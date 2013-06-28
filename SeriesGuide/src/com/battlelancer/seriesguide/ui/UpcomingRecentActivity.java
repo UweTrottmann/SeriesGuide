@@ -30,14 +30,13 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.adapters.TabPagerAdapter;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.ActivityType;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
-
-import net.simonvt.menudrawer.MenuDrawer;
 
 public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAddShowListener {
     private static final String TAG = "Activity";
@@ -59,7 +58,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
 
         TabsAdapter tabsAdapter = new TabsAdapter(getSupportFragmentManager(), this, actionBar,
-                viewPager, getMenu());
+                viewPager);
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
         argsUpcoming.putString(UpcomingFragment.InitBundle.TYPE, ActivityType.UPCOMING);
@@ -102,10 +101,6 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
             selection = 0;
         }
         actionBar.setSelectedNavigationItem(selection);
-
-        getMenu().setTouchMode(selection == 0
-                ? MenuDrawer.TOUCH_MODE_FULLSCREEN
-                : MenuDrawer.TOUCH_MODE_BEZEL);
     }
 
     @Override
@@ -122,12 +117,12 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
                 .getDefaultSharedPreferences(getApplicationContext());
 
         // set menu items to current values
-        readBooleanPreference(prefs, menu.findItem(R.id.menu_onlyfavorites),
-                SeriesGuidePreferences.KEY_ONLYFAVORITES);
-        readBooleanPreference(prefs, menu.findItem(R.id.menu_nospecials),
-                SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES);
-        readBooleanPreference(prefs, menu.findItem(R.id.menu_nowatched),
-                SeriesGuidePreferences.KEY_NOWATCHED);
+        menu.findItem(R.id.menu_onlyfavorites).setChecked(ActivitySettings.isOnlyFavorites(this));
+        menu.findItem(R.id.menu_nospecials).setChecked(ActivitySettings.isHidingSpecials(this));
+        menu.findItem(R.id.menu_nowatched).setChecked(
+                prefs.getBoolean(SeriesGuidePreferences.KEY_NOWATCHED, false));
+        menu.findItem(R.id.menu_infinite_scrolling).setChecked(
+                ActivitySettings.isInfiniteScrolling(this));
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -136,16 +131,20 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_onlyfavorites) {
+            storeBooleanPreference(item, ActivitySettings.KEY_ONLY_FAVORITES);
             fireTrackerEvent("Only favorite shows Toggle");
-            storeBooleanPreference(item, SeriesGuidePreferences.KEY_ONLYFAVORITES);
             return true;
         } else if (itemId == R.id.menu_nospecials) {
+            storeBooleanPreference(item, ActivitySettings.KEY_HIDE_SPECIALS);
             fireTrackerEvent("Hide specials Toggle");
-            storeBooleanPreference(item, SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES);
             return true;
         } else if (itemId == R.id.menu_nowatched) {
-            fireTrackerEvent("Hide watched Toggle");
             storeBooleanPreference(item, SeriesGuidePreferences.KEY_NOWATCHED);
+            fireTrackerEvent("Hide watched Toggle");
+            return true;
+        } else if (itemId == R.id.menu_infinite_scrolling) {
+            storeBooleanPreference(item, ActivitySettings.KEY_INFINITE_SCROLLING);
+            fireTrackerEvent("Infinite Scrolling Toggle");
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -168,8 +167,8 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         private SharedPreferences mPrefs;
 
         public TabsAdapter(FragmentManager fm, Context context, ActionBar actionBar,
-                ViewPager pager, MenuDrawer menu) {
-            super(fm, context, actionBar, pager, menu);
+                ViewPager pager) {
+            super(fm, context, actionBar, pager);
             mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         }
 
@@ -193,11 +192,6 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
     @Override
     protected void fireTrackerEvent(String label) {
         EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
-    }
-
-    private void readBooleanPreference(SharedPreferences prefs, MenuItem item, String key) {
-        boolean value = prefs.getBoolean(key, false);
-        item.setChecked(value);
     }
 
     private void storeBooleanPreference(MenuItem item, String key) {

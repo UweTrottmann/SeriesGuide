@@ -18,6 +18,7 @@
         android:gravity="center_vertical"
         android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.Medium.Light"
-        android:textColor="@color/text_primary" />
+        android:textColor="@color/text_primary"
+        android:textSize="18sp" />
 
 </RelativeLayout>

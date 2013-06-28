@@ -32,6 +32,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.uwetrottmann.seriesguide.R;
 
@@ -39,14 +40,15 @@ import com.uwetrottmann.seriesguide.R;
  * One button export or import of the show database using a JSON file on
  * external storage.
  */
-public class DataLiberationFragment extends SherlockFragment implements OnTaskFinishedListener {
+public class DataLiberationFragment extends SherlockFragment implements OnTaskFinishedListener,
+        OnTaskProgressListener {
 
     private Button mButtonExport;
     private Button mButtonImport;
     private ProgressBar mProgressBar;
     private CheckBox mCheckBoxFullDump;
     private CheckBox mCheckBoxImportWarning;
-    private AsyncTask<Void, Void, Integer> mTask;
+    private AsyncTask<Void, Integer, Integer> mTask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,7 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
 
         mButtonExport = (Button) v.findViewById(R.id.buttonExport);
         mButtonImport = (Button) v.findViewById(R.id.buttonImport);
-        mProgressBar = (ProgressBar) v.findViewById(R.id.progressBar);
+        mProgressBar = (ProgressBar) v.findViewById(R.id.progressBarDataLiberation);
         mCheckBoxFullDump = (CheckBox) v.findViewById(R.id.checkBoxFullDump);
         mCheckBoxImportWarning = (CheckBox) v.findViewById(R.id.checkBoxImportWarning);
 
@@ -90,8 +92,9 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
             public void onClick(View v) {
                 setProgressLock(true);
 
-                mTask = new JsonExportTask(context, DataLiberationFragment.this, mCheckBoxFullDump
-                        .isChecked(), false);
+                mTask = new JsonExportTask(context, DataLiberationFragment.this,
+                        DataLiberationFragment.this,
+                        mCheckBoxFullDump.isChecked(), false);
                 mTask.execute();
             }
         });
@@ -110,7 +113,7 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
                 mTask.execute();
             }
         });
-        
+
         // restore UI state
         if (mTask != null && mTask.getStatus() != AsyncTask.Status.FINISHED) {
             setProgressLock(true);
@@ -128,18 +131,30 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
     }
 
     @Override
+    public void onProgressUpdate(Integer... values) {
+        if (mProgressBar == null) {
+            return;
+        }
+        mProgressBar.setIndeterminate(values[0] == values[1] ? true : false);
+        mProgressBar.setMax(values[0]);
+        mProgressBar.setProgress(values[1]);
+    }
+
+    @Override
     public void onTaskFinished() {
         setProgressLock(false);
     }
 
-    private void setProgressLock(boolean isEnable) {
-        if (isEnable) {
+    private void setProgressLock(boolean isLocked) {
+        if (isLocked) {
             mButtonImport.setEnabled(false);
         } else {
             mButtonImport.setEnabled(mCheckBoxImportWarning.isChecked());
         }
-        mButtonExport.setEnabled(!isEnable);
-        mProgressBar.setVisibility(isEnable ? View.VISIBLE : View.GONE);
+        mButtonExport.setEnabled(!isLocked);
+        mProgressBar.setVisibility(isLocked ? View.VISIBLE : View.GONE);
+        mCheckBoxFullDump.setEnabled(!isLocked);
+        mCheckBoxImportWarning.setEnabled(!isLocked);
     }
 
 }

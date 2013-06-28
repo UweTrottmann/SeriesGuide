@@ -66,7 +66,7 @@ public class SeasonsAdapter extends CursorAdapter {
         if (seasonNumber.equals("0") || seasonNumber.length() == 0) {
             seasonName = mContext.getString(R.string.specialseason);
         } else {
-            seasonName = mContext.getString(R.string.season) + " " + seasonNumber;
+            seasonName = mContext.getString(R.string.season_number, seasonNumber);
         }
         viewHolder.seasonTitle.setText(seasonName);
 

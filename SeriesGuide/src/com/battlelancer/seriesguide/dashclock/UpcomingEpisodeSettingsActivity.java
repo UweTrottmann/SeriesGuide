@@ -14,7 +14,7 @@ import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
 
-import com.battlelancer.seriesguide.util.DashClockSettings;
+import com.battlelancer.seriesguide.settings.DashClockSettings;
 import com.uwetrottmann.seriesguide.R;
 
 /**

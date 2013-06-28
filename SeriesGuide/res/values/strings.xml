@@ -4,8 +4,10 @@
     <!-- Generic -->
     <string name="show">Show</string>
     <string name="episode">Episode</string>
+    <string name="episode_number">Episode %s</string>
     <string name="episodes">Episodes</string>
     <string name="season">Season</string>
+    <string name="season_number">Season %s</string>
     <string name="seasons">Seasons</string>
     <string name="unknown">unknown</string>
     <string name="episode_iswatched">Watched already</string>
@@ -13,6 +15,7 @@
     <string name="specialseason">Special Episodes</string>
     <string name="search_hint">Search episodes</string>
     <string name="share_episode">Share episode</string>
+    <string name="share_show">Share show</string>
     <string name="share_checkout">Check out</string>
     <string name="search_description">Episodes</string>
     <string name="description_overview">Overview</string>
@@ -121,7 +124,8 @@
     <!-- Metadata -->
     <string name="episode_number_absolute">ABSOLUTE</string>
     <string name="episode_number_disk">DVD</string>
-    <string name="episode_firstaired">Airdate</string>
+    <string name="episode_firstaired">Release date</string>
+    <string name="episode_firstaired_unknown">Release date unknown</string>
     <string name="episode_dvdnumber">DVD Episode</string>
     <string name="show_actors">Actors</string>
     <string name="show_firstaired">First Aired</string>
@@ -195,18 +199,13 @@
     <string name="norecent">There are no recent episodes.</string>
     <string name="only_favorites">Only favorite shows</string>
     <string name="togglewatched">Toggle watched</string>
+    <string name="pref_infinite_scrolling">Infinite activity</string>
 
     <!-- Updating -->
-    <string name="update_notification">Updating your shows…</string>
-    <string name="update_single">Updating show…</string>
-    <string name="update_delta">Updating outdated shows…</string>
-    <string name="update_full">Updating all shows…</string>
-    <string name="update_success">Shows updated.</string>
-    <string name="update_offline">Updating failed, check your internet/Wi-Fi connection.</string>
-    <string name="update_saxerror">Updating failed, trying again later.</string>
+    <string name="update_scheduled">Updating…</string>
+    <string name="update_no_connection">To update connect to the internet.</string>
+    <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
     <string name="update_inprogress">An update is in progress, try again later.</string>
-    <string name="update_rebuildsearch">Refreshing episode search…</string>
-    <string name="update_traktactivity">Loading trakt activity…</string>
 
     <!-- Loading posters -->
     <string name="menu_updateart">Load posters</string>
@@ -215,8 +214,7 @@
     <string name="arttask_nosdcard">Loading posters requires external storage (SD card).</string>
 
     <!-- Show info -->
-    <string name="show_network">on</string>
-    <string name="show_noairtime">No air times available</string>
+    <string name="show_on_network">on %s</string>
 
     <!-- Season list -->
     <string name="season_watchcount">episodes not watched</string>
@@ -334,7 +332,9 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Other</string>
     <string name="pref_autoupdate">Turn on Auto Update</string>
-    <string name="pref_autoupdatesummary">Periodically update your shows when starting SeriesGuide</string>
+    <string name="pref_autoupdatesummary">Periodically update your shows</string>
+    <string name="pref_autobackup">Turn on Auto Backup</string>
+    <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
     <string name="backup">Backup/Restore</string>
     <string name="backup_summary">Backup or restore your shows</string>
     <string name="pref_upcominglimit">Upcoming shows within…</string>
@@ -395,7 +395,8 @@
     <string name="looking_for_something_else">Looking for something else?</string>
 
     <!-- Share methods -->
-    <string name="menu_rate_trakt">Rate (trakt)</string>
+    <string name="menu_rate_episode">Rate episode</string>
+    <string name="menu_rate_show">Rate show</string>
     <string name="menu_share_others">Via other apps</string>
     <string name="traktcheckin_cancel">Override</string>
     <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
@@ -430,6 +431,7 @@
     <!-- Notifications -->
     <string name="upcoming_show">%s is coming up</string>
     <string name="upcoming_episodes">New episodes are coming up</string>
+    <string name="upcoming_episodes_number">%s new episodes</string>
     <string name="upcoming_show_detailed">%1$s on %2$s</string>
     <string name="upcoming_display">Select to display upcoming shows</string>
     <string name="pref_notifications">Notifications</string>
@@ -489,5 +491,11 @@
     <!-- strings for BETA release -->
     <string name="download_stable">Download SeriesGuide</string>
     <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
+
+    <!-- In-App Billing -->
+    <string name="upgrade_title">Get the X Upgrade</string>
+    <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+    <string name="upgrade_action">Get the X Upgrade</string>
+    <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
 
 </resources>

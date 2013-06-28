@@ -38,15 +38,15 @@ import android.text.style.ForegroundColorSpan;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.settings.ActivitySettings;
+import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.QuickCheckInActivity;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.Lists;
-import com.battlelancer.seriesguide.util.NotificationSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.seriesguide.R;
 
 import java.util.List;
@@ -149,8 +149,7 @@ public class NotificationService extends IntentService {
         if (isFavsOnly) {
             selection.append(Shows.SELECTION_FAVORITES);
         }
-        boolean isNoSpecials = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES,
-                false);
+        boolean isNoSpecials = ActivitySettings.isHidingSpecials(this);
         if (isNoSpecials) {
             selection.append(Episodes.SELECTION_NOSPECIALS);
         }
@@ -337,8 +336,7 @@ public class NotificationService extends IntentService {
         } else if (count > 1) {
             // notify about multiple episodes
             tickerText = getString(R.string.upcoming_episodes);
-            contentTitle = getString(R.string.upcoming_episodes) + " ("
-                    + String.valueOf(count) + ")";
+            contentTitle = getString(R.string.upcoming_episodes_number, count);
             contentText = getString(R.string.upcoming_display);
 
             Intent notificationIntent = new Intent(context, UpcomingRecentActivity.class);
@@ -415,6 +413,7 @@ public class NotificationService extends IntentService {
                 }
 
                 nb.setStyle(inboxStyle);
+                nb.setContentInfo(String.valueOf(count));
             }
         } else {
             // ICS and below

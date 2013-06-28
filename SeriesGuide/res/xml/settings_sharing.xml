@@ -2,6 +2,13 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <Preference
+        android:key="com.battlelancer.seriesguide.upgrade"
+        android:title="@string/upgrade_title" >
+        <intent
+            android:targetClass="com.battlelancer.seriesguide.billing.BillingActivity"
+            android:targetPackage="@string/package_name" />
+    </Preference>
+    <Preference
         android:key="clearGetGlueCredentials"
         android:summary="@string/clearGetGlueCredentialssummary"
         android:title="@string/clearGetGlueCredentials" />
@@ -9,8 +16,8 @@
     <PreferenceCategory android:title="@string/trakt" >
         <Preference
             android:key="com.battlelancer.seriesguide.trakt.connect"
-            android:title="@string/connect_trakt"
-            android:summary="@string/pref_traktsummary" >
+            android:summary="@string/pref_traktsummary"
+            android:title="@string/connect_trakt" >
             <intent
                 android:targetClass="com.battlelancer.seriesguide.ui.ConnectTraktActivity"
                 android:targetPackage="@string/package_name" />

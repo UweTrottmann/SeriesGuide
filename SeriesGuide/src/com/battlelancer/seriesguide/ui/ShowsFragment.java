@@ -52,6 +52,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
@@ -59,7 +60,6 @@ import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
 import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
@@ -72,7 +72,7 @@ import de.greenrobot.event.EventBus;
  * @author Uwe Trottmann
  */
 public class ShowsFragment extends SherlockFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener {
+        LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener, OnClickListener {
 
     private static final String TAG = "Shows";
 
@@ -141,7 +141,7 @@ public class ShowsFragment extends SherlockFragment implements
         getSherlockActivity().getTheme().resolveAttribute(R.attr.drawableStar0, outValueStarZero,
                 true);
         mAdapter = new SlowAdapter(getActivity(), null, 0, outValueStar.resourceId,
-                outValueStarZero.resourceId);
+                outValueStarZero.resourceId, this);
 
         // setup grid view
         mGrid = (GridView) getView().findViewById(R.id.showlist);
@@ -284,16 +284,16 @@ public class ShowsFragment extends SherlockFragment implements
                 return true;
             }
             case CONTEXT_DELETE_ID:
-                fireTrackerEvent("Delete show");
-
-                if (!TaskManager.getInstance(getActivity()).isUpdateTaskRunning(true)) {
+                if (!SgSyncAdapter.isSyncActive(getActivity(), true)) {
                     showDeleteDialog(info.id);
                 }
+
+                fireTrackerEvent("Delete show");
                 return true;
             case CONTEXT_UPDATE_ID:
-                fireTrackerEvent("Update show");
+                SgSyncAdapter.requestSync(getActivity(), (int) info.id);
 
-                ((ShowsActivity) getActivity()).performUpdateTask(false, String.valueOf(info.id));
+                fireTrackerEvent("Update show");
                 return true;
             case CONTEXT_FLAG_NEXT_ID:
                 fireTrackerEvent("Mark next episode");
@@ -312,6 +312,11 @@ public class ShowsFragment extends SherlockFragment implements
             }
         }
         return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        getActivity().openContextMenu(v);
     }
 
     @TargetApi(16)
@@ -385,21 +390,24 @@ public class ShowsFragment extends SherlockFragment implements
 
     private class SlowAdapter extends CursorAdapter {
 
+        private final int LAYOUT = R.layout.shows_row;
+
         private LayoutInflater mLayoutInflater;
 
-        private final int LAYOUT = R.layout.shows_row;
+        private OnClickListener mOnClickListener;
 
         private int mStarDrawableId;
 
         private int mStarZeroDrawableId;
 
         public SlowAdapter(Context context, Cursor c, int flags, int starDrawableResId,
-                int starZeroDrawableId) {
+                int starZeroDrawableId, OnClickListener listener) {
             super(context, c, flags);
             mLayoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             mStarDrawableId = starDrawableResId;
             mStarZeroDrawableId = starZeroDrawableId;
+            mOnClickListener = listener;
         }
 
         @Override
@@ -426,6 +434,8 @@ public class ShowsFragment extends SherlockFragment implements
                 viewHolder.episodeTime = (TextView) convertView.findViewById(R.id.episodetime);
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.showposter);
                 viewHolder.favorited = (ImageView) convertView.findViewById(R.id.favoritedLabel);
+                viewHolder.contextMenu = (ImageView) convertView
+                        .findViewById(R.id.imageViewShowsContextMenu);
 
                 convertView.setTag(viewHolder);
             } else {
@@ -487,6 +497,10 @@ public class ShowsFragment extends SherlockFragment implements
             final String imagePath = mCursor.getString(ShowsQuery.POSTER);
             ImageProvider.getInstance(mContext).loadPosterThumb(viewHolder.poster, imagePath);
 
+            // context menu
+            viewHolder.contextMenu.setVisibility(View.VISIBLE);
+            viewHolder.contextMenu.setOnClickListener(mOnClickListener);
+
             return convertView;
         }
 
@@ -514,6 +528,8 @@ public class ShowsFragment extends SherlockFragment implements
         public ImageView poster;
 
         public ImageView favorited;
+
+        public ImageView contextMenu;
 
     }
 

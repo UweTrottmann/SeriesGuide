@@ -11,13 +11,10 @@ import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
 import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
-import com.battlelancer.seriesguide.util.MenuOnPageChangeListener;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TabPageIndicator.OnTabReselectedListener;
-
-import net.simonvt.menudrawer.MenuDrawer;
 
 /**
  * Hosts a view pager to display and manage lists of shows, seasons and
@@ -53,9 +50,6 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
                 ListManageDialogFragment.showListManageDialog(listId, getSupportFragmentManager());
             }
         });
-        mIndicator.setOnPageChangeListener(new MenuOnPageChangeListener(getMenu()));
-
-        getMenu().setTouchMode(MenuDrawer.TOUCH_MODE_FULLSCREEN);
     }
 
     @Override

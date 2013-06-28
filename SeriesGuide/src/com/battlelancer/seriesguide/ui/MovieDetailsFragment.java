@@ -44,7 +44,8 @@ import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader;
 import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader.MovieDetails;
 import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 import com.uwetrottmann.tmdb.entities.Movie;
@@ -134,7 +135,7 @@ public class MovieDetailsFragment extends SherlockFragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_open_imdb) {
-            Utils.openImdb(mMovieDetails.movie().imdb_id, TAG, getActivity());
+            ServiceUtils.openImdb(mMovieDetails.movie().imdb_id, TAG, getActivity());
             return true;
         }
         if (itemId == R.id.menu_open_youtube) {
@@ -143,6 +144,11 @@ public class MovieDetailsFragment extends SherlockFragment implements
                             + mMovieDetails.trailers().youtube.get(0).source));
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
             startActivity(intent);
+            fireTrackerEvent("Trailer");
+            return true;
+        }
+        if (itemId == R.id.menu_open_trakt) {
+            ServiceUtils.openTraktMovie(getActivity(), mMovieDetails.movie().id, TAG);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -206,9 +212,9 @@ public class MovieDetailsFragment extends SherlockFragment implements
                 ImageView background = (ImageView) getView()
                         .findViewById(R.id.imageViewMoviePoster);
                 if (AndroidUtils.isJellyBeanOrHigher()) {
-                    background.setImageAlpha(50);
+                    background.setImageAlpha(30);
                 } else {
-                    background.setAlpha(50);
+                    background.setAlpha(30);
                 }
 
                 String posterPath = mBaseUrl + movie.poster_path;
@@ -226,6 +232,7 @@ public class MovieDetailsFragment extends SherlockFragment implements
                                 MovieCheckInDialogFragment f = MovieCheckInDialogFragment
                                         .newInstance(movie.imdb_id, movie.title);
                                 f.show(getFragmentManager(), "checkin-dialog");
+                                fireTrackerEvent("Check-In");
                             }
                         });
             } else {
@@ -241,9 +248,14 @@ public class MovieDetailsFragment extends SherlockFragment implements
                     Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
                     i.putExtras(TraktShoutsActivity.createInitBundleMovie(movie.title, movie.id));
                     startActivity(i);
+                    fireTrackerEvent("Comments");
                 }
             });
         }
+    }
+
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
     }
 
 }

@@ -20,14 +20,13 @@ package com.battlelancer.seriesguide.util;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
-import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -35,7 +34,6 @@ import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,11 +43,14 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.service.OnAlarmReceiver;
+import com.battlelancer.seriesguide.settings.ActivitySettings;
+import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormatSymbols;
@@ -287,12 +288,17 @@ public class Utils {
 
         timeAndDay.append(" ");
 
-        timeAndDay.append(DateUtils
-                .getRelativeTimeSpanString(
-                        cal.getTimeInMillis(),
-                        System.currentTimeMillis(),
-                        DateUtils.DAY_IN_MILLIS,
-                        DateUtils.FORMAT_ABBREV_ALL));
+        // Show 'today' instead of '0 days ago'
+        if (DateUtils.isToday(cal.getTimeInMillis())) {
+            timeAndDay.append(context.getString(R.string.today));
+        } else {
+            timeAndDay.append(DateUtils
+                    .getRelativeTimeSpanString(
+                            cal.getTimeInMillis(),
+                            System.currentTimeMillis(),
+                            DateUtils.DAY_IN_MILLIS,
+                            DateUtils.FORMAT_ABBREV_ALL));
+        }
 
         return timeAndDay.toString();
     }
@@ -606,8 +612,7 @@ public class Utils {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
             final boolean isOnlyFutureEpisodes = prefs.getBoolean(
                     SeriesGuidePreferences.KEY_ONLY_FUTURE_EPISODES, false);
-            final boolean isNoSpecials = prefs.getBoolean(
-                    SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES, false);
+            final boolean isNoSpecials = ActivitySettings.isHidingSpecials(mContext);
 
             if (mShowId != null) {
                 // update single show
@@ -658,7 +663,7 @@ public class Utils {
         if (seasonNumber == 0) {
             return context.getString(R.string.specialseason);
         } else {
-            return context.getString(R.string.season) + " " + seasonNumber;
+            return context.getString(R.string.season_number, seasonNumber);
         }
     }
 
@@ -683,19 +688,22 @@ public class Utils {
                 * DateUtils.MINUTE_IN_MILLIS, pi);
     }
 
-    public static String toSHA1(byte[] convertme) {
+    public static String toSHA1(Context context, String message) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
-            byte[] b = md.digest(convertme);
+            byte[] messageBytes = message.getBytes("UTF-8");
+            byte[] digest = md.digest(messageBytes);
 
             String result = "";
-            for (int i = 0; i < b.length; i++) {
-                result += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
+            for (int i = 0; i < digest.length; i++) {
+                result += Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1);
             }
 
             return result;
         } catch (NoSuchAlgorithmException e) {
-            Log.w(TAG, "Could not get SHA-1 message digest instance", e);
+            Utils.trackExceptionAndLog(context, TAG, e);
+        } catch (UnsupportedEncodingException e) {
+            Utils.trackExceptionAndLog(context, TAG, e);
         }
         return null;
     }
@@ -729,11 +737,41 @@ public class Utils {
      * @return
      */
     public static boolean isSupporterChannel(Context context) {
-        if (getChannel(context) != SGChannel.STABLE) {
+        if (getChannel(context) != SGChannel.STABLE || hasXinstalled(context)
+                || AdvancedSettings.hasPurchasedX(context)) {
             return true;
         } else {
             return false;
         }
+    }
+
+    /**
+     * Returns true if the user has the legacy X version installed, signed with
+     * the same key as we are.
+     */
+    public static boolean hasXinstalled(Context context) {
+        try {
+            // Get our signing key
+            PackageManager manager = context.getPackageManager();
+            PackageInfo appInfoSeriesGuide = manager
+                    .getPackageInfo(
+                            context.getApplicationContext().getPackageName(),
+                            PackageManager.GET_SIGNATURES);
+
+            // Try to find the X signing key
+            PackageInfo appInfoSeriesGuideX = manager
+                    .getPackageInfo(
+                            "com.battlelancer.seriesguide.x",
+                            PackageManager.GET_SIGNATURES);
+
+            final String ourKey = appInfoSeriesGuide.signatures[0].toCharsString();
+            final String xKey = appInfoSeriesGuideX.signatures[0].toCharsString();
+            return ourKey.equals(xKey);
+        } catch (NameNotFoundException e) {
+            // Expected exception that occurs if the package is not present.
+        }
+
+        return false;
     }
 
     public static void setValueOrPlaceholder(View view, final String value) {
@@ -771,9 +809,9 @@ public class Utils {
     @SuppressWarnings("deprecation")
     public static void setPosterBackground(ImageView background, String posterPath, Context context) {
         if (AndroidUtils.isJellyBeanOrHigher()) {
-            background.setImageAlpha(50);
+            background.setImageAlpha(30);
         } else {
-            background.setAlpha(50);
+            background.setAlpha(30);
         }
         ImageProvider.getInstance(context).loadImage(background, posterPath, false);
     }
@@ -830,122 +868,6 @@ public class Utils {
             return AndroidUtils.isWifiConnected(context);
         } else {
             return AndroidUtils.isNetworkConnected(context);
-        }
-    }
-
-    public static final String IMDB_TITLE_URL = "http://imdb.com/title/";
-
-    /**
-     * Displays the IMDb page for the given id (show or episode) in the IMDb app
-     * or on the imdb.com web page. If the IMDb id is empty, disables the
-     * button.
-     * 
-     * @param imdbId
-     * @param imdbButton
-     * @param logTag
-     * @param context
-     */
-    public static void setUpImdbButton(final String imdbId, View imdbButton, final String logTag,
-            final Context context) {
-        if (imdbButton != null) {
-            if (!TextUtils.isEmpty(imdbId)) {
-                imdbButton.setEnabled(true);
-                imdbButton.setOnClickListener(new OnClickListener() {
-                    public void onClick(View v) {
-                        openImdb(imdbId, logTag, context);
-                    }
-                });
-            } else {
-                imdbButton.setEnabled(false);
-            }
-        }
-    }
-
-    /**
-     * Open the IMDb app or web page for the given IMDb id.
-     */
-    public static void openImdb(String imdbId, String logTag, Context context) {
-        if (context == null || TextUtils.isEmpty(imdbId)) {
-            return;
-        }
-
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri
-                .parse("imdb:///title/" + imdbId + "/"));
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        try {
-            context.startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_TITLE_URL
-                    + imdbId));
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-            context.startActivity(intent);
-        }
-
-        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "IMDb", (long) 0);
-    }
-
-    /**
-     * Sets a {@link OnClickListener} on the given button linking to a Google
-     * Play Store search for the given title or disabling the button if the
-     * title is empty.
-     */
-    public static void setUpGooglePlayButton(final String title, View playButton,
-            final String logTag) {
-        if (playButton != null) {
-
-            if (!TextUtils.isEmpty(title)) {
-                playButton.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        EasyTracker.getTracker()
-                                .sendEvent(logTag, "Action Item", "Google Play", (long) 0);
-
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                        try {
-                            intent.setData(Uri.parse("market://search?q=" + title));
-                            v.getContext().startActivity(intent);
-                        } catch (ActivityNotFoundException e) {
-                            intent.setData(Uri.parse("http://play.google.com/store/search?q="
-                                    + title));
-                            v.getContext().startActivity(intent);
-                        }
-                    }
-                });
-            } else {
-                playButton.setEnabled(false);
-            }
-
-        }
-    }
-
-    /**
-     * Sets a {@link OnClickListener} on the given button linking to a Amazon
-     * web search for the given title or disabling the button if the title is
-     * empty.
-     */
-    public static void setUpAmazonButton(final String title, View amazonButton,
-            final String logTag) {
-        if (amazonButton != null) {
-
-            if (!TextUtils.isEmpty(title)) {
-                amazonButton.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        EasyTracker.getTracker()
-                                .sendEvent(logTag, "Action Item", "Amazon", (long) 0);
-
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(Uri
-                                .parse("http://www.amazon.com/gp/search?ie=UTF8&keywords=" + title));
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                        v.getContext().startActivity(intent);
-                    }
-                });
-            } else {
-                amazonButton.setEnabled(false);
-            }
-
         }
     }
 

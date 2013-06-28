@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Show</string>
   <string name="episode">Epizoda</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">Episodes</string>
   <string name="season">Sezona</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">Sezone</string>
   <string name="unknown">neznano</string>
   <string name="episode_iswatched">Že gledano</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">Posebne epizode</string>
   <string name="search_hint">Iskanje epizode</string>
   <string name="share_episode">Deli epizodo</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">Odjavi</string>
   <string name="search_description">Epizode</string>
   <string name="description_overview">Pregled</string>
@@ -73,7 +76,8 @@
   <string name="rating9">Odlično</string>
   <string name="episode_number_absolute">ABSOLUTE</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Datum predvajanja</string>
+  <string name="episode_firstaired">Release date</string>
+  <string name="episode_firstaired_unknown">Release date unknown</string>
   <string name="episode_dvdnumber">DVD epizoda</string>
   <string name="show_actors">Igralci</string>
   <string name="show_firstaired">Prvič predvajano</string>
@@ -137,22 +141,16 @@
   <string name="norecent">Ni nedavnih epizod.</string>
   <string name="only_favorites">Samo priljubljene oddaje</string>
   <string name="togglewatched">Preklopi med gledanimi</string>
-  <string name="update_notification">Posodabljanje vaših oddaj...</string>
-  <string name="update_single">Oddaja se posodablja...</string>
-  <string name="update_delta">Stare oddaje se posodabljajo...</string>
-  <string name="update_full">Vse oddaje se posodabljajo...</string>
-  <string name="update_success">Oddaje so posodobljene.</string>
-  <string name="update_offline">Posodabljanje ni uspelo. Preverite svojo internetno/Wi-Fi povezavo.</string>
-  <string name="update_saxerror">Updating failed, trying again later.</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
+  <string name="update_scheduled">Updating…</string>
+  <string name="update_no_connection">To update connect to the internet.</string>
+  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
   <string name="update_inprogress">Posodabljanje je v teku. Poizkusite ponovno kasneje.</string>
-  <string name="update_rebuildsearch">Osvežujem iskanje epizod...</string>
-  <string name="update_traktactivity">Nalagam aktivnosti s trakt-a...</string>
   <string name="menu_updateart">Naloži posterje</string>
   <string name="arttask_incomplete">Nekateri posterji se niso naložili. Poizkusi ponovno kasneje.</string>
   <string name="arttask_start">Nalagam posterje...</string>
   <string name="arttask_nosdcard">Nalaganje posterjev zahteva zunanjo podatkovno shrambo (kartico SD).</string>
-  <string name="show_network">ob</string>
-  <string name="show_noairtime">Časa oddajanja ni na voljo</string>
+  <string name="show_on_network">on %s</string>
   <string name="season_watchcount">Nepogledane epizode.</string>
   <string name="season_allwatched">Vse epizode pogledane</string>
   <string name="season_onenotwatched">Nepogledana epizoda.</string>
@@ -226,7 +224,9 @@
   <string name="pref_theme">Slikovna tema aplikacije</string>
   <string name="pref_other">Other</string>
   <string name="pref_autoupdate">Vklopite samodejne posodobitve</string>
-  <string name="pref_autoupdatesummary">Občasno posodobi svoje oddaje ob zagonu SeriesGuide</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Varnostno kopiranje/Obnovitev</string>
   <string name="backup_summary">Naredite varnostno kopijo ali obnovite vaše oddaje</string>
   <string name="pref_upcominglimit">Prihajajoče oddaje v...</string>
@@ -279,7 +279,8 @@
   <string name="check_into">Prijavi se v</string>
   <string name="no_selection">Izberi možnost spodaj</string>
   <string name="looking_for_something_else">Iščeš nekaj drugega?</string>
-  <string name="menu_rate_trakt">Oceni (trakt)</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">Preko drugih appsov</string>
   <string name="traktcheckin_cancel">Razveljavi</string>
   <string name="traktcheckin_inprogress">Prijavljen si že v drugo epizodo ali film. Ali razveljavi prejšnji vnos ali pa počakaj %s in poizkusi ponovno.</string>
@@ -303,6 +304,7 @@
   <string name="welcome_add_part1">Za začetek tapni</string>
   <string name="upcoming_show">%s prihaja na spored</string>
   <string name="upcoming_episodes">Nove epizode prihajajo na spored</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s na %2$s</string>
   <string name="upcoming_display">Izberi za prikaz prihajajočih oddaj</string>
   <string name="pref_notifications">Obvestila</string>
@@ -324,6 +326,10 @@
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">Prenesi SeriesGuide</string>
   <string name="betawarning"><b>Pozor!</b> Ta verzija je namenjea samo beta preizkuševalcem! Če si v dvomih prenesi spodnjo, stabilno verzijo.</string>
+  <string name="upgrade_title">Get the X Upgrade</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_action">Get the X Upgrade</string>
+  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
   <string-array name="shsorting">
     <item>A - Ž</item>
     <item>Naslednja epizoda</item>

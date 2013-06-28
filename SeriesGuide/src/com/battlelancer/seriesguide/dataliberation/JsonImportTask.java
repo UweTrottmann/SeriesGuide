@@ -37,6 +37,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
 import com.google.myjson.Gson;
@@ -56,7 +57,7 @@ import java.util.ArrayList;
  * By default meta-data like descriptions, ratings, actors, etc. will not be
  * included.
  */
-public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
+public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
     private static final int SUCCESS = 1;
     private static final int ERROR_STORAGE_ACCESS = 0;
@@ -80,7 +81,7 @@ public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
 
         // Ensure no large database ops are running
         TaskManager tm = TaskManager.getInstance(mContext);
-        if (tm.isUpdateTaskRunning(false) || tm.isAddTaskRunning()) {
+        if (SgSyncAdapter.isSyncActive(mContext, false) || tm.isAddTaskRunning()) {
             return ERROR_LARGE_DB_OP;
         }
 
@@ -313,7 +314,7 @@ public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
         }
 
         // Insert the lists items
-        ArrayList<ContentValues> items = com.battlelancer.seriesguide.util.Lists.newArrayList();
+        ArrayList<ContentValues> items = com.uwetrottmann.androidutils.Lists.newArrayList();
         for (ListItem item : list.items) {
             int type;
             if (ListItemTypesExport.SHOW.equals(item.type)) {

@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Show</string>
   <string name="episode">פרק</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">פרקים</string>
   <string name="season">עונה</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">עונות</string>
   <string name="unknown">לא ידוע</string>
   <string name="episode_iswatched">נצפה</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">פרקים מיוחדים</string>
   <string name="search_hint">חפש פרקים</string>
   <string name="share_episode">שתף פרק</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">התנתק</string>
   <string name="search_description">פרקים</string>
   <string name="description_overview">תקציר</string>
@@ -73,7 +76,8 @@
   <string name="rating9">מצוין</string>
   <string name="episode_number_absolute">ABSOLUTE</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">זמן שידור</string>
+  <string name="episode_firstaired">Release date</string>
+  <string name="episode_firstaired_unknown">Release date unknown</string>
   <string name="episode_dvdnumber">פרק DVD</string>
   <string name="show_actors">שחקנים</string>
   <string name="show_firstaired">הקרנה ראשונה</string>
@@ -137,22 +141,16 @@
   <string name="norecent">אין פרקים חדשים</string>
   <string name="only_favorites">סדרות מעודפות בלבד</string>
   <string name="togglewatched">החלף נצפו</string>
-  <string name="update_notification">מעדכן את הסדרות שלך</string>
-  <string name="update_single">מעדכן סדרה</string>
-  <string name="update_delta">מעדכן סדרות לא מעודכנות</string>
-  <string name="update_full">מעדכן את כל הסדרות</string>
-  <string name="update_success">הצג עדכונים</string>
-  <string name="update_offline">העדכון נכשל, בדוק את הקישוריות שלך.</string>
-  <string name="update_saxerror">העדכון נכשל, נסה שנית מאוחר יותר.</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
+  <string name="update_scheduled">Updating…</string>
+  <string name="update_no_connection">To update connect to the internet.</string>
+  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
   <string name="update_inprogress">מבצע תהליך עדכון, נסה מאוחר יותר.</string>
-  <string name="update_rebuildsearch">מרענן חיפוש פרקים</string>
-  <string name="update_traktactivity">טוען פעילויות trakt </string>
   <string name="menu_updateart">טען פוסטרים</string>
   <string name="arttask_incomplete">כמה פוסטרים לא נטענו, נסה שנית מאוחר יותר</string>
   <string name="arttask_start">טוען פוסטרים</string>
   <string name="arttask_nosdcard">טעינת פוסטרים דורשת אחסון חיצוני (כרטיס SD)</string>
-  <string name="show_network">בערוץ</string>
-  <string name="show_noairtime">אין זמני שידור מעודכנים</string>
+  <string name="show_on_network">on %s</string>
   <string name="season_watchcount">הפרקים לא נצפו</string>
   <string name="season_allwatched">כל הפרקים נצפו</string>
   <string name="season_onenotwatched">פרק שטרם נצפה</string>
@@ -226,7 +224,9 @@
   <string name="pref_theme">נושא אפליקציה</string>
   <string name="pref_other">אחר</string>
   <string name="pref_autoupdate">הדלק עדכון אוטומטי</string>
-  <string name="pref_autoupdatesummary">עדכן את סדרותיך באופן תקופתי כאשר SeriesGuide מופעל</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">גיבוי/שחזור</string>
   <string name="backup_summary">גבה או שחזר את סדרותיך</string>
   <string name="pref_upcominglimit">תוכניות המתקרבות תוך</string>
@@ -279,7 +279,8 @@
   <string name="check_into">בצע צ\'ק-אין ב</string>
   <string name="no_selection">בחר אחד להלן</string>
   <string name="looking_for_something_else">מחפש משהו אחר?</string>
-  <string name="menu_rate_trakt">דרג (trakt)</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">באמצעות אפליקציות אחרות</string>
   <string name="traktcheckin_cancel">דרוס</string>
   <string name="traktcheckin_inprogress">אתה כבר עושה צ\'ק-אין לפרק או סרט אחר. דרוס את הצ\'ק-אין הקודם או חכה %s ונסה שנית.</string>
@@ -303,6 +304,7 @@
   <string name="welcome_add_part1">כדי להתחיל, לחץ</string>
   <string name="upcoming_show">%s מתקרב</string>
   <string name="upcoming_episodes">פרקים חדשים מתקרבים</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s ב-%2$s</string>
   <string name="upcoming_display">בחר כדי להציג סדרות שמתקרבות</string>
   <string name="pref_notifications">התראות</string>
@@ -324,6 +326,10 @@
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">הורד SeriesGuide</string>
   <string name="betawarning"><b>שימו לב!</b> שחרור זה הוא עבור בודקי בטא בלבד! אם יש לך ספק, הורד את הגרסה היציבה שלהלן.</string>
+  <string name="upgrade_title">Get the X Upgrade</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_action">Get the X Upgrade</string>
+  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>הפרק הבא</item>

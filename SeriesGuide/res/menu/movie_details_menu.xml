@@ -10,5 +10,9 @@
         android:icon="@drawable/ic_action_youtube"
         android:showAsAction="ifRoom"
         android:title="@string/trailer"/>
+    <item
+        android:id="@+id/menu_open_trakt"
+        android:showAsAction="never"
+        android:title="@string/trakt"/>
 
 </menu>

@@ -12,6 +12,18 @@
         android:scaleType="centerCrop" >
     </ImageView>
 
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:background="?attr/colorSeparator" />
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:background="?attr/colorSeparator" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -24,16 +36,15 @@
             android:orientation="vertical" >
 
             <LinearLayout
+                android:id="@+id/containerOverviewShow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
                 <RelativeLayout
-                    android:id="@+id/showinfo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="?custom_list_selector"
                     android:focusable="true"
                     android:nextFocusDown="@+id/checkinButton"
                     android:paddingBottom="@dimen/default_padding" >
@@ -69,6 +80,8 @@
                         android:textAppearance="@style/TextAppearance.Small" />
                 </RelativeLayout>
 
+                <include layout="@layout/divider_vertical" />
+
                 <ImageView
                     android:id="@+id/imageViewFavorite"
                     style="@style/Widget.SeriesGuide.Button.Borderless"
@@ -79,7 +92,15 @@
                     android:src="@drawable/ic_action_star_0" />
             </LinearLayout>
 
-            <include layout="@layout/divider_horizontal" />
+            <View
+                android:id="@+id/spacerOverviewShow"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:visibility="gone" />
+
+            <include
+                android:id="@+id/dividerHorizontalOverviewShow"
+                layout="@layout/divider_horizontal" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -102,7 +123,8 @@
                     <FrameLayout
                         android:id="@+id/episode_primary_container"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/imagecontainer_height" >
+                        android:layout_height="@dimen/imagecontainer_height"
+                        android:foreground="?attr/custom_list_selector" >
 
                         <FrameLayout
                             android:id="@+id/imageContainer"
@@ -167,12 +189,6 @@
                                 android:textAllCaps="true"
                                 android:textAppearance="@style/TextAppearance.Small.Dim" />
                         </RelativeLayout>
-
-                        <View
-                            android:id="@+id/episode_primary_click_dummy"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="?attr/custom_list_selector" />
                     </FrameLayout>
 
                     <View
@@ -231,11 +247,9 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="@style/TextAppearance.Light" />
 
-                        <include layout="@layout/divider_horizontal" />
-
                         <include
                             android:id="@+id/buttonbar_ref"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             layout="@layout/buttonbar_services" />
                     </LinearLayout>

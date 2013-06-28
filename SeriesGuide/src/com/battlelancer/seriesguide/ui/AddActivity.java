@@ -36,14 +36,12 @@ import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
-import com.battlelancer.seriesguide.util.MenuOnPageChangeListener;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 import com.viewpagerindicator.TabPageIndicator;
 
-import net.simonvt.menudrawer.MenuDrawer;
 import java.util.Locale;
 
 /**
@@ -84,9 +82,6 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
 
         TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mPager);
-        indicator.setOnPageChangeListener(new MenuOnPageChangeListener(getMenu()));
-
-        getMenu().setTouchMode(MenuDrawer.TOUCH_MODE_FULLSCREEN);
 
         // set default tab
         if (getIntent() != null && getIntent().getExtras() != null) {

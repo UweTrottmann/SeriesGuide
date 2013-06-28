@@ -9,12 +9,11 @@
         <item name="android:editTextBackground">@drawable/edit_text_sg</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_sg</item>
-        <item name="android:spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
-        <item name="android:spinnerItemStyle">@style/Widget.SpinnerItem</item>
 
         <!-- Action bar (native, v11+) -->
         <item name="android:actionBarStyle">@style/ActionBar</item>
         <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
+        <item name="android:actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
         <item name="android:actionBarItemBackground" tools:targetApi="ice_cream_sandwich">@drawable/list_selector_sg</item>
         <item name="android:actionDropDownStyle">@style/DropDownNav</item>
     </style>
@@ -31,8 +30,9 @@
         <!-- Action bar (native, v11+) -->
         <item name="android:actionBarStyle">@style/ActionBar.Light</item>
         <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
+        <item name="android:actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
         <item name="android:actionBarItemBackground" tools:targetApi="ice_cream_sandwich">@drawable/list_selector_sg</item>
-        <item name="android:actionDropDownStyle">@style/DropDownNav</item>
+        <item name="android:actionDropDownStyle">@style/DropDownNav.Light</item>
     </style>
 
 </resources>

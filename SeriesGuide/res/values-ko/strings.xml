@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Show</string>
   <string name="episode">에피소드</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">에피소드</string>
   <string name="season">시즌</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">시즌</string>
   <string name="unknown">알 수 없음</string>
   <string name="episode_iswatched">이미 시청하였습니다</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">스페셜 에피소드</string>
   <string name="search_hint">에피소드 검색</string>
   <string name="share_episode">에피소드 공유</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">체크 아웃</string>
   <string name="search_description">에피소드</string>
   <string name="description_overview">개요</string>
@@ -73,7 +76,8 @@
   <string name="rating9">강추</string>
   <string name="episode_number_absolute">ABSOLUTE</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">방영일</string>
+  <string name="episode_firstaired">Release date</string>
+  <string name="episode_firstaired_unknown">Release date unknown</string>
   <string name="episode_dvdnumber">DVD 에피소드</string>
   <string name="show_actors">배우</string>
   <string name="show_firstaired">첫 방영날짜</string>
@@ -137,22 +141,16 @@
   <string name="norecent">최근 방영된 에피소드가 없습니다.</string>
   <string name="only_favorites">즐겨찾기한 쇼만 보이기</string>
   <string name="togglewatched">시청/미시청 토글</string>
-  <string name="update_notification">쇼 업데이트 중...</string>
-  <string name="update_single">쇼 업데이트 중...</string>
-  <string name="update_delta">오래된 쇼 목록 업데이트 중...</string>
-  <string name="update_full">모든 쇼 목록 업데이트 중...</string>
-  <string name="update_success">쇼 업데이트 완료.</string>
-  <string name="update_offline">업데이트 실패, 인터넷/Wi-Fi 연결을 확인하세요.</string>
-  <string name="update_saxerror">업데이트 실패. 나중에 다시 시도하세요.</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
+  <string name="update_scheduled">Updating…</string>
+  <string name="update_no_connection">To update connect to the internet.</string>
+  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
   <string name="update_inprogress">업데이트가 진행 중 입니다. 잠시 후 다시 시도해주세요.</string>
-  <string name="update_rebuildsearch">에피소드 검색 새로고치는 중...</string>
-  <string name="update_traktactivity">Trakt 활동을 로드 중</string>
   <string name="menu_updateart">포스터 불러오기</string>
   <string name="arttask_incomplete">일부 포스터 읽기에 실패하였습니다, 나중에 다시 시도하세요.</string>
   <string name="arttask_start">포스터 로드 중</string>
   <string name="arttask_nosdcard">포스터를 불러오기 위해서는 외장 SD카드가 필요합니다.</string>
-  <string name="show_network">on</string>
-  <string name="show_noairtime">방영시간 정보 없음</string>
+  <string name="show_on_network">on %s</string>
   <string name="season_watchcount">시청하지 않았음</string>
   <string name="season_allwatched">모든 에피소드 시청완료</string>
   <string name="season_onenotwatched">시청하지 않음</string>
@@ -226,7 +224,9 @@
   <string name="pref_theme">앱 테마</string>
   <string name="pref_other">기타</string>
   <string name="pref_autoupdate">자동 업데이트 켜기</string>
-  <string name="pref_autoupdatesummary">시리즈가이드를 시작할 때 주기적으로 쇼 목록을 업데이트합니다</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">백업/복원</string>
   <string name="backup_summary">쇼 목록을 백업학거나 복원합니다</string>
   <string name="pref_upcominglimit">방영 예정 쇼 표기</string>
@@ -279,7 +279,8 @@
   <string name="check_into">체크인</string>
   <string name="no_selection">아래에서 선택하세요</string>
   <string name="looking_for_something_else">다른것을 찾고 있습니까?</string>
-  <string name="menu_rate_trakt">평가 (trakt)</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">다른 앱을 통해</string>
   <string name="traktcheckin_cancel">오버라이드</string>
   <string name="traktcheckin_inprogress">이미 다른 에피소드 또는 영화에 체크인하였습니다. 이전 체크인을 해제하거나 %s 기다렸다가 다시 시도하세요.</string>
@@ -303,6 +304,7 @@
   <string name="welcome_add_part1">시작하려면 액션바에 있는</string>
   <string name="upcoming_show">%s가 방영 예정입니다</string>
   <string name="upcoming_episodes">새 에피소드 방영예정</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>
   <string name="upcoming_display">방영예정인 쇼를 표시하려면 선택</string>
   <string name="pref_notifications">알림</string>
@@ -324,6 +326,10 @@
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">시리즈가이드 다운로드</string>
   <string name="betawarning"><b>주목!</b> 이 버전은 베타테스터를 위한 버전입니다! 기분이 찝찝하다면 아래의 안정판을 다운받으세요.</string>
+  <string name="upgrade_title">Get the X Upgrade</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_action">Get the X Upgrade</string>
+  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>다음 에피소드</item>

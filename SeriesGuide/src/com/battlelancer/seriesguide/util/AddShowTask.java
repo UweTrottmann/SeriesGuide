@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.items.SearchResult;
@@ -37,6 +38,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Adds shows to the local database, tries to get watched and collected episodes
+ * if a trakt account is connected.
+ */
 public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
     private static final int ADD_ALREADYEXISTS = 0;
@@ -47,6 +52,8 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
     private static final int ADD_OFFLINE = 3;
 
+    private static final String TAG = "AddShowTask";
+
     final private Context mContext;
 
     final private LinkedList<SearchResult> mAddQueue = new LinkedList<SearchResult>();
@@ -55,51 +62,38 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
     private String mCurrentShowName;
 
-    public AddShowTask(Context context, SearchResult show) {
-        mContext = context.getApplicationContext();
-        mAddQueue.add(show);
-    }
+    private boolean mIsSilentMode;
 
-    public AddShowTask(Context context, List<SearchResult> shows) {
+    public AddShowTask(Context context, List<SearchResult> shows, boolean isSilentMode) {
+        // use an activity independent context
         mContext = context.getApplicationContext();
         mAddQueue.addAll(shows);
-    }
-
-    public LinkedList<SearchResult> getRemainingShows() {
-        return mAddQueue;
+        mIsSilentMode = isSilentMode;
     }
 
     /**
-     * Add a show to the add queue. If this returns false, the show was not
+     * Adds shows to the add queue. If this returns false, the shows were not
      * added because the task is finishing up. Create a new one instead.
      */
-    public boolean addShow(SearchResult show) {
-        if (mIsFinishedAddingShows) {
-            return false;
-        } else {
-            mAddQueue.add(show);
-            return true;
-        }
-    }
-
-    /**
-     * Add multiple shows to the add queue. If this returns false, the shows
-     * were not added because the task is finishing up. Create a new one
-     * instead.
-     */
     public boolean addShows(List<SearchResult> show) {
+        Log.d(TAG, "Trying to add shows to queue...");
         if (mIsFinishedAddingShows) {
+            Log.d(TAG, "FAILED. Already finishing up.");
             return false;
         } else {
             mAddQueue.addAll(show);
+            Log.d(TAG, "SUCCESS.");
             return true;
         }
     }
 
     @Override
     protected Void doInBackground(Void... params) {
+        Log.d(TAG, "Starting to add shows...");
+
         // don't even get started
         if (mAddQueue.isEmpty()) {
+            Log.d(TAG, "Finished. Queue was empty.");
             return null;
         }
 
@@ -107,11 +101,13 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         boolean modifiedDB = false;
 
         if (!AndroidUtils.isNetworkConnected(mContext)) {
+            Log.d(TAG, "Finished. No internet connection.");
             publishProgress(ADD_OFFLINE);
             return null;
         }
 
         if (isCancelled()) {
+            Log.d(TAG, "Finished. Cancelled.");
             return null;
         }
 
@@ -120,6 +116,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         List<TvShow> watched = new ArrayList<TvShow>();
         List<TvShow> collection = new ArrayList<TvShow>();
         if (ServiceUtils.isTraktCredentialsValid(mContext)) {
+            Log.d(TAG, "Getting watched and collected episodes from trakt.");
             ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
             if (manager != null) {
                 try {
@@ -139,13 +136,16 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         }
 
         while (!mAddQueue.isEmpty()) {
+            Log.d(TAG, "Starting to add next show...");
             if (isCancelled()) {
+                Log.d(TAG, "Finished. Cancelled.");
                 // only cancelled on config change, so don't rebuild fts
                 // table yet
                 return null;
             }
 
             if (!AndroidUtils.isNetworkConnected(mContext)) {
+                Log.d(TAG, "Finished. No connection.");
                 publishProgress(ADD_OFFLINE);
                 break;
             }
@@ -167,19 +167,27 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
             mCurrentShowName = nextShow.title;
             publishProgress(result);
+            Log.d(TAG, "Finished adding show. (Result code: " + result + ")");
         }
 
         mIsFinishedAddingShows = true;
         // renew FTS3 table
         if (modifiedDB) {
+            Log.d(TAG, "Renewing search table.");
             TheTVDB.onRenewFTSTable(mContext);
         }
 
+        Log.d(TAG, "Finished adding shows.");
         return null;
     }
 
     @Override
     protected void onProgressUpdate(Integer... values) {
+        if (mIsSilentMode) {
+            Log.d(TAG, "Progress toast not shown because in SILENT MODE.");
+            return;
+        }
+
         switch (values[0]) {
             case ADD_SUCCESS:
                 Toast.makeText(mContext,

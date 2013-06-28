@@ -16,11 +16,20 @@ Setup
 
 **If anyone wants to help me to switch this setup to Maven, feel free to contact me!**
 
-This project is built with ADT using the Android library concept for dependency management. First, clone this repository. You will also need clones of my [AndroidUtils][5], [ActionBarSherlock][6], [ViewPagerIndicator][7], [android-menudrawer][8] and [StickyGridHeaders][9] forks. Check out their seriesguide branches (if it exists). See the project.properties files on how the projects depend on another.
-To successfully build, you should also create a keys.xml file in the SeriesGuide/res/values folder and add the string values 
+This project is built with [Android Developer Tools (ADT)][9] using the Android library concept for dependency management. First, clone this repository inside your working folder. Then clone the
+
+- [AndroidUtils][5]
+- [ActionBarSherlock][6]
+- [ViewPagerIndicator][7]
+- [android-menudrawer][8]
+
+forks in that same working directory. Switch the ActionBarSherlock and ViewPagerIndicator repos to their seriesguide branches. (You can also have a look at the project.properties files on how the projects depend on another.)
+
+To successfully build with ADT, you should also create a keys.xml file in the SeriesGuide/res/values folder and add the string values 
 
     <resources>
         <string name="tvdb_apikey"></string>
+        <string name="tmdb_apikey"></string>
         <string name="getglue_consumer_key"></string>
         <string name="getglue_consumer_secret"></string>
         <string name="trakt_apikey"></string>
@@ -33,9 +42,9 @@ To build any of the free, X or beta version use the appropiate flavor project. T
 Why all the forking?
 --------------------
 
-For one, I add a more up to date copy of the Android Support Library to ABS and ViewPagerIndicator. Second, until I have switched to a Maven powered build, this is the only way I can ensure everybody uses the same version of all those libraries as I do.
+SeriesGuide requires a more up to date copy of the Android Support Library than is used with ABS and ViewPagerIndicator. Forking the library projects also minimizes the risk of everybody using different versions to test.
 
-If anybody can come up with a better solution or help me switch this build setup to Maven, please feel free to contact me!
+It is planned to switch all of the build setup slowly to maven or to depend on versionable jars wherever possible.
 
  [1]: http://seriesgui.de
  [2]: https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide
@@ -45,4 +54,4 @@ If anybody can come up with a better solution or help me switch this build setup
  [6]: https://github.com/UweTrottmann/ActionBarSherlock
  [7]: https://github.com/UweTrottmann/Android-ViewPagerIndicator
  [8]: https://github.com/UweTrottmann/android-menudrawer
- [9]: https://github.com/UweTrottmann/StickyGridHeaders
+ [9]: http://developer.android.com/tools/help/adt.html

@@ -18,13 +18,12 @@
 package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.service.TraktFlagService;
+import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.seriesguide.R;
 
 import java.util.List;
@@ -41,8 +40,6 @@ public class TaskManager {
     private static TaskManager _instance;
 
     private AddShowTask mAddTask;
-
-    private UpdateTask mUpdateTask;
 
     private JsonExportTask mBackupTask;
 
@@ -62,73 +59,37 @@ public class TaskManager {
     public synchronized void performAddTask(SearchResult show) {
         List<SearchResult> wrapper = Lists.newArrayList();
         wrapper.add(show);
-        performAddTask(wrapper);
+        performAddTask(wrapper, false);
     }
 
-    public synchronized void performAddTask(List<SearchResult> shows) {
-        // notify user here already
-        if (shows.size() == 1) {
-            // say title of show
-            SearchResult show = shows.get(0);
-            Toast.makeText(mContext,
-                    "\"" + show.title + "\" " + mContext.getString(R.string.add_started),
-                    Toast.LENGTH_SHORT).show();
-        } else {
-            // generic adding multiple message
-            Toast.makeText(
-                    mContext,
-                    R.string.add_multiple,
-                    Toast.LENGTH_SHORT).show();
+    public synchronized void performAddTask(List<SearchResult> shows, boolean isSilent) {
+        if (!isSilent) {
+            // notify user here already
+            if (shows.size() == 1) {
+                // say title of show
+                SearchResult show = shows.get(0);
+                Toast.makeText(mContext,
+                        "\"" + show.title + "\" " + mContext.getString(R.string.add_started),
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                // generic adding multiple message
+                Toast.makeText(
+                        mContext,
+                        R.string.add_multiple,
+                        Toast.LENGTH_SHORT).show();
+            }
         }
 
         // add the show(s) to a running add task or create a new one
         boolean isRequiringNewTask;
-        if (mAddTask == null || mAddTask.getStatus() == AsyncTask.Status.FINISHED) {
+        if (!isAddTaskRunning()) {
             isRequiringNewTask = true;
         } else {
-            // addTask is still running, try to add another show to its queue
+            // addTask is still running, try to add to its queue
             isRequiringNewTask = !mAddTask.addShows(shows);
         }
         if (isRequiringNewTask) {
-            mAddTask = (AddShowTask) new AddShowTask(mContext, shows).execute();
-        }
-    }
-
-    /**
-     * Checks if an {@link UpdateTask} is already running. If yes, a warning can
-     * be displayed by setting displayWarning. If not the given
-     * {@link UpdateTask} is stored and executed. If messageId is not -1 this
-     * string resource will be displayed as a toast after the {@link UpdateTask}
-     * is started.<br>
-     * Also sends all remaining trakt actions queued up in
-     * {@link FlagTapeEntryQueue}.
-     */
-    public synchronized void tryUpdateTask(UpdateTask task, boolean displayWarning, int messageId) {
-        // transmit any remaining trakt actions
-        mContext.startService(new Intent(mContext, TraktFlagService.class));
-
-        // try to start an update task
-        if (!isUpdateTaskRunning(displayWarning)) {
-            mUpdateTask = task;
-            task.execute();
-            if (messageId != -1) {
-                Toast.makeText(mContext, messageId, Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    public synchronized void onTaskCompleted() {
-        mUpdateTask = null;
-    }
-
-    public boolean isUpdateTaskRunning(boolean displayWarning) {
-        if (mUpdateTask != null) {
-            if (displayWarning) {
-                Toast.makeText(mContext, R.string.update_inprogress, Toast.LENGTH_LONG).show();
-            }
-            return true;
-        } else {
-            return false;
+            mAddTask = (AddShowTask) new AddShowTask(mContext, shows, isSilent).execute();
         }
     }
 
@@ -145,8 +106,8 @@ public class TaskManager {
      * {@link JsonExportTask} is started in silent mode.
      */
     public void tryBackupTask() {
-        if (!isUpdateTaskRunning(false) && !isAddTaskRunning()) {
-            mBackupTask = new JsonExportTask(mContext, null, false, true);
+        if (!isAddTaskRunning()) {
+            mBackupTask = new JsonExportTask(mContext, null, null, false, true);
             mBackupTask.execute();
         }
     }

@@ -57,7 +57,7 @@ public class ShareUtils {
     protected static final String TAG = "ShareUtils";
 
     public enum ShareMethod {
-        RATE_TRAKT(0, R.string.menu_rate_trakt, R.drawable.trakt_love_large),
+        RATE_TRAKT(0, R.string.menu_rate_episode, R.drawable.trakt_love_large),
 
         OTHER_SERVICES(1, R.string.menu_share_others, R.drawable.ic_action_share);
 
@@ -124,7 +124,7 @@ public class ShareUtils {
                 String text = args.getString(ShareUtils.ShareItems.SHARESTRING);
                 final String imdbId = args.getString(ShareUtils.ShareItems.IMDBID);
                 if (imdbId.length() != 0) {
-                    text += " " + Utils.IMDB_TITLE_URL + imdbId;
+                    text += " " + ServiceUtils.IMDB_TITLE_URL + imdbId;
                 }
 
                 ib.setText(text);

@@ -15,11 +15,22 @@
         android:src="@drawable/show_generic" />
 
     <ImageView
+        android:id="@+id/imageViewShowsContextMenu"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentRight="true"
+        android:background="?attr/custom_list_selector"
+        android:scaleType="center"
+        android:src="?attr/drawableDropdown"
+        android:visibility="gone" />
+
+    <ImageView
         android:id="@+id/favoritedLabel"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_alignParentRight="true"
+        android:layout_alignWithParentIfMissing="true"
         android:layout_marginTop="@dimen/inline_padding"
+        android:layout_toLeftOf="@id/imageViewShowsContextMenu"
         android:background="?attr/custom_list_selector"
         android:contentDescription="@string/favorited"
         android:src="?attr/drawableStar" />
@@ -59,7 +70,6 @@
         android:layout_below="@+id/TextViewShowListNextEpisode"
         android:layout_toRightOf="@id/showposter"
         android:paddingBottom="@dimen/item_padding"
-        android:text="@string/show_noairtime"
         android:textAppearance="@style/TextAppearance.Small" />
 
 </RelativeLayout>

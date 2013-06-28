@@ -42,13 +42,13 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.AppSettings;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.ChangesDialogFragment;
 import com.battlelancer.seriesguide.util.CompatActionBarNavHandler;
 import com.battlelancer.seriesguide.util.CompatActionBarNavListener;
 import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -118,7 +118,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setIcon(R.drawable.ic_action_menu);
 
         /* setup navigation */
         CompatActionBarNavHandler handler = new CompatActionBarNavHandler(this);
@@ -133,7 +132,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
             /* use list (spinner) (! use different layouts for ABS) */
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
             ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(this,
-                    R.array.showfilter_list, R.layout.sherlock_spinner_item);
+                    R.array.showfilter_list, R.layout.actionbar_spinner_item);
             mActionBarList.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
             actionBar.setListNavigationCallbacks(mActionBarList, handler);
         }
@@ -254,8 +253,14 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
             return true;
         }
         else if (itemId == R.id.menu_update) {
+            SgSyncAdapter.requestSync(this, 0);
             fireTrackerEvent("Update (outdated)");
-            performUpdateTask(false, null);
+
+            return true;
+        } else if (itemId == R.id.menu_fullupdate) {
+            SgSyncAdapter.requestSync(this, -1);
+            fireTrackerEvent("Update (all)");
+
             return true;
         } else if (itemId == R.id.menu_updateart) {
             fireTrackerEvent("Fetch posters");
@@ -270,10 +275,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
                 Toast.makeText(this, getString(R.string.arttask_start), Toast.LENGTH_LONG).show();
                 mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
             }
-            return true;
-        } else if (itemId == R.id.menu_fullupdate) {
-            fireTrackerEvent("Update (all)");
-            performUpdateTask(true, null);
             return true;
         } else if (itemId == R.id.menu_showsortby) {
             fireTrackerEvent("Sort shows");
@@ -303,28 +304,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
             return true;
         }
         return false;
-    }
-
-    protected void performUpdateTask(boolean isFullUpdate, String showId) {
-        int messageId;
-        UpdateTask task;
-        if (isFullUpdate) {
-            messageId = R.string.update_full;
-            task = (UpdateTask) new UpdateTask(true, this);
-        } else {
-            if (showId == null) {
-                // (delta) update all shows
-                messageId = R.string.update_delta;
-                task = (UpdateTask) new UpdateTask(false, this);
-            } else {
-                // update a single show
-                messageId = R.string.update_single;
-                task = (UpdateTask) new UpdateTask(new String[] {
-                        showId
-                }, 0, "", this);
-            }
-        }
-        TaskManager.getInstance(this).tryUpdateTask(task, true, messageId);
     }
 
     private class FetchPosterTask extends AsyncTask<Void, Void, Integer> {
@@ -422,7 +401,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
                     EasyTracker.getTracker().sendEvent(TAG, "Poster Task", "Success",
                             (long) 0);
 
-                    Toast.makeText(getApplicationContext(), getString(R.string.update_success),
+                    Toast.makeText(getApplicationContext(), getString(R.string.done),
                             Toast.LENGTH_SHORT).show();
                     break;
                 case UPDATE_INCOMPLETE:
@@ -477,8 +456,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
      */
     private void updatePreferences(SharedPreferences prefs) {
         // between-version upgrade code
-        final int lastVersion = prefs.getInt(SeriesGuidePreferences.KEY_VERSION, -1);
         try {
+            final int lastVersion = AppSettings.getLastVersionCode(this);
             final int currentVersion = getPackageManager().getPackageInfo(getPackageName(),
                     PackageManager.GET_META_DATA).versionCode;
             if (currentVersion > lastVersion) {
@@ -525,7 +504,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
                 }
 
                 // set this as lastVersion
-                editor.putInt(SeriesGuidePreferences.KEY_VERSION, currentVersion);
+                editor.putInt(AppSettings.KEY_VERSION, currentVersion);
 
                 editor.commit();
             }

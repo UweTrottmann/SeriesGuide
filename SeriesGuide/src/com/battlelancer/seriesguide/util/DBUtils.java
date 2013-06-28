@@ -38,10 +38,12 @@ import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.ActivityType;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
+import com.uwetrottmann.androidutils.Lists;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -193,7 +195,7 @@ public class DBUtils {
      * @return Cursor using the projection of {@link UpcomingQuery}.
      */
     public static Cursor getUpcomingEpisodes(boolean isOnlyUnwatched, Context context) {
-        String[][] args = buildActivityQuery(context, ActivityType.UPCOMING, isOnlyUnwatched);
+        String[][] args = buildActivityQuery(context, ActivityType.UPCOMING, isOnlyUnwatched, -1);
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 UpcomingQuery.PROJECTION, args[0][0], args[1], args[2][0]);
@@ -206,7 +208,7 @@ public class DBUtils {
      * @return Cursor using the projection of {@link UpcomingQuery}.
      */
     public static Cursor getRecentEpisodes(boolean isOnlyUnwatched, Context context) {
-        String[][] args = buildActivityQuery(context, ActivityType.RECENT, isOnlyUnwatched);
+        String[][] args = buildActivityQuery(context, ActivityType.RECENT, isOnlyUnwatched, -1);
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 UpcomingQuery.PROJECTION, args[0][0], args[1], args[2][0]);
@@ -216,51 +218,69 @@ public class DBUtils {
      * Returns an array of size 3. The built query is stored in {@code [0][0]},
      * the built selection args in {@code [1]} and the sort order in
      * {@code [2][0]}.
+     * 
+     * @param type A {@link ActivityType}, defaults to UPCOMING.
+     * @param numberOfDaysToInclude Limits the time range of returned episodes
+     *            to a number of days from today. If lower then 1 defaults to
+     *            infinity.
      */
-    public static String[][] buildActivityQuery(Context context, String type) {
+    public static String[][] buildActivityQuery(Context context, String type,
+            int numberOfDaysToInclude) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         boolean isNoWatched = prefs.getBoolean(SeriesGuidePreferences.KEY_NOWATCHED, false);
 
-        return buildActivityQuery(context, type, isNoWatched);
+        return buildActivityQuery(context, type, isNoWatched, numberOfDaysToInclude);
     }
 
     private static String[][] buildActivityQuery(Context context, String type,
-            boolean isOnlyUnwatched) {
+            boolean isOnlyUnwatched, int numberOfDaysToInclude) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         long fakeNow = Utils.getFakeCurrentTime(prefs);
         // go an hour back in time, so episodes move to recent one hour late
         long recentThreshold = fakeNow - DateUtils.HOUR_IN_MILLIS;
 
-        String sortOrder;
         String query;
-        long monthThreshold;
+        String[] selectionArgs;
+        String sortOrder;
+        long timeThreshold;
 
-        if (ActivityType.UPCOMING.equals(type)) {
-            query = UpcomingQuery.QUERY_UPCOMING;
-            sortOrder = UpcomingQuery.SORTING_UPCOMING;
-            monthThreshold = System.currentTimeMillis() + DateUtils.DAY_IN_MILLIS * 90;
-        } else {
+        if (ActivityType.RECENT.equals(type)) {
             query = UpcomingQuery.QUERY_RECENT;
             sortOrder = UpcomingQuery.SORTING_RECENT;
-            monthThreshold = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS * 90;
+            if (numberOfDaysToInclude < 1) {
+                // at least has an air date
+                timeThreshold = 0;
+            } else {
+                // last x days
+                timeThreshold = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS
+                        * numberOfDaysToInclude;
+            }
+        } else {
+            query = UpcomingQuery.QUERY_UPCOMING;
+            sortOrder = UpcomingQuery.SORTING_UPCOMING;
+            if (numberOfDaysToInclude < 1) {
+                // to infinity!
+                timeThreshold = Long.MAX_VALUE;
+            } else {
+                timeThreshold = System.currentTimeMillis() + DateUtils.DAY_IN_MILLIS
+                        * numberOfDaysToInclude;
+            }
         }
 
-        // build selection args
-        String[] selectionArgs = new String[] {
-                String.valueOf(recentThreshold), String.valueOf(monthThreshold)
+        selectionArgs = new String[] {
+                String.valueOf(recentThreshold), String.valueOf(timeThreshold)
         };
 
         // append only favorites selection if necessary
-        boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
+        boolean isOnlyFavorites = ActivitySettings.isOnlyFavorites(context);
         if (isOnlyFavorites) {
             query += Shows.SELECTION_FAVORITES;
         }
 
         // append no specials selection if necessary
-        boolean isNoSpecials = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES,
-                false);
+        boolean isNoSpecials = ActivitySettings.isHidingSpecials(context);
         if (isNoSpecials) {
             query += Episodes.SELECTION_NOSPECIALS;
         }
@@ -600,8 +620,7 @@ public class DBUtils {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         final boolean isOnlyFutureEpisodes = prefs.getBoolean(
                 SeriesGuidePreferences.KEY_ONLY_FUTURE_EPISODES, false);
-        final boolean isNoSpecials = prefs.getBoolean(
-                SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES, false);
+        final boolean isNoSpecials = ActivitySettings.isHidingSpecials(context);
         return updateLatestEpisode(context, showId, isOnlyFutureEpisodes, isNoSpecials, prefs);
     }
 

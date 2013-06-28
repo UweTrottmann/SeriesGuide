@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" >
+    </ImageView>
+
+    <ScrollView
+        android:id="@+id/showinfo_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" >
+
+        <LinearLayout
+            style="@style/DefaultPadding.Page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginRight="@dimen/default_padding"
+                android:textAppearance="@style/TextAppearance.Large.Light"
+                android:textIsSelectable="true"
+                android:textSize="@dimen/text_size_ultralarge" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_padding" >
+
+                <ImageView
+                    android:id="@+id/ImageViewShowInfoPoster"
+                    android:layout_width="140dp"
+                    android:layout_height="205dp"
+                    android:contentDescription="@string/description_poster"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:id="@+id/showStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_padding"
+                    android:layout_marginTop="@dimen/inline_padding"
+                    android:layout_toRightOf="@+id/ImageViewShowInfoPoster"
+                    android:textAllCaps="true"
+                    android:textAppearance="@style/TextAppearance.Light"
+                    android:textIsSelectable="true" />
+
+                <TextView
+                    android:id="@+id/showInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/showStatus"
+                    android:layout_marginLeft="@dimen/default_padding"
+                    android:layout_marginTop="@dimen/default_padding"
+                    android:layout_toRightOf="@+id/ImageViewShowInfoPoster"
+                    android:textAppearance="@style/TextAppearance.Light"
+                    android:textIsSelectable="true" />
+            </RelativeLayout>
+
+            <include layout="@layout/ratingbar" >
+            </include>
+
+            <include layout="@layout/show_info_metamore" >
+            </include>
+
+            <include
+                android:id="@+id/buttonbar_ref"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/buttonbar_services_stacked" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

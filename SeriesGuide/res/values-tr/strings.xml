@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Show</string>
   <string name="episode">Bölüm</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">Bölümler</string>
   <string name="season">Sezon</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">Sezonlar</string>
   <string name="unknown">bilinmiyor</string>
   <string name="episode_iswatched">İzlendi</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">Özel Bölümler</string>
   <string name="search_hint">Bölüm ara</string>
   <string name="share_episode">Bölümü paylaş</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">Kontrol et</string>
   <string name="search_description">Bölümler</string>
   <string name="description_overview">Genel Bakış</string>
@@ -73,7 +76,8 @@
   <string name="rating9">Süper</string>
   <string name="episode_number_absolute">ABSOLUTE</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Yayınlanma Tarihi</string>
+  <string name="episode_firstaired">Release date</string>
+  <string name="episode_firstaired_unknown">Release date unknown</string>
   <string name="episode_dvdnumber">DVD Bölümü</string>
   <string name="show_actors">Aktörler</string>
   <string name="show_firstaired">İlk Yayınlanma Tarihi</string>
@@ -137,22 +141,16 @@
   <string name="norecent">Yeni tarihli bölüm yok.</string>
   <string name="only_favorites">Sadece favori diziler</string>
   <string name="togglewatched">Seyredilme durumunu değiştir</string>
-  <string name="update_notification">Dizileriniz güncelleniyor...</string>
-  <string name="update_single">Dizi güncelleniyor…</string>
-  <string name="update_delta">Eski diziler güncelleniyor…</string>
-  <string name="update_full">Tüm diziler güncelleniyor...</string>
-  <string name="update_success">Diziler güncellendi.</string>
-  <string name="update_offline">Güncelleştirme başarısız oldu, İnternet/Wi-Fi bağlantınızı kontrol edin.</string>
-  <string name="update_saxerror">Güncelleme başarısız, daha sonra tekrar deneyin.</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
+  <string name="update_scheduled">Updating…</string>
+  <string name="update_no_connection">To update connect to the internet.</string>
+  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
   <string name="update_inprogress">Devam eden bir güncelleme var, daha sonra tekrar deneyin.</string>
-  <string name="update_rebuildsearch">Bölüm araması yenileniyor…</string>
-  <string name="update_traktactivity">Trakt etinlikleri yükleniyor...</string>
   <string name="menu_updateart">Posterleri yükle</string>
   <string name="arttask_incomplete">Bazı posterler yüklenemedi, daha sonra tekrar deneyin.</string>
   <string name="arttask_start">Posterler yükleniyor...</string>
   <string name="arttask_nosdcard">Posterleri yüklemek için harici depolama (SD kart) gereklidir.</string>
-  <string name="show_network"> </string>
-  <string name="show_noairtime">Yayın tarihi yok</string>
+  <string name="show_on_network">on %s</string>
   <string name="season_watchcount">izlenilmemiş bölüm</string>
   <string name="season_allwatched">Tüm bölümler izlendi</string>
   <string name="season_onenotwatched">bölüm izlenmedi</string>
@@ -226,7 +224,9 @@
   <string name="pref_theme">Uygulama teması</string>
   <string name="pref_other">Diğer</string>
   <string name="pref_autoupdate">Oto. Güncelleme Aç</string>
-  <string name="pref_autoupdatesummary">SeriesGuide başlatılırken dizilerinizi düzenli aralıklarla güncelleştirin</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Yedekle/Geri Yükle</string>
   <string name="backup_summary">Dizilerinizi yedekleyin veya geri yükleyin</string>
   <string name="pref_upcominglimit">Gelecek bölümleri gösterme süresi</string>
@@ -279,7 +279,8 @@
   <string name="check_into">Giriş yap</string>
   <string name="no_selection">birini seç</string>
   <string name="looking_for_something_else">Başka bir şey mi arıyorsun?</string>
-  <string name="menu_rate_trakt">Derece (trakt)</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">Diğer uygulamalar aracılığıyla</string>
   <string name="traktcheckin_cancel">Geçersiz Kıl</string>
   <string name="traktcheckin_inprogress">Başka bir bölüm veya filme giriş yapmış durumdasınız. Ya önceki girişinizi geçersiz kılın, ya da %s bekleyin ve tekrar deneyin.</string>
@@ -303,6 +304,7 @@
   <string name="welcome_add_part1">Başlamak için ekrana dokun</string>
   <string name="upcoming_show">%s geliyor</string>
   <string name="upcoming_episodes">Yeni bölümler geliyor</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">Yakında yayınlanacak Favori diziler için uyar</string>
   <string name="upcoming_display">Gelecek bölümleri görüntülemek için seçin</string>
   <string name="pref_notifications">Bildirimler</string>
@@ -324,6 +326,10 @@
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">SeriesGuide indir</string>
   <string name="betawarning"><b>Ön bilgi!</b> Bu yayımlama sadece beta testi yapanlar içindir! Eğer sizin için doğru yayımlama olduğundan şüpheliyseniz, alttaki kararlı sürümü indirin.</string>
+  <string name="upgrade_title">Get the X Upgrade</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_action">Get the X Upgrade</string>
+  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Sonraki bölüm</item>

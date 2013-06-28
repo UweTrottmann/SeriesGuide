@@ -27,8 +27,10 @@
     <dimen name="showgrid_columnWidth">290dp</dimen>
     <dimen name="showgrid_spacing">0dp</dimen>
     <dimen name="imagecontainer_height">180dp</dimen>
-    <dimen name="slidingmenu_width">240dp</dimen>
-    <dimen name="movie_item_height">282dp</dimen>
+    <dimen name="slidingmenu_width">200dp</dimen>
+    <dimen name="movie_item_width">100dp</dimen>
+    <dimen name="movie_item_height">214dp</dimen>
+    <dimen name="movie_item_poster_height">150dp</dimen>
     <dimen name="show_poster_width">128dp</dimen>
     <dimen name="show_poster_height">192dp</dimen>
 

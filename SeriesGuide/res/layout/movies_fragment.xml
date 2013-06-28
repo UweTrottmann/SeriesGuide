@@ -53,14 +53,13 @@
         android:layout_below="@+id/editTextCheckinSearch"
         android:animateLayoutChanges="true"
         android:clipToPadding="@bool/gridClipToPadding"
-        android:columnWidth="144dp"
+        android:columnWidth="@dimen/movie_item_width"
         android:fastScrollEnabled="true"
-        android:horizontalSpacing="@dimen/showgrid_spacing"
         android:listSelector="?custom_list_selector"
         android:numColumns="auto_fit"
-        android:padding="@dimen/showgrid_padding"
+        android:padding="@dimen/default_padding"
         android:stretchMode="spacingWidthUniform"
-        android:verticalSpacing="@dimen/showgrid_spacing" >
+        android:verticalSpacing="@dimen/default_padding" >
     </GridView>
 
     <TextView

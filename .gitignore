@@ -37,3 +37,9 @@ Desktop.ini
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
+
+### IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/

@@ -15,6 +15,11 @@
             android:key="com.battlelancer.seriesguide.autoupdate"
             android:summary="@string/pref_autoupdatesummary"
             android:title="@string/pref_autoupdate" />
+        <CheckBoxPreference
+            android:defaultValue="True"
+            android:key="com.battlelancer.seriesguide.autobackup"
+            android:summary="@string/pref_autobackupsummary"
+            android:title="@string/pref_autobackup" />
 
         <Preference
             android:key="dataliberation"
@@ -26,7 +31,6 @@
         </Preference>
         <Preference
             android:key="backup"
-            android:summary="Will be removed in the next version."
             android:title="Legacy Backup/Restore" >
             <intent
                 android:targetClass="com.battlelancer.seriesguide.ui.BackupDeleteActivity"

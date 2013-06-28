@@ -5,6 +5,65 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 6 *(2013-06-28)*
+------------------------
+
+* Unlock X features through 'X Upgrade' in-app purchase (see Settings, Services). Purchased SeriesGuide X already? Install it to unlock the purchase.
+* Beam shows to another device from the shows overview page (Android 4+).
+* Activity stream displays 30 days into the future/past. Option for 'Infinite activity'. List widget is always infinite.
+* Updates are handled in the background by Android (see the SeriesGuide Sync account in Android settings).
+* Navigation drawer only opens if swiping from the edge.
+* Added setting to disable Auto-Backup.
+* Toned down default dark design.
+
+#### 6 *(2013-06-28)*
+
+* TWEAK Always sync if manually updating via any update action menu items. Previously this was dependent on global and automatic sync being on.
+* TWEAK Reduce minimum update interval on opening the app from 30min to 20min. Checked in episodes should now show up as watched as expected.
+* TWEAK Add trakt page button to shows, episodes and movies.
+* FIX Play store reported crashes: auto-backup disk full, check-in failure dialog after leaving app and it was destroyed for resources.
+* FIX Flagging whole season watched now correctly sets the last watched episode to the last of that season.
+* NOTICE Latest translations from crowdin.
+
+#### 6beta4 *(2013-06-16)*
+
+* TWEAK Change up some colors, remove some accent color, added light separators to make the app look more clean.
+* FIX Crash after running the 'Load posters' task due to missing success string resource.
+* FIX Crash when filtering in activity results in no more items shown.
+
+#### 6beta3 *(2013-06-08)*
+
+* FEATURE Support unlocking X features through new 'X Upgrade' in-app purchase (see Settings, Services). If you have already purchased SeriesGuide X, just install it side-by-side to unlock the purchase.
+* TWEAK Display confirmation toasts when triggering manual updates, show descriptive error messages. For now Auto Update needs to be turned on to manually update.
+* TWEAK Syncs triggered through the app (not the regular periodic sync) now only run on WiFi if the user asked so.
+* TWEAK New export tool shows exact progress. Removed warning from old tool.
+* TWEAK Revamp service links below each episode and show.
+* TWEAK Change 'Air date' to the more general 'Release date', this better includes non-TV shows. Not having an air time or date is now not displayed as something wrong.
+* FIX Fix crash when new show got added from trakt activity screen if the updater did run in the background.
+
+#### 6beta2 *(2013-05-24)*
+
+* New! Beam your shows to a friends device from the shows overview page (Android 4+).
+* Updates are now handled in the background by Android (see the SeriesGuide Sync accounts in Android settings). As a side-effect update progress notifications are gone, but those did only distract anyway.
+* The action bar shows the new navigation drawer icon. The drawer does now only open if swiping from the edge.
+* Increased transparency of background posters to increase readability.
+* Remove split action bar in Overview, use inline buttons. All this new space!
+* Move rate actions to overflow menu, inline rating is much easier.
+* Add context menu buttons to movie and show items.
+* Latest translations from crowdin.
+
+#### 6beta1 *(2013-05-14)*
+
+* Activity stream now by default shows 30 days of activity into the future/into the past. Added option to show 'Infinite activity' to display all activity. List widget displays infinite activity again.
+* Redesigned menu to be more in line with other apps. Looks like there will be a Google Pattern at I/O, so it will probably change again, soon.
+* Android 3.0+ tablets now use a multi-pane overview layout which also displays show information.
+* Support different location of numbers for season and episode strings. Translations pending.
+* Design tweaks for action bar and tabs featuring less prominent text.
+* Design tweaks for movie section to fit more items on screen, less prominent text.
+* Added setting to disable Auto-Backup.
+* Fixed crash in movies section when movies did not have a proper release date set.
+* Latest translations from crowdin.
+
 Version 5.2 *(2013-05-16)*
 --------------------------
 

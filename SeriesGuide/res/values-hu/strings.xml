@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Show</string>
   <string name="episode">Epizód</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">Epizódok</string>
   <string name="season">Évad</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">Évadok</string>
   <string name="unknown">ismeretlen</string>
   <string name="episode_iswatched">Már láttam</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">Extra epizódok</string>
   <string name="search_hint">Epizódok keresése</string>
   <string name="share_episode">Epizód megosztása</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">Kijelentkezés</string>
   <string name="search_description">Epizódok</string>
   <string name="description_overview">Tartalom</string>
@@ -73,7 +76,8 @@
   <string name="rating9">Nagyszerű</string>
   <string name="episode_number_absolute">ABSOLUTE</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Sugárzás</string>
+  <string name="episode_firstaired">Release date</string>
+  <string name="episode_firstaired_unknown">Release date unknown</string>
   <string name="episode_dvdnumber">DVD epizód</string>
   <string name="show_actors">Szereplők</string>
   <string name="show_firstaired">Első sugárzás ideje</string>
@@ -137,22 +141,16 @@
   <string name="norecent">Nincsenek mostanában vetített epizódok.</string>
   <string name="only_favorites">Csak kedvenc műsorok</string>
   <string name="togglewatched">Láttam igen/nem</string>
-  <string name="update_notification">Sorozatok frissítése…</string>
-  <string name="update_single">Sorozat frissítése…</string>
-  <string name="update_delta">Már nem futó sorozatok frissítése…</string>
-  <string name="update_full">Minden sorozat frissítése…</string>
-  <string name="update_success">Műsorok frissítve.</string>
-  <string name="update_offline">A frissítés nem sikerült, ellenőrizze az internet/Wi-Fi kapcsolatot.</string>
-  <string name="update_saxerror">Firrsítés sikertelen, kérlek próbáld újra később.</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
+  <string name="update_scheduled">Updating…</string>
+  <string name="update_no_connection">To update connect to the internet.</string>
+  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
   <string name="update_inprogress">Egy frissítés folyamatban, próbálja később.</string>
-  <string name="update_rebuildsearch">Epizódkeresés frissítése…</string>
-  <string name="update_traktactivity">Trakt változások betöltése</string>
   <string name="menu_updateart">Képek letöltése</string>
   <string name="arttask_incomplete">Néhány kép letöltése nem sikerült, próbálja meg később.</string>
   <string name="arttask_start">Képek letöltése…</string>
   <string name="arttask_nosdcard">A képek letöltéséhez további tároló kapacitásra van szükség az SD kártyán.</string>
-  <string name="show_network">hol:</string>
-  <string name="show_noairtime">Nincs elérhető vetítés időpont</string>
+  <string name="show_on_network">on %s</string>
   <string name="season_watchcount">nem látott epizód</string>
   <string name="season_allwatched">Minden epizód megnézve</string>
   <string name="season_onenotwatched">nem látott epizód</string>
@@ -226,7 +224,9 @@
   <string name="pref_theme">Alkalmazás téma</string>
   <string name="pref_other">Egyéb</string>
   <string name="pref_autoupdate">Automatikus frissítés bekapcsolása</string>
-  <string name="pref_autoupdatesummary">Bizonyos időnként frissíti a sorozatokat a SeriesGuide indításakor</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Biztonsági másolat</string>
   <string name="backup_summary">Biztonsági mentés készítése a sorozatokról, vagy visszaállítás</string>
   <string name="pref_upcominglimit">Közelgő műsorok megjelenítése…</string>
@@ -279,7 +279,8 @@
   <string name="check_into">Bejelentkezés</string>
   <string name="no_selection">válasszon egyet lentről</string>
   <string name="looking_for_something_else">Valami mást keres?</string>
-  <string name="menu_rate_trakt">Értékelem (trakt)</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">Más alkalmazásokkal</string>
   <string name="traktcheckin_cancel">Felülbírál</string>
   <string name="traktcheckin_inprogress">Már bejelentkezett egy másik epizódba, vagy filmbe. Bírálja felül a korábbi bejelentkezést, vagy várjon %s és próbálja újra.</string>
@@ -303,6 +304,7 @@
   <string name="welcome_add_part1">To get started tap</string>
   <string name="upcoming_show">%s kezdődik</string>
   <string name="upcoming_episodes">Új epizódok kezdődnek</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s itt: %2$s</string>
   <string name="upcoming_display">Válassza ki a közelgő műsorok megjelenítéséhez</string>
   <string name="pref_notifications">Értesítések</string>
@@ -324,6 +326,10 @@
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">A SeriesGuide letöltése</string>
   <string name="betawarning"><b>Figyelem!</b> Ez a kiadás csak béta tesztelők számára készült! Ha nem vagy biztos a dolgodban, inkább válaszd a stabil verziót alább.</string>
+  <string name="upgrade_title">Get the X Upgrade</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_action">Get the X Upgrade</string>
+  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Következő epizód</item>
@@ -364,30 +370,30 @@
     <item>egy órával előtte</item>
   </string-array>
   <string-array name="widgetOpacity">
-    <item>Transparent</item>
+    <item>Átlátszó</item>
     <item>25% black</item>
     <item>50% black</item>
     <item>75% black</item>
-    <item>Black</item>
+    <item>Fekete</item>
   </string-array>
   <string-array name="widgetType">
     <item>Upcoming</item>
     <item>Recent</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
-    <item>hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>24 hours</item>
-    <item>3 days</item>
+    <item>óra</item>
+    <item>6 óra</item>
+    <item>12 óra</item>
+    <item>24 óra</item>
+    <item>3 nap</item>
     <item>week</item>
   </string-array>
   <plurals name="votes">
-    <item quantity="zero">%d votes</item>
+    <item quantity="zero">%d szavazat</item>
     <item quantity="one">%d szavazat</item>
-    <item quantity="two">%d votes</item>
-    <item quantity="few">%d votes</item>
-    <item quantity="many">%d votes</item>
+    <item quantity="two">%d szavazat</item>
+    <item quantity="few">%d szavazat</item>
+    <item quantity="many">%d szavazat</item>
     <item quantity="other">%d szavazat</item>
   </plurals>
   <plurals name="days_plural">

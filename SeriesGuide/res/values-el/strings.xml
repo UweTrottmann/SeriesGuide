@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Show</string>
   <string name="episode">Επεισόδιο</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">Episodes</string>
   <string name="season">Σεζόν</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">Σεζόν</string>
   <string name="unknown">άγνωστο</string>
   <string name="episode_iswatched">Έχει παρακολουθηθεί</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">Ειδικά Επεισόδια</string>
   <string name="search_hint">Αναζήτηση επεισοδίων</string>
   <string name="share_episode">Κοινή χρήση επεισοδίου</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">Check out</string>
   <string name="search_description">Επεισόδια</string>
   <string name="description_overview">Επισκόπηση</string>
@@ -73,7 +76,8 @@
   <string name="rating9">Εξαιρετικό</string>
   <string name="episode_number_absolute">ABSOLUTE</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Ημέρα προβολής</string>
+  <string name="episode_firstaired">Release date</string>
+  <string name="episode_firstaired_unknown">Release date unknown</string>
   <string name="episode_dvdnumber">Επεισόδιο DVD</string>
   <string name="show_actors">Ηθοποιοί</string>
   <string name="show_firstaired">Πρώτη προβολή</string>
@@ -137,22 +141,16 @@
   <string name="norecent">Δεν υπάρχουν πρόσφατα επεισόδια.</string>
   <string name="only_favorites">Μόνο αγαπημένες σειρές</string>
   <string name="togglewatched">Εναλλαγή παρακολουθημένων</string>
-  <string name="update_notification">Ενημέρωση των σειρών σας…</string>
-  <string name="update_single">Ενημέρωση σειράς…</string>
-  <string name="update_delta">Ενημέρωση παλιών σειρών…</string>
-  <string name="update_full">Ενημέρωση όλων των σειρών…</string>
-  <string name="update_success">Οι σειρές ενημερώθηκαν.</string>
-  <string name="update_offline">Η ενημέρωση απέτυχε, ελέγξτε την σύνδεσή σας στο internet/Wi-Fi.</string>
-  <string name="update_saxerror">Updating failed, trying again later.</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
+  <string name="update_scheduled">Updating…</string>
+  <string name="update_no_connection">To update connect to the internet.</string>
+  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
   <string name="update_inprogress">Μια ενημέρωση βρίσκεται σε εξέλιξη, δοκιμάστε ξανά αργότερα.</string>
-  <string name="update_rebuildsearch">Ανανέωση αναζήτησης επεισοδίων…</string>
-  <string name="update_traktactivity">Φόρτωση δραστηριότητας trakt…</string>
   <string name="menu_updateart">Φόρτωση αφισών</string>
   <string name="arttask_incomplete">Ορισμένες αφίσες δεν φόρτωσαν, δοκιμάστε ξανά αργότερα.</string>
   <string name="arttask_start">Φόρτωση αφισών…</string>
   <string name="arttask_nosdcard">Η φόρτωση αφισών απαιτεί χώρο εξωτερικής αποθήκευσης (κάρτα SD).</string>
-  <string name="show_network">Στο</string>
-  <string name="show_noairtime">Δεν υπάρχουν διαθέσιμες ημερομηνίες προβολής</string>
+  <string name="show_on_network">on %s</string>
   <string name="season_watchcount">Επεισόδια που δεν έχουν παρακολουθηθεί</string>
   <string name="season_allwatched">Όλα τα επεισόδια έχουν παρακολουθηθεί</string>
   <string name="season_onenotwatched">Επεισόδιο που δεν έχει παρακολουθηθεί</string>
@@ -226,7 +224,9 @@
   <string name="pref_theme">Θέμα εφαρμογής</string>
   <string name="pref_other">Other</string>
   <string name="pref_autoupdate">Aυτόματη ενημέρωση</string>
-  <string name="pref_autoupdatesummary">Περιοδική ενημέρωση των σειρών σας κατά την έναρξη του SeriesGuide</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Δημιουργία αντιγράφου ασφαλείας/Επαναφορά</string>
   <string name="backup_summary">Δημιουργία αντιγράφου ασφαλείας ή επαναφορά των σειρών</string>
   <string name="pref_upcominglimit">Επερχόμενες σειρές εντός…</string>
@@ -279,7 +279,8 @@
   <string name="check_into">Check into</string>
   <string name="no_selection">επιλογή ενός από τα παρακάτω</string>
   <string name="looking_for_something_else">Ψάχνετε για κάτι άλλο;</string>
-  <string name="menu_rate_trakt">Αξιολόγηση (trakt)</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">Μέσω άλλων εφαρμογών</string>
   <string name="traktcheckin_cancel">Παράκαμψη</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
@@ -303,6 +304,7 @@
   <string name="welcome_add_part1">Για να ξεκινήσετε πατήστε</string>
   <string name="upcoming_show">%s επερχόμενα</string>
   <string name="upcoming_episodes">Νέα επεισόδια έρχονται</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s προς %2$s</string>
   <string name="upcoming_display">Επιλέξτε, για να εμφανίσετε τις επερχόμενες σειρές</string>
   <string name="pref_notifications">Ειδοποιήσεις</string>
@@ -324,6 +326,10 @@
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">Λήψη SeriesGuide</string>
   <string name="betawarning"><b>Ειδοποίηση!</b> Αυτή η έκδοση είναι μόνο για τους beta testers! Εάν έχετε αμφιβολίες, κατεβάστε την παρακάτω σταθερή έκδοση.</string>
+  <string name="upgrade_title">Get the X Upgrade</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_action">Get the X Upgrade</string>
+  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
   <string-array name="shsorting">
     <item>Α - Ω</item>
     <item>Επόμενο επεισόδιο</item>

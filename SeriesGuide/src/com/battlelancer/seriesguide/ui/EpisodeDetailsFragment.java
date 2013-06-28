@@ -41,7 +41,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -359,22 +358,21 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 airdateText.setText(Utils.formatToDate(airTime, getActivity()));
                 String[] dayAndTime = Utils.formatToTimeAndDay(airTime, getActivity());
                 airTimeAndNumberText.append((dayAndTime[2] + " (" + dayAndTime[1] + ")")
-                        .toUpperCase(Locale.getDefault()));
+                        .toUpperCase(Locale.getDefault()))
+                        .append("  ");
             } else {
                 airdateText.setText(R.string.unknown);
             }
 
             // number
             int numberStartIndex = airTimeAndNumberText.length();
-            airTimeAndNumberText.append("  ")
-                    .append(getString(R.string.season).toUpperCase(Locale.getDefault()))
-                    .append(" ")
-                    .append(String.valueOf(mSeasonNumber));
+            airTimeAndNumberText
+                    .append(getString(R.string.season_number, mSeasonNumber).toUpperCase(
+                            Locale.getDefault()));
             airTimeAndNumberText.append(" ");
             airTimeAndNumberText
-                    .append(getString(R.string.episode).toUpperCase(Locale.getDefault()))
-                    .append(" ")
-                    .append(String.valueOf(mEpisodeNumber));
+                    .append(getString(R.string.episode_number, mEpisodeNumber).toUpperCase(
+                            Locale.getDefault()));
             final int episodeAbsoluteNumber = cursor.getInt(DetailsQuery.ABSOLUTE_NUMBER);
             if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != mEpisodeNumber) {
                 airTimeAndNumberText.append(" (").append(String.valueOf(episodeAbsoluteNumber))
@@ -466,10 +464,9 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             RelativeLayout ratings = (RelativeLayout) view.findViewById(R.id.ratingbar);
             String ratingText = cursor.getString(DetailsQuery.RATING);
             if (ratingText != null && ratingText.length() != 0) {
-                RatingBar ratingBar = (RatingBar) ratings.findViewById(R.id.bar);
-                TextView ratingValue = (TextView) ratings.findViewById(R.id.value);
-                ratingBar.setProgress((int) (Double.valueOf(ratingText) / 0.1));
-                ratingValue.setText(ratingText + "/10");
+                TextView ratingValue = (TextView) ratings
+                        .findViewById(R.id.textViewRatingsTvdbValue);
+                ratingValue.setText(ratingText);
             }
             ratings.setOnClickListener(new OnClickListener() {
                 @Override
@@ -478,18 +475,27 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 }
             });
             ratings.setFocusable(true);
-            CheatSheet.setup(ratings, R.string.menu_rate_trakt);
+            CheatSheet.setup(ratings, R.string.menu_rate_episode);
 
             // fetch trakt ratings
             onLoadTraktRatings(ratings, true);
 
             // Google Play button
             View playButton = view.findViewById(R.id.buttonGooglePlay);
-            Utils.setUpGooglePlayButton(showTitle + " " + episodeTitle, playButton, TAG);
+            ServiceUtils.setUpGooglePlayButton(showTitle + " " + episodeTitle, playButton, TAG);
 
             // Amazon button
             View amazonButton = view.findViewById(R.id.buttonAmazon);
-            Utils.setUpAmazonButton(showTitle + " " + episodeTitle, amazonButton, TAG);
+            ServiceUtils.setUpAmazonButton(showTitle + " " + episodeTitle, amazonButton, TAG);
+
+            // IMDb button
+            String imdbId = cursor.getString(DetailsQuery.IMDBID);
+            if (TextUtils.isEmpty(imdbId)) {
+                // fall back to show IMDb id
+                imdbId = cursor.getString(DetailsQuery.SHOW_IMDBID);
+            }
+            ServiceUtils.setUpImdbButton(imdbId, view.findViewById(R.id.buttonShowInfoIMDB), TAG,
+                    getActivity());
 
             // TVDb button
             final String seasonId = cursor.getString(DetailsQuery.REF_SEASON_ID);
@@ -501,17 +507,13 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                                     + Constants.TVDB_EPISODE_URL_2 + seasonId
                                     + Constants.TVDB_EPISODE_URL_3 + getEpisodeId()));
                     startActivity(i);
+                    fireTrackerEvent("TVDb");
                 }
             });
 
-            // IMDb button
-            String imdbId = cursor.getString(DetailsQuery.IMDBID);
-            if (TextUtils.isEmpty(imdbId)) {
-                // fall back to show IMDb id
-                imdbId = cursor.getString(DetailsQuery.SHOW_IMDBID);
-            }
-            Utils.setUpImdbButton(imdbId, view.findViewById(R.id.buttonShowInfoIMDB), TAG,
-                    getActivity());
+            // trakt button
+            ServiceUtils.setUpTraktButton(mShowId, mSeasonNumber, mEpisodeNumber,
+                    view.findViewById(R.id.buttonTrakt), TAG);
 
             // trakt shouts button
             view.findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
@@ -521,6 +523,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     intent.putExtras(TraktShoutsActivity.createInitBundleEpisode(mShowId,
                             mSeasonNumber, mEpisodeNumber, episodeTitle));
                     startActivity(intent);
+                    fireTrackerEvent("Comments");
                 }
             });
 
@@ -533,6 +536,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(),
                             episodeTvdbId);
                     f.show(getFragmentManager(), "checkin-dialog");
+                    fireTrackerEvent("Check-In");
                 }
             });
 

@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Show</string>
   <string name="episode">集數</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">Episodes</string>
   <string name="season">季</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">季數</string>
   <string name="unknown">unknown</string>
   <string name="episode_iswatched">已觀賞</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">特集</string>
   <string name="search_hint">搜尋集數</string>
   <string name="share_episode">分享此集</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">登出</string>
   <string name="search_description">集數</string>
   <string name="description_overview">簡介</string>
@@ -73,7 +76,8 @@
   <string name="rating9">Superb</string>
   <string name="episode_number_absolute">ABSOLUTE</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Airdate</string>
+  <string name="episode_firstaired">Release date</string>
+  <string name="episode_firstaired_unknown">Release date unknown</string>
   <string name="episode_dvdnumber">DVD集數</string>
   <string name="show_actors">Actors</string>
   <string name="show_firstaired">First Aired</string>
@@ -137,22 +141,16 @@
   <string name="norecent">沒有最近的影集。</string>
   <string name="only_favorites">Only favorite shows</string>
   <string name="togglewatched">切換已觀看</string>
-  <string name="update_notification">Updating your shows…</string>
-  <string name="update_single">Updating show…</string>
-  <string name="update_delta">Updating outdated shows…</string>
-  <string name="update_full">Updating all shows…</string>
-  <string name="update_success">Shows updated.</string>
-  <string name="update_offline">更新失敗，請檢查你的網路/Wi-Fi設定。</string>
-  <string name="update_saxerror">Updating failed, trying again later.</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
+  <string name="update_scheduled">Updating…</string>
+  <string name="update_no_connection">To update connect to the internet.</string>
+  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
   <string name="update_inprogress">An update is in progress, try again later.</string>
-  <string name="update_rebuildsearch">Refreshing episode search…</string>
-  <string name="update_traktactivity">Loading trakt activity…</string>
   <string name="menu_updateart">載入海報</string>
   <string name="arttask_incomplete">部分海報並未載入，請稍後再試。</string>
   <string name="arttask_start">Loading posters…</string>
   <string name="arttask_nosdcard">載入海報須額外的儲存空間(SD card)。</string>
-  <string name="show_network">on</string>
-  <string name="show_noairtime">找無播出時間</string>
+  <string name="show_on_network">on %s</string>
   <string name="season_watchcount">尚未觀看集數</string>
   <string name="season_allwatched">已觀看所有集數</string>
   <string name="season_onenotwatched">尚未觀看集數</string>
@@ -226,7 +224,9 @@
   <string name="pref_theme">App Theme</string>
   <string name="pref_other">Other</string>
   <string name="pref_autoupdate">開啟自動更新</string>
-  <string name="pref_autoupdatesummary">當執行SeriesGuide時，定期更新您的影集</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">備份/還原</string>
   <string name="backup_summary">備份或還原你的影集</string>
   <string name="pref_upcominglimit">Upcoming shows within…</string>
@@ -279,7 +279,8 @@
   <string name="check_into">Check into</string>
   <string name="no_selection">pick one below</string>
   <string name="looking_for_something_else">Looking for something else?</string>
-  <string name="menu_rate_trakt">等級(trakt)</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">透過其他應用程式。</string>
   <string name="traktcheckin_cancel">Override</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
@@ -303,6 +304,7 @@
   <string name="welcome_add_part1">To get started tap</string>
   <string name="upcoming_show">%s is coming up</string>
   <string name="upcoming_episodes">New episodes are coming up</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>
   <string name="upcoming_display">Select to display upcoming shows</string>
   <string name="pref_notifications">Notifications</string>
@@ -324,6 +326,10 @@
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">下載 SeriesGuide</string>
   <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
+  <string name="upgrade_title">Get the X Upgrade</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_action">Get the X Upgrade</string>
+  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>下一集</item>

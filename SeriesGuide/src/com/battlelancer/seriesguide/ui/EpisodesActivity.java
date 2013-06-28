@@ -46,8 +46,6 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 import com.viewpagerindicator.TitlePageIndicator;
 
-import net.simonvt.menudrawer.MenuDrawer;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -201,9 +199,6 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
                 @Override
                 public void onPageSelected(int position) {
                     mEpisodesFragment.setItemChecked(position);
-                    getMenu().setTouchMode(position == 0
-                            ? MenuDrawer.TOUCH_MODE_FULLSCREEN
-                            : MenuDrawer.TOUCH_MODE_BEZEL);
                 }
 
                 @Override
@@ -215,9 +210,6 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
                 }
             });
 
-            getMenu().setTouchMode(startPosition == 0
-                    ? MenuDrawer.TOUCH_MODE_FULLSCREEN
-                    : MenuDrawer.TOUCH_MODE_BEZEL);
         } else {
             // Make sure no fragments are left over from a config
             // change

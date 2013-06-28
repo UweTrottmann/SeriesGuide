@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item name="show_info" type="layout">@layout/show_info_regular</item>
+    <item name="buttonbar_services" type="layout">@layout/buttonbar_services_stacked</item>
+    
     <bool name="isLargeTablet">false</bool>
 
 </resources>

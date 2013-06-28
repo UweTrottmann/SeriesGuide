@@ -26,6 +26,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -36,8 +37,10 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.adapters.MoviesWatchListAdapter;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.loaders.TraktMoviesWatchlistLoader;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.trakt.entities.Movie;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -50,8 +53,9 @@ import java.util.List;
  * Loads and displays the users trakt movie watchlist.
  */
 public class MoviesWatchListFragment extends SherlockFragment implements
-        LoaderCallbacks<List<Movie>>, OnItemClickListener {
+        LoaderCallbacks<List<Movie>>, OnItemClickListener, OnClickListener {
 
+    private static final String TAG = "Movie Watchlist";
     private static final int LOADER_ID = R.layout.movies_watchlist_fragment;
     private static final int CONTEXT_REMOVE_ID = 0;
     private MoviesWatchListAdapter mAdapter;
@@ -72,7 +76,7 @@ public class MoviesWatchListFragment extends SherlockFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new MoviesWatchListAdapter(getActivity());
+        mAdapter = new MoviesWatchListAdapter(getActivity(), this);
 
         mGridView.setAdapter(mAdapter);
 
@@ -101,7 +105,9 @@ public class MoviesWatchListFragment extends SherlockFragment implements
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        menu.add(0, CONTEXT_REMOVE_ID, 0, R.string.watchlist_remove);
+        if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
+            menu.add(0, CONTEXT_REMOVE_ID, 0, R.string.watchlist_remove);
+        }
     }
 
     @Override
@@ -124,11 +130,17 @@ public class MoviesWatchListFragment extends SherlockFragment implements
                         new TraktTask(getActivity(), null)
                                 .unwatchlistMovie(Integer.valueOf(movie.tmdbId)),
                         new Void[] {});
+                fireTrackerEvent("Remove from watchlist");
                 return true;
             }
         }
 
         return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        getActivity().openContextMenu(v);
     }
 
     @Override
@@ -163,5 +175,9 @@ public class MoviesWatchListFragment extends SherlockFragment implements
             // reload movie watchlist after user added/removed
             getLoaderManager().restartLoader(LOADER_ID, null, this);
         }
+    }
+
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
     }
 }

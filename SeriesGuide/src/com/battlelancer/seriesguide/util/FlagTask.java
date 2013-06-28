@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.seriesguide.R;
 
 import de.greenrobot.event.EventBus;
@@ -387,7 +388,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                         Episodes.buildEpisodesOfSeasonUri(String.valueOf(mSeasonTvdbId)),
                         PROJECTION_EPISODE, null, null, Episodes.NUMBER + " DESC");
                 if (seasonEpisodes != null) {
-                    if (!seasonEpisodes.moveToFirst()) {
+                    if (seasonEpisodes.moveToFirst()) {
                         lastWatchedId = seasonEpisodes.getInt(0);
                     }
 

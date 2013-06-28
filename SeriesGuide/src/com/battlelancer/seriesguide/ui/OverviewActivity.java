@@ -17,12 +17,17 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.NfcAdapter.CreateNdefMessageCallback;
+import android.nfc.NfcEvent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -32,15 +37,14 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.adapters.TabPagerAdapter;
 import com.battlelancer.seriesguide.items.Series;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.UpdateTask;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.TheTVDB;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 import java.lang.ref.WeakReference;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +54,9 @@ import java.util.List;
 public class OverviewActivity extends BaseActivity {
 
     private int mShowId;
+    private NfcAdapter mNfcAdapter;
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,30 +98,63 @@ public class OverviewActivity extends BaseActivity {
             }
         }
 
-        // if (AndroidUtils.isICSOrHigher()) {
-        // // register for Android Beam
-        // mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        // if (mNfcAdapter != null) {
-        // mNfcAdapter.setNdefPushMessageCallback(this, this);
-        // }
-        // }
+        // Support beaming shows via Android Beam
+        if (AndroidUtils.isICSOrHigher()) {
+            mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+            if (mNfcAdapter != null) {
+                mNfcAdapter.setNdefPushMessageCallback(new CreateNdefMessageCallback() {
+                    @Override
+                    public NdefMessage createNdefMessage(NfcEvent event) {
+                        final Series show = DBUtils.getShow(OverviewActivity.this, mShowId);
+                        // send id, also title and overview (both can be empty)
+                        NdefMessage msg = new NdefMessage(new NdefRecord[] {
+                                createMimeRecord(
+                                        "application/com.battlelancer.seriesguide.beam",
+                                        String.valueOf(mShowId).getBytes()),
+                                createMimeRecord("application/com.battlelancer.seriesguide.beam",
+                                        show.getTitle().getBytes()),
+                                createMimeRecord("application/com.battlelancer.seriesguide.beam",
+                                        show
+                                                .getOverview().getBytes())
+                        });
+                        return msg;
+                    }
+
+                    /**
+                     * Creates a custom MIME type encapsulated in an NDEF record
+                     */
+                    public NdefRecord createMimeRecord(String mimeType, byte[] payload) {
+                        byte[] mimeBytes = mimeType.getBytes(Charset.forName("US-ASCII"));
+                        NdefRecord mimeRecord = new NdefRecord(
+                                NdefRecord.TNF_MIME_MEDIA, mimeBytes, new byte[0], payload);
+                        return mimeRecord;
+                    }
+                }, this);
+            }
+        }
 
         // try to update this show
-        onUpdate();
+        onUpdateShow();
     }
 
     private void setupPanes() {
-        Fragment overviewFragment = OverviewFragment.newInstance(mShowId);
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
-        ft.replace(R.id.fragment_overview, overviewFragment);
-        ft.commit();
+        Fragment showsFragment = ShowInfoFragment.newInstance(mShowId);
+        FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
+        ft1.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+        ft1.replace(R.id.fragment_show, showsFragment);
+        ft1.commit();
 
-        Fragment seasonsFragment = SeasonsFragment.newInstance(mShowId);
+        Fragment overviewFragment = OverviewFragment.newInstance(mShowId);
         FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
         ft2.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
-        ft2.replace(R.id.fragment_seasons, seasonsFragment);
+        ft2.replace(R.id.fragment_overview, overviewFragment);
         ft2.commit();
+
+        Fragment seasonsFragment = SeasonsFragment.newInstance(mShowId);
+        FragmentTransaction ft3 = getSupportFragmentManager().beginTransaction();
+        ft3.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+        ft3.replace(R.id.fragment_seasons, seasonsFragment);
+        ft3.commit();
     }
 
     private void setupViewPager(View pagerView) {
@@ -127,7 +166,7 @@ public class OverviewActivity extends BaseActivity {
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         TabPagerAdapter tabsAdapter = new TabPagerAdapter(getSupportFragmentManager(), this,
-                actionBar, pager, getMenu());
+                actionBar, pager);
         Bundle argsShow = new Bundle();
         argsShow.putInt(ShowInfoFragment.InitBundle.SHOW_TVDBID, mShowId);
         tabsAdapter.addTab(R.string.show, ShowInfoFragment.class, argsShow);
@@ -208,37 +247,18 @@ public class OverviewActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void onUpdate() {
-        // only update this show if no global update is running and we have a
-        // connection
-        if (!TaskManager.getInstance(this).isUpdateTaskRunning(false)
-                && Utils.isAllowedConnection(this)) {
-            final SharedPreferences prefs = PreferenceManager
-                    .getDefaultSharedPreferences(getApplicationContext());
-
-            // check if auto-update is enabled
-            final boolean isAutoUpdateEnabled = prefs.getBoolean(
-                    SeriesGuidePreferences.KEY_AUTOUPDATE, true);
-            if (isAutoUpdateEnabled) {
-                final String showId = String.valueOf(mShowId);
-                boolean isTime = TheTVDB.isUpdateShow(showId, System.currentTimeMillis(), this);
-
-                // look if we need to update
-                if (isTime) {
-                    final Context context = getApplicationContext();
-                    Handler handler = new Handler();
-                    Runnable r = new Runnable() {
-                        @Override
-                        public void run() {
-                            UpdateTask updateTask = new UpdateTask(showId, context);
-                            TaskManager.getInstance(context).tryUpdateTask(updateTask, false, -1);
-                        }
-                    };
-                    handler.postDelayed(r, 1000);
-                }
+    /**
+     * Delayed request to sync the displayed show.
+     */
+    private void onUpdateShow() {
+        final Context context = getApplicationContext();
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                SgSyncAdapter.requestSync(context, mShowId, false);
             }
-
-        }
+        }, 1000);
     }
 
     @Override
@@ -252,37 +272,5 @@ public class OverviewActivity extends BaseActivity {
         startSearch(null, false, args, false);
         return true;
     }
-
-    // @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    // @Override
-    // public NdefMessage createNdefMessage(NfcEvent event) {
-    // final Series show = DBUtils.getShow(this, String.valueOf(mShowId));
-    // // send id, also title and overview (both can be empty)
-    // NdefMessage msg = new NdefMessage(new NdefRecord[] {
-    // createMimeRecord(
-    // "application/com.battlelancer.seriesguide.beam", String.valueOf(mShowId)
-    // .getBytes()),
-    // createMimeRecord("application/com.battlelancer.seriesguide.beam",
-    // show.getTitle()
-    // .getBytes()),
-    // createMimeRecord("application/com.battlelancer.seriesguide.beam", show
-    // .getOverview()
-    // .getBytes())
-    // });
-    // return msg;
-    // }
-    //
-    // /**
-    // * Creates a custom MIME type encapsulated in an NDEF record
-    // *
-    // * @param mimeType
-    // */
-    // @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    // public NdefRecord createMimeRecord(String mimeType, byte[] payload) {
-    // byte[] mimeBytes = mimeType.getBytes(Charset.forName("US-ASCII"));
-    // NdefRecord mimeRecord = new NdefRecord(
-    // NdefRecord.TNF_MIME_MEDIA, mimeBytes, new byte[0], payload);
-    // return mimeRecord;
-    // }
 
 }

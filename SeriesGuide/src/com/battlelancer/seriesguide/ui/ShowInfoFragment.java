@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -33,6 +32,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
@@ -101,14 +101,14 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_rate_trakt) {
+        if (itemId == R.id.menu_show_rate) {
             onRateOnTrakt();
             return true;
-        } else if (itemId == R.id.menu_manage_lists) {
+        } else if (itemId == R.id.menu_show_manage_lists) {
             ListsDialogFragment.showListsDialog(String.valueOf(getShowTvdbId()),
                     ListItemTypes.SHOW, getFragmentManager());
             return true;
-        } else if (itemId == R.id.menu_share) {
+        } else if (itemId == R.id.menu_show_share) {
             onShareShow();
             return true;
         }
@@ -162,17 +162,17 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
 
         // air time
         StringBuilder infoText = new StringBuilder();
-        if (mShow.getAirsDayOfWeek().length() == 0 || mShow.getAirsTime() == -1) {
-            infoText.append(getString(R.string.show_noairtime));
-        } else {
+        if (!TextUtils.isEmpty(mShow.getAirsDayOfWeek()) && mShow.getAirsTime() != -1) {
             String[] values = Utils.parseMillisecondsToTime(mShow.getAirsTime(),
                     mShow.getAirsDayOfWeek(), getActivity());
-            infoText.append(values[1]).append(" ").append(values[0]);
+            infoText.append(values[1])
+                    .append(" ")
+                    .append(values[0])
+                    .append(" ");
         }
         // network
         if (mShow.getNetwork().length() != 0) {
-            infoText.append(" ").append(getString(R.string.show_network)).append(" ")
-                    .append(mShow.getNetwork());
+            infoText.append(getString(R.string.show_on_network, mShow.getNetwork()));
         }
         info.setText(infoText);
 
@@ -207,10 +207,8 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
         // TVDb rating
         String ratingText = mShow.getRating();
         if (ratingText != null && ratingText.length() != 0) {
-            RatingBar ratingBar = (RatingBar) getView().findViewById(R.id.bar);
-            ratingBar.setProgress((int) (Double.valueOf(ratingText) / 0.1));
-            TextView rating = (TextView) getView().findViewById(R.id.value);
-            rating.setText(ratingText + "/10");
+            TextView rating = (TextView) getView().findViewById(R.id.textViewRatingsTvdbValue);
+            rating.setText(ratingText);
         }
         View ratings = getView().findViewById(R.id.ratingbar);
         ratings.setOnClickListener(new OnClickListener() {
@@ -220,7 +218,7 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
             }
         });
         ratings.setFocusable(true);
-        CheatSheet.setup(ratings, R.string.menu_rate_trakt);
+        CheatSheet.setup(ratings, R.string.menu_rate_show);
 
         // Last edit date
         TextView lastEdit = (TextView) getView().findViewById(R.id.lastEdit);
@@ -234,16 +232,16 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
 
         // Google Play button
         View playButton = getView().findViewById(R.id.buttonGooglePlay);
-        Utils.setUpGooglePlayButton(mShow.getTitle(), playButton, TAG);
+        ServiceUtils.setUpGooglePlayButton(mShow.getTitle(), playButton, TAG);
 
         // Amazon button
         View amazonButton = getView().findViewById(R.id.buttonAmazon);
-        Utils.setUpAmazonButton(mShow.getTitle(), amazonButton, TAG);
+        ServiceUtils.setUpAmazonButton(mShow.getTitle(), amazonButton, TAG);
 
         // IMDb button
         View imdbButton = (View) getView().findViewById(R.id.buttonShowInfoIMDB);
         final String imdbId = mShow.getImdbId();
-        Utils.setUpImdbButton(imdbId, imdbButton, TAG, getActivity());
+        ServiceUtils.setUpImdbButton(imdbId, imdbButton, TAG, getActivity());
 
         // TVDb button
         View tvdbButton = (View) getView().findViewById(R.id.buttonTVDB);
@@ -251,38 +249,43 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
         if (tvdbButton != null) {
             tvdbButton.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
-                    fireTrackerEvent("TVDb");
                     Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TVDB_SHOW_URL
                             + tvdbId));
                     startActivity(i);
+                    fireTrackerEvent("TVDb");
                 }
             });
         }
+
+        // trakt button
+        ServiceUtils.setUpTraktButton(getShowTvdbId(), getView().findViewById(R.id.buttonTrakt),
+                TAG);
 
         // Shout button
         getView().findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                fireTrackerEvent("Shouts");
                 Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
                 i.putExtras(TraktShoutsActivity.createInitBundleShow(mShow.getTitle(),
                         getShowTvdbId()));
                 startActivity(i);
+                fireTrackerEvent("Shouts");
             }
         });
 
         // Poster
         final ImageView poster = (ImageView) getView().findViewById(R.id.ImageViewShowInfoPoster);
         ImageProvider.getInstance(getActivity()).loadImage(poster, mShow.getPoster(), false);
-        Utils.setPosterBackground((ImageView) getView().findViewById(R.id.background),
-                mShow.getPoster(), getActivity());
+        // Utils.setPosterBackground((ImageView)
+        // getView().findViewById(R.id.background),
+        // mShow.getPoster(), getActivity());
 
         // trakt ratings
         onLoadTraktRatings(true);
     }
 
     private void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Context Item", label, (long) 0);
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
     }
 
     private int getShowTvdbId() {
@@ -293,6 +296,7 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
         TraktRateDialogFragment newFragment = TraktRateDialogFragment
                 .newInstance(getShowTvdbId());
         newFragment.show(getFragmentManager(), "traktratedialog");
+        fireTrackerEvent("Rate (trakt)");
     }
 
     private void onLoadTraktRatings(boolean isUseCachedValues) {
@@ -309,10 +313,10 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
             // Share intent
             IntentBuilder ib = ShareCompat.IntentBuilder
                     .from(getActivity())
-                    .setChooserTitle(R.string.share)
+                    .setChooserTitle(R.string.share_show)
                     .setText(
                             getString(R.string.share_checkout) + " \"" + mShow.getTitle()
-                                    + "\" " + Utils.IMDB_TITLE_URL + mShow.getImdbId())
+                                    + "\" " + ServiceUtils.IMDB_TITLE_URL + mShow.getImdbId())
                     .setType("text/plain");
             ib.startChooser();
         }

@@ -142,8 +142,8 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment {
 
                 final String username = ((EditText) layout.findViewById(R.id.username)).getText()
                         .toString();
-                final String passwordHash = Utils.toSHA1(((EditText) layout
-                        .findViewById(R.id.password)).getText().toString().getBytes());
+                final String passwordHash = Utils.toSHA1(context, ((EditText) layout
+                        .findViewById(R.id.password)).getText().toString());
                 final String email = ((EditText) layout.findViewById(R.id.email)).getText()
                         .toString();
                 final boolean isNewAccount = ((CheckBox) layout.findViewById(R.id.checkNewAccount))

@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Ohjelma</string>
   <string name="episode">Jakso</string>
+  <string name="episode_number">Jakso %s</string>
   <string name="episodes">Jaksoa</string>
   <string name="season">Kausi</string>
+  <string name="season_number">Kausi %s</string>
   <string name="seasons">Kaudet</string>
   <string name="unknown">tuntematon</string>
   <string name="episode_iswatched">Katsottu</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">Erikoisjaksot</string>
   <string name="search_hint">Hae jaksoja</string>
   <string name="share_episode">Jaa jakso</string>
+  <string name="share_show">Jaa ohjelma</string>
   <string name="share_checkout">Kuittaa ulos</string>
   <string name="search_description">Jaksot</string>
   <string name="description_overview">Yleiskatsaus</string>
@@ -71,9 +74,10 @@
   <string name="rating7">Hyvä</string>
   <string name="rating8">Upea</string>
   <string name="rating9">Loistava</string>
-  <string name="episode_number_absolute">ABSOLUUTTINEN</string>
+  <string name="episode_number_absolute">TODELLINEN</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Esityspäivä</string>
+  <string name="episode_firstaired">Julkaisupäivä</string>
+  <string name="episode_firstaired_unknown">Tuntematon julkaisupäivä</string>
   <string name="episode_dvdnumber">DVD-jakso</string>
   <string name="show_actors">Näyttelijät</string>
   <string name="show_firstaired">Ensiesitys</string>
@@ -137,22 +141,16 @@
   <string name="norecent">Ei viimeaikaisia jaksoja.</string>
   <string name="only_favorites">Vain suosikkiohjelmat</string>
   <string name="togglewatched">Vaihda katsottu</string>
-  <string name="update_notification">Päivitetään ohjelmiasi…</string>
-  <string name="update_single">Päivitetään ohjelmaa…</string>
-  <string name="update_delta">Päivitetään vanhentuneita ohjelmia…</string>
-  <string name="update_full">Päivitetään kaikkia ohjelmia…</string>
-  <string name="update_success">Ohjelmat päivitetty.</string>
-  <string name="update_offline">Päivitys epäonnistui, tarkista internet/Wi-Fi-yhteytesi.</string>
-  <string name="update_saxerror">Päivitys epäonnistui, yritä myöhemmin uudelleen.</string>
+  <string name="pref_infinite_scrolling">Päättymätön toiminta</string>
+  <string name="update_scheduled">Päivitetään...</string>
+  <string name="update_no_connection">Päivittääksesi muodosta yhteys internetiin.</string>
+  <string name="update_no_wifi">Päivittääksesi yhdistä Wi-Fiin tai salli muut yhteydet asetuksissa.</string>
   <string name="update_inprogress">Päivitys on käynnissä, yritä myöhemmin uudelleen.</string>
-  <string name="update_rebuildsearch">Päivitetään jaksohakua…</string>
-  <string name="update_traktactivity">Ladataan toimintaa traktista…</string>
   <string name="menu_updateart">Lataa julisteet</string>
   <string name="arttask_incomplete">Jotkut julisteet eivät lataantuneet, yritä myöhemmin uudelleen.</string>
   <string name="arttask_start">Ladataan julisteita…</string>
   <string name="arttask_nosdcard">Julisteiden lataaminen vaatii ulkoisen tallennustilan (SD-kortti).</string>
-  <string name="show_network">kanavalla</string>
-  <string name="show_noairtime">Ei esitysaikoja saatavilla</string>
+  <string name="show_on_network">kanavalla %s</string>
   <string name="season_watchcount">katsomatonta jaksoa</string>
   <string name="season_allwatched">Kaikki jaksot katsottu</string>
   <string name="season_onenotwatched">katsomaton jakso</string>
@@ -226,7 +224,9 @@
   <string name="pref_theme">Sovelluksen teema</string>
   <string name="pref_other">Muu</string>
   <string name="pref_autoupdate">Ota automaattiset päivitykset käyttöön</string>
-  <string name="pref_autoupdatesummary">Päivitä ohjelmasi ajoittain SeriesGuiden käynnistyessä</string>
+  <string name="pref_autoupdatesummary">Säännöllisesti päivittää ohjelmasi</string>
+  <string name="pref_autobackup">Automaattinen varmuuskopiointi</string>
+  <string name="pref_autobackupsummary">Varmuuskopioi viikoittain ohjelmatietokantasi Download-kansioon</string>
   <string name="backup">Varmuuskopioi/Palauta</string>
   <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
   <string name="pref_upcominglimit">Tulevat ohjelmat ajalta…</string>
@@ -279,7 +279,8 @@
   <string name="check_into">Kuittaa</string>
   <string name="no_selection">valitse yksi alta</string>
   <string name="looking_for_something_else">Etsitkö jotain muuta?</string>
-  <string name="menu_rate_trakt">Arvostele (trakt)</string>
+  <string name="menu_rate_episode">Arvostele jakso</string>
+  <string name="menu_rate_show">Arvostele ohjelma</string>
   <string name="menu_share_others">Muulla sovelluksella</string>
   <string name="traktcheckin_cancel">Korvaa</string>
   <string name="traktcheckin_inprogress">Olet jo kuitannut toiseen jaksoon tai elokuvaan. Joko korvaa edellinen kuittaus tai odota %s ja yritä uudelleen.</string>
@@ -303,6 +304,7 @@
   <string name="welcome_add_part1">Napauta aloittaaksesi</string>
   <string name="upcoming_show">%s on tulossa</string>
   <string name="upcoming_episodes">Uusia jaksoja tulossa</string>
+  <string name="upcoming_episodes_number">%s uutta jaksoa</string>
   <string name="upcoming_show_detailed">%1$s kanavalla %2$s</string>
   <string name="upcoming_display">Valitse näyttääksesi tulevat ohjelmat</string>
   <string name="pref_notifications">Ilmoitukset</string>
@@ -324,6 +326,10 @@
   <string name="dashclock_pref_upcoming_threshold">Näytä jaksot ajalta</string>
   <string name="download_stable">Lataa SeriesGuide</string>
   <string name="betawarning"><b>Varoitus!</b> Tämä julkaisu on vain beeta-testaajille! Jos epäröit, lataa vakaa versio alta.</string>
+  <string name="upgrade_title">Hanki X-päivitys</string>
+  <string name="upgrade_description">Hanki pääsy ilmoituksiin ja useampiin valintoihin listawidgeteistä. Tue tulevaa kehitystä.\n\nJos olet jo ostanut SeriesGuide X:n, asenna se avataksesi tämä päivitys.</string>
+  <string name="upgrade_action">Hanki X-päivitys</string>
+  <string name="upgrade_success">Kiitos, sinulla on jo X-päivitys!</string>
   <string-array name="shsorting">
     <item>A - Ö</item>
     <item>Seuraava jakso</item>

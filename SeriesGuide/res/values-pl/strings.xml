@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Pokaż</string>
   <string name="episode">Odcinek</string>
+  <string name="episode_number">Odcinek %s</string>
   <string name="episodes">Odcinki</string>
   <string name="season">Sezon</string>
+  <string name="season_number">Sezon %s</string>
   <string name="seasons">Sezony</string>
   <string name="unknown">nieznana</string>
   <string name="episode_iswatched">Obejrzany</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">Odcinki specjalne</string>
   <string name="search_hint">Szukaj odcinków</string>
   <string name="share_episode">Udostępnij</string>
+  <string name="share_show">Współdziel serial</string>
   <string name="share_checkout">Odłącz się</string>
   <string name="search_description">Odcinki</string>
   <string name="description_overview">Opis</string>
@@ -71,9 +74,10 @@
   <string name="rating7">Dobry</string>
   <string name="rating8">Świetny</string>
   <string name="rating9">Niesamowity</string>
-  <string name="episode_number_absolute">Bezwzględny</string>
+  <string name="episode_number_absolute">Nr w całym serialu</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Data emisji</string>
+  <string name="episode_firstaired">Data premiery</string>
+  <string name="episode_firstaired_unknown">Data premiery nieznana</string>
   <string name="episode_dvdnumber">Odcinek na DVD</string>
   <string name="show_actors">Obsada</string>
   <string name="show_firstaired">Pierwsza emisja</string>
@@ -137,22 +141,16 @@
   <string name="norecent">Brak ostatnio emitowanych odcinków.</string>
   <string name="only_favorites">Tylko ulubione seriale</string>
   <string name="togglewatched">Przełącz obejrzane</string>
-  <string name="update_notification">Aktualizacja seriali</string>
-  <string name="update_single">Aktualizacja serialu</string>
-  <string name="update_delta">Aktualizacja starych</string>
-  <string name="update_full">Aktualizacja wszystkich</string>
-  <string name="update_success">Seriale zostały zaktualizowane.</string>
-  <string name="update_offline">Aktualizacja nie powiodła się. Sprawdź połączenie internetowe/Wi-Fi.</string>
-  <string name="update_saxerror">Aktualizacja nie powiodła się, spróbuj ponownie później.</string>
+  <string name="pref_infinite_scrolling">Nieskończona aktywność</string>
+  <string name="update_scheduled">Aktualizowanie…</string>
+  <string name="update_no_connection">Do aktualizacji należy połączyć się z Internetem.</string>
+  <string name="update_no_wifi">Aby zaktualizować należy połączyć się z WiFi lub zezwolić na inne połączenia w ustawieniach.</string>
   <string name="update_inprogress">Aktualizacja w toku, spróbuj ponownie później.</string>
-  <string name="update_rebuildsearch">Odświeżanie indeksu wyszukiwania</string>
-  <string name="update_traktactivity">Ładowanie aktywności trakt</string>
   <string name="menu_updateart">Wczytaj plakaty</string>
   <string name="arttask_incomplete">Niektóre plakaty nie zostały wczytane. Spróbuj ponownie później.</string>
   <string name="arttask_start">Wczytywanie plakatów…</string>
   <string name="arttask_nosdcard">Wczytywanie plakatów wymaga karty SD.</string>
-  <string name="show_network">w</string>
-  <string name="show_noairtime">Brak dostępnego czasu emisji</string>
+  <string name="show_on_network">na %s</string>
   <string name="season_watchcount">nieobejrzanych</string>
   <string name="season_allwatched">Wszystkie odcinki obejrzane</string>
   <string name="season_onenotwatched">odcinek nie obejrzany</string>
@@ -226,7 +224,9 @@
   <string name="pref_theme">Schemat kolorów</string>
   <string name="pref_other">Inne</string>
   <string name="pref_autoupdate">Aktualizacje automatyczne</string>
-  <string name="pref_autoupdatesummary">Okresowo aktualizuje seriale podczas startu SeriesGuide</string>
+  <string name="pref_autoupdatesummary">Okresowo aktualizuje seriale</string>
+  <string name="pref_autobackup">Włącz automatyczną kopię zapasową</string>
+  <string name="pref_autobackupsummary">Cotygodniowa kopia zapasowa bazy danych seriali w folderze Download</string>
   <string name="backup">Kopia zapasowa</string>
   <string name="backup_summary">Utwórz/Przywróć kopię bazy seriali</string>
   <string name="pref_upcominglimit">Wyświetlaj odcinki z</string>
@@ -279,7 +279,8 @@
   <string name="check_into">Podepnij się</string>
   <string name="no_selection">wybierz z poniższych</string>
   <string name="looking_for_something_else">Szukasz czegoś innego?</string>
-  <string name="menu_rate_trakt">Oceń (trakt)</string>
+  <string name="menu_rate_episode">Oceń odcinek</string>
+  <string name="menu_rate_show">Oceń serial</string>
   <string name="menu_share_others">za pomocą innych aplikacji</string>
   <string name="traktcheckin_cancel">Zastąp</string>
   <string name="traktcheckin_inprogress">Już podpięto do innego odcinka lub filmu. Należy zamienić poprzednie podpięcie lub zaczekać %s i spróbować ponownie.</string>
@@ -303,6 +304,7 @@
   <string name="welcome_add_part1">Naciśnij, aby rozpocząć</string>
   <string name="upcoming_show">Nadchodzi odcinek %s</string>
   <string name="upcoming_episodes">Nadchodzą nowe odcinki</string>
+  <string name="upcoming_episodes_number">%s nowych odcinków</string>
   <string name="upcoming_show_detailed">%1$s na %2$s</string>
   <string name="upcoming_display">Wyświetl informacje o nadchodzących odcinkach</string>
   <string name="pref_notifications">Powiadomienia</string>
@@ -324,6 +326,10 @@
   <string name="dashclock_pref_upcoming_threshold">Pokaż odcinki emitowane za</string>
   <string name="download_stable">Pobierz SeriesGuide</string>
   <string name="betawarning"><b>Uwaga!</b> To wydanie jest tylko dla beta testerów! Wersję stabilną można pobrać poniżej.</string>
+  <string name="upgrade_title">Ulepsz do wersji X</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_action">Ulepsz do wersji X</string>
+  <string name="upgrade_success">Dziękujemy, posiadasz już wersję X!</string>
   <string-array name="shsorting">
     <item>Od A do Z</item>
     <item>Następny odcinek</item>
