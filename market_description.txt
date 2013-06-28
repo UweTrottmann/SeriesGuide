@@ -1,6 +1,4 @@
-SeriesGuide X adds more list widget options and notifications for favorited shows.
-
-To support future development consider buying SeriesGuide X.
+Purchase the X Upgrade in settings to add more list widget options, notifications for new episodes and to support future development.
 
 Manage the progress of (re-)watching your favorite TV shows. See what is coming up, keep track of what to watch next. Check in with trakt.tv or GetGlue. Share episodes with your friends or the world.
 
