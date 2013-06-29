@@ -11,9 +11,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- Notification service -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- Syncadapter permissions -->
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -106,8 +107,7 @@
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
         </activity>
-        <activity
-            android:name="com.battlelancer.seriesguide.ui.OverviewActivity" >
+        <activity android:name="com.battlelancer.seriesguide.ui.OverviewActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
@@ -200,7 +200,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.SeriesGuidePreferences" />
         </activity>
-		
+        <activity android:name="com.battlelancer.seriesguide.billing.BillingActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.SeriesGuidePreferences" />
+        </activity>
+
         <!-- Services -->
         <service android:name="com.battlelancer.seriesguide.service.TraktFlagService" >
         </service>
@@ -214,7 +219,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        
+
         <!-- Sync service -->
         <service
             android:name="com.battlelancer.seriesguide.sync.SgAuthenticationService"
@@ -331,7 +336,7 @@
                 android:name="settingsActivity"
                 android:value="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity" />
         </service>
-        
+
         <activity
             android:name="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity"
             android:exported="true" >
