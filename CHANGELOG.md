@@ -5,6 +5,11 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 6.1x *(2013-06-29)*
+------------------------
+This was released for SeriesGuide X only.
+* FIX Crash when trying to open in-app upgrade activity.
+
 Version 6 *(2013-06-28)*
 ------------------------
 
