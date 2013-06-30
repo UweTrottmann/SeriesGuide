@@ -27,5 +27,39 @@ title: Privacy Policy
         <h2>Contact</h2>
         <p>If you contact us (e.g. via Email, Twitter, Facebook or Google+), we may keep a record of your communications to help solve any issues you might be facing. We may use your email address to inform you about our services, such as letting you know about upcoming changes or improvements.</p>
         
+        <h2>App permissions</h2>
+        <p>The following lists the reason for each of the premissions SeriesGuide requires.</p>
+        <dl>
+            <dt>Use accounts on the device</dt>
+            <dt>Add or remove accounts</dt>
+            <dt>Create accounts and set passwords</dt>
+            <dt>Find accounts on the device</dt>
+            <dd>SeriesGuide creates a dummy account to enable integration with the Android sync framework. You can have a look at it in your Android account settings.</dd>  
+            </br>
+            <dt>Full network access</dt>  
+            <dd>SeriesGuide needs to download information from its data sources to display them inside the app: theTVDb.com, themoviedb.org. Also service integration with trakt.tv and GetGlue requires an internet connection.</dd>
+            </br>
+            <dt>Control Near Field Communication (NFC)</dt>
+            <dd>SeriesGuide allows you to beam a show to another device. This uses Android Beam which requires NFC.</dd>
+            </br>
+            <dt>Modify or delete the contents of your USB storage</dt>
+            <dt>Test access to protected storage</dt>
+            <dd>SeriesGuide caches images on your external storage. Also the backup and restore tool as well as Auto-Backup write and read their files from your external storage (USB/SD card/integrated).</dd> 
+            </br>
+            <dt>View network connections</dt>  
+            <dd>SeriesGuide has the option to only allow updates over Wi-Fi and needs to behave well if you are offline. So it needs to check which, if any, connections are currently available.</dd>
+            </br>
+            <dt>Control vibration</dt>
+            <dd>SeriesGuide can show notifications, these can be set to also vibrate.</dd>
+            </br>
+            <dt>Run at startup</dt>
+            <dd>SeriesGuide can show notifications, so at startup it makes sure that the notification service is re-scheduled to wake up for the next one. This is delayed so it will not slow down your boot process.</dd>
+            </br>
+            <dt>Read sync statistics</dt>
+            <dt>Read sync settings</dt>
+            <dt>Toggle sync on and off</dt>
+            <dd>SeriesGuide integrates with the Android sync framework. It offers toggling SeriesGuide sync on and off inside its settings, needs to know if a sync is already running and needs to set it up on first run to sync periodically.</dd>
+        </dl>
+        
     </div> <!-- span -->
 </div> <!-- row -->
