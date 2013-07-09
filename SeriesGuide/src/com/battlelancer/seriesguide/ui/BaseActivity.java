@@ -40,6 +40,7 @@ import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener
 import com.uwetrottmann.seriesguide.R;
 
 import net.simonvt.menudrawer.MenuDrawer;
+import net.simonvt.menudrawer.MenuDrawer.OnDrawerStateChangeListener;
 
 /**
  * Provides some common functionality across all activities like setting the
@@ -62,6 +63,19 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
         // setting size in pixels, oh come on...
         int menuSize = (int) getResources().getDimension(R.dimen.slidingmenu_width);
         mMenuDrawer.setMenuSize(menuSize);
+        mMenuDrawer.setOnDrawerStateChangeListener(new OnDrawerStateChangeListener() {
+            @Override
+            public void onDrawerStateChange(int oldState, int newState) {
+                // helps hiding actions when the drawer is open
+                if (newState == MenuDrawer.STATE_CLOSED || newState == MenuDrawer.STATE_OPEN) {
+                    supportInvalidateOptionsMenu();
+                }
+            }
+
+            @Override
+            public void onDrawerSlide(float openRatio, int offsetPixels) {
+            }
+        });
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment f = new SlidingMenuFragment();
