@@ -380,6 +380,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     .types(ActivityType.Episode)
                     .actions(ActivityAction.Checkin, ActivityAction.Seen,
                             ActivityAction.Scrobble, ActivityAction.Collection)
+                    .minimal()
                     .timestamp(startTimeTrakt).fire();
         } catch (TraktException e) {
             Utils.trackExceptionAndLog(getContext(), TAG, e);
