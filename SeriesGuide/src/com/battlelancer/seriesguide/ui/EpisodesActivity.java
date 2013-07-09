@@ -86,7 +86,7 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.episodes);
+        getMenu().setContentView(R.layout.episodes);
 
         // check for dual pane layout
         View pagerFragment = findViewById(R.id.pager);

@@ -68,7 +68,7 @@ public class GetGlueAuthActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         mWebview = new WebView(this);
-        setContentView(mWebview);
+        getMenu().setContentView(mWebview);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.oauthmessage));

@@ -67,7 +67,7 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.addactivity_pager);
+        getMenu().setContentView(R.layout.addactivity_pager);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.ic_action_add);

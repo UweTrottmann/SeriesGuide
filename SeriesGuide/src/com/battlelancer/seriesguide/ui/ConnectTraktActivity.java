@@ -17,7 +17,7 @@ public class ConnectTraktActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_singlepane_empty);
+        getMenu().setContentView(R.layout.activity_singlepane_empty);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.connect_trakt);

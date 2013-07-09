@@ -73,7 +73,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.episode_pager);
+        getMenu().setContentView(R.layout.episode_pager);
 
         setupActionBar();
 

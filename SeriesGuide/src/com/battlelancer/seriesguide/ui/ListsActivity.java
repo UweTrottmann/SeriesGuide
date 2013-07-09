@@ -30,7 +30,7 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.lists);
+        getMenu().setContentView(R.layout.lists);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.ic_action_list);

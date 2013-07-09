@@ -60,7 +60,7 @@ public class OverviewActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.overview);
+        getMenu().setContentView(R.layout.overview);
 
         mShowId = getIntent().getIntExtra(OverviewFragment.InitBundle.SHOW_TVDBID, -1);
         if (mShowId == -1) {

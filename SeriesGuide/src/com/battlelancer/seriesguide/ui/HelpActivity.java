@@ -31,7 +31,7 @@ public class HelpActivity extends BaseActivity {
         super.onCreate(arg0);
 
         mWebview = new WebView(this);
-        setContentView(mWebview);
+        getMenu().setContentView(mWebview);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);

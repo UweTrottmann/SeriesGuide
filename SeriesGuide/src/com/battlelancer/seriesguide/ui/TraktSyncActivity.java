@@ -57,7 +57,7 @@ public class TraktSyncActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.trakt_sync);
+        getMenu().setContentView(R.layout.trakt_sync);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);

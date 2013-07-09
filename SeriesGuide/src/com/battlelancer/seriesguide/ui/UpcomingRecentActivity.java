@@ -48,7 +48,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.upcoming);
+        getMenu().setContentView(R.layout.upcoming);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.activity);

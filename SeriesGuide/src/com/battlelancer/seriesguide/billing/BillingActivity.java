@@ -42,7 +42,7 @@ public class BillingActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.billing);
+        getMenu().setContentView(R.layout.billing);
 
         setupViews();
 
