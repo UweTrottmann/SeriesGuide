@@ -5,20 +5,6 @@
     android:background="@color/background_lighter"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/containerMenuLogo"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:layout_width="?actionBarSize"
-            android:layout_height="?actionBarSize"
-            android:contentDescription="@string/app_name"
-            android:padding="@dimen/default_padding"
-            android:src="@drawable/ic_launcher" />
-    </LinearLayout>
-
     <ListView
         android:id="@+android:id/list"
         android:layout_width="match_parent"
