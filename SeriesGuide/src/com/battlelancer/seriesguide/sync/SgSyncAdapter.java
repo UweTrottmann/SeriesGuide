@@ -205,6 +205,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         if (mShows == null) {
             mShows = getShowsToUpdate(type, currentTime);
         }
+        
+        Log.d(TAG, "Perform TVDb update");
 
         // actually update the shows
         for (int i = updateCount.get(); i < mShows.length; i++) {
@@ -348,6 +350,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private UpdateResult getTraktActivity(long currentTime) {
+        Log.d(TAG, "Get trakt activity");
         if (!ServiceUtils.isTraktCredentialsValid(getContext())) {
             // trakt is not connected, we are done here
             return UpdateResult.SUCCESS;
