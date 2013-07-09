@@ -43,6 +43,8 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 import com.viewpagerindicator.TitlePageIndicator;
 
+import net.simonvt.menudrawer.MenuDrawer;
+
 import java.util.ArrayList;
 
 /**
@@ -143,6 +145,13 @@ public class EpisodeDetailsActivity extends BaseActivity {
 
         TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mPager, startPosition);
+    }
+    
+    @Override
+    protected MenuDrawer getAttachedMenuDrawer() {
+        MenuDrawer menuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.OVERLAY);
+        menuDrawer.setMenuView(R.layout.menu_frame_with_spacer);
+        return menuDrawer;
     }
 
     private void setupActionBar() {
