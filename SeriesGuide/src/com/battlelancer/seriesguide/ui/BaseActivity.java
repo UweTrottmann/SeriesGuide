@@ -57,8 +57,15 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
         setTheme(SeriesGuidePreferences.THEME);
         super.onCreate(arg0);
 
-        mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.OVERLAY);
-        mMenuDrawer.setMenuView(R.layout.menu_frame);
+        setupNavDrawer();
+    }
+
+    /**
+     * Attaches the {@link MenuDrawer}.
+     */
+    private void setupNavDrawer() {
+        mMenuDrawer = getAttachedMenuDrawer();
+
         mMenuDrawer.setTouchMode(MenuDrawer.TOUCH_MODE_BEZEL);
         // setting size in pixels, oh come on...
         int menuSize = (int) getResources().getDimension(R.dimen.slidingmenu_width);
@@ -81,6 +88,16 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
         Fragment f = new SlidingMenuFragment();
         ft.replace(R.id.menu_frame, f);
         ft.commit();
+    }
+
+    /*
+     * Creates an {@link MenuDrawer} attached to this activity as an overlay.
+     * Subclasses may override this to set their own layout and drawer type.
+     */
+    protected MenuDrawer getAttachedMenuDrawer() {
+        MenuDrawer menuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.OVERLAY);
+        menuDrawer.setMenuView(R.layout.menu_frame);
+        return menuDrawer;
     }
 
     @Override
