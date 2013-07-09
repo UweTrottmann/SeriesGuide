@@ -56,7 +56,7 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
         setTheme(SeriesGuidePreferences.THEME);
         super.onCreate(arg0);
 
-        mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW);
+        mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.BEHIND);
         mMenuDrawer.setMenuView(R.layout.menu_frame);
         mMenuDrawer.setTouchMode(MenuDrawer.TOUCH_MODE_BEZEL);
         // setting size in pixels, oh come on...
