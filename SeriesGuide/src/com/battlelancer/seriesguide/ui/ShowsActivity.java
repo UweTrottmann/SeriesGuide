@@ -55,6 +55,8 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
+import net.simonvt.menudrawer.MenuDrawer;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -240,6 +242,12 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
                     getString(R.string.sort) + ": " + items[sorting.index()]);
         }
 
+        // If the nav drawer is open, hide action items related to the content
+        // view
+        boolean isDrawerOpen = getMenu().getDrawerState() == MenuDrawer.STATE_OPEN;
+        menu.findItem(R.id.menu_add_show).setVisible(!isDrawerOpen);
+        menu.findItem(R.id.menu_checkin).setVisible(!isDrawerOpen);
+        
         return super.onPrepareOptionsMenu(menu);
     }
 
