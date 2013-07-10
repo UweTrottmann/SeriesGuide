@@ -86,7 +86,7 @@
             android:label="@string/backup" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+                android:value="com.battlelancer.seriesguide.ui.SeriesGuidePreferences" />
         </activity>
         <activity
             android:name="com.battlelancer.seriesguide.ui.SearchActivity"
@@ -127,7 +127,7 @@
         <activity android:name="com.battlelancer.seriesguide.ui.TraktSyncActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+                android:value="com.battlelancer.seriesguide.ui.SeriesGuidePreferences" />
         </activity>
         <activity
             android:name="com.battlelancer.seriesguide.ui.UpcomingRecentActivity"
@@ -186,7 +186,7 @@
         <activity android:name="com.battlelancer.seriesguide.ui.ConnectTraktActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+                android:value="com.battlelancer.seriesguide.ui.SeriesGuidePreferences" />
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.HelpActivity" >
             <meta-data

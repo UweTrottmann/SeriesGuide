@@ -18,9 +18,7 @@ public class ConnectTraktActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.connect_trakt);
-        actionBar.setHomeButtonEnabled(true);
+        setupActionBar();
 
         if (savedInstanceState == null) {
             if (ServiceUtils.isTraktCredentialsValid(this)) {
@@ -37,5 +35,11 @@ public class ConnectTraktActivity extends BaseActivity {
                 ft.commit();
             }
         }
+    }
+    
+    private void setupActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.connect_trakt);
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.util.Utils;
@@ -43,6 +44,8 @@ public class BillingActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.billing);
+        
+        setupActionBar();
 
         setupViews();
 
@@ -77,6 +80,26 @@ public class BillingActivity extends BaseActivity {
                 mHelper.queryInventoryAsync(mGotInventoryListener);
             }
         });
+    }
+
+    private void setupActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void setupViews() {
+        mUpgradeButton = (Button) findViewById(R.id.buttonBillingGetUpgrade);
+        mUpgradeButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onUpgradeAppButtonClicked(v);
+            }
+        });
+    
+        mTextHasUpgrade = findViewById(R.id.textViewBillingExisting);
+    
+        mProgressScreen = findViewById(R.id.progressBarBilling);
+        mContentContainer = findViewById(R.id.containerBilling);
     }
 
     @Override
@@ -204,21 +227,6 @@ public class BillingActivity extends BaseActivity {
             }
         }
     };
-
-    private void setupViews() {
-        mUpgradeButton = (Button) findViewById(R.id.buttonBillingGetUpgrade);
-        mUpgradeButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onUpgradeAppButtonClicked(v);
-            }
-        });
-
-        mTextHasUpgrade = findViewById(R.id.textViewBillingExisting);
-
-        mProgressScreen = findViewById(R.id.progressBarBilling);
-        mContentContainer = findViewById(R.id.containerBilling);
-    }
 
     private boolean updateUi() {
         // Only enable purchase button if the user does not have the upgrade yet

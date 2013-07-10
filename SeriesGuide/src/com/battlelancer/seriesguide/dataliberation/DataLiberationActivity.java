@@ -20,21 +20,25 @@ package com.battlelancer.seriesguide.dataliberation;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
+import com.battlelancer.seriesguide.ui.BaseActivity;
 
-public class DataLiberationActivity extends BaseNavDrawerActivity {
+public class DataLiberationActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        setupActionBar();
 
         if (savedInstanceState == null) {
             DataLiberationFragment f = new DataLiberationFragment();
             getSupportFragmentManager().beginTransaction().add(android.R.id.content, f).commit();
         }
+    }
+
+    private void setupActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
 }
