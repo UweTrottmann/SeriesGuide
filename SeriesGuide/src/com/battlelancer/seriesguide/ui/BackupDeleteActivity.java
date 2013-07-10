@@ -48,7 +48,7 @@ import java.io.IOException;
 /**
  * Allows to back up or restore the show database to external storage.
  */
-public class BackupDeleteActivity extends BaseNavDrawerActivity {
+public class BackupDeleteActivity extends BaseActivity {
 
     private static final String TAG = "Backup";
 
@@ -75,7 +75,7 @@ public class BackupDeleteActivity extends BaseNavDrawerActivity {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getMenu().setContentView(R.layout.backup);
+        setContentView(R.layout.backup);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);

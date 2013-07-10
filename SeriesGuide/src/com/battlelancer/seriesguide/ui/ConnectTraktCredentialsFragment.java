@@ -262,7 +262,7 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment {
                                 // show options after successful connection
                                 ConnectTraktFinishedFragment f = new ConnectTraktFinishedFragment();
                                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                                ft.replace(R.id.root_container, f);
+                                ft.replace(android.R.id.content, f);
                                 ft.commit();
                             }
                         }

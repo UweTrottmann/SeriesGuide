@@ -12,12 +12,11 @@ import com.uwetrottmann.seriesguide.R;
  * Shows a {@link ConnectTraktFragment} or if already connected to trakt a
  * {@link TraktCredentialsDialogFragment}.
  */
-public class ConnectTraktActivity extends BaseNavDrawerActivity {
+public class ConnectTraktActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getMenu().setContentView(R.layout.activity_singlepane_empty);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.connect_trakt);
@@ -28,13 +27,13 @@ public class ConnectTraktActivity extends BaseNavDrawerActivity {
                 // immediately show credentials to allow disconnecting
                 ConnectTraktCredentialsFragment f = ConnectTraktCredentialsFragment.newInstance();
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.add(R.id.root_container, f);
+                ft.add(android.R.id.content, f);
                 ft.commit();
             } else {
                 // display trakt introduction
                 ConnectTraktFragment f = new ConnectTraktFragment();
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.add(R.id.root_container, f);
+                ft.add(android.R.id.content, f);
                 ft.commit();
             }
         }

@@ -42,7 +42,7 @@ import com.uwetrottmann.seriesguide.R;
  * Displays information and offers tools to upload or download watched flags
  * from trakt.
  */
-public class TraktSyncActivity extends BaseNavDrawerActivity {
+public class TraktSyncActivity extends BaseActivity {
 
     private static final int DIALOG_SELECT_SHOWS = 100;
 
@@ -57,7 +57,7 @@ public class TraktSyncActivity extends BaseNavDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getMenu().setContentView(R.layout.trakt_sync);
+        setContentView(R.layout.trakt_sync);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
