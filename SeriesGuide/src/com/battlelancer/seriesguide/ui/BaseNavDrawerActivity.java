@@ -68,7 +68,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment f = new SlidingMenuFragment();
-        ft.replace(R.id.menu_frame, f);
+        ft.add(R.id.menu_frame, f);
         ft.commit();
     }
 
