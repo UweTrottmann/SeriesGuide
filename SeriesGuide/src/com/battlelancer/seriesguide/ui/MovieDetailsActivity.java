@@ -33,6 +33,7 @@ public class MovieDetailsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getMenu().setContentView(R.layout.activity_singlepane_empty);
 
         if (getIntent().getExtras() == null) {
             finish();
@@ -50,7 +51,7 @@ public class MovieDetailsActivity extends BaseActivity {
 
         if (savedInstanceState == null) {
             MovieDetailsFragment f = MovieDetailsFragment.newInstance(tmdbId);
-            getSupportFragmentManager().beginTransaction().add(android.R.id.content, f).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.root_container, f).commit();
         }
     }
 
