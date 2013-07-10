@@ -16,6 +16,8 @@ import com.uwetrottmann.seriesguide.R;
 import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TabPageIndicator.OnTabReselectedListener;
 
+import net.simonvt.menudrawer.MenuDrawer;
+
 /**
  * Hosts a view pager to display and manage lists of shows, seasons and
  * episodes.
@@ -68,6 +70,16 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportMenuInflater().inflate(R.menu.lists_menu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content
+        // view
+        boolean isDrawerOpen = getMenu().getDrawerState() == MenuDrawer.STATE_OPEN;
+        menu.findItem(R.id.menu_list_add).setVisible(!isDrawerOpen);
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override

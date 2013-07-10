@@ -246,7 +246,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
         // view
         boolean isDrawerOpen = getMenu().getDrawerState() == MenuDrawer.STATE_OPEN;
         menu.findItem(R.id.menu_add_show).setVisible(!isDrawerOpen);
-        menu.findItem(R.id.menu_checkin).setVisible(!isDrawerOpen);
         
         return super.onPrepareOptionsMenu(menu);
     }
