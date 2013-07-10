@@ -92,8 +92,8 @@ public class SlidingMenuFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         // close menu any way
-        if (getActivity() instanceof BaseActivity) {
-            final BaseActivity activity = (BaseActivity) getActivity();
+        if (getActivity() instanceof BaseNavDrawerActivity) {
+            final BaseNavDrawerActivity activity = (BaseNavDrawerActivity) getActivity();
             Handler h = new Handler();
             h.postDelayed(new Runnable() {
                 @Override

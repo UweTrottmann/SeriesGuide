@@ -20,7 +20,7 @@ import com.uwetrottmann.seriesguide.R;
 /**
  * Activities at the top of the navigation hierarchy, show menu on going up.
  */
-public abstract class BaseTopActivity extends BaseActivity {
+public abstract class BaseTopActivity extends BaseNavDrawerActivity {
 
     private static final String TAG = "BaseTopActivity";
     private IabHelper mHelper;

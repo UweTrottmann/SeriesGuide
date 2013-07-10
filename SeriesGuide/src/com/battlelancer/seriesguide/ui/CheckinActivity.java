@@ -56,7 +56,7 @@ import com.uwetrottmann.seriesguide.R;
  * Displays a searchable list of shows to allow quickly checking into a shows
  * next episode.
  */
-public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cursor> {
+public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCallbacks<Cursor> {
 
     private static final int LOADER_ID = R.layout.checkin;
 
@@ -70,7 +70,7 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
     protected void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
 
-        setContentView(R.layout.checkin);
+        getMenu().setContentView(R.layout.checkin);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.checkin));

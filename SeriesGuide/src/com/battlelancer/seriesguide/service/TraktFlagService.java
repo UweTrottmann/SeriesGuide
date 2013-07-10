@@ -110,7 +110,7 @@ public class TraktFlagService extends Service implements Callback {
 
         /*
          * If the device is not connected to an allowed connection we rely on
-         * BaseActivity.onAutoUpdate() to start this service again at most every
+         * BaseNavDrawerActivity.onAutoUpdate() to start this service again at most every
          * 15 minutes when the user opens the app.
          */
 

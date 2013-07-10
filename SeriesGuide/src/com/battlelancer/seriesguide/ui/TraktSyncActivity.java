@@ -59,17 +59,25 @@ public class TraktSyncActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trakt_sync);
 
+        setupActionBar();
+
+        setupViews();
+    }
+
+    private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
 
+    private void setupViews() {
         mContainer = findViewById(R.id.syncbuttons);
-
+    
         mSyncUnseenEpisodes = (CheckBox) findViewById(R.id.checkBoxSyncUnseen);
-
+    
         // Sync to SeriesGuide button
         final Button syncToDeviceButton = (Button) findViewById(R.id.syncToDeviceButton);
         syncToDeviceButton.setOnClickListener(new OnClickListener() {
-
+    
             public void onClick(View v) {
                 fireTrackerEvent("Download to SeriesGuide");
                 if (mSyncTask == null
@@ -79,11 +87,11 @@ public class TraktSyncActivity extends BaseActivity {
                 }
             }
         });
-
+    
         // Sync to trakt button
         final Button syncToTraktButton = (Button) findViewById(R.id.syncToTraktButton);
         syncToTraktButton.setOnClickListener(new OnClickListener() {
-
+    
             @Override
             public void onClick(View v) {
                 showDialog(DIALOG_SELECT_SHOWS);

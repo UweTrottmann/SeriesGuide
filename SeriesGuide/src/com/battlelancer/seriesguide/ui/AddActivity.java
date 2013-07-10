@@ -48,7 +48,7 @@ import java.util.Locale;
  * Hosts various fragments in a {@link ViewPager} which allow adding shows to
  * the database.
  */
-public class AddActivity extends BaseActivity implements OnAddShowListener {
+public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListener {
 
     private AddPagerAdapter mAdapter;
 
@@ -67,7 +67,7 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.addactivity_pager);
+        getMenu().setContentView(R.layout.addactivity_pager);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.ic_action_add);

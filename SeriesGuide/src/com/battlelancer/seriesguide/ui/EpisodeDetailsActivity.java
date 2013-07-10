@@ -43,6 +43,8 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 import com.viewpagerindicator.TitlePageIndicator;
 
+import net.simonvt.menudrawer.MenuDrawer;
+
 import java.util.ArrayList;
 
 /**
@@ -50,7 +52,7 @@ import java.util.ArrayList;
  * season. Used on smaller screens which do not allow for multi-pane layouts or
  * if coming from a search result selection.
  */
-public class EpisodeDetailsActivity extends BaseActivity {
+public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     protected static final String TAG = "Episode Details";
 
     private EpisodePagerAdapter mAdapter;
@@ -73,7 +75,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.episode_pager);
+        getMenu().setContentView(R.layout.episode_pager);
 
         setupActionBar();
 
@@ -143,6 +145,13 @@ public class EpisodeDetailsActivity extends BaseActivity {
 
         TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mPager, startPosition);
+    }
+    
+    @Override
+    protected MenuDrawer getAttachedMenuDrawer() {
+        MenuDrawer menuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.OVERLAY);
+        menuDrawer.setMenuView(R.layout.menu_frame_with_spacer);
+        return menuDrawer;
     }
 
     private void setupActionBar() {

@@ -124,7 +124,7 @@ public class FirstRunFragment extends SherlockFragment {
         });
 
         // peek menu
-        ((BaseActivity) getActivity()).getMenu().peekDrawer();
+        ((BaseNavDrawerActivity) getActivity()).getMenu().peekDrawer();
     }
 
     @Override

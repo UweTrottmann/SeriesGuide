@@ -90,7 +90,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shows);
+        getMenu().setContentView(R.layout.shows);
 
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
@@ -240,6 +240,11 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
                     getString(R.string.sort) + ": " + items[sorting.index()]);
         }
 
+        // If the nav drawer is open, hide action items related to the content
+        // view
+        boolean isDrawerOpen = isMenuDrawerOpen();
+        menu.findItem(R.id.menu_add_show).setVisible(!isDrawerOpen);
+        
         return super.onPrepareOptionsMenu(menu);
     }
 

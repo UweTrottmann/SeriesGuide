@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2013 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,37 +39,18 @@ import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.uwetrottmann.seriesguide.R;
 
-import net.simonvt.menudrawer.MenuDrawer;
-
 /**
  * Provides some common functionality across all activities like setting the
- * theme and navigation shortcuts.
+ * theme, navigation shortcuts and triggering AutoUpdates and AutoBackups.
  */
 public abstract class BaseActivity extends SherlockFragmentActivity implements
         OnTraktActionCompleteListener {
-
-    private MenuDrawer mMenuDrawer;
 
     @Override
     protected void onCreate(Bundle arg0) {
         // set a theme based on user preference
         setTheme(SeriesGuidePreferences.THEME);
         super.onCreate(arg0);
-
-        mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW);
-        mMenuDrawer.setMenuView(R.layout.menu_frame);
-        mMenuDrawer.setTouchMode(MenuDrawer.TOUCH_MODE_BEZEL);
-        // setting size in pixels, oh come on...
-        int menuSize = (int) getResources().getDimension(R.dimen.slidingmenu_width);
-        mMenuDrawer.setMenuSize(menuSize);
-
-        // hack to reduce overdraw caused by menu drawer by one layer
-        getWindow().getDecorView().setBackgroundDrawable(null);
-
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Fragment f = new SlidingMenuFragment();
-        ft.replace(R.id.menu_frame, f);
-        ft.commit();
     }
 
     @Override
@@ -92,13 +73,6 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
 
     @Override
     public void onBackPressed() {
-        // close an open menu first
-        final int drawerState = mMenuDrawer.getDrawerState();
-        if (drawerState == MenuDrawer.STATE_OPEN || drawerState == MenuDrawer.STATE_OPENING) {
-            mMenuDrawer.closeMenu();
-            return;
-        }
-
         super.onBackPressed();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
@@ -124,14 +98,6 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    protected MenuDrawer getMenu() {
-        return mMenuDrawer;
-    }
-
-    protected void toggleMenu() {
-        mMenuDrawer.toggleMenu();
     }
 
     @Override

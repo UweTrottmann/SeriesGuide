@@ -30,7 +30,7 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.lists);
+        getMenu().setContentView(R.layout.lists);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.ic_action_list);
@@ -68,6 +68,16 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportMenuInflater().inflate(R.menu.lists_menu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content
+        // view
+        boolean isDrawerOpen = isMenuDrawerOpen();
+        menu.findItem(R.id.menu_list_add).setVisible(!isDrawerOpen);
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override

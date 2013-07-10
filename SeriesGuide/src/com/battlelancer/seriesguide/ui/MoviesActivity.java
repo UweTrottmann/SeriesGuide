@@ -42,7 +42,7 @@ public class MoviesActivity extends BaseTopActivity {
         setSupportProgressBarIndeterminateVisibility(false);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.movies);
+        getMenu().setContentView(R.layout.movies);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.movies));

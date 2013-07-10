@@ -33,7 +33,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Window;
-import com.battlelancer.seriesguide.ui.BaseActivity;
+import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -50,7 +50,7 @@ import oauth.signpost.exception.OAuthNotAuthorizedException;
  * Executes the OAuthRequestTokenTask to retrieve a request token and authorize
  * it by the user. After the request is authorized, this will get the callback.
  */
-public class GetGlueAuthActivity extends BaseActivity {
+public class GetGlueAuthActivity extends BaseNavDrawerActivity {
 
     final String TAG = "GetGlueAuthActivity";
 
@@ -68,7 +68,7 @@ public class GetGlueAuthActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         mWebview = new WebView(this);
-        setContentView(mWebview);
+        getMenu().setContentView(mWebview);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.oauthmessage));
