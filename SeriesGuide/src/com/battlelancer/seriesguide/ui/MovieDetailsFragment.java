@@ -116,19 +116,31 @@ public class MovieDetailsFragment extends SherlockFragment implements
 
         if (mMovieDetails != null) {
             inflater.inflate(R.menu.movie_details_menu, menu);
+        }
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+
+        if (mMovieDetails != null) {
+            // If the nav drawer is open, hide action items related to the
+            // content view
+            boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isMenuDrawerOpen();
 
             boolean isEnableImdb = mMovieDetails.movie() != null
                     && !TextUtils.isEmpty(mMovieDetails.movie().imdb_id);
             MenuItem imdbItem = menu.findItem(R.id.menu_open_imdb);
             imdbItem.setEnabled(isEnableImdb);
-            imdbItem.setVisible(isEnableImdb);
+            imdbItem.setVisible(isEnableImdb && !isDrawerOpen);
 
             boolean isEnableYoutube = mMovieDetails.trailers() != null &&
                     mMovieDetails.trailers().youtube.size() > 0;
             MenuItem youtubeItem = menu.findItem(R.id.menu_open_youtube);
             youtubeItem.setEnabled(isEnableYoutube);
-            youtubeItem.setVisible(isEnableYoutube);
+            youtubeItem.setVisible(isEnableYoutube && !isDrawerOpen);
         }
+
+        super.onPrepareOptionsMenu(menu);
     }
 
     @Override
