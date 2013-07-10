@@ -23,7 +23,7 @@
         android:clipToPadding="@bool/gridClipToPadding"
         android:columnWidth="@dimen/movie_item_width"
         android:fastScrollEnabled="true"
-        android:listSelector="?custom_list_selector"
+        android:listSelector="@color/transparent"
         android:numColumns="auto_fit"
         android:padding="@dimen/default_padding"
         android:stretchMode="spacingWidthUniform"
