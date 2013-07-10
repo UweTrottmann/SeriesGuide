@@ -20,9 +20,9 @@ package com.battlelancer.seriesguide.dataliberation;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.battlelancer.seriesguide.ui.BaseActivity;
+import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 
-public class DataLiberationActivity extends BaseActivity {
+public class DataLiberationActivity extends BaseNavDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

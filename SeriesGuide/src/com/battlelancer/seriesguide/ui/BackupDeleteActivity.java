@@ -48,7 +48,7 @@ import java.io.IOException;
 /**
  * Allows to back up or restore the show database to external storage.
  */
-public class BackupDeleteActivity extends BaseActivity {
+public class BackupDeleteActivity extends BaseNavDrawerActivity {
 
     private static final String TAG = "Backup";
 

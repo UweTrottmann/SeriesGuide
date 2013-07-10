@@ -28,7 +28,7 @@ import com.uwetrottmann.seriesguide.R;
  * Hosts a {@link MovieDetailsFragment} displaying details about the movie
  * defined by the given TMDb id intent extra.
  */
-public class MovieDetailsActivity extends BaseActivity {
+public class MovieDetailsActivity extends BaseNavDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

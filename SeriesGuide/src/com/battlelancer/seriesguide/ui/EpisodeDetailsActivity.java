@@ -52,7 +52,7 @@ import java.util.ArrayList;
  * season. Used on smaller screens which do not allow for multi-pane layouts or
  * if coming from a search result selection.
  */
-public class EpisodeDetailsActivity extends BaseActivity {
+public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     protected static final String TAG = "Episode Details";
 
     private EpisodePagerAdapter mAdapter;

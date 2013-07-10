@@ -42,7 +42,7 @@ import com.uwetrottmann.seriesguide.R;
  * Displays information and offers tools to upload or download watched flags
  * from trakt.
  */
-public class TraktSyncActivity extends BaseActivity {
+public class TraktSyncActivity extends BaseNavDrawerActivity {
 
     private static final int DIALOG_SELECT_SHOWS = 100;
 

@@ -48,7 +48,7 @@ import java.util.Locale;
  * Hosts various fragments in a {@link ViewPager} which allow adding shows to
  * the database.
  */
-public class AddActivity extends BaseActivity implements OnAddShowListener {
+public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListener {
 
     private AddPagerAdapter mAdapter;
 

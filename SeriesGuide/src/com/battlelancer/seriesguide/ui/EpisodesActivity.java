@@ -54,7 +54,7 @@ import java.util.List;
  * Hosts a fragment which displays episodes of a season. On larger screen hosts
  * a {@link ViewPager} displaying the episodes.
  */
-public class EpisodesActivity extends BaseActivity implements OnSharedPreferenceChangeListener {
+public class EpisodesActivity extends BaseNavDrawerActivity implements OnSharedPreferenceChangeListener {
 
     private EpisodesFragment mEpisodesFragment;
 

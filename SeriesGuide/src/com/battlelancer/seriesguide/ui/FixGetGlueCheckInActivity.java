@@ -31,7 +31,7 @@ import java.util.List;
  * Displays a list of GetGlue search results to choose from which are used to
  * provide object ids for GetGlue check ins.
  */
-public class FixGetGlueCheckInActivity extends BaseActivity implements
+public class FixGetGlueCheckInActivity extends BaseNavDrawerActivity implements
         LoaderManager.LoaderCallbacks<List<GetGlueObject>>, OnItemClickListener {
 
     public interface InitBundle {

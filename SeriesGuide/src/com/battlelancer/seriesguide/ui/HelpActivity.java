@@ -17,7 +17,7 @@ import com.uwetrottmann.seriesguide.R;
 /**
  * Displays the seriesguide online help page.
  */
-public class HelpActivity extends BaseActivity {
+public class HelpActivity extends BaseNavDrawerActivity {
 
     private static final String TAG = "Help";
     private WebView mWebview;
@@ -39,7 +39,7 @@ public class HelpActivity extends BaseActivity {
 
         setSupportProgressBarVisibility(true);
 
-        final BaseActivity activity = this;
+        final BaseNavDrawerActivity activity = this;
         mWebview.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 /*

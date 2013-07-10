@@ -51,7 +51,7 @@ import java.util.List;
 /**
  * Hosts an {@link OverviewFragment}.
  */
-public class OverviewActivity extends BaseActivity {
+public class OverviewActivity extends BaseNavDrawerActivity {
 
     private int mShowId;
     private NfcAdapter mNfcAdapter;

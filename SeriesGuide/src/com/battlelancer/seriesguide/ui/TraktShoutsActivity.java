@@ -24,7 +24,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.google.analytics.tracking.android.EasyTracker;
 
-public class TraktShoutsActivity extends BaseActivity {
+public class TraktShoutsActivity extends BaseNavDrawerActivity {
 
     public static Bundle createInitBundleEpisode(int showTvdbid, int seasonNumber,
             int episodeNumber, String title) {

@@ -12,7 +12,7 @@ import com.uwetrottmann.seriesguide.R;
  * Shows a {@link ConnectTraktFragment} or if already connected to trakt a
  * {@link TraktCredentialsDialogFragment}.
  */
-public class ConnectTraktActivity extends BaseActivity {
+public class ConnectTraktActivity extends BaseNavDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

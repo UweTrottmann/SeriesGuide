@@ -10,11 +10,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.ui.BaseActivity;
+import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
-public class BillingActivity extends BaseActivity {
+public class BillingActivity extends BaseNavDrawerActivity {
 
     public static final String TAG = "BillingActivity";
 
