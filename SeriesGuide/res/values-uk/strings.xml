@@ -91,7 +91,7 @@
   <string name="show_isalive">Продовжується</string>
   <string name="show_isnotalive">Закінчився</string>
   <string name="lastEdit">Останнє редагування / / TVDb</string>
-  <string name="services_watch">Дивитися</string>
+  <string name="services_watch">Переглянути</string>
   <string name="services_more">Більше</string>
   <string name="sort">Сортувати за</string>
   <string name="updateall_yes">Оновити (все)</string>
@@ -150,7 +150,7 @@
   <string name="arttask_incomplete">Деякі постери не завантажились, спробуйте пізніше.</string>
   <string name="arttask_start">Завантаження постерів...</string>
   <string name="arttask_nosdcard">Завантаження постерів потребує зовнішньої карти пам\'яті (SD карти).</string>
-  <string name="show_on_network">увімкнути %s</string>
+  <string name="show_on_network">на %s</string>
   <string name="season_watchcount">серій не переглянуто</string>
   <string name="season_allwatched">Усі серії переглянуті</string>
   <string name="season_onenotwatched">серія не переглянута</string>

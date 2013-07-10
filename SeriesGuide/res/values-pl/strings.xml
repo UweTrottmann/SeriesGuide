@@ -327,7 +327,7 @@
   <string name="download_stable">Pobierz SeriesGuide</string>
   <string name="betawarning"><b>Uwaga!</b> To wydanie jest tylko dla beta testerów! Wersję stabilną można pobrać poniżej.</string>
   <string name="upgrade_title">Ulepsz do wersji X</string>
-  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_description">Uzyskaj dostęp do powiadomień i dodatkowych możliwości dla widżetu.Wesprzyj rozwój programu.\n\nJeśli już nabyto SeriesGuide X, zainstaluj ją, aby odblokować dodatkową zawartość.</string>
   <string name="upgrade_action">Ulepsz do wersji X</string>
   <string name="upgrade_success">Dziękujemy, posiadasz już wersję X!</string>
   <string-array name="shsorting">

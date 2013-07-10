@@ -3,10 +3,10 @@
 <resources>
   <string name="show">Инфо</string>
   <string name="episode">Эпизод</string>
-  <string name="episode_number">Episode %s</string>
+  <string name="episode_number">Эпизод %s</string>
   <string name="episodes">Эпизоды</string>
   <string name="season">Сезон</string>
-  <string name="season_number">Season %s</string>
+  <string name="season_number">Сезон %s</string>
   <string name="seasons">Сезоны</string>
   <string name="unknown">Неизвестно</string>
   <string name="episode_iswatched">Посмотрели уже</string>
@@ -76,8 +76,8 @@
   <string name="rating9">Превосходно</string>
   <string name="episode_number_absolute">ABSOLUTE</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Release date</string>
-  <string name="episode_firstaired_unknown">Release date unknown</string>
+  <string name="episode_firstaired">Дата выпуска</string>
+  <string name="episode_firstaired_unknown">Дата выпуска неизвестна</string>
   <string name="episode_dvdnumber">DVD эпизод</string>
   <string name="show_actors">Актеры</string>
   <string name="show_firstaired">Премьера</string>
@@ -142,8 +142,8 @@
   <string name="only_favorites">Только избранные сериалы</string>
   <string name="togglewatched">Просмотрено</string>
   <string name="pref_infinite_scrolling">Infinite activity</string>
-  <string name="update_scheduled">Updating…</string>
-  <string name="update_no_connection">To update connect to the internet.</string>
+  <string name="update_scheduled">Обновление...</string>
+  <string name="update_no_connection">Для обновления подключите Интернет.</string>
   <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
   <string name="update_inprogress">Выполняется обновление, попробуйте еще раз позже.</string>
   <string name="menu_updateart">Загрузить постеры</string>
@@ -225,8 +225,8 @@
   <string name="pref_other">Другие</string>
   <string name="pref_autoupdate">Включить автоматическое обновление</string>
   <string name="pref_autoupdatesummary">Periodically update your shows</string>
-  <string name="pref_autobackup">Turn on Auto Backup</string>
-  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
+  <string name="pref_autobackup">Включите автоматическое резервное копирование</string>
+  <string name="pref_autobackupsummary">Еженедельное резервное копирование базы данных в папке загрузки</string>
   <string name="backup">Резервное копирование/восстановление</string>
   <string name="backup_summary">Резервное копирование или восстановление ваших сериалов</string>
   <string name="pref_upcominglimit">Показы в ближайшие N дней...</string>
