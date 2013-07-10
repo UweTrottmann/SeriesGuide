@@ -5,6 +5,14 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 7 *(TBA)*
+-----------------
+
+#### 7beta1 *(2013-07-10)*
+
+* TWEAK Use new navigation drawer that overlays content. Does not overlay tabs, not a bug!
+* TWEAK Use minimal activity stream to get trakt activity, apparently reducing download size up to 90%.
+
 Version 6.1x *(2013-06-29)*
 ------------------------
 This was released for SeriesGuide X only.
