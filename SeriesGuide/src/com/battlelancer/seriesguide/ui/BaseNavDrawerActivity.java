@@ -56,7 +56,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
             @Override
             public void onDrawerStateChange(int oldState, int newState) {
                 // helps hiding actions when the drawer is open
-                if (newState == MenuDrawer.STATE_CLOSED || newState == MenuDrawer.STATE_OPEN) {
+                if (newState == MenuDrawer.STATE_CLOSED || newState == MenuDrawer.STATE_OPENING) {
                     supportInvalidateOptionsMenu();
                 }
             }
@@ -96,6 +96,14 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
 
     protected MenuDrawer getMenu() {
         return mMenuDrawer;
+    }
+
+    /**
+     * Returns true if the navigation drawer is visible in any way (opening,
+     * closing, peeking, open).
+     */
+    protected boolean isMenuDrawerOpen() {
+        return getMenu().getDrawerState() != MenuDrawer.STATE_CLOSED;
     }
 
     protected void toggleMenu() {

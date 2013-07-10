@@ -55,8 +55,6 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
-import net.simonvt.menudrawer.MenuDrawer;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -244,7 +242,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
 
         // If the nav drawer is open, hide action items related to the content
         // view
-        boolean isDrawerOpen = getMenu().getDrawerState() == MenuDrawer.STATE_OPEN;
+        boolean isDrawerOpen = isMenuDrawerOpen();
         menu.findItem(R.id.menu_add_show).setVisible(!isDrawerOpen);
         
         return super.onPrepareOptionsMenu(menu);

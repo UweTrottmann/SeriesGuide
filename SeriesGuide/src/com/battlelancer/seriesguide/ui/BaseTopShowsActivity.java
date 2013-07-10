@@ -36,7 +36,7 @@ public abstract class BaseTopShowsActivity extends BaseTopActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content
         // view
-        boolean isDrawerOpen = getMenu().getDrawerState() == MenuDrawer.STATE_OPEN;
+        boolean isDrawerOpen = getMenu().getDrawerState() != MenuDrawer.STATE_CLOSED;
         menu.findItem(R.id.menu_checkin).setVisible(!isDrawerOpen);
 
         return super.onPrepareOptionsMenu(menu);
