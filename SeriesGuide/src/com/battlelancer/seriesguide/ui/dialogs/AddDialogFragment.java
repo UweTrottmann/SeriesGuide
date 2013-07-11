@@ -35,6 +35,7 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -91,8 +92,14 @@ public class AddDialogFragment extends DialogFragment {
         final SearchResult show = getArguments().getParcelable("show");
 
         // title and description
-        ((TextView) layout.findViewById(R.id.title)).setText(show.title);
-        ((TextView) layout.findViewById(R.id.description)).setText(show.overview);
+        TextView title = ((TextView) layout.findViewById(R.id.title));
+        TextView description = ((TextView) layout.findViewById(R.id.description));
+        if (AndroidUtils.isHoneycombOrHigher()) {
+            title.setTextIsSelectable(true);
+            description.setTextIsSelectable(true);
+        }
+        title.setText(show.title);
+        description.setText(show.overview);
 
         // buttons
         Button dontAddButton = (Button) layout.findViewById(R.id.buttonNegative);
