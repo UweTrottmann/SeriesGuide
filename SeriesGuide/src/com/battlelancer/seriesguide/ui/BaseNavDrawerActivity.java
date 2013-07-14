@@ -55,8 +55,10 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         mMenuDrawer.setOnDrawerStateChangeListener(new OnDrawerStateChangeListener() {
             @Override
             public void onDrawerStateChange(int oldState, int newState) {
-                // helps hiding actions when the drawer is open
-                if (newState == MenuDrawer.STATE_CLOSED || newState == MenuDrawer.STATE_OPENING) {
+                // helps hiding actions when the drawer is opening
+                if (newState == MenuDrawer.STATE_CLOSED
+                        || (oldState == MenuDrawer.STATE_CLOSED &&
+                        (newState == MenuDrawer.STATE_OPENING || newState == MenuDrawer.STATE_DRAGGING))) {
                     supportInvalidateOptionsMenu();
                 }
             }
