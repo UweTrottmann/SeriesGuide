@@ -9,7 +9,7 @@ Branch structure
 The repository is made up of two main branches: master (stable) and beta (development).
 
 * **master** has the latest stable code, its tags are released as [SeriesGuide][1] on Google Play.
-* **beta** includes the latest unstable code. Its tags are released through the [beta program][3] for SeriesGuide on Google Play.
+* **beta** includes the latest unstable code. Its tags are released through the [beta program][2] for SeriesGuide on Google Play.
 
 Setup
 -----
