@@ -12,7 +12,7 @@ public class AppSettings {
     public static final String KEY_VERSION = "oldversioncode";
 
     /**
-     * Retruns the version code of the previously installed version. Is the
+     * Returns the version code of the previously installed version. Is the
      * current version on fresh installs.
      */
     public static int getLastVersionCode(Context context) {

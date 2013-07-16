@@ -85,10 +85,11 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
         builder.setPositiveButton(R.string.traktcheckin_cancel, new OnClickListener() {
 
+            @Override
             @SuppressLint("CommitTransaction")
             public void onClick(DialogInterface dialog, int which) {
                 FragmentTransaction ft = fm.beginTransaction();
-                // ft is commited with .show()
+                // ft is committed with .show()
                 Fragment prev = fm.findFragmentByTag("progress-dialog");
                 if (prev != null) {
                     ft.remove(prev);
