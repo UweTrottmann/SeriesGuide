@@ -107,8 +107,8 @@ public class SeriesContract {
         String GETGLUEID = "series_getglueid";
 
         /**
-         * Id of the last watched episode, used to calculate the next to watche
-         * episode. Added in db version 31.
+         * Id of the last watched episode, used to calculate the next episode to
+         * watch. Added in db version 31.
          */
         String LASTWATCHEDID = "series_lastwatchedid";
 

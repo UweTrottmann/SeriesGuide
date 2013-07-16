@@ -486,7 +486,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
                 }
 
                 if (lastVersion < VER_TRAKT_SEC_CHANGES) {
-                    // clear trakt credetials
+                    // clear trakt credentials
                     editor.putString(SeriesGuidePreferences.KEY_TRAKTPWD, null);
                     editor.putString(SeriesGuidePreferences.KEY_SECURE, null);
                 }
