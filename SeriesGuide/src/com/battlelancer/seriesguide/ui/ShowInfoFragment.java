@@ -1,6 +1,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -293,10 +294,14 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
     }
 
     private void onRateOnTrakt() {
-        TraktRateDialogFragment newFragment = TraktRateDialogFragment
-                .newInstance(getShowTvdbId());
-        newFragment.show(getFragmentManager(), "traktratedialog");
-        fireTrackerEvent("Rate (trakt)");
+        Activity activity = getActivity();
+        if (ServiceUtils.isTraktCredentialsValid(activity)) {
+            TraktRateDialogFragment rateShow = TraktRateDialogFragment.newInstance(getShowTvdbId());
+            rateShow.show(getFragmentManager(), "traktratedialog");
+            fireTrackerEvent("Rate (trakt)");
+        } else {
+            startActivity(new Intent(activity, ConnectTraktActivity.class));
+        }
     }
 
     private void onLoadTraktRatings(boolean isUseCachedValues) {
