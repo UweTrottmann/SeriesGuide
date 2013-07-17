@@ -90,7 +90,7 @@ public class ImageDownloader {
      * 
      * @param mUrl The URL of the image to download.
      * @param imageView The ImageView to bind the downloaded image to.
-     * @param isDiskCaching Wether to cache the image to disk or just memory.
+     * @param isDiskCaching Whether to cache the image to disk or just memory.
      */
     public void download(String url, ImageView imageView, boolean isDiskCaching) {
         resetPurgeTimer();

@@ -47,7 +47,7 @@ public class GetGlueObjectAdapter extends ArrayAdapter<GetGlueObject> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // A ViewHolder keeps references to children views to avoid
-        // unneccessary calls to findViewById() on each row.
+        // unnecessary calls to findViewById() on each row.
         ViewHolder holder;
 
         if (convertView == null) {

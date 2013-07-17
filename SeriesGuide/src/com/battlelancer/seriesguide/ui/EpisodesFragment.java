@@ -207,7 +207,7 @@ public class EpisodesFragment extends SherlockListFragment implements
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        // only display the action appropiate for the items current state
+        // only display the action appropriate for the items current state
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         final Cursor episode = (Cursor) mAdapter.getItem(info.position);
 
