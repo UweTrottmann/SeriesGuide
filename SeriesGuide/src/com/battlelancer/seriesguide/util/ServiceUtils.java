@@ -37,13 +37,31 @@ import com.uwetrottmann.seriesguide.R;
  * Helper methods to interact with third-party services trakt and The Movie
  * Database used within SeriesGuide.
  */
-public class ServiceUtils {
+public final class ServiceUtils {
+
+    private static final String GOOGLE_PLAY = "https://play.google.com/store/search?q=%s&c=movies";
+
+    private static final String TRAKT_SEARCH_BASE_URL = "http://trakt.tv/search/";
+
+    public static final String IMDB_TITLE_URL = "http://imdb.com/title/";
+
+    public static final String TRAKT_SEARCH_MOVIE_URL = TRAKT_SEARCH_BASE_URL + "tmdb?q=";
+
+    public static final String TRAKT_SEARCH_SHOW_URL = TRAKT_SEARCH_BASE_URL + "tvdb?q=";
+
+    public static final String TRAKT_SEARCH_SEASON_ARG = "&s=";
+
+    public static final String TRAKT_SEARCH_EPISODE_ARG = "&e=";
 
     private static ServiceManager sTraktServiceManagerInstance;
 
     private static ServiceManager sTraktServiceManagerWithAuthInstance;
 
     private static com.uwetrottmann.tmdb.ServiceManager sTmdbServiceManagerInstance;
+
+    /* This class is never initialized */
+    private ServiceUtils() {
+    }
 
     /**
      * Get a tmdb-java ServiceManager with our API key set.
@@ -155,8 +173,6 @@ public class ServiceUtils {
         editor.commit();
     }
 
-    public static final String IMDB_TITLE_URL = "http://imdb.com/title/";
-
     /**
      * Displays the IMDb page for the given id (show or episode) in the IMDb app
      * or on the imdb.com web page. If the IMDb id is empty, disables the
@@ -225,7 +241,8 @@ public class ServiceUtils {
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                         try {
-                            intent.setData(Uri.parse("market://search?q=" + title));
+                            String shopTV = String.format(GOOGLE_PLAY, Uri.encode(title));
+                            intent.setData(Uri.parse(shopTV));
                             v.getContext().startActivity(intent);
                         } catch (ActivityNotFoundException e) {
                             intent.setData(Uri.parse("http://play.google.com/store/search?q="
@@ -270,16 +287,6 @@ public class ServiceUtils {
 
         }
     }
-
-    private static final String TRAKT_SEARCH_BASE_URL = "http://trakt.tv/search/";
-
-    public static final String TRAKT_SEARCH_MOVIE_URL = TRAKT_SEARCH_BASE_URL + "tmdb?q=";
-
-    public static final String TRAKT_SEARCH_SHOW_URL = TRAKT_SEARCH_BASE_URL + "tvdb?q=";
-
-    public static final String TRAKT_SEARCH_SEASON_ARG = "&s=";
-
-    public static final String TRAKT_SEARCH_EPISODE_ARG = "&e=";
 
     /**
      * Starts activity with {@link Intent#ACTION_VIEW} to display the given
