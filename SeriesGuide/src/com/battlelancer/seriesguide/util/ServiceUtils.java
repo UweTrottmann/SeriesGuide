@@ -235,26 +235,14 @@ public final class ServiceUtils {
                 playButton.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        EasyTracker.getTracker()
-                                .sendEvent(logTag, "Action Item", "Google Play", (long) 0);
-
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                        try {
-                            String shopTV = String.format(GOOGLE_PLAY, Uri.encode(title));
-                            intent.setData(Uri.parse(shopTV));
-                            v.getContext().startActivity(intent);
-                        } catch (ActivityNotFoundException e) {
-                            intent.setData(Uri.parse("http://play.google.com/store/search?q="
-                                    + title));
-                            v.getContext().startActivity(intent);
-                        }
+                        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "Google Play",
+                                (long) 0);
+                        searchGooglePlay(v.getContext(), title);
                     }
                 });
             } else {
                 playButton.setEnabled(false);
             }
-
         }
     }
 
@@ -346,4 +334,25 @@ public final class ServiceUtils {
         EasyTracker.getTracker()
                 .sendEvent(logTag, "Action Item", "trakt", (long) 0);
     }
+
+    /**
+     * Used to search the Movies & TV category in Google Play for
+     * <code>query</code>
+     * 
+     * @param context The {@link Context} to use
+     * @param query The search term
+     */
+    public static void searchGooglePlay(Context context, String query) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        try {
+            String shopTV = String.format(GOOGLE_PLAY, Uri.encode(query));
+            intent.setData(Uri.parse(shopTV));
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            intent.setData(Uri.parse("http://play.google.com/store/search?q=" + query));
+            context.startActivity(intent);
+        }
+    }
+
 }
