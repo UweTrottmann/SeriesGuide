@@ -233,7 +233,7 @@ public class BillingActivity extends BaseActivity {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
             Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
             if (result.isFailure()) {
-                if (result.getResponse() != IabHelper.BILLING_RESPONSE_RESULT_USER_CANCELED) {
+                if (result.getResponse() != IabHelper.IABHELPER_USER_CANCELLED) {
                     complain("Error purchasing: " + result);
                 }
                 setWaitMode(false);
