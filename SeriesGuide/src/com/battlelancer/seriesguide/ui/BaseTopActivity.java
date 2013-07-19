@@ -12,8 +12,6 @@ import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.IabHelper;
 import com.battlelancer.seriesguide.billing.IabResult;
 import com.battlelancer.seriesguide.billing.Inventory;
-import com.battlelancer.seriesguide.billing.Purchase;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -113,14 +111,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
 
             Log.d(TAG, "Query inventory was successful.");
 
-            // Do we have the premium upgrade?
-            Purchase premiumPurchase = inventory.getPurchase(BillingActivity.SKU_X);
-            boolean hasXUpgrade = (premiumPurchase != null && BillingActivity
-                    .verifyDeveloperPayload(premiumPurchase));
-            Log.d(TAG, "User has " + (hasXUpgrade ? "X UPGRADE" : "NOT X UPGRADE"));
-
-            // Save current state until we query again
-            AdvancedSettings.setLastUpgradeState(BaseTopActivity.this, hasXUpgrade);
+            BillingActivity.checkForSubscription(BaseTopActivity.this, inventory);
 
             Log.d(TAG, "Inventory query finished.");
             disposeIabHelper();

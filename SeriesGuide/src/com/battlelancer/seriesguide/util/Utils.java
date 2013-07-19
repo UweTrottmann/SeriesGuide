@@ -738,7 +738,7 @@ public class Utils {
      */
     public static boolean isSupporterChannel(Context context) {
         if (getChannel(context) != SGChannel.STABLE || hasXinstalled(context)
-                || AdvancedSettings.hasPurchasedX(context)) {
+                || AdvancedSettings.hasAccessToX(context)) {
             return true;
         } else {
             return false;

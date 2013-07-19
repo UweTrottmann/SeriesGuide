@@ -493,9 +493,9 @@
     <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
 
     <!-- In-App Billing -->
-    <string name="upgrade_title">Get the X Upgrade</string>
-    <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
-    <string name="upgrade_action">Get the X Upgrade</string>
-    <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
+    <string name="upgrade_title">Get X features</string>
+    <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+    <string name="upgrade_action">Get X features</string>
+    <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
 
 </resources>

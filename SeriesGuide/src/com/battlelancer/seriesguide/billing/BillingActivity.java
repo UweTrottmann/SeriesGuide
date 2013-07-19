@@ -2,6 +2,7 @@
 package com.battlelancer.seriesguide.billing;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,8 +23,9 @@ public class BillingActivity extends BaseActivity {
     // enable debug logging, disable for production!
     public static final boolean DEBUG = false;
 
-    // The SKU product id as set in the Developer Console
+    // The SKU product ids as set in the Developer Console
     public static final String SKU_X = "x_upgrade";
+    public static final String SKU_X_SUBSCRIPTION = "x_subscription";
 
     // (arbitrary) request code for the purchase flow
     private static final int RC_REQUEST = 749758;
@@ -36,7 +38,7 @@ public class BillingActivity extends BaseActivity {
 
     private View mContentContainer;
 
-    private Button mUpgradeButton;
+    private Button mSubscribeButton;
 
     private View mTextHasUpgrade;
 
@@ -44,7 +46,7 @@ public class BillingActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.billing);
-        
+
         setupActionBar();
 
         setupViews();
@@ -88,16 +90,16 @@ public class BillingActivity extends BaseActivity {
     }
 
     private void setupViews() {
-        mUpgradeButton = (Button) findViewById(R.id.buttonBillingGetUpgrade);
-        mUpgradeButton.setOnClickListener(new OnClickListener() {
+        mSubscribeButton = (Button) findViewById(R.id.buttonBillingGetUpgrade);
+        mSubscribeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                onUpgradeAppButtonClicked(v);
+                onSubscribeToXButtonClicked(v);
             }
         });
-    
+
         mTextHasUpgrade = findViewById(R.id.textViewBillingExisting);
-    
+
         mProgressScreen = findViewById(R.id.progressBarBilling);
         mContentContainer = findViewById(R.id.containerBilling);
     }
@@ -140,25 +142,49 @@ public class BillingActivity extends BaseActivity {
 
             Log.d(TAG, "Query inventory was successful.");
 
-            /*
-             * Check for items we own. Notice that for each purchase, we check
-             * the developer payload to see if it's correct! See
-             * verifyDeveloperPayload().
-             */
-
-            // Do we have the premium upgrade?
-            Purchase premiumPurchase = inventory.getPurchase(SKU_X);
-            boolean hasXUpgrade = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
-            Log.d(TAG, "User has " + (hasXUpgrade ? "X UPGRADE" : "NOT X UPGRADE"));
-
-            // Save current state until we query again
-            AdvancedSettings.setLastUpgradeState(BillingActivity.this, hasXUpgrade);
+            checkForSubscription(BillingActivity.this, inventory);
 
             updateUi();
             setWaitMode(false);
             Log.d(TAG, "Initial inventory query finished; enabling main UI.");
         }
+
     };
+
+    /**
+     * Checks if the user is subscribed to X features or has the deprecated X
+     * upgrade (so he gets the subscription for life). Also sets the current
+     * state through
+     * {@link AdvancedSettings#setLastSubscriptionState(Context, boolean)}.
+     */
+    public static void checkForSubscription(Context context, Inventory inventory) {
+        /*
+         * Check for items we own. Notice that for each purchase, we check the
+         * developer payload to see if it's correct! See
+         * verifyDeveloperPayload().
+         */
+
+        /*
+         * Does the user have the deprecated X Upgrade in-app purchase? He gets
+         * X for life.
+         */
+        Purchase premiumPurchase = inventory.getPurchase(SKU_X);
+        boolean hasXUpgrade = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
+
+        // Does the user subscribe to the X features?
+        Purchase xSubscription = inventory.getPurchase(SKU_X_SUBSCRIPTION);
+        boolean isSubscribedToX = (xSubscription != null && verifyDeveloperPayload(xSubscription));
+
+        if (hasXUpgrade) {
+            Log.d(TAG, "User has X SUBSCRIPTION for life.");
+        } else {
+            Log.d(TAG, "User has "
+                    + (isSubscribedToX ? "X SUBSCRIPTION" : "NO X SUBSCRIPTION"));
+        }
+
+        // Save current state until we query again
+        AdvancedSettings.setLastSubscriptionState(context, hasXUpgrade || isSubscribedToX);
+    }
 
     /** Verifies the developer payload of a purchase. */
     public static boolean verifyDeveloperPayload(Purchase p) {
@@ -185,19 +211,21 @@ public class BillingActivity extends BaseActivity {
         return SOME_STRING.equals(payload);
     }
 
-    // User clicked the "Upgrade to Premium" button.
-    private void onUpgradeAppButtonClicked(View button) {
-        Log.d(TAG, "Upgrade button clicked; launching purchase flow for upgrade.");
+    // User clicked the "Subscribe" button.
+    private void onSubscribeToXButtonClicked(View button) {
+        Log.d(TAG, "Subscribe button clicked; launching purchase flow for X subscription.");
 
         /*
          * TODO: for security, generate your payload here for verification. See
          * the comments on verifyDeveloperPayload() for more info.
          */
+        // We don't really care for now.
         String payload = SOME_STRING;
 
         setWaitMode(true);
 
-        mHelper.launchPurchaseFlow(this, SKU_X, RC_REQUEST, mPurchaseFinishedListener, payload);
+        mHelper.launchSubscriptionPurchaseFlow(this, SKU_X_SUBSCRIPTION, RC_REQUEST,
+                mPurchaseFinishedListener, payload);
     }
 
     // Callback for when a purchase is finished
@@ -217,11 +245,10 @@ public class BillingActivity extends BaseActivity {
 
             Log.d(TAG, "Purchase successful.");
 
-            if (purchase.getSku().equals(SKU_X)) {
-                // bought the upgrade!
-                Log.d(TAG, "Purchased X upgrade. Congratulating user.");
+            if (purchase.getSku().equals(SKU_X_SUBSCRIPTION)) {
+                Log.d(TAG, "Purchased X subscription. Congratulating user.");
                 // Save current state until we query again
-                AdvancedSettings.setLastUpgradeState(BillingActivity.this, true);
+                AdvancedSettings.setLastSubscriptionState(BillingActivity.this, true);
                 updateUi();
                 setWaitMode(false);
             }
@@ -230,10 +257,10 @@ public class BillingActivity extends BaseActivity {
 
     private boolean updateUi() {
         // Only enable purchase button if the user does not have the upgrade yet
-        boolean hasXupgrade = Utils.isSupporterChannel(this);
-        mUpgradeButton.setEnabled(!hasXupgrade);
-        mTextHasUpgrade.setVisibility(hasXupgrade ? View.VISIBLE : View.GONE);
-        return hasXupgrade;
+        boolean isSubscribedToX = Utils.isSupporterChannel(this);
+        mSubscribeButton.setEnabled(!isSubscribedToX);
+        mTextHasUpgrade.setVisibility(isSubscribedToX ? View.VISIBLE : View.GONE);
+        return isSubscribedToX;
     }
 
     private void setWaitMode(boolean isActive) {
