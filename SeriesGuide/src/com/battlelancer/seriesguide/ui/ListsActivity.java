@@ -65,6 +65,12 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mListsAdapter.onCleanUp();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportMenuInflater().inflate(R.menu.lists_menu, menu);
         return super.onCreateOptionsMenu(menu);
