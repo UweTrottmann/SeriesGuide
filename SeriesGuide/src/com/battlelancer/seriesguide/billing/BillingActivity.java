@@ -259,7 +259,7 @@ public class BillingActivity extends BaseActivity {
 
     private boolean updateUi() {
         // Only enable purchase button if the user does not have the upgrade yet
-        boolean isSubscribedToX = Utils.isSupporterChannel(this);
+        boolean isSubscribedToX = Utils.hasAccessToX(this);
         mSubscribeButton.setEnabled(!isSubscribedToX);
         mTextHasUpgrade.setVisibility(isSubscribedToX ? View.VISIBLE : View.GONE);
         return isSubscribedToX;

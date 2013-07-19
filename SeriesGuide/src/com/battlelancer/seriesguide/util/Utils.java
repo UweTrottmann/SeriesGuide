@@ -731,14 +731,26 @@ public class Utils {
     }
 
     /**
-     * Used to make some features only available to supporters.
-     * 
-     * @param context
-     * @return
+     * Returns whether a regular check with the Google Play app is necessary to
+     * determine access to X features (e.g. the subscription is still valid).
      */
-    public static boolean isSupporterChannel(Context context) {
-        if (getChannel(context) != SGChannel.STABLE || hasXinstalled(context)
-                || AdvancedSettings.hasAccessToX(context)) {
+    public static boolean requiresPurchaseCheck(Context context) {
+        // dev builds and the SeriesGuide X key app are not handled through the
+        // Play store
+        if (getChannel(context) != SGChannel.STABLE || hasUnlockKeyInstalled(context)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Returns whether this user should currently get access to X features.
+     */
+    public static boolean hasAccessToX(Context context) {
+        // dev builds, SeriesGuide X installed or a valid purchase unlock X
+        // features
+        if (!requiresPurchaseCheck(context) || AdvancedSettings.hasSubscribedToX(context)) {
             return true;
         } else {
             return false;
@@ -746,10 +758,10 @@ public class Utils {
     }
 
     /**
-     * Returns true if the user has the legacy X version installed, signed with
-     * the same key as we are.
+     * Returns true if the user has the legacy SeriesGuide X version installed,
+     * signed with the same key as we are.
      */
-    public static boolean hasXinstalled(Context context) {
+    public static boolean hasUnlockKeyInstalled(Context context) {
         try {
             // Get our signing key
             PackageManager manager = context.getPackageManager();
