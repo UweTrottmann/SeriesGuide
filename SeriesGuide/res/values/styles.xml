@@ -230,13 +230,13 @@
     <style name="TabPageIndicator" parent="Widget.Sherlock.ActionBar.TabBar">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:background">@drawable/tab_indicator</item>
-        <item name="android:paddingLeft">16dip</item>
-        <item name="android:paddingRight">16dip</item>
-        <item name="android:paddingTop">12dp</item>
-        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingLeft">18dp</item>
+        <item name="android:paddingRight">18dp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
         <item name="android:textAppearance">@style/TextAppearance.TabPageIndicator</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/text_size_xsmall</item>
+        <item name="android:singleLine">true</item>
         <item name="android:ellipsize">marquee</item>
     </style>
 
