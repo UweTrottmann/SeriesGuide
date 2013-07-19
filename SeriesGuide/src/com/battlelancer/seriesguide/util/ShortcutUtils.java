@@ -44,6 +44,7 @@ public final class ShortcutUtils {
         final Intent shortcutIntent = new Intent(activity, OverviewActivity.class);
         shortcutIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, id);
         shortcutIntent.setAction(Intent.ACTION_MAIN);
+        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         // Intent that actually creates the shortcut
