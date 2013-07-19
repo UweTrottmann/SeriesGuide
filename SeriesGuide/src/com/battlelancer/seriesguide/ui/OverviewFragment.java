@@ -65,6 +65,7 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
+import com.battlelancer.seriesguide.util.ShortcutUtils;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
@@ -222,6 +223,14 @@ public class OverviewFragment extends SherlockFragment implements
             if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
                 ListsDialogFragment.showListsDialog(mEpisodeCursor.getString(EpisodeQuery._ID),
                         ListItemTypes.EPISODE, getFragmentManager());
+            }
+            return true;
+        } else if (itemId == R.id.menu_overview_add_to_homescreen) {
+            if (mShowCursor != null && mShowCursor.moveToFirst()) {
+                fireTrackerEvent("Add to Homescreen");
+                String title = mShowCursor.getString(ShowQuery.SHOW_TITLE);
+                String poster = mShowCursor.getString(ShowQuery.SHOW_POSTER);
+                ShortcutUtils.createShortcut(getActivity(), title, poster, getShowId());
             }
             return true;
         }

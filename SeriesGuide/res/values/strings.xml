@@ -498,4 +498,7 @@
     <string name="upgrade_action">Get the X Upgrade</string>
     <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
 
+    <!-- Add to Homescreen -->
+    <string name="add_to_homescreen">Add to Homescreen</string>
+
 </resources>
