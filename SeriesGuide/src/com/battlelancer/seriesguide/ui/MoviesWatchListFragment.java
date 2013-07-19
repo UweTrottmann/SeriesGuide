@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -58,6 +59,7 @@ public class MoviesWatchListFragment extends SherlockFragment implements
     private static final String TAG = "Movie Watchlist";
     private static final int LOADER_ID = R.layout.movies_watchlist_fragment;
     private static final int CONTEXT_REMOVE_ID = 0;
+    private static final int CONTENT_GOOGLE_PLAY = 1;
     private MoviesWatchListAdapter mAdapter;
     private GridView mGridView;
 
@@ -104,10 +106,12 @@ public class MoviesWatchListFragment extends SherlockFragment implements
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-
+        // Remove from watchlist
         if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
             menu.add(0, CONTEXT_REMOVE_ID, 0, R.string.watchlist_remove);
         }
+        // Search Google Play
+        menu.add(0, CONTENT_GOOGLE_PLAY, 0, R.string.googleplay);
     }
 
     @Override
@@ -120,21 +124,26 @@ public class MoviesWatchListFragment extends SherlockFragment implements
         if (!getUserVisibleHint()) {
             return super.onContextItemSelected(item);
         }
-
+        Activity activity = getActivity();
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+        Movie movie = mAdapter.getItem(info.position);
         switch (item.getItemId()) {
             case CONTEXT_REMOVE_ID: {
                 // Remove movie from watchlist
-                AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-                Movie movie = mAdapter.getItem(info.position);
                 AndroidUtils.executeAsyncTask(
-                        new TraktTask(getActivity(), null)
-                                .unwatchlistMovie(Integer.valueOf(movie.tmdbId)),
+                        new TraktTask(activity, null).unwatchlistMovie(Integer.valueOf(movie.tmdbId)),
                         new Void[] {});
                 fireTrackerEvent("Remove from watchlist");
                 return true;
             }
+            case CONTENT_GOOGLE_PLAY:
+                // Search Google Play for the movie
+                ServiceUtils.searchGooglePlay(activity, movie.title);
+                fireTrackerEvent("Searching Google Play");
+                return true;
+            default:
+                break;
         }
-
         return super.onContextItemSelected(item);
     }
 
