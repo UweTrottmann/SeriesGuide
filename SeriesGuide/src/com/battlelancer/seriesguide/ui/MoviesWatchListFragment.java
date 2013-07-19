@@ -60,6 +60,7 @@ public class MoviesWatchListFragment extends SherlockFragment implements
     private static final int LOADER_ID = R.layout.movies_watchlist_fragment;
     private static final int CONTEXT_REMOVE_ID = 0;
     private static final int CONTENT_GOOGLE_PLAY = 1;
+
     private MoviesWatchListAdapter mAdapter;
     private GridView mGridView;
 
