@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
+import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -89,7 +90,11 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
     /**
      * Initial constructor. Call <b>one</b> of the setup-methods, like
-     * {@code shout(tvdbid, shout, isSpoiler)}, afterwards.
+     * {@code shout(tvdbid, shout, isSpoiler)}, afterwards.<br>
+     * <br>
+     * Make sure the user has valid trakt credentials (check with
+     * {@link ServiceUtils#isTraktCredentialsValid(Context)} and then possibly
+     * launch {@link ConnectTraktActivity}) or execution will fail.
      */
     public TraktTask(Context context, OnTraktActionCompleteListener listener) {
         mContext = context;
@@ -99,7 +104,11 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
     /**
      * Fast constructor, allows passing of an already pre-built {@code args}
-     * {@link Bundle}.
+     * {@link Bundle}.<br>
+     * <br>
+     * Make sure the user has valid trakt credentials (check with
+     * {@link ServiceUtils#isTraktCredentialsValid(Context)} and then possibly
+     * launch {@link ConnectTraktActivity}) or execution will fail.
      */
     public TraktTask(Context context, Bundle args, OnTraktActionCompleteListener listener) {
         this(context, listener);
