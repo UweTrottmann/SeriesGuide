@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.ui;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -43,6 +44,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
@@ -227,10 +229,18 @@ public class OverviewFragment extends SherlockFragment implements
             return true;
         } else if (itemId == R.id.menu_overview_add_to_homescreen) {
             if (mShowCursor != null && mShowCursor.moveToFirst()) {
-                fireTrackerEvent("Add to Homescreen");
+                Activity activity = getActivity();
+
+                // Create the shortcut
                 String title = mShowCursor.getString(ShowQuery.SHOW_TITLE);
                 String poster = mShowCursor.getString(ShowQuery.SHOW_POSTER);
-                ShortcutUtils.createShortcut(getActivity(), title, poster, getShowId());
+                ShortcutUtils.createShortcut(activity, title, poster, getShowId());
+                // Notify the user everything went well
+                String confirm = " " + getString(R.string.add_to_homescreen_confirmation);
+                Toast.makeText(activity, title + confirm, Toast.LENGTH_SHORT).show();
+
+                // Analytics
+                fireTrackerEvent("Add to Homescreen");
             }
             return true;
         }
