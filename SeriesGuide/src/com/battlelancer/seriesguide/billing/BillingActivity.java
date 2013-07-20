@@ -206,13 +206,19 @@ public class BillingActivity extends BaseActivity {
      * Displays a notification that the subscription has expired. Its action
      * opens {@link BillingActivity}.
      */
-    private static void onExpiredNotification(Context context) {
+    public static void onExpiredNotification(Context context) {
         NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
 
         // set required attributes
         nb.setSmallIcon(R.drawable.ic_notification);
         nb.setContentTitle(context.getString(R.string.subscription_expired));
         nb.setContentText(context.getString(R.string.subscription_expired_details));
+        
+        // set additional attributes
+        nb.setDefaults(Notification.DEFAULT_LIGHTS);
+        nb.setAutoCancel(true);
+        nb.setTicker(context.getString(R.string.subscription_expired_details));
+        nb.setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         // build task stack
         Intent notificationIntent = new Intent(context, BillingActivity.class);
