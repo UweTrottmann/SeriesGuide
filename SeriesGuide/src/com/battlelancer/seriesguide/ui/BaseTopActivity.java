@@ -27,9 +27,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
 
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        setupActionBar();
 
         // setup nav drawer to show special indicator
         getMenu().setSlideDrawable(R.drawable.ic_drawer);
@@ -37,10 +35,9 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
 
         // query in-app purchases (only if not already qualified)
         if (Utils.requiresPurchaseCheck(this)) {
-            String key = getString(R.string.key_a) + getString(R.string.key_b)
-                    + getString(R.string.key_c) + getString(R.string.key_d);
-            mHelper = new IabHelper(this, key);
+            mHelper = new IabHelper(this, BillingActivity.getPublicKey(this));
             mHelper.enableDebugLogging(BillingActivity.DEBUG);
+            
             Log.d(TAG, "Starting In-App Billing helper setup.");
             mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
                 public void onIabSetupFinished(IabResult result) {
@@ -59,6 +56,12 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
                 }
             });
         }
+    }
+
+    private void setupActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -118,11 +121,6 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
         }
     };
 
-    /**
-     * Google Analytics helper method for easy sending of click events.
-     */
-    protected abstract void fireTrackerEvent(String label);
-
     private void disposeIabHelper() {
         if (mHelper != null) {
             Log.d(TAG, "Disposing of IabHelper.");
@@ -130,4 +128,9 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
         }
         mHelper = null;
     }
+
+    /**
+     * Google Analytics helper method for easy sending of click events.
+     */
+    protected abstract void fireTrackerEvent(String label);
 }

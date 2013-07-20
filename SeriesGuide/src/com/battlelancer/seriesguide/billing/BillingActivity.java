@@ -57,9 +57,7 @@ public class BillingActivity extends BaseActivity {
             return;
         }
 
-        String key = getString(R.string.key_a) + getString(R.string.key_b)
-                + getString(R.string.key_c) + getString(R.string.key_d);
-        mHelper = new IabHelper(this, key);
+        mHelper = new IabHelper(this, getPublicKey(this));
 
         // enable debug logging (for a production application, you should set
         // this to false).
@@ -256,6 +254,15 @@ public class BillingActivity extends BaseActivity {
             }
         }
     };
+
+    /**
+     * Returns the public key used for verification of purchases by
+     * {@link IabHelper}.
+     */
+    public static String getPublicKey(Context context) {
+        return context.getString(R.string.key_a) + context.getString(R.string.key_b)
+                + context.getString(R.string.key_c) + context.getString(R.string.key_d);
+    }
 
     private boolean updateUi() {
         // Only enable purchase button if the user does not have the upgrade yet
