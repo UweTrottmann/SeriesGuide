@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -124,26 +125,29 @@ public class UpcomingFragment extends SherlockFragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Activity activity = getActivity();
 
         // Check to see if we have a frame in which to embed the details
         // fragment directly in the containing UI.
-        View detailsFragment = getActivity().findViewById(R.id.fragment_details);
+        View detailsFragment = activity.findViewById(R.id.fragment_details);
         mDualPane = detailsFragment != null && detailsFragment.getVisibility() == View.VISIBLE;
 
-        // setup adapter
-        mAdapter = new SlowAdapter(getActivity(), null, 0);
-        mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteScrolling(getActivity()));
+        // Setup adapter
+        mAdapter = new SlowAdapter(activity, null, 0);
+        mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteScrolling(activity));
 
-        // setup grid view
+        // Start loading data
+        getLoaderManager().initLoader(getLoaderId(), null, this);
+
+        // Setup grid view
         mGridView.setAdapter(mAdapter);
         mGridView.setOnItemClickListener(this);
 
-        // start loading data
-        getActivity().getSupportLoaderManager().initLoader(getLoaderId(), null, this);
-
-        PreferenceManager.getDefaultSharedPreferences(getActivity())
+        // Register the preference change listener
+        PreferenceManager.getDefaultSharedPreferences(activity)
                 .registerOnSharedPreferenceChangeListener(this);
 
+        // Register for a context menu to be shown
         registerForContextMenu(mGridView);
     }
 
