@@ -125,7 +125,7 @@ public class NotificationService extends IntentService {
          * Unschedule notification service wake-ups for disabled notifications
          * and non-supporters.
          */
-        if (!NotificationSettings.isNotificationsEnabled(this) || !Utils.isSupporterChannel(this)) {
+        if (!NotificationSettings.isNotificationsEnabled(this) || !Utils.hasAccessToX(this)) {
             // cancel any pending alarm
             AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent i = new Intent(this, OnAlarmReceiver.class);
