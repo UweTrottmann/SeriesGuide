@@ -37,11 +37,17 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
         if (Utils.requiresPurchaseCheck(this)) {
             mHelper = new IabHelper(this, BillingActivity.getPublicKey(this));
             mHelper.enableDebugLogging(BillingActivity.DEBUG);
-            
+
             Log.d(TAG, "Starting In-App Billing helper setup.");
             mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
                 public void onIabSetupFinished(IabResult result) {
                     Log.d(TAG, "Setup finished.");
+
+                    if (mHelper == null) {
+                        // activity has already been destroyed and helper has
+                        // been disposed of
+                        return;
+                    }
 
                     if (!result.isSuccess()) {
                         // Oh noes, there was a problem. But do not go crazy.
