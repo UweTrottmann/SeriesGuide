@@ -19,6 +19,7 @@ Version 7 *(TBA)*
 * FIX If the X subscription is canceled, actually remove access to X features once it has expired.
 * FIX Ensure valid trakt credentials before rating a show. Thanks Andrew Neal (@adneal)!
 * FIX Actions now properly hide in all cases when opening the navigation drawer.
+* FIX Some Google Play reported crashes in the backup tool, with in-app billing.
 * NOTICE For contributers: all libraries live now inside the SeriesGuide repository, no need to clone multiple repositories anymore.
 
 #### 7beta1 *(2013-07-10)*
