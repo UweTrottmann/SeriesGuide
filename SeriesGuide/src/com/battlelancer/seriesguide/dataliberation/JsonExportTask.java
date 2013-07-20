@@ -37,6 +37,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
 import com.google.myjson.Gson;
 import com.google.myjson.JsonIOException;
@@ -63,6 +64,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     public static final String EXPORT_JSON_FILE_SHOWS = "sg-shows-export.json";
     public static final String EXPORT_JSON_FILE_LISTS = "sg-lists-export.json";
 
+    private static final String TAG = "Json Export";
     private static final int SUCCESS = 1;
     private static final int ERROR_STORAGE_ACCESS = 0;
     private static final int ERROR = -1;
@@ -145,11 +147,14 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             OutputStream out = new FileOutputStream(backup);
 
             writeJsonStreamShows(out, shows);
+        } catch (JsonIOException e) {
+            // Only catch IO exception as we want to know if exporting fails due
+            // to a JsonSyntaxException
+            Utils.trackExceptionAndLog(mContext, TAG, e);
+            return ERROR;
         } catch (IOException e) {
             // Backup failed
-            return ERROR;
-        } catch (JsonIOException e) {
-            // Backup failed
+            Utils.trackExceptionAndLog(mContext, TAG, e);
             return ERROR;
         } finally {
             shows.close();
@@ -179,7 +184,13 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             OutputStream out = new FileOutputStream(backupLists);
 
             writeJsonStreamLists(out, lists);
+        } catch (JsonIOException e) {
+            // Only catch IO exception as we want to know if exporting fails due
+            // to a JsonSyntaxException
+            Utils.trackExceptionAndLog(mContext, TAG, e);
+            return ERROR;
         } catch (IOException e) {
+            Utils.trackExceptionAndLog(mContext, TAG, e);
             return ERROR;
         } finally {
             lists.close();
