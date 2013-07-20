@@ -750,7 +750,7 @@ public class Utils {
     public static boolean hasAccessToX(Context context) {
         // dev builds, SeriesGuide X installed or a valid purchase unlock X
         // features
-        if (!requiresPurchaseCheck(context) || AdvancedSettings.hasSubscribedToX(context)) {
+        if (!requiresPurchaseCheck(context) || AdvancedSettings.isSubscribedToX(context)) {
             return true;
         } else {
             return false;

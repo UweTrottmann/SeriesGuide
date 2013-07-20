@@ -2,17 +2,25 @@
 package com.battlelancer.seriesguide.billing;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.ui.BaseActivity;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -153,7 +161,7 @@ public class BillingActivity extends BaseActivity {
      * Checks if the user is subscribed to X features or has the deprecated X
      * upgrade (so he gets the subscription for life). Also sets the current
      * state through
-     * {@link AdvancedSettings#setLastSubscriptionState(Context, boolean)}.
+     * {@link AdvancedSettings#setSubscriptionState(Context, boolean)}.
      */
     public static void checkForSubscription(Context context, Inventory inventory) {
         /*
@@ -180,8 +188,49 @@ public class BillingActivity extends BaseActivity {
                     + (isSubscribedToX ? "X SUBSCRIPTION" : "NO X SUBSCRIPTION"));
         }
 
+        // notify the user about a change in subscription state
+        boolean isSubscribedOld = AdvancedSettings.isSubscribedToX(context);
+        boolean isSubscribed = hasXUpgrade || isSubscribedToX;
+        if (!isSubscribedOld && isSubscribed) {
+            Toast.makeText(context, R.string.subscription_activated, Toast.LENGTH_SHORT)
+                    .show();
+        } else if (isSubscribedOld && !isSubscribed) {
+            onExpiredNotification(context);
+        }
+
         // Save current state until we query again
-        AdvancedSettings.setLastSubscriptionState(context, hasXUpgrade || isSubscribedToX);
+        AdvancedSettings.setSubscriptionState(context, isSubscribed);
+    }
+
+    /**
+     * Displays a notification that the subscription has expired. Its action
+     * opens {@link BillingActivity}.
+     */
+    private static void onExpiredNotification(Context context) {
+        NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
+
+        // set required attributes
+        nb.setSmallIcon(R.drawable.ic_notification);
+        nb.setContentTitle(context.getString(R.string.subscription_expired));
+        nb.setContentText(context.getString(R.string.subscription_expired_details));
+
+        // build task stack
+        Intent notificationIntent = new Intent(context, BillingActivity.class);
+        PendingIntent contentIntent = TaskStackBuilder
+                .create(context)
+                .addNextIntent(new Intent(context, ShowsActivity.class))
+                .addNextIntent(new Intent(context, SeriesGuidePreferences.class))
+                .addNextIntent(notificationIntent)
+                .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        nb.setContentIntent(contentIntent);
+
+        // build the notification
+        Notification notification = nb.build();
+
+        // show the notification
+        final NotificationManager nm = (NotificationManager) context
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.notify(R.string.subscription_expired, notification);
     }
 
     /** Verifies the developer payload of a purchase. */
@@ -248,7 +297,7 @@ public class BillingActivity extends BaseActivity {
             if (purchase.getSku().equals(SKU_X_SUBSCRIPTION)) {
                 Log.d(TAG, "Purchased X subscription. Congratulating user.");
                 // Save current state until we query again
-                AdvancedSettings.setLastSubscriptionState(BillingActivity.this, true);
+                AdvancedSettings.setSubscriptionState(BillingActivity.this, true);
                 updateUi();
                 setWaitMode(false);
             }

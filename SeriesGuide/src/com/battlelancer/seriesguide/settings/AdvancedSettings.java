@@ -55,12 +55,12 @@ public class AdvancedSettings {
      * Wether the user is qualified for the X upgrade since the last time we
      * checked.
      */
-    public static boolean hasSubscribedToX(Context context) {
+    public static boolean isSubscribedToX(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
                 KEY_LAST_UPGRADE_STATE, false);
     }
 
-    public static void setLastSubscriptionState(Context context, boolean isSubscribedToX) {
+    public static void setSubscriptionState(Context context, boolean isSubscribedToX) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(
                 KEY_LAST_UPGRADE_STATE, isSubscribedToX).commit();
     }
