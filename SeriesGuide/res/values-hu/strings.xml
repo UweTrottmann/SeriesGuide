@@ -32,7 +32,7 @@
   <string name="close">Bezár</string>
   <string name="save_selection">Kijelöltek mentése</string>
   <string name="offline">Nincs hálózati kapcsolat. Próbálja meg később.</string>
-  <string name="onlyx">Csak a SeriesGuide X-ben elérhető</string>
+  <string name="onlyx">Only available with X Subscription</string>
   <string name="shows">Sorozatok</string>
   <string name="lists">Listák</string>
   <string name="activity">Tevékenység</string>
@@ -334,6 +334,7 @@
   <string name="subscription_activated">You are now subscribed to X features.</string>
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Következő epizód</item>

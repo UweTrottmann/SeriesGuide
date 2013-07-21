@@ -32,7 +32,7 @@
   <string name="close">Stäng</string>
   <string name="save_selection">Spara valda</string>
   <string name="offline">Ingen nätanslutning. Försök igen senare.</string>
-  <string name="onlyx">Endast tillgänglig i SeriesGuide X</string>
+  <string name="onlyx">Only available with X Subscription</string>
   <string name="shows">Serier</string>
   <string name="lists">Listor</string>
   <string name="activity">Aktivitet</string>
@@ -334,6 +334,7 @@
   <string name="subscription_activated">You are now subscribed to X features.</string>
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string-array name="shsorting">
     <item>A – Ö</item>
     <item>Nästa avsnitt</item>

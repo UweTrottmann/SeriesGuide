@@ -32,7 +32,7 @@
   <string name="close">Закрити</string>
   <string name="save_selection">Зберегти вибране</string>
   <string name="offline">Нема зв\'язку з мережею. Спробуйте пізніше.</string>
-  <string name="onlyx">Доступно лише у SeriesGuide X</string>
+  <string name="onlyx">Only available with X Subscription</string>
   <string name="shows">Серіали</string>
   <string name="lists">Списки</string>
   <string name="activity">Активність</string>
@@ -334,6 +334,7 @@
   <string name="subscription_activated">You are now subscribed to X features.</string>
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string-array name="shsorting">
     <item>А - Я</item>
     <item>Наступна серія</item>

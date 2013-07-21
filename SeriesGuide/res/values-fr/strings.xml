@@ -32,7 +32,7 @@
   <string name="close">Fermer</string>
   <string name="save_selection">Enregistrer</string>
   <string name="offline">Pas de connexion. Réessayez plus tard.</string>
-  <string name="onlyx">Disponible seulement dans SeriesGuide X</string>
+  <string name="onlyx">Only available with X Subscription</string>
   <string name="shows">Séries</string>
   <string name="lists">Listes</string>
   <string name="activity">Activité</string>
@@ -334,6 +334,7 @@
   <string name="subscription_activated">You are now subscribed to X features.</string>
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Episode suivant</item>

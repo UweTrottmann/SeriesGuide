@@ -32,7 +32,7 @@
   <string name="close">关闭</string>
   <string name="save_selection">保存已选项</string>
   <string name="offline">没有可用连接，请稍后重试。</string>
-  <string name="onlyx">仅在 SeriesGuide X 中可用</string>
+  <string name="onlyx">Only available with X Subscription</string>
   <string name="shows">剧目</string>
   <string name="lists">列表</string>
   <string name="activity">活动</string>
@@ -334,6 +334,7 @@
   <string name="subscription_activated">You are now subscribed to X features.</string>
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string-array name="shsorting">
     <item>A 到 Z</item>
     <item>下一集</item>

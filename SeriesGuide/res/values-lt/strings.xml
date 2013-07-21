@@ -32,7 +32,7 @@
   <string name="close">Uždaryti</string>
   <string name="save_selection">Išsaugoti pasirinkimą</string>
   <string name="offline">Nėra tinklo ryšio. Pabandykite vėliau.</string>
-  <string name="onlyx">Prieinama tik SeriesGuide X</string>
+  <string name="onlyx">Only available with X Subscription</string>
   <string name="shows">Serialai</string>
   <string name="lists">Sąrašai</string>
   <string name="activity">Veikla</string>
@@ -334,6 +334,7 @@
   <string name="subscription_activated">You are now subscribed to X features.</string>
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string-array name="shsorting">
     <item>A–Z</item>
     <item>Kita serija</item>

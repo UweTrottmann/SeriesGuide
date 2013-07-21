@@ -32,7 +32,7 @@
   <string name="close">Sulje</string>
   <string name="save_selection">Tallenna valinta</string>
   <string name="offline">Ei verkkoyhteyttä. Yritä myöhemmin uudelleen.</string>
-  <string name="onlyx">Saatavilla vain SeriesGuide X:ssä</string>
+  <string name="onlyx">Only available with X Subscription</string>
   <string name="shows">Ohjelmat</string>
   <string name="lists">Listat</string>
   <string name="activity">Toiminta</string>
@@ -334,6 +334,7 @@
   <string name="subscription_activated">You are now subscribed to X features.</string>
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string-array name="shsorting">
     <item>A - Ö</item>
     <item>Seuraava jakso</item>

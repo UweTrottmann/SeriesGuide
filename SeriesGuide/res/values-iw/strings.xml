@@ -32,7 +32,7 @@
   <string name="close">סגור</string>
   <string name="save_selection">שמור בחירה</string>
   <string name="offline">אין קישוריות, נסה מאוחר יותר</string>
-  <string name="onlyx">זמין רק בגרסת SeriesGuide X</string>
+  <string name="onlyx">Only available with X Subscription</string>
   <string name="shows">סדרות</string>
   <string name="lists">רשימות</string>
   <string name="activity">פעילות</string>
@@ -334,6 +334,7 @@
   <string name="subscription_activated">You are now subscribed to X features.</string>
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>הפרק הבא</item>

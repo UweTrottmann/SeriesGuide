@@ -32,7 +32,7 @@
   <string name="close">إغلاق</string>
   <string name="save_selection">حفظ التحديد</string>
   <string name="offline">خطأ في الاتصال. حاول لاحقاً.</string>
-  <string name="onlyx">متوفر فقط في سيريزغايد اكس</string>
+  <string name="onlyx">Only available with X Subscription</string>
   <string name="shows">مسلسلات</string>
   <string name="lists">قوائم</string>
   <string name="activity">النشاط</string>
@@ -334,6 +334,7 @@
   <string name="subscription_activated">You are now subscribed to X features.</string>
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string-array name="shsorting">
     <item>A-Z</item>
     <item>الحلقة القادمة</item>

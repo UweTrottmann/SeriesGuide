@@ -32,7 +32,7 @@
   <string name="close">닫기</string>
   <string name="save_selection">선택한 것 저장</string>
   <string name="offline">네트워크에 연결에 실패하였습니다. 나중에 다시 시도해주세요.</string>
-  <string name="onlyx">시리즈가이드 X 에서만 사용가능</string>
+  <string name="onlyx">Only available with X Subscription</string>
   <string name="shows">쇼</string>
   <string name="lists">목록</string>
   <string name="activity">활동</string>
@@ -334,6 +334,7 @@
   <string name="subscription_activated">You are now subscribed to X features.</string>
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>다음 에피소드</item>
