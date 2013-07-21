@@ -43,7 +43,7 @@
     </plurals>
 
     <string name="offline">No network connectivity. Try again later.</string>
-    <string name="onlyx">Only available in SeriesGuide X</string>
+    <string name="onlyx">Only available with X Subscription</string>
 
     <!-- Main Menu -->
     <string name="shows">Shows</string>
