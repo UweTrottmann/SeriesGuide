@@ -505,6 +505,5 @@
 
     <!-- Add to Homescreen -->
     <string name="add_to_homescreen">Add to Home screen</string>
-    <string name="add_to_homescreen_confirmation">%s added to Home screen</string>
 
 </resources>

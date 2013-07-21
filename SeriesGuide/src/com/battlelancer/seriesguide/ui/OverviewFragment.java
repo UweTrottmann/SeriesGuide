@@ -43,7 +43,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
@@ -232,10 +231,6 @@ public class OverviewFragment extends SherlockFragment implements
                 String title = mShowCursor.getString(ShowQuery.SHOW_TITLE);
                 String poster = mShowCursor.getString(ShowQuery.SHOW_POSTER);
                 ShortcutUtils.createShortcut(getActivity(), title, poster, getShowId());
-                // Notify the user everything went well
-                Toast.makeText(getActivity(),
-                        getString(R.string.add_to_homescreen_confirmation, title),
-                        Toast.LENGTH_SHORT).show();
 
                 // Analytics
                 fireTrackerEvent("Add to Homescreen");
