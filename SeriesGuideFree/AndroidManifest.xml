@@ -27,6 +27,8 @@
     <uses-permission android:name="android.permission.NFC" />
     <!-- In-app billing -->
     <uses-permission android:name="com.android.vending.BILLING" />
+    <!-- Create show shortcuts -->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
 
     <uses-feature
         android:name="android.hardware.touchscreen"
@@ -109,7 +111,9 @@
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.OverviewActivity" >
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.OverviewActivity"
+            android:exported="true" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />

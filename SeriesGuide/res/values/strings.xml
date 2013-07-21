@@ -503,4 +503,7 @@
     <string name="subscription_expired">Subscription expired</string>
     <string name="subscription_expired_details">Your X features subscription has expired.</string>
 
+    <!-- Add to Homescreen -->
+    <string name="add_to_homescreen">Add to Home screen</string>
+
 </resources>

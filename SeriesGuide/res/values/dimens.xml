@@ -33,6 +33,7 @@
     <dimen name="movie_item_poster_height">150dp</dimen>
     <dimen name="show_poster_width">128dp</dimen>
     <dimen name="show_poster_height">192dp</dimen>
+    <dimen name="shortcut_icon_size">48dp</dimen>
 
     <integer name="animation_duration">400</integer>
 
