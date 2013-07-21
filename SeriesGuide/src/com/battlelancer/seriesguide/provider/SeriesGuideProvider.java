@@ -100,7 +100,7 @@ public class SeriesGuideProvider extends ContentProvider {
         matcher.addURI(authority, SeriesContract.PATH_SHOWS + "/" + SeriesContract.PATH_FILTER
                 + "/*", SHOWS_FILTERED);
         matcher.addURI(authority, SeriesContract.PATH_SHOWS + "/"
-                + SeriesContract.PATH_WITH_EPISODE + "/*", SHOWS_WITH_EPISODE);
+                + SeriesContract.PATH_WITH_EPISODE, SHOWS_WITH_EPISODE);
         matcher.addURI(authority, SeriesContract.PATH_SHOWS + "/*", SHOWS_ID);
 
         // Episodes
