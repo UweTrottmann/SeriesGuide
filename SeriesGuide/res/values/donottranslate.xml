@@ -208,6 +208,7 @@
     <string-array name="widgetTypeData">
         <item>0</item>
         <item>1</item>
+        <item>2</item>
     </string-array>
     <string-array name="dashclockUpcomingThresholdsData" translatable="false">
         <item>1</item>

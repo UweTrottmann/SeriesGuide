@@ -472,6 +472,7 @@
     <string-array name="widgetType">
         <item>Upcoming</item>
         <item>Recent</item>
+        <item>Favorites</item>
     </string-array>
 
     <!-- DashClock extension -->
