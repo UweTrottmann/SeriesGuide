@@ -20,6 +20,7 @@ package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.Intent.ShortcutIconResource;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -62,10 +63,17 @@ public final class ShortcutUtils {
         final Intent intent = new Intent();
         intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
         intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, showTitle);
-        intent.putExtra(
-                Intent.EXTRA_SHORTCUT_ICON,
-                resizeAndCropCenter(icon,
-                        context.getResources().getDimensionPixelSize(R.dimen.shortcut_icon_size)));
+        if (icon == null) {
+            // fall back to the app icon
+            intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                    ShortcutIconResource.fromContext(context, R.drawable.ic_launcher));
+        } else {
+            intent.putExtra(
+                    Intent.EXTRA_SHORTCUT_ICON,
+                    resizeAndCropCenter(icon,
+                            context.getResources()
+                                    .getDimensionPixelSize(R.dimen.shortcut_icon_size)));
+        }
         intent.setAction(ACTION_INSTALL_SHORTCUT);
         context.sendBroadcast(intent);
     }
