@@ -27,7 +27,7 @@
     <uses-permission android:name="android.permission.NFC" />
     <!-- In-app billing -->
     <uses-permission android:name="com.android.vending.BILLING" />
-    <!-- Used to create launcher shortcuts -->
+    <!-- Create show shortcuts -->
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
 
     <uses-feature
