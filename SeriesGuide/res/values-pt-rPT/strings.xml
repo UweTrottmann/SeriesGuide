@@ -321,15 +321,19 @@
   <string name="hide_watched">Ocultar episódios já visualizados</string>
   <string name="pref_widget_opacity">Plano de fundo do widget</string>
   <string name="pref_widget_type">Tipo de widget</string>
+  <string name="favorites">Favoritos</string>
   <string name="dashclock_extension_label">Próximo episódio</string>
   <string name="dashclock_extension_description">Exibe o próximo episódio das suas séries do SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">Download SeriesGuide</string>
   <string name="betawarning"><b>Atenção!</b> Esta versão destina-se apenas aos "beta testers"! Se tiver dúvidas faça o download da versão estável.</string>
-  <string name="upgrade_title">Get the X Upgrade</string>
-  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
-  <string name="upgrade_action">Get the X Upgrade</string>
-  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
+  <string name="upgrade_title">Get X features</string>
+  <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_action">Get X features</string>
+  <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
+  <string name="subscription_activated">You are now subscribed to X features.</string>
+  <string name="subscription_expired">Subscription expired</string>
+  <string name="subscription_expired_details">Your X features subscription has expired.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Próximo episódio</item>
@@ -379,6 +383,7 @@
   <string-array name="widgetType">
     <item>Brevemente</item>
     <item>Recentes</item>
+    <item>Favoritos</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
     <item>hora</item>

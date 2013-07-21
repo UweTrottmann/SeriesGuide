@@ -321,15 +321,19 @@
   <string name="hide_watched">הסתר פרקים שנצפו</string>
   <string name="pref_widget_opacity">רקע ווידג\'ט</string>
   <string name="pref_widget_type">סוג ווידג\'ט</string>
+  <string name="favorites">מועדפים</string>
   <string name="dashclock_extension_label">פרקים קרובים</string>
   <string name="dashclock_extension_description">מציג את הפרק הקרוב הבא מסדרות ה-SeriesGuide שלך.</string>
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">הורד SeriesGuide</string>
   <string name="betawarning"><b>שימו לב!</b> שחרור זה הוא עבור בודקי בטא בלבד! אם יש לך ספק, הורד את הגרסה היציבה שלהלן.</string>
-  <string name="upgrade_title">Get the X Upgrade</string>
-  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
-  <string name="upgrade_action">Get the X Upgrade</string>
-  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
+  <string name="upgrade_title">Get X features</string>
+  <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_action">Get X features</string>
+  <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
+  <string name="subscription_activated">You are now subscribed to X features.</string>
+  <string name="subscription_expired">Subscription expired</string>
+  <string name="subscription_expired_details">Your X features subscription has expired.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>הפרק הבא</item>
@@ -379,45 +383,46 @@
   <string-array name="widgetType">
     <item>בקרוב</item>
     <item>חדש</item>
+    <item>מועדפים</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
     <item>hour</item>
     <item>6 hours</item>
     <item>12 hours</item>
     <item>24 hours</item>
-    <item>3 days</item>
+    <item>3 ימים</item>
     <item>week</item>
   </string-array>
   <plurals name="votes">
     <item quantity="zero">הצבעות %d</item>
     <item quantity="one">הצבעה %d</item>
-    <item quantity="two">%d votes</item>
-    <item quantity="few">%d votes</item>
-    <item quantity="many">%d votes</item>
+    <item quantity="two">הצבעות %d</item>
+    <item quantity="few">הצבעות %d</item>
+    <item quantity="many">הצבעות %d</item>
     <item quantity="other">הצבעות %d</item>
   </plurals>
   <plurals name="days_plural">
     <item quantity="one">יום אחד</item>
-    <item quantity="zero">%d days</item>
-    <item quantity="two">%d days</item>
-    <item quantity="few">%d days</item>
-    <item quantity="many">%d days</item>
+    <item quantity="zero">%d ימים</item>
+    <item quantity="two">%d ימים</item>
+    <item quantity="few">%d ימים</item>
+    <item quantity="many">%d ימים</item>
     <item quantity="other">%d ימים</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d hours</item>
+    <item quantity="zero">%d שעות</item>
     <item quantity="one">שעה אחת</item>
-    <item quantity="two">%d hours</item>
-    <item quantity="few">%d hours</item>
-    <item quantity="many">%d hours</item>
+    <item quantity="two">%d שעות</item>
+    <item quantity="few">%d שעות</item>
+    <item quantity="many">%d שעות</item>
     <item quantity="other">%d שעות</item>
   </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d minutes</item>
+    <item quantity="zero">%d דקות</item>
     <item quantity="one">דקה אחת</item>
-    <item quantity="two">%d minutes</item>
-    <item quantity="few">%d minutes</item>
-    <item quantity="many">%d minutes</item>
+    <item quantity="two">%d דקות</item>
+    <item quantity="few">%d דקות</item>
+    <item quantity="many">%d דקות</item>
     <item quantity="other">%d דקות</item>
   </plurals>
 </resources>

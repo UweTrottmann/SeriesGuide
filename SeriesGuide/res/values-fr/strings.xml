@@ -321,15 +321,19 @@
   <string name="hide_watched">Masquer les épisodes vus</string>
   <string name="pref_widget_opacity">Arrière-plan du widget</string>
   <string name="pref_widget_type">Type du widget</string>
+  <string name="favorites">Favoris</string>
   <string name="dashclock_extension_label">Prochain épisode</string>
   <string name="dashclock_extension_description">Affiche le prochain épisode à venir parmi vos séries.</string>
   <string name="dashclock_pref_upcoming_threshold">Montrer les épisodes à venir dans</string>
   <string name="download_stable">Télécharger SeriesGuide</string>
   <string name="betawarning"><b>Attention !</b> Cette version est pour les bêta-testeurs seulement ! Si vous êtes dans le doute, téléchargez la version stable ci-dessous.</string>
-  <string name="upgrade_title">Obtenir la mise à niveau X</string>
-  <string name="upgrade_description">Obtenez l\'accès aux notifications et ayez plus d\'options pour le widget. Supportez le développement.\n\nSi vous avez déjà acheté SeriesGuide X, installez-le pour débloquer cette mise à niveau.</string>
-  <string name="upgrade_action">Obtenir la mise à niveau X</string>
-  <string name="upgrade_success">Vous avez déjà la mise à niveau X, merci !</string>
+  <string name="upgrade_title">Get X features</string>
+  <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_action">Get X features</string>
+  <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
+  <string name="subscription_activated">You are now subscribed to X features.</string>
+  <string name="subscription_expired">Subscription expired</string>
+  <string name="subscription_expired_details">Your X features subscription has expired.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Episode suivant</item>
@@ -379,6 +383,7 @@
   <string-array name="widgetType">
     <item>À venir</item>
     <item>Dernièrement</item>
+    <item>Favoris</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
     <item>1 heure</item>
