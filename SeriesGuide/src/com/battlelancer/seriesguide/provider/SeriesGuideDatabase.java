@@ -84,7 +84,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     /**
      * Qualifies column names by prefixing their {@link Tables} name.
      */
-    private interface Qualified {
+    public interface Qualified {
         String SHOWS_ID = Tables.SHOWS + "." + Shows._ID;
         String SHOWS_NEXTEPISODE = Tables.SHOWS + "." + Shows.NEXTEPISODE;
         String EPISODES_ID = Tables.EPISODES + "." + Episodes._ID;
