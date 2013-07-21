@@ -321,15 +321,19 @@
   <string name="hide_watched">Скрий гледаните епизоди</string>
   <string name="pref_widget_opacity">Фон на уиджета</string>
   <string name="pref_widget_type">Вид на уиджета</string>
+  <string name="favorites">Любими</string>
   <string name="dashclock_extension_label">Предстоящ епизод</string>
   <string name="dashclock_extension_description">Показва следващите епизоди на вашите SeriesGuide  сериали.</string>
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">Изтегляне на SeriesGuide</string>
   <string name="betawarning"><b>Внимание!</b> Тази версия е само бета тестери! Ако имате съмнения, изтеглете стабилната версия отдолу.</string>
-  <string name="upgrade_title">Get the X Upgrade</string>
-  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
-  <string name="upgrade_action">Get the X Upgrade</string>
-  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
+  <string name="upgrade_title">Get X features</string>
+  <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_action">Get X features</string>
+  <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
+  <string name="subscription_activated">You are now subscribed to X features.</string>
+  <string name="subscription_expired">Subscription expired</string>
+  <string name="subscription_expired_details">Your X features subscription has expired.</string>
   <string-array name="shsorting">
     <item>А-Ю</item>
     <item>Следващ епизод</item>
@@ -379,13 +383,14 @@
   <string-array name="widgetType">
     <item>Предстоящи</item>
     <item>Последни</item>
+    <item>Любими</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
     <item>hour</item>
     <item>6 hours</item>
     <item>12 hours</item>
     <item>24 hours</item>
-    <item>3 days</item>
+    <item>три дни</item>
     <item>week</item>
   </string-array>
   <plurals name="votes">

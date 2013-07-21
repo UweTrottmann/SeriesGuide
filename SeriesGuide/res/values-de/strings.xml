@@ -321,15 +321,19 @@
   <string name="hide_watched">Verstecke gesehene Folgen</string>
   <string name="pref_widget_opacity">Widget-Hintergrund</string>
   <string name="pref_widget_type">Widget-Typ</string>
+  <string name="favorites">Favoriten</string>
   <string name="dashclock_extension_label">Nächste Folge</string>
   <string name="dashclock_extension_description">Zeigt die nächste kommende Folge deiner Serien aus SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Zeige Folgen im Zeitraum</string>
   <string name="download_stable">SeriesGuide herunterladen</string>
   <string name="betawarning"><b>Achtung!</b> Diese Version ist für nur Beta-Tester! Laden Sie im Zweifel unten die stabile Version.</string>
-  <string name="upgrade_title">X-Upgrade holen</string>
-  <string name="upgrade_description">Erhalten Sie Zugriff auf Benachrichtigungen und weitere Optionen für das Listen-Widget. Unterstützen Sie die Weiterentwicklung.\n\nFalls Sie bereits SeriesGuide X  erworben haben, installieren Sie es um dieses Upgrade zu aktivieren.</string>
-  <string name="upgrade_action">X-Upgrade kaufen</string>
-  <string name="upgrade_success">Danke, Sie haben das X-Upgrade bereits!</string>
+  <string name="upgrade_title">Get X features</string>
+  <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_action">Get X features</string>
+  <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
+  <string name="subscription_activated">You are now subscribed to X features.</string>
+  <string name="subscription_expired">Subscription expired</string>
+  <string name="subscription_expired_details">Your X features subscription has expired.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Nächste Folge</item>
@@ -379,6 +383,7 @@
   <string-array name="widgetType">
     <item>Demnächst</item>
     <item>Vor Kurzem</item>
+    <item>Favoriten</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
     <item>einer Stunde</item>

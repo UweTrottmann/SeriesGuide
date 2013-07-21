@@ -262,8 +262,15 @@ public class SeriesContract {
 
     public static final String PATH_WITH_DETAILS = "with_details";
 
+    public static final String PATH_WITH_EPISODE = "with_episode";
+
     public static class Shows implements ShowsColumns, BaseColumns {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SHOWS)
+                .build();
+
+        public static final Uri CONTENT_URI_WITH_EPISODE = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_SHOWS)
+                .appendPath(PATH_WITH_EPISODE)
                 .build();
 
         public static final Uri CONTENT_FILTER_URI = Uri.withAppendedPath(CONTENT_URI, "filter");
@@ -278,6 +285,9 @@ public class SeriesContract {
         public static final String DEFAULT_SORT = ShowsColumns.TITLE + " ASC";
 
         public static final String SELECTION_FAVORITES = " AND " + Shows.FAVORITE + "=1";
+
+        public static final String SELECTION_WITH_NEXT_EPISODE = " AND " + Shows.NEXTEPISODE
+                + "!=''";
 
         public static Uri buildShowUri(String showId) {
             return CONTENT_URI.buildUpon().appendPath(showId).build();

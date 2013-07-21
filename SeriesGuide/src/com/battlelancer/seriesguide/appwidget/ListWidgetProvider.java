@@ -126,6 +126,9 @@ public class ListWidgetProvider extends AppWidgetProvider {
         if (typeIndex == 1) {
             activityTab = 1;
             rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.recent));
+        } else if (typeIndex == 2) {
+            activityTab = 2;
+            rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.favorites));
         } else {
             activityTab = 0;
             rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.upcoming));
@@ -136,13 +139,24 @@ public class ListWidgetProvider extends AppWidgetProvider {
         rv.setInt(R.id.container, "setBackgroundColor", bgColor);
 
         // Activity button
-        Intent activityIntent = new Intent(context, UpcomingRecentActivity.class);
-        activityIntent.putExtra(UpcomingRecentActivity.InitBundle.SELECTED_TAB, activityTab);
-        PendingIntent pendingIntent = TaskStackBuilder
-                .create(context)
-                .addNextIntent(new Intent(context, ShowsActivity.class))
-                .addNextIntent(activityIntent)
-                .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent;
+        if (typeIndex == 2) {
+            // launching the shows list
+            Intent activityIntent = new Intent(context, ShowsActivity.class);
+            pendingIntent = TaskStackBuilder
+                    .create(context)
+                    .addNextIntent(activityIntent)
+                    .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
+        } else {
+            // launching an activities list
+            Intent activityIntent = new Intent(context, UpcomingRecentActivity.class);
+            activityIntent.putExtra(UpcomingRecentActivity.InitBundle.SELECTED_TAB, activityTab);
+            pendingIntent = TaskStackBuilder
+                    .create(context)
+                    .addNextIntent(new Intent(context, ShowsActivity.class))
+                    .addNextIntent(activityIntent)
+                    .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
         rv.setOnClickPendingIntent(R.id.widget_title, pendingIntent);
 
         // Intent template for items to launch an EpisodesActivity

@@ -29,6 +29,9 @@ import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Qualified;
 import com.battlelancer.seriesguide.settings.WidgetSettings;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
@@ -50,7 +53,9 @@ public class ListWidgetService extends RemoteViewsService {
 
         private int mAppWidgetId;
 
-        private Cursor mEpisodeCursor;
+        private Cursor mDataCursor;
+
+        private int mTypeIndex;
 
         public ListRemoteViewsFactory(Context context, Intent intent) {
             mContext = context;
@@ -69,68 +74,92 @@ public class ListWidgetService extends RemoteViewsService {
 
         private void onQueryForData() {
             boolean isHideWatched = WidgetSettings.getWidgetHidesWatched(mContext, mAppWidgetId);
-            final int typeIndex = WidgetSettings.getWidgetListType(mContext, mAppWidgetId);
+            mTypeIndex = WidgetSettings.getWidgetListType(mContext, mAppWidgetId);
 
-            if (typeIndex == 1) {
-                mEpisodeCursor = DBUtils.getRecentEpisodes(isHideWatched, mContext);
-            } else {
-                mEpisodeCursor = DBUtils.getUpcomingEpisodes(isHideWatched, mContext);
+            switch (mTypeIndex) {
+                case WidgetSettings.Type.RECENT:
+                    // Recent episodes
+                    mDataCursor = DBUtils.getRecentEpisodes(isHideWatched, mContext);
+                    break;
+                case WidgetSettings.Type.FAVORITES:
+                    // Favorite shows + next episodes, exclude those without
+                    // episode
+                    mDataCursor = getContentResolver().query(
+                            Shows.CONTENT_URI_WITH_EPISODE,
+                            ShowsQuery.PROJECTION,
+                            Shows.HIDDEN + "=0" + Shows.SELECTION_FAVORITES
+                                    + Shows.SELECTION_WITH_NEXT_EPISODE, null,
+                            Shows.DEFAULT_SORT);
+                    break;
+                default:
+                    // Upcoming episodes
+                    mDataCursor = DBUtils.getUpcomingEpisodes(isHideWatched, mContext);
+                    break;
             }
         }
 
         public void onDestroy() {
             // In onDestroy() you should tear down anything that was setup for
             // your data source, eg. cursors, connections, etc.
-            mEpisodeCursor.close();
+            mDataCursor.close();
         }
 
         public int getCount() {
-            if (mEpisodeCursor != null) {
-                return mEpisodeCursor.getCount();
+            if (mDataCursor != null) {
+                return mDataCursor.getCount();
             } else {
                 return 0;
             }
         }
 
         public RemoteViews getViewAt(int position) {
+            final boolean isShowQuery = mTypeIndex == WidgetSettings.Type.FAVORITES;
+
             // We construct a remote views item based on our widget item xml
             // file, and set the text based on the position.
             RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.appwidget_row);
 
-            if (mEpisodeCursor.isClosed()) {
+            if (mDataCursor.isClosed()) {
                 return rv;
             }
             // position will always range from 0 to getCount() - 1.
-            mEpisodeCursor.moveToPosition(position);
+            mDataCursor.moveToPosition(position);
 
             // episode description
-            int seasonNumber = mEpisodeCursor.getInt(UpcomingQuery.SEASON);
-            int episodeNumber = mEpisodeCursor.getInt(UpcomingQuery.NUMBER);
-            String title = mEpisodeCursor.getString(UpcomingQuery.TITLE);
+            int seasonNumber = mDataCursor.getInt(isShowQuery ?
+                    ShowsQuery.EPISODE_SEASON : UpcomingQuery.SEASON);
+            int episodeNumber = mDataCursor.getInt(isShowQuery ?
+                    ShowsQuery.EPISODE_NUMBER : UpcomingQuery.NUMBER);
+            String title = mDataCursor.getString(isShowQuery ?
+                    ShowsQuery.EPISODE_TITLE : UpcomingQuery.TITLE);
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
             rv.setTextViewText(R.id.textViewWidgetEpisode,
                     Utils.getNextEpisodeString(prefs, seasonNumber, episodeNumber, title));
 
             // relative airtime
-            long airtime = mEpisodeCursor.getLong(UpcomingQuery.FIRSTAIREDMS);
+            long airtime = mDataCursor.getLong(isShowQuery ?
+                    ShowsQuery.EPISODE_FIRSTAIRED_MS : UpcomingQuery.FIRSTAIREDMS);
             String[] dayAndTime = Utils.formatToTimeAndDay(airtime, mContext);
             String value = dayAndTime[2] + " (" + dayAndTime[1] + ")";
             rv.setTextViewText(R.id.widgetAirtime, value);
 
             // absolute airtime and network (if any)
             value = dayAndTime[0];
-            String network = mEpisodeCursor.getString(UpcomingQuery.SHOW_NETWORK);
+            String network = mDataCursor.getString(isShowQuery ?
+                    ShowsQuery.SHOW_NETWORK : UpcomingQuery.SHOW_NETWORK);
             if (network.length() != 0) {
                 value += " " + network;
             }
             rv.setTextViewText(R.id.widgetNetwork, value);
 
             // show name
-            value = mEpisodeCursor.getString(UpcomingQuery.SHOW_TITLE);
+            value = mDataCursor.getString(isShowQuery ?
+                    ShowsQuery.SHOW_TITLE : UpcomingQuery.SHOW_TITLE);
             rv.setTextViewText(R.id.textViewWidgetShow, value);
 
             // show poster
-            value = mEpisodeCursor.getString(UpcomingQuery.SHOW_POSTER);
+            value = mDataCursor.getString(isShowQuery
+                    ? ShowsQuery.SHOW_POSTER : UpcomingQuery.SHOW_POSTER);
             final Bitmap poster = ImageProvider.getInstance(mContext).getImage(value, true);
             if (poster != null) {
                 rv.setImageViewBitmap(R.id.widgetPoster, poster);
@@ -141,7 +170,8 @@ public class ListWidgetService extends RemoteViewsService {
             // Set the fill-in intent for the list items
             Bundle extras = new Bundle();
             extras.putInt(EpisodesActivity.InitBundle.EPISODE_TVDBID,
-                    mEpisodeCursor.getInt(UpcomingQuery._ID));
+                    mDataCursor.getInt(isShowQuery ?
+                            ShowsQuery.SHOW_NEXT_EPISODE_ID : UpcomingQuery._ID));
             Intent fillInIntent = new Intent();
             fillInIntent.putExtras(extras);
             rv.setOnClickFillInIntent(R.id.appwidget_row, fillInIntent);
@@ -180,10 +210,39 @@ public class ListWidgetService extends RemoteViewsService {
             // The widget will remain
             // in its current state while work is being done here, so you don't
             // need to worry about locking up the widget.
-            if (mEpisodeCursor != null) {
-                mEpisodeCursor.close();
+            if (mDataCursor != null) {
+                mDataCursor.close();
             }
             onQueryForData();
         }
+    }
+
+    interface ShowsQuery {
+        String[] PROJECTION = {
+                Qualified.SHOWS_ID, Shows.TITLE, Shows.NETWORK, Shows.POSTER, Shows.STATUS,
+                Shows.NEXTEPISODE, Episodes.TITLE, Episodes.NUMBER, Episodes.SEASON,
+                Episodes.FIRSTAIREDMS
+        };
+
+        int SHOW_ID = 0;
+
+        int SHOW_TITLE = 1;
+
+        int SHOW_NETWORK = 2;
+
+        int SHOW_POSTER = 3;
+
+        int SHOW_STATUS = 4;
+
+        int SHOW_NEXT_EPISODE_ID = 5;
+
+        int EPISODE_TITLE = 6;
+
+        int EPISODE_NUMBER = 7;
+
+        int EPISODE_SEASON = 8;
+
+        int EPISODE_FIRSTAIRED_MS = 9;
+
     }
 }

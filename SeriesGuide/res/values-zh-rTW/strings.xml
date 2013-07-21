@@ -4,7 +4,7 @@
   <string name="show">Show</string>
   <string name="episode">集數</string>
   <string name="episode_number">Episode %s</string>
-  <string name="episodes">Episodes</string>
+  <string name="episodes">集數</string>
   <string name="season">季</string>
   <string name="season_number">Season %s</string>
   <string name="seasons">季數</string>
@@ -38,7 +38,7 @@
   <string name="activity">活動</string>
   <string name="movies">Movies</string>
   <string name="statistics">Statistics</string>
-  <string name="search">Search</string>
+  <string name="search">搜尋</string>
   <string name="add_show">新增影集</string>
   <string name="preferences">設定</string>
   <string name="help">說明</string>
@@ -321,15 +321,19 @@
   <string name="hide_watched">Hide watched episodes</string>
   <string name="pref_widget_opacity">Widget background</string>
   <string name="pref_widget_type">Widget type</string>
+  <string name="favorites">我的最愛</string>
   <string name="dashclock_extension_label">Upcoming episode</string>
   <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">下載 SeriesGuide</string>
   <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
-  <string name="upgrade_title">Get the X Upgrade</string>
-  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
-  <string name="upgrade_action">Get the X Upgrade</string>
-  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
+  <string name="upgrade_title">Get X features</string>
+  <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_action">Get X features</string>
+  <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
+  <string name="subscription_activated">You are now subscribed to X features.</string>
+  <string name="subscription_expired">Subscription expired</string>
+  <string name="subscription_expired_details">Your X features subscription has expired.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>下一集</item>
@@ -350,7 +354,7 @@
     <item>按最舊的順序排序(DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>now</item>
+    <item>目前</item>
     <item>a day</item>
     <item>3 days</item>
     <item>a week</item>
@@ -377,8 +381,9 @@
     <item>Black</item>
   </string-array>
   <string-array name="widgetType">
-    <item>Upcoming</item>
-    <item>Recent</item>
+    <item>即將播出</item>
+    <item>最近</item>
+    <item>我的最愛</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
     <item>hour</item>

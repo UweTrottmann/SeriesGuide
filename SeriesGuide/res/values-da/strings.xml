@@ -116,8 +116,8 @@
   <string name="trakt_notseen">%s ikke set.</string>
   <string name="trakt_collected">%s valgt.</string>
   <string name="trakt_notcollected">%s ikke valgt.</string>
-  <string name="add_empty">There are no shows here or your device has no internet connection.</string>
-  <string name="shows_empty">Look in the menu above to add some shows.</string>
+  <string name="add_empty">Der er ingen serier her eller din enhed har ingen internet forbindelse.</string>
+  <string name="shows_empty">Kig i menuen for at tilføje serier.</string>
   <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
   <string name="hidden_empty">Long-press on a show to hide it here.</string>
   <string name="confirm_delete">Vil du fjerne %s?</string>
@@ -142,7 +142,7 @@
   <string name="only_favorites">Kun favorit serier</string>
   <string name="togglewatched">Toggle watched</string>
   <string name="pref_infinite_scrolling">Infinite activity</string>
-  <string name="update_scheduled">Updating…</string>
+  <string name="update_scheduled">Opdaterer…</string>
   <string name="update_no_connection">To update connect to the internet.</string>
   <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
   <string name="update_inprogress">En opdatering er allerede i gang, prøv igen senere.</string>
@@ -150,7 +150,7 @@
   <string name="arttask_incomplete">Ikke alle plakater blev hentet, prøv igen senere.</string>
   <string name="arttask_start">Indlæser plakater...</string>
   <string name="arttask_nosdcard">Hentning af plakater kræver ekstern hukommelse (SDkort).</string>
-  <string name="show_on_network">on %s</string>
+  <string name="show_on_network">på %s</string>
   <string name="season_watchcount">episoder ikke set</string>
   <string name="season_allwatched">Alle episoder set</string>
   <string name="season_onenotwatched">episode ikke set</string>
@@ -185,7 +185,7 @@
   <string name="list_item_remove">Fjern fra liste</string>
   <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
   <string name="connect_trakt">Connect trakt</string>
-  <string name="connect_trakt_done">Connected to trakt!</string>
+  <string name="connect_trakt_done">Forbundet til trakt!</string>
   <string name="add_trakt_shows">Add shows from your library:</string>
   <string name="show_library">Show your library</string>
   <string name="upload_shows">Upload your SeriesGuide show list:</string>
@@ -195,8 +195,8 @@
   <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
   <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
   <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
-  <string name="trakt_download">Download to SeriesGuide</string>
-  <string name="trakt_upload">Upload to trakt.tv</string>
+  <string name="trakt_download">Download til SeriesGuide</string>
+  <string name="trakt_upload">Upload til trakt.tv</string>
   <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
   <string name="prefs_category_basic">Grundlæggende</string>
   <string name="prefs_category_sharing">Tjenester</string>
@@ -304,8 +304,8 @@
   <string name="welcome_add_part1">For at starte tryk</string>
   <string name="upcoming_show">%s is coming up</string>
   <string name="upcoming_episodes">Nye episoder kommer snart</string>
-  <string name="upcoming_episodes_number">%s new episodes</string>
-  <string name="upcoming_show_detailed">%1$s on %2$s</string>
+  <string name="upcoming_episodes_number">%s nye episoder</string>
+  <string name="upcoming_show_detailed">%1$s på %2$s</string>
   <string name="upcoming_display">Vælg for at vise kommende serier</string>
   <string name="pref_notifications">Meddelelser</string>
   <string name="pref_notificationssummary">Notify about new episodes</string>
@@ -321,15 +321,19 @@
   <string name="hide_watched">Skjul sete episoder</string>
   <string name="pref_widget_opacity">Widget baggrund</string>
   <string name="pref_widget_type">Widget type</string>
+  <string name="favorites">Favoritter</string>
   <string name="dashclock_extension_label">Kommende episode</string>
   <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">Download SeriesGuide</string>
   <string name="betawarning"><b>Vær opmærksom!</b> Denne udgave er kun lavet til beta testere! Hvis du er i tvivl, så hent den stabile version nedenfor.</string>
-  <string name="upgrade_title">Get the X Upgrade</string>
-  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
-  <string name="upgrade_action">Get the X Upgrade</string>
-  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
+  <string name="upgrade_title">Get X features</string>
+  <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_action">Get X features</string>
+  <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
+  <string name="subscription_activated">You are now subscribed to X features.</string>
+  <string name="subscription_expired">Subscription expired</string>
+  <string name="subscription_expired_details">Your X features subscription has expired.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Næste episode</item>
@@ -379,6 +383,7 @@
   <string-array name="widgetType">
     <item>Kommende</item>
     <item>Seneste</item>
+    <item>Favoritter</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
     <item>time</item>
@@ -389,35 +394,35 @@
     <item>uge</item>
   </string-array>
   <plurals name="votes">
-    <item quantity="zero">%d votes</item>
+    <item quantity="zero">%d stemmer</item>
     <item quantity="one">%d afstemning</item>
-    <item quantity="two">%d votes</item>
-    <item quantity="few">%d votes</item>
-    <item quantity="many">%d votes</item>
+    <item quantity="two">%d stemmer</item>
+    <item quantity="few">%d stemmer</item>
+    <item quantity="many">%d stemmer</item>
     <item quantity="other">%d stemmer</item>
   </plurals>
   <plurals name="days_plural">
-    <item quantity="one">%d day</item>
-    <item quantity="zero">%d days</item>
-    <item quantity="two">%d days</item>
-    <item quantity="few">%d days</item>
-    <item quantity="many">%d days</item>
-    <item quantity="other">%d days</item>
+    <item quantity="one">%d dag</item>
+    <item quantity="zero">%d dage</item>
+    <item quantity="two">%d dage</item>
+    <item quantity="few">%d dage</item>
+    <item quantity="many">%d dage</item>
+    <item quantity="other">%d dage</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d hours</item>
-    <item quantity="one">%d hour</item>
-    <item quantity="two">%d hours</item>
-    <item quantity="few">%d hours</item>
-    <item quantity="many">%d hours</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="zero">%d timer</item>
+    <item quantity="one">%d time</item>
+    <item quantity="two">%d timer</item>
+    <item quantity="few">%d timer</item>
+    <item quantity="many">%d timer</item>
+    <item quantity="other">%d timer</item>
   </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d minutes</item>
-    <item quantity="one">%d minute</item>
-    <item quantity="two">%d minutes</item>
-    <item quantity="few">%d minutes</item>
-    <item quantity="many">%d minutes</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="zero">%d minutter</item>
+    <item quantity="one">%d minut</item>
+    <item quantity="two">%d minutter</item>
+    <item quantity="few">%d minutter</item>
+    <item quantity="many">%d minutter</item>
+    <item quantity="other">%d minutter</item>
   </plurals>
 </resources>

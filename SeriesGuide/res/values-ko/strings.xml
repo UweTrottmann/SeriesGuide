@@ -321,15 +321,19 @@
   <string name="hide_watched">시청한 에피소드 숨기기</string>
   <string name="pref_widget_opacity">위젯 배경</string>
   <string name="pref_widget_type">위젯 형태</string>
+  <string name="favorites">즐겨찾기</string>
   <string name="dashclock_extension_label">방영예정 에피소드</string>
   <string name="dashclock_extension_description">시리즈가이드에 있는 쇼의 다음 에피소드를 표시합니다.</string>
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">시리즈가이드 다운로드</string>
   <string name="betawarning"><b>주목!</b> 이 버전은 베타테스터를 위한 버전입니다! 기분이 찝찝하다면 아래의 안정판을 다운받으세요.</string>
-  <string name="upgrade_title">Get the X Upgrade</string>
-  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
-  <string name="upgrade_action">Get the X Upgrade</string>
-  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
+  <string name="upgrade_title">Get X features</string>
+  <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_action">Get X features</string>
+  <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
+  <string name="subscription_activated">You are now subscribed to X features.</string>
+  <string name="subscription_expired">Subscription expired</string>
+  <string name="subscription_expired_details">Your X features subscription has expired.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>다음 에피소드</item>
@@ -379,21 +383,22 @@
   <string-array name="widgetType">
     <item>방영예정</item>
     <item>최근방영됨</item>
+    <item>즐겨찾기</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
     <item>hour</item>
     <item>6 hours</item>
     <item>12 hours</item>
     <item>24 hours</item>
-    <item>3 days</item>
+    <item>3일</item>
     <item>week</item>
   </string-array>
   <plurals name="votes">
-    <item quantity="zero">%d votes</item>
+    <item quantity="zero">%d명이 투표</item>
     <item quantity="one">%d명이 투표</item>
-    <item quantity="two">%d votes</item>
-    <item quantity="few">%d votes</item>
-    <item quantity="many">%d votes</item>
+    <item quantity="two">%d명이 투표</item>
+    <item quantity="few">%d명이 투표</item>
+    <item quantity="many">%d명이 투표</item>
     <item quantity="other">%d명이 투표</item>
   </plurals>
   <plurals name="days_plural">

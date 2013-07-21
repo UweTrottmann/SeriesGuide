@@ -321,15 +321,19 @@
   <string name="hide_watched">Ukryj obejrzane odcinki</string>
   <string name="pref_widget_opacity">Tło widżetu</string>
   <string name="pref_widget_type">Typ widżetu</string>
+  <string name="favorites">Ulubione</string>
   <string name="dashclock_extension_label">Nadchodzące odcinki</string>
   <string name="dashclock_extension_description">Wyświetla nadchodzące odcinki seriali z SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Pokaż odcinki emitowane za</string>
   <string name="download_stable">Pobierz SeriesGuide</string>
   <string name="betawarning"><b>Uwaga!</b> To wydanie jest tylko dla beta testerów! Wersję stabilną można pobrać poniżej.</string>
-  <string name="upgrade_title">Ulepsz do wersji X</string>
-  <string name="upgrade_description">Uzyskaj dostęp do powiadomień i dodatkowych możliwości dla widżetu.Wesprzyj rozwój programu.\n\nJeśli już nabyto SeriesGuide X, zainstaluj ją, aby odblokować dodatkową zawartość.</string>
-  <string name="upgrade_action">Ulepsz do wersji X</string>
-  <string name="upgrade_success">Dziękujemy, posiadasz już wersję X!</string>
+  <string name="upgrade_title">Get X features</string>
+  <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_action">Get X features</string>
+  <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
+  <string name="subscription_activated">You are now subscribed to X features.</string>
+  <string name="subscription_expired">Subscription expired</string>
+  <string name="subscription_expired_details">Your X features subscription has expired.</string>
   <string-array name="shsorting">
     <item>Od A do Z</item>
     <item>Następny odcinek</item>
@@ -379,6 +383,7 @@
   <string-array name="widgetType">
     <item>Nadchodzące</item>
     <item>Ostatnie</item>
+    <item>Ulubione</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
     <item>godzinę</item>

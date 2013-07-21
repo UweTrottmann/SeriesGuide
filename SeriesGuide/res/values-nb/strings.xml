@@ -321,15 +321,19 @@
   <string name="hide_watched">Skjul sette episoder</string>
   <string name="pref_widget_opacity">Modulbakgrunn</string>
   <string name="pref_widget_type">Modultype</string>
+  <string name="favorites">Favoritter</string>
   <string name="dashclock_extension_label">Kommende episode</string>
   <string name="dashclock_extension_description">Viser neste episode av dine SeriesGuide serier.</string>
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">Last ned SeriesGuide</string>
   <string name="betawarning"><b>Se opp!</b> Denne versjonen er kun for beta-testere. Hvis du er i tvil laster du ned den stabile versjonen nedenfor.</string>
-  <string name="upgrade_title">Hent X-oppgradering</string>
-  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
-  <string name="upgrade_action">Hent X-oppgradering</string>
-  <string name="upgrade_success">Takk, du har allerede X oppgraderingen!</string>
+  <string name="upgrade_title">Get X features</string>
+  <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_action">Get X features</string>
+  <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
+  <string name="subscription_activated">You are now subscribed to X features.</string>
+  <string name="subscription_expired">Subscription expired</string>
+  <string name="subscription_expired_details">Your X features subscription has expired.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Neste episode</item>
@@ -379,6 +383,7 @@
   <string-array name="widgetType">
     <item>Kommende</item>
     <item>Nylig</item>
+    <item>Favoritter</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
     <item>time</item>
