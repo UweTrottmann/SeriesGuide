@@ -24,6 +24,12 @@ import android.content.SharedPreferences;
  */
 public class WidgetSettings {
 
+    public interface Type {
+        int UPCOMING = 0;
+        int RECENT = 1;
+        int FAVORITES = 2;
+    }
+
     public static final String SETTINGS_FILE = "ListWidgetPreferences";
 
     public static final String KEY_PREFIX_WIDGET_BACKGROUND_COLOR = "background_color_";
@@ -35,7 +41,7 @@ public class WidgetSettings {
     private static final int DEFAULT_WIDGET_BACKGROUND_OPACITY = 50;
 
     public static int getWidgetListType(Context context, int appWidgetId) {
-        int type = 0;
+        int type = Type.UPCOMING;
         try {
             type = Integer.parseInt(context.getSharedPreferences(SETTINGS_FILE, 0)
                     .getString(KEY_PREFIX_WIDGET_LISTTYPE + appWidgetId, "0"));
