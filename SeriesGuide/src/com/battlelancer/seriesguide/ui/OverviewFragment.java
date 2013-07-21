@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.ui;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -43,6 +44,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
@@ -65,6 +67,7 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
+import com.battlelancer.seriesguide.util.ShortcutUtils;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
@@ -222,6 +225,22 @@ public class OverviewFragment extends SherlockFragment implements
             if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
                 ListsDialogFragment.showListsDialog(mEpisodeCursor.getString(EpisodeQuery._ID),
                         ListItemTypes.EPISODE, getFragmentManager());
+            }
+            return true;
+        } else if (itemId == R.id.menu_overview_add_to_homescreen) {
+            if (mShowCursor != null && mShowCursor.moveToFirst()) {
+                Activity activity = getActivity();
+
+                // Create the shortcut
+                String title = mShowCursor.getString(ShowQuery.SHOW_TITLE);
+                String poster = mShowCursor.getString(ShowQuery.SHOW_POSTER);
+                ShortcutUtils.createShortcut(activity, title, poster, getShowId());
+                // Notify the user everything went well
+                String confirm = " " + getString(R.string.add_to_homescreen_confirmation);
+                Toast.makeText(activity, title + confirm, Toast.LENGTH_SHORT).show();
+
+                // Analytics
+                fireTrackerEvent("Add to Homescreen");
             }
             return true;
         }
