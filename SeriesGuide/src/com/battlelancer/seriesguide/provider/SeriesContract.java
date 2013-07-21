@@ -269,6 +269,7 @@ public class SeriesContract {
                 .build();
 
         public static final Uri CONTENT_URI_WITH_EPISODE = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_SHOWS)
                 .appendPath(PATH_WITH_EPISODE)
                 .build();
 
