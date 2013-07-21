@@ -79,6 +79,8 @@ public class BillingActivity extends BaseActivity {
                 if (!result.isSuccess()) {
                     // Oh noes, there was a problem.
                     complain("Problem setting up In-app Billing: " + result);
+                    disableUi();
+                    setWaitMode(false);
                     return;
                 }
 
@@ -213,7 +215,7 @@ public class BillingActivity extends BaseActivity {
         nb.setSmallIcon(R.drawable.ic_notification);
         nb.setContentTitle(context.getString(R.string.subscription_expired));
         nb.setContentText(context.getString(R.string.subscription_expired_details));
-        
+
         // set additional attributes
         nb.setDefaults(Notification.DEFAULT_LIGHTS);
         nb.setAutoCancel(true);
@@ -325,6 +327,14 @@ public class BillingActivity extends BaseActivity {
         mSubscribeButton.setEnabled(!isSubscribedToX);
         mTextHasUpgrade.setVisibility(isSubscribedToX ? View.VISIBLE : View.GONE);
         return isSubscribedToX;
+    }
+
+    /**
+     * Disables the purchase button and hides the subscribed message.
+     */
+    private void disableUi() {
+        mSubscribeButton.setEnabled(false);
+        mTextHasUpgrade.setVisibility(View.GONE);
     }
 
     private void setWaitMode(boolean isActive) {
