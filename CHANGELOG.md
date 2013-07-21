@@ -11,6 +11,8 @@ Version 7 *(TBA)*
 #### 7beta2 *(2013-07-20)*
 
 * NOTICE The X Upgrade is now a yearly X Subscription. You can try it for free for 30 days. Users who have purchased the old X Upgrade or install SeriesGuide X side-by-side will get acess to the X Subscription for free until SeriesGuide will cease to exist. Please write in if there are problems!
+* X FEATURE New widget type: display favorite shows.
+* X FEATURE Add shortcuts to shows to your home screen from their overview page. Thanks Andrew Neal (@adneal)!
 * TWEAK Tapping the Google Play link now searches exclusively for movies and TV shows. Thanks Andrew Neal (@adneal)!
 * TWEAK Title and description in the add show dialog are now selectable (Android 3+). Thanks Andrew Neal (@adneal)!
 * TWEAK The search bar is now shown on older versions of Android, too. Thanks Andrew Neal (@adneal)!
