@@ -81,18 +81,32 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = DBVER_LASTWATCHEDID;
 
+    /**
+     * Qualifies column names by prefixing their {@link Tables} name.
+     */
+    private interface Qualified {
+        String SHOWS_ID = Tables.SHOWS + "." + Shows._ID;
+        String SHOWS_NEXTEPISODE = Tables.SHOWS + "." + Shows.NEXTEPISODE;
+        String EPISODES_ID = Tables.EPISODES + "." + Episodes._ID;
+        String EPISODES_SHOW_ID = Tables.EPISODES + "." + Shows.REF_SHOW_ID;
+        String SEASONS_SHOW_ID = Tables.SEASONS + "." + Shows.REF_SHOW_ID;
+    }
+
     public interface Tables {
         String SHOWS = "series";
 
         String SEASONS = "seasons";
 
-        String SEASONS_JOIN_SHOWS = "seasons "
-                + "LEFT OUTER JOIN series ON seasons.series_id=series._id";
-
         String EPISODES = "episodes";
 
-        String EPISODES_JOIN_SHOWS = "episodes "
-                + "LEFT OUTER JOIN series ON episodes.series_id=series._id";
+        String SHOWS_JOIN_EPISODES = SHOWS + " LEFT OUTER JOIN " + EPISODES
+                + " ON " + Qualified.SHOWS_NEXTEPISODE + "=" + Qualified.EPISODES_ID;
+
+        String SEASONS_JOIN_SHOWS = SEASONS + " LEFT OUTER JOIN " + SHOWS
+                + " ON " + Qualified.SEASONS_SHOW_ID + "=" + Qualified.SHOWS_ID;
+
+        String EPISODES_JOIN_SHOWS = EPISODES + " LEFT OUTER JOIN " + SHOWS
+                + " ON " + Qualified.EPISODES_SHOW_ID + "=" + Qualified.SHOWS_ID;
 
         String EPISODES_SEARCH = "searchtable";
 
@@ -117,6 +131,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 + "((SELECT " + Selections.LIST_ITEMS_COLUMNS_INTERNAL
                 + " FROM listitems WHERE item_type=3) AS listitems LEFT OUTER JOIN ("
                 + EPISODES_JOIN_SHOWS + ") AS episodes ON listitems.item_ref_id=episodes._id))";
+
     }
 
     private interface Selections {
