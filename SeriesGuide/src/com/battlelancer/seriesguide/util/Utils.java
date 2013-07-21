@@ -28,6 +28,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -36,9 +37,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.Constants.EpisodeSorting;
+import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
@@ -891,6 +894,19 @@ public class Utils {
      */
     public static String makeViewPagerFragmentName(int viewId, long id) {
         return "android:switcher:" + viewId + ":" + id;
+    }
+
+    /**
+     * Launches {@link BillingActivity} and notifies that something is only
+     * available with the X subscription.
+     */
+    public static void advertiseSubscription(Context context) {
+        Toast.makeText(context, R.string.onlyx, Toast.LENGTH_SHORT).show();
+        TaskStackBuilder
+                .create(context)
+                .addNextIntent(new Intent(context, SeriesGuidePreferences.class))
+                .addNextIntent(new Intent(context, BillingActivity.class))
+                .startActivities();
     }
 
 }

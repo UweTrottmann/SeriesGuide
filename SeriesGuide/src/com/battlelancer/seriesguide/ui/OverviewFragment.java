@@ -226,6 +226,11 @@ public class OverviewFragment extends SherlockFragment implements
             }
             return true;
         } else if (itemId == R.id.menu_overview_add_to_homescreen) {
+            if (!Utils.hasAccessToX(getActivity())) {
+                Utils.advertiseSubscription(getActivity());
+                return true;
+            }
+            
             if (mShowCursor != null && mShowCursor.moveToFirst()) {
                 // Create the shortcut
                 String title = mShowCursor.getString(ShowQuery.SHOW_TITLE);
