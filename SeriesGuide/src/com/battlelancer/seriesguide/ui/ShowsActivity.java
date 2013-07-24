@@ -153,6 +153,13 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
     @Override
     protected void onStart() {
         super.onStart();
+
+        // display a warning dialog about SeriesGuide X deprecation
+        if (getPackageName().contains("x")
+                && getSupportFragmentManager().findFragmentByTag(ChangesDialogFragment.TAG) == null) {
+            ChangesDialogFragment.show(getSupportFragmentManager());
+        }
+
         EasyTracker.getInstance().activityStart(this);
     }
 
@@ -244,7 +251,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
         // view
         boolean isDrawerOpen = isMenuDrawerOpen();
         menu.findItem(R.id.menu_add_show).setVisible(!isDrawerOpen);
-        
+
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -501,12 +508,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
                     scheduleAllShowsUpdate();
                 }
 
-                // display extensive change dialog on beta channel
-                if (getPackageName().contains("beta")) {
-                    ChangesDialogFragment.show(getSupportFragmentManager());
-                } else {
-                    Toast.makeText(this, R.string.updated, Toast.LENGTH_LONG).show();
-                }
+                // update notification
+                Toast.makeText(this, R.string.updated, Toast.LENGTH_LONG).show();
 
                 // set this as lastVersion
                 editor.putInt(AppSettings.KEY_VERSION, currentVersion);
