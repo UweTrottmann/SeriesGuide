@@ -490,9 +490,12 @@
         <item>week</item>
     </string-array>
 
-    <!-- strings for BETA release -->
+    <!-- SeriesGuide X deprecation -->
+    <string name="deprecation_title">Move to SeriesGuide</string>
+    <string name="backup_tool">Backup tool</string>
     <string name="download_stable">Download SeriesGuide</string>
-    <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
+    <string name="deprecation_warning"><b>Heads up!</b> SeriesGuide X will be stripped of all functionality very soon. Migrate your shows to the free version and keep SeriesGuide X installed to unlock the new X Subscription for life.</string>
+    <string name="migration_tutorial">To migrate your shows: touch <b>Backup tool</b>, then <b>Backup</b>.\n\nGo back until this dialog appears again.\n\nTouch <b>Download SeriesGuide</b> and install SeriesGuide.\n\nLaunch SeriesGuide. Touch <b>Menu</b>, then <b>Settings</b>. In <b>Advanced</b> use the backup tool to restore.</string>
 
     <!-- In-App Billing -->
     <string name="upgrade_title">Get X features</string>

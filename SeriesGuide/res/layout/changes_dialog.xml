@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
-                android:text="@string/add_show"
+                android:text="@string/deprecation_title"
                 android:textAppearance="@style/TextAppearance.Large.Light" />
 
             <TextView
@@ -33,7 +33,7 @@
                 android:layout_marginBottom="@dimen/large_padding"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
-                android:text="@string/betamessage"
+                android:text="@string/deprecation_warning"
                 android:textAppearance="@style/TextAppearance" />
 
             <include layout="@layout/divider_horizontal" />
@@ -45,7 +45,7 @@
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
                 android:layout_marginTop="@dimen/default_padding"
-                android:text="@string/betawarning"
+                android:text="@string/migration_tutorial"
                 android:textAppearance="@style/TextAppearance" />
         </LinearLayout>
     </ScrollView>
