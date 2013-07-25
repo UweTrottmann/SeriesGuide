@@ -43,6 +43,7 @@ import com.battlelancer.seriesguide.loaders.TraktCommentsLoader;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
+import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.Comment;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -291,7 +292,7 @@ public class TraktShoutsFragment extends SherlockFragment implements
             }
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(typeUrl + comment.id));
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-            startActivity(intent);
+            Utils.tryStartActivity(getActivity(), intent, true);
         }
     }
 

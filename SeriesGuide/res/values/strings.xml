@@ -43,6 +43,7 @@
     </plurals>
 
     <string name="offline">No network connectivity. Try again later.</string>
+    <string name="app_not_available">No app available to handle this.</string>
     <string name="onlyx">Only available with X Subscription</string>
 
     <!-- Main Menu -->

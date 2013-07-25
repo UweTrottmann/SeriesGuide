@@ -24,7 +24,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,7 +48,6 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
@@ -230,7 +228,7 @@ public class OverviewFragment extends SherlockFragment implements
                 Utils.advertiseSubscription(getActivity());
                 return true;
             }
-            
+
             if (mShowCursor != null && mShowCursor.moveToFirst()) {
                 // Create the shortcut
                 String title = mShowCursor.getString(ShowQuery.SHOW_TITLE);
@@ -702,21 +700,10 @@ public class OverviewFragment extends SherlockFragment implements
                 getActivity());
 
         // TVDb button
-        final String seasonId = episode.getString(EpisodeQuery.REF_SEASON_ID);
-        getView().findViewById(R.id.buttonTVDB).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
-                    Intent i = new Intent(Intent.ACTION_VIEW, Uri
-                            .parse(Constants.TVDB_EPISODE_URL_1
-                                    + getShowId() + Constants.TVDB_EPISODE_URL_2 + seasonId
-                                    + Constants.TVDB_EPISODE_URL_3
-                                    + mEpisodeCursor.getString(EpisodeQuery._ID)));
-                    startActivity(i);
-                    fireTrackerEvent("TVDb");
-                }
-            }
-        });
+        final int episodeTvdbId = episode.getInt(EpisodeQuery._ID);
+        final int seasonTvdbId = episode.getInt(EpisodeQuery.REF_SEASON_ID);
+        ServiceUtils.setUpTvdbButton(getShowId(), seasonTvdbId, episodeTvdbId, getView()
+                .findViewById(R.id.buttonTVDB), TAG);
 
         // trakt button
         ServiceUtils.setUpTraktButton(getShowId(), seasonNumber, episodeNumber, getView()

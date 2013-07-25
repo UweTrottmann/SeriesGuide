@@ -40,6 +40,7 @@
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:restrictedAccountType="com.battlelancer.seriesguide.x"
         android:theme="@style/SeriesGuideTheme" >
 
         <!-- Android Backup key for X -->

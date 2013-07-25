@@ -20,7 +20,6 @@ package com.battlelancer.seriesguide.ui;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -151,12 +150,8 @@ public class MovieDetailsFragment extends SherlockFragment implements
             return true;
         }
         if (itemId == R.id.menu_open_youtube) {
-            Intent intent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("http://www.youtube.com/watch?v="
-                            + mMovieDetails.trailers().youtube.get(0).source));
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-            startActivity(intent);
-            fireTrackerEvent("Trailer");
+            ServiceUtils.openYoutube(mMovieDetails.trailers().youtube.get(0).source, TAG,
+                    getActivity());
             return true;
         }
         if (itemId == R.id.menu_open_trakt) {

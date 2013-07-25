@@ -17,7 +17,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,15 +42,29 @@ public final class ServiceUtils {
 
     private static final String TRAKT_SEARCH_BASE_URL = "http://trakt.tv/search/";
 
+    private static final String IMDB_APP_TITLE_URI_POSTFIX = "/";
+
+    private static final String IMDB_APP_TITLE_URI = "imdb:///title/";
+
     public static final String IMDB_TITLE_URL = "http://imdb.com/title/";
 
-    public static final String TRAKT_SEARCH_MOVIE_URL = TRAKT_SEARCH_BASE_URL + "tmdb?q=";
+    private static final String TRAKT_SEARCH_MOVIE_URL = TRAKT_SEARCH_BASE_URL + "tmdb?q=";
 
-    public static final String TRAKT_SEARCH_SHOW_URL = TRAKT_SEARCH_BASE_URL + "tvdb?q=";
+    private static final String TRAKT_SEARCH_SHOW_URL = TRAKT_SEARCH_BASE_URL + "tvdb?q=";
 
-    public static final String TRAKT_SEARCH_SEASON_ARG = "&s=";
+    private static final String TRAKT_SEARCH_SEASON_ARG = "&s=";
 
-    public static final String TRAKT_SEARCH_EPISODE_ARG = "&e=";
+    private static final String TRAKT_SEARCH_EPISODE_ARG = "&e=";
+
+    private static final String TVDB_SHOW_URL = "http://thetvdb.com/?tab=series&id=";
+
+    private static final String TVDB_EPISODE_URL = "http://thetvdb.com/?tab=episode&seriesid=";
+
+    private static final String TVDB_EPISODE_URL_SEASON_PARAM = "&seasonid=";
+
+    private static final String TVDB_EPISODE_URL_EPISODE_PARAM = "&id=";
+
+    private static final String YOUTUBE_BASE_URL = "http://www.youtube.com/watch?v=";
 
     private static ServiceManager sTraktServiceManagerInstance;
 
@@ -208,15 +221,15 @@ public final class ServiceUtils {
         }
 
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri
-                .parse("imdb:///title/" + imdbId + "/"));
+                .parse(IMDB_APP_TITLE_URI + imdbId + IMDB_APP_TITLE_URI_POSTFIX));
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        try {
-            context.startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_TITLE_URL
-                    + imdbId));
+        // try launching IMDb app
+        if (!Utils.tryStartActivity(context, intent, false)) {
+            // on failure, try launching the web page
+            intent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse(IMDB_TITLE_URL + imdbId));
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-            context.startActivity(intent);
+            Utils.tryStartActivity(context, intent, true);
         }
 
         EasyTracker.getTracker().sendEvent(logTag, "Action Item", "IMDb", (long) 0);
@@ -239,16 +252,10 @@ public final class ServiceUtils {
                                 .sendEvent(logTag, "Action Item", "Google Play", (long) 0);
 
                         Intent intent = new Intent(Intent.ACTION_VIEW);
+                        String playStoreQuery = String.format(GOOGLE_PLAY, Uri.encode(title));
+                        intent.setData(Uri.parse(playStoreQuery));
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                        try {
-                            String shopTV = String.format(GOOGLE_PLAY, Uri.encode(title));
-                            intent.setData(Uri.parse(shopTV));
-                            v.getContext().startActivity(intent);
-                        } catch (ActivityNotFoundException e) {
-                            intent.setData(Uri.parse("http://play.google.com/store/search?q="
-                                    + title));
-                            v.getContext().startActivity(intent);
-                        }
+                        Utils.tryStartActivity(v.getContext(), intent, true);
                     }
                 });
             } else {
@@ -278,7 +285,7 @@ public final class ServiceUtils {
                         intent.setData(Uri
                                 .parse("http://www.amazon.com/gp/search?ie=UTF8&keywords=" + title));
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                        v.getContext().startActivity(intent);
+                        Utils.tryStartActivity(v.getContext(), intent, true);
                     }
                 });
             } else {
@@ -316,7 +323,7 @@ public final class ServiceUtils {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(uri));
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                    v.getContext().startActivity(intent);
+                    Utils.tryStartActivity(v.getContext(), intent, true);
 
                     EasyTracker.getTracker()
                             .sendEvent(logTag, "Action Item", "trakt", (long) 0);
@@ -341,9 +348,63 @@ public final class ServiceUtils {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(TRAKT_SEARCH_MOVIE_URL + tmdbId));
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        context.startActivity(intent);
+        Utils.tryStartActivity(context, intent, true);
 
-        EasyTracker.getTracker()
-                .sendEvent(logTag, "Action Item", "trakt", (long) 0);
+        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "trakt", (long) 0);
+    }
+
+    /**
+     * Starts activity with {@link Intent#ACTION_VIEW} to display the given show
+     * or episodes TVDb.com page.<br>
+     * If any of the season or episode numbers is below 0, displays the show
+     * page.
+     */
+    public static void setUpTvdbButton(final int showTvdbId, final int seasonTvdbId,
+            final int episodeTvdbId, View tvdbButton, final String logTag) {
+        if (tvdbButton != null) {
+            tvdbButton.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    String uri;
+                    if (seasonTvdbId < 0 || episodeTvdbId < 0) {
+                        // look just for the show page
+                        uri = TVDB_SHOW_URL + showTvdbId;
+                    } else {
+                        // look for the episode page
+                        uri = TVDB_EPISODE_URL + showTvdbId
+                                + TVDB_EPISODE_URL_SEASON_PARAM + seasonTvdbId
+                                + TVDB_EPISODE_URL_EPISODE_PARAM + episodeTvdbId;
+                    }
+
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(uri));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+                    Utils.tryStartActivity(v.getContext(), intent, true);
+
+                    EasyTracker.getTracker().sendEvent(logTag, "Action Item", "TVDb", (long) 0);
+                }
+            });
+        }
+    }
+
+    /**
+     * Starts activity with {@link Intent#ACTION_VIEW} to display the given
+     * shows TVDb.com page.
+     */
+    public static void setUpTvdbButton(final int showTvdbId, View tvdbButton, final String logTag) {
+        setUpTvdbButton(showTvdbId, -1, -1, tvdbButton, logTag);
+    }
+
+    /**
+     * Opens the YouTube app or web page for the given video.
+     */
+    public static void openYoutube(String videoId, String logTag, Context context) {
+        Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse(YOUTUBE_BASE_URL + videoId));
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        Utils.tryStartActivity(context, intent, true);
+
+        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "YouTube", (long) 0);
     }
 }

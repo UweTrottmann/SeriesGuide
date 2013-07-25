@@ -189,12 +189,4 @@ public class Constants {
             return STRING_MAPPING.get(value.toUpperCase());
         }
     }
-
-    public static final String TVDB_SHOW_URL = "http://thetvdb.com/?tab=series&id=";
-
-    public static final String TVDB_EPISODE_URL_1 = "http://thetvdb.com/?tab=episode&seriesid=";
-
-    public static final String TVDB_EPISODE_URL_2 = "&seasonid=";
-
-    public static final String TVDB_EPISODE_URL_3 = "&id=";
 }

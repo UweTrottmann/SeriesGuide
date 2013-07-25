@@ -17,7 +17,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -161,9 +160,7 @@ public class ShareUtils {
         intent.putExtra("beginTime", startTime);
         intent.putExtra("endTime", endTime);
 
-        try {
-            context.startActivity(intent);
-        } catch (ActivityNotFoundException e) {
+        if (!Utils.tryStartActivity(context, intent, false)) {
             EasyTracker.getTracker().sendEvent(TAG, "Calendar", "Failed", (long) 0);
             Toast.makeText(context, context.getString(R.string.addtocalendar_failed),
                     Toast.LENGTH_SHORT).show();
