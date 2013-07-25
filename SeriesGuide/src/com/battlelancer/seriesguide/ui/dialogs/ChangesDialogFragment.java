@@ -17,7 +17,6 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,6 +33,7 @@ import android.widget.TextView;
 
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
@@ -91,15 +91,8 @@ public class ChangesDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 // launch SeriesGuide Play Store page
-                try {
-                    Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
-                            .parse(MARKETLINK_APP));
-                    startActivity(myIntent);
-                } catch (ActivityNotFoundException e) {
-                    Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
-                            .parse(MARKETLINK_HTTP));
-                    startActivity(myIntent);
-                }
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(MARKETLINK_HTTP));
+                Utils.tryStartActivity(getActivity(), intent);
             }
         });
 
