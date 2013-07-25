@@ -18,6 +18,7 @@
 package com.battlelancer.seriesguide.util;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -907,6 +908,22 @@ public class Utils {
                 .addNextIntent(new Intent(context, SeriesGuidePreferences.class))
                 .addNextIntent(new Intent(context, BillingActivity.class))
                 .startActivities();
+    }
+
+    /**
+     * Calls {@link Context#startActivity(Intent)} with the given
+     * <b>implicit</b> {@link Intent} after making sure there is an
+     * {@link Activity} to handle it. Will show an error toast, if not. <br>
+     * <br>
+     * This may happen if e.g. the web browser has been disabled through
+     * restricted profiles.
+     */
+    public static void tryStartActivity(Context context, Intent intent) {
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(intent);
+        } else {
+            Toast.makeText(context, R.string.app_not_available, Toast.LENGTH_LONG).show();
+        }
     }
 
 }
