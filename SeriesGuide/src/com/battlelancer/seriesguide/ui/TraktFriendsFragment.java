@@ -160,7 +160,7 @@ public class TraktFriendsFragment extends ListFragment implements
             // Check if fragment is shown, create new if needed.
             EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
                     .findFragmentById(R.id.fragment_details);
-            if (detailsFragment == null || detailsFragment.getEpisodeId() != episodeId) {
+            if (detailsFragment == null || detailsFragment.getEpisodeTvdbId() != episodeId) {
                 // Make new fragment to show this selection.
                 detailsFragment = EpisodeDetailsFragment.newInstance(episodeId, true, true);
 

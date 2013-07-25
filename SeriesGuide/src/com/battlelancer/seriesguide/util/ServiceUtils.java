@@ -45,13 +45,21 @@ public final class ServiceUtils {
 
     public static final String IMDB_TITLE_URL = "http://imdb.com/title/";
 
-    public static final String TRAKT_SEARCH_MOVIE_URL = TRAKT_SEARCH_BASE_URL + "tmdb?q=";
+    private static final String TRAKT_SEARCH_MOVIE_URL = TRAKT_SEARCH_BASE_URL + "tmdb?q=";
 
-    public static final String TRAKT_SEARCH_SHOW_URL = TRAKT_SEARCH_BASE_URL + "tvdb?q=";
+    private static final String TRAKT_SEARCH_SHOW_URL = TRAKT_SEARCH_BASE_URL + "tvdb?q=";
 
-    public static final String TRAKT_SEARCH_SEASON_ARG = "&s=";
+    private static final String TRAKT_SEARCH_SEASON_ARG = "&s=";
 
-    public static final String TRAKT_SEARCH_EPISODE_ARG = "&e=";
+    private static final String TRAKT_SEARCH_EPISODE_ARG = "&e=";
+
+    private static final String TVDB_SHOW_URL = "http://thetvdb.com/?tab=series&id=";
+
+    private static final String TVDB_EPISODE_URL = "http://thetvdb.com/?tab=episode&seriesid=";
+
+    private static final String TVDB_EPISODE_URL_SEASON_PARAM = "&seasonid=";
+
+    private static final String TVDB_EPISODE_URL_EPISODE_PARAM = "&id=";
 
     private static ServiceManager sTraktServiceManagerInstance;
 
@@ -345,5 +353,48 @@ public final class ServiceUtils {
 
         EasyTracker.getTracker()
                 .sendEvent(logTag, "Action Item", "trakt", (long) 0);
+    }
+
+    /**
+     * Starts activity with {@link Intent#ACTION_VIEW} to display the given show
+     * or episodes TVDb.com page.<br>
+     * If any of the season or episode numbers is below 0, displays the show
+     * page.
+     */
+    public static void setUpTvdbButton(final int showTvdbId, final int seasonTvdbId,
+            final int episodeTvdbId, View tvdbButton, final String logTag) {
+        if (tvdbButton != null) {
+            tvdbButton.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    String uri;
+                    if (seasonTvdbId < 0 || episodeTvdbId < 0) {
+                        // look just for the show page
+                        uri = TVDB_SHOW_URL + showTvdbId;
+                    } else {
+                        // look for the episode page
+                        uri = TVDB_EPISODE_URL + showTvdbId
+                                + TVDB_EPISODE_URL_SEASON_PARAM + seasonTvdbId
+                                + TVDB_EPISODE_URL_EPISODE_PARAM + episodeTvdbId;
+                    }
+
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(uri));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+                    v.getContext().startActivity(intent);
+
+                    EasyTracker.getTracker().sendEvent(logTag, "Action Item", "TVDb", (long) 0);
+                }
+            });
+        }
+    }
+
+    /**
+     * Starts activity with {@link Intent#ACTION_VIEW} to display the given
+     * shows TVDb.com page.
+     */
+    public static void setUpTvdbButton(final int showTvdbId, View tvdbButton, final String logTag) {
+        setUpTvdbButton(showTvdbId, -1, -1, tvdbButton, logTag);
     }
 }

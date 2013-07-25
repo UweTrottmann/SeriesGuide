@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -24,7 +23,6 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.loaders.ShowLoader;
@@ -245,17 +243,7 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
 
         // TVDb button
         View tvdbButton = (View) getView().findViewById(R.id.buttonTVDB);
-        final String tvdbId = mShow.getId();
-        if (tvdbButton != null) {
-            tvdbButton.setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
-                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TVDB_SHOW_URL
-                            + tvdbId));
-                    startActivity(i);
-                    fireTrackerEvent("TVDb");
-                }
-            });
-        }
+        ServiceUtils.setUpTvdbButton(getShowTvdbId(), tvdbButton, TAG);
 
         // trakt button
         ServiceUtils.setUpTraktButton(getShowTvdbId(), getView().findViewById(R.id.buttonTrakt),

@@ -21,7 +21,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,7 +48,6 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
@@ -98,7 +96,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     protected boolean mCollected;
 
-    protected int mShowId;
+    protected int mShowTvdbId;
 
     protected int mSeasonNumber;
 
@@ -211,7 +209,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             return true;
         } else if (itemId == R.id.menu_manage_lists) {
             fireTrackerEvent("Manage lists");
-            ListsDialogFragment.showListsDialog(String.valueOf(getEpisodeId()),
+            ListsDialogFragment.showListsDialog(String.valueOf(getEpisodeTvdbId()),
                     ListItemTypes.EPISODE, getFragmentManager());
             return true;
         }
@@ -263,7 +261,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         }
     }
 
-    public int getEpisodeId() {
+    public int getEpisodeTvdbId() {
         return getArguments().getInt(InitBundle.EPISODE_TVDBID);
     }
 
@@ -282,15 +280,15 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     private void onToggleWatched() {
         mWatched = !mWatched;
-        new FlagTask(getActivity(), mShowId)
-                .episodeWatched(getEpisodeId(), mSeasonNumber, mEpisodeNumber, mWatched)
+        new FlagTask(getActivity(), mShowTvdbId)
+                .episodeWatched(getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber, mWatched)
                 .execute();
     }
 
     private void onToggleCollected() {
         mCollected = !mCollected;
-        new FlagTask(getActivity(), mShowId)
-                .episodeCollected(getEpisodeId(), mSeasonNumber, mEpisodeNumber, mCollected)
+        new FlagTask(getActivity(), mShowTvdbId)
+                .episodeCollected(getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber, mCollected)
                 .execute();
     }
 
@@ -316,7 +314,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
-            mShowId = cursor.getInt(DetailsQuery.REF_SHOW_ID);
+            mShowTvdbId = cursor.getInt(DetailsQuery.REF_SHOW_ID);
             mSeasonNumber = cursor.getInt(DetailsQuery.SEASON);
             mEpisodeNumber = cursor.getInt(DetailsQuery.NUMBER);
             final String showTitle = cursor.getString(DetailsQuery.SHOW_TITLE);
@@ -341,7 +339,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 showtitle.setOnClickListener(new OnClickListener() {
                     public void onClick(View v) {
                         Intent upIntent = new Intent(getActivity(), OverviewActivity.class);
-                        upIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, mShowId);
+                        upIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, mShowTvdbId);
                         upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                                 | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(upIntent);
@@ -508,21 +506,12 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     getActivity());
 
             // TVDb button
-            final String seasonId = cursor.getString(DetailsQuery.REF_SEASON_ID);
-            view.findViewById(R.id.buttonTVDB).setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(Intent.ACTION_VIEW, Uri
-                            .parse(Constants.TVDB_EPISODE_URL_1 + mShowId
-                                    + Constants.TVDB_EPISODE_URL_2 + seasonId
-                                    + Constants.TVDB_EPISODE_URL_3 + getEpisodeId()));
-                    startActivity(i);
-                    fireTrackerEvent("TVDb");
-                }
-            });
+            final int seasonTvdbId = cursor.getInt(DetailsQuery.REF_SEASON_ID);
+            ServiceUtils.setUpTvdbButton(mShowTvdbId, seasonTvdbId, getEpisodeTvdbId(),
+                    view.findViewById(R.id.buttonTVDB), TAG);
 
             // trakt button
-            ServiceUtils.setUpTraktButton(mShowId, mSeasonNumber, mEpisodeNumber,
+            ServiceUtils.setUpTraktButton(mShowTvdbId, mSeasonNumber, mEpisodeNumber,
                     view.findViewById(R.id.buttonTrakt), TAG);
 
             // trakt shouts button
@@ -530,7 +519,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), TraktShoutsActivity.class);
-                    intent.putExtras(TraktShoutsActivity.createInitBundleEpisode(mShowId,
+                    intent.putExtras(TraktShoutsActivity.createInitBundleEpisode(mShowTvdbId,
                             mSeasonNumber, mEpisodeNumber, episodeTitle));
                     startActivity(intent);
                     fireTrackerEvent("Comments");
@@ -615,7 +604,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
         return new CursorLoader(getActivity(), Episodes.buildEpisodeWithShowUri(String
-                .valueOf(getEpisodeId())), DetailsQuery.PROJECTION, null, null, null);
+                .valueOf(getEpisodeTvdbId())), DetailsQuery.PROJECTION, null, null, null);
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -641,7 +630,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 && (mTraktTask == null || mTraktTask.getStatus() != AsyncTask.Status.RUNNING)) {
             mTraktTask = new TraktSummaryTask(getSherlockActivity(), ratingBar, isUseCachedValues)
                     .episode(
-                            mShowId, mSeasonNumber, mEpisodeNumber);
+                            mShowTvdbId, mSeasonNumber, mEpisodeNumber);
             AndroidUtils.executeAsyncTask(mTraktTask, new Void[] {});
         }
     }
