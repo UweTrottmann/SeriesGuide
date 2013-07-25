@@ -92,7 +92,7 @@ public class ChangesDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 // launch SeriesGuide Play Store page
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(MARKETLINK_HTTP));
-                Utils.tryStartActivity(getActivity(), intent);
+                Utils.tryStartActivity(getActivity(), intent, true);
             }
         });
 

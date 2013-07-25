@@ -913,17 +913,22 @@ public class Utils {
     /**
      * Calls {@link Context#startActivity(Intent)} with the given
      * <b>implicit</b> {@link Intent} after making sure there is an
-     * {@link Activity} to handle it. Will show an error toast, if not. <br>
+     * {@link Activity} to handle it. Can show an error toast, if not. <br>
      * <br>
      * This may happen if e.g. the web browser has been disabled through
      * restricted profiles.
+     * 
+     * @return Whether there was an {@link Activity} to handle the given
+     *         {@link Intent}.
      */
-    public static void tryStartActivity(Context context, Intent intent) {
+    public static boolean tryStartActivity(Context context, Intent intent, boolean displayError) {
         if (intent.resolveActivity(context.getPackageManager()) != null) {
             context.startActivity(intent);
-        } else {
+            return true;
+        } else if (displayError) {
             Toast.makeText(context, R.string.app_not_available, Toast.LENGTH_LONG).show();
         }
+        return false;
     }
 
 }
