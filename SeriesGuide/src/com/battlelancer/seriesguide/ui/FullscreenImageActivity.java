@@ -19,11 +19,11 @@ package com.battlelancer.seriesguide.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.uwetrottmann.seriesguide.R;
 
 /**
  * This {@link Activity} is used to display a full screen image of a TV show's
@@ -36,9 +36,6 @@ public class FullscreenImageActivity extends Activity {
     /** The {@link Intent} extra used to deliver the path to the requested image */
     public static final String PATH = "fullscreenimageactivity.intent.extra.image";
 
-    /** The {@link Intent} extra used to determine the orientation to use */
-    public static final String POSTER = "fullscreenimageactivity.intent.extra.poster";
-
     /** Displays the poster or episode preview */
     private ImageView mImage;
 
@@ -48,25 +45,13 @@ public class FullscreenImageActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Create the ImageView used to display the poster/episode preview
-        mImage = new ImageView(this);
-        setContentView(mImage);
-
-        // Determine the correct orientation
-        Bundle extras = getIntent().getExtras();
-        int orientation = ActivityInfo.SCREEN_ORIENTATION_USER;
-        if (extras.getBoolean(POSTER)) {
-            // Viewing a poster
-            orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
-        } else {
-            // Viewing an episode preview
-            orientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-        }
-        setRequestedOrientation(orientation);
+        // Inflate the layout and initialize the ImageView
+        setContentView(R.layout.fullscreen_image_activity);
+        mImage = (ImageView) findViewById(android.R.id.icon);
 
         // Load the requested image
         String imagePath = getIntent().getExtras().getString(PATH);
-        ImageProvider.getInstance(this).loadImage(mImage, imagePath, false);
+        mImage.setImageBitmap(ImageProvider.getInstance(this).getImage(imagePath, false));
     }
 
     /**

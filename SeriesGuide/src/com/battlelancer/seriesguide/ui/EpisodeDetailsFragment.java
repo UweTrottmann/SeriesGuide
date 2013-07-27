@@ -428,7 +428,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 public void onClick(View v) {
                     Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
                     fullscreen.putExtra(FullscreenImageActivity.PATH, imagePath);
-                    fullscreen.putExtra(FullscreenImageActivity.POSTER, false);
                     startActivity(fullscreen);
                 }
             });
