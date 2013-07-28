@@ -25,6 +25,7 @@ import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -124,26 +125,29 @@ public class UpcomingFragment extends SherlockFragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        FragmentActivity activity = getActivity();
 
         // Check to see if we have a frame in which to embed the details
         // fragment directly in the containing UI.
-        View detailsFragment = getActivity().findViewById(R.id.fragment_details);
+        View detailsFragment = activity.findViewById(R.id.fragment_details);
         mDualPane = detailsFragment != null && detailsFragment.getVisibility() == View.VISIBLE;
 
-        // setup adapter
-        mAdapter = new SlowAdapter(getActivity(), null, 0);
-        mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteScrolling(getActivity()));
+        // Setup adapter
+        mAdapter = new SlowAdapter(activity, null, 0);
+        mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteScrolling(activity));
 
-        // setup grid view
+        // Setup grid view
         mGridView.setAdapter(mAdapter);
         mGridView.setOnItemClickListener(this);
 
-        // start loading data
-        getActivity().getSupportLoaderManager().initLoader(getLoaderId(), null, this);
+        // Start loading data
+        activity.getSupportLoaderManager().initLoader(getLoaderId(), null, this);
 
-        PreferenceManager.getDefaultSharedPreferences(getActivity())
+        // Register the preference change listener
+        PreferenceManager.getDefaultSharedPreferences(activity)
                 .registerOnSharedPreferenceChangeListener(this);
 
+        // Register for a context menu to be shown
         registerForContextMenu(mGridView);
     }
 
@@ -152,13 +156,14 @@ public class UpcomingFragment extends SherlockFragment implements
         super.onStart();
         final String tag = getArguments().getString("analyticstag");
         EasyTracker.getTracker().sendView(tag);
+        // Ensure the correct data is displayed after an orientation change
+        onRequery();
     }
 
     @Override
     public void onDestroy() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         prefs.unregisterOnSharedPreferenceChangeListener(this);
-
         super.onDestroy();
     }
 
@@ -166,7 +171,7 @@ public class UpcomingFragment extends SherlockFragment implements
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        // only display the action appropiate for the items current state
+        // only display the action appropriate for the items current state
         menu.add(0, CONTEXT_CHECKIN_ID, 0, R.string.checkin);
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         WatchedBox watchedBox = (WatchedBox) info.targetView.findViewById(R.id.watchedBoxUpcoming);
