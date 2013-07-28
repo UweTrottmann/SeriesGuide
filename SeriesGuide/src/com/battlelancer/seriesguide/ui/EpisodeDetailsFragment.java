@@ -419,8 +419,16 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
             // Episode image
             FrameLayout imageContainer = (FrameLayout) view.findViewById(R.id.imageContainer);
-            String imagePath = cursor.getString(DetailsQuery.IMAGE);
+            final String imagePath = cursor.getString(DetailsQuery.IMAGE);
             onLoadImage(imagePath, imageContainer);
+            imageContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
+                    fullscreen.putExtra(FullscreenImageActivity.PATH, imagePath);
+                    startActivity(fullscreen);
+                }
+            });
 
             // Watched button
             mWatched = cursor.getInt(DetailsQuery.WATCHED) == 1 ? true : false;
