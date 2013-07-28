@@ -281,13 +281,11 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
     }
 
     private void onRateOnTrakt() {
-        if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
+        if (ServiceUtils.ensureTraktCredentials(getActivity())) {
             TraktRateDialogFragment rateShow = TraktRateDialogFragment.newInstance(getShowTvdbId());
             rateShow.show(getFragmentManager(), "traktratedialog");
-            fireTrackerEvent("Rate (trakt)");
-        } else {
-            startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
         }
+        fireTrackerEvent("Rate (trakt)");
     }
 
     private void onLoadTraktRatings(boolean isUseCachedValues) {

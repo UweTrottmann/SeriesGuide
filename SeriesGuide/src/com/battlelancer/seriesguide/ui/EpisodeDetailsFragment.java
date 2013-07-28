@@ -217,12 +217,10 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     private void onRateOnTrakt() {
-        fireTrackerEvent("Rate (trakt)");
-        if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
+        if (ServiceUtils.ensureTraktCredentials(getActivity())) {
             onShareEpisode(ShareMethod.RATE_TRAKT);
-        } else {
-            startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
         }
+        fireTrackerEvent("Rate (trakt)");
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
