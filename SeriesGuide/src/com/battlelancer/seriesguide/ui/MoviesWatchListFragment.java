@@ -37,7 +37,6 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.adapters.MoviesWatchListAdapter;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.loaders.TraktMoviesWatchlistLoader;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -105,9 +104,7 @@ public class MoviesWatchListFragment extends SherlockFragment implements
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
-            menu.add(0, CONTEXT_REMOVE_ID, 0, R.string.watchlist_remove);
-        }
+        menu.add(0, CONTEXT_REMOVE_ID, 0, R.string.watchlist_remove);
     }
 
     @Override
