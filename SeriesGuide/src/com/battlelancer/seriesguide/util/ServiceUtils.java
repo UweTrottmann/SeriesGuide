@@ -27,6 +27,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.trakt.ServiceManager;
@@ -176,6 +177,23 @@ public final class ServiceUtils {
         String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
 
         return (!username.equalsIgnoreCase("") && !password.equalsIgnoreCase(""));
+    }
+
+    /**
+     * Checks for existing trakt credentials. If there aren't any valid ones
+     * (determined by {@link #ensureTraktCredentials(Context)}), launches the
+     * trakt connect flow.
+     * 
+     * @return <b>true</b> if credentials are valid, <b>false</b> if invalid and
+     *         launching trakt connect flow.
+     */
+    public static boolean ensureTraktCredentials(Context context) {
+        if (!isTraktCredentialsValid(context)) {
+            // launch trakt connect process
+            context.startActivity(new Intent(context, ConnectTraktActivity.class));
+            return false;
+        }
+        return true;
     }
 
     public static void clearTraktCredentials(Context context) {
