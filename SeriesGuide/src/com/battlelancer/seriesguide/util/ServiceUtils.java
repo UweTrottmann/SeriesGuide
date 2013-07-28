@@ -181,7 +181,7 @@ public final class ServiceUtils {
 
     /**
      * Checks for existing trakt credentials. If there aren't any valid ones
-     * (determined by {@link #ensureTraktCredentials(Context)}), launches the
+     * (determined by {@link #isTraktCredentialsValid(Context)}), launches the
      * trakt connect flow.
      * 
      * @return <b>true</b> if credentials are valid, <b>false</b> if invalid and
