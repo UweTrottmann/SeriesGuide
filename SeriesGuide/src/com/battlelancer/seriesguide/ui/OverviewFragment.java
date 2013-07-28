@@ -291,12 +291,10 @@ public class OverviewFragment extends SherlockFragment implements
 
     private void onRateOnTrakt() {
         // rate episode on trakt.tv
-        fireTrackerEvent("Rate (trakt)");
-        if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
+        if (ServiceUtils.ensureTraktCredentials(getActivity())) {
             onShareEpisode(ShareMethod.RATE_TRAKT);
-        } else {
-            startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
         }
+        fireTrackerEvent("Rate (trakt)");
     }
 
     private void onShareEpisode(ShareMethod shareMethod) {

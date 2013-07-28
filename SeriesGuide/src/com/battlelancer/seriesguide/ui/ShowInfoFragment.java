@@ -263,7 +263,16 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
 
         // Poster
         final ImageView poster = (ImageView) getView().findViewById(R.id.ImageViewShowInfoPoster);
-        ImageProvider.getInstance(getActivity()).loadImage(poster, mShow.getPoster(), false);
+        final String imagePath = mShow.getPoster();
+        ImageProvider.getInstance(getActivity()).loadImage(poster, imagePath, false);
+        poster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
+                fullscreen.putExtra(FullscreenImageActivity.PATH, imagePath);
+                startActivity(fullscreen);
+            }
+        });
         // Utils.setPosterBackground((ImageView)
         // getView().findViewById(R.id.background),
         // mShow.getPoster(), getActivity());
@@ -281,13 +290,11 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
     }
 
     private void onRateOnTrakt() {
-        if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
+        if (ServiceUtils.ensureTraktCredentials(getActivity())) {
             TraktRateDialogFragment rateShow = TraktRateDialogFragment.newInstance(getShowTvdbId());
             rateShow.show(getFragmentManager(), "traktratedialog");
-            fireTrackerEvent("Rate (trakt)");
-        } else {
-            startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
         }
+        fireTrackerEvent("Rate (trakt)");
     }
 
     private void onLoadTraktRatings(boolean isUseCachedValues) {
