@@ -45,9 +45,13 @@ public class FullscreenImageActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Inflate the layout and initialize the ImageView
         setContentView(R.layout.fullscreen_image_activity);
-        mImage = (ImageView) findViewById(android.R.id.icon);
+
+        setupViews();
+    }
+
+    private void setupViews() {
+        mImage = (ImageView) findViewById(R.id.fullscreenImageView);
 
         // Load the requested image
         String imagePath = getIntent().getExtras().getString(PATH);

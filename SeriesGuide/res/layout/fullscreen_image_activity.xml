@@ -1,8 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@android:id/icon"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scaleType="fitCenter"
-    tools:ignore="ContentDescription" />
+    android:background="#0099cc"
+    tools:context=".FullscreenImageActivity" >
+
+    <!--
+         The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc.
+    -->
+
+    <ImageView
+        android:id="@+id/fullscreenImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:keepScreenOn="true"
+        android:scaleType="fitCenter"
+        tools:ignore="ContentDescription" />
+
+</FrameLayout>
