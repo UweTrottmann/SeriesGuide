@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal" >
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        android:layout_width="0px"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
+    android:layout_height="match_parent" >
 
     <View
+        android:id="@+id/separatorUpcoming"
         android:layout_width="2dp"
         android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
         android:background="?attr/colorSeparator" />
+
+    <com.viewpagerindicator.TabPageIndicator
+        android:id="@+id/indicatorUpcoming"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/separatorUpcoming" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pagerUpcoming"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/indicatorUpcoming"
+        android:layout_toLeftOf="@id/separatorUpcoming" />
 
     <FrameLayout
         android:id="@+id/fragment_details"
-        android:layout_width="0px"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_toRightOf="@id/separatorUpcoming" />
 
-</LinearLayout>
+</RelativeLayout>

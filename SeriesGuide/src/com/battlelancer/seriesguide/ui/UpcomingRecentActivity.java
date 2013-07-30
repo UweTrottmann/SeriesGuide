@@ -28,7 +28,7 @@ import android.support.v4.view.ViewPager;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.adapters.TabPagerAdapter;
+import com.battlelancer.seriesguide.adapters.TabPagerIndicatorAdapter;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.ActivityType;
@@ -37,6 +37,7 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
+import com.viewpagerindicator.TabPageIndicator;
 
 public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAddShowListener {
     private static final String TAG = "Activity";
@@ -50,15 +51,23 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         super.onCreate(savedInstanceState);
         getMenu().setContentView(R.layout.upcoming);
 
+        setupActionBar();
+
+        setupViews(savedInstanceState);
+    }
+
+    private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.activity);
         actionBar.setIcon(R.drawable.ic_action_upcoming);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    }
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+    private void setupViews(Bundle savedInstanceState) {
+        ViewPager viewPager = (ViewPager) findViewById(R.id.pagerUpcoming);
+        TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicatorUpcoming);
 
-        TabsAdapter tabsAdapter = new TabsAdapter(getSupportFragmentManager(), this, actionBar,
-                viewPager);
+        ActivityTabPageAdapter tabsAdapter = new ActivityTabPageAdapter(
+                getSupportFragmentManager(), this, viewPager, indicator);
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
         argsUpcoming.putString(UpcomingFragment.InitBundle.TYPE, ActivityType.UPCOMING);
@@ -100,7 +109,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         if (selection > tabsAdapter.getCount() - 1) {
             selection = 0;
         }
-        actionBar.setSelectedNavigationItem(selection);
+        indicator.setCurrentItem(selection);
     }
 
     @Override
@@ -153,22 +162,16 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
     }
 
     /**
-     * This is a helper class that implements the management of tabs and all
-     * details of connecting a ViewPager with associated TabHost. It relies on a
-     * trick. Normally a tab host has a simple API for supplying a View or
-     * Intent that each tab will show. This is not sufficient for switching
-     * between pages. So instead we make the content part of the tab host 0dp
-     * high (it is not shown) and the TabsAdapter supplies its own dummy view to
-     * show as the tab content. It listens to changes in tabs, and takes care of
-     * switch to the correct paged in the ViewPager whenever the selected tab
-     * changes.
+     * Special {@link TabPagerIndicatorAdapter} which saves the currently
+     * selected page to preferences, so we can restore it when the user comes
+     * back later.
      */
-    public static class TabsAdapter extends TabPagerAdapter {
+    public static class ActivityTabPageAdapter extends TabPagerIndicatorAdapter {
         private SharedPreferences mPrefs;
 
-        public TabsAdapter(FragmentManager fm, Context context, ActionBar actionBar,
-                ViewPager pager) {
-            super(fm, context, actionBar, pager);
+        public ActivityTabPageAdapter(FragmentManager fm, Context context, ViewPager pager,
+                TabPageIndicator indicator) {
+            super(fm, context, pager, indicator);
             mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         }
 
