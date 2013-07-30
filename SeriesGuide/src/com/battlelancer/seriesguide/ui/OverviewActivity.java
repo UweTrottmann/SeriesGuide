@@ -74,7 +74,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         // look if we are on a multi-pane or single-pane layout...
-        View pagerView = findViewById(R.id.pager);
+        View pagerView = findViewById(R.id.pagerOverview);
         if (pagerView != null && pagerView.getVisibility() == View.VISIBLE) {
             // ...single pane layout with view pager
 
@@ -160,7 +160,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
 
     private void setupViewPager(View pagerView) {
         ViewPager pager = (ViewPager) pagerView;
-        TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicator);
+        TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicatorOverview);
 
         // setup tab strip
         TabPagerIndicatorAdapter tabsAdapter = new TabPagerIndicatorAdapter(

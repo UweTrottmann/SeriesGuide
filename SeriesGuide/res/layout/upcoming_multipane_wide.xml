@@ -10,19 +10,18 @@
         android:layout_weight="3" >
 
         <com.viewpagerindicator.TabPageIndicator
-            android:id="@+id/indicator"
+            android:id="@+id/indicatorUpcoming"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <android.support.v4.view.ViewPager
-            android:id="@+id/pager"
+            android:id="@+id/pagerUpcoming"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/indicator" />
+            android:layout_below="@id/indicatorUpcoming" />
     </RelativeLayout>
 
     <View
-        android:id="@+id/spacer_middle"
         android:layout_width="0px"
         android:layout_height="match_parent"
         android:layout_weight="1" />

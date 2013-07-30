@@ -63,8 +63,8 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
     }
 
     private void setupViews(Bundle savedInstanceState) {
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicator);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.pagerUpcoming);
+        TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicatorUpcoming);
 
         ActivityTabPageAdapter tabsAdapter = new ActivityTabPageAdapter(
                 getSupportFragmentManager(), this, viewPager, indicator);
