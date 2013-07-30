@@ -39,6 +39,7 @@ import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
@@ -54,7 +55,8 @@ import java.util.List;
  * Hosts a fragment which displays episodes of a season. On larger screen hosts
  * a {@link ViewPager} displaying the episodes.
  */
-public class EpisodesActivity extends BaseNavDrawerActivity implements OnSharedPreferenceChangeListener {
+public class EpisodesActivity extends BaseNavDrawerActivity implements
+        OnSharedPreferenceChangeListener {
 
     private EpisodesFragment mEpisodesFragment;
 
@@ -87,6 +89,9 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements OnSharedP
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getMenu().setContentView(R.layout.episodes);
+
+        // if coming from a notification, set last cleared time
+        NotificationService.handleDeleteIntent(this, getIntent());
 
         // check for dual pane layout
         View pagerFragment = findViewById(R.id.pager);

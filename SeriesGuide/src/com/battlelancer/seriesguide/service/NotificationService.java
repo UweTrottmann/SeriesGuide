@@ -114,10 +114,7 @@ public class NotificationService extends IntentService {
         /*
          * Handle a possible delete intent.
          */
-        long clearedTime = intent.getLongExtra(KEY_EPISODE_CLEARED_TIME, 0);
-        if (clearedTime != 0) {
-            // Never show the cleared episode(s) again
-            prefs.edit().putLong(NotificationSettings.KEY_LAST_CLEARED, clearedTime).commit();
+        if (handleDeleteIntent(this, intent)) {
             return;
         }
 
@@ -288,6 +285,22 @@ public class NotificationService extends IntentService {
     }
 
     /**
+     * Extracts the last cleared time and stores it in settings.
+     */
+    public static boolean handleDeleteIntent(Context context, Intent intent) {
+        long clearedTime = intent.getLongExtra(KEY_EPISODE_CLEARED_TIME, 0);
+        if (clearedTime != 0) {
+            // Never show the cleared episode(s) again
+            PreferenceManager.getDefaultSharedPreferences(context)
+                    .edit()
+                    .putLong(NotificationSettings.KEY_LAST_CLEARED, clearedTime)
+                    .commit();
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Resets the air time of the last notified about episode. Afterwards
      * notifications for episodes may appear, which were already notified about.
      */
@@ -331,6 +344,7 @@ public class NotificationService extends IntentService {
             Intent notificationIntent = new Intent(context, EpisodesActivity.class);
             notificationIntent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
                     upcomingEpisodes.getInt(NotificationQuery._ID));
+            notificationIntent.putExtra(KEY_EPISODE_CLEARED_TIME, latestAirtime);
             contentIntent = PendingIntent.getActivity(context, REQUEST_CODE_SINGLE_EPISODE,
                     notificationIntent, 0);
         } else if (count > 1) {
@@ -340,6 +354,7 @@ public class NotificationService extends IntentService {
             contentText = getString(R.string.upcoming_display);
 
             Intent notificationIntent = new Intent(context, UpcomingRecentActivity.class);
+            notificationIntent.putExtra(KEY_EPISODE_CLEARED_TIME, latestAirtime);
             contentIntent = PendingIntent.getActivity(context, REQUEST_CODE_MULTIPLE_EPISODES,
                     notificationIntent, 0);
         }

@@ -30,6 +30,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.adapters.TabPagerIndicatorAdapter;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.ActivityType;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
@@ -50,6 +51,9 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getMenu().setContentView(R.layout.upcoming);
+
+        // if coming from a notification, set last cleared time
+        NotificationService.handleDeleteIntent(this, getIntent());
 
         setupActionBar();
 
