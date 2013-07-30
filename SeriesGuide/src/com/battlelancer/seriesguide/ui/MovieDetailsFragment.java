@@ -154,6 +154,10 @@ public class MovieDetailsFragment extends SherlockFragment implements
                     getActivity());
             return true;
         }
+        if (itemId == R.id.menu_open_google_play) {
+            ServiceUtils.searchGooglePlay(mMovieDetails.movie().title, TAG, getActivity());
+            return true;
+        }
         if (itemId == R.id.menu_open_trakt) {
             ServiceUtils.openTraktMovie(getActivity(), mMovieDetails.movie().id, TAG);
             return true;

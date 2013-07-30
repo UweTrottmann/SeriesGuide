@@ -266,14 +266,7 @@ public final class ServiceUtils {
                 playButton.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        EasyTracker.getTracker()
-                                .sendEvent(logTag, "Action Item", "Google Play", (long) 0);
-
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        String playStoreQuery = String.format(GOOGLE_PLAY, Uri.encode(title));
-                        intent.setData(Uri.parse(playStoreQuery));
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                        Utils.tryStartActivity(v.getContext(), intent, true);
+                        searchGooglePlay(title, logTag, v.getContext());
                     }
                 });
             } else {
@@ -281,6 +274,20 @@ public final class ServiceUtils {
             }
 
         }
+    }
+
+    /**
+     * Tries to open Google Play to search for the given tv show, episode or
+     * movie title.
+     */
+    public static void searchGooglePlay(final String title, final String logTag, Context context) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        String playStoreQuery = String.format(GOOGLE_PLAY, Uri.encode(title));
+        intent.setData(Uri.parse(playStoreQuery));
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        Utils.tryStartActivity(context, intent, true);
+
+        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "Google Play", (long) 0);
     }
 
     /**
