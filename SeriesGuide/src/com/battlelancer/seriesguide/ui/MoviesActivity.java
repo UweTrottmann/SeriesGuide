@@ -22,10 +22,11 @@ import android.support.v4.view.ViewPager;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
-import com.battlelancer.seriesguide.adapters.TabPagerAdapter;
+import com.battlelancer.seriesguide.adapters.TabPagerIndicatorAdapter;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
+import com.viewpagerindicator.TabPageIndicator;
 
 /**
  * Users can search for a movie, display detailed information and then check in
@@ -44,21 +45,23 @@ public class MoviesActivity extends BaseTopActivity {
         super.onCreate(savedInstanceState);
         getMenu().setContentView(R.layout.movies);
 
+        setupActionBar();
+
+        setupViews();
+    }
+
+    private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.movies));
         actionBar.setIcon(R.drawable.ic_action_movie);
-
-        setupViewPager();
     }
 
-    private void setupViewPager() {
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
+    private void setupViews() {
         ViewPager pager = (ViewPager) findViewById(R.id.pagerMovies);
+        TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicatorMovies);
 
-        TabPagerAdapter tabsAdapter = new TabPagerAdapter(getSupportFragmentManager(), this,
-                actionBar, pager);
+        TabPagerIndicatorAdapter tabsAdapter = new TabPagerIndicatorAdapter(
+                getSupportFragmentManager(), this, pager, indicator);
         // only show the trakt watchlist with valid credentials
         if (ServiceUtils.isTraktCredentialsValid(this)) {
             tabsAdapter.addTab(R.string.movies_watchlist, MoviesWatchListFragment.class, null);
