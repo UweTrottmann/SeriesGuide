@@ -509,5 +509,8 @@
 
     <!-- Add to Homescreen -->
     <string name="add_to_homescreen">Add to Home screen</string>
+    
+    <!-- Search -->
+    <string name="search_within_show">Search within %s</string>
 
 </resources>

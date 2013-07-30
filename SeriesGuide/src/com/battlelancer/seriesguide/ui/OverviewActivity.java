@@ -234,13 +234,16 @@ public class OverviewActivity extends BaseNavDrawerActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Intent upIntent = new Intent(this, ShowsActivity.class);
-                upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(upIntent);
-                overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            Intent upIntent = new Intent(this, ShowsActivity.class);
+            upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(upIntent);
+            overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
+            return true;
+        } else if (itemId == R.id.menu_overview_search) {
+            onSearchRequested();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

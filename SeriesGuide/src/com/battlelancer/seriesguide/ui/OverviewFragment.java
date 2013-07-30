@@ -213,6 +213,7 @@ public class OverviewFragment extends SherlockFragment implements
         boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isMenuDrawerOpen();
         menu.findItem(R.id.menu_overview_manage_lists).setVisible(!isDrawerOpen);
         menu.findItem(R.id.menu_overview_share).setVisible(!isDrawerOpen);
+        menu.findItem(R.id.menu_overview_search).setVisible(!isDrawerOpen);
     }
 
     @Override

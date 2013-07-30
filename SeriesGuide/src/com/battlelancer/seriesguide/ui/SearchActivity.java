@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
@@ -42,11 +43,12 @@ public class SearchActivity extends BaseTopActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getMenu().setContentView(R.layout.search);
-        handleIntent(getIntent());
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.search_hint);
         actionBar.setDisplayShowTitleEnabled(true);
+
+        handleIntent(getIntent());
     }
 
     @Override
@@ -72,19 +74,32 @@ public class SearchActivity extends BaseTopActivity {
             return;
         }
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            Bundle extras = getIntent().getExtras();
+
+            // set query as subtitle
             String query = intent.getStringExtra(SearchManager.QUERY);
-            getSupportActionBar().setSubtitle("\"" + query + "\"");
+            final ActionBar actionBar = getSupportActionBar();
+            actionBar.setSubtitle("\"" + query + "\"");
+
+            // searching within a show?
+            Bundle appData = extras.getBundle(SearchManager.APP_DATA);
+            if (appData != null) {
+                String showTitle = appData.getString(SearchFragment.InitBundle.SHOW_TITLE);
+                if (!TextUtils.isEmpty(showTitle)) {
+                    actionBar.setTitle(getString(R.string.search_within_show, showTitle));
+                }
+            }
 
             // display results in a search fragment
             SearchFragment searchFragment = (SearchFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.search_fragment);
             if (searchFragment == null) {
                 SearchFragment newFragment = new SearchFragment();
-                newFragment.setArguments(getIntent().getExtras());
+                newFragment.setArguments(extras);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.search_fragment, newFragment).commit();
             } else {
-                searchFragment.onPerformSearch(getIntent().getExtras());
+                searchFragment.onPerformSearch(extras);
             }
             EasyTracker.getTracker().sendEvent(TAG, "Search action", "Search", (long) 0);
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
