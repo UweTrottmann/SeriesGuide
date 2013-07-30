@@ -108,10 +108,7 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_show_rate) {
-            onRateOnTrakt();
-            return true;
-        } else if (itemId == R.id.menu_show_manage_lists) {
+        if (itemId == R.id.menu_show_manage_lists) {
             ListsDialogFragment.showListsDialog(String.valueOf(getShowTvdbId()),
                     ListItemTypes.SHOW, getFragmentManager());
             return true;

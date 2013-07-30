@@ -207,7 +207,6 @@ public class OverviewFragment extends SherlockFragment implements
         }
         menu.findItem(R.id.menu_overview_manage_lists).setEnabled(isEpisodeVisible);
         menu.findItem(R.id.menu_overview_share).setEnabled(isEpisodeVisible);
-        menu.findItem(R.id.menu_overview_rate).setEnabled(isEpisodeVisible);
 
         // If the nav drawer is open, hide action items related to the content
         // view
@@ -219,10 +218,7 @@ public class OverviewFragment extends SherlockFragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_overview_rate) {
-            onRateOnTrakt();
-            return true;
-        } else if (itemId == R.id.menu_overview_share) {
+        if (itemId == R.id.menu_overview_share) {
             // share episode
             fireTrackerEvent("Share");
             onShareEpisode(ShareMethod.OTHER_SERVICES);
