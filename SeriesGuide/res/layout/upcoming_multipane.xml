@@ -10,17 +10,17 @@
         android:layout_centerHorizontal="true"
         android:background="?attr/colorSeparator" />
 
-    <com.viewpagerindicator.TabPageIndicator
-        android:id="@+id/indicatorUpcoming"
+    <com.astuetz.viewpager.extensions.PagerSlidingTabStrip
+        android:id="@+id/tabsUpcoming"
+        style="@style/TabStrip"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/separatorUpcoming" />
+        android:layout_height="@dimen/tab_strip_height" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pagerUpcoming"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/indicatorUpcoming"
+        android:layout_below="@id/tabsUpcoming"
         android:layout_toLeftOf="@id/separatorUpcoming" />
 
     <FrameLayout
