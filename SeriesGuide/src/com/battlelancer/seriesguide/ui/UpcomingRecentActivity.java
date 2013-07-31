@@ -24,11 +24,13 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.adapters.TabPagerIndicatorAdapter;
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
@@ -38,7 +40,6 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
-import com.viewpagerindicator.TabPageIndicator;
 
 public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAddShowListener {
     private static final String TAG = "Activity";
@@ -67,11 +68,11 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
     }
 
     private void setupViews(Bundle savedInstanceState) {
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pagerUpcoming);
-        TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicatorUpcoming);
+        ViewPager pager = (ViewPager) findViewById(R.id.pagerUpcoming);
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsUpcoming);
 
         ActivityTabPageAdapter tabsAdapter = new ActivityTabPageAdapter(
-                getSupportFragmentManager(), this, viewPager, indicator);
+                getSupportFragmentManager(), this, pager, tabs);
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
         argsUpcoming.putString(UpcomingFragment.InitBundle.TYPE, ActivityType.UPCOMING);
@@ -113,7 +114,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         if (selection > tabsAdapter.getCount() - 1) {
             selection = 0;
         }
-        indicator.setCurrentItem(selection);
+        pager.setCurrentItem(selection);
     }
 
     @Override
@@ -170,22 +171,31 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
      * selected page to preferences, so we can restore it when the user comes
      * back later.
      */
-    public static class ActivityTabPageAdapter extends TabPagerIndicatorAdapter {
+    public static class ActivityTabPageAdapter extends TabStripAdapter implements
+            OnPageChangeListener {
         private SharedPreferences mPrefs;
 
         public ActivityTabPageAdapter(FragmentManager fm, Context context, ViewPager pager,
-                TabPageIndicator indicator) {
-            super(fm, context, pager, indicator);
+                PagerSlidingTabStrip tabs) {
+            super(fm, context, pager, tabs);
             mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+            tabs.setOnPageChangeListener(this);
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
         }
 
         @Override
         public void onPageSelected(int position) {
-            super.onPageSelected(position);
-
             // save selected tab index
             mPrefs.edit().putInt(SeriesGuidePreferences.KEY_ACTIVITYTAB, position).commit();
         }
+
     }
 
     /**

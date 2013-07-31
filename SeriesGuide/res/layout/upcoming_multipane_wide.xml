@@ -9,17 +9,23 @@
         android:layout_height="match_parent"
         android:layout_weight="3" >
 
-        <com.viewpagerindicator.TabPageIndicator
-            android:id="@+id/indicatorUpcoming"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <com.astuetz.viewpager.extensions.PagerSlidingTabStrip
+            android:id="@+id/tabsUpcoming"
+            style="@style/TabStrip"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tab_strip_height" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pagerUpcoming"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/indicatorUpcoming" />
+            android:layout_below="@id/tabsUpcoming" />
     </RelativeLayout>
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="?attr/colorSeparator" />
 
     <View
         android:layout_width="0px"

@@ -35,14 +35,14 @@ import android.view.View;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.adapters.TabPagerIndicatorAdapter;
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
-import com.viewpagerindicator.TabPageIndicator;
 
 import java.lang.ref.WeakReference;
 import java.nio.charset.Charset;
@@ -69,35 +69,9 @@ public class OverviewActivity extends BaseNavDrawerActivity {
             return;
         }
 
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        setupActionBar();
 
-        // look if we are on a multi-pane or single-pane layout...
-        View pagerView = findViewById(R.id.pagerOverview);
-        if (pagerView != null && pagerView.getVisibility() == View.VISIBLE) {
-            // ...single pane layout with view pager
-
-            // clear up left-over fragments from multi-pane layout
-            findAndRemoveFragment(R.id.fragment_overview);
-            findAndRemoveFragment(R.id.fragment_seasons);
-
-            setupViewPager(pagerView);
-        } else {
-            // ...multi-pane overview and seasons fragment
-
-            // clear up left-over fragments from single-pane layout
-            boolean isSwitchingLayouts = getActiveFragments().size() != 0;
-            for (Fragment fragment : getActiveFragments()) {
-                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-            }
-
-            // attach new fragments if there are none or if we just switched
-            // layouts
-            if (savedInstanceState == null || isSwitchingLayouts) {
-                setupPanes();
-            }
-        }
+        setupViews(savedInstanceState);
 
         // Support beaming shows via Android Beam
         if (AndroidUtils.isICSOrHigher()) {
@@ -138,6 +112,40 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         onUpdateShow();
     }
 
+    private void setupActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void setupViews(Bundle savedInstanceState) {
+        // look if we are on a multi-pane or single-pane layout...
+        View pagerView = findViewById(R.id.pagerOverview);
+        if (pagerView != null && pagerView.getVisibility() == View.VISIBLE) {
+            // ...single pane layout with view pager
+
+            // clear up left-over fragments from multi-pane layout
+            findAndRemoveFragment(R.id.fragment_overview);
+            findAndRemoveFragment(R.id.fragment_seasons);
+
+            setupViewPager(pagerView);
+        } else {
+            // ...multi-pane overview and seasons fragment
+
+            // clear up left-over fragments from single-pane layout
+            boolean isSwitchingLayouts = getActiveFragments().size() != 0;
+            for (Fragment fragment : getActiveFragments()) {
+                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+
+            // attach new fragments if there are none or if we just switched
+            // layouts
+            if (savedInstanceState == null || isSwitchingLayouts) {
+                setupPanes();
+            }
+        }
+    }
+
     private void setupPanes() {
         Fragment showsFragment = ShowInfoFragment.newInstance(mShowId);
         FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
@@ -160,11 +168,11 @@ public class OverviewActivity extends BaseNavDrawerActivity {
 
     private void setupViewPager(View pagerView) {
         ViewPager pager = (ViewPager) pagerView;
-        TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicatorOverview);
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsOverview);
 
         // setup tab strip
-        TabPagerIndicatorAdapter tabsAdapter = new TabPagerIndicatorAdapter(
-                getSupportFragmentManager(), this, pager, indicator);
+        TabStripAdapter tabsAdapter = new TabStripAdapter(
+                getSupportFragmentManager(), this, pager, tabs);
         Bundle argsShow = new Bundle();
         argsShow.putInt(ShowInfoFragment.InitBundle.SHOW_TVDBID, mShowId);
         tabsAdapter.addTab(R.string.show, ShowInfoFragment.class, argsShow);
@@ -177,7 +185,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         tabsAdapter.addTab(R.string.seasons, SeasonsFragment.class, argsSeason);
 
         // select overview to be shown initially
-        indicator.setCurrentItem(1);
+        pager.setCurrentItem(1);
     }
 
     private void findAndRemoveFragment(int fragmentId) {
