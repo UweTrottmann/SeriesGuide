@@ -14,7 +14,8 @@
         android:id="@+id/tabsUpcoming"
         style="@style/TabStrip"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/tab_strip_height" />
+        android:layout_height="@dimen/tab_strip_height"
+        android:layout_toLeftOf="@id/separatorUpcoming" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pagerUpcoming"
