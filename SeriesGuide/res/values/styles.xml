@@ -217,11 +217,10 @@
 
     <!-- PagerSlidingTabStrip -->
     <style name="TabStrip">
-        <item name="android:textColor">?attr/textColorSgActionBar</item>
-        <item name="dividerColor">@color/separator_dim</item>
+        <item name="android:textColor">?attr/colorTabStripText</item>
+        <item name="dividerColor">?attr/colorDivider</item>
         <item name="indicatorColor">?attr/colorAccent</item>
         <item name="underlineColor">?attr/colorAccent</item>
-        <item name="android:background">@color/background</item>
     </style>
 
     <!-- ViewPagerIndicator -->
