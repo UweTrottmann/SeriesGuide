@@ -7,14 +7,14 @@ import android.support.v4.view.ViewPager;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip.OnTabClickListener;
 import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
 import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
-import com.viewpagerindicator.TabPageIndicator;
-import com.viewpagerindicator.TabPageIndicator.OnTabReselectedListener;
 
 /**
  * Hosts a view pager to display and manage lists of shows, seasons and
@@ -25,7 +25,7 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
     public static final String TAG = "Lists";
     private ListsPagerAdapter mListsAdapter;
     private ViewPager mPager;
-    private TabPageIndicator mIndicator;
+    private PagerSlidingTabStrip mTabs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +49,16 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
         mPager = (ViewPager) findViewById(R.id.pagerLists);
         mPager.setAdapter(mListsAdapter);
 
-        mIndicator = (TabPageIndicator) findViewById(R.id.indicatorLists);
-        mIndicator.setViewPager(mPager);
-        mIndicator.setOnTabReselectedListener(new OnTabReselectedListener() {
+        mTabs = (PagerSlidingTabStrip) findViewById(R.id.tabsLists);
+        mTabs.setViewPager(mPager);
+        mTabs.setOnTabClickListener(new OnTabClickListener() {
             @Override
-            public void onTabReselected(int position) {
-                String listId = mListsAdapter.getListId(position);
-                ListManageDialogFragment.showListManageDialog(listId, getSupportFragmentManager());
+            public void onTabClick(int position) {
+                if (mPager.getCurrentItem() == position) {
+                    String listId = mListsAdapter.getListId(position);
+                    ListManageDialogFragment.showListManageDialog(listId,
+                            getSupportFragmentManager());
+                }
             }
         });
     }
@@ -111,7 +114,7 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
         // refresh list adapter
         mListsAdapter.onListsChanged();
         // update indicator and view pager
-        mIndicator.notifyDataSetChanged();
+        mTabs.notifyDataSetChanged();
     }
 
     protected void fireTrackerEvent(String label) {
