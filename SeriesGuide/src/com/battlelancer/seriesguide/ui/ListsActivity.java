@@ -32,16 +32,24 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
         super.onCreate(savedInstanceState);
         getMenu().setContentView(R.layout.lists);
 
+        setupActionBar();
+
+        setupViews();
+    }
+
+    private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.ic_action_list);
         actionBar.setTitle(R.string.lists);
+    }
 
+    private void setupViews() {
         mListsAdapter = new ListsPagerAdapter(getSupportFragmentManager(), this);
 
-        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager = (ViewPager) findViewById(R.id.pagerLists);
         mPager.setAdapter(mListsAdapter);
 
-        mIndicator = (TabPageIndicator) findViewById(R.id.indicator);
+        mIndicator = (TabPageIndicator) findViewById(R.id.indicatorLists);
         mIndicator.setViewPager(mPager);
         mIndicator.setOnTabReselectedListener(new OnTabReselectedListener() {
             @Override
