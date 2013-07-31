@@ -69,12 +69,20 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
 
         getMenu().setContentView(R.layout.addactivity_pager);
 
+        setupActionBar();
+
+        setupViews();
+    }
+
+    private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.ic_action_add);
         actionBar.setDisplayHomeAsUpEnabled(true);
         setProgressBarIndeterminateVisibility(Boolean.FALSE);
         setSupportProgressBarIndeterminateVisibility(false);
+    }
 
+    private void setupViews() {
         mAdapter = new AddPagerAdapter(getSupportFragmentManager(), this);
 
         mPager = (ViewPager) findViewById(R.id.pagerAddShows);
