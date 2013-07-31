@@ -223,36 +223,6 @@
         <item name="underlineColor">?attr/colorAccent</item>
     </style>
 
-    <!-- ViewPagerIndicator -->
-    <style name="TitlePageIndicator">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="footerColor">@color/accent_primary</item>
-        <item name="footerLineHeight">2dp</item>
-        <item name="footerIndicatorHeight">5dp</item>
-        <item name="footerIndicatorStyle">underline</item>
-        <item name="android:textColor">@color/text_primary</item>
-        <item name="selectedColor">@color/text_primary</item>
-        <item name="selectedBold">true</item>
-    </style>
-
-    <style name="TabPageIndicator" parent="Widget.Sherlock.ActionBar.TabBar">
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:background">@drawable/tab_indicator</item>
-        <item name="android:paddingLeft">18dp</item>
-        <item name="android:paddingRight">18dp</item>
-        <item name="android:paddingTop">14dp</item>
-        <item name="android:paddingBottom">14dp</item>
-        <item name="android:textAppearance">@style/TextAppearance.TabPageIndicator</item>
-        <item name="android:textSize">@dimen/text_size_xsmall</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:ellipsize">marquee</item>
-    </style>
-
-    <style name="TextAppearance.TabPageIndicator" parent="Widget">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?attr/textColorSgActionBar</item>
-    </style>
-
     <style name="Header">
         <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:textColor">@color/text_primary</item>
@@ -404,11 +374,6 @@
         <item name="android:background">@drawable/btn_default_holo_dark</item>
     </style>
 
-    <!-- Title indicator -->
-    <style name="TitlePageIndicator.Dark" parent="TitlePageIndicator">
-        <item name="footerColor">#33B5E5</item>
-    </style>
-
     <!-- ////////////////////////////////////////////// -->
 
 
@@ -425,21 +390,6 @@
     <style name="Widget.SeriesGuide.Light.EditText" parent="Widget.SeriesGuide.EditText">
         <item name="android:background">@drawable/edit_text_holo_light</item>
         <item name="android:textColor">@color/text_primary_light_sg</item>
-    </style>
-
-    <!-- Title page indicator -->
-    <style name="TitlePageIndicator.Light">
-        <item name="android:textColor">@color/text_primary_inverse</item>
-        <item name="selectedColor">@color/text_primary_inverse</item>
-    </style>
-
-    <!-- Tab page indicator -->
-    <style name="TabPageIndicator.Light">
-        <item name="android:textAppearance">@style/TextAppearance.Light.TabPageIndicator</item>
-    </style>
-
-    <style name="TextAppearance.Light.TabPageIndicator" parent="TextAppearance.TabPageIndicator">
-        <item name="android:textColor">@color/vpi__light_theme</item>
     </style>
 
     <!-- ActionBar -->

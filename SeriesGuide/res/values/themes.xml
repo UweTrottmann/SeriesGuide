@@ -42,10 +42,6 @@
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
 
-        <!-- Title page Indicator -->
-        <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator</item>
-        <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator</item>
-
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
         <item name="drawableCalendarIcon">@drawable/ic_action_calendar</item>
@@ -93,8 +89,6 @@
 
     <!-- A dark Android theme -->
     <style name="ICSBaseTheme" parent="Theme.Sherlock">
-        <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.Dark</item>
-        <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
         <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
 
         <!-- System widgets -->
@@ -133,8 +127,6 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
         <item name="custom_list_selector">@drawable/list_selector_sg</item>
-        <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.Light</item>
-        <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator.Light</item>
 
         <!-- System widgets (ABS) -->
         <item name="dropDownListViewStyle">@style/DropDownListView</item>
