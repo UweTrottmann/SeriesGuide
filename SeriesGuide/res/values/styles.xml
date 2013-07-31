@@ -221,6 +221,7 @@
         <item name="dividerColor">@color/separator_dim</item>
         <item name="indicatorColor">?attr/colorAccent</item>
         <item name="underlineColor">?attr/colorAccent</item>
+        <item name="android:background">@color/background</item>
     </style>
 
     <!-- ViewPagerIndicator -->
