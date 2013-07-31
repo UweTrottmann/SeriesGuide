@@ -29,26 +29,26 @@
 
         <ImageView
             android:id="@+id/background"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:contentDescription="@string/description_poster"
             android:scaleType="centerCrop" >
         </ImageView>
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <com.viewpagerindicator.TitlePageIndicator
-                android:id="@+id/indicator"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dip" />
+            <com.astuetz.viewpager.extensions.PagerSlidingTabStrip
+                android:id="@+id/tabsEpisodes"
+                style="@style/TabStrip"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tab_strip_height" />
 
             <android.support.v4.view.ViewPager
-                android:id="@+id/pager"
-                android:layout_width="fill_parent"
+                android:id="@+id/pagerEpisodes"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
         </LinearLayout>

@@ -14,11 +14,11 @@
         android:orientation="vertical"
         android:paddingTop="?actionBarSize" >
 
-        <com.viewpagerindicator.TitlePageIndicator
-            android:id="@+id/indicator"
+        <com.astuetz.viewpager.extensions.PagerSlidingTabStrip
+            android:id="@+id/tabsEpisodeDetails"
+            style="@style/TabStrip"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dip" />
+            android:layout_height="@dimen/tab_strip_height" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:layout_height="match_parent" />
 
             <android.support.v4.view.ViewPager
-                android:id="@+id/pager"
+                android:id="@+id/pagerEpisodeDetails"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="5" />
