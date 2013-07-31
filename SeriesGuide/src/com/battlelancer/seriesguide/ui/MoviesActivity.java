@@ -22,11 +22,11 @@ import android.support.v4.view.ViewPager;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
-import com.battlelancer.seriesguide.adapters.TabPagerIndicatorAdapter;
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
-import com.viewpagerindicator.TabPageIndicator;
 
 /**
  * Users can search for a movie, display detailed information and then check in
@@ -58,10 +58,10 @@ public class MoviesActivity extends BaseTopActivity {
 
     private void setupViews() {
         ViewPager pager = (ViewPager) findViewById(R.id.pagerMovies);
-        TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicatorMovies);
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsMovies);
 
-        TabPagerIndicatorAdapter tabsAdapter = new TabPagerIndicatorAdapter(
-                getSupportFragmentManager(), this, pager, indicator);
+        TabStripAdapter tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this, pager,
+                tabs);
         // only show the trakt watchlist with valid credentials
         if (ServiceUtils.isTraktCredentialsValid(this)) {
             tabsAdapter.addTab(R.string.movies_watchlist, MoviesWatchListFragment.class, null);
