@@ -207,7 +207,7 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment {
                         connectbtn.setEnabled(true);
 
                         if (response == null) {
-                            status.setText(R.string.trakt_generalerror);
+                            status.setText(R.string.trakt_error_credentials);
                             return;
                         }
                         if (response.status.equals(TraktStatus.FAILURE)) {
@@ -219,7 +219,7 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment {
                         String passwordEncr = SimpleCrypto.encrypt(passwordHash, context);
                         if (passwordEncr == null) {
                             // password encryption failed
-                            status.setText(R.string.trakt_generalerror);
+                            status.setText(R.string.trakt_error_credentials);
                             return;
                         }
 
@@ -232,7 +232,7 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment {
                                 && passwordEncr.length() != 0 && editor.commit()) {
                             // try setting new auth data for service manager
                             if (ServiceUtils.getTraktServiceManagerWithAuth(context, true) == null) {
-                                status.setText(R.string.trakt_generalerror);
+                                status.setText(R.string.trakt_error_credentials);
                                 return;
                             }
 

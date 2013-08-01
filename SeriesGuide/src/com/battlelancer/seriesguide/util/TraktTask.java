@@ -222,7 +222,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
             // password could not be decrypted
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
-            r.error = mContext.getString(R.string.trakt_generalerror);
+            r.error = mContext.getString(R.string.trakt_error_credentials);
             return r;
         }
 
@@ -347,13 +347,13 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
             Utils.trackExceptionAndLog(mContext, TAG, e);
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
-            r.error = mContext.getString(R.string.trakt_generalerror);
+            r.error = mContext.getString(R.string.trakt_error_general);
             return r;
         } catch (ApiException e) {
             Utils.trackExceptionAndLog(mContext, TAG, e);
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
-            r.error = mContext.getString(R.string.trakt_generalerror);
+            r.error = mContext.getString(R.string.trakt_error_general);
             return r;
         }
     }
