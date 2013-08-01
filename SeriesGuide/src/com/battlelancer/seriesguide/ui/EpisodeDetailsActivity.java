@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -219,9 +220,9 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         private ArrayList<Episode> mEpisodes;
 
-        private SharedPreferences mPrefs;
+        private final SharedPreferences mPrefs;
 
-        private boolean mIsShowingShowLink;
+        private final boolean mIsShowingShowLink;
 
         public EpisodePagerAdapter(FragmentManager fm, ArrayList<Episode> episodes,
                 SharedPreferences prefs, boolean isShowingShowLink) {
