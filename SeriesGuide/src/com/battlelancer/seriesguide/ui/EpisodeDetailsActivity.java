@@ -32,7 +32,6 @@ import android.widget.ImageView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
 import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.items.Episode;
@@ -73,11 +72,9 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+        // requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
         getMenu().setContentView(R.layout.episode_pager);
-
-        setupActionBar();
 
         final int episodeId = getIntent().getIntExtra(InitBundle.EPISODE_TVDBID, 0);
         if (episodeId == 0) {
@@ -92,7 +89,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         // Lookup show and season of episode
         final Cursor episode = getContentResolver().query(
                 Episodes.buildEpisodeWithShowUri(String.valueOf(episodeId)), new String[] {
-                        Seasons.REF_SEASON_ID, Shows.POSTER, Shows.REF_SHOW_ID
+                        Seasons.REF_SEASON_ID, Shows.POSTER, Shows.REF_SHOW_ID, Shows.TITLE
                 }, null, null, null);
 
         if (episode == null || !episode.moveToFirst()) {
@@ -112,10 +109,20 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         Cursor episodeCursor = getContentResolver().query(
                 Episodes.buildEpisodesOfSeasonUri(String.valueOf(mSeasonId)), new String[] {
-                        Episodes._ID, Episodes.NUMBER, Episodes.SEASON
+                        BaseColumns._ID, Episodes.NUMBER, Episodes.SEASON
                 }, null, null, sorting.query());
 
-        if (episodeCursor != null) {
+        // Set up the ActionBar
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (episodeCursor != null && episodeCursor.moveToFirst()) {
+
+            // Set the ActionBar title/subtitle
+            final String seasonTitle = Utils.getSeasonString(this, episodeCursor.getInt(2));
+            actionBar.setTitle(episode.getString(3));
+            actionBar.setSubtitle(seasonTitle);
+
+            // Cycle through each episode for the selected season
             int i = 0;
             while (episodeCursor.moveToNext()) {
                 Episode ep = new Episode();
@@ -154,13 +161,6 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         MenuDrawer menuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.OVERLAY);
         menuDrawer.setMenuView(R.layout.menu_frame_with_spacer);
         return menuDrawer;
-    }
-
-    private void setupActionBar() {
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setBackgroundDrawable(null);
     }
 
     @Override
