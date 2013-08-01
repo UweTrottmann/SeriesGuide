@@ -282,14 +282,6 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment {
                     @Override
                     protected Void doInBackground(Void... params) {
                         ServiceUtils.clearTraktCredentials(context);
-
-                        // force removing credentials from memory
-                        ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(
-                                context, false);
-                        if (manager != null) {
-                            manager.setAuthentication(null, null);
-                        }
-
                         return null;
                     }
                 }.execute();

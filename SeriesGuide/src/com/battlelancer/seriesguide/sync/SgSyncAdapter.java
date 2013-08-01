@@ -272,6 +272,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 Utils.trackExceptionAndLog(getContext(), TAG, e);
             }
 
+            // validate trakt credentials
+            ServiceUtils.checkTraktCredentials(getContext());
+
             // get newly watched episodes from trakt
             final UpdateResult traktResult = getTraktActivity(currentTime);
 
@@ -351,7 +354,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
     private UpdateResult getTraktActivity(long currentTime) {
         Log.d(TAG, "Get trakt activity");
-        if (!ServiceUtils.isTraktCredentialsValid(getContext())) {
+        if (!ServiceUtils.hasTraktCredentials(getContext())) {
             // trakt is not connected, we are done here
             return UpdateResult.SUCCESS;
         }

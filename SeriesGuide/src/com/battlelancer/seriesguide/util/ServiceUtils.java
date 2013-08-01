@@ -24,13 +24,19 @@ import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.TraktException;
+import com.jakewharton.trakt.entities.Response;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -38,6 +44,8 @@ import com.uwetrottmann.seriesguide.R;
  * Database used within SeriesGuide.
  */
 public final class ServiceUtils {
+
+    public static final String TAG = "Service Utils";
 
     private static final String GOOGLE_PLAY = "https://play.google.com/store/search?q=%s&c=movies";
 
@@ -139,23 +147,14 @@ public final class ServiceUtils {
         }
 
         if (refreshCredentials) {
-            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-            final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, null);
-            String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, null);
-
-            if (!TextUtils.isEmpty(password)) {
-                // decryption might return null, so wrap in separate condition
-                password = SimpleCrypto.decrypt(password, context);
-            }
+            final String username = getTraktUsername(context);
+            final String password = getTraktPasswordHash(context);
 
             if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
                 ServiceUtils.sTraktServiceManagerWithAuthInstance.setAuthentication(username,
                         password);
             } else {
-                // clear all trakt credentials
                 clearTraktCredentials(context);
-                ServiceUtils.sTraktServiceManagerWithAuthInstance.setAuthentication(null, null);
                 return null;
             }
         }
@@ -164,13 +163,31 @@ public final class ServiceUtils {
     }
 
     public static String getTraktUsername(Context context) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                .getApplicationContext());
-
-        return prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(
+                SeriesGuidePreferences.KEY_TRAKTUSER, "");
     }
 
-    public static boolean isTraktCredentialsValid(Context context) {
+    /**
+     * Returns the SHA hash of the users trakt password.<br>
+     * <b>Never</b> store this yourself, always call this method.
+     */
+    private static String getTraktPasswordHash(Context context) {
+        String hash = PreferenceManager.getDefaultSharedPreferences(context).getString(
+                SeriesGuidePreferences.KEY_TRAKTPWD, null);
+
+        // try decrypting the hash
+        if (!TextUtils.isEmpty(hash)) {
+            hash = SimpleCrypto.decrypt(hash, context);
+        }
+
+        return hash;
+    }
+
+    /**
+     * Checks if there are a non-empty trakt username and password. Returns
+     * false if either one is empty.
+     */
+    public static boolean hasTraktCredentials(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
                 .getApplicationContext());
         String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
@@ -181,14 +198,14 @@ public final class ServiceUtils {
 
     /**
      * Checks for existing trakt credentials. If there aren't any valid ones
-     * (determined by {@link #isTraktCredentialsValid(Context)}), launches the
-     * trakt connect flow.
+     * (determined by {@link #hasTraktCredentials(Context)}), launches the trakt
+     * connect flow.
      * 
      * @return <b>true</b> if credentials are valid, <b>false</b> if invalid and
      *         launching trakt connect flow.
      */
     public static boolean ensureTraktCredentials(Context context) {
-        if (!isTraktCredentialsValid(context)) {
+        if (!hasTraktCredentials(context)) {
             // launch trakt connect process
             context.startActivity(new Intent(context, ConnectTraktActivity.class));
             return false;
@@ -196,12 +213,57 @@ public final class ServiceUtils {
         return true;
     }
 
+    /**
+     * Creates a network request to check if the current trakt credentials are
+     * still valid. Will assume valid credentials if there was no response from
+     * trakt (due to a network error, etc.).<br>
+     * <b>Never</b> run this on the main thread.
+     */
+    public static void checkTraktCredentials(Context context) {
+        Log.d(TAG, "Checking trakt credentials...");
+
+        // no username or password? stop right here
+        if (!hasTraktCredentials(context)) {
+            return;
+        }
+
+        // check for connectivity
+        if (!AndroidUtils.isNetworkConnected(context)) {
+            return;
+        }
+
+        ServiceManager manager = getTraktServiceManagerWithAuth(context, false);
+        try {
+            Response r = manager.accountService().test().fire();
+            if (r != null && TraktStatus.FAILURE.equals(r.status)) {
+                // credentials invalid according to trakt, remove them
+                clearTraktCredentials(context);
+            }
+        } catch (TraktException e) {
+        } catch (ApiException e) {
+        }
+        /*
+         * Ignore exceptions, trakt may be offline, etc. We expect the user to
+         * disconnect and reconnect himself.
+         */
+    }
+
+    /**
+     * Removes trakt username and password from settings as well as from the
+     * authenticated {@link ServiceManager} instance.
+     */
     public static void clearTraktCredentials(Context context) {
+        Log.d(TAG, "Clearing trakt credentials...");
+
+        // remove from settings
         Editor editor = PreferenceManager.getDefaultSharedPreferences(context
                 .getApplicationContext()).edit();
         editor.putString(SeriesGuidePreferences.KEY_TRAKTUSER, "").putString(
                 SeriesGuidePreferences.KEY_TRAKTPWD, "");
         editor.commit();
+
+        // remove from memory
+        ServiceUtils.sTraktServiceManagerWithAuthInstance.setAuthentication(null, null);
     }
 
     /**

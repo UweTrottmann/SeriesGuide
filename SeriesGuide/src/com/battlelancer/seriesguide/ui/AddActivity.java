@@ -169,7 +169,7 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
 
         @Override
         public int getCount() {
-            final boolean isValidCredentials = ServiceUtils.isTraktCredentialsValid(mContext);
+            final boolean isValidCredentials = ServiceUtils.hasTraktCredentials(mContext);
             if (isValidCredentials) {
                 // show trakt recommended and libraried shows, too
                 return TRAKT_CONNECTED_TABCOUNT;
