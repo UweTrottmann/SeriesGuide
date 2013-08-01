@@ -73,7 +73,6 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
         getMenu().setContentView(R.layout.episode_pager);
 
