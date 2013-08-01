@@ -116,10 +116,15 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         // Set up the ActionBar
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        if (episodeCursor != null && episodeCursor.moveToFirst()) {
+        if (episodeCursor != null) {
+
+            // Move to Cursor to the first row to retrieve the season number
+            episodeCursor.moveToFirst();
+            final String seasonTitle = Utils.getSeasonString(this, episodeCursor.getInt(2));
+            // Move back to the first episode so it'll be displayed in the pager
+            episodeCursor.moveToPrevious();
 
             // Set the ActionBar title/subtitle
-            final String seasonTitle = Utils.getSeasonString(this, episodeCursor.getInt(2));
             actionBar.setTitle(episode.getString(3));
             actionBar.setSubtitle(seasonTitle);
 
