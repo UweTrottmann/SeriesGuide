@@ -789,12 +789,13 @@ public class OverviewFragment extends SherlockFragment implements
         // favorite
         final ImageView favorited = (ImageView) getView().findViewById(R.id.imageViewFavorite);
         boolean isFavorited = show.getInt(ShowQuery.SHOW_FAVORITE) == 1;
+        TypedValue outValue = new TypedValue();
         if (isFavorited) {
-            TypedValue outValue = new TypedValue();
             getSherlockActivity().getTheme().resolveAttribute(R.attr.drawableStar, outValue, true);
             favorited.setImageResource(outValue.resourceId);
         } else {
-            favorited.setImageResource(R.drawable.ic_action_star_0);
+            getSherlockActivity().getTheme().resolveAttribute(R.attr.drawableStar0, outValue, true);
+            favorited.setImageResource(outValue.resourceId);
         }
         CheatSheet.setup(favorited, isFavorited ? R.string.context_unfavorite
                 : R.string.context_favorite);
