@@ -32,6 +32,7 @@
   <string name="close">Închide</string>
   <string name="save_selection">Salvează selecția</string>
   <string name="offline">Nici o conexiune la internet. Încercaţi din nou mai târziu.</string>
+  <string name="app_not_available">No app available to handle this.</string>
   <string name="onlyx">Only available with X Subscription</string>
   <string name="shows">Emisiuni</string>
   <string name="lists">Liste</string>
@@ -296,7 +297,8 @@
   <string name="disconnect">Deconectaţi</string>
   <string name="trakt_error">Interacţiunea cu trakt a eșuat</string>
   <string name="trakt_decryptfail">parola nu a potut fi decriptată</string>
-  <string name="trakt_generalerror">Ceva a mers prost. Va rugam sa va verificaţi acreditările şi sa încercaţi din nou.</string>
+  <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
+  <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_createaccount">Creare cont nou</string>
   <string name="welcome_setuplanguage">Alegeți limba</string>
   <string name="welcome_traktmessage">Accesați biblioteca trakt.tv și activitatea prietenilor</string>
@@ -325,8 +327,11 @@
   <string name="dashclock_extension_label">Episoade ce urmeaza</string>
   <string name="dashclock_extension_description">Afişează următorul episod din SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
+  <string name="deprecation_title">Move to SeriesGuide</string>
+  <string name="backup_tool">Backup tool</string>
   <string name="download_stable">Descărcați SeriesGuide</string>
-  <string name="betawarning"><b>Atentie!</b> Această versiune este numai pentru beta testeri! Dacă sunteţi în dubiu descărcati versiunea stabilă de mai jos.</string>
+  <string name="deprecation_warning"><b>Heads up!</b> SeriesGuide X will be stripped of all functionality very soon. Migrate your shows to the free version and keep SeriesGuide X installed to unlock the new X Subscription for life.</string>
+  <string name="migration_tutorial">To migrate your shows: touch <b>Backup tool</b>, then <b>Backup</b>.\n\nGo back until this dialog appears again.\n\nTouch <b>Download SeriesGuide</b> and install SeriesGuide.\n\nLaunch SeriesGuide. Touch <b>Menu</b>, then <b>Settings</b>. In <b>Advanced</b> use the backup tool to restore.</string>
   <string name="upgrade_title">Get X features</string>
   <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
   <string name="upgrade_action">Get X features</string>
@@ -335,6 +340,7 @@
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
   <string name="add_to_homescreen">Add to Home screen</string>
+  <string name="search_within_show">Search within %s</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Urmatorul episod</item>
