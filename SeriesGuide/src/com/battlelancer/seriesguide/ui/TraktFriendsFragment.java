@@ -189,7 +189,7 @@ public class TraktFriendsFragment extends ListFragment implements
 
         @Override
         public List<UserProfile> loadInBackground() {
-            if (ServiceUtils.isTraktCredentialsValid(getContext())) {
+            if (ServiceUtils.hasTraktCredentials(getContext())) {
                 ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(getContext(),
                         false);
                 if (manager == null) {

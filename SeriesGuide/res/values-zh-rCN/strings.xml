@@ -32,6 +32,7 @@
   <string name="close">关闭</string>
   <string name="save_selection">保存已选项</string>
   <string name="offline">没有可用连接，请稍后重试。</string>
+  <string name="app_not_available">No app available to handle this.</string>
   <string name="onlyx">Only available with X Subscription</string>
   <string name="shows">剧目</string>
   <string name="lists">列表</string>
@@ -296,7 +297,8 @@
   <string name="disconnect">断开</string>
   <string name="trakt_error">与 trakt 交互失败</string>
   <string name="trakt_decryptfail">无法解密密钥</string>
-  <string name="trakt_generalerror">出现了一些问题，请检查您的凭据后再试。</string>
+  <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
+  <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_createaccount">创建新用户</string>
   <string name="welcome_setuplanguage">选择语言</string>
   <string name="welcome_traktmessage">随时访问您的数据库和好友动态</string>
@@ -325,8 +327,11 @@
   <string name="dashclock_extension_label">即将播出</string>
   <string name="dashclock_extension_description">在 “追剧助手” 节目列表中显示即将播出的剧集。</string>
   <string name="dashclock_pref_upcoming_threshold">“即将播出”剧目的时间区间</string>
+  <string name="deprecation_title">Move to SeriesGuide</string>
+  <string name="backup_tool">Backup tool</string>
   <string name="download_stable">下载“美剧指南”</string>
-  <string name="betawarning"><b>注意</b> 这是一个仅供测试的版本。如果您有任何疑问，请下载稳定版本。</string>
+  <string name="deprecation_warning"><b>Heads up!</b> SeriesGuide X will be stripped of all functionality very soon. Migrate your shows to the free version and keep SeriesGuide X installed to unlock the new X Subscription for life.</string>
+  <string name="migration_tutorial">To migrate your shows: touch <b>Backup tool</b>, then <b>Backup</b>.\n\nGo back until this dialog appears again.\n\nTouch <b>Download SeriesGuide</b> and install SeriesGuide.\n\nLaunch SeriesGuide. Touch <b>Menu</b>, then <b>Settings</b>. In <b>Advanced</b> use the backup tool to restore.</string>
   <string name="upgrade_title">Get X features</string>
   <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
   <string name="upgrade_action">Get X features</string>
@@ -335,6 +340,7 @@
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
   <string name="add_to_homescreen">Add to Home screen</string>
+  <string name="search_within_show">Search within %s</string>
   <string-array name="shsorting">
     <item>A 到 Z</item>
     <item>下一集</item>

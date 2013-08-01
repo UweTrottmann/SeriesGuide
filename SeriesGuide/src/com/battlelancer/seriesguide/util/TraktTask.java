@@ -93,7 +93,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
      * {@code shout(tvdbid, shout, isSpoiler)}, afterwards.<br>
      * <br>
      * Make sure the user has valid trakt credentials (check with
-     * {@link ServiceUtils#isTraktCredentialsValid(Context)} and then possibly
+     * {@link ServiceUtils#hasTraktCredentials(Context)} and then possibly
      * launch {@link ConnectTraktActivity}) or execution will fail.
      */
     public TraktTask(Context context, OnTraktActionCompleteListener listener) {
@@ -107,7 +107,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
      * {@link Bundle}.<br>
      * <br>
      * Make sure the user has valid trakt credentials (check with
-     * {@link ServiceUtils#isTraktCredentialsValid(Context)} and then possibly
+     * {@link ServiceUtils#hasTraktCredentials(Context)} and then possibly
      * launch {@link ConnectTraktActivity}) or execution will fail.
      */
     public TraktTask(Context context, Bundle args, OnTraktActionCompleteListener listener) {
@@ -212,7 +212,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         }
 
         // check for valid credentials
-        if (!ServiceUtils.isTraktCredentialsValid(mContext)) {
+        if (!ServiceUtils.hasTraktCredentials(mContext)) {
             return null;
         }
 
@@ -222,7 +222,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
             // password could not be decrypted
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
-            r.error = mContext.getString(R.string.trakt_generalerror);
+            r.error = mContext.getString(R.string.trakt_error_credentials);
             return r;
         }
 
@@ -347,13 +347,13 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
             Utils.trackExceptionAndLog(mContext, TAG, e);
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
-            r.error = mContext.getString(R.string.trakt_generalerror);
+            r.error = mContext.getString(R.string.trakt_error_general);
             return r;
         } catch (ApiException e) {
             Utils.trackExceptionAndLog(mContext, TAG, e);
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
-            r.error = mContext.getString(R.string.trakt_generalerror);
+            r.error = mContext.getString(R.string.trakt_error_general);
             return r;
         }
     }

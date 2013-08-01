@@ -32,6 +32,7 @@
   <string name="close">Schließen</string>
   <string name="save_selection">Auswahl speichern</string>
   <string name="offline">Keine Netzwerkverbindung. Versuchen Sie es später erneut.</string>
+  <string name="app_not_available">No app available to handle this.</string>
   <string name="onlyx">Nur mit X-Abonnement erhältlich</string>
   <string name="shows">Serien</string>
   <string name="lists">Listen</string>
@@ -296,7 +297,8 @@
   <string name="disconnect">Trennen</string>
   <string name="trakt_error">Interaktion mit trakt ist fehlgeschlagen</string>
   <string name="trakt_decryptfail">Kennwort konnte nicht entschlüsselt werden</string>
-  <string name="trakt_generalerror">Etwas ist schief gelaufen. Bitte überprüfen Sie Ihre Anmeldeinformationen und versuchen Sie es erneut.</string>
+  <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
+  <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_createaccount">Neues Konto einrichten</string>
   <string name="welcome_setuplanguage">Sprache auswählen</string>
   <string name="welcome_traktmessage">Zugriff auf Ihre trakt.tv-Bibliothek und Aktivität von Freunden</string>
@@ -325,8 +327,11 @@
   <string name="dashclock_extension_label">Nächste Folge</string>
   <string name="dashclock_extension_description">Zeigt die nächste kommende Folge deiner Serien aus SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Zeige Folgen im Zeitraum</string>
+  <string name="deprecation_title">Move to SeriesGuide</string>
+  <string name="backup_tool">Backup tool</string>
   <string name="download_stable">SeriesGuide herunterladen</string>
-  <string name="betawarning"><b>Achtung!</b> Diese Version ist für nur Beta-Tester! Laden Sie im Zweifel unten die stabile Version.</string>
+  <string name="deprecation_warning"><b>Heads up!</b> SeriesGuide X will be stripped of all functionality very soon. Migrate your shows to the free version and keep SeriesGuide X installed to unlock the new X Subscription for life.</string>
+  <string name="migration_tutorial">To migrate your shows: touch <b>Backup tool</b>, then <b>Backup</b>.\n\nGo back until this dialog appears again.\n\nTouch <b>Download SeriesGuide</b> and install SeriesGuide.\n\nLaunch SeriesGuide. Touch <b>Menu</b>, then <b>Settings</b>. In <b>Advanced</b> use the backup tool to restore.</string>
   <string name="upgrade_title">X-Funktionen erhalten</string>
   <string name="upgrade_description">Erhalten Sie Zugriff auf Benachrichtigungen, weitere Optionen für das Listen-Widget und alle zukünftigen X-Funkionen. Unterstützen Sie die Weiterentwicklung.\n\nFalls Sie bereits SeriesGuide X  erworben haben, installieren Sie es um dieses Upgrade zu aktivieren.</string>
   <string name="upgrade_action">X-Funktionen erhalten</string>
@@ -335,6 +340,7 @@
   <string name="subscription_expired">Abonnement abgelaufen</string>
   <string name="subscription_expired_details">Ihr X-Funktionen-Abonnement ist abgelaufen.</string>
   <string name="add_to_homescreen">Zum Startbildschirm hinzufügen</string>
+  <string name="search_within_show">Search within %s</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Nächste Folge</item>

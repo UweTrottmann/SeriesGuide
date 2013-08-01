@@ -169,7 +169,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    if (!ServiceUtils.isTraktCredentialsValid(getSherlockActivity())) {
+                    if (!ServiceUtils.hasTraktCredentials(getSherlockActivity())) {
                         // authenticate already here
                         Intent i = new Intent(getActivity(), ConnectTraktActivity.class);
                         startActivity(i);
@@ -201,7 +201,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
                 }
 
                 if (mTraktChecked) {
-                    if (!ServiceUtils.isTraktCredentialsValid(getActivity())) {
+                    if (!ServiceUtils.hasTraktCredentials(getActivity())) {
                         // cancel if required auth data is missing
                         mToggleTraktButton.setChecked(false);
                         mTraktChecked = false;

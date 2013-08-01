@@ -171,7 +171,7 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
 
     private ServiceManager getServiceManager() {
         ServiceManager serviceManager;
-        if (ServiceUtils.isTraktCredentialsValid(mContext)) {
+        if (ServiceUtils.hasTraktCredentials(mContext)) {
             serviceManager = ServiceUtils.getTraktServiceManagerWithAuth(mContext,
                     false);
         } else {

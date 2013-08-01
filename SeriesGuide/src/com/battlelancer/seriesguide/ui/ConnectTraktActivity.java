@@ -21,7 +21,7 @@ public class ConnectTraktActivity extends BaseActivity {
         setupActionBar();
 
         if (savedInstanceState == null) {
-            if (ServiceUtils.isTraktCredentialsValid(this)) {
+            if (ServiceUtils.hasTraktCredentials(this)) {
                 // immediately show credentials to allow disconnecting
                 ConnectTraktCredentialsFragment f = ConnectTraktCredentialsFragment.newInstance();
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

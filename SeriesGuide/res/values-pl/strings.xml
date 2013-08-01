@@ -32,7 +32,8 @@
   <string name="close">Zamknij</string>
   <string name="save_selection">Zapisz zaznaczone</string>
   <string name="offline">Brak połączenia sieciowego. Spróbuj ponownie później.</string>
-  <string name="onlyx">Only available with X Subscription</string>
+  <string name="app_not_available">No app available to handle this.</string>
+  <string name="onlyx">Dostępne tylko z wersją X</string>
   <string name="shows">Seriale</string>
   <string name="lists">Listy</string>
   <string name="activity">Aktywność</string>
@@ -296,7 +297,8 @@
   <string name="disconnect">Rozłącz</string>
   <string name="trakt_error">Komunikacja z trakt.tv zakończona niepowodzeniem</string>
   <string name="trakt_decryptfail">Nie można odszyfrować hasła</string>
-  <string name="trakt_generalerror">Coś poszło nie tak. Prosimy o sprawdzenie poświadczeń i ponowną próbę.</string>
+  <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
+  <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_createaccount">Utwórz nowe konto</string>
   <string name="welcome_setuplanguage">Wybierz język</string>
   <string name="welcome_traktmessage">Uzyskaj dostęp do biblioteki trakt.tv i aktywności przyjaciół</string>
@@ -325,16 +327,20 @@
   <string name="dashclock_extension_label">Nadchodzące odcinki</string>
   <string name="dashclock_extension_description">Wyświetla nadchodzące odcinki seriali z SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Pokaż odcinki emitowane za</string>
+  <string name="deprecation_title">Move to SeriesGuide</string>
+  <string name="backup_tool">Backup tool</string>
   <string name="download_stable">Pobierz SeriesGuide</string>
-  <string name="betawarning"><b>Uwaga!</b> To wydanie jest tylko dla beta testerów! Wersję stabilną można pobrać poniżej.</string>
-  <string name="upgrade_title">Get X features</string>
-  <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
-  <string name="upgrade_action">Get X features</string>
-  <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
-  <string name="subscription_activated">You are now subscribed to X features.</string>
-  <string name="subscription_expired">Subscription expired</string>
-  <string name="subscription_expired_details">Your X features subscription has expired.</string>
-  <string name="add_to_homescreen">Add to Home screen</string>
+  <string name="deprecation_warning"><b>Heads up!</b> SeriesGuide X will be stripped of all functionality very soon. Migrate your shows to the free version and keep SeriesGuide X installed to unlock the new X Subscription for life.</string>
+  <string name="migration_tutorial">To migrate your shows: touch <b>Backup tool</b>, then <b>Backup</b>.\n\nGo back until this dialog appears again.\n\nTouch <b>Download SeriesGuide</b> and install SeriesGuide.\n\nLaunch SeriesGuide. Touch <b>Menu</b>, then <b>Settings</b>. In <b>Advanced</b> use the backup tool to restore.</string>
+  <string name="upgrade_title">Uzyskaj funkcje X</string>
+  <string name="upgrade_description">Uzyskaj dostęp do powiadomień, większej ilości opcji w widżetach i innych funkcji X które będą dostępne w przyszłości. Wesprzyj tworzenie tej aplikacji.\n\nIf Jeśli już zakupiłeś SeriesGuide X, zainstaluj go aby odblokować nowe funkcje.</string>
+  <string name="upgrade_action">Uzyskaj funkcje X</string>
+  <string name="upgrade_success">Dzięki jesteś już zapisany do wszystkich funkcji X!</string>
+  <string name="subscription_activated">Subskrybujesz teraz funkcję X.</string>
+  <string name="subscription_expired">Subskrypcja wygasła</string>
+  <string name="subscription_expired_details">Twoje funkcję X wygasły.</string>
+  <string name="add_to_homescreen">Dodaj do pulpitu</string>
+  <string name="search_within_show">Search within %s</string>
   <string-array name="shsorting">
     <item>Od A do Z</item>
     <item>Następny odcinek</item>

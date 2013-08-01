@@ -640,7 +640,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
     @Override
     protected Integer doInBackground(Void... params) {
         // check for valid trakt credentials
-        mIsTraktInvolved = ServiceUtils.isTraktCredentialsValid(mContext);
+        mIsTraktInvolved = ServiceUtils.hasTraktCredentials(mContext);
 
         // prepare trakt stuff
         if (mIsTraktInvolved) {

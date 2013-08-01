@@ -101,7 +101,7 @@ public class TraktFlagService extends Service implements Callback {
     @Override
     public void onFailure(boolean isNotConnected) {
         // The user has disconnected from trakt in the meanwhile
-        if (!ServiceUtils.isTraktCredentialsValid(getApplicationContext())) {
+        if (!ServiceUtils.hasTraktCredentials(getApplicationContext())) {
             // clear all remaining tasks
             while (mQueue.size() > 0) {
                 mQueue.remove();

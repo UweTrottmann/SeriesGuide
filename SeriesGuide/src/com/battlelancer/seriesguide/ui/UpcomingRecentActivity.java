@@ -90,7 +90,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         tabsAdapter.addTab(R.string.recent, UpcomingFragment.class, argsRecent);
 
         // trakt friends tab
-        final boolean isTraktSetup = ServiceUtils.isTraktCredentialsValid(this);
+        final boolean isTraktSetup = ServiceUtils.hasTraktCredentials(this);
         if (isTraktSetup) {
             tabsAdapter.addTab(R.string.friends, TraktFriendsFragment.class, null);
         }
