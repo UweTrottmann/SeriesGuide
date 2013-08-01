@@ -205,7 +205,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         if (mShows == null) {
             mShows = getShowsToUpdate(type, currentTime);
         }
-        
+
         Log.d(TAG, "Perform TVDb update");
 
         // actually update the shows
@@ -253,23 +253,23 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             if (updateCount.get() > 0 && mShows.length > 0) {
                 // renew search table
                 TheTVDB.onRenewFTSTable(getContext());
+            }
 
-                // get latest TMDb configuration
-                try {
-                    Configuration config = ServiceUtils.getTmdbServiceManager(getContext())
-                            .configurationService()
-                            .configuration().fire();
-                    if (config != null && config.images != null
-                            && !TextUtils.isEmpty(config.images.base_url)) {
-                        prefs.edit()
-                                .putString(SeriesGuidePreferences.KEY_TMDB_BASE_URL,
-                                        config.images.base_url).commit();
-                    }
-                } catch (TmdbException e) {
-                    Utils.trackExceptionAndLog(getContext(), TAG, e);
-                } catch (ApiException e) {
-                    Utils.trackExceptionAndLog(getContext(), TAG, e);
+            // get latest TMDb configuration
+            try {
+                Configuration config = ServiceUtils.getTmdbServiceManager(getContext())
+                        .configurationService()
+                        .configuration().fire();
+                if (config != null && config.images != null
+                        && !TextUtils.isEmpty(config.images.base_url)) {
+                    prefs.edit()
+                            .putString(SeriesGuidePreferences.KEY_TMDB_BASE_URL,
+                                    config.images.base_url).commit();
                 }
+            } catch (TmdbException e) {
+                Utils.trackExceptionAndLog(getContext(), TAG, e);
+            } catch (ApiException e) {
+                Utils.trackExceptionAndLog(getContext(), TAG, e);
             }
 
             // get newly watched episodes from trakt
