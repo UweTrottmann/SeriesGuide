@@ -137,15 +137,26 @@
         <item name="android:background">@drawable/btn_default_sg</item>
     </style>
 
+    <!-- CheckBox -->
     <!-- pre v11 -->
     <style name="Widget.SeriesGuide.CheckBox" parent="android:Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/btn_check_sg</item>
     </style>
 
+    <!-- EditText -->
     <!-- pre v11 -->
     <style name="Widget.SeriesGuide.EditText" parent="android:Widget.EditText">
         <item name="android:background">@drawable/edit_text_sg</item>
         <item name="android:textColor">@color/text_primary_sg</item>
+    </style>
+
+    <!-- ProgressBar -->
+    <!-- pre v11 -->
+    <style name="ProgressBar" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_sg</item>
+        <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_sg</item>
+        <item name="android:minHeight">16dip</item>
+        <item name="android:maxHeight">16dip</item>
     </style>
 
     <!-- List selectors -->
@@ -390,6 +401,12 @@
     <style name="Widget.SeriesGuide.Light.EditText" parent="Widget.SeriesGuide.EditText">
         <item name="android:background">@drawable/edit_text_holo_light</item>
         <item name="android:textColor">@color/text_primary_light_sg</item>
+    </style>
+
+    <!-- ProgressBar -->
+    <!-- pre v11 -->
+    <style name="ProgressBar.Light">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_sg_light</item>
     </style>
 
     <!-- ActionBar -->

@@ -17,6 +17,7 @@
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
         <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBar</item>
 
         <!-- Action bar (ABS) -->
         <item name="actionBarStyle">@style/ActionBar</item>
@@ -135,6 +136,7 @@
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
         <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBar.Light</item>
 
         <!-- Action bar (ABS) -->
         <item name="actionBarStyle">@style/ActionBar.Light</item>
