@@ -16,6 +16,9 @@
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
         <item name="android:actionBarItemBackground" tools:targetApi="ice_cream_sandwich">@drawable/list_selector_sg</item>
         <item name="android:actionDropDownStyle">@style/DropDownNav</item>
+
+        <!-- Fast scroll thumb -->
+        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
     </style>
 
     <!-- SeriesGuide Light theme v11+ customizations -->
@@ -33,6 +36,9 @@
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
         <item name="android:actionBarItemBackground" tools:targetApi="ice_cream_sandwich">@drawable/list_selector_sg</item>
         <item name="android:actionDropDownStyle">@style/DropDownNav.Light</item>
+
+        <!-- Fast scroll thumb -->
+        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
     </style>
 
     <!-- Fullscreen theme v11+ customizations -->
