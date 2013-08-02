@@ -17,7 +17,7 @@
         <item name="android:actionBarItemBackground" tools:targetApi="ice_cream_sandwich">@drawable/list_selector_sg</item>
         <item name="android:actionDropDownStyle">@style/DropDownNav</item>
 
-        <!-- Fastscroll thumb -->
+        <!-- Fast scroll thumb -->
         <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
     </style>
 
@@ -37,7 +37,7 @@
         <item name="android:actionBarItemBackground" tools:targetApi="ice_cream_sandwich">@drawable/list_selector_sg</item>
         <item name="android:actionDropDownStyle">@style/DropDownNav.Light</item>
 
-        <!-- Fastscroll thumb -->
+        <!-- Fast scroll thumb -->
         <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
     </style>
 
