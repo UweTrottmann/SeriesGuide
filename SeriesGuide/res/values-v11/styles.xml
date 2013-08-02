@@ -12,6 +12,11 @@
         <item name="android:background">@drawable/btn_default_sg</item>
     </style>
 
+    <style name="ProgressBar" parent="android:Widget.Holo.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_sg</item>
+        <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_sg</item>
+    </style>
+
     <!-- ////////////////////////////////////////////// -->
 
 
@@ -25,5 +30,9 @@
 
 
     <!-- Light styles -->
+    <style name="ProgressBar.Light" parent="android:Widget.Holo.Light.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_sg_light</item>
+        <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_sg</item>
+    </style>
 
 </resources>

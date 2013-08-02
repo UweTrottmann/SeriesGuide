@@ -13,23 +13,22 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
+
 -->
 
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
         android:id="@android:id/background"
-        android:drawable="@drawable/progress_bg_holo_dark"/>
-
+        android:drawable="@drawable/progress_bg_holo_light"/>
     <item android:id="@android:id/secondaryProgress">
-<scale
-            android:drawable="@drawable/progress_secondary_holo_dark"
+        <scale
+            android:drawable="@drawable/progress_secondary_holo_light"
             android:scaleWidth="100%" />
     </item>
-
     <item android:id="@android:id/progress">
-<scale
-            android:drawable="@drawable/progress_primary_holo_dark"
+        <scale
+            android:drawable="@drawable/progress_primary_holo_light"
             android:scaleWidth="100%" />
     </item>
 
