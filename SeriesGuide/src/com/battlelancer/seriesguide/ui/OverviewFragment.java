@@ -313,6 +313,7 @@ public class OverviewFragment extends SherlockFragment implements
 
             // build share data
             Bundle shareData = new Bundle();
+            shareData.putString(ShareItems.CHOOSER_TITLE, getString(R.string.share_episode));
             shareData.putInt(ShareItems.SEASON, seasonNumber);
             shareData.putInt(ShareItems.EPISODE, episodeNumber);
             shareData.putInt(ShareItems.TVDBID, getShowId());

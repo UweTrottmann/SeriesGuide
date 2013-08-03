@@ -23,62 +23,67 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
 import com.battlelancer.seriesguide.util.SystemUiHider;
 import com.battlelancer.seriesguide.util.SystemUiHider.OnVisibilityChangeListener;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
 /**
  * This {@link Activity} is used to display a full screen image of a TV show's
  * poster, or the image provided for a specific episode.
  */
-public class FullscreenImageActivity extends Activity {
+public class FullscreenImageActivity extends FragmentActivity implements Runnable {
+
+    /** Log tag */
+    private static final String TAG = "FullscreenImageActivity";
 
     /** The {@link Intent} extra used to deliver the path to the requested image */
-    public static final String PATH = "fullscreenimageactivity.intent.extra.image";
+    public static final String PATH = ShareItems.IMAGE;
 
     /**
      * The number of milliseconds to wait after user interaction before hiding
-     * the system UI.
+     * the system UI
      */
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
 
-    /**
-     * The flags to pass to {@link SystemUiHider#getInstance}.
-     */
+    /** The flags to pass to {@link SystemUiHider#getInstance} */
     private static final int HIDER_FLAGS = SystemUiHider.FLAG_HIDE_NAVIGATION;
 
-    /**
-     * The instance of the {@link SystemUiHider} for this activity.
-     */
+    /** The {@link Handler} used to schedule System UI changes */
+    private final Handler mHideHandler = new Handler();
+
+    /** The instance of the {@link SystemUiHider} for this activity */
     private SystemUiHider mSystemUiHider;
 
     /** Displays the poster or episode preview */
     private ImageView mContentView;
 
-    /**
-     * {@inheritDoc}
-     */
+    /** The {@link Bundle} passed into this activity */
+    private Bundle mArgs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fullscreen_image_activity);
-
-        setupViews();
-    }
-
-    private void setupViews() {
         mContentView = (ImageView) findViewById(R.id.fullscreen_content);
 
         // Load the requested image
-        String imagePath = getIntent().getExtras().getString(PATH);
+        mArgs = getIntent().getExtras();
+        String imagePath = mArgs.getString(PATH);
         mContentView.setImageBitmap(ImageProvider.getInstance(this).getImage(imagePath, false));
 
         // Set up an instance of SystemUiHider to control the system UI for
-        // this activity.
+        // this activity
         mSystemUiHider = SystemUiHider.getInstance(this, mContentView, HIDER_FLAGS);
         mSystemUiHider.setup();
         mSystemUiHider.setOnVisibilityChangeListener(new OnVisibilityChangeListener() {
@@ -91,7 +96,7 @@ public class FullscreenImageActivity extends Activity {
             }
         });
 
-        // Set up the user interaction to manually show or hide the system UI.
+        // Set up the user interaction to manually show or hide the system UI
         mContentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,39 +106,43 @@ public class FullscreenImageActivity extends Activity {
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        delayedHide(100);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.fullscreen_image_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_share) {
+            ShareUtils.onShareEpisode(this, mArgs, ShareMethod.OTHER_SERVICES);
+            EasyTracker.getTracker().sendEvent(TAG, "Action Item", "Share", null);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public void onDetachedFromWindow() {
         // Release any references to the ImageView
         mContentView.setImageDrawable(null);
         mContentView = null;
+        // Release any references to the Handler
+        mHideHandler.removeCallbacksAndMessages(null);
         super.onDetachedFromWindow();
     }
 
-    Handler mHideHandler = new Handler();
-
-    Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            mSystemUiHider.hide();
-        }
-    };
+    @Override
+    public void run() {
+        mSystemUiHider.hide();
+    }
 
     /**
      * Schedules a call to hide() in [delay] milliseconds, canceling any
      * previously scheduled calls.
      */
     private void delayedHide(int delayMillis) {
-        mHideHandler.removeCallbacks(mHideRunnable);
-        mHideHandler.postDelayed(mHideRunnable, delayMillis);
+        mHideHandler.removeCallbacks(this);
+        mHideHandler.postDelayed(this, delayMillis);
     }
 
 }
