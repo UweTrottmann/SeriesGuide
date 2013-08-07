@@ -8,6 +8,18 @@ All dates are in the European Central timezone.
 Version 7 *(TBA)*
 -----------------
 
+#### 7beta3 *(2013-08-07)*
+
+* FEATURE Display show posters and episode images full screen by touching them. Thanks Andrew Neal (@adneal)!
+* TWEAK Improvements to support restricted profiles in Android 4.3.
+* TWEAK New sliding tab indicators, is now behind the new overlaying nav drawer.
+* TWEAK Check validity of trakt credentials when updating, auto-disconnect if they are invalid (e.g. if you change your password).
+* TWEAK Add Google Play search link to movie detail page. Thanks Andrew Neal (@adneal)!
+* FIX Reenable search within shows from their overview page. Suggestions still show for all shows though :(
+* FIX Also correctly remember last notified about episode when touching a notification instead of swiping it away.
+* FIX Activity wrongly limits number of episodes after rotating after enabling 'Infinte Activity'.
+* NOTICE Updated ActionBarSherlock to 4.4.0.
+
 #### 7beta2 *(2013-07-20)*
 
 * NOTICE The X Upgrade is now a yearly X Subscription. You can try it for free for 30 days. Users who have purchased the old X Upgrade or install SeriesGuide X side-by-side will get acess to the X Subscription for free until SeriesGuide will cease to exist. Please write in if there are problems!
