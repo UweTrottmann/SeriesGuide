@@ -33,7 +33,7 @@
   <string name="save_selection">Lagre valg</string>
   <string name="offline">Ingen nettverksforbindelse. Prøv på nytt senere.</string>
   <string name="app_not_available">No app available to handle this.</string>
-  <string name="onlyx">Only available with X Subscription</string>
+  <string name="onlyx">Bare tilgjengelig med X abonnement</string>
   <string name="shows">Serier</string>
   <string name="lists">Lister</string>
   <string name="activity">Aktiviteter</string>
@@ -43,24 +43,24 @@
   <string name="add_show">Legg Til</string>
   <string name="preferences">Innstillinger</string>
   <string name="help">Hjelp</string>
-  <string name="shouts">Shouts</string>
+  <string name="shouts">Roper</string>
   <string name="comments">Kommentarer</string>
-  <string name="shout_hint">Type a shout (in English)</string>
-  <string name="shout">Shout!</string>
+  <string name="shout_hint">Skriv inn et rop (på engelsk)</string>
+  <string name="shout">Rope!</string>
   <string name="isspoiler">Spoileradvarsel!</string>
-  <string name="no_shouts">Be the first to shout!</string>
-  <string name="shouts_for">Shouts for %s</string>
+  <string name="no_shouts">Vær den første til å rope!</string>
+  <string name="shouts_for">Rop for %s</string>
   <string name="autorefresh">Oppdateres automagisk</string>
-  <string name="movies_watchlist">Watchlist (trakt)</string>
-  <string name="watchlist_add">Add to watchlist</string>
-  <string name="watchlist_remove">Remove from watchlist</string>
-  <string name="watchlist_added">Added to watchlist</string>
-  <string name="watchlist_removed">Removed from watchlist</string>
+  <string name="movies_watchlist">Overvåkningsliste (trakt)</string>
+  <string name="watchlist_add">Legg til i overvåkningsliste</string>
+  <string name="watchlist_remove">Fjern fra overvåkningsliste</string>
+  <string name="watchlist_added">Lagt til i overvåkningsliste</string>
+  <string name="watchlist_removed">Fjernet fra overvåkningsliste</string>
   <string name="movies_search_hint">Skriv inn en filmtittel</string>
   <string name="movies_empty">Søk etter en film ovenfor.</string>
   <string name="movies_watchlist_empty">You have no internet connection or not added movies to your trakt watchlist.</string>
   <string name="trailer">Trailer</string>
-  <string name="shows_with_next">%s with next episodes</string>
+  <string name="shows_with_next">%s med neste episoder</string>
   <string name="shows_continuing">%s fortsetter</string>
   <string name="episodes_watched">%s sett</string>
   <string name="runtime_all_episodes">Visningstid for alle sette episoder</string>
@@ -75,7 +75,7 @@
   <string name="rating7">Bra</string>
   <string name="rating8">Veldig bra</string>
   <string name="rating9">Fantastisk</string>
-  <string name="episode_number_absolute">ABSOLUTE</string>
+  <string name="episode_number_absolute">ABSOLUTT</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Utgivelsesdato</string>
   <string name="episode_firstaired_unknown">Ukjent utgivelsesdato</string>
@@ -92,7 +92,7 @@
   <string name="show_isalive">Fortsetter</string>
   <string name="show_isnotalive">Avsluttet</string>
   <string name="lastEdit">Sist endret // TVDb</string>
-  <string name="services_watch">Watch</string>
+  <string name="services_watch">Se</string>
   <string name="services_more">Mer</string>
   <string name="sort">Sorter etter</string>
   <string name="updateall_yes">Oppdater (alle)</string>
@@ -110,8 +110,8 @@
   <string name="mark_untilhere">Sett alle tidligere vist</string>
   <string name="collect">Anskaffet episode</string>
   <string name="uncollect">Ikke enda anskaffet episode</string>
-  <string name="collect_all">Collected all</string>
-  <string name="uncollect_all">Collected none</string>
+  <string name="collect_all">Samlet alle</string>
+  <string name="uncollect_all">Samlet ingen</string>
   <string name="trakt_submitqueued">Sender til trakt.</string>
   <string name="trakt_seen">%s sett.</string>
   <string name="trakt_notseen">%s ikke sett.</string>
@@ -142,7 +142,7 @@
   <string name="norecent">Det er ingen nylige episoder.</string>
   <string name="only_favorites">Bare favoritter</string>
   <string name="togglewatched">Sett/ikke sett</string>
-  <string name="pref_infinite_scrolling">Infinite activity</string>
+  <string name="pref_infinite_scrolling">Uendelig aktivitet</string>
   <string name="update_scheduled">Oppdaterer...</string>
   <string name="update_no_connection">Koble til internett for å oppdatere.</string>
   <string name="update_no_wifi">Koble til WiFi eller tillat andre tilkoblinger i innstillingene for å oppdatere.</string>
@@ -174,7 +174,7 @@
   <string name="trending">Populære</string>
   <string name="recommended">Anbefalte</string>
   <string name="library">Bibliotek</string>
-  <string name="watchlist">Watchlist</string>
+  <string name="watchlist">Overvåkningsliste</string>
   <string name="powered_by_thetvdb">drevet av thetvdb.com</string>
   <string name="powered_by_trakt">drevet at travkt.tv</string>
   <string name="first_list">Første liste</string>
@@ -185,11 +185,11 @@
   <string name="list_item_manage">Behandle lister</string>
   <string name="list_item_remove">Fjern fra liste</string>
   <string name="list_empty">Du kan legge til serier, sesonger eller episoder til denne listen.</string>
-  <string name="connect_trakt">Connect trakt</string>
-  <string name="connect_trakt_done">Connected to trakt!</string>
-  <string name="add_trakt_shows">Add shows from your library:</string>
-  <string name="show_library">Show your library</string>
-  <string name="upload_shows">Upload your SeriesGuide show list:</string>
+  <string name="connect_trakt">Koble til trak</string>
+  <string name="connect_trakt_done">Koblet til trakt!</string>
+  <string name="add_trakt_shows">Legg til programmer fra biblioteket:</string>
+  <string name="show_library">Vis ditt bibliotek</string>
+  <string name="upload_shows">Last opp din SeriesGuide program liste:</string>
   <string name="upload_existing_shows">Last opp eksisterende serier</string>
   <string name="about_trakt">trakt bidrar til å holde oversikt over hvilke TV-programmer og filmer du ser på. <a href="http://trakt.tv"> Lær mer</a></string>
   <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
@@ -226,7 +226,7 @@
   <string name="pref_other">Annet</string>
   <string name="pref_autoupdate">Slå på automatisk oppdatering</string>
   <string name="pref_autoupdatesummary">Periodically update your shows</string>
-  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackup">Slå på automatisk sikkerhetskopiering</string>
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Sikkerhetskopiering/gjenoppretting</string>
   <string name="backup_summary">Sikkerhetskopiere eller gjenopprette dine serier</string>
@@ -327,19 +327,19 @@
   <string name="dashclock_extension_label">Kommende episode</string>
   <string name="dashclock_extension_description">Viser neste episode av dine SeriesGuide serier.</string>
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
-  <string name="deprecation_title">Move to SeriesGuide</string>
-  <string name="backup_tool">Backup tool</string>
+  <string name="deprecation_title">Flytt til SeriesGuide</string>
+  <string name="backup_tool">Sikkerhetskopierings verktøy</string>
   <string name="download_stable">Last ned SeriesGuide</string>
   <string name="deprecation_warning"><b>Heads up!</b> SeriesGuide X will be stripped of all functionality very soon. Migrate your shows to the free version and keep SeriesGuide X installed to unlock the new X Subscription for life.</string>
   <string name="migration_tutorial">To migrate your shows: touch <b>Backup tool</b>, then <b>Backup</b>.\n\nGo back until this dialog appears again.\n\nTouch <b>Download SeriesGuide</b> and install SeriesGuide.\n\nLaunch SeriesGuide. Touch <b>Menu</b>, then <b>Settings</b>. In <b>Advanced</b> use the backup tool to restore.</string>
-  <string name="upgrade_title">Get X features</string>
+  <string name="upgrade_title">Få X funkjoner</string>
   <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
-  <string name="upgrade_action">Get X features</string>
+  <string name="upgrade_action">Få X funkjoner</string>
   <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
   <string name="subscription_activated">You are now subscribed to X features.</string>
-  <string name="subscription_expired">Subscription expired</string>
+  <string name="subscription_expired">Abonnement utløpt</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
-  <string name="add_to_homescreen">Add to Home screen</string>
+  <string name="add_to_homescreen">Legg til på hjem-skjermen</string>
   <string name="search_within_show">Search within %s</string>
   <string-array name="shsorting">
     <item>A - Z</item>
@@ -375,7 +375,7 @@
     <item>Skjulte</item>
   </string-array>
   <string-array name="notificationThreshold">
-    <item>on air</item>
+    <item>På lufta</item>
     <item>5 min på forhånd</item>
     <item>10 min på forhånd</item>
     <item>en time på forhånd</item>

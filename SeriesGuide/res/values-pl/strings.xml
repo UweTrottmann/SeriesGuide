@@ -32,7 +32,7 @@
   <string name="close">Zamknij</string>
   <string name="save_selection">Zapisz zaznaczone</string>
   <string name="offline">Brak połączenia sieciowego. Spróbuj ponownie później.</string>
-  <string name="app_not_available">No app available to handle this.</string>
+  <string name="app_not_available">Brak aplikacji obsługującej to żądanie.</string>
   <string name="onlyx">Dostępne tylko z wersją X</string>
   <string name="shows">Seriale</string>
   <string name="lists">Listy</string>
@@ -297,8 +297,8 @@
   <string name="disconnect">Rozłącz</string>
   <string name="trakt_error">Komunikacja z trakt.tv zakończona niepowodzeniem</string>
   <string name="trakt_decryptfail">Nie można odszyfrować hasła</string>
-  <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
-  <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
+  <string name="trakt_error_credentials">Coś poszło nie tak. Sprawdź swoje poświadczenia i spróbuj ponownie.</string>
+  <string name="trakt_error_general">Nie można połączyć z  trakt. Spróbuj ponownie później.</string>
   <string name="trakt_createaccount">Utwórz nowe konto</string>
   <string name="welcome_setuplanguage">Wybierz język</string>
   <string name="welcome_traktmessage">Uzyskaj dostęp do biblioteki trakt.tv i aktywności przyjaciół</string>
@@ -327,11 +327,11 @@
   <string name="dashclock_extension_label">Nadchodzące odcinki</string>
   <string name="dashclock_extension_description">Wyświetla nadchodzące odcinki seriali z SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Pokaż odcinki emitowane za</string>
-  <string name="deprecation_title">Move to SeriesGuide</string>
-  <string name="backup_tool">Backup tool</string>
+  <string name="deprecation_title">Przejdź do SeriesGuide</string>
+  <string name="backup_tool">Kopia zapasowa</string>
   <string name="download_stable">Pobierz SeriesGuide</string>
-  <string name="deprecation_warning"><b>Heads up!</b> SeriesGuide X will be stripped of all functionality very soon. Migrate your shows to the free version and keep SeriesGuide X installed to unlock the new X Subscription for life.</string>
-  <string name="migration_tutorial">To migrate your shows: touch <b>Backup tool</b>, then <b>Backup</b>.\n\nGo back until this dialog appears again.\n\nTouch <b>Download SeriesGuide</b> and install SeriesGuide.\n\nLaunch SeriesGuide. Touch <b>Menu</b>, then <b>Settings</b>. In <b>Advanced</b> use the backup tool to restore.</string>
+  <string name="deprecation_warning"><b>Uwaga!</b> SeriesGuide X zostanie wkrótce pozbawiony wszelkiej funkcjonalności. Przenieś seriale do darmowej wersji i zachowaj SeriesGuide X zainstalowany, aby odblokować nową, dożywotnią subskrypcję X.</string>
+  <string name="migration_tutorial">Aby przenieść swoje seriale: kliknij na narzędziu <b>kopia zapasowa</b>, a następnie <b>Archiwizuj</b>. \n\nWróć z powrotem, dopóki to okno dialogowe pojawia się ponownie.\n\nKliknij na <b>pobierz SeriesGuide</b> i zainstaluj SeriesGuide.\n\nUruchom SeriesGuide. Dotknij <b>Menu</b>, a następnie <b>Ustawienia</b>. W <b>Zaawansowane</b> będzie można przywrócić kopię zapasową.</string>
   <string name="upgrade_title">Uzyskaj funkcje X</string>
   <string name="upgrade_description">Uzyskaj dostęp do powiadomień, większej ilości opcji w widżetach i innych funkcji X które będą dostępne w przyszłości. Wesprzyj tworzenie tej aplikacji.\n\nIf Jeśli już zakupiłeś SeriesGuide X, zainstaluj go aby odblokować nowe funkcje.</string>
   <string name="upgrade_action">Uzyskaj funkcje X</string>
@@ -340,7 +340,7 @@
   <string name="subscription_expired">Subskrypcja wygasła</string>
   <string name="subscription_expired_details">Twoje funkcję X wygasły.</string>
   <string name="add_to_homescreen">Dodaj do pulpitu</string>
-  <string name="search_within_show">Search within %s</string>
+  <string name="search_within_show">Szukaj w %s</string>
   <string-array name="shsorting">
     <item>Od A do Z</item>
     <item>Następny odcinek</item>

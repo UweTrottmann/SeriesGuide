@@ -32,7 +32,7 @@
   <string name="close">Sulje</string>
   <string name="save_selection">Tallenna valinta</string>
   <string name="offline">Ei verkkoyhteyttä. Yritä myöhemmin uudelleen.</string>
-  <string name="app_not_available">No app available to handle this.</string>
+  <string name="app_not_available">Tähän toimintoon ei löydy sovellusta.</string>
   <string name="onlyx">Saatavilla vain X-tilauksella</string>
   <string name="shows">Ohjelmat</string>
   <string name="lists">Listat</string>
@@ -297,8 +297,8 @@
   <string name="disconnect">Katkaise yhteys</string>
   <string name="trakt_error">Vuorovaikutus traktin kanssa epäonnistui</string>
   <string name="trakt_decryptfail">Salasanaa ei voitu purkaa</string>
-  <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
-  <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
+  <string name="trakt_error_credentials">Jokin meni pieleen. Tarkista oikeutesi ja yritä uudelleen.</string>
+  <string name="trakt_error_general">Kommunikointi traktin kanssa ei onnistu. Yritä myöhemmin uudelleen.</string>
   <string name="trakt_createaccount">Luo uusi tili</string>
   <string name="welcome_setuplanguage">Valitse kieli</string>
   <string name="welcome_traktmessage">Käytä trakt.tv-kokoelmaasi ja näe ystäviesi toiminta</string>
@@ -340,7 +340,7 @@
   <string name="subscription_expired">Tilaus vanhentunut</string>
   <string name="subscription_expired_details">X-ominaisuustilauksesi on vanhentunut.</string>
   <string name="add_to_homescreen">Lisää kotiruudulle</string>
-  <string name="search_within_show">Search within %s</string>
+  <string name="search_within_show">Hae ohjelmasta %s</string>
   <string-array name="shsorting">
     <item>A - Ö</item>
     <item>Seuraava jakso</item>

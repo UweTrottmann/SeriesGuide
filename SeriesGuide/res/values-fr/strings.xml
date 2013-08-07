@@ -32,7 +32,7 @@
   <string name="close">Fermer</string>
   <string name="save_selection">Enregistrer</string>
   <string name="offline">Pas de connexion. Réessayez plus tard.</string>
-  <string name="app_not_available">No app available to handle this.</string>
+  <string name="app_not_available">Aucune application n\'est disponible pour gérer ceci.</string>
   <string name="onlyx">Disponible uniquement avec l\'abonnement X</string>
   <string name="shows">Séries</string>
   <string name="lists">Listes</string>
@@ -146,7 +146,7 @@
   <string name="update_scheduled">Mise à jour...</string>
   <string name="update_no_connection">Pour mettre à jour, connectez-vous à Internet.</string>
   <string name="update_no_wifi">Pour mettre à jour, connectez-vous en WiFi ou autorisez d\'autres connections dans les paramètres.</string>
-  <string name="update_inprogress">Une mise à jour est en cours, réessayez plus tard.</string>
+  <string name="update_inprogress">Une mise à jour est en cours, réessayez ultérieurement.</string>
   <string name="menu_updateart">Charger les affiches</string>
   <string name="arttask_incomplete">Le chargement de quelques affiches a échoué, réessayez plus tard.</string>
   <string name="arttask_start">Chargement des affiches...</string>
@@ -297,8 +297,8 @@
   <string name="disconnect">Se déconnecter</string>
   <string name="trakt_error">Échec d\'interaction avec trakt</string>
   <string name="trakt_decryptfail">le mot de passe n\'a pas pu être décrypté</string>
-  <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
-  <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
+  <string name="trakt_error_credentials">Un problème est survenu. Merci de vérifier vos identifiants et d\'essayer de nouveau.</string>
+  <string name="trakt_error_general">Impossible de communiquer avec trakt. Réessayez ultérieurement.</string>
   <string name="trakt_createaccount">Créer un nouveau compte</string>
   <string name="welcome_setuplanguage">Choisissez la langue</string>
   <string name="welcome_traktmessage">Accédez à votre bibliothèque trakt.tv et à l\'activité de vos amis</string>
@@ -340,7 +340,7 @@
   <string name="subscription_expired">Abonnement expiré</string>
   <string name="subscription_expired_details">Votre abonnement aux fonctionnalités X a expiré.</string>
   <string name="add_to_homescreen">Ajouter à l\'écran d\'accueil</string>
-  <string name="search_within_show">Search within %s</string>
+  <string name="search_within_show">Chercher dans %s</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Episode suivant</item>
