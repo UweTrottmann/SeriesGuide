@@ -3,6 +3,8 @@ Contributing
 
 If you would like to contribute code to SeriesGuide you can do so through GitHub by forking the repository and sending a **pull request against the beta branch**.
 
+*Note:* If you would like to help translate SeriesGuide, please check out its [Crowdin page][4] instead.
+
 Branch structure
 ----------------
 
@@ -33,3 +35,4 @@ To build any of the free, X or beta version use the appropiate flavor project. T
  [1]: https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide
  [2]: https://github.com/UweTrottmann/SeriesGuide/wiki/Beta
  [3]: http://developer.android.com/tools/help/adt.html
+ [4]: http://crowdin.net/project/seriesguide-translations
