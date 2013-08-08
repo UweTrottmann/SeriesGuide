@@ -5,8 +5,16 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 7 *(TBA)*
+Version 7 *(2013-08-08)*
 -----------------
+
+* NOTICE Introducing the X Subscription. You can try it for free for 30 days. Users who have purchased the old X Upgrade or install the SeriesGuide X Life-Time Pass side-by-side will get access to the X Subscription for free until SeriesGuide will cease to exist. Please write in if there are problems!
+* FEATURE Display show posters and episode images full screen by touching them.
+* X FEATURE New widget type: favorite shows.
+* X FEATURE Add shortcuts to shows to your home screen from their overview page.
+* TWEAK Add Google Play search link to movie detail page.
+* TWEAK Check validity of trakt credentials when updating, auto-disconnect if they are invalid (e.g. if you change your password).
+* TWEAK Improvements to support restricted profiles in Android 4.3.
 
 #### 7beta3 *(2013-08-07)*
 
@@ -22,7 +30,7 @@ Version 7 *(TBA)*
 
 #### 7beta2 *(2013-07-20)*
 
-* NOTICE The X Upgrade is now a yearly X Subscription. You can try it for free for 30 days. Users who have purchased the old X Upgrade or install SeriesGuide X side-by-side will get acess to the X Subscription for free until SeriesGuide will cease to exist. Please write in if there are problems!
+* NOTICE The X Upgrade is now a yearly X Subscription. You can try it for free for 30 days. Users who have purchased the old X Upgrade or install SeriesGuide X side-by-side will get access to the X Subscription for free until SeriesGuide will cease to exist. Please write in if there are problems!
 * X FEATURE New widget type: display favorite shows.
 * X FEATURE Add shortcuts to shows to your home screen from their overview page. Thanks Andrew Neal (@adneal)!
 * TWEAK Tapping the Google Play link now searches exclusively for movies and TV shows. Thanks Andrew Neal (@adneal)!

@@ -137,6 +137,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         }
         if (shows.getCount() == 0) {
             // There are no shows? Done.
+            shows.close();
             return SUCCESS;
         }
 
@@ -174,6 +175,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         }
         if (lists.getCount() == 0) {
             // There are no lists? Done.
+            lists.close();
             return SUCCESS;
         }
 
