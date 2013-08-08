@@ -32,7 +32,8 @@
   <string name="close">Fermer</string>
   <string name="save_selection">Enregistrer</string>
   <string name="offline">Pas de connexion. Réessayez plus tard.</string>
-  <string name="onlyx">Disponible seulement dans SeriesGuide X</string>
+  <string name="app_not_available">Aucune application n\'est disponible pour gérer ceci.</string>
+  <string name="onlyx">Disponible uniquement avec l\'abonnement X</string>
   <string name="shows">Séries</string>
   <string name="lists">Listes</string>
   <string name="activity">Activité</string>
@@ -145,7 +146,7 @@
   <string name="update_scheduled">Mise à jour...</string>
   <string name="update_no_connection">Pour mettre à jour, connectez-vous à Internet.</string>
   <string name="update_no_wifi">Pour mettre à jour, connectez-vous en WiFi ou autorisez d\'autres connections dans les paramètres.</string>
-  <string name="update_inprogress">Une mise à jour est en cours, réessayez plus tard.</string>
+  <string name="update_inprogress">Une mise à jour est en cours, réessayez ultérieurement.</string>
   <string name="menu_updateart">Charger les affiches</string>
   <string name="arttask_incomplete">Le chargement de quelques affiches a échoué, réessayez plus tard.</string>
   <string name="arttask_start">Chargement des affiches...</string>
@@ -296,7 +297,8 @@
   <string name="disconnect">Se déconnecter</string>
   <string name="trakt_error">Échec d\'interaction avec trakt</string>
   <string name="trakt_decryptfail">le mot de passe n\'a pas pu être décrypté</string>
-  <string name="trakt_generalerror">Quelque chose s\'est mal passé. Veuillez vérifier vos identifiants et essayez à nouveau.</string>
+  <string name="trakt_error_credentials">Un problème est survenu. Merci de vérifier vos identifiants et d\'essayer de nouveau.</string>
+  <string name="trakt_error_general">Impossible de communiquer avec trakt. Réessayez ultérieurement.</string>
   <string name="trakt_createaccount">Créer un nouveau compte</string>
   <string name="welcome_setuplanguage">Choisissez la langue</string>
   <string name="welcome_traktmessage">Accédez à votre bibliothèque trakt.tv et à l\'activité de vos amis</string>
@@ -321,15 +323,24 @@
   <string name="hide_watched">Masquer les épisodes vus</string>
   <string name="pref_widget_opacity">Arrière-plan du widget</string>
   <string name="pref_widget_type">Type du widget</string>
+  <string name="favorites">Favoris</string>
   <string name="dashclock_extension_label">Prochain épisode</string>
   <string name="dashclock_extension_description">Affiche le prochain épisode à venir parmi vos séries.</string>
   <string name="dashclock_pref_upcoming_threshold">Montrer les épisodes à venir dans</string>
+  <string name="deprecation_title">Migrez vers SériesGuide</string>
+  <string name="backup_tool">Outil de sauvegarde</string>
   <string name="download_stable">Télécharger SeriesGuide</string>
-  <string name="betawarning"><b>Attention !</b> Cette version est pour les bêta-testeurs seulement ! Si vous êtes dans le doute, téléchargez la version stable ci-dessous.</string>
-  <string name="upgrade_title">Obtenir la mise à niveau X</string>
-  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
-  <string name="upgrade_action">Obtenir la mise à niveau X</string>
-  <string name="upgrade_success">Vous avez déjà la mise à niveau X, merci !</string>
+  <string name="deprecation_warning"><b>Attention !</b> SeriesGuide X sera très prochainement dépourvu de toutes fonctionnalités. Migrez vos séries vers la version gratuite et laissez SeriesGuide X installé afin de déverrouiller le nouvel abonnement X à vie.</string>
+  <string name="migration_tutorial">Pour migrer vos séries : appuyez sur <b>Outil de sauvegarde</b> puis <b>Sauvegarder</b>.\n\nRevenez en arrière jusqu\'à ce que ce message réapparaisse.\n\nAppuyez sur <b>Télécharger SeriesGuide</b> et installez-le.\n\nLancez SeriesGuide. Avec la touche <b>Menu</b>, allez dans <b>Paramètres</b>. Enfin, dans <b>Avancé</b>, utilisez la rubrique Sauvegarde / Restauration pour restaurer vos séries.</string>
+  <string name="upgrade_title">Obtenir les fonctionnalités X</string>
+  <string name="upgrade_description">Accédez aux notifications, à plus d\'options pour le widget et à toutes les fonctionnalités X futures. Supportez le développement.\n\nSi vous avez déjà acheté SeriesGuide X, installez-le pour déverrouiller cette mise à niveau.</string>
+  <string name="upgrade_action">Obtenir les fonctionnalités X</string>
+  <string name="upgrade_success">Merci, vous êtes déjà abonné à toutes les fonctionnalités X !</string>
+  <string name="subscription_activated">Vous avez dès à présent accès aux fonctionnalités X.</string>
+  <string name="subscription_expired">Abonnement expiré</string>
+  <string name="subscription_expired_details">Votre abonnement aux fonctionnalités X a expiré.</string>
+  <string name="add_to_homescreen">Ajouter à l\'écran d\'accueil</string>
+  <string name="search_within_show">Chercher dans %s</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Episode suivant</item>
@@ -379,6 +390,7 @@
   <string-array name="widgetType">
     <item>À venir</item>
     <item>Dernièrement</item>
+    <item>Favoris</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
     <item>1 heure</item>

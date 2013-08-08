@@ -35,7 +35,8 @@ import android.view.View;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.adapters.TabPagerAdapter;
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -51,7 +52,7 @@ import java.util.List;
 /**
  * Hosts an {@link OverviewFragment}.
  */
-public class OverviewActivity extends BaseActivity {
+public class OverviewActivity extends BaseNavDrawerActivity {
 
     private int mShowId;
     private NfcAdapter mNfcAdapter;
@@ -60,7 +61,7 @@ public class OverviewActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.overview);
+        getMenu().setContentView(R.layout.overview);
 
         mShowId = getIntent().getIntExtra(OverviewFragment.InitBundle.SHOW_TVDBID, -1);
         if (mShowId == -1) {
@@ -68,35 +69,9 @@ public class OverviewActivity extends BaseActivity {
             return;
         }
 
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        setupActionBar();
 
-        // look if we are on a multi-pane or single-pane layout...
-        View pagerView = findViewById(R.id.pager);
-        if (pagerView != null && pagerView.getVisibility() == View.VISIBLE) {
-            // ...single pane layout with view pager
-
-            // clear up left-over fragments from multi-pane layout
-            findAndRemoveFragment(R.id.fragment_overview);
-            findAndRemoveFragment(R.id.fragment_seasons);
-
-            setupViewPager(pagerView);
-        } else {
-            // ...multi-pane overview and seasons fragment
-
-            // clear up left-over fragments from single-pane layout
-            boolean isSwitchingLayouts = getActiveFragments().size() != 0;
-            for (Fragment fragment : getActiveFragments()) {
-                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-            }
-
-            // attach new fragments if there are none or if we just switched
-            // layouts
-            if (savedInstanceState == null || isSwitchingLayouts) {
-                setupPanes();
-            }
-        }
+        setupViews(savedInstanceState);
 
         // Support beaming shows via Android Beam
         if (AndroidUtils.isICSOrHigher()) {
@@ -137,6 +112,40 @@ public class OverviewActivity extends BaseActivity {
         onUpdateShow();
     }
 
+    private void setupActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void setupViews(Bundle savedInstanceState) {
+        // look if we are on a multi-pane or single-pane layout...
+        View pagerView = findViewById(R.id.pagerOverview);
+        if (pagerView != null && pagerView.getVisibility() == View.VISIBLE) {
+            // ...single pane layout with view pager
+
+            // clear up left-over fragments from multi-pane layout
+            findAndRemoveFragment(R.id.fragment_overview);
+            findAndRemoveFragment(R.id.fragment_seasons);
+
+            setupViewPager(pagerView);
+        } else {
+            // ...multi-pane overview and seasons fragment
+
+            // clear up left-over fragments from single-pane layout
+            boolean isSwitchingLayouts = getActiveFragments().size() != 0;
+            for (Fragment fragment : getActiveFragments()) {
+                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+
+            // attach new fragments if there are none or if we just switched
+            // layouts
+            if (savedInstanceState == null || isSwitchingLayouts) {
+                setupPanes();
+            }
+        }
+    }
+
     private void setupPanes() {
         Fragment showsFragment = ShowInfoFragment.newInstance(mShowId);
         FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
@@ -158,15 +167,12 @@ public class OverviewActivity extends BaseActivity {
     }
 
     private void setupViewPager(View pagerView) {
-        final ActionBar actionBar = getSupportActionBar();
-
         ViewPager pager = (ViewPager) pagerView;
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsOverview);
 
-        // setup action bar tabs
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-        TabPagerAdapter tabsAdapter = new TabPagerAdapter(getSupportFragmentManager(), this,
-                actionBar, pager);
+        // setup tab strip
+        TabStripAdapter tabsAdapter = new TabStripAdapter(
+                getSupportFragmentManager(), this, pager, tabs);
         Bundle argsShow = new Bundle();
         argsShow.putInt(ShowInfoFragment.InitBundle.SHOW_TVDBID, mShowId);
         tabsAdapter.addTab(R.string.show, ShowInfoFragment.class, argsShow);
@@ -179,7 +185,7 @@ public class OverviewActivity extends BaseActivity {
         tabsAdapter.addTab(R.string.seasons, SeasonsFragment.class, argsSeason);
 
         // select overview to be shown initially
-        actionBar.setSelectedNavigationItem(1);
+        pager.setCurrentItem(1);
     }
 
     private void findAndRemoveFragment(int fragmentId) {
@@ -236,13 +242,16 @@ public class OverviewActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Intent upIntent = new Intent(this, ShowsActivity.class);
-                upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(upIntent);
-                overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            Intent upIntent = new Intent(this, ShowsActivity.class);
+            upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(upIntent);
+            overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
+            return true;
+        } else if (itemId == R.id.menu_overview_search) {
+            onSearchRequested();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

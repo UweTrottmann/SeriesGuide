@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
+import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -89,7 +90,11 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
     /**
      * Initial constructor. Call <b>one</b> of the setup-methods, like
-     * {@code shout(tvdbid, shout, isSpoiler)}, afterwards.
+     * {@code shout(tvdbid, shout, isSpoiler)}, afterwards.<br>
+     * <br>
+     * Make sure the user has valid trakt credentials (check with
+     * {@link ServiceUtils#hasTraktCredentials(Context)} and then possibly
+     * launch {@link ConnectTraktActivity}) or execution will fail.
      */
     public TraktTask(Context context, OnTraktActionCompleteListener listener) {
         mContext = context;
@@ -99,7 +104,11 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
     /**
      * Fast constructor, allows passing of an already pre-built {@code args}
-     * {@link Bundle}.
+     * {@link Bundle}.<br>
+     * <br>
+     * Make sure the user has valid trakt credentials (check with
+     * {@link ServiceUtils#hasTraktCredentials(Context)} and then possibly
+     * launch {@link ConnectTraktActivity}) or execution will fail.
      */
     public TraktTask(Context context, Bundle args, OnTraktActionCompleteListener listener) {
         this(context, listener);
@@ -203,9 +212,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         }
 
         // check for valid credentials
-        if (!ServiceUtils.isTraktCredentialsValid(mContext)) {
-            // return null so a credentials dialog is displayed
-            // it will call us again with valid credentials
+        if (!ServiceUtils.hasTraktCredentials(mContext)) {
             return null;
         }
 
@@ -215,7 +222,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
             // password could not be decrypted
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
-            r.error = mContext.getString(R.string.trakt_generalerror);
+            r.error = mContext.getString(R.string.trakt_error_credentials);
             return r;
         }
 
@@ -340,13 +347,13 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
             Utils.trackExceptionAndLog(mContext, TAG, e);
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
-            r.error = mContext.getString(R.string.trakt_generalerror);
+            r.error = mContext.getString(R.string.trakt_error_general);
             return r;
         } catch (ApiException e) {
             Utils.trackExceptionAndLog(mContext, TAG, e);
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
-            r.error = mContext.getString(R.string.trakt_generalerror);
+            r.error = mContext.getString(R.string.trakt_error_general);
             return r;
         }
     }

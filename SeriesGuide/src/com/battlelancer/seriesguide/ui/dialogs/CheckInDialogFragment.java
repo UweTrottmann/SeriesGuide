@@ -52,25 +52,28 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
      * the given episode TVDb id. Might return null.
      */
     public static CheckInDialogFragment newInstance(Context context, int episodeTvdbId) {
-        CheckInDialogFragment f = new CheckInDialogFragment();
-
         final Cursor episode = context.getContentResolver().query(
                 Episodes.buildEpisodeWithShowUri(episodeTvdbId),
                 CheckInQuery.PROJECTION, null, null, null);
-        if (episode == null || !episode.moveToFirst()) {
-            return null;
+
+        CheckInDialogFragment f = null;
+
+        if (episode != null) {
+            if (episode.moveToFirst()) {
+                f = new CheckInDialogFragment();
+                Bundle args = new Bundle();
+                args.putString(InitBundle.IMDB_ID, episode.getString(5));
+                args.putInt(InitBundle.SHOW_TVDB_ID, episode.getInt(4));
+                args.putInt(InitBundle.SEASON, episode.getInt(1));
+                args.putInt(InitBundle.EPISODE, episode.getInt(2));
+
+                String episodeTitleWithNumbers = ShareUtils.onCreateShareString(context, episode);
+                args.putString(InitBundle.ITEM_TITLE, episodeTitleWithNumbers);
+                args.putString(InitBundle.DEFAULT_MESSAGE, episodeTitleWithNumbers);
+                f.setArguments(args);
+            }
+            episode.close();
         }
-
-        Bundle args = new Bundle();
-        args.putString(InitBundle.IMDB_ID, episode.getString(5));
-        args.putInt(InitBundle.SHOW_TVDB_ID, episode.getInt(4));
-        args.putInt(InitBundle.SEASON, episode.getInt(1));
-        args.putInt(InitBundle.EPISODE, episode.getInt(2));
-
-        String episodeTitleWithNumbers = ShareUtils.onCreateShareString(context, episode);
-        args.putString(InitBundle.ITEM_TITLE, episodeTitleWithNumbers);
-        args.putString(InitBundle.DEFAULT_MESSAGE, episodeTitleWithNumbers);
-        f.setArguments(args);
 
         return f;
     }

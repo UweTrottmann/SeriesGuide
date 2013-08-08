@@ -1,8 +1,6 @@
-SeriesGuide X adds more list widget options and notifications for favorited shows.
-
-To support future development consider buying SeriesGuide X.
-
 Manage the progress of (re-)watching your favorite TV shows. See what is coming up, keep track of what to watch next. Check in with trakt.tv or GetGlue. Share episodes with your friends or the world.
+
+Get the X Subscription in Settings! The X Subscription includes more list widget options and notifications for new episodes. You also support continued fixes and new features.
 
 NOTE: Information is United States (Pacific time) based. You can't watch episodes.
 
@@ -11,3 +9,11 @@ No sign-in required.
 Offline support (Internet connection may be required for adding or updating shows, downloading episode images, sharing).
 
 DashClock extension.
+
+
+Unlock a life-time pass to the X Subscription of SeriesGuide. Requires SeriesGuide to be installed.
+
+The X Subscription includes more list widget options and notifications for new episodes. You also support continued fixes and new features.
+
+For users of the old SeriesGuide X:
+Transfer your show database with the Backup and Restore functionality in Settings to the free version, or any other SeriesGuide installation for that matter.

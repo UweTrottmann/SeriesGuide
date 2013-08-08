@@ -20,7 +20,6 @@ package com.battlelancer.seriesguide.ui;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -116,19 +115,31 @@ public class MovieDetailsFragment extends SherlockFragment implements
 
         if (mMovieDetails != null) {
             inflater.inflate(R.menu.movie_details_menu, menu);
+        }
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+
+        if (mMovieDetails != null) {
+            // If the nav drawer is open, hide action items related to the
+            // content view
+            boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isMenuDrawerOpen();
 
             boolean isEnableImdb = mMovieDetails.movie() != null
                     && !TextUtils.isEmpty(mMovieDetails.movie().imdb_id);
             MenuItem imdbItem = menu.findItem(R.id.menu_open_imdb);
             imdbItem.setEnabled(isEnableImdb);
-            imdbItem.setVisible(isEnableImdb);
+            imdbItem.setVisible(isEnableImdb && !isDrawerOpen);
 
             boolean isEnableYoutube = mMovieDetails.trailers() != null &&
                     mMovieDetails.trailers().youtube.size() > 0;
             MenuItem youtubeItem = menu.findItem(R.id.menu_open_youtube);
             youtubeItem.setEnabled(isEnableYoutube);
-            youtubeItem.setVisible(isEnableYoutube);
+            youtubeItem.setVisible(isEnableYoutube && !isDrawerOpen);
         }
+
+        super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -139,12 +150,12 @@ public class MovieDetailsFragment extends SherlockFragment implements
             return true;
         }
         if (itemId == R.id.menu_open_youtube) {
-            Intent intent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("http://www.youtube.com/watch?v="
-                            + mMovieDetails.trailers().youtube.get(0).source));
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-            startActivity(intent);
-            fireTrackerEvent("Trailer");
+            ServiceUtils.openYoutube(mMovieDetails.trailers().youtube.get(0).source, TAG,
+                    getActivity());
+            return true;
+        }
+        if (itemId == R.id.menu_open_google_play) {
+            ServiceUtils.searchGooglePlay(mMovieDetails.movie().title, TAG, getActivity());
             return true;
         }
         if (itemId == R.id.menu_open_trakt) {

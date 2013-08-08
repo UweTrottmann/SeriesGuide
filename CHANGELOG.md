@@ -5,6 +5,50 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 7 *(2013-08-08)*
+-----------------
+
+* NOTICE Introducing the X Subscription. You can try it for free for 30 days. Users who have purchased the old X Upgrade or install the SeriesGuide X Life-Time Pass side-by-side will get access to the X Subscription for free until SeriesGuide will cease to exist. Please write in if there are problems!
+* FEATURE Display show posters and episode images full screen by touching them.
+* X FEATURE New widget type: favorite shows.
+* X FEATURE Add shortcuts to shows to your home screen from their overview page.
+* TWEAK Add Google Play search link to movie detail page.
+* TWEAK Check validity of trakt credentials when updating, auto-disconnect if they are invalid (e.g. if you change your password).
+* TWEAK Improvements to support restricted profiles in Android 4.3.
+
+#### 7beta3 *(2013-08-07)*
+
+* FEATURE Display show posters and episode images full screen by touching them. Thanks Andrew Neal (@adneal)!
+* TWEAK Improvements to support restricted profiles in Android 4.3.
+* TWEAK New sliding tab indicators, is now behind the new overlaying nav drawer.
+* TWEAK Check validity of trakt credentials when updating, auto-disconnect if they are invalid (e.g. if you change your password).
+* TWEAK Add Google Play search link to movie detail page. Thanks Andrew Neal (@adneal)!
+* FIX Reenable search within shows from their overview page. Suggestions still show for all shows though :(
+* FIX Also correctly remember last notified about episode when touching a notification instead of swiping it away.
+* FIX Activity wrongly limits number of episodes after rotating after enabling 'Infinte Activity'.
+* NOTICE Updated ActionBarSherlock to 4.4.0.
+
+#### 7beta2 *(2013-07-20)*
+
+* NOTICE The X Upgrade is now a yearly X Subscription. You can try it for free for 30 days. Users who have purchased the old X Upgrade or install SeriesGuide X side-by-side will get access to the X Subscription for free until SeriesGuide will cease to exist. Please write in if there are problems!
+* X FEATURE New widget type: display favorite shows.
+* X FEATURE Add shortcuts to shows to your home screen from their overview page. Thanks Andrew Neal (@adneal)!
+* TWEAK Tapping the Google Play link now searches exclusively for movies and TV shows. Thanks Andrew Neal (@adneal)!
+* TWEAK Title and description in the add show dialog are now selectable (Android 3+). Thanks Andrew Neal (@adneal)!
+* TWEAK The search bar is now shown on older versions of Android, too. Thanks Andrew Neal (@adneal)!
+* TWEAK Tab bars are now only as wide as they need to be, this looks way better especially on large screens.
+* FIX Strict mode testing: some unclosed cursors are now closed correctly, freeing up resources correctly. Thanks Andrew Neal (@adneal)!
+* FIX If the X subscription is canceled, actually remove access to X features once it has expired.
+* FIX Ensure valid trakt credentials before rating a show. Thanks Andrew Neal (@adneal)!
+* FIX Actions now properly hide in all cases when opening the navigation drawer.
+* FIX Some Google Play reported crashes in the backup tool, with in-app billing.
+* NOTICE For contributers: all libraries live now inside the SeriesGuide repository, no need to clone multiple repositories anymore.
+
+#### 7beta1 *(2013-07-10)*
+
+* TWEAK Use new navigation drawer that overlays content. Does not overlay tabs, not a bug!
+* TWEAK Use minimal activity stream to get trakt activity, apparently reducing download size up to 90%.
+
 Version 6.1x *(2013-06-29)*
 ------------------------
 This was released for SeriesGuide X only.

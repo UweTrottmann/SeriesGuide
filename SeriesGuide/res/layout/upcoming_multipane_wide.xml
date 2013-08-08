@@ -4,14 +4,30 @@
     android:layout_height="match_parent"
     android:orientation="horizontal" >
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
+    <RelativeLayout
         android:layout_width="0px"
         android:layout_height="match_parent"
-        android:layout_weight="3" />
+        android:layout_weight="3" >
+
+        <com.astuetz.viewpager.extensions.PagerSlidingTabStrip
+            android:id="@+id/tabsUpcoming"
+            style="@style/TabStrip"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tab_strip_height" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pagerUpcoming"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tabsUpcoming" />
+    </RelativeLayout>
 
     <View
-        android:id="@+id/spacer_middle"
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="?attr/colorSeparator" />
+
+    <View
         android:layout_width="0px"
         android:layout_height="match_parent"
         android:layout_weight="1" />

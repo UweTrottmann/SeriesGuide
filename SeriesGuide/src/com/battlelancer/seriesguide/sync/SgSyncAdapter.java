@@ -206,6 +206,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             mShows = getShowsToUpdate(type, currentTime);
         }
 
+        Log.d(TAG, "Perform TVDb update");
+
         // actually update the shows
         for (int i = updateCount.get(); i < mShows.length; i++) {
             int id = mShows[i];
@@ -251,24 +253,27 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             if (updateCount.get() > 0 && mShows.length > 0) {
                 // renew search table
                 TheTVDB.onRenewFTSTable(getContext());
-
-                // get latest TMDb configuration
-                try {
-                    Configuration config = ServiceUtils.getTmdbServiceManager(getContext())
-                            .configurationService()
-                            .configuration().fire();
-                    if (config != null && config.images != null
-                            && !TextUtils.isEmpty(config.images.base_url)) {
-                        prefs.edit()
-                                .putString(SeriesGuidePreferences.KEY_TMDB_BASE_URL,
-                                        config.images.base_url).commit();
-                    }
-                } catch (TmdbException e) {
-                    Utils.trackExceptionAndLog(getContext(), TAG, e);
-                } catch (ApiException e) {
-                    Utils.trackExceptionAndLog(getContext(), TAG, e);
-                }
             }
+
+            // get latest TMDb configuration
+            try {
+                Configuration config = ServiceUtils.getTmdbServiceManager(getContext())
+                        .configurationService()
+                        .configuration().fire();
+                if (config != null && config.images != null
+                        && !TextUtils.isEmpty(config.images.base_url)) {
+                    prefs.edit()
+                            .putString(SeriesGuidePreferences.KEY_TMDB_BASE_URL,
+                                    config.images.base_url).commit();
+                }
+            } catch (TmdbException e) {
+                Utils.trackExceptionAndLog(getContext(), TAG, e);
+            } catch (ApiException e) {
+                Utils.trackExceptionAndLog(getContext(), TAG, e);
+            }
+
+            // validate trakt credentials
+            ServiceUtils.checkTraktCredentials(getContext());
 
             // get newly watched episodes from trakt
             final UpdateResult traktResult = getTraktActivity(currentTime);
@@ -348,7 +353,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private UpdateResult getTraktActivity(long currentTime) {
-        if (!ServiceUtils.isTraktCredentialsValid(getContext())) {
+        Log.d(TAG, "Get trakt activity");
+        if (!ServiceUtils.hasTraktCredentials(getContext())) {
             // trakt is not connected, we are done here
             return UpdateResult.SUCCESS;
         }
@@ -380,6 +386,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     .types(ActivityType.Episode)
                     .actions(ActivityAction.Checkin, ActivityAction.Seen,
                             ActivityAction.Scrobble, ActivityAction.Collection)
+                    .minimal()
                     .timestamp(startTimeTrakt).fire();
         } catch (TraktException e) {
             Utils.trackExceptionAndLog(getContext(), TAG, e);

@@ -42,8 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewSeasonTitle"
-        android:layout_toLeftOf="@id/imageViewContextMenu"
-        android:progressDrawable="@drawable/progress_horizontal_holo_dark" >
+        android:layout_toLeftOf="@id/imageViewContextMenu" >
     </ProgressBar>
 
     <TextView

@@ -252,8 +252,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         });
 
         // Notifications
-        // allow supporters to enable notfications
-        if (Utils.isSupporterChannel(context)) {
+        // allow supporters to enable notifications
+        if (Utils.hasAccessToX(context)) {
             notificationsPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {

@@ -7,14 +7,14 @@ import android.support.v4.view.ViewPager;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip.OnTabClickListener;
 import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
 import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
-import com.viewpagerindicator.TabPageIndicator;
-import com.viewpagerindicator.TabPageIndicator.OnTabReselectedListener;
 
 /**
  * Hosts a view pager to display and manage lists of shows, seasons and
@@ -25,29 +25,40 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
     public static final String TAG = "Lists";
     private ListsPagerAdapter mListsAdapter;
     private ViewPager mPager;
-    private TabPageIndicator mIndicator;
+    private PagerSlidingTabStrip mTabs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.lists);
+        getMenu().setContentView(R.layout.lists);
 
+        setupActionBar();
+
+        setupViews();
+    }
+
+    private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.ic_action_list);
         actionBar.setTitle(R.string.lists);
+    }
 
+    private void setupViews() {
         mListsAdapter = new ListsPagerAdapter(getSupportFragmentManager(), this);
 
-        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager = (ViewPager) findViewById(R.id.pagerLists);
         mPager.setAdapter(mListsAdapter);
 
-        mIndicator = (TabPageIndicator) findViewById(R.id.indicator);
-        mIndicator.setViewPager(mPager);
-        mIndicator.setOnTabReselectedListener(new OnTabReselectedListener() {
+        mTabs = (PagerSlidingTabStrip) findViewById(R.id.tabsLists);
+        mTabs.setViewPager(mPager);
+        mTabs.setOnTabClickListener(new OnTabClickListener() {
             @Override
-            public void onTabReselected(int position) {
-                String listId = mListsAdapter.getListId(position);
-                ListManageDialogFragment.showListManageDialog(listId, getSupportFragmentManager());
+            public void onTabClick(int position) {
+                if (mPager.getCurrentItem() == position) {
+                    String listId = mListsAdapter.getListId(position);
+                    ListManageDialogFragment.showListManageDialog(listId,
+                            getSupportFragmentManager());
+                }
             }
         });
     }
@@ -65,9 +76,25 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mListsAdapter.onCleanUp();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportMenuInflater().inflate(R.menu.lists_menu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content
+        // view
+        boolean isDrawerOpen = isMenuDrawerOpen();
+        menu.findItem(R.id.menu_list_add).setVisible(!isDrawerOpen);
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -87,7 +114,7 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
         // refresh list adapter
         mListsAdapter.onListsChanged();
         // update indicator and view pager
-        mIndicator.notifyDataSetChanged();
+        mTabs.notifyDataSetChanged();
     }
 
     protected void fireTrackerEvent(String label) {

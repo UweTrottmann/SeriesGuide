@@ -24,7 +24,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,7 +48,6 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
@@ -65,6 +63,7 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
+import com.battlelancer.seriesguide.util.ShortcutUtils;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
@@ -193,6 +192,11 @@ public class OverviewFragment extends SherlockFragment implements
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.overview_menu, menu);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
 
         // enable/disable menu items
         boolean isEpisodeVisible;
@@ -203,16 +207,19 @@ public class OverviewFragment extends SherlockFragment implements
         }
         menu.findItem(R.id.menu_overview_manage_lists).setEnabled(isEpisodeVisible);
         menu.findItem(R.id.menu_overview_share).setEnabled(isEpisodeVisible);
-        menu.findItem(R.id.menu_overview_rate).setEnabled(isEpisodeVisible);
+
+        // If the nav drawer is open, hide action items related to the content
+        // view
+        boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isMenuDrawerOpen();
+        menu.findItem(R.id.menu_overview_manage_lists).setVisible(!isDrawerOpen);
+        menu.findItem(R.id.menu_overview_share).setVisible(!isDrawerOpen);
+        menu.findItem(R.id.menu_overview_search).setVisible(!isDrawerOpen);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_overview_rate) {
-            onRateOnTrakt();
-            return true;
-        } else if (itemId == R.id.menu_overview_share) {
+        if (itemId == R.id.menu_overview_share) {
             // share episode
             fireTrackerEvent("Share");
             onShareEpisode(ShareMethod.OTHER_SERVICES);
@@ -222,6 +229,22 @@ public class OverviewFragment extends SherlockFragment implements
             if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
                 ListsDialogFragment.showListsDialog(mEpisodeCursor.getString(EpisodeQuery._ID),
                         ListItemTypes.EPISODE, getFragmentManager());
+            }
+            return true;
+        } else if (itemId == R.id.menu_overview_add_to_homescreen) {
+            if (!Utils.hasAccessToX(getActivity())) {
+                Utils.advertiseSubscription(getActivity());
+                return true;
+            }
+
+            if (mShowCursor != null && mShowCursor.moveToFirst()) {
+                // Create the shortcut
+                String title = mShowCursor.getString(ShowQuery.SHOW_TITLE);
+                String poster = mShowCursor.getString(ShowQuery.SHOW_POSTER);
+                ShortcutUtils.createShortcut(getActivity(), title, poster, getShowId());
+
+                // Analytics
+                fireTrackerEvent("Add to Homescreen");
             }
             return true;
         }
@@ -276,12 +299,10 @@ public class OverviewFragment extends SherlockFragment implements
 
     private void onRateOnTrakt() {
         // rate episode on trakt.tv
-        fireTrackerEvent("Rate (trakt)");
-        if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
+        if (ServiceUtils.ensureTraktCredentials(getActivity())) {
             onShareEpisode(ShareMethod.RATE_TRAKT);
-        } else {
-            startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
         }
+        fireTrackerEvent("Rate (trakt)");
     }
 
     private void onShareEpisode(ShareMethod shareMethod) {
@@ -685,21 +706,10 @@ public class OverviewFragment extends SherlockFragment implements
                 getActivity());
 
         // TVDb button
-        final String seasonId = episode.getString(EpisodeQuery.REF_SEASON_ID);
-        getView().findViewById(R.id.buttonTVDB).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
-                    Intent i = new Intent(Intent.ACTION_VIEW, Uri
-                            .parse(Constants.TVDB_EPISODE_URL_1
-                                    + getShowId() + Constants.TVDB_EPISODE_URL_2 + seasonId
-                                    + Constants.TVDB_EPISODE_URL_3
-                                    + mEpisodeCursor.getString(EpisodeQuery._ID)));
-                    startActivity(i);
-                    fireTrackerEvent("TVDb");
-                }
-            }
-        });
+        final int episodeTvdbId = episode.getInt(EpisodeQuery._ID);
+        final int seasonTvdbId = episode.getInt(EpisodeQuery.REF_SEASON_ID);
+        ServiceUtils.setUpTvdbButton(getShowId(), seasonTvdbId, episodeTvdbId, getView()
+                .findViewById(R.id.buttonTVDB), TAG);
 
         // trakt button
         ServiceUtils.setUpTraktButton(getShowId(), seasonNumber, episodeNumber, getView()
@@ -779,12 +789,13 @@ public class OverviewFragment extends SherlockFragment implements
         // favorite
         final ImageView favorited = (ImageView) getView().findViewById(R.id.imageViewFavorite);
         boolean isFavorited = show.getInt(ShowQuery.SHOW_FAVORITE) == 1;
+        TypedValue outValue = new TypedValue();
         if (isFavorited) {
-            TypedValue outValue = new TypedValue();
             getSherlockActivity().getTheme().resolveAttribute(R.attr.drawableStar, outValue, true);
             favorited.setImageResource(outValue.resourceId);
         } else {
-            favorited.setImageResource(R.drawable.ic_action_star_0);
+            getSherlockActivity().getTheme().resolveAttribute(R.attr.drawableStar0, outValue, true);
+            favorited.setImageResource(outValue.resourceId);
         }
         CheatSheet.setup(favorited, isFavorited ? R.string.context_unfavorite
                 : R.string.context_favorite);

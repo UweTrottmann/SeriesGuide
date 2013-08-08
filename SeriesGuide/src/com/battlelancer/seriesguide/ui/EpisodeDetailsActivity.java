@@ -33,6 +33,7 @@ import android.widget.ImageView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -41,7 +42,8 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
-import com.viewpagerindicator.TitlePageIndicator;
+
+import net.simonvt.menudrawer.MenuDrawer;
 
 import java.util.ArrayList;
 
@@ -50,7 +52,7 @@ import java.util.ArrayList;
  * season. Used on smaller screens which do not allow for multi-pane layouts or
  * if coming from a search result selection.
  */
-public class EpisodeDetailsActivity extends BaseActivity {
+public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     protected static final String TAG = "Episode Details";
 
     private EpisodePagerAdapter mAdapter;
@@ -73,7 +75,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.episode_pager);
+        getMenu().setContentView(R.layout.episode_pager);
 
         setupActionBar();
 
@@ -138,11 +140,20 @@ public class EpisodeDetailsActivity extends BaseActivity {
 
         mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), episodes, prefs, true);
 
-        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager = (ViewPager) findViewById(R.id.pagerEpisodeDetails);
         mPager.setAdapter(mAdapter);
 
-        TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
-        indicator.setViewPager(mPager, startPosition);
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsEpisodeDetails);
+        tabs.setAllCaps(false);
+        tabs.setViewPager(mPager);
+        mPager.setCurrentItem(startPosition, false);
+    }
+
+    @Override
+    protected MenuDrawer getAttachedMenuDrawer() {
+        MenuDrawer menuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.OVERLAY);
+        menuDrawer.setMenuView(R.layout.menu_frame_with_spacer);
+        return menuDrawer;
     }
 
     private void setupActionBar() {

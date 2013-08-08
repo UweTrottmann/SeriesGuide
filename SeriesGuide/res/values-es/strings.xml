@@ -32,7 +32,8 @@
   <string name="close">Cerrar</string>
   <string name="save_selection">Guardar selección</string>
   <string name="offline">No hay conexión de red. Inténtelo más tarde.</string>
-  <string name="onlyx">Sólo está disponible en SeriesGuide X</string>
+  <string name="app_not_available">No app available to handle this.</string>
+  <string name="onlyx">Sólo disponible con la suscripción X</string>
   <string name="shows">Series</string>
   <string name="lists">Listas</string>
   <string name="activity">Actividad</string>
@@ -55,7 +56,7 @@
   <string name="watchlist_remove">Remover de lista</string>
   <string name="watchlist_added">Agregado a lista</string>
   <string name="watchlist_removed">Removido de lista</string>
-  <string name="movies_search_hint">Escribe un título de película</string>
+  <string name="movies_search_hint">Escriba el título de la película</string>
   <string name="movies_empty">Buscar una película arriba.</string>
   <string name="movies_watchlist_empty">No tienes conexión a internet o no has agregado películas a tu lista de seguidos.</string>
   <string name="trailer">Trailer</string>
@@ -296,7 +297,8 @@
   <string name="disconnect">Desconectar</string>
   <string name="trakt_error">Interacción con trakt falló</string>
   <string name="trakt_decryptfail">no se pudo descifrar la contraseña</string>
-  <string name="trakt_generalerror">Algo salió mal. Comprueba tus datos y prueba otra vez.</string>
+  <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
+  <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_createaccount">Crear una cuenta nueva</string>
   <string name="welcome_setuplanguage">Elija idioma</string>
   <string name="welcome_traktmessage">Acceder a tu biblioteca y actividad de tus amigos de trakt.tv</string>
@@ -321,15 +323,24 @@
   <string name="hide_watched">Ocultar episodios vistos</string>
   <string name="pref_widget_opacity">Fondo de widget</string>
   <string name="pref_widget_type">Tipo de widget</string>
+  <string name="favorites">Favoritos</string>
   <string name="dashclock_extension_label">Próximo episodio</string>
   <string name="dashclock_extension_description">Muestra el próximo episodio de sus series de SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Mostrar próximos episodios</string>
+  <string name="deprecation_title">Mover a SeriesGuide</string>
+  <string name="backup_tool">Backup tool</string>
   <string name="download_stable">Descargar SeriesGuide</string>
-  <string name="betawarning"><b>¡Atención!</b> ¡Esta versión es sólo para probadores beta! Si estás en duda descargar la versión estable abajo.</string>
-  <string name="upgrade_title">Obtener la Mejora X</string>
-  <string name="upgrade_description">Acceder a las notificaciones y más opciones para el widget. Apoyar el desarrollo.\n\nSi ya compró SeriesGuide X, instálelo para desbloquear esta mejora.</string>
-  <string name="upgrade_action">Obtener la Mejora X</string>
-  <string name="upgrade_success">Gracias, ya tiene la Mejora X!</string>
+  <string name="deprecation_warning"><b>Heads up!</b> SeriesGuide X will be stripped of all functionality very soon. Migrate your shows to the free version and keep SeriesGuide X installed to unlock the new X Subscription for life.</string>
+  <string name="migration_tutorial">To migrate your shows: touch <b>Backup tool</b>, then <b>Backup</b>.\n\nGo back until this dialog appears again.\n\nTouch <b>Download SeriesGuide</b> and install SeriesGuide.\n\nLaunch SeriesGuide. Touch <b>Menu</b>, then <b>Settings</b>. In <b>Advanced</b> use the backup tool to restore.</string>
+  <string name="upgrade_title">Obtén las características X</string>
+  <string name="upgrade_description">Obtén acceso a notificaciones, mas opciones de widgets y todas las futuras características X. Apoya el desarrollo.\n\nSi ya has comprado SeriesGuide X, instálalo para desbloquear esta actualización.</string>
+  <string name="upgrade_action">Obtén las características X</string>
+  <string name="upgrade_success">Enhorabuena, ya estás suscrito a todas las características X!</string>
+  <string name="subscription_activated">Ahora estás suscrito a las características X.</string>
+  <string name="subscription_expired">Suscripción caducada</string>
+  <string name="subscription_expired_details">Tu suscripción a las características X ha caducado.</string>
+  <string name="add_to_homescreen">Añadir a pantalla de inicio</string>
+  <string name="search_within_show">Search within %s</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Episodio siguiente</item>
@@ -379,6 +390,7 @@
   <string-array name="widgetType">
     <item>Próximo</item>
     <item>Recientes</item>
+    <item>Favoritos</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
     <item>hora</item>

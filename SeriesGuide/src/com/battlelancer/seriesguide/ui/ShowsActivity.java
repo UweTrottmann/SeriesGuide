@@ -90,7 +90,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shows);
+        getMenu().setContentView(R.layout.shows);
 
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
@@ -153,6 +153,13 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
     @Override
     protected void onStart() {
         super.onStart();
+
+        // display a warning dialog about SeriesGuide X deprecation
+        if (getPackageName().contains("x")
+                && getSupportFragmentManager().findFragmentByTag(ChangesDialogFragment.TAG) == null) {
+            ChangesDialogFragment.show(getSupportFragmentManager());
+        }
+
         EasyTracker.getInstance().activityStart(this);
     }
 
@@ -239,6 +246,11 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
             sortMenu.setTitle(
                     getString(R.string.sort) + ": " + items[sorting.index()]);
         }
+
+        // If the nav drawer is open, hide action items related to the content
+        // view
+        boolean isDrawerOpen = isMenuDrawerOpen();
+        menu.findItem(R.id.menu_add_show).setVisible(!isDrawerOpen);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -481,7 +493,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
                 }
 
                 if (lastVersion < VER_TRAKT_SEC_CHANGES) {
-                    // clear trakt credetials
+                    // clear trakt credentials
                     editor.putString(SeriesGuidePreferences.KEY_TRAKTPWD, null);
                     editor.putString(SeriesGuidePreferences.KEY_SECURE, null);
                 }
@@ -496,12 +508,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
                     scheduleAllShowsUpdate();
                 }
 
-                // display extensive change dialog on beta channel
-                if (getPackageName().contains("beta")) {
-                    ChangesDialogFragment.show(getSupportFragmentManager());
-                } else {
-                    Toast.makeText(this, R.string.updated, Toast.LENGTH_LONG).show();
-                }
+                // update notification
+                Toast.makeText(this, R.string.updated, Toast.LENGTH_LONG).show();
 
                 // set this as lastVersion
                 editor.putInt(AppSettings.KEY_VERSION, currentVersion);

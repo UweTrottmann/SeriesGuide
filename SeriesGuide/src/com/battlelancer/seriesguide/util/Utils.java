@@ -18,6 +18,7 @@
 package com.battlelancer.seriesguide.util;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -28,6 +29,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -36,9 +38,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.Constants.EpisodeSorting;
+import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
@@ -731,14 +735,26 @@ public class Utils {
     }
 
     /**
-     * Used to make some features only available to supporters.
-     * 
-     * @param context
-     * @return
+     * Returns whether a regular check with the Google Play app is necessary to
+     * determine access to X features (e.g. the subscription is still valid).
      */
-    public static boolean isSupporterChannel(Context context) {
-        if (getChannel(context) != SGChannel.STABLE || hasXinstalled(context)
-                || AdvancedSettings.hasPurchasedX(context)) {
+    public static boolean requiresPurchaseCheck(Context context) {
+        // dev builds and the SeriesGuide X key app are not handled through the
+        // Play store
+        if (getChannel(context) != SGChannel.STABLE || hasUnlockKeyInstalled(context)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Returns whether this user should currently get access to X features.
+     */
+    public static boolean hasAccessToX(Context context) {
+        // dev builds, SeriesGuide X installed or a valid purchase unlock X
+        // features
+        if (!requiresPurchaseCheck(context) || AdvancedSettings.isSubscribedToX(context)) {
             return true;
         } else {
             return false;
@@ -746,10 +762,10 @@ public class Utils {
     }
 
     /**
-     * Returns true if the user has the legacy X version installed, signed with
-     * the same key as we are.
+     * Returns true if the user has the legacy SeriesGuide X version installed,
+     * signed with the same key as we are.
      */
-    public static boolean hasXinstalled(Context context) {
+    public static boolean hasUnlockKeyInstalled(Context context) {
         try {
             // Get our signing key
             PackageManager manager = context.getPackageManager();
@@ -879,6 +895,40 @@ public class Utils {
      */
     public static String makeViewPagerFragmentName(int viewId, long id) {
         return "android:switcher:" + viewId + ":" + id;
+    }
+
+    /**
+     * Launches {@link BillingActivity} and notifies that something is only
+     * available with the X subscription.
+     */
+    public static void advertiseSubscription(Context context) {
+        Toast.makeText(context, R.string.onlyx, Toast.LENGTH_SHORT).show();
+        TaskStackBuilder
+                .create(context)
+                .addNextIntent(new Intent(context, SeriesGuidePreferences.class))
+                .addNextIntent(new Intent(context, BillingActivity.class))
+                .startActivities();
+    }
+
+    /**
+     * Calls {@link Context#startActivity(Intent)} with the given
+     * <b>implicit</b> {@link Intent} after making sure there is an
+     * {@link Activity} to handle it. Can show an error toast, if not. <br>
+     * <br>
+     * This may happen if e.g. the web browser has been disabled through
+     * restricted profiles.
+     * 
+     * @return Whether there was an {@link Activity} to handle the given
+     *         {@link Intent}.
+     */
+    public static boolean tryStartActivity(Context context, Intent intent, boolean displayError) {
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(intent);
+            return true;
+        } else if (displayError) {
+            Toast.makeText(context, R.string.app_not_available, Toast.LENGTH_LONG).show();
+        }
+        return false;
     }
 
 }

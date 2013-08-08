@@ -60,9 +60,9 @@ public class BackupDeleteActivity extends BaseActivity {
 
     private static final int IMPORT_PROGRESS = 4;
 
-    private Button exportDbToSdButton;
+    private Button mExportDbToSdButton;
 
-    private Button importDbFromSdButton;
+    private Button mImportDbFromSdButton;
 
     private ExportDatabaseTask mExportTask;
 
@@ -77,20 +77,28 @@ public class BackupDeleteActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.backup);
 
+        setupActionBar();
+
+        setupViews();
+    }
+
+    private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(getString(R.string.backup));
         actionBar.setDisplayShowTitleEnabled(true);
+    }
 
-        exportDbToSdButton = (Button) findViewById(R.id.ButtonExportDBtoSD);
-        exportDbToSdButton.setOnClickListener(new OnClickListener() {
+    private void setupViews() {
+        mExportDbToSdButton = (Button) findViewById(R.id.ButtonExportDBtoSD);
+        mExportDbToSdButton.setOnClickListener(new OnClickListener() {
             public void onClick(final View v) {
                 showDialog(EXPORT_DIALOG);
             }
         });
 
-        importDbFromSdButton = (Button) findViewById(R.id.ButtonImportDBfromSD);
-        importDbFromSdButton.setOnClickListener(new OnClickListener() {
+        mImportDbFromSdButton = (Button) findViewById(R.id.ButtonImportDBfromSD);
+        mImportDbFromSdButton.setOnClickListener(new OnClickListener() {
             public void onClick(final View v) {
                 showDialog(IMPORT_DIALOG);
             }

@@ -34,6 +34,7 @@ public class StatsActivity extends BaseTopActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getMenu().setContentView(R.layout.activity_singlepane_empty);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.statistics);
@@ -42,7 +43,7 @@ public class StatsActivity extends BaseTopActivity {
         if (savedInstanceState == null) {
             StatsFragment f = new StatsFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(android.R.id.content, f);
+            ft.add(R.id.root_container, f);
             ft.commit();
         }
     }

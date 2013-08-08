@@ -138,9 +138,6 @@ public class UpcomingFragment extends SherlockFragment implements
         mGridView.setAdapter(mAdapter);
         mGridView.setOnItemClickListener(this);
 
-        // start loading data
-        getActivity().getSupportLoaderManager().initLoader(getLoaderId(), null, this);
-
         PreferenceManager.getDefaultSharedPreferences(getActivity())
                 .registerOnSharedPreferenceChangeListener(this);
 
@@ -150,6 +147,14 @@ public class UpcomingFragment extends SherlockFragment implements
     @Override
     public void onStart() {
         super.onStart();
+
+        /**
+         * Workaround for loader issues on config change. For some reason the
+         * activity holds on to an old cursor. Find out why! See
+         * https://github.com/UweTrottmann/SeriesGuide/issues/257.
+         */
+        onRequery();
+
         final String tag = getArguments().getString("analyticstag");
         EasyTracker.getTracker().sendView(tag);
     }
@@ -166,7 +171,7 @@ public class UpcomingFragment extends SherlockFragment implements
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        // only display the action appropiate for the items current state
+        // only display the action appropriate for the items current state
         menu.add(0, CONTEXT_CHECKIN_ID, 0, R.string.checkin);
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         WatchedBox watchedBox = (WatchedBox) info.targetView.findViewById(R.id.watchedBoxUpcoming);
@@ -220,7 +225,7 @@ public class UpcomingFragment extends SherlockFragment implements
             // Check if fragment is shown, create new if needed.
             EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
                     .findFragmentById(R.id.fragment_details);
-            if (detailsFragment == null || detailsFragment.getEpisodeId() != episodeId) {
+            if (detailsFragment == null || detailsFragment.getEpisodeTvdbId() != episodeId) {
                 // Make new fragment to show this selection.
                 detailsFragment = EpisodeDetailsFragment.newInstance(episodeId, true, true);
 
@@ -326,14 +331,6 @@ public class UpcomingFragment extends SherlockFragment implements
         int IMDBID = 11;
 
     }
-
-    protected OnItemClickListener mCheckinButtonListener = new OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            // TODO Auto-generated method stub
-
-        }
-    };
 
     private class SlowAdapter extends CursorAdapter implements StickyGridHeadersBaseAdapter {
 
@@ -585,7 +582,7 @@ public class UpcomingFragment extends SherlockFragment implements
 
             return headers;
         }
-        
+
         @Override
         public Cursor swapCursor(Cursor newCursor) {
             mHeaders = null;

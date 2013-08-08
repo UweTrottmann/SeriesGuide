@@ -341,9 +341,10 @@ public class DBUtils {
                 SHOW_PROJECTION, null,
                 null, null);
 
+        Series show = null;
         if (details != null) {
             if (details.moveToFirst()) {
-                Series show = new Series();
+                show = new Series();
 
                 show.setId(details.getString(0));
                 show.setActors(details.getString(1));
@@ -362,13 +363,11 @@ public class DBUtils {
                 show.setImdbId(details.getString(14));
                 show.setNextEpisode(details.getLong(15));
                 show.setLastEdit(details.getLong(16));
-
-                return show;
             }
             details.close();
         }
 
-        return null;
+        return show;
     }
 
     public static boolean isShowExists(String showId, Context context) {

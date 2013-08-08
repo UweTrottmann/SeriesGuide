@@ -17,26 +17,29 @@ public class ConnectTraktActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_singlepane_empty);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.connect_trakt);
-        actionBar.setHomeButtonEnabled(true);
+        setupActionBar();
 
         if (savedInstanceState == null) {
-            if (ServiceUtils.isTraktCredentialsValid(this)) {
+            if (ServiceUtils.hasTraktCredentials(this)) {
                 // immediately show credentials to allow disconnecting
                 ConnectTraktCredentialsFragment f = ConnectTraktCredentialsFragment.newInstance();
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.add(R.id.root_container, f);
+                ft.add(android.R.id.content, f);
                 ft.commit();
             } else {
                 // display trakt introduction
                 ConnectTraktFragment f = new ConnectTraktFragment();
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.add(R.id.root_container, f);
+                ft.add(android.R.id.content, f);
                 ft.commit();
             }
         }
+    }
+    
+    private void setupActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.connect_trakt);
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 }

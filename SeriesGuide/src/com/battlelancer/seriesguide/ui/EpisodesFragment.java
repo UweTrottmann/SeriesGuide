@@ -128,8 +128,8 @@ public class EpisodesFragment extends SherlockListFragment implements
 
         // Check to see if we have a frame in which to embed the details
         // fragment directly in the containing UI.
-        View pagerFragment = getActivity().findViewById(R.id.pager);
-        mDualPane = pagerFragment != null && pagerFragment.getVisibility() == View.VISIBLE;
+        View pager = getActivity().findViewById(R.id.pagerEpisodes);
+        mDualPane = pager != null && pager.getVisibility() == View.VISIBLE;
 
         if (mDualPane) {
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -207,7 +207,7 @@ public class EpisodesFragment extends SherlockListFragment implements
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        // only display the action appropiate for the items current state
+        // only display the action appropriate for the items current state
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         final Cursor episode = (Cursor) mAdapter.getItem(info.position);
 

@@ -35,7 +35,7 @@ public class ConnectTraktFragment extends SherlockFragment {
             public void onClick(View v) {
                 ConnectTraktCredentialsFragment f = ConnectTraktCredentialsFragment.newInstance();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.root_container, f);
+                ft.replace(android.R.id.content, f);
                 ft.commit();
             }
         });

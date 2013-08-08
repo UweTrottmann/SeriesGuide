@@ -19,10 +19,15 @@ package com.battlelancer.seriesguide;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.annotation.SuppressLint;
 import android.app.Application;
+import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.os.StrictMode.ThreadPolicy;
+import android.os.StrictMode.VmPolicy;
 import android.preference.PreferenceManager;
 
 import com.battlelancer.seriesguide.sync.SgAccountAuthenticator;
@@ -31,6 +36,7 @@ import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.BuildConfig;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -41,48 +47,76 @@ import com.uwetrottmann.seriesguide.R;
  */
 public class SeriesGuideApplication extends Application {
 
+    /**
+     * The content authority used to identify the SeriesGuide
+     * {@link ContentProvider}
+     */
     public static String CONTENT_AUTHORITY;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        // set provider authority
+        // Set provider authority
         CONTENT_AUTHORITY = getPackageName() + ".provider";
 
-        // initialize settings on first run
+        // Initialize settings on first run
         PreferenceManager.setDefaultValues(this, R.xml.settings_basic, false);
         PreferenceManager.setDefaultValues(this, R.xml.settings_advanced, false);
 
-        // load the current theme into a global variable
+        // Load the current theme into a global variable
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        final String theme = prefs.getString(
-                SeriesGuidePreferences.KEY_THEME, "0");
+        final String theme = prefs.getString(SeriesGuidePreferences.KEY_THEME, "0");
         Utils.updateTheme(theme);
 
-        // set a context for Google Analytics
-        EasyTracker.getInstance().setContext(getApplicationContext());
+        // Set a context for Google Analytics
+        EasyTracker.getInstance().setContext(this);
 
-        // set up a dummy account for syncing
+        // Set up a dummy account for syncing
         AccountManager manager = AccountManager.get(this);
         final Account account = SgAccountAuthenticator.getSyncAccount(this);
         if (manager.addAccountExplicitly(account, null, null)) {
-            ContentResolver.setIsSyncable(account, SeriesGuideApplication.CONTENT_AUTHORITY, 1);
-            ContentResolver.setSyncAutomatically(account, SeriesGuideApplication.CONTENT_AUTHORITY,
-                    true);
+            ContentResolver.setIsSyncable(account, CONTENT_AUTHORITY, 1);
+            ContentResolver.setSyncAutomatically(account, CONTENT_AUTHORITY, true);
             // Sync daily by default
-            ContentResolver.addPeriodicSync(account, CONTENT_AUTHORITY,
-                    new Bundle(), 24 * 60 * 60);
+            ContentResolver.addPeriodicSync(account, CONTENT_AUTHORITY, new Bundle(), 24 * 60 * 60);
         }
+
+        // Enable StrictMode
+        enableStrictMode();
     }
 
     @Override
     public void onLowMemory() {
         if (!AndroidUtils.isICSOrHigher()) {
-            // clear the whole cache as Honeycomb and below don't support
+            // Clear the whole cache as Honeycomb and below don't support
             // onTrimMemory (used directly in our ImageProvider)
             ImageProvider.getInstance(this).clearCache();
         }
+    }
+
+    /**
+     * Used to enable {@link StrictMode} during production
+     */
+    @SuppressLint("NewApi")
+    public static void enableStrictMode() {
+        if (!BuildConfig.DEBUG || !AndroidUtils.isGingerbreadOrHigher()) {
+            return;
+        }
+        // Enable StrictMode
+        final ThreadPolicy.Builder threadPolicyBuilder = new ThreadPolicy.Builder();
+        threadPolicyBuilder.detectAll();
+        threadPolicyBuilder.penaltyLog();
+        StrictMode.setThreadPolicy(threadPolicyBuilder.build());
+
+        // Policy applied to all threads in the virtual machine's process
+        final VmPolicy.Builder vmPolicyBuilder = new VmPolicy.Builder();
+        vmPolicyBuilder.detectAll();
+        vmPolicyBuilder.penaltyLog();
+        if (AndroidUtils.isJellyBeanOrHigher()) {
+            vmPolicyBuilder.detectLeakedRegistrationObjects();
+        }
+        StrictMode.setVmPolicy(vmPolicyBuilder.build());
     }
 
 }

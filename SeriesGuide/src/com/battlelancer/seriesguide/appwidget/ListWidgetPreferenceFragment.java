@@ -98,7 +98,7 @@ public class ListWidgetPreferenceFragment extends PreferenceFragment {
                 backgroundPreference);
 
         // disable type and background pref for non-supporters
-        if (!Utils.isSupporterChannel(getActivity())) {
+        if (!Utils.hasAccessToX(getActivity())) {
             typePreference.setEnabled(false);
             typePreference.setSummary(R.string.onlyx);
             backgroundPreference.setEnabled(false);

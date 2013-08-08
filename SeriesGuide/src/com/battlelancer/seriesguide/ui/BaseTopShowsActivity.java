@@ -7,6 +7,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.uwetrottmann.seriesguide.R;
 
+import net.simonvt.menudrawer.MenuDrawer;
+
 /**
  * Adds action items specific to top show activities.
  */
@@ -28,5 +30,15 @@ public abstract class BaseTopShowsActivity extends BaseTopActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content
+        // view
+        boolean isDrawerOpen = getMenu().getDrawerState() != MenuDrawer.STATE_CLOSED;
+        menu.findItem(R.id.menu_checkin).setVisible(!isDrawerOpen);
+
+        return super.onPrepareOptionsMenu(menu);
     }
 }

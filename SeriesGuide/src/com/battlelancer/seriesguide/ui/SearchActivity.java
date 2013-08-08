@@ -17,20 +17,18 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.annotation.TargetApi;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.widget.SearchView;
+import android.text.TextUtils;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.widget.SearchView;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -44,12 +42,13 @@ public class SearchActivity extends BaseTopActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search);
-        handleIntent(getIntent());
+        getMenu().setContentView(R.layout.search);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.search_hint);
         actionBar.setDisplayShowTitleEnabled(true);
+
+        handleIntent(getIntent());
     }
 
     @Override
@@ -75,19 +74,32 @@ public class SearchActivity extends BaseTopActivity {
             return;
         }
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            Bundle extras = getIntent().getExtras();
+
+            // set query as subtitle
             String query = intent.getStringExtra(SearchManager.QUERY);
-            getSupportActionBar().setSubtitle("\"" + query + "\"");
+            final ActionBar actionBar = getSupportActionBar();
+            actionBar.setSubtitle("\"" + query + "\"");
+
+            // searching within a show?
+            Bundle appData = extras.getBundle(SearchManager.APP_DATA);
+            if (appData != null) {
+                String showTitle = appData.getString(SearchFragment.InitBundle.SHOW_TITLE);
+                if (!TextUtils.isEmpty(showTitle)) {
+                    actionBar.setTitle(getString(R.string.search_within_show, showTitle));
+                }
+            }
 
             // display results in a search fragment
             SearchFragment searchFragment = (SearchFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.search_fragment);
             if (searchFragment == null) {
                 SearchFragment newFragment = new SearchFragment();
-                newFragment.setArguments(getIntent().getExtras());
+                newFragment.setArguments(extras);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.search_fragment, newFragment).commit();
             } else {
-                searchFragment.onPerformSearch(getIntent().getExtras());
+                searchFragment.onPerformSearch(extras);
             }
             EasyTracker.getTracker().sendEvent(TAG, "Search action", "Search", (long) 0);
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
@@ -99,22 +111,18 @@ public class SearchActivity extends BaseTopActivity {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportMenuInflater().inflate(R.menu.search_menu, menu);
 
-        if (AndroidUtils.isHoneycombOrHigher()) {
-            SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-            SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-            searchView.setIconifiedByDefault(false);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false);
 
-            // set incoming query
-            String query = getIntent().getStringExtra(SearchManager.QUERY);
-            searchView.setQuery(query, false);
-        }
-
+        // set incoming query
+        String query = getIntent().getStringExtra(SearchManager.QUERY);
+        searchView.setQuery(query, false);
         return super.onCreateOptionsMenu(menu);
     }
 

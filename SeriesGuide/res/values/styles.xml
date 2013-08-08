@@ -137,15 +137,26 @@
         <item name="android:background">@drawable/btn_default_sg</item>
     </style>
 
+    <!-- CheckBox -->
     <!-- pre v11 -->
     <style name="Widget.SeriesGuide.CheckBox" parent="android:Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/btn_check_sg</item>
     </style>
 
+    <!-- EditText -->
     <!-- pre v11 -->
     <style name="Widget.SeriesGuide.EditText" parent="android:Widget.EditText">
         <item name="android:background">@drawable/edit_text_sg</item>
         <item name="android:textColor">@color/text_primary_sg</item>
+    </style>
+
+    <!-- ProgressBar -->
+    <!-- pre v11 -->
+    <style name="ProgressBar" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_sg</item>
+        <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_sg</item>
+        <item name="android:minHeight">16dip</item>
+        <item name="android:maxHeight">16dip</item>
     </style>
 
     <!-- List selectors -->
@@ -215,34 +226,12 @@
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
     </style>
 
-    <!-- ViewPagerIndicator -->
-    <style name="TitlePageIndicator">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="footerColor">@color/accent_primary</item>
-        <item name="footerLineHeight">2dp</item>
-        <item name="footerIndicatorHeight">5dp</item>
-        <item name="footerIndicatorStyle">underline</item>
-        <item name="android:textColor">@color/text_primary</item>
-        <item name="selectedColor">@color/text_primary</item>
-        <item name="selectedBold">true</item>
-    </style>
-
-    <style name="TabPageIndicator" parent="Widget.Sherlock.ActionBar.TabBar">
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:background">@drawable/tab_indicator</item>
-        <item name="android:paddingLeft">16dip</item>
-        <item name="android:paddingRight">16dip</item>
-        <item name="android:paddingTop">12dp</item>
-        <item name="android:paddingBottom">12dp</item>
-        <item name="android:textAppearance">@style/TextAppearance.TabPageIndicator</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:ellipsize">marquee</item>
-    </style>
-
-    <style name="TextAppearance.TabPageIndicator" parent="Widget">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?attr/textColorSgActionBar</item>
+    <!-- PagerSlidingTabStrip -->
+    <style name="TabStrip">
+        <item name="android:textColor">?attr/colorTabStripText</item>
+        <item name="dividerColor">?attr/colorDivider</item>
+        <item name="indicatorColor">?attr/colorAccent</item>
+        <item name="underlineColor">?attr/colorAccent</item>
     </style>
 
     <style name="Header">
@@ -396,11 +385,6 @@
         <item name="android:background">@drawable/btn_default_holo_dark</item>
     </style>
 
-    <!-- Title indicator -->
-    <style name="TitlePageIndicator.Dark" parent="TitlePageIndicator">
-        <item name="footerColor">#33B5E5</item>
-    </style>
-
     <!-- ////////////////////////////////////////////// -->
 
 
@@ -419,19 +403,10 @@
         <item name="android:textColor">@color/text_primary_light_sg</item>
     </style>
 
-    <!-- Title page indicator -->
-    <style name="TitlePageIndicator.Light">
-        <item name="android:textColor">@color/text_primary_inverse</item>
-        <item name="selectedColor">@color/text_primary_inverse</item>
-    </style>
-
-    <!-- Tab page indicator -->
-    <style name="TabPageIndicator.Light">
-        <item name="android:textAppearance">@style/TextAppearance.Light.TabPageIndicator</item>
-    </style>
-
-    <style name="TextAppearance.Light.TabPageIndicator" parent="TextAppearance.TabPageIndicator">
-        <item name="android:textColor">@color/vpi__light_theme</item>
+    <!-- ProgressBar -->
+    <!-- pre v11 -->
+    <style name="ProgressBar.Light">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_sg_light</item>
     </style>
 
     <!-- ActionBar -->

@@ -57,6 +57,7 @@ public class SeriesGuideProvider extends ContentProvider {
     private static final int SHOWS = 100;
     private static final int SHOWS_ID = 101;
     private static final int SHOWS_FILTERED = 102;
+    private static final int SHOWS_WITH_EPISODE = 103;
 
     private static final int EPISODES = 200;
     private static final int EPISODES_ID = 201;
@@ -98,6 +99,8 @@ public class SeriesGuideProvider extends ContentProvider {
         matcher.addURI(authority, SeriesContract.PATH_SHOWS, SHOWS);
         matcher.addURI(authority, SeriesContract.PATH_SHOWS + "/" + SeriesContract.PATH_FILTER
                 + "/*", SHOWS_FILTERED);
+        matcher.addURI(authority, SeriesContract.PATH_SHOWS + "/"
+                + SeriesContract.PATH_WITH_EPISODE, SHOWS_WITH_EPISODE);
         matcher.addURI(authority, SeriesContract.PATH_SHOWS + "/*", SHOWS_ID);
 
         // Episodes
@@ -184,6 +187,8 @@ public class SeriesGuideProvider extends ContentProvider {
             case SHOWS_ID:
                 return Shows.CONTENT_ITEM_TYPE;
             case SHOWS_FILTERED:
+                return Shows.CONTENT_TYPE;
+            case SHOWS_WITH_EPISODE:
                 return Shows.CONTENT_TYPE;
             case EPISODES:
                 return Episodes.CONTENT_TYPE;
@@ -497,6 +502,11 @@ public class SeriesGuideProvider extends ContentProvider {
                 final String filter = uri.getLastPathSegment();
                 return builder.table(Tables.SHOWS).where(Shows.TITLE + " LIKE ?",
                         "%" + filter + "%");
+            }
+            case SHOWS_WITH_EPISODE: {
+                return builder.table(Tables.SHOWS_JOIN_EPISODES)
+                        .mapToTable(Shows._ID, Tables.SHOWS)
+                        .mapToTable(Shows.RATING, Tables.SHOWS);
             }
             case EPISODES: {
                 return builder.table(Tables.EPISODES);

@@ -22,7 +22,8 @@ import android.support.v4.view.ViewPager;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
-import com.battlelancer.seriesguide.adapters.TabPagerAdapter;
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
@@ -42,25 +43,27 @@ public class MoviesActivity extends BaseTopActivity {
         setSupportProgressBarIndeterminateVisibility(false);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.movies);
+        getMenu().setContentView(R.layout.movies);
 
+        setupActionBar();
+
+        setupViews();
+    }
+
+    private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.movies));
         actionBar.setIcon(R.drawable.ic_action_movie);
-
-        setupViewPager();
     }
 
-    private void setupViewPager() {
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
+    private void setupViews() {
         ViewPager pager = (ViewPager) findViewById(R.id.pagerMovies);
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsMovies);
 
-        TabPagerAdapter tabsAdapter = new TabPagerAdapter(getSupportFragmentManager(), this,
-                actionBar, pager);
+        TabStripAdapter tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this, pager,
+                tabs);
         // only show the trakt watchlist with valid credentials
-        if (ServiceUtils.isTraktCredentialsValid(this)) {
+        if (ServiceUtils.hasTraktCredentials(this)) {
             tabsAdapter.addTab(R.string.movies_watchlist, MoviesWatchListFragment.class, null);
         }
         // movie search

@@ -33,6 +33,7 @@ import android.widget.EditText;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
@@ -40,7 +41,6 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
-import com.viewpagerindicator.TabPageIndicator;
 
 import java.util.Locale;
 
@@ -48,7 +48,7 @@ import java.util.Locale;
  * Hosts various fragments in a {@link ViewPager} which allow adding shows to
  * the database.
  */
-public class AddActivity extends BaseActivity implements OnAddShowListener {
+public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListener {
 
     private AddPagerAdapter mAdapter;
 
@@ -67,27 +67,35 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.addactivity_pager);
+        getMenu().setContentView(R.layout.addactivity_pager);
 
+        setupActionBar();
+
+        setupViews();
+    }
+
+    private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.ic_action_add);
         actionBar.setDisplayHomeAsUpEnabled(true);
         setProgressBarIndeterminateVisibility(Boolean.FALSE);
         setSupportProgressBarIndeterminateVisibility(false);
+    }
 
+    private void setupViews() {
         mAdapter = new AddPagerAdapter(getSupportFragmentManager(), this);
 
-        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager = (ViewPager) findViewById(R.id.pagerAddShows);
         mPager.setAdapter(mAdapter);
 
-        TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicator);
-        indicator.setViewPager(mPager);
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsAddShows);
+        tabs.setViewPager(mPager);
 
         // set default tab
         if (getIntent() != null && getIntent().getExtras() != null) {
             int defaultTab = getIntent().getExtras().getInt(InitBundle.DEFAULT_TAB);
             if (defaultTab < mAdapter.getCount()) {
-                indicator.setCurrentItem(defaultTab);
+                mPager.setCurrentItem(defaultTab);
             }
         }
     }
@@ -161,7 +169,7 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
 
         @Override
         public int getCount() {
-            final boolean isValidCredentials = ServiceUtils.isTraktCredentialsValid(mContext);
+            final boolean isValidCredentials = ServiceUtils.hasTraktCredentials(mContext);
             if (isValidCredentials) {
                 // show trakt recommended and libraried shows, too
                 return TRAKT_CONNECTED_TABCOUNT;

@@ -39,8 +39,10 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
 import com.google.myjson.Gson;
+import com.google.myjson.JsonParseException;
 import com.google.myjson.stream.JsonReader;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -59,6 +61,7 @@ import java.util.ArrayList;
  */
 public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
+    private static final String TAG = "Json Import";
     private static final int SUCCESS = 1;
     private static final int ERROR_STORAGE_ACCESS = 0;
     private static final int ERROR = -1;
@@ -116,7 +119,12 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
             reader.endArray();
             reader.close();
 
+        } catch (JsonParseException e) {
+            // the given Json might not be valid or unreadable
+            Utils.trackExceptionAndLog(mContext, TAG, e);
+            return ERROR;
         } catch (IOException e) {
+            Utils.trackExceptionAndLog(mContext, TAG, e);
             return ERROR;
         }
 
@@ -146,7 +154,12 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
             reader.endArray();
             reader.close();
 
+        } catch (JsonParseException e) {
+            // the given Json might not be valid or unreadable
+            Utils.trackExceptionAndLog(mContext, TAG, e);
+            return ERROR;
         } catch (IOException e) {
+            Utils.trackExceptionAndLog(mContext, TAG, e);
             return ERROR;
         }
 

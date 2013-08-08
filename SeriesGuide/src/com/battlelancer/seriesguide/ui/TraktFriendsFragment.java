@@ -160,7 +160,7 @@ public class TraktFriendsFragment extends ListFragment implements
             // Check if fragment is shown, create new if needed.
             EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
                     .findFragmentById(R.id.fragment_details);
-            if (detailsFragment == null || detailsFragment.getEpisodeId() != episodeId) {
+            if (detailsFragment == null || detailsFragment.getEpisodeTvdbId() != episodeId) {
                 // Make new fragment to show this selection.
                 detailsFragment = EpisodeDetailsFragment.newInstance(episodeId, true, true);
 
@@ -189,7 +189,7 @@ public class TraktFriendsFragment extends ListFragment implements
 
         @Override
         public List<UserProfile> loadInBackground() {
-            if (ServiceUtils.isTraktCredentialsValid(getContext())) {
+            if (ServiceUtils.hasTraktCredentials(getContext())) {
                 ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(getContext(),
                         false);
                 if (manager == null) {
@@ -278,7 +278,7 @@ public class TraktFriendsFragment extends ListFragment implements
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             // A ViewHolder keeps references to children views to avoid
-            // unneccessary calls to findViewById() on each row.
+            // unnecessary calls to findViewById() on each row.
             ViewHolder holder;
 
             if (convertView == null) {

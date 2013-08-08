@@ -99,4 +99,14 @@ public class ListsPagerAdapter extends MultiPagerAdapter {
             notifyDataSetChanged();
         }
     }
+
+    /**
+     * Close the {@link Cursor} backing this {@link ListsPagerAdapter}.
+     */
+    public void onCleanUp() {
+        if (mLists != null && !mLists.isClosed()) {
+            mLists.close();
+            mLists = null;
+        }
+    }
 }

@@ -31,7 +31,7 @@ import java.util.List;
  * Displays a list of GetGlue search results to choose from which are used to
  * provide object ids for GetGlue check ins.
  */
-public class FixGetGlueCheckInActivity extends BaseActivity implements
+public class FixGetGlueCheckInActivity extends BaseNavDrawerActivity implements
         LoaderManager.LoaderCallbacks<List<GetGlueObject>>, OnItemClickListener {
 
     public interface InitBundle {
@@ -50,7 +50,7 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle args) {
         super.onCreate(args);
-        setContentView(R.layout.activity_fix_get_glue);
+        getMenu().setContentView(R.layout.activity_fix_get_glue);
 
         setTitle(R.string.checkin_fixgetglue);
         

@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -24,7 +23,6 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.loaders.ShowLoader;
@@ -99,12 +97,18 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isMenuDrawerOpen();
+        menu.findItem(R.id.menu_show_manage_lists).setVisible(!isDrawerOpen);
+        menu.findItem(R.id.menu_show_share).setVisible(!isDrawerOpen);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_show_rate) {
-            onRateOnTrakt();
-            return true;
-        } else if (itemId == R.id.menu_show_manage_lists) {
+        if (itemId == R.id.menu_show_manage_lists) {
             ListsDialogFragment.showListsDialog(String.valueOf(getShowTvdbId()),
                     ListItemTypes.SHOW, getFragmentManager());
             return true;
@@ -245,17 +249,7 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
 
         // TVDb button
         View tvdbButton = (View) getView().findViewById(R.id.buttonTVDB);
-        final String tvdbId = mShow.getId();
-        if (tvdbButton != null) {
-            tvdbButton.setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
-                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TVDB_SHOW_URL
-                            + tvdbId));
-                    startActivity(i);
-                    fireTrackerEvent("TVDb");
-                }
-            });
-        }
+        ServiceUtils.setUpTvdbButton(getShowTvdbId(), tvdbButton, TAG);
 
         // trakt button
         ServiceUtils.setUpTraktButton(getShowTvdbId(), getView().findViewById(R.id.buttonTrakt),
@@ -275,7 +269,16 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
 
         // Poster
         final ImageView poster = (ImageView) getView().findViewById(R.id.ImageViewShowInfoPoster);
-        ImageProvider.getInstance(getActivity()).loadImage(poster, mShow.getPoster(), false);
+        final String imagePath = mShow.getPoster();
+        ImageProvider.getInstance(getActivity()).loadImage(poster, imagePath, false);
+        poster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
+                fullscreen.putExtra(FullscreenImageActivity.PATH, imagePath);
+                startActivity(fullscreen);
+            }
+        });
         // Utils.setPosterBackground((ImageView)
         // getView().findViewById(R.id.background),
         // mShow.getPoster(), getActivity());
@@ -293,9 +296,10 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
     }
 
     private void onRateOnTrakt() {
-        TraktRateDialogFragment newFragment = TraktRateDialogFragment
-                .newInstance(getShowTvdbId());
-        newFragment.show(getFragmentManager(), "traktratedialog");
+        if (ServiceUtils.ensureTraktCredentials(getActivity())) {
+            TraktRateDialogFragment rateShow = TraktRateDialogFragment.newInstance(getShowTvdbId());
+            rateShow.show(getFragmentManager(), "traktratedialog");
+        }
         fireTrackerEvent("Rate (trakt)");
     }
 

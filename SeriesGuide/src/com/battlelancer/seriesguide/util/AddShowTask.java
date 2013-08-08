@@ -115,7 +115,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         // already here, so we only have to get it once
         List<TvShow> watched = new ArrayList<TvShow>();
         List<TvShow> collection = new ArrayList<TvShow>();
-        if (ServiceUtils.isTraktCredentialsValid(mContext)) {
+        if (ServiceUtils.hasTraktCredentials(mContext)) {
             Log.d(TAG, "Getting watched and collected episodes from trakt.");
             ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
             if (manager != null) {

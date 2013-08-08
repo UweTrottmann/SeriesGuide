@@ -33,18 +33,19 @@ import android.widget.ImageView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
-import com.viewpagerindicator.TitlePageIndicator;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -54,7 +55,8 @@ import java.util.List;
  * Hosts a fragment which displays episodes of a season. On larger screen hosts
  * a {@link ViewPager} displaying the episodes.
  */
-public class EpisodesActivity extends BaseActivity implements OnSharedPreferenceChangeListener {
+public class EpisodesActivity extends BaseNavDrawerActivity implements
+        OnSharedPreferenceChangeListener, OnPageChangeListener {
 
     private EpisodesFragment mEpisodesFragment;
 
@@ -62,7 +64,7 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
 
     private ViewPager mPager;
 
-    private TitlePageIndicator mIndicator;
+    private PagerSlidingTabStrip mTabs;
 
     private boolean mDualPane;
 
@@ -86,11 +88,14 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.episodes);
+        getMenu().setContentView(R.layout.episodes);
+
+        // if coming from a notification, set last cleared time
+        NotificationService.handleDeleteIntent(this, getIntent());
 
         // check for dual pane layout
-        View pagerFragment = findViewById(R.id.pager);
-        mDualPane = pagerFragment != null && pagerFragment.getVisibility() == View.VISIBLE;
+        View pager = findViewById(R.id.pagerEpisodes);
+        mDualPane = pager != null && pager.getVisibility() == View.VISIBLE;
 
         boolean isFinishing = false;
 
@@ -156,15 +161,7 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
             return;
         }
 
-        // setup ActionBar
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-        final String seasonTitle = Utils.getSeasonString(this, mSeasonNumber);
-        setTitle(show.getTitle() + " " + seasonTitle);
-        actionBar.setTitle(show.getTitle());
-        actionBar.setSubtitle(seasonTitle);
+        setupActionBar(show);
 
         // setup the episode list fragment
         if (savedInstanceState == null) {
@@ -189,26 +186,17 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
             // set adapters for pager and indicator
             int startPosition = updateEpisodeList(episodeId);
             mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), mEpisodes, prefs, false);
-            mPager = (ViewPager) pagerFragment;
+            mPager = (ViewPager) pager;
             mPager.setAdapter(mAdapter);
 
-            mIndicator = (TitlePageIndicator) findViewById(R.id.indicator);
-            mIndicator.setViewPager(mPager, startPosition);
-            mIndicator.setOnPageChangeListener(new OnPageChangeListener() {
+            mTabs = (PagerSlidingTabStrip) findViewById(R.id.tabsEpisodes);
+            mTabs.setAllCaps(false);
+            mTabs.setViewPager(mPager);
 
-                @Override
-                public void onPageSelected(int position) {
-                    mEpisodesFragment.setItemChecked(position);
-                }
-
-                @Override
-                public void onPageScrolled(int arg0, float arg1, int arg2) {
-                }
-
-                @Override
-                public void onPageScrollStateChanged(int arg0) {
-                }
-            });
+            // set page listener afterwards to avoid null pointer for
+            // non-existing content view
+            mPager.setCurrentItem(startPosition, false);
+            mTabs.setOnPageChangeListener(this);
 
         } else {
             // Make sure no fragments are left over from a config
@@ -220,6 +208,18 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
                 }
             }
         }
+    }
+
+    private void setupActionBar(Series show) {
+        // setup ActionBar
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        final String seasonTitle = Utils.getSeasonString(this, mSeasonNumber);
+        setTitle(show.getTitle() + " " + seasonTitle);
+        actionBar.setTitle(show.getTitle());
+        actionBar.setSubtitle(seasonTitle);
     }
 
     @Override
@@ -320,7 +320,7 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
             // reorder
             updateEpisodeList();
             mAdapter.updateEpisodeList(mEpisodes);
-            mIndicator.notifyDataSetChanged();
+            mTabs.notifyDataSetChanged();
 
             // restore visible episode
             onChangePage(episodeId);
@@ -369,5 +369,18 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
         mEpisodes = episodeList;
 
         return startPosition;
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int arg0) {
+    }
+
+    @Override
+    public void onPageScrolled(int arg0, float arg1, int arg2) {
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        mEpisodesFragment.setItemChecked(position);
     }
 }

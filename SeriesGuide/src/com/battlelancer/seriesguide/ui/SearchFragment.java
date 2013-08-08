@@ -50,6 +50,7 @@ public class SearchFragment extends SherlockListFragment implements LoaderCallba
     interface InitBundle {
         String QUERY = "query";
 
+        /** Set to pre-filter search results by show title. */
         String SHOW_TITLE = "title";
     }
 

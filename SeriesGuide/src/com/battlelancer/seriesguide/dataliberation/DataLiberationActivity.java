@@ -28,13 +28,17 @@ public class DataLiberationActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        setupActionBar();
 
         if (savedInstanceState == null) {
             DataLiberationFragment f = new DataLiberationFragment();
             getSupportFragmentManager().beginTransaction().add(android.R.id.content, f).commit();
         }
+    }
+
+    private void setupActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
 }

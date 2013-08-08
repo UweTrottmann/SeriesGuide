@@ -123,9 +123,11 @@ public class ListWidgetProvider extends AppWidgetProvider {
         // change title based on config
         int typeIndex = WidgetSettings.getWidgetListType(context, appWidgetId);
         int activityTab = 0;
-        if (typeIndex == 1) {
+        if (typeIndex == WidgetSettings.Type.RECENT) {
             activityTab = 1;
             rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.recent));
+        } else if (typeIndex == WidgetSettings.Type.FAVORITES) {
+            rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.favorites));
         } else {
             activityTab = 0;
             rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.upcoming));
@@ -136,26 +138,38 @@ public class ListWidgetProvider extends AppWidgetProvider {
         rv.setInt(R.id.container, "setBackgroundColor", bgColor);
 
         // Activity button
-        Intent activityIntent = new Intent(context, UpcomingRecentActivity.class);
-        activityIntent.putExtra(UpcomingRecentActivity.InitBundle.SELECTED_TAB, activityTab);
-        PendingIntent pendingIntent = TaskStackBuilder
-                .create(context)
-                .addNextIntent(new Intent(context, ShowsActivity.class))
-                .addNextIntent(activityIntent)
-                .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent;
+        if (typeIndex == WidgetSettings.Type.FAVORITES) {
+            // launching the shows list
+            Intent activityIntent = new Intent(context, ShowsActivity.class);
+            pendingIntent = TaskStackBuilder
+                    .create(context)
+                    .addNextIntent(activityIntent)
+                    .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
+        } else {
+            // launching an activities list
+            Intent activityIntent = new Intent(context, UpcomingRecentActivity.class);
+            activityIntent.putExtra(UpcomingRecentActivity.InitBundle.SELECTED_TAB, activityTab);
+            pendingIntent = TaskStackBuilder
+                    .create(context)
+                    .addNextIntent(new Intent(context, ShowsActivity.class))
+                    .addNextIntent(activityIntent)
+                    .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
         rv.setOnClickPendingIntent(R.id.widget_title, pendingIntent);
 
         // Intent template for items to launch an EpisodesActivity
-        Intent itemIntent = new Intent(context, EpisodesActivity.class);
-        PendingIntent pendingIntentTemplate = TaskStackBuilder
-                .create(context)
-                .addNextIntent(new Intent(context, ShowsActivity.class))
-                .addNextIntent(
-                        new Intent(context, UpcomingRecentActivity.class).putExtra(
-                                UpcomingRecentActivity.InitBundle.SELECTED_TAB, activityTab))
-                .addNextIntent(itemIntent)
-                .getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT);
-        rv.setPendingIntentTemplate(R.id.list_view, pendingIntentTemplate);
+        TaskStackBuilder builder = TaskStackBuilder.create(context)
+                .addNextIntent(new Intent(context, ShowsActivity.class));
+        if (typeIndex != WidgetSettings.Type.FAVORITES) {
+            // only insert activity page for activity types
+            builder.addNextIntent(
+                    new Intent(context, UpcomingRecentActivity.class).putExtra(
+                            UpcomingRecentActivity.InitBundle.SELECTED_TAB, activityTab));
+        }
+        builder.addNextIntent(new Intent(context, EpisodesActivity.class));
+        rv.setPendingIntentTemplate(R.id.list_view,
+                builder.getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT));
 
         // Show list button
         Intent homeIntent = new Intent(context, ShowsActivity.class);

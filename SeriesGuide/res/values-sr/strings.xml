@@ -4,7 +4,7 @@
   <string name="show">Show</string>
   <string name="episode">Epizoda</string>
   <string name="episode_number">Episode %s</string>
-  <string name="episodes">Episodes</string>
+  <string name="episodes">Epizode</string>
   <string name="season">Sezona</string>
   <string name="season_number">Season %s</string>
   <string name="seasons">Sezone</string>
@@ -32,7 +32,8 @@
   <string name="close">Zatvori</string>
   <string name="save_selection">Sačuvaj izabrano</string>
   <string name="offline">Nema mreže. Pokušajte kasnije.</string>
-  <string name="onlyx">Dostupno samo u SeriesGuide X</string>
+  <string name="app_not_available">No app available to handle this.</string>
+  <string name="onlyx">Only available with X Subscription</string>
   <string name="shows">Serije</string>
   <string name="lists">Liste</string>
   <string name="activity">Aktivnost</string>
@@ -296,7 +297,8 @@
   <string name="disconnect">Prekini vezu</string>
   <string name="trakt_error">Greška u komunikaciji sa traktom</string>
   <string name="trakt_decryptfail">Lozinka ne može biti dešifrovana</string>
-  <string name="trakt_generalerror">Nešto nije u redu. Proverite vaše podatke i pokušajte ponovo.</string>
+  <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
+  <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_createaccount">Napravi novi nalog</string>
   <string name="welcome_setuplanguage">Izaberi jezik</string>
   <string name="welcome_traktmessage">Pristupi svojim trakt informacijama i aktivnostima prijatelja</string>
@@ -321,15 +323,24 @@
   <string name="hide_watched">Sakrij pogledane epizode</string>
   <string name="pref_widget_opacity">Widget background</string>
   <string name="pref_widget_type">Widget type</string>
+  <string name="favorites">Omiljene</string>
   <string name="dashclock_extension_label">Upcoming episode</string>
   <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
+  <string name="deprecation_title">Move to SeriesGuide</string>
+  <string name="backup_tool">Backup tool</string>
   <string name="download_stable">Preuzmi SeriesGuide</string>
-  <string name="betawarning"><b>Pažnja!</b> Ovo verzija je samo za beta testere! Ako niste sigurni preuzmite stabilni verziju ispod.</string>
-  <string name="upgrade_title">Get the X Upgrade</string>
-  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
-  <string name="upgrade_action">Get the X Upgrade</string>
-  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
+  <string name="deprecation_warning"><b>Heads up!</b> SeriesGuide X will be stripped of all functionality very soon. Migrate your shows to the free version and keep SeriesGuide X installed to unlock the new X Subscription for life.</string>
+  <string name="migration_tutorial">To migrate your shows: touch <b>Backup tool</b>, then <b>Backup</b>.\n\nGo back until this dialog appears again.\n\nTouch <b>Download SeriesGuide</b> and install SeriesGuide.\n\nLaunch SeriesGuide. Touch <b>Menu</b>, then <b>Settings</b>. In <b>Advanced</b> use the backup tool to restore.</string>
+  <string name="upgrade_title">Get X features</string>
+  <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_action">Get X features</string>
+  <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
+  <string name="subscription_activated">You are now subscribed to X features.</string>
+  <string name="subscription_expired">Subscription expired</string>
+  <string name="subscription_expired_details">Your X features subscription has expired.</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
+  <string name="search_within_show">Search within %s</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Sledeća epizoda</item>
@@ -377,23 +388,24 @@
     <item>Black</item>
   </string-array>
   <string-array name="widgetType">
-    <item>Upcoming</item>
-    <item>Recent</item>
+    <item>Predstojeće</item>
+    <item>Skorašnje</item>
+    <item>Omiljene</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
     <item>hour</item>
     <item>6 hours</item>
     <item>12 hours</item>
     <item>24 hours</item>
-    <item>3 days</item>
+    <item>3 dana</item>
     <item>week</item>
   </string-array>
   <plurals name="votes">
-    <item quantity="zero">%d votes</item>
+    <item quantity="zero">%d glasova</item>
     <item quantity="one">%d glas</item>
-    <item quantity="two">%d votes</item>
-    <item quantity="few">%d votes</item>
-    <item quantity="many">%d votes</item>
+    <item quantity="two">%d glasova</item>
+    <item quantity="few">%d glasova</item>
+    <item quantity="many">%d glasova</item>
     <item quantity="other">%d glasova</item>
   </plurals>
   <plurals name="days_plural">

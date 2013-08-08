@@ -24,12 +24,15 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.adapters.TabPagerAdapter;
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.ActivityType;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
@@ -48,17 +51,28 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.upcoming);
+        getMenu().setContentView(R.layout.upcoming);
 
+        // if coming from a notification, set last cleared time
+        NotificationService.handleDeleteIntent(this, getIntent());
+
+        setupActionBar();
+
+        setupViews(savedInstanceState);
+    }
+
+    private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.activity);
         actionBar.setIcon(R.drawable.ic_action_upcoming);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    }
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+    private void setupViews(Bundle savedInstanceState) {
+        ViewPager pager = (ViewPager) findViewById(R.id.pagerUpcoming);
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsUpcoming);
 
-        TabsAdapter tabsAdapter = new TabsAdapter(getSupportFragmentManager(), this, actionBar,
-                viewPager);
+        ActivityTabPageAdapter tabsAdapter = new ActivityTabPageAdapter(
+                getSupportFragmentManager(), this, pager, tabs);
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
         argsUpcoming.putString(UpcomingFragment.InitBundle.TYPE, ActivityType.UPCOMING);
@@ -76,7 +90,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         tabsAdapter.addTab(R.string.recent, UpcomingFragment.class, argsRecent);
 
         // trakt friends tab
-        final boolean isTraktSetup = ServiceUtils.isTraktCredentialsValid(this);
+        final boolean isTraktSetup = ServiceUtils.hasTraktCredentials(this);
         if (isTraktSetup) {
             tabsAdapter.addTab(R.string.friends, TraktFriendsFragment.class, null);
         }
@@ -100,7 +114,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         if (selection > tabsAdapter.getCount() - 1) {
             selection = 0;
         }
-        actionBar.setSelectedNavigationItem(selection);
+        pager.setCurrentItem(selection);
     }
 
     @Override
@@ -153,32 +167,35 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
     }
 
     /**
-     * This is a helper class that implements the management of tabs and all
-     * details of connecting a ViewPager with associated TabHost. It relies on a
-     * trick. Normally a tab host has a simple API for supplying a View or
-     * Intent that each tab will show. This is not sufficient for switching
-     * between pages. So instead we make the content part of the tab host 0dp
-     * high (it is not shown) and the TabsAdapter supplies its own dummy view to
-     * show as the tab content. It listens to changes in tabs, and takes care of
-     * switch to the correct paged in the ViewPager whenever the selected tab
-     * changes.
+     * Special {@link TabPagerIndicatorAdapter} which saves the currently
+     * selected page to preferences, so we can restore it when the user comes
+     * back later.
      */
-    public static class TabsAdapter extends TabPagerAdapter {
+    public static class ActivityTabPageAdapter extends TabStripAdapter implements
+            OnPageChangeListener {
         private SharedPreferences mPrefs;
 
-        public TabsAdapter(FragmentManager fm, Context context, ActionBar actionBar,
-                ViewPager pager) {
-            super(fm, context, actionBar, pager);
+        public ActivityTabPageAdapter(FragmentManager fm, Context context, ViewPager pager,
+                PagerSlidingTabStrip tabs) {
+            super(fm, context, pager, tabs);
             mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+            tabs.setOnPageChangeListener(this);
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
         }
 
         @Override
         public void onPageSelected(int position) {
-            super.onPageSelected(position);
-
             // save selected tab index
             mPrefs.edit().putInt(SeriesGuidePreferences.KEY_ACTIVITYTAB, position).commit();
         }
+
     }
 
     /**
