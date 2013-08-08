@@ -40,6 +40,7 @@ import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.thetvdbapi.TheTVDB;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -260,14 +261,18 @@ public class OverviewActivity extends BaseNavDrawerActivity {
      * Delayed request to sync the displayed show.
      */
     private void onUpdateShow() {
-        final Context context = getApplicationContext();
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                SgSyncAdapter.requestSync(context, mShowId, false);
-            }
-        }, 1000);
+        final String showId = String.valueOf(mShowId);
+        boolean isTime = TheTVDB.isUpdateShow(showId, System.currentTimeMillis(), this);
+        if (isTime) {
+            final Context context = getApplicationContext();
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    SgSyncAdapter.requestSync(context, mShowId, false);
+                }
+            }, 1000);
+        }
     }
 
     @Override
