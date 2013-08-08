@@ -123,7 +123,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             args.putBoolean(ContentResolver.SYNC_EXTRAS_IGNORE_SETTINGS, true);
         }
 
-        final Account account = SgAccountAuthenticator.getSyncAccount(context);
+        final Account account = SyncUtils.getSyncAccount(context);
         ContentResolver.requestSync(account,
                 SeriesGuideApplication.CONTENT_AUTHORITY, args);
 
@@ -134,7 +134,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * tickle.
      */
     public static void setSyncAutomatically(Context context, boolean sync) {
-        final Account account = SgAccountAuthenticator.getSyncAccount(context);
+        final Account account = SyncUtils.getSyncAccount(context);
         ContentResolver.setSyncAutomatically(account, SeriesGuideApplication.CONTENT_AUTHORITY,
                 sync);
     }
@@ -143,7 +143,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Check if the provider should be synced when a network tickle is received.
      */
     public static boolean isSyncAutomatically(Context context) {
-        return ContentResolver.getSyncAutomatically(SgAccountAuthenticator.getSyncAccount(context),
+        return ContentResolver.getSyncAutomatically(SyncUtils.getSyncAccount(context),
                 SeriesGuideApplication.CONTENT_AUTHORITY);
     }
 
@@ -153,7 +153,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      */
     public static boolean isSyncActive(Context context, boolean displayWarning) {
         boolean isSyncActive = ContentResolver.isSyncActive(
-                SgAccountAuthenticator.getSyncAccount(context),
+                SyncUtils.getSyncAccount(context),
                 SeriesGuideApplication.CONTENT_AUTHORITY);
         if (isSyncActive) {
             Toast.makeText(context, R.string.update_inprogress, Toast.LENGTH_LONG).show();
