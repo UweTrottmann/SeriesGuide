@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.uwetrottmann.seriesguide.R;
 
 public class SgAccountAuthenticator extends AbstractAccountAuthenticator {
 
@@ -20,8 +21,7 @@ public class SgAccountAuthenticator extends AbstractAccountAuthenticator {
     private Context mContext;
 
     public static Account getSyncAccount(Context context) {
-        Account account = new Account(SgAccountAuthenticator.ACCOUNT_NAME, context.getPackageName());
-        return account;
+        return new Account(ACCOUNT_NAME, context.getString(R.string.package_name));
     }
 
     public SgAccountAuthenticator(Context context) {
@@ -42,7 +42,7 @@ public class SgAccountAuthenticator extends AbstractAccountAuthenticator {
 
         // set up a dummy account for syncing
         AccountManager manager = AccountManager.get(mContext);
-        final Account account = new Account(ACCOUNT_NAME, mContext.getPackageName());
+        final Account account = getSyncAccount(mContext);
         manager.addAccountExplicitly(account, null, null);
         ContentResolver.setIsSyncable(account, SeriesGuideApplication.CONTENT_AUTHORITY, 1);
         ContentResolver.setSyncAutomatically(account, SeriesGuideApplication.CONTENT_AUTHORITY,
@@ -86,7 +86,7 @@ public class SgAccountAuthenticator extends AbstractAccountAuthenticator {
     public Bundle getAccountRemovalAllowed(AccountAuthenticatorResponse response, Account account)
             throws NetworkErrorException {
         final Bundle result = new Bundle();
-        result.putBoolean(AccountManager.KEY_BOOLEAN_RESULT, false);
+        result.putBoolean(AccountManager.KEY_BOOLEAN_RESULT, true);
         return result;
     }
 
