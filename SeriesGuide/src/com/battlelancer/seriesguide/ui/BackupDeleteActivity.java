@@ -34,6 +34,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
@@ -121,6 +122,15 @@ public class BackupDeleteActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         onCancelTasks();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            super.onBackPressed();
+            return true;
+        }
+        return false;
     }
 
     private void onCancelTasks() {

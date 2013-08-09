@@ -20,6 +20,7 @@ package com.battlelancer.seriesguide.dataliberation;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 
 public class DataLiberationActivity extends BaseActivity {
@@ -39,6 +40,15 @@ public class DataLiberationActivity extends BaseActivity {
     private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            super.onBackPressed();
+            return true;
+        }
+        return false;
     }
 
 }
