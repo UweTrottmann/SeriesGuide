@@ -69,10 +69,12 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     private static final int ERROR_FILE_ACCESS = -3;
     private Context mContext;
     private OnTaskFinishedListener mListener;
+    private boolean mIsAutoBackupMode;
 
-    public JsonImportTask(Context context, OnTaskFinishedListener listener) {
+    public JsonImportTask(Context context, OnTaskFinishedListener listener, boolean isAutoBackupMode) {
         mContext = context.getApplicationContext();
         mListener = listener;
+        mIsAutoBackupMode = isAutoBackupMode;
     }
 
     @Override
@@ -89,7 +91,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         // Ensure JSON file is available
-        File path = JsonExportTask.getExportPath(false);
+        File path = JsonExportTask.getExportPath(mIsAutoBackupMode);
         File backup = new File(path, JsonExportTask.EXPORT_JSON_FILE_SHOWS);
         if (!backup.exists() || !backup.canRead()) {
             return ERROR_FILE_ACCESS;

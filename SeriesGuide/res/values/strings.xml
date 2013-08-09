@@ -374,6 +374,8 @@
     <string name="import_yes">Restore</string>
     <string name="import_no">Don\'t Restore</string>
     <string name="import_warning">I understand my current shows and lists will be lost!</string>
+    <string name="last_auto_backup">Last Auto Backup: %s</string>
+    <string name="restore_auto_backup">Restore Auto Backup</string>
 
     <!-- Check Ins -->
     <string name="checkin">Check in</string>

@@ -85,6 +85,24 @@
             android:layout_marginTop="@dimen/default_padding"
             android:enabled="false"
             android:text="@string/import_button" />
+
+        <TextView
+            android:id="@+id/textViewBackupLastAutoBackup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/buttonImport"
+            android:layout_marginTop="@dimen/default_padding"
+            android:text="@string/last_auto_backup"
+            android:textAppearance="@style/TextAppearance.Small" />
+
+        <Button
+            android:id="@+id/buttonBackupRestoreAutoBackup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewBackupLastAutoBackup"
+            android:layout_marginTop="@dimen/default_padding"
+            android:enabled="false"
+            android:text="@string/restore_auto_backup" />
     </RelativeLayout>
 
 </ScrollView>

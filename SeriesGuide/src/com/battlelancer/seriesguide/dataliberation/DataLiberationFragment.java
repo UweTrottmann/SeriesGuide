@@ -20,6 +20,7 @@ package com.battlelancer.seriesguide.dataliberation;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,6 +35,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -45,6 +47,7 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
 
     private Button mButtonExport;
     private Button mButtonImport;
+    private Button mButtonImportAutoBackup;
     private ProgressBar mProgressBar;
     private CheckBox mCheckBoxFullDump;
     private CheckBox mCheckBoxImportWarning;
@@ -65,19 +68,31 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.data_liberation_fragment, container, false);
 
+        mProgressBar = (ProgressBar) v.findViewById(R.id.progressBarDataLiberation);
         mButtonExport = (Button) v.findViewById(R.id.buttonExport);
         mButtonImport = (Button) v.findViewById(R.id.buttonImport);
-        mProgressBar = (ProgressBar) v.findViewById(R.id.progressBarDataLiberation);
+        mButtonImportAutoBackup = (Button) v.findViewById(R.id.buttonBackupRestoreAutoBackup);
         mCheckBoxFullDump = (CheckBox) v.findViewById(R.id.checkBoxFullDump);
         mCheckBoxImportWarning = (CheckBox) v.findViewById(R.id.checkBoxImportWarning);
 
+        // display backup path
         TextView backuppath = (TextView) v.findViewById(R.id.textViewBackupPath);
         String path = JsonExportTask.getExportPath(false).toString();
         backuppath.setText(getString(R.string.backup_path) + ": " + path);
 
+        // display current db version
         TextView dbVersion = (TextView) v.findViewById(R.id.textViewBackupDatabaseVersion);
         dbVersion.setText(getString(R.string.backup_version) + ": "
                 + SeriesGuideDatabase.DATABASE_VERSION);
+
+        // display last auto-backup date
+        TextView lastAutoBackup = (TextView) v.findViewById(R.id.textViewBackupLastAutoBackup);
+        long lastAutoBackupTime = AdvancedSettings.getLastAutoBackupTime(getActivity());
+        lastAutoBackup
+                .setText(getString(R.string.last_auto_backup,
+                        DateUtils.getRelativeDateTimeString(getActivity(),
+                                lastAutoBackupTime, DateUtils.SECOND_IN_MILLIS,
+                                DateUtils.DAY_IN_MILLIS, 0)));
 
         return v;
     }
@@ -102,6 +117,7 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mButtonImport.setEnabled(isChecked);
+                mButtonImportAutoBackup.setEnabled(isChecked);
             }
         });
         mButtonImport.setOnClickListener(new OnClickListener() {
@@ -109,7 +125,16 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
             public void onClick(View v) {
                 setProgressLock(true);
 
-                mTask = new JsonImportTask(context, DataLiberationFragment.this);
+                mTask = new JsonImportTask(context, DataLiberationFragment.this, false);
+                mTask.execute();
+            }
+        });
+        mButtonImportAutoBackup.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setProgressLock(true);
+
+                mTask = new JsonImportTask(context, DataLiberationFragment.this, true);
                 mTask.execute();
             }
         });
@@ -148,8 +173,10 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
     private void setProgressLock(boolean isLocked) {
         if (isLocked) {
             mButtonImport.setEnabled(false);
+            mButtonImportAutoBackup.setEnabled(false);
         } else {
             mButtonImport.setEnabled(mCheckBoxImportWarning.isChecked());
+            mButtonImportAutoBackup.setEnabled(mCheckBoxImportWarning.isChecked());
         }
         mButtonExport.setEnabled(!isLocked);
         mProgressBar.setVisibility(isLocked ? View.VISIBLE : View.GONE);
