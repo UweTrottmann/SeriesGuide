@@ -172,6 +172,9 @@
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top_inverse</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu_light</item>
         <item name="drawableCheckin">@drawable/ic_action_checkin_inverse</item>
+
+        <!-- Necessary to inherit the primary accent color in the DarkActionBar (ABS) -->
+        <item name="actionBarWidgetTheme">@style/SeriesGuideTheme</item>
     </style>
 
     <style name="SeriesGuideBaseThemeLight" parent="Theme.Sherlock.Light.DarkActionBar">
