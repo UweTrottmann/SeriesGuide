@@ -17,10 +17,13 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.accounts.Account;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.SyncStatusObserver;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
@@ -40,7 +43,9 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
+import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
@@ -88,11 +93,18 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
 
     private Fragment mFragment;
 
+    private Object mSyncObserverHandle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // need progress bar to display update progress
+        requestWindowFeature(Window.FEATURE_PROGRESS);
+
         super.onCreate(savedInstanceState);
         getMenu().setContentView(R.layout.shows);
-        
+
+        setSupportProgressBarIndeterminate(true);
+
         // Set up a sync account if needed
         SyncUtils.createSyncAccount(this);
 
@@ -173,6 +185,22 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
         Utils.updateLatestEpisodes(this);
         if (mSavedState != null) {
             restoreLocalState(mSavedState);
+        }
+
+        mSyncStatusObserver.onStatusChanged(0);
+
+        // Watch for sync state changes
+        final int mask = ContentResolver.SYNC_OBSERVER_TYPE_PENDING |
+                ContentResolver.SYNC_OBSERVER_TYPE_ACTIVE;
+        mSyncObserverHandle = ContentResolver.addStatusChangeListener(mask, mSyncStatusObserver);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mSyncObserverHandle != null) {
+            ContentResolver.removeStatusChangeListener(mSyncObserverHandle);
+            mSyncObserverHandle = null;
         }
     }
 
@@ -570,4 +598,41 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
         getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment, mFragment)
                 .commit();
     }
+
+    /**
+     * Create a new anonymous SyncStatusObserver. It's attached to the app's
+     * ContentResolver in onResume(), and removed in onPause(). If a sync is
+     * active or pending, a progress bar is shown.
+     */
+    private SyncStatusObserver mSyncStatusObserver = new SyncStatusObserver() {
+        /** Callback invoked with the sync adapter status changes. */
+        @Override
+        public void onStatusChanged(int which) {
+            runOnUiThread(new Runnable() {
+                /**
+                 * The SyncAdapter runs on a background thread. To update the
+                 * UI, onStatusChanged() runs on the UI thread.
+                 */
+                @Override
+                public void run() {
+                    Account account = SyncUtils.getSyncAccount(ShowsActivity.this);
+                    if (account == null) {
+                        // GetAccount() returned an invalid value. This
+                        // shouldn't happen.
+                        setProgressBarVisibility(false);
+                        return;
+                    }
+
+                    // Test the ContentResolver to see if the sync adapter is
+                    // active or pending.
+                    // Set the state of the refresh button accordingly.
+                    boolean syncActive = ContentResolver.isSyncActive(
+                            account, SeriesGuideApplication.CONTENT_AUTHORITY);
+                    boolean syncPending = ContentResolver.isSyncPending(
+                            account, SeriesGuideApplication.CONTENT_AUTHORITY);
+                    setProgressBarVisibility(syncActive || syncPending);
+                }
+            });
+        }
+    };
 }
