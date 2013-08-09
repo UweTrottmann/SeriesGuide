@@ -33,6 +33,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.TraktSync;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -135,6 +136,15 @@ public class TraktSyncActivity extends BaseActivity {
             mSyncTask.cancel(true);
             mSyncTask = null;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            super.onBackPressed();
+            return true;
+        }
+        return false;
     }
 
     @Override
