@@ -861,6 +861,10 @@ public class IabHelper {
 
         do {
             logDebug("Calling getPurchases with continuation token: " + continueToken);
+            if (!mSetupDone) {
+                logError("IabHelper was disposed before we would do something.");
+                return IABHELPER_BAD_RESPONSE;
+            }
             Bundle ownedItems = mService.getPurchases(3, mContext.getPackageName(),
                     itemType, continueToken);
 
