@@ -5,7 +5,7 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 7.1 *(2013-08-09)*
+Version 7.1 *(2013-08-10)*
 -----------------
 
 * NOTICE Allow removal of SeriesGuide account from Android settings. If you experience random crashes, try removing and then adding the SeriesGuide account again.
