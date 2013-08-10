@@ -393,6 +393,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             NavUtils.navigateUpTo(this,
                     new Intent(Intent.ACTION_MAIN).setClass(this, ShowsActivity.class));
+            overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
             return true;
         }
         return false;
@@ -403,7 +404,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         switch (item.getItemId()) {
             case android.R.id.home:
                 super.onBackPressed();
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 return true;
         }
         return super.onOptionsItemSelected(item);

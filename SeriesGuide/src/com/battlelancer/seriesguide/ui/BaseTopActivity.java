@@ -94,7 +94,6 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
             fireTrackerEvent("Settings");
 
             startActivity(new Intent(this, SeriesGuidePreferences.class));
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             return true;
         }
         else if (itemId == R.id.menu_help) {
