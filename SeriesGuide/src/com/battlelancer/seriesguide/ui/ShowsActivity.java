@@ -102,6 +102,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
 
         super.onCreate(savedInstanceState);
         getMenu().setContentView(R.layout.shows);
+        
+        // Set up a sync account if needed
+        SyncUtils.createSyncAccount(this);
 
         setSupportProgressBarIndeterminate(true);
 
