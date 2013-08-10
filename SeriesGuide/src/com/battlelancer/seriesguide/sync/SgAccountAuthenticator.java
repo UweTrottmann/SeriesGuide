@@ -6,23 +6,12 @@ import android.accounts.Account;
 import android.accounts.AccountAuthenticatorResponse;
 import android.accounts.AccountManager;
 import android.accounts.NetworkErrorException;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-
-import com.battlelancer.seriesguide.SeriesGuideApplication;
 
 public class SgAccountAuthenticator extends AbstractAccountAuthenticator {
 
-    public static final String ACCOUNT_NAME = "SeriesGuide Sync";
-    private static final String TAG = "SgAccountAuthenticator";
     private Context mContext;
-
-    public static Account getSyncAccount(Context context) {
-        Account account = new Account(SgAccountAuthenticator.ACCOUNT_NAME, context.getPackageName());
-        return account;
-    }
 
     public SgAccountAuthenticator(Context context) {
         super(context);
@@ -30,33 +19,28 @@ public class SgAccountAuthenticator extends AbstractAccountAuthenticator {
     }
 
     @Override
-    public Bundle editProperties(AccountAuthenticatorResponse response, String accountType) {
-        return null;
-    }
-
-    @Override
     public Bundle addAccount(AccountAuthenticatorResponse response, String accountType,
             String authTokenType, String[] requiredFeatures, Bundle options)
             throws NetworkErrorException {
-        Log.d(TAG, "Setting up sync account");
 
-        // set up a dummy account for syncing
-        AccountManager manager = AccountManager.get(mContext);
-        final Account account = new Account(ACCOUNT_NAME, mContext.getPackageName());
-        manager.addAccountExplicitly(account, null, null);
-        ContentResolver.setIsSyncable(account, SeriesGuideApplication.CONTENT_AUTHORITY, 1);
-        ContentResolver.setSyncAutomatically(account, SeriesGuideApplication.CONTENT_AUTHORITY,
-                true);
+        SyncUtils.createSyncAccount(mContext);
 
-        Log.d(TAG, "Finished setting up sync account");
-
-        return null;
+        final Account account = SyncUtils.getSyncAccount(mContext);
+        Bundle bundle = new Bundle();
+        bundle.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
+        bundle.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);
+        return bundle;
     }
 
     @Override
     public Bundle confirmCredentials(AccountAuthenticatorResponse response, Account account,
             Bundle options) throws NetworkErrorException {
         return null;
+    }
+
+    @Override
+    public Bundle editProperties(AccountAuthenticatorResponse response, String accountType) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -79,14 +63,19 @@ public class SgAccountAuthenticator extends AbstractAccountAuthenticator {
     @Override
     public Bundle hasFeatures(AccountAuthenticatorResponse response, Account account,
             String[] features) throws NetworkErrorException {
-        return null;
+        // This call is used to query whether the Authenticator supports
+        // specific features. We don't expect to get called, so we always
+        // return false (no) for any queries.
+        final Bundle result = new Bundle();
+        result.putBoolean(AccountManager.KEY_BOOLEAN_RESULT, false);
+        return result;
     }
 
     @Override
     public Bundle getAccountRemovalAllowed(AccountAuthenticatorResponse response, Account account)
             throws NetworkErrorException {
         final Bundle result = new Bundle();
-        result.putBoolean(AccountManager.KEY_BOOLEAN_RESULT, false);
+        result.putBoolean(AccountManager.KEY_BOOLEAN_RESULT, true);
         return result;
     }
 
