@@ -63,6 +63,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getMenu().setContentView(R.layout.overview);
+        getWindow().setBackgroundDrawable(null);
 
         mShowId = getIntent().getIntExtra(OverviewFragment.InitBundle.SHOW_TVDBID, -1);
         if (mShowId == -1) {

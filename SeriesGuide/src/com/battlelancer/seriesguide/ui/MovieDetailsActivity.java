@@ -34,6 +34,7 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getMenu().setContentView(R.layout.activity_singlepane_empty);
+        getWindow().setBackgroundDrawable(null);
 
         if (getIntent().getExtras() == null) {
             finish();
