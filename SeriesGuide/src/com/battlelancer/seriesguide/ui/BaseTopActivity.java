@@ -84,23 +84,38 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        // show subscribe button if not subscribed, yet
+        menu.findItem(R.id.menu_subscribe).setVisible(!Utils.hasAccessToX(this));
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == android.R.id.home) {
             toggleMenu();
             return true;
         }
-        else if (itemId == R.id.menu_preferences) {
-            fireTrackerEvent("Settings");
+        else if (itemId == R.id.menu_subscribe) {
+            startActivity(new Intent(this, BillingActivity.class));
 
+            fireTrackerEvent("Subscribe");
+            return true;
+        }
+        else if (itemId == R.id.menu_preferences) {
             startActivity(new Intent(this, SeriesGuidePreferences.class));
+
+            fireTrackerEvent("Settings");
             return true;
         }
         else if (itemId == R.id.menu_help) {
-            fireTrackerEvent("Help");
-
             startActivity(new Intent(this, HelpActivity.class));
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+            fireTrackerEvent("Help");
             return true;
         }
         return super.onOptionsItemSelected(item);
