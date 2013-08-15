@@ -89,6 +89,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getMenu().setContentView(R.layout.episodes);
+        getWindow().setBackgroundDrawable(null);
 
         // if coming from a notification, set last cleared time
         NotificationService.handleDeleteIntent(this, getIntent());

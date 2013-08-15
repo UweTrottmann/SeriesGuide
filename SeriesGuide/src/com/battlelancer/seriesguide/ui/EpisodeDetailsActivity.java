@@ -76,6 +76,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
         getMenu().setContentView(R.layout.episode_pager);
+        getWindow().setBackgroundDrawable(null);
 
         setupActionBar();
 
