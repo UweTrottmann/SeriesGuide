@@ -1,6 +1,7 @@
 apply plugin: 'android-library'
 
 dependencies {
+    compile 'com.android.support:support-v4:18.0.+'
     compile fileTree(dir: 'libs', include: '*.jar')
     compile project(':libraries:actionbarsherlock-i18n')
     compile project(':libraries:android-menudrawer')
