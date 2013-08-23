@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.uwetrottmann.seriesguide"
-    android:versionCode="185"
-    android:versionName="2.9.7" >
+          package="com.uwetrottmann.seriesguide"
+          android:versionCode="185"
+          android:versionName="2.9.7">
 
     <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="17" />
+            android:minSdkVersion="8"
+            android:targetSdkVersion="18"/>
+
+    <application
+            android:name="com.battlelancer.seriesguide.SeriesGuideApplication"
+            android:allowBackup="true"
+            android:backupAgent="com.battlelancer.seriesguide.PrefBackupHelper"
+            android:hardwareAccelerated="true"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/app_name"
+            android:theme="@style/SeriesGuideTheme">
+    </application>
 
 </manifest>
