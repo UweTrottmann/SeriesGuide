@@ -1,0 +1,7 @@
+include ':libraries:androidutils'
+include ':SeriesGuideBeta'
+include ':libraries:pagerslidingtabstrip'
+include ':libraries:android-menudrawer'
+include ':libraries:actionbarsherlock-i18n'
+include ':SeriesGuide'
+include ':libraries:actionbarsherlock'
