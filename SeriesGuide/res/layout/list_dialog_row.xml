@@ -8,4 +8,5 @@
     android:gravity="center_vertical"
     android:paddingLeft="@dimen/large_padding"
     android:paddingRight="@dimen/large_padding"
-    android:textAppearance="@style/TextAppearance.Small.Primary" />
+    android:textAppearance="@style/TextAppearance.Small.Primary"
+    android:textColor="@color/text_default"/>
