@@ -8,31 +8,6 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!-- Notification service -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- Syncadapter permissions -->
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_SYNC_STATS" />
-    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
-    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
-    <!-- Android Beam -->
-    <uses-permission android:name="android.permission.NFC" />
-    <!-- Create show shortcuts -->
-    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
-
-    <uses-feature
-        android:name="android.hardware.touchscreen"
-        android:required="false" >
-    </uses-feature>
-
     <application
         android:name="com.battlelancer.seriesguide.SeriesGuideApplication"
         android:allowBackup="true"
