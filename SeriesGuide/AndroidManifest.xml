@@ -16,6 +16,78 @@
             android:icon="@drawable/ic_launcher"
             android:label="@string/app_name"
             android:theme="@style/SeriesGuideTheme">
+
+        <!-- Widgets -->
+        <receiver
+            android:name="com.battlelancer.seriesguide.appwidget.ListWidgetProvider"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.battlelancer.seriesguide.appwidget.UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_v11_info" />
+        </receiver>
+        <service
+            android:name="com.battlelancer.seriesguide.appwidget.ListWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" >
+        </service>
+
+        <receiver
+            android:name="com.battlelancer.seriesguide.appwidget.AppWidget"
+            android:enabled="@bool/isGingerbreadOrLower"
+            android:label="@string/smallwidget" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_info" />
+        </receiver>
+        <service
+            android:name="com.battlelancer.seriesguide.appwidget.AppWidget$UpdateService"
+            android:enabled="@bool/isGingerbreadOrLower" >
+        </service>
+
+        <receiver
+            android:name="com.battlelancer.seriesguide.appwidget.AppWidgetBig"
+            android:enabled="@bool/isGingerbreadOrLower"
+            android:label="@string/bigwidget" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_big_info" />
+        </receiver>
+        <service
+            android:name="com.battlelancer.seriesguide.appwidget.AppWidgetBig$UpdateServiceBig"
+            android:enabled="@bool/isGingerbreadOrLower" >
+        </service>
+
+        <receiver
+            android:name="com.battlelancer.seriesguide.appwidget.AppWidgetLarge"
+            android:enabled="@bool/isGingerbreadOrLower"
+            android:label="@string/largewidget" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_large_info" />
+        </receiver>
+
+        <service
+            android:name="com.battlelancer.seriesguide.appwidget.AppWidgetLarge$UpdateServiceLarge"
+            android:enabled="@bool/isGingerbreadOrLower" >
+        </service>
     </application>
 
 </manifest>
