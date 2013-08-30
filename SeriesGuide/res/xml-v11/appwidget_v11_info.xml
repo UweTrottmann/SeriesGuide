@@ -5,6 +5,8 @@
     android:initialLayout="@layout/appwidget_v11"
     android:minHeight="140dp"
     android:minWidth="250dp"
+    android:minResizeHeight="40dp"
+    android:minResizeWidth="180dp"
     android:previewImage="@drawable/listwidget_ori_portrait"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="0"
