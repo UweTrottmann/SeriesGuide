@@ -236,32 +236,6 @@
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/sync_seriesguide" />
         </service>
-
-        <!-- DashClock Extension -->
-        <service
-            android:name="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeExtension"
-            android:icon="@drawable/ic_notification"
-            android:label="@string/dashclock_extension_label"
-            android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA" >
-            <intent-filter>
-                <action android:name="com.google.android.apps.dashclock.Extension" />
-            </intent-filter>
-
-            <meta-data
-                android:name="protocolVersion"
-                android:value="1" />
-            <meta-data
-                android:name="description"
-                android:value="@string/dashclock_extension_description" />
-            <meta-data
-                android:name="settingsActivity"
-                android:value="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity" />
-        </service>
-
-        <activity
-            android:name="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity"
-            android:exported="true" >
-        </activity>
     </application>
 
 </manifest>
