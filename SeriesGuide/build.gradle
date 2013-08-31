@@ -1,7 +1,7 @@
 apply plugin: 'android-library'
 
 dependencies {
-    compile project(':libraries:actionbarsherlock-i18n')
+    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
     compile project(':libraries:android-menudrawer')
     compile project(':libraries:androidutils')
     compile project(':libraries:pagerslidingtabstrip')

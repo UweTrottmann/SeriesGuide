@@ -1,5 +1,3 @@
-include ':libraries:actionbarsherlock-i18n'
-include ':libraries:actionbarsherlock'
 include ':libraries:androidutils'
 include ':libraries:pagerslidingtabstrip'
 include ':libraries:android-menudrawer'
