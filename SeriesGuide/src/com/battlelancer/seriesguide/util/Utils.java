@@ -27,6 +27,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.support.v4.app.TaskStackBuilder;
@@ -35,6 +36,7 @@ import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -929,6 +931,15 @@ public class Utils {
             Toast.makeText(context, R.string.app_not_available, Toast.LENGTH_LONG).show();
         }
         return false;
+    }
+
+    /**
+     * Resolves the given attribute to the resource id for the given theme.
+     */
+    public static int resolveAttributeToResourceId(Resources.Theme theme, int attributeResId) {
+        TypedValue outValue = new TypedValue();
+        theme.resolveAttribute(attributeResId, outValue, true);
+        return outValue.resourceId;
     }
 
 }
