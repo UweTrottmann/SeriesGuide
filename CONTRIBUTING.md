@@ -16,7 +16,7 @@ The repository is made up of two main branches: master (stable) and beta (develo
 Setup
 -----
 
-This project is built with Gradle and the [Android Gradle plugin][3] using the Android library concept for dependency management. Clone this repository inside your working folder. Add all projects inside the root and the libraries folder. (You can also have a look at the build.gradle files on how the projects depend on another.)
+This project is built with Gradle and the [Android Gradle plugin][3] using the Android library concept for dependency management. Clone this repository inside your working folder. Import the build.gradle file in the root folder into Android Studio. (You can also have a look at the build.gradle files on how the projects depend on another.)
 
 To successfully build with ADT, you should also create a keys.xml file in the SeriesGuide/res/values folder and add the string values 
 
