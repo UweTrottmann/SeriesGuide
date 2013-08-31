@@ -595,7 +595,7 @@ public class OverviewFragment extends SherlockFragment implements
             ImageButton collectedButton = (ImageButton) buttons
                     .findViewById(R.id.collectedButton);
             collectedButton.setImageResource(isCollected ? R.drawable.ic_collected
-                    : R.drawable.ic_action_collect);
+                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(), R.attr.drawableCollect));
             collectedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {

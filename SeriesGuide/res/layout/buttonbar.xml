@@ -42,7 +42,7 @@
         android:contentDescription="@string/collect"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
-        android:src="@drawable/ic_action_collect" />
+        android:src="?attr/drawableCollect" />
 
     <include layout="@layout/divider_vertical" />
 
