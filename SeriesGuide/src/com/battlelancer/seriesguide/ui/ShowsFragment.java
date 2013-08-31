@@ -135,13 +135,11 @@ public class ShowsFragment extends SherlockFragment implements
         updateSorting(prefs);
         int showfilter = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
 
-        TypedValue outValueStar = new TypedValue();
-        getSherlockActivity().getTheme().resolveAttribute(R.attr.drawableStar, outValueStar, true);
-        TypedValue outValueStarZero = new TypedValue();
-        getSherlockActivity().getTheme().resolveAttribute(R.attr.drawableStar0, outValueStarZero,
-                true);
-        mAdapter = new SlowAdapter(getActivity(), null, 0, outValueStar.resourceId,
-                outValueStarZero.resourceId, this);
+        int resIdStar = Utils.resolveAttributeToResourceId(getSherlockActivity().getTheme(),
+                R.attr.drawableStar);
+        int resIdStarZero = Utils.resolveAttributeToResourceId(getSherlockActivity().getTheme(),
+                R.attr.drawableStar0);
+        mAdapter = new SlowAdapter(getActivity(), null, 0, resIdStar, resIdStarZero, this);
 
         // setup grid view
         mGrid = (GridView) getView().findViewById(R.id.showlist);

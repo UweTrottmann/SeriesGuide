@@ -182,10 +182,8 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
 
         // Running state
         if (mShow.getStatus() == 1) {
-            TypedValue outValue = new TypedValue();
-            getActivity().getTheme().resolveAttribute(R.attr.textColorSgGreen,
-                    outValue, true);
-            status.setTextColor(getResources().getColor(outValue.resourceId));
+            status.setTextColor(getResources().getColor(Utils.resolveAttributeToResourceId(
+                    getActivity().getTheme(), R.attr.textColorSgGreen)));
             status.setText(getString(R.string.show_isalive));
         } else if (mShow.getStatus() == 0) {
             status.setTextColor(Color.GRAY);
@@ -308,7 +306,7 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
                 && (mTraktTask == null || mTraktTask.getStatus() != AsyncTask.Status.RUNNING)) {
             mTraktTask = new TraktSummaryTask(getActivity(), getView().findViewById(
                     R.id.ratingbar), isUseCachedValues).show(getShowTvdbId());
-            AndroidUtils.executeAsyncTask(mTraktTask, new Void[] {});
+            AndroidUtils.executeAsyncTask(mTraktTask, new Void[]{});
         }
     }
 

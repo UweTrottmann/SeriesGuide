@@ -776,10 +776,8 @@ public class OverviewFragment extends SherlockFragment implements
         final TextView statusText = (TextView) getView().findViewById(R.id.showStatus);
         int status = show.getInt(ShowQuery.SHOW_STATUS);
         if (status == 1) {
-            TypedValue outValue = new TypedValue();
-            getActivity().getTheme().resolveAttribute(R.attr.textColorSgGreen,
-                    outValue, true);
-            statusText.setTextColor(getResources().getColor(outValue.resourceId));
+            statusText.setTextColor(getResources().getColor(Utils.resolveAttributeToResourceId(
+                    getActivity().getTheme(), R.attr.textColorSgGreen)));
             statusText.setText(getString(R.string.show_isalive));
         } else if (status == 0) {
             statusText.setTextColor(Color.GRAY);
@@ -789,13 +787,12 @@ public class OverviewFragment extends SherlockFragment implements
         // favorite
         final ImageView favorited = (ImageView) getView().findViewById(R.id.imageViewFavorite);
         boolean isFavorited = show.getInt(ShowQuery.SHOW_FAVORITE) == 1;
-        TypedValue outValue = new TypedValue();
         if (isFavorited) {
-            getSherlockActivity().getTheme().resolveAttribute(R.attr.drawableStar, outValue, true);
-            favorited.setImageResource(outValue.resourceId);
+            favorited.setImageResource(Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                    R.attr.drawableStar));
         } else {
-            getSherlockActivity().getTheme().resolveAttribute(R.attr.drawableStar0, outValue, true);
-            favorited.setImageResource(outValue.resourceId);
+            favorited.setImageResource(Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                    R.attr.drawableStar0));
         }
         CheatSheet.setup(favorited, isFavorited ? R.string.context_unfavorite
                 : R.string.context_favorite);
