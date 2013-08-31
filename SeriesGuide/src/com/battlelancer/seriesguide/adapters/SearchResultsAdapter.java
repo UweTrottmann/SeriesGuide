@@ -68,8 +68,8 @@ public class SearchResultsAdapter extends CursorAdapter {
         viewHolder.showTitle.setText(mCursor.getString(SearchQuery.SHOW_TITLE));
         viewHolder.watchedStatus.setImageResource(mCursor
                 .getInt(SearchQuery.WATCHED) == 1
-                ? R.drawable.ic_watched
-                : R.drawable.ic_action_watched);
+                ? R.drawable.ic_ticked
+                : Utils.resolveAttributeToResourceId(mContext.getTheme(), R.attr.drawableWatch));
 
         // ensure matched term is bold
         viewHolder.searchSnippet.setText(Html.fromHtml(mCursor.getString(SearchQuery.OVERVIEW)));

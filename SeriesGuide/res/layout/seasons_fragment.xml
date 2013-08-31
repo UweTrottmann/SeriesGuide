@@ -10,7 +10,7 @@
         android:layout_height="48dp"
         android:background="?custom_list_selector"
         android:padding="@dimen/default_padding"
-        android:src="@drawable/ic_action_watched" />
+        android:src="?attr/drawableWatch" />
 
     <include
         android:id="@+id/dividerSeasons1"

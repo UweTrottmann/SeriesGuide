@@ -21,16 +21,20 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
 public class WatchedBox extends ImageView {
 
+    private final int mResIdWatchDrawable;
     private boolean checked;
 
     public WatchedBox(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.checked = false;
-        this.setImageResource(R.drawable.ic_action_watched);
+        mResIdWatchDrawable = Utils.resolveAttributeToResourceId(context.getTheme(),
+                R.attr.drawableWatch);
+        this.setImageResource(mResIdWatchDrawable);
     }
 
     public boolean isChecked() {
@@ -49,9 +53,9 @@ public class WatchedBox extends ImageView {
 
     private void updateStateImage() {
         if (checked) {
-            this.setImageResource(R.drawable.ic_watched);
+            this.setImageResource(R.drawable.ic_ticked);
         } else {
-            this.setImageResource(R.drawable.ic_action_watched);
+            this.setImageResource(mResIdWatchDrawable);
         }
     }
 }

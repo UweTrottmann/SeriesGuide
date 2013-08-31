@@ -11,7 +11,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="@dimen/inline_padding"
         android:layout_marginTop="@dimen/inline_padding"
-        android:src="@drawable/ic_action_watched" />
+        android:src="?attr/drawableWatch" />
 
     <TextView
         android:id="@+id/textViewShowTitle"

@@ -58,6 +58,7 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
 import com.battlelancer.seriesguide.util.FlagTask.SeasonWatchedType;
+import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
@@ -156,8 +157,8 @@ public class SeasonsFragment extends SherlockListFragment implements
     };
 
     private void setWatchedToggleState(Integer result) {
-        mButtonWatchedAll.setImageResource(result == 0 ? R.drawable.ic_watched
-                : R.drawable.ic_action_watched);
+        mButtonWatchedAll.setImageResource(result == 0 ? R.drawable.ic_ticked
+                : Utils.resolveAttributeToResourceId(getActivity().getTheme(), R.attr.drawableWatch));
         mButtonWatchedAll
                 .setOnClickListener(result == 0 ? mListenerFlagAllUnwatched
                         : mListenerFlagAllWatched);

@@ -30,7 +30,7 @@
         android:contentDescription="@string/togglewatched"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
-        android:src="@drawable/ic_action_watched" />
+        android:src="?attr/drawableWatch" />
 
     <include layout="@layout/divider_vertical" />
 

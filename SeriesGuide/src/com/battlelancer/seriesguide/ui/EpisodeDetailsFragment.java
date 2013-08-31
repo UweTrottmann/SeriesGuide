@@ -433,8 +433,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             // Watched button
             mWatched = cursor.getInt(DetailsQuery.WATCHED) == 1 ? true : false;
             ImageButton seenButton = (ImageButton) view.findViewById(R.id.watchedButton);
-            seenButton.setImageResource(mWatched ? R.drawable.ic_watched
-                    : R.drawable.ic_action_watched);
+            seenButton.setImageResource(mWatched ? R.drawable.ic_ticked
+                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(), R.attr.drawableWatch));
             seenButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
