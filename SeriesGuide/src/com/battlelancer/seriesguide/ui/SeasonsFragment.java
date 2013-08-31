@@ -168,7 +168,7 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     private void setCollectedToggleState(Integer result) {
         mButtonCollectedAll.setImageResource(result == 0 ? R.drawable.ic_collected
-                : R.drawable.ic_action_collect);
+                : Utils.resolveAttributeToResourceId(getActivity().getTheme(), R.attr.drawableCollect));
         mButtonCollectedAll
                 .setOnClickListener(result == 0 ? mListenerFlagAllUncollected
                         : mListenerFlagAllCollected);

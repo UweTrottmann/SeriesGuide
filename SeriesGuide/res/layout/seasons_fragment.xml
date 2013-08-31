@@ -26,7 +26,7 @@
         android:layout_toRightOf="@+id/dividerSeasons1"
         android:background="?custom_list_selector"
         android:padding="@dimen/default_padding"
-        android:src="@drawable/ic_action_collect" />
+        android:src="?attr/drawableCollect" />
 
     <include
         android:id="@+id/dividerSeasons2"

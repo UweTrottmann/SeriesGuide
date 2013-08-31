@@ -449,7 +449,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             mCollected = cursor.getInt(DetailsQuery.COLLECTED) == 1 ? true : false;
             ImageButton collectedButton = (ImageButton) view.findViewById(R.id.collectedButton);
             collectedButton.setImageResource(mCollected ? R.drawable.ic_collected
-                    : R.drawable.ic_action_collect);
+                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(), R.attr.drawableCollect));
             collectedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
