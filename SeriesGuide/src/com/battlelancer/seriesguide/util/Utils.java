@@ -30,7 +30,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -905,11 +904,7 @@ public class Utils {
      */
     public static void advertiseSubscription(Context context) {
         Toast.makeText(context, R.string.onlyx, Toast.LENGTH_SHORT).show();
-        TaskStackBuilder
-                .create(context)
-                .addNextIntent(new Intent(context, SeriesGuidePreferences.class))
-                .addNextIntent(new Intent(context, BillingActivity.class))
-                .startActivities();
+        context.startActivity(new Intent(context, BillingActivity.class));
     }
 
     /**
