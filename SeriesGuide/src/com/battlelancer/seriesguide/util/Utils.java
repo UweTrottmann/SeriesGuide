@@ -848,16 +848,6 @@ public class Utils {
     }
 
     /**
-     * Creates the tag of a {@link ViewPager} fragment.
-     * 
-     * @param viewId of the {@link ViewPager}
-     * @param id of the fragment, often the position
-     */
-    public static String makeViewPagerFragmentName(int viewId, long id) {
-        return "android:switcher:" + viewId + ":" + id;
-    }
-
-    /**
      * Launches {@link BillingActivity} and notifies that something is only
      * available with the X subscription.
      */
