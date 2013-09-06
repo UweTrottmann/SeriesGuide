@@ -160,20 +160,20 @@ public class GetGlue {
                     }
                 }
             } catch (ClientProtocolException e) {
-                Utils.trackExceptionAndLog(mContext, TAG, e);
+                Utils.trackExceptionAndLog(TAG, e);
             } catch (IOException e) {
-                Utils.trackExceptionAndLog(mContext, TAG, e);
+                Utils.trackExceptionAndLog(TAG, e);
             } catch (IllegalStateException e) {
-                Utils.trackExceptionAndLog(mContext, TAG, e);
+                Utils.trackExceptionAndLog(TAG, e);
             } catch (XmlPullParserException e) {
-                Utils.trackExceptionAndLog(mContext, TAG, e);
+                Utils.trackExceptionAndLog(TAG, e);
             } finally {
                 if (responseIn != null) {
                     try {
                         responseIn.close();
                     } catch (IOException e) {
                         Log.w(TAG, e);
-                        Utils.trackExceptionAndLog(mContext, TAG, e);
+                        Utils.trackExceptionAndLog(TAG, e);
                     }
                 }
             }
@@ -221,15 +221,15 @@ public class GetGlue {
             consumer.sign(request);
             return request;
         } catch (OAuthMessageSignerException e) {
-            Utils.trackExceptionAndLog(context, TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
         } catch (OAuthExpectationFailedException e) {
-            Utils.trackExceptionAndLog(context, TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
         } catch (OAuthCommunicationException e) {
-            Utils.trackExceptionAndLog(context, TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
         } catch (IOException e) {
-            Utils.trackExceptionAndLog(context, TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
         } catch (IllegalArgumentException e) {
-            Utils.trackExceptionAndLog(context, TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
         }
         return null;
     }

@@ -114,10 +114,10 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
             shows = manager.userService().libraryShowsWatched(username).extended(ExtendedParam.Min)
                     .fire();
         } catch (TraktException e) {
-            Utils.trackExceptionAndLog(mContext, TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
             return FAILED_API;
         } catch (ApiException e) {
-            Utils.trackExceptionAndLog(mContext, TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
             return FAILED_API;
         }
 
@@ -186,12 +186,12 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                                 batch);
                     } catch (RemoteException e) {
                         // Failed binder transactions aren't recoverable
-                        Utils.trackExceptionAndLog(mContext, TAG, e);
+                        Utils.trackExceptionAndLog(TAG, e);
                         throw new RuntimeException("Problem applying batch operation", e);
                     } catch (OperationApplicationException e) {
                         // Failures like constraint violation aren't
                         // recoverable
-                        Utils.trackExceptionAndLog(mContext, TAG, e);
+                        Utils.trackExceptionAndLog(TAG, e);
                         throw new RuntimeException("Problem applying batch operation", e);
                     }
 
@@ -281,10 +281,10 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                     builderUnseen.fire();
                 }
             } catch (TraktException e) {
-                Utils.trackExceptionAndLog(mContext, TAG, e);
+                Utils.trackExceptionAndLog(TAG, e);
                 return FAILED_API;
             } catch (ApiException e) {
-                Utils.trackExceptionAndLog(mContext, TAG, e);
+                Utils.trackExceptionAndLog(TAG, e);
                 return FAILED_API;
             }
         }

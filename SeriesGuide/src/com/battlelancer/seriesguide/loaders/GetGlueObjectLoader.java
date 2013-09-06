@@ -65,19 +65,19 @@ public class GetGlueObjectLoader extends GenericSimpleLoader<List<GetGlueObject>
                 // getGlueXmlParser.parseError(responseIn);
             }
         } catch (ClientProtocolException e) {
-            Utils.trackExceptionAndLog(getContext(), TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
         } catch (IOException e) {
-            Utils.trackExceptionAndLog(getContext(), TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
         } catch (IllegalStateException e) {
-            Utils.trackExceptionAndLog(getContext(), TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
         } catch (XmlPullParserException e) {
-            Utils.trackExceptionAndLog(getContext(), TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
         } finally {
             if (responseIn != null) {
                 try {
                     responseIn.close();
                 } catch (IOException e) {
-                    Utils.trackExceptionAndLog(getContext(), TAG, e);
+                    Utils.trackExceptionAndLog(TAG, e);
                 }
             }
         }

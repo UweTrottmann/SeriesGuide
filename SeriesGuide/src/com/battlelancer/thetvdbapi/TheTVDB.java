@@ -364,9 +364,9 @@ public class TheTVDB {
             try {
                 traktShow = manager.showService().summary(showTvdbId).fire();
             } catch (TraktException e) {
-                Utils.trackExceptionAndLog(context, TAG, e);
+                Utils.trackExceptionAndLog(TAG, e);
             } catch (ApiException e) {
-                Utils.trackExceptionAndLog(context, TAG, e);
+                Utils.trackExceptionAndLog(TAG, e);
             }
         }
 
@@ -793,20 +793,20 @@ public class TheTVDB {
             }
         } catch (IOException e) {
             Log.w(TAG, "I/O error retrieving bitmap from " + url, e);
-            Utils.trackException(context, TAG + " I/O error retrieving bitmap from " + url, e);
+            Utils.trackException(TAG + " I/O error retrieving bitmap from " + url, e);
         } catch (IllegalStateException e) {
             Log.w(TAG, "Incorrect URL: " + url);
-            Utils.trackException(context, TAG + " Incorrect URL " + url, e);
+            Utils.trackException(TAG + " Incorrect URL " + url, e);
         } catch (Exception e) {
             Log.w(TAG, "Error while retrieving bitmap from " + url, e);
-            Utils.trackException(context, TAG + " Error while retrieving bitmap from " + url, e);
+            Utils.trackException(TAG + " Error while retrieving bitmap from " + url, e);
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
                     Log.w(TAG, "I/O error while retrieving bitmap from " + url, e);
-                    Utils.trackException(context, TAG + " I/O error retrieving bitmap from " + url,
+                    Utils.trackException(TAG + " I/O error retrieving bitmap from " + url,
                             e);
                 }
             }

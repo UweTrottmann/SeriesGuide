@@ -231,7 +231,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     if (itry == 1) {
                         // failed twice, report error
                         resultCode = UpdateResult.INCOMPLETE;
-                        Utils.trackExceptionAndLog(getContext(), TAG, e);
+                        Utils.trackExceptionAndLog(TAG, e);
                     }
                 }
             }
@@ -267,9 +267,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                                     config.images.base_url).commit();
                 }
             } catch (TmdbException e) {
-                Utils.trackExceptionAndLog(getContext(), TAG, e);
+                Utils.trackExceptionAndLog(TAG, e);
             } catch (ApiException e) {
-                Utils.trackExceptionAndLog(getContext(), TAG, e);
+                Utils.trackExceptionAndLog(TAG, e);
             }
 
             // validate trakt credentials
@@ -389,10 +389,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     .minimal()
                     .timestamp(startTimeTrakt).fire();
         } catch (TraktException e) {
-            Utils.trackExceptionAndLog(getContext(), TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
             return UpdateResult.INCOMPLETE;
         } catch (ApiException e) {
-            Utils.trackExceptionAndLog(getContext(), TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
             return UpdateResult.INCOMPLETE;
         }
 
@@ -484,12 +484,12 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
         } catch (RemoteException e) {
             // Failed binder transactions aren't recoverable
-            Utils.trackExceptionAndLog(getContext(), TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
             throw new RuntimeException("Problem applying batch operation", e);
         } catch (OperationApplicationException e) {
             // Failures like constraint violation aren't
             // recoverable
-            Utils.trackExceptionAndLog(getContext(), TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
             throw new RuntimeException("Problem applying batch operation", e);
         }
 

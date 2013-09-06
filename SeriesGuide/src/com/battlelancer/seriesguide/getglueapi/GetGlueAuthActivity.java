@@ -160,13 +160,13 @@ public class GetGlueAuthActivity extends BaseNavDrawerActivity {
                 Log.i(TAG, "OAuth - Access Token Retrieved");
                 return AUTH_SUCCESS;
             } catch (OAuthMessageSignerException e) {
-                Utils.trackExceptionAndLog(getApplicationContext(), TAG, e);
+                Utils.trackExceptionAndLog(TAG, e);
             } catch (OAuthNotAuthorizedException e) {
-                Utils.trackExceptionAndLog(getApplicationContext(), TAG, e);
+                Utils.trackExceptionAndLog(TAG, e);
             } catch (OAuthExpectationFailedException e) {
-                Utils.trackExceptionAndLog(getApplicationContext(), TAG, e);
+                Utils.trackExceptionAndLog(TAG, e);
             } catch (OAuthCommunicationException e) {
-                Utils.trackExceptionAndLog(getApplicationContext(), TAG, e);
+                Utils.trackExceptionAndLog(TAG, e);
             }
 
             return AUTH_FAILED;
@@ -218,16 +218,16 @@ public class GetGlueAuthActivity extends BaseNavDrawerActivity {
                 Log.i(TAG, "Popping a browser with the authorize URL");
                 publishProgress(authUrl);
             } catch (OAuthMessageSignerException e) {
-                Utils.trackExceptionAndLog(mContext, TAG, e);
+                Utils.trackExceptionAndLog(TAG, e);
                 return e.getMessage();
             } catch (OAuthNotAuthorizedException e) {
-                Utils.trackExceptionAndLog(mContext, TAG, e);
+                Utils.trackExceptionAndLog(TAG, e);
                 return e.getMessage();
             } catch (OAuthExpectationFailedException e) {
-                Utils.trackExceptionAndLog(mContext, TAG, e);
+                Utils.trackExceptionAndLog(TAG, e);
                 return e.getMessage();
             } catch (OAuthCommunicationException e) {
-                Utils.trackExceptionAndLog(mContext, TAG, e);
+                Utils.trackExceptionAndLog(TAG, e);
                 return e.getMessage();
             }
             return null;

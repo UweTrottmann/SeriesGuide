@@ -344,13 +344,13 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
             return r;
         } catch (TraktException e) {
-            Utils.trackExceptionAndLog(mContext, TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
             r.error = mContext.getString(R.string.trakt_error_general);
             return r;
         } catch (ApiException e) {
-            Utils.trackExceptionAndLog(mContext, TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
             r.error = mContext.getString(R.string.trakt_error_general);

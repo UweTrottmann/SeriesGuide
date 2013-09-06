@@ -151,11 +151,11 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         } catch (JsonIOException e) {
             // Only catch IO exception as we want to know if exporting fails due
             // to a JsonSyntaxException
-            Utils.trackExceptionAndLog(mContext, TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
             return ERROR;
         } catch (IOException e) {
             // Backup failed
-            Utils.trackExceptionAndLog(mContext, TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
             return ERROR;
         } finally {
             shows.close();
@@ -189,10 +189,10 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         } catch (JsonIOException e) {
             // Only catch IO exception as we want to know if exporting fails due
             // to a JsonSyntaxException
-            Utils.trackExceptionAndLog(mContext, TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
             return ERROR;
         } catch (IOException e) {
-            Utils.trackExceptionAndLog(mContext, TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
             return ERROR;
         } finally {
             lists.close();

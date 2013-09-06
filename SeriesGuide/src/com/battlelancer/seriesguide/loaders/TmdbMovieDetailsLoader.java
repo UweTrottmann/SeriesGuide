@@ -57,10 +57,10 @@ public class TmdbMovieDetailsLoader extends GenericSimpleLoader<MovieDetails> {
             details.casts(manager.moviesService().casts(mTmdbId).fire());
             return details;
         } catch (TmdbException e) {
-            Utils.trackException(getContext(), TAG, e);
+            Utils.trackException(TAG, e);
             Log.w(TAG, e);
         } catch (ApiException e) {
-            Utils.trackException(getContext(), TAG, e);
+            Utils.trackException(TAG, e);
             Log.w(TAG, e);
         }
 

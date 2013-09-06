@@ -30,7 +30,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
-import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
@@ -670,9 +669,9 @@ public class Utils {
 
             return result;
         } catch (NoSuchAlgorithmException e) {
-            Utils.trackExceptionAndLog(context, TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
         } catch (UnsupportedEncodingException e) {
-            Utils.trackExceptionAndLog(context, TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
         }
         return null;
     }
@@ -819,7 +818,7 @@ public class Utils {
     /**
      * Tracks an exception using the Google Analytics {@link EasyTracker}.
      */
-    public static void trackException(Context context, String tag, Exception e) {
+    public static void trackException(String tag, Exception e) {
         EasyTracker.getTracker().sendException(tag + ": " + e.getMessage(), false);
     }
 
@@ -827,8 +826,8 @@ public class Utils {
      * Tracks an exception using the Google Analytics {@link EasyTracker} and
      * the local log.
      */
-    public static void trackExceptionAndLog(Context context, String tag, Exception e) {
-        trackException(context, tag, e);
+    public static void trackExceptionAndLog(String tag, Exception e) {
+        trackException(tag, e);
         Log.w(tag, e);
     }
 

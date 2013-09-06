@@ -70,10 +70,10 @@ public class TraktCommentsLoader extends GenericSimpleLoader<List<Comment>> {
             }
 
         } catch (TraktException e) {
-            Utils.trackExceptionAndLog(getContext(), TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
             return null;
         } catch (ApiException e) {
-            Utils.trackExceptionAndLog(getContext(), TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
             return null;
         }
 

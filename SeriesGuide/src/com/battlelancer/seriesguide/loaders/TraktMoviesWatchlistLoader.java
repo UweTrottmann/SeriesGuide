@@ -33,9 +33,9 @@ public class TraktMoviesWatchlistLoader extends GenericSimpleLoader<List<Movie>>
                     .watchlistMovies(ServiceUtils.getTraktUsername(getContext()))
                     .fire();
         } catch (TraktException e) {
-            Utils.trackExceptionAndLog(getContext(), TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
         } catch (ApiException e) {
-            Utils.trackExceptionAndLog(getContext(), TAG, e);
+            Utils.trackExceptionAndLog(TAG, e);
         }
 
         return null;
