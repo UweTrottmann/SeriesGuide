@@ -570,11 +570,11 @@ public class SeasonsFragment extends SherlockListFragment implements
         getActivity().openContextMenu(v);
     }
 
-    private void fireTrackerEvent(String label) {
+    private static void fireTrackerEvent(String label) {
         EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
     }
 
-    private void fireTrackerEventContextMenu(String label) {
+    private static void fireTrackerEventContextMenu(String label) {
         EasyTracker.getTracker().sendEvent(TAG, "Context Item", label, (long) 0);
     }
 }

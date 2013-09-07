@@ -200,7 +200,7 @@ public class TraktSyncActivity extends BaseActivity {
         return null;
     }
 
-    private void fireTrackerEvent(String label) {
+    private static void fireTrackerEvent(String label) {
         EasyTracker.getTracker().sendEvent(TAG, "Click", label, (long) 0);
     }
 }

@@ -388,7 +388,7 @@ public class ListsFragment extends SherlockFragment implements
 
     }
 
-    private void fireTrackerEvent(String label) {
+    private static void fireTrackerEvent(String label) {
         EasyTracker.getTracker().sendEvent(TAG, "Context Item", label, (long) 0);
     }
 }

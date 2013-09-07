@@ -646,7 +646,7 @@ public class ShowsFragment extends SherlockFragment implements
         setEmptyView(itemPosition);
     }
 
-    private void fireTrackerEvent(String label) {
+    private static void fireTrackerEvent(String label) {
         EasyTracker.getTracker().sendEvent(TAG, "Context Item", label, (long) 0);
     }
 
