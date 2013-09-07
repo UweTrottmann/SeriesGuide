@@ -225,10 +225,6 @@ public class ImageDownloader {
         } catch (Exception e) {
             Log.w(LOG_TAG, "Error while retrieving bitmap from " + urlString, e);
         } finally {
-            if (connection != null) {
-                connection.disconnect();
-                connection = null;
-            }
             if (inputStream != null) {
                 try {
                     inputStream.close();

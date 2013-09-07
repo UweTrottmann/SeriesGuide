@@ -101,17 +101,17 @@ public class TheTVDB {
                 new String[] {
                         Shows._ID, Shows.LASTUPDATED
                 }, null, null, null);
-        boolean update = false;
+        boolean isUpdate = false;
         if (show != null) {
             if (show.moveToFirst()) {
                 long lastUpdateTime = show.getLong(1);
                 if (currentTime - lastUpdateTime > DateUtils.HOUR_IN_MILLIS * 12) {
-                    update = true;
+                    isUpdate = true;
                 }
             }
             show.close();
         }
-        return update;
+        return isUpdate;
     }
 
     /**
