@@ -527,7 +527,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Queries for an episode id and adds a content provider op to set it as
      * last watched for the given show.
      */
-    private void addLastWatchedUpdateOp(ContentResolver resolver,
+    private static void addLastWatchedUpdateOp(ContentResolver resolver,
             ArrayList<ContentProviderOperation> batch, int season, int number, String showTvdbId) {
         // query for the episode id
         final Cursor episode = resolver.query(

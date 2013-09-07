@@ -285,7 +285,7 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
         onLoadTraktRatings(true);
     }
 
-    private void fireTrackerEvent(String label) {
+    private static void fireTrackerEvent(String label) {
         EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
     }
 

@@ -174,7 +174,7 @@ public class MoviesWatchListFragment extends SherlockFragment implements
         }
     }
 
-    private void fireTrackerEvent(String label) {
+    private static void fireTrackerEvent(String label) {
         EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
     }
 }
