@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.concurrent.ConcurrentHashMap;
@@ -182,7 +183,9 @@ public class ImageDownloader {
 
     private Bitmap downloadBitmap(String urlString, boolean isDiskCaching, File imageFile) {
         try {
-            InputStream inputStream = AndroidUtils.downloadUrl(urlString);
+            HttpURLConnection connection = AndroidUtils.buildHttpUrlConnection(urlString);
+            connection.connect();
+            InputStream inputStream = connection.getInputStream();
 
             try {
                 // return BitmapFactory.decodeStream(inputStream);
@@ -221,6 +224,7 @@ public class ImageDownloader {
 
                 return bitmap;
             } finally {
+                connection.disconnect();
                 inputStream.close();
             }
         } catch (IOException e) {
