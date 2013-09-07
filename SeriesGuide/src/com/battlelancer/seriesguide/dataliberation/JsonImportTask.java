@@ -255,7 +255,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
      * {@link ContentValues} packages put into arrays. The first array returned
      * includes all seasons, the second array all episodes.
      */
-    private ContentValues[][] buildSeasonAndEpisodeBatches(Show show) {
+    private static ContentValues[][] buildSeasonAndEpisodeBatches(Show show) {
         // Initialize arrays
         ContentValues[] seasonBatch = new ContentValues[show.seasons.size()];
         int episodesSize = 0;

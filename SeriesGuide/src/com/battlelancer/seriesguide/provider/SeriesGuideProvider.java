@@ -420,7 +420,7 @@ public class SeriesGuideProvider extends ContentProvider {
      * {@link Uri}. This is usually enough to support {@link #insert},
      * {@link #update}, and {@link #delete} operations.
      */
-    private SelectionBuilder buildSimpleSelection(Uri uri) {
+    private static SelectionBuilder buildSimpleSelection(Uri uri) {
         final SelectionBuilder builder = new SelectionBuilder();
         final int match = sUriMatcher.match(uri);
         switch (match) {
@@ -488,7 +488,7 @@ public class SeriesGuideProvider extends ContentProvider {
      * {@link Uri}. This is usually only used by {@link #query}, since it
      * performs table joins useful for {@link Cursor} data.
      */
-    private SelectionBuilder buildExpandedSelection(Uri uri, int match) {
+    private static SelectionBuilder buildExpandedSelection(Uri uri, int match) {
         final SelectionBuilder builder = new SelectionBuilder();
         switch (match) {
             case SHOWS: {

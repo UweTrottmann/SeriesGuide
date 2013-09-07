@@ -512,7 +512,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     /**
      * Add {@link Episodes} column to store absolute episode number.
      */
-    private void upgradeToThirty(SQLiteDatabase db) {
+    private static void upgradeToThirty(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN "
                 + EpisodesColumns.ABSOLUTE_NUMBER + " INTEGER;");
     }
@@ -520,7 +520,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     /**
      * Add {@link Shows} column to store a GetGlue object id.
      */
-    private void upgradeToTwentyNine(SQLiteDatabase db) {
+    private static void upgradeToTwentyNine(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.GETGLUEID
                 + " TEXT DEFAULT '';");
     }
@@ -528,7 +528,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     /**
      * Add tables to store lists and list items.
      */
-    private void upgradeToTwentyEight(SQLiteDatabase db) {
+    private static void upgradeToTwentyEight(SQLiteDatabase db) {
         db.execSQL(CREATE_LISTS_TABLE);
 
         db.execSQL(CREATE_LIST_ITEMS_TABLE);
@@ -541,7 +541,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * 
      * @param db
      */
-    private void upgradeToTwentySeven(SQLiteDatabase db) {
+    private static void upgradeToTwentySeven(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.LASTEDIT
                 + " INTEGER DEFAULT 0;");
         db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN " + EpisodesColumns.IMDBID
@@ -556,7 +556,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * 
      * @param db
      */
-    private void upgradeToTwentySix(SQLiteDatabase db) {
+    private static void upgradeToTwentySix(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN " + EpisodesColumns.COLLECTED
                 + " INTEGER DEFAULT 0;");
     }
@@ -567,7 +567,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * 
      * @param db
      */
-    private void upgradeToTwentyFive(SQLiteDatabase db) {
+    private static void upgradeToTwentyFive(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.NEXTAIRDATEMS
                 + " INTEGER DEFAULT 0;");
     }
@@ -578,7 +578,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * 
      * @param db
      */
-    private void upgradeToTwentyFour(SQLiteDatabase db) {
+    private static void upgradeToTwentyFour(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN " + EpisodesColumns.FIRSTAIREDMS
                 + " INTEGER DEFAULT -1;");
 
@@ -627,7 +627,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * 
      * @param db
      */
-    private void upgradeToTwentyThree(SQLiteDatabase db) {
+    private static void upgradeToTwentyThree(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.HIDDEN
                 + " INTEGER DEFAULT 0;");
     }
@@ -640,17 +640,17 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * 
      * @param db
      */
-    private void upgradeToTwentyTwo(SQLiteDatabase db) {
+    private static void upgradeToTwentyTwo(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.LASTUPDATED
                 + " INTEGER DEFAULT 0;");
     }
 
-    private void upgradeToTwentyOne(SQLiteDatabase db) {
+    private static void upgradeToTwentyOne(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.AIRTIME
                 + " TEXT DEFAULT '';");
     }
 
-    private void upgradeToTwenty(SQLiteDatabase db) {
+    private static void upgradeToTwenty(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.SYNCENABLED
                 + " INTEGER DEFAULT 1;");
     }
@@ -660,7 +660,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * 
      * @param db
      */
-    private void upgradeToNineteen(SQLiteDatabase db) {
+    private static void upgradeToNineteen(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SEASONS + " ADD COLUMN " + SeasonsColumns.TOTALCOUNT
                 + " INTEGER DEFAULT 0;");
     }
@@ -670,7 +670,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * 
      * @param db
      */
-    private void upgradeToEighteen(SQLiteDatabase db) {
+    private static void upgradeToEighteen(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.NEXTAIRDATETEXT
                 + " TEXT DEFAULT '';");
 
@@ -711,7 +711,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * 
      * @param db
      */
-    private void upgradeToSeventeen(SQLiteDatabase db) {
+    private static void upgradeToSeventeen(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.FAVORITE
                 + " INTEGER DEFAULT 0;");
     }
