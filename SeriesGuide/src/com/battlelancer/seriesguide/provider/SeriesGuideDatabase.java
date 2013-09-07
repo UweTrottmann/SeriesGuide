@@ -465,7 +465,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * Add {@link Shows} column to store the last watched episode id for better
      * prediction of next episode.
      */
-    private void upgradeToThirtyOne(SQLiteDatabase db) {
+    private static void upgradeToThirtyOne(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.LASTWATCHEDID
                 + " INTEGER DEFAULT 0;");
 
