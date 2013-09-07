@@ -34,12 +34,15 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ShortcutUtils;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -54,6 +57,8 @@ import java.util.List;
  * Hosts an {@link OverviewFragment}.
  */
 public class OverviewActivity extends BaseNavDrawerActivity {
+
+    private static final String TAG = "Overview";
 
     private int mShowId;
     private NfcAdapter mNfcAdapter;
@@ -242,6 +247,20 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content
+        // view
+        menu.findItem(R.id.menu_overview_search).setVisible(!isMenuDrawerOpen());
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportMenuInflater().inflate(R.menu.overview_activity_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == android.R.id.home) {
@@ -252,6 +271,21 @@ public class OverviewActivity extends BaseNavDrawerActivity {
             return true;
         } else if (itemId == R.id.menu_overview_search) {
             onSearchRequested();
+            return true;
+        } else if (itemId == R.id.menu_overview_add_to_homescreen) {
+            if (!Utils.hasAccessToX(this)) {
+                Utils.advertiseSubscription(this);
+                return true;
+            }
+
+            // Create the shortcut
+            final Series show = DBUtils.getShow(this, mShowId);
+            String title = show.getTitle();
+            String poster = show.getPoster();
+            ShortcutUtils.createShortcut(this, title, poster, mShowId);
+
+            // Analytics
+            fireTrackerEvent("Add to Homescreen");
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -285,6 +319,10 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         args.putString(SearchFragment.InitBundle.SHOW_TITLE, showTitle);
         startSearch(null, false, args, false);
         return true;
+    }
+
+    private static void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
     }
 
 }
