@@ -182,57 +182,62 @@ public class ImageDownloader {
     }
 
     private Bitmap downloadBitmap(String urlString, boolean isDiskCaching, File imageFile) {
+        HttpURLConnection connection = null;
+        InputStream inputStream = null;
+        Bitmap bitmap = null;
         try {
-            HttpURLConnection connection = AndroidUtils.buildHttpUrlConnection(urlString);
-            connection.connect();
-            InputStream inputStream = connection.getInputStream();
+            connection = AndroidUtils.buildHttpUrlConnection(urlString);
+            inputStream = connection.getInputStream();
+            // return BitmapFactory.decodeStream(inputStream);
+            // Bug on slow connections, fixed in future release.
+            // Bitmap bitmap = BitmapFactory.decodeStream(new
+            // FlushedInputStream(inputStream));
 
-            try {
-                // return BitmapFactory.decodeStream(inputStream);
-                // Bug on slow connections, fixed in future release.
-                // Bitmap bitmap = BitmapFactory.decodeStream(new
-                // FlushedInputStream(inputStream));
-
-                // write directly to disk
-                Bitmap bitmap;
-                if (isDiskCaching && AndroidUtils.isExtStorageAvailable()) {
-                    FileOutputStream outputstream = new FileOutputStream(imageFile);
-                    try {
-                        AndroidUtils.copy(new FlushedInputStream(inputStream), outputstream);
-                    } finally {
-                        outputstream.close();
-                    }
-                    bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-                } else {
-                    // if we have no external storage, decode directly
-                    bitmap = BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
+            // write directly to disk
+            if (isDiskCaching && AndroidUtils.isExtStorageAvailable()) {
+                FileOutputStream outputstream = new FileOutputStream(imageFile);
+                try {
+                    AndroidUtils.copy(new FlushedInputStream(inputStream), outputstream);
+                } finally {
+                    outputstream.close();
                 }
-
-                /*
-                 * TODO look if we can return the bitmap first, then save in the
-                 * background
-                 */
-                // if (Utils.isExtStorageAvailable()) {
-                // // write the bitmap to the disk cache
-                // FileOutputStream os = new FileOutputStream(imagefile);
-                //
-                // @SuppressWarnings("unused")
-                // boolean isreconstructable =
-                // bitmap.compress(CompressFormat.JPEG, 90, os);
-                // os.close();
-                // }
-
-                return bitmap;
-            } finally {
-                connection.disconnect();
-                inputStream.close();
+                bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+            } else {
+                // if we have no external storage, decode directly
+                bitmap = BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
             }
+
+            /*
+             * TODO look if we can return the bitmap first, then save in the
+             * background
+             */
+            // if (Utils.isExtStorageAvailable()) {
+            // // write the bitmap to the disk cache
+            // FileOutputStream os = new FileOutputStream(imagefile);
+            //
+            // @SuppressWarnings("unused")
+            // boolean isreconstructable =
+            // bitmap.compress(CompressFormat.JPEG, 90, os);
+            // os.close();
+            // }
         } catch (IOException e) {
             Log.w(LOG_TAG, "I/O error while retrieving bitmap from " + urlString, e);
         } catch (Exception e) {
             Log.w(LOG_TAG, "Error while retrieving bitmap from " + urlString, e);
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+                connection = null;
+            }
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException ignored) {
+                    // Nothing to do
+                }
+            }
         }
-        return null;
+        return bitmap;
     }
 
     /*
