@@ -32,7 +32,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -63,7 +62,6 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
-import com.battlelancer.seriesguide.util.ShortcutUtils;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
@@ -191,7 +189,7 @@ public class OverviewFragment extends SherlockFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.overview_menu, menu);
+        inflater.inflate(R.menu.overview_fragment_menu, menu);
     }
 
     @Override
@@ -229,22 +227,6 @@ public class OverviewFragment extends SherlockFragment implements
             if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
                 ListsDialogFragment.showListsDialog(mEpisodeCursor.getString(EpisodeQuery._ID),
                         ListItemTypes.EPISODE, getFragmentManager());
-            }
-            return true;
-        } else if (itemId == R.id.menu_overview_add_to_homescreen) {
-            if (!Utils.hasAccessToX(getActivity())) {
-                Utils.advertiseSubscription(getActivity());
-                return true;
-            }
-
-            if (mShowCursor != null && mShowCursor.moveToFirst()) {
-                // Create the shortcut
-                String title = mShowCursor.getString(ShowQuery.SHOW_TITLE);
-                String poster = mShowCursor.getString(ShowQuery.SHOW_POSTER);
-                ShortcutUtils.createShortcut(getActivity(), title, poster, getShowId());
-
-                // Analytics
-                fireTrackerEvent("Add to Homescreen");
             }
             return true;
         }
