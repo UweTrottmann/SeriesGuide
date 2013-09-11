@@ -23,12 +23,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
@@ -42,7 +43,7 @@ import com.uwetrottmann.seriesguide.R;
  * This {@link Activity} is used to display a full screen image of a TV show's
  * poster, or the image provided for a specific episode.
  */
-public class FullscreenImageActivity extends FragmentActivity implements Runnable {
+public class FullscreenImageActivity extends SherlockFragmentActivity implements Runnable {
 
     /** Log tag */
     private static final String TAG = "FullscreenImageActivity";
@@ -77,6 +78,10 @@ public class FullscreenImageActivity extends FragmentActivity implements Runnabl
         setContentView(R.layout.fullscreen_image_activity);
         mContentView = (ImageView) findViewById(R.id.fullscreen_content);
 
+        // Set up the ActionBar
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         // Load the requested image
         mArgs = getIntent().getExtras();
         String imagePath = mArgs.getString(PATH);
@@ -90,8 +95,13 @@ public class FullscreenImageActivity extends FragmentActivity implements Runnabl
             @Override
             public void onVisibilityChange(boolean visible) {
                 if (visible) {
+                    // Show the ActionBar
+                    actionBar.show();
                     // Schedule a hide().
                     delayedHide(AUTO_HIDE_DELAY_MILLIS);
+                } else {
+                    // Hide the ActionBar
+                    actionBar.hide();
                 }
             }
         });
@@ -103,17 +113,23 @@ public class FullscreenImageActivity extends FragmentActivity implements Runnabl
                 mSystemUiHider.toggle();
             }
         });
+
+        // hide() right away
+        delayedHide(0);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.fullscreen_image_menu, menu);
+        getSupportMenuInflater().inflate(R.menu.fullscreen_image_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_share) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+        } else if (id == R.id.menu_share) {
             ShareUtils.onShareEpisode(this, mArgs, ShareMethod.OTHER_SERVICES);
             EasyTracker.getTracker().sendEvent(TAG, "Action Item", "Share", null);
             return true;
