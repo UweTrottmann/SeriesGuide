@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
@@ -28,6 +29,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.app.ShareCompat.IntentBuilder;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +41,7 @@ import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
+import java.io.File;
 import java.util.Calendar;
 
 /**
@@ -49,11 +52,11 @@ import java.util.Calendar;
  */
 public class ShareUtils {
 
+    protected static final String TAG = "ShareUtils";
+
     public static final String KEY_GETGLUE_COMMENT = "com.battlelancer.seriesguide.getglue.comment";
 
     public static final String KEY_GETGLUE_IMDBID = "com.battlelancer.seriesguide.getglue.imdbid";
-
-    protected static final String TAG = "ShareUtils";
 
     public enum ShareMethod {
         RATE_TRAKT(0, R.string.menu_rate_episode, R.drawable.trakt_love_large),
@@ -93,6 +96,10 @@ public class ShareUtils {
         String TRAKTACTION = "traktaction";
 
         String ISSPOILER = "isspoiler";
+
+        String IMAGE = "image";
+
+        String CHOOSER_TITLE = "choosertitle";
     }
 
     /**
@@ -119,19 +126,32 @@ public class ShareUtils {
             case OTHER_SERVICES: {
                 // Android apps
                 IntentBuilder ib = ShareCompat.IntentBuilder.from(activity);
+                ib.setChooserTitle(args.getString(ShareItems.CHOOSER_TITLE));
 
-                String text = args.getString(ShareUtils.ShareItems.SHARESTRING);
-                final String imdbId = args.getString(ShareUtils.ShareItems.IMDBID);
+                // Build the message
+                String text = args.getString(ShareItems.SHARESTRING);
+                final String imdbId = args.getString(ShareItems.IMDBID);
                 if (imdbId.length() != 0) {
                     text += " " + ServiceUtils.IMDB_TITLE_URL + imdbId;
                 }
-
                 ib.setText(text);
-                ib.setChooserTitle(R.string.share_episode);
-                ib.setType("text/plain");
+
+                // Determine if an image is trying to be added
+                String image = args.getString(ShareItems.IMAGE);
+                if (TextUtils.isEmpty(image)) {
+                    // If the image isn't there, then we're sending plain text
+                    ib.setType("text/plain");
+                } else {
+                    // Otherwise try to attach the image
+                    File imageFile = ImageProvider.getInstance(activity).getImageFile(image);
+                    ib.setType("image/*");
+                    ib.setStream(Uri.fromFile(imageFile));
+                }
                 ib.startChooser();
                 break;
             }
+            default:
+                break;
         }
     }
 

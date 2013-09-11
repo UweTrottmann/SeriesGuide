@@ -6,8 +6,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.app.ShareCompat;
-import android.support.v4.app.ShareCompat.IntentBuilder;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -31,6 +29,9 @@ import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
@@ -272,8 +273,10 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
         poster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle shareArgs = shareBundle();
+                shareArgs.putString(FullscreenImageActivity.PATH, imagePath);
                 Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
-                fullscreen.putExtra(FullscreenImageActivity.PATH, imagePath);
+                fullscreen.putExtras(shareArgs);
                 startActivity(fullscreen);
             }
         });
@@ -312,15 +315,21 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
 
     private void onShareShow() {
         if (mShow != null) {
-            // Share intent
-            IntentBuilder ib = ShareCompat.IntentBuilder
-                    .from(getActivity())
-                    .setChooserTitle(R.string.share_show)
-                    .setText(
-                            getString(R.string.share_checkout) + " \"" + mShow.getTitle()
-                                    + "\" " + ServiceUtils.IMDB_TITLE_URL + mShow.getImdbId())
-                    .setType("text/plain");
-            ib.startChooser();
+            ShareUtils.onShareEpisode(getActivity(), shareBundle(), ShareMethod.OTHER_SERVICES);
         }
     }
+
+    /**
+     * @return The {@link Bundle} used by {@link ShareUtils} to share the
+     *         current show
+     */
+    private Bundle shareBundle() {
+        String sharestring = getString(R.string.share_checkout) + " \"" + mShow.getTitle();
+        Bundle shareData = new Bundle();
+        shareData.putString(ShareItems.CHOOSER_TITLE, getString(R.string.share_show));
+        shareData.putString(ShareItems.SHARESTRING, sharestring);
+        shareData.putString(ShareItems.IMDBID, mShow.getImdbId());
+        return shareData;
+    }
+
 }

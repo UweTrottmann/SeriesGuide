@@ -229,24 +229,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         final Cursor episode = (Cursor) mAdapter.getItem(0);
         final SherlockFragmentActivity activity = getSherlockActivity();
         if (episode != null && activity != null) {
-            Bundle shareData = new Bundle();
-            String episodestring = ShareUtils.onCreateShareString(activity, episode);
-            String sharestring = getString(R.string.share_checkout);
-            sharestring += " \"" + episode.getString(DetailsQuery.SHOW_TITLE);
-            sharestring += " - " + episodestring + "\"";
-            shareData.putString(ShareItems.EPISODESTRING, episodestring);
-            shareData.putString(ShareItems.SHARESTRING, sharestring);
-            shareData.putInt(ShareItems.EPISODE, episode.getInt(DetailsQuery.NUMBER));
-            shareData.putInt(ShareItems.SEASON, episode.getInt(DetailsQuery.SEASON));
-            shareData.putInt(ShareItems.TVDBID, episode.getInt(DetailsQuery.REF_SHOW_ID));
-
-            // IMDb id
-            String imdbId = episode.getString(DetailsQuery.IMDBID);
-            if (TextUtils.isEmpty(imdbId)) {
-                // fall back to show IMDb id
-                imdbId = episode.getString(DetailsQuery.SHOW_IMDBID);
-            }
-            shareData.putString(ShareItems.IMDBID, imdbId);
+            Bundle shareData = shareBundle(episode, activity);
 
             // don't close cursor!
             // episode.close();
@@ -270,6 +253,33 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     null
             });
         }
+    }
+
+    /**
+     * The {@link Bundle} used by {@link ShareUtils} to share the current
+     * episode
+     */
+    private Bundle shareBundle(Cursor episode, SherlockFragmentActivity activity) {
+        Bundle shareData = new Bundle();
+        String episodestring = ShareUtils.onCreateShareString(activity, episode);
+        String sharestring = getString(R.string.share_checkout);
+        sharestring += " \"" + episode.getString(DetailsQuery.SHOW_TITLE);
+        sharestring += " - " + episodestring + "\"";
+        shareData.putString(ShareItems.CHOOSER_TITLE, getString(R.string.share_episode));
+        shareData.putString(ShareItems.EPISODESTRING, episodestring);
+        shareData.putString(ShareItems.SHARESTRING, sharestring);
+        shareData.putInt(ShareItems.EPISODE, episode.getInt(DetailsQuery.NUMBER));
+        shareData.putInt(ShareItems.SEASON, episode.getInt(DetailsQuery.SEASON));
+        shareData.putInt(ShareItems.TVDBID, episode.getInt(DetailsQuery.REF_SHOW_ID));
+
+        // IMDb id
+        String imdbId = episode.getString(DetailsQuery.IMDBID);
+        if (TextUtils.isEmpty(imdbId)) {
+            // fall back to show IMDb id
+            imdbId = episode.getString(DetailsQuery.SHOW_IMDBID);
+        }
+        shareData.putString(ShareItems.IMDBID, imdbId);
+        return shareData;
     }
 
     private boolean isShowingShowLink() {
@@ -311,7 +321,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         }
 
         @Override
-        public void bindView(View view, Context context, Cursor cursor) {
+        public void bindView(View view, Context context, final Cursor cursor) {
             mShowTvdbId = cursor.getInt(DetailsQuery.REF_SHOW_ID);
             mSeasonNumber = cursor.getInt(DetailsQuery.SEASON);
             mEpisodeNumber = cursor.getInt(DetailsQuery.NUMBER);
@@ -424,8 +434,10 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             imageContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Bundle shareBundle = shareBundle(cursor, getSherlockActivity());
+                    shareBundle.putString(FullscreenImageActivity.PATH, imagePath);
                     Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
-                    fullscreen.putExtra(FullscreenImageActivity.PATH, imagePath);
+                    fullscreen.putExtras(shareBundle);
                     startActivity(fullscreen);
                 }
             });
