@@ -95,7 +95,7 @@ public class AddFragment extends SherlockFragment {
             // display more details in a dialog
             int position = mGrid.getPositionForView(v);
             SearchResult show = mAdapter.getItem(position);
-            AddDialogFragment.showAddDialog(show, getFragmentManager());
+            AddDialogFragment.showAddDialog(show, getFragmentManager(), mAdapter);
         }
     };
 
