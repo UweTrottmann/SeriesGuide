@@ -6,12 +6,15 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NavUtils;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.dataliberation.OnTaskFinishedListener;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
@@ -65,7 +68,19 @@ public class MigrationActivity extends BaseActivity implements JsonExportTask.On
 
         setContentView(R.layout.activity_migration);
 
+        setupActionBar();
         setupViews();
+
+        // do not show the migration activity by force again
+        PreferenceManager.getDefaultSharedPreferences(this).edit()
+                .putBoolean(KEY_MIGRATION_OPT_OUT, true)
+                .commit();
+    }
+
+    private void setupActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     private void setupViews() {
@@ -106,6 +121,16 @@ public class MigrationActivity extends BaseActivity implements JsonExportTask.On
         mTask = null;
 
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void validateLaunchStep() {
