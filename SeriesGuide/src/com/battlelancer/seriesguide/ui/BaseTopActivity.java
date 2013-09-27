@@ -12,6 +12,7 @@ import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.IabHelper;
 import com.battlelancer.seriesguide.billing.IabResult;
 import com.battlelancer.seriesguide.billing.Inventory;
+import com.battlelancer.seriesguide.migration.MigrationActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -103,6 +104,10 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
             startActivity(new Intent(this, BillingActivity.class));
 
             fireTrackerEvent("Subscribe");
+            return true;
+        }
+        else if (itemId == R.id.menu_migrate) {
+            startActivity(new Intent(this, MigrationActivity.class));
             return true;
         }
         else if (itemId == R.id.menu_preferences) {

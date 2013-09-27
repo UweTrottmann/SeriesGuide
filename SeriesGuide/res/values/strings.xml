@@ -504,6 +504,7 @@
     <string name="migration_action_install">Install SeriesGuide</string>
     <string name="migration_restore">Touch below and restore with the Backup/Restore tool in advanced Settings.</string>
     <string name="migration_action_launch">Open SeriesGuide, then Restore</string>
+    <string name="action_migrate">Migrate</string>
 
     <!-- In-App Billing -->
     <string name="upgrade_title">Get X features</string>
