@@ -502,8 +502,10 @@
     <string name="migration_action_backup">Backup Shows</string>
     <string name="migration_install">Touch below to install the free version of SeriesGuide.</string>
     <string name="migration_action_install">Install SeriesGuide</string>
-    <string name="migration_restore">Touch below and restore with the Backup/Restore tool in advanced Settings.</string>
-    <string name="migration_action_launch">Open SeriesGuide, then Restore</string>
+    <string name="migration_launch">Touch below and once in SeriesGuide touch Menu, then Migrate.</string>
+    <string name="migration_action_launch">Open SeriesGuide, then Migrate</string>
+    <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
+    <string name="migration_action_import">Import Backup</string>
     <string name="action_migrate">Migrate</string>
 
     <!-- In-App Billing -->

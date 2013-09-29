@@ -131,7 +131,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
         setUpActionBar(prefs);
 
         // show migration helper
-        if (!MigrationActivity.hasOptedOutOfMigration(this)) {
+        if (MigrationActivity.isQualifiedForMigration(this)) {
             startActivity(new Intent(this, MigrationActivity.class));
         }
     }

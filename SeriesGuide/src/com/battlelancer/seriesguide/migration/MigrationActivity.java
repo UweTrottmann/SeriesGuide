@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
+import com.battlelancer.seriesguide.dataliberation.JsonImportTask;
 import com.battlelancer.seriesguide.dataliberation.OnTaskFinishedListener;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.BaseActivity;
@@ -27,18 +28,21 @@ import com.uwetrottmann.seriesguide.R;
 import java.io.File;
 
 /**
- * Helps users migrate their show database to the free version of SeriesGuide.
+ * Helps users migrate their show database to the free version of SeriesGuide. When using
+ * SeriesGuide X a backup assistant and install+launch the free version assistant is shown.
+ * When using any other version an import assistant is shown.
  */
 public class MigrationActivity extends BaseActivity implements JsonExportTask.OnTaskProgressListener, OnTaskFinishedListener {
 
     private static final String KEY_MIGRATION_OPT_OUT = "com.battlelancer.seriesguide.migration.optout";
     private static final String MARKETLINK_HTTP = "http://play.google.com/store/apps/details?id=com.battlelancer.seriesguide";
     private static final String PACKAGE_SERIESGUIDE = "com.battlelancer.seriesguide";
-    private JsonExportTask mTask;
+    private boolean mIsX;
     private ProgressBar mProgressBar;
     private Button mButtonBackup;
     private Button mButtonLaunch;
     private TextView mTextViewLaunchInstructions;
+    private AsyncTask<Void, Integer, Integer> mTask;
     private Intent mLaunchIntentForPackage;
     private View.OnClickListener mSeriesGuideLaunchListener = new View.OnClickListener() {
         @Override
@@ -57,8 +61,11 @@ public class MigrationActivity extends BaseActivity implements JsonExportTask.On
         }
     };
 
-    public static boolean hasOptedOutOfMigration(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(KEY_MIGRATION_OPT_OUT,
+    public static boolean isQualifiedForMigration(Context context) {
+        if (Utils.getChannel(context) != Utils.SGChannel.X) {
+            return false;
+        }
+        return !PreferenceManager.getDefaultSharedPreferences(context).getBoolean(KEY_MIGRATION_OPT_OUT,
                 false);
     }
 
@@ -67,6 +74,8 @@ public class MigrationActivity extends BaseActivity implements JsonExportTask.On
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_migration);
+
+        mIsX = Utils.getChannel(this) == Utils.SGChannel.X;
 
         setupActionBar();
         setupViews();
@@ -86,14 +95,29 @@ public class MigrationActivity extends BaseActivity implements JsonExportTask.On
     private void setupViews() {
         mProgressBar = (ProgressBar) findViewById(R.id.progressBarMigration);
 
+        /**
+         * Change from backup to import tool whether we use X or any other version (internal beta,
+         * free).
+         */
+        ((TextView) findViewById(R.id.textViewMigrationBackupInstructions))
+                .setText(mIsX ? R.string.migration_backup : R.string.migration_import);
+
         mButtonBackup = (Button) findViewById(R.id.buttonMigrationExport);
+        mButtonBackup.setText(mIsX ? R.string.migration_action_backup
+                : R.string.migration_action_import);
         mButtonBackup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // backup shows
-                mTask = new JsonExportTask(MigrationActivity.this, MigrationActivity.this,
-                        MigrationActivity.this,
-                        true, false);
+                if (mIsX) {
+                    // backup shows
+                    mTask = new JsonExportTask(MigrationActivity.this, MigrationActivity.this,
+                            MigrationActivity.this,
+                            true, false);
+                } else {
+                    // import shows
+                    mTask = new JsonImportTask(MigrationActivity.this, MigrationActivity.this,
+                            false);
+                }
                 mTask.execute();
 
                 mProgressBar.setVisibility(View.VISIBLE);
@@ -134,12 +158,18 @@ public class MigrationActivity extends BaseActivity implements JsonExportTask.On
     }
 
     private void validateLaunchStep() {
+        if (!mIsX) {
+            // don't show launcher if importing
+            setLauncherVisibility(false);
+            return;
+        }
+
         // check if SeriesGuide is already installed
         mLaunchIntentForPackage = getPackageManager().getLaunchIntentForPackage(PACKAGE_SERIESGUIDE);
         boolean isSeriesGuideInstalled = mLaunchIntentForPackage != null;
 
         // prepare next step
-        mTextViewLaunchInstructions.setText(isSeriesGuideInstalled ? R.string.migration_restore : R.string.migration_install);
+        mTextViewLaunchInstructions.setText(isSeriesGuideInstalled ? R.string.migration_launch : R.string.migration_install);
         mButtonLaunch.setText(isSeriesGuideInstalled ? R.string.migration_action_launch : R.string.migration_action_install);
         mButtonLaunch.setOnClickListener(isSeriesGuideInstalled ? mSeriesGuideLaunchListener : mSeriesGuideInstallListener);
 
