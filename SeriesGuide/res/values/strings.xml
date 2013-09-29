@@ -506,7 +506,7 @@
     <string name="migration_action_launch">Open SeriesGuide, then Migrate</string>
     <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
     <string name="migration_action_import">Import and replace existing shows</string>
-    <string name="action_migrate">Migrate</string>
+    <string name="action_migrate">Migrate from X</string>
 
     <!-- In-App Billing -->
     <string name="upgrade_title">Get X features</string>
