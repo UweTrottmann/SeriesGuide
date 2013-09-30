@@ -678,6 +678,10 @@ public class OverviewFragment extends SherlockFragment implements
         View amazonButton = getView().findViewById(R.id.buttonAmazon);
         ServiceUtils.setUpAmazonButton(mShowTitle + " " + episodeTitle, amazonButton, TAG);
 
+        // YouTube button
+        View youtubeButton = getView().findViewById(R.id.buttonYouTube);
+        ServiceUtils.setUpYouTubeButton(mShowTitle + " " + episodeTitle, youtubeButton, TAG);
+
         // IMDb button
         String imdbId = episode.getString(EpisodeQuery.IMDBID);
         if (TextUtils.isEmpty(imdbId) && mShowCursor != null) {
