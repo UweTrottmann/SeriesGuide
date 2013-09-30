@@ -26,19 +26,6 @@
             android:syncable="true" >
         </provider>
 
-        <!-- Launch activity -->
-        <activity android:name="com.battlelancer.seriesguide.ui.ShowsActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-        </activity>
-
         <!-- List widget configuration -->
         <activity
             android:name="com.battlelancer.seriesguide.appwidget.ListWidgetConfigure"
