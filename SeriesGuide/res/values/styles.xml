@@ -294,10 +294,11 @@
 
     <style name="Page">
         <item name="android:padding">@dimen/large_padding</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
 
     <style name="Page.Centered">
-        <item name="android:layout_width">match_parent</item>
     </style>
 
     <!-- Used for longer passages of text -->
