@@ -20,46 +20,29 @@
             android:orientation="vertical"
             android:padding="@dimen/large_padding">
 
-            <RelativeLayout
-                android:id="@+id/layoutTop"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textViewFirstRunTitle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/default_padding">
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingTop="@dimen/default_padding"
+                android:text="@string/welcome_add_part1"
+                android:textAppearance="@style/TextAppearance.Large.Light" />
 
-                <ImageButton
-                    android:id="@+id/buttonFirstRunDismiss"
-                    android:layout_width="42dp"
-                    android:layout_height="42dp"
-                    android:layout_alignParentRight="true"
-                    android:background="?attr/custom_list_selector"
-                    android:contentDescription="@string/dismiss"
-                    android:src="?attr/drawableCancel" />
-
-                <TextView
-                    android:id="@+id/textViewFirstRunTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginTop="@dimen/default_padding"
-                    android:layout_toLeftOf="@id/buttonFirstRunDismiss"
-                    android:text="@string/welcome_add_part1"
-                    android:textAppearance="@style/TextAppearance.Large.Light" />
-
-                <Button
-                    android:id="@+id/buttonFirstRunAddShow"
-                    style="@style/Widget.SeriesGuide.Button.Borderless.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/textViewFirstRunTitle"
-                    android:drawableLeft="?attr/drawableAddIcon"
-                    android:drawablePadding="5dp"
-                    android:paddingLeft="@dimen/default_padding"
-                    android:paddingRight="@dimen/default_padding"
-                    android:text="@string/add_show"
-                    android:textAllCaps="true"
-                    android:textColor="?attr/textColorSgPrimary"
-                    android:textStyle="bold" />
-            </RelativeLayout>
+            <Button
+                android:id="@+id/buttonFirstRunAddShow"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:drawableLeft="?attr/drawableAddIcon"
+                android:drawablePadding="5dp"
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingRight="@dimen/default_padding"
+                android:text="@string/add_show"
+                android:textAllCaps="true"
+                android:textColor="?attr/textColorSgPrimary"
+                android:textStyle="bold" />
 
             <include
                 android:id="@+id/divider1"
@@ -129,5 +112,16 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <ImageButton
+        android:id="@+id/buttonFirstRunDismiss"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="top|right"
+        android:layout_marginRight="@dimen/default_padding"
+        android:layout_marginTop="@dimen/default_padding"
+        android:background="?attr/custom_list_selector"
+        android:contentDescription="@string/dismiss"
+        android:src="?attr/drawableCancel" />
 
 </FrameLayout>
