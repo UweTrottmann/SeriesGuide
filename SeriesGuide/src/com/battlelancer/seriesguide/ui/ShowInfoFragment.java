@@ -240,13 +240,17 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
         View amazonButton = getView().findViewById(R.id.buttonAmazon);
         ServiceUtils.setUpAmazonButton(mShow.getTitle(), amazonButton, TAG);
 
+        // YouTube button
+        View youtubeButton = getView().findViewById(R.id.buttonYouTube);
+        ServiceUtils.setUpYouTubeButton(mShow.getTitle(), youtubeButton, TAG);
+
         // IMDb button
-        View imdbButton = (View) getView().findViewById(R.id.buttonShowInfoIMDB);
+        View imdbButton = getView().findViewById(R.id.buttonShowInfoIMDB);
         final String imdbId = mShow.getImdbId();
         ServiceUtils.setUpImdbButton(imdbId, imdbButton, TAG, getActivity());
 
         // TVDb button
-        View tvdbButton = (View) getView().findViewById(R.id.buttonTVDB);
+        View tvdbButton = getView().findViewById(R.id.buttonTVDB);
         ServiceUtils.setUpTvdbButton(getShowTvdbId(), tvdbButton, TAG);
 
         // trakt button

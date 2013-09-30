@@ -21,12 +21,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 
 import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
@@ -74,6 +76,10 @@ public final class ServiceUtils {
     private static final String TVDB_EPISODE_URL_EPISODE_PARAM = "&id=";
 
     private static final String YOUTUBE_BASE_URL = "http://www.youtube.com/watch?v=";
+
+    private static final String YOUTUBE_SEARCH = "http://www.youtube.com/results?search_query=%s";
+
+    private static final String YOUTUBE_PACKAGE = "com.google.android.youtube";
 
     private static ServiceManager sTraktServiceManagerInstance;
 
@@ -496,4 +502,66 @@ public final class ServiceUtils {
 
         EasyTracker.getTracker().sendEvent(logTag, "Action Item", "YouTube", (long) 0);
     }
+
+    /**
+     * Used to open the YouTube app and search for <code>query</code>
+     * 
+     * @param query The search query for the YouTube app
+     * @param button The {@link Button} used to invoke the
+     *            {@link android.view.View.OnClickListener}
+     * @param logTag The log tag to use, for Analytics
+     */
+    public static void setUpYouTubeButton(final String query, View button, final String logTag) {
+        if (button == null) {
+            // Return if the button isn't initialized
+            return;
+        } else if (TextUtils.isEmpty(query)) {
+            // Disable the button if there's nothing to search for
+            button.setEnabled(false);
+            return;
+        }
+
+        button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchYoutube(v.getContext(), query, logTag);
+            }
+        });
+    }
+
+    /**
+     * Attempts to open the YouTube application to search for <code>query</code>
+     * . If the app is unavailable, a web search if performed instead
+     * 
+     * @param context The {@link Context} to use
+     * @param query The search query
+     * @param logTag The log tag to use, for Analytics
+     */
+    public static void searchYoutube(Context context, String query, String logTag) {
+        PackageManager pm = context.getPackageManager();
+        boolean hasYouTube = false;
+        try {
+            pm.getPackageInfo(YOUTUBE_PACKAGE, PackageManager.GET_ACTIVITIES);
+            hasYouTube = true;
+        } catch (PackageManager.NameNotFoundException notInstalled) {
+            hasYouTube = false;
+        }
+
+        Intent intent;
+        if (hasYouTube) {
+            // Directly search the YouTube app
+            intent = new Intent(Intent.ACTION_SEARCH);
+            intent.setPackage(YOUTUBE_PACKAGE);
+            intent.putExtra("query", query);
+        } else {
+            // Launch a web search
+            intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(String.format(YOUTUBE_SEARCH, Uri.encode(query))));
+        }
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        Utils.tryStartActivity(context, intent, true);
+        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "YouTube search", (long) 0);
+    }
+
 }
