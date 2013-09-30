@@ -27,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ public class AddDialogFragment extends DialogFragment {
     }
 
     private OnAddShowListener mListener;
+    private BaseAdapter mAdapterCallback;
 
     public static AddDialogFragment newInstance(SearchResult show) {
         AddDialogFragment f = new AddDialogFragment();
@@ -108,6 +110,10 @@ public class AddDialogFragment extends DialogFragment {
         addButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mAdapterCallback != null) {
+                    show.isAdded = true;
+                    mAdapterCallback.notifyDataSetChanged();
+                }
                 mListener.onAddShow(show);
                 dismiss();
             }
@@ -132,8 +138,10 @@ public class AddDialogFragment extends DialogFragment {
      * 
      * @param show
      * @param fm
+     * @param adapter
      */
-    public static void showAddDialog(SearchResult show, FragmentManager fm) {
+    public static void showAddDialog(SearchResult show, FragmentManager fm,
+            BaseAdapter adapter) {
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction. We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.
@@ -145,7 +153,21 @@ public class AddDialogFragment extends DialogFragment {
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = AddDialogFragment.newInstance(show);
+        AddDialogFragment newFragment = AddDialogFragment.newInstance(show);
+        newFragment.mAdapterCallback = adapter;
         newFragment.show(ft, "dialog");
     }
+
+    /**
+     * Display a dialog which asks if the user wants to add the given show to
+     * his show database. If necessary an AsyncTask will be started which takes
+     * care of adding the show.
+     * 
+     * @param show
+     * @param fm
+     */
+    public static void showAddDialog(SearchResult show, FragmentManager fm) {
+        showAddDialog(show, fm, null);
+    }
+
 }
