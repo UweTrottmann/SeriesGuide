@@ -32,7 +32,7 @@
   <string name="close">Fechar</string>
   <string name="save_selection">Salvar seleção</string>
   <string name="offline">Sem conexão. Tente novamente mais tarde.</string>
-  <string name="app_not_available">No app available to handle this.</string>
+  <string name="app_not_available">Nenhum aplicativo disponível que suporte isso.</string>
   <string name="onlyx">Disponível apenas com a Inscrição X</string>
   <string name="shows">Séries</string>
   <string name="lists">Listas</string>
@@ -264,6 +264,8 @@
   <string name="import_yes">Restaurar</string>
   <string name="import_no">Não Restaurar</string>
   <string name="import_warning">Eu entendo que minhas séries e listas atuais serão perdidas!</string>
+  <string name="last_auto_backup">Last Auto Backup: %s</string>
+  <string name="restore_auto_backup">Restore Auto Backup</string>
   <string name="checkin">Check-in</string>
   <string name="checkin_noaction">Nenhum serviço habilitado, faça check-in uma vez com o SeriesGuide.</string>
   <string name="checkin_searchhint">Digite o nome da série</string>
@@ -297,8 +299,8 @@
   <string name="disconnect">Desconectar</string>
   <string name="trakt_error">Interação com o trakt falhou</string>
   <string name="trakt_decryptfail">senha não pôde ser descriptografada</string>
-  <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
-  <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
+  <string name="trakt_error_credentials">Alguma coisa deu errado. Por favor, verifique suas credenciais e tente novamente.</string>
+  <string name="trakt_error_general">Não foi possível se comunicar com o trakt. Tente novamente mais tarde.</string>
   <string name="trakt_createaccount">Criar nova conta</string>
   <string name="welcome_setuplanguage">Escolha o idioma</string>
   <string name="welcome_traktmessage">Acesse sua coleção do trakt.tv e as atividades dos seus amigos</string>
@@ -327,11 +329,18 @@
   <string name="dashclock_extension_label">Próximo episódio</string>
   <string name="dashclock_extension_description">Exibe o próximo episódio das suas séries do SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Mostrar próximos episódios</string>
-  <string name="deprecation_title">Mover para SeriesGuide</string>
-  <string name="backup_tool">Ferramenta de backup</string>
   <string name="download_stable">Baixar SeriesGuide</string>
-  <string name="deprecation_warning"><b>Atenção!</b> O SeriesGuide X terá as funcionalidades removidas em breve. Migre suas séries para a versão free e mantenha o SeriesGuide X instalado para acessar a nova Inscrição X eterna.</string>
-  <string name="migration_tutorial">Para migrar suas séries: clique em <b>Ferramenta de backup</b>, e <b>Backup</b>.\n\nVolte até esta caixa aparecer de novo.\n\nClique em <b>Baixar SeriesGuide</b> e instale o SeriesGuide.\n\nAbra o SeriesGuide. Clique em <b>Menu</b>, e <b>Configurações</b>. Em <b>Avançado</b> use a ferramenta de backup para reverter.</string>
+  <string name="migration_header">Migrate to SeriesGuide</string>
+  <string name="migration_description">SeriesGuide X is now X Life-Time Pass, you should migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
+  <string name="migration_backup">Touch below to create a fresh backup of your shows.</string>
+  <string name="migration_action_backup">Backup Shows</string>
+  <string name="migration_install">Touch below to install the free version of SeriesGuide.</string>
+  <string name="migration_action_install">Install SeriesGuide</string>
+  <string name="migration_launch">Touch below and once in SeriesGuide touch Menu, then Migrate.</string>
+  <string name="migration_action_launch">Open SeriesGuide, then Migrate</string>
+  <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
+  <string name="migration_action_import">Import and replace existing shows</string>
+  <string name="action_migrate">Migrate from X</string>
   <string name="upgrade_title">Obtenha as funcionalidades X</string>
   <string name="upgrade_description">Tenha acesso a notificações, mais opções de listas de widgets e novas funcionalidades X. Apoie o desenvolvimento.\n\nSe você já comprou o SeriesGuide X, instale-o para acessar este upgrade.</string>
   <string name="upgrade_action">Obtenha as funcionalidades X</string>
@@ -340,7 +349,7 @@
   <string name="subscription_expired">Inscrição expirada</string>
   <string name="subscription_expired_details">Sua inscrição X expirou.</string>
   <string name="add_to_homescreen">Adicionar à Página inicial</string>
-  <string name="search_within_show">Search within %s</string>
+  <string name="search_within_show">Procurar dentro de %s</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Próximo episódio</item>
