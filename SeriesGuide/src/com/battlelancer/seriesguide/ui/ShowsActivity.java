@@ -46,12 +46,12 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.migration.MigrationActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.sync.SyncUtils;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
-import com.battlelancer.seriesguide.ui.dialogs.ChangesDialogFragment;
 import com.battlelancer.seriesguide.util.CompatActionBarNavHandler;
 import com.battlelancer.seriesguide.util.CompatActionBarNavListener;
 import com.battlelancer.seriesguide.util.ImageProvider;
@@ -130,6 +130,10 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
         // set up action bar
         setUpActionBar(prefs);
 
+        // show migration helper
+        if (MigrationActivity.isQualifiedForMigration(this)) {
+            startActivity(new Intent(this, MigrationActivity.class));
+        }
     }
 
     private void setUpActionBar(SharedPreferences prefs) {
@@ -172,12 +176,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
     @Override
     protected void onStart() {
         super.onStart();
-
-        // display a warning dialog about SeriesGuide X deprecation
-        if (getPackageName().contains("x")
-                && getSupportFragmentManager().findFragmentByTag(ChangesDialogFragment.TAG) == null) {
-            ChangesDialogFragment.show(getSupportFragmentManager());
-        }
 
         EasyTracker.getInstance().activityStart(this);
     }

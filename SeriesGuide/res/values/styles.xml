@@ -294,10 +294,11 @@
 
     <style name="Page">
         <item name="android:padding">@dimen/large_padding</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
 
     <style name="Page.Centered">
-        <item name="android:layout_width">match_parent</item>
     </style>
 
     <!-- Used for longer passages of text -->
@@ -324,22 +325,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="CenteredColumn">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_gravity">fill</item>
-    </style>
-
-    <style name="CenteredWrappingColumn">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">fill</item>
-    </style>
-
     <style name="FirstRunColumn">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_gravity">fill</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
     <!-- Rating -->

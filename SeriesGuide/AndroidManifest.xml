@@ -43,6 +43,14 @@
             android:icon="@drawable/ic_launcher"
             android:label="@string/app_name"
             android:theme="@style/SeriesGuideTheme">
+
+        <!-- Migration activity -->
+        <activity android:name="com.battlelancer.seriesguide.migration.MigrationActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
+
         <!-- Shows -->
         <activity
             android:name="com.battlelancer.seriesguide.ui.AddActivity"

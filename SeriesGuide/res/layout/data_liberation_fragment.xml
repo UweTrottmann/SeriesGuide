@@ -4,9 +4,8 @@
     android:layout_height="match_parent" >
 
     <RelativeLayout
-        style="@style/CenteredColumn"
-        android:animateLayoutChanges="true"
-        android:padding="@dimen/large_padding" >
+        style="@style/Page.Centered"
+        android:animateLayoutChanges="true" >
 
         <TextView
             android:id="@+id/textViewTitle"

@@ -33,13 +33,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.migration.MigrationActivity;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
 
 /**
  * Helps the user to get familiar with the basic functions of SeriesGuide. Shown
  * only on first start up.
- * 
+ *
  * @author Uwe Trottmann
  */
 public class FirstRunFragment extends SherlockFragment {
@@ -86,11 +88,20 @@ public class FirstRunFragment extends SherlockFragment {
         super.onActivityCreated(savedInstanceState);
 
         // add button
-        getView().findViewById(R.id.addbutton).setOnClickListener(new OnClickListener() {
+        getView().findViewById(R.id.buttonFirstRunAddShow).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 fireTrackerEvent("Add show");
                 startActivity(new Intent(getActivity(), AddActivity.class));
+                setFirstRunDismissed();
+            }
+        });
+
+        // migrate button
+        getView().findViewById(R.id.buttonFirstRunMigrate).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), MigrationActivity.class));
                 setFirstRunDismissed();
             }
         });
@@ -115,7 +126,9 @@ public class FirstRunFragment extends SherlockFragment {
         });
 
         // dismiss button
-        getView().findViewById(R.id.dismissButton).setOnClickListener(new OnClickListener() {
+        View buttonDismiss = getView().findViewById(R.id.buttonFirstRunDismiss);
+        CheatSheet.setup(buttonDismiss);
+        buttonDismiss.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 fireTrackerEvent("Dismiss");

@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/CenteredColumn"
-    android:padding="@dimen/layout_padding" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/syncbuttons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp" >
+        style="@style/Page.Centered">
 
         <TextView
             android:id="@+id/textViewTitleSync"
@@ -16,8 +13,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="@string/pref_traktsync"
-            android:textAppearance="@style/TextAppearance.Large.Light" >
-        </TextView>
+            android:textAppearance="@style/TextAppearance.Large.Light" />
 
         <TextView
             android:id="@+id/textViewIntro"
@@ -25,8 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/textViewTitleSync"
-            android:text="@string/trakt_sync_intro" >
-        </TextView>
+            android:text="@string/trakt_sync_intro" />
 
         <TextView
             android:id="@+id/textViewDownloadHint"
@@ -35,8 +30,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@id/textViewIntro"
             android:layout_marginTop="@dimen/default_padding"
-            android:text="@string/trakt_download_hint" >
-        </TextView>
+            android:text="@string/trakt_download_hint" />
 
         <Button
             android:id="@+id/syncToDeviceButton"
@@ -46,8 +40,7 @@
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/default_padding"
-            android:text="@string/trakt_download" >
-        </Button>
+            android:text="@string/trakt_download" />
 
         <TextView
             android:id="@+id/textViewUploadHint"
@@ -56,8 +49,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@id/syncToDeviceButton"
             android:layout_marginTop="@dimen/large_padding"
-            android:text="@string/trakt_upload_hint" >
-        </TextView>
+            android:text="@string/trakt_upload_hint" />
 
         <Button
             android:id="@+id/syncToTraktButton"
@@ -67,8 +59,7 @@
             android:layout_alignRight="@+id/syncToDeviceButton"
             android:layout_below="@id/textViewUploadHint"
             android:layout_marginTop="@dimen/default_padding"
-            android:text="@string/trakt_upload" >
-        </Button>
+            android:text="@string/trakt_upload" />
 
         <CheckBox
             android:id="@+id/checkBoxSyncUnseen"
@@ -78,8 +69,7 @@
             android:layout_alignRight="@+id/syncToTraktButton"
             android:layout_below="@+id/syncToTraktButton"
             android:layout_marginTop="20dp"
-            android:text="@string/trakt_syncunwatched" >
-        </CheckBox>
+            android:text="@string/trakt_syncunwatched" />
 
         <ProgressBar
             android:id="@+id/progressBarToTraktSync"
@@ -88,8 +78,7 @@
             android:layout_alignBottom="@+id/syncToTraktButton"
             android:layout_alignTop="@+id/syncToTraktButton"
             android:layout_toRightOf="@+id/syncToTraktButton"
-            android:visibility="gone" >
-        </ProgressBar>
+            android:visibility="gone" />
 
         <ProgressBar
             android:id="@+id/progressBarToDeviceSync"
@@ -98,8 +87,7 @@
             android:layout_alignBottom="@+id/syncToDeviceButton"
             android:layout_alignTop="@+id/syncToDeviceButton"
             android:layout_toRightOf="@+id/syncToDeviceButton"
-            android:visibility="gone" >
-        </ProgressBar>
+            android:visibility="gone" />
     </RelativeLayout>
 
 </ScrollView>

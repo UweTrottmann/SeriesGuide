@@ -13,9 +13,6 @@
     <RelativeLayout
         android:id="@+id/containerBilling"
         style="@style/Page.Centered"
-        android:layout_width="300dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
         android:visibility="gone" >
 
         <TextView
