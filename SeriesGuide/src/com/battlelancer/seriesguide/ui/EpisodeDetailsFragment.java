@@ -502,6 +502,10 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             View amazonButton = view.findViewById(R.id.buttonAmazon);
             ServiceUtils.setUpAmazonButton(showTitle + " " + episodeTitle, amazonButton, TAG);
 
+            // YouTube button
+            View youtubeButton = view.findViewById(R.id.buttonYouTube);
+            ServiceUtils.setUpYouTubeButton(showTitle + " " + episodeTitle, youtubeButton, TAG);
+
             // IMDb button
             String imdbId = cursor.getString(DetailsQuery.IMDBID);
             if (TextUtils.isEmpty(imdbId)) {

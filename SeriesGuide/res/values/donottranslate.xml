@@ -5,6 +5,7 @@
     <string name="package_name">com.battlelancer.seriesguide</string>
     <string name="googleplay">Google Play</string>
     <string name="amazon">Amazon</string>
+    <string name="youtube">YouTube</string>
     <string name="imdb">IMDb</string>
     <string name="tvdb">TVDb</string>
     <string name="tvdb_range">/10</string>
