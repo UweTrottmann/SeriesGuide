@@ -5,6 +5,25 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 7.2 *(in development)*
+-----------------
+
+#### 7.2-beta1 *(2013-10-01)*
+
+* NOTICE SeriesGuide X users, time to migrate your shows to the free version! Keep X installed to unlock all features in the free version.
+* FEATURE YouTube search link on show and episode pages. Thanks Andrew Neal (@adneal)!
+* FEATURE Migration assistant. Helps export shows and install SeriesGuide in X, import shows within SeriesGuide.
+* TWEAK Refined first run info card, now a less distracting dismiss button.
+* TWEAK Some layout tweaks for larger screens (7-inch, 10-inch).
+* TWEAK Refreshed icons. Search inside show action now shown with any tab in show overview.
+* TWEAK List widget can be resized down to about one row in height and three columns in width. Removed legacy one row widget.
+* TWEAK Display subscription button right in the top menu for better discovery.
+* FIX Day headers on activity screen blacked out.
+* FIX Going back from X subscription screen dropped you out of the app.
+* FIX Layout animations in season list caused wierd overlaps.
+* NOTICE Switched to Gradle build system.
+* NOTICE Latest translations from crowdin.
+
 Version 7.1 *(2013-08-10)*
 -----------------
 
