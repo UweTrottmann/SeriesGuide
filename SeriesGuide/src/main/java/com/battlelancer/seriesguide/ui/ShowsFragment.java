@@ -116,7 +116,39 @@ public class ShowsFragment extends SherlockFragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.shows_fragment, container, false);
+        View v = inflater.inflate(R.layout.shows_fragment, container, false);
+
+        v.findViewById(R.id.emptyViewShows).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), AddActivity.class));
+            }
+        });
+        v.findViewById(R.id.emptyViewShowsFilter).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mIsFilterFavorites = mIsFilterUnwatched = mIsFilterUpcoming = mIsFilterHidden
+                        = false;
+
+                // already start loading, do not need to wait on saving prefs
+                getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, null, ShowsFragment.this);
+
+                // prepare an updated empty view
+                updateEmptyView();
+
+                PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+                        .putBoolean(ShowFilterSettings.KEY_FILTER_FAVORITES, false)
+                        .putBoolean(ShowFilterSettings.KEY_FILTER_UNWATCHED, false)
+                        .putBoolean(ShowFilterSettings.KEY_FILTER_UPCOMING, false)
+                        .putBoolean(ShowFilterSettings.KEY_FILTER_HIDDEN, false)
+                        .commit();
+
+                // refresh filter menu check box states
+                getActivity().supportInvalidateOptionsMenu();
+            }
+        });
+
+        return v;
     }
 
     @Override
@@ -336,26 +368,26 @@ public class ShowsFragment extends SherlockFragment implements
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_shows_filter_favorites) {
             mIsFilterFavorites = !mIsFilterFavorites;
-            toggleFilterSetting(ShowFilterSettings.KEY_FILTER_FAVORITES, mIsFilterFavorites, item);
+            changeFilter(ShowFilterSettings.KEY_FILTER_FAVORITES, mIsFilterFavorites, item);
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_unwatched) {
             mIsFilterUnwatched = !mIsFilterUnwatched;
-            toggleFilterSetting(ShowFilterSettings.KEY_FILTER_UNWATCHED, mIsFilterUnwatched, item);
+            changeFilter(ShowFilterSettings.KEY_FILTER_UNWATCHED, mIsFilterUnwatched, item);
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_upcoming) {
             mIsFilterUpcoming = !mIsFilterUpcoming;
-            toggleFilterSetting(ShowFilterSettings.KEY_FILTER_UPCOMING, mIsFilterUpcoming, item);
+            changeFilter(ShowFilterSettings.KEY_FILTER_UPCOMING, mIsFilterUpcoming, item);
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_hidden) {
             mIsFilterHidden = !mIsFilterHidden;
-            toggleFilterSetting(ShowFilterSettings.KEY_FILTER_HIDDEN, mIsFilterHidden, item);
+            changeFilter(ShowFilterSettings.KEY_FILTER_HIDDEN, mIsFilterHidden, item);
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
     }
 
-    private void toggleFilterSetting(String key, boolean state, MenuItem item) {
+    private void changeFilter(String key, boolean state, MenuItem item) {
         // already start loading, do not need to wait on saving prefs
         getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, null, this);
 

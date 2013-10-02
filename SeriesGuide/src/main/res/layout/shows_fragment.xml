@@ -2,27 +2,29 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/shows_fragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/emptyViewShows"
         android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_gravity="center"
         android:drawableTop="?attr/drawableAddIcon"
         android:gravity="center"
-        android:padding="10dp"
+        android:paddingBottom="70dp"
+        android:paddingTop="70dp"
         android:text="@string/empty_shows"
         android:visibility="gone" />
 
     <TextView
         android:id="@+id/emptyViewShowsFilter"
         android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_gravity="center"
         android:drawableTop="?attr/drawableFilter"
         android:gravity="center"
-        android:padding="10dp"
+        android:paddingBottom="70dp"
+        android:paddingTop="70dp"
         android:text="@string/empty_filter"
         android:visibility="gone" />
 
@@ -39,7 +41,6 @@
         android:numColumns="auto_fit"
         android:padding="@dimen/showgrid_padding"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="@dimen/showgrid_spacing" >
-    </GridView>
+        android:verticalSpacing="@dimen/showgrid_spacing" />
 
 </FrameLayout>
