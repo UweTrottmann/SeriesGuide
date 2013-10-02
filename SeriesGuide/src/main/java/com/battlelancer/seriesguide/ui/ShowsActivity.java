@@ -102,7 +102,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
 
         super.onCreate(savedInstanceState);
         getMenu().setContentView(R.layout.shows);
-        
+
         // Set up a sync account if needed
         SyncUtils.createSyncAccount(this);
 
@@ -269,17 +269,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
     public boolean onPrepareOptionsMenu(Menu menu) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        MenuItem sortMenu = menu.findItem(R.id.menu_action_shows_sort);
-        if (android.os.Build.VERSION.SDK_INT >= 11) {
-            final CharSequence[] items = getResources().getStringArray(R.array.shsorting);
-            ShowSorting sorting = ShowSorting
-                    .fromValue(prefs.getString(
-                            SeriesGuidePreferences.KEY_SHOW_SORT_ORDER,
-                            ShowSorting.FAVORITES_FIRST.value()));
-            sortMenu.setTitle(
-                    getString(R.string.sort) + ": " + items[sorting.index()]);
-        }
-
         // If the nav drawer is open, hide action items related to the content
         // view
         boolean isDrawerOpen = isMenuDrawerOpen();
@@ -321,22 +310,11 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
                 mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
             }
             return true;
-        } else if (itemId == R.id.menu_action_shows_sort) {
-            fireTrackerEvent("Sort shows");
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            ShowSorting sorting = ShowSorting
-                    .fromValue(prefs.getString(
-                            SeriesGuidePreferences.KEY_SHOW_SORT_ORDER,
-                            ShowSorting.FAVORITES_FIRST.value()));
-            ShowsFragment.showSortDialog(getSupportFragmentManager(), sorting);
-            return true;
-        }
-        else if (itemId == R.id.menu_search) {
+        } else if (itemId == R.id.menu_search) {
             fireTrackerEvent("Search");
             onSearchRequested();
             return true;
-        }
-        else {
+        } else {
             return super.onOptionsItemSelected(item);
         }
     }

@@ -49,6 +49,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -155,6 +158,8 @@ public class ShowsFragment extends SherlockFragment implements
 
         // listen for some settings changes
         prefs.registerOnSharedPreferenceChangeListener(mPrefsListener);
+
+        setHasOptionsMenu(true);
     }
 
     private void setEmptyView(int showfilter) {
@@ -310,6 +315,16 @@ public class ShowsFragment extends SherlockFragment implements
             }
         }
         return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.shows_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -583,13 +598,6 @@ public class ShowsFragment extends SherlockFragment implements
         ConfirmDeleteDialogFragment deleteDialog = ConfirmDeleteDialogFragment.newInstance(String
                 .valueOf(showId));
         deleteDialog.show(fm, "fragment_delete");
-    }
-
-    public static void showSortDialog(FragmentManager fm, ShowSorting currentSorting) {
-        SortDialogFragment sortDialog = SortDialogFragment.newInstance(R.array.shsorting,
-                R.array.shsortingData, currentSorting.index(),
-                SeriesGuidePreferences.KEY_SHOW_SORT_ORDER, R.string.pref_showsorting);
-        sortDialog.show(fm, "fragment_sort");
     }
 
     /**
