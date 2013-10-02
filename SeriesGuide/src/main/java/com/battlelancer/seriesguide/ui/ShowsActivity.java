@@ -69,8 +69,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Provides the apps main screen, displaying a list of shows and their next
  * episodes.
  */
-public class ShowsActivity extends BaseTopShowsActivity implements CompatActionBarNavListener,
-        OnFirstRunDismissedListener {
+public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDismissedListener {
 
     protected static final String TAG = "Shows";
 
@@ -88,8 +87,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
     private Bundle mSavedState;
 
     private FetchPosterTask mArtTask;
-
-    private boolean mIsLoaderStartAllowed;
 
     private Fragment mFragment;
 
@@ -137,40 +134,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
     }
 
     private void setUpActionBar(SharedPreferences prefs) {
-        mIsLoaderStartAllowed = false;
-
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
-
-        /* setup navigation */
-        CompatActionBarNavHandler handler = new CompatActionBarNavHandler(this);
-        if (getResources().getBoolean(R.bool.isLargeTablet)) {
-            /* use tabs */
-            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-            final String[] categories = getResources().getStringArray(R.array.showfilter_list);
-            for (String category : categories) {
-                actionBar.addTab(actionBar.newTab().setText(category).setTabListener(handler));
-            }
-        } else {
-            /* use list (spinner) (! use different layouts for ABS) */
-            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-            ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(this,
-                    R.array.showfilter_list, R.layout.actionbar_spinner_item);
-            mActionBarList.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
-            actionBar.setListNavigationCallbacks(mActionBarList, handler);
-        }
-
-        // try to restore previously set show filter
-        int navSelection = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
-        if (navSelection < 0 || navSelection > 3) {
-            navSelection = 0;
-        }
-        if (getSupportActionBar().getSelectedNavigationIndex() != navSelection) {
-            getSupportActionBar().setSelectedNavigationItem(navSelection);
-        }
-
-        // prevent the onNavigationItemSelected listener from reacting
-        mIsLoaderStartAllowed = true;
+        actionBar.setDisplayShowTitleEnabled(true);
     }
 
     @Override
@@ -538,29 +503,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
         ContentValues values = new ContentValues();
         values.put(Shows.LASTUPDATED, 0);
         getContentResolver().update(Shows.CONTENT_URI, values, null, null);
-    }
-
-    @Override
-    public void onCategorySelected(int itemPosition) {
-        // only react if everything is set up
-        if (!mIsLoaderStartAllowed) {
-            return;
-        } else {
-            // pass filter to show fragment
-            ShowsFragment fragment;
-            try {
-                fragment = (ShowsFragment) mFragment;
-                if (fragment != null) {
-                    fragment.onFilterChanged(itemPosition);
-                }
-            } catch (ClassCastException e) {
-            }
-
-            // save the selected filter back to settings
-            Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-            editor.putInt(SeriesGuidePreferences.KEY_SHOWFILTER, itemPosition);
-            editor.commit();
-        }
     }
 
     @Override

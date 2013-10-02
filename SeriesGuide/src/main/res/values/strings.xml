@@ -308,12 +308,6 @@
     <string name="pref_autoaddshows">Add new trakt shows</string>
     <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
 
-    <string-array name="shsorting">
-        <item>A - Z</item>
-        <item>Next episode</item>
-        <item>Favorites (A - Z)</item>
-        <item>Favorites (Next ep.)</item>
-    </string-array>
     <string-array name="sesorting">
         <item>Latest first</item>
         <item>Oldest first</item>
@@ -434,13 +428,6 @@
     <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
     <string name="dismiss">Dismiss</string>
     <string name="welcome_add_part1">To get started tap</string>
-
-    <string-array name="showfilter_list">
-        <item>All</item>
-        <item>Favorites</item>
-        <item>Unseen/Upcoming</item>
-        <item>Hidden</item>
-    </string-array>
 
     <!-- Notifications -->
     <string name="upcoming_show">%s is coming up</string>
