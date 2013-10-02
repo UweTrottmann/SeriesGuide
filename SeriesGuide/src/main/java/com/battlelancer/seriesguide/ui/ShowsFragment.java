@@ -55,6 +55,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
@@ -344,48 +345,53 @@ public class ShowsFragment extends SherlockFragment implements
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String selection = null;
-        String[] selectionArgs = null;
+        StringBuilder selection = new StringBuilder();
 
-        int filterId = args.getInt(FILTER_ID);
-        switch (filterId) {
-            case SHOWFILTER_ALL:
-                selection = Shows.HIDDEN + "=?";
-                selectionArgs = new String[] {
-                        "0"
-                };
-                break;
-            case SHOWFILTER_FAVORITES:
-                selection = Shows.FAVORITE + "=? AND " + Shows.HIDDEN + "=?";
-                selectionArgs = new String[] {
-                        "1", "0"
-                };
-                break;
-            case SHOWFILTER_UNSEENEPISODES:
-                SharedPreferences prefs = PreferenceManager
-                        .getDefaultSharedPreferences(getActivity());
-                int upcomingLimit = Integer.valueOf(prefs.getString(
-                        SeriesGuidePreferences.KEY_UPCOMING_LIMIT, "1"));
+        boolean isFilterFavorites = false;
+        boolean isFilterUnwatched = false;
+        boolean isFilterUpcoming = false;
+        boolean isFilterHidden = false;
 
-                selection = Shows.NEXTAIRDATEMS + "!=? AND " + Shows.NEXTAIRDATEMS + " <=? AND "
-                        + Shows.HIDDEN + "=?";
-                // Display shows upcoming within x amount of days + 1 hour
-                String inTheFuture = String.valueOf(System.currentTimeMillis() + upcomingLimit
-                        * DateUtils.DAY_IN_MILLIS + DateUtils.HOUR_IN_MILLIS);
-                selectionArgs = new String[] {
-                        DBUtils.UNKNOWN_NEXT_AIR_DATE, inTheFuture, "0"
-                };
-                break;
-            case SHOWFILTER_HIDDEN:
-                selection = Shows.HIDDEN + "=?";
-                selectionArgs = new String[] {
-                        "1"
-                };
-                break;
+        // restrict to favorites?
+        if (isFilterFavorites) {
+            selection.append(Shows.FAVORITE).append("=1");
+        }
+        // restrict to shows with a next episode?
+        if (isFilterUnwatched) {
+            if (selection.length() != 0) {
+                selection.append(" AND ");
+            }
+            selection.append(Shows.NEXTAIRDATEMS).append("!=").append(DBUtils.UNKNOWN_NEXT_AIR_DATE);
+        }
+        // restrict to shows with an upcoming (yet to air) next episode?
+        if (isFilterUpcoming) {
+            if (selection.length() != 0) {
+                selection.append(" AND ");
+            }
+            // Display shows upcoming within <limit> days + 1 hour
+            long timeInAnHour = System.currentTimeMillis() + DateUtils.HOUR_IN_MILLIS;
+            int upcomingLimitInDays = AdvancedSettings.getUpcomingLimitInDays(getActivity());
+            long latestAirtime = timeInAnHour
+                    + upcomingLimitInDays * DateUtils.DAY_IN_MILLIS;
+
+            selection.append(Shows.NEXTAIRDATEMS).append("<=").append(latestAirtime);
+
+            // exclude shows with no upcoming episodes if not filtered for unwatched, too
+            if (!isFilterUnwatched) {
+                selection.append(" AND ")
+                        .append(Shows.NEXTAIRDATEMS).append(">=")
+                        .append(timeInAnHour);
+            }
         }
 
-        return new CursorLoader(getActivity(), Shows.CONTENT_URI, ShowsQuery.PROJECTION, selection,
-                selectionArgs, mSorting.query());
+        // special: if hidden filter is disabled, exclude hidden shows
+        if (selection.length() != 0) {
+            selection.append(" AND ");
+        }
+        selection.append(Shows.HIDDEN).append(isFilterHidden ? "=1" : "=0");
+
+        return new CursorLoader(getActivity(), Shows.CONTENT_URI, ShowsQuery.PROJECTION,
+                selection.toString(), null, mSorting.query());
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -627,7 +633,7 @@ public class ShowsFragment extends SherlockFragment implements
             if (key.equals(SeriesGuidePreferences.KEY_SHOW_SORT_ORDER)) {
                 updateSorting(sharedPreferences);
                 isAffectingChange = true;
-            } else if (key.equals(SeriesGuidePreferences.KEY_UPCOMING_LIMIT)) {
+            } else if (key.equals(AdvancedSettings.KEY_UPCOMING_LIMIT)) {
                 isAffectingChange = true;
             }
 
