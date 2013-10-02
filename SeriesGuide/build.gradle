@@ -3,6 +3,7 @@ apply plugin: 'android'
 android {
     compileSdkVersion 18
     buildToolsVersion "18.1"
+    compileOptions.encoding = "UTF-8"
 
     defaultConfig {
         minSdkVersion 8
