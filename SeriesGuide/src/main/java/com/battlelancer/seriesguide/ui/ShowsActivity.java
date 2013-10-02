@@ -269,7 +269,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
     public boolean onPrepareOptionsMenu(Menu menu) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        MenuItem sortMenu = menu.findItem(R.id.menu_showsortby);
+        MenuItem sortMenu = menu.findItem(R.id.menu_action_shows_sort);
         if (android.os.Build.VERSION.SDK_INT >= 11) {
             final CharSequence[] items = getResources().getStringArray(R.array.shsorting);
             ShowSorting sorting = ShowSorting
@@ -321,7 +321,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
                 mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
             }
             return true;
-        } else if (itemId == R.id.menu_showsortby) {
+        } else if (itemId == R.id.menu_action_shows_sort) {
             fireTrackerEvent("Sort shows");
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             ShowSorting sorting = ShowSorting

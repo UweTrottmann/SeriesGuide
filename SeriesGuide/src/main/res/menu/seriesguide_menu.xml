@@ -1,41 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item
+        android:id="@+id/menu_action_shows_filter"
+        android:icon="@drawable/ic_action_filter"
+        android:orderInCategory="0"
+        android:showAsAction="ifRoom"
+        android:title="Filter shows">
+        <menu>
+            <item
+                android:id="@+id/menu_action_shows_filter_favorites"
+                android:checkable="true"
+                android:title="Favorites" />
+            <item
+                android:id="@+id/menu_action_shows_filter_unwatched"
+                android:checkable="true"
+                android:title="Unwatched episode" />
+            <item
+                android:id="@+id/menu_action_shows_filter_upcoming"
+                android:checkable="true"
+                android:title="Upcoming episode" />
+            <item
+                android:id="@+id/menu_action_shows_filter_hidden"
+                android:checkable="true"
+                android:title="Hidden" />
+        </menu>
+    </item>
     <item
         android:id="@+id/menu_add_show"
         android:icon="@drawable/ic_action_add"
         android:orderInCategory="1"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/add_show"/>
+        android:title="@string/add_show" />
     <item
         android:id="@+id/menu_search"
         android:icon="@drawable/ic_action_search"
         android:orderInCategory="2"
         android:showAsAction="never"
-        android:title="@string/search_hint"/>
+        android:title="@string/search_hint" />
     <item
-        android:id="@+id/menu_showsortby"
+        android:id="@+id/menu_action_shows_sort"
         android:icon="@drawable/ic_action_sort"
         android:orderInCategory="3"
         android:showAsAction="never"
-        android:title="@string/sort"/>
+        android:title="@string/sort">
+        <menu>
+            <item
+                android:id="@+id/menu_action_shows_sort_title"
+                android:title="Title" />
+            <item
+                android:id="@+id/menu_action_shows_sort_episode"
+                android:title="Next episode" />
+            <item
+                android:id="@+id/menu_action_shows_sort_favorites"
+                android:checkable="true"
+                android:title="Favorites first" />
+        </menu>
+    </item>
     <item
         android:id="@+id/menu_updateart"
         android:icon="@drawable/ic_action_refresh"
         android:orderInCategory="4"
         android:showAsAction="never"
-        android:title="@string/menu_updateart"/>
+        android:title="@string/menu_updateart" />
     <item
         android:id="@+id/menu_update"
         android:icon="@drawable/ic_action_refresh"
         android:orderInCategory="5"
         android:showAsAction="never"
-        android:title="@string/menu_update_delta"/>
+        android:title="@string/menu_update_delta" />
     <item
         android:id="@+id/menu_fullupdate"
         android:icon="@drawable/ic_action_refresh"
         android:orderInCategory="6"
         android:showAsAction="never"
-        android:title="@string/updateall_yes"/>
+        android:title="@string/updateall_yes" />
 
 </menu>
