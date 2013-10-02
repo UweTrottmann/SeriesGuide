@@ -29,5 +29,6 @@
     <attr name="drawableCheckin" format="reference" />
     <attr name="drawableWatch" format="reference" />
     <attr name="drawableCollect" format="reference" />
+    <attr name="drawableFilter" format="reference" />
 
 </resources>
