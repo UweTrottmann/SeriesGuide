@@ -56,6 +56,7 @@ import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.settings.ShowFilterSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
@@ -347,10 +348,10 @@ public class ShowsFragment extends SherlockFragment implements
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         StringBuilder selection = new StringBuilder();
 
-        boolean isFilterFavorites = false;
-        boolean isFilterUnwatched = false;
-        boolean isFilterUpcoming = false;
-        boolean isFilterHidden = false;
+        boolean isFilterFavorites = ShowFilterSettings.isFilteringFavorites(getActivity());
+        boolean isFilterUnwatched = ShowFilterSettings.isFilteringUnwatched(getActivity());
+        boolean isFilterUpcoming = ShowFilterSettings.isFilteringUpcoming(getActivity());
+        boolean isFilterHidden = ShowFilterSettings.isFilteringHidden(getActivity());
 
         // restrict to favorites?
         if (isFilterFavorites) {
