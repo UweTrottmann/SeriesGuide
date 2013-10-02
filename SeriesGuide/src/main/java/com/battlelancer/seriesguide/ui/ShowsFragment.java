@@ -33,7 +33,6 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
 import android.text.format.DateUtils;
-import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -61,7 +60,6 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
 import com.battlelancer.seriesguide.util.ImageProvider;
@@ -72,9 +70,8 @@ import com.uwetrottmann.seriesguide.R;
 import de.greenrobot.event.EventBus;
 
 /**
- * Displays the list of shows in a users local library.
- * 
- * @author Uwe Trottmann
+ * Displays the list of shows in a users local library with sorting and filtering abilities. The
+ * main view of the app.
  */
 public class ShowsFragment extends SherlockFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener, OnClickListener {
@@ -82,8 +79,6 @@ public class ShowsFragment extends SherlockFragment implements
     private static final String TAG = "Shows";
 
     public static final int LOADER_ID = R.layout.shows_fragment;
-
-    public static final String FILTER_ID = "filterid";
 
     // context menu items
     private static final int CONTEXT_DELETE_ID = 200;
@@ -104,20 +99,15 @@ public class ShowsFragment extends SherlockFragment implements
 
     private static final int CONTEXT_CHECKIN_ID = 208;
 
-    // Show Filter Ids
-    private static final int SHOWFILTER_ALL = 0;
-
-    private static final int SHOWFILTER_FAVORITES = 1;
-
-    private static final int SHOWFILTER_UNSEENEPISODES = 2;
-
-    private static final int SHOWFILTER_HIDDEN = 3;
-
     private SlowAdapter mAdapter;
 
     private GridView mGrid;
 
     private ShowSorting mSorting;
+    private boolean mIsFilterFavorites;
+    private boolean mIsFilterUnwatched;
+    private boolean mIsFilterUpcoming;
+    private boolean mIsFilterHidden;
 
     public static ShowsFragment newInstance() {
         ShowsFragment f = new ShowsFragment();
@@ -137,8 +127,8 @@ public class ShowsFragment extends SherlockFragment implements
                 .getDefaultSharedPreferences(getActivity());
 
         // get settings
+        getFilterSettings();
         updateSorting(prefs);
-        int showfilter = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
 
         int resIdStar = Utils.resolveAttributeToResourceId(getSherlockActivity().getTheme(),
                 R.attr.drawableStar);
@@ -147,16 +137,14 @@ public class ShowsFragment extends SherlockFragment implements
         mAdapter = new SlowAdapter(getActivity(), null, 0, resIdStar, resIdStarZero, this);
 
         // setup grid view
-        mGrid = (GridView) getView().findViewById(R.id.showlist);
+        mGrid = (GridView) getView().findViewById(R.id.gridViewShows);
         mGrid.setAdapter(mAdapter);
         mGrid.setOnItemClickListener(this);
-        setEmptyView(showfilter);
+        updateEmptyView();
         registerForContextMenu(mGrid);
 
-        // start loading data, use saved show filter
-        Bundle args = new Bundle();
-        args.putInt(FILTER_ID, showfilter);
-        getLoaderManager().initLoader(LOADER_ID, args, this);
+        // start loading data
+        getLoaderManager().initLoader(LOADER_ID, null, this);
 
         // listen for some settings changes
         prefs.registerOnSharedPreferenceChangeListener(mPrefsListener);
@@ -164,27 +152,29 @@ public class ShowsFragment extends SherlockFragment implements
         setHasOptionsMenu(true);
     }
 
-    private void setEmptyView(int showfilter) {
+    private void getFilterSettings() {
+        mIsFilterFavorites = ShowFilterSettings.isFilteringFavorites(getActivity());
+        mIsFilterUnwatched = ShowFilterSettings.isFilteringUnwatched(getActivity());
+        mIsFilterUpcoming = ShowFilterSettings.isFilteringUpcoming(getActivity());
+        mIsFilterHidden = ShowFilterSettings.isFilteringHidden(getActivity());
+    }
+
+    private void updateEmptyView() {
         View oldEmptyView = mGrid.getEmptyView();
 
         View emptyView = null;
-        switch (showfilter) {
-            case SHOWFILTER_FAVORITES:
-                emptyView = getView().findViewById(R.id.emptyFavorites);
-                break;
-            case SHOWFILTER_HIDDEN:
-                emptyView = getView().findViewById(R.id.emptyHidden);
-                break;
-            default:
-                emptyView = getView().findViewById(R.id.empty);
-                break;
-        }
-        if (emptyView != null) {
-            mGrid.setEmptyView(emptyView);
+        if (mIsFilterFavorites || mIsFilterUnwatched || mIsFilterUpcoming || mIsFilterHidden) {
+            emptyView = getView().findViewById(R.id.emptyViewShowsFilter);
+        } else {
+            emptyView = getView().findViewById(R.id.emptyViewShows);
         }
 
         if (oldEmptyView != null) {
             oldEmptyView.setVisibility(View.GONE);
+        }
+
+        if (emptyView != null) {
+            mGrid.setEmptyView(emptyView);
         }
     }
 
@@ -322,6 +312,16 @@ public class ShowsFragment extends SherlockFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.shows_menu, menu);
+
+        // set filter check box states
+        menu.findItem(R.id.menu_action_shows_filter_favorites)
+                .setChecked(mIsFilterFavorites);
+        menu.findItem(R.id.menu_action_shows_filter_unwatched)
+                .setChecked(mIsFilterUnwatched);
+        menu.findItem(R.id.menu_action_shows_filter_upcoming)
+                .setChecked(mIsFilterUpcoming);
+        menu.findItem(R.id.menu_action_shows_filter_hidden)
+                .setChecked(mIsFilterHidden);
     }
 
     @Override
@@ -333,7 +333,39 @@ public class ShowsFragment extends SherlockFragment implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_action_shows_filter_favorites) {
+            mIsFilterFavorites = !mIsFilterFavorites;
+            toggleFilterSetting(ShowFilterSettings.KEY_FILTER_FAVORITES, mIsFilterFavorites, item);
+            return true;
+        } else if (itemId == R.id.menu_action_shows_filter_unwatched) {
+            mIsFilterUnwatched = !mIsFilterUnwatched;
+            toggleFilterSetting(ShowFilterSettings.KEY_FILTER_UNWATCHED, mIsFilterUnwatched, item);
+            return true;
+        } else if (itemId == R.id.menu_action_shows_filter_upcoming) {
+            mIsFilterUpcoming = !mIsFilterUpcoming;
+            toggleFilterSetting(ShowFilterSettings.KEY_FILTER_UPCOMING, mIsFilterUpcoming, item);
+            return true;
+        } else if (itemId == R.id.menu_action_shows_filter_hidden) {
+            mIsFilterHidden = !mIsFilterHidden;
+            toggleFilterSetting(ShowFilterSettings.KEY_FILTER_HIDDEN, mIsFilterHidden, item);
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void toggleFilterSetting(String key, boolean state, MenuItem item) {
+        // already start loading, do not need to wait on saving prefs
+        getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, null, this);
+
+        // prepare an updated empty view
+        updateEmptyView();
+
+        // update menu item state, then save at last
+        item.setChecked(state);
+        PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+                .putBoolean(key, state).commit();
     }
 
     @Override
@@ -355,10 +387,11 @@ public class ShowsFragment extends SherlockFragment implements
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         StringBuilder selection = new StringBuilder();
 
-        boolean isFilterFavorites = ShowFilterSettings.isFilteringFavorites(getActivity());
-        boolean isFilterUnwatched = ShowFilterSettings.isFilteringUnwatched(getActivity());
-        boolean isFilterUpcoming = ShowFilterSettings.isFilteringUpcoming(getActivity());
-        boolean isFilterHidden = ShowFilterSettings.isFilteringHidden(getActivity());
+        // create temporary copies
+        final boolean isFilterFavorites = mIsFilterFavorites;
+        final boolean isFilterUnwatched = mIsFilterUnwatched;
+        final boolean isFilterUpcoming = mIsFilterUpcoming;
+        final boolean isFilterHidden = mIsFilterHidden;
 
         // restrict to favorites?
         if (isFilterFavorites) {
@@ -616,7 +649,7 @@ public class ShowsFragment extends SherlockFragment implements
 
     /**
      * Fetches the sorting preference and stores it in {@code mSorting}.
-     * 
+     *
      * @param prefs
      * @return Returns true if the value changed, false otherwise.
      */
@@ -646,8 +679,7 @@ public class ShowsFragment extends SherlockFragment implements
             }
 
             if (isAffectingChange) {
-                onFilterChanged(getSherlockActivity().getSupportActionBar()
-                        .getSelectedNavigationIndex());
+                getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, null, ShowsFragment.this);
             }
         }
     };
@@ -656,16 +688,6 @@ public class ShowsFragment extends SherlockFragment implements
         if (isAdded()) {
             Utils.updateLatestEpisode(getActivity(), String.valueOf(event.mType.getShowTvdbId()));
         }
-    }
-
-    public void onFilterChanged(int itemPosition) {
-        // requery with the new filter
-        Bundle args = new Bundle();
-        args.putInt(ShowsFragment.FILTER_ID, itemPosition);
-        getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, args, this);
-
-        // update the empty view
-        setEmptyView(itemPosition);
     }
 
     private static void fireTrackerEvent(String label) {
