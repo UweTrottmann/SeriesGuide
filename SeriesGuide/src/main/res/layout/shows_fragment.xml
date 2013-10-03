@@ -2,42 +2,34 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/shows_fragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/empty"
+        android:id="@+id/emptyViewShows"
         android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_gravity="center"
-        android:drawableTop="?attr/drawableArrowUp"
+        android:drawableTop="?attr/drawableAddIcon"
         android:gravity="center"
-        android:padding="10dp"
-        android:text="@string/shows_empty"
+        android:paddingBottom="70dp"
+        android:paddingTop="70dp"
+        android:text="@string/empty_shows"
         android:visibility="gone" />
 
     <TextView
-        android:id="@+id/emptyFavorites"
+        android:id="@+id/emptyViewShowsFilter"
         android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_gravity="center"
-        android:drawableTop="?attr/drawableStar"
+        android:drawableTop="?attr/drawableFilter"
         android:gravity="center"
-        android:padding="10dp"
-        android:text="@string/favorites_empty"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/emptyHidden"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="@string/hidden_empty"
+        android:paddingBottom="70dp"
+        android:paddingTop="70dp"
+        android:text="@string/empty_filter"
         android:visibility="gone" />
 
     <GridView
-        android:id="@+id/showlist"
+        android:id="@+id/gridViewShows"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="@bool/gridClipToPadding"
@@ -49,7 +41,6 @@
         android:numColumns="auto_fit"
         android:padding="@dimen/showgrid_padding"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="@dimen/showgrid_spacing" >
-    </GridView>
+        android:verticalSpacing="@dimen/showgrid_spacing" />
 
 </FrameLayout>

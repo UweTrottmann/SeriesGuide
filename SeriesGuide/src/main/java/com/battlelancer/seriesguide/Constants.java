@@ -136,57 +136,5 @@ public class Constants {
         }
     }
 
-    public static enum ShowSorting {
-        ALPHABETIC(0, "alphabetic", Shows.TITLE + " COLLATE NOCASE ASC"),
 
-        UPCOMING(1, "upcoming", Shows.NEXTAIRDATEMS + " ASC," + Shows.AIRSTIME + " ASC,"
-                + Shows.TITLE + " COLLATE NOCASE ASC"),
-
-        FAVORITES_FIRST(2, "favorites", Shows.FAVORITE + " DESC," + Shows.TITLE
-                + " COLLATE NOCASE ASC"),
-
-        FAVORITES_UPCOMING(3, "favoritesupcoming", Shows.FAVORITE + " DESC," + Shows.NEXTAIRDATEMS
-                + " ASC," + Shows.AIRSTIME + " ASC," + Shows.TITLE + " COLLATE NOCASE ASC");
-
-        private final int index;
-
-        private final String value;
-
-        private final String query;
-
-        ShowSorting(int index, String value, String query) {
-            this.index = index;
-            this.value = value;
-            this.query = query;
-        }
-
-        public int index() {
-            return index;
-        }
-
-        public String value() {
-            return value;
-        }
-
-        public String query() {
-            return query;
-        }
-
-        @Override
-        public String toString() {
-            return this.value;
-        }
-
-        private static final Map<String, ShowSorting> STRING_MAPPING = new HashMap<String, ShowSorting>();
-
-        static {
-            for (ShowSorting via : ShowSorting.values()) {
-                STRING_MAPPING.put(via.toString().toUpperCase(), via);
-            }
-        }
-
-        public static ShowSorting fromValue(String value) {
-            return STRING_MAPPING.get(value.toUpperCase());
-        }
-    }
 }

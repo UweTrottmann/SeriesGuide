@@ -18,6 +18,8 @@ public class AdvancedSettings {
 
     public static final String KEY_LAST_UPGRADE_STATE = "com.battlelancer.seriesguide.lastupgradestate";
 
+    public static final String KEY_UPCOMING_LIMIT = "com.battlelancer.seriesguide.upcominglimit";
+
     public static long getLastAutoUpdateTime(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
@@ -63,5 +65,21 @@ public class AdvancedSettings {
     public static void setSubscriptionState(Context context, boolean isSubscribedToX) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(
                 KEY_LAST_UPGRADE_STATE, isSubscribedToX).commit();
+    }
+
+    /**
+     * Returns the maximum number of days from today on an episode can air for its show to be
+     * considered as upcoming.
+     */
+    public static int getUpcomingLimitInDays(Context context) {
+        int upcomingLimit = 1;
+        try {
+            upcomingLimit = Integer.parseInt(PreferenceManager
+                    .getDefaultSharedPreferences(context).getString(
+                            KEY_UPCOMING_LIMIT, "1"));
+        } catch (NumberFormatException ignored) {
+        }
+
+        return upcomingLimit;
     }
 }

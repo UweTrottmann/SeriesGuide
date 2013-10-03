@@ -45,6 +45,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
+import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.ImageProvider;
@@ -94,8 +95,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_DATABASEIMPORTED = "com.battlelancer.seriesguide.dbimported";
 
-    public static final String KEY_SHOW_SORT_ORDER = "showSorting";
-
     public static final String KEY_SEASON_SORT_ORDER = "seasonSorting";
 
     public static final String KEY_EPISODE_SORT_ORDER = "episodeSorting";
@@ -117,8 +116,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     public static final String KEY_LASTTRAKTUPDATE = "com.battlelancer.seriesguide.lasttraktupdate";
 
     public static final String KEY_NOWATCHED = "com.battlelancer.seriesguide.activity.nowatched";
-
-    public static final String KEY_UPCOMING_LIMIT = "com.battlelancer.seriesguide.upcominglimit";
 
     public static final String KEY_LANGUAGE = "language";
 
@@ -181,7 +178,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             setupAdvancedSettings(this,
                     getIntent(),
                     findPreference(KEY_THEME),
-                    findPreference(KEY_UPCOMING_LIMIT),
+                    findPreference(AdvancedSettings.KEY_UPCOMING_LIMIT),
                     findPreference(KEY_NUMBERFORMAT),
                     findPreference(KEY_OFFSET),
                     findPreference(KEY_GOOGLEANALYTICS),
@@ -418,7 +415,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     @SuppressWarnings("deprecation")
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(KEY_UPCOMING_LIMIT) || key.equals(KEY_LANGUAGE)
+        if (key.equals(AdvancedSettings.KEY_UPCOMING_LIMIT) || key.equals(KEY_LANGUAGE)
                 || key.equals(KEY_NUMBERFORMAT) || key.equals(KEY_THEME)
                 || key.equals(NotificationSettings.KEY_THRESHOLD)) {
             Preference pref = findPreference(key);
@@ -512,7 +509,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 setupAdvancedSettings(getActivity(),
                         getActivity().getIntent(),
                         findPreference(KEY_THEME),
-                        findPreference(KEY_UPCOMING_LIMIT),
+                        findPreference(AdvancedSettings.KEY_UPCOMING_LIMIT),
                         findPreference(KEY_NUMBERFORMAT),
                         findPreference(KEY_OFFSET),
                         findPreference(KEY_GOOGLEANALYTICS),
@@ -542,7 +539,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (key.equals(KEY_UPCOMING_LIMIT) || key.equals(KEY_LANGUAGE)
+            if (key.equals(AdvancedSettings.KEY_UPCOMING_LIMIT) || key.equals(KEY_LANGUAGE)
                     || key.equals(KEY_NUMBERFORMAT) || key.equals(KEY_THEME)
                     || key.equals(NotificationSettings.KEY_THRESHOLD)) {
                 Preference pref = findPreference(key);

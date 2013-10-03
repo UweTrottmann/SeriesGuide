@@ -55,6 +55,7 @@
         <item name="drawableCheckin">@drawable/ic_action_checkin</item>
         <item name="drawableWatch">@drawable/ic_action_tick</item>
         <item name="drawableCollect">@drawable/ic_action_collect</item>
+        <item name="drawableFilter">@drawable/ic_action_filter</item>
     </style>
 
     <style name="SeriesGuideBaseTheme" parent="Theme.Sherlock">
@@ -124,6 +125,7 @@
         <item name="drawableCheckin">@drawable/ic_action_checkin</item>
         <item name="drawableWatch">@drawable/ic_action_tick</item>
         <item name="drawableCollect">@drawable/ic_action_collect</item>
+        <item name="drawableFilter">@drawable/ic_action_filter</item>
     </style>
 
     <!-- SeriesGuide Light theme -->
@@ -178,6 +180,7 @@
         <item name="drawableCheckin">@drawable/ic_action_checkin_inverse</item>
         <item name="drawableWatch">@drawable/ic_action_tick_inverse</item>
         <item name="drawableCollect">@drawable/ic_action_collect_inverse</item>
+        <item name="drawableFilter">@drawable/ic_action_filter_inverse</item>
 
         <!-- Necessary to inherit the primary accent color in the DarkActionBar (ABS) -->
         <item name="actionBarWidgetTheme">@style/SeriesGuideTheme</item>

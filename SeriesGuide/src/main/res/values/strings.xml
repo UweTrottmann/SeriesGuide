@@ -174,9 +174,8 @@
 
     <!-- SeriesGuide mainscreen -->
     <string name="add_empty">There are no shows here or your device has no internet connection.</string>
-    <string name="shows_empty">Look in the menu above to add some shows.</string>
-    <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
-    <string name="hidden_empty">Long-press on a show to hide it here.</string>
+    <string name="empty_shows">Add shows</string>
+    <string name="empty_filter">Remove all filters</string>
     <string name="confirm_delete">Do you really want to remove %s?</string>
     <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
     <string name="delete_show">Remove</string>
@@ -190,6 +189,17 @@
     <string name="context_unhide">Un-Hide</string>
     <string name="hidden">Hidden show</string>
     <string name="unhidden">Un-Hidden show</string>
+
+    <!-- Shows -->
+    <string name="action_shows_filter">Filter shows</string>
+    <string name="action_shows_filter_favorites">Favorites</string>
+    <string name="action_shows_filter_unwatched">Unwatched</string>
+    <string name="action_shows_filter_upcoming">Upcoming</string>
+    <string name="action_shows_filter_hidden">Hidden</string>
+    <string name="action_shows_sort">Sort shows</string>
+    <string name="action_shows_sort_title">Title</string>
+    <string name="action_shows_sort_episode">Next episode</string>
+    <string name="action_shows_sort_favorites">Favorites first</string>
 
     <!-- Activity -->
     <string name="upcoming">Upcoming</string>
@@ -298,12 +308,6 @@
     <string name="pref_autoaddshows">Add new trakt shows</string>
     <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
 
-    <string-array name="shsorting">
-        <item>A - Z</item>
-        <item>Next episode</item>
-        <item>Favorites (A - Z)</item>
-        <item>Favorites (Next ep.)</item>
-    </string-array>
     <string-array name="sesorting">
         <item>Latest first</item>
         <item>Oldest first</item>
@@ -424,13 +428,6 @@
     <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
     <string name="dismiss">Dismiss</string>
     <string name="welcome_add_part1">To get started tap</string>
-
-    <string-array name="showfilter_list">
-        <item>All</item>
-        <item>Favorites</item>
-        <item>Unseen/Upcoming</item>
-        <item>Hidden</item>
-    </string-array>
 
     <!-- Notifications -->
     <string name="upcoming_show">%s is coming up</string>

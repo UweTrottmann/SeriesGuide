@@ -35,7 +35,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +43,6 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
-import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.migration.MigrationActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -52,8 +50,6 @@ import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.sync.SyncUtils;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
-import com.battlelancer.seriesguide.util.CompatActionBarNavHandler;
-import com.battlelancer.seriesguide.util.CompatActionBarNavListener;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
@@ -69,8 +65,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Provides the apps main screen, displaying a list of shows and their next
  * episodes.
  */
-public class ShowsActivity extends BaseTopShowsActivity implements CompatActionBarNavListener,
-        OnFirstRunDismissedListener {
+public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDismissedListener {
 
     protected static final String TAG = "Shows";
 
@@ -89,8 +84,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
 
     private FetchPosterTask mArtTask;
 
-    private boolean mIsLoaderStartAllowed;
-
     private Fragment mFragment;
 
     private Object mSyncObserverHandle;
@@ -102,7 +95,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
 
         super.onCreate(savedInstanceState);
         getMenu().setContentView(R.layout.shows);
-        
+
         // Set up a sync account if needed
         SyncUtils.createSyncAccount(this);
 
@@ -127,8 +120,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
             mFragment = getSupportFragmentManager().findFragmentById(R.id.shows_fragment);
         }
 
-        // set up action bar
-        setUpActionBar(prefs);
+        setUpActionBar();
 
         // show migration helper
         if (MigrationActivity.isQualifiedForMigration(this)) {
@@ -136,41 +128,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
         }
     }
 
-    private void setUpActionBar(SharedPreferences prefs) {
-        mIsLoaderStartAllowed = false;
-
+    private void setUpActionBar() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
-
-        /* setup navigation */
-        CompatActionBarNavHandler handler = new CompatActionBarNavHandler(this);
-        if (getResources().getBoolean(R.bool.isLargeTablet)) {
-            /* use tabs */
-            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-            final String[] categories = getResources().getStringArray(R.array.showfilter_list);
-            for (String category : categories) {
-                actionBar.addTab(actionBar.newTab().setText(category).setTabListener(handler));
-            }
-        } else {
-            /* use list (spinner) (! use different layouts for ABS) */
-            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-            ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(this,
-                    R.array.showfilter_list, R.layout.actionbar_spinner_item);
-            mActionBarList.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
-            actionBar.setListNavigationCallbacks(mActionBarList, handler);
-        }
-
-        // try to restore previously set show filter
-        int navSelection = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
-        if (navSelection < 0 || navSelection > 3) {
-            navSelection = 0;
-        }
-        if (getSupportActionBar().getSelectedNavigationIndex() != navSelection) {
-            getSupportActionBar().setSelectedNavigationItem(navSelection);
-        }
-
-        // prevent the onNavigationItemSelected listener from reacting
-        mIsLoaderStartAllowed = true;
     }
 
     @Override
@@ -269,17 +229,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
     public boolean onPrepareOptionsMenu(Menu menu) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        MenuItem sortMenu = menu.findItem(R.id.menu_showsortby);
-        if (android.os.Build.VERSION.SDK_INT >= 11) {
-            final CharSequence[] items = getResources().getStringArray(R.array.shsorting);
-            ShowSorting sorting = ShowSorting
-                    .fromValue(prefs.getString(
-                            SeriesGuidePreferences.KEY_SHOW_SORT_ORDER,
-                            ShowSorting.FAVORITES_FIRST.value()));
-            sortMenu.setTitle(
-                    getString(R.string.sort) + ": " + items[sorting.index()]);
-        }
-
         // If the nav drawer is open, hide action items related to the content
         // view
         boolean isDrawerOpen = isMenuDrawerOpen();
@@ -321,22 +270,11 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
                 mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
             }
             return true;
-        } else if (itemId == R.id.menu_showsortby) {
-            fireTrackerEvent("Sort shows");
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            ShowSorting sorting = ShowSorting
-                    .fromValue(prefs.getString(
-                            SeriesGuidePreferences.KEY_SHOW_SORT_ORDER,
-                            ShowSorting.FAVORITES_FIRST.value()));
-            ShowsFragment.showSortDialog(getSupportFragmentManager(), sorting);
-            return true;
-        }
-        else if (itemId == R.id.menu_search) {
+        } else if (itemId == R.id.menu_search) {
             fireTrackerEvent("Search");
             onSearchRequested();
             return true;
-        }
-        else {
+        } else {
             return super.onOptionsItemSelected(item);
         }
     }
@@ -560,29 +498,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
         ContentValues values = new ContentValues();
         values.put(Shows.LASTUPDATED, 0);
         getContentResolver().update(Shows.CONTENT_URI, values, null, null);
-    }
-
-    @Override
-    public void onCategorySelected(int itemPosition) {
-        // only react if everything is set up
-        if (!mIsLoaderStartAllowed) {
-            return;
-        } else {
-            // pass filter to show fragment
-            ShowsFragment fragment;
-            try {
-                fragment = (ShowsFragment) mFragment;
-                if (fragment != null) {
-                    fragment.onFilterChanged(itemPosition);
-                }
-            } catch (ClassCastException e) {
-            }
-
-            // save the selected filter back to settings
-            Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-            editor.putInt(SeriesGuidePreferences.KEY_SHOWFILTER, itemPosition);
-            editor.commit();
-        }
     }
 
     @Override
