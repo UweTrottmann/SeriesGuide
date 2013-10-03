@@ -5,8 +5,8 @@
     <item
         android:id="@+id/menu_action_shows_filter"
         android:icon="@drawable/ic_action_filter"
-        android:orderInCategory="0"
-        android:showAsAction="ifRoom"
+        android:orderInCategory="2"
+        android:showAsAction="always"
         android:title="@string/action_shows_filter">
         <menu>
             <item
