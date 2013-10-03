@@ -44,7 +44,6 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
-import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.migration.MigrationActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;

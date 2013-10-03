@@ -51,11 +51,10 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.settings.ShowFilterSettings;
+import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
@@ -103,7 +102,9 @@ public class ShowsFragment extends SherlockFragment implements
 
     private GridView mGrid;
 
-    private ShowSorting mSorting;
+    private int mSortOrderId;
+    private boolean mIsSortFavoritesFirst;
+
     private boolean mIsFilterFavorites;
     private boolean mIsFilterUnwatched;
     private boolean mIsFilterUpcoming;
@@ -137,10 +138,10 @@ public class ShowsFragment extends SherlockFragment implements
                 updateEmptyView();
 
                 PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
-                        .putBoolean(ShowFilterSettings.KEY_FILTER_FAVORITES, false)
-                        .putBoolean(ShowFilterSettings.KEY_FILTER_UNWATCHED, false)
-                        .putBoolean(ShowFilterSettings.KEY_FILTER_UPCOMING, false)
-                        .putBoolean(ShowFilterSettings.KEY_FILTER_HIDDEN, false)
+                        .putBoolean(ShowsDistillationSettings.KEY_FILTER_FAVORITES, false)
+                        .putBoolean(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, false)
+                        .putBoolean(ShowsDistillationSettings.KEY_FILTER_UPCOMING, false)
+                        .putBoolean(ShowsDistillationSettings.KEY_FILTER_HIDDEN, false)
                         .commit();
 
                 // refresh filter menu check box states
@@ -159,8 +160,7 @@ public class ShowsFragment extends SherlockFragment implements
                 .getDefaultSharedPreferences(getActivity());
 
         // get settings
-        getFilterSettings();
-        updateSorting(prefs);
+        getSortAndFilterSettings();
 
         int resIdStar = Utils.resolveAttributeToResourceId(getSherlockActivity().getTheme(),
                 R.attr.drawableStar);
@@ -184,11 +184,14 @@ public class ShowsFragment extends SherlockFragment implements
         setHasOptionsMenu(true);
     }
 
-    private void getFilterSettings() {
-        mIsFilterFavorites = ShowFilterSettings.isFilteringFavorites(getActivity());
-        mIsFilterUnwatched = ShowFilterSettings.isFilteringUnwatched(getActivity());
-        mIsFilterUpcoming = ShowFilterSettings.isFilteringUpcoming(getActivity());
-        mIsFilterHidden = ShowFilterSettings.isFilteringHidden(getActivity());
+    private void getSortAndFilterSettings() {
+        mIsFilterFavorites = ShowsDistillationSettings.isFilteringFavorites(getActivity());
+        mIsFilterUnwatched = ShowsDistillationSettings.isFilteringUnwatched(getActivity());
+        mIsFilterUpcoming = ShowsDistillationSettings.isFilteringUpcoming(getActivity());
+        mIsFilterHidden = ShowsDistillationSettings.isFilteringHidden(getActivity());
+
+        mSortOrderId = ShowsDistillationSettings.getSortOrderId(getActivity());
+        mIsSortFavoritesFirst = ShowsDistillationSettings.isSortFavoritesFirst(getActivity());
     }
 
     private void updateEmptyView() {
@@ -354,6 +357,10 @@ public class ShowsFragment extends SherlockFragment implements
                 .setChecked(mIsFilterUpcoming);
         menu.findItem(R.id.menu_action_shows_filter_hidden)
                 .setChecked(mIsFilterHidden);
+
+        // set sort check box state
+        menu.findItem(R.id.menu_action_shows_sort_favorites)
+                .setChecked(mIsSortFavoritesFirst);
     }
 
     @Override
@@ -368,26 +375,47 @@ public class ShowsFragment extends SherlockFragment implements
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_shows_filter_favorites) {
             mIsFilterFavorites = !mIsFilterFavorites;
-            changeFilter(ShowFilterSettings.KEY_FILTER_FAVORITES, mIsFilterFavorites, item);
+            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_FAVORITES, mIsFilterFavorites, item);
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_unwatched) {
             mIsFilterUnwatched = !mIsFilterUnwatched;
-            changeFilter(ShowFilterSettings.KEY_FILTER_UNWATCHED, mIsFilterUnwatched, item);
+            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, mIsFilterUnwatched, item);
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_upcoming) {
             mIsFilterUpcoming = !mIsFilterUpcoming;
-            changeFilter(ShowFilterSettings.KEY_FILTER_UPCOMING, mIsFilterUpcoming, item);
+            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UPCOMING, mIsFilterUpcoming, item);
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_hidden) {
             mIsFilterHidden = !mIsFilterHidden;
-            changeFilter(ShowFilterSettings.KEY_FILTER_HIDDEN, mIsFilterHidden, item);
+            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_HIDDEN, mIsFilterHidden, item);
+            return true;
+        } else if (itemId == R.id.menu_action_shows_sort_title) {
+            if (mSortOrderId == ShowsDistillationSettings.ShowsSortOrder.TITLE_ID) {
+                mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.TITLE_REVERSE_ID;
+            } else {
+                mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.TITLE_ID;
+            }
+            changeSort();
+            return true;
+        } else if (itemId == R.id.menu_action_shows_sort_episode) {
+            if (mSortOrderId == ShowsDistillationSettings.ShowsSortOrder.EPISODE_ID) {
+                mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.EPISODE_REVERSE_ID;
+            } else {
+                mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.EPISODE_ID;
+            }
+            changeSort();
+            return true;
+        } else if (itemId == R.id.menu_action_shows_sort_favorites) {
+            mIsSortFavoritesFirst = !mIsSortFavoritesFirst;
+            changeSortOrFilter(ShowsDistillationSettings.KEY_SORT_FAVORITES_FIRST,
+                    mIsSortFavoritesFirst, item);
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
     }
 
-    private void changeFilter(String key, boolean state, MenuItem item) {
+    private void changeSortOrFilter(String key, boolean state, MenuItem item) {
         // already start loading, do not need to wait on saving prefs
         getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, null, this);
 
@@ -398,6 +426,15 @@ public class ShowsFragment extends SherlockFragment implements
         item.setChecked(state);
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
                 .putBoolean(key, state).commit();
+    }
+
+    private void changeSort() {
+        // already start loading, do not need to wait on saving prefs
+        getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, null, this);
+
+        // save new sort order to preferences
+        PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+                .putInt(ShowsDistillationSettings.KEY_SORT_ORDER, mSortOrderId).commit();
     }
 
     @Override
@@ -473,7 +510,8 @@ public class ShowsFragment extends SherlockFragment implements
         selection.append(Shows.HIDDEN).append(isFilterHidden ? "=1" : "=0");
 
         return new CursorLoader(getActivity(), Shows.CONTENT_URI, ShowsQuery.PROJECTION,
-                selection.toString(), null, mSorting.query());
+                selection.toString(), null,
+                ShowsDistillationSettings.getSortQuery(mSortOrderId, mIsSortFavoritesFirst));
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -688,38 +726,10 @@ public class ShowsFragment extends SherlockFragment implements
         deleteDialog.show(fm, "fragment_delete");
     }
 
-    /**
-     * Fetches the sorting preference and stores it in {@code mSorting}.
-     *
-     * @param prefs
-     * @return Returns true if the value changed, false otherwise.
-     */
-    private boolean updateSorting(SharedPreferences prefs) {
-        final ShowSorting oldSorting = mSorting;
-
-        mSorting = ShowSorting.fromValue(prefs.getString(
-                SeriesGuidePreferences.KEY_SHOW_SORT_ORDER, ShowSorting.FAVORITES_FIRST.value()));
-
-        if (oldSorting != mSorting) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     private final OnSharedPreferenceChangeListener mPrefsListener = new OnSharedPreferenceChangeListener() {
 
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            boolean isAffectingChange = false;
-
-            if (key.equals(SeriesGuidePreferences.KEY_SHOW_SORT_ORDER)) {
-                updateSorting(sharedPreferences);
-                isAffectingChange = true;
-            } else if (key.equals(AdvancedSettings.KEY_UPCOMING_LIMIT)) {
-                isAffectingChange = true;
-            }
-
-            if (isAffectingChange) {
+            if (key.equals(AdvancedSettings.KEY_UPCOMING_LIMIT)) {
                 getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, null, ShowsFragment.this);
             }
         }

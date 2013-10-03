@@ -43,8 +43,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.ui.ShowsFragment.ViewHolder;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
@@ -159,7 +159,7 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
         return new CursorLoader(this, baseUri, CheckinQuery.PROJECTION, CheckinQuery.SELECTION,
                 new String[] {
                         fakeInAnHour
-                }, ShowSorting.UPCOMING.query());
+                }, ShowsDistillationSettings.ShowsSortOrder.EPISODE_REVERSE);
     }
 
     @Override

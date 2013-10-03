@@ -95,8 +95,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_DATABASEIMPORTED = "com.battlelancer.seriesguide.dbimported";
 
-    public static final String KEY_SHOW_SORT_ORDER = "showSorting";
-
     public static final String KEY_SEASON_SORT_ORDER = "seasonSorting";
 
     public static final String KEY_EPISODE_SORT_ORDER = "episodeSorting";
