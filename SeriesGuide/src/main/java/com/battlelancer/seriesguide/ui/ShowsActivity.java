@@ -124,8 +124,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
             mFragment = getSupportFragmentManager().findFragmentById(R.id.shows_fragment);
         }
 
-        // set up action bar
-        setUpActionBar(prefs);
+        setUpActionBar();
 
         // show migration helper
         if (MigrationActivity.isQualifiedForMigration(this)) {
@@ -133,9 +132,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
         }
     }
 
-    private void setUpActionBar(SharedPreferences prefs) {
+    private void setUpActionBar() {
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
     }
 
     @Override
