@@ -156,12 +156,10 @@ public class ShowsFragment extends SherlockFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getActivity());
-
         // get settings
         getSortAndFilterSettings();
 
+        // prepare view adapter
         int resIdStar = Utils.resolveAttributeToResourceId(getSherlockActivity().getTheme(),
                 R.attr.drawableStar);
         int resIdStarZero = Utils.resolveAttributeToResourceId(getSherlockActivity().getTheme(),
@@ -179,7 +177,9 @@ public class ShowsFragment extends SherlockFragment implements
         getLoaderManager().initLoader(LOADER_ID, null, this);
 
         // listen for some settings changes
-        prefs.registerOnSharedPreferenceChangeListener(mPrefsListener);
+        PreferenceManager
+                .getDefaultSharedPreferences(getActivity())
+                .registerOnSharedPreferenceChangeListener(mPrefsListener);
 
         setHasOptionsMenu(true);
     }
@@ -268,7 +268,7 @@ public class ShowsFragment extends SherlockFragment implements
 
         switch (item.getItemId()) {
             case CONTEXT_CHECKIN_ID: {
-                fireTrackerEvent("Check in");
+                fireTrackerEventContext("Check in");
 
                 Cursor show = (Cursor) mAdapter.getItem(info.position);
                 int episodeTvdbId = show.getInt(ShowsQuery.NEXTEPISODE);
@@ -292,7 +292,7 @@ public class ShowsFragment extends SherlockFragment implements
                 return true;
             }
             case CONTEXT_HIDE_ID: {
-                fireTrackerEvent("Hide show");
+                fireTrackerEventContext("Hide show");
 
                 ContentValues values = new ContentValues();
                 values.put(Shows.HIDDEN, true);
@@ -303,7 +303,7 @@ public class ShowsFragment extends SherlockFragment implements
                 return true;
             }
             case CONTEXT_UNHIDE_ID: {
-                fireTrackerEvent("Unhide show");
+                fireTrackerEventContext("Unhide show");
 
                 ContentValues values = new ContentValues();
                 values.put(Shows.HIDDEN, false);
@@ -318,15 +318,15 @@ public class ShowsFragment extends SherlockFragment implements
                     showDeleteDialog(info.id);
                 }
 
-                fireTrackerEvent("Delete show");
+                fireTrackerEventContext("Delete show");
                 return true;
             case CONTEXT_UPDATE_ID:
                 SgSyncAdapter.requestSync(getActivity(), (int) info.id);
 
-                fireTrackerEvent("Update show");
+                fireTrackerEventContext("Update show");
                 return true;
             case CONTEXT_FLAG_NEXT_ID:
-                fireTrackerEvent("Mark next episode");
+                fireTrackerEventContext("Mark next episode");
 
                 Cursor show = (Cursor) mAdapter.getItem(info.position);
                 DBUtils.markNextEpisode(getActivity(), (int) info.id,
@@ -334,7 +334,7 @@ public class ShowsFragment extends SherlockFragment implements
 
                 return true;
             case CONTEXT_MANAGE_LISTS_ID: {
-                fireTrackerEvent("Manage lists");
+                fireTrackerEventContext("Manage lists");
 
                 ListsDialogFragment.showListsDialog(String.valueOf(info.id), ListItemTypes.SHOW,
                         getFragmentManager());
@@ -373,21 +373,37 @@ public class ShowsFragment extends SherlockFragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_action_shows_filter_favorites) {
+        if (itemId == R.id.menu_action_shows_filter) {
+            fireTrackerEventAction("Filter shows");
+            // did not handle here
+            return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.menu_action_shows_sort) {
+            fireTrackerEventAction("Sort shows");
+            // did not handle here
+            return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.menu_action_shows_filter_favorites) {
             mIsFilterFavorites = !mIsFilterFavorites;
             changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_FAVORITES, mIsFilterFavorites, item);
+
+            fireTrackerEventAction("Filter Favorites");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_unwatched) {
             mIsFilterUnwatched = !mIsFilterUnwatched;
             changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, mIsFilterUnwatched, item);
+
+            fireTrackerEventAction("Filter Unwatched");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_upcoming) {
             mIsFilterUpcoming = !mIsFilterUpcoming;
             changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UPCOMING, mIsFilterUpcoming, item);
+
+            fireTrackerEventAction("Filter Upcoming");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_hidden) {
             mIsFilterHidden = !mIsFilterHidden;
             changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_HIDDEN, mIsFilterHidden, item);
+
+            fireTrackerEventAction("Filter Hidden");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_title) {
             if (mSortOrderId == ShowsDistillationSettings.ShowsSortOrder.TITLE_ID) {
@@ -396,6 +412,8 @@ public class ShowsFragment extends SherlockFragment implements
                 mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.TITLE_ID;
             }
             changeSort();
+
+            fireTrackerEventAction("Sort Title");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_episode) {
             if (mSortOrderId == ShowsDistillationSettings.ShowsSortOrder.EPISODE_ID) {
@@ -404,11 +422,15 @@ public class ShowsFragment extends SherlockFragment implements
                 mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.EPISODE_ID;
             }
             changeSort();
+
+            fireTrackerEventAction("Sort Episode");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_favorites) {
             mIsSortFavoritesFirst = !mIsSortFavoritesFirst;
             changeSortOrFilter(ShowsDistillationSettings.KEY_SORT_FAVORITES_FIRST,
                     mIsSortFavoritesFirst, item);
+
+            fireTrackerEventAction("Sort Favorites");
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -716,7 +738,7 @@ public class ShowsFragment extends SherlockFragment implements
                 Toast.LENGTH_SHORT)
                 .show();
 
-        fireTrackerEvent(isFavorite ? "Favorite show" : "Unfavorite show");
+        fireTrackerEventContext(isFavorite ? "Favorite show" : "Unfavorite show");
     }
 
     private void showDeleteDialog(long showId) {
@@ -741,7 +763,11 @@ public class ShowsFragment extends SherlockFragment implements
         }
     }
 
-    private static void fireTrackerEvent(String label) {
+    private static void fireTrackerEventAction(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    }
+
+    private static void fireTrackerEventContext(String label) {
         EasyTracker.getTracker().sendEvent(TAG, "Context Item", label, (long) 0);
     }
 
