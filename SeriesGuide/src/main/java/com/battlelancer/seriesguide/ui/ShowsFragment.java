@@ -429,12 +429,22 @@ public class ShowsFragment extends SherlockFragment implements
         if (isFilterFavorites) {
             selection.append(Shows.FAVORITE).append("=1");
         }
+
+        final long timeInAnHour = System.currentTimeMillis() + DateUtils.HOUR_IN_MILLIS;
+
         // restrict to shows with a next episode?
         if (isFilterUnwatched) {
             if (selection.length() != 0) {
                 selection.append(" AND ");
             }
             selection.append(Shows.NEXTAIRDATEMS).append("!=").append(DBUtils.UNKNOWN_NEXT_AIR_DATE);
+
+            // exclude shows with upcoming next episode
+            if (!isFilterUpcoming) {
+                selection.append(" AND ")
+                        .append(Shows.NEXTAIRDATEMS).append("<=")
+                        .append(timeInAnHour);
+            }
         }
         // restrict to shows with an upcoming (yet to air) next episode?
         if (isFilterUpcoming) {
@@ -442,14 +452,13 @@ public class ShowsFragment extends SherlockFragment implements
                 selection.append(" AND ");
             }
             // Display shows upcoming within <limit> days + 1 hour
-            long timeInAnHour = System.currentTimeMillis() + DateUtils.HOUR_IN_MILLIS;
             int upcomingLimitInDays = AdvancedSettings.getUpcomingLimitInDays(getActivity());
             long latestAirtime = timeInAnHour
                     + upcomingLimitInDays * DateUtils.DAY_IN_MILLIS;
 
             selection.append(Shows.NEXTAIRDATEMS).append("<=").append(latestAirtime);
 
-            // exclude shows with no upcoming episodes if not filtered for unwatched, too
+            // exclude shows with no upcoming next episode if not filtered for unwatched, too
             if (!isFilterUnwatched) {
                 selection.append(" AND ")
                         .append(Shows.NEXTAIRDATEMS).append(">=")
