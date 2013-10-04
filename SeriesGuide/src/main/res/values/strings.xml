@@ -53,7 +53,6 @@
     <string name="movies">Movies</string>
     <string name="statistics">Statistics</string>
     <string name="search">Search</string>
-    <string name="add_show">Add Show</string>
     <string name="preferences">Settings</string>
     <string name="help">Help</string>
 
@@ -174,7 +173,6 @@
 
     <!-- SeriesGuide mainscreen -->
     <string name="add_empty">There are no shows here or your device has no internet connection.</string>
-    <string name="empty_shows">Add shows</string>
     <string name="empty_filter">Remove all filters</string>
     <string name="confirm_delete">Do you really want to remove %s?</string>
     <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
@@ -191,6 +189,7 @@
     <string name="unhidden">Un-Hidden show</string>
 
     <!-- Shows -->
+    <string name="action_shows_add">Add shows</string>
     <string name="action_shows_filter">Filter shows</string>
     <string name="action_shows_filter_favorites">Favorites</string>
     <string name="action_shows_filter_unwatched">Unwatched</string>
