@@ -189,7 +189,7 @@
     <string name="unhidden">Un-Hidden show</string>
 
     <!-- Shows -->
-    <string name="action_shows_add">Add shows</string>
+    <string name="action_shows_add">Add show</string>
     <string name="action_shows_filter">Filter shows</string>
     <string name="action_shows_filter_favorites">Favorites</string>
     <string name="action_shows_filter_unwatched">Unwatched</string>
