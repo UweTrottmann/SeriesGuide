@@ -5,8 +5,14 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 7.2 *(in development)*
+Version 8 *(in development)*
 -----------------
+
+#### 8-beta2 *(2013-10-04)*
+
+* FEATURE New filter and sort options for shows. Applay sort order twice to reverse it. Removed old categories.
+* FIX Some reported crashes.
+* NOTICE Latest translations from crowdin.
 
 #### 7.2-beta1 *(2013-10-01)*
 
