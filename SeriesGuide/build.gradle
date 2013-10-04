@@ -27,6 +27,18 @@ android {
             versionName "8x"
         }
     }
+
+    signingConfigs {
+        release {
+            storeFile file('release.keystore')
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
 }
 
 dependencies {
@@ -37,4 +49,15 @@ dependencies {
     compile project(':libraries:stickygridheaders')
     compile fileTree(dir: 'libs', include: '*.jar')
     compile 'com.android.support:support-v4:18.0.+'
+}
+
+// get signing config from gradle.properties file
+if (project.hasProperty('storePassword')
+        && project.hasProperty('keyAlias')
+        && project.hasProperty('keyPassword')) {
+    android.signingConfigs.release.storePassword = storePassword
+    android.signingConfigs.release.keyAlias = keyAlias
+    android.signingConfigs.release.keyPassword = keyPassword
+} else {
+    buildTypes.release.signingConfig = null
 }
