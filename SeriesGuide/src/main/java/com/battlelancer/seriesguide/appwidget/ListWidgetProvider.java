@@ -127,7 +127,8 @@ public class ListWidgetProvider extends AppWidgetProvider {
             activityTab = 1;
             rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.recent));
         } else if (typeIndex == WidgetSettings.Type.FAVORITES) {
-            rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.favorites));
+            rv.setTextViewText(R.id.widgetTitle,
+                    context.getString(R.string.action_shows_filter_favorites));
         } else {
             activityTab = 0;
             rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.upcoming));

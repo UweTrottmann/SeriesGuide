@@ -469,7 +469,6 @@
     </string-array>
 
     <string name="pref_widget_type">Widget type</string>
-    <string name="favorites">Favorites</string>
 
     <string-array name="widgetType">
         <item>Upcoming</item>
