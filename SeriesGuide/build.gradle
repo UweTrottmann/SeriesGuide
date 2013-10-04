@@ -24,7 +24,7 @@ android {
         x {
             packageName "com.battlelancer.seriesguide.x"
             versionCode 160
-            versionName "7x"
+            versionName "8x"
         }
     }
 }
