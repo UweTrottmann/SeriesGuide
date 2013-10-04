@@ -59,7 +59,7 @@
         android:layout_height="match_parent"
         android:background="?custom_list_selector"
         android:clickable="true"
-        android:contentDescription="@string/add_show"
+        android:contentDescription="@string/action_shows_filter"
         android:focusable="true"
         android:padding="@dimen/default_padding"
         android:scaleType="centerInside"

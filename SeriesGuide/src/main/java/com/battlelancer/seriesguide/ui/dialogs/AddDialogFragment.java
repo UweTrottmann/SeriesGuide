@@ -104,7 +104,7 @@ public class AddDialogFragment extends DialogFragment {
             }
         });
         Button addButton = (Button) layout.findViewById(R.id.buttonPositive);
-        addButton.setText(R.string.add_show);
+        addButton.setText(R.string.action_shows_add);
         addButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

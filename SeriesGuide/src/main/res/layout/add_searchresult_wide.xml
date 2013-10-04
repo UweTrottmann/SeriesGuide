@@ -67,7 +67,7 @@
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:contentDescription="@string/add_show"
+                android:contentDescription="@string/action_shows_add"
                 android:padding="@dimen/inline_padding"
                 android:src="?attr/drawableAddIcon" />
 
@@ -75,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/add_show"
+                android:text="@string/action_shows_add"
                 android:textAppearance="@style/TextAppearance.Small.Label" />
         </LinearLayout>
     </LinearLayout>

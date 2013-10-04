@@ -39,7 +39,7 @@
                 android:drawablePadding="5dp"
                 android:paddingLeft="@dimen/default_padding"
                 android:paddingRight="@dimen/default_padding"
-                android:text="@string/add_show"
+                android:text="@string/action_shows_add"
                 android:textAllCaps="true"
                 android:textColor="?attr/textColorSgPrimary"
                 android:textStyle="bold" />
