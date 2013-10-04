@@ -40,7 +40,6 @@
   <string name="movies">Filmes</string>
   <string name="statistics">Estatísticas</string>
   <string name="search">Procura</string>
-  <string name="add_show">Adicionar Série</string>
   <string name="preferences">Definições</string>
   <string name="help">Ajuda</string>
   <string name="shouts">Comentários</string>
@@ -118,9 +117,7 @@
   <string name="trakt_collected">%s recolhido.</string>
   <string name="trakt_notcollected">%s não recolhidos.</string>
   <string name="add_empty">Não há programas ou o seu dispositivo não tem ligação à internet.</string>
-  <string name="shows_empty">Procure no menu acima para adicionar programas.</string>
-  <string name="favorites_empty">Pressione num programa para o adicionar aos Favoritos.</string>
-  <string name="hidden_empty">Pressione num programa para o esconder aqui.</string>
+  <string name="empty_filter">Remove all filters</string>
   <string name="confirm_delete">Deseja realmente remover %s?</string>
   <string name="delete_has_list_items">Remova primeiro o %s de todas as listas.</string>
   <string name="delete_show">Remover</string>
@@ -134,6 +131,16 @@
   <string name="context_unhide">Mostrar</string>
   <string name="hidden">Ocultar Série</string>
   <string name="unhidden">Mostrar Série</string>
+  <string name="action_shows_add">Add show</string>
+  <string name="action_shows_filter">Filter shows</string>
+  <string name="action_shows_filter_favorites">Favoritos</string>
+  <string name="action_shows_filter_unwatched">Unwatched</string>
+  <string name="action_shows_filter_upcoming">Próximos</string>
+  <string name="action_shows_filter_hidden">Hidden</string>
+  <string name="action_shows_sort">Sort shows</string>
+  <string name="action_shows_sort_title">Title</string>
+  <string name="action_shows_sort_episode">Next episode</string>
+  <string name="action_shows_sort_favorites">Favorites first</string>
   <string name="upcoming">Próximos</string>
   <string name="recent">Recente</string>
   <string name="friends">Amigos</string>
@@ -325,7 +332,6 @@
   <string name="hide_watched">Ocultar episódios já visualizados</string>
   <string name="pref_widget_opacity">Plano de fundo do widget</string>
   <string name="pref_widget_type">Tipo de widget</string>
-  <string name="favorites">Favoritos</string>
   <string name="dashclock_extension_label">Próximo episódio</string>
   <string name="dashclock_extension_description">Exibe o próximo episódio das suas séries do SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
@@ -350,12 +356,6 @@
   <string name="subscription_expired_details">A sua assinatura dos recursos X expirou.</string>
   <string name="add_to_homescreen">Adicionar ao ecrã inicial</string>
   <string name="search_within_show">Procurar dentro da %s</string>
-  <string-array name="shsorting">
-    <item>A - Z</item>
-    <item>Próximo episódio</item>
-    <item>Favoritos (A-Z)</item>
-    <item>Favoritos (Ep. seg.)</item>
-  </string-array>
   <string-array name="sesorting">
     <item>Mais recente primeiro</item>
     <item>Mais Antigo primeiro</item>
@@ -376,12 +376,6 @@
     <item>uma semana</item>
     <item>duas semanas</item>
     <item>um mês</item>
-  </string-array>
-  <string-array name="showfilter_list">
-    <item>Todos</item>
-    <item>Favoritos</item>
-    <item>Por ver/Por exibir</item>
-    <item>Oculto</item>
   </string-array>
   <string-array name="notificationThreshold">
     <item>a transmitir</item>

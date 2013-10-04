@@ -40,7 +40,6 @@
   <string name="movies">电影</string>
   <string name="statistics">统计</string>
   <string name="search">搜索</string>
-  <string name="add_show">添加剧目</string>
   <string name="preferences">设置</string>
   <string name="help">帮助</string>
   <string name="shouts">吐槽</string>
@@ -118,9 +117,7 @@
   <string name="trakt_collected">%s 已收藏。</string>
   <string name="trakt_notcollected">%s 未收藏。</string>
   <string name="add_empty">没有可供显示的剧目，或者没有可用网络连接。</string>
-  <string name="shows_empty">查看上面的菜单来添加更多剧目。</string>
-  <string name="favorites_empty">长按剧目以添加到收藏。</string>
-  <string name="hidden_empty">长按一个剧目使其在列表中隐藏。</string>
+  <string name="empty_filter">Remove all filters</string>
   <string name="confirm_delete">您要移除 %s 吗？</string>
   <string name="delete_has_list_items">无法执行操作，请先将 %s 从所有列表中移除。</string>
   <string name="delete_show">移除</string>
@@ -134,6 +131,16 @@
   <string name="context_unhide">取消隐藏</string>
   <string name="hidden">隐藏的剧目</string>
   <string name="unhidden">未隐藏的剧目</string>
+  <string name="action_shows_add">Add show</string>
+  <string name="action_shows_filter">Filter shows</string>
+  <string name="action_shows_filter_favorites">喜爱</string>
+  <string name="action_shows_filter_unwatched">Unwatched</string>
+  <string name="action_shows_filter_upcoming">即将播出</string>
+  <string name="action_shows_filter_hidden">Hidden</string>
+  <string name="action_shows_sort">Sort shows</string>
+  <string name="action_shows_sort_title">Title</string>
+  <string name="action_shows_sort_episode">Next episode</string>
+  <string name="action_shows_sort_favorites">Favorites first</string>
   <string name="upcoming">即将播出</string>
   <string name="recent">最近浏览</string>
   <string name="friends">朋友在看神马</string>
@@ -325,7 +332,6 @@
   <string name="hide_watched">隐藏已观看剧集</string>
   <string name="pref_widget_opacity">小部件背景</string>
   <string name="pref_widget_type">小部件类型</string>
-  <string name="favorites">喜爱</string>
   <string name="dashclock_extension_label">即将播出</string>
   <string name="dashclock_extension_description">在 “追剧助手” 节目列表中显示即将播出的剧集。</string>
   <string name="dashclock_pref_upcoming_threshold">“即将播出”剧目的时间区间</string>
@@ -350,12 +356,6 @@
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
   <string name="add_to_homescreen">Add to Home screen</string>
   <string name="search_within_show">Search within %s</string>
-  <string-array name="shsorting">
-    <item>A 到 Z</item>
-    <item>下一集</item>
-    <item>喜爱（A 到 Z）</item>
-    <item>喜爱（下一集）</item>
-  </string-array>
   <string-array name="sesorting">
     <item>最新在最上</item>
     <item>最旧在最上</item>
@@ -376,12 +376,6 @@
     <item>1 周</item>
     <item>2 周</item>
     <item>1 月</item>
-  </string-array>
-  <string-array name="showfilter_list">
-    <item>全部</item>
-    <item>喜爱</item>
-    <item>未观看 / 即将播出</item>
-    <item>已隐藏</item>
   </string-array>
   <string-array name="notificationThreshold">
     <item>放映</item>

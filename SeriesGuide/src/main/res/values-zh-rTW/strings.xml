@@ -40,7 +40,6 @@
   <string name="movies">電影</string>
   <string name="statistics">統計</string>
   <string name="search">搜尋</string>
-  <string name="add_show">新增影集</string>
   <string name="preferences">設定</string>
   <string name="help">說明</string>
   <string name="shouts">Shouts</string>
@@ -118,9 +117,7 @@
   <string name="trakt_collected">%s collected.</string>
   <string name="trakt_notcollected">%s not collected.</string>
   <string name="add_empty">There are no shows here or your device has no internet connection.</string>
-  <string name="shows_empty">Look in the menu above to add some shows.</string>
-  <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
-  <string name="hidden_empty">Long-press on a show to hide it here.</string>
+  <string name="empty_filter">Remove all filters</string>
   <string name="confirm_delete">Do you really want to remove %s?</string>
   <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">刪除</string>
@@ -134,6 +131,16 @@
   <string name="context_unhide">取消隱藏</string>
   <string name="hidden">隱藏影集</string>
   <string name="unhidden">取消隱藏影集</string>
+  <string name="action_shows_add">Add show</string>
+  <string name="action_shows_filter">Filter shows</string>
+  <string name="action_shows_filter_favorites">我的最愛</string>
+  <string name="action_shows_filter_unwatched">Unwatched</string>
+  <string name="action_shows_filter_upcoming">即將播出</string>
+  <string name="action_shows_filter_hidden">Hidden</string>
+  <string name="action_shows_sort">Sort shows</string>
+  <string name="action_shows_sort_title">Title</string>
+  <string name="action_shows_sort_episode">Next episode</string>
+  <string name="action_shows_sort_favorites">Favorites first</string>
   <string name="upcoming">即將播出</string>
   <string name="recent">最近</string>
   <string name="friends">好友</string>
@@ -325,7 +332,6 @@
   <string name="hide_watched">Hide watched episodes</string>
   <string name="pref_widget_opacity">Widget background</string>
   <string name="pref_widget_type">Widget type</string>
-  <string name="favorites">我的最愛</string>
   <string name="dashclock_extension_label">Upcoming episode</string>
   <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
@@ -350,12 +356,6 @@
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
   <string name="add_to_homescreen">Add to Home screen</string>
   <string name="search_within_show">Search within %s</string>
-  <string-array name="shsorting">
-    <item>A - Z</item>
-    <item>下一集</item>
-    <item>我的最愛 (A-Z)</item>
-    <item>我的最愛 (下一集)</item>
-  </string-array>
   <string-array name="sesorting">
     <item>按最新的項目排序</item>
     <item>按最舊的項目排序</item>
@@ -364,7 +364,7 @@
     <item>按最新的項目排序</item>
     <item>按最舊的項目排序</item>
     <item>先排未觀賞</item>
-    <item>按字母A - Z順序</item>
+    <item>A - Z</item>
     <item>Top rated</item>
     <item>按最新的順序排序(DVD)</item>
     <item>按最舊的順序排序(DVD)</item>
@@ -376,12 +376,6 @@
     <item>a week</item>
     <item>two weeks</item>
     <item>a month</item>
-  </string-array>
-  <string-array name="showfilter_list">
-    <item>全部</item>
-    <item>我的最愛</item>
-    <item>尚未觀賞/即將播出</item>
-    <item>隱藏</item>
   </string-array>
   <string-array name="notificationThreshold">
     <item>on air</item>

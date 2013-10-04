@@ -40,7 +40,6 @@
   <string name="movies">Фильмы</string>
   <string name="statistics">Статистика</string>
   <string name="search">Поиск</string>
-  <string name="add_show">Добавить сериал</string>
   <string name="preferences">Настройки</string>
   <string name="help">Справка</string>
   <string name="shouts">Отзывы</string>
@@ -118,9 +117,7 @@
   <string name="trakt_collected">%s помечен.</string>
   <string name="trakt_notcollected">%s не помечен.</string>
   <string name="add_empty">Нет сериалов или ваше устройство не подключено к интернету.</string>
-  <string name="shows_empty">Посмотрите меню перед добавлением сериалов.</string>
-  <string name="favorites_empty">Долгое нажатие на сериал добавляет в Избранное.</string>
-  <string name="hidden_empty">Долгое нажатие на сериал скрывает его.</string>
+  <string name="empty_filter">Remove all filters</string>
   <string name="confirm_delete">Вы действительно хотите удалить %s?</string>
   <string name="delete_has_list_items">Невозможно выполнить. Сначала удалите %s из всех списков.</string>
   <string name="delete_show">Удалить</string>
@@ -134,6 +131,16 @@
   <string name="context_unhide">Не скрывать</string>
   <string name="hidden">Скрытые сериалы</string>
   <string name="unhidden">Нескрытые сериалы</string>
+  <string name="action_shows_add">Add show</string>
+  <string name="action_shows_filter">Filter shows</string>
+  <string name="action_shows_filter_favorites">Избранное</string>
+  <string name="action_shows_filter_unwatched">Unwatched</string>
+  <string name="action_shows_filter_upcoming">Следующие эпизоды</string>
+  <string name="action_shows_filter_hidden">Hidden</string>
+  <string name="action_shows_sort">Sort shows</string>
+  <string name="action_shows_sort_title">Title</string>
+  <string name="action_shows_sort_episode">Next episode</string>
+  <string name="action_shows_sort_favorites">Favorites first</string>
   <string name="upcoming">Следующие эпизоды</string>
   <string name="recent">Недавние</string>
   <string name="friends">Друзья</string>
@@ -325,7 +332,6 @@
   <string name="hide_watched">Скрыть просмотренные эпизоды</string>
   <string name="pref_widget_opacity">Фон виджета</string>
   <string name="pref_widget_type">Тип виджета</string>
-  <string name="favorites">Избранное</string>
   <string name="dashclock_extension_label">Предстоящий</string>
   <string name="dashclock_extension_description">Отображает следующий предстоящийего SeriesGuide сериала.</string>
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
@@ -350,12 +356,6 @@
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
   <string name="add_to_homescreen">Add to Home screen</string>
   <string name="search_within_show">Search within %s</string>
-  <string-array name="shsorting">
-    <item>A - Z</item>
-    <item>Следующий эпизод</item>
-    <item>Избранное (A - Z)</item>
-    <item>Избранное (Следующий эп.)</item>
-  </string-array>
   <string-array name="sesorting">
     <item>Сначала последний</item>
     <item>Старшие с начала</item>
@@ -376,12 +376,6 @@
     <item>неделя</item>
     <item>две недели</item>
     <item>месяц</item>
-  </string-array>
-  <string-array name="showfilter_list">
-    <item>Все</item>
-    <item>Избранное</item>
-    <item>Не просмотренные/предстоящие</item>
-    <item>Скрытые</item>
   </string-array>
   <string-array name="notificationThreshold">
     <item>в эфире</item>

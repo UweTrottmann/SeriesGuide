@@ -40,7 +40,6 @@
   <string name="movies">Films</string>
   <string name="statistics">Statistieken</string>
   <string name="search">Zoeken</string>
-  <string name="add_show">Serie toevoegen</string>
   <string name="preferences">Instellingen</string>
   <string name="help">Help</string>
   <string name="shouts">Shouts</string>
@@ -118,9 +117,7 @@
   <string name="trakt_collected">%s verzameld.</string>
   <string name="trakt_notcollected">%s niet verzameld.</string>
   <string name="add_empty">Er zijn geen shows of uw apparaat heeft geen internetverbinding.</string>
-  <string name="shows_empty">Kijk in het menu hierboven om een aantal shows toe te voegen.</string>
-  <string name="favorites_empty">Lang drukken om een show aan Favorieten toe te voegen.</string>
-  <string name="hidden_empty">Lang drukken om een show hier te verbergen.</string>
+  <string name="empty_filter">Remove all filters</string>
   <string name="confirm_delete">Wilt u %s echt verwijderen?</string>
   <string name="delete_has_list_items">Kan geen overeenkomst vinden; verwijder eerst %s uit alle lijsten.</string>
   <string name="delete_show">Verwijderen</string>
@@ -134,6 +131,16 @@
   <string name="context_unhide">Niet verbergen</string>
   <string name="hidden">Verborgen serie</string>
   <string name="unhidden">Niet-verborgen serie</string>
+  <string name="action_shows_add">Add show</string>
+  <string name="action_shows_filter">Filter shows</string>
+  <string name="action_shows_filter_favorites">Favorieten</string>
+  <string name="action_shows_filter_unwatched">Unwatched</string>
+  <string name="action_shows_filter_upcoming">Eerstvolgende</string>
+  <string name="action_shows_filter_hidden">Hidden</string>
+  <string name="action_shows_sort">Sort shows</string>
+  <string name="action_shows_sort_title">Title</string>
+  <string name="action_shows_sort_episode">Next episode</string>
+  <string name="action_shows_sort_favorites">Favorites first</string>
   <string name="upcoming">Eerstvolgende</string>
   <string name="recent">Recente</string>
   <string name="friends">Vrienden</string>
@@ -325,7 +332,6 @@
   <string name="hide_watched">Bekeken afleveringen verbergen</string>
   <string name="pref_widget_opacity">Widget achtergrond</string>
   <string name="pref_widget_type">Widget type</string>
-  <string name="favorites">Favorieten</string>
   <string name="dashclock_extension_label">Volgende aflevering</string>
   <string name="dashclock_extension_description">Geeft de eerstvolgende aflevering van uw SeriesGuide shows weer.</string>
   <string name="dashclock_pref_upcoming_threshold">Toon komende afleveringen</string>
@@ -350,12 +356,6 @@
   <string name="subscription_expired_details">Uw X abonnement is verlopen.</string>
   <string name="add_to_homescreen">Toevoegen aan startscherm</string>
   <string name="search_within_show">Search within %s</string>
-  <string-array name="shsorting">
-    <item>A - Z</item>
-    <item>Volgende aflevering</item>
-    <item>Favorieten (A - Z)</item>
-    <item>Favorieten (volgende afl.)</item>
-  </string-array>
   <string-array name="sesorting">
     <item>Nieuwste eerst</item>
     <item>Oudste eerst</item>
@@ -376,12 +376,6 @@
     <item>1 week</item>
     <item>2 weken</item>
     <item>een maand</item>
-  </string-array>
-  <string-array name="showfilter_list">
-    <item>Alle</item>
-    <item>Favorieten</item>
-    <item>Niet bekeken/Aankomende</item>
-    <item>Verborgen</item>
   </string-array>
   <string-array name="notificationThreshold">
     <item>uitzending</item>

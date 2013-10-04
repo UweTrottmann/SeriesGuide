@@ -40,7 +40,6 @@
   <string name="movies">Film</string>
   <string name="statistics">Statistikker</string>
   <string name="search">Søg</string>
-  <string name="add_show">Tilføj tv-serie</string>
   <string name="preferences">Indstillinger</string>
   <string name="help">Hjælp</string>
   <string name="shouts">Kommentarer</string>
@@ -118,9 +117,7 @@
   <string name="trakt_collected">%s valgt.</string>
   <string name="trakt_notcollected">%s ikke valgt.</string>
   <string name="add_empty">Der er ingen serier her eller din enhed har ingen internet forbindelse.</string>
-  <string name="shows_empty">Kig i menuen for at tilføje serier.</string>
-  <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
-  <string name="hidden_empty">Long-press on a show to hide it here.</string>
+  <string name="empty_filter">Remove all filters</string>
   <string name="confirm_delete">Vil du fjerne %s?</string>
   <string name="delete_has_list_items">Kan ikke udføres, fjern %s fra alle lister først.</string>
   <string name="delete_show">Fjern</string>
@@ -134,6 +131,16 @@
   <string name="context_unhide">Vis</string>
   <string name="hidden">Skjult tv-serie</string>
   <string name="unhidden">Ikke-skjult serie</string>
+  <string name="action_shows_add">Add show</string>
+  <string name="action_shows_filter">Filter shows</string>
+  <string name="action_shows_filter_favorites">Favoritter</string>
+  <string name="action_shows_filter_unwatched">Unwatched</string>
+  <string name="action_shows_filter_upcoming">Kommende</string>
+  <string name="action_shows_filter_hidden">Hidden</string>
+  <string name="action_shows_sort">Sort shows</string>
+  <string name="action_shows_sort_title">Title</string>
+  <string name="action_shows_sort_episode">Next episode</string>
+  <string name="action_shows_sort_favorites">Favorites first</string>
   <string name="upcoming">Kommende</string>
   <string name="recent">Nylige</string>
   <string name="friends">Venner</string>
@@ -325,7 +332,6 @@
   <string name="hide_watched">Skjul sete episoder</string>
   <string name="pref_widget_opacity">Widget baggrund</string>
   <string name="pref_widget_type">Widget type</string>
-  <string name="favorites">Favoritter</string>
   <string name="dashclock_extension_label">Kommende episode</string>
   <string name="dashclock_extension_description">Viser de kommende episoder af dine SeriesGuide serier.</string>
   <string name="dashclock_pref_upcoming_threshold">Vis episoder i de næste</string>
@@ -350,12 +356,6 @@
   <string name="subscription_expired_details">Dit abonnement på X funktioner er udløbet.</string>
   <string name="add_to_homescreen">Tilføj til Hjemmeskærmen</string>
   <string name="search_within_show">Søg indenfor %s</string>
-  <string-array name="shsorting">
-    <item>A - Z</item>
-    <item>Næste episode</item>
-    <item>Favoritter (A-Z)</item>
-    <item>Favoritter (Kommende episoder)</item>
-  </string-array>
   <string-array name="sesorting">
     <item>Seneste først</item>
     <item>Ældste først</item>
@@ -364,7 +364,7 @@
     <item>Nyeste først</item>
     <item>Ældste først</item>
     <item>Usete først</item>
-    <item>A-Z</item>
+    <item>A - Z</item>
     <item>Top bedømte</item>
     <item>Nyeste først (DVD)</item>
     <item>Ældste først (DVD)</item>
@@ -376,12 +376,6 @@
     <item>en uge</item>
     <item>to uger</item>
     <item>en måned</item>
-  </string-array>
-  <string-array name="showfilter_list">
-    <item>Alle</item>
-    <item>Favoritter</item>
-    <item>Uset/Kommende</item>
-    <item>Skjulte</item>
   </string-array>
   <string-array name="notificationThreshold">
     <item>on air</item>

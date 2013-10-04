@@ -24,7 +24,7 @@
   <string name="loading">Lädt…</string>
   <string name="done">Erledigt</string>
   <string name="clear">Löschen</string>
-  <string name="more">%s mehr</string>
+  <string name="more">%s weitere</string>
   <string name="cancel">Abbrechen</string>
   <string name="share">Empfehlen</string>
   <string name="updated">Auf neueste Version aktualisiert.</string>
@@ -38,9 +38,8 @@
   <string name="lists">Listen</string>
   <string name="activity">Aktivität</string>
   <string name="movies">Filme</string>
-  <string name="statistics">Statistiken</string>
+  <string name="statistics">Statistik</string>
   <string name="search">Suche</string>
-  <string name="add_show">Serie hinzufügen</string>
   <string name="preferences">Einstellungen</string>
   <string name="help">Hilfe</string>
   <string name="shouts">Shouts</string>
@@ -112,17 +111,15 @@
   <string name="uncollect">Folge noch nicht gesammelt</string>
   <string name="collect_all">Alle gesammelt</string>
   <string name="uncollect_all">Keine gesammelt</string>
-  <string name="trakt_submitqueued">Sende zu trakt.</string>
+  <string name="trakt_submitqueued">Sende an trakt.</string>
   <string name="trakt_seen">%s gesehen.</string>
   <string name="trakt_notseen">%s nicht gesehen.</string>
   <string name="trakt_collected">%s gesammelt.</string>
   <string name="trakt_notcollected">%s nicht gesammelt.</string>
   <string name="add_empty">Es gibt hier keine Serien oder das Gerät verfügt über keine Internetverbindung.</string>
-  <string name="shows_empty">Suchen Sie im Menü oben um einige Serien hinzufügen.</string>
-  <string name="favorites_empty">Halten Sie eine Serie gedrückt um sie zu den Favoriten hinzuzufügen.</string>
-  <string name="hidden_empty">Halten Sie eine Serie gedrückt um sie hier zu verstecken.</string>
+  <string name="empty_filter">Alle Filter entfernen</string>
   <string name="confirm_delete">Wollen Sie %s wirklich entfernen?</string>
-  <string name="delete_has_list_items">Ausführung nicht möglich, entferne zuerst %s von allen Listen.</string>
+  <string name="delete_has_list_items">Ausführung nicht möglich, entfernen Sie zuerst %s von allen Listen.</string>
   <string name="delete_show">Löschen</string>
   <string name="dontdelete_show">Nicht löschen</string>
   <string name="no_nextepisode">keine weitere Folge gefunden</string>
@@ -134,6 +131,16 @@
   <string name="context_unhide">Einblenden</string>
   <string name="hidden">Serie ausgeblendet</string>
   <string name="unhidden">Serie wieder sichtbar</string>
+  <string name="action_shows_add">Serie hinzufügen</string>
+  <string name="action_shows_filter">Serien filtern</string>
+  <string name="action_shows_filter_favorites">Favoriten</string>
+  <string name="action_shows_filter_unwatched">Ungesehen</string>
+  <string name="action_shows_filter_upcoming">Demnächst</string>
+  <string name="action_shows_filter_hidden">Ausgeblendet</string>
+  <string name="action_shows_sort">Serien sortieren</string>
+  <string name="action_shows_sort_title">Titel</string>
+  <string name="action_shows_sort_episode">Nächste Folge</string>
+  <string name="action_shows_sort_favorites">Favoriten zuerst</string>
   <string name="upcoming">Demnächst</string>
   <string name="recent">Vor kurzem</string>
   <string name="friends">Freunde</string>
@@ -179,7 +186,7 @@
   <string name="powered_by_trakt">ein Dienst von trakt.tv</string>
   <string name="first_list">Erste Liste</string>
   <string name="list_add">Liste hinzufügen</string>
-  <string name="list_title_hint">Liste bennenen</string>
+  <string name="list_title_hint">Liste benennen</string>
   <string name="list_remove">Liste entfernen</string>
   <string name="list_manage">Liste verwalten</string>
   <string name="list_item_manage">Listen verwalten</string>
@@ -187,13 +194,13 @@
   <string name="list_empty">Sie können Serien, Staffeln oder Folgen zu dieser Liste hinzufügen.</string>
   <string name="connect_trakt">Mit Trakt verbinden</string>
   <string name="connect_trakt_done">Mit Trakt verbunden!</string>
-  <string name="add_trakt_shows">Serien aus deiner Bibliothek hinzufügen:</string>
-  <string name="show_library">Deine Bibliothek anzeigen</string>
-  <string name="upload_shows">Deine SeriesGuide-Serien-Liste hochladen:</string>
+  <string name="add_trakt_shows">Serien aus Ihrer Bibliothek hinzufügen:</string>
+  <string name="show_library">Ihre Bibliothek anzeigen</string>
+  <string name="upload_shows">Ihre SeriesGuide Serien-Liste hochladen:</string>
   <string name="upload_existing_shows">Vorhandene Serien hochladen</string>
-  <string name="about_trakt">Trakt hilft TV-Sendungen und Filme zu speichern, die du angesehen hast. <a href="http://trakt.tv">Erfahre mehr</a></string>
-  <string name="integration_trakt_items">- Serien aus deiner Bibliothek oder Watchliste hinzufügen\n\n- Empfehlungen und Aktivität von Freunden anzeigen\n\n- Gesehen- und Gesammelt-Flaggen werden automatisch synchronisiert\n\n- neue Serien die du angesehen hast werden automatisch hinzugefügt</string>
-  <string name="trakt_sync_intro">Es werden keine Serien zu SeriesGuide hinzugefügt oder entfernt, erledige das in der Serienliste.</string>
+  <string name="about_trakt">trakt hilft TV-Sendungen und Filme zu speichern, die Sie angesehen haben. <a href="http://trakt.tv">Mehr erfahren</a></string>
+  <string name="integration_trakt_items">- Serien aus Ihrer Bibliothek oder Watchliste hinzufügen\n\n- Empfehlungen und Aktivität von Freunden anzeigen\n\n- Gesehen- und Gesammelt-Flaggen werden automatisch synchronisiert\n\n- neue Serien die Sie angesehen haben werden automatisch hinzugefügt</string>
+  <string name="trakt_sync_intro">Es werden keine Serien zu SeriesGuide hinzugefügt oder entfernt, erledigen Sie das in der Serienliste.</string>
   <string name="trakt_download_hint">Markiere alle auf trakt gesehenen Folgen als gesehen in SeriesGuide:</string>
   <string name="trakt_upload_hint">Markiere alle gesehenen Folgen in SeriesGuide als gesehen bei trakt:</string>
   <string name="trakt_download">In SeriesGuide herunterladen</string>
@@ -206,12 +213,12 @@
   <string name="pref_showsorting">Sortiere Serien nach…</string>
   <string name="pref_onlyfuture">Keine gesendeten Folgen</string>
   <string name="pref_onlyfuturesummary">Zeige nie bereits ausgestrahlte Folgen an</string>
-  <string name="pref_onlyseasoneps">Verstecke Special Episodes</string>
+  <string name="pref_onlyseasoneps">Special Episodes verstecken</string>
   <string name="pref_onlyseasonepssummary">Special Episodes verschwinden, außer in der Staffel-Liste</string>
   <string name="pref_seasonsorting">Sortiere Staffeln nach…</string>
   <string name="pref_episodesorting">Sortiere Folgen nach…</string>
   <string name="pref_language">Sprache des Inhalts</string>
-  <string name="pref_updatewifionly">Nur über Wi-Fi aktualisieren</string>
+  <string name="pref_updatewifionly">Nur über WLAN aktualisieren</string>
   <string name="about">Über SeriesGuide</string>
   <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">Von GetGlue abmelden</string>
@@ -220,12 +227,12 @@
   <string name="pref_traktsync">Manueller Sync mit trakt.tv</string>
   <string name="feedback">Feedback senden</string>
   <string name="pref_autoaddshows">Neue trakt Serien hinzufügen</string>
-  <string name="pref_autoaddshowssummary">Automatisch neue Serien von deinen trakt-Aktivitäten hinzufügen</string>
-  <string name="pref_appearance">Darstellung</string>
+  <string name="pref_autoaddshowssummary">Automatisch neue Serien aus Ihren trakt-Aktivitäten hinzufügen</string>
+  <string name="pref_appearance">Erscheinungsbild</string>
   <string name="pref_theme">App Design</string>
-  <string name="pref_other">Andere</string>
+  <string name="pref_other">Anderes</string>
   <string name="pref_autoupdate">Auto-Aktualisierung aktivieren</string>
-  <string name="pref_autoupdatesummary">Aktualisiert regelmäßig Ihre Sendungen</string>
+  <string name="pref_autoupdatesummary">Aktualisiert regelmäßig Ihre Serien</string>
   <string name="pref_autobackup">Automatische Sicherung aktivieren</string>
   <string name="pref_autobackupsummary">Wöchentliche Sicherung Ihrer Serien-Datenbank in den Download-Ordner</string>
   <string name="backup">Sichern/Wiederherstellen</string>
@@ -240,7 +247,7 @@
   <string name="pref_ganalyticssummary">Verfolgt die Verwendung von Funktionen zur Verbesserung von SeriesGuide</string>
   <string name="pref_hideimages">Verstecke Bilder</string>
   <string name="pref_hideimagessummary">Blenden Sie Bilder aus Ihrer Foto-Galerie aus (Neustart erforderlich)</string>
-  <string name="backup_description"><b>Sichern</b> exportiert Ihre Serien, Staffeln, Folgen und Listen in eine JSON-Datei in den unten angegebenen Ordner.\nBeim <b>Wiederherstellen</b> ist sicherzustellen, dass die von der Sicherung erstellten JSON-Dateien im Sicherungsordner liegen.</string>
+  <string name="backup_description"><b>Sichern</b> exportiert Ihre Serien, Staffeln, Folgen und Listen in eine JSON-Datei in den unten angegebenen Ordner.\nBeim <b>Wiederherstellen</b> ist sicherzustellen, dass die von der Sicherung erstellten JSON-Dateien in diesem Ordner liegen.</string>
   <string name="backup_full_dump">Alle Meta-Daten wie Beschreibungen, Schauspieler und Bewertungen mit einschließen.</string>
   <string name="backup_path">Sicherungsordner</string>
   <string name="backup_version">Datenbankversion</string>
@@ -250,7 +257,7 @@
   <string name="backup_failed">Sicherung ist fehlgeschlagen.</string>
   <string name="import_inprogress">Wiederherstellen der Datenbank…</string>
   <string name="import_failed_nosd">Wiederherstellen fehlgeschlagen. Der Backup-Ordner ist nicht verfügbar.</string>
-  <string name="import_failed_nofile">Es gibt keine lesbare Sicherungs-Datei.</string>
+  <string name="import_failed_nofile">Keine lesbare Sicherungs-Datei vorhanden.</string>
   <string name="import_failed_noread">Die Sicherungs-Datei ist nicht lesbar.</string>
   <string name="dbupgradefailed">Das Backup ist möglicherweise zu alt oder leer. Hinweis: Importieren Sie Pre-2.0 Sicherungen zuerst in einer 1.9.x Version.</string>
   <string name="import_success">Sicherung erfolgreich wiederhergestellt.</string>
@@ -325,22 +332,21 @@
   <string name="hide_watched">Verstecke gesehene Folgen</string>
   <string name="pref_widget_opacity">Widget-Hintergrund</string>
   <string name="pref_widget_type">Widget-Typ</string>
-  <string name="favorites">Favoriten</string>
   <string name="dashclock_extension_label">Nächste Folge</string>
   <string name="dashclock_extension_description">Zeigt die nächste kommende Folge deiner Serien aus SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Zeige Folgen im Zeitraum</string>
   <string name="download_stable">SeriesGuide herunterladen</string>
-  <string name="migration_header">Migrate to SeriesGuide</string>
-  <string name="migration_description">SeriesGuide X is now X Life-Time Pass, you should migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
-  <string name="migration_backup">Touch below to create a fresh backup of your shows.</string>
-  <string name="migration_action_backup">Backup Shows</string>
-  <string name="migration_install">Touch below to install the free version of SeriesGuide.</string>
-  <string name="migration_action_install">Install SeriesGuide</string>
-  <string name="migration_launch">Touch below and once in SeriesGuide touch Menu, then Migrate.</string>
-  <string name="migration_action_launch">Open SeriesGuide, then Migrate</string>
-  <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
-  <string name="migration_action_import">Import and replace existing shows</string>
-  <string name="action_migrate">Migrate from X</string>
+  <string name="migration_header">Migration zu SeriesGuide</string>
+  <string name="migration_description">SeriesGuide X ist jetzt X Life-Time Pass, Sie sollten ihre Serien in die kostenlose Version von SeriesGuide migrieren. Lassen Sie X installiert um alle Funktionen in der kostenlosen Version zu entsperren.</string>
+  <string name="migration_backup">Tippen Sie unten um eine frische Sicherung Ihrer Serien zu erstellen.</string>
+  <string name="migration_action_backup">Serien Sichern</string>
+  <string name="migration_install">Tippen Sie unten um die kostenlose Version von SeriesGuide zu installieren.</string>
+  <string name="migration_action_install">SeriesGuide Installieren</string>
+  <string name="migration_launch">Tippen Sie unten und nachdem SeriesGuide geöffnet ist tippen Sie auf Menü, dann Migration.</string>
+  <string name="migration_action_launch">SeriesGuide Öffnen, dann Migration</string>
+  <string name="migration_import">Tippen Sie unten um die in SeriesGuide X erstellte Sicherung zu importieren.</string>
+  <string name="migration_action_import">Importieren und vorhandene Serien ersetzen</string>
+  <string name="action_migrate">Migration von X</string>
   <string name="upgrade_title">X-Funktionen erhalten</string>
   <string name="upgrade_description">Erhalten Sie Zugriff auf Benachrichtigungen, weitere Optionen für das Listen-Widget und alle zukünftigen X-Funkionen. Unterstützen Sie die Weiterentwicklung.\n\nFalls Sie bereits SeriesGuide X  erworben haben, installieren Sie es um dieses Upgrade zu aktivieren.</string>
   <string name="upgrade_action">X-Funktionen erhalten</string>
@@ -349,13 +355,7 @@
   <string name="subscription_expired">Abonnement abgelaufen</string>
   <string name="subscription_expired_details">Ihr X-Funktionen-Abonnement ist abgelaufen.</string>
   <string name="add_to_homescreen">Zum Startbildschirm hinzufügen</string>
-  <string name="search_within_show">Search within %s</string>
-  <string-array name="shsorting">
-    <item>A - Z</item>
-    <item>Nächste Folge</item>
-    <item>Favoriten (A - Z)</item>
-    <item>Favoriten (nächste Fo.)</item>
-  </string-array>
+  <string name="search_within_show">Durchsuche %s</string>
   <string-array name="sesorting">
     <item>Aktuellste zuerst</item>
     <item>Älteste zuerst</item>
@@ -376,12 +376,6 @@
     <item>einer Woche</item>
     <item>zweier Wochen</item>
     <item>eines Monats</item>
-  </string-array>
-  <string-array name="showfilter_list">
-    <item>Alle</item>
-    <item>Favoriten</item>
-    <item>Ungesehene/Zukünftige</item>
-    <item>Ausgeblendete</item>
   </string-array>
   <string-array name="notificationThreshold">
     <item>auf Sendung</item>

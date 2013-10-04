@@ -40,7 +40,6 @@
   <string name="movies">Филми</string>
   <string name="statistics">Статистика</string>
   <string name="search">Търсене</string>
-  <string name="add_show">Добавяне на сериал</string>
   <string name="preferences">Настройки</string>
   <string name="help">Помощ</string>
   <string name="shouts">Мнения</string>
@@ -118,9 +117,7 @@
   <string name="trakt_collected">%s събрани.</string>
   <string name="trakt_notcollected">%s не събрани.</string>
   <string name="add_empty">Няма никакви предания или устройство е без интернет връзка.</string>
-  <string name="shows_empty">Потърсете в менюто отгоре за да добавите предаване.</string>
-  <string name="favorites_empty">Продължително натиснете върху предаване за да го добавите към Любими.</string>
-  <string name="hidden_empty">Продължително натиснете върху предаване, за да го скриете тук.</string>
+  <string name="empty_filter">Remove all filters</string>
   <string name="confirm_delete">Искаш ли да премахнеш %s?</string>
   <string name="delete_has_list_items">Може\не може да се изпълни, първо премахнете %s от всички списъци.</string>
   <string name="delete_show">Премахване</string>
@@ -134,6 +131,16 @@
   <string name="context_unhide">Показване</string>
   <string name="hidden">Скрито предаване</string>
   <string name="unhidden">Показано предаване</string>
+  <string name="action_shows_add">Add show</string>
+  <string name="action_shows_filter">Filter shows</string>
+  <string name="action_shows_filter_favorites">Любими</string>
+  <string name="action_shows_filter_unwatched">Unwatched</string>
+  <string name="action_shows_filter_upcoming">Предстоящи</string>
+  <string name="action_shows_filter_hidden">Hidden</string>
+  <string name="action_shows_sort">Sort shows</string>
+  <string name="action_shows_sort_title">Title</string>
+  <string name="action_shows_sort_episode">Next episode</string>
+  <string name="action_shows_sort_favorites">Favorites first</string>
   <string name="upcoming">Предстоящи</string>
   <string name="recent">Последни</string>
   <string name="friends">Приятели</string>
@@ -325,7 +332,6 @@
   <string name="hide_watched">Скрий гледаните епизоди</string>
   <string name="pref_widget_opacity">Фон на уиджета</string>
   <string name="pref_widget_type">Вид на уиджета</string>
-  <string name="favorites">Любими</string>
   <string name="dashclock_extension_label">Предстоящ епизод</string>
   <string name="dashclock_extension_description">Показва следващите епизоди на вашите SeriesGuide  сериали.</string>
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
@@ -350,12 +356,6 @@
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
   <string name="add_to_homescreen">Add to Home screen</string>
   <string name="search_within_show">Search within %s</string>
-  <string-array name="shsorting">
-    <item>А-Ю</item>
-    <item>Следващ епизод</item>
-    <item>Любими (A - Z)</item>
-    <item>Любичи (Следващ еп.)</item>
-  </string-array>
   <string-array name="sesorting">
     <item>Най-новите отгоре</item>
     <item>Най-старите отгоре</item>
@@ -364,7 +364,7 @@
     <item>Най-новите отгоре</item>
     <item>Най-старите отгоре</item>
     <item>Негледаните най-отгоре</item>
-    <item>A - Z</item>
+    <item>А-Ю</item>
     <item>Най-високо оценени</item>
     <item>Най-новите отгоре (DVD)</item>
     <item>Най-старите отгоре (DVD)</item>
@@ -376,12 +376,6 @@
     <item>седмица</item>
     <item>две седмици</item>
     <item>месец</item>
-  </string-array>
-  <string-array name="showfilter_list">
-    <item>Всички</item>
-    <item>Любими</item>
-    <item>Негледани/Предстоящи</item>
-    <item>Скрити</item>
   </string-array>
   <string-array name="notificationThreshold">
     <item>в момента</item>

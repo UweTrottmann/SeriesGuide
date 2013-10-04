@@ -40,7 +40,6 @@
   <string name="movies">Películas</string>
   <string name="statistics">Estadísticas</string>
   <string name="search">Buscar</string>
-  <string name="add_show">Agregar serie</string>
   <string name="preferences">Configuración</string>
   <string name="help">Ayuda</string>
   <string name="shouts">Gritos</string>
@@ -118,9 +117,7 @@
   <string name="trakt_collected">%s recopilados.</string>
   <string name="trakt_notcollected">%s no recopilados.</string>
   <string name="add_empty">No hay ningún programa aquí o tu dispositivo no tiene conexión a internet.</string>
-  <string name="shows_empty">Busca en el menú de arriba para añadir algunos programas.</string>
-  <string name="favorites_empty">Pulse sostenidamente en una serie para agregarla a favoritos.</string>
-  <string name="hidden_empty">Pulse sostenidamente en una serie para ocultarla aquí.</string>
+  <string name="empty_filter">Remove all filters</string>
   <string name="confirm_delete">¿Realmente desea eliminar %s?</string>
   <string name="delete_has_list_items">No se puede realizar, quite %s de todas las listas primero.</string>
   <string name="delete_show">Eliminar</string>
@@ -134,6 +131,16 @@
   <string name="context_unhide">Des-esconder</string>
   <string name="hidden">Serie oculta</string>
   <string name="unhidden">Mostrar serie</string>
+  <string name="action_shows_add">Add show</string>
+  <string name="action_shows_filter">Filter shows</string>
+  <string name="action_shows_filter_favorites">Favoritos</string>
+  <string name="action_shows_filter_unwatched">Unwatched</string>
+  <string name="action_shows_filter_upcoming">Próximos</string>
+  <string name="action_shows_filter_hidden">Hidden</string>
+  <string name="action_shows_sort">Sort shows</string>
+  <string name="action_shows_sort_title">Title</string>
+  <string name="action_shows_sort_episode">Next episode</string>
+  <string name="action_shows_sort_favorites">Favorites first</string>
   <string name="upcoming">Próximos</string>
   <string name="recent">Reciente</string>
   <string name="friends">Amigos</string>
@@ -325,7 +332,6 @@
   <string name="hide_watched">Ocultar episodios vistos</string>
   <string name="pref_widget_opacity">Fondo de widget</string>
   <string name="pref_widget_type">Tipo de widget</string>
-  <string name="favorites">Favoritos</string>
   <string name="dashclock_extension_label">Próximo episodio</string>
   <string name="dashclock_extension_description">Muestra el próximo episodio de sus series de SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Mostrar próximos episodios</string>
@@ -350,12 +356,6 @@
   <string name="subscription_expired_details">Tu suscripción a las características X ha caducado.</string>
   <string name="add_to_homescreen">Añadir a pantalla de inicio</string>
   <string name="search_within_show">Búsqueda dentro de %s</string>
-  <string-array name="shsorting">
-    <item>A - Z</item>
-    <item>Episodio siguiente</item>
-    <item>Favoritos (A - Z)</item>
-    <item>Favoritos (cap. siguiente)</item>
-  </string-array>
   <string-array name="sesorting">
     <item>Más reciente primero</item>
     <item>Más antiguo primero</item>
@@ -364,7 +364,7 @@
     <item>Más reciente primero</item>
     <item>Más antiguo primero</item>
     <item>No vistos primero</item>
-    <item>A-Z</item>
+    <item>A - Z</item>
     <item>Mas valorado</item>
     <item>Primero los más rencientes (DVD)</item>
     <item>Primero más antiguos (DVD)</item>
@@ -376,12 +376,6 @@
     <item>una semana</item>
     <item>dos semanas</item>
     <item>un mes</item>
-  </string-array>
-  <string-array name="showfilter_list">
-    <item>Todo</item>
-    <item>Favoritos</item>
-    <item>No vistos/Próximos</item>
-    <item>Oculto</item>
   </string-array>
   <string-array name="notificationThreshold">
     <item>en directo</item>

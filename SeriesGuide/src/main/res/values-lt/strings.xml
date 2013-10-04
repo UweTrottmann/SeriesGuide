@@ -40,7 +40,6 @@
   <string name="movies">Filmai</string>
   <string name="statistics">Statistika</string>
   <string name="search">Paieška</string>
-  <string name="add_show">Pridėti serialą</string>
   <string name="preferences">Nustatymai</string>
   <string name="help">Pagalba</string>
   <string name="shouts">Shouts</string>
@@ -118,9 +117,7 @@
   <string name="trakt_collected">%s collected.</string>
   <string name="trakt_notcollected">%s not collected.</string>
   <string name="add_empty">There are no shows here or your device has no internet connection.</string>
-  <string name="shows_empty">Look in the menu above to add some shows.</string>
-  <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
-  <string name="hidden_empty">Long-press on a show to hide it here.</string>
+  <string name="empty_filter">Remove all filters</string>
   <string name="confirm_delete">Ar tikrai norite pašalinti %s?</string>
   <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Pašalinti</string>
@@ -134,6 +131,16 @@
   <string name="context_unhide">Nebeslėpti</string>
   <string name="hidden">Hidden show</string>
   <string name="unhidden">Un-Hidden show</string>
+  <string name="action_shows_add">Add show</string>
+  <string name="action_shows_filter">Filter shows</string>
+  <string name="action_shows_filter_favorites">Mėgstamiausi</string>
+  <string name="action_shows_filter_unwatched">Unwatched</string>
+  <string name="action_shows_filter_upcoming">Artėjančios</string>
+  <string name="action_shows_filter_hidden">Hidden</string>
+  <string name="action_shows_sort">Sort shows</string>
+  <string name="action_shows_sort_title">Title</string>
+  <string name="action_shows_sort_episode">Next episode</string>
+  <string name="action_shows_sort_favorites">Favorites first</string>
   <string name="upcoming">Artėjančios</string>
   <string name="recent">Paskutinės</string>
   <string name="friends">Draugai</string>
@@ -325,7 +332,6 @@
   <string name="hide_watched">Slėpti pažiūrėtas serijas</string>
   <string name="pref_widget_opacity">Widget background</string>
   <string name="pref_widget_type">Widget type</string>
-  <string name="favorites">Mėgstamiausi</string>
   <string name="dashclock_extension_label">Upcoming episode</string>
   <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
@@ -350,12 +356,6 @@
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
   <string name="add_to_homescreen">Add to Home screen</string>
   <string name="search_within_show">Search within %s</string>
-  <string-array name="shsorting">
-    <item>A–Z</item>
-    <item>Kita serija</item>
-    <item>Mėgstamiausi (A–Z)</item>
-    <item>Mėgstamiausi (kita serija)</item>
-  </string-array>
   <string-array name="sesorting">
     <item>Latest first</item>
     <item>Oldest first</item>
@@ -376,12 +376,6 @@
     <item>a week</item>
     <item>two weeks</item>
     <item>a month</item>
-  </string-array>
-  <string-array name="showfilter_list">
-    <item>Visi</item>
-    <item>Mėgstamiausi</item>
-    <item>Unseen/Upcoming</item>
-    <item>Hidden</item>
   </string-array>
   <string-array name="notificationThreshold">
     <item>on air</item>

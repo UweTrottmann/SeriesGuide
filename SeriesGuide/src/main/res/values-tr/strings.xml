@@ -40,7 +40,6 @@
   <string name="movies">Filmler</string>
   <string name="statistics">İstatistikler</string>
   <string name="search">Ara</string>
-  <string name="add_show">Dizi Ekle</string>
   <string name="preferences">Ayarlar</string>
   <string name="help">Yardım</string>
   <string name="shouts">Notlar</string>
@@ -118,9 +117,7 @@
   <string name="trakt_collected">Kolleksiyona dahil edilen: %s.</string>
   <string name="trakt_notcollected">Kolleksiyonda bulunmayan: %s.</string>
   <string name="add_empty">Burada hiç dizi yok ya da internet bağlantın yok.</string>
-  <string name="shows_empty">Dizi eklemek için üstteki menüye bakın.</string>
-  <string name="favorites_empty">Favorilere eklemek için diziye uzun basın.</string>
-  <string name="hidden_empty">Burada gizlemek için diziye uzun basın.</string>
+  <string name="empty_filter">Remove all filters</string>
   <string name="confirm_delete">%s öğesini silmek istediğinize emin misiniz?</string>
   <string name="delete_has_list_items">Tamamen kaldırılamıyor, önce %s bütün listelerden kaldırın.</string>
   <string name="delete_show">Kaldır</string>
@@ -134,6 +131,16 @@
   <string name="context_unhide">Göster</string>
   <string name="hidden">Gizli dizi</string>
   <string name="unhidden">Gizlenmemiş dizi</string>
+  <string name="action_shows_add">Add show</string>
+  <string name="action_shows_filter">Filter shows</string>
+  <string name="action_shows_filter_favorites">Sık Kullanılanlar</string>
+  <string name="action_shows_filter_unwatched">Unwatched</string>
+  <string name="action_shows_filter_upcoming">Yaklaşan</string>
+  <string name="action_shows_filter_hidden">Hidden</string>
+  <string name="action_shows_sort">Sort shows</string>
+  <string name="action_shows_sort_title">Title</string>
+  <string name="action_shows_sort_episode">Next episode</string>
+  <string name="action_shows_sort_favorites">Favorites first</string>
   <string name="upcoming">Yaklaşan</string>
   <string name="recent">En Son</string>
   <string name="friends">Arkadaşlar</string>
@@ -325,7 +332,6 @@
   <string name="hide_watched">İzlenmiş bölümleri gizle</string>
   <string name="pref_widget_opacity">Widget arka planı</string>
   <string name="pref_widget_type">Widget tipi</string>
-  <string name="favorites">Sık Kullanılanlar</string>
   <string name="dashclock_extension_label">Gelecek bölüm</string>
   <string name="dashclock_extension_description">SeriesGuide dizilerinizin gelecek bölümünü gösterir.</string>
   <string name="dashclock_pref_upcoming_threshold">Dizinin sonraki bölümlerinde</string>
@@ -350,12 +356,6 @@
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
   <string name="add_to_homescreen">Ev Ekranına Ekleyin</string>
   <string name="search_within_show">İçinde ara %s</string>
-  <string-array name="shsorting">
-    <item>A - Z</item>
-    <item>Sonraki bölüm</item>
-    <item>Favoriler (A - Z)</item>
-    <item>Sık Kullanılanlar (sonraki bl)</item>
-  </string-array>
   <string-array name="sesorting">
     <item>Önce en yenisi</item>
     <item>Önce en eskisi</item>
@@ -376,12 +376,6 @@
     <item>bir hafta</item>
     <item>iki hafta</item>
     <item>bir ay</item>
-  </string-array>
-  <string-array name="showfilter_list">
-    <item>Tümü</item>
-    <item>Sık Kullanılanlar</item>
-    <item>İzlenmemiş / Yaklaşan</item>
-    <item>Gizli</item>
   </string-array>
   <string-array name="notificationThreshold">
     <item>yayında</item>

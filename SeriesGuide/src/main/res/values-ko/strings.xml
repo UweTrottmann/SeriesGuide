@@ -40,7 +40,6 @@
   <string name="movies">영화</string>
   <string name="statistics">통계</string>
   <string name="search">검색</string>
-  <string name="add_show">쇼 추가</string>
   <string name="preferences">설정</string>
   <string name="help">도움말</string>
   <string name="shouts">감상평</string>
@@ -118,9 +117,7 @@
   <string name="trakt_collected">%s 수집됨.</string>
   <string name="trakt_notcollected">%s 수집되지 않음.</string>
   <string name="add_empty">쇼정보가 없거나 인터넷 연결이 끊겨있습니다.</string>
-  <string name="shows_empty">쇼를 추가하려면 위의 메뉴를 보세요.</string>
-  <string name="favorites_empty">즐겨찾기에 쇼를 추가하려면 화면을 오래 누르세요.</string>
-  <string name="hidden_empty">쇼를 여기에 숨기려면 화면을 오래 누르세요.</string>
+  <string name="empty_filter">Remove all filters</string>
   <string name="confirm_delete">%S을 제거 하시겠습니까?</string>
   <string name="delete_has_list_items">진행불가. %s을 먼저 모든 목록에서 삭제하세요.</string>
   <string name="delete_show">삭제</string>
@@ -134,6 +131,16 @@
   <string name="context_unhide">보이기</string>
   <string name="hidden">숨겨진 쇼</string>
   <string name="unhidden">쇼 보이기</string>
+  <string name="action_shows_add">Add show</string>
+  <string name="action_shows_filter">Filter shows</string>
+  <string name="action_shows_filter_favorites">즐겨찾기</string>
+  <string name="action_shows_filter_unwatched">Unwatched</string>
+  <string name="action_shows_filter_upcoming">방영예정</string>
+  <string name="action_shows_filter_hidden">Hidden</string>
+  <string name="action_shows_sort">Sort shows</string>
+  <string name="action_shows_sort_title">Title</string>
+  <string name="action_shows_sort_episode">Next episode</string>
+  <string name="action_shows_sort_favorites">Favorites first</string>
   <string name="upcoming">방영예정</string>
   <string name="recent">최근방영됨</string>
   <string name="friends">친구</string>
@@ -325,7 +332,6 @@
   <string name="hide_watched">시청한 에피소드 숨기기</string>
   <string name="pref_widget_opacity">위젯 배경</string>
   <string name="pref_widget_type">위젯 형태</string>
-  <string name="favorites">즐겨찾기</string>
   <string name="dashclock_extension_label">방영예정 에피소드</string>
   <string name="dashclock_extension_description">시리즈가이드에 있는 쇼의 다음 에피소드를 표시합니다.</string>
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
@@ -350,12 +356,6 @@
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
   <string name="add_to_homescreen">Add to Home screen</string>
   <string name="search_within_show">Search within %s</string>
-  <string-array name="shsorting">
-    <item>A - Z</item>
-    <item>다음 에피소드</item>
-    <item>즐겨찾기 (A-Z)</item>
-    <item>즐겨찾기 (다음에피)</item>
-  </string-array>
   <string-array name="sesorting">
     <item>최근 방영 순</item>
     <item>예전 방영 순</item>
@@ -376,12 +376,6 @@
     <item>1주</item>
     <item>2주</item>
     <item>한달</item>
-  </string-array>
-  <string-array name="showfilter_list">
-    <item>모두</item>
-    <item>즐겨찾기</item>
-    <item>미시청/방영예정</item>
-    <item>숨겨짐</item>
   </string-array>
   <string-array name="notificationThreshold">
     <item>방송중</item>
