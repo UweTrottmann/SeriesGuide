@@ -151,11 +151,11 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Returns true if there is currently a sync operation for the given account
      * or authority in the pending list, or actively being processed.
      */
-    public static boolean isSyncActive(Context context, boolean displayWarning) {
+    public static boolean isSyncActive(Context context, boolean isDisplayWarning) {
         boolean isSyncActive = ContentResolver.isSyncActive(
                 SyncUtils.getSyncAccount(context),
                 SeriesGuideApplication.CONTENT_AUTHORITY);
-        if (isSyncActive) {
+        if (isSyncActive && isDisplayWarning) {
             Toast.makeText(context, R.string.update_inprogress, Toast.LENGTH_LONG).show();
         }
         return isSyncActive;
