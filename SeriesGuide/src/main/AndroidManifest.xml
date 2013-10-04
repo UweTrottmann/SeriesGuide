@@ -65,7 +65,7 @@
         <!-- Shows -->
         <activity
             android:name="com.battlelancer.seriesguide.ui.AddActivity"
-            android:label="@string/add_show"
+            android:label="@string/action_shows_add"
             android:launchMode="singleTop" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
