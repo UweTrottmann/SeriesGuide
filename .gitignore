@@ -1,6 +1,7 @@
 ﻿dist
 analytics.xml
 keys.xml
+*.keystore
 
 ### Android
 ###########
