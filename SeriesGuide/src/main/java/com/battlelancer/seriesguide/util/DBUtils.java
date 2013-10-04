@@ -28,6 +28,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 
 import com.battlelancer.seriesguide.SeriesGuideApplication;
@@ -493,7 +494,10 @@ public class DBUtils {
             episodes.moveToFirst();
             while (!episodes.isAfterLast()) {
                 episodeIDs[counter++] = episodes.getString(0);
-                imageProvider.removeImage(episodes.getString(1));
+                String imageUrl = episodes.getString(1);
+                if (!TextUtils.isEmpty(imageUrl)) {
+                    imageProvider.removeImage(imageUrl);
+                }
                 episodes.moveToNext();
             }
             episodes.close();
