@@ -239,6 +239,9 @@ public final class ServiceUtils {
         }
 
         ServiceManager manager = getTraktServiceManagerWithAuth(context, false);
+        if (manager == null) {
+            return;
+        }
         try {
             Response r = manager.accountService().test().fire();
             if (r != null && TraktStatus.FAILURE.equals(r.status)) {
