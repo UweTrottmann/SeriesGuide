@@ -25,7 +25,7 @@
                 android:paddingBottom="@dimen/default_padding"
                 android:paddingLeft="@dimen/default_padding"
                 android:paddingRight="@dimen/default_padding"
-                android:text="@string/add_show"
+                android:text="@string/action_shows_add"
                 android:textAppearance="@style/TextAppearance.Large.Light"
                 android:textIsSelectable="true" />
 
