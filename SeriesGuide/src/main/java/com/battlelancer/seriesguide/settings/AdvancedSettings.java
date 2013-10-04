@@ -72,11 +72,11 @@ public class AdvancedSettings {
      * considered as upcoming.
      */
     public static int getUpcomingLimitInDays(Context context) {
-        int upcomingLimit = 1;
+        int upcomingLimit = 3;
         try {
             upcomingLimit = Integer.parseInt(PreferenceManager
                     .getDefaultSharedPreferences(context).getString(
-                            KEY_UPCOMING_LIMIT, "1"));
+                            KEY_UPCOMING_LIMIT, "3"));
         } catch (NumberFormatException ignored) {
         }
 
