@@ -81,6 +81,8 @@ public final class ServiceUtils {
 
     private static final String YOUTUBE_PACKAGE = "com.google.android.youtube";
 
+    private static final String WIKIPEDIA = "http://www.google.com/search?q=%s+Wikipedia+TV&btnI=745";
+
     private static ServiceManager sTraktServiceManagerInstance;
 
     private static ServiceManager sTraktServiceManagerWithAuthInstance;
@@ -293,6 +295,7 @@ public final class ServiceUtils {
             if (!TextUtils.isEmpty(imdbId)) {
                 imdbButton.setEnabled(true);
                 imdbButton.setOnClickListener(new OnClickListener() {
+                    @Override
                     public void onClick(View v) {
                         openImdb(imdbId, logTag, context);
                     }
@@ -565,6 +568,48 @@ public final class ServiceUtils {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
         EasyTracker.getTracker().sendEvent(logTag, "Action Item", "YouTube search", (long) 0);
+    }
+
+    /**
+     * Used to search Wikipedia for <code>query</code>
+     * 
+     * @param query The search query for the YouTube app
+     * @param button The {@link Button} used to invoke the
+     *            {@link android.view.View.OnClickListener}
+     * @param logTag The log tag to use, for Analytics
+     */
+    public static void setUpWikipediaButton(final String query, View button, final String logTag) {
+        if (button == null) {
+            // Return if the button isn't initialized
+            return;
+        } else if (TextUtils.isEmpty(query)) {
+            // Disable the button if there's nothing to search for
+            button.setEnabled(false);
+            return;
+        }
+
+        button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchWikipedia(v.getContext(), query, logTag);
+            }
+        });
+    }
+
+    /**
+     * Attempts to search Wikipedia for <code>query</code> using a little Google
+     * search trick
+     * 
+     * @param context The {@link Context} to use
+     * @param query The search query
+     * @param logTag The log tag to use, for Analytics
+     */
+    public static void searchWikipedia(Context context, String query, String logTag) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(String.format(WIKIPEDIA, Uri.encode(query))));
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        Utils.tryStartActivity(context, intent, true);
+        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "Wikipedia search", (long) 0);
     }
 
 }

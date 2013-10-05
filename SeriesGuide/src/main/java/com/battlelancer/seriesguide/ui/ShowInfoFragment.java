@@ -257,6 +257,10 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
         ServiceUtils.setUpTraktButton(getShowTvdbId(), getView().findViewById(R.id.buttonTrakt),
                 TAG);
 
+        // Wikipedia button
+        View wikiButton = getView().findViewById(R.id.buttonWikipedia);
+        ServiceUtils.setUpWikipediaButton(mShow.getTitle(), wikiButton, TAG);
+
         // Shout button
         getView().findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
             @Override

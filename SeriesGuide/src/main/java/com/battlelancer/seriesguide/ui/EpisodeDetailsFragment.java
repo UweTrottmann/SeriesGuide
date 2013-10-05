@@ -524,6 +524,10 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             ServiceUtils.setUpTraktButton(mShowTvdbId, mSeasonNumber, mEpisodeNumber,
                     view.findViewById(R.id.buttonTrakt), TAG);
 
+            // Wikipedia button
+            View wikiButton = view.findViewById(R.id.buttonWikipedia);
+            ServiceUtils.setUpWikipediaButton(showTitle + " " + episodeTitle, wikiButton, TAG);
+
             // trakt shouts button
             view.findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
                 @Override
