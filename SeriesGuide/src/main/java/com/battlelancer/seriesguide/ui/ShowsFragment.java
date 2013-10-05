@@ -209,7 +209,13 @@ public class ShowsFragment extends SherlockFragment implements
         }
 
         if (emptyView != null) {
-            mGrid.setEmptyView(emptyView);
+            final View emptyViewCopy = emptyView;
+            mGrid.post(new Runnable() {
+                @Override
+                public void run() {
+                    mGrid.setEmptyView(emptyViewCopy);
+                }
+            });
         }
     }
 
