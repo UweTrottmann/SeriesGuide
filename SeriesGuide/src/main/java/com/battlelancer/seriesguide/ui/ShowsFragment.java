@@ -134,9 +134,6 @@ public class ShowsFragment extends SherlockFragment implements
                 // already start loading, do not need to wait on saving prefs
                 getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, null, ShowsFragment.this);
 
-                // prepare an updated empty view
-                updateEmptyView();
-
                 PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
                         .putBoolean(ShowsDistillationSettings.KEY_FILTER_FAVORITES, false)
                         .putBoolean(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, false)
@@ -170,7 +167,6 @@ public class ShowsFragment extends SherlockFragment implements
         mGrid = (GridView) getView().findViewById(R.id.gridViewShows);
         mGrid.setAdapter(mAdapter);
         mGrid.setOnItemClickListener(this);
-        updateEmptyView();
         registerForContextMenu(mGrid);
 
         // start loading data
@@ -209,13 +205,7 @@ public class ShowsFragment extends SherlockFragment implements
         }
 
         if (emptyView != null) {
-            final View emptyViewCopy = emptyView;
-            mGrid.post(new Runnable() {
-                @Override
-                public void run() {
-                    mGrid.setEmptyView(emptyViewCopy);
-                }
-            });
+            mGrid.setEmptyView(emptyView);
         }
     }
 
@@ -447,9 +437,6 @@ public class ShowsFragment extends SherlockFragment implements
         // already start loading, do not need to wait on saving prefs
         getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, null, this);
 
-        // prepare an updated empty view
-        updateEmptyView();
-
         // update menu item state, then save at last
         item.setChecked(state);
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
@@ -481,6 +468,7 @@ public class ShowsFragment extends SherlockFragment implements
         getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
     }
 
+    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         StringBuilder selection = new StringBuilder();
 
@@ -542,12 +530,18 @@ public class ShowsFragment extends SherlockFragment implements
                 ShowsDistillationSettings.getSortQuery(mSortOrderId, mIsSortFavoritesFirst));
     }
 
+    @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         // Swap the new cursor in. (The framework will take care of closing the
         // old cursor once we return.)
         mAdapter.swapCursor(data);
+
+        // prepare an updated empty view
+        updateEmptyView();
+
     }
 
+    @Override
     public void onLoaderReset(Loader<Cursor> arg0) {
         // This is called when the last Cursor provided to onLoadFinished()
         // above is about to be closed. We need to make sure we are no
@@ -756,6 +750,7 @@ public class ShowsFragment extends SherlockFragment implements
 
     private final OnSharedPreferenceChangeListener mPrefsListener = new OnSharedPreferenceChangeListener() {
 
+        @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (key.equals(AdvancedSettings.KEY_UPCOMING_LIMIT)) {
                 getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, null, ShowsFragment.this);
