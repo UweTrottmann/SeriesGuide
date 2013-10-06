@@ -385,6 +385,10 @@ public class TheTVDB {
                 // Correct to EST
                 // Sample: heute-show
                 show.airtime -= 9 * DateUtils.HOUR_IN_MILLIS;
+            } else if ("Australia".equals(traktShow.country)) {
+                // Correct to Australian EST
+                // Sample: Offspring
+                show.airtime -= 18 * DateUtils.HOUR_IN_MILLIS;
             }
         }
 
