@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -80,8 +81,6 @@ public final class ServiceUtils {
     private static final String YOUTUBE_SEARCH = "http://www.youtube.com/results?search_query=%s";
 
     private static final String YOUTUBE_PACKAGE = "com.google.android.youtube";
-
-    private static final String WIKIPEDIA = "http://www.google.com/search?q=%s+Wikipedia+TV&btnI=745";
 
     private static ServiceManager sTraktServiceManagerInstance;
 
@@ -571,14 +570,14 @@ public final class ServiceUtils {
     }
 
     /**
-     * Used to search Wikipedia for <code>query</code>
+     * Used to search the web for <code>query</code>
      * 
      * @param query The search query for the YouTube app
      * @param button The {@link Button} used to invoke the
      *            {@link android.view.View.OnClickListener}
      * @param logTag The log tag to use, for Analytics
      */
-    public static void setUpWikipediaButton(final String query, View button, final String logTag) {
+    public static void setUpWebSearchButton(final String query, View button, final String logTag) {
         if (button == null) {
             // Return if the button isn't initialized
             return;
@@ -591,25 +590,24 @@ public final class ServiceUtils {
         button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchWikipedia(v.getContext(), query, logTag);
+                performWebSearch(v.getContext(), query, logTag);
             }
         });
     }
 
     /**
-     * Attempts to search Wikipedia for <code>query</code> using a little Google
-     * search trick
+     * Attempts to search the web for <code>query</code>
      * 
      * @param context The {@link Context} to use
      * @param query The search query
      * @param logTag The log tag to use, for Analytics
      */
-    public static void searchWikipedia(Context context, String query, String logTag) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(String.format(WIKIPEDIA, Uri.encode(query))));
+    public static void performWebSearch(Context context, String query, String logTag) {
+        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+        intent.putExtra(SearchManager.QUERY, query);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
-        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "Wikipedia search", (long) 0);
+        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "Web search", (long) 0);
     }
 
 }

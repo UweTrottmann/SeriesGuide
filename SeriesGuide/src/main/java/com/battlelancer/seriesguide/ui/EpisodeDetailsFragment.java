@@ -524,9 +524,9 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             ServiceUtils.setUpTraktButton(mShowTvdbId, mSeasonNumber, mEpisodeNumber,
                     view.findViewById(R.id.buttonTrakt), TAG);
 
-            // Wikipedia button
-            View wikiButton = view.findViewById(R.id.buttonWikipedia);
-            ServiceUtils.setUpWikipediaButton(showTitle + " " + episodeTitle, wikiButton, TAG);
+            // Web search button
+            View webSearch = view.findViewById(R.id.buttonWebSearch);
+            ServiceUtils.setUpWebSearchButton(showTitle + " " + episodeTitle, webSearch, TAG);
 
             // trakt shouts button
             view.findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
@@ -616,15 +616,18 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         int ABSOLUTE_NUMBER = 22;
     }
 
+    @Override
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
         return new CursorLoader(getActivity(), Episodes.buildEpisodeWithShowUri(String
                 .valueOf(getEpisodeTvdbId())), DetailsQuery.PROJECTION, null, null, null);
     }
 
+    @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
     }
 
+    @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mAdapter.swapCursor(null);
     }
