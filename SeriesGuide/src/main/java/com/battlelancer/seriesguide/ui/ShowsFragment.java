@@ -538,7 +538,6 @@ public class ShowsFragment extends SherlockFragment implements
 
         // prepare an updated empty view
         updateEmptyView();
-
     }
 
     @Override
