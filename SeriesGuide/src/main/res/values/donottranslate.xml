@@ -67,6 +67,8 @@
         <item>Türkçe</item>
         <item>한국어 (Korean)</item>
         <item>中文 (Chinese)</item>
+        <item> עברית</item>
+        <item>日本語 (Japanese)</item>
     </string-array>
     <string-array name="languageData">
         <item>en</item>
@@ -90,6 +92,8 @@
         <item>tr</item>
         <item>ko</item>
         <item>zh</item>
+        <item>he</item>
+        <item>ja</item>
     </string-array>
     <string-array name="numberData">
         <item>default</item>
