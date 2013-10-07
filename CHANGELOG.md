@@ -5,12 +5,26 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 8 *(in development)*
+Version 8 *(in beta)*
 -----------------
+
+* SeriesGuide X users, time to migrate your shows to the free version! Use the migration assistants, keep X installed to unlock all features in the free version.
+* Revamped filter and sort options for shows. Apply sort order twice to reverse it.
+* YouTube and web search button for shows and episodes.
+* Reduced minimum size of list widget, removed legacy one row widget on Android 3.0 and up.
+* Bug and crash fixes.
+
+### Detailed changes:
+
+#### 8 *(2013-10-07)*
+
+* FEATURE Support Hebrew and Japanese TVDb content languages.
+* FEATURE 'Web search' button for shows and episodes. Thanks Andrew Neal (@adneal)!
+* TWEAK Correct air times for Australian shows using information from trakt.tv.
 
 #### 8-beta2 *(2013-10-04)*
 
-* FEATURE New filter and sort options for shows. Applay sort order twice to reverse it. Removed old categories.
+* FEATURE New filter and sort options for shows. Apply sort order twice to reverse it. Removed old categories.
 * FIX Some reported crashes.
 * NOTICE Latest translations from crowdin.
 
