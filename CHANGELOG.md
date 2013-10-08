@@ -5,7 +5,7 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 8 *(in beta)*
+Version 8 *(2013-10-08)*
 -----------------
 
 * SeriesGuide X users, time to migrate your shows to the free version! Use the migration assistants, keep X installed to unlock all features in the free version.
