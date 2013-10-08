@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/searchbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/default_padding"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginTop="@dimen/large_padding" >
+
+            <EditText
+                android:id="@+id/searchbox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/search_hint_add"
+                android:hint="@string/search_hint_add"
+                android:imeOptions="actionSearch"
+                android:inputType="text" />
+
+            <ImageButton
+                android:id="@+id/clearButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/custom_list_selector"
+                android:contentDescription="@string/search_button"
+                android:src="?attr/drawableCancel" />
+        </LinearLayout>
+
+        <GridView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="@bool/gridClipToPadding"
+            android:columnWidth="@dimen/showgrid_columnWidth"
+            android:fastScrollEnabled="true"
+            android:gravity="center"
+            android:horizontalSpacing="@dimen/showgrid_spacing"
+            android:listSelector="@null"
+            android:numColumns="auto_fit"
+            android:padding="@dimen/showgrid_padding"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="@dimen/showgrid_spacing" >
+        </GridView>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/poweredby"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:background="#bf000000"
+        android:padding="@dimen/default_padding"
+        android:text="@string/powered_by_thetvdb"
+        android:textAppearance="@style/TextAppearance.XSmall"
+        android:textColor="@color/text_default" />
+
+</FrameLayout>

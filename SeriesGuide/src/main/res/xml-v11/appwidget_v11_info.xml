@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:configure="com.battlelancer.seriesguide.appwidget.ListWidgetConfigure"
+    android:initialKeyguardLayout="@layout/appwidget_v11"
+    android:initialLayout="@layout/appwidget_v11"
+    android:minHeight="140dp"
+    android:minWidth="250dp"
+    android:minResizeHeight="40dp"
+    android:minResizeWidth="180dp"
+    android:previewImage="@drawable/listwidget_ori_portrait"
+    android:resizeMode="horizontal|vertical"
+    android:updatePeriodMillis="0"
+    android:widgetCategory="keyguard|home_screen" >
+
+</appwidget-provider>

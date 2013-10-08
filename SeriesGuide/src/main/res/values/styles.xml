@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Text styles -->
+    <style name="TextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">?attr/textColorSgDefault</item>
+        <item name="android:textSize">@dimen/text_size_xmedium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif</item>
+    </style>
+
+    <style name="TextAppearance.Dim">
+        <item name="android:textColor">?attr/textColorSgDim</item>
+    </style>
+
+    <style name="TextAppearance.Light">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
+    </style>
+
+    <style name="TextAppearance.Primary">
+        <item name="android:textColor">?attr/textColorSgPrimary</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
+    </style>
+
+    <style name="TextAppearance.XSmall">
+        <item name="android:textSize">@dimen/text_size_xsmall</item>
+        <item name="android:textColor">?attr/textColorSgDefault</item>
+    </style>
+
+    <style name="TextAppearance.XSmall.Dim">
+        <item name="android:textColor">?attr/textColorSgDim</item>
+    </style>
+
+    <style name="TextAppearance.Small">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">?attr/textColorSgDefault</item>
+    </style>
+
+    <style name="TextAppearance.Small.Light">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
+    </style>
+
+    <style name="TextAppearance.Small.Highlight">
+        <item name="android:textColor">@color/text_blue</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="TextAppearance.Small.Dim">
+        <item name="android:textColor">?attr/textColorSgDim</item>
+    </style>
+
+    <style name="TextAppearance.Small.Primary">
+        <item name="android:textColor">?attr/textColorSgPrimary</item>
+    </style>
+
+    <style name="TextAppearance.Small.Label">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps" tools:targetApi="ice_cream_sandwich">true</item>
+    </style>
+
+    <style name="TextAppearance.Medium">
+        <item name="android:textColor">?attr/textColorSgPrimary</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+    <style name="TextAppearance.Medium.Dim">
+        <item name="android:textColor">?attr/textColorSgDim</item>
+    </style>
+
+    <style name="TextAppearance.Medium.Light">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
+    </style>
+
+    <style name="TextAppearance.Medium.Light.Dim">
+        <item name="android:textColor">?attr/textColorSgDefault</item>
+    </style>
+
+    <style name="TextAppearance.Large">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textColor">?attr/textColorSgPrimary</item>
+    </style>
+
+    <style name="TextAppearance.ActionBar" parent="TextAppearance.Sherlock.Widget.ActionBar.Title">
+        <item name="android:textColor">?attr/textColorSgActionBar</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
+    </style>
+
+    <style name="TextAppearance.Large.Light">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
+    </style>
+
+    <style name="TextAppearance.HyperLarge">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-thin</item>
+        <item name="android:textSize">@dimen/text_size_hyperlarge</item>
+    </style>
+
+    <!-- Widget styles -->
+    <style name="Widget"></style>
+
+    <style name="Widget.SeriesGuide" parent="Widget"></style>
+
+    <!-- Buttons -->
+    <style name="Widget.SeriesGuide.Button" parent="android:Widget.Button">
+        <item name="android:background">@drawable/btn_default_sg</item>
+        <item name="android:textAppearance">@style/TextAppearance.Medium</item>
+        <item name="android:textColor">@color/text_primary_sg</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:minWidth">64dip</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.Button.Borderless">
+        <item name="android:background">?custom_list_selector</item>
+        <item name="android:paddingLeft">4dip</item>
+        <item name="android:paddingRight">4dip</item>
+        <item name="android:textColor">?attr/textColorSgPrimary</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.Button.Borderless.Default">
+        <item name="android:textAppearance">@style/TextAppearance</item>
+        <item name="android:textColor">?attr/textColorSgDefault</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.Button.Borderless.Small">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.Button.Borderless.Small.Default">
+        <item name="android:textColor">?attr/textColorSgDefault</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.Button.Borderless.Small.Highlight">
+        <item name="android:textColor">@color/text_blue</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.ImageButton" parent="android:Widget.ImageButton">
+        <item name="android:background">@drawable/btn_default_sg</item>
+    </style>
+
+    <!-- CheckBox -->
+    <!-- pre v11 -->
+    <style name="Widget.SeriesGuide.CheckBox" parent="android:Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/btn_check_sg</item>
+    </style>
+
+    <!-- EditText -->
+    <!-- pre v11 -->
+    <style name="Widget.SeriesGuide.EditText" parent="android:Widget.EditText">
+        <item name="android:background">@drawable/edit_text_sg</item>
+        <item name="android:textColor">@color/text_primary_sg</item>
+    </style>
+
+    <!-- ProgressBar -->
+    <!-- pre v11 -->
+    <style name="ProgressBar" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_sg</item>
+        <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_sg</item>
+        <item name="android:minHeight">16dip</item>
+        <item name="android:maxHeight">16dip</item>
+    </style>
+
+    <!-- List selectors -->
+    <!-- pre v11 -->
+    <style name="Widget.SeriesGuide.ListView" parent="android:Widget.ListView">
+        <item name="android:listSelector">?custom_list_selector</item>
+    </style>
+
+    <!-- pre v11 -->
+    <style name="Widget.SeriesGuide.ListView.White" parent="android:Widget.ListView.White">
+        <item name="android:listSelector">?custom_list_selector</item>
+    </style>
+
+    <!-- Dialogs -->
+    <style name="DialogWindowTitle.SeriesGuide" parent="Widget">
+        <item name="android:maxLines">1</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:textAppearance">@style/TextAppearance.SeriesGuide.DialogWindowTitle</item>
+        <item name="android:minHeight">64dip</item>
+        <item name="android:paddingLeft">16dip</item>
+        <item name="android:paddingRight">16dip</item>
+    </style>
+
+    <style name="TextAppearance.SeriesGuide.DialogWindowTitle" parent="Widget">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <style name="Animation.CheckinDialog" parent="android:Animation.Dialog">
+        <item name="android:windowExitAnimation">@anim/checkin_dialog_exit</item>
+    </style>
+
+    <!-- ABS -->
+    <style name="ActionBar" parent="Widget.Sherlock.ActionBar">
+        <item name="background">@drawable/sg_actionbar_background</item>
+        <item name="android:background">@drawable/sg_actionbar_background</item>
+        <item name="titleTextStyle">@style/TextAppearance.ActionBar</item>
+        <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/TextAppearance.ActionBar</item>
+    </style>
+
+    <style name="ActionBarTabStyle" parent="Widget.Sherlock.ActionBar.TabBar">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">@drawable/tab_indicator</item>
+        <item name="android:paddingLeft">16dip</item>
+        <item name="android:paddingRight">16dip</item>
+    </style>
+
+    <style name="ActionBarTabTextStyle" parent="Widget.Sherlock.ActionBar.TabText">
+        <item name="android:textColor">?attr/textColorSgActionBar</item>
+    </style>
+
+    <style name="DropDownListView" parent="Widget.Sherlock.ListView.DropDown">
+        <item name="android:listSelector">?custom_list_selector</item>
+    </style>
+
+    <style name="DropDownNav" parent="@style/Widget.Sherlock.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_sg</item>
+        <item name="android:dropDownSelector">?custom_list_selector</item>
+    </style>
+
+    <!-- ActionBar Spinner -->
+    <style name="ActionBarSpinnerItem">
+        <item name="android:textColor">?attr/textColorSgActionBar</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
+    </style>
+
+    <!-- PagerSlidingTabStrip -->
+    <style name="TabStrip">
+        <item name="android:textColor">?attr/colorTabStripText</item>
+        <item name="dividerColor">?attr/colorDivider</item>
+        <item name="indicatorColor">?attr/colorAccent</item>
+        <item name="underlineColor">?attr/colorAccent</item>
+    </style>
+
+    <style name="Header">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:layout_marginLeft">@dimen/default_padding</item>
+        <item name="android:layout_marginRight">@dimen/default_padding</item>
+    </style>
+
+    <style name="ListHeader">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <!-- Unified text styles and sizes -->
+    <style name="ListTextBig">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ListTextNormal">
+        <item name="android:textSize">@dimen/text_size_xmedium</item>
+    </style>
+
+    <style name="ListTextSmall">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="ListTextSmall.Dim">
+        <item name="android:textColor">@color/text_dim</item>
+    </style>
+
+    <!-- Easy layouting -->
+    <style name="DefaultPadding"></style>
+
+    <style name="DefaultPadding.Page">
+        <item name="android:paddingTop">@dimen/default_padding</item>
+        <item name="android:paddingBottom">@dimen/default_padding</item>
+        <item name="android:paddingLeft">@dimen/large_padding</item>
+        <item name="android:paddingRight">@dimen/large_padding</item>
+    </style>
+
+    <style name="DefaultPadding.Blocks">
+        <item name="android:paddingLeft">@dimen/default_padding</item>
+        <item name="android:paddingRight">@dimen/default_padding</item>
+    </style>
+
+    <style name="DefaultPadding.Blocks.WithTopMargin">
+        <item name="android:layout_marginTop">@dimen/inline_padding</item>
+    </style>
+
+    <style name="DefaultPadding.Blocks.WithBottomMargin">
+        <item name="android:layout_marginBottom">@dimen/default_padding</item>
+    </style>
+
+    <style name="DefaultPadding.Blocks.WithBottomMargin.FlowText">
+        <item name="android:lineSpacingMultiplier">1.2</item>
+    </style>
+
+    <style name="Page">
+        <item name="android:padding">@dimen/large_padding</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="Page.Centered">
+    </style>
+
+    <!-- Used for longer passages of text -->
+    <style name="DescriptionFont">
+        <item name="android:textSize">@dimen/text_size_xmedium</item>
+    </style>
+
+    <!-- Widget items -->
+    <style name="WidgetTextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="WidgetTextView.Show">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Notification -->
+    <style name="NotificationText">
+        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="FirstRunColumn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <!-- Rating -->
+    <style name="RatingButton">
+        <item name="android:background">?custom_list_selector</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:padding">@dimen/default_padding</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/text_size_xmedium</item>
+        <item name="android:drawableLeft">@drawable/trakt_heart</item>
+    </style>
+
+    <!-- Episode pager -->
+    <style name="EpisodePagerSpacer">
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <!-- Panes -->
+    <style name="EpisodesPane">
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="DetailsPane">
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <!-- ////////////////////////////////////////////// -->
+
+
+    <!-- Dark styles -->
+
+
+    <!-- Buttons -->
+    <style name="Widget.Android.Button" parent="android:Widget.Button">
+        <item name="android:background">@drawable/btn_default_holo_dark</item>
+        <item name="android:textAppearance">@style/TextAppearance.Medium</item>
+        <item name="android:textColor">@color/text_primary_sg</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:minWidth">64dip</item>
+    </style>
+
+    <style name="Widget.Android.ImageButton" parent="android:Widget.ImageButton">
+        <item name="android:background">@drawable/btn_default_holo_dark</item>
+    </style>
+
+    <!-- ////////////////////////////////////////////// -->
+
+
+    <!-- Light styles -->
+
+
+    <!-- Buttons -->
+    <!-- pre v11 -->
+    <style name="Widget.SeriesGuide.Light.CheckBox" parent="Widget.SeriesGuide.CheckBox">
+        <item name="android:button">@drawable/btn_check_holo_light</item>
+    </style>
+
+    <!-- pre v11 -->
+    <style name="Widget.SeriesGuide.Light.EditText" parent="Widget.SeriesGuide.EditText">
+        <item name="android:background">@drawable/edit_text_holo_light</item>
+        <item name="android:textColor">@color/text_primary_light_sg</item>
+    </style>
+
+    <!-- ProgressBar -->
+    <!-- pre v11 -->
+    <style name="ProgressBar.Light">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_sg_light</item>
+    </style>
+
+    <!-- ActionBar -->
+    <style name="ActionBar.Light" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+        <item name="titleTextStyle">@style/TextAppearance.ActionBar</item>
+        <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/TextAppearance.ActionBar</item>
+    </style>
+
+    <!-- ActionBar Spinner -->
+    <style name="DropDownNav.Light" parent="@style/Widget.Sherlock.Light.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_sg</item>
+        <item name="android:dropDownSelector">?custom_list_selector</item>
+    </style>
+
+</resources>

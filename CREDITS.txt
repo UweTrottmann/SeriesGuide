@@ -153,3 +153,10 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+
+Androidicons Developer set (http://www.androidicons.com/)
+-------------------------------------------------------------------
+
+They do not require crediting, but I'll do it anyways because you
+absolutely have to check their icons out!

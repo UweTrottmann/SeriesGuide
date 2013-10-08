@@ -1,6 +1,7 @@
 ﻿dist
 analytics.xml
 keys.xml
+*.keystore
 
 ### Android
 ###########
@@ -20,6 +21,7 @@ gen/
 
 # Local configuration file (sdk path, etc)
 local.properties
+gradle.properties
 
 ### Linux
 #########
@@ -43,3 +45,8 @@ $RECYCLE.BIN/
 *.ipr
 *.iws
 .idea/
+
+### Gradle
+.gradle/
+build/
+out/

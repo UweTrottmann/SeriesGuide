@@ -5,6 +5,45 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 8 *(in beta)*
+-----------------
+
+* SeriesGuide X users, time to migrate your shows to the free version! Use the migration assistants, keep X installed to unlock all features in the free version.
+* Revamped filter and sort options for shows. Apply sort order twice to reverse it.
+* YouTube and web search button for shows and episodes.
+* Reduced minimum size of list widget, removed legacy one row widget on Android 3.0 and up.
+* Bug and crash fixes.
+
+### Detailed changes:
+
+#### 8 *(2013-10-07)*
+
+* FEATURE Support Hebrew and Japanese TVDb content languages.
+* FEATURE 'Web search' button for shows and episodes. Thanks Andrew Neal (@adneal)!
+* TWEAK Correct air times for Australian shows using information from trakt.tv.
+
+#### 8-beta2 *(2013-10-04)*
+
+* FEATURE New filter and sort options for shows. Apply sort order twice to reverse it. Removed old categories.
+* FIX Some reported crashes.
+* NOTICE Latest translations from crowdin.
+
+#### 7.2-beta1 *(2013-10-01)*
+
+* NOTICE SeriesGuide X users, time to migrate your shows to the free version! Keep X installed to unlock all features in the free version.
+* FEATURE YouTube search link on show and episode pages. Thanks Andrew Neal (@adneal)!
+* FEATURE Migration assistant. Helps export shows and install SeriesGuide in X, import shows within SeriesGuide.
+* TWEAK Refined first run info card, now a less distracting dismiss button.
+* TWEAK Some layout tweaks for larger screens (7-inch, 10-inch).
+* TWEAK Refreshed icons. Search inside show action now shown with any tab in show overview.
+* TWEAK List widget can be resized down to about one row in height and three columns in width. Removed legacy one row widget.
+* TWEAK Display subscription button right in the top menu for better discovery.
+* FIX Day headers on activity screen blacked out.
+* FIX Going back from X subscription screen dropped you out of the app.
+* FIX Layout animations in season list caused wierd overlaps.
+* NOTICE Switched to Gradle build system.
+* NOTICE Latest translations from crowdin.
+
 Version 7.1 *(2013-08-10)*
 -----------------
 

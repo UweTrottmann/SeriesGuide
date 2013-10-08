@@ -16,9 +16,9 @@ The repository is made up of two main branches: master (stable) and beta (develo
 Setup
 -----
 
-This project is built with [Android Developer Tools (ADT)][3] using the Android library concept for dependency management. Clone this repository inside your working folder. Add all projects inside the root and the libraries folder. (You can also have a look at the project.properties files on how the projects depend on another.)
+This project is built with Gradle and the [Android Gradle plugin][3] using the Android library concept for dependency management. Clone this repository inside your working folder. Import the build.gradle file in the root folder into Android Studio. (You can also have a look at the build.gradle files on how the projects depend on another.)
 
-To successfully build with ADT, you should also create a keys.xml file in the SeriesGuide/res/values folder and add the string values 
+To successfully build with ADT, you should also create a keys.xml file in the `SeriesGuide/src/main/res/values` folder and add the string values 
 
     <resources>
         <string name="tvdb_apikey"></string>
@@ -30,9 +30,10 @@ To successfully build with ADT, you should also create a keys.xml file in the Se
 	
 to it. These are not shared with the public mainly for security reasons.
 
-To build any of the free, X or beta version use the appropiate flavor project. They all use the SeriesGuide project as an Android library project and just change the package names and icons as well as the Content Provider URI.
+Now build any of the free, X or beta debug build variants (flavor + debug build type, see [instructions about product flavors][5]) defined in `SeriesGuide/build.gradle`. Each flavor just changes the package names and icons as well as the Content Provider URI and some additional properties.
 
  [1]: https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide
  [2]: https://github.com/UweTrottmann/SeriesGuide/wiki/Beta
- [3]: http://developer.android.com/tools/help/adt.html
+ [3]: http://tools.android.com/tech-docs/new-build-system/user-guide
  [4]: http://crowdin.net/project/seriesguide-translations
+ [5]: http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Product-flavors

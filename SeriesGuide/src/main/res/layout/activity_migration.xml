@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        style="@style/Page.Centered"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/default_padding"
+            android:text="@string/migration_header"
+            android:textAppearance="@style/TextAppearance.Large.Light" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/large_padding"
+            android:text="@string/migration_description"
+            android:textAppearance="@style/TextAppearance" />
+
+        <TextView
+            android:id="@+id/textViewMigrationLaunchInstructions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/large_padding"
+            android:text="@string/migration_install"
+            android:textAppearance="@style/TextAppearance"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/buttonMigrationLaunch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/large_padding"
+            android:text="@string/migration_action_install"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textViewMigrationBackupInstructions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/large_padding"
+            android:text="@string/migration_backup"
+            android:textAppearance="@style/TextAppearance" />
+
+        <ProgressBar
+            android:id="@+id/progressBarMigration"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/buttonMigrationExport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/large_padding"
+            android:text="@string/migration_action_backup" />
+    </LinearLayout>
+</ScrollView>

@@ -1,36 +1,63 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:0.4'
-    }
-}
-apply plugin: 'android-library'
-
-dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
-    compile project(':AndroidUtils:library')
-    compile project(':ActionBarSherlock:actionbarsherlock')
-    compile project(':Android-ViewPagerIndicator:library')
-    compile project(':android-menudrawer:library')
-}
+apply plugin: 'android'
 
 android {
-    compileSdkVersion 17
-    buildToolsVersion "17.0.0"
+    compileSdkVersion 18
+    buildToolsVersion "18.1"
+    compileOptions.encoding = "UTF-8"
 
-    sourceSets {
-        main {
-            manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src']
-            resources.srcDirs = ['src']
-            aidl.srcDirs = ['src']
-            renderscript.srcDirs = ['src']
-            res.srcDirs = ['res']
-            assets.srcDirs = ['assets']
-        }
-
-        instrumentTest.setRoot('tests')
+    defaultConfig {
+        minSdkVersion 8
+        targetSdkVersion 18
     }
+
+    productFlavors {
+        free {
+            packageName "com.battlelancer.seriesguide"
+            versionCode 176
+            versionName "8"
+        }
+        beta {
+            packageName "com.battlelancer.seriesguide.beta"
+            versionCode 215
+            versionName "8-internal"
+        }
+        x {
+            packageName "com.battlelancer.seriesguide.x"
+            versionCode 160
+            versionName "8x"
+        }
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('release.keystore')
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
+}
+
+dependencies {
+    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
+    compile project(':libraries:android-menudrawer')
+    compile project(':libraries:androidutils')
+    compile project(':libraries:pagerslidingtabstrip')
+    compile project(':libraries:stickygridheaders')
+    compile fileTree(dir: 'libs', include: '*.jar')
+    compile 'com.android.support:support-v4:18.0.+'
+}
+
+// get signing config from gradle.properties file
+if (project.hasProperty('storePassword')
+        && project.hasProperty('keyAlias')
+        && project.hasProperty('keyPassword')) {
+    android.signingConfigs.release.storePassword = storePassword
+    android.signingConfigs.release.keyAlias = keyAlias
+    android.signingConfigs.release.keyPassword = keyPassword
+} else {
+    android.buildTypes.release.signingConfig = null
 }

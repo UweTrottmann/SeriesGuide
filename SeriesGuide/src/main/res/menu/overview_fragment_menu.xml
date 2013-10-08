@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_overview_manage_lists"
+        android:icon="@drawable/ic_action_list"
+        android:orderInCategory="0"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/list_item_manage"/>
+    <item
+        android:id="@+id/menu_overview_share"
+        android:icon="@drawable/ic_action_share"
+        android:orderInCategory="1"
+        android:showAsAction="ifRoom"
+        android:title="@string/share_episode"/>
+
+</menu>

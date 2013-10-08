@@ -1,0 +1,63 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.battlelancer.seriesguide.beta"
+    android:installLocation="auto" >
+
+    <application
+        android:name="com.battlelancer.seriesguide.SeriesGuideApplication"
+        android:allowBackup="true"
+        android:backupAgent="com.battlelancer.seriesguide.PrefBackupHelper"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:restrictedAccountType="com.battlelancer.seriesguide.beta"
+        android:theme="@style/SeriesGuideTheme" >
+
+        <!-- Android Backup key for beta -->
+        <meta-data
+            android:name="com.google.android.backup.api_key"
+            android:value="AEdPqrEAAAAIlG-fXzOx6u3ozZ1ah_9eqMnUD70jCFA1FPzJnQ" />
+
+        <!-- Content provider -->
+        <provider
+            android:name="com.battlelancer.seriesguide.provider.SeriesGuideProvider"
+            android:authorities="com.battlelancer.seriesguide.beta.provider"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:syncable="true" >
+        </provider>
+
+        <!-- List widget configuration -->
+        <activity
+            android:name="com.battlelancer.seriesguide.appwidget.ListWidgetConfigure"
+            android:taskAffinity="com.battlelancer.seriesguide.beta.widgetconfiguration" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <!-- Sync service -->
+        <service
+            android:name="com.battlelancer.seriesguide.sync.SgAuthenticationService"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/accountauth" />
+        </service>
+        <service
+            android:name="com.battlelancer.seriesguide.sync.SgSyncService"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/sync_seriesguide" />
+        </service>
+    </application>
+
+</manifest>

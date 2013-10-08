@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_padding" >
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/poster"
+                android:paddingBottom="@dimen/default_padding"
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingRight="@dimen/default_padding"
+                android:text="@string/action_shows_add"
+                android:textAppearance="@style/TextAppearance.Large.Light"
+                android:textIsSelectable="true" />
+
+            <TextView
+                android:id="@+id/description"
+                style="@style/DefaultPadding.Blocks.WithBottomMargin.FlowText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/title"
+                android:layout_toLeftOf="@+id/poster"
+                android:text="@string/description_overview"
+                android:textAppearance="@style/TextAppearance.Light"
+                android:textIsSelectable="true" />
+
+            <ImageView
+                android:id="@+id/poster"
+                android:layout_width="116dp"
+                android:layout_height="163dp"
+                android:layout_alignParentRight="true"
+                android:layout_margin="@dimen/default_padding"
+                android:contentDescription="@string/description_poster"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <include layout="@layout/dialog_buttons" />
+
+</LinearLayout>
