@@ -231,7 +231,7 @@
 
         <receiver
             android:name="com.battlelancer.seriesguide.appwidget.AppWidget"
-            android:enabled="@bool/isGingerbreadOrLower"
+            android:enabled="@bool/isIceCreamSandwichOrLower"
             android:label="@string/smallwidget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
