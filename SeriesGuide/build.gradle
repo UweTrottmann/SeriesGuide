@@ -21,11 +21,6 @@ android {
             versionCode 215
             versionName "8-internal"
         }
-        x {
-            packageName "com.battlelancer.seriesguide.x"
-            versionCode 160
-            versionName "8x"
-        }
     }
 
     signingConfigs {
