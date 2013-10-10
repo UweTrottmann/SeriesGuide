@@ -88,7 +88,8 @@ public class ListWidgetConfigure extends Activity {
 
     private void onUpdateWidget() {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-        RemoteViews views = ListWidgetProvider.buildRemoteViews(this, mAppWidgetId);
+        RemoteViews views = ListWidgetProvider
+                .buildRemoteViews(this, appWidgetManager, mAppWidgetId);
         appWidgetManager.updateAppWidget(mAppWidgetId, views);
 
         Intent resultValue = new Intent();
