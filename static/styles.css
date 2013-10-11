@@ -6,6 +6,11 @@ color:#333;
 font-size: 14px;
 }
 
+h1, h2, h3, h4, h5, h6 {
+font-family: 'Roboto', sans-serif;
+text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
+}
+
 h1, h2 {
 font-weight: 300;
 color:#2B00AA;
@@ -14,10 +19,6 @@ color:#2B00AA;
 h3, h4, h5, h6 {
 font-weight: 300;
 color:#333;
-}
-
-p {
-font-family: 'Roboto', sans-serif;
 }
 
 li {
@@ -45,19 +46,27 @@ color:#333;
 font-size:2em;
 }
 
-.navbar .brand {
-color: #eee;
+.button-description {
+margin-top:5px;
 }
 
-.navbar .nav > li > a {
-font-size: 1.2em;
+.navbar-brand {
+  font-weight:300;
+  color: #eee;
+}
+
+.navbar-nav > li > a {
+font-size: 1.1em;
 font-weight:400;
-color: #eee;
 }
 
 .toc > li > a {
 color:#333;
 font-weight:400;
+}
+
+.img-hero {
+  max-height:600px;
 }
 
 .spacer {
@@ -86,8 +95,18 @@ float: left;
 margin-left: 2px;
 }
 
-.follow-button {
-padding:4px 0px 4px 0px;
+.app-logo {
+  height:128px;
+  width:128px;
+}
+
+.app-logo-inline {
+  height:32px;
+  width:32px;
+}
+
+#app-description {
+  margin-top:0;
 }
 
 #content {
