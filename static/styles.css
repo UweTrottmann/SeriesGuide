@@ -95,6 +95,16 @@ float: left;
 margin-left: 2px;
 }
 
+.app-logo {
+  height:128px;
+  width:128px;
+}
+
+.app-logo-inline {
+  height:32px;
+  width:32px;
+}
+
 #app-description {
   margin-top:0;
 }
