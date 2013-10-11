@@ -46,11 +46,16 @@ color:#333;
 font-size:2em;
 }
 
-.navbar .brand {
-color: #eee;
+.button-description {
+margin-top:5px;
 }
 
-.navbar .nav > li > a {
+.navbar-brand {
+  font-weight:300;
+  color: #eee;
+}
+
+.navbar-nav > li > a {
 font-size: 1.2em;
 font-weight:400;
 }
@@ -58,6 +63,10 @@ font-weight:400;
 .toc > li > a {
 color:#333;
 font-weight:400;
+}
+
+.img-hero {
+  max-height:600px;
 }
 
 .spacer {
@@ -84,6 +93,10 @@ color: #ffffff;
 .share-button {
 float: left;
 margin-left: 2px;
+}
+
+#app-description {
+  margin-top:0;
 }
 
 #content {
