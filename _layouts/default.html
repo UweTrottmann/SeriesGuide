@@ -1,161 +1,132 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta content="en" http-equiv="Content-Language" />
-	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-	<meta name="description" content="SeriesGuide helps you manage (re)watching your favorite TV shows on any Android device. Phones, tablets, Google TV, you name it." />
+  <meta content="en" http-equiv="Content-Language" />
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <meta name="description" content="SeriesGuide helps you manage (re)watching your favorite TV shows on your Android devices." />
+  
+  <title>{{ page.title }}</title>
+  <link rel="shortcut icon" href="favicon.ico"/>
+  
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,700italic,400italic,300italic,300' rel='stylesheet' type='text/css'>
 	
-	<title>{{ page.title }}</title>
-	<link rel="shortcut icon" href="favicon.ico"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  
+  <!-- SeriesGuide -->
+  <link href="../static/styles.css" rel="stylesheet" type="text/css" />
 	
-	<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,700italic,400italic,300italic,300' rel='stylesheet' type='text/css'>
-	
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.min.css" />
-	<link href="../static/styles.css" rel="stylesheet" type="text/css" />
-	
-	<!-- Google+ author tag -->
-	<link href="https://plus.google.com/112462818579768957964" rel="publisher" />
-	
-	<!-- Analytics -->
-	<script type="text/javascript">
-	var _gaq = _gaq || [];
-	_gaq.push(['_setAccount', 'UA-27760852-1']);
-	_gaq.push(['_trackPageview']);
-
-	(function() {
-		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	})();
+  <!-- Google+ author tag -->
+  <link href="https://plus.google.com/112462818579768957964" rel="publisher" />
+  
+  <!-- Analytics -->
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27760852-1']);
+  _gaq.push(['_trackPageview']);
+  
+  (function() {
+  	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
     </script>
 </head>
 
 <body>
-
-
-<div class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container">
-    	<!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-		</a>
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">SeriesGuide</a>    
+    </div>
     
-		<a class="brand" href="/">SeriesGuide</a>
-		
-		<div class="nav-collapse">
-			<ul class="nav">
-			  <li><a href="whypay">Why X</a></li>
-			  <li><a href="http://seriesguide.uservoice.com">Feature Request</a></li>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="whypay">Why X</a></li>
 			  <li><a href="help">Help</a></li>
 			  <li><a href="privacy">Privacy</a></li>
+			  <li><a href="http://seriesguide.uservoice.com">Feature Request <span class="glyphicon glyphicon-new-window"></span></a></li>
 			</ul>
-		</div>
     </div>
-  </div> <!-- navbar-inner -->
-</div> <!-- navbar -->
+  </nav> <!-- navbar -->
 
-<div id="content" class="container">
-	{{ content }}
-</div> <!-- container -->
-
-<div id="footer" class="container">
+  <div id="content" class="container">
+    {{ content }}
+  </div> <!-- container -->
+    
+  <div id="footer" class="container">
+  
     <div class="spacer"></div>
     
     <div class="row">
-        <div class="span4">
-            <h3>Follow SeriesGuide</h3>
-            <div class="well">
-            <div id="follow-buttons" class="row">
-            	<div id="go-follow" class="span follow-button">
-                    <div class="g-follow" data-annotation="bubble" data-height="20" data-href="//plus.google.com/112462818579768957964" data-rel="publisher"></div>           	            
-    			</div>
-    			
-    			<div id="tw-follow" class="span follow-button">
-    			    <a href="https://twitter.com/SeriesGuide" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false" data-lang="en">Follow @SeriesGuide</a>
-    	      	</div>
-    	      	
-    			<div id="fb-follow" class="span follow-button">
-    			    <div class="fb-like" data-href="https://www.facebook.com/SeriesGuide" data-send="false" data-layout="button_count" data-width="90" data-show-faces="true"></div>
-                </div>
-            </div> <!-- follow-buttons -->
-            </div>
-        </div>
-        <div class="span4"> 
-            <h3>Powered by</h3>
-            <div id="poweredby" class="well">
-                <ul id="poweredby-ul" class="thumbnails">
-                    <li>
-                        <a title="TheTVDb.com" href="http://thetvdb.com"><img src="images/tvdb-40px.png" width="101" height="40" alt="" /></a>
-                    </li>
-                    <li>
-                        <a title="Trakt.tv" href="http://trakt.tv"><img src="images/trakt.png" width="33" height="40" alt="" /></a>
-                    </li>
-                    <li>
-                        <a title="ActionBarSherlock" href="http://actionbarsherlock.com"><img src="images/actionbarsherlock-40px.png" width="35" height="40" alt="ActionBarSherlock" /></a>
-                    </li>
-                    <li>
-                        <a title="ViewPagerIndicator" href="http://viewpagerindicator.com"><img src="images/viewpagerindicator-40px.png" width="40" height="40" alt="" /></a>
-                    </li>
-                    <li>
-                        <a title="Themoviedb.org" href="http://themoviedb.org"><img src="images/tmdb-40px.png" width="193" height="40" alt="" /></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="span4"> 
-            <h3>Further Resources</h3>
-            <div id="resources" class="well">
-                <dl>
-                    <dt><a href="https://plus.google.com/u/0/communities/103447253937737054097">SeriesGuide Community</a></dt>
-                    <dd><img src="images/gplus-16.png" width="16" height="16"/> Share ideas, report bugs or ask for help</dd>
-                    <br/>
-                    <dt><a href="http://git.io/sgchanges#changelog">Changelog</a></dt>
-                    <dd>Read through the recent changes</dd>
-                    <br/>
-                    <dt><a href="https://github.com/UweTrottmann/SeriesGuide">Source Code</a></dt>
-                    <dd>SeriesGuide GitHub page</dd>
-                    <br/>
-                    <dt><a href="http://crowdin.net/project/seriesguide-translations/invite">Translate SeriesGuide</a></dt>
-                    <dd>Help translate SeriesGuide to your native language on crowdin.net</dd>
-                </dl>
-            </div> <!-- resources -->
-        </div>
+      <div class="col-sm-6 col-md-4">
+        <h3>Follow SeriesGuide</h3>
+        <div id="follow-buttons" class="row">
+          <div class="col-md-12">
+      	    <a class="btn btn-default" href="http://plus.google.com/112462818579768957964">Google+</a>
+            <a class="btn btn-default" href="https://www.facebook.com/SeriesGuide">Facebook</a>
+            <a class="btn btn-default" href="https://twitter.com/SeriesGuide">Twitter</a>
+          </div>
+        </div> <!-- follow-buttons -->
+      </div> <!-- col -->
+        
+      <div class="col-sm-6 col-md-4"> 
+        <h3>Powered by</h3>
+        <div id="poweredby" class="row">
+          <div class="col-md-12">
+          <ul class="list-inline">
+            <li><a title="theTVDb.com" class="btn btn-info" href="http://thetvdb.com"><img src="images/tvdb-40px.png" width="101" height="40" alt="theTVDb.com" /></a></li>
+            <li><a title="trakt.tv" class="btn btn-info" href="http://trakt.tv"><img src="images/trakt.png" width="33" height="40" alt="trakt.tv" /></a></li>
+            <div style="height:10px;"></div>
+            <li><a title="themoviedb.org" class="btn btn-info" href="http://themoviedb.org"><img src="images/tmdb-40px.png" width="193" height="40" alt="themoviedb.org" /></a></li>
+          </ul>
+          </div>
+        </div> <!-- poweredby -->
+      </div> <!-- span4 -->
+      
+      <div class="col-sm-6 col-md-4"> 
+        <h3>Further Resources</h3>
+        <dl>
+          <dt><a href="https://plus.google.com/u/0/communities/103447253937737054097">SeriesGuide Community <span class="glyphicon glyphicon-new-window"></span></a></dt>
+          <dd><img src="images/gplus-16.png" width="16" height="16"/> Share ideas, report bugs or ask for help</dd>
+          <br/>
+          <dt><a href="http://git.io/sgchanges#changelog">Changelog <span class="glyphicon glyphicon-new-window"></span></a></dt>
+          <dd>Detailed list of changes</dd>
+          <br/>
+          <dt><a href="https://github.com/UweTrottmann/SeriesGuide">Source Code <span class="glyphicon glyphicon-new-window"></span></a></dt>
+          <dd>GitHub code repository</dd>
+          <br/>
+          <dt><a href="http://crowdin.net/project/seriesguide-translations/invite">Translate SeriesGuide <span class="glyphicon glyphicon-new-window"></span></a></dt>
+          <dd>Help translate SeriesGuide to your native language on crowdin.net</dd>
+        </dl>
+      </div> <!-- span4 -->
     </div> <!-- row -->
+  
+  	<p id="credits">Made on Earth. Uwe Trottmann <a href="http://twitter.com/tripmckay" target="_blank">Twitter</a> <a href="https://plus.google.com/117131830664292118904" target="_blank">Google+</a>.</p>
+  </div> <!-- footer -->
 
-	<p id="credits">
-        Made on Earth. Uwe Trottmann <a href="http://twitter.com/tripmckay" target="_blank">Twitter</a> <a href="https://plus.google.com/117131830664292118904" target="_blank">Google+</a>.
-    </p>
-</div> <!-- footer -->
 
-<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
-
-<!-- Google+ -->
-<script type="text/javascript">
-(function() {
-	var po = document.createElement("script");
-	po.type = "text/javascript"; po.async = true;po.src = "https://apis.google.com/js/plusone.js";
-	var s = document.getElementsByTagName("script")[0];
-	s.parentNode.insertBefore(po, s);
-})();</script>
-
-<!-- Twitter -->
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
-<!-- Facebook -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="//code.jquery.com/jquery.js"></script>
+  <!-- Bootstrap: Include all compiled plugins -->
+  <script src="bootstrap/js/bootstrap.min.js"></script>
+  
+  <!-- Google+ -->
+  <script type="text/javascript">
+  (function() {
+  	var po = document.createElement("script");
+  	po.type = "text/javascript"; po.async = true;po.src = "https://apis.google.com/js/plusone.js";
+  	var s = document.getElementsByTagName("script")[0];
+  	s.parentNode.insertBefore(po, s);
+  })();</script>
 
 </body>
 
