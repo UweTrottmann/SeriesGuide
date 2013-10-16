@@ -2,7 +2,7 @@ apply plugin: 'android'
 
 android {
     compileSdkVersion 18
-    buildToolsVersion "18.1"
+    buildToolsVersion "18.1.1"
     compileOptions.encoding = "UTF-8"
 
     defaultConfig {
@@ -13,7 +13,7 @@ android {
     productFlavors {
         free {
             packageName "com.battlelancer.seriesguide"
-            versionCode 177
+            versionCode 178
             versionName "8.1"
         }
         beta {

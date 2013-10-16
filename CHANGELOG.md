@@ -5,6 +5,12 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 8.1 *(2013-10-16)*
+-----------------
+
+* Restored the one-row widget on Android 4.0 (Ice Cream Sandwich) and below. Added a new compact mode to the list widget on Android 4.1 (Jelly Bean) and up.
+* Updates for translations.
+
 Version 8 *(2013-10-08)*
 -----------------
 

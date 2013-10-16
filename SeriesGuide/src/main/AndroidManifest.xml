@@ -243,7 +243,7 @@
         </receiver>
         <service
             android:name="com.battlelancer.seriesguide.appwidget.AppWidget$UpdateService"
-            android:enabled="@bool/isGingerbreadOrLower" >
+            android:enabled="@bool/isIceCreamSandwichOrLower" >
         </service>
 
         <receiver

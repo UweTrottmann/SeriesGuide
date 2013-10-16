@@ -96,9 +96,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
         super.onCreate(savedInstanceState);
         getMenu().setContentView(R.layout.shows);
 
-        // Set up a sync account if needed
-        SyncUtils.createSyncAccount(this);
-
         setSupportProgressBarIndeterminate(true);
 
         // Set up a sync account if needed
