@@ -336,14 +336,8 @@
   <string name="dashclock_extension_description">Megjeleníti a következő epizódokat a SeriesGuide-ból.</string>
   <string name="dashclock_pref_upcoming_threshold">Mutasd a következő epizódokat</string>
   <string name="download_stable">A SeriesGuide letöltése</string>
-  <string name="migration_header">Migrate to SeriesGuide</string>
-  <string name="migration_description">SeriesGuide X is now X Life-Time Pass, you should migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
-  <string name="migration_backup">Touch below to create a fresh backup of your shows.</string>
-  <string name="migration_action_backup">Backup Shows</string>
-  <string name="migration_install">Touch below to install the free version of SeriesGuide.</string>
-  <string name="migration_action_install">Install SeriesGuide</string>
-  <string name="migration_launch">Touch below and once in SeriesGuide touch Menu, then Migrate.</string>
-  <string name="migration_action_launch">Open SeriesGuide, then Migrate</string>
+  <string name="migration_header">Migrate to the free version</string>
+  <string name="migration_description">SeriesGuide X is now an unlock key for X features in the free version (\"X Life-Time Pass\"). Please migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
   <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
   <string name="migration_action_import">Import and replace existing shows</string>
   <string name="action_migrate">Migrate from X</string>

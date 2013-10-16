@@ -150,8 +150,8 @@
   <string name="only_favorites">Alleen favoriete series</string>
   <string name="togglewatched">Bekeken/niet bekeken wijzigen</string>
   <string name="pref_infinite_scrolling">Oneindige activiteit</string>
-  <string name="update_scheduled">Updaten...</string>
-  <string name="update_no_connection">Verbindt met het internet om bij te werken.</string>
+  <string name="update_scheduled">Bijwerken…</string>
+  <string name="update_no_connection">Om bij te werken verbind met het internet.</string>
   <string name="update_no_wifi">Om bij te werken verbindt met WiFi of sta andere verbindingen toe in de Instellingen.</string>
   <string name="update_inprogress">Er wordt een update uitgevoerd, probeer het later opnieuw.</string>
   <string name="menu_updateart">Affiches laden</string>
@@ -336,26 +336,20 @@
   <string name="dashclock_extension_description">Geeft de eerstvolgende aflevering van uw SeriesGuide shows weer.</string>
   <string name="dashclock_pref_upcoming_threshold">Toon komende afleveringen</string>
   <string name="download_stable">SeriesGuide downloaden</string>
-  <string name="migration_header">Migreren naar SeriesGuide</string>
-  <string name="migration_description">SeriesGuide X is X Life-Time Pass. U zal u series moeten overzetten naar de gratis versie van SeriesGuide. Laat X geïnstalleerd staan om alle functies te ontgrendelen in de gratis versie.</string>
-  <string name="migration_backup">Raak hieronder aan om een nieuwe back-up van uw series te maken.</string>
-  <string name="migration_action_backup">Backup Shows</string>
-  <string name="migration_install">Touch below to install the free version of SeriesGuide.</string>
-  <string name="migration_action_install">SeriesGuide installeren</string>
-  <string name="migration_launch">Touch below and once in SeriesGuide touch Menu, then Migrate.</string>
-  <string name="migration_action_launch">Open SeriesGuide, then Migrate</string>
-  <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
-  <string name="migration_action_import">Import and replace existing shows</string>
-  <string name="action_migrate">Migrate from X</string>
+  <string name="migration_header">Migreer naar de gratis versie</string>
+  <string name="migration_description">SeriesGuide X is now an unlock key for X features in the free version (\"X Life-Time Pass\"). Please migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
+  <string name="migration_import">Druk hieronder om de in SeriesGuide X gemaakte back-up te importeren.</string>
+  <string name="migration_action_import">Importeer en vervang bestaande series</string>
+  <string name="action_migrate">Migreer van X</string>
   <string name="upgrade_title">Verkrijg X functies</string>
-  <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_description">Krijg toegang tot meldingen, meer lijst widget opties en alle toekomstige X functies. Ondersteun verdere ontwikkeling.\n\nAls u al SeriesGuide X heeft gekocht, installeer deze dan om deze upgrade te ontgrendelen.</string>
   <string name="upgrade_action">Verkrijg X functies</string>
   <string name="upgrade_success">Bedankt, u bent al geabonneerd op alle X functies!</string>
-  <string name="subscription_activated">You are now subscribed to X features.</string>
+  <string name="subscription_activated">U bent nu geabonneerd op X functies.</string>
   <string name="subscription_expired">Abonnement is verlopen</string>
   <string name="subscription_expired_details">Uw X abonnement is verlopen.</string>
   <string name="add_to_homescreen">Toevoegen aan startscherm</string>
-  <string name="search_within_show">Search within %s</string>
+  <string name="search_within_show">Zoek binnen %s</string>
   <string-array name="sesorting">
     <item>Nieuwste eerst</item>
     <item>Oudste eerst</item>
