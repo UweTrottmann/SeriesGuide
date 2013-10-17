@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.format.DateUtils;
@@ -43,8 +44,8 @@ import com.uwetrottmann.seriesguide.R;
 public class ListWidgetProvider extends AppWidgetProvider {
 
     public static final String UPDATE = "com.battlelancer.seriesguide.appwidget.UPDATE";
-
     public static final long REPETITION_INTERVAL = 5 * DateUtils.MINUTE_IN_MILLIS;
+    private static final int DIP_THRESHOLD_COMPACT_LAYOUT = 80;
 
     @Override
     public void onDisabled(Context context) {
@@ -62,30 +63,24 @@ public class ListWidgetProvider extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
 
+        // check if we received our update alarm
         if (UPDATE.equals(intent.getAction())) {
+            // trigger refresh of list widgets
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context,
                     ListWidgetProvider.class));
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.list_view);
-            // Toast.makeText(context,
-            // "ListWidgets called to refresh " + Arrays.toString(appWidgetIds),
-            // Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // update each of the widgets with the remote adapter
-        for (int i = 0; i < appWidgetIds.length; ++i) {
-            // Toast.makeText(context, "Refreshing widget " + appWidgetIds[i],
-            // Toast.LENGTH_SHORT)
-            // .show();
-
-            RemoteViews rv = buildRemoteViews(context, appWidgetIds[i]);
-
-            appWidgetManager.updateAppWidget(appWidgetIds[i], rv);
-        }
         super.onUpdate(context, appWidgetManager, appWidgetIds);
+
+        // update all added list widgets
+        for (int appWidgetId : appWidgetIds) {
+            onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, null);
+        }
 
         // set an alarm to update widgets every x mins if the device is awake
         Intent update = new Intent(UPDATE);
@@ -96,9 +91,19 @@ public class ListWidgetProvider extends AppWidgetProvider {
                 + REPETITION_INTERVAL, REPETITION_INTERVAL, pi);
     }
 
+    @Override
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
+        RemoteViews rv = buildRemoteViews(context, appWidgetManager, appWidgetId);
+
+        appWidgetManager.updateAppWidget(appWidgetId, rv);
+    }
+
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    @SuppressWarnings("deprecation")
-    public static RemoteViews buildRemoteViews(Context context, int appWidgetId) {
+    public static RemoteViews buildRemoteViews(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
+        // determine layout based on given size
+        final boolean isCompactLayout = isCompactLayout(appWidgetManager, appWidgetId);
+        // determine content type from widget settings
+        final int typeIndex = WidgetSettings.getWidgetListType(context, appWidgetId);
 
         // Here we setup the intent which points to the StackViewService
         // which will provide the views for this collection.
@@ -109,7 +114,10 @@ public class ListWidgetProvider extends AppWidgetProvider {
         // embed the extras into the data so that the extras will not be
         // ignored.
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-        RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.appwidget_v11);
+
+        RemoteViews rv = new RemoteViews(context.getPackageName(),
+                isCompactLayout ? R.layout.appwidget_v11_compact : R.layout.appwidget_v11);
+
         if (AndroidUtils.isICSOrHigher()) {
             rv.setRemoteAdapter(R.id.list_view, intent);
         } else {
@@ -120,44 +128,46 @@ public class ListWidgetProvider extends AppWidgetProvider {
         // should be a sibling of the collection view.
         rv.setEmptyView(R.id.list_view, R.id.empty_view);
 
-        // change title based on config
-        int typeIndex = WidgetSettings.getWidgetListType(context, appWidgetId);
-        int activityTab = 0;
-        if (typeIndex == WidgetSettings.Type.RECENT) {
-            activityTab = 1;
-            rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.recent));
-        } else if (typeIndex == WidgetSettings.Type.FAVORITES) {
-            rv.setTextViewText(R.id.widgetTitle,
-                    context.getString(R.string.action_shows_filter_favorites));
-        } else {
-            activityTab = 0;
-            rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.upcoming));
-        }
-
         // set the background color
         int bgColor = WidgetSettings.getWidgetBackgroundColor(context, appWidgetId);
         rv.setInt(R.id.container, "setBackgroundColor", bgColor);
 
-        // Activity button
-        PendingIntent pendingIntent;
-        if (typeIndex == WidgetSettings.Type.FAVORITES) {
-            // launching the shows list
-            Intent activityIntent = new Intent(context, ShowsActivity.class);
-            pendingIntent = TaskStackBuilder
-                    .create(context)
-                    .addNextIntent(activityIntent)
-                    .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
-        } else {
-            // launching an activities list
-            Intent activityIntent = new Intent(context, UpcomingRecentActivity.class);
-            activityIntent.putExtra(UpcomingRecentActivity.InitBundle.SELECTED_TAB, activityTab);
-            pendingIntent = TaskStackBuilder
-                    .create(context)
-                    .addNextIntent(new Intent(context, ShowsActivity.class))
-                    .addNextIntent(activityIntent)
-                    .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
+        // determine the activity tab touching the widget title should open
+        int activityTab = typeIndex == WidgetSettings.Type.RECENT ? 1 : 0;
+
+        // only regular layout has title
+        if (!isCompactLayout) {
+            // change title based on config
+            if (typeIndex == WidgetSettings.Type.RECENT) {
+                rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.recent));
+            } else if (typeIndex == WidgetSettings.Type.FAVORITES) {
+                rv.setTextViewText(R.id.widgetTitle,
+                        context.getString(R.string.action_shows_filter_favorites));
+            } else {
+                rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.upcoming));
+            }
+
+            // Activity button
+            PendingIntent pendingIntent;
+            if (typeIndex == WidgetSettings.Type.FAVORITES) {
+                // launching the shows list
+                Intent activityIntent = new Intent(context, ShowsActivity.class);
+                pendingIntent = TaskStackBuilder
+                        .create(context)
+                        .addNextIntent(activityIntent)
+                        .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
+            } else {
+                // launching an activities list
+                Intent activityIntent = new Intent(context, UpcomingRecentActivity.class);
+                activityIntent.putExtra(UpcomingRecentActivity.InitBundle.SELECTED_TAB, activityTab);
+                pendingIntent = TaskStackBuilder
+                        .create(context)
+                        .addNextIntent(new Intent(context, ShowsActivity.class))
+                        .addNextIntent(activityIntent)
+                        .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
+            }
+            rv.setOnClickPendingIntent(R.id.widget_title, pendingIntent);
         }
-        rv.setOnClickPendingIntent(R.id.widget_title, pendingIntent);
 
         // Intent template for items to launch an EpisodesActivity
         TaskStackBuilder builder = TaskStackBuilder.create(context)
@@ -190,5 +200,18 @@ public class ListWidgetProvider extends AppWidgetProvider {
                         settingsIntent, PendingIntent.FLAG_UPDATE_CURRENT));
 
         return rv;
+    }
+
+    /**
+     * Based on the widget size determines whether to use a compact layout. Defaults to false on
+     * ICS and below.
+     */
+    private static boolean isCompactLayout(AppWidgetManager appWidgetManager, int appWidgetId) {
+        if (AndroidUtils.isJellyBeanOrHigher()) {
+            Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
+            int minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
+            return minHeight < DIP_THRESHOLD_COMPACT_LAYOUT;
+        }
+        return false;
     }
 }

@@ -336,14 +336,8 @@
   <string name="dashclock_extension_description">Zeigt die nächste kommende Folge deiner Serien aus SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Zeige Folgen im Zeitraum</string>
   <string name="download_stable">SeriesGuide herunterladen</string>
-  <string name="migration_header">Migration zu SeriesGuide</string>
-  <string name="migration_description">SeriesGuide X ist jetzt X Life-Time Pass, Sie sollten ihre Serien in die kostenlose Version von SeriesGuide migrieren. Lassen Sie X installiert um alle Funktionen in der kostenlosen Version zu entsperren.</string>
-  <string name="migration_backup">Tippen Sie unten um eine frische Sicherung Ihrer Serien zu erstellen.</string>
-  <string name="migration_action_backup">Serien Sichern</string>
-  <string name="migration_install">Tippen Sie unten um die kostenlose Version von SeriesGuide zu installieren.</string>
-  <string name="migration_action_install">SeriesGuide Installieren</string>
-  <string name="migration_launch">Tippen Sie unten und nachdem SeriesGuide geöffnet ist tippen Sie auf Menü, dann Migration.</string>
-  <string name="migration_action_launch">SeriesGuide Öffnen, dann Migration</string>
+  <string name="migration_header">Wechseln Sie zur kostenlosen Version</string>
+  <string name="migration_description">SeriesGuide X ist jetzt ein Freischalt-Schlüssel für die X Funktionen in der kostenlosen Version (\"X Life-Time Pass\"). Bitte übertragen Sie Ihre Serien in die kostenlose Version von SeriesGuide. Lassen Sie X installiert um alle Funktionen in der kostenlosen Version freizuschalten.</string>
   <string name="migration_import">Tippen Sie unten um die in SeriesGuide X erstellte Sicherung zu importieren.</string>
   <string name="migration_action_import">Importieren und vorhandene Serien ersetzen</string>
   <string name="action_migrate">Migration von X</string>
