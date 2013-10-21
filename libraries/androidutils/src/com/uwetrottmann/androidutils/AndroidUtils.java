@@ -25,6 +25,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 
+import com.squareup.okhttp.OkHttpClient;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -59,8 +61,8 @@ public class AndroidUtils {
     public static boolean isFroyoOrHigher() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO;
     }
-    
-    public static boolean isGoogleTV(Context context){
+
+    public static boolean isGoogleTV(Context context) {
         return context.getPackageManager().hasSystemFeature("com.google.android.tv");
     }
 
@@ -68,7 +70,7 @@ public class AndroidUtils {
      * Checks if {@link Environment}.MEDIA_MOUNTED is returned by
      * {@code getExternalStorageState()} and therefore external storage is read-
      * and writeable.
-     * 
+     *
      * @return
      */
     public static boolean isExtStorageAvailable() {
@@ -77,7 +79,7 @@ public class AndroidUtils {
 
     /**
      * Whether there is any network with a usable connection.
-     * 
+     *
      * @param context
      * @return
      */
@@ -93,7 +95,7 @@ public class AndroidUtils {
 
     /**
      * Whether WiFi has an active, usable connection.
-     * 
+     *
      * @param context
      * @return
      */
@@ -110,7 +112,7 @@ public class AndroidUtils {
 
     /**
      * Copies the contents of one file to the other using {@link FileChannel}s.
-     * 
+     *
      * @param src source {@link File}
      * @param dst destination {@link File}
      * @throws IOException
@@ -139,8 +141,8 @@ public class AndroidUtils {
     /**
      * Copies data from one input stream to the other using a buffer of 8
      * kilobyte in size.
-     * 
-     * @param input {@link InputStream}
+     *
+     * @param input  {@link InputStream}
      * @param output {@link OutputStream}
      * @return
      * @throws IOException
@@ -158,11 +160,11 @@ public class AndroidUtils {
 
     /**
      * Execute an {@link AsyncTask} on a thread pool.
-     * 
+     *
      * @param task Task to execute.
      * @param args Optional arguments to pass to
-     *            {@link AsyncTask#execute(Object[])}.
-     * @param <T> Task argument type.
+     *             {@link AsyncTask#execute(Object[])}.
+     * @param <T>  Task argument type.
      */
     @TargetApi(11)
     public static <T> void executeAsyncTask(AsyncTask<T, ?, ?> task, T... args) {
@@ -188,33 +190,17 @@ public class AndroidUtils {
     }
 
     /**
-     * Returns an {@link HttpURLConnection} using sensible default settings for
-     * mobile and taking care of buggy behavior prior to Froyo.
+     * Returns a GET {@link HttpURLConnection} using sensible default settings.
      */
     public static HttpURLConnection buildHttpUrlConnection(String urlString)
             throws MalformedURLException, IOException {
-        AndroidUtils.disableConnectionReuseIfNecessary();
-
         URL url = new URL(urlString);
 
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setReadTimeout(10000 /* milliseconds */);
-        conn.setConnectTimeout(15000 /* milliseconds */);
-        conn.setDoInput(true);
-        conn.setRequestMethod("GET");
-        return conn;
-    }
+        OkHttpClient client = new OkHttpClient();
 
-    /**
-     * Prior to Android 2.2 (Froyo), {@link HttpURLConnection} had some
-     * frustrating bugs. In particular, calling close() on a readable
-     * InputStream could poison the connection pool. Work around this by
-     * disabling connection pooling.
-     */
-    public static void disableConnectionReuseIfNecessary() {
-        // HTTP connection reuse which was buggy pre-froyo
-        if (!isFroyoOrHigher()) {
-            System.setProperty("http.keepAlive", "false");
-        }
+        HttpURLConnection conn = client.open(url);
+        conn.setConnectTimeout(15 * 1000 /* milliseconds */);
+        conn.setReadTimeout(20 * 1000 /* milliseconds */);
+        return conn;
     }
 }
