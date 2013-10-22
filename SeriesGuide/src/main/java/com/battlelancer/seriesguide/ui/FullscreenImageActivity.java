@@ -31,13 +31,17 @@ import com.battlelancer.seriesguide.util.SystemUiHider;
 import com.battlelancer.seriesguide.util.SystemUiHider.OnVisibilityChangeListener;
 import com.uwetrottmann.seriesguide.R;
 
+import uk.co.senab.photoview.PhotoViewAttacher;
+
 /**
  * This {@link Activity} is used to display a full screen image of a TV show's
  * poster, or the image provided for a specific episode.
  */
 public class FullscreenImageActivity extends Activity {
 
-    /** The {@link Intent} extra used to deliver the path to the requested image */
+    /**
+     * The {@link Intent} extra used to deliver the path to the requested image
+     */
     public static final String PATH = "fullscreenimageactivity.intent.extra.image";
 
     /**
@@ -56,8 +60,15 @@ public class FullscreenImageActivity extends Activity {
      */
     private SystemUiHider mSystemUiHider;
 
-    /** Displays the poster or episode preview */
+    /**
+     * Displays the poster or episode preview
+     */
     private ImageView mContentView;
+
+    /**
+     * Handles all zooming
+     */
+    private PhotoViewAttacher mAttacher;
 
     /**
      * {@inheritDoc}
@@ -76,6 +87,9 @@ public class FullscreenImageActivity extends Activity {
         // Load the requested image
         String imagePath = getIntent().getExtras().getString(PATH);
         mContentView.setImageBitmap(ImageProvider.getInstance(this).getImage(imagePath, false));
+
+        // Attach a PhotoViewAttacher, which takes care of all of the zooming functionality.
+        mAttacher = new PhotoViewAttacher(mContentView);
 
         // Set up an instance of SystemUiHider to control the system UI for
         // this activity.
