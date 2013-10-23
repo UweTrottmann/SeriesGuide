@@ -22,14 +22,7 @@ public class SgAccountAuthenticator extends AbstractAccountAuthenticator {
     public Bundle addAccount(AccountAuthenticatorResponse response, String accountType,
             String authTokenType, String[] requiredFeatures, Bundle options)
             throws NetworkErrorException {
-
-        SyncUtils.createSyncAccount(mContext);
-
-        final Account account = SyncUtils.getSyncAccount(mContext);
-        Bundle bundle = new Bundle();
-        bundle.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
-        bundle.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);
-        return bundle;
+        return null;
     }
 
     @Override
@@ -46,29 +39,24 @@ public class SgAccountAuthenticator extends AbstractAccountAuthenticator {
     @Override
     public Bundle getAuthToken(AccountAuthenticatorResponse response, Account account,
             String authTokenType, Bundle options) throws NetworkErrorException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public String getAuthTokenLabel(String authTokenType) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Bundle updateCredentials(AccountAuthenticatorResponse response, Account account,
             String authTokenType, Bundle options) throws NetworkErrorException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Bundle hasFeatures(AccountAuthenticatorResponse response, Account account,
             String[] features) throws NetworkErrorException {
-        // This call is used to query whether the Authenticator supports
-        // specific features. We don't expect to get called, so we always
-        // return false (no) for any queries.
-        final Bundle result = new Bundle();
-        result.putBoolean(AccountManager.KEY_BOOLEAN_RESULT, false);
-        return result;
+        throw new UnsupportedOperationException();
     }
 
     @Override
