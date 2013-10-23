@@ -21,25 +21,21 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Represents a block of information about in-app items. An Inventory is
- * returned by such methods as {@link IabHelper#queryInventory}.
+ * Represents a block of information about in-app items.
+ * An Inventory is returned by such methods as {@link IabHelper#queryInventory}.
  */
 public class Inventory {
-    Map<String, SkuDetails> mSkuMap = new HashMap<String, SkuDetails>();
-    Map<String, Purchase> mPurchaseMap = new HashMap<String, Purchase>();
+    Map<String,SkuDetails> mSkuMap = new HashMap<String,SkuDetails>();
+    Map<String,Purchase> mPurchaseMap = new HashMap<String,Purchase>();
 
-    Inventory() {
-    }
+    Inventory() { }
 
     /** Returns the listing details for an in-app product. */
     public SkuDetails getSkuDetails(String sku) {
         return mSkuMap.get(sku);
     }
 
-    /**
-     * Returns purchase information for a given product, or null if there is no
-     * purchase.
-     */
+    /** Returns purchase information for a given product, or null if there is no purchase. */
     public Purchase getPurchase(String sku) {
         return mPurchaseMap.get(sku);
     }
@@ -55,16 +51,15 @@ public class Inventory {
     }
 
     /**
-     * Erase a purchase (locally) from the inventory, given its product ID. This
-     * just modifies the Inventory object locally and has no effect on the
-     * server! This is useful when you have an existing Inventory object which
-     * you know to be up to date, and you have just consumed an item
-     * successfully, which means that erasing its purchase data from the
-     * Inventory you already have is quicker than querying for a new Inventory.
+     * Erase a purchase (locally) from the inventory, given its product ID. This just
+     * modifies the Inventory object locally and has no effect on the server! This is
+     * useful when you have an existing Inventory object which you know to be up to date,
+     * and you have just consumed an item successfully, which means that erasing its
+     * purchase data from the Inventory you already have is quicker than querying for
+     * a new Inventory.
      */
     public void erasePurchase(String sku) {
-        if (mPurchaseMap.containsKey(sku))
-            mPurchaseMap.remove(sku);
+        if (mPurchaseMap.containsKey(sku)) mPurchaseMap.remove(sku);
     }
 
     /** Returns a list of all owned product IDs. */
@@ -76,8 +71,7 @@ public class Inventory {
     List<String> getAllOwnedSkus(String itemType) {
         List<String> result = new ArrayList<String>();
         for (Purchase p : mPurchaseMap.values()) {
-            if (p.getItemType().equals(itemType))
-                result.add(p.getSku());
+            if (p.getItemType().equals(itemType)) result.add(p.getSku());
         }
         return result;
     }

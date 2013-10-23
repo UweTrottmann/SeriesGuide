@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.billing.IabResult;
 import com.battlelancer.seriesguide.billing.Inventory;
 import com.battlelancer.seriesguide.migration.MigrationActivity;
 import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.seriesguide.BuildConfig;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -37,24 +38,21 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
         // query in-app purchases (only if not already qualified)
         if (Utils.requiresPurchaseCheck(this)) {
             mHelper = new IabHelper(this, BillingActivity.getPublicKey(this));
-            mHelper.enableDebugLogging(BillingActivity.DEBUG);
+            mHelper.enableDebugLogging(BuildConfig.DEBUG);
 
             Log.d(TAG, "Starting In-App Billing helper setup.");
             mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
                 public void onIabSetupFinished(IabResult result) {
                     Log.d(TAG, "Setup finished.");
 
-                    if (mHelper == null) {
-                        // activity has already been destroyed and helper has
-                        // been disposed of
-                        return;
-                    }
-
                     if (!result.isSuccess()) {
                         // Oh noes, there was a problem. But do not go crazy.
                         disposeIabHelper();
                         return;
                     }
+
+                    // Have we been disposed of in the meantime? If so, quit.
+                    if (mHelper == null) return;
 
                     // Hooray, IAB is fully set up. Now, let's get an inventory
                     // of stuff we own.
@@ -131,6 +129,10 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
             Log.d(TAG, "Query inventory finished.");
+
+            // Have we been disposed of in the meantime? If so, quit.
+            if (mHelper == null) return;
+
             if (result.isFailure()) {
                 // ignore failures (maybe not, requires testing)
                 disposeIabHelper();
