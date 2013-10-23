@@ -5,6 +5,11 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 8.2 *(2013-10-23)*
+-----------------
+
+* Security updates and bug fixes for In-App billing.
+
 Version 8.1 *(2013-10-16)*
 -----------------
 
