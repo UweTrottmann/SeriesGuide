@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.util.SystemUiHider;
 import com.battlelancer.seriesguide.util.SystemUiHider.OnVisibilityChangeListener;
 import com.uwetrottmann.seriesguide.R;
 
+import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
@@ -45,12 +46,6 @@ public class FullscreenImageActivity extends Activity {
     public static final String PATH = "fullscreenimageactivity.intent.extra.image";
 
     /**
-     * The number of milliseconds to wait after user interaction before hiding
-     * the system UI.
-     */
-    private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
-
-    /**
      * The flags to pass to {@link SystemUiHider#getInstance}.
      */
     private static final int HIDER_FLAGS = SystemUiHider.FLAG_HIDE_NAVIGATION;
@@ -63,12 +58,7 @@ public class FullscreenImageActivity extends Activity {
     /**
      * Displays the poster or episode preview
      */
-    private ImageView mContentView;
-
-    /**
-     * Handles all zooming
-     */
-    private PhotoViewAttacher mAttacher;
+    private PhotoView mContentView;
 
     /**
      * {@inheritDoc}
@@ -82,28 +72,16 @@ public class FullscreenImageActivity extends Activity {
     }
 
     private void setupViews() {
-        mContentView = (ImageView) findViewById(R.id.fullscreen_content);
+        mContentView = (PhotoView) findViewById(R.id.fullscreen_content);
 
         // Load the requested image
         String imagePath = getIntent().getExtras().getString(PATH);
         mContentView.setImageBitmap(ImageProvider.getInstance(this).getImage(imagePath, false));
 
-        // Attach a PhotoViewAttacher, which takes care of all of the zooming functionality.
-        mAttacher = new PhotoViewAttacher(mContentView);
-
         // Set up an instance of SystemUiHider to control the system UI for
         // this activity.
         mSystemUiHider = SystemUiHider.getInstance(this, mContentView, HIDER_FLAGS);
         mSystemUiHider.setup();
-        mSystemUiHider.setOnVisibilityChangeListener(new OnVisibilityChangeListener() {
-            @Override
-            public void onVisibilityChange(boolean visible) {
-                if (visible) {
-                    // Schedule a hide().
-                    delayedHide(AUTO_HIDE_DELAY_MILLIS);
-                }
-            }
-        });
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
