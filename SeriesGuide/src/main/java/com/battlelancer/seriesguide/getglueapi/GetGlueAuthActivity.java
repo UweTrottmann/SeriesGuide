@@ -36,12 +36,11 @@ import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.getglue.GetGlue;
 import com.uwetrottmann.seriesguide.R;
 
-import org.apache.oltu.oauth2.client.OAuthClient;
-import org.apache.oltu.oauth2.client.URLConnectionClient;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
-import org.apache.oltu.oauth2.client.response.OAuthJSONAccessTokenResponse;
+import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 
@@ -50,7 +49,7 @@ import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
  */
 public class GetGlueAuthActivity extends BaseNavDrawerActivity {
 
-    final String TAG = "GetGlueAuthActivity";
+    static final String TAG = "GetGlueAuthActivity";
 
     private WebView mWebview;
 
@@ -141,21 +140,18 @@ public class GetGlueAuthActivity extends BaseNavDrawerActivity {
             final String authCode = uri.getQueryParameter("code");
 
             try {
-                Log.d(TAG, "Building token request...");
+                Log.d(TAG, "Building OAuth 2.0 token request...");
 
                 Resources resources = mContext.getResources();
-                OAuthClientRequest request = com.uwetrottmann.getglue.GetGlue.getAccessTokenRequest(
+                OAuthAccessTokenResponse response = GetGlue.getAccessTokenResponse(
                         resources.getString(R.string.getglue_client_id),
                         resources.getString(R.string.getglue_client_secret),
                         GetGlueCheckin.OAUTH_CALLBACK_URL,
                         authCode
                 );
 
-                //create OAuth client that uses custom http client under the hood
-                OAuthClient client = new OAuthClient(new URLConnectionClient());
-                OAuthJSONAccessTokenResponse response = client.accessToken(request);
-
                 // store access and refresh token, as well as expiration date of access token
+                Log.d(TAG, "Storing received OAuth 2.0 tokens...");
                 long expiresIn = response.getExpiresIn();
                 long expirationDate = System.currentTimeMillis() + expiresIn * DateUtils.SECOND_IN_MILLIS;
                 PreferenceManager.getDefaultSharedPreferences(mContext).edit()
