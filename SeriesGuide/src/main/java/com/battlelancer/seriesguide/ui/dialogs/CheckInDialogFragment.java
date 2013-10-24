@@ -80,7 +80,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
     }
 
     private interface CheckInQuery {
-        String[] PROJECTION = new String[] {
+        String[] PROJECTION = new String[]{
                 Episodes._ID, Episodes.SEASON, Episodes.NUMBER, Episodes.TITLE, Shows.REF_SHOW_ID,
                 Shows.GETGLUEID, Shows.TITLE
         };
@@ -122,23 +122,19 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
             isAbortingCheckIn = true;
         } else {
             Cursor show = getActivity().getContentResolver().query(
-                    Shows.buildShowUri(String.valueOf(tvdbid)), new String[] {
-                            Shows._ID, Shows.GETGLUEID
-                    }, null, null, null);
+                    Shows.buildShowUri(String.valueOf(tvdbid)), new String[]{
+                    Shows._ID, Shows.GETGLUEID
+            }, null, null, null);
             if (show != null) {
                 show.moveToFirst();
                 mGetGlueId = show.getString(1);
                 show.close();
             }
 
-            // fall back to IMDb id
+            // fall back to show title
             if (TextUtils.isEmpty(mGetGlueId)) {
-                if (TextUtils.isEmpty(title)) {
-                    // cancel if we don't know what to check into
-                    isAbortingCheckIn = true;
-                } else {
-                    objectId = title;
-                }
+                // cancel if we don't know what to check into
+                isAbortingCheckIn = true;
             } else {
                 objectId = mGetGlueId;
             }
@@ -152,7 +148,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
         } else {
             // check in, use task on thread pool
             AndroidUtils.executeAsyncTask(new CheckInTask(objectId, message,
-                    getActivity()), new Void[] {});
+                    getActivity()), new Void[]{});
         }
     }
 
@@ -165,8 +161,8 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
         AndroidUtils.executeAsyncTask(
                 new TraktTask(getActivity(), mListener)
                         .checkInEpisode(tvdbid, season, episode, message),
-                new Void[] {
-                    null
+                new Void[]{
+                        null
                 });
     }
 
