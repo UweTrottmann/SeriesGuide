@@ -13,88 +13,98 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * Modified by Uwe Trottmann to better work with newer devices.
+ * Modified by Uwe Trottmann.
  * 
  */
 
 package com.battlelancer.seriesguide.ui;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.Window;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.SystemUiHider;
-import com.battlelancer.seriesguide.util.SystemUiHider.OnVisibilityChangeListener;
 import com.uwetrottmann.seriesguide.R;
+
+import uk.co.senab.photoview.PhotoView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * This {@link Activity} is used to display a full screen image of a TV show's
  * poster, or the image provided for a specific episode.
  */
-public class FullscreenImageActivity extends Activity {
+public class FullscreenImageActivity extends SherlockFragmentActivity {
 
-    /** The {@link Intent} extra used to deliver the path to the requested image */
-    public static final String PATH = "fullscreenimageactivity.intent.extra.image";
-
-    /**
-     * The number of milliseconds to wait after user interaction before hiding
-     * the system UI.
-     */
-    private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
-
-    /**
-     * The flags to pass to {@link SystemUiHider#getInstance}.
-     */
-    private static final int HIDER_FLAGS = SystemUiHider.FLAG_HIDE_NAVIGATION;
+    public interface InitBundle {
+        String IMAGE_PATH = "fullscreenimageactivity.intent.extra.image";
+        String IMAGE_TITLE = "fullscreenimageactivity.intent.extra.title";
+        String IMAGE_SUBTITLE = "fullscreenimageactivity.intent.extra.subtitle";
+    }
 
     /**
      * The instance of the {@link SystemUiHider} for this activity.
      */
     private SystemUiHider mSystemUiHider;
 
-    /** Displays the poster or episode preview */
-    private ImageView mContentView;
+    /**
+     * Displays the poster or episode preview
+     */
+    private PhotoView mContentView;
 
     /**
      * {@inheritDoc}
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fullscreen_image_activity);
 
+        setupActionBar();
         setupViews();
     }
 
+    private void setupActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources()
+                .getColor(R.color.black_overlay)));
+
+        // set a title and subtitle if available
+        String title = getIntent().getExtras().getString(InitBundle.IMAGE_TITLE);
+        if (TextUtils.isEmpty(title)) {
+            actionBar.setDisplayShowTitleEnabled(false);
+        } else {
+            actionBar.setTitle(title);
+            String subtitle = getIntent().getExtras().getString(InitBundle.IMAGE_SUBTITLE);
+            if (subtitle != null) actionBar.setSubtitle(subtitle);
+        }
+    }
+
     private void setupViews() {
-        mContentView = (ImageView) findViewById(R.id.fullscreen_content);
+        mContentView = (PhotoView) findViewById(R.id.fullscreen_content);
 
         // Load the requested image
-        String imagePath = getIntent().getExtras().getString(PATH);
+        String imagePath = getIntent().getExtras().getString(InitBundle.IMAGE_PATH);
         mContentView.setImageBitmap(ImageProvider.getInstance(this).getImage(imagePath, false));
 
         // Set up an instance of SystemUiHider to control the system UI for
         // this activity.
-        mSystemUiHider = SystemUiHider.getInstance(this, mContentView, HIDER_FLAGS);
+        mSystemUiHider = SystemUiHider.getInstance(this, mContentView,
+                SystemUiHider.FLAG_FULLSCREEN);
         mSystemUiHider.setup();
-        mSystemUiHider.setOnVisibilityChangeListener(new OnVisibilityChangeListener() {
-            @Override
-            public void onVisibilityChange(boolean visible) {
-                if (visible) {
-                    // Schedule a hide().
-                    delayedHide(AUTO_HIDE_DELAY_MILLIS);
-                }
-            }
-        });
 
-        // Set up the user interaction to manually show or hide the system UI.
-        mContentView.setOnClickListener(new View.OnClickListener() {
+        mContentView.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
             @Override
-            public void onClick(View view) {
+            public void onViewTap(View view, float x, float y) {
                 mSystemUiHider.toggle();
             }
         });
@@ -116,6 +126,16 @@ public class FullscreenImageActivity extends Activity {
         mContentView.setImageDrawable(null);
         mContentView = null;
         super.onDetachedFromWindow();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     Handler mHideHandler = new Handler();
