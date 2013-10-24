@@ -45,19 +45,12 @@ import org.apache.oltu.oauth2.client.response.OAuthJSONAccessTokenResponse;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 
-import oauth.signpost.OAuthConsumer;
-import oauth.signpost.OAuthProvider;
-
 /**
  * Starts an OAuth 2.0 authentication flow via an {@link android.webkit.WebView}.
  */
 public class GetGlueAuthActivity extends BaseNavDrawerActivity {
 
     final String TAG = "GetGlueAuthActivity";
-
-    private OAuthConsumer mConsumer;
-
-    private OAuthProvider mProvider;
 
     private WebView mWebview;
 
