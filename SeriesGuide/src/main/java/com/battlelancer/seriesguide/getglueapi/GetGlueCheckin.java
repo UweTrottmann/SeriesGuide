@@ -39,7 +39,7 @@ public class GetGlueCheckin {
 
     private static final String TAG = "GetGlue";
 
-    public static final String OAUTH_CALLBACK_URL = "sgoauth://getgluecallback";
+    public static final String OAUTH_CALLBACK_URL = "http://seriesgui.de";
 
     public static class CheckInTask extends AsyncTask<Void, Void, Integer> {
 
