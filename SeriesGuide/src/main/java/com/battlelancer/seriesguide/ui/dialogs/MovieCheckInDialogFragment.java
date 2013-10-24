@@ -67,7 +67,7 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
         EasyTracker.getTracker().sendView("Movie Check-In Dialog");
     }
 
-    protected void onGetGlueCheckin(final String title, final String message) {
+    protected boolean onGetGlueCheckin(final String title, final String message) {
         boolean isAbortingCheckIn = false;
 
         // require GetGlue authentication
@@ -79,12 +79,13 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
             mToggleGetGlueButton.setChecked(false);
             mGetGlueChecked = false;
             updateCheckInButtonState();
-            return;
         } else {
             // check in, use task on thread pool
             AndroidUtils.executeAsyncTask(new CheckInTask(title, message,
                     getActivity()), new Void[]{});
         }
+
+        return isAbortingCheckIn;
     }
 
     /**

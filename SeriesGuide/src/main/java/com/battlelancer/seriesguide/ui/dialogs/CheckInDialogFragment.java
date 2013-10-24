@@ -109,7 +109,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
     }
 
     @Override
-    protected void onGetGlueCheckin(String title, String message) {
+    protected boolean onGetGlueCheckin(String title, String message) {
         boolean isAbortingCheckIn = false;
         String objectId = null;
 
@@ -140,12 +140,13 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
             mToggleGetGlueButton.setChecked(false);
             mGetGlueChecked = false;
             updateCheckInButtonState();
-            return;
         } else {
             // check in, use task on thread pool
             AndroidUtils.executeAsyncTask(new CheckInTask(objectId, message,
                     getActivity()), new Void[]{});
         }
+
+        return isAbortingCheckIn;
     }
 
     @Override

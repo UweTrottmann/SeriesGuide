@@ -202,7 +202,8 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
                 final String message = mMessageBox.getText().toString();
 
                 if (mGetGlueChecked) {
-                    onGetGlueCheckin(title, message);
+                    boolean shouldAbort = onGetGlueCheckin(title, message);
+                    if (shouldAbort) return;
                 }
 
                 if (mTraktChecked) {
@@ -267,8 +268,10 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
 
     /**
      * Start the GetGlue check-in task.
+     *
+     * @return Return whether the check-in should be aborted.
      */
-    protected abstract void onGetGlueCheckin(final String title, final String comment);
+    protected abstract boolean onGetGlueCheckin(final String title, final String comment);
 
     /**
      * Start the trakt check-in task.
