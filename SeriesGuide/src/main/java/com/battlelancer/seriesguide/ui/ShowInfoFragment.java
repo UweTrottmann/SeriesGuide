@@ -275,10 +275,11 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
         });
 
         // Poster
-        final ImageView poster = (ImageView) getView().findViewById(R.id.ImageViewShowInfoPoster);
+        final View posterContainer = getView().findViewById(R.id.containerShowInfoPoster);
+        final ImageView posterView = (ImageView) posterContainer.findViewById(R.id.imageViewShowInfoPoster);
         final String imagePath = mShow.getPoster();
-        ImageProvider.getInstance(getActivity()).loadImage(poster, imagePath, false);
-        poster.setOnClickListener(new View.OnClickListener() {
+        ImageProvider.getInstance(getActivity()).loadImage(posterView, imagePath, false);
+        posterContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
