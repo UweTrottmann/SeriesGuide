@@ -20,13 +20,15 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.app.Activity;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.SystemUiHider;
@@ -39,7 +41,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  * This {@link Activity} is used to display a full screen image of a TV show's
  * poster, or the image provided for a specific episode.
  */
-public class FullscreenImageActivity extends SherlockActivity {
+public class FullscreenImageActivity extends SherlockFragmentActivity {
 
     public interface InitBundle {
         String IMAGE_PATH = "fullscreenimageactivity.intent.extra.image";
@@ -62,6 +64,7 @@ public class FullscreenImageActivity extends SherlockActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fullscreen_image_activity);
 
@@ -72,6 +75,8 @@ public class FullscreenImageActivity extends SherlockActivity {
     private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources()
+                .getColor(R.color.black_overlay)));
 
         // set a title and subtitle if available
         String title = getIntent().getExtras().getString(InitBundle.IMAGE_TITLE);

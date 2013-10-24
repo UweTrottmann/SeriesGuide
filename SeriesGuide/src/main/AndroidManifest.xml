@@ -192,8 +192,7 @@
         </activity>
         <activity
             android:name="com.battlelancer.seriesguide.ui.FullscreenImageActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/FullscreenTheme" />
+            android:configChanges="orientation|keyboardHidden|screenSize" />
 
         <!-- Services -->
         <service android:name="com.battlelancer.seriesguide.service.TraktFlagService" >
