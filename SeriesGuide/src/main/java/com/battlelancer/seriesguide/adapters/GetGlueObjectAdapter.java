@@ -24,7 +24,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.battlelancer.seriesguide.getglueapi.GetGlueXmlParser.GetGlueObject;
+import com.uwetrottmann.getglue.entities.GetGlueObject;
 import com.uwetrottmann.seriesguide.R;
 
 import java.util.List;
@@ -66,7 +66,7 @@ public class GetGlueObjectAdapter extends ArrayAdapter<GetGlueObject> {
         GetGlueObject glueObject = getItem(position);
 
         holder.title.setText(glueObject.title);
-        holder.getGlueId.setText(glueObject.key);
+        holder.getGlueId.setText(glueObject.id);
 
         return convertView;
     }

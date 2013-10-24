@@ -3,26 +3,22 @@ package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
 
-import com.battlelancer.seriesguide.getglueapi.GetGlue;
-import com.battlelancer.seriesguide.getglueapi.GetGlueXmlParser;
-import com.battlelancer.seriesguide.getglueapi.GetGlueXmlParser.GetGlueObject;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
+import com.uwetrottmann.getglue.ServiceManager;
+import com.uwetrottmann.getglue.entities.GetGlueObject;
+import com.uwetrottmann.getglue.entities.GetGlueObjects;
 
-import org.apache.http.client.ClientProtocolException;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.util.List;
+
+import retrofit.RetrofitError;
 
 /**
  * Loads a list of TV shows using a search term against GetGlue's
  * glue/findObjects end point.
- * 
+ *
  * @see <a
- *      href="http://getglue.com/api#networkwide-methods">http://getglue.com/api#networkwide-methods</a>
+ * href="http://getglue.com/api#networkwide-methods">http://getglue.com/api#networkwide-methods</a>
  */
 public class GetGlueObjectLoader extends GenericSimpleLoader<List<GetGlueObject>> {
 
@@ -36,53 +32,15 @@ public class GetGlueObjectLoader extends GenericSimpleLoader<List<GetGlueObject>
 
     @Override
     public List<GetGlueObject> loadInBackground() {
-        // replace only white spaces
-        mQuery = mQuery.replace(" ", "%20");
+        ServiceManager manager = new ServiceManager();
 
-        String url = GetGlue.GETGLUE_APIPATH_V2 + GetGlue.GETGLUE_FIND_OBJECTS + mQuery;
-
-        // build request
-        HttpURLConnection request = GetGlue.buildGetGlueRequest(url, getContext());
-        if (request == null) {
+        try {
+            GetGlueObjects results = manager.searchService().searchTvShow(mQuery);
+            return results.objects;
+        } catch (RetrofitError e) {
+            Utils.trackExceptionAndLog(TAG, e);
             return null;
         }
-
-        // execute request and parse response
-        InputStream responseIn = null;
-        try {
-            request.connect();
-
-            GetGlueXmlParser getGlueXmlParser = new GetGlueXmlParser();
-            responseIn = request.getInputStream();
-
-            int statuscode = request.getResponseCode();
-            if (statuscode == HttpURLConnection.HTTP_OK) {
-                List<GetGlueObject> tvShows = getGlueXmlParser.parseObjects(responseIn);
-                return tvShows;
-            } else {
-                // TODO: hm, what are we going to do with this here?
-                // GetGlueXmlParser.Error error =
-                // getGlueXmlParser.parseError(responseIn);
-            }
-        } catch (ClientProtocolException e) {
-            Utils.trackExceptionAndLog(TAG, e);
-        } catch (IOException e) {
-            Utils.trackExceptionAndLog(TAG, e);
-        } catch (IllegalStateException e) {
-            Utils.trackExceptionAndLog(TAG, e);
-        } catch (XmlPullParserException e) {
-            Utils.trackExceptionAndLog(TAG, e);
-        } finally {
-            if (responseIn != null) {
-                try {
-                    responseIn.close();
-                } catch (IOException e) {
-                    Utils.trackExceptionAndLog(TAG, e);
-                }
-            }
-        }
-
-        return null;
     }
 
 }

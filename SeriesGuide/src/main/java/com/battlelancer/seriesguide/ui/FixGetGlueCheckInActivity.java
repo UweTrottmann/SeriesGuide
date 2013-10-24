@@ -19,10 +19,10 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.adapters.GetGlueObjectAdapter;
-import com.battlelancer.seriesguide.getglueapi.GetGlueXmlParser.GetGlueObject;
 import com.battlelancer.seriesguide.loaders.GetGlueObjectLoader;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.getglue.entities.GetGlueObject;
 import com.uwetrottmann.seriesguide.R;
 
 import java.util.List;
@@ -168,7 +168,7 @@ public class FixGetGlueCheckInActivity extends BaseNavDrawerActivity implements
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // we have a header view, subtract one to get actual position
         GetGlueObject glueObject = mAdapter.getItem(position - 1);
-        mSelectedValue.setText(glueObject.key);
+        mSelectedValue.setText(glueObject.id);
         mSaveButton.setEnabled(true);
     }
 
@@ -194,7 +194,7 @@ public class FixGetGlueCheckInActivity extends BaseNavDrawerActivity implements
     }
 
     @Override
-    public void onLoaderReset(Loader<List<GetGlueObject>> laoder) {
+    public void onLoaderReset(Loader<List<GetGlueObject>> loader) {
         mAdapter.setData(null);
     }
 }
