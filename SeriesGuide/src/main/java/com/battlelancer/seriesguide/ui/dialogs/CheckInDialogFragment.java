@@ -33,6 +33,7 @@ import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin.CheckInTask;
 import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
@@ -62,10 +63,10 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
             if (episode.moveToFirst()) {
                 f = new CheckInDialogFragment();
                 Bundle args = new Bundle();
-                args.putString(InitBundle.IMDB_ID, episode.getString(5));
-                args.putInt(InitBundle.SHOW_TVDB_ID, episode.getInt(4));
-                args.putInt(InitBundle.SEASON, episode.getInt(1));
-                args.putInt(InitBundle.EPISODE, episode.getInt(2));
+                args.putString(InitBundle.TITLE, episode.getString(CheckInQuery.SHOW_TITLE));
+                args.putInt(InitBundle.SHOW_TVDB_ID, episode.getInt(CheckInQuery.SHOW_TVDB_ID));
+                args.putInt(InitBundle.SEASON, episode.getInt(CheckInQuery.SEASON));
+                args.putInt(InitBundle.EPISODE, episode.getInt(CheckInQuery.NUMBER));
 
                 String episodeTitleWithNumbers = ShareUtils.onCreateShareString(context, episode);
                 args.putString(InitBundle.ITEM_TITLE, episodeTitleWithNumbers);
@@ -81,8 +82,15 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
     private interface CheckInQuery {
         String[] PROJECTION = new String[] {
                 Episodes._ID, Episodes.SEASON, Episodes.NUMBER, Episodes.TITLE, Shows.REF_SHOW_ID,
-                Shows.IMDBID, Shows.GETGLUEID
+                Shows.GETGLUEID, Shows.TITLE
         };
+        int EPISODE_TVDB_ID = 0;
+        int SEASON = 1;
+        int NUMBER = 2;
+        int EPISODE_TITLE = 3;
+        int SHOW_TVDB_ID = 4;
+        int SHOW_GETGLUE_ID = 5;
+        int SHOW_TITLE = 6;
     }
 
     private String mGetGlueId;
@@ -104,13 +112,13 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
     }
 
     @Override
-    protected void onGetGlueCheckin(SharedPreferences prefs, String imdbid, String message) {
+    protected void onGetGlueCheckin(String title, String message) {
         final int tvdbid = getArguments().getInt(InitBundle.SHOW_TVDB_ID);
         boolean isAbortingCheckIn = false;
         String objectId = null;
 
         // require GetGlue authentication
-        if (!GetGlueCheckin.isAuthenticated(prefs)) {
+        if (!GetGlueSettings.isAuthenticated(getActivity())) {
             isAbortingCheckIn = true;
         } else {
             Cursor show = getActivity().getContentResolver().query(
@@ -125,11 +133,11 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
 
             // fall back to IMDb id
             if (TextUtils.isEmpty(mGetGlueId)) {
-                if (TextUtils.isEmpty(imdbid)) {
+                if (TextUtils.isEmpty(title)) {
                     // cancel if we don't know what to check into
                     isAbortingCheckIn = true;
                 } else {
-                    objectId = imdbid;
+                    objectId = title;
                 }
             } else {
                 objectId = mGetGlueId;
@@ -163,9 +171,9 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
     }
 
     @Override
-    protected void handleGetGlueToggle(SharedPreferences prefs, String imdbid, boolean isChecked) {
+    protected void handleGetGlueToggle(boolean isChecked) {
         if (isChecked) {
-            if (!GetGlueCheckin.isAuthenticated(prefs)) {
+            if (!GetGlueSettings.isAuthenticated(getActivity())) {
                 if (!AndroidUtils.isNetworkConnected(getActivity())) {
                     Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_LONG)
                             .show();
@@ -177,7 +185,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
                             GetGlueAuthActivity.class);
                     startActivity(i);
                 }
-            } else if (TextUtils.isEmpty(imdbid) && TextUtils.isEmpty(mGetGlueId)) {
+            } else if (TextUtils.isEmpty(mGetGlueId)) {
                 // the user has to set a GetGlue object id
                 Intent i = new Intent(getSherlockActivity(),
                         FixGetGlueCheckInActivity.class);
