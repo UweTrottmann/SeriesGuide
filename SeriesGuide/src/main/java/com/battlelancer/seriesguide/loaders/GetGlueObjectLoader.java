@@ -5,7 +5,7 @@ import android.content.Context;
 
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.getglue.ServiceManager;
+import com.uwetrottmann.getglue.GetGlue;
 import com.uwetrottmann.getglue.entities.GetGlueObject;
 import com.uwetrottmann.getglue.entities.GetGlueObjects;
 
@@ -32,10 +32,10 @@ public class GetGlueObjectLoader extends GenericSimpleLoader<List<GetGlueObject>
 
     @Override
     public List<GetGlueObject> loadInBackground() {
-        ServiceManager manager = new ServiceManager();
+        GetGlue getglue = new GetGlue();
 
         try {
-            GetGlueObjects results = manager.searchService().searchTvShow(mQuery);
+            GetGlueObjects results = getglue.searchService().searchTvShow(mQuery);
             return results.objects;
         } catch (RetrofitError e) {
             Utils.trackExceptionAndLog(TAG, e);
