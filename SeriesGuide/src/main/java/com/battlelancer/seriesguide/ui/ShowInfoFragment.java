@@ -282,7 +282,8 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
             @Override
             public void onClick(View v) {
                 Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
-                fullscreen.putExtra(FullscreenImageActivity.PATH, imagePath);
+                fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH, imagePath);
+                fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_TITLE, mShow.getTitle());
                 ActivityCompat.startActivity(getActivity(), fullscreen,
                         ActivityOptionsCompat
                                 .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight()).toBundle());

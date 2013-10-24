@@ -427,7 +427,9 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 @Override
                 public void onClick(View v) {
                     Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
-                    fullscreen.putExtra(FullscreenImageActivity.PATH, imagePath);
+                    fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH, imagePath);
+                    fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_TITLE, showTitle);
+                    fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_SUBTITLE, episodeTitle);
                     ActivityCompat.startActivity(getActivity(), fullscreen,
                             ActivityOptionsCompat
                                     .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight()).toBundle());

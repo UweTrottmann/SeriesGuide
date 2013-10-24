@@ -13,22 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * Modified by Uwe Trottmann to better work with newer devices.
+ * Modified by Uwe Trottmann.
  * 
  */
 
 package com.battlelancer.seriesguide.ui;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.SystemUiHider;
-import com.battlelancer.seriesguide.util.SystemUiHider.OnVisibilityChangeListener;
 import com.uwetrottmann.seriesguide.R;
 
 import uk.co.senab.photoview.PhotoView;
@@ -38,12 +39,13 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  * This {@link Activity} is used to display a full screen image of a TV show's
  * poster, or the image provided for a specific episode.
  */
-public class FullscreenImageActivity extends Activity {
+public class FullscreenImageActivity extends SherlockActivity {
 
-    /**
-     * The {@link Intent} extra used to deliver the path to the requested image
-     */
-    public static final String PATH = "fullscreenimageactivity.intent.extra.image";
+    public interface InitBundle {
+        String IMAGE_PATH = "fullscreenimageactivity.intent.extra.image";
+        String IMAGE_TITLE = "fullscreenimageactivity.intent.extra.title";
+        String IMAGE_SUBTITLE = "fullscreenimageactivity.intent.extra.subtitle";
+    }
 
     /**
      * The instance of the {@link SystemUiHider} for this activity.
@@ -63,14 +65,30 @@ public class FullscreenImageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fullscreen_image_activity);
 
+        setupActionBar();
         setupViews();
+    }
+
+    private void setupActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        // set a title and subtitle if available
+        String title = getIntent().getExtras().getString(InitBundle.IMAGE_TITLE);
+        if (TextUtils.isEmpty(title)) {
+            actionBar.setDisplayShowTitleEnabled(false);
+        } else {
+            actionBar.setTitle(title);
+            String subtitle = getIntent().getExtras().getString(InitBundle.IMAGE_SUBTITLE);
+            if (subtitle != null) actionBar.setSubtitle(subtitle);
+        }
     }
 
     private void setupViews() {
         mContentView = (PhotoView) findViewById(R.id.fullscreen_content);
 
         // Load the requested image
-        String imagePath = getIntent().getExtras().getString(PATH);
+        String imagePath = getIntent().getExtras().getString(InitBundle.IMAGE_PATH);
         mContentView.setImageBitmap(ImageProvider.getInstance(this).getImage(imagePath, false));
 
         // Set up an instance of SystemUiHider to control the system UI for
@@ -103,6 +121,16 @@ public class FullscreenImageActivity extends Activity {
         mContentView.setImageDrawable(null);
         mContentView = null;
         super.onDetachedFromWindow();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     Handler mHideHandler = new Handler();
