@@ -59,14 +59,8 @@ public class FixGetGlueCheckInActivity extends BaseNavDrawerActivity implements
 
         setupViews();
 
-        mShowId = null;
-        if (getIntent() != null) {
-            mShowId = getIntent().getStringExtra(InitBundle.SHOW_ID);
-        }
-        if (TextUtils.isEmpty(mShowId)) {
-            finish();
-            return;
-        }
+        // do not check for null, we want to crash if so
+        mShowId = getIntent().getExtras().getString(InitBundle.SHOW_ID);
 
         mAdapter = new GetGlueObjectAdapter(this);
         mList = (ListView) findViewById(R.id.listViewGetGlueResults);
