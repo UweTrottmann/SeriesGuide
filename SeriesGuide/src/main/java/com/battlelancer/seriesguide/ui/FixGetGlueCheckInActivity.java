@@ -35,7 +35,7 @@ public class FixGetGlueCheckInActivity extends BaseNavDrawerActivity implements
         LoaderManager.LoaderCallbacks<List<GetGlueObject>>, OnItemClickListener {
 
     public interface InitBundle {
-        String SHOW_ID = "showid";
+        String SHOW_TVDB_ID = "showtvdbid";
     }
 
     private ListView mList;
@@ -60,7 +60,7 @@ public class FixGetGlueCheckInActivity extends BaseNavDrawerActivity implements
         setupViews();
 
         // do not check for null, we want to crash if so
-        mShowId = getIntent().getExtras().getString(InitBundle.SHOW_ID);
+        mShowId = getIntent().getExtras().getString(InitBundle.SHOW_TVDB_ID);
 
         mAdapter = new GetGlueObjectAdapter(this);
         mList = (ListView) findViewById(R.id.listViewGetGlueResults);

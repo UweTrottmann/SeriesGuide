@@ -19,7 +19,6 @@ package com.battlelancer.seriesguide.ui.dialogs;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -28,13 +27,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
-import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin.CheckInTask;
 import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
+import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin.CheckInTask;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
-import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
@@ -53,12 +50,11 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
      * the given episode TVDb id. Might return null.
      */
     public static CheckInDialogFragment newInstance(Context context, int episodeTvdbId) {
+        CheckInDialogFragment f = null;
+
         final Cursor episode = context.getContentResolver().query(
                 Episodes.buildEpisodeWithShowUri(episodeTvdbId),
                 CheckInQuery.PROJECTION, null, null, null);
-
-        CheckInDialogFragment f = null;
-
         if (episode != null) {
             if (episode.moveToFirst()) {
                 f = new CheckInDialogFragment();
@@ -94,13 +90,14 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
     }
 
     private String mGetGlueId;
+    private int mShowTvdbId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout = super.onCreateView(inflater, container, savedInstanceState);
 
-        final int tvdbId = getArguments().getInt(InitBundle.SHOW_TVDB_ID);
-        setupFixGetGlueButton(layout, true, tvdbId);
+        mShowTvdbId = getArguments().getInt(InitBundle.SHOW_TVDB_ID);
+        setupFixGetGlueButton(layout, true, mShowTvdbId);
 
         return layout;
     }
@@ -113,7 +110,6 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
 
     @Override
     protected void onGetGlueCheckin(String title, String message) {
-        final int tvdbid = getArguments().getInt(InitBundle.SHOW_TVDB_ID);
         boolean isAbortingCheckIn = false;
         String objectId = null;
 
@@ -122,7 +118,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
             isAbortingCheckIn = true;
         } else {
             Cursor show = getActivity().getContentResolver().query(
-                    Shows.buildShowUri(String.valueOf(tvdbid)), new String[]{
+                    Shows.buildShowUri(String.valueOf(mShowTvdbId)), new String[]{
                     Shows._ID, Shows.GETGLUEID
             }, null, null, null);
             if (show != null) {
@@ -154,13 +150,12 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
 
     @Override
     protected void onTraktCheckIn(String message) {
-        final int tvdbid = getArguments().getInt(InitBundle.SHOW_TVDB_ID);
         final int season = getArguments().getInt(InitBundle.SEASON);
         final int episode = getArguments().getInt(InitBundle.EPISODE);
 
         AndroidUtils.executeAsyncTask(
                 new TraktTask(getActivity(), mListener)
-                        .checkInEpisode(tvdbid, season, episode, message),
+                        .checkInEpisode(mShowTvdbId, season, episode, message),
                 new Void[]{
                         null
                 });
@@ -183,9 +178,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
                 }
             } else if (TextUtils.isEmpty(mGetGlueId)) {
                 // the user has to set a GetGlue object id
-                Intent i = new Intent(getSherlockActivity(),
-                        FixGetGlueCheckInActivity.class);
-                startActivity(i);
+                launchFixGetGlueCheckInActivity(mShowTvdbId);
             }
         }
     }

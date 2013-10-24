@@ -256,9 +256,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
             fixButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(getActivity(), FixGetGlueCheckInActivity.class);
-                    i.putExtra(FixGetGlueCheckInActivity.InitBundle.SHOW_ID, String.valueOf(tvdbId));
-                    startActivity(i);
+                    launchFixGetGlueCheckInActivity(tvdbId);
                 }
             });
         } else {
@@ -297,6 +295,12 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
                     GetGlueAuthActivity.class);
             startActivity(i);
         }
+    }
+
+    protected void launchFixGetGlueCheckInActivity(int showTvdbId) {
+        Intent i = new Intent(getActivity(), FixGetGlueCheckInActivity.class);
+        i.putExtra(FixGetGlueCheckInActivity.InitBundle.SHOW_TVDB_ID, String.valueOf(showTvdbId));
+        startActivity(i);
     }
 
 }
