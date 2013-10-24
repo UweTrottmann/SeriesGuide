@@ -43,6 +43,7 @@ dependencies {
     compile project(':libraries:pagerslidingtabstrip')
     compile project(':libraries:stickygridheaders')
     compile 'com.github.chrisbanes.photoview:library:1.2.2'
+    compile 'com.squareup.okhttp:okhttp:1.2.1'
     compile 'org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:0.31'
     compile 'com.squareup.retrofit:retrofit:1.2.2'
     compile 'com.android.support:support-v4:18.0.+'
