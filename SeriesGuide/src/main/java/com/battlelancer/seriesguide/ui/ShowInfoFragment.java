@@ -5,13 +5,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.app.ShareCompat.IntentBuilder;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -282,12 +283,11 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
             public void onClick(View v) {
                 Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
                 fullscreen.putExtra(FullscreenImageActivity.PATH, imagePath);
-                startActivity(fullscreen);
+                ActivityCompat.startActivity(getActivity(), fullscreen,
+                        ActivityOptionsCompat
+                                .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight()).toBundle());
             }
         });
-        // Utils.setPosterBackground((ImageView)
-        // getView().findViewById(R.id.background),
-        // mShow.getPoster(), getActivity());
 
         // trakt ratings
         onLoadTraktRatings(true);

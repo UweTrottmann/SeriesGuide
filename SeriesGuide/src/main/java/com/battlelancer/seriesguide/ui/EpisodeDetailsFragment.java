@@ -24,6 +24,8 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -71,9 +73,9 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
 
-import de.greenrobot.event.EventBus;
-
 import java.util.Locale;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Displays details about a single episode like summary, ratings and episode
@@ -118,7 +120,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     public static EpisodeDetailsFragment newInstance(int episodeId, boolean isShowingPoster,
-            boolean isShowingShowLink) {
+                                                     boolean isShowingShowLink) {
         EpisodeDetailsFragment f = new EpisodeDetailsFragment();
 
         // Supply index input as an argument.
@@ -266,7 +268,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     protected void onLoadImage(String imagePath, FrameLayout container) {
         if (mArtTask == null || mArtTask.getStatus() == AsyncTask.Status.FINISHED) {
             mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity());
-            AndroidUtils.executeAsyncTask(mArtTask, new Void[] {
+            AndroidUtils.executeAsyncTask(mArtTask, new Void[]{
                     null
             });
         }
@@ -426,7 +428,9 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 public void onClick(View v) {
                     Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
                     fullscreen.putExtra(FullscreenImageActivity.PATH, imagePath);
-                    startActivity(fullscreen);
+                    ActivityCompat.startActivity(getActivity(), fullscreen,
+                            ActivityOptionsCompat
+                                    .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight()).toBundle());
                 }
             });
 
@@ -559,7 +563,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     interface DetailsQuery {
 
-        String[] PROJECTION = new String[] {
+        String[] PROJECTION = new String[]{
                 Tables.EPISODES + "." + Episodes._ID, Shows.REF_SHOW_ID, Episodes.OVERVIEW,
                 Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIREDMS,
                 Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
@@ -648,7 +652,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             mTraktTask = new TraktSummaryTask(getSherlockActivity(), ratingBar, isUseCachedValues)
                     .episode(
                             mShowTvdbId, mSeasonNumber, mEpisodeNumber);
-            AndroidUtils.executeAsyncTask(mTraktTask, new Void[] {});
+            AndroidUtils.executeAsyncTask(mTraktTask, new Void[]{});
         }
     }
 }
