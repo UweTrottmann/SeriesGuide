@@ -24,8 +24,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.battlelancer.seriesguide.getglueapi.GetGlue;
-import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
+import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
+import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin.CheckInTask;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -71,7 +71,7 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
         String objectId = null;
 
         // require GetGlue authentication
-        if (!GetGlue.isAuthenticated(prefs)) {
+        if (!GetGlueCheckin.isAuthenticated(prefs)) {
             isAbortingCheckIn = true;
         } else {
             // fall back to IMDb id
@@ -110,7 +110,7 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
     protected void handleGetGlueToggle(final SharedPreferences prefs, final String imdbid,
             boolean isChecked) {
         if (isChecked) {
-            if (!GetGlue.isAuthenticated(prefs)) {
+            if (!GetGlueCheckin.isAuthenticated(prefs)) {
                 ensureGetGlueAuthAndConnection();
             } else if (TextUtils.isEmpty(imdbid)) {
                 // no IMDb id, no action

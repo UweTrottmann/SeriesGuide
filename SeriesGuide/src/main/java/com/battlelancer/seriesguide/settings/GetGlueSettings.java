@@ -13,19 +13,30 @@ public class GetGlueSettings {
 
     public static String getAuthToken(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_AUTH_TOKEN, null);
-    }
-
-    public static long getAuthTokenExpiration(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getLong(KEY_AUTH_EXPIRATION, System.currentTimeMillis());
+                .getString(KEY_AUTH_TOKEN, "");
     }
 
     public static String getRefreshToken(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_REFRESH_TOKEN, null);
+                .getString(KEY_REFRESH_TOKEN, "");
     }
 
+    public static boolean isAuthenticated(Context context) {
+        return !(getAuthToken(context) == "" || getRefreshToken(context) == "");
+    }
 
+    public static boolean isAuthTokenExpired(Context context) {
+        long now = System.currentTimeMillis();
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getLong(KEY_AUTH_EXPIRATION, now) <= now;
+    }
 
+    public static void clearTokens(Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putString(KEY_AUTH_TOKEN, "")
+                .putLong(KEY_AUTH_EXPIRATION, 0)
+                .putString(KEY_REFRESH_TOKEN, "")
+                .commit();
+    }
 }

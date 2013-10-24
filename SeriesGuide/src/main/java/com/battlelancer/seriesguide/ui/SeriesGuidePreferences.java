@@ -40,7 +40,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.getglueapi.GetGlue;
+import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
@@ -200,13 +200,13 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     protected static void setupSharingSettings(Context context, Preference getGluePref) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         // Disconnect GetGlue
-        getGluePref.setEnabled(GetGlue.isAuthenticated(prefs));
+        getGluePref.setEnabled(GetGlueCheckin.isAuthenticated(prefs));
         getGluePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
                 fireTrackerEvent("Disonnect GetGlue");
 
-                GetGlue.clearCredentials(prefs);
+                GetGlueCheckin.clearCredentials(prefs);
                 preference.setEnabled(false);
                 return true;
             }

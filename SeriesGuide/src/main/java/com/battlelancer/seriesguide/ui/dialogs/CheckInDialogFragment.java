@@ -28,8 +28,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.battlelancer.seriesguide.getglueapi.GetGlue;
-import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
+import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
+import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin.CheckInTask;
 import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -110,7 +110,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
         String objectId = null;
 
         // require GetGlue authentication
-        if (!GetGlue.isAuthenticated(prefs)) {
+        if (!GetGlueCheckin.isAuthenticated(prefs)) {
             isAbortingCheckIn = true;
         } else {
             Cursor show = getActivity().getContentResolver().query(
@@ -165,7 +165,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
     @Override
     protected void handleGetGlueToggle(SharedPreferences prefs, String imdbid, boolean isChecked) {
         if (isChecked) {
-            if (!GetGlue.isAuthenticated(prefs)) {
+            if (!GetGlueCheckin.isAuthenticated(prefs)) {
                 if (!AndroidUtils.isNetworkConnected(getActivity())) {
                     Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_LONG)
                             .show();

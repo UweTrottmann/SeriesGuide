@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.getglueapi.GetGlue;
-import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
+import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
+import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin.CheckInTask;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
@@ -118,7 +118,7 @@ public class QuickCheckInActivity extends SherlockFragmentActivity implements
             String objectId = null;
 
             // require GetGlue authentication
-            if (!GetGlue.isAuthenticated(prefs)) {
+            if (!GetGlueCheckin.isAuthenticated(prefs)) {
                 isAbortingCheckIn = true;
             } else {
                 Cursor show = getContentResolver().query(

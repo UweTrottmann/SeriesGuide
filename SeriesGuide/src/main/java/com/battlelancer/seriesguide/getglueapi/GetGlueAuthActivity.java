@@ -18,7 +18,6 @@
 package com.battlelancer.seriesguide.getglueapi;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -48,10 +47,6 @@ import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
-import oauth.signpost.exception.OAuthCommunicationException;
-import oauth.signpost.exception.OAuthExpectationFailedException;
-import oauth.signpost.exception.OAuthMessageSignerException;
-import oauth.signpost.exception.OAuthNotAuthorizedException;
 
 /**
  * Starts an OAuth 2.0 authentication flow via an {@link android.webkit.WebView}.
@@ -105,7 +100,7 @@ public class GetGlueAuthActivity extends BaseNavDrawerActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (url.startsWith(GetGlue.OAUTH_CALLBACK_URL)) {
+                if (url.startsWith(GetGlueCheckin.OAUTH_CALLBACK_URL)) {
                     Uri uri = Uri.parse(url);
 
                     new RetrieveAccessTokenTask(getApplicationContext()).execute(uri);
@@ -124,7 +119,7 @@ public class GetGlueAuthActivity extends BaseNavDrawerActivity {
         try {
             OAuthClientRequest request = com.uwetrottmann.getglue.GetGlue
                     .getAuthorizationRequest(res.getString(R.string.getglue_client_id),
-                            GetGlue.OAUTH_CALLBACK_URL);
+                            GetGlueCheckin.OAUTH_CALLBACK_URL);
             mWebview.loadUrl(request.getLocationUri());
         } catch (OAuthSystemException e) {
             Utils.trackExceptionAndLog(TAG, e);
@@ -159,7 +154,7 @@ public class GetGlueAuthActivity extends BaseNavDrawerActivity {
                 OAuthClientRequest request = com.uwetrottmann.getglue.GetGlue.getAccessTokenRequest(
                         resources.getString(R.string.getglue_client_id),
                         resources.getString(R.string.getglue_client_secret),
-                        GetGlue.OAUTH_CALLBACK_URL,
+                        GetGlueCheckin.OAUTH_CALLBACK_URL,
                         authCode
                 );
 
