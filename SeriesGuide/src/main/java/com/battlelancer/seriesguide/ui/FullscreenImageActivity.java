@@ -46,11 +46,6 @@ public class FullscreenImageActivity extends Activity {
     public static final String PATH = "fullscreenimageactivity.intent.extra.image";
 
     /**
-     * The flags to pass to {@link SystemUiHider#getInstance}.
-     */
-    private static final int HIDER_FLAGS = SystemUiHider.FLAG_HIDE_NAVIGATION;
-
-    /**
      * The instance of the {@link SystemUiHider} for this activity.
      */
     private SystemUiHider mSystemUiHider;
@@ -80,13 +75,13 @@ public class FullscreenImageActivity extends Activity {
 
         // Set up an instance of SystemUiHider to control the system UI for
         // this activity.
-        mSystemUiHider = SystemUiHider.getInstance(this, mContentView, HIDER_FLAGS);
+        mSystemUiHider = SystemUiHider.getInstance(this, mContentView,
+                SystemUiHider.FLAG_FULLSCREEN);
         mSystemUiHider.setup();
 
-        // Set up the user interaction to manually show or hide the system UI.
-        mContentView.setOnClickListener(new View.OnClickListener() {
+        mContentView.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
             @Override
-            public void onClick(View view) {
+            public void onViewTap(View view, float x, float y) {
                 mSystemUiHider.toggle();
             }
         });
