@@ -42,9 +42,11 @@ dependencies {
     compile project(':libraries:androidutils')
     compile project(':libraries:pagerslidingtabstrip')
     compile project(':libraries:stickygridheaders')
-    compile fileTree(dir: 'libs', include: '*.jar')
     compile 'com.github.chrisbanes.photoview:library:1.2.2'
+    compile 'org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:0.31'
+    compile 'com.squareup.retrofit:retrofit:1.2.2'
     compile 'com.android.support:support-v4:18.0.+'
+    compile fileTree(dir: 'libs', include: '*.jar')
 }
 
 // get signing config from gradle.properties file
