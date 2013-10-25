@@ -27,7 +27,7 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.getglue.GetGlue;
-import com.uwetrottmann.getglue.entities.GetGlueCheckIn;
+import com.uwetrottmann.getglue.entities.GetGlueInteraction;
 import com.uwetrottmann.getglue.entities.GetGlueInteractionResource;
 import com.uwetrottmann.getglue.entities.GetGlueObject;
 import com.uwetrottmann.getglue.entities.GetGlueObjects;
@@ -85,16 +85,16 @@ public class GetGlueCheckin {
                 }
 
                 // do the checkin
-                GetGlueCheckIn checkin;
+                GetGlueInteraction checkin;
                 if (TextUtils.isEmpty(mComment)) {
-                    checkin = getglue.objectService().checkinObject(mObjectId);
+                    checkin = getglue.objectService().checkin(mObjectId);
                 } else {
-                    checkin = getglue.objectService().checkinObject(mObjectId, mComment);
+                    checkin = getglue.objectService().checkin(mObjectId, mComment);
                 }
 
                 // get title of checked in show
                 GetGlueInteractionResource interaction = getglue.interactionService()
-                        .getInteraction(checkin.id);
+                        .get(checkin.id);
                 if (interaction != null
                         && interaction.interaction != null
                         && interaction.interaction._object != null
