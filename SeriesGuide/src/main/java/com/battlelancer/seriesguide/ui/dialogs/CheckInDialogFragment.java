@@ -122,9 +122,25 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
         boolean isAbortingCheckIn = false;
 
         // require GetGlue authentication
-        // check for valid GetGlue id
-        if (!GetGlueSettings.isAuthenticated(getActivity())
-                || TextUtils.isEmpty(mGetGlueId)) {
+        if (!GetGlueSettings.isAuthenticated(getActivity())) {
+            isAbortingCheckIn = true;
+        }
+
+        if (mIsGetGlueIdOutdated) {
+            final Cursor show = getActivity().getContentResolver().query(
+                    Shows.buildShowUri(String.valueOf(mShowTvdbId)), new String[]{
+                    Shows._ID, Shows.GETGLUEID
+            }, null, null, null);
+            if (show != null) {
+                show.moveToFirst();
+                mGetGlueId = show.getString(1);
+                mIsGetGlueIdOutdated = false;
+                show.close();
+            }
+        }
+
+        // check for GetGlue id
+        if (TextUtils.isEmpty(mGetGlueId)) {
             isAbortingCheckIn = true;
         }
 
