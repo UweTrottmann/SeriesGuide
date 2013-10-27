@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.settings;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 
 public class GetGlueSettings {
 
@@ -25,10 +26,13 @@ public class GetGlueSettings {
         return !(getAuthToken(context) == "" || getRefreshToken(context) == "");
     }
 
+    /**
+     * Returns true if the expired date of the current access token is within a day or later.
+     */
     public static boolean isAuthTokenExpired(Context context) {
         long now = System.currentTimeMillis();
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getLong(KEY_AUTH_EXPIRATION, now) <= now;
+                .getLong(KEY_AUTH_EXPIRATION, now) <= now - DateUtils.DAY_IN_MILLIS;
     }
 
     public static void clearTokens(Context context) {
