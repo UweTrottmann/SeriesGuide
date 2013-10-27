@@ -35,19 +35,21 @@ import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
+
 import com.google.analytics.tracking.android.EasyTracker;
+
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 /**
- * Allows to check into an episode on trakt, into a show on GetGlue. Launching
- * activities must implement {@link OnTraktActionCompleteListener}.
+ * Allows to check into an episode on trakt, into a show on GetGlue. Launching activities must
+ * implement {@link OnTraktActionCompleteListener}.
  */
 public class CheckInDialogFragment extends GenericCheckInDialogFragment {
 
     /**
-     * Builds a new {@link CheckInDialogFragment} setting all values based on
-     * the given episode TVDb id. Might return null.
+     * Builds a new {@link CheckInDialogFragment} setting all values based on the given episode TVDb
+     * id. Might return null.
      */
     public static CheckInDialogFragment newInstance(Context context, int episodeTvdbId) {
         CheckInDialogFragment f = null;
@@ -63,6 +65,8 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
                 args.putInt(InitBundle.SHOW_TVDB_ID, episode.getInt(CheckInQuery.SHOW_TVDB_ID));
                 args.putInt(InitBundle.SEASON, episode.getInt(CheckInQuery.SEASON));
                 args.putInt(InitBundle.EPISODE, episode.getInt(CheckInQuery.NUMBER));
+                args.putString(InitBundle.SHOW_GETGLUE_ID,
+                        episode.getString(CheckInQuery.SHOW_GETGLUE_ID));
 
                 String episodeTitleWithNumbers = ShareUtils.onCreateShareString(context, episode);
                 args.putString(InitBundle.ITEM_TITLE, episodeTitleWithNumbers);
@@ -76,6 +80,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
     }
 
     private interface CheckInQuery {
+
         String[] PROJECTION = new String[]{
                 Episodes._ID, Episodes.SEASON, Episodes.NUMBER, Episodes.TITLE, Shows.REF_SHOW_ID,
                 Shows.GETGLUEID, Shows.TITLE
@@ -90,14 +95,18 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
     }
 
     private String mGetGlueId;
+
     private int mShowTvdbId;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         View layout = super.onCreateView(inflater, container, savedInstanceState);
 
         mShowTvdbId = getArguments().getInt(InitBundle.SHOW_TVDB_ID);
         setupFixGetGlueButton(layout, true, mShowTvdbId);
+
+        mGetGlueId = getArguments().getString(InitBundle.SHOW_GETGLUE_ID);
 
         return layout;
     }
@@ -111,29 +120,12 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
     @Override
     protected boolean onGetGlueCheckin(String title, String message) {
         boolean isAbortingCheckIn = false;
-        String objectId = null;
 
         // require GetGlue authentication
-        if (!GetGlueSettings.isAuthenticated(getActivity())) {
+        // check for valid GetGlue id
+        if (!GetGlueSettings.isAuthenticated(getActivity())
+                || TextUtils.isEmpty(mGetGlueId)) {
             isAbortingCheckIn = true;
-        } else {
-            Cursor show = getActivity().getContentResolver().query(
-                    Shows.buildShowUri(String.valueOf(mShowTvdbId)), new String[]{
-                    Shows._ID, Shows.GETGLUEID
-            }, null, null, null);
-            if (show != null) {
-                show.moveToFirst();
-                mGetGlueId = show.getString(1);
-                show.close();
-            }
-
-            // fall back to show title
-            if (TextUtils.isEmpty(mGetGlueId)) {
-                // cancel if we don't know what to check into
-                isAbortingCheckIn = true;
-            } else {
-                objectId = mGetGlueId;
-            }
         }
 
         if (isAbortingCheckIn) {
@@ -142,7 +134,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
             updateCheckInButtonState();
         } else {
             // check in, use task on thread pool
-            AndroidUtils.executeAsyncTask(new CheckInTask(objectId, message,
+            AndroidUtils.executeAsyncTask(new CheckInTask(mGetGlueId, message,
                     getActivity()), new Void[]{});
         }
 

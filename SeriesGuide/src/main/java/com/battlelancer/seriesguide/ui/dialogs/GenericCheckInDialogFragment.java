@@ -74,6 +74,11 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         String SHOW_TVDB_ID = "showtvdbid";
 
         /**
+         * Show GetGlue id. <b>Required for episodes.</b>
+         */
+        String SHOW_GETGLUE_ID = "showgetglueid";
+
+        /**
          * Season number. <b>Required for episodes.</b>
          */
         String SEASON = "season";
