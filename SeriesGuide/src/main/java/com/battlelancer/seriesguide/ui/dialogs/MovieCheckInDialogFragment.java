@@ -24,8 +24,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.battlelancer.seriesguide.getglueapi.GetGlue;
-import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
+import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
+import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin.CheckInTask;
+import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -37,12 +38,13 @@ import com.uwetrottmann.androidutils.AndroidUtils;
  */
 public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
 
-    public static MovieCheckInDialogFragment newInstance(String imdbid, String movieTitle) {
+    public static MovieCheckInDialogFragment newInstance(String imdbId, String movieTitle) {
         MovieCheckInDialogFragment f = new MovieCheckInDialogFragment();
 
         Bundle args = new Bundle();
-        args.putString(InitBundle.IMDB_ID, imdbid);
+        args.putString(InitBundle.TITLE, movieTitle);
         args.putString(InitBundle.ITEM_TITLE, movieTitle);
+        args.putString(InitBundle.MOVIE_IMDB_ID, imdbId);
         f.setArguments(args);
 
         return f;
@@ -65,56 +67,43 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
         EasyTracker.getTracker().sendView("Movie Check-In Dialog");
     }
 
-    protected void onGetGlueCheckin(final SharedPreferences prefs, final String imdbid,
-            final String message) {
+    protected boolean onGetGlueCheckin(final String title, final String message) {
         boolean isAbortingCheckIn = false;
-        String objectId = null;
 
         // require GetGlue authentication
-        if (!GetGlue.isAuthenticated(prefs)) {
+        if (!GetGlueSettings.isAuthenticated(getActivity())) {
             isAbortingCheckIn = true;
-        } else {
-            // fall back to IMDb id
-            if (TextUtils.isEmpty(imdbid)) {
-                // cancel if we don't know what to check into
-                isAbortingCheckIn = true;
-            } else {
-                objectId = imdbid;
-            }
         }
 
         if (isAbortingCheckIn) {
             mToggleGetGlueButton.setChecked(false);
             mGetGlueChecked = false;
             updateCheckInButtonState();
-            return;
         } else {
             // check in, use task on thread pool
-            AndroidUtils.executeAsyncTask(new CheckInTask(objectId, message,
-                    getActivity()), new Void[] {});
+            AndroidUtils.executeAsyncTask(new CheckInTask(title, message,
+                    getActivity()), new Void[]{});
         }
+
+        return isAbortingCheckIn;
     }
 
     /**
      * Start the trakt check in task.
      */
     protected void onTraktCheckIn(String message) {
-        final String imdbId = getArguments().getString(InitBundle.IMDB_ID);
+        final String imdbId = getArguments().getString(InitBundle.MOVIE_IMDB_ID);
         AndroidUtils.executeAsyncTask(
                 new TraktTask(getActivity(), mListener).checkInMovie(imdbId, message),
-                new Void[] {
-                    null
+                new Void[]{
+                        null
                 });
     }
 
-    protected void handleGetGlueToggle(final SharedPreferences prefs, final String imdbid,
-            boolean isChecked) {
+    protected void handleGetGlueToggle(boolean isChecked) {
         if (isChecked) {
-            if (!GetGlue.isAuthenticated(prefs)) {
+            if (!GetGlueSettings.isAuthenticated(getActivity())) {
                 ensureGetGlueAuthAndConnection();
-            } else if (TextUtils.isEmpty(imdbid)) {
-                // no IMDb id, no action
-                mToggleGetGlueButton.setChecked(false);
             }
         }
     }
