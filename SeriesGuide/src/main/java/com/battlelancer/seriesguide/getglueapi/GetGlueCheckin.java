@@ -17,14 +17,10 @@
 
 package com.battlelancer.seriesguide.getglueapi;
 
-import android.content.Context;
-import android.os.AsyncTask;
-import android.text.TextUtils;
-import android.widget.Toast;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.getglue.GetGlue;
 import com.uwetrottmann.getglue.entities.GetGlueInteraction;
@@ -32,6 +28,11 @@ import com.uwetrottmann.getglue.entities.GetGlueInteractionResource;
 import com.uwetrottmann.getglue.entities.GetGlueObject;
 import com.uwetrottmann.getglue.entities.GetGlueObjects;
 import com.uwetrottmann.seriesguide.R;
+
+import android.content.Context;
+import android.os.AsyncTask;
+import android.text.TextUtils;
+import android.widget.Toast;
 
 import retrofit.RetrofitError;
 
@@ -67,12 +68,21 @@ public class GetGlueCheckin {
                 return CHECKIN_OFFLINE;
             }
 
-            // TODO handle setting a valid token, getting a new one if it is expired
+            // ensure there is a valid access token, get a new one if it is expired
+            if (GetGlueSettings.isAuthTokenExpired(mContext)) {
+                boolean gotNewTokens = GetGlueAuthActivity.fetchAndStoreTokens(mContext,
+                        GetGlueSettings.getRefreshToken(mContext));
+                if (!gotNewTokens) {
+                    // abort, user needs to re-authenticate
+                    return CHECKIN_FAILED;
+                }
+            }
+
             GetGlue getglue = new GetGlue();
             getglue.setAccessToken(GetGlueSettings.getAuthToken(mContext));
 
             try {
-                // search for an id if none is available
+                // search for an id if only a title was given
                 if (!(mObjectId.startsWith("tv_shows") || mObjectId.startsWith("movies"))) {
                     GetGlueObjects response = getglue.searchService().searchAnyObject(mObjectId);
                     if (response != null
@@ -80,7 +90,6 @@ public class GetGlueCheckin {
                             && response.objects.size() > 0) {
                         GetGlueObject glueObject = response.objects.get(0);
                         mObjectId = glueObject.id;
-                        // TODO store the id to the database to avoid queries
                     }
                 }
 
@@ -92,7 +101,7 @@ public class GetGlueCheckin {
                     checkin = getglue.objectService().checkin(mObjectId, mComment);
                 }
 
-                // get title of checked in show
+                // get title of checked in item
                 GetGlueInteractionResource interaction = getglue.interactionService()
                         .get(checkin.id);
                 if (interaction != null

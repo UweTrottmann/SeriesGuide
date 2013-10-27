@@ -17,19 +17,6 @@
 
 package com.battlelancer.seriesguide.getglueapi;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.text.format.DateUtils;
-import android.util.Log;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Toast;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Window;
@@ -43,6 +30,19 @@ import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
 import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
+import android.util.Log;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 /**
  * Starts an OAuth 2.0 authentication flow via an {@link android.webkit.WebView}.
@@ -82,7 +82,7 @@ public class GetGlueAuthActivity extends BaseNavDrawerActivity {
         });
         mWebview.setWebViewClient(new WebViewClient() {
             public void onReceivedError(WebView view, int errorCode, String description,
-                                        String failingUrl) {
+                    String failingUrl) {
                 Toast.makeText(activity,
                         getString(R.string.getglue_authfailed) + " " + description,
                         Toast.LENGTH_LONG).show();
@@ -131,43 +131,15 @@ public class GetGlueAuthActivity extends BaseNavDrawerActivity {
         }
 
         /**
-         * Retrieve the oauth_verifier, and store the oauth and
-         * oauth_token_secret for future API calls.
+         * Retrieve the oauth_verifier, and store the oauth and oauth_token_secret for future API
+         * calls.
          */
         @Override
         protected Integer doInBackground(Uri... params) {
             final Uri uri = params[0];
             final String authCode = uri.getQueryParameter("code");
 
-            try {
-                Log.d(TAG, "Building OAuth 2.0 token request...");
-
-                Resources resources = mContext.getResources();
-                OAuthAccessTokenResponse response = GetGlue.getAccessTokenResponse(
-                        resources.getString(R.string.getglue_client_id),
-                        resources.getString(R.string.getglue_client_secret),
-                        GetGlueCheckin.OAUTH_CALLBACK_URL,
-                        authCode
-                );
-
-                // store access and refresh token, as well as expiration date of access token
-                Log.d(TAG, "Storing received OAuth 2.0 tokens...");
-                long expiresIn = response.getExpiresIn();
-                long expirationDate = System.currentTimeMillis() + expiresIn * DateUtils.SECOND_IN_MILLIS;
-                PreferenceManager.getDefaultSharedPreferences(mContext).edit()
-                        .putString(GetGlueSettings.KEY_AUTH_TOKEN, response.getAccessToken())
-                        .putLong(GetGlueSettings.KEY_AUTH_EXPIRATION, expirationDate)
-                        .putString(GetGlueSettings.KEY_REFRESH_TOKEN, response.getRefreshToken())
-                        .commit();
-
-                return AUTH_SUCCESS;
-            } catch (OAuthSystemException e) {
-                Utils.trackExceptionAndLog(TAG, e);
-            } catch (OAuthProblemException e) {
-                Utils.trackExceptionAndLog(TAG, e);
-            }
-
-            return AUTH_FAILED;
+            return fetchAndStoreTokens(mContext, authCode) ? AUTH_SUCCESS : AUTH_FAILED;
         }
 
         @Override
@@ -180,6 +152,48 @@ public class GetGlueAuthActivity extends BaseNavDrawerActivity {
                             Toast.LENGTH_LONG).show();
                     break;
             }
+        }
+    }
+
+    /**
+     * Tries to obtain new tokens from GetGlue using the given auth code. Returns true if
+     * successful, returns false and clears any existing tokens if failing.
+     */
+    public static boolean fetchAndStoreTokens(Context context, String authCode) {
+        Resources resources = context.getResources();
+        OAuthAccessTokenResponse response = null;
+
+        Log.d(TAG, "Building OAuth 2.0 token request...");
+        try {
+            response = GetGlue.getAccessTokenResponse(
+                    resources.getString(R.string.getglue_client_id),
+                    resources.getString(R.string.getglue_client_secret),
+                    GetGlueCheckin.OAUTH_CALLBACK_URL,
+                    authCode
+            );
+        } catch (OAuthSystemException e) {
+            response = null;
+            Utils.trackExceptionAndLog(TAG, e);
+        } catch (OAuthProblemException e) {
+            response = null;
+            Utils.trackExceptionAndLog(TAG, e);
+        }
+
+        if (response != null) {
+            Log.d(TAG, "Storing received OAuth 2.0 tokens...");
+            long expiresIn = response.getExpiresIn();
+            long expirationDate = System.currentTimeMillis()
+                    + expiresIn * DateUtils.SECOND_IN_MILLIS;
+            PreferenceManager.getDefaultSharedPreferences(context).edit()
+                    .putString(GetGlueSettings.KEY_AUTH_TOKEN, response.getAccessToken())
+                    .putLong(GetGlueSettings.KEY_AUTH_EXPIRATION, expirationDate)
+                    .putString(GetGlueSettings.KEY_REFRESH_TOKEN, response.getRefreshToken())
+                    .commit();
+            return true;
+        } else {
+            Log.d(TAG, "Failed, purging OAuth 2.0 tokens...");
+            GetGlueSettings.clearTokens(context);
+            return false;
         }
     }
 
