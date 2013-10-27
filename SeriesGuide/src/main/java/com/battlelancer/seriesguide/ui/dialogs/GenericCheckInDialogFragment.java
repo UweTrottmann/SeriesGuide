@@ -49,9 +49,9 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
 
     public interface InitBundle {
         /**
-         * IMDb id of episode or movie. <b>Required.</b>
+         * Title of show or movie. <b>Required.</b>
          */
-        String IMDB_ID = "imdbid";
+        String TITLE = "title";
 
         /**
          * Title of episode or movie. <b>Required.</b>
@@ -64,9 +64,19 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         String DEFAULT_MESSAGE = "message";
 
         /**
+         * Movie IMDb id. <b>Required for movies.</b>
+         */
+        String MOVIE_IMDB_ID = "movieimdbid";
+
+        /**
          * Show TVDb id. <b>Required for episodes.</b>
          */
-        String SHOW_TVDB_ID = "tvdbid";
+        String SHOW_TVDB_ID = "showtvdbid";
+
+        /**
+         * Show GetGlue id. <b>Required for episodes.</b>
+         */
+        String SHOW_GETGLUE_ID = "showgetglueid";
 
         /**
          * Season number. <b>Required for episodes.</b>
@@ -112,7 +122,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
                 .getDefaultSharedPreferences(getSherlockActivity());
 
         // some required values
-        final String imdbid = getArguments().getString(InitBundle.IMDB_ID);
+        final String title = getArguments().getString(InitBundle.TITLE);
         final String defaultMessage = getArguments().getString(InitBundle.DEFAULT_MESSAGE);
         final String itemTitle = getArguments().getString(InitBundle.ITEM_TITLE);
 
@@ -153,7 +163,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         mToggleGetGlueButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                handleGetGlueToggle(prefs, imdbid, isChecked);
+                handleGetGlueToggle(isChecked);
 
                 mGetGlueChecked = isChecked;
                 prefs.edit().putBoolean(SeriesGuidePreferences.KEY_SHAREWITHGETGLUE, isChecked)
@@ -197,7 +207,8 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
                 final String message = mMessageBox.getText().toString();
 
                 if (mGetGlueChecked) {
-                    onGetGlueCheckin(prefs, imdbid, message);
+                    boolean shouldAbort = onGetGlueCheckin(title, message);
+                    if (shouldAbort) return;
                 }
 
                 if (mTraktChecked) {
@@ -251,9 +262,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
             fixButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(getActivity(), FixGetGlueCheckInActivity.class);
-                    i.putExtra(FixGetGlueCheckInActivity.InitBundle.SHOW_ID, String.valueOf(tvdbId));
-                    startActivity(i);
+                    launchFixGetGlueCheckInActivity(tvdbId);
                 }
             });
         } else {
@@ -264,9 +273,10 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
 
     /**
      * Start the GetGlue check-in task.
+     *
+     * @return Return whether the check-in should be aborted.
      */
-    protected abstract void onGetGlueCheckin(final SharedPreferences prefs, final String imdbid,
-            final String message);
+    protected abstract boolean onGetGlueCheckin(final String title, final String comment);
 
     /**
      * Start the trakt check-in task.
@@ -281,8 +291,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         }
     }
 
-    protected abstract void handleGetGlueToggle(final SharedPreferences prefs, final String imdbid,
-            boolean isChecked);
+    protected abstract void handleGetGlueToggle(boolean isChecked);
 
     protected void ensureGetGlueAuthAndConnection() {
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
@@ -294,6 +303,12 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
                     GetGlueAuthActivity.class);
             startActivity(i);
         }
+    }
+
+    protected void launchFixGetGlueCheckInActivity(int showTvdbId) {
+        Intent i = new Intent(getActivity(), FixGetGlueCheckInActivity.class);
+        i.putExtra(FixGetGlueCheckInActivity.InitBundle.SHOW_TVDB_ID, String.valueOf(showTvdbId));
+        startActivity(i);
     }
 
 }

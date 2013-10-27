@@ -40,12 +40,12 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.ImageProvider;
@@ -197,16 +197,15 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
-    protected static void setupSharingSettings(Context context, Preference getGluePref) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    protected static void setupSharingSettings(final Context context, Preference getGluePref) {
         // Disconnect GetGlue
-        getGluePref.setEnabled(GetGlue.isAuthenticated(prefs));
+        getGluePref.setEnabled(GetGlueSettings.isAuthenticated(context));
         getGluePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
                 fireTrackerEvent("Disonnect GetGlue");
 
-                GetGlue.clearCredentials(prefs);
+                GetGlueSettings.clearTokens(context);
                 preference.setEnabled(false);
                 return true;
             }
