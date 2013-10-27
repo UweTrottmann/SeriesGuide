@@ -104,10 +104,6 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
             fireTrackerEvent("Subscribe");
             return true;
         }
-        else if (itemId == R.id.menu_migrate) {
-            startActivity(new Intent(this, MigrationActivity.class));
-            return true;
-        }
         else if (itemId == R.id.menu_preferences) {
             startActivity(new Intent(this, SeriesGuidePreferences.class));
 

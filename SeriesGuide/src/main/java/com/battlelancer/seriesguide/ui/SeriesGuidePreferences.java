@@ -170,7 +170,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                     findPreference(KEY_LANGUAGE),
                     findPreference(NotificationSettings.KEY_THRESHOLD));
         } else if (action != null && action.equals(ACTION_PREFS_SHARING)) {
-            addPreferencesFromResource(R.xml.settings_sharing);
+            addPreferencesFromResource(R.xml.settings_services);
             setupSharingSettings(this,
                     findPreference(KEY_GETGLUE_DISCONNECT));
         } else if (action != null && action.equals(ACTION_PREFS_ADVANCED)) {
@@ -500,7 +500,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                         findPreference(KEY_LANGUAGE),
                         findPreference(NotificationSettings.KEY_THRESHOLD));
             } else if ("sharing".equals(settings)) {
-                addPreferencesFromResource(R.xml.settings_sharing);
+                addPreferencesFromResource(R.xml.settings_services);
                 setupSharingSettings(getActivity(),
                         findPreference(KEY_GETGLUE_DISCONNECT));
             } else if ("advanced".equals(settings)) {
