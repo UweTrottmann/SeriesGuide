@@ -16,6 +16,7 @@ Version 9 *(in development)*
 * TWEAK Move update progress bar below action bar. Use it for poster loading progress as well.
 * TWEAK Improve poster and episode image full screen view: two-finger zoom, navigation stays visible.
 * TWEAK Change filter icon state if a filter is active. Thanks @adneal!
+* TWEAK Moved 'Migrate from X' action to service settings. Grouped SeriesGuide and GetGlue service settings
 
 Version 8.2 *(2013-10-23)*
 -----------------
