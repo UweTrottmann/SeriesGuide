@@ -286,8 +286,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
 
         ArrayList<String> mPaths;
 
-        private View mProgressOverlay;
-
         protected FetchPosterTask() {
         }
 
@@ -298,27 +296,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
 
         @Override
         protected void onPreExecute() {
-            // see if we already inflated the progress overlay
-            mProgressOverlay = findViewById(R.id.overlay_update);
-            if (mProgressOverlay == null) {
-                mProgressOverlay = ((ViewStub) findViewById(R.id.stub_update)).inflate();
-            }
-            showOverlay(mProgressOverlay);
-            // setup the progress overlay
-            TextView mUpdateStatus = (TextView) mProgressOverlay
-                    .findViewById(R.id.textViewUpdateStatus);
-            mUpdateStatus.setText("");
-
-            ProgressBar updateProgress = (ProgressBar) mProgressOverlay
-                    .findViewById(R.id.ProgressBarShowListDet);
-            updateProgress.setIndeterminate(true);
-
-            View cancelButton = mProgressOverlay.findViewById(R.id.overlayCancel);
-            cancelButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    onCancelTasks();
-                }
-            });
+            setProgressVisibility(true);
         }
 
         @Override
@@ -388,12 +366,12 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
                     break;
             }
 
-            hideOverlay(mProgressOverlay);
+            setProgressVisibility(false);
         }
 
         @Override
         protected void onCancelled() {
-            hideOverlay(mProgressOverlay);
+            setProgressVisibility(false);
         }
     }
 
@@ -411,18 +389,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
             mArtTask.cancel(true);
             mArtTask = null;
         }
-    }
-
-    public void showOverlay(View overlay) {
-        overlay.startAnimation(AnimationUtils
-                .loadAnimation(getApplicationContext(), R.anim.fade_in));
-        overlay.setVisibility(View.VISIBLE);
-    }
-
-    public void hideOverlay(View overlay) {
-        overlay.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.fade_out));
-        overlay.setVisibility(View.GONE);
     }
 
     /**

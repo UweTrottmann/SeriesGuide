@@ -17,11 +17,4 @@
         android:layout_marginTop="-7dp"
         android:indeterminateOnly="true" />
 
-    <ViewStub
-        android:id="@+id/stub_update"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inflatedId="@+id/overlay_update"
-        android:layout="@layout/progress_overlay" />
-
 </FrameLayout>
