@@ -17,15 +17,7 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
 import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin.CheckInTask;
@@ -35,11 +27,18 @@ import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
-
-import com.google.analytics.tracking.android.EasyTracker;
-
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
+
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 /**
  * Allows to check into an episode on trakt, into a show on GetGlue. Launching activities must
@@ -187,7 +186,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
                 }
             } else if (TextUtils.isEmpty(mGetGlueId)) {
                 // the user has to set a GetGlue object id
-                launchFixGetGlueCheckInActivity(mShowTvdbId);
+                launchFixGetGlueCheckInActivity(mToggleGetGlueButton, mShowTvdbId);
             }
         }
     }
