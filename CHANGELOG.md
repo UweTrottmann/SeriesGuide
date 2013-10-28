@@ -5,6 +5,18 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 9 *(in development)*
+-----------------
+
+### Detailed changes:
+
+#### 9-beta1 *(2013-10-28)*
+
+* TWEAK Switch to new GetGlue v3 API. Requires giving permission to SeriesGuide once. Setting a GetGlue id once before checking into a new show.
+* TWEAK Move update progress bar below action bar. Use it for poster loading progress as well.
+* TWEAK Improve poster and episode image full screen view: two-finger zoom, navigation stays visible.
+* TWEAK Change filter icon state if a filter is active. Thanks @adneal!
+
 Version 8.2 *(2013-10-23)*
 -----------------
 
