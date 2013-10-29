@@ -10,6 +10,10 @@ Version 9 *(in development)*
 
 ### Detailed changes:
 
+#### 9-beta2 *(2013-10-29)*
+
+* FIX Crash fix for In-App billing.
+
 #### 9-beta1 *(2013-10-28)*
 
 * TWEAK Switch to new GetGlue v3 API. Requires giving permission to SeriesGuide once. Setting a GetGlue id once before checking into a new show.
