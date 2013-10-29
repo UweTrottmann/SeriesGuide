@@ -17,6 +17,16 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
+import com.battlelancer.seriesguide.enums.TraktStatus;
+import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.jakewharton.trakt.Trakt;
+import com.jakewharton.trakt.entities.Response;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -31,16 +41,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import com.battlelancer.seriesguide.enums.TraktStatus;
-import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
-import com.jakewharton.trakt.entities.Response;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
+import retrofit.RetrofitError;
 
 /**
  * Helper methods to interact with third-party services trakt and The Movie
@@ -82,9 +83,9 @@ public final class ServiceUtils {
 
     private static final String YOUTUBE_PACKAGE = "com.google.android.youtube";
 
-    private static ServiceManager sTraktServiceManagerInstance;
+    private static Trakt sTraktServiceManagerInstance;
 
-    private static ServiceManager sTraktServiceManagerWithAuthInstance;
+    private static Trakt sTraktServiceManagerWithAuthInstance;
 
     private static com.uwetrottmann.tmdb.ServiceManager sTmdbServiceManagerInstance;
 
@@ -111,15 +112,10 @@ public final class ServiceUtils {
     /**
      * Get a trakt-java ServiceManager with just our API key set. NO user auth
      * data.
-     * 
-     * @param context
-     * @return
      */
-    public static synchronized ServiceManager getTraktServiceManager(Context context) {
+    public static synchronized Trakt getTraktServiceManager(Context context) {
         if (ServiceUtils.sTraktServiceManagerInstance == null) {
-            ServiceUtils.sTraktServiceManagerInstance = new ServiceManager();
-            ServiceUtils.sTraktServiceManagerInstance.setReadTimeout(10000);
-            ServiceUtils.sTraktServiceManagerInstance.setConnectionTimeout(15000);
+            ServiceUtils.sTraktServiceManagerInstance = new Trakt();
             ServiceUtils.sTraktServiceManagerInstance.setApiKey(context.getResources().getString(
                     R.string.trakt_apikey));
             // this made some problems, so sadly disabled for now
@@ -132,24 +128,20 @@ public final class ServiceUtils {
     /**
      * Get the trakt-java ServiceManger with user credentials and our API key
      * set.
-     * 
+     *
+     *
      * @param context
      * @param refreshCredentials Set this flag to refresh the user credentials.
      * @return
      * @throws Exception When decrypting the password failed.
      */
-    public static synchronized ServiceManager getTraktServiceManagerWithAuth(Context context,
+    public static synchronized Trakt getTraktServiceManagerWithAuth(Context context,
             boolean refreshCredentials) {
         if (ServiceUtils.sTraktServiceManagerWithAuthInstance == null) {
-            ServiceUtils.sTraktServiceManagerWithAuthInstance = new ServiceManager();
-            ServiceUtils.sTraktServiceManagerWithAuthInstance.setReadTimeout(10000);
-            ServiceUtils.sTraktServiceManagerWithAuthInstance.setConnectionTimeout(15000);
+            ServiceUtils.sTraktServiceManagerWithAuthInstance = new Trakt();
             ServiceUtils.sTraktServiceManagerWithAuthInstance.setApiKey(context.getResources()
                     .getString(
                             R.string.trakt_apikey));
-            // this made some problems, so sadly disabled for now
-            // manager.setUseSsl(true);
-
             refreshCredentials = true;
         }
 
@@ -207,7 +199,7 @@ public final class ServiceUtils {
      * Checks for existing trakt credentials. If there aren't any valid ones
      * (determined by {@link #hasTraktCredentials(Context)}), launches the trakt
      * connect flow.
-     * 
+     *
      * @return <b>true</b> if credentials are valid, <b>false</b> if invalid and
      *         launching trakt connect flow.
      */
@@ -239,18 +231,17 @@ public final class ServiceUtils {
             return;
         }
 
-        ServiceManager manager = getTraktServiceManagerWithAuth(context, false);
+        Trakt manager = getTraktServiceManagerWithAuth(context, false);
         if (manager == null) {
             return;
         }
         try {
-            Response r = manager.accountService().test().fire();
+            Response r = manager.accountService().test();
             if (r != null && TraktStatus.FAILURE.equals(r.status)) {
                 // credentials invalid according to trakt, remove them
                 clearTraktCredentials(context);
             }
-        } catch (TraktException e) {
-        } catch (ApiException e) {
+        } catch (RetrofitError e) {
         }
         /*
          * Ignore exceptions, trakt may be offline, etc. We expect the user to
@@ -260,7 +251,7 @@ public final class ServiceUtils {
 
     /**
      * Removes trakt username and password from settings as well as from the
-     * authenticated {@link ServiceManager} instance.
+     * authenticated {@link com.jakewharton.trakt.Trakt} instance.
      */
     public static void clearTraktCredentials(Context context) {
         Log.d(TAG, "Clearing trakt credentials...");
@@ -282,7 +273,7 @@ public final class ServiceUtils {
      * Displays the IMDb page for the given id (show or episode) in the IMDb app
      * or on the imdb.com web page. If the IMDb id is empty, disables the
      * button.
-     * 
+     *
      * @param imdbId
      * @param imdbButton
      * @param logTag
@@ -510,7 +501,7 @@ public final class ServiceUtils {
 
     /**
      * Used to open the YouTube app and search for <code>query</code>
-     * 
+     *
      * @param query The search query for the YouTube app
      * @param button The {@link Button} used to invoke the
      *            {@link android.view.View.OnClickListener}
@@ -537,7 +528,7 @@ public final class ServiceUtils {
     /**
      * Attempts to open the YouTube application to search for <code>query</code>
      * . If the app is unavailable, a web search if performed instead
-     * 
+     *
      * @param context The {@link Context} to use
      * @param query The search query
      * @param logTag The log tag to use, for Analytics
@@ -571,7 +562,7 @@ public final class ServiceUtils {
 
     /**
      * Used to search the web for <code>query</code>
-     * 
+     *
      * @param query The search query for the YouTube app
      * @param button The {@link Button} used to invoke the
      *            {@link android.view.View.OnClickListener}
@@ -597,7 +588,7 @@ public final class ServiceUtils {
 
     /**
      * Attempts to search the web for <code>query</code>
-     * 
+     *
      * @param context The {@link Context} to use
      * @param query The search query
      * @param logTag The log tag to use, for Analytics
