@@ -44,8 +44,8 @@ import android.widget.Button;
 import retrofit.RetrofitError;
 
 /**
- * Helper methods to interact with third-party services trakt and The Movie
- * Database used within SeriesGuide.
+ * Helper methods to interact with third-party services trakt and The Movie Database used within
+ * SeriesGuide.
  */
 public final class ServiceUtils {
 
@@ -110,8 +110,7 @@ public final class ServiceUtils {
     }
 
     /**
-     * Get a trakt-java ServiceManager with just our API key set. NO user auth
-     * data.
+     * Get a trakt-java ServiceManager with just our API key set. NO user auth data.
      */
     public static synchronized Trakt getTraktServiceManager(Context context) {
         if (ServiceUtils.sTraktServiceManagerInstance == null) {
@@ -126,13 +125,9 @@ public final class ServiceUtils {
     }
 
     /**
-     * Get the trakt-java ServiceManger with user credentials and our API key
-     * set.
+     * Get the trakt-java ServiceManger with user credentials and our API key set.
      *
-     *
-     * @param context
      * @param refreshCredentials Set this flag to refresh the user credentials.
-     * @return
      * @throws Exception When decrypting the password failed.
      */
     public static synchronized Trakt getTraktServiceManagerWithAuth(Context context,
@@ -167,8 +162,8 @@ public final class ServiceUtils {
     }
 
     /**
-     * Returns the SHA hash of the users trakt password.<br>
-     * <b>Never</b> store this yourself, always call this method.
+     * Returns the SHA hash of the users trakt password.<br> <b>Never</b> store this yourself,
+     * always call this method.
      */
     private static String getTraktPasswordHash(Context context) {
         String hash = PreferenceManager.getDefaultSharedPreferences(context).getString(
@@ -183,8 +178,8 @@ public final class ServiceUtils {
     }
 
     /**
-     * Checks if there are a non-empty trakt username and password. Returns
-     * false if either one is empty.
+     * Checks if there are a non-empty trakt username and password. Returns false if either one is
+     * empty.
      */
     public static boolean hasTraktCredentials(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
@@ -196,12 +191,11 @@ public final class ServiceUtils {
     }
 
     /**
-     * Checks for existing trakt credentials. If there aren't any valid ones
-     * (determined by {@link #hasTraktCredentials(Context)}), launches the trakt
-     * connect flow.
+     * Checks for existing trakt credentials. If there aren't any valid ones (determined by {@link
+     * #hasTraktCredentials(Context)}), launches the trakt connect flow.
      *
-     * @return <b>true</b> if credentials are valid, <b>false</b> if invalid and
-     *         launching trakt connect flow.
+     * @return <b>true</b> if credentials are valid, <b>false</b> if invalid and launching trakt
+     * connect flow.
      */
     public static boolean ensureTraktCredentials(Context context) {
         if (!hasTraktCredentials(context)) {
@@ -213,10 +207,9 @@ public final class ServiceUtils {
     }
 
     /**
-     * Creates a network request to check if the current trakt credentials are
-     * still valid. Will assume valid credentials if there was no response from
-     * trakt (due to a network error, etc.).<br>
-     * <b>Never</b> run this on the main thread.
+     * Creates a network request to check if the current trakt credentials are still valid. Will
+     * assume valid credentials if there was no response from trakt (due to a network error,
+     * etc.).<br> <b>Never</b> run this on the main thread.
      */
     public static void checkTraktCredentials(Context context) {
         Log.d(TAG, "Checking trakt credentials...");
@@ -250,8 +243,8 @@ public final class ServiceUtils {
     }
 
     /**
-     * Removes trakt username and password from settings as well as from the
-     * authenticated {@link com.jakewharton.trakt.Trakt} instance.
+     * Removes trakt username and password from settings as well as from the authenticated {@link
+     * com.jakewharton.trakt.Trakt} instance.
      */
     public static void clearTraktCredentials(Context context) {
         Log.d(TAG, "Clearing trakt credentials...");
@@ -270,14 +263,8 @@ public final class ServiceUtils {
     }
 
     /**
-     * Displays the IMDb page for the given id (show or episode) in the IMDb app
-     * or on the imdb.com web page. If the IMDb id is empty, disables the
-     * button.
-     *
-     * @param imdbId
-     * @param imdbButton
-     * @param logTag
-     * @param context
+     * Displays the IMDb page for the given id (show or episode) in the IMDb app or on the imdb.com
+     * web page. If the IMDb id is empty, disables the button.
      */
     public static void setUpImdbButton(final String imdbId, View imdbButton, final String logTag,
             final Context context) {
@@ -320,9 +307,8 @@ public final class ServiceUtils {
     }
 
     /**
-     * Sets a {@link OnClickListener} on the given button linking to a Google
-     * Play Store search for the given title or disabling the button if the
-     * title is empty.
+     * Sets a {@link OnClickListener} on the given button linking to a Google Play Store search for
+     * the given title or disabling the button if the title is empty.
      */
     public static void setUpGooglePlayButton(final String title, View playButton,
             final String logTag) {
@@ -343,8 +329,7 @@ public final class ServiceUtils {
     }
 
     /**
-     * Tries to open Google Play to search for the given tv show, episode or
-     * movie title.
+     * Tries to open Google Play to search for the given tv show, episode or movie title.
      */
     public static void searchGooglePlay(final String title, final String logTag, Context context) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -357,9 +342,8 @@ public final class ServiceUtils {
     }
 
     /**
-     * Sets a {@link OnClickListener} on the given button linking to a Amazon
-     * web search for the given title or disabling the button if the title is
-     * empty.
+     * Sets a {@link OnClickListener} on the given button linking to a Amazon web search for the
+     * given title or disabling the button if the title is empty.
      */
     public static void setUpAmazonButton(final String title, View amazonButton,
             final String logTag) {
@@ -374,7 +358,8 @@ public final class ServiceUtils {
 
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri
-                                .parse("http://www.amazon.com/gp/search?ie=UTF8&keywords=" + title));
+                                .parse("http://www.amazon.com/gp/search?ie=UTF8&keywords="
+                                        + title));
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                         Utils.tryStartActivity(v.getContext(), intent, true);
                     }
@@ -387,9 +372,8 @@ public final class ServiceUtils {
     }
 
     /**
-     * Starts activity with {@link Intent#ACTION_VIEW} to display the given
-     * shows or episodes trakt.tv page.<br>
-     * If any of the season or episode numbers is below 0, displays the show
+     * Starts activity with {@link Intent#ACTION_VIEW} to display the given shows or episodes
+     * trakt.tv page.<br> If any of the season or episode numbers is below 0, displays the show
      * page.
      */
     public static void setUpTraktButton(final int showTvdbId, final int seasonNumber,
@@ -424,16 +408,14 @@ public final class ServiceUtils {
     }
 
     /**
-     * Starts activity with {@link Intent#ACTION_VIEW} to display the given
-     * shows trakt.tv page.
+     * Starts activity with {@link Intent#ACTION_VIEW} to display the given shows trakt.tv page.
      */
     public static void setUpTraktButton(int showTvdbId, View traktButton, String logTag) {
         setUpTraktButton(showTvdbId, -1, -1, traktButton, logTag);
     }
 
     /**
-     * Starts activity with {@link Intent#ACTION_VIEW} to display the given
-     * movies trakt.tv page.
+     * Starts activity with {@link Intent#ACTION_VIEW} to display the given movies trakt.tv page.
      */
     public static void openTraktMovie(Context context, int tmdbId, String logTag) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -445,9 +427,8 @@ public final class ServiceUtils {
     }
 
     /**
-     * Starts activity with {@link Intent#ACTION_VIEW} to display the given show
-     * or episodes TVDb.com page.<br>
-     * If any of the season or episode numbers is below 0, displays the show
+     * Starts activity with {@link Intent#ACTION_VIEW} to display the given show or episodes
+     * TVDb.com page.<br> If any of the season or episode numbers is below 0, displays the show
      * page.
      */
     public static void setUpTvdbButton(final int showTvdbId, final int seasonTvdbId,
@@ -480,8 +461,7 @@ public final class ServiceUtils {
     }
 
     /**
-     * Starts activity with {@link Intent#ACTION_VIEW} to display the given
-     * shows TVDb.com page.
+     * Starts activity with {@link Intent#ACTION_VIEW} to display the given shows TVDb.com page.
      */
     public static void setUpTvdbButton(final int showTvdbId, View tvdbButton, final String logTag) {
         setUpTvdbButton(showTvdbId, -1, -1, tvdbButton, logTag);
@@ -502,9 +482,8 @@ public final class ServiceUtils {
     /**
      * Used to open the YouTube app and search for <code>query</code>
      *
-     * @param query The search query for the YouTube app
-     * @param button The {@link Button} used to invoke the
-     *            {@link android.view.View.OnClickListener}
+     * @param query  The search query for the YouTube app
+     * @param button The {@link Button} used to invoke the {@link android.view.View.OnClickListener}
      * @param logTag The log tag to use, for Analytics
      */
     public static void setUpYouTubeButton(final String query, View button, final String logTag) {
@@ -526,12 +505,12 @@ public final class ServiceUtils {
     }
 
     /**
-     * Attempts to open the YouTube application to search for <code>query</code>
-     * . If the app is unavailable, a web search if performed instead
+     * Attempts to open the YouTube application to search for <code>query</code> . If the app is
+     * unavailable, a web search if performed instead
      *
      * @param context The {@link Context} to use
-     * @param query The search query
-     * @param logTag The log tag to use, for Analytics
+     * @param query   The search query
+     * @param logTag  The log tag to use, for Analytics
      */
     public static void searchYoutube(Context context, String query, String logTag) {
         PackageManager pm = context.getPackageManager();
@@ -563,9 +542,8 @@ public final class ServiceUtils {
     /**
      * Used to search the web for <code>query</code>
      *
-     * @param query The search query for the YouTube app
-     * @param button The {@link Button} used to invoke the
-     *            {@link android.view.View.OnClickListener}
+     * @param query  The search query for the YouTube app
+     * @param button The {@link Button} used to invoke the {@link android.view.View.OnClickListener}
      * @param logTag The log tag to use, for Analytics
      */
     public static void setUpWebSearchButton(final String query, View button, final String logTag) {
@@ -590,8 +568,8 @@ public final class ServiceUtils {
      * Attempts to search the web for <code>query</code>
      *
      * @param context The {@link Context} to use
-     * @param query The search query
-     * @param logTag The log tag to use, for Analytics
+     * @param query   The search query
+     * @param logTag  The log tag to use, for Analytics
      */
     public static void performWebSearch(Context context, String query, String logTag) {
         Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
