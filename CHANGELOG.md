@@ -18,6 +18,11 @@ Version 9 *(in development)*
 * TWEAK Change filter icon state if a filter is active. Thanks @adneal!
 * TWEAK Moved 'Migrate from X' action to service settings. Grouped SeriesGuide and GetGlue service settings
 
+Version 8.3 *(2013-10-29)*
+-----------------
+
+* Crash fix for In-App billing.
+
 Version 8.2 *(2013-10-23)*
 -----------------
 
