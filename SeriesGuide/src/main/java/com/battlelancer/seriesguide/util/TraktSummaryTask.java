@@ -17,23 +17,23 @@
 
 package com.battlelancer.seriesguide.util;
 
-import android.content.Context;
-import android.os.AsyncTask;
-import android.view.View;
-import android.widget.TextView;
-
 import com.battlelancer.seriesguide.util.TraktSummaryTask.RatingsWrapper;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
+import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Ratings;
 import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.enumerations.Rating;
 import com.uwetrottmann.seriesguide.R;
 
+import android.content.Context;
+import android.os.AsyncTask;
+import android.view.View;
+import android.widget.TextView;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+
+import retrofit.RetrofitError;
 
 public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
 
@@ -41,15 +41,17 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
 
     // Hard cache, with a fixed maximum capacity
     @SuppressWarnings("serial")
-    private final static HashMap<String, TvEntity> sHardEntityCache = new LinkedHashMap<String, TvEntity>(
+    private final static HashMap<String, TvEntity> sHardEntityCache
+            = new LinkedHashMap<String, TvEntity>(
             HARD_CACHE_CAPACITY / 2, 0.75f, true) {
         @Override
         protected boolean removeEldestEntry(LinkedHashMap.Entry<String, TvEntity> eldest) {
             if (size() > HARD_CACHE_CAPACITY) {
                 // remove eldest if capacity is exceeded
                 return true;
-            } else
+            } else {
                 return false;
+            }
         }
     };
 
@@ -57,7 +59,7 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
 
     private Context mContext;
 
-    private int mTvdbId;
+    private int mShowTvdbId;
 
     private int mSeason;
 
@@ -67,19 +69,13 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
 
     private TextView mTraktVotes;
 
-    private String mTvdbIdString;
-
     private TextView mTraktUserRating;
 
     private boolean mIsDoCacheLookup;
 
     /**
-     * Sets values for predefined views which have to be children of the given
-     * view. Make sure to call either {@code show(tvdbId)} or
-     * {@code episode(tvdbId, season, episode)}, too.
-     * 
-     * @param context
-     * @param view
+     * Sets values for predefined views which have to be children of the given view. Make sure to
+     * call either {@code show(tvdbId)} or {@code episode(tvdbId, season, episode)}, too.
      */
     public TraktSummaryTask(Context context, View view, boolean isUseCachedValue) {
         mView = view;
@@ -87,13 +83,14 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
         mIsDoCacheLookup = isUseCachedValue;
     }
 
-    public TraktSummaryTask show(int tvdbId) {
-        mTvdbIdString = String.valueOf(tvdbId);
+    public TraktSummaryTask show(int showTvdbId) {
+        mShowTvdbId = showTvdbId;
+        mSeason = -1;
         return this;
     }
 
-    public TraktSummaryTask episode(int tvdbId, int season, int episode) {
-        mTvdbId = tvdbId;
+    public TraktSummaryTask episode(int showTvdbId, int season, int episode) {
+        mShowTvdbId = showTvdbId;
         mSeason = season;
         mEpisode = episode;
         return this;
@@ -115,13 +112,10 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
 
         try {
             // decide whether we have a show or an episode
-            if (mTvdbIdString != null) {
+            if (mSeason == -1) {
                 if (Utils.isAllowedConnection(mContext)) {
                     // get the shows summary from trakt
-                    TvShow entity = getServiceManager()
-                            .showService()
-                            .summary(mTvdbIdString)
-                            .fire();
+                    TvShow entity = getTrakt().showService().summary(mShowTvdbId);
                     if (entity != null) {
                         RatingsWrapper results = new RatingsWrapper();
                         results.rating = entity.rating_advanced;
@@ -131,7 +125,7 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
                 }
             } else {
                 TvEntity entity = null;
-                String key = String.valueOf(mTvdbId) + String.valueOf(mSeason)
+                String key = String.valueOf(mShowTvdbId) + String.valueOf(mSeason)
                         + String.valueOf(mEpisode);
 
                 if (mIsDoCacheLookup) {
@@ -144,10 +138,8 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
 
                 // on cache miss load the summary from trakt
                 if (entity == null && Utils.isAllowedConnection(mContext)) {
-                    entity = getServiceManager()
-                            .showService()
-                            .episodeSummary(mTvdbId, mSeason, mEpisode)
-                            .fire();
+                    entity = getTrakt().showService()
+                            .episodeSummary(mShowTvdbId, mSeason, mEpisode);
                 }
 
                 if (entity != null) {
@@ -160,24 +152,22 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
                     return results;
                 }
             }
-        } catch (TraktException te) {
-            return null;
-        } catch (ApiException e) {
+        } catch (RetrofitError e) {
             return null;
         }
 
         return null;
     }
 
-    private ServiceManager getServiceManager() {
-        ServiceManager serviceManager;
+    private Trakt getTrakt() {
+        Trakt trakt;
         if (ServiceUtils.hasTraktCredentials(mContext)) {
-            serviceManager = ServiceUtils.getTraktServiceManagerWithAuth(mContext,
+            trakt = ServiceUtils.getTraktServiceManagerWithAuth(mContext,
                     false);
         } else {
-            serviceManager = ServiceUtils.getTraktServiceManager(mContext);
+            trakt = ServiceUtils.getTraktServiceManager(mContext);
         }
-        return serviceManager;
+        return trakt;
     }
 
     @Override
@@ -247,7 +237,9 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
     }
 
     static class RatingsWrapper {
+
         Ratings ratings;
+
         Rating rating;
     }
 
