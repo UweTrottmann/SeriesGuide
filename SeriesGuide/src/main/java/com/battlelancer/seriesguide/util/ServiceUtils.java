@@ -117,8 +117,6 @@ public final class ServiceUtils {
             ServiceUtils.sTraktServiceManagerInstance = new Trakt();
             ServiceUtils.sTraktServiceManagerInstance.setApiKey(context.getResources().getString(
                     R.string.trakt_apikey));
-            // this made some problems, so sadly disabled for now
-            // manager.setUseSsl(true);
         }
 
         return ServiceUtils.sTraktServiceManagerInstance;
