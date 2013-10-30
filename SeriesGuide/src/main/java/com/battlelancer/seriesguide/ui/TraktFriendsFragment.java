@@ -17,6 +17,25 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
+import com.battlelancer.seriesguide.util.ImageDownloader;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.Utils;
+import com.jakewharton.trakt.Trakt;
+import com.jakewharton.trakt.entities.ActivityItem;
+import com.jakewharton.trakt.entities.ActivityItemBase;
+import com.jakewharton.trakt.entities.TvShow;
+import com.jakewharton.trakt.entities.TvShowEpisode;
+import com.jakewharton.trakt.entities.UserProfile;
+import com.jakewharton.trakt.enumerations.ActivityType;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.GenericSimpleLoader;
+import com.uwetrottmann.seriesguide.R;
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -39,28 +58,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
-import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
-import com.jakewharton.trakt.entities.ActivityItem;
-import com.jakewharton.trakt.entities.ActivityItemBase;
-import com.jakewharton.trakt.entities.TvShow;
-import com.jakewharton.trakt.entities.TvShowEpisode;
-import com.jakewharton.trakt.entities.UserProfile;
-import com.jakewharton.trakt.enumerations.ActivityType;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.seriesguide.R;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit.RetrofitError;
 
 public class TraktFriendsFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<List<UserProfile>> {
@@ -129,7 +130,7 @@ public class TraktFriendsFragment extends ListFragment implements
 
         if (episode != null && show != null) {
             Cursor episodeidquery = getActivity().getContentResolver().query(
-                    Episodes.buildEpisodesOfShowUri(show.tvdbId), new String[] {
+                    Episodes.buildEpisodesOfShowUri(show.tvdb_id), new String[] {
                         Episodes._ID
                     }, Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[] {
                             String.valueOf(episode.number), String.valueOf(episode.season)
@@ -144,7 +145,7 @@ public class TraktFriendsFragment extends ListFragment implements
             } else {
                 // offer to add the show if it's not in the show database yet
                 SearchResult newshow = new SearchResult();
-                newshow.tvdbid = show.tvdbId;
+                newshow.tvdbid = show.tvdb_id;
                 newshow.title = show.title;
                 newshow.overview = show.overview;
                 AddDialogFragment.showAddDialog(newshow, getFragmentManager());
@@ -190,15 +191,14 @@ public class TraktFriendsFragment extends ListFragment implements
         @Override
         public List<UserProfile> loadInBackground() {
             if (ServiceUtils.hasTraktCredentials(getContext())) {
-                ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(getContext(),
-                        false);
+                Trakt manager = ServiceUtils.getTraktServiceManagerWithAuth(getContext(), false);
                 if (manager == null) {
                     return null;
                 }
 
                 try {
                     List<UserProfile> friends = manager.userService()
-                            .friends(ServiceUtils.getTraktUsername(getContext())).fire();
+                            .friends(ServiceUtils.getTraktUsername(getContext()));
 
                     // list watching now separately and first
                     List<UserProfile> friendsActivity = new ArrayList<UserProfile>();
@@ -241,9 +241,7 @@ public class TraktFriendsFragment extends ListFragment implements
                     }
 
                     return friendsActivity;
-                } catch (TraktException e) {
-                    Log.w(TAG, e);
-                } catch (ApiException e) {
+                } catch (RetrofitError e) {
                     Log.w(TAG, e);
                 }
             }
