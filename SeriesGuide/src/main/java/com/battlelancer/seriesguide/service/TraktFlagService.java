@@ -17,6 +17,15 @@
 
 package com.battlelancer.seriesguide.service;
 
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.FlagTapeEntry;
+import com.battlelancer.seriesguide.util.FlagTapeEntryQueue;
+import com.battlelancer.seriesguide.util.FlagTapedTask;
+import com.battlelancer.seriesguide.util.FlagTapedTask.Callback;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.jakewharton.trakt.Trakt;
+import com.jakewharton.trakt.services.ShowService;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -27,15 +36,6 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 import android.util.Log;
-
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.FlagTapeEntry;
-import com.battlelancer.seriesguide.util.FlagTapeEntryQueue;
-import com.battlelancer.seriesguide.util.FlagTapedTask;
-import com.battlelancer.seriesguide.util.FlagTapedTask.Callback;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.services.ShowService;
 
 public class TraktFlagService extends Service implements Callback {
 
@@ -70,7 +70,7 @@ public class TraktFlagService extends Service implements Callback {
             running = true;
 
             // build a new FlagTapedTask and execute it
-            ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(
+            Trakt manager = ServiceUtils.getTraktServiceManagerWithAuth(
                     getApplicationContext(), false);
             if (manager == null) {
                 stop();
