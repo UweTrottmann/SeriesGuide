@@ -130,11 +130,11 @@ public class TraktFriendsFragment extends ListFragment implements
 
         if (episode != null && show != null) {
             Cursor episodeidquery = getActivity().getContentResolver().query(
-                    Episodes.buildEpisodesOfShowUri(show.tvdb_id), new String[] {
-                        Episodes._ID
-                    }, Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[] {
-                            String.valueOf(episode.number), String.valueOf(episode.season)
-                    }, null);
+                    Episodes.buildEpisodesOfShowUri(show.tvdb_id), new String[]{
+                    Episodes._ID
+            }, Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[]{
+                    String.valueOf(episode.number), String.valueOf(episode.season)
+            }, null);
 
             if (episodeidquery.getCount() != 0) {
                 // display the episode details if we have a match
@@ -196,54 +196,58 @@ public class TraktFriendsFragment extends ListFragment implements
                     return null;
                 }
 
+                List<UserProfile> friendsActivity = new ArrayList<UserProfile>();
+
                 try {
-                    List<UserProfile> friends = manager.userService()
-                            .friends(ServiceUtils.getTraktUsername(getContext()));
+                    List<UserProfile> following = manager.userService()
+                            .following(ServiceUtils.getTraktUsername(getContext()));
 
-                    // list watching now separately and first
-                    List<UserProfile> friendsActivity = new ArrayList<UserProfile>();
-                    for (UserProfile friend : friends) {
-                        if (friend.watching != null && friend.watching.type == ActivityType.Episode) {
-                            friendsActivity.add(friend);
+                    for (UserProfile user : following) {
+                        // no reason to look for activity if user is protected, skip them
+                        if (user._protected) {
+                            continue;
                         }
-                    }
 
-                    // then include friends which have a watched episode no
-                    // longer than 4 weeks in the past
-                    // so a friend can appear as watching something right now
-                    // and further down with the episode he watched before that
-                    for (UserProfile friend : friends) {
-                        for (ActivityItem activity : friend.watched) {
+                        // get the detailed profile
+                        UserProfile profile = manager.userService().profile(user.username);
 
-                            // is this an episode?
-                            if (activity != null && activity.type == ActivityType.Episode) {
+                        if (profile.watching != null
+                                && profile.watching.type == ActivityType.Episode) {
+                            // followed is watching something now
+                            friendsActivity.add(profile);
+                        } else {
+                            // look if followed was watching something in the last 4 weeks
+                            for (ActivityItem activity : profile.watched) {
+                                // only look for episodes
+                                if (activity != null && activity.type == ActivityType.Episode) {
+                                    // is this activity no longer than 4 weeks old
+                                    // and not in the future?
+                                    long watchedTime = activity.watched.getTime();
+                                    if (watchedTime > System.currentTimeMillis()
+                                            - DateUtils.WEEK_IN_MILLIS * 4
+                                            && watchedTime <= System.currentTimeMillis()) {
+                                        UserProfile clonedfriend = new UserProfile();
+                                        clonedfriend.username = profile.username;
+                                        clonedfriend.avatar = profile.avatar;
 
-                                // is this activity no longer than 4 weeks old
-                                // and not in the future?
-                                long watchedTime = activity.watched.getTime();
-                                if (watchedTime > System.currentTimeMillis()
-                                        - DateUtils.WEEK_IN_MILLIS * 4
-                                        && watchedTime <= System.currentTimeMillis()) {
-                                    UserProfile clonedfriend = new UserProfile();
-                                    clonedfriend.username = friend.username;
-                                    clonedfriend.avatar = friend.avatar;
+                                        List<ActivityItem> watchedclone
+                                                = new ArrayList<ActivityItem>();
+                                        watchedclone.add(activity);
+                                        clonedfriend.watched = watchedclone;
 
-                                    List<ActivityItem> watchedclone = new ArrayList<ActivityItem>();
-                                    watchedclone.add(activity);
-                                    clonedfriend.watched = watchedclone;
+                                        friendsActivity.add(clonedfriend);
 
-                                    friendsActivity.add(clonedfriend);
-
-                                    break;
+                                        break;
+                                    }
                                 }
                             }
                         }
                     }
-
-                    return friendsActivity;
                 } catch (RetrofitError e) {
                     Log.w(TAG, e);
                 }
+
+                return friendsActivity;
             }
 
             return null;
@@ -251,6 +255,7 @@ public class TraktFriendsFragment extends ListFragment implements
     }
 
     private static class TraktFriendsAdapter extends ArrayAdapter<UserProfile> {
+
         private final ImageDownloader mImageDownloader;
 
         private final LayoutInflater mInflater;
@@ -350,6 +355,7 @@ public class TraktFriendsFragment extends ListFragment implements
         }
 
         static class ViewHolder {
+
             TextView name;
 
             TextView show;
