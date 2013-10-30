@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.jakewharton.trakt.Trakt;
+import com.jakewharton.trakt.entities.CheckinResponse;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.enumerations.Rating;
 import com.jakewharton.trakt.services.CommentService;
@@ -381,20 +382,23 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 }
 
             } else if (TraktStatus.FAILURE.equals(r.status)) {
-                if (r.wait != 0) {
-                    // looks like a check in is in progress
-
-                    if (mListener != null) {
-                        mListener.onCheckinBlocked(mArgs, r.wait);
+                if (mAction == TraktAction.CHECKIN_EPISODE
+                        || mAction == TraktAction.CHECKIN_MOVIE) {
+                    CheckinResponse checkinResponse = (CheckinResponse) r;
+                    if (checkinResponse.wait != 0) {
+                        // looks like a check in is already in progress
+                        if (mListener != null) {
+                            mListener.onCheckinBlocked(mArgs, checkinResponse.wait);
+                        }
+                        return;
                     }
-                } else {
-                    // well, something went wrong
+                }
 
-                    Toast.makeText(mContext, r.error, Toast.LENGTH_LONG).show();
+                // well, something went wrong
+                Toast.makeText(mContext, r.error, Toast.LENGTH_LONG).show();
 
-                    if (mListener != null) {
-                        mListener.onTraktActionComplete(mArgs, false);
-                    }
+                if (mListener != null) {
+                    mListener.onTraktActionComplete(mArgs, false);
                 }
 
             }
