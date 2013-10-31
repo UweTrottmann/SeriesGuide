@@ -10,6 +10,10 @@ Version 9 *(in development)*
 
 ### Detailed changes:
 
+#### 9-beta3 *(2013-10-31)*
+
+* TWEAK Moved trakt integration to new backend.
+
 #### 9-beta2 *(2013-10-29)*
 
 * FIX Crash fix for In-App billing.
