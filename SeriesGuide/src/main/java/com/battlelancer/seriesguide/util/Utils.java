@@ -560,24 +560,24 @@ public class Utils {
     /**
      * Update the latest episode field for a specific show.
      */
-    public static void updateLatestEpisode(Context context, String showId) {
-        Thread t = new UpdateLatestEpisodeThread(context, showId);
+    public static void updateLatestEpisode(Context context, int showTvdbId) {
+        Thread t = new UpdateLatestEpisodeThread(context, showTvdbId);
         t.start();
     }
 
     public static class UpdateLatestEpisodeThread extends Thread {
         private Context mContext;
 
-        private String mShowId;
+        private int mShowTvdbId;
 
         public UpdateLatestEpisodeThread(Context context) {
             mContext = context;
             this.setName("UpdateLatestEpisode");
         }
 
-        public UpdateLatestEpisodeThread(Context context, String showId) {
+        public UpdateLatestEpisodeThread(Context context, int showTvdbId) {
             this(context);
-            mShowId = showId;
+            mShowTvdbId = showTvdbId;
         }
 
         public void run() {
@@ -586,9 +586,9 @@ public class Utils {
                     SeriesGuidePreferences.KEY_ONLY_FUTURE_EPISODES, false);
             final boolean isNoSpecials = ActivitySettings.isHidingSpecials(mContext);
 
-            if (mShowId != null) {
+            if (mShowTvdbId > 0) {
                 // update single show
-                DBUtils.updateLatestEpisode(mContext, mShowId, isOnlyFutureEpisodes, isNoSpecials,
+                DBUtils.updateLatestEpisode(mContext, mShowTvdbId, isOnlyFutureEpisodes, isNoSpecials,
                         prefs);
             } else {
                 // update all shows
@@ -598,8 +598,8 @@ public class Utils {
                         }, null, null, null);
                 if (shows != null) {
                     while (shows.moveToNext()) {
-                        String showId = shows.getString(0);
-                        DBUtils.updateLatestEpisode(mContext, showId, isOnlyFutureEpisodes,
+                        int showTvdbId = shows.getInt(0);
+                        DBUtils.updateLatestEpisode(mContext, showTvdbId, isOnlyFutureEpisodes,
                                 isNoSpecials, prefs);
                     }
                     shows.close();

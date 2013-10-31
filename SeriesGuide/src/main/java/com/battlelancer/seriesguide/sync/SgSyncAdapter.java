@@ -1,6 +1,31 @@
 
 package com.battlelancer.seriesguide.sync;
 
+import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.thetvdbapi.TheTVDB;
+import com.jakewharton.apibuilder.ApiException;
+import com.jakewharton.trakt.Trakt;
+import com.jakewharton.trakt.entities.Activity;
+import com.jakewharton.trakt.entities.ActivityItem;
+import com.jakewharton.trakt.entities.TvShowEpisode;
+import com.jakewharton.trakt.enumerations.ActivityAction;
+import com.jakewharton.trakt.enumerations.ActivityType;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.Lists;
+import com.uwetrottmann.seriesguide.R;
+import com.uwetrottmann.tmdb.TmdbException;
+import com.uwetrottmann.tmdb.entities.Configuration;
+
+import org.xml.sax.SAXException;
+
 import android.accounts.Account;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
@@ -19,36 +44,12 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.battlelancer.seriesguide.SeriesGuideApplication;
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.TheTVDB;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
-import com.jakewharton.trakt.entities.Activity;
-import com.jakewharton.trakt.entities.ActivityItem;
-import com.jakewharton.trakt.entities.TvShowEpisode;
-import com.jakewharton.trakt.enumerations.ActivityAction;
-import com.jakewharton.trakt.enumerations.ActivityType;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.Lists;
-import com.uwetrottmann.seriesguide.R;
-import com.uwetrottmann.tmdb.TmdbException;
-import com.uwetrottmann.tmdb.entities.Configuration;
-
-import org.xml.sax.SAXException;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import retrofit.RetrofitError;
 
 /**
  * {@link AbstractThreadedSyncAdapter} which updates the show library.
@@ -371,7 +372,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         final long startTimeTrakt = prefs.getLong(SeriesGuidePreferences.KEY_LASTTRAKTUPDATE,
                 currentTime) / 1000;
 
-        ServiceManager manager = ServiceUtils
+        Trakt manager = ServiceUtils
                 .getTraktServiceManagerWithAuth(getContext(), false);
         if (manager == null) {
             return UpdateResult.INCOMPLETE;
@@ -382,16 +383,12 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         try {
             activity = manager
                     .activityService()
-                    .user(ServiceUtils.getTraktUsername(getContext()))
-                    .types(ActivityType.Episode)
-                    .actions(ActivityAction.Checkin, ActivityAction.Seen,
-                            ActivityAction.Scrobble, ActivityAction.Collection)
-                    .minimal()
-                    .timestamp(startTimeTrakt).fire();
-        } catch (TraktException e) {
-            Utils.trackExceptionAndLog(TAG, e);
-            return UpdateResult.INCOMPLETE;
-        } catch (ApiException e) {
+                    .user(ServiceUtils.getTraktUsername(getContext()),
+                            ActivityType.Episode.toString(),
+                            ActivityAction.Checkin + "," + ActivityAction.Seen + "," +
+                                    ActivityAction.Scrobble + "," + ActivityAction.Collection,
+                            startTimeTrakt, 1, 0);
+        } catch (RetrofitError e) {
             Utils.trackExceptionAndLog(TAG, e);
             return UpdateResult.INCOMPLETE;
         }
@@ -419,18 +416,18 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // build an update batch
         mNewShows = Lists.newArrayList();
-        final HashSet<String> newShowIds = new HashSet<String>();
+        final HashSet<Integer> newShowIds = new HashSet<Integer>();
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
         for (ActivityItem item : activity.activity) {
             // check for null (potential fix for reported crash)
             if (item.action != null && item.show != null) {
-                if (isAutoAddingShows && !existingShows.contains(item.show.tvdbId)
-                        && !newShowIds.contains(item.show.tvdbId)) {
+                if (isAutoAddingShows && !existingShows.contains(item.show.tvdb_id)
+                        && !newShowIds.contains(item.show.tvdb_id)) {
                     SearchResult show = new SearchResult();
                     show.title = item.show.title;
-                    show.tvdbid = item.show.tvdbId;
+                    show.tvdbid = item.show.tvdb_id;
                     mNewShows.add(show);
-                    newShowIds.add(item.show.tvdbId); // prevent duplicates
+                    newShowIds.add(item.show.tvdb_id); // prevent duplicates
                 } else {
                     // show added, get watched episodes
                     switch (item.action) {
@@ -444,13 +441,13 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                                     season = episode.season;
                                     number = episode.number;
                                 }
-                                addEpisodeSeenUpdateOp(batch, episode, item.show.tvdbId);
+                                addEpisodeSeenUpdateOp(batch, episode, item.show.tvdb_id);
                             }
                             // set highest season + number combo as last
                             // watched
                             if (season != -1 && number != -1) {
                                 addLastWatchedUpdateOp(resolver, batch, season, number,
-                                        item.show.tvdbId);
+                                        item.show.tvdb_id);
                             }
                             break;
                         }
@@ -458,16 +455,16 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                         case Scrobble: {
                             // checkin and scrobble use a single episode
                             TvShowEpisode episode = item.episode;
-                            addEpisodeSeenUpdateOp(batch, episode, item.show.tvdbId);
+                            addEpisodeSeenUpdateOp(batch, episode, item.show.tvdb_id);
                             addLastWatchedUpdateOp(resolver, batch, episode.season,
-                                    episode.number, item.show.tvdbId);
+                                    episode.number, item.show.tvdb_id);
                             break;
                         }
                         case Collection: {
                             // collection uses an array of episodes
                             List<TvShowEpisode> episodes = item.episodes;
                             for (TvShowEpisode episode : episodes) {
-                                addEpisodeCollectedUpdateOp(batch, episode, item.show.tvdbId);
+                                addEpisodeCollectedUpdateOp(batch, episode, item.show.tvdb_id);
                             }
                             break;
                         }
@@ -505,7 +502,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Helper method to build update to flag an episode watched.
      */
     private static void addEpisodeSeenUpdateOp(final ArrayList<ContentProviderOperation> batch,
-            TvShowEpisode episode, String showTvdbId) {
+            TvShowEpisode episode, int showTvdbId) {
         batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodesOfShowUri(showTvdbId))
                 .withSelection(Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[] {
                         String.valueOf(episode.number), String.valueOf(episode.season)
@@ -516,7 +513,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Helper method to build update to flag an episode collected.
      */
     private static void addEpisodeCollectedUpdateOp(ArrayList<ContentProviderOperation> batch,
-            TvShowEpisode episode, String showTvdbId) {
+            TvShowEpisode episode, int showTvdbId) {
         batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodesOfShowUri(showTvdbId))
                 .withSelection(Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[] {
                         String.valueOf(episode.number), String.valueOf(episode.season)
@@ -528,7 +525,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * last watched for the given show.
      */
     private static void addLastWatchedUpdateOp(ContentResolver resolver,
-            ArrayList<ContentProviderOperation> batch, int season, int number, String showTvdbId) {
+            ArrayList<ContentProviderOperation> batch, int season, int number, int showTvdbId) {
         // query for the episode id
         final Cursor episode = resolver.query(
                 Episodes.buildEpisodesOfShowUri(showTvdbId),

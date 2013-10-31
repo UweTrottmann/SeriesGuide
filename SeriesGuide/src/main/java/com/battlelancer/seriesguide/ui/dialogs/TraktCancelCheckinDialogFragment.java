@@ -17,6 +17,20 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
+import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.enums.TraktStatus;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
+import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
+import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
+import com.jakewharton.trakt.Trakt;
+import com.jakewharton.trakt.entities.Response;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -33,20 +47,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.format.DateUtils;
 import android.widget.Toast;
 
-import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.enums.TraktStatus;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
-import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
-import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
-import com.jakewharton.trakt.entities.Response;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
+import retrofit.RetrofitError;
 
 /**
  * Warns about an ongoing check-in, how long it takes until it is finished.
@@ -102,7 +103,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
                     @Override
                     protected Response doInBackground(String... params) {
 
-                        ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(
+                        Trakt manager = ServiceUtils.getTraktServiceManagerWithAuth(
                                 context, false);
                         if (manager == null) {
                             // password could not be decrypted
@@ -115,16 +116,11 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
                         Response response;
                         try {
                             if (isEpisodeNotMovie) {
-                                response = manager.showService().cancelCheckin().fire();
+                                response = manager.showService().cancelcheckin();
                             } else {
-                                response = manager.movieService().cancelCheckin().fire();
+                                response = manager.movieService().cancelcheckin();
                             }
-                        } catch (TraktException te) {
-                            Response r = new Response();
-                            r.status = TraktStatus.FAILURE;
-                            r.error = te.getMessage();
-                            return r;
-                        } catch (ApiException e) {
+                        } catch (RetrofitError e) {
                             Response r = new Response();
                             r.status = TraktStatus.FAILURE;
                             r.error = e.getMessage();
