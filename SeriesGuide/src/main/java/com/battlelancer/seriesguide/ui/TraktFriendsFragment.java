@@ -199,17 +199,12 @@ public class TraktFriendsFragment extends ListFragment implements
                 List<UserProfile> friendsActivity = new ArrayList<UserProfile>();
 
                 try {
-                    List<UserProfile> following = manager.userService()
-                            .following(ServiceUtils.getTraktUsername(getContext()));
+                    List<UserProfile> friends = manager.userService()
+                            .friends(ServiceUtils.getTraktUsername(getContext()));
 
-                    for (UserProfile user : following) {
-                        // no reason to look for activity if user is protected, skip them
-                        if (user._protected) {
-                            continue;
-                        }
-
+                    for (UserProfile friend : friends) {
                         // get the detailed profile
-                        UserProfile profile = manager.userService().profile(user.username);
+                        UserProfile profile = manager.userService().profile(friend.username);
 
                         if (profile.watching != null
                                 && profile.watching.type == ActivityType.Episode) {
