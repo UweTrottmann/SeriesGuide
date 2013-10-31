@@ -128,7 +128,7 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
         // only one message sent during the beam
         NdefMessage msg = (NdefMessage) rawMsgs[0];
         SearchResult show = new SearchResult();
-        show.tvdbid = new String(msg.getRecords()[0].getPayload());
+        show.tvdbid = Integer.valueOf(new String(msg.getRecords()[0].getPayload()));
         show.title = new String(msg.getRecords()[1].getPayload());
         show.overview = new String(msg.getRecords()[2].getPayload());
 

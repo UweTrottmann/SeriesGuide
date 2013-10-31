@@ -17,35 +17,40 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
+import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
+import com.jakewharton.trakt.services.ShowService;
+
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
-import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.TraktException;
-import com.jakewharton.trakt.services.ShowService;
-import com.jakewharton.trakt.services.ShowService.EpisodeSeenBuilder;
-import com.jakewharton.trakt.services.ShowService.EpisodeUnlibraryBuilder;
-import com.jakewharton.trakt.services.ShowService.EpisodeUnseenBuilder;
-
+import java.util.ArrayList;
 import java.util.List;
+
+import retrofit.RetrofitError;
 
 public class FlagTapedTask {
 
     public interface Callback {
+
         void onSuccess();
 
         void onFailure(boolean isNotConnected);
     }
 
     private static final Handler MAIN_THREAD = new Handler(Looper.getMainLooper());
+
     private Context mContext;
+
     private ShowService mShowService;
+
     private FlagAction mAction;
+
     private int mShowId;
+
     private List<Flag> mFlags;
+
     private boolean mIsFlag;
 
     public FlagTapedTask(Context context, ShowService showService, FlagAction action, int showId,
@@ -74,83 +79,73 @@ public class FlagTapedTask {
                         case EPISODE_WATCHED: {
                             Flag episode = mFlags.get(0);
                             if (mIsFlag) {
-                                mShowService.episodeSeen(mShowId)
-                                        .episode(episode.season, episode.episode).fire();
+                                mShowService.episodeSeen(
+                                        new ShowService.Episodes(mShowId, episode.season,
+                                                episode.episode));
                             } else {
-                                mShowService.episodeUnseen(mShowId).episode(episode.season,
-                                        episode.episode).fire();
+                                mShowService.episodeUnseen(
+                                        new ShowService.Episodes(mShowId, episode.season,
+                                                episode.episode));
                             }
                             break;
                         }
                         case EPISODE_COLLECTED: {
                             Flag episode = mFlags.get(0);
                             if (mIsFlag) {
-                                mShowService.episodeLibrary(mShowId)
-                                        .episode(episode.season, episode.episode).fire();
+                                mShowService.episodeLibrary(
+                                        new ShowService.Episodes(mShowId, episode.season,
+                                                episode.episode));
                             } else {
-                                mShowService.episodeUnlibrary(mShowId)
-                                        .episode(episode.season, episode.episode).fire();
+                                mShowService.episodeUnlibrary(
+                                        new ShowService.Episodes(mShowId, episode.season,
+                                                episode.episode));
                             }
                             break;
                         }
                         case SEASON_WATCHED: {
                             if (mIsFlag) {
-                                mShowService.seasonSeen(mShowId).season(mFlags.get(0).season)
-                                        .fire();
+                                mShowService.seasonSeen(
+                                        new ShowService.Season(mShowId, mFlags.get(0).season));
                             } else {
-                                EpisodeUnseenBuilder builder = mShowService.episodeUnseen(mShowId);
-                                for (Flag episode : mFlags) {
-                                    builder.episode(episode.season, episode.episode);
-                                }
-                                builder.fire();
+                                mShowService.episodeUnseen(new ShowService.Episodes(
+                                        mShowId, buildEpisodeList(mFlags)));
                             }
                             break;
                         }
                         case SEASON_COLLECTED: {
                             if (mIsFlag) {
-                                mShowService.seasonLibrary(mShowId).season(mFlags.get(0).season)
-                                        .fire();
+                                mShowService.seasonLibrary(
+                                        new ShowService.Season(mShowId, mFlags.get(0).season));
                             } else {
-                                EpisodeUnlibraryBuilder builder = mShowService
-                                        .episodeUnlibrary(mShowId);
-                                for (Flag episode : mFlags) {
-                                    builder.episode(episode.season, episode.episode);
-                                }
-                                builder.fire();
+                                mShowService.episodeUnlibrary(new ShowService.Episodes(
+                                        mShowId, buildEpisodeList(mFlags)));
                             }
                             break;
                         }
                         case SHOW_WATCHED: {
                             if (mIsFlag) {
-                                mShowService.showSeen(mShowId).fire();
+                                mShowService.showSeen(new ShowService.Show(mShowId));
                             } else {
-                                EpisodeUnseenBuilder builder = mShowService.episodeUnseen(mShowId);
-                                for (Flag episode : mFlags) {
-                                    builder.episode(episode.season, episode.episode);
-                                }
-                                builder.fire();
+                                mShowService.episodeUnseen(new ShowService.Episodes(
+                                        mShowId, buildEpisodeList(mFlags)
+                                ));
                             }
                             break;
                         }
                         case SHOW_COLLECTED: {
                             if (mIsFlag) {
-                                mShowService.showLibrary(mShowId).fire();
+                                mShowService.showLibrary(new ShowService.Show(mShowId));
                             } else {
-                                EpisodeUnlibraryBuilder builder = mShowService
-                                        .episodeUnlibrary(mShowId);
-                                for (Flag episode : mFlags) {
-                                    builder.episode(episode.season, episode.episode);
-                                }
-                                builder.fire();
+                                mShowService.episodeUnlibrary(new ShowService.Episodes(
+                                        mShowId, buildEpisodeList(mFlags)
+                                ));
                             }
                             break;
                         }
                         case EPISODE_WATCHED_PREVIOUS: {
-                            EpisodeSeenBuilder builder = mShowService.episodeSeen(mShowId);
-                            for (Flag episode : mFlags) {
-                                builder.episode(episode.season, episode.episode);
-                            }
-                            builder.fire();
+                            mShowService.episodeSeen(new ShowService.Episodes(
+                                    mShowId, buildEpisodeList(mFlags)
+                            ));
                             break;
                         }
                     }
@@ -162,9 +157,7 @@ public class FlagTapedTask {
                             callback.onSuccess();
                         }
                     });
-                } catch (TraktException e) {
-                    postFailure(false);
-                } catch (ApiException e) {
+                } catch (RetrofitError e) {
                     postFailure(false);
                 }
             }
@@ -179,6 +172,14 @@ public class FlagTapedTask {
                 });
             }
         }).start();
+    }
+
+    private static List<ShowService.Episodes.Episode> buildEpisodeList(List<Flag> flags) {
+        List<ShowService.Episodes.Episode> episodes = new ArrayList<ShowService.Episodes.Episode>();
+        for (Flag episode : flags) {
+            episodes.add(new ShowService.Episodes.Episode(episode.season, episode.episode));
+        }
+        return episodes;
     }
 
 }

@@ -17,6 +17,25 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
+import com.battlelancer.seriesguide.util.ImageDownloader;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.Utils;
+import com.jakewharton.trakt.Trakt;
+import com.jakewharton.trakt.entities.ActivityItem;
+import com.jakewharton.trakt.entities.ActivityItemBase;
+import com.jakewharton.trakt.entities.TvShow;
+import com.jakewharton.trakt.entities.TvShowEpisode;
+import com.jakewharton.trakt.entities.UserProfile;
+import com.jakewharton.trakt.enumerations.ActivityType;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.GenericSimpleLoader;
+import com.uwetrottmann.seriesguide.R;
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -39,28 +58,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
-import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
-import com.jakewharton.trakt.entities.ActivityItem;
-import com.jakewharton.trakt.entities.ActivityItemBase;
-import com.jakewharton.trakt.entities.TvShow;
-import com.jakewharton.trakt.entities.TvShowEpisode;
-import com.jakewharton.trakt.entities.UserProfile;
-import com.jakewharton.trakt.enumerations.ActivityType;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.seriesguide.R;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit.RetrofitError;
 
 public class TraktFriendsFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<List<UserProfile>> {
@@ -129,11 +130,11 @@ public class TraktFriendsFragment extends ListFragment implements
 
         if (episode != null && show != null) {
             Cursor episodeidquery = getActivity().getContentResolver().query(
-                    Episodes.buildEpisodesOfShowUri(show.tvdbId), new String[] {
-                        Episodes._ID
-                    }, Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[] {
-                            String.valueOf(episode.number), String.valueOf(episode.season)
-                    }, null);
+                    Episodes.buildEpisodesOfShowUri(show.tvdb_id), new String[]{
+                    Episodes._ID
+            }, Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[]{
+                    String.valueOf(episode.number), String.valueOf(episode.season)
+            }, null);
 
             if (episodeidquery.getCount() != 0) {
                 // display the episode details if we have a match
@@ -144,7 +145,7 @@ public class TraktFriendsFragment extends ListFragment implements
             } else {
                 // offer to add the show if it's not in the show database yet
                 SearchResult newshow = new SearchResult();
-                newshow.tvdbid = show.tvdbId;
+                newshow.tvdbid = show.tvdb_id;
                 newshow.title = show.title;
                 newshow.overview = show.overview;
                 AddDialogFragment.showAddDialog(newshow, getFragmentManager());
@@ -190,62 +191,58 @@ public class TraktFriendsFragment extends ListFragment implements
         @Override
         public List<UserProfile> loadInBackground() {
             if (ServiceUtils.hasTraktCredentials(getContext())) {
-                ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(getContext(),
-                        false);
+                Trakt manager = ServiceUtils.getTraktServiceManagerWithAuth(getContext(), false);
                 if (manager == null) {
                     return null;
                 }
 
+                List<UserProfile> friendsActivity = new ArrayList<UserProfile>();
+
                 try {
                     List<UserProfile> friends = manager.userService()
-                            .friends(ServiceUtils.getTraktUsername(getContext())).fire();
+                            .friends(ServiceUtils.getTraktUsername(getContext()));
 
-                    // list watching now separately and first
-                    List<UserProfile> friendsActivity = new ArrayList<UserProfile>();
                     for (UserProfile friend : friends) {
-                        if (friend.watching != null && friend.watching.type == ActivityType.Episode) {
-                            friendsActivity.add(friend);
-                        }
-                    }
+                        // get the detailed profile
+                        UserProfile profile = manager.userService().profile(friend.username);
 
-                    // then include friends which have a watched episode no
-                    // longer than 4 weeks in the past
-                    // so a friend can appear as watching something right now
-                    // and further down with the episode he watched before that
-                    for (UserProfile friend : friends) {
-                        for (ActivityItem activity : friend.watched) {
+                        if (profile.watching != null
+                                && profile.watching.type == ActivityType.Episode) {
+                            // followed is watching something now
+                            friendsActivity.add(profile);
+                        } else {
+                            // look if followed was watching something in the last 4 weeks
+                            for (ActivityItem activity : profile.watched) {
+                                // only look for episodes
+                                if (activity != null && activity.type == ActivityType.Episode) {
+                                    // is this activity no longer than 4 weeks old
+                                    // and not in the future?
+                                    long watchedTime = activity.watched.getTime();
+                                    if (watchedTime > System.currentTimeMillis()
+                                            - DateUtils.WEEK_IN_MILLIS * 4
+                                            && watchedTime <= System.currentTimeMillis()) {
+                                        UserProfile clonedfriend = new UserProfile();
+                                        clonedfriend.username = profile.username;
+                                        clonedfriend.avatar = profile.avatar;
 
-                            // is this an episode?
-                            if (activity != null && activity.type == ActivityType.Episode) {
+                                        List<ActivityItem> watchedclone
+                                                = new ArrayList<ActivityItem>();
+                                        watchedclone.add(activity);
+                                        clonedfriend.watched = watchedclone;
 
-                                // is this activity no longer than 4 weeks old
-                                // and not in the future?
-                                long watchedTime = activity.watched.getTime();
-                                if (watchedTime > System.currentTimeMillis()
-                                        - DateUtils.WEEK_IN_MILLIS * 4
-                                        && watchedTime <= System.currentTimeMillis()) {
-                                    UserProfile clonedfriend = new UserProfile();
-                                    clonedfriend.username = friend.username;
-                                    clonedfriend.avatar = friend.avatar;
+                                        friendsActivity.add(clonedfriend);
 
-                                    List<ActivityItem> watchedclone = new ArrayList<ActivityItem>();
-                                    watchedclone.add(activity);
-                                    clonedfriend.watched = watchedclone;
-
-                                    friendsActivity.add(clonedfriend);
-
-                                    break;
+                                        break;
+                                    }
                                 }
                             }
                         }
                     }
-
-                    return friendsActivity;
-                } catch (TraktException e) {
-                    Log.w(TAG, e);
-                } catch (ApiException e) {
+                } catch (RetrofitError e) {
                     Log.w(TAG, e);
                 }
+
+                return friendsActivity;
             }
 
             return null;
@@ -253,6 +250,7 @@ public class TraktFriendsFragment extends ListFragment implements
     }
 
     private static class TraktFriendsAdapter extends ArrayAdapter<UserProfile> {
+
         private final ImageDownloader mImageDownloader;
 
         private final LayoutInflater mInflater;
@@ -352,6 +350,7 @@ public class TraktFriendsFragment extends ListFragment implements
         }
 
         static class ViewHolder {
+
             TextView name;
 
             TextView show;

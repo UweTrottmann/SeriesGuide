@@ -371,8 +371,8 @@ public class DBUtils {
         return show;
     }
 
-    public static boolean isShowExists(String showId, Context context) {
-        Cursor testsearch = context.getContentResolver().query(Shows.buildShowUri(showId),
+    public static boolean isShowExists(int showTvdbId, Context context) {
+        Cursor testsearch = context.getContentResolver().query(Shows.buildShowUri(showTvdbId),
                 new String[] {
                     Shows._ID
                 }, null, null, null);
@@ -612,34 +612,29 @@ public class DBUtils {
     }
 
     /**
-     * Convenience method for calling {@code updateLatestEpisode} once. If it is
-     * going to be called multiple times, use the version which passes more
-     * data.
-     * 
-     * @param context
-     * @param showId
+     * Convenience method for calling {@code updateLatestEpisode} once. If it is going to be called
+     * multiple times, use the version which passes more data.
      */
-    public static long updateLatestEpisode(Context context, String showId) {
+    public static long updateLatestEpisode(Context context, int showTvdbId) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         final boolean isOnlyFutureEpisodes = prefs.getBoolean(
                 SeriesGuidePreferences.KEY_ONLY_FUTURE_EPISODES, false);
         final boolean isNoSpecials = ActivitySettings.isHidingSpecials(context);
-        return updateLatestEpisode(context, showId, isOnlyFutureEpisodes, isNoSpecials, prefs);
+        return updateLatestEpisode(context, showTvdbId, isOnlyFutureEpisodes, isNoSpecials, prefs);
     }
 
     /**
-     * Update the latest episode fields of the show where {@link Shows._ID}
-     * equals the given {@code id}.
-     * 
-     * @return The id of the calculated next episode.
+     * Update the latest episode fields of the given show.
+     *
+     * @return The TVDb id of the calculated next episode.
      */
-    public static long updateLatestEpisode(Context context, String showId,
+    public static long updateLatestEpisode(Context context, int showTvdbId,
             boolean isOnlyFutureEpisodes, boolean isNoSpecials, SharedPreferences prefs) {
-        final Uri episodesWithShow = Episodes.buildEpisodesOfShowUri(showId);
+        final Uri episodesWithShow = Episodes.buildEpisodesOfShowUri(showTvdbId);
         final StringBuilder selectQuery = new StringBuilder();
 
         // STEP 1: get last watched episode
-        final Cursor show = context.getContentResolver().query(Shows.buildShowUri(showId),
+        final Cursor show = context.getContentResolver().query(Shows.buildShowUri(showTvdbId),
                 new String[] {
                         Shows._ID, Shows.LASTWATCHEDID
                 }, null, null, null);
@@ -732,7 +727,7 @@ public class DBUtils {
         }
 
         // update the show with the new next episode values
-        context.getContentResolver().update(Shows.buildShowUri(showId), update, null, null);
+        context.getContentResolver().update(Shows.buildShowUri(showTvdbId), update, null, null);
 
         return episodeId;
     }

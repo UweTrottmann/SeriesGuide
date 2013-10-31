@@ -17,6 +17,23 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
+import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.enums.TraktStatus;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
+import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.SimpleCrypto;
+import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.Utils;
+import com.jakewharton.trakt.Trakt;
+import com.jakewharton.trakt.entities.Response;
+import com.jakewharton.trakt.services.AccountService;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -38,22 +55,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.enums.TraktStatus;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
-import com.battlelancer.seriesguide.util.SimpleCrypto;
-import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
-import com.jakewharton.trakt.entities.Response;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
+import retrofit.RetrofitError;
 
 public class ConnectTraktCredentialsFragment extends SherlockFragment {
 
@@ -176,25 +178,23 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment {
 
                         // use a separate ServiceManager here to avoid
                         // setting wrong credentials
-                        final ServiceManager manager = new ServiceManager();
+                        final Trakt manager = new Trakt();
                         manager.setApiKey(traktApiKey);
                         manager.setAuthentication(username, passwordHash);
-                        manager.setUseSsl(true);
 
                         Response response = null;
 
                         try {
                             if (isNewAccount) {
                                 // create new account
-                                response = manager.accountService()
-                                        .create(username, passwordHash, email).fire();
+                                response = manager.accountService().create(
+                                        new AccountService.NewAccount(username, passwordHash,
+                                                email));
                             } else {
                                 // validate existing account
-                                response = manager.accountService().test().fire();
+                                response = manager.accountService().test();
                             }
-                        } catch (TraktException te) {
-                            response = te.getResponse();
-                        } catch (ApiException ae) {
+                        } catch (RetrofitError e) {
                             response = null;
                         }
 

@@ -765,7 +765,7 @@ public class ShowsFragment extends SherlockFragment implements
 
     public void onEvent(FlagTaskCompletedEvent event) {
         if (isAdded()) {
-            Utils.updateLatestEpisode(getActivity(), String.valueOf(event.mType.getShowTvdbId()));
+            Utils.updateLatestEpisode(getActivity(), event.mType.getShowTvdbId());
         }
     }
 

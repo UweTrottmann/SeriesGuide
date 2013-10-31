@@ -17,6 +17,17 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.jakewharton.trakt.Trakt;
+import com.jakewharton.trakt.entities.TvShow;
+import com.jakewharton.trakt.entities.TvShowSeason;
+import com.jakewharton.trakt.services.ShowService;
+import com.uwetrottmann.androidutils.Lists;
+import com.uwetrottmann.seriesguide.R;
+
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.OperationApplicationException;
@@ -27,23 +38,10 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.battlelancer.seriesguide.SeriesGuideApplication;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
-import com.jakewharton.trakt.entities.TvShow;
-import com.jakewharton.trakt.entities.TvShowSeason;
-import com.jakewharton.trakt.enumerations.ExtendedParam;
-import com.jakewharton.trakt.services.ShowService.EpisodeSeenBuilder;
-import com.jakewharton.trakt.services.ShowService.EpisodeUnseenBuilder;
-import com.uwetrottmann.androidutils.Lists;
-import com.uwetrottmann.seriesguide.R;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit.RetrofitError;
 
 public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
@@ -92,7 +90,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
             return FAILED_CREDENTIALS;
         }
 
-        ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
+        Trakt manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
         if (manager == null) {
             // password could not be decrypted
             return FAILED_CREDENTIALS;
@@ -105,32 +103,28 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
         }
     }
 
-    private Integer syncToSeriesGuide(ServiceManager manager, String username) {
+    private Integer syncToSeriesGuide(Trakt manager, String username) {
         mResult = "";
 
         List<TvShow> shows;
         try {
             // get watched episodes from trakt
-            shows = manager.userService().libraryShowsWatched(username).extended(ExtendedParam.Min)
-                    .fire();
-        } catch (TraktException e) {
-            Utils.trackExceptionAndLog(TAG, e);
-            return FAILED_API;
-        } catch (ApiException e) {
+            shows = manager.userService().libraryShowsWatchedExtended(username);
+        } catch (RetrofitError e) {
             Utils.trackExceptionAndLog(TAG, e);
             return FAILED_API;
         }
 
         // get show ids in local database
-        Cursor showTvdbIds = mContext.getContentResolver().query(Shows.CONTENT_URI, new String[] {
+        Cursor showTvdbIds = mContext.getContentResolver().query(Shows.CONTENT_URI, new String[]{
                 Shows._ID
         }, null, null, null);
 
         // assume we have a local list of which shows to sync (later...)
         while (showTvdbIds.moveToNext()) {
-            String tvdbId = showTvdbIds.getString(0);
+            int tvdbId = showTvdbIds.getInt(0);
             for (TvShow tvShow : shows) {
-                if (tvdbId.equalsIgnoreCase(tvShow.tvdbId)) {
+                if (tvdbId == tvShow.tvdb_id) {
                     if (mResult.length() != 0) {
                         mResult += ", ";
                     }
@@ -149,11 +143,11 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                     List<TvShowSeason> seasons = tvShow.seasons;
                     for (TvShowSeason season : seasons) {
                         Cursor seasonMatch = mContext.getContentResolver().query(
-                                Seasons.buildSeasonsOfShowUri(tvdbId), new String[] {
-                                    Seasons._ID
-                                }, Seasons.COMBINED + "=?", new String[] {
-                                    season.season.toString()
-                                }, null);
+                                Seasons.buildSeasonsOfShowUri(tvdbId), new String[]{
+                                Seasons._ID
+                        }, Seasons.COMBINED + "=?", new String[]{
+                                season.season.toString()
+                        }, null);
 
                         // if we found a season, go on with its episodes
                         if (seasonMatch.moveToFirst()) {
@@ -164,7 +158,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                             for (Integer episode : season.episodes.numbers) {
                                 batch.add(ContentProviderOperation
                                         .newUpdate(Episodes.buildEpisodesOfSeasonUri(seasonId))
-                                        .withSelection(Episodes.NUMBER + "=?", new String[] {
+                                        .withSelection(Episodes.NUMBER + "=?", new String[]{
                                                 episode.toString()
                                         }).withValue(Episodes.WATCHED, true).build());
                             }
@@ -212,9 +206,9 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
         }
     }
 
-    private Integer syncToTrakt(ServiceManager manager) {
+    private Integer syncToTrakt(Trakt manager) {
         // get show ids in local database for which syncing is enabled
-        Cursor showTvdbIds = mContext.getContentResolver().query(Shows.CONTENT_URI, new String[] {
+        Cursor showTvdbIds = mContext.getContentResolver().query(Shows.CONTENT_URI, new String[]{
                 Shows._ID
         }, Shows.SYNCENABLED + "=1", null, null);
 
@@ -223,47 +217,36 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
         }
 
         while (showTvdbIds.moveToNext()) {
-            String tvdbId = showTvdbIds.getString(0);
-            EpisodeSeenBuilder builder = manager.showService().episodeSeen(Integer.valueOf(tvdbId));
+            int showTvdbId = showTvdbIds.getInt(0);
+            List<ShowService.Episodes.Episode> watchedEpisodes
+                    = new ArrayList<ShowService.Episodes.Episode>();
 
-            // build seen episodes trakt post
+            // build a list of all watched episodes
             Cursor seenEpisodes = mContext.getContentResolver().query(
-                    Episodes.buildEpisodesOfShowUri(tvdbId), new String[] {
-                            Episodes.SEASON, Episodes.NUMBER
-                    }, Episodes.WATCHED + "=?", new String[] {
-                        "1"
-                    }, null);
-            if (seenEpisodes.getCount() == 0) {
-                builder = null;
-            } else {
-                while (seenEpisodes.moveToNext()) {
-                    int season = seenEpisodes.getInt(0);
-                    int episode = seenEpisodes.getInt(1);
-                    builder.episode(season, episode);
-                }
+                    Episodes.buildEpisodesOfShowUri(showTvdbId), new String[]{
+                    Episodes.SEASON, Episodes.NUMBER
+            }, Episodes.WATCHED + "=?", new String[]{
+                    "1"
+            }, null);
+            if (seenEpisodes != null) {
+                buildEpisodeList(watchedEpisodes, seenEpisodes);
+                seenEpisodes.close();
             }
-            seenEpisodes.close();
 
             // build unseen episodes trakt post
-            EpisodeUnseenBuilder builderUnseen = null;
+            List<ShowService.Episodes.Episode> unwatchedEpisodes
+                    = new ArrayList<ShowService.Episodes.Episode>();
             if (mIsSyncingUnseen) {
-                builderUnseen = manager.showService().episodeUnseen(Integer.valueOf(tvdbId));
                 Cursor unseenEpisodes = mContext.getContentResolver().query(
-                        Episodes.buildEpisodesOfShowUri(tvdbId), new String[] {
-                                Episodes.SEASON, Episodes.NUMBER
-                        }, Episodes.WATCHED + "=?", new String[] {
-                            "0"
-                        }, null);
-                if (unseenEpisodes.getCount() == 0) {
-                    builderUnseen = null;
-                } else {
-                    while (unseenEpisodes.moveToNext()) {
-                        int season = unseenEpisodes.getInt(0);
-                        int episode = unseenEpisodes.getInt(1);
-                        builderUnseen.episode(season, episode);
-                    }
+                        Episodes.buildEpisodesOfShowUri(showTvdbId), new String[]{
+                        Episodes.SEASON, Episodes.NUMBER
+                }, Episodes.WATCHED + "=?", new String[]{
+                        "0"
+                }, null);
+                if (unseenEpisodes != null) {
+                    buildEpisodeList(unwatchedEpisodes, unseenEpisodes);
+                    unseenEpisodes.close();
                 }
-                unseenEpisodes.close();
             }
 
             // last chance to abort
@@ -273,17 +256,18 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
             }
 
             try {
-                // mark episodes of show
-                if (builder != null) {
-                    builder.fire();
+                // post to trakt
+                if (watchedEpisodes.size() > 0) {
+                    manager.showService().episodeSeen(new ShowService.Episodes(
+                            showTvdbId, watchedEpisodes
+                    ));
                 }
-                if (mIsSyncingUnseen && builderUnseen != null) {
-                    builderUnseen.fire();
+                if (mIsSyncingUnseen && unwatchedEpisodes.size() > 0) {
+                    manager.showService().episodeUnseen(new ShowService.Episodes(
+                            showTvdbId, unwatchedEpisodes
+                    ));
                 }
-            } catch (TraktException e) {
-                Utils.trackExceptionAndLog(TAG, e);
-                return FAILED_API;
-            } catch (ApiException e) {
+            } catch (RetrofitError e) {
                 Utils.trackExceptionAndLog(TAG, e);
                 return FAILED_API;
             }
@@ -336,5 +320,14 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
         }
         mContainer.findViewById(R.id.syncToDeviceButton).setEnabled(true);
         mContainer.findViewById(R.id.syncToTraktButton).setEnabled(true);
+    }
+
+    private static void buildEpisodeList(List<ShowService.Episodes.Episode> watchedEpisodes,
+            Cursor seenEpisodes) {
+        while (seenEpisodes.moveToNext()) {
+            int season = seenEpisodes.getInt(0);
+            int episode = seenEpisodes.getInt(1);
+            watchedEpisodes.add(new ShowService.Episodes.Episode(season, episode));
+        }
     }
 }

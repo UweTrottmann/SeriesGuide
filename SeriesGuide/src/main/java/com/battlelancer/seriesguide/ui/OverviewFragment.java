@@ -359,18 +359,18 @@ public class OverviewFragment extends SherlockFragment implements
 
     public static class EpisodeLoader extends CursorLoader {
 
-        private String mShowId;
+        private int mShowTvdbId;
 
-        public EpisodeLoader(Context context, String showId) {
+        public EpisodeLoader(Context context, int showTvdbId) {
             super(context);
-            mShowId = showId;
+            mShowTvdbId = showTvdbId;
             setProjection(EpisodeQuery.PROJECTION);
         }
 
         @Override
         public Cursor loadInBackground() {
             // get episode id, set query params
-            int episodeId = (int) DBUtils.updateLatestEpisode(getContext(), mShowId);
+            int episodeId = (int) DBUtils.updateLatestEpisode(getContext(), mShowTvdbId);
             setUri(Episodes.buildEpisodeWithShowUri(String.valueOf(episodeId)));
 
             return super.loadInBackground();
@@ -446,7 +446,7 @@ public class OverviewFragment extends SherlockFragment implements
         switch (id) {
             case EPISODE_LOADER_ID:
             default:
-                return new EpisodeLoader(getActivity(), String.valueOf(getShowId()));
+                return new EpisodeLoader(getActivity(), getShowId());
             case SHOW_LOADER_ID:
                 return new CursorLoader(getActivity(), Shows.buildShowUri(String
                         .valueOf(getShowId())), ShowQuery.PROJECTION, null, null, null);
