@@ -281,7 +281,7 @@ public class NotificationService extends IntentService {
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(this, NotificationService.class);
         PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
-        am.set(AlarmManager.RTC_WAKEUP, wakeUpTime, pi);
+        am.setExact(AlarmManager.RTC_WAKEUP, wakeUpTime, pi);
     }
 
     /**
