@@ -1,13 +1,18 @@
 apply plugin: 'android'
 
 android {
-    compileSdkVersion 18
-    buildToolsVersion "18.1.1"
-    compileOptions.encoding = "UTF-8"
+    compileSdkVersion 19
+    buildToolsVersion "19.0.0"
 
     defaultConfig {
         minSdkVersion 8
-        targetSdkVersion 18
+        targetSdkVersion 19
+    }
+
+    compileOptions {
+        encoding = "UTF-8"
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 
     productFlavors {
