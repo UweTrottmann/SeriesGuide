@@ -5,6 +5,7 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import org.junit.Test;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.failBecauseExceptionWasNotThrown;
 
 public class EpisodeToolsTest {
 

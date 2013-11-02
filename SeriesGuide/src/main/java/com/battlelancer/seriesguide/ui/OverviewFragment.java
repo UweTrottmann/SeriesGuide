@@ -48,6 +48,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
@@ -297,7 +298,7 @@ public class OverviewFragment extends SherlockFragment implements
             final int episode = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
             new FlagTask(getActivity(), getShowId())
                     .episodeWatched(mEpisodeCursor.getInt(EpisodeQuery._ID), season,
-                            episode, true)
+                            episode, EpisodeFlags.WATCHED)
                     .execute();
         }
     }

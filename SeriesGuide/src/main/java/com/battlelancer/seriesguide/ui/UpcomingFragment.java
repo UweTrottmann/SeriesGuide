@@ -49,6 +49,7 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.WatchedBox;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
@@ -213,7 +214,8 @@ public class UpcomingFragment extends SherlockFragment implements
 
         new FlagTask(getActivity(), item.getInt(UpcomingQuery.REF_SHOW_ID))
                 .episodeWatched((int) info.id, item.getInt(UpcomingQuery.SEASON),
-                        item.getInt(UpcomingQuery.NUMBER), isWatched)
+                        item.getInt(UpcomingQuery.NUMBER),
+                        isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED)
                 .execute();
     }
 
@@ -415,7 +417,9 @@ public class UpcomingFragment extends SherlockFragment implements
                     checkBox.toggle();
 
                     new FlagTask(mContext, showTvdbId)
-                            .episodeWatched(episodeTvdbId, season, episode, checkBox.isChecked())
+                            .episodeWatched(episodeTvdbId, season, episode,
+                                    checkBox.isChecked() ? EpisodeFlags.WATCHED
+                                            : EpisodeFlags.UNWATCHED)
                             .execute();
                 }
             });

@@ -34,6 +34,7 @@ import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -318,7 +319,8 @@ public class DBUtils {
             if (episode != null) {
                 if (episode.moveToFirst()) {
                     new FlagTask(context, showId)
-                            .episodeWatched(episodeId, episode.getInt(0), episode.getInt(1), true)
+                            .episodeWatched(episodeId, episode.getInt(0), episode.getInt(1),
+                                    EpisodeFlags.WATCHED)
                             .execute();
                 }
                 episode.close();

@@ -51,6 +51,7 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
@@ -321,7 +322,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     private void onToggleWatched() {
         mWatched = !mWatched;
         new FlagTask(getActivity(), mShowTvdbId)
-                .episodeWatched(getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber, mWatched)
+                .episodeWatched(getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber, mWatched ?
+                        EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED)
                 .execute();
     }
 

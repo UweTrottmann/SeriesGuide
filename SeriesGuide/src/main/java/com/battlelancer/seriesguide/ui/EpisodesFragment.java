@@ -46,6 +46,7 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.Constants.EpisodeSorting;
 import com.battlelancer.seriesguide.adapters.EpisodesAdapter;
 import com.battlelancer.seriesguide.adapters.EpisodesAdapter.OnFlagEpisodeListener;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
@@ -321,7 +322,8 @@ public class EpisodesFragment extends SherlockListFragment implements
     @Override
     public void onFlagEpisodeWatched(int episodeTvdbId, int episode, boolean isWatched) {
         new FlagTask(getActivity(), getShowId())
-                .episodeWatched(episodeTvdbId, getSeasonNumber(), episode, isWatched)
+                .episodeWatched(episodeTvdbId, getSeasonNumber(), episode,
+                        isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED)
                 .execute();
     }
 
@@ -333,7 +335,8 @@ public class EpisodesFragment extends SherlockListFragment implements
 
     private void onFlagSeasonWatched(boolean isWatched) {
         new FlagTask(getActivity(), getShowId())
-                .seasonWatched(getSeasonId(), getSeasonNumber(), isWatched)
+                .seasonWatched(getSeasonId(), getSeasonNumber(),
+                        isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED)
                 .execute();
     }
 

@@ -50,6 +50,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.Constants.SeasonSorting;
 import com.battlelancer.seriesguide.adapters.SeasonsAdapter;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
@@ -331,7 +332,8 @@ public class SeasonsFragment extends SherlockListFragment implements
      */
     private void onFlagSeasonWatched(long seasonId, int seasonNumber, boolean isWatched) {
         new FlagTask(getActivity(), getShowId())
-                .seasonWatched((int) seasonId, seasonNumber, isWatched)
+                .seasonWatched((int) seasonId, seasonNumber,
+                        isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED)
                 .execute();
     }
 
