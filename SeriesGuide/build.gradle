@@ -2,25 +2,30 @@ apply plugin: 'android'
 apply plugin: 'android-test'
 
 android {
-    compileSdkVersion 18
-    buildToolsVersion "18.1.1"
-    compileOptions.encoding = "UTF-8"
+    compileSdkVersion 19
+    buildToolsVersion "19.0.0"
 
     defaultConfig {
         minSdkVersion 8
-        targetSdkVersion 18
+        targetSdkVersion 19
+    }
+
+    compileOptions {
+        encoding = "UTF-8"
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 
     productFlavors {
         free {
             packageName "com.battlelancer.seriesguide"
-            versionCode 179
-            versionName "8.2"
+            versionCode 183
+            versionName "9-beta3"
         }
         beta {
             packageName "com.battlelancer.seriesguide.beta"
             versionCode 215
-            versionName "8-internal"
+            versionName "9-internal"
         }
     }
 
@@ -39,7 +44,7 @@ android {
 
 dependencies {
     compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
-    compile project(':libraries:android-menudrawer')
+    compile 'net.simonvt.menudrawer:menudrawer:3.0.4@aar'
     compile project(':libraries:androidutils')
     compile project(':libraries:pagerslidingtabstrip')
     compile project(':libraries:stickygridheaders')

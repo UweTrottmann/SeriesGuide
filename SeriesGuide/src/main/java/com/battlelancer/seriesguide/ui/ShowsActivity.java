@@ -42,7 +42,6 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.migration.MigrationActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -53,7 +52,9 @@ import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListe
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
+
 import com.google.analytics.tracking.android.EasyTracker;
+
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -62,8 +63,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Provides the apps main screen, displaying a list of shows and their next
- * episodes.
+ * Provides the apps main screen, displaying a list of shows and their next episodes.
  */
 public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDismissedListener {
 
@@ -86,26 +86,30 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
 
     private Fragment mFragment;
 
+    private ProgressBar mProgressBar;
+
     private Object mSyncObserverHandle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // need progress bar to display update progress
-        requestWindowFeature(Window.FEATURE_PROGRESS);
-
         super.onCreate(savedInstanceState);
         getMenu().setContentView(R.layout.shows);
-
-        setSupportProgressBarIndeterminate(true);
 
         // Set up a sync account if needed
         SyncUtils.createSyncAccount(this);
 
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
+        onUpgrade();
 
-        updatePreferences(prefs);
+        setUpActionBar();
+        setupViews(savedInstanceState);
+    }
 
+    private void setUpActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+    }
+
+    private void setupViews(Bundle savedInstanceState) {
         // setup fragments
         if (!FirstRunFragment.hasSeenFirstRunFragment(this)) {
             mFragment = FirstRunFragment.newInstance();
@@ -117,17 +121,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
             mFragment = getSupportFragmentManager().findFragmentById(R.id.shows_fragment);
         }
 
-        setUpActionBar();
-
-        // show migration helper
-        if (MigrationActivity.isQualifiedForMigration(this)) {
-            startActivity(new Intent(this, MigrationActivity.class));
-        }
-    }
-
-    private void setUpActionBar() {
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
+        // setup progress bar
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBarShows);
     }
 
     @Override
@@ -242,8 +237,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
             startActivity(new Intent(this, AddActivity.class));
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             return true;
-        }
-        else if (itemId == R.id.menu_update) {
+        } else if (itemId == R.id.menu_update) {
             SgSyncAdapter.requestSync(this, 0);
             fireTrackerEvent("Update (outdated)");
 
@@ -287,11 +281,10 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
     }
 
     private class FetchPosterTask extends AsyncTask<Void, Void, Integer> {
+
         final AtomicInteger mFetchCount = new AtomicInteger();
 
         ArrayList<String> mPaths;
-
-        private View mProgressOverlay;
 
         protected FetchPosterTask() {
         }
@@ -303,34 +296,14 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
 
         @Override
         protected void onPreExecute() {
-            // see if we already inflated the progress overlay
-            mProgressOverlay = findViewById(R.id.overlay_update);
-            if (mProgressOverlay == null) {
-                mProgressOverlay = ((ViewStub) findViewById(R.id.stub_update)).inflate();
-            }
-            showOverlay(mProgressOverlay);
-            // setup the progress overlay
-            TextView mUpdateStatus = (TextView) mProgressOverlay
-                    .findViewById(R.id.textViewUpdateStatus);
-            mUpdateStatus.setText("");
-
-            ProgressBar updateProgress = (ProgressBar) mProgressOverlay
-                    .findViewById(R.id.ProgressBarShowListDet);
-            updateProgress.setIndeterminate(true);
-
-            View cancelButton = mProgressOverlay.findViewById(R.id.overlayCancel);
-            cancelButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    onCancelTasks();
-                }
-            });
+            setProgressVisibility(true);
         }
 
         @Override
         protected Integer doInBackground(Void... params) {
             // fetch all available poster paths
             if (mPaths == null) {
-                Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[] {
+                Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[]{
                         Shows.POSTER
                 }, null, null, null);
 
@@ -393,12 +366,12 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
                     break;
             }
 
-            hideOverlay(mProgressOverlay);
+            setProgressVisibility(false);
         }
 
         @Override
         protected void onCancelled() {
-            hideOverlay(mProgressOverlay);
+            setProgressVisibility(false);
         }
     }
 
@@ -418,23 +391,12 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
         }
     }
 
-    public void showOverlay(View overlay) {
-        overlay.startAnimation(AnimationUtils
-                .loadAnimation(getApplicationContext(), R.anim.fade_in));
-        overlay.setVisibility(View.VISIBLE);
-    }
-
-    public void hideOverlay(View overlay) {
-        overlay.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.fade_out));
-        overlay.setVisibility(View.GONE);
-    }
-
     /**
-     * Called once on activity creation to load initial settings and display
-     * one-time information dialogs.
+     * Called once on activity creation to load initial settings and display one-time information
+     * dialogs.
      */
-    private void updatePreferences(SharedPreferences prefs) {
+    private void onUpgrade() {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         // between-version upgrade code
         try {
             final int lastVersion = AppSettings.getLastVersionCode(this);
@@ -513,9 +475,16 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
     }
 
     /**
-     * Create a new anonymous SyncStatusObserver. It's attached to the app's
-     * ContentResolver in onResume(), and removed in onPause(). If a sync is
-     * active or pending, a progress bar is shown.
+     * Shows or hides a custom indeterminate progress indicator inside this activity layout.
+     */
+    public void setProgressVisibility(boolean isVisible) {
+        mProgressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    }
+
+    /**
+     * Create a new anonymous SyncStatusObserver. It's attached to the app's ContentResolver in
+     * onResume(), and removed in onPause(). If a sync is active or pending, a progress bar is
+     * shown.
      */
     private SyncStatusObserver mSyncStatusObserver = new SyncStatusObserver() {
         /** Callback invoked with the sync adapter status changes. */
@@ -532,7 +501,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
                     if (account == null) {
                         // GetAccount() returned an invalid value. This
                         // shouldn't happen.
-                        setProgressBarVisibility(false);
+                        setProgressVisibility(false);
                         return;
                     }
 
@@ -543,7 +512,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
                             account, SeriesGuideApplication.CONTENT_AUTHORITY);
                     boolean syncPending = ContentResolver.isSyncPending(
                             account, SeriesGuideApplication.CONTENT_AUTHORITY);
-                    setProgressBarVisibility(syncActive || syncPending);
+                    setProgressVisibility(syncActive || syncPending);
                 }
             });
         }

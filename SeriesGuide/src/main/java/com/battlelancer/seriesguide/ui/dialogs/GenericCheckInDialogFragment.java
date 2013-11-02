@@ -17,11 +17,24 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import com.actionbarsherlock.app.SherlockDialogFragment;
+import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
+import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
+import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
+import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
@@ -34,20 +47,10 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockDialogFragment;
-import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
-import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
-import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
-import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
-
 public abstract class GenericCheckInDialogFragment extends SherlockDialogFragment {
 
     public interface InitBundle {
+
         /**
          * Title of show or movie. <b>Required.</b>
          */
@@ -118,7 +121,8 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         final View layout = inflater.inflate(R.layout.checkin_dialog, null);
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getSherlockActivity());
@@ -210,7 +214,9 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
 
                 if (mGetGlueChecked) {
                     boolean shouldAbort = onGetGlueCheckin(title, message);
-                    if (shouldAbort) return;
+                    if (shouldAbort) {
+                        return;
+                    }
                 }
 
                 if (mTraktChecked) {
@@ -264,7 +270,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
             fixButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    launchFixGetGlueCheckInActivity(tvdbId);
+                    launchFixGetGlueCheckInActivity(v, tvdbId);
                 }
             });
         } else {
@@ -307,11 +313,13 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         }
     }
 
-    protected void launchFixGetGlueCheckInActivity(int showTvdbId) {
+    protected void launchFixGetGlueCheckInActivity(View v, int showTvdbId) {
         mIsGetGlueIdOutdated = true;
         Intent i = new Intent(getActivity(), FixGetGlueCheckInActivity.class);
         i.putExtra(FixGetGlueCheckInActivity.InitBundle.SHOW_TVDB_ID, String.valueOf(showTvdbId));
-        startActivity(i);
+        ActivityCompat.startActivity(getActivity(), i,
+                ActivityOptionsCompat.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
+                        .toBundle());
     }
 
 }

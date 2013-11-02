@@ -36,6 +36,6 @@
     <dimen name="shortcut_icon_size">48dp</dimen>
     <dimen name="tab_strip_height">48dp</dimen>
 
-    <integer name="animation_duration">400</integer>
+    <integer name="animation_duration">200</integer>
 
 </resources>
