@@ -56,6 +56,7 @@
         <item name="drawableWatch">@drawable/ic_action_tick</item>
         <item name="drawableCollect">@drawable/ic_action_collect</item>
         <item name="drawableFilter">@drawable/ic_action_filter</item>
+        <item name="drawableSkip">@drawable/ic_action_playback_next</item>
     </style>
 
     <style name="SeriesGuideBaseTheme" parent="Theme.Sherlock">
@@ -126,6 +127,7 @@
         <item name="drawableWatch">@drawable/ic_action_tick</item>
         <item name="drawableCollect">@drawable/ic_action_collect</item>
         <item name="drawableFilter">@drawable/ic_action_filter</item>
+        <item name="drawableSkip">@drawable/ic_action_playback_next</item>
     </style>
 
     <!-- SeriesGuide Light theme -->
@@ -181,6 +183,7 @@
         <item name="drawableWatch">@drawable/ic_action_tick_inverse</item>
         <item name="drawableCollect">@drawable/ic_action_collect_inverse</item>
         <item name="drawableFilter">@drawable/ic_action_filter_inverse</item>
+        <item name="drawableSkip">@drawable/ic_action_playback_next_inverse</item>
 
         <!-- Necessary to inherit the primary accent color in the DarkActionBar (ABS) -->
         <item name="actionBarWidgetTheme">@style/SeriesGuideTheme</item>
