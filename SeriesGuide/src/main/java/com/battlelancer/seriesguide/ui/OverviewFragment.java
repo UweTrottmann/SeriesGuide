@@ -32,6 +32,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -84,6 +85,8 @@ public class OverviewFragment extends SherlockFragment implements
     private static final int EPISODE_LOADER_ID = 100;
 
     private static final int SHOW_LOADER_ID = 101;
+
+    private static final int CONTEXT_CREATE_CALENDAR_EVENT_ID = 201;
 
     private boolean mMultiPane;
 
@@ -183,6 +186,26 @@ public class OverviewFragment extends SherlockFragment implements
         if (mTraktTask != null) {
             mTraktTask.cancel(true);
             mTraktTask = null;
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+            ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        menu.add(0, CONTEXT_CREATE_CALENDAR_EVENT_ID, 0, R.string.addtocalendar);
+    }
+
+    @Override
+    public boolean onContextItemSelected(android.view.MenuItem item) {
+        switch (item.getItemId()) {
+            case CONTEXT_CREATE_CALENDAR_EVENT_ID: {
+                onAddCalendarEvent();
+                return true;
+            }
+            default:
+                return super.onContextItemSelected(item);
         }
     }
 
@@ -555,7 +578,7 @@ public class OverviewFragment extends SherlockFragment implements
 
             // Button bar
             // check-in button
-            buttons.findViewById(R.id.checkinButton).setOnClickListener(new OnClickListener() {
+            buttons.findViewById(R.id.imageButtonBarCheckin).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onCheckIn();
@@ -563,7 +586,7 @@ public class OverviewFragment extends SherlockFragment implements
             });
 
             // watched button
-            View watchedButton = buttons.findViewById(R.id.watchedButton);
+            View watchedButton = buttons.findViewById(R.id.imageButtonBarWatched);
             watchedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -575,7 +598,7 @@ public class OverviewFragment extends SherlockFragment implements
             // collected button
             boolean isCollected = episode.getInt(EpisodeQuery.COLLECTED) == 1;
             ImageButton collectedButton = (ImageButton) buttons
-                    .findViewById(R.id.collectedButton);
+                    .findViewById(R.id.imageButtonBarCollected);
             collectedButton.setImageResource(isCollected ? R.drawable.ic_collected
                     : Utils.resolveAttributeToResourceId(getActivity().getTheme(), R.attr.drawableCollect));
             collectedButton.setOnClickListener(new OnClickListener() {
@@ -587,15 +610,25 @@ public class OverviewFragment extends SherlockFragment implements
             CheatSheet.setup(collectedButton, isCollected ? R.string.uncollect
                     : R.string.collect);
 
-            // calendar button
-            View calendarButton = buttons.findViewById(R.id.calendarButton);
-            calendarButton.setOnClickListener(new OnClickListener() {
+            // skip button
+            View skipButton = buttons.findViewById(R.id.imageButtonBarSkip);
+            skipButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onAddCalendarEvent();
+                    // TODO
                 }
             });
-            CheatSheet.setup(calendarButton);
+            CheatSheet.setup(skipButton);
+
+            // button bar menu
+            View menuButton = buttons.findViewById(R.id.imageButtonBarMenu);
+            registerForContextMenu(menuButton);
+            menuButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().openContextMenu(v);
+                }
+            });
 
             ratings.setOnClickListener(new OnClickListener() {
                 @Override

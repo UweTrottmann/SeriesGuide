@@ -165,6 +165,7 @@
     <string name="uncollect">Not yet collected episode</string>
     <string name="collect_all">Collected all</string>
     <string name="uncollect_all">Collected none</string>
+    <string name="action_episode_skip">Skip episode</string>
     <string name="trakt_submitqueued">Submitting to trakt.</string>
     <string name="trakt_seen">%s seen.</string>
     <string name="trakt_notseen">%s not seen.</string>

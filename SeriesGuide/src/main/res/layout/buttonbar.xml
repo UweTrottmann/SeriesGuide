@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Will never be a root layout, overdraw is expected -->
+<?xml version="1.0" encoding="utf-8"?><!-- Will never be a root layout, overdraw is expected -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/buttonbar"
@@ -7,53 +6,61 @@
     android:layout_height="48dp"
     android:layout_marginBottom="@dimen/default_padding"
     android:background="?attr/colorBackgroundDim"
-    tools:ignore="Overdraw" >
-
-    <Button
-        android:id="@+id/checkinButton"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
-        android:text="@string/checkin"
-        android:textAllCaps="true"
-        android:textStyle="bold" />
-
-    <include layout="@layout/divider_vertical" />
+    tools:ignore="Overdraw">
 
     <ImageButton
-        android:id="@+id/watchedButton"
+        android:id="@+id/imageButtonBarCheckin"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Small"
+        android:layout_width="56dp"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/checkin"
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
+        android:src="?attr/drawableCheckin" />
+
+    <ImageButton
+        android:id="@+id/imageButtonBarWatched"
         style="@style/Widget.SeriesGuide.Button.Borderless"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/buttonbar_button_width"
         android:layout_height="match_parent"
         android:contentDescription="@string/togglewatched"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:src="?attr/drawableWatch" />
 
-    <include layout="@layout/divider_vertical" />
-
     <ImageButton
-        android:id="@+id/collectedButton"
+        android:id="@+id/imageButtonBarCollected"
         style="@style/Widget.SeriesGuide.Button.Borderless"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/buttonbar_button_width"
         android:layout_height="match_parent"
         android:contentDescription="@string/collect"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:src="?attr/drawableCollect" />
 
+    <ImageButton
+        android:id="@+id/imageButtonBarSkip"
+        style="@style/Widget.SeriesGuide.Button.Borderless"
+        android:layout_width="@dimen/buttonbar_button_width"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/action_episode_skip"
+        android:paddingLeft="@dimen/default_padding"
+        android:src="?attr/drawableSkip" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
     <include layout="@layout/divider_vertical" />
 
     <ImageButton
-        android:id="@+id/calendarButton"
+        android:id="@+id/imageButtonBarMenu"
         style="@style/Widget.SeriesGuide.Button.Borderless"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/buttonbar_button_width"
         android:layout_height="match_parent"
-        android:contentDescription="@string/addtocalendar"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
-        android:src="?attr/drawableCalendarIcon" />
+        android:src="?attr/drawableDropdown" />
 
 </LinearLayout>

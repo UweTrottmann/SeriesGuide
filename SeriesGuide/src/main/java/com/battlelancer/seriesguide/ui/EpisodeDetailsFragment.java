@@ -35,6 +35,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.style.TextAppearanceSpan;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -87,6 +88,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     private static final int EPISODE_LOADER = 3;
 
     private static final String TAG = "Episode Details";
+
+    private static final int CONTEXT_CREATE_CALENDAR_EVENT_ID = 101;
 
     private FetchArtTask mArtTask;
 
@@ -184,6 +187,26 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+            ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        menu.add(0, CONTEXT_CREATE_CALENDAR_EVENT_ID, 0, R.string.addtocalendar);
+    }
+
+    @Override
+    public boolean onContextItemSelected(android.view.MenuItem item) {
+        switch (item.getItemId()) {
+            case CONTEXT_CREATE_CALENDAR_EVENT_ID: {
+                onAddCalendarEvent();
+                return true;
+            }
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.episodedetails_menu, menu);
@@ -223,6 +246,23 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             onShareEpisode(ShareMethod.RATE_TRAKT);
         }
         fireTrackerEvent("Rate (trakt)");
+    }
+
+    private void onAddCalendarEvent() {
+        fireTrackerEvent("Add to calendar");
+
+        // Episode of this fragment is always the first item in the cursor
+        final Cursor episode = (Cursor) mAdapter.getItem(0);
+        if (episode != null && episode.moveToFirst()) {
+            String showTitle = episode.getString(DetailsQuery.SHOW_TITLE);
+            String episodeTitleAndNumber = ShareUtils.onCreateShareString(
+                    getSherlockActivity(), episode);
+            long showAirTime = episode.getLong(DetailsQuery.FIRSTAIREDMS);
+            int showRunTime = episode.getInt(DetailsQuery.SHOW_RUNTIME);
+
+            ShareUtils.onAddCalendarEvent(getActivity(), showTitle,
+                    episodeTitleAndNumber, showAirTime, showRunTime);
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -319,8 +359,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             mEpisodeNumber = cursor.getInt(DetailsQuery.NUMBER);
             final String showTitle = cursor.getString(DetailsQuery.SHOW_TITLE);
             final String episodeTitle = cursor.getString(DetailsQuery.TITLE);
-            final String episodeString = ShareUtils.onCreateShareString(
-                    getSherlockActivity(), cursor);
             final long airTime = cursor.getLong(DetailsQuery.FIRSTAIREDMS);
 
             // Title and description
@@ -438,7 +476,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
             // Watched button
             mWatched = cursor.getInt(DetailsQuery.WATCHED) == 1 ? true : false;
-            ImageButton seenButton = (ImageButton) view.findViewById(R.id.watchedButton);
+            ImageButton seenButton = (ImageButton) view.findViewById(R.id.imageButtonBarWatched);
             seenButton.setImageResource(mWatched ? R.drawable.ic_ticked
                     : Utils.resolveAttributeToResourceId(getActivity().getTheme(), R.attr.drawableWatch));
             seenButton.setOnClickListener(new OnClickListener() {
@@ -453,7 +491,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
             // Collected button
             mCollected = cursor.getInt(DetailsQuery.COLLECTED) == 1 ? true : false;
-            ImageButton collectedButton = (ImageButton) view.findViewById(R.id.collectedButton);
+            ImageButton collectedButton = (ImageButton) view.findViewById(R.id.imageButtonBarCollected);
             collectedButton.setImageResource(mCollected ? R.drawable.ic_collected
                     : Utils.resolveAttributeToResourceId(getActivity().getTheme(), R.attr.drawableCollect));
             collectedButton.setOnClickListener(new OnClickListener() {
@@ -466,19 +504,25 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             CheatSheet.setup(collectedButton, mCollected ? R.string.uncollect
                     : R.string.collect);
 
-            // Calendar button
-            final int runtime = cursor.getInt(DetailsQuery.SHOW_RUNTIME);
-            View calendarButton = view.findViewById(R.id.calendarButton);
-            calendarButton.setOnClickListener(
-                    new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            fireTrackerEvent("Add to calendar");
-                            ShareUtils.onAddCalendarEvent(getSherlockActivity(), showTitle,
-                                    episodeString, airTime, runtime);
-                        }
-                    });
-            CheatSheet.setup(calendarButton);
+            // skip button
+            View skipButton = view.findViewById(R.id.imageButtonBarSkip);
+            skipButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO
+                }
+            });
+            CheatSheet.setup(skipButton);
+
+            // menu button
+            View menuButton = view.findViewById(R.id.imageButtonBarMenu);
+            registerForContextMenu(menuButton);
+            menuButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().openContextMenu(v);
+                }
+            });
 
             // TVDb rating
             RelativeLayout ratings = (RelativeLayout) view.findViewById(R.id.ratingbar);
@@ -548,7 +592,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
             // Check in button
             final int episodeTvdbId = cursor.getInt(DetailsQuery._ID);
-            view.findViewById(R.id.checkinButton).setOnClickListener(new OnClickListener() {
+            view.findViewById(R.id.imageButtonBarCheckin).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // display a check-in dialog
