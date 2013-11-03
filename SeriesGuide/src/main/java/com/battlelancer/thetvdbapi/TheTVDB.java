@@ -300,6 +300,10 @@ public class TheTVDB {
                 // try to find matching seasons
                 final List<TvShowSeason> seasons = tvShow.seasons;
                 for (TvShowSeason season : seasons) {
+                    if (season == null) {
+                        continue;
+                    }
+
                     final Cursor seasonMatch = context.getContentResolver().query(
                             Seasons.buildSeasonsOfShowUri(showTvdbId), new String[] {
                                 Seasons._ID
