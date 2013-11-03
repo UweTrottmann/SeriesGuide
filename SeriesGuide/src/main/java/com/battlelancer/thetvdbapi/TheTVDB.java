@@ -274,11 +274,10 @@ public class TheTVDB {
                     .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
             context.getContentResolver()
                     .bulkInsert(Episodes.CONTENT_URI, newEpisodesValues);
-        } catch (RemoteException e) {
-            // Failed binder transactions aren't recoverable
-            throw new RuntimeException("Problem applying batch operation", e);
-        } catch (OperationApplicationException e) {
-            // Failures like constraint violation aren't recoverable
+        } catch (RemoteException | OperationApplicationException e) {
+            // RemoteException: Failed binder transactions aren't recoverable
+            // OperationApplicationException: Failures like constraint violation aren't
+            // recoverable
             throw new RuntimeException("Problem applying batch operation", e);
         }
     }
@@ -291,11 +290,11 @@ public class TheTVDB {
 
     private static void storeTraktFlags(int showTvdbId, List<TvShow> shows, Context context,
             boolean isSeenFlags) {
-        final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
+        final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
         // try to find seen episodes from trakt
         for (TvShow tvShow : shows) {
-            if (showTvdbId == tvShow.tvdb_id) {
+            if (tvShow != null && tvShow.tvdb_id == showTvdbId) {
                 batch.clear();
 
                 // try to find matching seasons
@@ -307,6 +306,9 @@ public class TheTVDB {
                             }, Seasons.COMBINED + "=?", new String[] {
                                 season.season.toString()
                             }, null);
+                    if (seasonMatch == null) {
+                        continue;
+                    }
 
                     // add ops to flag episodes
                     if (seasonMatch.moveToFirst()) {
@@ -332,11 +334,9 @@ public class TheTVDB {
                 try {
                     context.getContentResolver()
                             .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
-                } catch (RemoteException e) {
-                    // Failed binder transactions aren't recoverable
-                    throw new RuntimeException("Problem applying batch operation", e);
-                } catch (OperationApplicationException e) {
-                    // Failures like constraint violation aren't
+                } catch (RemoteException | OperationApplicationException e) {
+                    // RemoteException: Failed binder transactions aren't recoverable
+                    // OperationApplicationException: Failures like constraint violation aren't
                     // recoverable
                     throw new RuntimeException("Problem applying batch operation", e);
                 }
