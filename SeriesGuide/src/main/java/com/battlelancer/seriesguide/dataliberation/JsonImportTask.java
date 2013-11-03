@@ -29,6 +29,7 @@ import com.battlelancer.seriesguide.dataliberation.model.List;
 import com.battlelancer.seriesguide.dataliberation.model.ListItem;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -293,7 +294,13 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
                 episodeValues.put(Episodes.ABSOLUTE_NUMBER, episode.episodeAbsolute);
                 episodeValues.put(Episodes.SEASON, season.season);
                 episodeValues.put(Episodes.TITLE, episode.title);
-                episodeValues.put(Episodes.WATCHED, episode.watched);
+                // watched/skipped represented internally in watched flag
+                if (episode.skipped) {
+                    episodeValues.put(Episodes.WATCHED, EpisodeFlags.SKIPPED);
+                } else {
+                    episodeValues.put(Episodes.WATCHED,
+                            episode.watched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
+                }
                 episodeValues.put(Episodes.COLLECTED, episode.collected);
                 episodeValues.put(Episodes.FIRSTAIREDMS, episode.firstAired);
                 episodeValues.put(Episodes.IMDBID, episode.imdbId);

@@ -17,45 +17,70 @@
 
 package com.battlelancer.seriesguide;
 
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
-
 public class WatchedBox extends ImageView {
 
+    private int mEpisodeFlag;
+
     private final int mResIdWatchDrawable;
-    private boolean checked;
+
+    private int mResIdWatchSkippedDrawable;
 
     public WatchedBox(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.checked = false;
+        mEpisodeFlag = EpisodeFlags.UNWATCHED;
         mResIdWatchDrawable = Utils.resolveAttributeToResourceId(context.getTheme(),
                 R.attr.drawableWatch);
-        this.setImageResource(mResIdWatchDrawable);
-    }
-
-    public boolean isChecked() {
-        return checked;
-    }
-
-    public void setChecked(boolean checked) {
-        this.checked = checked;
+        mResIdWatchSkippedDrawable = Utils.resolveAttributeToResourceId(context.getTheme(),
+                R.attr.drawableWatchSkipped);
         updateStateImage();
     }
 
-    public void toggle() {
-        checked = !checked;
+    public int getEpisodeFlag() {
+        return mEpisodeFlag;
+    }
+
+    /**
+     * Set an {@link com.battlelancer.seriesguide.enums.EpisodeFlags} flag.
+     */
+    public void setEpisodeFlag(int episodeFlag) {
+        EpisodeTools.validateFlags(episodeFlag);
+        mEpisodeFlag = episodeFlag;
+        updateStateImage();
+    }
+
+    /**
+     * If box was in watched state, sets to unwatched. Otherwise sets to watched.
+     */
+    public void toggleWatched() {
+        mEpisodeFlag = EpisodeTools.isWatched(mEpisodeFlag)
+                ? EpisodeFlags.UNWATCHED : EpisodeFlags.WATCHED;
         updateStateImage();
     }
 
     private void updateStateImage() {
-        if (checked) {
-            this.setImageResource(R.drawable.ic_ticked);
-        } else {
-            this.setImageResource(mResIdWatchDrawable);
+        switch (mEpisodeFlag) {
+            case EpisodeFlags.WATCHED: {
+                setImageResource(R.drawable.ic_ticked);
+                break;
+            }
+            case EpisodeFlags.SKIPPED: {
+                setImageResource(mResIdWatchSkippedDrawable);
+                break;
+            }
+            case EpisodeFlags.UNWATCHED:
+            default: {
+                setImageResource(mResIdWatchDrawable);
+                break;
+            }
         }
     }
 }

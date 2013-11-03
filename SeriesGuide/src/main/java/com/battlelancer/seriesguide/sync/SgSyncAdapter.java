@@ -2,6 +2,7 @@
 package com.battlelancer.seriesguide.sync;
 
 import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -479,12 +480,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         try {
             getContext().getContentResolver()
                     .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
-        } catch (RemoteException e) {
-            // Failed binder transactions aren't recoverable
-            Utils.trackExceptionAndLog(TAG, e);
-            throw new RuntimeException("Problem applying batch operation", e);
-        } catch (OperationApplicationException e) {
-            // Failures like constraint violation aren't
+        } catch (RemoteException | OperationApplicationException e) {
+            // RemoteException: Failed binder transactions aren't recoverable
+            // OperationApplicationException: Failures like constraint violation aren't
             // recoverable
             Utils.trackExceptionAndLog(TAG, e);
             throw new RuntimeException("Problem applying batch operation", e);
@@ -506,7 +504,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodesOfShowUri(showTvdbId))
                 .withSelection(Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[] {
                         String.valueOf(episode.number), String.valueOf(episode.season)
-                }).withValue(Episodes.WATCHED, true).build());
+                }).withValue(Episodes.WATCHED, EpisodeFlags.WATCHED).build());
     }
 
     /**

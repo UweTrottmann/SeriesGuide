@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.battlelancer.seriesguide.ui.SearchFragment;
 import com.battlelancer.seriesguide.ui.SearchFragment.SearchQuery;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -66,8 +67,8 @@ public class SearchResultsAdapter extends CursorAdapter {
         }
 
         viewHolder.showTitle.setText(mCursor.getString(SearchQuery.SHOW_TITLE));
-        viewHolder.watchedStatus.setImageResource(mCursor
-                .getInt(SearchQuery.WATCHED) == 1
+        viewHolder.watchedStatus.setImageResource(
+                EpisodeTools.isWatched(mCursor.getInt(SearchQuery.WATCHED))
                 ? R.drawable.ic_ticked
                 : Utils.resolveAttributeToResourceId(mContext.getTheme(), R.attr.drawableWatch));
 

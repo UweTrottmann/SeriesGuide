@@ -1,4 +1,5 @@
 apply plugin: 'android'
+apply plugin: 'android-test'
 
 android {
     compileSdkVersion 19
@@ -53,6 +54,10 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.2.2'
     compile 'com.android.support:support-v4:18.0.+'
     compile fileTree(dir: 'libs', include: '*.jar')
+
+    testCompile 'junit:junit:4.10'
+    testCompile 'org.robolectric:robolectric:2.2'
+    testCompile 'com.squareup:fest-android:1.0.+'
 }
 
 // get signing config from gradle.properties file

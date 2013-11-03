@@ -49,12 +49,14 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.WatchedBox;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
@@ -175,7 +177,7 @@ public class UpcomingFragment extends SherlockFragment implements
         menu.add(0, CONTEXT_CHECKIN_ID, 0, R.string.checkin);
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         WatchedBox watchedBox = (WatchedBox) info.targetView.findViewById(R.id.watchedBoxUpcoming);
-        if (watchedBox.isChecked()) {
+        if (EpisodeTools.isWatched(watchedBox.getEpisodeFlag())) {
             menu.add(0, CONTEXT_FLAG_UNWATCHED_ID, 2, R.string.unmark_episode);
         } else {
             menu.add(0, CONTEXT_FLAG_WATCHED_ID, 1, R.string.mark_episode);
@@ -213,7 +215,8 @@ public class UpcomingFragment extends SherlockFragment implements
 
         new FlagTask(getActivity(), item.getInt(UpcomingQuery.REF_SHOW_ID))
                 .episodeWatched((int) info.id, item.getInt(UpcomingQuery.SEASON),
-                        item.getInt(UpcomingQuery.NUMBER), isWatched)
+                        item.getInt(UpcomingQuery.NUMBER),
+                        isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED)
                 .execute();
     }
 
@@ -412,32 +415,19 @@ public class UpcomingFragment extends SherlockFragment implements
             viewHolder.watchedBox.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
                     WatchedBox checkBox = (WatchedBox) v;
-                    checkBox.toggle();
+                    checkBox.toggleWatched();
 
                     new FlagTask(mContext, showTvdbId)
-                            .episodeWatched(episodeTvdbId, season, episode, checkBox.isChecked())
+                            .episodeWatched(episodeTvdbId, season, episode,
+                                    EpisodeTools.isWatched(checkBox.getEpisodeFlag())
+                                            ? EpisodeFlags.UNWATCHED : EpisodeFlags.WATCHED)
                             .execute();
                 }
             });
-            viewHolder.watchedBox.setChecked(mCursor.getInt(UpcomingQuery.WATCHED) > 0);
-            viewHolder.watchedBox.setOnLongClickListener(new OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Toast infoToast = Toast.makeText(getActivity(), ((WatchedBox) v)
-                            .isChecked() ? R.string.unmark_episode : R.string.mark_episode,
-                            Toast.LENGTH_SHORT);
-
-                    // position toast near view
-                    int[] location = new int[2];
-                    v.getLocationOnScreen(location);
-                    infoToast.setGravity(Gravity.TOP | Gravity.LEFT,
-                            location[0] - v.getWidth() / 2,
-                            location[1] - v.getHeight() - v.getHeight() / 2);
-
-                    infoToast.show();
-                    return true;
-                }
-            });
+            viewHolder.watchedBox.setEpisodeFlag(mCursor.getInt(UpcomingQuery.WATCHED));
+            CheatSheet.setup(viewHolder.watchedBox,
+                    EpisodeTools.isWatched(viewHolder.watchedBox.getEpisodeFlag())
+                            ? R.string.unmark_episode : R.string.mark_episode);
 
             // checkin button (not avail in all layouts)
             if (viewHolder.buttonCheckin != null) {

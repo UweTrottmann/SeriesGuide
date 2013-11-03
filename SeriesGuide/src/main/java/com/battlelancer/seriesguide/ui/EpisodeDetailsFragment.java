@@ -35,6 +35,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.style.TextAppearanceSpan;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,6 +51,7 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
@@ -58,6 +60,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -68,7 +71,9 @@ import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.Utils;
+
 import com.google.analytics.tracking.android.EasyTracker;
+
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
@@ -78,8 +83,7 @@ import java.util.Locale;
 import de.greenrobot.event.EventBus;
 
 /**
- * Displays details about a single episode like summary, ratings and episode
- * image if available.
+ * Displays details about a single episode like summary, ratings and episode image if available.
  */
 public class EpisodeDetailsFragment extends SherlockListFragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -88,13 +92,15 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     private static final String TAG = "Episode Details";
 
+    private static final int CONTEXT_CREATE_CALENDAR_EVENT_ID = 101;
+
     private FetchArtTask mArtTask;
 
     private TraktSummaryTask mTraktTask;
 
     private DetailsAdapter mAdapter;
 
-    protected boolean mWatched;
+    protected int mEpisodeFlag;
 
     protected boolean mCollected;
 
@@ -108,6 +114,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
      * Data which has to be passed when creating this fragment.
      */
     public interface InitBundle {
+
         /**
          * Integer extra.
          */
@@ -120,7 +127,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     public static EpisodeDetailsFragment newInstance(int episodeId, boolean isShowingPoster,
-                                                     boolean isShowingShowLink) {
+            boolean isShowingShowLink) {
         EpisodeDetailsFragment f = new EpisodeDetailsFragment();
 
         // Supply index input as an argument.
@@ -134,7 +141,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         /*
          * never use this here (on config change the view needed before removing
          * the fragment)
@@ -184,6 +192,26 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+            ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        menu.add(0, CONTEXT_CREATE_CALENDAR_EVENT_ID, 0, R.string.addtocalendar);
+    }
+
+    @Override
+    public boolean onContextItemSelected(android.view.MenuItem item) {
+        switch (item.getItemId()) {
+            case CONTEXT_CREATE_CALENDAR_EVENT_ID: {
+                onAddCalendarEvent();
+                return true;
+            }
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.episodedetails_menu, menu);
@@ -223,6 +251,23 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             onShareEpisode(ShareMethod.RATE_TRAKT);
         }
         fireTrackerEvent("Rate (trakt)");
+    }
+
+    private void onAddCalendarEvent() {
+        fireTrackerEvent("Add to calendar");
+
+        // Episode of this fragment is always the first item in the cursor
+        final Cursor episode = (Cursor) mAdapter.getItem(0);
+        if (episode != null && episode.moveToFirst()) {
+            String showTitle = episode.getString(DetailsQuery.SHOW_TITLE);
+            String episodeTitleAndNumber = ShareUtils.onCreateShareString(
+                    getSherlockActivity(), episode);
+            long showAirTime = episode.getLong(DetailsQuery.FIRSTAIREDMS);
+            int showRunTime = episode.getInt(DetailsQuery.SHOW_RUNTIME);
+
+            ShareUtils.onAddCalendarEvent(getActivity(), showTitle,
+                    episodeTitleAndNumber, showAirTime, showRunTime);
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -278,10 +323,26 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         return getArguments().getBoolean("showlink");
     }
 
+    /**
+     * If episode was watched, flags as unwatched. Otherwise, flags as watched.
+     */
     private void onToggleWatched() {
-        mWatched = !mWatched;
+        onChangeEpisodeFlag(EpisodeTools.isWatched(mEpisodeFlag)
+                ? EpisodeFlags.UNWATCHED : EpisodeFlags.WATCHED);
+    }
+
+    /**
+     * If episode was skipped, flags as unwatched. Otherwise, flags as skipped.
+     */
+    private void onToggleSkipped() {
+        onChangeEpisodeFlag(EpisodeTools.isSkipped(mEpisodeFlag)
+                ? EpisodeFlags.UNWATCHED : EpisodeFlags.SKIPPED);
+    }
+
+    private void onChangeEpisodeFlag(int episodeFlag) {
+        mEpisodeFlag = episodeFlag;
         new FlagTask(getActivity(), mShowTvdbId)
-                .episodeWatched(getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber, mWatched)
+                .episodeWatched(getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber, episodeFlag)
                 .execute();
     }
 
@@ -293,8 +354,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     /**
-     * Non-static class (!) so we can access fields of
-     * {@link EpisodeDetailsFragment}. Displays one row, aka one episode.
+     * Non-static class (!) so we can access fields of {@link EpisodeDetailsFragment}. Displays one
+     * row, aka one episode.
      */
     private class DetailsAdapter extends CursorAdapter {
 
@@ -319,8 +380,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             mEpisodeNumber = cursor.getInt(DetailsQuery.NUMBER);
             final String showTitle = cursor.getString(DetailsQuery.SHOW_TITLE);
             final String episodeTitle = cursor.getString(DetailsQuery.TITLE);
-            final String episodeString = ShareUtils.onCreateShareString(
-                    getSherlockActivity(), cursor);
             final long airTime = cursor.getLong(DetailsQuery.FIRSTAIREDMS);
 
             // Title and description
@@ -429,56 +488,77 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
                     fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH, imagePath);
                     fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_TITLE, showTitle);
-                    fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_SUBTITLE, episodeTitle);
+                    fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_SUBTITLE,
+                            episodeTitle);
                     ActivityCompat.startActivity(getActivity(), fullscreen,
                             ActivityOptionsCompat
-                                    .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight()).toBundle());
+                                    .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
+                                    .toBundle());
                 }
             });
 
+            mEpisodeFlag = cursor.getInt(DetailsQuery.WATCHED);
             // Watched button
-            mWatched = cursor.getInt(DetailsQuery.WATCHED) == 1 ? true : false;
-            ImageButton seenButton = (ImageButton) view.findViewById(R.id.watchedButton);
-            seenButton.setImageResource(mWatched ? R.drawable.ic_ticked
-                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(), R.attr.drawableWatch));
+            boolean isWatched = EpisodeTools.isWatched(mEpisodeFlag);
+            ImageButton seenButton = (ImageButton) view.findViewById(R.id.imageButtonBarWatched);
+            seenButton.setImageResource(isWatched ? R.drawable.ic_ticked
+                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                            R.attr.drawableWatch));
             seenButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    fireTrackerEvent("Toggle watched");
                     onToggleWatched();
+                    fireTrackerEvent("Toggle watched");
                 }
             });
-            CheatSheet.setup(seenButton, mWatched ? R.string.unmark_episode
+            CheatSheet.setup(seenButton, isWatched ? R.string.unmark_episode
                     : R.string.mark_episode);
 
+            // skip button
+            boolean isSkipped = EpisodeTools.isSkipped(mEpisodeFlag);
+            ImageButton skipButton = (ImageButton) view.findViewById(R.id.imageButtonBarSkip);
+            skipButton.setVisibility(
+                    isWatched ? View.GONE : View.VISIBLE); // if watched do not allow skipping
+            skipButton.setImageResource(isSkipped
+                    ? R.drawable.ic_action_playback_next_highlight
+                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                            R.attr.drawableSkip));
+            skipButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onToggleSkipped();
+                    fireTrackerEvent("Toggle skipped");
+                }
+            });
+            CheatSheet.setup(skipButton, isSkipped
+                    ? R.string.action_dont_skip : R.string.action_skip);
+
             // Collected button
-            mCollected = cursor.getInt(DetailsQuery.COLLECTED) == 1 ? true : false;
-            ImageButton collectedButton = (ImageButton) view.findViewById(R.id.collectedButton);
+            mCollected = cursor.getInt(DetailsQuery.COLLECTED) == 1;
+            ImageButton collectedButton = (ImageButton) view.findViewById(
+                    R.id.imageButtonBarCollected);
             collectedButton.setImageResource(mCollected ? R.drawable.ic_collected
-                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(), R.attr.drawableCollect));
+                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                            R.attr.drawableCollect));
             collectedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    fireTrackerEvent("Toggle collected");
                     onToggleCollected();
+                    fireTrackerEvent("Toggle collected");
                 }
             });
             CheatSheet.setup(collectedButton, mCollected ? R.string.uncollect
                     : R.string.collect);
 
-            // Calendar button
-            final int runtime = cursor.getInt(DetailsQuery.SHOW_RUNTIME);
-            View calendarButton = view.findViewById(R.id.calendarButton);
-            calendarButton.setOnClickListener(
-                    new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            fireTrackerEvent("Add to calendar");
-                            ShareUtils.onAddCalendarEvent(getSherlockActivity(), showTitle,
-                                    episodeString, airTime, runtime);
-                        }
-                    });
-            CheatSheet.setup(calendarButton);
+            // menu button
+            View menuButton = view.findViewById(R.id.imageButtonBarMenu);
+            registerForContextMenu(menuButton);
+            menuButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().openContextMenu(v);
+                }
+            });
 
             // TVDb rating
             RelativeLayout ratings = (RelativeLayout) view.findViewById(R.id.ratingbar);
@@ -548,7 +628,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
             // Check in button
             final int episodeTvdbId = cursor.getInt(DetailsQuery._ID);
-            view.findViewById(R.id.checkinButton).setOnClickListener(new OnClickListener() {
+            View checkinButton = view.findViewById(R.id.imageButtonBarCheckin);
+            checkinButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // display a check-in dialog
@@ -558,6 +639,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     fireTrackerEvent("Check-In");
                 }
             });
+            CheatSheet.setup(checkinButton);
 
         }
 
@@ -639,7 +721,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     public void onEvent(TraktActionCompleteEvent event) {
-        if (event.mTraktTaskArgs.getInt(TraktTask.InitBundle.TRAKTACTION) == TraktAction.RATE_EPISODE.index) {
+        if (event.mTraktTaskArgs.getInt(TraktTask.InitBundle.TRAKTACTION)
+                == TraktAction.RATE_EPISODE.index) {
             onLoadTraktRatings(getView().findViewById(R.id.ratingbar), false);
         }
     }
