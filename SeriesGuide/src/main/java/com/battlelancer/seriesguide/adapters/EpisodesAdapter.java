@@ -79,29 +79,28 @@ public class EpisodesAdapter extends CursorAdapter {
         // episode title
         viewHolder.episodeTitle.setText(mCursor.getString(EpisodesQuery.TITLE));
 
-        // watched box
-        viewHolder.watchedBox.setChecked(
-                EpisodeTools.isWatched(mCursor.getInt(EpisodesQuery.WATCHED)));
-
-        final int episodeId = mCursor.getInt(EpisodesQuery._ID);
+        // number
         final int episodeNumber = mCursor.getInt(EpisodesQuery.NUMBER);
+        viewHolder.episodeNumber.setText(String.valueOf(episodeNumber));
+
+        // watched box
+        viewHolder.watchedBox.setEpisodeFlag(mCursor.getInt(EpisodesQuery.WATCHED));
+        final int episodeId = mCursor.getInt(EpisodesQuery._ID);
         viewHolder.watchedBox.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                ((WatchedBox) v).toggle();
+                WatchedBox box = (WatchedBox) v;
                 mOnFlagListener.onFlagEpisodeWatched(episodeId, episodeNumber,
-                        ((WatchedBox) v).isChecked());
+                        !EpisodeTools.isWatched(box.getEpisodeFlag()));
             }
         });
         CheatSheet.setup(viewHolder.watchedBox,
-                viewHolder.watchedBox.isChecked() ? R.string.unmark_episode
-                        : R.string.mark_episode);
+                EpisodeTools.isWatched(viewHolder.watchedBox.getEpisodeFlag())
+                        ? R.string.unmark_episode : R.string.mark_episode);
 
+        // collected tag
         viewHolder.collected
                 .setVisibility(mCursor.getInt(EpisodesQuery.COLLECTED) == 1 ? View.VISIBLE
                         : View.INVISIBLE);
-
-        // number
-        viewHolder.episodeNumber.setText(String.valueOf(episodeNumber));
 
         // alternative numbers
         StringBuilder altNumbers = new StringBuilder();

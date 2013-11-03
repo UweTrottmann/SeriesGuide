@@ -177,7 +177,7 @@ public class UpcomingFragment extends SherlockFragment implements
         menu.add(0, CONTEXT_CHECKIN_ID, 0, R.string.checkin);
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         WatchedBox watchedBox = (WatchedBox) info.targetView.findViewById(R.id.watchedBoxUpcoming);
-        if (watchedBox.isChecked()) {
+        if (EpisodeTools.isWatched(watchedBox.getEpisodeFlag())) {
             menu.add(0, CONTEXT_FLAG_UNWATCHED_ID, 2, R.string.unmark_episode);
         } else {
             menu.add(0, CONTEXT_FLAG_WATCHED_ID, 1, R.string.mark_episode);
@@ -415,35 +415,19 @@ public class UpcomingFragment extends SherlockFragment implements
             viewHolder.watchedBox.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
                     WatchedBox checkBox = (WatchedBox) v;
-                    checkBox.toggle();
+                    checkBox.toggleWatched();
 
                     new FlagTask(mContext, showTvdbId)
                             .episodeWatched(episodeTvdbId, season, episode,
-                                    checkBox.isChecked() ? EpisodeFlags.WATCHED
-                                            : EpisodeFlags.UNWATCHED)
+                                    EpisodeTools.isWatched(checkBox.getEpisodeFlag())
+                                            ? EpisodeFlags.UNWATCHED : EpisodeFlags.WATCHED)
                             .execute();
                 }
             });
-            viewHolder.watchedBox.setChecked(
-                    EpisodeTools.isWatched(mCursor.getInt(UpcomingQuery.WATCHED)));
-            viewHolder.watchedBox.setOnLongClickListener(new OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Toast infoToast = Toast.makeText(getActivity(), ((WatchedBox) v)
-                            .isChecked() ? R.string.unmark_episode : R.string.mark_episode,
-                            Toast.LENGTH_SHORT);
-
-                    // position toast near view
-                    int[] location = new int[2];
-                    v.getLocationOnScreen(location);
-                    infoToast.setGravity(Gravity.TOP | Gravity.LEFT,
-                            location[0] - v.getWidth() / 2,
-                            location[1] - v.getHeight() - v.getHeight() / 2);
-
-                    infoToast.show();
-                    return true;
-                }
-            });
+            viewHolder.watchedBox.setEpisodeFlag(mCursor.getInt(UpcomingQuery.WATCHED));
+            CheatSheet.setup(viewHolder.watchedBox,
+                    EpisodeTools.isWatched(viewHolder.watchedBox.getEpisodeFlag())
+                            ? R.string.unmark_episode : R.string.mark_episode);
 
             // checkin button (not avail in all layouts)
             if (viewHolder.buttonCheckin != null) {
