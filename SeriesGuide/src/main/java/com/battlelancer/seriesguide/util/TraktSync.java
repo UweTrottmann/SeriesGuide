@@ -122,12 +122,15 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
         Cursor showTvdbIds = mContext.getContentResolver().query(Shows.CONTENT_URI, new String[]{
                 Shows._ID
         }, null, null, null);
+        if (showTvdbIds == null) {
+            return FAILED;
+        }
 
         // assume we have a local list of which shows to sync (later...)
         while (showTvdbIds.moveToNext()) {
             int tvdbId = showTvdbIds.getInt(0);
             for (TvShow tvShow : shows) {
-                if (tvdbId == tvShow.tvdb_id) {
+                if (tvShow != null && tvShow.tvdb_id == tvdbId) {
                     if (mResult.length() != 0) {
                         mResult += ", ";
                     }
@@ -145,12 +148,19 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                     // season
                     List<TvShowSeason> seasons = tvShow.seasons;
                     for (TvShowSeason season : seasons) {
+                        if (season == null) {
+                            continue;
+                        }
+
                         Cursor seasonMatch = mContext.getContentResolver().query(
                                 Seasons.buildSeasonsOfShowUri(tvdbId), new String[]{
                                 Seasons._ID
                         }, Seasons.COMBINED + "=?", new String[]{
                                 season.season.toString()
                         }, null);
+                        if (seasonMatch == null) {
+                            continue;
+                        }
 
                         // if we found a season, go on with its episodes
                         if (seasonMatch.moveToFirst()) {
@@ -222,8 +232,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
         while (showTvdbIds.moveToNext()) {
             int showTvdbId = showTvdbIds.getInt(0);
-            List<ShowService.Episodes.Episode> watchedEpisodes
-                    = new ArrayList<ShowService.Episodes.Episode>();
+            List<ShowService.Episodes.Episode> watchedEpisodes = new ArrayList<>();
 
             // build a list of all watched episodes
             Cursor seenEpisodes = mContext.getContentResolver().query(
@@ -235,8 +244,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
             }
 
             // build unseen episodes trakt post
-            List<ShowService.Episodes.Episode> unwatchedEpisodes
-                    = new ArrayList<ShowService.Episodes.Episode>();
+            List<ShowService.Episodes.Episode> unwatchedEpisodes = new ArrayList<>();
             if (mIsSyncingUnseen) {
                 Cursor unseenEpisodes = mContext.getContentResolver().query(
                         Episodes.buildEpisodesOfShowUri(showTvdbId), TraktSyncQuery.PROJECTION,
