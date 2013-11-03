@@ -66,23 +66,19 @@ public class DBUtils {
                 Episodes._ID
         };
 
-        static final String NOAIRDATE_SELECTION = Episodes.WATCHED + "=? AND "
-                + Episodes.FIRSTAIREDMS + "=?";
+        static final String AIRED_SELECTION = Episodes.WATCHED + "=0 AND " + Episodes.FIRSTAIREDMS
+                + " !=-1 AND " + Episodes.FIRSTAIREDMS + "<=?";
 
-        static final String FUTURE_SELECTION = Episodes.WATCHED + "=? AND " + Episodes.FIRSTAIREDMS
+        static final String FUTURE_SELECTION = Episodes.WATCHED + "=0 AND " + Episodes.FIRSTAIREDMS
                 + ">?";
 
-        static final String AIRED_SELECTION = Episodes.WATCHED + "=? AND " + Episodes.FIRSTAIREDMS
-                + " !=? AND " + Episodes.FIRSTAIREDMS + "<=?";
+        static final String NOAIRDATE_SELECTION = Episodes.WATCHED + "=0 AND "
+                + Episodes.FIRSTAIREDMS + "=-1";
     }
 
     /**
-     * Looks up the episodes of a given season and stores the count of already
-     * aired, but not watched ones in the seasons watchcount.
-     * 
-     * @param context
-     * @param seasonid
-     * @param prefs
+     * Looks up the episodes of a given season and stores the count of already aired, but not
+     * watched ones in the seasons watchcount.
      */
     public static void updateUnwatchedCount(Context context, String seasonid,
             SharedPreferences prefs) {
@@ -94,38 +90,48 @@ public class DBUtils {
         final Cursor total = resolver.query(episodesOfSeasonUri, new String[] {
                 Episodes._ID
         }, null, null, null);
-        final int totalcount = total.getCount();
+        if (total == null) {
+            return;
+        }
+        final int totalCount = total.getCount();
         total.close();
 
         // unwatched, aired episodes
         final Cursor unwatched = resolver.query(episodesOfSeasonUri, UnwatchedQuery.PROJECTION,
                 UnwatchedQuery.AIRED_SELECTION, new String[] {
-                        "0", "-1", fakenow
+                        fakenow
                 }, null);
+        if (unwatched == null) {
+            return;
+        }
         final int count = unwatched.getCount();
         unwatched.close();
 
         // unwatched, aired in the future episodes
-        final Cursor unaired = resolver.query(episodesOfSeasonUri, UnwatchedQuery.PROJECTION,
-                UnwatchedQuery.FUTURE_SELECTION, new String[] {
-                        "0", fakenow
-                }, null);
-        final int unaired_count = unaired.getCount();
-        unaired.close();
+        final Cursor unAired = resolver.query(episodesOfSeasonUri, UnwatchedQuery.PROJECTION,
+                UnwatchedQuery.FUTURE_SELECTION, new String[]{
+                fakenow
+        }, null);
+        if (unAired == null) {
+            return;
+        }
+        final int unairedCount = unAired.getCount();
+        unAired.close();
 
         // unwatched, no airdate
-        final Cursor noairdate = resolver.query(episodesOfSeasonUri, UnwatchedQuery.PROJECTION,
-                UnwatchedQuery.NOAIRDATE_SELECTION, new String[] {
-                        "0", "-1"
-                }, null);
-        final int noairdate_count = noairdate.getCount();
-        noairdate.close();
+        final Cursor noAirDate = resolver.query(episodesOfSeasonUri, UnwatchedQuery.PROJECTION,
+                UnwatchedQuery.NOAIRDATE_SELECTION, null, null);
+        if (noAirDate == null) {
+            return;
+        }
+        final int noAirDateCount = noAirDate.getCount();
+        noAirDate.close();
 
         final ContentValues update = new ContentValues();
         update.put(Seasons.WATCHCOUNT, count);
-        update.put(Seasons.UNAIREDCOUNT, unaired_count);
-        update.put(Seasons.NOAIRDATECOUNT, noairdate_count);
-        update.put(Seasons.TOTALCOUNT, totalcount);
+        update.put(Seasons.UNAIREDCOUNT, unairedCount);
+        update.put(Seasons.NOAIRDATECOUNT, noAirDateCount);
+        update.put(Seasons.TOTALCOUNT, totalCount);
         resolver.update(Seasons.buildSeasonUri(seasonid), update, null, null);
     }
 
