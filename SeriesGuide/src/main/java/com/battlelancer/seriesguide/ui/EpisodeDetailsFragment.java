@@ -515,10 +515,11 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     : R.string.mark_episode);
 
             // skip button
+            boolean isSkipped = EpisodeTools.isSkipped(mEpisodeFlag);
             ImageButton skipButton = (ImageButton) view.findViewById(R.id.imageButtonBarSkip);
             skipButton.setVisibility(
                     isWatched ? View.GONE : View.VISIBLE); // if watched do not allow skipping
-            skipButton.setImageResource(EpisodeTools.isSkipped(mEpisodeFlag)
+            skipButton.setImageResource(isSkipped
                     ? R.drawable.ic_action_playback_next_highlight
                     : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                             R.attr.drawableSkip));
@@ -529,7 +530,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     fireTrackerEvent("Toggle skipped");
                 }
             });
-            CheatSheet.setup(skipButton);
+            CheatSheet.setup(skipButton, isSkipped
+                    ? R.string.action_episode_dont_skip : R.string.action_episode_skip);
 
             // Collected button
             mCollected = cursor.getInt(DetailsQuery.COLLECTED) == 1;
