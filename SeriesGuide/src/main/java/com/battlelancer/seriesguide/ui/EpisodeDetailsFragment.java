@@ -60,6 +60,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -98,7 +99,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     private DetailsAdapter mAdapter;
 
-    protected boolean mWatched;
+    protected int mEpisodeFlag;
 
     protected boolean mCollected;
 
@@ -319,11 +320,26 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         return getArguments().getBoolean("showlink");
     }
 
+    /**
+     * If episode was watched, flags as unwatched. Otherwise, flags as watched.
+     */
     private void onToggleWatched() {
-        mWatched = !mWatched;
+        onChangeEpisodeFlag(EpisodeTools.isWatched(mEpisodeFlag)
+                ? EpisodeFlags.UNWATCHED : EpisodeFlags.WATCHED);
+    }
+
+    /**
+     * If episode was skipped, flags as unwatched. Otherwise, flags as skipped.
+     */
+    private void onToggleSkipped() {
+        onChangeEpisodeFlag(EpisodeTools.isSkipped(mEpisodeFlag)
+                ? EpisodeFlags.UNWATCHED : EpisodeFlags.SKIPPED);
+    }
+
+    private void onChangeEpisodeFlag(int episodeFlag) {
+        mEpisodeFlag = episodeFlag;
         new FlagTask(getActivity(), mShowTvdbId)
-                .episodeWatched(getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber, mWatched ?
-                        EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED)
+                .episodeWatched(getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber, episodeFlag)
                 .execute();
     }
 
@@ -476,45 +492,48 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 }
             });
 
+            mEpisodeFlag = cursor.getInt(DetailsQuery.WATCHED);
             // Watched button
-            mWatched = cursor.getInt(DetailsQuery.WATCHED) == 1 ? true : false;
+            boolean isWatched = EpisodeTools.isWatched(mEpisodeFlag);
             ImageButton seenButton = (ImageButton) view.findViewById(R.id.imageButtonBarWatched);
-            seenButton.setImageResource(mWatched ? R.drawable.ic_ticked
+            seenButton.setImageResource(isWatched ? R.drawable.ic_ticked
                     : Utils.resolveAttributeToResourceId(getActivity().getTheme(), R.attr.drawableWatch));
             seenButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    fireTrackerEvent("Toggle watched");
                     onToggleWatched();
+                    fireTrackerEvent("Toggle watched");
                 }
             });
-            CheatSheet.setup(seenButton, mWatched ? R.string.unmark_episode
+            CheatSheet.setup(seenButton, isWatched ? R.string.unmark_episode
                     : R.string.mark_episode);
 
+            // skip button
+            View skipButton = view.findViewById(R.id.imageButtonBarSkip);
+            skipButton.setEnabled(!isWatched); // if watched do not allow skipping
+            skipButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onToggleSkipped();
+                    fireTrackerEvent("Toggle skipped");
+                }
+            });
+            CheatSheet.setup(skipButton);
+
             // Collected button
-            mCollected = cursor.getInt(DetailsQuery.COLLECTED) == 1 ? true : false;
+            mCollected = cursor.getInt(DetailsQuery.COLLECTED) == 1;
             ImageButton collectedButton = (ImageButton) view.findViewById(R.id.imageButtonBarCollected);
             collectedButton.setImageResource(mCollected ? R.drawable.ic_collected
                     : Utils.resolveAttributeToResourceId(getActivity().getTheme(), R.attr.drawableCollect));
             collectedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    fireTrackerEvent("Toggle collected");
                     onToggleCollected();
+                    fireTrackerEvent("Toggle collected");
                 }
             });
             CheatSheet.setup(collectedButton, mCollected ? R.string.uncollect
                     : R.string.collect);
-
-            // skip button
-            View skipButton = view.findViewById(R.id.imageButtonBarSkip);
-            skipButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // TODO
-                }
-            });
-            CheatSheet.setup(skipButton);
 
             // menu button
             View menuButton = view.findViewById(R.id.imageButtonBarMenu);
