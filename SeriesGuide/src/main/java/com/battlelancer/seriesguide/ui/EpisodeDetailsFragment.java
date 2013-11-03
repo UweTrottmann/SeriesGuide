@@ -71,7 +71,9 @@ import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.Utils;
+
 import com.google.analytics.tracking.android.EasyTracker;
+
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
@@ -81,8 +83,7 @@ import java.util.Locale;
 import de.greenrobot.event.EventBus;
 
 /**
- * Displays details about a single episode like summary, ratings and episode
- * image if available.
+ * Displays details about a single episode like summary, ratings and episode image if available.
  */
 public class EpisodeDetailsFragment extends SherlockListFragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -113,6 +114,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
      * Data which has to be passed when creating this fragment.
      */
     public interface InitBundle {
+
         /**
          * Integer extra.
          */
@@ -125,7 +127,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     public static EpisodeDetailsFragment newInstance(int episodeId, boolean isShowingPoster,
-                                                     boolean isShowingShowLink) {
+            boolean isShowingShowLink) {
         EpisodeDetailsFragment f = new EpisodeDetailsFragment();
 
         // Supply index input as an argument.
@@ -139,7 +141,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         /*
          * never use this here (on config change the view needed before removing
          * the fragment)
@@ -351,8 +354,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     /**
-     * Non-static class (!) so we can access fields of
-     * {@link EpisodeDetailsFragment}. Displays one row, aka one episode.
+     * Non-static class (!) so we can access fields of {@link EpisodeDetailsFragment}. Displays one
+     * row, aka one episode.
      */
     private class DetailsAdapter extends CursorAdapter {
 
@@ -499,7 +502,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             boolean isWatched = EpisodeTools.isWatched(mEpisodeFlag);
             ImageButton seenButton = (ImageButton) view.findViewById(R.id.imageButtonBarWatched);
             seenButton.setImageResource(isWatched ? R.drawable.ic_ticked
-                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(), R.attr.drawableWatch));
+                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                            R.attr.drawableWatch));
             seenButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -532,7 +536,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             ImageButton collectedButton = (ImageButton) view.findViewById(
                     R.id.imageButtonBarCollected);
             collectedButton.setImageResource(mCollected ? R.drawable.ic_collected
-                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(), R.attr.drawableCollect));
+                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                            R.attr.drawableCollect));
             collectedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -714,7 +719,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     public void onEvent(TraktActionCompleteEvent event) {
-        if (event.mTraktTaskArgs.getInt(TraktTask.InitBundle.TRAKTACTION) == TraktAction.RATE_EPISODE.index) {
+        if (event.mTraktTaskArgs.getInt(TraktTask.InitBundle.TRAKTACTION)
+                == TraktAction.RATE_EPISODE.index) {
             onLoadTraktRatings(getView().findViewById(R.id.ratingbar), false);
         }
     }
