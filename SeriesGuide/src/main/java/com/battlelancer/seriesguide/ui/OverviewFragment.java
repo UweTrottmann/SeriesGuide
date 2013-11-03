@@ -291,14 +291,23 @@ public class OverviewFragment extends SherlockFragment implements
         }
     }
 
-    private void onFlagWatched() {
+    private void onEpisodeSkipped() {
+        onChangeEpisodeFlag(EpisodeFlags.SKIPPED);
+        fireTrackerEvent("Flag Skipped");
+    }
+
+    private void onEpisodeWatched() {
+        onChangeEpisodeFlag(EpisodeFlags.WATCHED);
         fireTrackerEvent("Flag Watched");
+    }
+
+    private void onChangeEpisodeFlag(int episodeFlag) {
         if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
             final int season = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
             final int episode = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
             new FlagTask(getActivity(), getShowId())
                     .episodeWatched(mEpisodeCursor.getInt(EpisodeQuery._ID), season,
-                            episode, EpisodeFlags.WATCHED)
+                            episode, episodeFlag)
                     .execute();
         }
     }
@@ -349,8 +358,7 @@ public class OverviewFragment extends SherlockFragment implements
         if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
             final int season = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
             final int episode = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-            final boolean isCollected = mEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1 ? true
-                    : false;
+            final boolean isCollected = mEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1;
             new FlagTask(getActivity(), getShowId())
                     .episodeCollected(mEpisodeCursor.getInt(EpisodeQuery._ID), season, episode,
                             !isCollected)
@@ -579,19 +587,21 @@ public class OverviewFragment extends SherlockFragment implements
 
             // Button bar
             // check-in button
-            buttons.findViewById(R.id.imageButtonBarCheckin).setOnClickListener(new OnClickListener() {
+            View checkinButton = buttons.findViewById(R.id.imageButtonBarCheckin);
+            checkinButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onCheckIn();
                 }
             });
+            CheatSheet.setup(checkinButton);
 
             // watched button
             View watchedButton = buttons.findViewById(R.id.imageButtonBarWatched);
             watchedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onFlagWatched();
+                    onEpisodeWatched();
                 }
             });
             CheatSheet.setup(watchedButton, R.string.mark_episode);
@@ -616,7 +626,7 @@ public class OverviewFragment extends SherlockFragment implements
             skipButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO
+                    onEpisodeSkipped();
                 }
             });
             CheatSheet.setup(skipButton);
