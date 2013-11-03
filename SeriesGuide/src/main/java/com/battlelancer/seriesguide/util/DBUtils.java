@@ -151,7 +151,7 @@ public class DBUtils {
         // unwatched, aired episodes
         final Cursor unwatched = resolver.query(episodesOfShowUri, UnwatchedQuery.PROJECTION,
                 UnwatchedQuery.AIRED_SELECTION + Episodes.SELECTION_NOSPECIALS, new String[] {
-                        "0", "-1", fakenow
+                        fakenow
                 }, null);
         if (unwatched == null) {
             return -1;
