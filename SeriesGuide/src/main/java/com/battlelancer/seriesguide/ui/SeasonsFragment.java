@@ -83,6 +83,8 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     private static final int CONTEXT_MANAGE_LISTS_ID = 4;
 
+    private static  final int CONTEXT_FLAG_ALL_SKIPPED_ID = 5;
+
     private static final int LOADER_ID = 1;
 
     private static final String TAG = "Seasons";
@@ -230,7 +232,8 @@ public class SeasonsFragment extends SherlockListFragment implements
         menu.add(0, CONTEXT_FLAG_ALL_UNWATCHED_ID, 1, R.string.unmark_all);
         menu.add(0, CONTEXT_FLAG_ALL_COLLECTED_ID, 2, R.string.collect_all);
         menu.add(0, CONTEXT_FLAG_ALL_UNCOLLECTED_ID, 3, R.string.uncollect_all);
-        menu.add(0, CONTEXT_MANAGE_LISTS_ID, 4, R.string.list_item_manage);
+        menu.add(0, CONTEXT_FLAG_ALL_SKIPPED_ID, 4, R.string.action_season_skip);
+        menu.add(0, CONTEXT_MANAGE_LISTS_ID, 5, R.string.list_item_manage);
     }
 
     @Override
@@ -257,6 +260,11 @@ public class SeasonsFragment extends SherlockListFragment implements
             case CONTEXT_FLAG_ALL_UNCOLLECTED_ID: {
                 onFlagSeasonCollected(info.id, season.getInt(SeasonsQuery.COMBINED), false);
                 fireTrackerEventContextMenu("Flag all uncollected");
+                return true;
+            }
+            case CONTEXT_FLAG_ALL_SKIPPED_ID: {
+                onFlagSeasonSkipped(info.id, season.getInt(SeasonsQuery.COMBINED));
+                fireTrackerEventContextMenu("Flag all skipped");
                 return true;
             }
             case CONTEXT_MANAGE_LISTS_ID: {
@@ -324,6 +332,12 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     private int getShowId() {
         return getArguments().getInt(InitBundle.SHOW_TVDBID);
+    }
+
+    private void onFlagSeasonSkipped(long seasonId, int seasonNumber) {
+        new FlagTask(getActivity(), getShowId())
+                .seasonWatched((int) seasonId, seasonNumber, EpisodeFlags.SKIPPED)
+                .execute();
     }
 
     /**
