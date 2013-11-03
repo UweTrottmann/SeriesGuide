@@ -30,5 +30,7 @@
     <attr name="drawableWatch" format="reference" />
     <attr name="drawableCollect" format="reference" />
     <attr name="drawableFilter" format="reference" />
+    <attr name="drawableSkip" format="reference" />
+    <attr name="drawableWatchSkipped" format="reference" />
 
 </resources>
