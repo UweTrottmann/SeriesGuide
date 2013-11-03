@@ -31,6 +31,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewStub;
@@ -43,6 +44,10 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.billing.BillingActivity;
+import com.battlelancer.seriesguide.billing.IabHelper;
+import com.battlelancer.seriesguide.billing.IabResult;
+import com.battlelancer.seriesguide.billing.Inventory;
 import com.battlelancer.seriesguide.migration.MigrationActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.AppSettings;
@@ -56,6 +61,7 @@ import com.battlelancer.thetvdbapi.TheTVDB;
 import com.google.analytics.tracking.android.EasyTracker;
 
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.BuildConfig;
 import com.uwetrottmann.seriesguide.R;
 
 import java.util.ArrayList;
@@ -80,6 +86,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
 
     private static final String STATE_ART_INDEX = "seriesguide.art.index";
 
+    private IabHelper mHelper;
+
     private Bundle mSavedState;
 
     private FetchPosterTask mArtTask;
@@ -102,6 +110,35 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
 
         setUpActionBar();
         setupViews(savedInstanceState);
+
+        // query in-app purchases (only if not already qualified)
+        if (Utils.requiresPurchaseCheck(this)) {
+            mHelper = new IabHelper(this, BillingActivity.getPublicKey(this));
+            mHelper.enableDebugLogging(BuildConfig.DEBUG);
+
+            Log.d(TAG, "Starting In-App Billing helper setup.");
+            mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+                public void onIabSetupFinished(IabResult result) {
+                    Log.d(TAG, "Setup finished.");
+
+                    if (!result.isSuccess()) {
+                        // Oh noes, there was a problem. But do not go crazy.
+                        disposeIabHelper();
+                        return;
+                    }
+
+                    // Have we been disposed of in the meantime? If so, quit.
+                    if (mHelper == null) {
+                        return;
+                    }
+
+                    // Hooray, IAB is fully set up. Now, let's get an inventory
+                    // of stuff we own.
+                    Log.d(TAG, "Setup successful. Querying inventory.");
+                    mHelper.queryInventoryAsync(mGotInventoryListener);
+                }
+            });
+        }
     }
 
     private void setUpActionBar() {
@@ -167,6 +204,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
     protected void onDestroy() {
         super.onDestroy();
         onCancelTasks();
+        disposeIabHelper();
     }
 
     @Override
@@ -479,6 +517,41 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
      */
     public void setProgressVisibility(boolean isVisible) {
         mProgressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    }
+
+    // Listener that's called when we finish querying the items and
+    // subscriptions we own
+    IabHelper.QueryInventoryFinishedListener mGotInventoryListener
+            = new IabHelper.QueryInventoryFinishedListener() {
+        public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
+            Log.d(TAG, "Query inventory finished.");
+
+            // Have we been disposed of in the meantime? If so, quit.
+            if (mHelper == null) {
+                return;
+            }
+
+            if (result.isFailure()) {
+                // ignore failures (maybe not, requires testing)
+                disposeIabHelper();
+                return;
+            }
+
+            Log.d(TAG, "Query inventory was successful.");
+
+            BillingActivity.checkForSubscription(ShowsActivity.this, inventory);
+
+            Log.d(TAG, "Inventory query finished.");
+            disposeIabHelper();
+        }
+    };
+
+    private void disposeIabHelper() {
+        if (mHelper != null) {
+            Log.d(TAG, "Disposing of IabHelper.");
+            mHelper.dispose();
+        }
+        mHelper = null;
     }
 
     /**
