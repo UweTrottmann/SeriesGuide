@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.ui.EpisodesFragment.EpisodesQuery;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
@@ -79,7 +80,8 @@ public class EpisodesAdapter extends CursorAdapter {
         viewHolder.episodeTitle.setText(mCursor.getString(EpisodesQuery.TITLE));
 
         // watched box
-        viewHolder.watchedBox.setChecked(mCursor.getInt(EpisodesQuery.WATCHED) > 0);
+        viewHolder.watchedBox.setChecked(
+                EpisodeTools.isWatched(mCursor.getInt(EpisodesQuery.WATCHED)));
 
         final int episodeId = mCursor.getInt(EpisodesQuery._ID);
         final int episodeNumber = mCursor.getInt(EpisodesQuery.NUMBER);

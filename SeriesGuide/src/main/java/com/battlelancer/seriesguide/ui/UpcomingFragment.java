@@ -56,6 +56,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
@@ -423,7 +424,8 @@ public class UpcomingFragment extends SherlockFragment implements
                             .execute();
                 }
             });
-            viewHolder.watchedBox.setChecked(mCursor.getInt(UpcomingQuery.WATCHED) > 0);
+            viewHolder.watchedBox.setChecked(
+                    EpisodeTools.isWatched(mCursor.getInt(UpcomingQuery.WATCHED)));
             viewHolder.watchedBox.setOnLongClickListener(new OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
