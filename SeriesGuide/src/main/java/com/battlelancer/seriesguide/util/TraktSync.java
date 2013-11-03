@@ -18,6 +18,7 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -52,6 +53,8 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
     private static final int FAILED_CREDENTIALS = 102;
 
     private static final int FAILED_API = 103;
+
+    private static final int FAILED = 104;
 
     private static final String TAG = "TraktSync";
 
@@ -131,7 +134,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
                     if (mIsSyncingUnseen) {
                         ContentValues values = new ContentValues();
-                        values.put(Episodes.WATCHED, false);
+                        values.put(Episodes.WATCHED, EpisodeFlags.UNWATCHED);
                         mContext.getContentResolver().update(
                                 Episodes.buildEpisodesOfShowUri(tvdbId), values, null, null);
                     }
@@ -160,7 +163,8 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                                         .newUpdate(Episodes.buildEpisodesOfSeasonUri(seasonId))
                                         .withSelection(Episodes.NUMBER + "=?", new String[]{
                                                 episode.toString()
-                                        }).withValue(Episodes.WATCHED, true).build());
+                                        }).withValue(Episodes.WATCHED, EpisodeFlags.WATCHED)
+                                        .build());
                             }
 
                         }
@@ -178,12 +182,9 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                         mContext.getContentResolver().applyBatch(
                                 SeriesGuideApplication.CONTENT_AUTHORITY,
                                 batch);
-                    } catch (RemoteException e) {
-                        // Failed binder transactions aren't recoverable
-                        Utils.trackExceptionAndLog(TAG, e);
-                        throw new RuntimeException("Problem applying batch operation", e);
-                    } catch (OperationApplicationException e) {
-                        // Failures like constraint violation aren't
+                    } catch (RemoteException | OperationApplicationException e) {
+                        // RemoteException: Failed binder transactions aren't recoverable
+                        // OperationApplicationException: Failures like constraint violation aren't
                         // recoverable
                         Utils.trackExceptionAndLog(TAG, e);
                         throw new RuntimeException("Problem applying batch operation", e);
@@ -212,6 +213,9 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                 Shows._ID
         }, Shows.SYNCENABLED + "=1", null, null);
 
+        if (showTvdbIds == null) {
+            return FAILED;
+        }
         if (showTvdbIds.getCount() == 0) {
             return SUCCESS_NOWORK;
         }
@@ -223,11 +227,8 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
             // build a list of all watched episodes
             Cursor seenEpisodes = mContext.getContentResolver().query(
-                    Episodes.buildEpisodesOfShowUri(showTvdbId), new String[]{
-                    Episodes.SEASON, Episodes.NUMBER
-            }, Episodes.WATCHED + "=?", new String[]{
-                    "1"
-            }, null);
+                    Episodes.buildEpisodesOfShowUri(showTvdbId), TraktSyncQuery.PROJECTION,
+                    TraktSyncQuery.SELECTION_WATCHED, null, null);
             if (seenEpisodes != null) {
                 buildEpisodeList(watchedEpisodes, seenEpisodes);
                 seenEpisodes.close();
@@ -238,11 +239,8 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                     = new ArrayList<ShowService.Episodes.Episode>();
             if (mIsSyncingUnseen) {
                 Cursor unseenEpisodes = mContext.getContentResolver().query(
-                        Episodes.buildEpisodesOfShowUri(showTvdbId), new String[]{
-                        Episodes.SEASON, Episodes.NUMBER
-                }, Episodes.WATCHED + "=?", new String[]{
-                        "0"
-                }, null);
+                        Episodes.buildEpisodesOfShowUri(showTvdbId), TraktSyncQuery.PROJECTION,
+                        TraktSyncQuery.SELECTION_UNWATCHED, null, null);
                 if (unseenEpisodes != null) {
                     buildEpisodeList(unwatchedEpisodes, unseenEpisodes);
                     unseenEpisodes.close();
@@ -302,6 +300,10 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                 message = "Your credentials are incomplete. Please enter them again.";
                 duration = Toast.LENGTH_LONG;
                 break;
+            case FAILED:
+                message = "Something went wrong. Please try again.";
+                duration = Toast.LENGTH_LONG;
+                break;
             case FAILED_API:
                 message = "Could not communicate with trakt servers. Try again later.";
                 duration = Toast.LENGTH_LONG;
@@ -329,5 +331,16 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
             int episode = seenEpisodes.getInt(1);
             watchedEpisodes.add(new ShowService.Episodes.Episode(season, episode));
         }
+    }
+
+    public interface TraktSyncQuery {
+
+        public String[] PROJECTION = new String[]{
+                Episodes.SEASON, Episodes.NUMBER
+        };
+
+        public String SELECTION_WATCHED = Episodes.WATCHED + "=" + EpisodeFlags.WATCHED;
+
+        public String SELECTION_UNWATCHED = Episodes.WATCHED + "!=" + EpisodeFlags.WATCHED;
     }
 }
