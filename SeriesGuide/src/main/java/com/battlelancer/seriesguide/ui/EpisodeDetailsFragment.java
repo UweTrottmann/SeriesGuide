@@ -511,9 +511,13 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     : R.string.mark_episode);
 
             // skip button
-            View skipButton = view.findViewById(R.id.imageButtonBarSkip);
+            ImageButton skipButton = (ImageButton) view.findViewById(R.id.imageButtonBarSkip);
             skipButton.setVisibility(
                     isWatched ? View.GONE : View.VISIBLE); // if watched do not allow skipping
+            skipButton.setImageResource(EpisodeTools.isSkipped(mEpisodeFlag)
+                    ? R.drawable.ic_action_playback_next_highlight
+                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                            R.attr.drawableSkip));
             skipButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -525,7 +529,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
             // Collected button
             mCollected = cursor.getInt(DetailsQuery.COLLECTED) == 1;
-            ImageButton collectedButton = (ImageButton) view.findViewById(R.id.imageButtonBarCollected);
+            ImageButton collectedButton = (ImageButton) view.findViewById(
+                    R.id.imageButtonBarCollected);
             collectedButton.setImageResource(mCollected ? R.drawable.ic_collected
                     : Utils.resolveAttributeToResourceId(getActivity().getTheme(), R.attr.drawableCollect));
             collectedButton.setOnClickListener(new OnClickListener() {
