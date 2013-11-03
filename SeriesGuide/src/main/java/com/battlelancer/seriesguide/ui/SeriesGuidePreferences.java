@@ -34,6 +34,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
@@ -357,6 +358,11 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         // About
         aboutPref.setSummary("v" + versionFinal + " (Database v"
                 + SeriesGuideDatabase.DATABASE_VERSION + ")");
+    }
+
+    @Override
+    protected boolean isValidFragment(String fragmentName) {
+        return SettingsFragment.class.getName().equals(fragmentName);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
