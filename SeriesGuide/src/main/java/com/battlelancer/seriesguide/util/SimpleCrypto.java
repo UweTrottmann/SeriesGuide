@@ -106,7 +106,7 @@ public class SimpleCrypto {
             // load existing key store
             fis = context.openFileInput(DATACORE);
             keystore.load(fis, keystorePassword);
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             // create new key store
             keystore.load(null, keystorePassword);
         } finally {
