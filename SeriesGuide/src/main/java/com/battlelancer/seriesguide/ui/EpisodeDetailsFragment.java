@@ -485,10 +485,12 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
                     fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH, imagePath);
                     fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_TITLE, showTitle);
-                    fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_SUBTITLE, episodeTitle);
+                    fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_SUBTITLE,
+                            episodeTitle);
                     ActivityCompat.startActivity(getActivity(), fullscreen,
                             ActivityOptionsCompat
-                                    .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight()).toBundle());
+                                    .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
+                                    .toBundle());
                 }
             });
 
@@ -510,7 +512,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
             // skip button
             View skipButton = view.findViewById(R.id.imageButtonBarSkip);
-            skipButton.setEnabled(!isWatched); // if watched do not allow skipping
+            skipButton.setVisibility(
+                    isWatched ? View.GONE : View.VISIBLE); // if watched do not allow skipping
             skipButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -613,7 +616,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
             // Check in button
             final int episodeTvdbId = cursor.getInt(DetailsQuery._ID);
-            view.findViewById(R.id.imageButtonBarCheckin).setOnClickListener(new OnClickListener() {
+            View checkinButton = view.findViewById(R.id.imageButtonBarCheckin);
+            checkinButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // display a check-in dialog
@@ -623,6 +627,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     fireTrackerEvent("Check-In");
                 }
             });
+            CheatSheet.setup(checkinButton);
 
         }
 
