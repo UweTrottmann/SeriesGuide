@@ -230,9 +230,9 @@ public class SeasonsFragment extends SherlockListFragment implements
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.add(0, CONTEXT_FLAG_ALL_WATCHED_ID, 0, R.string.mark_all);
         menu.add(0, CONTEXT_FLAG_ALL_UNWATCHED_ID, 1, R.string.unmark_all);
-        menu.add(0, CONTEXT_FLAG_ALL_COLLECTED_ID, 2, R.string.collect_all);
-        menu.add(0, CONTEXT_FLAG_ALL_UNCOLLECTED_ID, 3, R.string.uncollect_all);
-        menu.add(0, CONTEXT_FLAG_ALL_SKIPPED_ID, 4, R.string.action_season_skip);
+        menu.add(0, CONTEXT_FLAG_ALL_SKIPPED_ID, 2, R.string.action_skip);
+        menu.add(0, CONTEXT_FLAG_ALL_COLLECTED_ID, 3, R.string.collect_all);
+        menu.add(0, CONTEXT_FLAG_ALL_UNCOLLECTED_ID, 4, R.string.uncollect_all);
         menu.add(0, CONTEXT_MANAGE_LISTS_ID, 5, R.string.list_item_manage);
     }
 

@@ -531,7 +531,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 }
             });
             CheatSheet.setup(skipButton, isSkipped
-                    ? R.string.action_episode_dont_skip : R.string.action_episode_skip);
+                    ? R.string.action_dont_skip : R.string.action_skip);
 
             // Collected button
             mCollected = cursor.getInt(DetailsQuery.COLLECTED) == 1;

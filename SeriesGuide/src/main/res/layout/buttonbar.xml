@@ -43,7 +43,7 @@
         style="@style/Widget.SeriesGuide.Button.Borderless"
         android:layout_width="@dimen/buttonbar_button_width"
         android:layout_height="match_parent"
-        android:contentDescription="@string/action_episode_skip"
+        android:contentDescription="@string/action_skip"
         android:paddingLeft="@dimen/default_padding"
         android:src="?attr/drawableSkip" />
 
