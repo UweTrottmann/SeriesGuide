@@ -10,7 +10,6 @@
     <string name="season_number">Season %s</string>
     <string name="seasons">Seasons</string>
     <string name="unknown">unknown</string>
-    <string name="episode_notwatched">Not watched yet</string>
     <string name="specialseason">Special Episodes</string>
     <string name="search_hint">Search episodes</string>
     <string name="share_episode">Share episode</string>
@@ -26,7 +25,6 @@
     <string name="clear">Clear</string>
     <string name="more">%s more</string>
     <string name="cancel">Cancel</string>
-    <string name="share">Share</string>
     <string name="updated">Updated to latest version.</string>
     <string name="discard">Discard</string>
     <string name="close">Close</string>

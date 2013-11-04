@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="@dimen/default_padding" >
@@ -11,7 +12,7 @@
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/textViewSeasonProgress"
         android:paddingTop="@dimen/default_padding"
-        android:text="@string/season"
+        tools:text="@string/season_number"
         android:textAppearance="@style/TextAppearance.Medium.Light" />
 
     <ImageView
@@ -52,8 +53,8 @@
         android:layout_below="@id/progressBarSeason"
         android:layout_toLeftOf="@id/imageViewContextMenu"
         android:paddingBottom="@dimen/default_padding"
-        android:text="@string/episode_notwatched"
         android:textAllCaps="true"
+        tools:text="10 episodes not watched yet"
         android:textAppearance="@style/TextAppearance.XSmall" />
 
 </RelativeLayout>
