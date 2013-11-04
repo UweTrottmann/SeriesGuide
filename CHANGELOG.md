@@ -10,6 +10,13 @@ Version 9 *(in development)*
 
 ### Detailed changes:
 
+#### 9-beta4 *(2013-11-04)*
+
+* FEATURE Skip an episode or an entire season you don't want to watch right now.
+* TWEAK Speeded up screen transitions, making the app even faster.
+* TWEAK Built and optimized for Android 4.4 (KitKat).
+* FIX Various crashes, related to in-app billing, syncing with trakt, connecting to trakt.
+
 #### 9-beta3 *(2013-10-31)*
 
 * TWEAK Moved trakt integration to new backend.
