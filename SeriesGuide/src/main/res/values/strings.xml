@@ -1,48 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Generic -->
-    <string name="show">Show</string>
-    <string name="episode">Episode</string>
-    <string name="episode_number">Episode %s</string>
-    <string name="episodes">Episodes</string>
-    <string name="season">Season</string>
-    <string name="season_number">Season %s</string>
-    <string name="seasons">Seasons</string>
-    <string name="unknown">unknown</string>
-    <string name="specialseason">Special Episodes</string>
-    <string name="search_hint">Search episodes</string>
-    <string name="share_episode">Share episode</string>
-    <string name="share_show">Share show</string>
-    <string name="share_checkout">Check out</string>
-    <string name="search_description">Episodes</string>
-    <string name="description_overview">Overview</string>
-    <string name="description_poster">Show poster</string>
-    <string name="description_image">Episode image</string>
-    <string name="norating">n/a</string>
-    <string name="loading">Loading…</string>
-    <string name="done">Done</string>
-    <string name="clear">Clear</string>
-    <string name="more">%s more</string>
-    <string name="cancel">Cancel</string>
-    <string name="updated">Updated to latest version.</string>
-    <string name="discard">Discard</string>
-    <string name="close">Close</string>
-    <string name="save_selection">Save selection</string>
-
-    <plurals name="votes">
-        <item quantity="zero">%d votes</item>
-        <item quantity="one">%d vote</item>
-        <item quantity="two">%d votes</item>
-        <item quantity="few">%d votes</item>
-        <item quantity="many">%d votes</item>
-        <item quantity="other">%d votes</item>
-    </plurals>
-
-    <string name="offline">No network connectivity. Try again later.</string>
-    <string name="app_not_available">No app available to handle this.</string>
-    <string name="onlyx">Only available with X Subscription</string>
-
     <!-- Main Menu -->
     <string name="shows">Shows</string>
     <string name="lists">Lists</string>
@@ -52,6 +10,48 @@
     <string name="search">Search</string>
     <string name="preferences">Settings</string>
     <string name="help">Help</string>
+
+    <!-- Media items -->
+    <string name="show">Show</string>
+    <string name="episode">Episode</string>
+    <string name="episode_number">Episode %s</string>
+    <string name="episodes">Episodes</string>
+    <string name="season">Season</string>
+    <string name="season_number">Season %s</string>
+    <string name="seasons">Seasons</string>
+    <string name="specialseason">Special Episodes</string>
+
+    <!-- Descriptions -->
+    <string name="description_overview">Overview</string>
+    <string name="description_poster">Show poster</string>
+    <string name="description_image">Episode image</string>
+
+    <!-- Actions -->
+    <string name="done">Done</string>
+    <string name="clear">Clear</string>
+    <string name="close">Close</string>
+    <string name="discard">Discard</string>
+    <string name="save_selection">Save selection</string>
+    <string name="search_hint">Search episodes</string>
+
+    <!-- Notifications -->
+    <string name="more">%s more</string>
+
+    <!-- Status messages -->
+    <string name="updated">Updated to latest version.</string>
+    <string name="loading">Loading…</string>
+    <string name="norating">n/a</string>
+    <string name="unknown">unknown</string>
+    <string name="offline">No network connectivity. Try again later.</string>
+    <string name="app_not_available">No app available to handle this.</string>
+    <string name="onlyx">Only available with X Subscription</string>
+    <string name="add_empty">There are no shows here or your device has no internet connection.</string>
+
+
+    <!-- Sharing -->
+    <string name="share_show">Share show</string>
+    <string name="share_episode">Share episode</string>
+    <string name="share_checkout">Check out</string>
 
     <!-- Shouts -->
     <string name="shouts">Shouts</string>
@@ -117,6 +117,14 @@
     <string name="rating7">Good</string>
     <string name="rating8">Great</string>
     <string name="rating9">Superb</string>
+    <plurals name="votes">
+        <item quantity="zero">%d votes</item>
+        <item quantity="one">%d vote</item>
+        <item quantity="two">%d votes</item>
+        <item quantity="few">%d votes</item>
+        <item quantity="many">%d votes</item>
+        <item quantity="other">%d votes</item>
+    </plurals>
 
     <!-- Metadata -->
     <string name="episode_number_absolute">ABSOLUTE</string>
@@ -141,17 +149,13 @@
 
     <!-- Menu options -->
     <string name="sort">Sort by</string>
-    <string name="updateall_yes">Update (all)</string>
-    <string name="menu_update_delta">Update (outdated only)</string>
-    <string name="context_updateshow">Update</string>
-    <string name="context_marknext">Watched next episode</string>
 
     <!-- Date and Time -->
     <string name="today">today</string>
     <string name="now">now</string>
     <string name="daily">Daily</string>
 
-    <!-- Marking -->
+    <!-- Flagging -->
     <string name="mark_episode">Watched episode</string>
     <string name="unmark_episode">Not yet watched episode</string>
     <string name="mark_all">Watched all</string>
@@ -169,9 +173,7 @@
     <string name="trakt_collected">%s collected.</string>
     <string name="trakt_notcollected">%s not collected.</string>
 
-    <!-- SeriesGuide mainscreen -->
-    <string name="add_empty">There are no shows here or your device has no internet connection.</string>
-    <string name="empty_filter">Remove all filters</string>
+    <!-- Shows -->
     <string name="confirm_delete">Do you really want to remove %s?</string>
     <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
     <string name="delete_show">Remove</string>
@@ -185,10 +187,9 @@
     <string name="context_unhide">Un-Hide</string>
     <string name="hidden">Hidden show</string>
     <string name="unhidden">Un-Hidden show</string>
-
-    <!-- Shows -->
     <string name="action_shows_add">Add show</string>
     <string name="action_shows_filter">Filter shows</string>
+    <string name="empty_filter">Remove all filters</string>
     <string name="action_shows_filter_favorites">Favorites</string>
     <string name="action_shows_filter_unwatched">Unwatched</string>
     <string name="action_shows_filter_upcoming">Upcoming</string>
@@ -197,6 +198,10 @@
     <string name="action_shows_sort_title">Title</string>
     <string name="action_shows_sort_episode">Next episode</string>
     <string name="action_shows_sort_favorites">Favorites first</string>
+    <string name="updateall_yes">Update (all)</string>
+    <string name="menu_update_delta">Update (outdated only)</string>
+    <string name="context_updateshow">Update</string>
+    <string name="context_marknext">Watched next episode</string>
 
     <!-- Activity -->
     <string name="upcoming">Upcoming</string>
@@ -224,7 +229,7 @@
     <!-- Show info -->
     <string name="show_on_network">on %s</string>
 
-    <!-- Season list -->
+    <!-- Seasons -->
     <string name="season_watchcount">episodes not watched</string>
     <string name="season_allwatched">All episodes watched</string>
     <string name="season_onenotwatched">episode not watched</string>
@@ -234,7 +239,6 @@
     <string name="remaining">%s remaining</string>
 
     <!-- Add show -->
-    <string name="search_button">Search</string>
     <string name="search_hint_add">Show name</string>
     <string name="no_results">No results, try complete words.</string>
     <string name="search_error">Searching failed, try again later.</string>

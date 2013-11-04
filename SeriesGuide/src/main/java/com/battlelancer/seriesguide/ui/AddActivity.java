@@ -196,7 +196,7 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
                         return mContext.getString(R.string.watchlist).toUpperCase(
                                 Locale.getDefault());
                     case SEARCH_TAB_CONNECTED_POSITION:
-                        return mContext.getString(R.string.search_button).toUpperCase(
+                        return mContext.getString(R.string.search).toUpperCase(
                                 Locale.getDefault());
                 }
             } else {
@@ -205,7 +205,7 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
                         return mContext.getString(R.string.trending).toUpperCase(
                                 Locale.getDefault());
                     case SEARCH_TAB_DEFAULT_POSITION:
-                        return mContext.getString(R.string.search_button).toUpperCase(
+                        return mContext.getString(R.string.search).toUpperCase(
                                 Locale.getDefault());
                 }
             }
