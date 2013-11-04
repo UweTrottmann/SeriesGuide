@@ -41,7 +41,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/large_padding"
             android:enabled="false"
-            android:text="@string/upgrade_action" />
+            android:text="@string/action_upgrade" />
 
         <TextView
             android:id="@+id/textViewBillingExisting"
