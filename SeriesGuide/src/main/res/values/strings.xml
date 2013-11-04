@@ -254,8 +254,6 @@
     <string name="recommended">Recommended</string>
     <string name="library">Library</string>
     <string name="watchlist">Watchlist</string>
-    <string name="powered_by_thetvdb">powered by thetvdb.com</string>
-    <string name="powered_by_trakt">powered by trakt.tv</string>
 
     <!-- Lists -->
     <string name="first_list">First list</string>
