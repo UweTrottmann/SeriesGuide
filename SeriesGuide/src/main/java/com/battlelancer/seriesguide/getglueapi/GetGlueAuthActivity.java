@@ -64,7 +64,7 @@ public class GetGlueAuthActivity extends BaseNavDrawerActivity {
         getMenu().setContentView(mWebview);
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.oauthmessage));
+        actionBar.setTitle(getString(R.string.getglue_authentication));
         actionBar.setDisplayShowTitleEnabled(true);
 
         setSupportProgressBarVisibility(true);

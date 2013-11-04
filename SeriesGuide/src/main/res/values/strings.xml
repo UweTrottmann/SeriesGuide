@@ -386,6 +386,7 @@
     <string name="paste_title">Paste title</string>
     <string name="checkinsuccess">Checked into %s on GetGlue.</string>
     <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
+    <string name="getglue_authentication">Connect GetGlue</string>
     <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
     <string name="checkin_success_trakt">Checked into %s on trakt.</string>
     <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
@@ -402,7 +403,6 @@
     <string name="traktcheckin_cancel">Override</string>
     <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
     <string name="traktcheckin_wait">I\'ll wait</string>
-    <string name="oauthmessage">Authenticating SeriesGuide with GetGlue…</string>
     <string name="addtocalendar">Add to calendar</string>
     <string name="addtocalendar_failed">Can not create a calendar event.</string>
     <string name="username">Username</string>
