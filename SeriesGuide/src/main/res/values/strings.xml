@@ -346,7 +346,6 @@
     <string name="pref_offsetsummary">Offset air times by %s hours</string>
     <string name="clear_cache">Clear image caches</string>
     <string name="clear_cache_summary">Remove all cached images from your device</string>
-    <string name="pref_ganalytics">Google Analytics</string>
     <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
     <string name="pref_hideimages">Hide images</string>
     <string name="pref_hideimagessummary">Hide images from your photo gallery (reboot required)</string>

@@ -65,7 +65,7 @@
             android:defaultValue="True"
             android:key="enableGAnalytics"
             android:summary="@string/pref_ganalyticssummary"
-            android:title="@string/pref_ganalytics" />
+            android:title="@string/analytics" />
         <CheckBoxPreference
             android:defaultValue="True"
             android:key="hideimages"
