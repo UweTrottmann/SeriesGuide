@@ -56,21 +56,11 @@ public class ShareUtils {
     protected static final String TAG = "ShareUtils";
 
     public enum ShareMethod {
-        RATE_TRAKT(0, R.string.menu_rate_episode, R.drawable.trakt_love_large),
 
-        OTHER_SERVICES(1, R.string.menu_share_others, R.drawable.ic_action_share);
+        RATE_TRAKT,
 
-        ShareMethod(int index, int titleRes, int drawableRes) {
-            this.index = index;
-            this.titleRes = titleRes;
-            this.drawableRes = drawableRes;
-        }
+        OTHER_SERVICES
 
-        public int index;
-
-        public int titleRes;
-
-        public int drawableRes;
     }
 
     public interface ShareItems {
