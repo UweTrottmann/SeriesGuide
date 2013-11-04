@@ -26,12 +26,6 @@
     <string name="pref_suggest_features">Suggest improvements</string>
     <string name="pref_suggest_featuressummary">Suggest and vote on future improvements</string>
 
-    <string-array name="shsortingData">
-        <item>alphabetic</item>
-        <item>upcoming</item>
-        <item>favorites</item>
-        <item>favoritesupcoming</item>
-    </string-array>
     <string-array name="sesortingData">
         <item>latestfirst</item>
         <item>oldestfirst</item>

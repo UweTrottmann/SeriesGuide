@@ -10,7 +10,6 @@
     <string name="season_number">Season %s</string>
     <string name="seasons">Seasons</string>
     <string name="unknown">unknown</string>
-    <string name="episode_iswatched">Watched already</string>
     <string name="episode_notwatched">Not watched yet</string>
     <string name="specialseason">Special Episodes</string>
     <string name="search_hint">Search episodes</string>
@@ -147,7 +146,6 @@
     <string name="updateall_yes">Update (all)</string>
     <string name="menu_update_delta">Update (outdated only)</string>
     <string name="context_updateshow">Update</string>
-    <string name="context_showinfo">Show Info</string>
     <string name="context_marknext">Watched next episode</string>
 
     <!-- Date and Time -->
@@ -290,7 +288,6 @@
     <string name="prefs_category_sharing">Services</string>
     <string name="prefs_category_advanced">Advanced</string>
     <string name="prefs_category_about">About</string>
-    <string name="pref_showsorting">Sort shows by…</string>
     <string name="pref_onlyfuture">No aired episodes</string>
     <string name="pref_onlyfuturesummary">Never display already aired episodes</string>
     <string name="pref_onlyseasoneps">Hide special episodes</string>
@@ -492,7 +489,6 @@
     </string-array>
 
     <!-- SeriesGuide X deprecation -->
-    <string name="download_stable">Download SeriesGuide</string>
     <string name="migration_header">Migrate to SeriesGuide</string>
     <string name="migration_description">SeriesGuide X is now X Life-Time Pass, you should migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
     <string name="migration_backup">Touch below to create a fresh backup of your shows.</string>
