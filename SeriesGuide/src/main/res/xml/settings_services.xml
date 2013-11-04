@@ -4,7 +4,7 @@
     <PreferenceCategory android:title="@string/app_name">
         <Preference
             android:key="com.battlelancer.seriesguide.upgrade"
-            android:title="@string/upgrade_title">
+            android:title="@string/action_upgrade">
             <intent
                 android:targetClass="com.battlelancer.seriesguide.billing.BillingActivity"
                 android:targetPackage="@string/package_name" />

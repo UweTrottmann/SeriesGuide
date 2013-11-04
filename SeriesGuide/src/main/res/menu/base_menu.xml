@@ -5,7 +5,7 @@
         android:id="@+id/menu_subscribe"
         android:orderInCategory="96"
         android:showAsAction="never"
-        android:title="@string/upgrade_title"/>
+        android:title="@string/action_upgrade"/>
     <item
         android:id="@+id/menu_preferences"
         android:icon="@drawable/ic_action_settings"
