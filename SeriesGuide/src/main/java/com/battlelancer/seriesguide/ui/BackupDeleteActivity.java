@@ -305,7 +305,7 @@ public class BackupDeleteActivity extends BaseActivity {
             case EXPORT_DIALOG:
                 return new AlertDialog.Builder(BackupDeleteActivity.this)
                         .setMessage(getString(R.string.backup_question))
-                        .setPositiveButton(getString(R.string.backup_yes),
+                        .setPositiveButton(getString(R.string.backup_button),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface arg0, int arg1) {
                                         if (AndroidUtils.isExtStorageAvailable()) {
@@ -321,7 +321,7 @@ public class BackupDeleteActivity extends BaseActivity {
             case IMPORT_DIALOG:
                 return new AlertDialog.Builder(BackupDeleteActivity.this)
                         .setMessage(getString(R.string.import_question))
-                        .setPositiveButton(getString(R.string.import_yes),
+                        .setPositiveButton(getString(R.string.import_button),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface arg0, int arg1) {
                                         if (AndroidUtils.isExtStorageAvailable()) {

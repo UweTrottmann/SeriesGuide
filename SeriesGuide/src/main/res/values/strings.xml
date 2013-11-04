@@ -369,10 +369,8 @@
     <string name="backup_button">Backup</string>
     <string name="import_button">Restore</string>
     <string name="backup_question">This will overwrite the current backup file in the backup folder!</string>
-    <string name="backup_yes">Backup</string>
     <string name="backup_no">Don\'t Backup</string>
     <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
-    <string name="import_yes">Restore</string>
     <string name="import_no">Don\'t Restore</string>
     <string name="import_warning">I understand my current shows and lists will be lost!</string>
     <string name="last_auto_backup">Last Auto Backup: %s</string>
