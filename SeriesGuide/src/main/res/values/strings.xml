@@ -29,7 +29,6 @@
     <!-- Actions -->
     <string name="done">Done</string>
     <string name="clear">Clear</string>
-    <string name="close">Close</string>
     <string name="discard">Discard</string>
     <string name="save_selection">Save selection</string>
     <string name="search_hint">Search episodes</string>
