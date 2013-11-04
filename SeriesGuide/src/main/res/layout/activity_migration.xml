@@ -12,7 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/default_padding"
-            android:text="@string/migration_header"
+            android:text="@string/action_migrate"
             android:textAppearance="@style/TextAppearance.Large.Light" />
 
         <TextView
@@ -27,25 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/large_padding"
-            android:text="@string/migration_install"
-            android:textAppearance="@style/TextAppearance"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/buttonMigrationLaunch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/large_padding"
-            android:text="@string/migration_action_install"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/textViewMigrationBackupInstructions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/large_padding"
-            android:text="@string/migration_backup"
+            android:text="@string/migration_import"
             android:textAppearance="@style/TextAppearance" />
 
         <ProgressBar
@@ -62,6 +44,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/large_padding"
-            android:text="@string/migration_action_backup" />
+            android:text="@string/migration_action_import" />
     </LinearLayout>
 </ScrollView>

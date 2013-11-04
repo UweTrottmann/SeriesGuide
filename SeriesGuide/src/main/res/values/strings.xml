@@ -33,9 +33,6 @@
     <string name="save_selection">Save selection</string>
     <string name="search_hint">Search episodes</string>
 
-    <!-- Notifications -->
-    <string name="more">%s more</string>
-
     <!-- Status messages -->
     <string name="updated">Updated to latest version.</string>
     <string name="loading">Loading…</string>
@@ -427,6 +424,7 @@
     <string name="upcoming_episodes">New episodes are coming up</string>
     <string name="upcoming_episodes_number">%s new episodes</string>
     <string name="upcoming_show_detailed">%1$s on %2$s</string>
+    <string name="more">%s more</string>
     <string name="upcoming_display">Select to display upcoming shows</string>
     <string name="pref_notifications">Notifications</string>
     <string name="pref_notificationssummary">Notify about new episodes</string>
@@ -484,17 +482,10 @@
     </string-array>
 
     <!-- SeriesGuide X deprecation -->
-    <string name="migration_header">Migrate to SeriesGuide</string>
-    <string name="migration_description">SeriesGuide X is now X Life-Time Pass, you should migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
-    <string name="migration_backup">Touch below to create a fresh backup of your shows.</string>
-    <string name="migration_action_backup">Backup Shows</string>
-    <string name="migration_install">Touch below to install the free version of SeriesGuide.</string>
-    <string name="migration_action_install">Install SeriesGuide</string>
-    <string name="migration_launch">Touch below and once in SeriesGuide touch Menu, then Migrate.</string>
-    <string name="migration_action_launch">Open SeriesGuide, then Migrate</string>
+    <string name="action_migrate">Migrate from X</string>
+    <string name="migration_description">SeriesGuide X is now an unlock key for X features in the free version (X Pass). Please migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
     <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
     <string name="migration_action_import">Import and replace existing shows</string>
-    <string name="action_migrate">Migrate from X</string>
 
     <!-- In-App Billing -->
     <string name="upgrade_title">Get X features</string>
