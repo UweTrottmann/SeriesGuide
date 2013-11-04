@@ -57,10 +57,8 @@
 	<string name="episodes_watched">%s angesehen</string>
 	<string name="runtime_all_episodes">Laufzeit aller angesehenen Folgen</string>
 	<plurals name="days_plural">
-		<item quantity="one">%d Tag</item>
-	</plurals>
-	<plurals name="days_plural">
-		<item quantity="zero">%d Tage</item>
+        <item quantity="zero">%d Tage</item>
+        <item quantity="one">%d Tag</item>
 		<item quantity="two">%d Tage</item>
 		<item quantity="few">%d Tage</item>
 		<item quantity="many">%d Tage</item>
