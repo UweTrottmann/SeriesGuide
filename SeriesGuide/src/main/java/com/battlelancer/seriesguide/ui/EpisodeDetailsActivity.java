@@ -17,9 +17,11 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -28,6 +30,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -41,11 +45,15 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 import net.simonvt.menudrawer.MenuDrawer;
+import net.simonvt.menudrawer.Position;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Hosts a {@link ViewPager} displaying an episode per fragment of a complete
@@ -149,9 +157,22 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         mPager.setCurrentItem(startPosition, false);
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected MenuDrawer getAttachedMenuDrawer() {
-        MenuDrawer menuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.OVERLAY);
+        Position drawerPosition = Position.LEFT;
+
+        if (AndroidUtils.isJellyBeanMR1OrHigher()) {
+            // attach drawer to right side if using RTL layout
+            int direction = TextUtils
+                    .getLayoutDirectionFromLocale(Locale.getDefault());
+            if (direction == View.LAYOUT_DIRECTION_RTL) {
+                drawerPosition = Position.RIGHT;
+            }
+        }
+
+        MenuDrawer menuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.OVERLAY, drawerPosition);
+        menuDrawer.setupUpIndicator(this);
         menuDrawer.setMenuView(R.layout.menu_frame_with_spacer);
         return menuDrawer;
     }
