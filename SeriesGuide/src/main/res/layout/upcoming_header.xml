@@ -11,6 +11,7 @@
         android:layout_marginTop="@dimen/default_padding"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/default_padding"
+        android:paddingStart="@dimen/default_padding"
         android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.Small.Label" />
 
