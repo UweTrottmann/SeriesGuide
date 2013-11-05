@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/shouts_title"
@@ -12,6 +12,7 @@
         android:layout_marginRight="@dimen/layout_padding"
         android:layout_marginTop="@dimen/layout_padding"
         android:text="@string/shouts"
+        android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.Large.Light" />
 
     <TextView
@@ -21,13 +22,14 @@
         android:layout_marginLeft="@dimen/layout_padding"
         android:layout_marginRight="@dimen/layout_padding"
         android:text="@string/shouts_for"
+        android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.Small.Primary" />
 
     <FrameLayout
         android:id="@+id/shouts_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" >
+        android:layout_weight="1">
 
         <LinearLayout
             android:id="@+id/progress_container"
@@ -35,7 +37,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="gone" >
+            android:visibility="gone">
 
             <ProgressBar
                 android:layout_width="wrap_content"
@@ -45,7 +47,7 @@
         <FrameLayout
             android:id="@+id/list_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <ListView
                 android:id="@+android:id/list"
@@ -54,8 +56,7 @@
                 android:layout_height="match_parent"
                 android:clipToPadding="@bool/gridClipToPadding"
                 android:divider="?attr/drawableDivider"
-                android:listSelector="?attr/custom_list_selector" >
-            </ListView>
+                android:listSelector="?attr/custom_list_selector"/>
 
             <TextView
                 android:id="@+android:id/empty"
@@ -78,21 +79,23 @@
 
     <include
         android:id="@+id/divider"
+        layout="@layout/divider_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/divider_horizontal" />
+        android:layout_height="wrap_content" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/layout_padding" >
+        android:layout_margin="@dimen/layout_padding">
 
         <EditText
             android:id="@+id/shouttext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/inline_padding"
             android:layout_marginRight="@dimen/inline_padding"
             android:layout_toLeftOf="@+id/shoutbutton"
+            android:layout_toStartOf="@+id/shoutbutton"
             android:gravity="top"
             android:hint="@string/shout_hint"
             android:maxLength="2000"
@@ -102,6 +105,7 @@
             android:id="@+id/shoutbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/shouttext"
             android:contentDescription="@string/shout"
