@@ -17,14 +17,22 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
+import android.view.View;
 
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 import net.simonvt.menudrawer.MenuDrawer;
 import net.simonvt.menudrawer.MenuDrawer.OnDrawerStateChangeListener;
+import net.simonvt.menudrawer.Position;
+
+import java.util.Locale;
 
 /**
  * Adds onto {@link BaseActivity} by attaching a navigation drawer.
@@ -75,8 +83,21 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
      * Creates an {@link MenuDrawer} attached to this activity as an overlay.
      * Subclasses may override this to set their own layout and drawer type.
      */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     protected MenuDrawer getAttachedMenuDrawer() {
-        MenuDrawer menuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.OVERLAY);
+        Position drawerPosition = Position.LEFT;
+
+        if (AndroidUtils.isJellyBeanMR1OrHigher()) {
+            // attach drawer to right side if using RTL layout
+            int direction = TextUtils
+                    .getLayoutDirectionFromLocale(Locale.getDefault());
+            if (direction == View.LAYOUT_DIRECTION_RTL) {
+                drawerPosition = Position.RIGHT;
+            }
+        }
+
+        MenuDrawer menuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.OVERLAY, drawerPosition);
+        menuDrawer.setupUpIndicator(this);
         menuDrawer.setMenuView(R.layout.menu_frame);
         return menuDrawer;
     }
