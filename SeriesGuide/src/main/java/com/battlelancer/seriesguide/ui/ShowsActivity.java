@@ -507,9 +507,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
 
     @Override
     protected void fireTrackerEvent(String label) {
-        EasyTracker.getInstance(this).send(
-                MapBuilder.createEvent(TAG, "Action Item", label, null).build()
-        );
+        Utils.trackAction(this, TAG, label);
     }
 
     private void onShowShowsFragment() {
