@@ -12,6 +12,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.MapBuilder;
+
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -79,7 +81,9 @@ public class HelpActivity extends BaseNavDrawerActivity {
         return super.onOptionsItemSelected(item);
     };
 
-    private static void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getInstance(this).send(
+                MapBuilder.createEvent(TAG, "Action Item", label, null).build()
+        );
     }
 }

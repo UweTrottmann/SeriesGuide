@@ -35,6 +35,9 @@ import android.widget.Spinner;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.migration.MigrationActivity;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.MapBuilder;
+
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
 
@@ -143,7 +146,10 @@ public class FirstRunFragment extends SherlockFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().sendView(TAG);
+        EasyTracker tracker = EasyTracker.getInstance(getActivity());
+        tracker.set(Fields.SCREEN_NAME, TAG);
+        tracker.send(MapBuilder.createAppView().build());
+        tracker.set(Fields.SCREEN_NAME, null);
     }
 
     private void setFirstRunDismissed() {
@@ -169,7 +175,9 @@ public class FirstRunFragment extends SherlockFragment {
         }
     }
 
-    private static void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Click", label, (long) 0);
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getInstance(getActivity()).send(
+                MapBuilder.createEvent(TAG, "Click", label, null).build()
+        );
     }
 }

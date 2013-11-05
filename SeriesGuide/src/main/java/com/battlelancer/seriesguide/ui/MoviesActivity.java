@@ -26,6 +26,8 @@ import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.MapBuilder;
+
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -70,8 +72,11 @@ public class MoviesActivity extends BaseTopActivity {
         tabsAdapter.addTab(R.string.search, MovieSearchFragment.class, null);
     }
 
-    @Override
+
     protected void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+        EasyTracker.getInstance(this).send(
+                MapBuilder.createEvent(TAG, "Action Item", label, null).build()
+        );
     }
+
 }

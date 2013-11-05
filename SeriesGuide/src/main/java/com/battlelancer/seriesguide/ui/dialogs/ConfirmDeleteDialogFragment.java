@@ -31,6 +31,8 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.google.analytics.tracking.android.EasyTracker;
+
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
 public class ConfirmDeleteDialogFragment extends DialogFragment {
@@ -54,7 +56,7 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().sendView("Delete Dialog");
+        Utils.trackView(getActivity(), "Delete Dialog");
     }
 
     @Override

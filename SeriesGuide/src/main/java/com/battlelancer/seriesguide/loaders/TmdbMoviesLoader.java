@@ -60,11 +60,8 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<List<Movie>> {
             if (page != null && page.results != null) {
                 return page.results;
             }
-        } catch (TmdbException e) {
-            Utils.trackException(TAG, e);
-            Log.w(TAG, e);
-        } catch (ApiException e) {
-            Utils.trackException(TAG, e);
+        } catch (TmdbException | ApiException e) {
+            Utils.trackException(getContext(), TAG, e);
             Log.w(TAG, e);
         }
 

@@ -18,6 +18,7 @@
 package com.battlelancer.seriesguide.getglueapi;
 
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.MapBuilder;
 
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.util.Utils;
@@ -115,7 +116,7 @@ public class GetGlueCheckin {
 
                 return CHECKIN_SUCCESSFUL;
             } catch (RetrofitError e) {
-                Utils.trackExceptionAndLog(TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
             }
 
             return CHECKIN_FAILED;
@@ -127,12 +128,16 @@ public class GetGlueCheckin {
                 case CHECKIN_SUCCESSFUL:
                     Toast.makeText(mContext, mContext.getString(R.string.checkinsuccess, mComment),
                             Toast.LENGTH_SHORT).show();
-                    EasyTracker.getTracker().sendEvent(TAG, "Check-In", "Success", (long) 0);
+                    EasyTracker.getInstance(mContext).send(
+                            MapBuilder.createEvent(TAG, "Check-In", "Success", null).build()
+                    );
                     break;
                 case CHECKIN_FAILED:
                     Toast.makeText(mContext, mContext.getString(R.string.checkinfailed),
                             Toast.LENGTH_LONG).show();
-                    EasyTracker.getTracker().sendEvent(TAG, "Check-In", "Failure", (long) 0);
+                    EasyTracker.getInstance(mContext).send(
+                            MapBuilder.createEvent(TAG, "Check-In", "Failure", null).build()
+                    );
                     break;
                 case CHECKIN_OFFLINE:
                     Toast.makeText(mContext, R.string.offline, Toast.LENGTH_LONG).show();

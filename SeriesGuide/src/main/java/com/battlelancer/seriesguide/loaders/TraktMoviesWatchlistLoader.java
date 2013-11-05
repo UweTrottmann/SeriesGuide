@@ -32,7 +32,7 @@ public class TraktMoviesWatchlistLoader extends GenericSimpleLoader<List<Movie>>
             return manager.userService()
                     .watchlistMovies(ServiceUtils.getTraktUsername(getContext()));
         } catch (RetrofitError e) {
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(getContext(), TAG, e);
         }
 
         return null;

@@ -51,6 +51,9 @@ import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.MapBuilder;
+
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -668,10 +671,8 @@ public class Utils {
             }
 
             return result;
-        } catch (NoSuchAlgorithmException e) {
-            Utils.trackExceptionAndLog(TAG, e);
-        } catch (UnsupportedEncodingException e) {
-            Utils.trackExceptionAndLog(TAG, e);
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            Utils.trackExceptionAndLog(context, TAG, e);
         }
         return null;
     }
@@ -818,17 +819,51 @@ public class Utils {
     /**
      * Tracks an exception using the Google Analytics {@link EasyTracker}.
      */
-    public static void trackException(String tag, Exception e) {
-        EasyTracker.getTracker().sendException(tag + ": " + e.getMessage(), false);
+    public static void trackException(Context context, String tag, Exception e) {
+        EasyTracker.getInstance(context).send(
+                MapBuilder.createException(tag + ": " + e.getMessage(), false).build()
+        );
     }
 
     /**
      * Tracks an exception using the Google Analytics {@link EasyTracker} and
      * the local log.
      */
-    public static void trackExceptionAndLog(String tag, Exception e) {
-        trackException(tag, e);
+    public static void trackExceptionAndLog(Context context, String tag, Exception e) {
+        trackException(context, tag, e);
         Log.w(tag, e);
+    }
+
+    public static void trackView(Context context, String screenName) {
+        EasyTracker tracker = EasyTracker.getInstance(context);
+        tracker.set(Fields.SCREEN_NAME, screenName);
+        tracker.send(MapBuilder.createAppView().build());
+        tracker.set(Fields.SCREEN_NAME, null);
+    }
+
+    public static void trackCustomEvent(Context context, String tag, String category,
+            String label) {
+        EasyTracker.getInstance(context).send(
+                MapBuilder.createEvent(tag, category, label, null).build()
+        );
+    }
+
+    public static void trackAction(Context context, String tag, String label) {
+        EasyTracker.getInstance(context).send(
+                MapBuilder.createEvent(tag, "Action Item", label, null).build()
+        );
+    }
+
+    public static void trackContextMenu(Context context, String tag, String label) {
+        EasyTracker.getInstance(context).send(
+                MapBuilder.createEvent(tag, "Context Item", label, null).build()
+        );
+    }
+
+    public static void trackClick(Context context, String tag, String label) {
+        EasyTracker.getInstance(context).send(
+                MapBuilder.createEvent(tag, "Click", label, null).build()
+        );
     }
 
     /**

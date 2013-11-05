@@ -38,7 +38,7 @@ public class GetGlueObjectLoader extends GenericSimpleLoader<List<GetGlueObject>
             GetGlueObjects results = getglue.searchService().searchTvShows(mQuery);
             return results.objects;
         } catch (RetrofitError e) {
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(getContext(), TAG, e);
             return null;
         }
     }

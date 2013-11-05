@@ -64,9 +64,6 @@ public class SeriesGuideApplication extends Application {
         final String theme = prefs.getString(SeriesGuidePreferences.KEY_THEME, "0");
         Utils.updateTheme(theme);
 
-        // Set a context for Google Analytics
-        EasyTracker.getInstance().setContext(this);
-
         // Enable StrictMode
         enableStrictMode();
     }

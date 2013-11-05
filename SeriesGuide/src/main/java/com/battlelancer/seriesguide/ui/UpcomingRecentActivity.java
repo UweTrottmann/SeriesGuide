@@ -39,6 +39,8 @@ import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListen
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.analytics.tracking.android.EasyTracker;
+
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
 public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAddShowListener {
@@ -167,7 +169,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
     }
 
     /**
-     * Special {@link TabPagerIndicatorAdapter} which saves the currently
+     * Special {@link TabStripAdapter} which saves the currently
      * selected page to preferences, so we can restore it when the user comes
      * back later.
      */
@@ -208,7 +210,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
 
     @Override
     protected void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+        Utils.trackAction(this, TAG, label);
     }
 
     private void storeBooleanPreference(MenuItem item, String key) {

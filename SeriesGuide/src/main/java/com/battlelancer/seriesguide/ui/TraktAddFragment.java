@@ -18,6 +18,8 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.MapBuilder;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -27,6 +29,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -127,7 +130,7 @@ public class TraktAddFragment extends AddFragment {
                 break;
         }
         if (tag != null) {
-            EasyTracker.getTracker().sendView(tag);
+            Utils.trackView(getActivity(), tag);
         }
     }
 

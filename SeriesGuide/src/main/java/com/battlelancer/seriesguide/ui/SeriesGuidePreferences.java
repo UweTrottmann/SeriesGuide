@@ -53,6 +53,8 @@ import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.MapBuilder;
+
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -148,8 +150,10 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static int THEME = R.style.SeriesGuideTheme;
 
-    private static void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Click", label, (long) 0);
+    private static void fireTrackerEvent(Context context, String label) {
+        EasyTracker.getInstance(context).send(
+                MapBuilder.createEvent(TAG, "Click", label, null).build()
+        );
     }
 
     @SuppressWarnings("deprecation")
@@ -204,7 +208,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         getGluePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
-                fireTrackerEvent("Disonnect GetGlue");
+                fireTrackerEvent(context, "Disonnect GetGlue");
 
                 GetGlueSettings.clearTokens(context);
                 preference.setEnabled(false);
@@ -223,11 +227,15 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
             public boolean onPreferenceClick(Preference preference) {
                 if (((CheckBoxPreference) preference).isChecked()) {
-                    EasyTracker.getTracker().sendEvent(TAG, "OnlyFutureEpisodes", "Enable",
-                            (long) 0);
+                    EasyTracker.getInstance(context).send(
+                            MapBuilder.createEvent(TAG, "OnlyFutureEpisodes", "Enable", null)
+                                    .build()
+                    );
                 } else {
-                    EasyTracker.getTracker().sendEvent(TAG, "OnlyFutureEpisodes", "Disable",
-                            (long) 0);
+                    EasyTracker.getInstance(context).send(
+                            MapBuilder.createEvent(TAG, "OnlyFutureEpisodes", "Disable", null)
+                                    .build()
+                    );
                 }
                 return false;
             }
@@ -238,11 +246,15 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
             public boolean onPreferenceClick(Preference preference) {
                 if (((CheckBoxPreference) preference).isChecked()) {
-                    EasyTracker.getTracker().sendEvent(TAG, "OnlySeasonEpisodes", "Enable",
-                            (long) 0);
+                    EasyTracker.getInstance(context).send(
+                            MapBuilder.createEvent(TAG, "OnlySeasonEpisodes", "Enable", null)
+                                    .build()
+                    );
                 } else {
-                    EasyTracker.getTracker().sendEvent(TAG, "OnlySeasonEpisodes", "Disable",
-                            (long) 0);
+                    EasyTracker.getInstance(context).send(
+                            MapBuilder.createEvent(TAG, "OnlySeasonEpisodes", "Disable", null)
+                                    .build()
+                    );
                 }
                 return false;
             }
@@ -256,11 +268,15 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 public boolean onPreferenceClick(Preference preference) {
                     boolean isChecked = ((CheckBoxPreference) preference).isChecked();
                     if (isChecked) {
-                        EasyTracker.getTracker().sendEvent(TAG, "Notifications", "Enable",
-                                (long) 0);
+                        EasyTracker.getInstance(context).send(
+                                MapBuilder.createEvent(TAG, "Notifications", "Enable", null)
+                                        .build()
+                        );
                     } else {
-                        EasyTracker.getTracker().sendEvent(TAG, "Notifications", "Disable",
-                                (long) 0);
+                        EasyTracker.getInstance(context).send(
+                                MapBuilder.createEvent(TAG, "Notifications", "Disable", null)
+                                        .build()
+                        );
                     }
 
                     notificationsThresholdPref.setEnabled(isChecked);
@@ -316,7 +332,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         clearCachePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
-                fireTrackerEvent("Clear Image Cache");
+                fireTrackerEvent(activity, "Clear Image Cache");
 
                 ImageProvider.getInstance(activity).clearCache();
                 ImageProvider.getInstance(activity).clearExternalStorageCache();
@@ -377,7 +393,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
         prefs.registerOnSharedPreferenceChangeListener(this);
-        EasyTracker.getInstance().activityStart(this);
+        EasyTracker.getInstance(this).activityStart(this);
     }
 
     @Override
@@ -386,7 +402,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
         prefs.unregisterOnSharedPreferenceChangeListener(this);
-        EasyTracker.getInstance().activityStop(this);
+        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override

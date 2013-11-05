@@ -114,7 +114,7 @@ public class GetGlueAuthActivity extends BaseNavDrawerActivity {
                             GetGlueCheckin.OAUTH_CALLBACK_URL);
             mWebview.loadUrl(request.getLocationUri());
         } catch (OAuthSystemException e) {
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(this, TAG, e);
         }
     }
 
@@ -173,10 +173,10 @@ public class GetGlueAuthActivity extends BaseNavDrawerActivity {
             );
         } catch (OAuthSystemException e) {
             response = null;
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(context, TAG, e);
         } catch (OAuthProblemException e) {
             response = null;
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(context, TAG, e);
         }
 
         if (response != null) {
