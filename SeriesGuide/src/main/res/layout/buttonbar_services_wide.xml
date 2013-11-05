@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/buttonbar_services"
+<LinearLayout android:id="@+id/buttonbar_services"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:baselineAligned="false"
     android:orientation="horizontal"
-    android:paddingTop="@dimen/default_padding" >
+    android:paddingTop="@dimen/default_padding">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/inline_padding"
         android:layout_marginRight="@dimen/inline_padding"
         android:layout_weight="1"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_padding"
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
+            android:layout_marginStart="@dimen/default_padding"
             android:text="@string/services_watch"
             android:textAppearance="@style/TextAppearance.Small.Label" />
 
@@ -33,7 +36,7 @@
             android:layout_height="wrap_content"
             android:divider="?attr/drawableDivider"
             android:orientation="vertical"
-            android:showDividers="middle" >
+            android:showDividers="middle">
 
             <include layout="@layout/services_watch" />
         </LinearLayout>
@@ -44,13 +47,15 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/inline_padding"
         android:layout_weight="1"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_padding"
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
+            android:layout_marginStart="@dimen/default_padding"
             android:text="@string/services_more"
             android:textAppearance="@style/TextAppearance.Small.Label" />
 
@@ -65,7 +70,7 @@
             android:layout_height="wrap_content"
             android:divider="?attr/drawableDivider"
             android:orientation="vertical"
-            android:showDividers="middle" >
+            android:showDividers="middle">
 
             <include layout="@layout/services_more" />
         </LinearLayout>
