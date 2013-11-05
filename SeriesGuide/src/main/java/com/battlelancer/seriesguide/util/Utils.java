@@ -804,7 +804,7 @@ public class Utils {
         int theme = Integer.valueOf(themeIndex);
         switch (theme) {
             case 1:
-                SeriesGuidePreferences.THEME = R.style.ICSBaseTheme;
+                SeriesGuidePreferences.THEME = R.style.AndroidTheme;
                 break;
             case 2:
                 SeriesGuidePreferences.THEME = R.style.SeriesGuideThemeLight;

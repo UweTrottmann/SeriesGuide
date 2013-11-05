@@ -49,7 +49,7 @@ public class ListManageDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
 
         // hide title, use custom theme
-        if (SeriesGuidePreferences.THEME == R.style.ICSBaseTheme) {
+        if (SeriesGuidePreferences.THEME == R.style.AndroidTheme) {
             setStyle(STYLE_NO_TITLE, 0);
         } else {
             setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog);

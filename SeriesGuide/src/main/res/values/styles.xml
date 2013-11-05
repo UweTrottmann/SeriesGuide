@@ -360,6 +360,11 @@
 
     <!-- Dark styles -->
 
+    <!-- ABS -->
+    <style name="ActionBarDark" parent="Widget.Sherlock.ActionBar">
+        <item name="background">@drawable/sg_actionbar_background</item>
+        <item name="android:background">@drawable/sg_actionbar_background</item>
+    </style>
 
     <!-- Buttons -->
     <style name="Widget.Android.Button" parent="android:Widget.Button">
