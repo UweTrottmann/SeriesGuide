@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/root"
+<LinearLayout
+    android:id="@+id/root"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -44,6 +45,7 @@
                 android:layout_toLeftOf="@+id/poster"
                 android:layout_toStartOf="@+id/poster"
                 android:text="@string/description_overview"
+                android:textAlignment="viewStart"
                 android:textAppearance="@style/TextAppearance.Light"
                 android:textIsSelectable="true" />
 

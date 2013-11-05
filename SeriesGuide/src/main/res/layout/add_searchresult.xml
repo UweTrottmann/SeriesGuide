@@ -55,6 +55,7 @@
             android:paddingEnd="@dimen/default_padding"
             android:paddingRight="@dimen/default_padding"
             android:text="@string/app_name"
+            android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.Small" />
     </RelativeLayout>
 
