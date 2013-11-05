@@ -301,7 +301,7 @@ public final class ServiceUtils {
             Utils.tryStartActivity(context, intent, true);
         }
 
-        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "IMDb", (long) 0);
+        Utils.trackAction(context, logTag, "IMDb");
     }
 
     /**
@@ -336,14 +336,14 @@ public final class ServiceUtils {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
 
-        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "Google Play", (long) 0);
+        Utils.trackAction(context, logTag, "Google Play");
     }
 
     /**
      * Sets a {@link OnClickListener} on the given button linking to a Amazon web search for the
      * given title or disabling the button if the title is empty.
      */
-    public static void setUpAmazonButton(final String title, View amazonButton,
+    public static void setUpAmazonButton(final String title, final View amazonButton,
             final String logTag) {
         if (amazonButton != null) {
 
@@ -351,8 +351,7 @@ public final class ServiceUtils {
                 amazonButton.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        EasyTracker.getTracker()
-                                .sendEvent(logTag, "Action Item", "Amazon", (long) 0);
+                        Utils.trackAction(amazonButton.getContext(), logTag, "Amazon");
 
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri
@@ -376,7 +375,7 @@ public final class ServiceUtils {
      */
     public static void setUpTraktButton(final int showTvdbId, final int seasonNumber,
             final int episodeNumber,
-            View traktButton, final String logTag) {
+            final View traktButton, final String logTag) {
         if (traktButton != null) {
             traktButton.setOnClickListener(new OnClickListener() {
 
@@ -398,8 +397,7 @@ public final class ServiceUtils {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                     Utils.tryStartActivity(v.getContext(), intent, true);
 
-                    EasyTracker.getTracker()
-                            .sendEvent(logTag, "Action Item", "trakt", (long) 0);
+                    Utils.trackAction(traktButton.getContext(), logTag, "trakt");
                 }
             });
         }
@@ -421,7 +419,7 @@ public final class ServiceUtils {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
 
-        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "trakt", (long) 0);
+        Utils.trackAction(context, logTag, "trakt");
     }
 
     /**
@@ -430,7 +428,7 @@ public final class ServiceUtils {
      * page.
      */
     public static void setUpTvdbButton(final int showTvdbId, final int seasonTvdbId,
-            final int episodeTvdbId, View tvdbButton, final String logTag) {
+            final int episodeTvdbId, final View tvdbButton, final String logTag) {
         if (tvdbButton != null) {
             tvdbButton.setOnClickListener(new OnClickListener() {
 
@@ -452,7 +450,7 @@ public final class ServiceUtils {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                     Utils.tryStartActivity(v.getContext(), intent, true);
 
-                    EasyTracker.getTracker().sendEvent(logTag, "Action Item", "TVDb", (long) 0);
+                    Utils.trackAction(tvdbButton.getContext(), logTag, "TVDb");
                 }
             });
         }
@@ -474,7 +472,7 @@ public final class ServiceUtils {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
 
-        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "YouTube", (long) 0);
+        Utils.trackAction(context, logTag, "YouTube");
     }
 
     /**
@@ -534,7 +532,7 @@ public final class ServiceUtils {
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
-        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "YouTube search", (long) 0);
+        Utils.trackAction(context, logTag, "YouTube search");
     }
 
     /**
@@ -574,7 +572,8 @@ public final class ServiceUtils {
         intent.putExtra(SearchManager.QUERY, query);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
-        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "Web search", (long) 0);
+
+        Utils.trackAction(context, logTag, "Web search");
     }
 
 }

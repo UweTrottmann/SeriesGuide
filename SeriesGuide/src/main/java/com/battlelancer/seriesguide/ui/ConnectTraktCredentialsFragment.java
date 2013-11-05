@@ -18,6 +18,8 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.MapBuilder;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.enums.TraktAction;
@@ -77,7 +79,10 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().sendView("Connect Trakt Credentials");
+        EasyTracker tracker = EasyTracker.getInstance(getActivity());
+        tracker.set(Fields.SCREEN_NAME, "Connect Trakt Credentials");
+        tracker.send(MapBuilder.createAppView().build());
+        tracker.set(Fields.SCREEN_NAME, null);
     }
 
     @Override

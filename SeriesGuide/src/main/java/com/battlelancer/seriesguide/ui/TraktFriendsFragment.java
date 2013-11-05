@@ -109,7 +109,7 @@ public class TraktFriendsFragment extends ListFragment implements
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().sendView("Friends");
+        Utils.trackView(getActivity(), "Friends");
     }
 
     @Override

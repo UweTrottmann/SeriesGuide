@@ -64,6 +64,8 @@ import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.MapBuilder;
+
 import com.uwetrottmann.seriesguide.R;
 
 import de.greenrobot.event.EventBus;
@@ -769,12 +771,16 @@ public class ShowsFragment extends SherlockFragment implements
         }
     }
 
-    private static void fireTrackerEventAction(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    private void fireTrackerEventAction(String label) {
+        EasyTracker.getInstance(getActivity()).send(
+                MapBuilder.createEvent(TAG, "Action Item", label, null).build()
+        );
     }
 
-    private static void fireTrackerEventContext(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Context Item", label, (long) 0);
+    private void fireTrackerEventContext(String label) {
+        EasyTracker.getInstance(getActivity()).send(
+                MapBuilder.createEvent(TAG, "Context Item", label, null).build()
+        );
     }
 
 }

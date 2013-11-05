@@ -50,6 +50,8 @@ import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.MapBuilder;
+
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -388,7 +390,9 @@ public class ListsFragment extends SherlockFragment implements
 
     }
 
-    private static void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Context Item", label, (long) 0);
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getInstance(getActivity()).send(
+                MapBuilder.createEvent(TAG, "Context Item", label, null).build()
+        );
     }
 }

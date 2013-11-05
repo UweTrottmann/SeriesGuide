@@ -220,7 +220,7 @@ public class ListsDialogFragment extends DialogFragment implements
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().sendView("Manage Lists Dialog");
+        Utils.trackView(getActivity(), "Manage Lists Dialog");
     }
 
     @Override

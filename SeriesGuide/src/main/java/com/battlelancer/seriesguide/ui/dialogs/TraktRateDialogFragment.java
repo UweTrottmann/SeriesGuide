@@ -29,6 +29,8 @@ import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.google.analytics.tracking.android.EasyTracker;
+
+import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.enumerations.Rating;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -76,7 +78,7 @@ public class TraktRateDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().sendView("Rate Dialog");
+        Utils.trackView(getActivity(), "Rate Dialog");
     }
 
     @Override

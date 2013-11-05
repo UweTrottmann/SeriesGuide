@@ -35,6 +35,9 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.MapBuilder;
+
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -82,7 +85,10 @@ public class AddDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().sendView("Add Dialog");
+        EasyTracker tracker = EasyTracker.getInstance(getActivity());
+        tracker.set(Fields.SCREEN_NAME, "Add Dialog");
+        tracker.send(MapBuilder.createAppView().build());
+        tracker.set(Fields.SCREEN_NAME, null);
     }
 
     @Override

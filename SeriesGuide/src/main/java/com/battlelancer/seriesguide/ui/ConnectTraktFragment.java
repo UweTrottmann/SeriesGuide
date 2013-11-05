@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.MapBuilder;
+
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -56,6 +59,9 @@ public class ConnectTraktFragment extends SherlockFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().sendView("Connect Trakt Intro");
+        EasyTracker tracker = EasyTracker.getInstance(getActivity());
+        tracker.set(Fields.SCREEN_NAME, "Connect Trakt Intro");
+        tracker.send(MapBuilder.createAppView().build());
+        tracker.set(Fields.SCREEN_NAME, null);
     }
 }

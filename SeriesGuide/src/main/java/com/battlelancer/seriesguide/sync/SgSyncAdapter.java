@@ -233,7 +233,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     if (itry == 1) {
                         // failed twice, report error
                         resultCode = UpdateResult.INCOMPLETE;
-                        Utils.trackExceptionAndLog(TAG, e);
+                        Utils.trackExceptionAndLog(getContext(), TAG, e);
                     }
                 }
             }
@@ -268,10 +268,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                             .putString(SeriesGuidePreferences.KEY_TMDB_BASE_URL,
                                     config.images.base_url).commit();
                 }
-            } catch (TmdbException e) {
-                Utils.trackExceptionAndLog(TAG, e);
-            } catch (ApiException e) {
-                Utils.trackExceptionAndLog(TAG, e);
+            } catch (TmdbException | ApiException e) {
+                Utils.trackExceptionAndLog(getContext(), TAG, e);
             }
 
             // validate trakt credentials
@@ -390,7 +388,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                                     ActivityAction.Scrobble + "," + ActivityAction.Collection,
                             startTimeTrakt, 1, 0);
         } catch (RetrofitError e) {
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(getContext(), TAG, e);
             return UpdateResult.INCOMPLETE;
         }
 
@@ -484,7 +482,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             // RemoteException: Failed binder transactions aren't recoverable
             // OperationApplicationException: Failures like constraint violation aren't
             // recoverable
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(getContext(), TAG, e);
             throw new RuntimeException("Problem applying batch operation", e);
         }
 

@@ -69,7 +69,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<List<Comment>> {
             }
 
         } catch (RetrofitError e) {
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(getContext(), TAG, e);
             return null;
         }
 

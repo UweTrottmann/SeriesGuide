@@ -61,6 +61,9 @@ import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.MapBuilder;
+
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 import com.uwetrottmann.androidutils.CheatSheet;
@@ -158,7 +161,7 @@ public class UpcomingFragment extends SherlockFragment implements
         onRequery();
 
         final String tag = getArguments().getString("analyticstag");
-        EasyTracker.getTracker().sendView(tag);
+        Utils.trackView(getActivity(), tag);
     }
 
     @Override

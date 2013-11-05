@@ -59,6 +59,7 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.MapBuilder;
 
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.BuildConfig;
@@ -166,7 +167,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
     protected void onStart() {
         super.onStart();
 
-        EasyTracker.getInstance().activityStart(this);
+        EasyTracker.getInstance(this).activityStart(this);
     }
 
     @Override
@@ -197,7 +198,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
     @Override
     protected void onStop() {
         super.onStop();
-        EasyTracker.getInstance().activityStop(this);
+        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override
@@ -389,18 +390,20 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
         protected void onPostExecute(Integer resultCode) {
             switch (resultCode) {
                 case UPDATE_SUCCESS:
-                    EasyTracker.getTracker().sendEvent(TAG, "Poster Task", "Success",
-                            (long) 0);
-
                     Toast.makeText(getApplicationContext(), getString(R.string.done),
                             Toast.LENGTH_SHORT).show();
+
+                    EasyTracker.getInstance(getApplicationContext()).send(
+                            MapBuilder.createEvent(TAG, "Poster Task", "Success", null).build()
+                    );
                     break;
                 case UPDATE_INCOMPLETE:
-                    EasyTracker.getTracker().sendEvent(TAG, "Poster Task", "Incomplete",
-                            (long) 0);
-
                     Toast.makeText(getApplicationContext(), getString(R.string.arttask_incomplete),
                             Toast.LENGTH_LONG).show();
+
+                    EasyTracker.getInstance(getApplicationContext()).send(
+                            MapBuilder.createEvent(TAG, "Poster Task", "Incomplete", null).build()
+                    );
                     break;
             }
 
@@ -502,8 +505,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
         onShowShowsFragment();
     }
 
+    @Override
     protected void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+        Utils.trackAction(this, TAG, label);
     }
 
     private void onShowShowsFragment() {

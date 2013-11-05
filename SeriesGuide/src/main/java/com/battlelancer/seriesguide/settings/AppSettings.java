@@ -11,6 +11,8 @@ public class AppSettings {
 
     public static final String KEY_VERSION = "oldversioncode";
 
+    public static final String KEY_GOOGLEANALYTICS = "enableGAnalytics";
+
     /**
      * Returns the version code of the previously installed version. Is the
      * current version on fresh installs.
@@ -32,5 +34,10 @@ public class AppSettings {
         }
 
         return lastVersionCode;
+    }
+
+    public static boolean isGaAppOptOut(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_GOOGLEANALYTICS, false);
     }
 }

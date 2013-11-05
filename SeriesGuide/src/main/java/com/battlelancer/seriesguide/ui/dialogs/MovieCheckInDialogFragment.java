@@ -30,6 +30,8 @@ import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.google.analytics.tracking.android.EasyTracker;
+
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
@@ -64,7 +66,7 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().sendView("Movie Check-In Dialog");
+        Utils.trackView(getActivity(), "Movie Check-In Dialog");
     }
 
     protected boolean onGetGlueCheckin(final String title, final String message) {
