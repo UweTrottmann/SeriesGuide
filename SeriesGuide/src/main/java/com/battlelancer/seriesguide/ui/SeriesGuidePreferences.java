@@ -46,6 +46,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
@@ -109,8 +110,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     public static final String KEY_UPDATEATLEASTEVERY = "com.battlelancer.seriesguide.updateatleastevery";
 
     public static final String KEY_HIDEIMAGES = "hideimages";
-
-    public static final String KEY_GOOGLEANALYTICS = "enableGAnalytics";
 
     public static final String KEY_AUTOUPDATE = "com.battlelancer.seriesguide.autoupdate";
 
@@ -186,7 +185,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                     findPreference(AdvancedSettings.KEY_UPCOMING_LIMIT),
                     findPreference(KEY_NUMBERFORMAT),
                     findPreference(KEY_OFFSET),
-                    findPreference(KEY_GOOGLEANALYTICS),
+                    findPreference(AppSettings.KEY_GOOGLEANALYTICS),
                     findPreference(KEY_CLEAR_CACHE),
                     findPreference(KEY_AUTOUPDATE));
         } else if (action != null && action.equals(ACTION_PREFS_ABOUT)) {
@@ -346,7 +345,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         analyticsPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                if (preference.getKey().equals(KEY_GOOGLEANALYTICS)) {
+                if (preference.getKey().equals(AppSettings.KEY_GOOGLEANALYTICS)) {
                     boolean isEnabled = (Boolean) newValue;
                     GoogleAnalytics.getInstance(activity).setAppOptOut(isEnabled);
                     return true;
@@ -533,7 +532,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                         findPreference(AdvancedSettings.KEY_UPCOMING_LIMIT),
                         findPreference(KEY_NUMBERFORMAT),
                         findPreference(KEY_OFFSET),
-                        findPreference(KEY_GOOGLEANALYTICS),
+                        findPreference(AppSettings.KEY_GOOGLEANALYTICS),
                         findPreference(KEY_CLEAR_CACHE),
                         findPreference(KEY_AUTOUPDATE));
             } else if ("about".equals(settings)) {
