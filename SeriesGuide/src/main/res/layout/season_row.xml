@@ -3,23 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/default_padding" >
+    android:paddingLeft="@dimen/default_padding"
+    android:paddingStart="@dimen/default_padding">
 
     <TextView
         android:id="@+id/textViewSeasonTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/textViewSeasonProgress"
+        android:layout_toStartOf="@+id/textViewSeasonProgress"
         android:paddingTop="@dimen/default_padding"
-        tools:text="@string/season_number"
-        android:textAppearance="@style/TextAppearance.Medium.Light" />
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.Medium.Light"
+        tools:text="@string/season_number" />
 
     <ImageView
         android:id="@+id/imageViewContextMenu"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textViewSeasonWatchCount"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/textViewSeasonTitle"
         android:background="?attr/custom_list_selector"
@@ -31,11 +36,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/default_padding"
+        android:layout_marginStart="@dimen/default_padding"
         android:layout_toLeftOf="@id/imageViewContextMenu"
+        android:layout_toStartOf="@id/imageViewContextMenu"
         android:paddingTop="@dimen/default_padding"
         android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance.Medium.Light.Dim" >
-    </TextView>
+        android:textAppearance="@style/TextAppearance.Medium.Light.Dim" />
 
     <ProgressBar
         android:id="@+id/progressBarSeason"
@@ -43,8 +49,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewSeasonTitle"
-        android:layout_toLeftOf="@id/imageViewContextMenu" >
-    </ProgressBar>
+        android:layout_toLeftOf="@id/imageViewContextMenu"
+        android:layout_toStartOf="@id/imageViewContextMenu" />
 
     <TextView
         android:id="@+id/textViewSeasonWatchCount"
@@ -52,9 +58,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/progressBarSeason"
         android:layout_toLeftOf="@id/imageViewContextMenu"
+        android:layout_toStartOf="@id/imageViewContextMenu"
         android:paddingBottom="@dimen/default_padding"
+        android:textAlignment="viewStart"
         android:textAllCaps="true"
-        tools:text="10 episodes not watched yet"
-        android:textAppearance="@style/TextAppearance.XSmall" />
+        android:textAppearance="@style/TextAppearance.XSmall"
+        tools:text="10 episodes not watched yet" />
 
 </RelativeLayout>
