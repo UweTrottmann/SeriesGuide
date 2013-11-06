@@ -37,9 +37,8 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
 
     /**
      * Dialog to confirm the removal of a show from the database.
-     * 
+     *
      * @param showId The show to remove.
-     * @return
      */
     public static ConfirmDeleteDialogFragment newInstance(String showId) {
         ConfirmDeleteDialogFragment f = new ConfirmDeleteDialogFragment();
@@ -70,22 +69,22 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
          */
         final Cursor itemsInLists = getActivity().getContentResolver().query(
                 ListItems.CONTENT_WITH_DETAILS_URI,
-                new String[] {
-                    ListItems.LIST_ITEM_ID
+                new String[]{
+                        ListItems.LIST_ITEM_ID
                 },
                 Shows.REF_SHOW_ID + "=? OR (" + ListItems.TYPE + "=" + ListItemTypes.SHOW + " AND "
                         + ListItems.ITEM_REF_ID
-                        + "=?)", new String[] {
-                        showId, showId
-                }, null);
+                        + "=?)", new String[]{
+                showId, showId
+        }, null);
         if (itemsInLists != null) {
             hasListItems = itemsInLists.getCount() > 0;
             itemsInLists.close();
         }
 
         final Cursor show = getActivity().getContentResolver().query(Shows.buildShowUri(showId),
-                new String[] {
-                    Shows.TITLE
+                new String[]{
+                        Shows.TITLE
                 }, null, null, null);
 
         String showName = getString(R.string.unknown);
@@ -104,20 +103,20 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
         } else {
             builder.setMessage(getString(R.string.confirm_delete, showName)).setPositiveButton(
                     getString(R.string.delete_show), new OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            final ProgressDialog progress = new ProgressDialog(getActivity());
-                            progress.setCancelable(false);
-                            progress.show();
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    final ProgressDialog progress = new ProgressDialog(getActivity());
+                    progress.setCancelable(false);
+                    progress.show();
 
-                            new Thread(new Runnable() {
-                                public void run() {
-                                    DBUtils.deleteShow(getActivity(), getArguments()
-                                            .getString("showid"), progress);
-                                }
-                            }).start();
+                    new Thread(new Runnable() {
+                        public void run() {
+                            DBUtils.deleteShow(getActivity(), getArguments()
+                                    .getString("showid"), progress);
                         }
-                    });
+                    }).start();
+                }
+            });
         }
 
         return builder.create();
