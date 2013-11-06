@@ -22,6 +22,7 @@ import com.google.analytics.tracking.android.MapBuilder;
 
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -31,10 +32,10 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.TraktSync;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
-import com.jakewharton.trakt.entities.TvShowSeason;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.seriesguide.R;
@@ -283,55 +284,24 @@ public class TheTVDB {
 
     private static void storeTraktFlags(int showTvdbId, List<TvShow> shows, Context context,
             boolean isSeenFlags) {
-        final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-
-        // try to find seen episodes from trakt
+        // try to find seen episodes from trakt of the given show
         for (TvShow tvShow : shows) {
-            if (tvShow != null && tvShow.tvdb_id != null && tvShow.tvdb_id == showTvdbId) {
-                batch.clear();
-
-                // try to find matching seasons
-                final List<TvShowSeason> seasons = tvShow.seasons;
-                for (TvShowSeason season : seasons) {
-                    if (season == null) {
-                        continue;
-                    }
-
-                    final Cursor seasonMatch = context.getContentResolver().query(
-                            Seasons.buildSeasonsOfShowUri(showTvdbId), new String[] {
-                                Seasons._ID
-                            }, Seasons.COMBINED + "=?", new String[] {
-                                season.season.toString()
-                            }, null);
-                    if (seasonMatch == null) {
-                        continue;
-                    }
-
-                    // add ops to flag episodes
-                    if (seasonMatch.moveToFirst()) {
-                        final String seasonId = seasonMatch.getString(0);
-
-                        for (Integer episode : season.episodes.numbers) {
-                            // flag as watched or collected depending on call
-                            // parameter
-                            batch.add(ContentProviderOperation
-                                    .newUpdate(Episodes.buildEpisodesOfSeasonUri(seasonId))
-                                    .withSelection(Episodes.NUMBER + "=?", new String[] {
-                                            episode.toString()
-                                    })
-                                    .withValue(isSeenFlags ? Episodes.WATCHED : Episodes.COLLECTED,
-                                            true).build());
-                        }
-                    }
-
-                    seasonMatch.close();
-                }
-
-                // apply ops for this show
-                DBUtils.applyInSmallBatches(context, batch);
-
-                break;
+            if (tvShow == null || tvShow.tvdb_id == null || tvShow.tvdb_id != showTvdbId) {
+                // skip, does not match
+                continue;
             }
+
+            final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+
+            TraktSync.buildSeasonBatch(context, batch, tvShow,
+                    isSeenFlags ? Episodes.WATCHED : Episodes.COLLECTED,
+                    EpisodeFlags.WATCHED);
+
+            // apply ops for this show
+            DBUtils.applyInSmallBatches(context, batch);
+
+            // done, found the show we were looking for
+            return;
         }
     }
 
