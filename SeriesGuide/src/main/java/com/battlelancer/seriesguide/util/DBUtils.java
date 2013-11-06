@@ -17,20 +17,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import android.app.ProgressDialog;
-import android.content.ContentProviderOperation;
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.OperationApplicationException;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.RemoteException;
-import android.preference.PreferenceManager;
-import android.text.TextUtils;
-import android.text.format.DateUtils;
-
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
@@ -47,6 +33,20 @@ import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
 import com.uwetrottmann.androidutils.Lists;
 
+import android.app.ProgressDialog;
+import android.content.ContentProviderOperation;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.OperationApplicationException;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.RemoteException;
+import android.preference.PreferenceManager;
+import android.text.TextUtils;
+import android.text.format.DateUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -60,6 +60,8 @@ public class DBUtils {
      * episode so they will get sorted last.
      */
     public static final String UNKNOWN_NEXT_AIR_DATE = "9223372036854775807";
+
+    public static final int SMALL_BATCH_SIZE = 50;
 
     interface UnwatchedQuery {
         static final String[] PROJECTION = new String[] {
@@ -445,12 +447,8 @@ public class DBUtils {
     }
 
     /**
-     * Delete a show and manually delete its seasons and episodes. Also cleans
-     * up the poster and images.
-     * 
-     * @param context
-     * @param showId
-     * @param progress
+     * Delete a show and manually delete its seasons and episodes. Also cleans up the poster and
+     * images.
      */
     public static void deleteShow(Context context, String showId, ProgressDialog progress) {
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
@@ -475,11 +473,10 @@ public class DBUtils {
         try {
             context.getContentResolver()
                     .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
-        } catch (RemoteException e) {
-            // Failed binder transactions aren't recoverable
-            throw new RuntimeException("Problem applying batch operation", e);
-        } catch (OperationApplicationException e) {
-            // Failures like constraint violation aren't recoverable
+        } catch (RemoteException | OperationApplicationException e) {
+            // RemoteException: Failed binder transactions aren't recoverable
+            // OperationApplicationException: Failures like constraint violation aren't
+            // recoverable
             throw new RuntimeException("Problem applying batch operation", e);
         }
 
@@ -521,16 +518,7 @@ public class DBUtils {
         batch.add(ContentProviderOperation.newDelete(Episodes.buildEpisodesOfShowUri(showId))
                 .build());
 
-        try {
-            context.getContentResolver()
-                    .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
-        } catch (RemoteException e) {
-            // Failed binder transactions aren't recoverable
-            throw new RuntimeException("Problem applying batch operation", e);
-        } catch (OperationApplicationException e) {
-            // Failures like constraint violation aren't recoverable
-            throw new RuntimeException("Problem applying batch operation", e);
-        }
+        applyInSmallBatches(context, batch);
 
         // hide progress dialog now
         if (progress.isShowing()) {
@@ -738,6 +726,52 @@ public class DBUtils {
         context.getContentResolver().update(Shows.buildShowUri(showTvdbId), update, null, null);
 
         return episodeId;
+    }
+
+    /**
+     * Applies a large {@link ContentProviderOperation} batch in smaller batches as not to overload
+     * the transaction cache.
+     */
+    public static void applyInSmallBatches(Context context,
+            ArrayList<ContentProviderOperation> batch) {
+        // split into smaller batches to not overload transaction cache
+        // see http://developer.android.com/reference/android/os/TransactionTooLargeException.html
+
+        ArrayList<ContentProviderOperation> smallBatch = new ArrayList<>();
+
+        while (!batch.isEmpty()) {
+            if (batch.size() <= SMALL_BATCH_SIZE) {
+                // small enough already? apply right away
+                applyBatch(context, batch);
+                return;
+            }
+
+            // take up to 50 elements out of batch
+            for (int count = 0; count < SMALL_BATCH_SIZE; count++) {
+                if (batch.isEmpty()) {
+                    break;
+                }
+                smallBatch.add(batch.remove(0));
+            }
+
+            // apply small batch
+            applyBatch(context, smallBatch);
+
+            // prepare for next small batch
+            smallBatch.clear();
+        }
+    }
+
+    private static void applyBatch(Context context, ArrayList<ContentProviderOperation> batch) {
+        try {
+            context.getContentResolver()
+                    .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
+        } catch (RemoteException | OperationApplicationException e) {
+            // RemoteException: Failed binder transactions aren't recoverable
+            // OperationApplicationException: Failures like constraint violation aren't
+            // recoverable
+            throw new RuntimeException("Problem applying batch operation", e);
+        }
     }
 
     private interface NextEpisodeQuery {

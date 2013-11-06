@@ -20,7 +20,6 @@ package com.battlelancer.thetvdbapi;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.MapBuilder;
 
-import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
@@ -46,12 +45,10 @@ import org.xml.sax.SAXException;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.OperationApplicationException;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.sax.Element;
 import android.sax.EndElementListener;
@@ -272,17 +269,10 @@ public class TheTVDB {
         ContentValues[] newEpisodesValues = new ContentValues[importShowEpisodes.size()];
         newEpisodesValues = importShowEpisodes.toArray(newEpisodesValues);
 
-        try {
-            context.getContentResolver()
-                    .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
-            context.getContentResolver()
-                    .bulkInsert(Episodes.CONTENT_URI, newEpisodesValues);
-        } catch (RemoteException | OperationApplicationException e) {
-            // RemoteException: Failed binder transactions aren't recoverable
-            // OperationApplicationException: Failures like constraint violation aren't
-            // recoverable
-            throw new RuntimeException("Problem applying batch operation", e);
-        }
+        DBUtils.applyInSmallBatches(context, batch);
+
+        // insert all new episodes in bulk
+        context.getContentResolver().bulkInsert(Episodes.CONTENT_URI, newEpisodesValues);
     }
 
     private static String getTheTVDBLanguage(Context context) {
@@ -338,15 +328,7 @@ public class TheTVDB {
                 }
 
                 // apply ops for this show
-                try {
-                    context.getContentResolver()
-                            .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
-                } catch (RemoteException | OperationApplicationException e) {
-                    // RemoteException: Failed binder transactions aren't recoverable
-                    // OperationApplicationException: Failures like constraint violation aren't
-                    // recoverable
-                    throw new RuntimeException("Problem applying batch operation", e);
-                }
+                DBUtils.applyInSmallBatches(context, batch);
 
                 break;
             }

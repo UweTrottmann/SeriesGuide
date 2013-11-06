@@ -1,7 +1,6 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
@@ -9,17 +8,16 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -129,17 +127,7 @@ public class ListsDialogFragment extends DialogFragment implements
                 }
 
                 // apply ops
-                try {
-                    getActivity().getContentResolver().applyBatch(
-                            SeriesGuideApplication.CONTENT_AUTHORITY,
-                            batch);
-                } catch (RemoteException e) {
-                    // Failed binder transactions aren't recoverable
-                    throw new RuntimeException("Problem applying batch operation", e);
-                } catch (OperationApplicationException e) {
-                    // Failures like constraint violation aren't recoverable
-                    throw new RuntimeException("Problem applying batch operation", e);
-                }
+                DBUtils.applyInSmallBatches(getActivity(), batch);
 
                 getActivity().getContentResolver().notifyChange(ListItems.CONTENT_WITH_DETAILS_URI,
                         null);

@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
@@ -33,12 +34,10 @@ import android.content.ContentProviderClient;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.OperationApplicationException;
 import android.content.SharedPreferences;
 import android.content.SyncResult;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -475,16 +474,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // execute the batch
-        try {
-            getContext().getContentResolver()
-                    .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
-        } catch (RemoteException | OperationApplicationException e) {
-            // RemoteException: Failed binder transactions aren't recoverable
-            // OperationApplicationException: Failures like constraint violation aren't
-            // recoverable
-            Utils.trackExceptionAndLog(getContext(), TAG, e);
-            throw new RuntimeException("Problem applying batch operation", e);
-        }
+        DBUtils.applyInSmallBatches(getContext(), batch);
 
         // store time of this update as seen by the trakt server
         prefs.edit()

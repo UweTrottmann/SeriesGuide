@@ -17,7 +17,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
@@ -31,10 +30,8 @@ import com.uwetrottmann.seriesguide.R;
 
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
-import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.os.RemoteException;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Toast;
@@ -188,17 +185,8 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                         return null;
                     }
 
-                    try {
-                        mContext.getContentResolver().applyBatch(
-                                SeriesGuideApplication.CONTENT_AUTHORITY,
-                                batch);
-                    } catch (RemoteException | OperationApplicationException e) {
-                        // RemoteException: Failed binder transactions aren't recoverable
-                        // OperationApplicationException: Failures like constraint violation aren't
-                        // recoverable
-                        Utils.trackExceptionAndLog(mContext, TAG, e);
-                        throw new RuntimeException("Problem applying batch operation", e);
-                    }
+                    // apply batch
+                    DBUtils.applyInSmallBatches(mContext, batch);
 
                     mResult += tvShow.title;
 
