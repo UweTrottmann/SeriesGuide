@@ -14,6 +14,7 @@ Version 9 *(in development)*
 
 * TWEAK Always crop episode image in episode details, tap to view original.
 * TWEAK Use dark action bar and white item selector for Android Dark theme.
+* TWEAK Removed duplicate search action from shows menu, is accessible via nav drawer.
 * FIX Action items not readable in episode details using white theme on phones.
 * FIX Random crash on Android 4.4 (KitKat), when syncing with trakt, when shows got added automatically, when adding shows with lots of episodes.
 * FIX Check marks in activity stream only flagging as watched.
