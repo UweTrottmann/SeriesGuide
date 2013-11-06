@@ -124,17 +124,15 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
             isAbortingCheckIn = true;
         }
 
-        if (mIsGetGlueIdOutdated) {
-            final Cursor show = getActivity().getContentResolver().query(
-                    Shows.buildShowUri(String.valueOf(mShowTvdbId)), new String[]{
-                    Shows._ID, Shows.GETGLUEID
-            }, null, null, null);
-            if (show != null) {
-                show.moveToFirst();
-                mGetGlueId = show.getString(1);
-                mIsGetGlueIdOutdated = false;
-                show.close();
-            }
+        // always get the latest GetGlue id
+        final Cursor show = getActivity().getContentResolver().query(
+                Shows.buildShowUri(String.valueOf(mShowTvdbId)), new String[]{
+                Shows._ID, Shows.GETGLUEID
+        }, null, null, null);
+        if (show != null) {
+            show.moveToFirst();
+            mGetGlueId = show.getString(1);
+            show.close();
         }
 
         // check for GetGlue id

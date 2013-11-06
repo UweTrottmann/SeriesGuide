@@ -102,8 +102,6 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
 
     protected OnTraktActionCompleteListener mListener;
 
-    protected boolean mIsGetGlueIdOutdated;
-
     private EditText mMessageBox;
 
     private View mCheckinButton;
@@ -314,7 +312,6 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
     }
 
     protected void launchFixGetGlueCheckInActivity(View v, int showTvdbId) {
-        mIsGetGlueIdOutdated = true;
         Intent i = new Intent(getActivity(), FixGetGlueCheckInActivity.class);
         i.putExtra(FixGetGlueCheckInActivity.InitBundle.SHOW_TVDB_ID, String.valueOf(showTvdbId));
         ActivityCompat.startActivity(getActivity(), i,
