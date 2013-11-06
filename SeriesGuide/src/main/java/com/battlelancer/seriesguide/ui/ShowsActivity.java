@@ -294,10 +294,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
                 mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
             }
             return true;
-        } else if (itemId == R.id.menu_search) {
-            fireTrackerEvent("Search");
-            onSearchRequested();
-            return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
