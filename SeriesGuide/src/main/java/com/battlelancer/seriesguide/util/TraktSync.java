@@ -130,7 +130,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
         while (showTvdbIds.moveToNext()) {
             int tvdbId = showTvdbIds.getInt(0);
             for (TvShow tvShow : shows) {
-                if (tvShow != null && tvShow.tvdb_id == tvdbId) {
+                if (tvShow != null && tvShow.tvdb_id != null && tvShow.tvdb_id == tvdbId) {
                     if (mResult.length() != 0) {
                         mResult += ", ";
                     }

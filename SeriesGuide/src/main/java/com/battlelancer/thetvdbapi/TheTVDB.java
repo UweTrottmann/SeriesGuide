@@ -297,7 +297,7 @@ public class TheTVDB {
 
         // try to find seen episodes from trakt
         for (TvShow tvShow : shows) {
-            if (tvShow != null && tvShow.tvdb_id == showTvdbId) {
+            if (tvShow != null && tvShow.tvdb_id != null && tvShow.tvdb_id == showTvdbId) {
                 batch.clear();
 
                 // try to find matching seasons
