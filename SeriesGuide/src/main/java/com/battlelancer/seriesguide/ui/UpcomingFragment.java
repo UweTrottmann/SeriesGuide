@@ -410,12 +410,10 @@ public class UpcomingFragment extends SherlockFragment implements
             final int episode = mCursor.getInt(UpcomingQuery.NUMBER);
             viewHolder.watchedBox.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
-                    WatchedBox checkBox = (WatchedBox) v;
-                    checkBox.toggleWatched();
-
+                    WatchedBox box = (WatchedBox) v;
                     new FlagTask(mContext, showTvdbId)
                             .episodeWatched(episodeTvdbId, season, episode,
-                                    EpisodeTools.isWatched(checkBox.getEpisodeFlag())
+                                    EpisodeTools.isWatched(box.getEpisodeFlag())
                                             ? EpisodeFlags.UNWATCHED : EpisodeFlags.WATCHED)
                             .execute();
                 }
