@@ -52,4 +52,19 @@
         <item name="android:actionBarWidgetTheme" tools:targetApi="ice_cream_sandwich">@style/SeriesGuideTheme</item>
     </style>
 
+    <!-- Special themes -->
+    <style name="ImmersiveTheme" parent="SeriesGuideTheme">
+
+        <!-- Action bar (native, v11+) -->
+        <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
+
+    </style>
+
+    <style name="ImmersiveTheme.Light" parent="SeriesGuideThemeLight">
+
+        <!-- Action bar (native, v11+) -->
+        <item name="android:actionBarStyle">@style/ActionBar.Translucent</item>
+
+    </style>
+
 </resources>
