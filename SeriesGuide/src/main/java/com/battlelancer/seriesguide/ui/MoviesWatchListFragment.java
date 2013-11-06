@@ -17,6 +17,17 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.adapters.MoviesWatchListAdapter;
+import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.loaders.TraktMoviesWatchlistLoader;
+import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
+import com.battlelancer.seriesguide.util.Utils;
+import com.jakewharton.trakt.entities.Movie;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -33,22 +44,9 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.adapters.MoviesWatchListAdapter;
-import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.loaders.TraktMoviesWatchlistLoader;
-import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.MapBuilder;
-
-import com.jakewharton.trakt.entities.Movie;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
-
-import java.util.List;
 
 /**
  * Loads and displays the users trakt movie watchlist.
@@ -177,9 +175,7 @@ public class MoviesWatchListFragment extends SherlockFragment implements
     }
 
     private void fireTrackerEvent(String label) {
-        EasyTracker.getInstance(getActivity()).send(
-                MapBuilder.createEvent(TAG, "Action Item", label, null).build()
-        );
+        Utils.trackAction(getActivity(), TAG, label);
     }
 
 }

@@ -17,9 +17,27 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.Constants.EpisodeSorting;
+import com.battlelancer.seriesguide.adapters.EpisodesAdapter;
+import com.battlelancer.seriesguide.adapters.EpisodesAdapter.OnFlagEpisodeListener;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
+import com.battlelancer.seriesguide.util.FlagTask;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -38,28 +56,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
-
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.Constants.EpisodeSorting;
-import com.battlelancer.seriesguide.adapters.EpisodesAdapter;
-import com.battlelancer.seriesguide.adapters.EpisodesAdapter.OnFlagEpisodeListener;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
-import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.MapBuilder;
-
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
 
 /**
  * Displays a list of episodes of a season.
@@ -260,7 +256,7 @@ public class EpisodesFragment extends SherlockListFragment implements
             }
             case CONTEXT_FLAG_UNTILHERE_ID: {
                 final Cursor items = (Cursor) mAdapter.getItem(info.position);
-                onMarkUntilHere((int) info.id, items.getLong(EpisodesQuery.FIRSTAIREDMS));
+                onMarkUntilHere(items.getLong(EpisodesQuery.FIRSTAIREDMS));
                 fireTrackerEventContextMenu("Flag previously aired");
                 return true;
             }
@@ -349,7 +345,7 @@ public class EpisodesFragment extends SherlockListFragment implements
                 .execute();
     }
 
-    private void onMarkUntilHere(int episodeId, long firstaired) {
+    private void onMarkUntilHere(long firstaired) {
         new FlagTask(getActivity(), getShowId())
                 .episodeWatchedPrevious(firstaired)
                 .execute();
@@ -423,10 +419,7 @@ public class EpisodesFragment extends SherlockListFragment implements
         getLoaderManager().restartLoader(EPISODES_LOADER, null, EpisodesFragment.this);
         getSherlockActivity().invalidateOptionsMenu();
 
-        EasyTracker.getInstance(getActivity()).send(MapBuilder.createEvent(
-                TAG, "Sorting", mSorting.name(), null)
-                .build()
-        );
+        Utils.trackCustomEvent(getActivity(), TAG, "Sorting", mSorting.name());
     }
 
     @TargetApi(8)

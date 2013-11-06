@@ -17,6 +17,16 @@
 
 package com.battlelancer.seriesguide;
 
+import com.google.analytics.tracking.android.GoogleAnalytics;
+
+import com.battlelancer.seriesguide.settings.AppSettings;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.BuildConfig;
+import com.uwetrottmann.seriesguide.R;
+
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.ContentProvider;
@@ -25,18 +35,6 @@ import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.os.StrictMode.VmPolicy;
 import android.preference.PreferenceManager;
-
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.settings.AppSettings;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.GoogleAnalytics;
-
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.BuildConfig;
-import com.uwetrottmann.seriesguide.R;
 
 /**
  * Initializes settings and services and on pre-ICS implements actions for low

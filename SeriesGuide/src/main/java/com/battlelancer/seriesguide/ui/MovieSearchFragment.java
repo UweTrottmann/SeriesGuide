@@ -17,6 +17,16 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.adapters.MoviesAdapter;
+import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
+import com.uwetrottmann.tmdb.entities.Movie;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -37,19 +47,6 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.adapters.MoviesAdapter;
-import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.TraktTask;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.Fields;
-import com.google.analytics.tracking.android.MapBuilder;
-
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
-import com.uwetrottmann.tmdb.entities.Movie;
 
 import java.util.List;
 
@@ -117,10 +114,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker tracker = EasyTracker.getInstance(getActivity());
-        tracker.set(Fields.SCREEN_NAME, TAG);
-        tracker.send(MapBuilder.createAppView().build());
-        tracker.set(Fields.SCREEN_NAME, null);
+        Utils.trackView(getActivity(), TAG);
     }
 
     @Override
@@ -215,9 +209,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     }
 
     private void fireTrackerEvent(String label) {
-        EasyTracker.getInstance(getActivity()).send(
-                MapBuilder.createEvent(TAG, "Action Item", label, null).build()
-        );
+        Utils.trackAction(getActivity(), TAG, label);
     }
 
 }

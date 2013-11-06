@@ -324,9 +324,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     }
 
     private void fireTrackerEvent(String label) {
-        EasyTracker.getInstance(this).send(
-                MapBuilder.createEvent(TAG, "Action Item", label, null).build()
-        );
+        Utils.trackAction(this, TAG, label);
     }
 
 }

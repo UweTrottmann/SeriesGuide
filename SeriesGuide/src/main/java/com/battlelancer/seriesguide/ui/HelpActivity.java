@@ -1,20 +1,17 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.Window;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.Window;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.MapBuilder;
-
-import com.uwetrottmann.seriesguide.R;
 
 /**
  * Displays the seriesguide online help page.
@@ -79,11 +76,9 @@ public class HelpActivity extends BaseNavDrawerActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    };
+    }
 
     private void fireTrackerEvent(String label) {
-        EasyTracker.getInstance(this).send(
-                MapBuilder.createEvent(TAG, "Action Item", label, null).build()
-        );
+        Utils.trackAction(this, TAG, label);
     }
 }

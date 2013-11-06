@@ -24,6 +24,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.MapBuilder;
 
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -64,9 +65,7 @@ public class StatsActivity extends BaseTopActivity {
 
     @Override
     protected void fireTrackerEvent(String label) {
-        EasyTracker.getInstance(this).send(
-                MapBuilder.createEvent(TAG, "Action Item", label, null).build()
-        );
+        Utils.trackAction(this, TAG, label);
     }
 
 }

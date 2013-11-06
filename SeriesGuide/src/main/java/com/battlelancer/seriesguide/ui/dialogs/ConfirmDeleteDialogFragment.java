@@ -17,6 +17,13 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -25,15 +32,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.google.analytics.tracking.android.EasyTracker;
-
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
 
 public class ConfirmDeleteDialogFragment extends DialogFragment {
 

@@ -17,6 +17,10 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
+import com.uwetrottmann.seriesguide.R;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,13 +37,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.MapBuilder;
-
-import com.uwetrottmann.seriesguide.R;
 
 import java.util.Calendar;
 
@@ -155,9 +152,7 @@ public class ShareUtils {
         if (!Utils.tryStartActivity(context, intent, false)) {
             Toast.makeText(context, context.getString(R.string.addtocalendar_failed),
                     Toast.LENGTH_SHORT).show();
-            EasyTracker.getInstance(context).send(
-                    MapBuilder.createEvent(TAG, "Calendar", "Failed", null).build()
-            );
+            Utils.trackCustomEvent(context, TAG, "Calendar", "Failed");
         }
     }
 

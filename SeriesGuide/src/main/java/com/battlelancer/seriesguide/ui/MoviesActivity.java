@@ -17,18 +17,16 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
 import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.MapBuilder;
-
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
+
+import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 
 /**
  * Users can search for a movie, display detailed information and then check in
@@ -72,11 +70,9 @@ public class MoviesActivity extends BaseTopActivity {
         tabsAdapter.addTab(R.string.search, MovieSearchFragment.class, null);
     }
 
-
+    @Override
     protected void fireTrackerEvent(String label) {
-        EasyTracker.getInstance(this).send(
-                MapBuilder.createEvent(TAG, "Action Item", label, null).build()
-        );
+        Utils.trackAction(this, TAG, label);
     }
 
 }

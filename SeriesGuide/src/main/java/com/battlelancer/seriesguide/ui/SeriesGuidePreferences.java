@@ -17,6 +17,26 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.service.NotificationService;
+import com.battlelancer.seriesguide.settings.ActivitySettings;
+import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.settings.AppSettings;
+import com.battlelancer.seriesguide.settings.GetGlueSettings;
+import com.battlelancer.seriesguide.settings.NotificationSettings;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentValues;
@@ -34,30 +54,8 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.service.NotificationService;
-import com.battlelancer.seriesguide.settings.ActivitySettings;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.settings.AppSettings;
-import com.battlelancer.seriesguide.settings.GetGlueSettings;
-import com.battlelancer.seriesguide.settings.NotificationSettings;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.GoogleAnalytics;
-import com.google.analytics.tracking.android.MapBuilder;
-
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
 
 import java.util.List;
 
@@ -150,9 +148,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     public static int THEME = R.style.SeriesGuideTheme;
 
     private static void fireTrackerEvent(Context context, String label) {
-        EasyTracker.getInstance(context).send(
-                MapBuilder.createEvent(TAG, "Click", label, null).build()
-        );
+        Utils.trackClick(context, TAG, label);
     }
 
     @SuppressWarnings("deprecation")
@@ -226,15 +222,9 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
             public boolean onPreferenceClick(Preference preference) {
                 if (((CheckBoxPreference) preference).isChecked()) {
-                    EasyTracker.getInstance(context).send(
-                            MapBuilder.createEvent(TAG, "OnlyFutureEpisodes", "Enable", null)
-                                    .build()
-                    );
+                    Utils.trackCustomEvent(context, TAG, "OnlyFutureEpisodes", "Enable");
                 } else {
-                    EasyTracker.getInstance(context).send(
-                            MapBuilder.createEvent(TAG, "OnlyFutureEpisodes", "Disable", null)
-                                    .build()
-                    );
+                    Utils.trackCustomEvent(context, TAG, "OnlyFutureEpisodes", "Disable");
                 }
                 return false;
             }
@@ -245,15 +235,9 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
             public boolean onPreferenceClick(Preference preference) {
                 if (((CheckBoxPreference) preference).isChecked()) {
-                    EasyTracker.getInstance(context).send(
-                            MapBuilder.createEvent(TAG, "OnlySeasonEpisodes", "Enable", null)
-                                    .build()
-                    );
+                    Utils.trackCustomEvent(context, TAG, "OnlySeasonEpisodes", "Enable");
                 } else {
-                    EasyTracker.getInstance(context).send(
-                            MapBuilder.createEvent(TAG, "OnlySeasonEpisodes", "Disable", null)
-                                    .build()
-                    );
+                    Utils.trackCustomEvent(context, TAG, "OnlySeasonEpisodes", "Disable");
                 }
                 return false;
             }
@@ -267,15 +251,9 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 public boolean onPreferenceClick(Preference preference) {
                     boolean isChecked = ((CheckBoxPreference) preference).isChecked();
                     if (isChecked) {
-                        EasyTracker.getInstance(context).send(
-                                MapBuilder.createEvent(TAG, "Notifications", "Enable", null)
-                                        .build()
-                        );
+                        Utils.trackCustomEvent(context, TAG, "Notifications", "Enable");
                     } else {
-                        EasyTracker.getInstance(context).send(
-                                MapBuilder.createEvent(TAG, "Notifications", "Disable", null)
-                                        .build()
-                        );
+                        Utils.trackCustomEvent(context, TAG, "Notifications", "Disable");
                     }
 
                     notificationsThresholdPref.setEnabled(isChecked);

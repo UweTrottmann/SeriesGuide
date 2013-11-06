@@ -17,8 +17,6 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
 import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin.CheckInTask;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;

@@ -104,9 +104,7 @@ public class SearchActivity extends BaseTopActivity {
             } else {
                 searchFragment.onPerformSearch(extras);
             }
-            EasyTracker.getInstance(this).send(
-                    MapBuilder.createEvent(TAG, "Search action", "Search", null).build()
-            );
+            Utils.trackCustomEvent(this, TAG, "Search action", "Search");
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
             Uri data = intent.getData();
             String id = data.getLastPathSegment();

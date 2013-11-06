@@ -17,6 +17,21 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader;
+import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader.MovieDetails;
+import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
+import com.battlelancer.seriesguide.util.ImageDownloader;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
+import com.uwetrottmann.tmdb.entities.Movie;
+
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,23 +48,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader;
-import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader.MovieDetails;
-import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
-import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.MapBuilder;
-
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
-import com.uwetrottmann.tmdb.entities.Movie;
 
 /**
  * Displays details about one movie including plot, ratings, trailers and a
@@ -268,9 +266,7 @@ public class MovieDetailsFragment extends SherlockFragment implements
     }
 
     private void fireTrackerEvent(String label) {
-        EasyTracker.getInstance(getActivity()).send(
-                MapBuilder.createEvent(TAG, "Action Item", label, null).build()
-        );
+        Utils.trackAction(getActivity(), TAG, label);
     }
 
 }

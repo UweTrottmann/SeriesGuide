@@ -1,8 +1,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.os.Bundle;
-import android.support.v4.view.ViewPager;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
@@ -13,11 +12,11 @@ import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
 import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.MapBuilder;
-
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
+
+import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 
 /**
  * Hosts a view pager to display and manage lists of shows, seasons and

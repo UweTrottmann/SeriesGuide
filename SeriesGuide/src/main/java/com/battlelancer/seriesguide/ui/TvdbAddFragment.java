@@ -17,6 +17,15 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.thetvdbapi.TheTVDB;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
+
+import org.xml.sax.SAXException;
+
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,16 +38,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.TheTVDB;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
-
-import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.util.ArrayList;

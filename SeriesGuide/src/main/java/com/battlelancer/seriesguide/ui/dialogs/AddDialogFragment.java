@@ -17,6 +17,12 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.ImageDownloader;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -30,15 +36,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.Fields;
-import com.google.analytics.tracking.android.MapBuilder;
-
-import com.uwetrottmann.seriesguide.R;
 
 /**
  * A DialogFragment allowing the user to decide whether to add a show to his
@@ -85,10 +82,7 @@ public class AddDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker tracker = EasyTracker.getInstance(getActivity());
-        tracker.set(Fields.SCREEN_NAME, "Add Dialog");
-        tracker.send(MapBuilder.createAppView().build());
-        tracker.set(Fields.SCREEN_NAME, null);
+        Utils.trackView(getActivity(), "Add Dialog");
     }
 
     @Override

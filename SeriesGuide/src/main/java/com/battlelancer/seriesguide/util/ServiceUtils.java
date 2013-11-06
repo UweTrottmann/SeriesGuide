@@ -17,8 +17,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;

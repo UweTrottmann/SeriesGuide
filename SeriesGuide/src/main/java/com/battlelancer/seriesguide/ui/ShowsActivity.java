@@ -17,6 +17,28 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.billing.BillingActivity;
+import com.battlelancer.seriesguide.billing.IabHelper;
+import com.battlelancer.seriesguide.billing.IabResult;
+import com.battlelancer.seriesguide.billing.Inventory;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.AppSettings;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.sync.SyncUtils;
+import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.thetvdbapi.TheTVDB;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.BuildConfig;
+import com.uwetrottmann.seriesguide.R;
+
 import android.accounts.Account;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -34,36 +56,8 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewStub;
-import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
-import com.battlelancer.seriesguide.billing.BillingActivity;
-import com.battlelancer.seriesguide.billing.IabHelper;
-import com.battlelancer.seriesguide.billing.IabResult;
-import com.battlelancer.seriesguide.billing.Inventory;
-import com.battlelancer.seriesguide.migration.MigrationActivity;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.settings.AppSettings;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.sync.SyncUtils;
-import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.TheTVDB;
-
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.MapBuilder;
-
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.BuildConfig;
-import com.uwetrottmann.seriesguide.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -393,17 +387,14 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
                     Toast.makeText(getApplicationContext(), getString(R.string.done),
                             Toast.LENGTH_SHORT).show();
 
-                    EasyTracker.getInstance(getApplicationContext()).send(
-                            MapBuilder.createEvent(TAG, "Poster Task", "Success", null).build()
-                    );
+                    Utils.trackCustomEvent(getApplicationContext(), TAG, "Poster Task", "Success");
                     break;
                 case UPDATE_INCOMPLETE:
                     Toast.makeText(getApplicationContext(), getString(R.string.arttask_incomplete),
                             Toast.LENGTH_LONG).show();
 
-                    EasyTracker.getInstance(getApplicationContext()).send(
-                            MapBuilder.createEvent(TAG, "Poster Task", "Incomplete", null).build()
-                    );
+                    Utils.trackCustomEvent(getApplicationContext(), TAG, "Poster Task",
+                            "Incomplete");
                     break;
             }
 
