@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.enums.SeasonTags;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -76,6 +77,8 @@ public class DBUtils {
 
         static final String NOAIRDATE_SELECTION = Episodes.WATCHED + "=0 AND "
                 + Episodes.FIRSTAIREDMS + "=-1";
+
+        static final String SKIPPED_SELECTION = Episodes.WATCHED + "=" + EpisodeFlags.SKIPPED;
     }
 
     /**
@@ -129,10 +132,19 @@ public class DBUtils {
         final int noAirDateCount = noAirDate.getCount();
         noAirDate.close();
 
+        // any skipped episodes
+        final Cursor skipped = resolver.query(episodesOfSeasonUri, UnwatchedQuery.PROJECTION,
+                UnwatchedQuery.SKIPPED_SELECTION, null, null);
+        if (skipped == null) {
+            return;
+        }
+        boolean hasSkippedEpisodes = skipped.getCount() > 0;
+
         final ContentValues update = new ContentValues();
         update.put(Seasons.WATCHCOUNT, count);
         update.put(Seasons.UNAIREDCOUNT, unairedCount);
         update.put(Seasons.NOAIRDATECOUNT, noAirDateCount);
+        update.put(Seasons.TAGS, hasSkippedEpisodes ? SeasonTags.SKIPPED : SeasonTags.NONE);
         update.put(Seasons.TOTALCOUNT, totalCount);
         resolver.update(Seasons.buildSeasonUri(seasonid), update, null, null);
     }
