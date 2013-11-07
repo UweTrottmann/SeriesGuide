@@ -514,7 +514,7 @@ public class SeasonsFragment extends SherlockListFragment implements
 
         String[] PROJECTION = {
                 BaseColumns._ID, Seasons.COMBINED, Seasons.WATCHCOUNT, Seasons.UNAIREDCOUNT,
-                Seasons.NOAIRDATECOUNT, Seasons.TOTALCOUNT
+                Seasons.NOAIRDATECOUNT, Seasons.TOTALCOUNT, Seasons.TAGS
         };
 
         String SELECTION = Seasons.TOTALCOUNT + ">0";
@@ -530,6 +530,8 @@ public class SeasonsFragment extends SherlockListFragment implements
         int NOAIRDATECOUNT = 4;
 
         int TOTALCOUNT = 5;
+
+        int TAGS = 6;
     }
 
     private void showSortDialog() {
