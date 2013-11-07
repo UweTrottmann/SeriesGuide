@@ -6,7 +6,12 @@ Changelog
 All dates are in the European Central timezone.
 
 Version 9 *(in development)*
------------------
+----------------------------
+
+* Skip an episode or an entire season if you don't want to watch right now.
+* Android 4.4 (KitKat) compatible.
+* Moved 'Migrate from X' action to service settings.
+* New backend for GetGlue and trakt.
 
 ### Detailed changes:
 
