@@ -384,13 +384,15 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
             } else if (TraktStatus.FAILURE.equals(r.status)) {
                 if (mAction == TraktAction.CHECKIN_EPISODE
                         || mAction == TraktAction.CHECKIN_MOVIE) {
-                    CheckinResponse checkinResponse = (CheckinResponse) r;
-                    if (checkinResponse.wait != 0) {
-                        // looks like a check in is already in progress
-                        if (mListener != null) {
-                            mListener.onCheckinBlocked(mArgs, checkinResponse.wait);
+                    if (r instanceof CheckinResponse) {
+                        CheckinResponse checkinResponse = (CheckinResponse) r;
+                        if (checkinResponse.wait != 0) {
+                            // looks like a check in is already in progress
+                            if (mListener != null) {
+                                mListener.onCheckinBlocked(mArgs, checkinResponse.wait);
+                            }
+                            return;
                         }
-                        return;
                     }
                 }
 
