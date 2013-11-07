@@ -68,6 +68,7 @@ public class MoviesActivity extends BaseTopActivity {
         }
         // movie search
         tabsAdapter.addTab(R.string.search, MovieSearchFragment.class, null);
+        tabsAdapter.updateTabs();
     }
 
     @Override

@@ -95,6 +95,9 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
             tabsAdapter.addTab(R.string.friends, TraktFriendsFragment.class, null);
         }
 
+        // display new tabs
+        tabsAdapter.updateTabs();
+
         // set starting tab
         int selection = 0;
         if (savedInstanceState != null) {
