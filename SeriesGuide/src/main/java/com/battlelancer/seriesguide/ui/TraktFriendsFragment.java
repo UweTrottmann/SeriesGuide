@@ -30,6 +30,7 @@ import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.entities.UserProfile;
 import com.jakewharton.trakt.enumerations.ActivityType;
+import com.jakewharton.trakt.services.UserService;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.seriesguide.R;
@@ -197,12 +198,13 @@ public class TraktFriendsFragment extends ListFragment implements
                 List<UserProfile> friendsActivity = new ArrayList<UserProfile>();
 
                 try {
-                    List<UserProfile> friends = manager.userService()
+                    final UserService userService = manager.userService();
+                    List<UserProfile> friends = userService
                             .friends(ServiceUtils.getTraktUsername(getContext()));
 
                     for (UserProfile friend : friends) {
                         // get the detailed profile
-                        UserProfile profile = manager.userService().profile(friend.username);
+                        UserProfile profile = userService.profile(friend.username);
 
                         if (profile.watching != null
                                 && profile.watching.type == ActivityType.Episode) {
