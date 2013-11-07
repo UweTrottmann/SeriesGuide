@@ -139,6 +139,7 @@ public class DBUtils {
             return;
         }
         boolean hasSkippedEpisodes = skipped.getCount() > 0;
+        skipped.close();
 
         final ContentValues update = new ContentValues();
         update.put(Seasons.WATCHCOUNT, count);
