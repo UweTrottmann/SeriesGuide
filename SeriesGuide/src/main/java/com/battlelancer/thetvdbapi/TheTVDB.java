@@ -17,9 +17,6 @@
 
 package com.battlelancer.thetvdbapi;
 
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.MapBuilder;
-
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -240,11 +237,8 @@ public class TheTVDB {
                 }
             }
 
-            Long showCount = (long) shows.getCount();
-            EasyTracker.getInstance(context).send(
-                    MapBuilder.createEvent("Statistics", "Shows", String.valueOf(showCount),
-                            showCount).build()
-            );
+            long showCount = (long) shows.getCount();
+            Utils.trackCustomEvent(context, "Statistics", "Shows", String.valueOf(showCount));
 
             shows.close();
         }
