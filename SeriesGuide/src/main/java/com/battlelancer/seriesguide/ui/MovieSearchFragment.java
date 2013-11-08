@@ -17,6 +17,16 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.adapters.MoviesAdapter;
+import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
+import com.uwetrottmann.tmdb.entities.Movie;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -37,16 +47,6 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.adapters.MoviesAdapter;
-import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.TraktTask;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
-import com.uwetrottmann.tmdb.entities.Movie;
 
 import java.util.List;
 
@@ -114,7 +114,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().sendView(TAG);
+        Utils.trackView(getActivity(), TAG);
     }
 
     @Override
@@ -208,7 +208,8 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
         startActivity(i);
     }
 
-    private static void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    private void fireTrackerEvent(String label) {
+        Utils.trackAction(getActivity(), TAG, label);
     }
+
 }

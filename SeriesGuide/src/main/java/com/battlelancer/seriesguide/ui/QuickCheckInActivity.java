@@ -16,10 +16,10 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.getglueapi.GetGlue;
-import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
+import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin.CheckInTask;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.TraktTask;
@@ -60,7 +60,7 @@ public class QuickCheckInActivity extends SherlockFragmentActivity implements
                 .query(Episodes.buildEpisodeWithShowUri(String.valueOf(episodeId)),
                         new String[] {
                                 Episodes._ID, Episodes.TITLE, Episodes.SEASON, Episodes.NUMBER,
-                                Shows.REF_SHOW_ID, Shows.IMDBID
+                                Shows.REF_SHOW_ID, Shows.TITLE
                         },
                         null,
                         null,
@@ -83,7 +83,7 @@ public class QuickCheckInActivity extends SherlockFragmentActivity implements
         int season = episodeWithShow.getInt(2);
         int episode = episodeWithShow.getInt(3);
         int showTvdbId = episodeWithShow.getInt(4);
-        String showImdbId = episodeWithShow.getString(5);
+        String showTitle = episodeWithShow.getString(5);
         episodeWithShow.close();
         String defaultMessage = Utils.getNextEpisodeString(prefs, season, episode, title);
 
@@ -118,7 +118,7 @@ public class QuickCheckInActivity extends SherlockFragmentActivity implements
             String objectId = null;
 
             // require GetGlue authentication
-            if (!GetGlue.isAuthenticated(prefs)) {
+            if (!GetGlueSettings.isAuthenticated(this)) {
                 isAbortingCheckIn = true;
             } else {
                 Cursor show = getContentResolver().query(
@@ -133,11 +133,11 @@ public class QuickCheckInActivity extends SherlockFragmentActivity implements
 
                 // fall back to IMDb id
                 if (TextUtils.isEmpty(objectId)) {
-                    if (TextUtils.isEmpty(showImdbId)) {
+                    if (TextUtils.isEmpty(showTitle)) {
                         // cancel if we don't know what to check into
                         isAbortingCheckIn = true;
                     } else {
-                        objectId = showImdbId;
+                        objectId = showTitle;
                     }
                 }
             }

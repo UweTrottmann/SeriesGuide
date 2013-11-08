@@ -17,46 +17,39 @@
 
 package com.battlelancer.seriesguide.getglueapi;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Window;
+import com.battlelancer.seriesguide.settings.GetGlueSettings;
+import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.getglue.GetGlue;
+import com.uwetrottmann.seriesguide.R;
+
+import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
+import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
+import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
+import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
+
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Window;
-import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
-
-import oauth.signpost.OAuthConsumer;
-import oauth.signpost.OAuthProvider;
-import oauth.signpost.basic.DefaultOAuthConsumer;
-import oauth.signpost.basic.DefaultOAuthProvider;
-import oauth.signpost.exception.OAuthCommunicationException;
-import oauth.signpost.exception.OAuthExpectationFailedException;
-import oauth.signpost.exception.OAuthMessageSignerException;
-import oauth.signpost.exception.OAuthNotAuthorizedException;
-
 /**
- * Executes the OAuthRequestTokenTask to retrieve a request token and authorize
- * it by the user. After the request is authorized, this will get the callback.
+ * Starts an OAuth 2.0 authentication flow via an {@link android.webkit.WebView}.
  */
 public class GetGlueAuthActivity extends BaseNavDrawerActivity {
 
-    final String TAG = "GetGlueAuthActivity";
-
-    private OAuthConsumer mConsumer;
-
-    private OAuthProvider mProvider;
+    static final String TAG = "GetGlueAuthActivity";
 
     private WebView mWebview;
 
@@ -71,7 +64,7 @@ public class GetGlueAuthActivity extends BaseNavDrawerActivity {
         getMenu().setContentView(mWebview);
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.oauthmessage));
+        actionBar.setTitle(getString(R.string.getglue_authentication));
         actionBar.setDisplayShowTitleEnabled(true);
 
         setSupportProgressBarVisibility(true);
@@ -99,10 +92,10 @@ public class GetGlueAuthActivity extends BaseNavDrawerActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (url.startsWith(GetGlue.OAUTH_CALLBACK_URL)) {
+                if (url.startsWith(GetGlueCheckin.OAUTH_CALLBACK_URL)) {
                     Uri uri = Uri.parse(url);
-                    new RetrieveAccessTokenTask(mConsumer, mProvider,
-                            PreferenceManager.getDefaultSharedPreferences(activity)).execute(uri);
+
+                    new RetrieveAccessTokenTask(getApplicationContext()).execute(uri);
 
                     finish();
                     return true;
@@ -113,14 +106,16 @@ public class GetGlueAuthActivity extends BaseNavDrawerActivity {
 
         // mWebview.getSettings().setJavaScriptEnabled(true);
 
+        Log.d(TAG, "Initiating authorization request...");
         Resources res = getResources();
-        this.mConsumer = new DefaultOAuthConsumer(res.getString(R.string.getglue_consumer_key),
-                res.getString(R.string.getglue_consumer_secret));
-        this.mProvider = new DefaultOAuthProvider(GetGlue.REQUEST_URL, GetGlue.ACCESS_URL,
-                GetGlue.AUTHORIZE_URL);
-
-        Log.i(TAG, "Starting task to retrieve request token.");
-        new OAuthRequestTokenTask(this, mConsumer, mProvider, mWebview).execute();
+        try {
+            OAuthClientRequest request = com.uwetrottmann.getglue.GetGlue
+                    .getAuthorizationRequest(res.getString(R.string.getglue_client_id),
+                            GetGlueCheckin.OAUTH_CALLBACK_URL);
+            mWebview.loadUrl(request.getLocationUri());
+        } catch (OAuthSystemException e) {
+            Utils.trackExceptionAndLog(this, TAG, e);
+        }
     }
 
     public class RetrieveAccessTokenTask extends AsyncTask<Uri, Void, Integer> {
@@ -129,47 +124,22 @@ public class GetGlueAuthActivity extends BaseNavDrawerActivity {
 
         private static final int AUTH_SUCCESS = 1;
 
-        private SharedPreferences mPrefs;
+        private Context mContext;
 
-        private OAuthProvider mProvider;
-
-        private OAuthConsumer mConsumer;
-
-        public RetrieveAccessTokenTask(OAuthConsumer consumer, OAuthProvider provider,
-                SharedPreferences prefs) {
-            mPrefs = prefs;
-            mProvider = provider;
-            mConsumer = consumer;
+        public RetrieveAccessTokenTask(Context context) {
+            mContext = context;
         }
 
         /**
-         * Retrieve the oauth_verifier, and store the oauth and
-         * oauth_token_secret for future API calls.
+         * Retrieve the oauth_verifier, and store the oauth and oauth_token_secret for future API
+         * calls.
          */
         @Override
         protected Integer doInBackground(Uri... params) {
             final Uri uri = params[0];
-            final String oauth_verifier = uri.getQueryParameter("oauth_verifier");
+            final String authCode = uri.getQueryParameter("code");
 
-            try {
-                mProvider.retrieveAccessToken(mConsumer, oauth_verifier);
-
-                mPrefs.edit().putString(GetGlue.OAUTH_TOKEN, mConsumer.getToken())
-                        .putString(GetGlue.OAUTH_TOKEN_SECRET, mConsumer.getTokenSecret()).commit();
-
-                Log.i(TAG, "OAuth - Access Token Retrieved");
-                return AUTH_SUCCESS;
-            } catch (OAuthMessageSignerException e) {
-                Utils.trackExceptionAndLog(TAG, e);
-            } catch (OAuthNotAuthorizedException e) {
-                Utils.trackExceptionAndLog(TAG, e);
-            } catch (OAuthExpectationFailedException e) {
-                Utils.trackExceptionAndLog(TAG, e);
-            } catch (OAuthCommunicationException e) {
-                Utils.trackExceptionAndLog(TAG, e);
-            }
-
-            return AUTH_FAILED;
+            return fetchAndStoreTokens(mContext, authCode) ? AUTH_SUCCESS : AUTH_FAILED;
         }
 
         @Override
@@ -185,66 +155,46 @@ public class GetGlueAuthActivity extends BaseNavDrawerActivity {
         }
     }
 
-    public static class OAuthRequestTokenTask extends AsyncTask<Void, String, String> {
-        final String TAG = "OAuthRequestTokenTask";
+    /**
+     * Tries to obtain new tokens from GetGlue using the given auth code. Returns true if
+     * successful, returns false and clears any existing tokens if failing.
+     */
+    public static boolean fetchAndStoreTokens(Context context, String authCode) {
+        Resources resources = context.getResources();
+        OAuthAccessTokenResponse response = null;
 
-        private Context mContext;
-
-        private OAuthConsumer mConsumer;
-
-        private OAuthProvider mProvider;
-
-        private WebView mWebView;
-
-        public OAuthRequestTokenTask(Context context, OAuthConsumer consumer,
-                OAuthProvider provider, WebView webView) {
-            mContext = context;
-            mConsumer = consumer;
-            mProvider = provider;
-            mWebView = webView;
+        Log.d(TAG, "Building OAuth 2.0 token request...");
+        try {
+            response = GetGlue.getAccessTokenResponse(
+                    resources.getString(R.string.getglue_client_id),
+                    resources.getString(R.string.getglue_client_secret),
+                    GetGlueCheckin.OAUTH_CALLBACK_URL,
+                    authCode
+            );
+        } catch (OAuthSystemException e) {
+            response = null;
+            Utils.trackExceptionAndLog(context, TAG, e);
+        } catch (OAuthProblemException e) {
+            response = null;
+            Utils.trackExceptionAndLog(context, TAG, e);
         }
 
-        /**
-         * Retrieve the OAuth Request Token and present a browser to the user to
-         * authorize the token.
-         */
-        @Override
-        protected String doInBackground(Void... params) {
-            try {
-                Log.i(TAG, "Retrieving request token from GetGlue servers");
-                String authUrl = mProvider.retrieveRequestToken(mConsumer,
-                        GetGlue.OAUTH_CALLBACK_URL);
-
-                Log.i(TAG, "Popping a browser with the authorize URL");
-                publishProgress(authUrl);
-            } catch (OAuthMessageSignerException e) {
-                Utils.trackExceptionAndLog(TAG, e);
-                return e.getMessage();
-            } catch (OAuthNotAuthorizedException e) {
-                Utils.trackExceptionAndLog(TAG, e);
-                return e.getMessage();
-            } catch (OAuthExpectationFailedException e) {
-                Utils.trackExceptionAndLog(TAG, e);
-                return e.getMessage();
-            } catch (OAuthCommunicationException e) {
-                Utils.trackExceptionAndLog(TAG, e);
-                return e.getMessage();
-            }
-            return null;
+        if (response != null) {
+            Log.d(TAG, "Storing received OAuth 2.0 tokens...");
+            long expiresIn = response.getExpiresIn();
+            long expirationDate = System.currentTimeMillis()
+                    + expiresIn * DateUtils.SECOND_IN_MILLIS;
+            PreferenceManager.getDefaultSharedPreferences(context).edit()
+                    .putString(GetGlueSettings.KEY_AUTH_TOKEN, response.getAccessToken())
+                    .putLong(GetGlueSettings.KEY_AUTH_EXPIRATION, expirationDate)
+                    .putString(GetGlueSettings.KEY_REFRESH_TOKEN, response.getRefreshToken())
+                    .commit();
+            return true;
+        } else {
+            Log.d(TAG, "Failed, purging OAuth 2.0 tokens...");
+            GetGlueSettings.clearTokens(context);
+            return false;
         }
-
-        @Override
-        protected void onProgressUpdate(String... values) {
-            mWebView.loadUrl(values[0]);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            if (result != null) {
-                Toast.makeText(mContext, result, Toast.LENGTH_LONG).show();
-                ((GetGlueAuthActivity) mContext).finish();
-            }
-        }
-
     }
+
 }

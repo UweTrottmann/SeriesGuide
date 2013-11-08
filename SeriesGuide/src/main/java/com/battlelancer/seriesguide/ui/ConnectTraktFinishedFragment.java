@@ -1,17 +1,17 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.seriesguide.R;
 
 /**
  * Tells about successful connection, allows to continue adding shows from users
@@ -60,6 +60,6 @@ public class ConnectTraktFinishedFragment extends SherlockFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().sendView("Connect Trakt Finished");
+        Utils.trackView(getActivity(), "Connect Trakt Finished");
     }
 }

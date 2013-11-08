@@ -17,6 +17,15 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.Lists;
+import com.uwetrottmann.seriesguide.R;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -26,29 +35,21 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.Lists;
-import com.uwetrottmann.seriesguide.R;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
-import java.util.List;
-
 /**
- * Helps flag episodes in the local database and readies them for submission to
- * trakt.tv.
+ * Helps flag episodes in the local database and readies them for submission to trakt.tv.
  */
 public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
     /**
-     * Sent once the database ops are finished, sending to trakt may still be in
-     * progress or queued due to no available connection.
+     * Sent once the database ops are finished, sending to trakt may still be in progress or queued
+     * due to no available connection.
      */
     public class FlagTaskCompletedEvent {
+
         public FlagTaskType mType;
 
         public FlagTaskCompletedEvent(FlagTaskType type) {
@@ -81,7 +82,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
         protected int mShowTvdbId;
 
-        protected boolean mIsFlag;
+        protected int mEpisodeFlag;
 
         public abstract Uri getUri();
 
@@ -99,8 +100,8 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         /**
-         * Builds a list of {@link Flag} objects to pass to a
-         * {@link FlagTapedTask} to submit to trakt.
+         * Builds a list of {@link Flag} objects to pass to a {@link FlagTapedTask} to submit to
+         * trakt.
          */
         protected List<Flag> createEpisodeFlags() {
             List<Flag> episodes = Lists.newArrayList();
@@ -112,7 +113,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
             // query and add episodes to list
             final Cursor episodeCursor = mContext.getContentResolver().query(
                     uri,
-                    new String[] {
+                    new String[]{
                             Episodes.SEASON, Episodes.NUMBER
                     }, selection, null, null);
             if (episodeCursor != null) {
@@ -126,16 +127,15 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         /**
-         * Return the column which should get updated, either {@link Episodes}
-         * .WATCHED or {@link Episodes}.COLLECTED.
+         * Return the column which should get updated, either {@link Episodes} .WATCHED or {@link
+         * Episodes}.COLLECTED.
          */
         protected abstract String getColumn();
 
         protected abstract ContentValues getContentValues();
 
         /**
-         * Builds and executes the database op required to flag episodes in the
-         * local database.
+         * Builds and executes the database op required to flag episodes in the local database.
          */
         public void updateDatabase() {
             // determine query uri
@@ -155,8 +155,8 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         /**
-         * Determines the last watched episode and returns its TVDb id or -1 if
-         * it can't be determined.
+         * Determines the last watched episode and returns its TVDb id or -1 if it can't be
+         * determined.
          */
         protected abstract int getLastEpisodeTvdbId();
 
@@ -176,8 +176,8 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         /**
-         * Returns the text which should be prepended to the submission status
-         * message. Tells e.g. which episode was flagged watched.
+         * Returns the text which should be prepended to the submission status message. Tells e.g.
+         * which episode was flagged watched.
          */
         public abstract String getNotificationText();
     }
@@ -186,17 +186,20 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
      * Flagging single episodes watched or collected.
      */
     public static abstract class EpisodeType extends FlagTaskType {
+
         protected int mEpisodeTvdbId;
+
         protected int mSeason;
+
         protected int mEpisode;
 
         public EpisodeType(Context context, int showTvdbId, int episodeTvdbId, int season,
-                int episode, boolean isFlag) {
+                int episode, int episodeFlags) {
             super(context, showTvdbId);
             mEpisodeTvdbId = episodeTvdbId;
             mSeason = season;
             mEpisode = episode;
-            mIsFlag = isFlag;
+            mEpisodeFlag = episodeFlags;
         }
 
         @Override
@@ -212,7 +215,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         @Override
         protected ContentValues getContentValues() {
             ContentValues values = new ContentValues();
-            values.put(getColumn(), mIsFlag);
+            values.put(getColumn(), mEpisodeFlag);
             return values;
         }
 
@@ -228,8 +231,8 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
     public static class EpisodeWatchedType extends EpisodeType {
 
         public EpisodeWatchedType(Context context, int showTvdbId, int episodeTvdbId, int season,
-                int episode, boolean isFlag) {
-            super(context, showTvdbId, episodeTvdbId, season, episode, isFlag);
+                int episode, int episodeFlags) {
+            super(context, showTvdbId, episodeTvdbId, season, episode, episodeFlags);
             mAction = FlagAction.EPISODE_WATCHED;
         }
 
@@ -240,14 +243,13 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
         @Override
         protected int getLastEpisodeTvdbId() {
-            if (mIsFlag) {
-                return mEpisodeTvdbId;
-            } else {
+            if (EpisodeTools.isUnwatched(mEpisodeFlag)) {
+                // unwatched episode
                 int lastWatchedId = -1;
 
                 final Cursor show = mContext.getContentResolver().query(
                         Shows.buildShowUri(String.valueOf(mShowTvdbId)),
-                        new String[] {
+                        new String[]{
                                 Shows._ID, Shows.LASTWATCHEDID
                         }, null, null, null);
                 if (show != null) {
@@ -259,7 +261,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                                 .query(Episodes.buildEpisodesOfShowUri(String
                                         .valueOf(mShowTvdbId)),
                                         PROJECTION_EPISODE, SELECTION_PREVIOUS_WATCHED,
-                                        new String[] {
+                                        new String[]{
                                                 season, season, String.valueOf(mEpisode)
                                         }, ORDER_PREVIOUS_WATCHED);
                         if (latestWatchedEpisode != null) {
@@ -275,15 +277,26 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                 }
 
                 return lastWatchedId;
+            } else {
+                // watched or skipped episode
+                return mEpisodeTvdbId;
             }
         }
 
         @Override
         public String getNotificationText() {
+            if (EpisodeTools.isSkipped(mEpisodeFlag)) {
+                // skipping is not sent to trakt, no need for a message
+                return null;
+            }
+
+            // show episode seen/unseen message
             final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(mContext);
             String number = Utils.getEpisodeNumber(prefs, mSeason, mEpisode);
-            return mContext.getString(mIsFlag ? R.string.trakt_seen : R.string.trakt_notseen,
+            return mContext.getString(
+                    EpisodeTools.isWatched(mEpisodeFlag) ? R.string.trakt_seen
+                            : R.string.trakt_notseen,
                     number);
         }
     }
@@ -291,8 +304,8 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
     public static class EpisodeCollectedType extends EpisodeType {
 
         public EpisodeCollectedType(Context context, int showTvdbId, int episodeTvdbId, int season,
-                int episode, boolean isFlag) {
-            super(context, showTvdbId, episodeTvdbId, season, episode, isFlag);
+                int episode, int episodeFlags) {
+            super(context, showTvdbId, episodeTvdbId, season, episode, episodeFlags);
             mAction = FlagAction.EPISODE_COLLECTED;
         }
 
@@ -312,7 +325,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
             final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(mContext);
             String number = Utils.getEpisodeNumber(prefs, mSeason, mEpisode);
-            return mContext.getString(mIsFlag ? R.string.trakt_collected
+            return mContext.getString(mEpisodeFlag == 1 ? R.string.trakt_collected
                     : R.string.trakt_notcollected, number);
         }
     }
@@ -321,15 +334,17 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
      * Flagging whole seasons watched or collected.
      */
     public static abstract class SeasonType extends FlagTaskType {
+
         protected int mSeasonTvdbId;
+
         protected int mSeason;
 
         public SeasonType(Context context, int showTvdbId, int seasonTvdbId, int season,
-                boolean isFlag) {
+                int episodeFlags) {
             super(context, showTvdbId);
             mSeasonTvdbId = seasonTvdbId;
             mSeason = season;
-            mIsFlag = isFlag;
+            mEpisodeFlag = episodeFlags;
         }
 
         public int getSeasonTvdbId() {
@@ -349,17 +364,19 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         @Override
         protected ContentValues getContentValues() {
             ContentValues values = new ContentValues();
-            values.put(getColumn(), mIsFlag);
+            values.put(getColumn(), mEpisodeFlag);
             return values;
         }
 
         @Override
         public List<Flag> getEpisodes() {
-            if (mIsFlag) {
+            if (mEpisodeFlag != 0) {
+                // watched, skipped or collected season
                 List<Flag> episodes = Lists.newArrayList();
                 episodes.add(new Flag(mSeason, -1));
                 return episodes;
             } else {
+                // unwatched, not collected season
                 return createEpisodeFlags();
             }
         }
@@ -368,8 +385,8 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
     public static class SeasonWatchedType extends SeasonType {
 
         public SeasonWatchedType(Context context, int showTvdbId, int seasonTvdbId, int season,
-                boolean isFlag) {
-            super(context, showTvdbId, seasonTvdbId, season, isFlag);
+                int episodeFlags) {
+            super(context, showTvdbId, seasonTvdbId, season, episodeFlags);
             mAction = FlagAction.SEASON_WATCHED;
         }
 
@@ -380,7 +397,12 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
         @Override
         protected int getLastEpisodeTvdbId() {
-            if (mIsFlag) {
+            if (EpisodeTools.isUnwatched(mEpisodeFlag)) {
+                // unwatched season
+                // just reset
+                return 0;
+            } else {
+                // watched or skipped season
                 int lastWatchedId = -1;
 
                 // get the last flagged episode of the season
@@ -396,18 +418,22 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                 }
 
                 return lastWatchedId;
-            } else {
-                // just reset
-                return 0;
             }
         }
 
         @Override
         public String getNotificationText() {
+            if (EpisodeTools.isSkipped(mEpisodeFlag)) {
+                // skipping is not sent to trakt, no need for a message
+                return null;
+            }
+
             final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(mContext);
             String number = Utils.getEpisodeNumber(prefs, mSeason, -1);
-            return mContext.getString(mIsFlag ? R.string.trakt_seen : R.string.trakt_notseen,
+            return mContext.getString(
+                    EpisodeTools.isWatched(mEpisodeFlag) ? R.string.trakt_seen
+                            : R.string.trakt_notseen,
                     number);
         }
     }
@@ -415,8 +441,8 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
     public static class SeasonCollectedType extends SeasonType {
 
         public SeasonCollectedType(Context context, int showTvdbId, int seasonTvdbId, int season,
-                boolean isFlag) {
-            super(context, showTvdbId, seasonTvdbId, season, isFlag);
+                int episodeFlags) {
+            super(context, showTvdbId, seasonTvdbId, season, episodeFlags);
             mAction = FlagAction.SEASON_COLLECTED;
         }
 
@@ -435,16 +461,16 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
             final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(mContext);
             String number = Utils.getEpisodeNumber(prefs, mSeason, -1);
-            return mContext.getString(mIsFlag ? R.string.trakt_collected
+            return mContext.getString(mEpisodeFlag == 1 ? R.string.trakt_collected
                     : R.string.trakt_notcollected, number);
         }
     }
 
     public static abstract class ShowType extends FlagTaskType {
 
-        public ShowType(Context context, int showTvdbId, boolean isFlag) {
+        public ShowType(Context context, int showTvdbId, int episodeFlags) {
             super(context, showTvdbId);
-            mIsFlag = isFlag;
+            mEpisodeFlag = episodeFlags;
         }
 
         @Override
@@ -460,14 +486,14 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         @Override
         protected ContentValues getContentValues() {
             ContentValues values = new ContentValues();
-            values.put(getColumn(), mIsFlag);
+            values.put(getColumn(), mEpisodeFlag);
             return values;
         }
 
         @Override
         public List<Flag> getEpisodes() {
             // only for removing flags we need single episodes
-            if (!mIsFlag) {
+            if (mEpisodeFlag == 0) {
                 return createEpisodeFlags();
             } else {
                 return null;
@@ -481,8 +507,9 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     public static class ShowWatchedType extends ShowType {
-        public ShowWatchedType(Context context, int showTvdbId, boolean isFlag) {
-            super(context, showTvdbId, isFlag);
+
+        public ShowWatchedType(Context context, int showTvdbId, int episodeFlags) {
+            super(context, showTvdbId, episodeFlags);
             mAction = FlagAction.SHOW_WATCHED;
         }
 
@@ -493,19 +520,20 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
         @Override
         protected int getLastEpisodeTvdbId() {
-            if (mIsFlag) {
-                // we don't care
-                return -1;
-            } else {
+            if (EpisodeTools.isUnwatched(mEpisodeFlag)) {
                 // just reset
                 return 0;
+            } else {
+                // we don't care
+                return -1;
             }
         }
     }
 
     public static class ShowCollectedType extends ShowType {
-        public ShowCollectedType(Context context, int showTvdbId, boolean isFlag) {
-            super(context, showTvdbId, isFlag);
+
+        public ShowCollectedType(Context context, int showTvdbId, int episodeFlags) {
+            super(context, showTvdbId, episodeFlags);
             mAction = FlagAction.SHOW_COLLECTED;
         }
 
@@ -545,7 +573,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         @Override
         protected ContentValues getContentValues() {
             ContentValues values = new ContentValues();
-            values.put(Episodes.WATCHED, true);
+            values.put(Episodes.WATCHED, EpisodeFlags.WATCHED);
             return values;
         }
 
@@ -586,47 +614,47 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     public FlagTask episodeWatched(int episodeTvdbId, int season, int episode,
-            boolean isFlag) {
+            int episodeFlags) {
+        EpisodeTools.validateFlags(episodeFlags);
         mType = new EpisodeWatchedType(mContext, mShowTvdbId, episodeTvdbId, season, episode,
-                isFlag);
+                episodeFlags);
         return this;
     }
 
     public FlagTask episodeCollected(int episodeTvdbId, int season, int episode,
             boolean isFlag) {
         mType = new EpisodeCollectedType(mContext, mShowTvdbId, episodeTvdbId, season, episode,
-                isFlag);
+                isFlag ? 1 : 0);
         return this;
     }
 
     /**
-     * Flag all episodes previous to this one as watched. Previous in terms of
-     * air date.
-     * 
-     * @param firstaired
+     * Flag all episodes previous to this one as watched. Previous in terms of air date.
      */
     public FlagTask episodeWatchedPrevious(long episodeFirstAired) {
         mType = new EpisodeWatchedPreviousType(mContext, mShowTvdbId, episodeFirstAired);
         return this;
     }
 
-    public FlagTask seasonWatched(int seasonTvdbId, int season, boolean isFlag) {
-        mType = new SeasonWatchedType(mContext, mShowTvdbId, seasonTvdbId, season, isFlag);
+    public FlagTask seasonWatched(int seasonTvdbId, int season, int episodeFlags) {
+        EpisodeTools.validateFlags(episodeFlags);
+        mType = new SeasonWatchedType(mContext, mShowTvdbId, seasonTvdbId, season, episodeFlags);
         return this;
     }
 
     public FlagTask seasonCollected(int seasonTvdbId, int season, boolean isFlag) {
-        mType = new SeasonCollectedType(mContext, mShowTvdbId, seasonTvdbId, season, isFlag);
+        mType = new SeasonCollectedType(mContext, mShowTvdbId, seasonTvdbId, season,
+                isFlag ? 1 : 0);
         return this;
     }
 
     public FlagTask showWatched(boolean isFlag) {
-        mType = new ShowWatchedType(mContext, mShowTvdbId, isFlag);
+        mType = new ShowWatchedType(mContext, mShowTvdbId, isFlag ? 1 : 0);
         return this;
     }
 
     public FlagTask showCollected(boolean isFlag) {
-        mType = new ShowCollectedType(mContext, mShowTvdbId, isFlag);
+        mType = new ShowCollectedType(mContext, mShowTvdbId, isFlag ? 1 : 0);
         return this;
     }
 
@@ -634,13 +662,19 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
      * Run the task on the thread pool.
      */
     public void execute() {
-        AndroidUtils.executeAsyncTask(this, new Void[] {});
+        AndroidUtils.executeAsyncTask(this, new Void[]{});
     }
 
     @Override
     protected Integer doInBackground(Void... params) {
+        /**
+         * Do net send to trakt if we skipped episodes, this is not supported by trakt.
+         * However, if the skipped flag is removed this will be handled identical
+         * to flagging as unwatched.
+         */
         // check for valid trakt credentials
-        mIsTraktInvolved = ServiceUtils.hasTraktCredentials(mContext);
+        mIsTraktInvolved = !EpisodeTools.isSkipped(mType.mEpisodeFlag)
+                && ServiceUtils.hasTraktCredentials(mContext);
 
         // prepare trakt stuff
         if (mIsTraktInvolved) {
@@ -650,9 +684,12 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
             List<Flag> episodes = mType.getEpisodes();
 
+            // convert to boolean flag used by trakt (un/watched, un/collected)
+            boolean isFlag = !EpisodeTools.isUnwatched(mType.mEpisodeFlag);
+
             // Add a new taped flag task to the tape queue
             FlagTapeEntryQueue.getInstance(mContext).add(
-                    new FlagTapeEntry(mType.mAction, mType.mShowTvdbId, episodes, mType.mIsFlag));
+                    new FlagTapeEntry(mType.mAction, mType.mShowTvdbId, episodes, isFlag));
         }
 
         // always update local database
@@ -690,7 +727,9 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         EventBus.getDefault().post(new FlagTaskCompletedEvent(mType));
     }
 
-    /** Lower season or if season is equal has to have a lower episode number. */
+    /**
+     * Lower season or if season is equal has to have a lower episode number.
+     */
     private static final String SELECTION_PREVIOUS_WATCHED = Episodes.SEASON + "<? OR "
             + "(" + Episodes.SEASON + "=? AND " + Episodes.NUMBER + "<?)";
 
@@ -698,7 +737,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
             + Episodes.SEASON + " DESC,"
             + Episodes.NUMBER + " DESC";
 
-    private static final String[] PROJECTION_EPISODE = new String[] {
+    private static final String[] PROJECTION_EPISODE = new String[]{
             Episodes._ID
     };
 }

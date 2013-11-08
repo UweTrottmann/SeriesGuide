@@ -17,11 +17,24 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import com.actionbarsherlock.app.SherlockDialogFragment;
+import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
+import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
+import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
+import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
@@ -34,24 +47,14 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockDialogFragment;
-import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
-import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
-import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
-import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
-
 public abstract class GenericCheckInDialogFragment extends SherlockDialogFragment {
 
     public interface InitBundle {
+
         /**
-         * IMDb id of episode or movie. <b>Required.</b>
+         * Title of show or movie. <b>Required.</b>
          */
-        String IMDB_ID = "imdbid";
+        String TITLE = "title";
 
         /**
          * Title of episode or movie. <b>Required.</b>
@@ -64,9 +67,19 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         String DEFAULT_MESSAGE = "message";
 
         /**
+         * Movie IMDb id. <b>Required for movies.</b>
+         */
+        String MOVIE_IMDB_ID = "movieimdbid";
+
+        /**
          * Show TVDb id. <b>Required for episodes.</b>
          */
-        String SHOW_TVDB_ID = "tvdbid";
+        String SHOW_TVDB_ID = "showtvdbid";
+
+        /**
+         * Show GetGlue id. <b>Required for episodes.</b>
+         */
+        String SHOW_GETGLUE_ID = "showgetglueid";
 
         /**
          * Season number. <b>Required for episodes.</b>
@@ -98,7 +111,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         super.onCreate(savedInstanceState);
 
         // hide title
-        if (SeriesGuidePreferences.THEME == R.style.ICSBaseTheme) {
+        if (SeriesGuidePreferences.THEME == R.style.AndroidTheme) {
             setStyle(STYLE_NO_TITLE, 0);
         } else {
             setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog_CheckIn);
@@ -106,13 +119,14 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         final View layout = inflater.inflate(R.layout.checkin_dialog, null);
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getSherlockActivity());
 
         // some required values
-        final String imdbid = getArguments().getString(InitBundle.IMDB_ID);
+        final String title = getArguments().getString(InitBundle.TITLE);
         final String defaultMessage = getArguments().getString(InitBundle.DEFAULT_MESSAGE);
         final String itemTitle = getArguments().getString(InitBundle.ITEM_TITLE);
 
@@ -153,7 +167,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         mToggleGetGlueButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                handleGetGlueToggle(prefs, imdbid, isChecked);
+                handleGetGlueToggle(isChecked);
 
                 mGetGlueChecked = isChecked;
                 prefs.edit().putBoolean(SeriesGuidePreferences.KEY_SHAREWITHGETGLUE, isChecked)
@@ -197,7 +211,10 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
                 final String message = mMessageBox.getText().toString();
 
                 if (mGetGlueChecked) {
-                    onGetGlueCheckin(prefs, imdbid, message);
+                    boolean shouldAbort = onGetGlueCheckin(title, message);
+                    if (shouldAbort) {
+                        return;
+                    }
                 }
 
                 if (mTraktChecked) {
@@ -251,9 +268,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
             fixButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(getActivity(), FixGetGlueCheckInActivity.class);
-                    i.putExtra(FixGetGlueCheckInActivity.InitBundle.SHOW_ID, String.valueOf(tvdbId));
-                    startActivity(i);
+                    launchFixGetGlueCheckInActivity(v, tvdbId);
                 }
             });
         } else {
@@ -264,9 +279,10 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
 
     /**
      * Start the GetGlue check-in task.
+     *
+     * @return Return whether the check-in should be aborted.
      */
-    protected abstract void onGetGlueCheckin(final SharedPreferences prefs, final String imdbid,
-            final String message);
+    protected abstract boolean onGetGlueCheckin(final String title, final String comment);
 
     /**
      * Start the trakt check-in task.
@@ -281,8 +297,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         }
     }
 
-    protected abstract void handleGetGlueToggle(final SharedPreferences prefs, final String imdbid,
-            boolean isChecked);
+    protected abstract void handleGetGlueToggle(boolean isChecked);
 
     protected void ensureGetGlueAuthAndConnection() {
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
@@ -294,6 +309,14 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
                     GetGlueAuthActivity.class);
             startActivity(i);
         }
+    }
+
+    protected void launchFixGetGlueCheckInActivity(View v, int showTvdbId) {
+        Intent i = new Intent(getActivity(), FixGetGlueCheckInActivity.class);
+        i.putExtra(FixGetGlueCheckInActivity.InitBundle.SHOW_TVDB_ID, String.valueOf(showTvdbId));
+        ActivityCompat.startActivity(getActivity(), i,
+                ActivityOptionsCompat.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
+                        .toBundle());
     }
 
 }

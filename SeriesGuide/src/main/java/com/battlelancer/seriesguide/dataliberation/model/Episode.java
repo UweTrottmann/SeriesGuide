@@ -20,6 +20,8 @@ public class Episode {
 
     public boolean watched;
 
+    public boolean skipped;
+
     public boolean collected;
 
     @SerializedName("imdb_id")

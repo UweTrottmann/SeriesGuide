@@ -1,17 +1,17 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.seriesguide.R;
 
+import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+
 /**
  * Shows a {@link ConnectTraktFragment} or if already connected to trakt a
- * {@link TraktCredentialsDialogFragment}.
+ * {@link ConnectTraktCredentialsFragment}.
  */
 public class ConnectTraktActivity extends BaseActivity {
 

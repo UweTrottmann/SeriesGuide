@@ -17,6 +17,12 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.migration.MigrationActivity;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.CheatSheet;
+import com.uwetrottmann.seriesguide.R;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -31,12 +37,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.migration.MigrationActivity;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.androidutils.CheatSheet;
-import com.uwetrottmann.seriesguide.R;
 
 /**
  * Helps the user to get familiar with the basic functions of SeriesGuide. Shown
@@ -143,7 +143,7 @@ public class FirstRunFragment extends SherlockFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().sendView(TAG);
+        Utils.trackView(getActivity(), TAG);
     }
 
     private void setFirstRunDismissed() {
@@ -169,7 +169,7 @@ public class FirstRunFragment extends SherlockFragment {
         }
     }
 
-    private static void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Click", label, (long) 0);
+    private void fireTrackerEvent(String label) {
+        Utils.trackClick(getActivity(), TAG, label);
     }
 }

@@ -1,6 +1,13 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -17,13 +24,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
-import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.seriesguide.R;
 
 /**
  * Dialog to rename or remove a list. 
@@ -49,7 +49,7 @@ public class ListManageDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
 
         // hide title, use custom theme
-        if (SeriesGuidePreferences.THEME == R.style.ICSBaseTheme) {
+        if (SeriesGuidePreferences.THEME == R.style.AndroidTheme) {
             setStyle(STYLE_NO_TITLE, 0);
         } else {
             setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog);
@@ -129,7 +129,7 @@ public class ListManageDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().sendView("List Manage Dialog");
+        Utils.trackView(getActivity(), "List Manage Dialog");
     }
 
     @Override

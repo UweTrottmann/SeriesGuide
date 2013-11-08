@@ -17,6 +17,9 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,9 +34,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.seriesguide.R;
 
 /**
  * Displays a menu to allow quick navigation within the app.
@@ -234,8 +234,8 @@ public class SlidingMenuFragment extends ListFragment {
         }
     }
 
-    private static void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    private void fireTrackerEvent(String label) {
+        Utils.trackAction(getActivity(), TAG, label);
     }
 
 }

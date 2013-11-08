@@ -1,6 +1,13 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
+import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment.CharAndDigitInputFilter;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.app.Activity;
 import android.content.ContentValues;
 import android.os.Bundle;
@@ -16,13 +23,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
-import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment.CharAndDigitInputFilter;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.seriesguide.R;
 
 /**
  * Displays a dialog to add a new list to lists.
@@ -42,7 +42,7 @@ public class AddListDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
 
         // hide title, use custom theme
-        if (SeriesGuidePreferences.THEME == R.style.ICSBaseTheme) {
+        if (SeriesGuidePreferences.THEME == R.style.AndroidTheme) {
             setStyle(STYLE_NO_TITLE, 0);
         } else {
             setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog);
@@ -112,7 +112,7 @@ public class AddListDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().sendView("Add List Dialog");
+        Utils.trackView(getActivity(), "Add List Dialog");
     }
 
     /**

@@ -17,20 +17,20 @@
 
 package com.battlelancer.seriesguide.loaders;
 
-import android.content.Context;
-import android.os.Bundle;
-
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
+import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Comment;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 
+import android.content.Context;
+import android.os.Bundle;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit.RetrofitError;
 
 /**
  * Loads up comments from trakt for a movie (tvdbId arg is 0), show (episode arg
@@ -52,28 +52,24 @@ public class TraktCommentsLoader extends GenericSimpleLoader<List<Comment>> {
         int tvdbId = mArgs.getInt(ShareItems.TVDBID);
         int episode = mArgs.getInt(ShareItems.EPISODE);
 
-        ServiceManager manager = ServiceUtils.getTraktServiceManager(getContext());
+        Trakt manager = ServiceUtils.getTraktServiceManager(getContext());
         List<Comment> comments = new ArrayList<Comment>();
         try {
             if (tvdbId == 0) {
                 // movie comments
                 int tmdbId = mArgs.getInt(ShareItems.TMDBID);
-                comments = manager.movieService().comments(tmdbId).fire();
+                comments = manager.movieService().comments(tmdbId);
             } else if (episode == 0) {
                 // show comments
-                comments = manager.showService().comments(tvdbId).fire();
+                comments = manager.showService().comments(tvdbId);
             } else {
                 // episode comments
                 int season = mArgs.getInt(ShareItems.SEASON);
-                comments = manager.showService().episodeComments(tvdbId, season, episode)
-                        .fire();
+                comments = manager.showService().episodeComments(tvdbId, season, episode);
             }
 
-        } catch (TraktException e) {
-            Utils.trackExceptionAndLog(TAG, e);
-            return null;
-        } catch (ApiException e) {
-            Utils.trackExceptionAndLog(TAG, e);
+        } catch (RetrofitError e) {
+            Utils.trackExceptionAndLog(getContext(), TAG, e);
             return null;
         }
 

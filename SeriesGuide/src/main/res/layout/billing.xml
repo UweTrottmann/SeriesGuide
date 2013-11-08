@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:text="@string/upgrade_title"
+            android:text="@string/action_upgrade"
             android:textAppearance="@style/TextAppearance.Large.Light" />
 
         <TextView
@@ -41,7 +41,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/large_padding"
             android:enabled="false"
-            android:text="@string/upgrade_action" />
+            android:text="@string/action_upgrade" />
 
         <TextView
             android:id="@+id/textViewBillingExisting"

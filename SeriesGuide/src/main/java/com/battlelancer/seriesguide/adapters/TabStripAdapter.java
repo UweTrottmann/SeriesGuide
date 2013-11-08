@@ -17,14 +17,14 @@
 
 package com.battlelancer.seriesguide.adapters;
 
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-
-import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -35,13 +35,19 @@ import java.util.Locale;
 public class TabStripAdapter extends FragmentPagerAdapter {
 
     private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
+
     private Context mContext;
+
     private ViewPager mViewPager;
+
     private PagerSlidingTabStrip mTabStrip;
 
     static final class TabInfo {
+
         private final Class<?> mClass;
+
         private final Bundle mArgs;
+
         private final int mTitleRes;
 
         TabInfo(Class<?> fragmentClass, Bundle args, int titleRes) {
@@ -61,9 +67,18 @@ public class TabStripAdapter extends FragmentPagerAdapter {
         mTabStrip.setViewPager(mViewPager);
     }
 
+    /**
+     * Adds a new tab. Make sure to call {@link #updateTabs} after you have added them all.
+     */
     public void addTab(int titleRes, Class<?> fragmentClass, Bundle args) {
         TabInfo tab = new TabInfo(fragmentClass, args, titleRes);
         mTabs.add(tab);
+    }
+
+    /**
+     * Notifies the adapter and tab strip that the tabs have changed.
+     */
+    public void updateTabs() {
         notifyDataSetChanged();
         mTabStrip.notifyDataSetChanged();
     }

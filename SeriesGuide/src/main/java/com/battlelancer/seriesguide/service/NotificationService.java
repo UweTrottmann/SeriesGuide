@@ -53,7 +53,8 @@ import java.util.List;
 
 public class NotificationService extends IntentService {
 
-    private static final String KEY_EPISODE_CLEARED_TIME = "com.battlelancer.seriesguide.episode_cleared_time";
+    private static final String KEY_EPISODE_CLEARED_TIME
+            = "com.battlelancer.seriesguide.episode_cleared_time";
 
     private static final boolean DEBUG = false;
 
@@ -63,11 +64,11 @@ public class NotificationService extends IntentService {
 
     private static final int REQUEST_CODE_ACTION_CHECKIN = 4;
 
-    private static final long[] VIBRATION_PATTERN = new long[] {
+    private static final long[] VIBRATION_PATTERN = new long[]{
             0, 100, 200, 100, 100, 100
     };
 
-    private static final String[] PROJECTION = new String[] {
+    private static final String[] PROJECTION = new String[]{
             Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.FIRSTAIREDMS,
             Shows.TITLE, Shows.NETWORK, Episodes.NUMBER, Episodes.SEASON, Shows.POSTER,
             Episodes.OVERVIEW
@@ -82,6 +83,7 @@ public class NotificationService extends IntentService {
             + Episodes.SELECTION_NOWATCHED;
 
     interface NotificationQuery {
+
         int _ID = 0;
 
         int TITLE = 1;
@@ -106,7 +108,7 @@ public class NotificationService extends IntentService {
         setIntentRedelivery(true);
     }
 
-    @TargetApi(16)
+    @TargetApi(android.os.Build.VERSION_CODES.KITKAT)
     @Override
     protected void onHandleIntent(Intent intent) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -151,9 +153,9 @@ public class NotificationService extends IntentService {
             selection.append(Episodes.SELECTION_NOSPECIALS);
         }
         final Cursor upcomingEpisodes = getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
-                PROJECTION, selection.toString(), new String[] {
-                    String.valueOf(fakeNow - 12 * DateUtils.HOUR_IN_MILLIS)
-                }, SORTING);
+                PROJECTION, selection.toString(), new String[]{
+                String.valueOf(fakeNow - 12 * DateUtils.HOUR_IN_MILLIS)
+        }, SORTING);
 
         if (upcomingEpisodes != null) {
             int notificationThreshold = NotificationSettings.getLatestToIncludeTreshold(this);
@@ -281,7 +283,11 @@ public class NotificationService extends IntentService {
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(this, NotificationService.class);
         PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
-        am.set(AlarmManager.RTC_WAKEUP, wakeUpTime, pi);
+        if (AndroidUtils.isKitKatOrHigher()) {
+            am.setExact(AlarmManager.RTC_WAKEUP, wakeUpTime, pi);
+        } else {
+            am.set(AlarmManager.RTC_WAKEUP, wakeUpTime, pi);
+        }
     }
 
     /**
@@ -301,8 +307,8 @@ public class NotificationService extends IntentService {
     }
 
     /**
-     * Resets the air time of the last notified about episode. Afterwards
-     * notifications for episodes may appear, which were already notified about.
+     * Resets the air time of the last notified about episode. Afterwards notifications for episodes
+     * may appear, which were already notified about.
      */
     public static void resetLastEpisodeAirtime(final SharedPreferences prefs) {
         prefs.edit().putLong(NotificationSettings.KEY_LAST_CLEARED, 0)
@@ -336,9 +342,9 @@ public class NotificationService extends IntentService {
             contentTitle = showTitle
                     + " "
                     + Utils.getEpisodeNumber(
-                            PreferenceManager.getDefaultSharedPreferences(this),
-                            upcomingEpisodes.getInt(NotificationQuery.SEASON),
-                            upcomingEpisodes.getInt(NotificationQuery.NUMBER));
+                    PreferenceManager.getDefaultSharedPreferences(this),
+                    upcomingEpisodes.getInt(NotificationQuery.SEASON),
+                    upcomingEpisodes.getInt(NotificationQuery.NUMBER));
             contentText = getString(R.string.upcoming_show_detailed, airs, network);
 
             Intent notificationIntent = new Intent(context, EpisodesActivity.class);
@@ -470,7 +476,8 @@ public class NotificationService extends IntentService {
         Notification notification = nb.build();
 
         // use string resource id, always unique within app
-        final NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationManager nm = (NotificationManager) getSystemService(
+                Context.NOTIFICATION_SERVICE);
         nm.notify(R.string.upcoming_show, notification);
     }
 }

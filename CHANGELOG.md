@@ -5,6 +5,50 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 9 *(2013-11-08)*
+----------------------------
+
+* Skip an episode or an entire season if you don't want to watch right now.
+* Android 4.4 (KitKat) compatible.
+* Moved 'Migrate from X' action to service settings.
+* New backend for GetGlue and trakt.
+
+### Detailed changes:
+
+#### 9-beta5 *(2013-11-06)*
+
+* TWEAK Always crop episode image in episode details, tap to view original.
+* TWEAK Use dark action bar and white item selector for Android Dark theme.
+* TWEAK Removed duplicate search action from shows menu, is accessible via nav drawer.
+* FIX Action items not readable in episode details using white theme on phones.
+* FIX Random crash on Android 4.4 (KitKat), when syncing with trakt, when shows got added automatically, when adding shows with lots of episodes.
+* FIX Check marks in activity stream only flagging as watched.
+* FIX GetGlue id has to be entered multiple times when checking a show in for the first time.
+* FIX Search result images are too small on high resolution phones.
+
+#### 9-beta4 *(2013-11-04)*
+
+* FEATURE Skip an episode or an entire season you don't want to watch right now.
+* TWEAK Speeded up screen transitions, making the app even faster.
+* TWEAK Built and optimized for Android 4.4 (KitKat).
+* FIX Various crashes, related to in-app billing, syncing with trakt, connecting to trakt.
+
+#### 9-beta3 *(2013-10-31)*
+
+* TWEAK Moved trakt integration to new backend.
+
+#### 9-beta2 *(2013-10-29)*
+
+* FIX Crash fix for In-App billing.
+
+#### 9-beta1 *(2013-10-28)*
+
+* TWEAK Switch to new GetGlue v3 API. Requires giving permission to SeriesGuide once. Setting a GetGlue id once before checking into a new show.
+* TWEAK Move update progress bar below action bar. Use it for poster loading progress as well.
+* TWEAK Improve poster and episode image full screen view: two-finger zoom, navigation stays visible.
+* TWEAK Change filter icon state if a filter is active. Thanks @adneal!
+* TWEAK Moved 'Migrate from X' action to service settings. Grouped SeriesGuide and GetGlue service settings
+
 Version 8.3 *(2013-10-29)*
 -----------------
 

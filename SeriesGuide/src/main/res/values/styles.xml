@@ -197,6 +197,16 @@
         <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/TextAppearance.ActionBar</item>
     </style>
 
+    <style name="ActionBar.Translucent">
+        <item name="background">@color/background_translucent</item>
+        <item name="android:background">@color/background_translucent</item>
+    </style>
+
+    <style name="ActionBar.Invisible">
+        <item name="background">@null</item>
+        <item name="android:background">@null</item>
+    </style>
+
     <style name="ActionBarTabStyle" parent="Widget.Sherlock.ActionBar.TabBar">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:background">@drawable/tab_indicator</item>
@@ -360,6 +370,11 @@
 
     <!-- Dark styles -->
 
+    <!-- ABS -->
+    <style name="ActionBarDark" parent="Widget.Sherlock.ActionBar">
+        <item name="background">@drawable/sg_actionbar_background</item>
+        <item name="android:background">@drawable/sg_actionbar_background</item>
+    </style>
 
     <!-- Buttons -->
     <style name="Widget.Android.Button" parent="android:Widget.Button">

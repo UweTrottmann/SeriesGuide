@@ -37,6 +37,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
 import com.google.myjson.Gson;
@@ -151,11 +152,11 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         } catch (JsonIOException e) {
             // Only catch IO exception as we want to know if exporting fails due
             // to a JsonSyntaxException
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(mContext, TAG, e);
             return ERROR;
         } catch (IOException e) {
             // Backup failed
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(mContext, TAG, e);
             return ERROR;
         } finally {
             shows.close();
@@ -189,10 +190,10 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         } catch (JsonIOException e) {
             // Only catch IO exception as we want to know if exporting fails due
             // to a JsonSyntaxException
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(mContext, TAG, e);
             return ERROR;
         } catch (IOException e) {
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(mContext, TAG, e);
             return ERROR;
         } finally {
             lists.close();
@@ -341,7 +342,9 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             episode.episode = episodesCursor.getInt(EpisodesQuery.NUMBER);
             episode.episodeAbsolute = episodesCursor.getInt(EpisodesQuery.NUMBER_ABSOLUTE);
             episode.episodeDvd = episodesCursor.getDouble(EpisodesQuery.NUMBER_DVD);
-            episode.watched = episodesCursor.getInt(EpisodesQuery.WATCHED) == 1;
+            int episodeFlag = episodesCursor.getInt(EpisodesQuery.WATCHED);
+            episode.watched = EpisodeTools.isWatched(episodeFlag);
+            episode.skipped = EpisodeTools.isSkipped(episodeFlag);
             episode.collected = episodesCursor.getInt(EpisodesQuery.COLLECTED) == 1;
             episode.title = episodesCursor.getString(EpisodesQuery.TITLE);
             episode.firstAired = episodesCursor.getLong(EpisodesQuery.FIRSTAIRED);

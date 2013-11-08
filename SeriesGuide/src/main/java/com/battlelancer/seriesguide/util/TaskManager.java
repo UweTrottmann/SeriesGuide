@@ -17,27 +17,30 @@
 
 package com.battlelancer.seriesguide.util;
 
-import android.content.Context;
-import android.os.AsyncTask;
-import android.widget.Toast;
-
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.seriesguide.R;
 
+import android.content.Context;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
+import android.widget.Toast;
+
 import java.util.List;
 
 /**
- * Inspired by florianmski's traktoid TraktManager. This class is used to hold
- * running tasks, so it can execute independently from a running activity (so
- * the application can still be used while the update continues). A plain
- * AsyncTask could do this, too, but here we can also restrict it to one task
- * running at a time.
+ * Inspired by florianmski's traktoid TraktManager. This class is used to hold running tasks, so it
+ * can execute independently from a running activity (so the application can still be used while the
+ * update continues). A plain AsyncTask could do this, too, but here we can also restrict it to one
+ * task running at a time.
  */
 public class TaskManager {
 
     private static TaskManager _instance;
+
+    private Handler mHandler = new Handler(Looper.getMainLooper());
 
     private AddShowTask mAddTask;
 
@@ -62,7 +65,8 @@ public class TaskManager {
         performAddTask(wrapper, false);
     }
 
-    public synchronized void performAddTask(List<SearchResult> shows, boolean isSilent) {
+    public synchronized void performAddTask(final List<SearchResult> shows,
+            final boolean isSilent) {
         if (!isSilent) {
             // notify user here already
             if (shows.size() == 1) {
@@ -89,7 +93,13 @@ public class TaskManager {
             isRequiringNewTask = !mAddTask.addShows(shows);
         }
         if (isRequiringNewTask) {
-            mAddTask = (AddShowTask) new AddShowTask(mContext, shows, isSilent).execute();
+            // ensure this is called on our main thread (AsyncTask needs access to it)
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    mAddTask = (AddShowTask) new AddShowTask(mContext, shows, isSilent).execute();
+                }
+            });
         }
     }
 
@@ -102,8 +112,8 @@ public class TaskManager {
     }
 
     /**
-     * If no {@link UpdateTask} or {@link AddShowTask} is running a
-     * {@link JsonExportTask} is started in silent mode.
+     * If no {@link AddShowTask} is running a {@link JsonExportTask} is
+     * started in silent mode.
      */
     public void tryBackupTask() {
         if (!isAddTaskRunning()) {
@@ -112,11 +122,4 @@ public class TaskManager {
         }
     }
 
-    public boolean isBackupTaskRunning() {
-        if (mBackupTask == null || mBackupTask.getStatus() == AsyncTask.Status.FINISHED) {
-            return false;
-        } else {
-            return true;
-        }
-    }
 }

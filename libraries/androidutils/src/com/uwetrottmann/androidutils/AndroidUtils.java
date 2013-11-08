@@ -40,6 +40,10 @@ public class AndroidUtils {
 
     private static final int DEFAULT_BUFFER_SIZE = 8192;
 
+    public static boolean isKitKatOrHigher() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+    }
+
     public static boolean isJellyBeanOrHigher() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
     }

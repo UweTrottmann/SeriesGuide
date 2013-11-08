@@ -17,7 +17,7 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android"
         android:interpolator="@interpolator/decelerate_quint">
     <translate android:fromXDelta="33%" android:toXDelta="0%p"
-            android:duration="@android:integer/config_mediumAnimTime"/>
+            android:duration="@integer/animation_duration"/>
     <alpha android:fromAlpha="0.0" android:toAlpha="1.0"
-            android:duration="@android:integer/config_mediumAnimTime" />
+            android:duration="@integer/animation_duration" />
 </set>

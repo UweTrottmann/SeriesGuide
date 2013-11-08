@@ -37,12 +37,19 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_padding" >
 
-                <ImageView
-                    android:id="@+id/ImageViewShowInfoPoster"
-                    android:layout_width="140dp"
+                <FrameLayout
+                    android:id="@+id/containerShowInfoPoster"
                     android:layout_height="205dp"
-                    android:contentDescription="@string/description_poster"
-                    android:scaleType="centerCrop" />
+                    android:layout_width="140dp"
+                    android:foreground="?attr/custom_list_selector">
+
+                    <ImageView
+                        android:id="@+id/imageViewShowInfoPoster"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/description_poster"
+                        android:scaleType="centerCrop" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/showStatus"
@@ -50,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/default_padding"
                     android:layout_marginTop="@dimen/inline_padding"
-                    android:layout_toRightOf="@+id/ImageViewShowInfoPoster"
+                    android:layout_toRightOf="@+id/containerShowInfoPoster"
                     android:textAllCaps="true"
                     android:textAppearance="@style/TextAppearance.Light"
                     android:textIsSelectable="true" />
@@ -62,7 +69,7 @@
                     android:layout_below="@+id/showStatus"
                     android:layout_marginLeft="@dimen/default_padding"
                     android:layout_marginTop="@dimen/default_padding"
-                    android:layout_toRightOf="@+id/ImageViewShowInfoPoster"
+                    android:layout_toRightOf="@+id/containerShowInfoPoster"
                     android:textAppearance="@style/TextAppearance.Light"
                     android:textIsSelectable="true" />
             </RelativeLayout>

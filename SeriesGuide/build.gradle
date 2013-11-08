@@ -1,25 +1,31 @@
 apply plugin: 'android'
+apply plugin: 'android-test'
 
 android {
-    compileSdkVersion 18
-    buildToolsVersion "18.1.1"
-    compileOptions.encoding = "UTF-8"
+    compileSdkVersion 19
+    buildToolsVersion "19.0.0"
 
     defaultConfig {
         minSdkVersion 8
-        targetSdkVersion 18
+        targetSdkVersion 19
+    }
+
+    compileOptions {
+        encoding = "UTF-8"
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 
     productFlavors {
         free {
             packageName "com.battlelancer.seriesguide"
-            versionCode 181
-            versionName "8.3"
+            versionCode 187
+            versionName "9"
         }
         beta {
             packageName "com.battlelancer.seriesguide.beta"
             versionCode 215
-            versionName "8-internal"
+            versionName "9-internal"
         }
     }
 
@@ -38,12 +44,20 @@ android {
 
 dependencies {
     compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
-    compile project(':libraries:android-menudrawer')
+    compile 'net.simonvt.menudrawer:menudrawer:3.0.4@aar'
     compile project(':libraries:androidutils')
     compile project(':libraries:pagerslidingtabstrip')
     compile project(':libraries:stickygridheaders')
+    compile 'com.github.chrisbanes.photoview:library:1.2.2'
+    compile 'com.squareup.okhttp:okhttp:1.2.1'
+    compile 'org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:0.31'
+    compile 'com.squareup.retrofit:retrofit:1.2.2'
+    compile 'com.android.support:support-v4:19.0.+'
     compile fileTree(dir: 'libs', include: '*.jar')
-    compile 'com.android.support:support-v4:18.0.+'
+
+    testCompile 'junit:junit:4.10'
+    testCompile 'org.robolectric:robolectric:2.2'
+    testCompile 'com.squareup:fest-android:1.0.+'
 }
 
 // get signing config from gradle.properties file

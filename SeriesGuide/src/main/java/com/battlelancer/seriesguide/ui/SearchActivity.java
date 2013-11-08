@@ -29,6 +29,9 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.SearchView;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.MapBuilder;
+
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -54,13 +57,13 @@ public class SearchActivity extends BaseTopActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        EasyTracker.getInstance().activityStart(this);
+        EasyTracker.getInstance(this).activityStart(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        EasyTracker.getInstance().activityStop(this);
+        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override
@@ -101,12 +104,12 @@ public class SearchActivity extends BaseTopActivity {
             } else {
                 searchFragment.onPerformSearch(extras);
             }
-            EasyTracker.getTracker().sendEvent(TAG, "Search action", "Search", (long) 0);
+            Utils.trackCustomEvent(this, TAG, "Search action", "Search");
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
             Uri data = intent.getData();
             String id = data.getLastPathSegment();
             onShowEpisodeDetails(id);
-            EasyTracker.getTracker().sendEvent(TAG, "Search action", "View", (long) 0);
+            Utils.trackCustomEvent(this, TAG, "Search action", "View");
             finish();
         }
     }
@@ -137,9 +140,8 @@ public class SearchActivity extends BaseTopActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
     protected void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+        Utils.trackAction(this, TAG, label);
     }
 
     private void onShowEpisodeDetails(String id) {

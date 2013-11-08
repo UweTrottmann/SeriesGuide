@@ -17,6 +17,28 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.billing.BillingActivity;
+import com.battlelancer.seriesguide.billing.IabHelper;
+import com.battlelancer.seriesguide.billing.IabResult;
+import com.battlelancer.seriesguide.billing.Inventory;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.AppSettings;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.sync.SyncUtils;
+import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.thetvdbapi.TheTVDB;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.BuildConfig;
+import com.uwetrottmann.seriesguide.R;
+
 import android.accounts.Account;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -31,39 +53,18 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewStub;
-import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
-import com.battlelancer.seriesguide.migration.MigrationActivity;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.settings.AppSettings;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.sync.SyncUtils;
-import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.TheTVDB;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Provides the apps main screen, displaying a list of shows and their next
- * episodes.
+ * Provides the apps main screen, displaying a list of shows and their next episodes.
  */
 public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDismissedListener {
 
@@ -80,32 +81,67 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
 
     private static final String STATE_ART_INDEX = "seriesguide.art.index";
 
+    private IabHelper mHelper;
+
     private Bundle mSavedState;
 
     private FetchPosterTask mArtTask;
 
     private Fragment mFragment;
 
+    private ProgressBar mProgressBar;
+
     private Object mSyncObserverHandle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // need progress bar to display update progress
-        requestWindowFeature(Window.FEATURE_PROGRESS);
-
         super.onCreate(savedInstanceState);
         getMenu().setContentView(R.layout.shows);
-
-        setSupportProgressBarIndeterminate(true);
 
         // Set up a sync account if needed
         SyncUtils.createSyncAccount(this);
 
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
+        onUpgrade();
 
-        updatePreferences(prefs);
+        setUpActionBar();
+        setupViews(savedInstanceState);
 
+        // query in-app purchases (only if not already qualified)
+        if (Utils.requiresPurchaseCheck(this)) {
+            mHelper = new IabHelper(this, BillingActivity.getPublicKey(this));
+            mHelper.enableDebugLogging(BuildConfig.DEBUG);
+
+            Log.d(TAG, "Starting In-App Billing helper setup.");
+            mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+                public void onIabSetupFinished(IabResult result) {
+                    Log.d(TAG, "Setup finished.");
+
+                    if (!result.isSuccess()) {
+                        // Oh noes, there was a problem. But do not go crazy.
+                        disposeIabHelper();
+                        return;
+                    }
+
+                    // Have we been disposed of in the meantime? If so, quit.
+                    if (mHelper == null) {
+                        return;
+                    }
+
+                    // Hooray, IAB is fully set up. Now, let's get an inventory
+                    // of stuff we own.
+                    Log.d(TAG, "Setup successful. Querying inventory.");
+                    mHelper.queryInventoryAsync(mGotInventoryListener);
+                }
+            });
+        }
+    }
+
+    private void setUpActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+    }
+
+    private void setupViews(Bundle savedInstanceState) {
         // setup fragments
         if (!FirstRunFragment.hasSeenFirstRunFragment(this)) {
             mFragment = FirstRunFragment.newInstance();
@@ -117,24 +153,15 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
             mFragment = getSupportFragmentManager().findFragmentById(R.id.shows_fragment);
         }
 
-        setUpActionBar();
-
-        // show migration helper
-        if (MigrationActivity.isQualifiedForMigration(this)) {
-            startActivity(new Intent(this, MigrationActivity.class));
-        }
-    }
-
-    private void setUpActionBar() {
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
+        // setup progress bar
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBarShows);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        EasyTracker.getInstance().activityStart(this);
+        EasyTracker.getInstance(this).activityStart(this);
     }
 
     @Override
@@ -165,13 +192,14 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
     @Override
     protected void onStop() {
         super.onStop();
-        EasyTracker.getInstance().activityStop(this);
+        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         onCancelTasks();
+        disposeIabHelper();
     }
 
     @Override
@@ -242,8 +270,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
             startActivity(new Intent(this, AddActivity.class));
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             return true;
-        }
-        else if (itemId == R.id.menu_update) {
+        } else if (itemId == R.id.menu_update) {
             SgSyncAdapter.requestSync(this, 0);
             fireTrackerEvent("Update (outdated)");
 
@@ -267,10 +294,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
                 mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
             }
             return true;
-        } else if (itemId == R.id.menu_search) {
-            fireTrackerEvent("Search");
-            onSearchRequested();
-            return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
@@ -287,11 +310,10 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
     }
 
     private class FetchPosterTask extends AsyncTask<Void, Void, Integer> {
+
         final AtomicInteger mFetchCount = new AtomicInteger();
 
         ArrayList<String> mPaths;
-
-        private View mProgressOverlay;
 
         protected FetchPosterTask() {
         }
@@ -303,34 +325,14 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
 
         @Override
         protected void onPreExecute() {
-            // see if we already inflated the progress overlay
-            mProgressOverlay = findViewById(R.id.overlay_update);
-            if (mProgressOverlay == null) {
-                mProgressOverlay = ((ViewStub) findViewById(R.id.stub_update)).inflate();
-            }
-            showOverlay(mProgressOverlay);
-            // setup the progress overlay
-            TextView mUpdateStatus = (TextView) mProgressOverlay
-                    .findViewById(R.id.textViewUpdateStatus);
-            mUpdateStatus.setText("");
-
-            ProgressBar updateProgress = (ProgressBar) mProgressOverlay
-                    .findViewById(R.id.ProgressBarShowListDet);
-            updateProgress.setIndeterminate(true);
-
-            View cancelButton = mProgressOverlay.findViewById(R.id.overlayCancel);
-            cancelButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    onCancelTasks();
-                }
-            });
+            setProgressVisibility(true);
         }
 
         @Override
         protected Integer doInBackground(Void... params) {
             // fetch all available poster paths
             if (mPaths == null) {
-                Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[] {
+                Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[]{
                         Shows.POSTER
                 }, null, null, null);
 
@@ -378,27 +380,26 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
         protected void onPostExecute(Integer resultCode) {
             switch (resultCode) {
                 case UPDATE_SUCCESS:
-                    EasyTracker.getTracker().sendEvent(TAG, "Poster Task", "Success",
-                            (long) 0);
-
                     Toast.makeText(getApplicationContext(), getString(R.string.done),
                             Toast.LENGTH_SHORT).show();
+
+                    Utils.trackCustomEvent(getApplicationContext(), TAG, "Poster Task", "Success");
                     break;
                 case UPDATE_INCOMPLETE:
-                    EasyTracker.getTracker().sendEvent(TAG, "Poster Task", "Incomplete",
-                            (long) 0);
-
                     Toast.makeText(getApplicationContext(), getString(R.string.arttask_incomplete),
                             Toast.LENGTH_LONG).show();
+
+                    Utils.trackCustomEvent(getApplicationContext(), TAG, "Poster Task",
+                            "Incomplete");
                     break;
             }
 
-            hideOverlay(mProgressOverlay);
+            setProgressVisibility(false);
         }
 
         @Override
         protected void onCancelled() {
-            hideOverlay(mProgressOverlay);
+            setProgressVisibility(false);
         }
     }
 
@@ -418,23 +419,12 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
         }
     }
 
-    public void showOverlay(View overlay) {
-        overlay.startAnimation(AnimationUtils
-                .loadAnimation(getApplicationContext(), R.anim.fade_in));
-        overlay.setVisibility(View.VISIBLE);
-    }
-
-    public void hideOverlay(View overlay) {
-        overlay.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.fade_out));
-        overlay.setVisibility(View.GONE);
-    }
-
     /**
-     * Called once on activity creation to load initial settings and display
-     * one-time information dialogs.
+     * Called once on activity creation to load initial settings and display one-time information
+     * dialogs.
      */
-    private void updatePreferences(SharedPreferences prefs) {
+    private void onUpgrade() {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         // between-version upgrade code
         try {
             final int lastVersion = AppSettings.getLastVersionCode(this);
@@ -502,8 +492,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
         onShowShowsFragment();
     }
 
+    @Override
     protected void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+        Utils.trackAction(this, TAG, label);
     }
 
     private void onShowShowsFragment() {
@@ -513,9 +504,51 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
     }
 
     /**
-     * Create a new anonymous SyncStatusObserver. It's attached to the app's
-     * ContentResolver in onResume(), and removed in onPause(). If a sync is
-     * active or pending, a progress bar is shown.
+     * Shows or hides a custom indeterminate progress indicator inside this activity layout.
+     */
+    public void setProgressVisibility(boolean isVisible) {
+        mProgressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    }
+
+    // Listener that's called when we finish querying the items and
+    // subscriptions we own
+    IabHelper.QueryInventoryFinishedListener mGotInventoryListener
+            = new IabHelper.QueryInventoryFinishedListener() {
+        public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
+            Log.d(TAG, "Query inventory finished.");
+
+            // Have we been disposed of in the meantime? If so, quit.
+            if (mHelper == null) {
+                return;
+            }
+
+            if (result.isFailure()) {
+                // ignore failures (maybe not, requires testing)
+                disposeIabHelper();
+                return;
+            }
+
+            Log.d(TAG, "Query inventory was successful.");
+
+            BillingActivity.checkForSubscription(ShowsActivity.this, inventory);
+
+            Log.d(TAG, "Inventory query finished.");
+            disposeIabHelper();
+        }
+    };
+
+    private void disposeIabHelper() {
+        if (mHelper != null) {
+            Log.d(TAG, "Disposing of IabHelper.");
+            mHelper.dispose();
+        }
+        mHelper = null;
+    }
+
+    /**
+     * Create a new anonymous SyncStatusObserver. It's attached to the app's ContentResolver in
+     * onResume(), and removed in onPause(). If a sync is active or pending, a progress bar is
+     * shown.
      */
     private SyncStatusObserver mSyncStatusObserver = new SyncStatusObserver() {
         /** Callback invoked with the sync adapter status changes. */
@@ -532,7 +565,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
                     if (account == null) {
                         // GetAccount() returned an invalid value. This
                         // shouldn't happen.
-                        setProgressBarVisibility(false);
+                        setProgressVisibility(false);
                         return;
                     }
 
@@ -543,7 +576,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
                             account, SeriesGuideApplication.CONTENT_AUTHORITY);
                     boolean syncPending = ContentResolver.isSyncPending(
                             account, SeriesGuideApplication.CONTENT_AUTHORITY);
-                    setProgressBarVisibility(syncActive || syncPending);
+                    setProgressVisibility(syncActive || syncPending);
                 }
             });
         }

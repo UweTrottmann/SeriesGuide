@@ -1,24 +1,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.app.ShareCompat;
-import android.support.v4.app.ShareCompat.IntentBuilder;
-import android.support.v4.content.Loader;
-import android.text.TextUtils;
-import android.text.format.DateUtils;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -35,10 +17,28 @@ import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
+
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.app.ShareCompat;
+import android.support.v4.app.ShareCompat.IntentBuilder;
+import android.support.v4.content.Loader;
+import android.text.TextUtils;
+import android.text.format.DateUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import de.greenrobot.event.EventBus;
 
@@ -274,27 +274,28 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
         });
 
         // Poster
-        final ImageView poster = (ImageView) getView().findViewById(R.id.ImageViewShowInfoPoster);
+        final View posterContainer = getView().findViewById(R.id.containerShowInfoPoster);
+        final ImageView posterView = (ImageView) posterContainer.findViewById(R.id.imageViewShowInfoPoster);
         final String imagePath = mShow.getPoster();
-        ImageProvider.getInstance(getActivity()).loadImage(poster, imagePath, false);
-        poster.setOnClickListener(new View.OnClickListener() {
+        ImageProvider.getInstance(getActivity()).loadImage(posterView, imagePath, false);
+        posterContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
-                fullscreen.putExtra(FullscreenImageActivity.PATH, imagePath);
-                startActivity(fullscreen);
+                fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH, imagePath);
+                fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_TITLE, mShow.getTitle());
+                ActivityCompat.startActivity(getActivity(), fullscreen,
+                        ActivityOptionsCompat
+                                .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight()).toBundle());
             }
         });
-        // Utils.setPosterBackground((ImageView)
-        // getView().findViewById(R.id.background),
-        // mShow.getPoster(), getActivity());
 
         // trakt ratings
         onLoadTraktRatings(true);
     }
 
-    private static void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    private void fireTrackerEvent(String label) {
+        Utils.trackAction(getActivity(), TAG, label);
     }
 
     private int getShowTvdbId() {

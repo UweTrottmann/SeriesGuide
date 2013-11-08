@@ -51,6 +51,9 @@ import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.MapBuilder;
+
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -560,24 +563,24 @@ public class Utils {
     /**
      * Update the latest episode field for a specific show.
      */
-    public static void updateLatestEpisode(Context context, String showId) {
-        Thread t = new UpdateLatestEpisodeThread(context, showId);
+    public static void updateLatestEpisode(Context context, int showTvdbId) {
+        Thread t = new UpdateLatestEpisodeThread(context, showTvdbId);
         t.start();
     }
 
     public static class UpdateLatestEpisodeThread extends Thread {
         private Context mContext;
 
-        private String mShowId;
+        private int mShowTvdbId;
 
         public UpdateLatestEpisodeThread(Context context) {
             mContext = context;
             this.setName("UpdateLatestEpisode");
         }
 
-        public UpdateLatestEpisodeThread(Context context, String showId) {
+        public UpdateLatestEpisodeThread(Context context, int showTvdbId) {
             this(context);
-            mShowId = showId;
+            mShowTvdbId = showTvdbId;
         }
 
         public void run() {
@@ -586,9 +589,9 @@ public class Utils {
                     SeriesGuidePreferences.KEY_ONLY_FUTURE_EPISODES, false);
             final boolean isNoSpecials = ActivitySettings.isHidingSpecials(mContext);
 
-            if (mShowId != null) {
+            if (mShowTvdbId > 0) {
                 // update single show
-                DBUtils.updateLatestEpisode(mContext, mShowId, isOnlyFutureEpisodes, isNoSpecials,
+                DBUtils.updateLatestEpisode(mContext, mShowTvdbId, isOnlyFutureEpisodes, isNoSpecials,
                         prefs);
             } else {
                 // update all shows
@@ -598,8 +601,8 @@ public class Utils {
                         }, null, null, null);
                 if (shows != null) {
                     while (shows.moveToNext()) {
-                        String showId = shows.getString(0);
-                        DBUtils.updateLatestEpisode(mContext, showId, isOnlyFutureEpisodes,
+                        int showTvdbId = shows.getInt(0);
+                        DBUtils.updateLatestEpisode(mContext, showTvdbId, isOnlyFutureEpisodes,
                                 isNoSpecials, prefs);
                     }
                     shows.close();
@@ -668,10 +671,8 @@ public class Utils {
             }
 
             return result;
-        } catch (NoSuchAlgorithmException e) {
-            Utils.trackExceptionAndLog(TAG, e);
-        } catch (UnsupportedEncodingException e) {
-            Utils.trackExceptionAndLog(TAG, e);
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            Utils.trackExceptionAndLog(context, TAG, e);
         }
         return null;
     }
@@ -804,7 +805,7 @@ public class Utils {
         int theme = Integer.valueOf(themeIndex);
         switch (theme) {
             case 1:
-                SeriesGuidePreferences.THEME = R.style.ICSBaseTheme;
+                SeriesGuidePreferences.THEME = R.style.AndroidTheme;
                 break;
             case 2:
                 SeriesGuidePreferences.THEME = R.style.SeriesGuideThemeLight;
@@ -818,17 +819,51 @@ public class Utils {
     /**
      * Tracks an exception using the Google Analytics {@link EasyTracker}.
      */
-    public static void trackException(String tag, Exception e) {
-        EasyTracker.getTracker().sendException(tag + ": " + e.getMessage(), false);
+    public static void trackException(Context context, String tag, Exception e) {
+        EasyTracker.getInstance(context).send(
+                MapBuilder.createException(tag + ": " + e.getMessage(), false).build()
+        );
     }
 
     /**
      * Tracks an exception using the Google Analytics {@link EasyTracker} and
      * the local log.
      */
-    public static void trackExceptionAndLog(String tag, Exception e) {
-        trackException(tag, e);
+    public static void trackExceptionAndLog(Context context, String tag, Exception e) {
+        trackException(context, tag, e);
         Log.w(tag, e);
+    }
+
+    public static void trackView(Context context, String screenName) {
+        EasyTracker tracker = EasyTracker.getInstance(context);
+        tracker.set(Fields.SCREEN_NAME, screenName);
+        tracker.send(MapBuilder.createAppView().build());
+        tracker.set(Fields.SCREEN_NAME, null);
+    }
+
+    public static void trackCustomEvent(Context context, String tag, String category,
+            String label) {
+        EasyTracker.getInstance(context).send(
+                MapBuilder.createEvent(tag, category, label, null).build()
+        );
+    }
+
+    public static void trackAction(Context context, String tag, String label) {
+        EasyTracker.getInstance(context).send(
+                MapBuilder.createEvent(tag, "Action Item", label, null).build()
+        );
+    }
+
+    public static void trackContextMenu(Context context, String tag, String label) {
+        EasyTracker.getInstance(context).send(
+                MapBuilder.createEvent(tag, "Context Item", label, null).build()
+        );
+    }
+
+    public static void trackClick(Context context, String tag, String label) {
+        EasyTracker.getInstance(context).send(
+                MapBuilder.createEvent(tag, "Click", label, null).build()
+        );
     }
 
     /**

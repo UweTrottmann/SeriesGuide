@@ -17,6 +17,11 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.AsyncTask;
+import com.uwetrottmann.seriesguide.R;
+
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.content.ComponentCallbacks2;
@@ -34,12 +39,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.AsyncTask;
-import com.uwetrottmann.seriesguide.R;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -154,11 +153,9 @@ public class ImageProvider {
                 if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_HIDEIMAGES)) {
                     updateNoMediaFile(sharedPreferences);
                     if (prefs.getBoolean(SeriesGuidePreferences.KEY_HIDEIMAGES, true)) {
-                        EasyTracker.getTracker().sendEvent("Settings", "Hide images", "Enabled",
-                                (long) 0);
+                        Utils.trackCustomEvent(mContext, "Settings", "Hide images", "Enabled");
                     } else {
-                        EasyTracker.getTracker().sendEvent("Settings", "Hide images", "Disabled",
-                                (long) 0);
+                        Utils.trackCustomEvent(mContext, "Settings", "Hide images", "Disabled");
                     }
                 }
             }

@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop" >
-    </ImageView>
+        android:scaleType="centerCrop"></ImageView>
 
     <ScrollView
         android:id="@+id/showinfo_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true" >
+        android:layout_alignParentTop="true">
 
         <LinearLayout
             style="@style/DefaultPadding.Page"
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="@dimen/default_padding"
-            android:paddingRight="@dimen/default_padding" >
+            android:paddingRight="@dimen/default_padding">
 
             <TextView
                 android:id="@+id/title"
@@ -36,14 +36,21 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_padding" >
+                android:layout_margin="@dimen/default_padding">
 
-                <ImageView
-                    android:id="@+id/ImageViewShowInfoPoster"
-                    android:layout_width="84dp"
+                <FrameLayout
+                    android:id="@+id/containerShowInfoPoster"
                     android:layout_height="123dp"
-                    android:contentDescription="@string/description_poster"
-                    android:scaleType="centerCrop" />
+                    android:layout_width="84dp"
+                    android:foreground="?attr/custom_list_selector">
+
+                    <ImageView
+                        android:id="@+id/imageViewShowInfoPoster"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/description_poster"
+                        android:scaleType="centerCrop" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/showStatus"
@@ -51,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/default_padding"
                     android:layout_marginTop="@dimen/inline_padding"
-                    android:layout_toRightOf="@+id/ImageViewShowInfoPoster"
+                    android:layout_toRightOf="@+id/containerShowInfoPoster"
                     android:textAllCaps="true"
                     android:textAppearance="@style/TextAppearance.Light"
                     android:textIsSelectable="true" />
@@ -63,16 +70,14 @@
                     android:layout_below="@+id/showStatus"
                     android:layout_marginLeft="@dimen/default_padding"
                     android:layout_marginTop="@dimen/default_padding"
-                    android:layout_toRightOf="@+id/ImageViewShowInfoPoster"
+                    android:layout_toRightOf="@+id/containerShowInfoPoster"
                     android:textAppearance="@style/TextAppearance.Light"
                     android:textIsSelectable="true" />
             </RelativeLayout>
 
-            <include layout="@layout/ratingbar_narrow" >
-            </include>
+            <include layout="@layout/ratingbar_narrow"></include>
 
-            <include layout="@layout/show_info_metamore" >
-            </include>
+            <include layout="@layout/show_info_metamore"></include>
 
             <include
                 android:id="@+id/buttonbar_ref"

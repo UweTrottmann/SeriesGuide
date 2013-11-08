@@ -17,26 +17,25 @@
 
 package com.battlelancer.seriesguide.util;
 
-import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.Toast;
-
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.thetvdbapi.TheTVDB;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
+import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
-import com.jakewharton.trakt.enumerations.ExtendedParam;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 import org.xml.sax.SAXException;
 
+import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import retrofit.RetrofitError;
 
 /**
  * Adds shows to the local database, tries to get watched and collected episodes
@@ -117,20 +116,16 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         List<TvShow> collection = new ArrayList<TvShow>();
         if (ServiceUtils.hasTraktCredentials(mContext)) {
             Log.d(TAG, "Getting watched and collected episodes from trakt.");
-            ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
+            Trakt manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
             if (manager != null) {
                 try {
                     watched = manager.userService()
-                            .libraryShowsWatched(ServiceUtils.getTraktUsername(mContext))
-                            .extended(ExtendedParam.Min).fire();
+                            .libraryShowsWatchedMinimum(ServiceUtils.getTraktUsername(mContext));
 
                     collection = manager.userService()
-                            .libraryShowsCollection(ServiceUtils.getTraktUsername(mContext))
-                            .extended(ExtendedParam.Min).fire();
-                } catch (ApiException e) {
+                            .libraryShowsCollectionMinimum(ServiceUtils.getTraktUsername(mContext));
+                } catch (RetrofitError e) {
                     // something went wrong, just go on
-                } catch (TraktException e) {
-
                 }
             }
         }

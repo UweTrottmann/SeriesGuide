@@ -17,6 +17,25 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.Constants.EpisodeSorting;
+import com.battlelancer.seriesguide.adapters.EpisodesAdapter;
+import com.battlelancer.seriesguide.adapters.EpisodesAdapter.OnFlagEpisodeListener;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
+import com.battlelancer.seriesguide.util.FlagTask;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -37,25 +56,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
-
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.Constants.EpisodeSorting;
-import com.battlelancer.seriesguide.adapters.EpisodesAdapter;
-import com.battlelancer.seriesguide.adapters.EpisodesAdapter.OnFlagEpisodeListener;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
-import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
 
 /**
  * Displays a list of episodes of a season.
@@ -256,7 +256,7 @@ public class EpisodesFragment extends SherlockListFragment implements
             }
             case CONTEXT_FLAG_UNTILHERE_ID: {
                 final Cursor items = (Cursor) mAdapter.getItem(info.position);
-                onMarkUntilHere((int) info.id, items.getLong(EpisodesQuery.FIRSTAIREDMS));
+                onMarkUntilHere(items.getLong(EpisodesQuery.FIRSTAIREDMS));
                 fireTrackerEventContextMenu("Flag previously aired");
                 return true;
             }
@@ -321,7 +321,8 @@ public class EpisodesFragment extends SherlockListFragment implements
     @Override
     public void onFlagEpisodeWatched(int episodeTvdbId, int episode, boolean isWatched) {
         new FlagTask(getActivity(), getShowId())
-                .episodeWatched(episodeTvdbId, getSeasonNumber(), episode, isWatched)
+                .episodeWatched(episodeTvdbId, getSeasonNumber(), episode,
+                        isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED)
                 .execute();
     }
 
@@ -333,7 +334,8 @@ public class EpisodesFragment extends SherlockListFragment implements
 
     private void onFlagSeasonWatched(boolean isWatched) {
         new FlagTask(getActivity(), getShowId())
-                .seasonWatched(getSeasonId(), getSeasonNumber(), isWatched)
+                .seasonWatched(getSeasonId(), getSeasonNumber(),
+                        isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED)
                 .execute();
     }
 
@@ -343,7 +345,7 @@ public class EpisodesFragment extends SherlockListFragment implements
                 .execute();
     }
 
-    private void onMarkUntilHere(int episodeId, long firstaired) {
+    private void onMarkUntilHere(long firstaired) {
         new FlagTask(getActivity(), getShowId())
                 .episodeWatchedPrevious(firstaired)
                 .execute();
@@ -417,7 +419,7 @@ public class EpisodesFragment extends SherlockListFragment implements
         getLoaderManager().restartLoader(EPISODES_LOADER, null, EpisodesFragment.this);
         getSherlockActivity().invalidateOptionsMenu();
 
-        EasyTracker.getTracker().sendEvent(TAG, "Sorting", mSorting.name(), (long) 0);
+        Utils.trackCustomEvent(getActivity(), TAG, "Sorting", mSorting.name());
     }
 
     @TargetApi(8)
@@ -437,11 +439,11 @@ public class EpisodesFragment extends SherlockListFragment implements
         getActivity().openContextMenu(v);
     }
 
-    private static void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    private void fireTrackerEvent(String label) {
+        Utils.trackAction(getActivity(), TAG, label);
     }
 
-    private static void fireTrackerEventContextMenu(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Context Item", label, (long) 0);
+    private void fireTrackerEventContextMenu(String label) {
+        Utils.trackContextMenu(getActivity(), TAG, label);
     }
 }

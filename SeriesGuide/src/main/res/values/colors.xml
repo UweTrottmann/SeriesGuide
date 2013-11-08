@@ -11,7 +11,10 @@
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
-  limitations under the License.
+  limitations under the License.
+
+
+
 -->
 <resources>
 
@@ -32,6 +35,7 @@
     <color name="background_lighter">#ff171717</color>
     <color name="background_dim">#80111111</color>
     <color name="background_dim_inverse">#80ffffff</color>
+    <color name="background_translucent">#30000000</color>
     <color name="disabled">#80333333</color>
     <color name="overlay">#cc111111</color>
     <color name="overlay_inverse">#ccffffff</color>
@@ -40,7 +44,7 @@
     <color name="green_bright">#ff65f526</color>
     <color name="green_dark">#ff05A30D</color>
     <color name="widget_default_background">#80000000</color>
-    <color name="black_overlay">#66000000</color>
+    <color name="black_overlay">#aa000000</color>
     <color name="separator_dim">#40bebebe</color>
     <color name="divider">#26ffffff</color>
     <color name="divider_inverse">#1A000000</color>

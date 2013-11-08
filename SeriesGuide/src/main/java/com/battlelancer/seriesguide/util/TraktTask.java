@@ -17,6 +17,20 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.enums.TraktStatus;
+import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
+import com.jakewharton.trakt.Trakt;
+import com.jakewharton.trakt.entities.CheckinResponse;
+import com.jakewharton.trakt.entities.Response;
+import com.jakewharton.trakt.enumerations.Rating;
+import com.jakewharton.trakt.services.CommentService;
+import com.jakewharton.trakt.services.MovieService;
+import com.jakewharton.trakt.services.RateService;
+import com.jakewharton.trakt.services.ShowService;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -25,20 +39,8 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.enums.TraktStatus;
-import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
-import com.jakewharton.trakt.entities.Response;
-import com.jakewharton.trakt.enumerations.Rating;
-import com.jakewharton.trakt.services.MovieService;
-import com.jakewharton.trakt.services.ShowService.CheckinBuilder;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
-
 import de.greenrobot.event.EventBus;
+import retrofit.RetrofitError;
 
 public class TraktTask extends AsyncTask<Void, Void, Response> {
 
@@ -53,6 +55,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     private OnTraktActionCompleteListener mListener;
 
     public interface InitBundle {
+
         String TRAKTACTION = "traktaction";
 
         String IMDB_ID = "imdbid";
@@ -73,13 +76,16 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     }
 
     public interface OnTraktActionCompleteListener {
+
         public void onTraktActionComplete(Bundle traktTaskArgs, boolean wasSuccessfull);
 
         public void onCheckinBlocked(Bundle traktTaskArgs, int wait);
     }
 
     public static class TraktActionCompleteEvent {
+
         public Bundle mTraktTaskArgs;
+
         public boolean mWasSuccessful;
 
         public TraktActionCompleteEvent(Bundle traktTaskArgs, boolean wasSuccessful) {
@@ -89,12 +95,10 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     }
 
     /**
-     * Initial constructor. Call <b>one</b> of the setup-methods, like
-     * {@code shout(tvdbid, shout, isSpoiler)}, afterwards.<br>
-     * <br>
-     * Make sure the user has valid trakt credentials (check with
-     * {@link ServiceUtils#hasTraktCredentials(Context)} and then possibly
-     * launch {@link ConnectTraktActivity}) or execution will fail.
+     * Initial constructor. Call <b>one</b> of the setup-methods, like {@code shout(tvdbid, shout,
+     *isSpoiler)}, afterwards.<br> <br> Make sure the user has valid trakt credentials (check with
+     * {@link ServiceUtils#hasTraktCredentials(Context)} and then possibly launch {@link
+     * ConnectTraktActivity}) or execution will fail.
      */
     public TraktTask(Context context, OnTraktActionCompleteListener listener) {
         mContext = context;
@@ -103,12 +107,10 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     }
 
     /**
-     * Fast constructor, allows passing of an already pre-built {@code args}
-     * {@link Bundle}.<br>
-     * <br>
-     * Make sure the user has valid trakt credentials (check with
-     * {@link ServiceUtils#hasTraktCredentials(Context)} and then possibly
-     * launch {@link ConnectTraktActivity}) or execution will fail.
+     * Fast constructor, allows passing of an already pre-built {@code args} {@link Bundle}.<br>
+     * <br> Make sure the user has valid trakt credentials (check with {@link
+     * ServiceUtils#hasTraktCredentials(Context)} and then possibly launch {@link
+     * ConnectTraktActivity}) or execution will fail.
      */
     public TraktTask(Context context, Bundle args, OnTraktActionCompleteListener listener) {
         this(context, listener);
@@ -173,7 +175,8 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     /**
      * Post a shout for an episode.
      */
-    public TraktTask shout(int showTvdbid, int season, int episode, String shout, boolean isSpoiler) {
+    public TraktTask shout(int showTvdbid, int season, int episode, String shout,
+            boolean isSpoiler) {
         shout(showTvdbid, shout, isSpoiler);
         mArgs.putInt(InitBundle.SEASON, season);
         mArgs.putInt(InitBundle.EPISODE, episode);
@@ -217,7 +220,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         }
 
         // get an authenticated trakt-java ServiceManager
-        ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
+        Trakt manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
         if (manager == null) {
             // password could not be decrypted
             Response r = new Response();
@@ -243,14 +246,19 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 case CHECKIN_EPISODE: {
                     final String message = mArgs.getString(InitBundle.MESSAGE);
 
-                    final CheckinBuilder checkinBuilder = manager.showService().checkin(showTvdbId)
-                            .season(season).episode(episode);
-                    if (!TextUtils.isEmpty(message)) {
-                        checkinBuilder.message(message);
+                    if (TextUtils.isEmpty(message)) {
+                        // no message
+                        r = manager.showService().checkin(new ShowService.ShowCheckin(
+                                showTvdbId, season, episode, Utils.getVersion(mContext), ""
+                        ));
+                    } else {
+                        // with social media message
+                        r = manager.showService().checkin(new ShowService.ShowCheckin(
+                                showTvdbId, season, episode, message, Utils.getVersion(mContext), ""
+                        ));
                     }
-                    r = checkinBuilder.fire();
 
-                    if (TraktStatus.SUCCESS.equals(r.status)) {
+                    if (com.jakewharton.trakt.enumerations.Status.SUCCESS.equals(r.status)) {
                         SharedPreferences prefs = PreferenceManager
                                 .getDefaultSharedPreferences(mContext);
                         r.message = mContext
@@ -265,14 +273,17 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     final String imdbId = mArgs.getString(InitBundle.IMDB_ID);
                     final String message = mArgs.getString(InitBundle.MESSAGE);
 
-                    final MovieService.CheckinBuilder checkinBuilder = manager
-                            .movieService().checkin(imdbId);
-                    if (!TextUtils.isEmpty(message)) {
-                        checkinBuilder.message(message);
+                    if (TextUtils.isEmpty(message)) {
+                        r = manager.movieService().checkin(new MovieService.MovieCheckin(
+                                imdbId, Utils.getVersion(mContext), ""
+                        ));
+                    } else {
+                        r = manager.movieService().checkin(new MovieService.MovieCheckin(
+                                imdbId, message, Utils.getVersion(mContext), ""
+                        ));
                     }
-                    r = checkinBuilder.fire();
 
-                    if (TraktStatus.SUCCESS.equals(r.status)) {
+                    if (com.jakewharton.trakt.enumerations.Status.SUCCESS.equals(r.status)) {
                         r.message = mContext
                                 .getString(R.string.checkin_success_trakt,
                                         (r.movie != null ? r.movie.title + " " : ""));
@@ -282,13 +293,16 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 }
                 case RATE_EPISODE: {
                     final Rating rating = Rating.fromValue(mArgs.getString(InitBundle.RATING));
-                    r = manager.rateService().episode(showTvdbId).season(season).episode(episode)
-                            .rating(rating).fire();
+                    r = manager.rateService().episode(new RateService.EpisodeRating(
+                            showTvdbId, season, episode, rating
+                    ));
                     break;
                 }
                 case RATE_SHOW: {
                     final Rating rating = Rating.fromValue(mArgs.getString(InitBundle.RATING));
-                    r = manager.rateService().show(showTvdbId).rating(rating).fire();
+                    r = manager.rateService().show(new RateService.ShowRating(
+                            showTvdbId, rating
+                    ));
                     break;
                 }
                 case SHOUT: {
@@ -296,28 +310,21 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     final boolean isSpoiler = mArgs.getBoolean(InitBundle.ISSPOILER);
 
                     if (episode == 0) {
-                        r = manager.commentService()
-                                .show(showTvdbId)
-                                .comment(shout)
-                                .spoiler(isSpoiler)
-                                .fire();
+                        r = manager.commentService().show(new CommentService.ShowComment(
+                                showTvdbId, shout
+                        ).spoiler(isSpoiler));
                     } else {
-                        r = manager.commentService()
-                                .episode(showTvdbId)
-                                .season(season)
-                                .episode(episode)
-                                .comment(shout)
-                                .spoiler(isSpoiler)
-                                .fire();
+                        r = manager.commentService().episode(new CommentService.EpisodeComment(
+                                showTvdbId, season, episode, shout
+                        ).spoiler(isSpoiler));
                     }
                     break;
                 }
                 case WATCHLIST_MOVIE: {
                     final int tmdbId = mArgs.getInt(InitBundle.TMDB_ID);
-                    manager.movieService()
-                            .watchlist()
-                            .movie(tmdbId)
-                            .fire();
+                    manager.movieService().watchlist(new MovieService.Movies(
+                            new MovieService.SeenMovie(tmdbId)
+                    ));
                     // In case of failure this will just return an exception, so
                     // we need to construct our own response
                     r = new Response();
@@ -327,10 +334,9 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 }
                 case UNWATCHLIST_MOVIE: {
                     final int tmdbId = mArgs.getInt(InitBundle.TMDB_ID);
-                    manager.movieService()
-                            .unwatchlist()
-                            .movie(tmdbId)
-                            .fire();
+                    manager.movieService().unwatchlist(new MovieService.Movies(
+                            new MovieService.SeenMovie(tmdbId)
+                    ));
                     // In case of failure this will just return an exception, so
                     // we need to construct our own response
                     r = new Response();
@@ -343,14 +349,8 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
             }
 
             return r;
-        } catch (TraktException e) {
-            Utils.trackExceptionAndLog(TAG, e);
-            Response r = new Response();
-            r.status = TraktStatus.FAILURE;
-            r.error = mContext.getString(R.string.trakt_error_general);
-            return r;
-        } catch (ApiException e) {
-            Utils.trackExceptionAndLog(TAG, e);
+        } catch (RetrofitError e) {
+            Utils.trackExceptionAndLog(mContext, TAG, e);
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
             r.error = mContext.getString(R.string.trakt_error_general);
@@ -382,20 +382,25 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 }
 
             } else if (TraktStatus.FAILURE.equals(r.status)) {
-                if (r.wait != 0) {
-                    // looks like a check in is in progress
-
-                    if (mListener != null) {
-                        mListener.onCheckinBlocked(mArgs, r.wait);
+                if (mAction == TraktAction.CHECKIN_EPISODE
+                        || mAction == TraktAction.CHECKIN_MOVIE) {
+                    if (r instanceof CheckinResponse) {
+                        CheckinResponse checkinResponse = (CheckinResponse) r;
+                        if (checkinResponse.wait != 0) {
+                            // looks like a check in is already in progress
+                            if (mListener != null) {
+                                mListener.onCheckinBlocked(mArgs, checkinResponse.wait);
+                            }
+                            return;
+                        }
                     }
-                } else {
-                    // well, something went wrong
+                }
 
-                    Toast.makeText(mContext, r.error, Toast.LENGTH_LONG).show();
+                // well, something went wrong
+                Toast.makeText(mContext, r.error, Toast.LENGTH_LONG).show();
 
-                    if (mListener != null) {
-                        mListener.onTraktActionComplete(mArgs, false);
-                    }
+                if (mListener != null) {
+                    mListener.onTraktActionComplete(mArgs, false);
                 }
 
             }

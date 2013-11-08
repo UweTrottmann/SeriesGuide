@@ -21,6 +21,14 @@
         <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
     </style>
 
+    <!-- Dark Android theme v11+ customizations -->
+    <style name="AndroidBaseTheme" parent="Theme.Sherlock">
+
+        <!-- Action bar (native, v11+) -->
+        <item name="android:actionBarStyle">@style/ActionBarDark</item>
+
+    </style>
+
     <!-- SeriesGuide Light theme v11+ customizations -->
     <style name="SeriesGuideBaseThemeLight" parent="Theme.Sherlock.Light.DarkActionBar">
 
@@ -44,15 +52,19 @@
         <item name="android:actionBarWidgetTheme" tools:targetApi="ice_cream_sandwich">@style/SeriesGuideTheme</item>
     </style>
 
-    <!-- Fullscreen theme v11+ customizations -->
-    <style name="FullscreenTheme" parent="android:Theme.Holo">
-        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:windowBackground">@null</item>
+    <!-- Special themes -->
+    <style name="ImmersiveTheme" parent="SeriesGuideTheme">
+
+        <!-- Action bar (native, v11+) -->
+        <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
+
     </style>
 
-    <style name="FullscreenActionBarStyle" parent="android:Widget.Holo.ActionBar">
-        <item name="android:background">@color/black_overlay</item>
+    <style name="ImmersiveTheme.Light" parent="SeriesGuideThemeLight">
+
+        <!-- Action bar (native, v11+) -->
+        <item name="android:actionBarStyle">@style/ActionBar.Translucent</item>
+
     </style>
 
 </resources>
