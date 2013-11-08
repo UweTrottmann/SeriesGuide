@@ -66,7 +66,8 @@ public class TraktAddFragment extends AddFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         /*
          * never use this here (on config change the view needed before removing
          * the fragment)
@@ -199,17 +200,19 @@ public class TraktAddFragment extends AddFragment {
             }
 
             // get a list of existing shows to filter against
-            final Cursor existing = mContext.getContentResolver().query(Shows.CONTENT_URI,
-                    new String[] {
-                        Shows._ID
+            final Cursor existingShows = mContext.getContentResolver().query(Shows.CONTENT_URI,
+                    new String[]{
+                            Shows._ID
                     }, null, null, null);
-            final HashSet<String> existingIds = new HashSet<String>();
-            while (existing.moveToNext()) {
-                existingIds.add(existing.getString(0));
+            final HashSet<Integer> existingShowTvdbIds = new HashSet<>();
+            if (existingShows != null) {
+                while (existingShows.moveToNext()) {
+                    existingShowTvdbIds.add(existingShows.getInt(0));
+                }
+                existingShows.close();
             }
-            existing.close();
 
-            parseTvShowsToSearchResults(shows, showList, existingIds, mContext);
+            parseTvShowsToSearchResults(shows, showList, existingShowTvdbIds, mContext);
 
             return showList;
         }
@@ -228,13 +231,13 @@ public class TraktAddFragment extends AddFragment {
      * Parse a list of {@link TvShow} objects to a list of {@link SearchResult} objects.
      */
     private static void parseTvShowsToSearchResults(List<TvShow> inputList,
-            List<SearchResult> outputList, HashSet<String> existingIds, Context context) {
+            List<SearchResult> outputList, HashSet<Integer> existingShowTvdbIds, Context context) {
         Iterator<TvShow> shows = inputList.iterator();
         while (shows.hasNext()) {
             TvShow tvShow = shows.next();
 
             // only list non-existing shows
-            if (!existingIds.contains(tvShow.tvdb_id)) {
+            if (!existingShowTvdbIds.contains(tvShow.tvdb_id)) {
                 SearchResult show = new SearchResult();
                 show.tvdbid = tvShow.tvdb_id;
                 show.title = tvShow.title;
