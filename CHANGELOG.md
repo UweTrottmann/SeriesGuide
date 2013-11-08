@@ -5,7 +5,7 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 9 *(in development)*
+Version 9 *(2013-11-08)*
 ----------------------------
 
 * Skip an episode or an entire season if you don't want to watch right now.
