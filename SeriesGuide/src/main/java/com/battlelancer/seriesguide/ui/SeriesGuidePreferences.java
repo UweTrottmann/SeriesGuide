@@ -70,13 +70,17 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     private static final String KEY_GETGLUE_DISCONNECT = "clearGetGlueCredentials";
 
     // Actions for legacy settings
-    final static String ACTION_PREFS_BASIC = "com.battlelancer.seriesguide.PREFS_BASIC";
+    private static final String ACTION_PREFS_BASIC = "com.battlelancer.seriesguide.PREFS_BASIC";
 
-    private static final Object ACTION_PREFS_SHARING = "com.battlelancer.seriesguide.PREFS_SHARING";
+    private static final String ACTION_PREFS_NOTIFICATIONS
+            = "com.battlelancer.seriesguide.PREFS_NOTIFICATIONS";
 
-    final static String ACTION_PREFS_ADVANCED = "com.battlelancer.seriesguide.PREFS_ADVANCED";
+    private static final String ACTION_PREFS_SHARING = "com.battlelancer.seriesguide.PREFS_SHARING";
 
-    final static String ACTION_PREFS_ABOUT = "com.battlelancer.seriesguide.PREFS_ABOUT";
+    private static final String ACTION_PREFS_ADVANCED
+            = "com.battlelancer.seriesguide.PREFS_ADVANCED";
+
+    private static final String ACTION_PREFS_ABOUT = "com.battlelancer.seriesguide.PREFS_ABOUT";
 
     // Preference keys
     public static final String KEY_TRAKTPWD = "com.battlelancer.seriesguide.traktpwd";
@@ -105,7 +109,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_SECURE = "com.battlelancer.seriesguide.secure";
 
-    public static final String KEY_UPDATEATLEASTEVERY = "com.battlelancer.seriesguide.updateatleastevery";
+    public static final String KEY_UPDATEATLEASTEVERY
+            = "com.battlelancer.seriesguide.updateatleastevery";
 
     public static final String KEY_HIDEIMAGES = "hideimages";
 
@@ -121,7 +126,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_SHAREWITHTRAKT = "com.battlelancer.seriesguide.sharewithtrakt";
 
-    public static final String KEY_SHAREWITHGETGLUE = "com.battlelancer.seriesguide.sharewithgetglue";
+    public static final String KEY_SHAREWITHGETGLUE
+            = "com.battlelancer.seriesguide.sharewithgetglue";
 
     public static final String KEY_THEME = "com.battlelancer.seriesguide.theme";
 
@@ -129,9 +135,11 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_ACTIVITYTAB = "com.battlelancer.seriesguide.activitytab";
 
-    public static final String KEY_AUTO_ADD_TRAKT_SHOWS = "com.battlelancer.seriesguide.autoaddtraktshows";
+    public static final String KEY_AUTO_ADD_TRAKT_SHOWS
+            = "com.battlelancer.seriesguide.autoaddtraktshows";
 
-    public static final String KEY_SYNC_UNSEEN_EPISODES = "com.battlelancer.seriesguide.syncunseenepisodes";
+    public static final String KEY_SYNC_UNSEEN_EPISODES
+            = "com.battlelancer.seriesguide.syncunseenepisodes";
 
     public static final String SUPPORT_MAIL = "support@seriesgui.de";
 
@@ -163,11 +171,14 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             setupBasicSettings(this,
                     findPreference(KEY_ONLY_FUTURE_EPISODES),
                     findPreference(ActivitySettings.KEY_HIDE_SPECIALS),
+                    findPreference(KEY_LANGUAGE));
+        } else if (action != null && action.equals(ACTION_PREFS_NOTIFICATIONS)) {
+            addPreferencesFromResource(R.xml.settings_notifications);
+            setupNotifiationSettings(this,
                     findPreference(NotificationSettings.KEY_ENABLED),
                     findPreference(NotificationSettings.KEY_FAVONLY),
                     findPreference(NotificationSettings.KEY_VIBRATE),
                     findPreference(NotificationSettings.KEY_RINGTONE),
-                    findPreference(KEY_LANGUAGE),
                     findPreference(NotificationSettings.KEY_THRESHOLD));
         } else if (action != null && action.equals(ACTION_PREFS_SHARING)) {
             addPreferencesFromResource(R.xml.settings_services);
@@ -213,10 +224,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     }
 
     protected static void setupBasicSettings(final Context context, Preference noAiredPref,
-            Preference noSpecialsPref, Preference notificationsPref,
-            final Preference notificationsFavOnlyPref, final Preference vibratePref,
-            final Preference ringtonePref,
-            Preference languagePref, final Preference notificationsThresholdPref) {
+            Preference noSpecialsPref, Preference languagePref) {
         // No aired episodes
         noAiredPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
@@ -243,7 +251,13 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             }
         });
 
-        // Notifications
+        setListPreferenceSummary((ListPreference) languagePref);
+    }
+
+    protected static void setupNotifiationSettings(final Context context,
+            Preference notificationsPref, final Preference notificationsFavOnlyPref,
+            final Preference vibratePref, final Preference ringtonePref,
+            final Preference notificationsThresholdPref) {
         // allow supporters to enable notifications
         if (Utils.hasAccessToX(context)) {
             notificationsPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -281,7 +295,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             ringtonePref.setEnabled(false);
         }
 
-        setListPreferenceSummary((ListPreference) languagePref);
         setListPreferenceSummary((ListPreference) notificationsThresholdPref);
     }
 
@@ -405,10 +418,9 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     }
 
     /**
-     * Performs certain actions on settings changes. <br>
-     * <b>WARNING This is for older devices. Newer devices should implement
-     * actions in {@link SettingsFragment}s implementation if they require
-     * findPreference() to return non-null values.</b>
+     * Performs certain actions on settings changes. <br> <b>WARNING This is for older devices.
+     * Newer devices should implement actions in {@link SettingsFragment}s implementation if they
+     * require findPreference() to return non-null values.</b>
      */
     @SuppressWarnings("deprecation")
     @Override
@@ -465,8 +477,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     }
 
     /**
-     * Resets and runs the notification service to take care of potential time
-     * shifts when e.g. changing the time offset.
+     * Resets and runs the notification service to take care of potential time shifts when e.g.
+     * changing the time offset.
      */
     private static void resetAndRunNotificationsService(Context context) {
         NotificationService.resetLastEpisodeAirtime(PreferenceManager
@@ -492,11 +504,14 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 addPreferencesFromResource(R.xml.settings_basic);
                 setupBasicSettings(getActivity(), findPreference(KEY_ONLY_FUTURE_EPISODES),
                         findPreference(ActivitySettings.KEY_HIDE_SPECIALS),
+                        findPreference(KEY_LANGUAGE));
+            } else if ("notifications".equals(settings)) {
+                addPreferencesFromResource(R.xml.settings_notifications);
+                setupNotifiationSettings(getActivity(),
                         findPreference(NotificationSettings.KEY_ENABLED),
                         findPreference(NotificationSettings.KEY_FAVONLY),
                         findPreference(NotificationSettings.KEY_VIBRATE),
                         findPreference(NotificationSettings.KEY_RINGTONE),
-                        findPreference(KEY_LANGUAGE),
                         findPreference(NotificationSettings.KEY_THRESHOLD));
             } else if ("sharing".equals(settings)) {
                 addPreferencesFromResource(R.xml.settings_services);
@@ -552,7 +567,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                     ListPreference listPref = (ListPreference) pref;
                     // Set summary to be the user-description for the selected
                     // value
-                    listPref.setSummary(getString(R.string.pref_offsetsummary, listPref.getEntry()));
+                    listPref.setSummary(
+                            getString(R.string.pref_offsetsummary, listPref.getEntry()));
 
                     resetAndRunNotificationsService(getActivity());
                 }
