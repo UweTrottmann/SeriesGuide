@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
@@ -31,9 +32,7 @@ public class HelpActivity extends BaseActivity {
         WebView webview = new WebView(this);
         setContentView(webview);
 
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setTitle(R.string.help);
+        setupActionBar();
 
         setSupportProgressBarVisibility(true);
 
@@ -52,14 +51,25 @@ public class HelpActivity extends BaseActivity {
         webview.loadUrl(getString(R.string.help_url));
     }
 
+    private void setupActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(R.string.help);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportMenuInflater().inflate(R.menu.help_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
         if (itemId == R.id.menu_feedback) {
             fireTrackerEvent("Feedback");
 
