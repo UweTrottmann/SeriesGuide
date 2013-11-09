@@ -21,7 +21,9 @@ import com.google.analytics.tracking.android.EasyTracker;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.uwetrottmann.seriesguide.R;
 
 import android.os.Bundle;
 
@@ -58,8 +60,7 @@ public class TraktShoutsActivity extends BaseActivity {
         Bundle args = getIntent().getExtras();
         String title = args.getString(ShareItems.SHARESTRING);
 
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        setupActionBar();
 
         if (savedInstanceState == null) {
             // embed the shouts fragment dialog
@@ -81,6 +82,14 @@ public class TraktShoutsActivity extends BaseActivity {
         }
     }
 
+    private void setupActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(R.string.shouts);
+        actionBar.setSubtitle(getIntent().getExtras().getString(ShareItems.SHARESTRING));
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -91,5 +100,15 @@ public class TraktShoutsActivity extends BaseActivity {
     protected void onStop() {
         super.onStop();
         EasyTracker.getInstance(this).activityStop(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
