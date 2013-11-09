@@ -17,6 +17,8 @@
 
 package com.uwetrottmann.androidutils;
 
+import com.squareup.okhttp.OkHttpClient;
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -201,11 +203,11 @@ public class AndroidUtils {
 
         URL url = new URL(urlString);
 
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setReadTimeout(10000 /* milliseconds */);
-        conn.setConnectTimeout(15000 /* milliseconds */);
-        conn.setDoInput(true);
-        conn.setRequestMethod("GET");
+        OkHttpClient client = new OkHttpClient();
+
+        HttpURLConnection conn = client.open(url);
+        conn.setConnectTimeout(15 * 1000 /* milliseconds */);
+        conn.setReadTimeout(20 * 1000 /* milliseconds */);
         return conn;
     }
 
