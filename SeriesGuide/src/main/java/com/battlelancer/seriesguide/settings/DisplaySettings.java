@@ -5,6 +5,9 @@ import com.battlelancer.seriesguide.Constants;
 import android.content.Context;
 import android.preference.PreferenceManager;
 
+/**
+ * Settings related to appearance, display formats and sort orders.
+ */
 public class DisplaySettings {
 
     public static final String KEY_THEME = "com.battlelancer.seriesguide.theme";
@@ -27,15 +30,6 @@ public class DisplaySettings {
     public static final String KEY_EPISODE_SORT_ORDER = "episodeSorting";
 
     public static final String KEY_HIDE_SPECIALS = "onlySeasonEpisodes";
-
-    // Only applies to activity stream
-    public static final String KEY_ACTIVITYTAB = "com.battlelancer.seriesguide.activitytab";
-
-    public static final String KEY_INFINITE_ACTIVITY
-            = "com.battlelancer.seriesguide.activity.infinite";
-
-    public static final String KEY_ONLY_FAVORITE_SHOWS
-            = "com.battlelancer.seriesguide.onlyfavorites";
 
     public static String getThemeIndex(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).
@@ -81,29 +75,6 @@ public class DisplaySettings {
     public static boolean isHidingSpecials(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
                 KEY_HIDE_SPECIALS, false);
-    }
-
-    public static int getDefaultActivityTabPosition(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getInt(KEY_ACTIVITYTAB, 0);
-    }
-
-    /**
-     * Whether the activity stream should be infinite or limited to a number of days.
-     */
-    public static boolean isInfiniteActivity(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-                KEY_INFINITE_ACTIVITY,
-                false);
-    }
-
-    /**
-     * Whether the activity stream should only include episodes from favorited shows.
-     */
-    public static boolean isOnlyFavorites(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-                KEY_ONLY_FAVORITE_SHOWS,
-                false);
     }
 
 }

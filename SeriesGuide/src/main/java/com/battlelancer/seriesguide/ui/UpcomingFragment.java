@@ -23,6 +23,7 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -130,7 +131,7 @@ public class UpcomingFragment extends SherlockFragment implements
 
         // setup adapter
         mAdapter = new SlowAdapter(getActivity(), null, 0);
-        mAdapter.setIsShowingHeaders(!DisplaySettings.isInfiniteActivity(getActivity()));
+        mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteActivity(getActivity()));
 
         // setup grid view
         mGridView.setAdapter(mAdapter);
@@ -255,7 +256,7 @@ public class UpcomingFragment extends SherlockFragment implements
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String type = getArguments().getString(InitBundle.TYPE);
-        boolean isInfiniteScrolling = DisplaySettings.isInfiniteActivity(getActivity());
+        boolean isInfiniteScrolling = ActivitySettings.isInfiniteActivity(getActivity());
 
         // infinite or 30 days activity stream
         String[][] queryArgs = DBUtils.buildActivityQuery(getActivity(), type,
@@ -275,13 +276,13 @@ public class UpcomingFragment extends SherlockFragment implements
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (DisplaySettings.KEY_INFINITE_ACTIVITY.equals(key)) {
-            mAdapter.setIsShowingHeaders(!DisplaySettings.isInfiniteActivity(getActivity()));
+        if (ActivitySettings.KEY_INFINITE_ACTIVITY.equals(key)) {
+            mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteActivity(getActivity()));
         }
-        if (DisplaySettings.KEY_ONLY_FAVORITE_SHOWS.equals(key)
+        if (ActivitySettings.KEY_ONLY_FAVORITE_SHOWS.equals(key)
                 || DisplaySettings.KEY_HIDE_SPECIALS.equals(key)
                 || DisplaySettings.KEY_NO_WATCHED_EPISODES.equals(key)
-                || DisplaySettings.KEY_INFINITE_ACTIVITY.equals(key)) {
+                || ActivitySettings.KEY_INFINITE_ACTIVITY.equals(key)) {
             onRequery();
         }
     }

@@ -27,6 +27,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.ActivityType;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
@@ -294,7 +295,7 @@ public class DBUtils {
         };
 
         // append only favorites selection if necessary
-        boolean isOnlyFavorites = DisplaySettings.isOnlyFavorites(context);
+        boolean isOnlyFavorites = ActivitySettings.isOnlyFavorites(context);
         if (isOnlyFavorites) {
             query += Shows.SELECTION_FAVORITES;
         }
