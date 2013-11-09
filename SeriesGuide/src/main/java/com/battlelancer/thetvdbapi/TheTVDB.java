@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
@@ -123,7 +124,7 @@ public class TheTVDB {
      */
     public static boolean addShow(int showTvdbId, List<TvShow> seenShows,
             List<TvShow> collectedShows, Context context) throws SAXException {
-        String language = getTheTVDBLanguage(context);
+        String language = DisplaySettings.getContentLanguage(context);
         Show show = fetchShow(showTvdbId, language, context);
 
         boolean isShowExists = DBUtils.isShowExists(showTvdbId, context);
@@ -145,7 +146,7 @@ public class TheTVDB {
      * orphaned episodes.
      */
     public static void updateShow(int showTvdbId, Context context) throws SAXException {
-        String language = getTheTVDBLanguage(context);
+        String language = DisplaySettings.getContentLanguage(context);
         Show show = fetchShow(showTvdbId, language, context);
 
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
@@ -161,7 +162,7 @@ public class TheTVDB {
      */
     public static List<SearchResult> searchShow(String title, Context context) throws IOException,
             SAXException {
-        String language = getTheTVDBLanguage(context);
+        String language = DisplaySettings.getContentLanguage(context);
 
         URL url;
         try {
@@ -268,12 +269,6 @@ public class TheTVDB {
 
         // insert all new episodes in bulk
         context.getContentResolver().bulkInsert(Episodes.CONTENT_URI, newEpisodesValues);
-    }
-
-    private static String getTheTVDBLanguage(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                .getApplicationContext());
-        return prefs.getString(SeriesGuidePreferences.KEY_LANGUAGE, "en");
     }
 
     private static void storeTraktFlags(int showTvdbId, List<TvShow> shows, Context context,

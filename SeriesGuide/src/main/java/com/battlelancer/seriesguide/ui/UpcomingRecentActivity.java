@@ -25,9 +25,10 @@ import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.ActivityType;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
@@ -91,7 +92,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         tabsAdapter.addTab(R.string.recent, UpcomingFragment.class, argsRecent);
 
         // trakt friends tab
-        final boolean isTraktSetup = ServiceUtils.hasTraktCredentials(this);
+        final boolean isTraktSetup = TraktSettings.hasTraktCredentials(this);
         if (isTraktSetup) {
             tabsAdapter.addTab(R.string.friends, TraktFriendsFragment.class, null);
         }
@@ -110,8 +111,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
                 selection = extras.getInt(InitBundle.SELECTED_TAB, 0);
             } else {
                 // use saved selection
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                selection = prefs.getInt(SeriesGuidePreferences.KEY_ACTIVITYTAB, 0);
+                selection = ActivitySettings.getDefaultActivityTabPosition(this);
             }
         }
         // never select a non-existent tab
@@ -136,11 +136,10 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
 
         // set menu items to current values
         menu.findItem(R.id.menu_onlyfavorites).setChecked(ActivitySettings.isOnlyFavorites(this));
-        menu.findItem(R.id.menu_nospecials).setChecked(ActivitySettings.isHidingSpecials(this));
-        menu.findItem(R.id.menu_nowatched).setChecked(
-                prefs.getBoolean(SeriesGuidePreferences.KEY_NOWATCHED, false));
+        menu.findItem(R.id.menu_nospecials).setChecked(DisplaySettings.isHidingSpecials(this));
+        menu.findItem(R.id.menu_nowatched).setChecked(DisplaySettings.isNoWatchedEpisodes(this));
         menu.findItem(R.id.menu_infinite_scrolling).setChecked(
-                ActivitySettings.isInfiniteScrolling(this));
+                ActivitySettings.isInfiniteActivity(this));
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -149,19 +148,19 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_onlyfavorites) {
-            storeBooleanPreference(item, ActivitySettings.KEY_ONLY_FAVORITES);
+            storeBooleanPreference(item, ActivitySettings.KEY_ONLY_FAVORITE_SHOWS);
             fireTrackerEvent("Only favorite shows Toggle");
             return true;
         } else if (itemId == R.id.menu_nospecials) {
-            storeBooleanPreference(item, ActivitySettings.KEY_HIDE_SPECIALS);
+            storeBooleanPreference(item, DisplaySettings.KEY_HIDE_SPECIALS);
             fireTrackerEvent("Hide specials Toggle");
             return true;
         } else if (itemId == R.id.menu_nowatched) {
-            storeBooleanPreference(item, SeriesGuidePreferences.KEY_NOWATCHED);
+            storeBooleanPreference(item, DisplaySettings.KEY_NO_WATCHED_EPISODES);
             fireTrackerEvent("Hide watched Toggle");
             return true;
         } else if (itemId == R.id.menu_infinite_scrolling) {
-            storeBooleanPreference(item, ActivitySettings.KEY_INFINITE_SCROLLING);
+            storeBooleanPreference(item, ActivitySettings.KEY_INFINITE_ACTIVITY);
             fireTrackerEvent("Infinite Scrolling Toggle");
             return true;
         } else {
@@ -197,7 +196,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         @Override
         public void onPageSelected(int position) {
             // save selected tab index
-            mPrefs.edit().putInt(SeriesGuidePreferences.KEY_ACTIVITYTAB, position).commit();
+            mPrefs.edit().putInt(ActivitySettings.KEY_ACTIVITYTAB, position).commit();
         }
 
     }

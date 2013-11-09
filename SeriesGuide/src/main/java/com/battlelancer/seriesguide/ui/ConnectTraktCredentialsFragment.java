@@ -20,6 +20,7 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
@@ -33,7 +34,6 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -79,15 +79,15 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         final Context context = getActivity().getApplicationContext();
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         final View layout = inflater.inflate(R.layout.trakt_credentials_dialog, container, false);
         final FragmentManager fm = getFragmentManager();
         final Bundle args = getArguments();
 
         // restore the username from settings
-        final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+        final String username = TraktSettings.getUsername(context);
 
         // new account toggle
         final View mailviews = layout.findViewById(R.id.mailviews);
@@ -150,7 +150,8 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment {
                         .isChecked();
                 final String traktApiKey = getResources().getString(R.string.trakt_apikey);
 
-                AsyncTask<String, Void, Response> accountValidatorTask = new AsyncTask<String, Void, Response>() {
+                AsyncTask<String, Void, Response> accountValidatorTask
+                        = new AsyncTask<String, Void, Response>() {
 
                     @Override
                     protected void onPreExecute() {
@@ -222,21 +223,24 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment {
                         }
 
                         // prepare writing credentials to settings
-                        Editor editor = prefs.edit();
-                        editor.putString(SeriesGuidePreferences.KEY_TRAKTUSER, username).putString(
-                                SeriesGuidePreferences.KEY_TRAKTPWD, passwordEncr);
+                        final Editor editor = PreferenceManager.getDefaultSharedPreferences(context)
+                                .edit();
+                        editor.putString(TraktSettings.KEY_USERNAME, username).putString(
+                                TraktSettings.KEY_PASSWORD_SHA1_ENCR, passwordEncr);
 
                         if (response.status.equals(TraktStatus.SUCCESS)
                                 && passwordEncr.length() != 0 && editor.commit()) {
                             // try setting new auth data for service manager
-                            if (ServiceUtils.getTraktServiceManagerWithAuth(context, true) == null) {
+                            if (ServiceUtils.getTraktServiceManagerWithAuth(context, true)
+                                    == null) {
                                 status.setText(R.string.trakt_error_credentials);
                                 return;
                             }
 
                             if (isForwardingGivenTask) {
                                 // continue with original task
-                                if (TraktAction.values()[args.getInt(ShareItems.TRAKTACTION)] == TraktAction.CHECKIN_EPISODE) {
+                                if (TraktAction.values()[args.getInt(ShareItems.TRAKTACTION)]
+                                        == TraktAction.CHECKIN_EPISODE) {
                                     FragmentTransaction ft = fm.beginTransaction();
                                     Fragment prev = fm.findFragmentByTag("progress-dialog");
                                     if (prev != null) {
@@ -248,9 +252,9 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment {
 
                                 // relaunch the trakt task which called us
                                 AndroidUtils.executeAsyncTask(
-                                        new TraktTask(context, args, null), new Void[] {
-                                            null
-                                        });
+                                        new TraktTask(context, args, null), new Void[]{
+                                        null
+                                });
 
                                 FragmentActivity activity = getActivity();
                                 if (activity != null) {

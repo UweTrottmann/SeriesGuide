@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
@@ -130,7 +131,7 @@ public class UpcomingFragment extends SherlockFragment implements
 
         // setup adapter
         mAdapter = new SlowAdapter(getActivity(), null, 0);
-        mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteScrolling(getActivity()));
+        mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteActivity(getActivity()));
 
         // setup grid view
         mGridView.setAdapter(mAdapter);
@@ -255,7 +256,7 @@ public class UpcomingFragment extends SherlockFragment implements
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String type = getArguments().getString(InitBundle.TYPE);
-        boolean isInfiniteScrolling = ActivitySettings.isInfiniteScrolling(getActivity());
+        boolean isInfiniteScrolling = ActivitySettings.isInfiniteActivity(getActivity());
 
         // infinite or 30 days activity stream
         String[][] queryArgs = DBUtils.buildActivityQuery(getActivity(), type,
@@ -275,13 +276,13 @@ public class UpcomingFragment extends SherlockFragment implements
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (ActivitySettings.KEY_INFINITE_SCROLLING.equals(key)) {
-            mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteScrolling(getActivity()));
+        if (ActivitySettings.KEY_INFINITE_ACTIVITY.equals(key)) {
+            mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteActivity(getActivity()));
         }
-        if (ActivitySettings.KEY_ONLY_FAVORITES.equals(key)
-                || ActivitySettings.KEY_HIDE_SPECIALS.equals(key)
-                || SeriesGuidePreferences.KEY_NOWATCHED.equals(key)
-                || ActivitySettings.KEY_INFINITE_SCROLLING.equals(key)) {
+        if (ActivitySettings.KEY_ONLY_FAVORITE_SHOWS.equals(key)
+                || DisplaySettings.KEY_HIDE_SPECIALS.equals(key)
+                || DisplaySettings.KEY_NO_WATCHED_EPISODES.equals(key)
+                || ActivitySettings.KEY_INFINITE_ACTIVITY.equals(key)) {
             onRequery();
         }
     }
@@ -435,7 +436,7 @@ public class UpcomingFragment extends SherlockFragment implements
             }
 
             // number and show
-            final String number = Utils.getEpisodeNumber(mPrefs, season, episode);
+            final String number = Utils.getEpisodeNumber(mContext, season, episode);
             viewHolder.show.setText(number + " | " + mCursor.getString(UpcomingQuery.SHOW_TITLE));
 
             // title

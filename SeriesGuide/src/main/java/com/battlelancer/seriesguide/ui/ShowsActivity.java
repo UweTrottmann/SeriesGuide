@@ -33,6 +33,7 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.sync.SyncUtils;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -452,8 +453,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
                 }
 
                 if (lastVersion < VER_TRAKT_SEC_CHANGES) {
-                    // clear trakt credentials
-                    editor.putString(SeriesGuidePreferences.KEY_TRAKTPWD, null);
+                    ServiceUtils.clearTraktCredentials(this);
                     editor.putString(SeriesGuidePreferences.KEY_SECURE, null);
                 }
                 if (lastVersion < VER_SUMMERTIME_FIX) {

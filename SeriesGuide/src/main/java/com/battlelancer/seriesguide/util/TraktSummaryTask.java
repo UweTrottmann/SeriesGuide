@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.TraktSummaryTask.RatingsWrapper;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Ratings;
@@ -161,7 +162,7 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
 
     private Trakt getTrakt() {
         Trakt trakt;
-        if (ServiceUtils.hasTraktCredentials(mContext)) {
+        if (TraktSettings.hasTraktCredentials(mContext)) {
             trakt = ServiceUtils.getTraktServiceManagerWithAuth(mContext,
                     false);
         } else {

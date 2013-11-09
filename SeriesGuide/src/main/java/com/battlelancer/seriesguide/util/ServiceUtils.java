@@ -18,8 +18,8 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.enums.TraktStatus;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Response;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -28,7 +28,6 @@ import com.uwetrottmann.seriesguide.R;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -137,8 +136,8 @@ public final class ServiceUtils {
         }
 
         if (refreshCredentials) {
-            final String username = getTraktUsername(context);
-            final String password = getTraktPasswordHash(context);
+            final String username = TraktSettings.getUsername(context);
+            final String password = TraktSettings.getPasswordSha1(context);
 
             if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
                 ServiceUtils.sTraktServiceManagerWithAuthInstance.setAuthentication(username,
@@ -152,49 +151,15 @@ public final class ServiceUtils {
         return ServiceUtils.sTraktServiceManagerWithAuthInstance;
     }
 
-    public static String getTraktUsername(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(
-                SeriesGuidePreferences.KEY_TRAKTUSER, "");
-    }
-
-    /**
-     * Returns the SHA hash of the users trakt password.<br> <b>Never</b> store this yourself,
-     * always call this method.
-     */
-    private static String getTraktPasswordHash(Context context) {
-        String hash = PreferenceManager.getDefaultSharedPreferences(context).getString(
-                SeriesGuidePreferences.KEY_TRAKTPWD, null);
-
-        // try decrypting the hash
-        if (!TextUtils.isEmpty(hash)) {
-            hash = SimpleCrypto.decrypt(hash, context);
-        }
-
-        return hash;
-    }
-
-    /**
-     * Checks if there are a non-empty trakt username and password. Returns false if either one is
-     * empty.
-     */
-    public static boolean hasTraktCredentials(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                .getApplicationContext());
-        String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
-        String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
-
-        return (!username.equalsIgnoreCase("") && !password.equalsIgnoreCase(""));
-    }
-
     /**
      * Checks for existing trakt credentials. If there aren't any valid ones (determined by {@link
-     * #hasTraktCredentials(Context)}), launches the trakt connect flow.
+     * TraktSettings#hasTraktCredentials(Context)}), launches the trakt connect flow.
      *
      * @return <b>true</b> if credentials are valid, <b>false</b> if invalid and launching trakt
      * connect flow.
      */
     public static boolean ensureTraktCredentials(Context context) {
-        if (!hasTraktCredentials(context)) {
+        if (!TraktSettings.hasTraktCredentials(context)) {
             // launch trakt connect process
             context.startActivity(new Intent(context, ConnectTraktActivity.class));
             return false;
@@ -211,7 +176,7 @@ public final class ServiceUtils {
         Log.d(TAG, "Checking trakt credentials...");
 
         // no username or password? stop right here
-        if (!hasTraktCredentials(context)) {
+        if (!TraktSettings.hasTraktCredentials(context)) {
             return;
         }
 
@@ -248,8 +213,8 @@ public final class ServiceUtils {
         // remove from settings
         Editor editor = PreferenceManager.getDefaultSharedPreferences(context
                 .getApplicationContext()).edit();
-        editor.putString(SeriesGuidePreferences.KEY_TRAKTUSER, "").putString(
-                SeriesGuidePreferences.KEY_TRAKTPWD, "");
+        editor.putString(TraktSettings.KEY_USERNAME, "").putString(
+                TraktSettings.KEY_PASSWORD_SHA1_ENCR, "");
         editor.commit();
 
         // remove from memory

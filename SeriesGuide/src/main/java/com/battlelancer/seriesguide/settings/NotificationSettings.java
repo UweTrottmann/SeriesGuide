@@ -31,7 +31,7 @@ public class NotificationSettings {
 
     public static boolean isNotifyAboutFavoritesOnly(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(KEY_FAVONLY, true);
+                .getBoolean(KEY_FAVONLY, false);
     }
 
     /**

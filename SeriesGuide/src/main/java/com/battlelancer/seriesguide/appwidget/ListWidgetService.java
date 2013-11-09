@@ -17,18 +17,6 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
-import android.annotation.TargetApi;
-import android.appwidget.AppWidgetManager;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.widget.RemoteViews;
-import android.widget.RemoteViewsService;
-
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Qualified;
@@ -39,6 +27,16 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
+
+import android.annotation.TargetApi;
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.widget.RemoteViews;
+import android.widget.RemoteViewsService;
 
 @TargetApi(11)
 public class ListWidgetService extends RemoteViewsService {
@@ -132,9 +130,8 @@ public class ListWidgetService extends RemoteViewsService {
                     ShowsQuery.EPISODE_NUMBER : UpcomingQuery.NUMBER);
             String title = mDataCursor.getString(isShowQuery ?
                     ShowsQuery.EPISODE_TITLE : UpcomingQuery.TITLE);
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
             rv.setTextViewText(R.id.textViewWidgetEpisode,
-                    Utils.getNextEpisodeString(prefs, seasonNumber, episodeNumber, title));
+                    Utils.getNextEpisodeString(mContext, seasonNumber, episodeNumber, title));
 
             // relative airtime
             long airtime = mDataCursor.getLong(isShowQuery ?

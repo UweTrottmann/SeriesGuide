@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:defaultValue="en"
+        android:entries="@array/languages"
+        android:entryValues="@array/languageData"
+        android:key="language"
+        android:title="@string/pref_language" />
+
+    <CheckBoxPreference
+        android:defaultValue="True"
+        android:key="com.battlelancer.seriesguide.autoupdate"
+        android:summary="@string/pref_autoupdatesummary"
+        android:title="@string/pref_autoupdate" />
+    <CheckBoxPreference
+        android:defaultValue="False"
+        android:key="com.battlelancer.seriesguide.autoupdatewlanonly"
+        android:title="@string/pref_updatewifionly" />
 
     <CheckBoxPreference
         android:defaultValue="False"
@@ -11,50 +28,20 @@
         android:key="onlySeasonEpisodes"
         android:summary="@string/pref_onlyseasonepssummary"
         android:title="@string/pref_onlyseasoneps" />
-    <CheckBoxPreference
-        android:defaultValue="False"
-        android:key="com.battlelancer.seriesguide.autoupdatewlanonly"
-        android:title="@string/pref_updatewifionly" />
 
-    <ListPreference
-        android:defaultValue="en"
-        android:entries="@array/languages"
-        android:entryValues="@array/languageData"
-        android:key="language"
-        android:title="@string/pref_language" />
-
-    <PreferenceCategory android:title="@string/pref_notifications" >
-        <CheckBoxPreference
-            android:defaultValue="True"
-            android:key="com.battlelancer.seriesguide.notifications"
-            android:summary="@string/pref_notificationssummary"
-            android:title="@string/pref_notifications" />
-
+    <PreferenceCategory android:title="@string/pref_appearance">
         <ListPreference
-            android:defaultValue="60"
-            android:entries="@array/notificationThreshold"
-            android:entryValues="@array/notificationThresholdData"
-            android:key="com.battlelancer.seriesguide.notifications.threshold"
-            android:title="@string/pref_notifications_treshold" />
-
-        <CheckBoxPreference
-            android:defaultValue="True"
-            android:key="com.battlelancer.seriesguide.notifications.favonly"
-            android:summary="@string/pref_notifyfavonlysummary"
-            android:title="@string/pref_notifyfavonly" />
-        <CheckBoxPreference
-            android:defaultValue="False"
-            android:key="com.battlelancer.seriesguide.notifications.vibrate"
-            android:summary="@string/pref_vibratesummary"
-            android:title="@string/pref_vibrate" />
-
-        <RingtonePreference
-            android:defaultValue="content://settings/system/notification_sound"
-            android:key="com.battlelancer.seriesguide.notifications.ringtone"
-            android:ringtoneType="notification"
-            android:showDefault="true"
-            android:showSilent="true"
-            android:title="@string/pref_ringtone" />
+            android:defaultValue="0"
+            android:entries="@array/themeSelection"
+            android:entryValues="@array/themeSelectionData"
+            android:key="com.battlelancer.seriesguide.theme"
+            android:title="@string/pref_theme" />
+        <ListPreference
+            android:defaultValue="default"
+            android:entries="@array/numbers"
+            android:entryValues="@array/numberData"
+            android:key="numberformat"
+            android:title="@string/pref_number" />
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.Lists;
@@ -28,11 +29,9 @@ import com.uwetrottmann.seriesguide.R;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import java.util.List;
@@ -291,9 +290,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
             }
 
             // show episode seen/unseen message
-            final SharedPreferences prefs = PreferenceManager
-                    .getDefaultSharedPreferences(mContext);
-            String number = Utils.getEpisodeNumber(prefs, mSeason, mEpisode);
+            String number = Utils.getEpisodeNumber(mContext, mSeason, mEpisode);
             return mContext.getString(
                     EpisodeTools.isWatched(mEpisodeFlag) ? R.string.trakt_seen
                             : R.string.trakt_notseen,
@@ -322,9 +319,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
         @Override
         public String getNotificationText() {
-            final SharedPreferences prefs = PreferenceManager
-                    .getDefaultSharedPreferences(mContext);
-            String number = Utils.getEpisodeNumber(prefs, mSeason, mEpisode);
+            String number = Utils.getEpisodeNumber(mContext, mSeason, mEpisode);
             return mContext.getString(mEpisodeFlag == 1 ? R.string.trakt_collected
                     : R.string.trakt_notcollected, number);
         }
@@ -428,9 +423,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                 return null;
             }
 
-            final SharedPreferences prefs = PreferenceManager
-                    .getDefaultSharedPreferences(mContext);
-            String number = Utils.getEpisodeNumber(prefs, mSeason, -1);
+            String number = Utils.getEpisodeNumber(mContext, mSeason, -1);
             return mContext.getString(
                     EpisodeTools.isWatched(mEpisodeFlag) ? R.string.trakt_seen
                             : R.string.trakt_notseen,
@@ -458,9 +451,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
         @Override
         public String getNotificationText() {
-            final SharedPreferences prefs = PreferenceManager
-                    .getDefaultSharedPreferences(mContext);
-            String number = Utils.getEpisodeNumber(prefs, mSeason, -1);
+            String number = Utils.getEpisodeNumber(mContext, mSeason, -1);
             return mContext.getString(mEpisodeFlag == 1 ? R.string.trakt_collected
                     : R.string.trakt_notcollected, number);
         }
@@ -674,7 +665,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
          */
         // check for valid trakt credentials
         mIsTraktInvolved = !EpisodeTools.isSkipped(mType.mEpisodeFlag)
-                && ServiceUtils.hasTraktCredentials(mContext);
+                && TraktSettings.hasTraktCredentials(mContext);
 
         // prepare trakt stuff
         if (mIsTraktInvolved) {

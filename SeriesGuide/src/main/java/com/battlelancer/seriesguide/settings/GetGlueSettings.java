@@ -8,9 +8,14 @@ public class GetGlueSettings {
 
     public static final String KEY_AUTH_TOKEN = "com.battlelancer.seriesguide.getglue.authtoken";
 
-    public static final String KEY_AUTH_EXPIRATION = "com.battlelancer.seriesguide.getglue.authexpiration";
+    public static final String KEY_AUTH_EXPIRATION
+            = "com.battlelancer.seriesguide.getglue.authexpiration";
 
-    public static final String KEY_REFRESH_TOKEN = "com.battlelancer.seriesguide.getglue.refreshtoken";
+    public static final String KEY_REFRESH_TOKEN
+            = "com.battlelancer.seriesguide.getglue.refreshtoken";
+
+    public static final String KEY_SHARE_WITH_GETGLUE
+            = "com.battlelancer.seriesguide.sharewithgetglue";
 
     public static String getAuthToken(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
@@ -42,5 +47,10 @@ public class GetGlueSettings {
                 .putLong(KEY_AUTH_EXPIRATION, 0)
                 .putString(KEY_REFRESH_TOKEN, "")
                 .commit();
+    }
+
+    public static boolean isSharingWithGetGlue(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_SHARE_WITH_GETGLUE, false);
     }
 }

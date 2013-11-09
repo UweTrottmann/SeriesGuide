@@ -6,7 +6,8 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -70,7 +71,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     public static void requestSync(Context context) {
         // only request sync if at least UPDATE_INTERVAL has passed
         long now = System.currentTimeMillis();
-        long previousUpdateTime = AdvancedSettings.getLastAutoUpdateTime(context);
+        long previousUpdateTime = UpdateSettings.getLastAutoUpdateTime(context);
 
         final boolean isTime = (now - previousUpdateTime) >
                 UPDATE_INTERVAL_MINUTES * DateUtils.MINUTE_IN_MILLIS;
@@ -101,8 +102,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         if (!Utils.isAllowedConnection(context)) {
             // abort if no connection available
             if (isUserRequested) {
-                final boolean isWifiOnly = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getBoolean(SeriesGuidePreferences.KEY_ONLYWIFI, false);
+                final boolean isWifiOnly = UpdateSettings.isOnlyUpdateOverWifi(context);
                 Toast.makeText(context,
                         isWifiOnly ? R.string.update_no_wifi : R.string.update_no_connection,
                         Toast.LENGTH_LONG).show();
@@ -273,7 +273,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             ServiceUtils.checkTraktCredentials(getContext());
 
             // get newly watched episodes from trakt
-            final UpdateResult traktResult = getTraktActivity(currentTime);
+            final UpdateResult traktResult = getTraktActivity();
 
             // do not overwrite earlier failure codes
             if (resultCode == UpdateResult.SUCCESS) {
@@ -283,10 +283,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             // store time of update, set retry counter on failure
             if (resultCode == UpdateResult.SUCCESS) {
                 // we were successful, reset failed counter
-                prefs.edit().putLong(AdvancedSettings.KEY_LASTUPDATE, currentTime)
-                        .putInt(SeriesGuidePreferences.KEY_FAILED_COUNTER, 0).commit();
+                prefs.edit().putLong(UpdateSettings.KEY_LASTUPDATE, currentTime)
+                        .putInt(UpdateSettings.KEY_FAILED_COUNTER, 0).commit();
             } else {
-                int failed = prefs.getInt(SeriesGuidePreferences.KEY_FAILED_COUNTER, 0);
+                int failed = UpdateSettings.getFailedNumberOfUpdates(getContext());
 
                 /*
                  * Back off by 2**(failure + 2) * minutes. Purposely set a fake
@@ -305,8 +305,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
                 failed += 1;
                 prefs.edit()
-                        .putLong(AdvancedSettings.KEY_LASTUPDATE, fakeLastUpdateTime)
-                        .putInt(SeriesGuidePreferences.KEY_FAILED_COUNTER, failed).commit();
+                        .putLong(UpdateSettings.KEY_LASTUPDATE, fakeLastUpdateTime)
+                        .putInt(UpdateSettings.KEY_FAILED_COUNTER, failed).commit();
             }
         }
 
@@ -350,9 +350,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
     }
 
-    private UpdateResult getTraktActivity(long currentTime) {
+    private UpdateResult getTraktActivity() {
         Log.d(TAG, "Getting trakt activity...");
-        if (!ServiceUtils.hasTraktCredentials(getContext())) {
+        if (!TraktSettings.hasTraktCredentials(getContext())) {
             // trakt is not connected, we are done here
             return UpdateResult.SUCCESS;
         }
@@ -368,16 +368,14 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // get last trakt update timestamp
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        final long startTimeTrakt = prefs.getLong(SeriesGuidePreferences.KEY_LASTTRAKTUPDATE,
-                currentTime) / 1000;
+        final long startTimeTrakt = TraktSettings.getLastUpdateTime(getContext()) / 1000;
 
         // get activity from trakt
         Activity activities;
         try {
             activities = manager
                     .activityService()
-                    .user(ServiceUtils.getTraktUsername(getContext()),
+                    .user(TraktSettings.getUsername(getContext()),
                             ActivityType.Episode.toString(),
                             ActivityAction.Checkin + "," + ActivityAction.Seen + "," +
                                     ActivityAction.Scrobble + "," + ActivityAction.Collection,
@@ -405,8 +403,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // build an update batch for episode flag changes of existing shows, detect new shows
         mNewShows = new ArrayList<>();
-        boolean isAutoAddingShows = prefs.getBoolean(
-                SeriesGuidePreferences.KEY_AUTO_ADD_TRAKT_SHOWS, true);
+        boolean isAutoAddingShows = TraktSettings.isAutoAddingShows(getContext());
         final HashSet<Integer> newShowTvdbIds = new HashSet<>();
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         for (ActivityItem activity : activities.activity) {
@@ -433,9 +430,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         DBUtils.applyInSmallBatches(getContext(), batch);
 
         // store time of this update as seen by the trakt server
-        prefs.edit()
-                .putLong(SeriesGuidePreferences.KEY_LASTTRAKTUPDATE,
-                        activities.timestamps.current.getTime()).commit();
+        final SharedPreferences.Editor editor = PreferenceManager
+                .getDefaultSharedPreferences(getContext()).edit();
+        editor.putLong(TraktSettings.KEY_LAST_UPDATE,
+                activities.timestamps.current.getTime()).commit();
 
         return UpdateResult.SUCCESS;
     }
