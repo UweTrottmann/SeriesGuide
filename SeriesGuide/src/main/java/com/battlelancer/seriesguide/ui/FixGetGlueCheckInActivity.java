@@ -1,6 +1,15 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.battlelancer.seriesguide.adapters.GetGlueObjectAdapter;
+import com.battlelancer.seriesguide.loaders.GetGlueObjectLoader;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.uwetrottmann.getglue.entities.GetGlueObject;
+import com.uwetrottmann.seriesguide.R;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -17,21 +26,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.battlelancer.seriesguide.adapters.GetGlueObjectAdapter;
-import com.battlelancer.seriesguide.loaders.GetGlueObjectLoader;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.getglue.entities.GetGlueObject;
-import com.uwetrottmann.seriesguide.R;
-
 import java.util.List;
 
 /**
  * Displays a list of GetGlue search results to choose from which are used to
  * provide object ids for GetGlue check ins.
  */
-public class FixGetGlueCheckInActivity extends BaseNavDrawerActivity implements
+public class FixGetGlueCheckInActivity extends BaseActivity implements
         LoaderManager.LoaderCallbacks<List<GetGlueObject>>, OnItemClickListener {
 
     public interface InitBundle {
@@ -50,7 +51,7 @@ public class FixGetGlueCheckInActivity extends BaseNavDrawerActivity implements
     @Override
     protected void onCreate(Bundle args) {
         super.onCreate(args);
-        getMenu().setContentView(R.layout.activity_fix_get_glue);
+        setContentView(R.layout.activity_fix_get_glue);
 
         setTitle(R.string.checkin_fixgetglue);
         

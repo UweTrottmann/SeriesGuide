@@ -43,7 +43,8 @@ public class MoviesActivity extends BaseTopActivity {
         setSupportProgressBarIndeterminateVisibility(false);
 
         super.onCreate(savedInstanceState);
-        getMenu().setContentView(R.layout.movies);
+        setContentView(R.layout.movies);
+        setupNavDrawer();
 
         setupActionBar();
 

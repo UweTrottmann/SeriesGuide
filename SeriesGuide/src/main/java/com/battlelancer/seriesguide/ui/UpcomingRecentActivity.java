@@ -51,7 +51,8 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getMenu().setContentView(R.layout.upcoming);
+        setContentView(R.layout.upcoming);
+        setupNavDrawer();
 
         // if coming from a notification, set last cleared time
         NotificationService.handleDeleteIntent(this, getIntent());

@@ -10,6 +10,8 @@
     <string name="search">Search</string>
     <string name="preferences">Settings</string>
     <string name="help">Help</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 
     <!-- Media items -->
     <string name="show">Show</string>
@@ -56,7 +58,6 @@
     <string name="shout">Shout!</string>
     <string name="isspoiler">Spoiler alert!</string>
     <string name="no_shouts">Be the first to shout!</string>
-    <string name="shouts_for">Shouts for %s</string>
     <string name="autorefresh">Refreshing automagically</string>
 
     <!-- Movies -->

@@ -24,15 +24,20 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
 
         setupActionBar();
 
-        // setup nav drawer to show special indicator
-        getMenu().setSlideDrawable(R.drawable.ic_drawer);
-        getMenu().setDrawerIndicatorEnabled(true);
     }
 
     private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public void setupNavDrawer() {
+        super.setupNavDrawer();
+
+        // show a drawer indicator
+        setDrawerIndicatorEnabled(true);
     }
 
     @Override
@@ -52,11 +57,13 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == android.R.id.home) {
-            toggleMenu();
+        // check if we should toggle the navigation drawer (app icon was touched)
+        if (toggleDrawer(item)) {
             return true;
-        } else if (itemId == R.id.menu_subscribe) {
+        }
+
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_subscribe) {
             startActivity(new Intent(this, BillingActivity.class));
 
             fireTrackerEvent("Subscribe");
@@ -73,6 +80,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
             fireTrackerEvent("Help");
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

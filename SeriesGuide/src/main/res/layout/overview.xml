@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/wrapper"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="match_parent">
 
-    <com.astuetz.viewpager.extensions.PagerSlidingTabStrip
-        android:id="@+id/tabsOverview"
-        style="@style/TabStrip"
+    <LinearLayout
+        android:id="@+id/wrapper"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/tab_strip_height" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pagerOverview"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        <com.astuetz.viewpager.extensions.PagerSlidingTabStrip
+            android:id="@+id/tabsOverview"
+            style="@style/TabStrip"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tab_strip_height" />
 
-</LinearLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pagerOverview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <include layout="@layout/drawer_left" />
+
+</android.support.v4.widget.DrawerLayout>

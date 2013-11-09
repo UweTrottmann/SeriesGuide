@@ -124,7 +124,7 @@ public class MovieDetailsFragment extends SherlockFragment implements
         if (mMovieDetails != null) {
             // If the nav drawer is open, hide action items related to the
             // content view
-            boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isMenuDrawerOpen();
+            boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
 
             boolean isEnableImdb = mMovieDetails.movie() != null
                     && !TextUtils.isEmpty(mMovieDetails.movie().imdb_id);

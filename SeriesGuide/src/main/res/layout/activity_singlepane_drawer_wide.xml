@@ -5,9 +5,15 @@
     android:layout_height="match_parent">
 
     <FrameLayout
-        android:id="@+id/fragment_episodes"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/content_frame"
+            android:layout_width="@dimen/addpager_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="right|end" />
+    </FrameLayout>
 
     <include layout="@layout/drawer_left" />
 
