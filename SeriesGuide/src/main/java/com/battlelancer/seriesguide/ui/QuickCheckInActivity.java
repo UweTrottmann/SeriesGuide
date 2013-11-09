@@ -1,19 +1,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.os.Build;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
-import android.widget.Toast;
-
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin.CheckInTask;
@@ -27,6 +14,19 @@ import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
+
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.os.Build;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
+import android.widget.Toast;
 
 /**
  * Blank activity, just used to quickly check into a show/episode on
@@ -85,7 +85,7 @@ public class QuickCheckInActivity extends SherlockFragmentActivity implements
         int showTvdbId = episodeWithShow.getInt(4);
         String showTitle = episodeWithShow.getString(5);
         episodeWithShow.close();
-        String defaultMessage = Utils.getNextEpisodeString(prefs, season, episode, title);
+        String defaultMessage = Utils.getNextEpisodeString(this, season, episode, title);
 
         // get share service enabled settings
         boolean isShareWithGetGlue = prefs.getBoolean(SeriesGuidePreferences.KEY_SHAREWITHGETGLUE,

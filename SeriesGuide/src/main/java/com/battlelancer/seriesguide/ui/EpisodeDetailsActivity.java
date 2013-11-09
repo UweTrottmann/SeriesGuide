@@ -28,14 +28,14 @@ import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -47,11 +47,12 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 
 /**
- * Hosts a {@link ViewPager} displaying an episode per fragment of a complete
- * season. Used on smaller screens which do not allow for multi-pane layouts or
- * if coming from a search result selection.
+ * Hosts a {@link ViewPager} displaying an episode per fragment of a complete season. Used on
+ * smaller screens which do not allow for multi-pane layouts or if coming from a search result
+ * selection.
  */
 public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
+
     protected static final String TAG = "Episode Details";
 
     private EpisodePagerAdapter mAdapter;
@@ -63,10 +64,10 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     private int mShowId;
 
     /**
-     * Data which has to be passed when creating this activity. All Bundle
-     * extras are integer.
+     * Data which has to be passed when creating this activity. All Bundle extras are integer.
      */
     public interface InitBundle {
+
         String EPISODE_TVDBID = "episode_tvdbid";
     }
 
@@ -91,9 +92,9 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         // Lookup show and season of episode
         final Cursor episode = getContentResolver().query(
-                Episodes.buildEpisodeWithShowUri(String.valueOf(episodeId)), new String[] {
-                        Seasons.REF_SEASON_ID, Shows.POSTER, Shows.REF_SHOW_ID
-                }, null, null, null);
+                Episodes.buildEpisodeWithShowUri(String.valueOf(episodeId)), new String[]{
+                Seasons.REF_SEASON_ID, Shows.POSTER, Shows.REF_SHOW_ID
+        }, null, null, null);
 
         if (episode == null || !episode.moveToFirst()) {
             // nothing to display
@@ -108,12 +109,12 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         // lookup episodes of season
         mShowId = episode.getInt(2);
         mSeasonId = episode.getInt(0);
-        Constants.EpisodeSorting sorting = Utils.getEpisodeSorting(this);
+        Constants.EpisodeSorting sortOrder = DisplaySettings.getEpisodeSortOrder(this);
 
         Cursor episodeCursor = getContentResolver().query(
-                Episodes.buildEpisodesOfSeasonUri(String.valueOf(mSeasonId)), new String[] {
-                        Episodes._ID, Episodes.NUMBER, Episodes.SEASON
-                }, null, null, sorting.query());
+                Episodes.buildEpisodesOfSeasonUri(String.valueOf(mSeasonId)), new String[]{
+                Episodes._ID, Episodes.NUMBER, Episodes.SEASON
+        }, null, null, sortOrder.query());
 
         if (episodeCursor != null) {
             int i = 0;
@@ -135,10 +136,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         episode.close();
 
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
-
-        mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), episodes, prefs, true);
+        mAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(), episodes, true);
 
         mPager = (ViewPager) findViewById(R.id.pagerEpisodeDetails);
         mPager.setAdapter(mAdapter);
@@ -223,15 +221,15 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         private ArrayList<Episode> mEpisodes;
 
-        private SharedPreferences mPrefs;
+        private Context mContext;
 
         private boolean mIsShowingShowLink;
 
-        public EpisodePagerAdapter(FragmentManager fm, ArrayList<Episode> episodes,
-                SharedPreferences prefs, boolean isShowingShowLink) {
+        public EpisodePagerAdapter(Context context, FragmentManager fm, ArrayList<Episode> episodes,
+                boolean isShowingShowLink) {
             super(fm);
             mEpisodes = episodes;
-            mPrefs = prefs;
+            mContext = context;
             mIsShowingShowLink = isShowingShowLink;
         }
 
@@ -271,7 +269,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             Episode episode = mEpisodes.get(position);
-            return Utils.getEpisodeNumber(mPrefs, episode.seasonNumber, episode.episodeNumber);
+            return Utils.getEpisodeNumber(mContext, episode.seasonNumber, episode.episodeNumber);
         }
 
         public void updateEpisodeList(ArrayList<Episode> list) {

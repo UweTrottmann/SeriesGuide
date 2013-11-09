@@ -26,9 +26,9 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
-import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.AppSettings;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
@@ -66,9 +66,7 @@ import java.util.List;
 public class SeriesGuidePreferences extends SherlockPreferenceActivity implements
         OnSharedPreferenceChangeListener {
 
-    private static final String KEY_CLEAR_CACHE = "clearCache";
-
-    private static final String KEY_GETGLUE_DISCONNECT = "clearGetGlueCredentials";
+    private static final String TAG = "Settings";
 
     // Actions for legacy settings
     private static final String ACTION_PREFS_BASIC = "com.battlelancer.seriesguide.PREFS_BASIC";
@@ -84,29 +82,17 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     private static final String ACTION_PREFS_ABOUT = "com.battlelancer.seriesguide.PREFS_ABOUT";
 
     // Preference keys
+    private static final String KEY_CLEAR_CACHE = "clearCache";
+
+    private static final String KEY_GETGLUE_DISCONNECT = "clearGetGlueCredentials";
+
     public static final String KEY_TRAKTPWD = "com.battlelancer.seriesguide.traktpwd";
 
     public static final String KEY_TRAKTUSER = "com.battlelancer.seriesguide.traktuser";
 
-    public static final String KEY_ONLY_FUTURE_EPISODES = "onlyFutureEpisodes";
-
-    public static final String KEY_NUMBERFORMAT = "numberformat";
-
-    public static final String NUMBERFORMAT_DEFAULT = "default";
-
-    public static final String NUMBERFORMAT_ENGLISH = "english";
-
-    public static final String NUMBERFORMAT_ENGLISHLOWER = "englishlower";
-
     public static final String KEY_OFFSET = "com.battlelancer.seriesguide.timeoffset";
 
     public static final String KEY_DATABASEIMPORTED = "com.battlelancer.seriesguide.dbimported";
-
-    public static final String KEY_SEASON_SORT_ORDER = "seasonSorting";
-
-    public static final String KEY_EPISODE_SORT_ORDER = "episodeSorting";
-
-    public static final String KEY_SHOWFILTER = "com.battlelancer.seriesguide.showfilter";
 
     public static final String KEY_SECURE = "com.battlelancer.seriesguide.secure";
 
@@ -117,18 +103,10 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_LASTTRAKTUPDATE = "com.battlelancer.seriesguide.lasttraktupdate";
 
-    public static final String KEY_NOWATCHED = "com.battlelancer.seriesguide.activity.nowatched";
-
-    public static final String KEY_LANGUAGE = "language";
-
     public static final String KEY_SHAREWITHTRAKT = "com.battlelancer.seriesguide.sharewithtrakt";
 
     public static final String KEY_SHAREWITHGETGLUE
             = "com.battlelancer.seriesguide.sharewithgetglue";
-
-    public static final String KEY_THEME = "com.battlelancer.seriesguide.theme";
-
-    public static final String KEY_ACTIVITYTAB = "com.battlelancer.seriesguide.activitytab";
 
     public static final String KEY_AUTO_ADD_TRAKT_SHOWS
             = "com.battlelancer.seriesguide.autoaddtraktshows";
@@ -138,11 +116,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String SUPPORT_MAIL = "support@seriesgui.de";
 
-    private static final String TAG = "Settings";
-
     private static final String KEY_ABOUT = "aboutPref";
-
-    public static final String KEY_SELECTED_PAGE = "com.battlelancer.seriesguide.selectedpage";
 
     public static final String KEY_TMDB_BASE_URL = "com.battlelancer.seriesguide.tmdb.baseurl";
 
@@ -166,11 +140,11 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             setupBasicSettings(
                     this,
                     getIntent(),
-                    findPreference(KEY_ONLY_FUTURE_EPISODES),
-                    findPreference(ActivitySettings.KEY_HIDE_SPECIALS),
-                    findPreference(KEY_LANGUAGE),
-                    findPreference(KEY_THEME),
-                    findPreference(KEY_NUMBERFORMAT),
+                    findPreference(DisplaySettings.KEY_NO_RELEASED_EPISODES),
+                    findPreference(DisplaySettings.KEY_HIDE_SPECIALS),
+                    findPreference(DisplaySettings.KEY_LANGUAGE),
+                    findPreference(DisplaySettings.KEY_THEME),
+                    findPreference(DisplaySettings.KEY_NUMBERFORMAT),
                     findPreference(UpdateSettings.KEY_AUTOUPDATE)
             );
         } else if (action != null && action.equals(ACTION_PREFS_NOTIFICATIONS)) {
@@ -261,7 +235,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         themePref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                if (KEY_THEME.equals(preference.getKey())) {
+                if (DisplaySettings.KEY_THEME.equals(preference.getKey())) {
                     Utils.updateTheme((String) newValue);
 
                     // restart to apply new theme
@@ -431,9 +405,12 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     @SuppressWarnings("deprecation")
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(AdvancedSettings.KEY_UPCOMING_LIMIT) || key.equals(KEY_LANGUAGE)
-                || key.equals(KEY_NUMBERFORMAT) || key.equals(KEY_THEME)
-                || key.equals(NotificationSettings.KEY_THRESHOLD)) {
+        if (AdvancedSettings.KEY_UPCOMING_LIMIT.equals(key)
+                || DisplaySettings.KEY_LANGUAGE.equals(key)
+                || DisplaySettings.KEY_NUMBERFORMAT.equals(key)
+                || DisplaySettings.KEY_THEME.equals(key)
+                || NotificationSettings.KEY_THRESHOLD.equals(key)
+                ) {
             Preference pref = findPreference(key);
             if (pref != null) {
                 setListPreferenceSummary((ListPreference) pref);
@@ -444,7 +421,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
          * This can run here, as it does not depend on findPreference() which
          * would return null when using a SettingsFragment.
          */
-        if (key.equals(KEY_LANGUAGE)) {
+        if (DisplaySettings.KEY_LANGUAGE.equals(key)) {
             // reset last edit date of all episodes so they will get updated
             new Thread(new Runnable() {
                 public void run() {
@@ -466,7 +443,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             }
         }
 
-        if (key.equals(NotificationSettings.KEY_THRESHOLD)) {
+        if (NotificationSettings.KEY_THRESHOLD.equals(key)) {
             Preference pref = findPreference(key);
             if (pref != null) {
                 resetAndRunNotificationsService(SeriesGuidePreferences.this);
@@ -512,11 +489,11 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                     setupBasicSettings(
                             getActivity(),
                             getActivity().getIntent(),
-                            findPreference(KEY_ONLY_FUTURE_EPISODES),
-                            findPreference(ActivitySettings.KEY_HIDE_SPECIALS),
-                            findPreference(KEY_LANGUAGE),
-                            findPreference(KEY_THEME),
-                            findPreference(KEY_NUMBERFORMAT),
+                            findPreference(DisplaySettings.KEY_NO_RELEASED_EPISODES),
+                            findPreference(DisplaySettings.KEY_HIDE_SPECIALS),
+                            findPreference(DisplaySettings.KEY_LANGUAGE),
+                            findPreference(DisplaySettings.KEY_THEME),
+                            findPreference(DisplaySettings.KEY_NUMBERFORMAT),
                             findPreference(UpdateSettings.KEY_AUTOUPDATE)
                     );
                     break;
@@ -576,9 +553,12 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (key.equals(AdvancedSettings.KEY_UPCOMING_LIMIT) || key.equals(KEY_LANGUAGE)
-                    || key.equals(KEY_NUMBERFORMAT) || key.equals(KEY_THEME)
-                    || key.equals(NotificationSettings.KEY_THRESHOLD)) {
+            if (AdvancedSettings.KEY_UPCOMING_LIMIT.equals(key)
+                    || DisplaySettings.KEY_LANGUAGE.equals(key)
+                    || DisplaySettings.KEY_NUMBERFORMAT.equals(key)
+                    || DisplaySettings.KEY_THEME.equals(key)
+                    || NotificationSettings.KEY_THRESHOLD.equals(key)
+                    ) {
                 Preference pref = findPreference(key);
                 if (pref != null) {
                     setListPreferenceSummary((ListPreference) pref);
@@ -598,7 +578,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 }
             }
 
-            if (key.equals(NotificationSettings.KEY_THRESHOLD)) {
+            if (NotificationSettings.KEY_THRESHOLD.equals(key)) {
                 Preference pref = findPreference(key);
                 if (pref != null) {
                     resetAndRunNotificationsService(getActivity());

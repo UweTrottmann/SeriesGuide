@@ -22,14 +22,13 @@ import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.MapBuilder;
 
 import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.Constants.EpisodeSorting;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.service.OnAlarmReceiver;
-import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -473,9 +472,9 @@ public class Utils {
      * Returns a string in format "1x01 title" or "S1E01 title" dependent on a
      * user preference.
      */
-    public static String getNextEpisodeString(SharedPreferences prefs, int season, int episode,
+    public static String getNextEpisodeString(Context context, int season, int episode,
             String title) {
-        String result = getEpisodeNumber(prefs, season, episode);
+        String result = getEpisodeNumber(context, season, episode);
         result += " " + title;
         return result;
     }
@@ -484,12 +483,10 @@ public class Utils {
      * Returns the episode number formatted according to the users preference
      * (e.g. '1x01', 'S01E01', ...).
      */
-    public static String getEpisodeNumber(SharedPreferences prefs, int season,
-            int episode) {
-        String format = prefs.getString(SeriesGuidePreferences.KEY_NUMBERFORMAT,
-                SeriesGuidePreferences.NUMBERFORMAT_DEFAULT);
+    public static String getEpisodeNumber(Context context, int season, int episode) {
+        String format = DisplaySettings.getNumberFormat(context);
         String result = String.valueOf(season);
-        if (format.equals(SeriesGuidePreferences.NUMBERFORMAT_DEFAULT)) {
+        if (DisplaySettings.NUMBERFORMAT_DEFAULT.equals(format)) {
             // 1x01 format
             result += "x";
         } else {
@@ -498,7 +495,7 @@ public class Utils {
             if (season < 10) {
                 result = "0" + result;
             }
-            if (format.equals(SeriesGuidePreferences.NUMBERFORMAT_ENGLISHLOWER)) {
+            if (DisplaySettings.NUMBERFORMAT_ENGLISHLOWER.equals(format)) {
                 result = "s" + result + "e";
             } else {
                 result = "S" + result + "E";
@@ -536,24 +533,6 @@ public class Utils {
     }
 
     /**
-     * Get the currently set episode sorting from settings.
-     * 
-     * @return a EpisodeSorting enum set to the current sorting
-     */
-    public static EpisodeSorting getEpisodeSorting(Context context) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        String currentPref = prefs.getString(SeriesGuidePreferences.KEY_EPISODE_SORT_ORDER,
-                EpisodeSorting.OLDEST_FIRST.value());
-
-        EpisodeSorting sorting = EpisodeSorting.fromValue(currentPref);
-        if (sorting == null) {
-            return EpisodeSorting.OLDEST_FIRST;
-        } else {
-            return EpisodeSorting.fromValue(currentPref);
-        }
-    }
-
-    /**
      * Update the latest episode fields for all existing shows.
      */
     public static void updateLatestEpisodes(Context context) {
@@ -586,13 +565,12 @@ public class Utils {
 
         public void run() {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-            final boolean isOnlyFutureEpisodes = prefs.getBoolean(
-                    SeriesGuidePreferences.KEY_ONLY_FUTURE_EPISODES, false);
-            final boolean isNoSpecials = ActivitySettings.isHidingSpecials(mContext);
+            final boolean isNoReleasedEpisodes = DisplaySettings.isNoReleasedEpisodes(mContext);
+            final boolean isNoSpecials = DisplaySettings.isHidingSpecials(mContext);
 
             if (mShowTvdbId > 0) {
                 // update single show
-                DBUtils.updateLatestEpisode(mContext, mShowTvdbId, isOnlyFutureEpisodes, isNoSpecials,
+                DBUtils.updateLatestEpisode(mContext, mShowTvdbId, isNoReleasedEpisodes, isNoSpecials,
                         prefs);
             } else {
                 // update all shows
@@ -603,7 +581,7 @@ public class Utils {
                 if (shows != null) {
                     while (shows.moveToNext()) {
                         int showTvdbId = shows.getInt(0);
-                        DBUtils.updateLatestEpisode(mContext, showTvdbId, isOnlyFutureEpisodes,
+                        DBUtils.updateLatestEpisode(mContext, showTvdbId, isNoReleasedEpisodes,
                                 isNoSpecials, prefs);
                     }
                     shows.close();

@@ -1,6 +1,12 @@
 
 package com.battlelancer.seriesguide.adapters;
 
+import com.battlelancer.seriesguide.ui.SearchFragment;
+import com.battlelancer.seriesguide.ui.SearchFragment.SearchQuery;
+import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -13,15 +19,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.battlelancer.seriesguide.ui.SearchFragment;
-import com.battlelancer.seriesguide.ui.SearchFragment.SearchQuery;
-import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
-
 /**
- * {@link CursorAdapter} displaying episode search results inside the
- * {@link SearchFragment}.
+ * {@link CursorAdapter} displaying episode search results inside the {@link SearchFragment}.
  */
 public class SearchResultsAdapter extends CursorAdapter {
 
@@ -69,8 +68,9 @@ public class SearchResultsAdapter extends CursorAdapter {
         viewHolder.showTitle.setText(mCursor.getString(SearchQuery.SHOW_TITLE));
         viewHolder.watchedStatus.setImageResource(
                 EpisodeTools.isWatched(mCursor.getInt(SearchQuery.WATCHED))
-                ? R.drawable.ic_ticked
-                : Utils.resolveAttributeToResourceId(mContext.getTheme(), R.attr.drawableWatch));
+                        ? R.drawable.ic_ticked
+                        : Utils.resolveAttributeToResourceId(mContext.getTheme(),
+                                R.attr.drawableWatch));
 
         // ensure matched term is bold
         viewHolder.searchSnippet.setText(Html.fromHtml(mCursor.getString(SearchQuery.OVERVIEW)));
@@ -79,7 +79,8 @@ public class SearchResultsAdapter extends CursorAdapter {
         int number = mCursor.getInt(SearchQuery.NUMBER);
         int season = mCursor.getInt(SearchQuery.SEASON);
         String title = mCursor.getString(SearchQuery.TITLE);
-        viewHolder.episodeTitle.setText(Utils.getNextEpisodeString(mPrefs, season, number, title));
+        viewHolder.episodeTitle
+                .setText(Utils.getNextEpisodeString(mContext, season, number, title));
 
         return convertView;
     }
@@ -94,9 +95,13 @@ public class SearchResultsAdapter extends CursorAdapter {
     }
 
     static class ViewHolder {
+
         TextView showTitle;
+
         TextView episodeTitle;
+
         TextView searchSnippet;
+
         ImageView watchedStatus;
     }
 }

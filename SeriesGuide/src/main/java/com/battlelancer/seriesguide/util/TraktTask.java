@@ -32,10 +32,8 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -259,12 +257,10 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     }
 
                     if (com.jakewharton.trakt.enumerations.Status.SUCCESS.equals(r.status)) {
-                        SharedPreferences prefs = PreferenceManager
-                                .getDefaultSharedPreferences(mContext);
                         r.message = mContext
                                 .getString(R.string.checkin_success_trakt,
                                         (r.show != null ? r.show.title + " " : "")
-                                                + Utils.getEpisodeNumber(prefs, season, episode));
+                                                + Utils.getEpisodeNumber(mContext, season, episode));
                     }
 
                     break;
