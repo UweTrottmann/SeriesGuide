@@ -33,7 +33,7 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_singlepane_empty);
+        setContentView(R.layout.activity_singlepane_drawer);
         setupNavDrawer();
 
         if (getIntent().getExtras() == null) {
@@ -52,7 +52,7 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
 
         if (savedInstanceState == null) {
             MovieDetailsFragment f = MovieDetailsFragment.newInstance(tmdbId);
-            getSupportFragmentManager().beginTransaction().add(R.id.root_container, f).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.content_frame, f).commit();
         }
     }
 

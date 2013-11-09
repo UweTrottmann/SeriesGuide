@@ -100,7 +100,7 @@ public class SearchActivity extends BaseTopActivity {
                 SearchFragment newFragment = new SearchFragment();
                 newFragment.setArguments(extras);
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.search_fragment, newFragment).commit();
+                        .replace(R.id.content_frame, newFragment).commit();
             } else {
                 searchFragment.onPerformSearch(extras);
             }

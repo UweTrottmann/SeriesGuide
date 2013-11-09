@@ -36,7 +36,7 @@ public class StatsActivity extends BaseTopActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_singlepane_empty);
+        setContentView(R.layout.activity_singlepane_drawer);
         setupNavDrawer();
 
         ActionBar actionBar = getSupportActionBar();
@@ -46,7 +46,7 @@ public class StatsActivity extends BaseTopActivity {
         if (savedInstanceState == null) {
             StatsFragment f = new StatsFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(R.id.root_container, f);
+            ft.add(R.id.content_frame, f);
             ft.commit();
         }
     }

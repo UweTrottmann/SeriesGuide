@@ -9,10 +9,10 @@
         android:layout_height="match_parent">
 
         <FrameLayout
-            android:id="@+id/search_fragment"
+            android:id="@+id/content_frame"
             android:layout_width="@dimen/addpager_width"
             android:layout_height="match_parent"
-            android:layout_gravity="right" />
+            android:layout_gravity="right|end" />
     </FrameLayout>
 
     <include layout="@layout/drawer_left" />
