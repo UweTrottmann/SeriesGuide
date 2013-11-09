@@ -168,37 +168,47 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         String action = getIntent().getAction();
         if (action != null && action.equals(ACTION_PREFS_BASIC)) {
             addPreferencesFromResource(R.xml.settings_basic);
-            setupBasicSettings(this,
+            setupBasicSettings(
+                    this,
+                    getIntent(),
                     findPreference(KEY_ONLY_FUTURE_EPISODES),
                     findPreference(ActivitySettings.KEY_HIDE_SPECIALS),
-                    findPreference(KEY_LANGUAGE));
+                    findPreference(KEY_LANGUAGE),
+                    findPreference(KEY_THEME),
+                    findPreference(KEY_NUMBERFORMAT),
+                    findPreference(KEY_AUTOUPDATE)
+            );
         } else if (action != null && action.equals(ACTION_PREFS_NOTIFICATIONS)) {
             addPreferencesFromResource(R.xml.settings_notifications);
-            setupNotifiationSettings(this,
+            setupNotifiationSettings(
+                    this,
                     findPreference(NotificationSettings.KEY_ENABLED),
                     findPreference(NotificationSettings.KEY_FAVONLY),
                     findPreference(NotificationSettings.KEY_VIBRATE),
                     findPreference(NotificationSettings.KEY_RINGTONE),
-                    findPreference(NotificationSettings.KEY_THRESHOLD));
+                    findPreference(NotificationSettings.KEY_THRESHOLD)
+            );
         } else if (action != null && action.equals(ACTION_PREFS_SHARING)) {
             addPreferencesFromResource(R.xml.settings_services);
-            setupSharingSettings(this,
-                    findPreference(KEY_GETGLUE_DISCONNECT));
+            setupSharingSettings(
+                    this,
+                    findPreference(KEY_GETGLUE_DISCONNECT)
+            );
         } else if (action != null && action.equals(ACTION_PREFS_ADVANCED)) {
             addPreferencesFromResource(R.xml.settings_advanced);
-            setupAdvancedSettings(this,
-                    getIntent(),
-                    findPreference(KEY_THEME),
+            setupAdvancedSettings(
+                    this,
                     findPreference(AdvancedSettings.KEY_UPCOMING_LIMIT),
-                    findPreference(KEY_NUMBERFORMAT),
                     findPreference(KEY_OFFSET),
                     findPreference(AppSettings.KEY_GOOGLEANALYTICS),
-                    findPreference(KEY_CLEAR_CACHE),
-                    findPreference(KEY_AUTOUPDATE));
+                    findPreference(KEY_CLEAR_CACHE)
+            );
         } else if (action != null && action.equals(ACTION_PREFS_ABOUT)) {
             addPreferencesFromResource(R.xml.settings_about);
-            setupAboutSettings(this,
-                    findPreference(KEY_ABOUT));
+            setupAboutSettings(
+                    this,
+                    findPreference(KEY_ABOUT)
+            );
         } else if (!AndroidUtils.isHoneycombOrHigher()) {
             // Load the legacy preferences headers
             addPreferencesFromResource(R.xml.settings_legacy);
@@ -223,16 +233,17 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         });
     }
 
-    protected static void setupBasicSettings(final Context context, Preference noAiredPref,
-            Preference noSpecialsPref, Preference languagePref) {
+    protected static void setupBasicSettings(final Activity activity, final Intent startIntent,
+            Preference noAiredPref, Preference noSpecialsPref, Preference languagePref,
+            Preference themePref, Preference numberFormatPref, Preference updatePref) {
         // No aired episodes
         noAiredPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
                 if (((CheckBoxPreference) preference).isChecked()) {
-                    Utils.trackCustomEvent(context, TAG, "OnlyFutureEpisodes", "Enable");
+                    Utils.trackCustomEvent(activity, TAG, "OnlyFutureEpisodes", "Enable");
                 } else {
-                    Utils.trackCustomEvent(context, TAG, "OnlyFutureEpisodes", "Disable");
+                    Utils.trackCustomEvent(activity, TAG, "OnlyFutureEpisodes", "Disable");
                 }
                 return false;
             }
@@ -243,15 +254,37 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
             public boolean onPreferenceClick(Preference preference) {
                 if (((CheckBoxPreference) preference).isChecked()) {
-                    Utils.trackCustomEvent(context, TAG, "OnlySeasonEpisodes", "Enable");
+                    Utils.trackCustomEvent(activity, TAG, "OnlySeasonEpisodes", "Enable");
                 } else {
-                    Utils.trackCustomEvent(context, TAG, "OnlySeasonEpisodes", "Disable");
+                    Utils.trackCustomEvent(activity, TAG, "OnlySeasonEpisodes", "Disable");
                 }
                 return false;
             }
         });
 
+        // Theme switcher
+        themePref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                if (KEY_THEME.equals(preference.getKey())) {
+                    Utils.updateTheme((String) newValue);
+
+                    // restart to apply new theme
+                    NavUtils.navigateUpTo(activity,
+                            new Intent(Intent.ACTION_MAIN).setClass(activity, ShowsActivity.class));
+                    activity.startActivity(startIntent);
+                }
+                return true;
+            }
+        });
+
+        // set current value of auto-update pref
+        ((CheckBoxPreference) updatePref).setChecked(SgSyncAdapter.isSyncAutomatically(activity));
+
+        // show currently set values for list prefs
         setListPreferenceSummary((ListPreference) languagePref);
+        setListPreferenceSummary((ListPreference) themePref);
+        setListPreferenceSummary((ListPreference) numberFormatPref);
     }
 
     protected static void setupNotifiationSettings(final Context context,
@@ -298,35 +331,19 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         setListPreferenceSummary((ListPreference) notificationsThresholdPref);
     }
 
-    protected static void setupAdvancedSettings(final Activity activity, final Intent startIntent,
-            Preference themePref, Preference upcomingPref, Preference numberFormatPref,
-            Preference offsetPref, Preference analyticsPref, Preference clearCachePref,
-            Preference updatePref) {
-        // Theme switcher
-        themePref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                if (preference.getKey().equals(KEY_THEME)) {
-                    Utils.updateTheme((String) newValue);
-
-                    // restart to apply new theme
-                    NavUtils.navigateUpTo(activity,
-                            new Intent(Intent.ACTION_MAIN).setClass(activity, ShowsActivity.class));
-                    activity.startActivity(startIntent);
-                }
-                return true;
-            }
-        });
+    protected static void setupAdvancedSettings(final Context context,
+            Preference upcomingPref, Preference offsetPref, Preference analyticsPref,
+            Preference clearCachePref) {
 
         // Clear image cache
         clearCachePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
-                fireTrackerEvent(activity, "Clear Image Cache");
+                fireTrackerEvent(context, "Clear Image Cache");
 
-                ImageProvider.getInstance(activity).clearCache();
-                ImageProvider.getInstance(activity).clearExternalStorageCache();
-                Toast.makeText(activity, activity.getString(R.string.done), Toast.LENGTH_SHORT)
+                ImageProvider.getInstance(context).clearCache();
+                ImageProvider.getInstance(context).clearExternalStorageCache();
+                Toast.makeText(context, context.getString(R.string.done), Toast.LENGTH_SHORT)
                         .show();
                 return true;
             }
@@ -338,23 +355,17 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 if (preference.getKey().equals(AppSettings.KEY_GOOGLEANALYTICS)) {
                     boolean isEnabled = (Boolean) newValue;
-                    GoogleAnalytics.getInstance(activity).setAppOptOut(isEnabled);
+                    GoogleAnalytics.getInstance(context).setAppOptOut(isEnabled);
                     return true;
                 }
                 return false;
             }
         });
 
-        // set current value of auto-update pref
-        ((CheckBoxPreference) updatePref).setChecked(SgSyncAdapter.isSyncAutomatically(activity));
-
         // show currently set values for list prefs
-        setListPreferenceSummary((ListPreference) themePref);
         setListPreferenceSummary((ListPreference) upcomingPref);
-
-        setListPreferenceSummary((ListPreference) numberFormatPref);
         ListPreference offsetListPref = (ListPreference) offsetPref;
-        offsetListPref.setSummary(activity.getString(R.string.pref_offsetsummary,
+        offsetListPref.setSummary(context.getString(R.string.pref_offsetsummary,
                 offsetListPref.getEntry()));
     }
 
@@ -500,37 +511,55 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             super.onCreate(savedInstanceState);
 
             String settings = getArguments().getString("settings");
-            if ("basic".equals(settings)) {
-                addPreferencesFromResource(R.xml.settings_basic);
-                setupBasicSettings(getActivity(), findPreference(KEY_ONLY_FUTURE_EPISODES),
-                        findPreference(ActivitySettings.KEY_HIDE_SPECIALS),
-                        findPreference(KEY_LANGUAGE));
-            } else if ("notifications".equals(settings)) {
-                addPreferencesFromResource(R.xml.settings_notifications);
-                setupNotifiationSettings(getActivity(),
-                        findPreference(NotificationSettings.KEY_ENABLED),
-                        findPreference(NotificationSettings.KEY_FAVONLY),
-                        findPreference(NotificationSettings.KEY_VIBRATE),
-                        findPreference(NotificationSettings.KEY_RINGTONE),
-                        findPreference(NotificationSettings.KEY_THRESHOLD));
-            } else if ("sharing".equals(settings)) {
-                addPreferencesFromResource(R.xml.settings_services);
-                setupSharingSettings(getActivity(),
-                        findPreference(KEY_GETGLUE_DISCONNECT));
-            } else if ("advanced".equals(settings)) {
-                addPreferencesFromResource(R.xml.settings_advanced);
-                setupAdvancedSettings(getActivity(),
-                        getActivity().getIntent(),
-                        findPreference(KEY_THEME),
-                        findPreference(AdvancedSettings.KEY_UPCOMING_LIMIT),
-                        findPreference(KEY_NUMBERFORMAT),
-                        findPreference(KEY_OFFSET),
-                        findPreference(AppSettings.KEY_GOOGLEANALYTICS),
-                        findPreference(KEY_CLEAR_CACHE),
-                        findPreference(KEY_AUTOUPDATE));
-            } else if ("about".equals(settings)) {
-                addPreferencesFromResource(R.xml.settings_about);
-                setupAboutSettings(getActivity(), findPreference(KEY_ABOUT));
+            switch (settings) {
+                case "basic":
+                    addPreferencesFromResource(R.xml.settings_basic);
+                    setupBasicSettings(
+                            getActivity(),
+                            getActivity().getIntent(),
+                            findPreference(KEY_ONLY_FUTURE_EPISODES),
+                            findPreference(ActivitySettings.KEY_HIDE_SPECIALS),
+                            findPreference(KEY_LANGUAGE),
+                            findPreference(KEY_THEME),
+                            findPreference(KEY_NUMBERFORMAT),
+                            findPreference(KEY_AUTOUPDATE)
+                    );
+                    break;
+                case "notifications":
+                    addPreferencesFromResource(R.xml.settings_notifications);
+                    setupNotifiationSettings(
+                            getActivity(),
+                            findPreference(NotificationSettings.KEY_ENABLED),
+                            findPreference(NotificationSettings.KEY_FAVONLY),
+                            findPreference(NotificationSettings.KEY_VIBRATE),
+                            findPreference(NotificationSettings.KEY_RINGTONE),
+                            findPreference(NotificationSettings.KEY_THRESHOLD)
+                    );
+                    break;
+                case "sharing":
+                    addPreferencesFromResource(R.xml.settings_services);
+                    setupSharingSettings(
+                            getActivity(),
+                            findPreference(KEY_GETGLUE_DISCONNECT)
+                    );
+                    break;
+                case "advanced":
+                    addPreferencesFromResource(R.xml.settings_advanced);
+                    setupAdvancedSettings(
+                            getActivity(),
+                            findPreference(AdvancedSettings.KEY_UPCOMING_LIMIT),
+                            findPreference(KEY_OFFSET),
+                            findPreference(AppSettings.KEY_GOOGLEANALYTICS),
+                            findPreference(KEY_CLEAR_CACHE)
+                    );
+                    break;
+                case "about":
+                    addPreferencesFromResource(R.xml.settings_about);
+                    setupAboutSettings(
+                            getActivity(),
+                            findPreference(KEY_ABOUT)
+                    );
+                    break;
             }
         }
 
