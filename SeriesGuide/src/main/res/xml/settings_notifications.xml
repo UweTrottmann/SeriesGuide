@@ -15,7 +15,7 @@
         android:title="@string/pref_notifications_treshold" />
 
     <CheckBoxPreference
-        android:defaultValue="True"
+        android:defaultValue="False"
         android:key="com.battlelancer.seriesguide.notifications.favonly"
         android:summary="@string/pref_notifyfavonlysummary"
         android:title="@string/pref_notifyfavonly" />
