@@ -24,7 +24,6 @@
 
             <ListView
                 android:id="@+android:id/list"
-                style="@style/DefaultPadding.Page"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="@bool/gridClipToPadding"
@@ -59,7 +58,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/layout_padding">
+        android:layout_marginTop="@dimen/default_padding">
 
         <EditText
             android:id="@+id/shouttext"
