@@ -1,13 +1,11 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.content.Intent;
-
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.uwetrottmann.seriesguide.R;
 
-import net.simonvt.menudrawer.MenuDrawer;
+import android.content.Intent;
 
 /**
  * Adds action items specific to top show activities.
@@ -36,7 +34,7 @@ public abstract class BaseTopShowsActivity extends BaseTopActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content
         // view
-        boolean isDrawerOpen = getMenu().getDrawerState() != MenuDrawer.STATE_CLOSED;
+        boolean isDrawerOpen = isDrawerOpen();
         menu.findItem(R.id.menu_checkin).setVisible(!isDrawerOpen);
 
         return super.onPrepareOptionsMenu(menu);
