@@ -17,15 +17,14 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.MapBuilder;
-
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
+
+import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 
 /**
  * Hosts fragments displaying statistics.
@@ -37,7 +36,8 @@ public class StatsActivity extends BaseTopActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getMenu().setContentView(R.layout.activity_singlepane_empty);
+        setContentView(R.layout.activity_singlepane_empty);
+        setupNavDrawer();
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.statistics);

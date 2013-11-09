@@ -100,7 +100,7 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
 
-        boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isMenuDrawerOpen();
+        boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
         menu.findItem(R.id.menu_show_manage_lists).setVisible(!isDrawerOpen);
         menu.findItem(R.id.menu_show_share).setVisible(!isDrawerOpen);
     }

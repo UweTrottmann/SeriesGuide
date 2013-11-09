@@ -14,12 +14,11 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
 /**
- * Displays the seriesguide online help page.
+ * Displays the SeriesGuide online help page.
  */
-public class HelpActivity extends BaseNavDrawerActivity {
+public class HelpActivity extends BaseActivity {
 
     private static final String TAG = "Help";
-    private WebView mWebview;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -29,8 +28,8 @@ public class HelpActivity extends BaseNavDrawerActivity {
 
         super.onCreate(arg0);
 
-        mWebview = new WebView(this);
-        getMenu().setContentView(mWebview);
+        WebView webview = new WebView(this);
+        setContentView(webview);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
@@ -38,8 +37,8 @@ public class HelpActivity extends BaseNavDrawerActivity {
 
         setSupportProgressBarVisibility(true);
 
-        final BaseNavDrawerActivity activity = this;
-        mWebview.setWebChromeClient(new WebChromeClient() {
+        final BaseActivity activity = this;
+        webview.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 /*
                  * Activities and WebViews measure progress with different
@@ -49,8 +48,8 @@ public class HelpActivity extends BaseNavDrawerActivity {
                 activity.setSupportProgress(progress * 1000);
             }
         });
-        mWebview.getSettings().setJavaScriptEnabled(true);
-        mWebview.loadUrl(getString(R.string.help_url));
+        webview.getSettings().setJavaScriptEnabled(true);
+        webview.loadUrl(getString(R.string.help_url));
     }
 
     @Override

@@ -31,8 +31,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
-import net.simonvt.menudrawer.MenuDrawer;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -76,7 +74,8 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
-        getMenu().setContentView(R.layout.episode_pager);
+        setContentView(R.layout.episode_pager);
+        setupNavDrawer();
 
         setupActionBar();
 
@@ -160,13 +159,6 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         } else {
             setTheme(R.style.AndroidTheme);
         }
-    }
-
-    @Override
-    protected MenuDrawer getAttachedMenuDrawer() {
-        MenuDrawer menuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.OVERLAY);
-        menuDrawer.setMenuView(R.layout.menu_frame_with_spacer);
-        return menuDrawer;
     }
 
     private void setupActionBar() {

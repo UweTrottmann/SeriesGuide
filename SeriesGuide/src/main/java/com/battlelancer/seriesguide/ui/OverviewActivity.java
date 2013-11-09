@@ -68,7 +68,8 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getMenu().setContentView(R.layout.overview);
+        setContentView(R.layout.overview);
+        setupNavDrawer();
 
         mShowId = getIntent().getIntExtra(OverviewFragment.InitBundle.SHOW_TVDBID, -1);
         if (mShowId == -1) {
@@ -252,7 +253,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content
         // view
-        menu.findItem(R.id.menu_overview_search).setVisible(!isMenuDrawerOpen());
+        menu.findItem(R.id.menu_overview_search).setVisible(!isDrawerOpen());
         return super.onPrepareOptionsMenu(menu);
     }
 

@@ -218,7 +218,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     public void onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content
         // view
-        boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isMenuDrawerOpen();
+        boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
         menu.findItem(R.id.menu_manage_lists).setVisible(!isDrawerOpen);
         menu.findItem(R.id.menu_share).setVisible(!isDrawerOpen);
         super.onPrepareOptionsMenu(menu);

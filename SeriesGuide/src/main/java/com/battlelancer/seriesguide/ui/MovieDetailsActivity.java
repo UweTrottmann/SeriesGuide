@@ -17,12 +17,12 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.content.Intent;
-import android.os.Bundle;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 import com.uwetrottmann.seriesguide.R;
+
+import android.content.Intent;
+import android.os.Bundle;
 
 /**
  * Hosts a {@link MovieDetailsFragment} displaying details about the movie
@@ -33,7 +33,8 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getMenu().setContentView(R.layout.activity_singlepane_empty);
+        setContentView(R.layout.activity_singlepane_empty);
+        setupNavDrawer();
 
         if (getIntent().getExtras() == null) {
             finish();

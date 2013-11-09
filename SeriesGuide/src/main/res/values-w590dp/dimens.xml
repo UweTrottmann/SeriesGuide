@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="addpager_width">450dp</dimen>
     <dimen name="widget_item_width">35dp</dimen>
     <dimen name="widget_text_small">12sp</dimen>
     <dimen name="widget_text_middle">14sp</dimen>

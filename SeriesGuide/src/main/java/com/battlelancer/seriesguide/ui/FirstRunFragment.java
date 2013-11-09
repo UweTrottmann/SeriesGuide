@@ -135,9 +135,6 @@ public class FirstRunFragment extends SherlockFragment {
                 setFirstRunDismissed();
             }
         });
-
-        // peek menu
-        ((BaseNavDrawerActivity) getActivity()).getMenu().peekDrawer();
     }
 
     @Override

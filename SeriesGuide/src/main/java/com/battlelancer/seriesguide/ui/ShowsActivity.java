@@ -96,7 +96,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getMenu().setContentView(R.layout.shows);
+        setContentView(R.layout.shows);
+        setupNavDrawer();
 
         // Set up a sync account if needed
         SyncUtils.createSyncAccount(this);
@@ -256,7 +257,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
 
         // If the nav drawer is open, hide action items related to the content
         // view
-        boolean isDrawerOpen = isMenuDrawerOpen();
+        boolean isDrawerOpen = isDrawerOpen();
         menu.findItem(R.id.menu_add_show).setVisible(!isDrawerOpen);
 
         return super.onPrepareOptionsMenu(menu);
