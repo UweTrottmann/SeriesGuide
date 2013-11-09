@@ -6,7 +6,7 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -70,7 +70,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     public static void requestSync(Context context) {
         // only request sync if at least UPDATE_INTERVAL has passed
         long now = System.currentTimeMillis();
-        long previousUpdateTime = AdvancedSettings.getLastAutoUpdateTime(context);
+        long previousUpdateTime = UpdateSettings.getLastAutoUpdateTime(context);
 
         final boolean isTime = (now - previousUpdateTime) >
                 UPDATE_INTERVAL_MINUTES * DateUtils.MINUTE_IN_MILLIS;
@@ -101,8 +101,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         if (!Utils.isAllowedConnection(context)) {
             // abort if no connection available
             if (isUserRequested) {
-                final boolean isWifiOnly = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getBoolean(SeriesGuidePreferences.KEY_ONLYWIFI, false);
+                final boolean isWifiOnly = UpdateSettings.isOnlyUpdateOverWifi(context);
                 Toast.makeText(context,
                         isWifiOnly ? R.string.update_no_wifi : R.string.update_no_connection,
                         Toast.LENGTH_LONG).show();
@@ -283,10 +282,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             // store time of update, set retry counter on failure
             if (resultCode == UpdateResult.SUCCESS) {
                 // we were successful, reset failed counter
-                prefs.edit().putLong(AdvancedSettings.KEY_LASTUPDATE, currentTime)
-                        .putInt(SeriesGuidePreferences.KEY_FAILED_COUNTER, 0).commit();
+                prefs.edit().putLong(UpdateSettings.KEY_LASTUPDATE, currentTime)
+                        .putInt(UpdateSettings.KEY_FAILED_COUNTER, 0).commit();
             } else {
-                int failed = prefs.getInt(SeriesGuidePreferences.KEY_FAILED_COUNTER, 0);
+                int failed = UpdateSettings.getFailedNumberOfUpdates(getContext());
 
                 /*
                  * Back off by 2**(failure + 2) * minutes. Purposely set a fake
@@ -305,8 +304,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
                 failed += 1;
                 prefs.edit()
-                        .putLong(AdvancedSettings.KEY_LASTUPDATE, fakeLastUpdateTime)
-                        .putInt(SeriesGuidePreferences.KEY_FAILED_COUNTER, failed).commit();
+                        .putLong(UpdateSettings.KEY_LASTUPDATE, fakeLastUpdateTime)
+                        .putInt(UpdateSettings.KEY_FAILED_COUNTER, failed).commit();
             }
         }
 

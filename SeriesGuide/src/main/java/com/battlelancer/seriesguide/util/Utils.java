@@ -17,6 +17,24 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.MapBuilder;
+
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.Constants.EpisodeSorting;
+import com.battlelancer.seriesguide.billing.BillingActivity;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.service.NotificationService;
+import com.battlelancer.seriesguide.service.OnAlarmReceiver;
+import com.battlelancer.seriesguide.settings.ActivitySettings;
+import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.settings.UpdateSettings;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -39,23 +57,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.Constants.EpisodeSorting;
-import com.battlelancer.seriesguide.billing.BillingActivity;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.service.NotificationService;
-import com.battlelancer.seriesguide.service.OnAlarmReceiver;
-import com.battlelancer.seriesguide.settings.ActivitySettings;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.Fields;
-import com.google.analytics.tracking.android.MapBuilder;
-
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -871,10 +872,7 @@ public class Utils {
      * connection.
      */
     public static boolean isAllowedConnection(Context context) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        final boolean isWlanOnly = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYWIFI, false);
-
-        if (isWlanOnly) {
+        if (UpdateSettings.isOnlyUpdateOverWifi(context)) {
             return AndroidUtils.isWifiConnected(context);
         } else {
             return AndroidUtils.isNetworkConnected(context);

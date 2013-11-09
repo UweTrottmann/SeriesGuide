@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
+import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
@@ -114,10 +115,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_HIDEIMAGES = "hideimages";
 
-    public static final String KEY_AUTOUPDATE = "com.battlelancer.seriesguide.autoupdate";
-
-    public static final String KEY_ONLYWIFI = "com.battlelancer.seriesguide.autoupdatewlanonly";
-
     public static final String KEY_LASTTRAKTUPDATE = "com.battlelancer.seriesguide.lasttraktupdate";
 
     public static final String KEY_NOWATCHED = "com.battlelancer.seriesguide.activity.nowatched";
@@ -130,8 +127,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             = "com.battlelancer.seriesguide.sharewithgetglue";
 
     public static final String KEY_THEME = "com.battlelancer.seriesguide.theme";
-
-    public static final String KEY_FAILED_COUNTER = "com.battlelancer.seriesguide.failedcounter";
 
     public static final String KEY_ACTIVITYTAB = "com.battlelancer.seriesguide.activitytab";
 
@@ -176,7 +171,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                     findPreference(KEY_LANGUAGE),
                     findPreference(KEY_THEME),
                     findPreference(KEY_NUMBERFORMAT),
-                    findPreference(KEY_AUTOUPDATE)
+                    findPreference(UpdateSettings.KEY_AUTOUPDATE)
             );
         } else if (action != null && action.equals(ACTION_PREFS_NOTIFICATIONS)) {
             addPreferencesFromResource(R.xml.settings_notifications);
@@ -479,7 +474,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         }
 
         // Toggle auto-update on SyncAdapter
-        if (KEY_AUTOUPDATE.equals(key)) {
+        if (UpdateSettings.KEY_AUTOUPDATE.equals(key)) {
             CheckBoxPreference pref = (CheckBoxPreference) findPreference(key);
             if (pref != null) {
                 SgSyncAdapter.setSyncAutomatically(SeriesGuidePreferences.this, pref.isChecked());
@@ -522,7 +517,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                             findPreference(KEY_LANGUAGE),
                             findPreference(KEY_THEME),
                             findPreference(KEY_NUMBERFORMAT),
-                            findPreference(KEY_AUTOUPDATE)
+                            findPreference(UpdateSettings.KEY_AUTOUPDATE)
                     );
                     break;
                 case "notifications":
@@ -611,7 +606,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             }
 
             // Toggle auto-update on SyncAdapter
-            if (KEY_AUTOUPDATE.equals(key)) {
+            if (UpdateSettings.KEY_AUTOUPDATE.equals(key)) {
                 CheckBoxPreference pref = (CheckBoxPreference) findPreference(key);
                 if (pref != null) {
                     SgSyncAdapter.setSyncAutomatically(getActivity(), pref.isChecked());
