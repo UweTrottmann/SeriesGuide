@@ -7,6 +7,7 @@ import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin.CheckInTask;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.TraktTask;
@@ -90,8 +91,7 @@ public class QuickCheckInActivity extends SherlockFragmentActivity implements
         // get share service enabled settings
         boolean isShareWithGetGlue = prefs.getBoolean(SeriesGuidePreferences.KEY_SHAREWITHGETGLUE,
                 false);
-        boolean isShareWithTrakt = prefs.getBoolean(SeriesGuidePreferences.KEY_SHAREWITHTRAKT,
-                false);
+        boolean isShareWithTrakt = TraktSettings.isSharingWithTrakt(this);
 
         if (isShareWithTrakt) {
             // We want to remove any currently showing

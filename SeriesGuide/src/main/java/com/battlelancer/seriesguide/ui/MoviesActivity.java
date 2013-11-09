@@ -21,7 +21,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
 import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
-import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -64,7 +64,7 @@ public class MoviesActivity extends BaseTopActivity {
         TabStripAdapter tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this, pager,
                 tabs);
         // only show the trakt watchlist with valid credentials
-        if (ServiceUtils.hasTraktCredentials(this)) {
+        if (TraktSettings.hasTraktCredentials(this)) {
             tabsAdapter.addTab(R.string.movies_watchlist, MoviesWatchListFragment.class, null);
         }
         // movie search

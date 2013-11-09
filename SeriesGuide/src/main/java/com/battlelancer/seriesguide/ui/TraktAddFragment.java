@@ -22,6 +22,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -186,11 +187,11 @@ public class TraktAddFragment extends AddFragment {
                                 break;
                             case AddPagerAdapter.LIBRARY_TAB_POSITION:
                                 shows = manager.userService()
-                                        .libraryShowsAll(ServiceUtils.getTraktUsername(mContext));
+                                        .libraryShowsAll(TraktSettings.getUsername(mContext));
                                 break;
                             case AddPagerAdapter.WATCHLIST_TAB_POSITION:
                                 shows = manager.userService()
-                                        .watchlistShows(ServiceUtils.getTraktUsername(mContext));
+                                        .watchlistShows(TraktSettings.getUsername(mContext));
                                 break;
                         }
                     }

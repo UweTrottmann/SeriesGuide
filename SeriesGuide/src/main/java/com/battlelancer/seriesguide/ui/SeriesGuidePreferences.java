@@ -86,10 +86,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     private static final String KEY_GETGLUE_DISCONNECT = "clearGetGlueCredentials";
 
-    public static final String KEY_TRAKTPWD = "com.battlelancer.seriesguide.traktpwd";
-
-    public static final String KEY_TRAKTUSER = "com.battlelancer.seriesguide.traktuser";
-
     public static final String KEY_OFFSET = "com.battlelancer.seriesguide.timeoffset";
 
     public static final String KEY_DATABASEIMPORTED = "com.battlelancer.seriesguide.dbimported";
@@ -101,18 +97,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_HIDEIMAGES = "hideimages";
 
-    public static final String KEY_LASTTRAKTUPDATE = "com.battlelancer.seriesguide.lasttraktupdate";
-
-    public static final String KEY_SHAREWITHTRAKT = "com.battlelancer.seriesguide.sharewithtrakt";
-
     public static final String KEY_SHAREWITHGETGLUE
             = "com.battlelancer.seriesguide.sharewithgetglue";
-
-    public static final String KEY_AUTO_ADD_TRAKT_SHOWS
-            = "com.battlelancer.seriesguide.autoaddtraktshows";
-
-    public static final String KEY_SYNC_UNSEEN_EPISODES
-            = "com.battlelancer.seriesguide.syncunseenepisodes";
 
     public static final String SUPPORT_MAIL = "support@seriesgui.de";
 

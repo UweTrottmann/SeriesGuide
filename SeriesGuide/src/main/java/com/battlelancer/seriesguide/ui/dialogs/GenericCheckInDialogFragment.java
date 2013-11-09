@@ -19,10 +19,10 @@ package com.battlelancer.seriesguide.ui.dialogs;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -132,7 +132,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
 
         // get share service enabled settings
         mGetGlueChecked = prefs.getBoolean(SeriesGuidePreferences.KEY_SHAREWITHGETGLUE, false);
-        mTraktChecked = prefs.getBoolean(SeriesGuidePreferences.KEY_SHAREWITHTRAKT, false);
+        mTraktChecked = TraktSettings.isSharingWithTrakt(getSherlockActivity());;
 
         // Message box, set title as default comment
         mMessageBox = (EditText) layout.findViewById(R.id.message);
@@ -183,7 +183,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    if (!ServiceUtils.hasTraktCredentials(getSherlockActivity())) {
+                    if (!TraktSettings.hasTraktCredentials(getSherlockActivity())) {
                         // authenticate already here
                         Intent i = new Intent(getActivity(), ConnectTraktActivity.class);
                         startActivity(i);
@@ -191,7 +191,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
                 }
 
                 mTraktChecked = isChecked;
-                prefs.edit().putBoolean(SeriesGuidePreferences.KEY_SHAREWITHTRAKT, isChecked)
+                prefs.edit().putBoolean(TraktSettings.KEY_SHARE_WITH_TRAKT, isChecked)
                         .commit();
                 updateCheckInButtonState();
             }
@@ -218,7 +218,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
                 }
 
                 if (mTraktChecked) {
-                    if (!ServiceUtils.hasTraktCredentials(getActivity())) {
+                    if (!TraktSettings.hasTraktCredentials(getActivity())) {
                         // cancel if required auth data is missing
                         mToggleTraktButton.setChecked(false);
                         mTraktChecked = false;

@@ -26,9 +26,9 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.ActivityType;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
@@ -92,7 +92,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         tabsAdapter.addTab(R.string.recent, UpcomingFragment.class, argsRecent);
 
         // trakt friends tab
-        final boolean isTraktSetup = ServiceUtils.hasTraktCredentials(this);
+        final boolean isTraktSetup = TraktSettings.hasTraktCredentials(this);
         if (isTraktSetup) {
             tabsAdapter.addTab(R.string.friends, TraktFriendsFragment.class, null);
         }

@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowSeason;
@@ -87,7 +88,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected Integer doInBackground(Void... params) {
-        if (!ServiceUtils.hasTraktCredentials(mContext)) {
+        if (!TraktSettings.hasTraktCredentials(mContext)) {
             return FAILED_CREDENTIALS;
         }
 
@@ -100,7 +101,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
         if (mIsSyncToTrakt) {
             return syncToTrakt(manager);
         } else {
-            return syncToSeriesGuide(manager, ServiceUtils.getTraktUsername(mContext));
+            return syncToSeriesGuide(manager, TraktSettings.getUsername(mContext));
         }
     }
 

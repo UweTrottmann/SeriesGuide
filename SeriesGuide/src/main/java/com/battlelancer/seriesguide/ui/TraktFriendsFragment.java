@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -187,7 +188,7 @@ public class TraktFriendsFragment extends ListFragment implements
 
         @Override
         public List<UserProfile> loadInBackground() {
-            if (ServiceUtils.hasTraktCredentials(getContext())) {
+            if (TraktSettings.hasTraktCredentials(getContext())) {
                 Trakt manager = ServiceUtils.getTraktServiceManagerWithAuth(getContext(), false);
                 if (manager == null) {
                     return null;
@@ -198,7 +199,7 @@ public class TraktFriendsFragment extends ListFragment implements
                 try {
                     final UserService userService = manager.userService();
                     List<UserProfile> friends = userService
-                            .friends(ServiceUtils.getTraktUsername(getContext()));
+                            .friends(TraktSettings.getUsername(getContext()));
 
                     for (UserProfile friend : friends) {
                         // get the detailed profile

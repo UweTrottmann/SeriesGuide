@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.CheckinResponse;
@@ -213,7 +214,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         }
 
         // check for valid credentials
-        if (!ServiceUtils.hasTraktCredentials(mContext)) {
+        if (!TraktSettings.hasTraktCredentials(mContext)) {
             return null;
         }
 
