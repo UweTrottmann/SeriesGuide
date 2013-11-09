@@ -97,9 +97,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_HIDEIMAGES = "hideimages";
 
-    public static final String KEY_SHAREWITHGETGLUE
-            = "com.battlelancer.seriesguide.sharewithgetglue";
-
     public static final String SUPPORT_MAIL = "support@seriesgui.de";
 
     private static final String KEY_ABOUT = "aboutPref";

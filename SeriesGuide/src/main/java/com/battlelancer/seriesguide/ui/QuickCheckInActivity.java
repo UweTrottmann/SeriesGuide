@@ -89,8 +89,7 @@ public class QuickCheckInActivity extends SherlockFragmentActivity implements
         String defaultMessage = Utils.getNextEpisodeString(this, season, episode, title);
 
         // get share service enabled settings
-        boolean isShareWithGetGlue = prefs.getBoolean(SeriesGuidePreferences.KEY_SHAREWITHGETGLUE,
-                false);
+        boolean isShareWithGetGlue = GetGlueSettings.isSharingWithGetGlue(this);
         boolean isShareWithTrakt = TraktSettings.isSharingWithTrakt(this);
 
         if (isShareWithTrakt) {

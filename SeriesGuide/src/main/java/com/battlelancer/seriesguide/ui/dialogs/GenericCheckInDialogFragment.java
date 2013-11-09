@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.ui.dialogs;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
+import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
@@ -131,8 +132,8 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         final String itemTitle = getArguments().getString(InitBundle.ITEM_TITLE);
 
         // get share service enabled settings
-        mGetGlueChecked = prefs.getBoolean(SeriesGuidePreferences.KEY_SHAREWITHGETGLUE, false);
-        mTraktChecked = TraktSettings.isSharingWithTrakt(getSherlockActivity());;
+        mGetGlueChecked = GetGlueSettings.isSharingWithGetGlue(getSherlockActivity());
+        mTraktChecked = TraktSettings.isSharingWithTrakt(getSherlockActivity());
 
         // Message box, set title as default comment
         mMessageBox = (EditText) layout.findViewById(R.id.message);
@@ -170,7 +171,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
                 handleGetGlueToggle(isChecked);
 
                 mGetGlueChecked = isChecked;
-                prefs.edit().putBoolean(SeriesGuidePreferences.KEY_SHAREWITHGETGLUE, isChecked)
+                prefs.edit().putBoolean(GetGlueSettings.KEY_SHARE_WITH_GETGLUE, isChecked)
                         .commit();
                 updateCheckInButtonState();
             }
