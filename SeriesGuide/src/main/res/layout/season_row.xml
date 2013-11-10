@@ -2,9 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/default_padding"
-    android:paddingStart="@dimen/default_padding">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/textViewSeasonTitle"
@@ -12,6 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginLeft="@dimen/default_padding"
+        android:layout_marginStart="@dimen/default_padding"
         android:layout_toLeftOf="@+id/textViewSeasonProgress"
         android:layout_toStartOf="@+id/textViewSeasonProgress"
         android:paddingTop="@dimen/default_padding"
@@ -49,19 +49,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewSeasonTitle"
+        android:layout_marginLeft="@dimen/default_padding"
+        android:layout_marginStart="@dimen/default_padding"
         android:layout_toLeftOf="@id/imageViewContextMenu"
         android:layout_toStartOf="@id/imageViewContextMenu" />
 
     <ImageView
         android:id="@+id/imageViewSeasonSkipped"
-        android:layout_height="16dp"
         android:layout_width="16dp"
-        android:src="@drawable/ic_action_playback_next_highlight"
-        android:layout_below="@id/progressBarSeason"
-        android:layout_marginEnd="@dimen/inline_padding"
-        android:layout_marginRight="@dimen/inline_padding"
+        android:layout_height="16dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_below="@id/progressBarSeason"
+        android:layout_marginEnd="-4dp"
+        android:layout_marginLeft="@dimen/default_padding"
+        android:layout_marginRight="-4dp"
+        android:layout_marginStart="@dimen/default_padding"
+        android:src="@drawable/ic_action_playback_next_highlight"
         android:visibility="visible" />
 
     <TextView
@@ -69,10 +73,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/progressBarSeason"
-        android:layout_toLeftOf="@id/imageViewContextMenu"
-        android:layout_toStartOf="@id/imageViewContextMenu"
+        android:layout_marginLeft="@dimen/default_padding"
+        android:layout_marginStart="@dimen/default_padding"
         android:layout_toEndOf="@id/imageViewSeasonSkipped"
+        android:layout_toLeftOf="@id/imageViewContextMenu"
         android:layout_toRightOf="@id/imageViewSeasonSkipped"
+        android:layout_toStartOf="@id/imageViewContextMenu"
         android:paddingBottom="@dimen/default_padding"
         android:textAlignment="viewStart"
         android:textAllCaps="true"
