@@ -28,9 +28,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginRight="@dimen/default_padding"
+                android:textAlignment="viewStart"
                 android:textAppearance="@style/TextAppearance.Large.Light"
                 android:textIsSelectable="true"
-                android:textSize="@dimen/text_size_ultralarge" />
+                android:textSize="@dimen/text_size_ultralarge"
+                tools:text="Awesome Show Title" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
