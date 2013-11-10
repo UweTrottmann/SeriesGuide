@@ -243,7 +243,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + SeasonsColumns.NOAIRDATECOUNT + " INTEGER DEFAULT 0,"
 
-            + SeasonsColumns.POSTER + " TEXT DEFAULT '',"
+            + SeasonsColumns.TAGS + " TEXT DEFAULT '',"
 
             + SeasonsColumns.TOTALCOUNT + " INTEGER DEFAULT 0"
 

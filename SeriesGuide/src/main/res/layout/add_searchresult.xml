@@ -26,8 +26,8 @@
             android:layout_marginEnd="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
             android:contentDescription="@string/description_poster"
-            android:scaleType="centerInside"
-            android:src="@drawable/show_generic" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/appwidget_bg" />
 
         <TextView
             android:id="@+id/title"

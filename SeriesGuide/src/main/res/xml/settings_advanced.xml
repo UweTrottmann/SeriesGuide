@@ -1,61 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/pref_appearance" >
-        <ListPreference
-            android:defaultValue="0"
-            android:entries="@array/themeSelection"
-            android:entryValues="@array/themeSelectionData"
-            android:key="com.battlelancer.seriesguide.theme"
-            android:title="@string/pref_theme" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/pref_other" >
-        <CheckBoxPreference
-            android:defaultValue="True"
-            android:key="com.battlelancer.seriesguide.autoupdate"
-            android:summary="@string/pref_autoupdatesummary"
-            android:title="@string/pref_autoupdate" />
-        <CheckBoxPreference
-            android:defaultValue="True"
-            android:key="com.battlelancer.seriesguide.autobackup"
-            android:summary="@string/pref_autobackupsummary"
-            android:title="@string/pref_autobackup" />
+    <CheckBoxPreference
+        android:defaultValue="True"
+        android:key="com.battlelancer.seriesguide.autobackup"
+        android:summary="@string/pref_autobackupsummary"
+        android:title="@string/pref_autobackup" />
 
-        <Preference
-            android:key="dataliberation"
-            android:summary="@string/backup_summary"
-            android:title="@string/backup" >
-            <intent
-                android:targetClass="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity"
-                android:targetPackage="@string/package_name" />
-        </Preference>
-        <Preference
-            android:key="backup"
-            android:title="Legacy Backup/Restore" >
-            <intent
-                android:targetClass="com.battlelancer.seriesguide.ui.BackupDeleteActivity"
-                android:targetPackage="@string/package_name" />
-        </Preference>
+    <Preference
+        android:key="dataliberation"
+        android:summary="@string/backup_summary"
+        android:title="@string/backup">
+        <intent
+            android:targetClass="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity"
+            android:targetPackage="@string/package_name" />
+    </Preference>
 
-        <ListPreference
-            android:defaultValue="1"
-            android:entries="@array/upcominglimit"
-            android:entryValues="@array/upcominglimitData"
-            android:key="com.battlelancer.seriesguide.upcominglimit"
-            android:title="@string/pref_upcominglimit" />
-        <ListPreference
-            android:defaultValue="default"
-            android:entries="@array/numbers"
-            android:entryValues="@array/numberData"
-            android:key="numberformat"
-            android:title="@string/pref_number" />
-        <ListPreference
-            android:defaultValue="0"
-            android:entries="@array/offsets"
-            android:entryValues="@array/offsetData"
-            android:key="com.battlelancer.seriesguide.timeoffset"
-            android:title="@string/pref_offset" />
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/upcominglimit"
+        android:entryValues="@array/upcominglimitData"
+        android:key="com.battlelancer.seriesguide.upcominglimit"
+        android:title="@string/pref_upcominglimit" />
 
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/offsets"
+        android:entryValues="@array/offsetData"
+        android:key="com.battlelancer.seriesguide.timeoffset"
+        android:title="@string/pref_offset" />
+
+    <PreferenceCategory android:title="@string/pref_other">
         <Preference
             android:key="clearCache"
             android:summary="@string/clear_cache_summary"
@@ -71,6 +46,13 @@
             android:key="hideimages"
             android:summary="@string/pref_hideimagessummary"
             android:title="@string/pref_hideimages" />
+        <Preference
+            android:key="backup"
+            android:title="Legacy Backup/Restore">
+            <intent
+                android:targetClass="com.battlelancer.seriesguide.ui.BackupDeleteActivity"
+                android:targetPackage="@string/package_name" />
+        </Preference>
     </PreferenceCategory>
 
 </PreferenceScreen>

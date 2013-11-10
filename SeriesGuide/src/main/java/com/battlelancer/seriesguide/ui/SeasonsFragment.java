@@ -17,7 +17,27 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.annotation.SuppressLint;
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.adapters.SeasonsAdapter;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
+import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.FlagTask;
+import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
+import com.battlelancer.seriesguide.util.FlagTask.SeasonWatchedType;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.CheatSheet;
+import com.uwetrottmann.seriesguide.R;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -42,28 +62,6 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.Constants.SeasonSorting;
-import com.battlelancer.seriesguide.adapters.SeasonsAdapter;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
-import com.battlelancer.seriesguide.util.FlagTask.SeasonWatchedType;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.CheatSheet;
-import com.uwetrottmann.seriesguide.R;
 
 import de.greenrobot.event.EventBus;
 
@@ -183,7 +181,7 @@ public class SeasonsFragment extends SherlockListFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        updatePreferences();
+        getPreferences();
 
         // populate list
         mAdapter = new SeasonsAdapter(getActivity(), null, 0, this);
@@ -203,7 +201,7 @@ public class SeasonsFragment extends SherlockListFragment implements
     @Override
     public void onResume() {
         super.onResume();
-        updatePreferences();
+        getPreferences();
         updateUnwatchedCounts();
         onLoadRemainingCounter();
         EventBus.getDefault().register(this);
@@ -439,11 +437,8 @@ public class SeasonsFragment extends SherlockListFragment implements
         }
     }
 
-    private void updatePreferences() {
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getActivity());
-        mSorting = SeasonSorting.fromValue(prefs.getString(
-                SeriesGuidePreferences.KEY_SEASON_SORT_ORDER, SeasonSorting.LATEST_FIRST.value()));
+    private void getPreferences() {
+        mSorting = DisplaySettings.getSeasonSortOrder(getActivity());
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
@@ -515,7 +510,7 @@ public class SeasonsFragment extends SherlockListFragment implements
 
         String[] PROJECTION = {
                 BaseColumns._ID, Seasons.COMBINED, Seasons.WATCHCOUNT, Seasons.UNAIREDCOUNT,
-                Seasons.NOAIRDATECOUNT, Seasons.TOTALCOUNT
+                Seasons.NOAIRDATECOUNT, Seasons.TOTALCOUNT, Seasons.TAGS
         };
 
         String SELECTION = Seasons.TOTALCOUNT + ">0";
@@ -531,31 +526,31 @@ public class SeasonsFragment extends SherlockListFragment implements
         int NOAIRDATECOUNT = 4;
 
         int TOTALCOUNT = 5;
+
+        int TAGS = 6;
     }
 
     private void showSortDialog() {
         FragmentManager fm = getFragmentManager();
         SortDialogFragment sortDialog = SortDialogFragment.newInstance(R.array.sesorting,
                 R.array.sesortingData, mSorting.index(),
-                SeriesGuidePreferences.KEY_SEASON_SORT_ORDER, R.string.pref_seasonsorting);
+                DisplaySettings.KEY_SEASON_SORT_ORDER, R.string.pref_seasonsorting);
         sortDialog.show(fm, "fragment_sort");
     }
 
     private final OnSharedPreferenceChangeListener mPrefsListener = new OnSharedPreferenceChangeListener() {
 
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (key.equals(SeriesGuidePreferences.KEY_SEASON_SORT_ORDER)) {
-                updateSorting(sharedPreferences);
+            if (DisplaySettings.KEY_SEASON_SORT_ORDER.equals(key)) {
+                onSortOrderChanged();
             }
         }
     };
 
-    @SuppressLint("NewApi")
-    private void updateSorting(SharedPreferences prefs) {
-        mSorting = SeasonSorting.fromValue(prefs.getString(
-                SeriesGuidePreferences.KEY_SEASON_SORT_ORDER, SeasonSorting.LATEST_FIRST.value()));
+    private void onSortOrderChanged() {
+        getPreferences();
 
-        EasyTracker.getTracker().sendEvent(TAG, "Sorting", mSorting.name(), (long) 0);
+        Utils.trackCustomEvent(getActivity(), TAG, "Sorting", mSorting.name());
 
         // restart loader and update menu description
         getLoaderManager().restartLoader(LOADER_ID, null, SeasonsFragment.this);
@@ -586,11 +581,11 @@ public class SeasonsFragment extends SherlockListFragment implements
         getActivity().openContextMenu(v);
     }
 
-    private static void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    private void fireTrackerEvent(String label) {
+        Utils.trackAction(getActivity(), TAG, label);
     }
 
-    private static void fireTrackerEventContextMenu(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Context Item", label, (long) 0);
+    private void fireTrackerEventContextMenu(String label) {
+        Utils.trackContextMenu(getActivity(), TAG, label);
     }
 }

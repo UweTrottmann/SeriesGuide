@@ -19,8 +19,8 @@ android {
     productFlavors {
         free {
             packageName "com.battlelancer.seriesguide"
-            versionCode 185
-            versionName "9-beta4"
+            versionCode 188
+            versionName "9.1-beta1"
         }
         beta {
             packageName "com.battlelancer.seriesguide.beta"
@@ -44,7 +44,6 @@ android {
 
 dependencies {
     compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
-    compile 'net.simonvt.menudrawer:menudrawer:3.0.4@aar'
     compile project(':libraries:androidutils')
     compile project(':libraries:pagerslidingtabstrip')
     compile project(':libraries:stickygridheaders')
@@ -52,7 +51,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:1.2.1'
     compile 'org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:0.31'
     compile 'com.squareup.retrofit:retrofit:1.2.2'
-    compile 'com.android.support:support-v4:18.0.+'
+    compile 'com.android.support:support-v4:19.0.+'
     compile fileTree(dir: 'libs', include: '*.jar')
 
     testCompile 'junit:junit:4.10'

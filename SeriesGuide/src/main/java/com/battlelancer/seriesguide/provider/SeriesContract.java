@@ -133,8 +133,8 @@ public class SeriesContract {
         /** Number of unwatched episodes with no air date. */
         String NOAIRDATECOUNT = "noairdatecount";
 
-        /** UNUSED. Path to poster image. */
-        String POSTER = "seasonposter";
+        /** Text tags for this season. <em>Repurposed.</em>. */
+        String TAGS = "seasonposter";
     }
 
     interface EpisodesColumns {

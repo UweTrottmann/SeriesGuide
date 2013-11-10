@@ -1,8 +1,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.os.Bundle;
-import android.support.v4.view.ViewPager;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
@@ -13,8 +12,11 @@ import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
 import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
-import com.google.analytics.tracking.android.EasyTracker;
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
+
+import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 
 /**
  * Hosts a view pager to display and manage lists of shows, seasons and
@@ -30,7 +32,8 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getMenu().setContentView(R.layout.lists);
+        setContentView(R.layout.lists);
+        setupNavDrawer();
 
         setupActionBar();
 
@@ -66,13 +69,13 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
     @Override
     protected void onStart() {
         super.onStart();
-        EasyTracker.getInstance().activityStart(this);
+        EasyTracker.getInstance(this).activityStart(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        EasyTracker.getInstance().activityStop(this);
+        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override
@@ -91,7 +94,7 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content
         // view
-        boolean isDrawerOpen = isMenuDrawerOpen();
+        boolean isDrawerOpen = isDrawerOpen();
         menu.findItem(R.id.menu_list_add).setVisible(!isDrawerOpen);
 
         return super.onPrepareOptionsMenu(menu);
@@ -118,6 +121,6 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
     }
 
     protected void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+        Utils.trackAction(this, TAG, label);
     }
 }

@@ -210,7 +210,7 @@
   <string name="pref_language">Sprache des Inhalts</string>
   <string name="pref_updatewifionly">Nur über WLAN aktualisieren</string>
   <string name="about">Über SeriesGuide</string>
-  <string name="pref_credits">Credits</string>
+  <string name="pref_credits">Anerkennungen</string>
   <string name="clearGetGlueCredentials">Von GetGlue abmelden</string>
   <string name="clearGetGlueCredentialssummary">Mit GetGlue einchecken um erneut zu verbinden</string>
   <string name="pref_traktsummary">Hinzufügen oder Bearbeiten Ihrer trakt.tv Anmeldeinformationen</string>

@@ -49,8 +49,7 @@
         </service>
         <service
             android:name="com.battlelancer.seriesguide.sync.SgSyncService"
-            android:exported="true"
-            android:process=":sync" >
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>

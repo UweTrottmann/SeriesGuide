@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.CheckinResponse;
@@ -32,10 +33,8 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -215,7 +214,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         }
 
         // check for valid credentials
-        if (!ServiceUtils.hasTraktCredentials(mContext)) {
+        if (!TraktSettings.hasTraktCredentials(mContext)) {
             return null;
         }
 
@@ -259,12 +258,10 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     }
 
                     if (com.jakewharton.trakt.enumerations.Status.SUCCESS.equals(r.status)) {
-                        SharedPreferences prefs = PreferenceManager
-                                .getDefaultSharedPreferences(mContext);
                         r.message = mContext
                                 .getString(R.string.checkin_success_trakt,
                                         (r.show != null ? r.show.title + " " : "")
-                                                + Utils.getEpisodeNumber(prefs, season, episode));
+                                                + Utils.getEpisodeNumber(mContext, season, episode));
                     }
 
                     break;
@@ -350,7 +347,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
             return r;
         } catch (RetrofitError e) {
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(mContext, TAG, e);
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
             r.error = mContext.getString(R.string.trakt_error_general);
@@ -384,13 +381,15 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
             } else if (TraktStatus.FAILURE.equals(r.status)) {
                 if (mAction == TraktAction.CHECKIN_EPISODE
                         || mAction == TraktAction.CHECKIN_MOVIE) {
-                    CheckinResponse checkinResponse = (CheckinResponse) r;
-                    if (checkinResponse.wait != 0) {
-                        // looks like a check in is already in progress
-                        if (mListener != null) {
-                            mListener.onCheckinBlocked(mArgs, checkinResponse.wait);
+                    if (r instanceof CheckinResponse) {
+                        CheckinResponse checkinResponse = (CheckinResponse) r;
+                        if (checkinResponse.wait != 0) {
+                            // looks like a check in is already in progress
+                            if (mListener != null) {
+                                mListener.onCheckinBlocked(mArgs, checkinResponse.wait);
+                            }
+                            return;
                         }
-                        return;
                     }
                 }
 

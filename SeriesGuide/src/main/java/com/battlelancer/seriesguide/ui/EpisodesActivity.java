@@ -17,6 +17,24 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.items.Episode;
+import com.battlelancer.seriesguide.items.Series;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.service.NotificationService;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapter;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -30,22 +48,6 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
-import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.items.Episode;
-import com.battlelancer.seriesguide.items.Series;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.service.NotificationService;
-import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapter;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.seriesguide.R;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -88,7 +90,8 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getMenu().setContentView(R.layout.episodes);
+        setContentView(R.layout.episodes);
+        setupNavDrawer();
 
         // if coming from a notification, set last cleared time
         NotificationService.handleDeleteIntent(this, getIntent());
@@ -180,12 +183,9 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
             final ImageView background = (ImageView) findViewById(R.id.background);
             Utils.setPosterBackground(background, show.getPoster(), this);
 
-            final SharedPreferences prefs = PreferenceManager
-                    .getDefaultSharedPreferences(getApplicationContext());
-
             // set adapters for pager and indicator
             int startPosition = updateEpisodeList(episodeId);
-            mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), mEpisodes, prefs, false);
+            mAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(), mEpisodes, false);
             mPager = (ViewPager) pager;
             mPager.setAdapter(mAdapter);
 
@@ -231,7 +231,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
                 .getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
 
-        EasyTracker.getInstance().activityStart(this);
+        EasyTracker.getInstance(this).activityStart(this);
     }
 
     @Override
@@ -243,7 +243,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
                 .getDefaultSharedPreferences(this);
         prefs.unregisterOnSharedPreferenceChangeListener(this);
 
-        EasyTracker.getInstance().activityStop(this);
+        EasyTracker.getInstance(this).activityStop(this);
     }
 
     List<WeakReference<Fragment>> mFragments = new ArrayList<WeakReference<Fragment>>();
@@ -310,7 +310,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         // update the viewpager with new sorting, if shown
-        if (key.equals(SeriesGuidePreferences.KEY_EPISODE_SORT_ORDER) && mDualPane) {
+        if (DisplaySettings.KEY_EPISODE_SORT_ORDER.equals(key) && mDualPane) {
             // Workaround in combination with
             // EpisodePagerAdapter.getItemPosition()
             // save visible episode
@@ -340,13 +340,13 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
      * episode id is given it will return its position in the created list.
      */
     private int updateEpisodeList(int initialEpisodeId) {
-        Constants.EpisodeSorting sorting = Utils.getEpisodeSorting(this);
+        Constants.EpisodeSorting sortOrder = DisplaySettings.getEpisodeSortOrder(this);
 
         Cursor episodeCursor = getContentResolver().query(
                 Episodes.buildEpisodesOfSeasonWithShowUri(String.valueOf(mSeasonId)),
                 new String[] {
                         Episodes._ID, Episodes.NUMBER
-                }, null, null, sorting.query());
+                }, null, null, sortOrder.query());
 
         ArrayList<Episode> episodeList = new ArrayList<Episode>();
         int startPosition = 0;

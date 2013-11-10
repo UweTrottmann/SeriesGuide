@@ -17,8 +17,6 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -26,6 +24,7 @@ import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
+import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Response;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -69,7 +68,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().sendView("Cancel Check-In Dialog");
+        Utils.trackView(getActivity(), "Cancel Check-In Dialog");
     }
 
     @Override

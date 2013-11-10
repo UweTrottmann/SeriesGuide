@@ -100,7 +100,7 @@
   <string name="uncollect">Odcinka nie ma w kolekcji</string>
   <string name="collect_all">Wszystkie zebrane</string>
   <string name="uncollect_all">Brak zebranych</string>
-  <string name="action_skip">Skip</string>
+  <string name="action_skip">Pomiń</string>
   <string name="action_dont_skip">Don\'t skip</string>
   <string name="trakt_submitqueued">Wysyłanie do trakt.</string>
   <string name="trakt_seen">%s obejrzane.</string>
@@ -269,7 +269,7 @@
   <string name="paste_title">Wklej tytuł</string>
   <string name="checkinsuccess">Podpięty do %s na GetGlue.</string>
   <string name="checkinfailed">Podpięcie do GetGlue nie powiodło się. Spróbuj ponownie później.</string>
-  <string name="getglue_authentication">Connect GetGlue</string>
+  <string name="getglue_authentication">Połącz z GetGlue</string>
   <string name="getglue_authfailed">Uwierzytelnianie GetGlue nie powiodło się. Spróbuj ponownie później.</string>
   <string name="checkin_success_trakt">Podłączony do %s na trakt.</string>
   <string name="checkin_canceled_success_trakt">Anulowano podpięcie na trakt.</string>

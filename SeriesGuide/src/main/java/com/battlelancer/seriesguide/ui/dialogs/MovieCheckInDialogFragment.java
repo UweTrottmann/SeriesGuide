@@ -17,20 +17,17 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
 import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin.CheckInTask;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
-import com.google.analytics.tracking.android.EasyTracker;
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Allows to check into movies on trakt or GetGlue. Launching activities must
@@ -64,7 +61,7 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().sendView("Movie Check-In Dialog");
+        Utils.trackView(getActivity(), "Movie Check-In Dialog");
     }
 
     protected boolean onGetGlueCheckin(final String title, final String message) {

@@ -17,11 +17,9 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import com.battlelancer.seriesguide.enums.TraktStatus;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Response;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -30,7 +28,6 @@ import com.uwetrottmann.seriesguide.R;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -139,8 +136,8 @@ public final class ServiceUtils {
         }
 
         if (refreshCredentials) {
-            final String username = getTraktUsername(context);
-            final String password = getTraktPasswordHash(context);
+            final String username = TraktSettings.getUsername(context);
+            final String password = TraktSettings.getPasswordSha1(context);
 
             if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
                 ServiceUtils.sTraktServiceManagerWithAuthInstance.setAuthentication(username,
@@ -154,49 +151,15 @@ public final class ServiceUtils {
         return ServiceUtils.sTraktServiceManagerWithAuthInstance;
     }
 
-    public static String getTraktUsername(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(
-                SeriesGuidePreferences.KEY_TRAKTUSER, "");
-    }
-
-    /**
-     * Returns the SHA hash of the users trakt password.<br> <b>Never</b> store this yourself,
-     * always call this method.
-     */
-    private static String getTraktPasswordHash(Context context) {
-        String hash = PreferenceManager.getDefaultSharedPreferences(context).getString(
-                SeriesGuidePreferences.KEY_TRAKTPWD, null);
-
-        // try decrypting the hash
-        if (!TextUtils.isEmpty(hash)) {
-            hash = SimpleCrypto.decrypt(hash, context);
-        }
-
-        return hash;
-    }
-
-    /**
-     * Checks if there are a non-empty trakt username and password. Returns false if either one is
-     * empty.
-     */
-    public static boolean hasTraktCredentials(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                .getApplicationContext());
-        String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
-        String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
-
-        return (!username.equalsIgnoreCase("") && !password.equalsIgnoreCase(""));
-    }
-
     /**
      * Checks for existing trakt credentials. If there aren't any valid ones (determined by {@link
-     * #hasTraktCredentials(Context)}), launches the trakt connect flow.
+     * TraktSettings#hasTraktCredentials(Context)}), launches the trakt connect flow.
      *
      * @return <b>true</b> if credentials are valid, <b>false</b> if invalid and launching trakt
      * connect flow.
      */
     public static boolean ensureTraktCredentials(Context context) {
-        if (!hasTraktCredentials(context)) {
+        if (!TraktSettings.hasTraktCredentials(context)) {
             // launch trakt connect process
             context.startActivity(new Intent(context, ConnectTraktActivity.class));
             return false;
@@ -213,7 +176,7 @@ public final class ServiceUtils {
         Log.d(TAG, "Checking trakt credentials...");
 
         // no username or password? stop right here
-        if (!hasTraktCredentials(context)) {
+        if (!TraktSettings.hasTraktCredentials(context)) {
             return;
         }
 
@@ -250,8 +213,8 @@ public final class ServiceUtils {
         // remove from settings
         Editor editor = PreferenceManager.getDefaultSharedPreferences(context
                 .getApplicationContext()).edit();
-        editor.putString(SeriesGuidePreferences.KEY_TRAKTUSER, "").putString(
-                SeriesGuidePreferences.KEY_TRAKTPWD, "");
+        editor.putString(TraktSettings.KEY_USERNAME, "").putString(
+                TraktSettings.KEY_PASSWORD_SHA1_ENCR, "");
         editor.commit();
 
         // remove from memory
@@ -301,7 +264,7 @@ public final class ServiceUtils {
             Utils.tryStartActivity(context, intent, true);
         }
 
-        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "IMDb", (long) 0);
+        Utils.trackAction(context, logTag, "IMDb");
     }
 
     /**
@@ -336,14 +299,14 @@ public final class ServiceUtils {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
 
-        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "Google Play", (long) 0);
+        Utils.trackAction(context, logTag, "Google Play");
     }
 
     /**
      * Sets a {@link OnClickListener} on the given button linking to a Amazon web search for the
      * given title or disabling the button if the title is empty.
      */
-    public static void setUpAmazonButton(final String title, View amazonButton,
+    public static void setUpAmazonButton(final String title, final View amazonButton,
             final String logTag) {
         if (amazonButton != null) {
 
@@ -351,8 +314,7 @@ public final class ServiceUtils {
                 amazonButton.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        EasyTracker.getTracker()
-                                .sendEvent(logTag, "Action Item", "Amazon", (long) 0);
+                        Utils.trackAction(amazonButton.getContext(), logTag, "Amazon");
 
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri
@@ -376,7 +338,7 @@ public final class ServiceUtils {
      */
     public static void setUpTraktButton(final int showTvdbId, final int seasonNumber,
             final int episodeNumber,
-            View traktButton, final String logTag) {
+            final View traktButton, final String logTag) {
         if (traktButton != null) {
             traktButton.setOnClickListener(new OnClickListener() {
 
@@ -398,8 +360,7 @@ public final class ServiceUtils {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                     Utils.tryStartActivity(v.getContext(), intent, true);
 
-                    EasyTracker.getTracker()
-                            .sendEvent(logTag, "Action Item", "trakt", (long) 0);
+                    Utils.trackAction(traktButton.getContext(), logTag, "trakt");
                 }
             });
         }
@@ -421,7 +382,7 @@ public final class ServiceUtils {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
 
-        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "trakt", (long) 0);
+        Utils.trackAction(context, logTag, "trakt");
     }
 
     /**
@@ -430,7 +391,7 @@ public final class ServiceUtils {
      * page.
      */
     public static void setUpTvdbButton(final int showTvdbId, final int seasonTvdbId,
-            final int episodeTvdbId, View tvdbButton, final String logTag) {
+            final int episodeTvdbId, final View tvdbButton, final String logTag) {
         if (tvdbButton != null) {
             tvdbButton.setOnClickListener(new OnClickListener() {
 
@@ -452,7 +413,7 @@ public final class ServiceUtils {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                     Utils.tryStartActivity(v.getContext(), intent, true);
 
-                    EasyTracker.getTracker().sendEvent(logTag, "Action Item", "TVDb", (long) 0);
+                    Utils.trackAction(tvdbButton.getContext(), logTag, "TVDb");
                 }
             });
         }
@@ -474,7 +435,7 @@ public final class ServiceUtils {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
 
-        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "YouTube", (long) 0);
+        Utils.trackAction(context, logTag, "YouTube");
     }
 
     /**
@@ -534,7 +495,7 @@ public final class ServiceUtils {
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
-        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "YouTube search", (long) 0);
+        Utils.trackAction(context, logTag, "YouTube search");
     }
 
     /**
@@ -574,7 +535,8 @@ public final class ServiceUtils {
         intent.putExtra(SearchManager.QUERY, query);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
-        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "Web search", (long) 0);
+
+        Utils.trackAction(context, logTag, "Web search");
     }
 
 }

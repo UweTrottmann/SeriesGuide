@@ -1,26 +1,25 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.Window;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.seriesguide.R;
-
 /**
- * Displays the seriesguide online help page.
+ * Displays the SeriesGuide online help page.
  */
-public class HelpActivity extends BaseNavDrawerActivity {
+public class HelpActivity extends BaseActivity {
 
     private static final String TAG = "Help";
-    private WebView mWebview;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -30,17 +29,15 @@ public class HelpActivity extends BaseNavDrawerActivity {
 
         super.onCreate(arg0);
 
-        mWebview = new WebView(this);
-        getMenu().setContentView(mWebview);
+        WebView webview = new WebView(this);
+        setContentView(webview);
 
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setTitle(R.string.help);
+        setupActionBar();
 
         setSupportProgressBarVisibility(true);
 
-        final BaseNavDrawerActivity activity = this;
-        mWebview.setWebChromeClient(new WebChromeClient() {
+        final BaseActivity activity = this;
+        webview.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 /*
                  * Activities and WebViews measure progress with different
@@ -50,8 +47,15 @@ public class HelpActivity extends BaseNavDrawerActivity {
                 activity.setSupportProgress(progress * 1000);
             }
         });
-        mWebview.getSettings().setJavaScriptEnabled(true);
-        mWebview.loadUrl(getString(R.string.help_url));
+        webview.getSettings().setJavaScriptEnabled(true);
+        webview.loadUrl(getString(R.string.help_url));
+    }
+
+    private void setupActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(R.string.help);
     }
 
     @Override
@@ -60,8 +64,12 @@ public class HelpActivity extends BaseNavDrawerActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
         if (itemId == R.id.menu_feedback) {
             fireTrackerEvent("Feedback");
 
@@ -77,9 +85,9 @@ public class HelpActivity extends BaseNavDrawerActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    };
+    }
 
-    private static void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    private void fireTrackerEvent(String label) {
+        Utils.trackAction(this, TAG, label);
     }
 }

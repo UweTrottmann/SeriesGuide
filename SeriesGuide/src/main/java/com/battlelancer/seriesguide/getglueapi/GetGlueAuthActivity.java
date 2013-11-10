@@ -21,7 +21,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
-import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
+import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.getglue.GetGlue;
 import com.uwetrottmann.seriesguide.R;
@@ -47,7 +47,7 @@ import android.widget.Toast;
 /**
  * Starts an OAuth 2.0 authentication flow via an {@link android.webkit.WebView}.
  */
-public class GetGlueAuthActivity extends BaseNavDrawerActivity {
+public class GetGlueAuthActivity extends BaseActivity {
 
     static final String TAG = "GetGlueAuthActivity";
 
@@ -61,7 +61,7 @@ public class GetGlueAuthActivity extends BaseNavDrawerActivity {
         super.onCreate(savedInstanceState);
 
         mWebview = new WebView(this);
-        getMenu().setContentView(mWebview);
+        setContentView(mWebview);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.getglue_authentication));
@@ -114,7 +114,7 @@ public class GetGlueAuthActivity extends BaseNavDrawerActivity {
                             GetGlueCheckin.OAUTH_CALLBACK_URL);
             mWebview.loadUrl(request.getLocationUri());
         } catch (OAuthSystemException e) {
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(this, TAG, e);
         }
     }
 
@@ -173,10 +173,10 @@ public class GetGlueAuthActivity extends BaseNavDrawerActivity {
             );
         } catch (OAuthSystemException e) {
             response = null;
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(context, TAG, e);
         } catch (OAuthProblemException e) {
             response = null;
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(context, TAG, e);
         }
 
         if (response != null) {

@@ -69,37 +69,15 @@
         <item name="android:listViewWhiteStyle">@style/Widget.SeriesGuide.ListView.White</item>
     </style>
 
-    <style name="SeriesGuideTheme.Dialog" parent="SeriesGuideTheme">
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowTitleStyle">@style/DialogWindowTitle.SeriesGuide</item>
-        <item name="android:windowBackground">@color/background</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-        <item name="android:windowSoftInputMode">stateUnspecified|adjustResize</item>
-        <item name="android:windowActionBar" tools:targetApi="honeycomb">false</item>
-        <item name="android:windowActionModeOverlay" tools:targetApi="honeycomb">true</item>
-        <item name="android:windowCloseOnTouchOutside" tools:targetApi="honeycomb">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:backgroundDimAmount">0.6</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:textColorPrimary">@color/text_primary</item>
-        <item name="android:textColorPrimaryInverse">@color/abs__primary_text_holo_light</item>
-        <item name="android:windowMinWidthMajor" tools:targetApi="honeycomb">45%</item>
-        <item name="android:windowMinWidthMinor" tools:targetApi="honeycomb">75%</item>
-    </style>
+    <!-- Dark Android theme -->
+    <style name="AndroidTheme" parent="AndroidBaseTheme">
 
-    <style name="SeriesGuideTheme.Dialog.CheckIn">
-        <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
-    </style>
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
-    <!-- A dark Android theme -->
-    <style name="ICSBaseTheme" parent="Theme.Sherlock">
         <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
 
-        <!-- System widgets -->
-        <item name="android:buttonStyle">@style/Widget.Android.Button</item>
-        <item name="android:imageButtonStyle">@style/Widget.Android.ImageButton</item>
+        <!-- Action bar (ABS) -->
+        <item name="actionBarStyle">@style/ActionBarDark</item>
 
         <!-- Colors -->
         <item name="textColorSgDefault">@color/text_default</item>
@@ -130,6 +108,15 @@
         <item name="drawableFilter">@drawable/ic_action_filter</item>
         <item name="drawableSkip">@drawable/ic_action_playback_next</item>
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped</item>
+
+    </style>
+
+    <style name="AndroidBaseTheme" parent="Theme.Sherlock">
+
+        <!-- System widgets (native) -->
+        <item name="android:buttonStyle">@style/Widget.Android.Button</item>
+        <item name="android:imageButtonStyle">@style/Widget.Android.ImageButton</item>
+
     </style>
 
     <!-- SeriesGuide Light theme -->
@@ -199,6 +186,45 @@
         <item name="android:checkboxStyle">@style/Widget.SeriesGuide.Light.CheckBox</item>
         <item name="android:listViewStyle">@style/Widget.SeriesGuide.ListView</item>
         <item name="android:listViewWhiteStyle">@style/Widget.SeriesGuide.ListView.White</item>
+    </style>
+
+    <!-- Special themes -->
+    <style name="SeriesGuideTheme.Dialog" parent="SeriesGuideTheme">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowTitleStyle">@style/DialogWindowTitle.SeriesGuide</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustResize</item>
+        <item name="android:windowActionBar" tools:targetApi="honeycomb">false</item>
+        <item name="android:windowActionModeOverlay" tools:targetApi="honeycomb">true</item>
+        <item name="android:windowCloseOnTouchOutside" tools:targetApi="honeycomb">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorPrimaryInverse">@color/abs__primary_text_holo_light</item>
+        <item name="android:windowMinWidthMajor" tools:targetApi="honeycomb">45%</item>
+        <item name="android:windowMinWidthMinor" tools:targetApi="honeycomb">75%</item>
+    </style>
+
+    <style name="SeriesGuideTheme.Dialog.CheckIn">
+        <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
+    </style>
+
+    <style name="ImmersiveTheme" parent="SeriesGuideTheme">
+
+        <!-- Action bar (ABS) -->
+        <item name="actionBarStyle">@style/ActionBar.Invisible</item>
+
+    </style>
+
+    <style name="ImmersiveTheme.Light" parent="SeriesGuideThemeLight">
+
+        <!-- Action bar (ABS) -->
+        <item name="actionBarStyle">@style/ActionBar.Translucent</item>
+
     </style>
 
 </resources>

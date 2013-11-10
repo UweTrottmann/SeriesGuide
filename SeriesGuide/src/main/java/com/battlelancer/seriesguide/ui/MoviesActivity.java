@@ -17,16 +17,16 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
 import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.google.analytics.tracking.android.EasyTracker;
+import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
+
+import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 
 /**
  * Users can search for a movie, display detailed information and then check in
@@ -43,7 +43,8 @@ public class MoviesActivity extends BaseTopActivity {
         setSupportProgressBarIndeterminateVisibility(false);
 
         super.onCreate(savedInstanceState);
-        getMenu().setContentView(R.layout.movies);
+        setContentView(R.layout.movies);
+        setupNavDrawer();
 
         setupActionBar();
 
@@ -63,15 +64,17 @@ public class MoviesActivity extends BaseTopActivity {
         TabStripAdapter tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this, pager,
                 tabs);
         // only show the trakt watchlist with valid credentials
-        if (ServiceUtils.hasTraktCredentials(this)) {
+        if (TraktSettings.hasTraktCredentials(this)) {
             tabsAdapter.addTab(R.string.movies_watchlist, MoviesWatchListFragment.class, null);
         }
         // movie search
         tabsAdapter.addTab(R.string.search, MovieSearchFragment.class, null);
+        tabsAdapter.updateTabs();
     }
 
     @Override
     protected void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+        Utils.trackAction(this, TAG, label);
     }
+
 }

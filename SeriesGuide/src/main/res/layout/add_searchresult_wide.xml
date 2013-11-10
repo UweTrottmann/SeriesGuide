@@ -13,8 +13,8 @@
         android:layout_marginEnd="@dimen/default_padding"
         android:layout_marginRight="@dimen/default_padding"
         android:contentDescription="@string/description_poster"
-        android:scaleType="fitCenter"
-        android:src="@drawable/show_generic" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/appwidget_bg" />
 
     <LinearLayout
         android:layout_width="match_parent"

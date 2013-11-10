@@ -1,29 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Page.Centered"
     android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/shouts_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/layout_padding"
-        android:layout_marginRight="@dimen/layout_padding"
-        android:layout_marginTop="@dimen/layout_padding"
-        android:text="@string/shouts"
-        android:textAlignment="viewStart"
-        android:textAppearance="@style/TextAppearance.Large.Light" />
-
-    <TextView
-        android:id="@+id/shouts_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/layout_padding"
-        android:layout_marginRight="@dimen/layout_padding"
-        android:text="@string/shouts_for"
-        android:textAlignment="viewStart"
-        android:textAppearance="@style/TextAppearance.Small.Primary" />
 
     <FrameLayout
         android:id="@+id/shouts_container"
@@ -31,18 +10,12 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <LinearLayout
+        <ProgressBar
             android:id="@+id/progress_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="visible" />
 
         <FrameLayout
             android:id="@+id/list_container"
@@ -51,12 +24,11 @@
 
             <ListView
                 android:id="@+android:id/list"
-                style="@style/DefaultPadding.Page"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="@bool/gridClipToPadding"
                 android:divider="?attr/drawableDivider"
-                android:listSelector="?attr/custom_list_selector"/>
+                android:listSelector="?attr/custom_list_selector" />
 
             <TextView
                 android:id="@+android:id/empty"
@@ -86,7 +58,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/layout_padding">
+        android:layout_marginTop="@dimen/default_padding">
 
         <EditText
             android:id="@+id/shouttext"

@@ -52,6 +52,18 @@
         android:layout_toLeftOf="@id/imageViewContextMenu"
         android:layout_toStartOf="@id/imageViewContextMenu" />
 
+    <ImageView
+        android:id="@+id/imageViewSeasonSkipped"
+        android:layout_height="16dp"
+        android:layout_width="16dp"
+        android:src="@drawable/ic_action_playback_next_highlight"
+        android:layout_below="@id/progressBarSeason"
+        android:layout_marginEnd="@dimen/inline_padding"
+        android:layout_marginRight="@dimen/inline_padding"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:visibility="visible" />
+
     <TextView
         android:id="@+id/textViewSeasonWatchCount"
         android:layout_width="match_parent"
@@ -59,6 +71,8 @@
         android:layout_below="@id/progressBarSeason"
         android:layout_toLeftOf="@id/imageViewContextMenu"
         android:layout_toStartOf="@id/imageViewContextMenu"
+        android:layout_toEndOf="@id/imageViewSeasonSkipped"
+        android:layout_toRightOf="@id/imageViewSeasonSkipped"
         android:paddingBottom="@dimen/default_padding"
         android:textAlignment="viewStart"
         android:textAllCaps="true"

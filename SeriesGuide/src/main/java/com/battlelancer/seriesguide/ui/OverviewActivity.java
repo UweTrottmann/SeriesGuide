@@ -17,6 +17,22 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.battlelancer.seriesguide.adapters.TabStripAdapter;
+import com.battlelancer.seriesguide.items.Series;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ShortcutUtils;
+import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.thetvdbapi.TheTVDB;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -32,21 +48,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
-import com.battlelancer.seriesguide.adapters.TabStripAdapter;
-import com.battlelancer.seriesguide.items.Series;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.ShortcutUtils;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.TheTVDB;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
 
 import java.lang.ref.WeakReference;
 import java.nio.charset.Charset;
@@ -67,7 +68,8 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getMenu().setContentView(R.layout.overview);
+        setContentView(R.layout.overview);
+        setupNavDrawer();
 
         mShowId = getIntent().getIntExtra(OverviewFragment.InitBundle.SHOW_TVDBID, -1);
         if (mShowId == -1) {
@@ -189,6 +191,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         Bundle argsSeason = new Bundle();
         argsSeason.putInt(SeasonsFragment.InitBundle.SHOW_TVDBID, mShowId);
         tabsAdapter.addTab(R.string.seasons, SeasonsFragment.class, argsSeason);
+        tabsAdapter.updateTabs();
 
         // select overview to be shown initially
         pager.setCurrentItem(1);
@@ -231,13 +234,13 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        EasyTracker.getInstance().activityStart(this);
+        EasyTracker.getInstance(this).activityStart(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        EasyTracker.getInstance().activityStop(this);
+        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override
@@ -250,7 +253,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content
         // view
-        menu.findItem(R.id.menu_overview_search).setVisible(!isMenuDrawerOpen());
+        menu.findItem(R.id.menu_overview_search).setVisible(!isDrawerOpen());
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -321,8 +324,8 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         return true;
     }
 
-    private static void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    private void fireTrackerEvent(String label) {
+        Utils.trackAction(this, TAG, label);
     }
 
 }

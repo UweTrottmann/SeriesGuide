@@ -17,22 +17,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.annotation.TargetApi;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.os.Build;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.ImageView;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
@@ -43,24 +28,32 @@ import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
-import net.simonvt.menudrawer.MenuDrawer;
-import net.simonvt.menudrawer.Position;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.view.ViewPager;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 /**
- * Hosts a {@link ViewPager} displaying an episode per fragment of a complete
- * season. Used on smaller screens which do not allow for multi-pane layouts or
- * if coming from a search result selection.
+ * Hosts a {@link ViewPager} displaying an episode per fragment of a complete season. Used on
+ * smaller screens which do not allow for multi-pane layouts or if coming from a search result
+ * selection.
  */
 public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
+
     protected static final String TAG = "Episode Details";
 
     private EpisodePagerAdapter mAdapter;
@@ -72,10 +65,10 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     private int mShowId;
 
     /**
-     * Data which has to be passed when creating this activity. All Bundle
-     * extras are integer.
+     * Data which has to be passed when creating this activity. All Bundle extras are integer.
      */
     public interface InitBundle {
+
         String EPISODE_TVDBID = "episode_tvdbid";
     }
 
@@ -83,7 +76,8 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
-        getMenu().setContentView(R.layout.episode_pager);
+        setContentView(R.layout.episode_pager);
+        setupNavDrawer();
 
         setupActionBar();
 
@@ -99,9 +93,9 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         // Lookup show and season of episode
         final Cursor episode = getContentResolver().query(
-                Episodes.buildEpisodeWithShowUri(String.valueOf(episodeId)), new String[] {
-                        Seasons.REF_SEASON_ID, Shows.POSTER, Shows.REF_SHOW_ID
-                }, null, null, null);
+                Episodes.buildEpisodeWithShowUri(String.valueOf(episodeId)), new String[]{
+                Seasons.REF_SEASON_ID, Shows.POSTER, Shows.REF_SHOW_ID
+        }, null, null, null);
 
         if (episode == null || !episode.moveToFirst()) {
             // nothing to display
@@ -116,12 +110,12 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         // lookup episodes of season
         mShowId = episode.getInt(2);
         mSeasonId = episode.getInt(0);
-        Constants.EpisodeSorting sorting = Utils.getEpisodeSorting(this);
+        Constants.EpisodeSorting sortOrder = DisplaySettings.getEpisodeSortOrder(this);
 
         Cursor episodeCursor = getContentResolver().query(
-                Episodes.buildEpisodesOfSeasonUri(String.valueOf(mSeasonId)), new String[] {
-                        Episodes._ID, Episodes.NUMBER, Episodes.SEASON
-                }, null, null, sorting.query());
+                Episodes.buildEpisodesOfSeasonUri(String.valueOf(mSeasonId)), new String[]{
+                Episodes._ID, Episodes.NUMBER, Episodes.SEASON
+        }, null, null, sortOrder.query());
 
         if (episodeCursor != null) {
             int i = 0;
@@ -143,10 +137,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         episode.close();
 
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
-
-        mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), episodes, prefs, true);
+        mAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(), episodes, true);
 
         mPager = (ViewPager) findViewById(R.id.pagerEpisodeDetails);
         mPager.setAdapter(mAdapter);
@@ -159,41 +150,33 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
-    protected MenuDrawer getAttachedMenuDrawer() {
-        Position drawerPosition = Position.LEFT;
-
-        if (AndroidUtils.isJellyBeanMR1OrHigher()) {
-            // attach drawer to right side if using RTL layout
-            int direction = TextUtils
-                    .getLayoutDirectionFromLocale(Locale.getDefault());
-            if (direction == View.LAYOUT_DIRECTION_RTL) {
-                drawerPosition = Position.RIGHT;
-            }
+    protected void setCustomTheme() {
+        // use a special immersive theme
+        if (SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight) {
+            setTheme(R.style.ImmersiveTheme_Light);
+        } else if (SeriesGuidePreferences.THEME == R.style.SeriesGuideTheme) {
+            setTheme(R.style.ImmersiveTheme);
+        } else {
+            setTheme(R.style.AndroidTheme);
         }
-
-        MenuDrawer menuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.OVERLAY, drawerPosition);
-        menuDrawer.setupUpIndicator(this);
-        menuDrawer.setMenuView(R.layout.menu_frame_with_spacer);
-        return menuDrawer;
     }
 
     private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setBackgroundDrawable(null);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        EasyTracker.getInstance().activityStart(this);
+        EasyTracker.getInstance(this).activityStart(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        EasyTracker.getInstance().activityStop(this);
+        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override
@@ -240,15 +223,15 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         private ArrayList<Episode> mEpisodes;
 
-        private SharedPreferences mPrefs;
+        private Context mContext;
 
         private boolean mIsShowingShowLink;
 
-        public EpisodePagerAdapter(FragmentManager fm, ArrayList<Episode> episodes,
-                SharedPreferences prefs, boolean isShowingShowLink) {
+        public EpisodePagerAdapter(Context context, FragmentManager fm, ArrayList<Episode> episodes,
+                boolean isShowingShowLink) {
             super(fm);
             mEpisodes = episodes;
-            mPrefs = prefs;
+            mContext = context;
             mIsShowingShowLink = isShowingShowLink;
         }
 
@@ -288,7 +271,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             Episode episode = mEpisodes.get(position);
-            return Utils.getEpisodeNumber(mPrefs, episode.seasonNumber, episode.episodeNumber);
+            return Utils.getEpisodeNumber(mContext, episode.seasonNumber, episode.episodeNumber);
         }
 
         public void updateEpisodeList(ArrayList<Episode> list) {

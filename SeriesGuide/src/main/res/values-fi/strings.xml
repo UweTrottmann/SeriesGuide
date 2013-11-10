@@ -100,8 +100,8 @@
   <string name="uncollect">Vielä keräämätön jakso</string>
   <string name="collect_all">Kaikki kerätty</string>
   <string name="uncollect_all">Kaikki keräämättä</string>
-  <string name="action_skip">Skip</string>
-  <string name="action_dont_skip">Don\'t skip</string>
+  <string name="action_skip">Ohita</string>
+  <string name="action_dont_skip">Älä ohita</string>
   <string name="trakt_submitqueued">Lähetetään traktiin.</string>
   <string name="trakt_seen">%s katsottu.</string>
   <string name="trakt_notseen">%s ei ole katsottu.</string>
@@ -269,7 +269,7 @@
   <string name="paste_title">Liitä nimi</string>
   <string name="checkinsuccess">Kuitattu kohteeseen %s GetGluessa.</string>
   <string name="checkinfailed">GetGlue-kuittaus epäonnistui. Yritä myöhemmin uudelleen.</string>
-  <string name="getglue_authentication">Connect GetGlue</string>
+  <string name="getglue_authentication">Yhdistä GetGlue</string>
   <string name="getglue_authfailed">GetGluen todentaminen epäonnistui. Yritä myöhemmin uudelleen.</string>
   <string name="checkin_success_trakt">Kuitattu kohteeseen %s traktissa.</string>
   <string name="checkin_canceled_success_trakt">Kuittaus peruttu traktissa.</string>
@@ -326,7 +326,7 @@
   <string name="migration_description">SeriesGuide X on nyt avausavain X-ominaisuuksiin ilmaisessa versiossa (\"elinikäinen X-passi\"). Siirrä ohjelmasi SeriesGuiden ilmaiseen versioon. Pidä X asennettuna avataksesi kaikki ominaisuudet ilmaisessa versiossa.</string>
   <string name="migration_import">Kosketa alla tuodaksesi SeriesGuide X:ssä luotu varmuuskopio.</string>
   <string name="migration_action_import">Tuo ja korvaa nykyiset ohjelmat</string>
-  <string name="action_upgrade">Get X features</string>
+  <string name="action_upgrade">Hanki X-ominaisuudet</string>
   <string name="upgrade_description">Hanki pääsy ilmoituksiin, useampiin valintoihin listawidgeteissä ja kaikki tulevat X-ominaisuudet. Tue tulevaa kehitystä.\n\nJos olet jo ostanut SeriesGuide X:n, asenna se avataksesi tämä päivitys.</string>
   <string name="upgrade_success">Kiitos, sinulla on jo tilaus kaikkiin X-ominaisuuksiin!</string>
   <string name="subscription_activated">SInulla on nyt tilaus X-ominaisuuksiin.</string>
@@ -334,7 +334,7 @@
   <string name="subscription_expired_details">X-ominaisuustilauksesi on vanhentunut.</string>
   <string name="add_to_homescreen">Lisää kotiruudulle</string>
   <string name="search_within_show">Hae ohjelmasta %s</string>
-  <string name="web_search">Web search</string>
+  <string name="web_search">Verkkohaku</string>
   <string-array name="sesorting">
     <item>Uusin ensin</item>
     <item>Vanhin ensin</item>

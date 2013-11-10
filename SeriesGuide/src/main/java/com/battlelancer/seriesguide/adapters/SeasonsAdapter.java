@@ -1,9 +1,14 @@
 
 package com.battlelancer.seriesguide.adapters;
 
+import com.battlelancer.seriesguide.ui.SeasonsFragment.SeasonsQuery;
+import com.battlelancer.seriesguide.util.SeasonTools;
+import com.uwetrottmann.seriesguide.R;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,9 +16,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.battlelancer.seriesguide.ui.SeasonsFragment.SeasonsQuery;
-import com.uwetrottmann.seriesguide.R;
 
 public class SeasonsAdapter extends CursorAdapter {
 
@@ -52,6 +54,7 @@ public class SeasonsAdapter extends CursorAdapter {
                     .findViewById(R.id.progressBarSeason);
             viewHolder.seasonWatchCount = (TextView) convertView
                     .findViewById(R.id.textViewSeasonWatchCount);
+            viewHolder.seasonSkipped = convertView.findViewById(R.id.imageViewSeasonSkipped);
             viewHolder.contextMenu = (ImageView) convertView
                     .findViewById(R.id.imageViewContextMenu);
 
@@ -63,7 +66,9 @@ public class SeasonsAdapter extends CursorAdapter {
         // title
         final String seasonNumber = mCursor.getString(SeasonsQuery.COMBINED);
         final String seasonName;
-        if (seasonNumber.equals("0") || seasonNumber.length() == 0) {
+        if (TextUtils.isEmpty(seasonNumber)) {
+            seasonName = mContext.getString(R.string.season_number, "?");
+        } else if ("0".equals(seasonNumber)) {
             seasonName = mContext.getString(R.string.specialseason);
         } else {
             seasonName = mContext.getString(R.string.season_number, seasonNumber);
@@ -79,6 +84,11 @@ public class SeasonsAdapter extends CursorAdapter {
         viewHolder.seasonProgressBar.setMax(max);
         viewHolder.seasonProgressBar.setProgress(progress);
         viewHolder.seasonProgress.setText(progress + "/" + max);
+
+        // skipped label
+        viewHolder.seasonSkipped
+                .setVisibility(SeasonTools.hasSkippedTag(mCursor.getString(SeasonsQuery.TAGS))
+                        ? View.VISIBLE : View.GONE);
 
         // episodes text
         String episodeCount = "";
@@ -130,10 +140,17 @@ public class SeasonsAdapter extends CursorAdapter {
     }
 
     static class ViewHolder {
+
         TextView seasonTitle;
+
         TextView seasonProgress;
+
         ProgressBar seasonProgressBar;
+
         TextView seasonWatchCount;
+
+        View seasonSkipped;
+
         ImageView contextMenu;
     }
 

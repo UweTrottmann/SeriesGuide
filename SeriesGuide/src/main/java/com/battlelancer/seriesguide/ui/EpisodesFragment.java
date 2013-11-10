@@ -17,7 +17,25 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.annotation.SuppressLint;
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.adapters.EpisodesAdapter;
+import com.battlelancer.seriesguide.adapters.EpisodesAdapter.OnFlagEpisodeListener;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
+import com.battlelancer.seriesguide.util.FlagTask;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,26 +55,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
-
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.Constants.EpisodeSorting;
-import com.battlelancer.seriesguide.adapters.EpisodesAdapter;
-import com.battlelancer.seriesguide.adapters.EpisodesAdapter.OnFlagEpisodeListener;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
-import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
 
 /**
  * Displays a list of episodes of a season.
@@ -120,7 +118,7 @@ public class EpisodesFragment extends SherlockListFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        updatePreferences();
+        getPreferences();
 
         // listen to changes to the sorting preference
         final SharedPreferences prefs = PreferenceManager
@@ -191,7 +189,7 @@ public class EpisodesFragment extends SherlockListFragment implements
     @Override
     public void onResume() {
         super.onResume();
-        updatePreferences();
+        getPreferences();
     }
 
     @Override
@@ -257,7 +255,7 @@ public class EpisodesFragment extends SherlockListFragment implements
             }
             case CONTEXT_FLAG_UNTILHERE_ID: {
                 final Cursor items = (Cursor) mAdapter.getItem(info.position);
-                onMarkUntilHere((int) info.id, items.getLong(EpisodesQuery.FIRSTAIREDMS));
+                onMarkUntilHere(items.getLong(EpisodesQuery.FIRSTAIREDMS));
                 fireTrackerEventContextMenu("Flag previously aired");
                 return true;
             }
@@ -346,14 +344,14 @@ public class EpisodesFragment extends SherlockListFragment implements
                 .execute();
     }
 
-    private void onMarkUntilHere(int episodeId, long firstaired) {
+    private void onMarkUntilHere(long firstaired) {
         new FlagTask(getActivity(), getShowId())
                 .episodeWatchedPrevious(firstaired)
                 .execute();
     }
 
-    private void updatePreferences() {
-        mSorting = Utils.getEpisodeSorting(getActivity());
+    private void getPreferences() {
+        mSorting = DisplaySettings.getEpisodeSortOrder(getActivity());
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
@@ -398,29 +396,27 @@ public class EpisodesFragment extends SherlockListFragment implements
         FragmentManager fm = getFragmentManager();
         SortDialogFragment sortDialog = SortDialogFragment.newInstance(R.array.epsorting,
                 R.array.epsortingData, mSorting.index(),
-                SeriesGuidePreferences.KEY_EPISODE_SORT_ORDER, R.string.pref_episodesorting);
+                DisplaySettings.KEY_EPISODE_SORT_ORDER, R.string.pref_episodesorting);
         sortDialog.show(fm, "fragment_sort");
     }
 
-    private final OnSharedPreferenceChangeListener mPrefsListener = new OnSharedPreferenceChangeListener() {
+    private final OnSharedPreferenceChangeListener mPrefsListener
+            = new OnSharedPreferenceChangeListener() {
 
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (key.equals(SeriesGuidePreferences.KEY_EPISODE_SORT_ORDER)) {
-                updateSorting(sharedPreferences);
+            if (DisplaySettings.KEY_EPISODE_SORT_ORDER.equals(key)) {
+                onSortOrderChanged();
             }
         }
     };
 
-    @SuppressLint("NewApi")
-    private void updateSorting(SharedPreferences prefs) {
-        mSorting = EpisodeSorting
-                .fromValue(prefs.getString(SeriesGuidePreferences.KEY_EPISODE_SORT_ORDER,
-                        EpisodeSorting.OLDEST_FIRST.value()));
+    private void onSortOrderChanged() {
+        getPreferences();
 
         getLoaderManager().restartLoader(EPISODES_LOADER, null, EpisodesFragment.this);
         getSherlockActivity().invalidateOptionsMenu();
 
-        EasyTracker.getTracker().sendEvent(TAG, "Sorting", mSorting.name(), (long) 0);
+        Utils.trackCustomEvent(getActivity(), TAG, "Sorting", mSorting.name());
     }
 
     @TargetApi(8)
@@ -440,11 +436,11 @@ public class EpisodesFragment extends SherlockListFragment implements
         getActivity().openContextMenu(v);
     }
 
-    private static void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    private void fireTrackerEvent(String label) {
+        Utils.trackAction(getActivity(), TAG, label);
     }
 
-    private static void fireTrackerEventContextMenu(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Context Item", label, (long) 0);
+    private void fireTrackerEventContextMenu(String label) {
+        Utils.trackContextMenu(getActivity(), TAG, label);
     }
 }

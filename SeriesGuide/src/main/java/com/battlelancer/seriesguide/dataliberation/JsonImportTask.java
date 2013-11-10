@@ -124,10 +124,10 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
         } catch (JsonParseException e) {
             // the given Json might not be valid or unreadable
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(mContext, TAG, e);
             return ERROR;
         } catch (IOException e) {
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(mContext, TAG, e);
             return ERROR;
         }
 
@@ -159,10 +159,10 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
         } catch (JsonParseException e) {
             // the given Json might not be valid or unreadable
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(mContext, TAG, e);
             return ERROR;
         } catch (IOException e) {
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(mContext, TAG, e);
             return ERROR;
         }
 

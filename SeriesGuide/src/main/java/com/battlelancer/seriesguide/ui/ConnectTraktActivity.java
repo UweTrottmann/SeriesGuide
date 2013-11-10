@@ -1,17 +1,17 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.uwetrottmann.seriesguide.R;
+
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.uwetrottmann.seriesguide.R;
-
 /**
  * Shows a {@link ConnectTraktFragment} or if already connected to trakt a
- * {@link TraktCredentialsDialogFragment}.
+ * {@link ConnectTraktCredentialsFragment}.
  */
 public class ConnectTraktActivity extends BaseActivity {
 
@@ -22,7 +22,7 @@ public class ConnectTraktActivity extends BaseActivity {
         setupActionBar();
 
         if (savedInstanceState == null) {
-            if (ServiceUtils.hasTraktCredentials(this)) {
+            if (TraktSettings.hasTraktCredentials(this)) {
                 // immediately show credentials to allow disconnecting
                 ConnectTraktCredentialsFragment f = ConnectTraktCredentialsFragment.newInstance();
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

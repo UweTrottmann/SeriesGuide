@@ -17,8 +17,6 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
 import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin.CheckInTask;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -27,6 +25,7 @@ import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -113,7 +112,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().sendView("Show Check-In Dialog");
+        Utils.trackView(getActivity(), "Show Check-In Dialog");
     }
 
     @Override
@@ -125,17 +124,15 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
             isAbortingCheckIn = true;
         }
 
-        if (mIsGetGlueIdOutdated) {
-            final Cursor show = getActivity().getContentResolver().query(
-                    Shows.buildShowUri(String.valueOf(mShowTvdbId)), new String[]{
-                    Shows._ID, Shows.GETGLUEID
-            }, null, null, null);
-            if (show != null) {
-                show.moveToFirst();
-                mGetGlueId = show.getString(1);
-                mIsGetGlueIdOutdated = false;
-                show.close();
-            }
+        // always get the latest GetGlue id
+        final Cursor show = getActivity().getContentResolver().query(
+                Shows.buildShowUri(String.valueOf(mShowTvdbId)), new String[]{
+                Shows._ID, Shows.GETGLUEID
+        }, null, null, null);
+        if (show != null) {
+            show.moveToFirst();
+            mGetGlueId = show.getString(1);
+            show.close();
         }
 
         // check for GetGlue id

@@ -19,6 +19,6 @@
 
     <item android:drawable="@drawable/list_pressed_holo_dark"/>
 
-    <item android:drawable="@drawable/list_longpressed_holo"/>
+    <item android:drawable="@drawable/list_longpressed_holo_dark"/>
 
 </transition>

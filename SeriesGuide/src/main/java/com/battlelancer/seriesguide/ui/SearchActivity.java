@@ -17,19 +17,21 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.widget.SearchView;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.widget.SearchView;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.seriesguide.R;
 
 /**
  * Handles search intents and displays a {@link SearchFragment} when needed or
@@ -42,7 +44,8 @@ public class SearchActivity extends BaseTopActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getMenu().setContentView(R.layout.search);
+        setContentView(R.layout.search);
+        setupNavDrawer();
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.search_hint);
@@ -54,13 +57,13 @@ public class SearchActivity extends BaseTopActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        EasyTracker.getInstance().activityStart(this);
+        EasyTracker.getInstance(this).activityStart(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        EasyTracker.getInstance().activityStop(this);
+        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override
@@ -97,16 +100,16 @@ public class SearchActivity extends BaseTopActivity {
                 SearchFragment newFragment = new SearchFragment();
                 newFragment.setArguments(extras);
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.search_fragment, newFragment).commit();
+                        .replace(R.id.content_frame, newFragment).commit();
             } else {
                 searchFragment.onPerformSearch(extras);
             }
-            EasyTracker.getTracker().sendEvent(TAG, "Search action", "Search", (long) 0);
+            Utils.trackCustomEvent(this, TAG, "Search action", "Search");
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
             Uri data = intent.getData();
             String id = data.getLastPathSegment();
             onShowEpisodeDetails(id);
-            EasyTracker.getTracker().sendEvent(TAG, "Search action", "View", (long) 0);
+            Utils.trackCustomEvent(this, TAG, "Search action", "View");
             finish();
         }
     }
@@ -137,9 +140,8 @@ public class SearchActivity extends BaseTopActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
     protected void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+        Utils.trackAction(this, TAG, label);
     }
 
     private void onShowEpisodeDetails(String id) {

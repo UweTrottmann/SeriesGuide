@@ -17,16 +17,16 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -67,7 +67,8 @@ public class TraktAddFragment extends AddFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         /*
          * never use this here (on config change the view needed before removing
          * the fragment)
@@ -127,7 +128,7 @@ public class TraktAddFragment extends AddFragment {
                 break;
         }
         if (tag != null) {
-            EasyTracker.getTracker().sendView(tag);
+            Utils.trackView(getActivity(), tag);
         }
     }
 
@@ -186,11 +187,11 @@ public class TraktAddFragment extends AddFragment {
                                 break;
                             case AddPagerAdapter.LIBRARY_TAB_POSITION:
                                 shows = manager.userService()
-                                        .libraryShowsAll(ServiceUtils.getTraktUsername(mContext));
+                                        .libraryShowsAll(TraktSettings.getUsername(mContext));
                                 break;
                             case AddPagerAdapter.WATCHLIST_TAB_POSITION:
                                 shows = manager.userService()
-                                        .watchlistShows(ServiceUtils.getTraktUsername(mContext));
+                                        .watchlistShows(TraktSettings.getUsername(mContext));
                                 break;
                         }
                     }
@@ -200,17 +201,19 @@ public class TraktAddFragment extends AddFragment {
             }
 
             // get a list of existing shows to filter against
-            final Cursor existing = mContext.getContentResolver().query(Shows.CONTENT_URI,
-                    new String[] {
-                        Shows._ID
+            final Cursor existingShows = mContext.getContentResolver().query(Shows.CONTENT_URI,
+                    new String[]{
+                            Shows._ID
                     }, null, null, null);
-            final HashSet<String> existingIds = new HashSet<String>();
-            while (existing.moveToNext()) {
-                existingIds.add(existing.getString(0));
+            final HashSet<Integer> existingShowTvdbIds = new HashSet<>();
+            if (existingShows != null) {
+                while (existingShows.moveToNext()) {
+                    existingShowTvdbIds.add(existingShows.getInt(0));
+                }
+                existingShows.close();
             }
-            existing.close();
 
-            parseTvShowsToSearchResults(shows, showList, existingIds, mContext);
+            parseTvShowsToSearchResults(shows, showList, existingShowTvdbIds, mContext);
 
             return showList;
         }
@@ -229,13 +232,13 @@ public class TraktAddFragment extends AddFragment {
      * Parse a list of {@link TvShow} objects to a list of {@link SearchResult} objects.
      */
     private static void parseTvShowsToSearchResults(List<TvShow> inputList,
-            List<SearchResult> outputList, HashSet<String> existingIds, Context context) {
+            List<SearchResult> outputList, HashSet<Integer> existingShowTvdbIds, Context context) {
         Iterator<TvShow> shows = inputList.iterator();
         while (shows.hasNext()) {
             TvShow tvShow = shows.next();
 
             // only list non-existing shows
-            if (!existingIds.contains(tvShow.tvdb_id)) {
+            if (!existingShowTvdbIds.contains(tvShow.tvdb_id)) {
                 SearchResult show = new SearchResult();
                 show.tvdbid = tvShow.tvdb_id;
                 show.title = tvShow.title;

@@ -17,6 +17,27 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.WatchedBox;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.settings.ActivitySettings;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.FlagTask;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.Utils;
+import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
+import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
+import com.uwetrottmann.androidutils.CheatSheet;
+import com.uwetrottmann.androidutils.Lists;
+import com.uwetrottmann.androidutils.Maps;
+import com.uwetrottmann.seriesguide.R;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,40 +54,16 @@ import android.support.v4.widget.CursorAdapter;
 import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.WatchedBox;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.settings.ActivitySettings;
-import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
-import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
-import com.uwetrottmann.androidutils.CheatSheet;
-import com.uwetrottmann.androidutils.Lists;
-import com.uwetrottmann.androidutils.Maps;
-import com.uwetrottmann.seriesguide.R;
 
 import java.util.Calendar;
 import java.util.List;
@@ -134,7 +131,7 @@ public class UpcomingFragment extends SherlockFragment implements
 
         // setup adapter
         mAdapter = new SlowAdapter(getActivity(), null, 0);
-        mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteScrolling(getActivity()));
+        mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteActivity(getActivity()));
 
         // setup grid view
         mGridView.setAdapter(mAdapter);
@@ -158,7 +155,7 @@ public class UpcomingFragment extends SherlockFragment implements
         onRequery();
 
         final String tag = getArguments().getString("analyticstag");
-        EasyTracker.getTracker().sendView(tag);
+        Utils.trackView(getActivity(), tag);
     }
 
     @Override
@@ -259,7 +256,7 @@ public class UpcomingFragment extends SherlockFragment implements
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String type = getArguments().getString(InitBundle.TYPE);
-        boolean isInfiniteScrolling = ActivitySettings.isInfiniteScrolling(getActivity());
+        boolean isInfiniteScrolling = ActivitySettings.isInfiniteActivity(getActivity());
 
         // infinite or 30 days activity stream
         String[][] queryArgs = DBUtils.buildActivityQuery(getActivity(), type,
@@ -279,13 +276,13 @@ public class UpcomingFragment extends SherlockFragment implements
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (ActivitySettings.KEY_INFINITE_SCROLLING.equals(key)) {
-            mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteScrolling(getActivity()));
+        if (ActivitySettings.KEY_INFINITE_ACTIVITY.equals(key)) {
+            mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteActivity(getActivity()));
         }
-        if (ActivitySettings.KEY_ONLY_FAVORITES.equals(key)
-                || ActivitySettings.KEY_HIDE_SPECIALS.equals(key)
-                || SeriesGuidePreferences.KEY_NOWATCHED.equals(key)
-                || ActivitySettings.KEY_INFINITE_SCROLLING.equals(key)) {
+        if (ActivitySettings.KEY_ONLY_FAVORITE_SHOWS.equals(key)
+                || DisplaySettings.KEY_HIDE_SPECIALS.equals(key)
+                || DisplaySettings.KEY_NO_WATCHED_EPISODES.equals(key)
+                || ActivitySettings.KEY_INFINITE_ACTIVITY.equals(key)) {
             onRequery();
         }
     }
@@ -414,12 +411,10 @@ public class UpcomingFragment extends SherlockFragment implements
             final int episode = mCursor.getInt(UpcomingQuery.NUMBER);
             viewHolder.watchedBox.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
-                    WatchedBox checkBox = (WatchedBox) v;
-                    checkBox.toggleWatched();
-
+                    WatchedBox box = (WatchedBox) v;
                     new FlagTask(mContext, showTvdbId)
                             .episodeWatched(episodeTvdbId, season, episode,
-                                    EpisodeTools.isWatched(checkBox.getEpisodeFlag())
+                                    EpisodeTools.isWatched(box.getEpisodeFlag())
                                             ? EpisodeFlags.UNWATCHED : EpisodeFlags.WATCHED)
                             .execute();
                 }
@@ -441,7 +436,7 @@ public class UpcomingFragment extends SherlockFragment implements
             }
 
             // number and show
-            final String number = Utils.getEpisodeNumber(mPrefs, season, episode);
+            final String number = Utils.getEpisodeNumber(mContext, season, episode);
             viewHolder.show.setText(number + " | " + mCursor.getString(UpcomingQuery.SHOW_TITLE));
 
             // title

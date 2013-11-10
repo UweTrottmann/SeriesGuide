@@ -17,6 +17,23 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
+import com.battlelancer.seriesguide.dataliberation.model.Show;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.enums.SeasonTags;
+import com.battlelancer.seriesguide.items.Series;
+import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.ActivitySettings;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.ui.UpcomingFragment.ActivityType;
+import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
+import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
+import com.uwetrottmann.androidutils.Lists;
+
 import android.app.ProgressDialog;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
@@ -30,22 +47,6 @@ import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-
-import com.battlelancer.seriesguide.SeriesGuideApplication;
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
-import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.items.Series;
-import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.settings.ActivitySettings;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.ui.UpcomingFragment.ActivityType;
-import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
-import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
-import com.uwetrottmann.androidutils.Lists;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,6 +62,8 @@ public class DBUtils {
      */
     public static final String UNKNOWN_NEXT_AIR_DATE = "9223372036854775807";
 
+    public static final int SMALL_BATCH_SIZE = 50;
+
     interface UnwatchedQuery {
         static final String[] PROJECTION = new String[] {
                 Episodes._ID
@@ -74,6 +77,8 @@ public class DBUtils {
 
         static final String NOAIRDATE_SELECTION = Episodes.WATCHED + "=0 AND "
                 + Episodes.FIRSTAIREDMS + "=-1";
+
+        static final String SKIPPED_SELECTION = Episodes.WATCHED + "=" + EpisodeFlags.SKIPPED;
     }
 
     /**
@@ -127,10 +132,20 @@ public class DBUtils {
         final int noAirDateCount = noAirDate.getCount();
         noAirDate.close();
 
+        // any skipped episodes
+        final Cursor skipped = resolver.query(episodesOfSeasonUri, UnwatchedQuery.PROJECTION,
+                UnwatchedQuery.SKIPPED_SELECTION, null, null);
+        if (skipped == null) {
+            return;
+        }
+        boolean hasSkippedEpisodes = skipped.getCount() > 0;
+        skipped.close();
+
         final ContentValues update = new ContentValues();
         update.put(Seasons.WATCHCOUNT, count);
         update.put(Seasons.UNAIREDCOUNT, unairedCount);
         update.put(Seasons.NOAIRDATECOUNT, noAirDateCount);
+        update.put(Seasons.TAGS, hasSkippedEpisodes ? SeasonTags.SKIPPED : SeasonTags.NONE);
         update.put(Seasons.TOTALCOUNT, totalCount);
         resolver.update(Seasons.buildSeasonUri(seasonid), update, null, null);
     }
@@ -234,9 +249,7 @@ public class DBUtils {
      */
     public static String[][] buildActivityQuery(Context context, String type,
             int numberOfDaysToInclude) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-        boolean isNoWatched = prefs.getBoolean(SeriesGuidePreferences.KEY_NOWATCHED, false);
+        boolean isNoWatched = DisplaySettings.isNoWatchedEpisodes(context);
 
         return buildActivityQuery(context, type, isNoWatched, numberOfDaysToInclude);
     }
@@ -288,7 +301,7 @@ public class DBUtils {
         }
 
         // append no specials selection if necessary
-        boolean isNoSpecials = ActivitySettings.isHidingSpecials(context);
+        boolean isNoSpecials = DisplaySettings.isHidingSpecials(context);
         if (isNoSpecials) {
             query += Episodes.SELECTION_NOSPECIALS;
         }
@@ -445,12 +458,8 @@ public class DBUtils {
     }
 
     /**
-     * Delete a show and manually delete its seasons and episodes. Also cleans
-     * up the poster and images.
-     * 
-     * @param context
-     * @param showId
-     * @param progress
+     * Delete a show and manually delete its seasons and episodes. Also cleans up the poster and
+     * images.
      */
     public static void deleteShow(Context context, String showId, ProgressDialog progress) {
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
@@ -475,11 +484,10 @@ public class DBUtils {
         try {
             context.getContentResolver()
                     .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
-        } catch (RemoteException e) {
-            // Failed binder transactions aren't recoverable
-            throw new RuntimeException("Problem applying batch operation", e);
-        } catch (OperationApplicationException e) {
-            // Failures like constraint violation aren't recoverable
+        } catch (RemoteException | OperationApplicationException e) {
+            // RemoteException: Failed binder transactions aren't recoverable
+            // OperationApplicationException: Failures like constraint violation aren't
+            // recoverable
             throw new RuntimeException("Problem applying batch operation", e);
         }
 
@@ -521,16 +529,7 @@ public class DBUtils {
         batch.add(ContentProviderOperation.newDelete(Episodes.buildEpisodesOfShowUri(showId))
                 .build());
 
-        try {
-            context.getContentResolver()
-                    .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
-        } catch (RemoteException e) {
-            // Failed binder transactions aren't recoverable
-            throw new RuntimeException("Problem applying batch operation", e);
-        } catch (OperationApplicationException e) {
-            // Failures like constraint violation aren't recoverable
-            throw new RuntimeException("Problem applying batch operation", e);
-        }
+        applyInSmallBatches(context, batch);
 
         // hide progress dialog now
         if (progress.isShowing()) {
@@ -625,10 +624,9 @@ public class DBUtils {
      */
     public static long updateLatestEpisode(Context context, int showTvdbId) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        final boolean isOnlyFutureEpisodes = prefs.getBoolean(
-                SeriesGuidePreferences.KEY_ONLY_FUTURE_EPISODES, false);
-        final boolean isNoSpecials = ActivitySettings.isHidingSpecials(context);
-        return updateLatestEpisode(context, showTvdbId, isOnlyFutureEpisodes, isNoSpecials, prefs);
+        final boolean isNoReleasedEpisodes = DisplaySettings.isNoReleasedEpisodes(context);
+        final boolean isNoSpecials = DisplaySettings.isHidingSpecials(context);
+        return updateLatestEpisode(context, showTvdbId, isNoReleasedEpisodes, isNoSpecials, prefs);
     }
 
     /**
@@ -637,7 +635,7 @@ public class DBUtils {
      * @return The TVDb id of the calculated next episode.
      */
     public static long updateLatestEpisode(Context context, int showTvdbId,
-            boolean isOnlyFutureEpisodes, boolean isNoSpecials, SharedPreferences prefs) {
+            boolean isNoReleasedEpisodes, boolean isNoSpecials, SharedPreferences prefs) {
         final Uri episodesWithShow = Episodes.buildEpisodesOfShowUri(showTvdbId);
         final StringBuilder selectQuery = new StringBuilder();
 
@@ -685,7 +683,7 @@ public class DBUtils {
             // do not take specials into account
             selectQuery.append(Episodes.SELECTION_NOSPECIALS);
         }
-        if (isOnlyFutureEpisodes) {
+        if (isNoReleasedEpisodes) {
             // restrict to episodes with future air date
             selectQuery.append(NextEpisodeQuery.SELECT_ONLYFUTURE);
             final String now = String.valueOf(Utils.getFakeCurrentTime(prefs));
@@ -709,7 +707,7 @@ public class DBUtils {
         final ContentValues update = new ContentValues();
         if (next != null && next.moveToFirst()) {
             // next episode text, e.g. '0x12 Episode Name'
-            final String nextEpisodeString = Utils.getNextEpisodeString(prefs,
+            final String nextEpisodeString = Utils.getNextEpisodeString(context,
                     next.getInt(NextEpisodeQuery.SEASON), next.getInt(NextEpisodeQuery.NUMBER),
                     next.getString(NextEpisodeQuery.TITLE));
 
@@ -738,6 +736,52 @@ public class DBUtils {
         context.getContentResolver().update(Shows.buildShowUri(showTvdbId), update, null, null);
 
         return episodeId;
+    }
+
+    /**
+     * Applies a large {@link ContentProviderOperation} batch in smaller batches as not to overload
+     * the transaction cache.
+     */
+    public static void applyInSmallBatches(Context context,
+            ArrayList<ContentProviderOperation> batch) {
+        // split into smaller batches to not overload transaction cache
+        // see http://developer.android.com/reference/android/os/TransactionTooLargeException.html
+
+        ArrayList<ContentProviderOperation> smallBatch = new ArrayList<>();
+
+        while (!batch.isEmpty()) {
+            if (batch.size() <= SMALL_BATCH_SIZE) {
+                // small enough already? apply right away
+                applyBatch(context, batch);
+                return;
+            }
+
+            // take up to 50 elements out of batch
+            for (int count = 0; count < SMALL_BATCH_SIZE; count++) {
+                if (batch.isEmpty()) {
+                    break;
+                }
+                smallBatch.add(batch.remove(0));
+            }
+
+            // apply small batch
+            applyBatch(context, smallBatch);
+
+            // prepare for next small batch
+            smallBatch.clear();
+        }
+    }
+
+    private static void applyBatch(Context context, ArrayList<ContentProviderOperation> batch) {
+        try {
+            context.getContentResolver()
+                    .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
+        } catch (RemoteException | OperationApplicationException e) {
+            // RemoteException: Failed binder transactions aren't recoverable
+            // OperationApplicationException: Failures like constraint violation aren't
+            // recoverable
+            throw new RuntimeException("Problem applying batch operation", e);
+        }
     }
 
     private interface NextEpisodeQuery {

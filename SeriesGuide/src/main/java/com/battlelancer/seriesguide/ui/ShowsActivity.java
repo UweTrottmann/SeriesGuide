@@ -17,6 +17,29 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.billing.BillingActivity;
+import com.battlelancer.seriesguide.billing.IabHelper;
+import com.battlelancer.seriesguide.billing.IabResult;
+import com.battlelancer.seriesguide.billing.Inventory;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.AppSettings;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.sync.SyncUtils;
+import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.thetvdbapi.TheTVDB;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.BuildConfig;
+import com.uwetrottmann.seriesguide.R;
+
 import android.accounts.Account;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -34,35 +57,8 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewStub;
-import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
-import com.battlelancer.seriesguide.billing.BillingActivity;
-import com.battlelancer.seriesguide.billing.IabHelper;
-import com.battlelancer.seriesguide.billing.IabResult;
-import com.battlelancer.seriesguide.billing.Inventory;
-import com.battlelancer.seriesguide.migration.MigrationActivity;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.settings.AppSettings;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.sync.SyncUtils;
-import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.TheTVDB;
-
-import com.google.analytics.tracking.android.EasyTracker;
-
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.BuildConfig;
-import com.uwetrottmann.seriesguide.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +97,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getMenu().setContentView(R.layout.shows);
+        setContentView(R.layout.shows);
+        setupNavDrawer();
 
         // Set up a sync account if needed
         SyncUtils.createSyncAccount(this);
@@ -166,7 +163,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
     protected void onStart() {
         super.onStart();
 
-        EasyTracker.getInstance().activityStart(this);
+        EasyTracker.getInstance(this).activityStart(this);
     }
 
     @Override
@@ -197,7 +194,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
     @Override
     protected void onStop() {
         super.onStop();
-        EasyTracker.getInstance().activityStop(this);
+        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override
@@ -261,7 +258,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
 
         // If the nav drawer is open, hide action items related to the content
         // view
-        boolean isDrawerOpen = isMenuDrawerOpen();
+        boolean isDrawerOpen = isDrawerOpen();
         menu.findItem(R.id.menu_add_show).setVisible(!isDrawerOpen);
 
         return super.onPrepareOptionsMenu(menu);
@@ -298,10 +295,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
                 Toast.makeText(this, getString(R.string.arttask_start), Toast.LENGTH_LONG).show();
                 mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
             }
-            return true;
-        } else if (itemId == R.id.menu_search) {
-            fireTrackerEvent("Search");
-            onSearchRequested();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -389,18 +382,17 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
         protected void onPostExecute(Integer resultCode) {
             switch (resultCode) {
                 case UPDATE_SUCCESS:
-                    EasyTracker.getTracker().sendEvent(TAG, "Poster Task", "Success",
-                            (long) 0);
-
                     Toast.makeText(getApplicationContext(), getString(R.string.done),
                             Toast.LENGTH_SHORT).show();
+
+                    Utils.trackCustomEvent(getApplicationContext(), TAG, "Poster Task", "Success");
                     break;
                 case UPDATE_INCOMPLETE:
-                    EasyTracker.getTracker().sendEvent(TAG, "Poster Task", "Incomplete",
-                            (long) 0);
-
                     Toast.makeText(getApplicationContext(), getString(R.string.arttask_incomplete),
                             Toast.LENGTH_LONG).show();
+
+                    Utils.trackCustomEvent(getApplicationContext(), TAG, "Poster Task",
+                            "Incomplete");
                     break;
             }
 
@@ -461,8 +453,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
                 }
 
                 if (lastVersion < VER_TRAKT_SEC_CHANGES) {
-                    // clear trakt credentials
-                    editor.putString(SeriesGuidePreferences.KEY_TRAKTPWD, null);
+                    ServiceUtils.clearTraktCredentials(this);
                     editor.putString(SeriesGuidePreferences.KEY_SECURE, null);
                 }
                 if (lastVersion < VER_SUMMERTIME_FIX) {
@@ -502,8 +493,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
         onShowShowsFragment();
     }
 
+    @Override
     protected void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+        Utils.trackAction(this, TAG, label);
     }
 
     private void onShowShowsFragment() {

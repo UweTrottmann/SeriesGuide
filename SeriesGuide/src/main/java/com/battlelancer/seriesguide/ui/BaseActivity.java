@@ -17,17 +17,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NavUtils;
-import android.text.format.DateUtils;
-import android.view.KeyEvent;
-
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.enums.TraktAction;
@@ -39,6 +28,15 @@ import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.uwetrottmann.seriesguide.R;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
+import android.text.format.DateUtils;
+import android.view.KeyEvent;
+
 /**
  * Provides some common functionality across all activities like setting the
  * theme, navigation shortcuts and triggering AutoUpdates and AutoBackups.
@@ -48,9 +46,13 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
 
     @Override
     protected void onCreate(Bundle arg0) {
+        setCustomTheme();
+        super.onCreate(arg0);
+    }
+
+    protected void setCustomTheme() {
         // set a theme based on user preference
         setTheme(SeriesGuidePreferences.THEME);
-        super.onCreate(arg0);
     }
 
     @Override

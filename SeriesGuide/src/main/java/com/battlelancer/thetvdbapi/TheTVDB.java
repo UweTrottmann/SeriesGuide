@@ -17,24 +17,23 @@
 
 package com.battlelancer.thetvdbapi;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
-import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.TraktSync;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
-import com.jakewharton.trakt.entities.TvShowSeason;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.seriesguide.R;
@@ -45,12 +44,10 @@ import org.xml.sax.SAXException;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.OperationApplicationException;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.sax.Element;
 import android.sax.EndElementListener;
@@ -127,7 +124,7 @@ public class TheTVDB {
      */
     public static boolean addShow(int showTvdbId, List<TvShow> seenShows,
             List<TvShow> collectedShows, Context context) throws SAXException {
-        String language = getTheTVDBLanguage(context);
+        String language = DisplaySettings.getContentLanguage(context);
         Show show = fetchShow(showTvdbId, language, context);
 
         boolean isShowExists = DBUtils.isShowExists(showTvdbId, context);
@@ -149,7 +146,7 @@ public class TheTVDB {
      * orphaned episodes.
      */
     public static void updateShow(int showTvdbId, Context context) throws SAXException {
-        String language = getTheTVDBLanguage(context);
+        String language = DisplaySettings.getContentLanguage(context);
         Show show = fetchShow(showTvdbId, language, context);
 
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
@@ -165,7 +162,7 @@ public class TheTVDB {
      */
     public static List<SearchResult> searchShow(String title, Context context) throws IOException,
             SAXException {
-        String language = getTheTVDBLanguage(context);
+        String language = DisplaySettings.getContentLanguage(context);
 
         URL url;
         try {
@@ -241,9 +238,8 @@ public class TheTVDB {
                 }
             }
 
-            Long showCount = (long) shows.getCount();
-            EasyTracker.getTracker().sendEvent("Statistics", "Shows", String.valueOf(showCount),
-                    showCount);
+            long showCount = (long) shows.getCount();
+            Utils.trackCustomEvent(context, "Statistics", "Shows", String.valueOf(showCount));
 
             shows.close();
         }
@@ -269,84 +265,32 @@ public class TheTVDB {
         ContentValues[] newEpisodesValues = new ContentValues[importShowEpisodes.size()];
         newEpisodesValues = importShowEpisodes.toArray(newEpisodesValues);
 
-        try {
-            context.getContentResolver()
-                    .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
-            context.getContentResolver()
-                    .bulkInsert(Episodes.CONTENT_URI, newEpisodesValues);
-        } catch (RemoteException | OperationApplicationException e) {
-            // RemoteException: Failed binder transactions aren't recoverable
-            // OperationApplicationException: Failures like constraint violation aren't
-            // recoverable
-            throw new RuntimeException("Problem applying batch operation", e);
-        }
-    }
+        DBUtils.applyInSmallBatches(context, batch);
 
-    private static String getTheTVDBLanguage(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                .getApplicationContext());
-        return prefs.getString(SeriesGuidePreferences.KEY_LANGUAGE, "en");
+        // insert all new episodes in bulk
+        context.getContentResolver().bulkInsert(Episodes.CONTENT_URI, newEpisodesValues);
     }
 
     private static void storeTraktFlags(int showTvdbId, List<TvShow> shows, Context context,
             boolean isSeenFlags) {
-        final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-
-        // try to find seen episodes from trakt
+        // try to find seen episodes from trakt of the given show
         for (TvShow tvShow : shows) {
-            if (tvShow != null && tvShow.tvdb_id == showTvdbId) {
-                batch.clear();
-
-                // try to find matching seasons
-                final List<TvShowSeason> seasons = tvShow.seasons;
-                for (TvShowSeason season : seasons) {
-                    if (season == null) {
-                        continue;
-                    }
-
-                    final Cursor seasonMatch = context.getContentResolver().query(
-                            Seasons.buildSeasonsOfShowUri(showTvdbId), new String[] {
-                                Seasons._ID
-                            }, Seasons.COMBINED + "=?", new String[] {
-                                season.season.toString()
-                            }, null);
-                    if (seasonMatch == null) {
-                        continue;
-                    }
-
-                    // add ops to flag episodes
-                    if (seasonMatch.moveToFirst()) {
-                        final String seasonId = seasonMatch.getString(0);
-
-                        for (Integer episode : season.episodes.numbers) {
-                            // flag as watched or collected depending on call
-                            // parameter
-                            batch.add(ContentProviderOperation
-                                    .newUpdate(Episodes.buildEpisodesOfSeasonUri(seasonId))
-                                    .withSelection(Episodes.NUMBER + "=?", new String[] {
-                                            episode.toString()
-                                    })
-                                    .withValue(isSeenFlags ? Episodes.WATCHED : Episodes.COLLECTED,
-                                            true).build());
-                        }
-                    }
-
-                    seasonMatch.close();
-                }
-
-                // apply ops for this show
-                try {
-                    context.getContentResolver()
-                            .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
-                } catch (RemoteException | OperationApplicationException e) {
-                    // RemoteException: Failed binder transactions aren't recoverable
-                    // OperationApplicationException: Failures like constraint violation aren't
-                    // recoverable
-                    throw new RuntimeException("Problem applying batch operation", e);
-                }
-
-                break;
+            if (tvShow == null || tvShow.tvdb_id == null || tvShow.tvdb_id != showTvdbId) {
+                // skip, does not match
+                continue;
             }
+
+            final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+
+            TraktSync.buildSeasonBatch(context, batch, tvShow,
+                    isSeenFlags ? Episodes.WATCHED : Episodes.COLLECTED,
+                    EpisodeFlags.WATCHED);
+
+            // apply ops for this show
+            DBUtils.applyInSmallBatches(context, batch);
+
+            // done, found the show we were looking for
+            return;
         }
     }
 
@@ -367,7 +311,7 @@ public class TheTVDB {
             try {
                 traktShow = manager.showService().summary(showTvdbId);
             } catch (RetrofitError e) {
-                Utils.trackExceptionAndLog(TAG, e);
+                Utils.trackExceptionAndLog(context, TAG, e);
             }
         }
 
@@ -798,20 +742,20 @@ public class TheTVDB {
             }
         } catch (IOException e) {
             Log.w(TAG, "I/O error retrieving bitmap from " + url, e);
-            Utils.trackException(TAG + " I/O error retrieving bitmap from " + url, e);
+            Utils.trackException(context, TAG + " I/O error retrieving bitmap from " + url, e);
         } catch (IllegalStateException e) {
             Log.w(TAG, "Incorrect URL: " + url);
-            Utils.trackException(TAG + " Incorrect URL " + url, e);
+            Utils.trackException(context, TAG + " Incorrect URL " + url, e);
         } catch (Exception e) {
             Log.w(TAG, "Error while retrieving bitmap from " + url, e);
-            Utils.trackException(TAG + " Error while retrieving bitmap from " + url, e);
+            Utils.trackException(context, TAG + " Error while retrieving bitmap from " + url, e);
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
                     Log.w(TAG, "I/O error while retrieving bitmap from " + url, e);
-                    Utils.trackException(TAG + " I/O error retrieving bitmap from " + url,
+                    Utils.trackException(context, TAG + " I/O error retrieving bitmap from " + url,
                             e);
                 }
             }

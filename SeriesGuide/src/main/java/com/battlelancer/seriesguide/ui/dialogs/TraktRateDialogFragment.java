@@ -17,6 +17,14 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.Utils;
+import com.jakewharton.trakt.enumerations.Rating;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -24,14 +32,6 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
-
-import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
-import com.battlelancer.seriesguide.util.TraktTask;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.jakewharton.trakt.enumerations.Rating;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
 
 /**
  * Displays the trakt advanced rating scale, submits the chosen rating to the
@@ -76,7 +76,7 @@ public class TraktRateDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().sendView("Rate Dialog");
+        Utils.trackView(getActivity(), "Rate Dialog");
     }
 
     @Override

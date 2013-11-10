@@ -17,6 +17,16 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.battlelancer.seriesguide.util.TraktSync;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
@@ -32,13 +42,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.util.TraktSync;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.seriesguide.R;
-
 /**
  * Displays information and offers tools to upload or download watched flags
  * from trakt.
@@ -51,7 +54,7 @@ public class TraktSyncActivity extends BaseActivity {
 
     private TraktSync mSyncTask;
 
-    private CheckBox mSyncUnseenEpisodes;
+    private CheckBox mSyncUnwatchedEpisodes;
 
     private View mContainer;
 
@@ -73,7 +76,7 @@ public class TraktSyncActivity extends BaseActivity {
     private void setupViews() {
         mContainer = findViewById(R.id.syncbuttons);
     
-        mSyncUnseenEpisodes = (CheckBox) findViewById(R.id.checkBoxSyncUnseen);
+        mSyncUnwatchedEpisodes = (CheckBox) findViewById(R.id.checkBoxSyncUnseen);
     
         // Sync to SeriesGuide button
         final Button syncToDeviceButton = (Button) findViewById(R.id.syncToDeviceButton);
@@ -84,7 +87,7 @@ public class TraktSyncActivity extends BaseActivity {
                 if (mSyncTask == null
                         || (mSyncTask != null && mSyncTask.getStatus() == AsyncTask.Status.FINISHED)) {
                     mSyncTask = (TraktSync) new TraktSync(TraktSyncActivity.this, mContainer,
-                            false, mSyncUnseenEpisodes.isChecked()).execute();
+                            false, mSyncUnwatchedEpisodes.isChecked()).execute();
                 }
             }
         });
@@ -103,30 +106,28 @@ public class TraktSyncActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        EasyTracker.getInstance().activityStart(this);
+        EasyTracker.getInstance(this).activityStart(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean isSyncUnseenEpisodes = prefs.getBoolean(
-                SeriesGuidePreferences.KEY_SYNC_UNSEEN_EPISODES, false);
-        mSyncUnseenEpisodes.setChecked(isSyncUnseenEpisodes);
+        boolean isSyncUnseenEpisodes = TraktSettings.isSyncingUnwatchedEpisodes(this);
+        mSyncUnwatchedEpisodes.setChecked(isSyncUnseenEpisodes);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.edit().putBoolean(SeriesGuidePreferences.KEY_SYNC_UNSEEN_EPISODES,
-                mSyncUnseenEpisodes.isChecked()).commit();
+        prefs.edit().putBoolean(TraktSettings.KEY_SYNC_UNWATCHED_EPISODES,
+                mSyncUnwatchedEpisodes.isChecked()).commit();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        EasyTracker.getInstance().activityStop(this);
+        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override
@@ -184,11 +185,12 @@ public class TraktSyncActivity extends BaseActivity {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                Utils.trackAction(TraktSyncActivity.this, TAG, "Upload to trakt");
                                 fireTrackerEvent("Upload to trakt");
                                 if (mSyncTask == null
                                         || (mSyncTask != null && mSyncTask.getStatus() == AsyncTask.Status.FINISHED)) {
                                     mSyncTask = (TraktSync) new TraktSync(TraktSyncActivity.this,
-                                            mContainer, true, mSyncUnseenEpisodes.isChecked())
+                                            mContainer, true, mSyncUnwatchedEpisodes.isChecked())
                                             .execute();
                                 }
                             }
@@ -200,7 +202,7 @@ public class TraktSyncActivity extends BaseActivity {
         return null;
     }
 
-    private static void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Click", label, (long) 0);
+    private void fireTrackerEvent(String label) {
+        Utils.trackClick(this, TAG, label);
     }
 }

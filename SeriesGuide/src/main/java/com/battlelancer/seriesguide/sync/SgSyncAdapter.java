@@ -6,8 +6,10 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
@@ -20,7 +22,6 @@ import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.jakewharton.trakt.enumerations.ActivityType;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.seriesguide.R;
 import com.uwetrottmann.tmdb.TmdbException;
 import com.uwetrottmann.tmdb.entities.Configuration;
@@ -33,12 +34,10 @@ import android.content.ContentProviderClient;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.OperationApplicationException;
 import android.content.SharedPreferences;
 import android.content.SyncResult;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -66,13 +65,13 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     private ArrayList<SearchResult> mNewShows;
 
     /**
-     * Helper which eventually calls {@link ContentResolver}
-     * {@code .requestSync()}, but only if at least UPDATE_INTERVAL has passed.
+     * Helper which eventually calls {@link ContentResolver} {@code .requestSync()}, but only if at
+     * least UPDATE_INTERVAL has passed.
      */
     public static void requestSync(Context context) {
         // only request sync if at least UPDATE_INTERVAL has passed
         long now = System.currentTimeMillis();
-        long previousUpdateTime = AdvancedSettings.getLastAutoUpdateTime(context);
+        long previousUpdateTime = UpdateSettings.getLastAutoUpdateTime(context);
 
         final boolean isTime = (now - previousUpdateTime) >
                 UPDATE_INTERVAL_MINUTES * DateUtils.MINUTE_IN_MILLIS;
@@ -83,28 +82,27 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     /**
-     * Same as {@link #requestSync(Context, int, boolean)} with
-     * {@code isUserRequested} set to true.
+     * Same as {@link #requestSync(Context, int, boolean)} with {@code isUserRequested} set to
+     * true.
      */
     public static void requestSync(Context context, int showTvdbId) {
         requestSync(context, showTvdbId, true);
     }
 
     /**
-     * Update just a single shows data, or do a delta update or a full update.
-     * Will only queue a sync request if there is a network connection.
-     * 
-     * @param showTvdbId Update the show with the given TVDbid, if 0 does a
-     *            delta update, if less than 0 does a full update.
-     * @param isUserRequested If true, will show feedback toasts and force
-     *            syncing even if (global) sync is off.
+     * Update just a single shows data, or do a delta update or a full update. Will only queue a
+     * sync request if there is a network connection.
+     *
+     * @param showTvdbId      Update the show with the given TVDbid, if 0 does a delta update, if
+     *                        less than 0 does a full update.
+     * @param isUserRequested If true, will show feedback toasts and force syncing even if (global)
+     *                        sync is off.
      */
     public static void requestSync(Context context, int showTvdbId, boolean isUserRequested) {
         if (!Utils.isAllowedConnection(context)) {
             // abort if no connection available
             if (isUserRequested) {
-                final boolean isWifiOnly = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getBoolean(SeriesGuidePreferences.KEY_ONLYWIFI, false);
+                final boolean isWifiOnly = UpdateSettings.isOnlyUpdateOverWifi(context);
                 Toast.makeText(context,
                         isWifiOnly ? R.string.update_no_wifi : R.string.update_no_connection,
                         Toast.LENGTH_LONG).show();
@@ -132,8 +130,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     /**
-     * Set whether or not the provider is synced when it receives a network
-     * tickle.
+     * Set whether or not the provider is synced when it receives a network tickle.
      */
     public static void setSyncAutomatically(Context context, boolean sync) {
         final Account account = SyncUtils.getSyncAccount(context);
@@ -150,8 +147,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     /**
-     * Returns true if there is currently a sync operation for the given account
-     * or authority in the pending list, or actively being processed.
+     * Returns true if there is currently a sync operation for the given account or authority in the
+     * pending list, or actively being processed.
      */
     public static boolean isSyncActive(Context context, boolean isDisplayWarning) {
         boolean isSyncActive = ContentResolver.isSyncActive(
@@ -192,7 +189,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             type = UpdateType.FULL;
         } else {
             type = UpdateType.SINGLE;
-            mShows = new int[] {
+            mShows = new int[]{
                     showTvdbId
             };
         }
@@ -233,7 +230,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     if (itry == 1) {
                         // failed twice, report error
                         resultCode = UpdateResult.INCOMPLETE;
-                        Utils.trackExceptionAndLog(TAG, e);
+                        Utils.trackExceptionAndLog(getContext(), TAG, e);
                     }
                 }
             }
@@ -268,17 +265,15 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                             .putString(SeriesGuidePreferences.KEY_TMDB_BASE_URL,
                                     config.images.base_url).commit();
                 }
-            } catch (TmdbException e) {
-                Utils.trackExceptionAndLog(TAG, e);
-            } catch (ApiException e) {
-                Utils.trackExceptionAndLog(TAG, e);
+            } catch (TmdbException | ApiException e) {
+                Utils.trackExceptionAndLog(getContext(), TAG, e);
             }
 
             // validate trakt credentials
             ServiceUtils.checkTraktCredentials(getContext());
 
             // get newly watched episodes from trakt
-            final UpdateResult traktResult = getTraktActivity(currentTime);
+            final UpdateResult traktResult = getTraktActivity();
 
             // do not overwrite earlier failure codes
             if (resultCode == UpdateResult.SUCCESS) {
@@ -288,10 +283,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             // store time of update, set retry counter on failure
             if (resultCode == UpdateResult.SUCCESS) {
                 // we were successful, reset failed counter
-                prefs.edit().putLong(AdvancedSettings.KEY_LASTUPDATE, currentTime)
-                        .putInt(SeriesGuidePreferences.KEY_FAILED_COUNTER, 0).commit();
+                prefs.edit().putLong(UpdateSettings.KEY_LASTUPDATE, currentTime)
+                        .putInt(UpdateSettings.KEY_FAILED_COUNTER, 0).commit();
             } else {
-                int failed = prefs.getInt(SeriesGuidePreferences.KEY_FAILED_COUNTER, 0);
+                int failed = UpdateSettings.getFailedNumberOfUpdates(getContext());
 
                 /*
                  * Back off by 2**(failure + 2) * minutes. Purposely set a fake
@@ -302,15 +297,16 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 long fakeLastUpdateTime;
                 if (failed < 4) {
                     fakeLastUpdateTime = currentTime
-                            - ((UPDATE_INTERVAL_MINUTES - (int) Math.pow(2, failed + 2)) * DateUtils.MINUTE_IN_MILLIS);
+                            - ((UPDATE_INTERVAL_MINUTES - (int) Math.pow(2, failed + 2))
+                            * DateUtils.MINUTE_IN_MILLIS);
                 } else {
                     fakeLastUpdateTime = currentTime;
                 }
 
                 failed += 1;
                 prefs.edit()
-                        .putLong(AdvancedSettings.KEY_LASTUPDATE, fakeLastUpdateTime)
-                        .putInt(SeriesGuidePreferences.KEY_FAILED_COUNTER, failed).commit();
+                        .putLong(UpdateSettings.KEY_LASTUPDATE, fakeLastUpdateTime)
+                        .putInt(UpdateSettings.KEY_FAILED_COUNTER, failed).commit();
             }
         }
 
@@ -333,8 +329,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             case FULL:
                 // get all show IDs for a full update
                 final Cursor shows = getContext().getContentResolver().query(Shows.CONTENT_URI,
-                        new String[] {
-                            Shows._ID
+                        new String[]{
+                                Shows._ID
                         }, null, null, null);
 
                 int[] showIds = new int[shows.getCount()];
@@ -354,9 +350,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
     }
 
-    private UpdateResult getTraktActivity(long currentTime) {
-        Log.d(TAG, "Get trakt activity");
-        if (!ServiceUtils.hasTraktCredentials(getContext())) {
+    private UpdateResult getTraktActivity() {
+        Log.d(TAG, "Getting trakt activity...");
+        if (!TraktSettings.hasTraktCredentials(getContext())) {
             // trakt is not connected, we are done here
             return UpdateResult.SUCCESS;
         }
@@ -366,134 +362,149 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             return UpdateResult.INCOMPLETE;
         }
 
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        final ContentResolver resolver = getContext().getContentResolver();
-
-        // get last trakt update timestamp
-        final long startTimeTrakt = prefs.getLong(SeriesGuidePreferences.KEY_LASTTRAKTUPDATE,
-                currentTime) / 1000;
-
-        Trakt manager = ServiceUtils
-                .getTraktServiceManagerWithAuth(getContext(), false);
+        Trakt manager = ServiceUtils.getTraktServiceManagerWithAuth(getContext(), false);
         if (manager == null) {
             return UpdateResult.INCOMPLETE;
         }
 
-        // get episode activity from trakt
-        Activity activity;
+        // get last trakt update timestamp
+        final long startTimeTrakt = TraktSettings.getLastUpdateTime(getContext()) / 1000;
+
+        // get activity from trakt
+        Activity activities;
         try {
-            activity = manager
+            activities = manager
                     .activityService()
-                    .user(ServiceUtils.getTraktUsername(getContext()),
+                    .user(TraktSettings.getUsername(getContext()),
                             ActivityType.Episode.toString(),
                             ActivityAction.Checkin + "," + ActivityAction.Seen + "," +
                                     ActivityAction.Scrobble + "," + ActivityAction.Collection,
                             startTimeTrakt, 1, 0);
         } catch (RetrofitError e) {
-            Utils.trackExceptionAndLog(TAG, e);
+            Utils.trackExceptionAndLog(getContext(), TAG, e);
             return UpdateResult.INCOMPLETE;
         }
 
-        if (activity == null || activity.activity == null) {
+        if (activities == null || activities.activity == null) {
             return UpdateResult.INCOMPLETE;
         }
 
         // get a list of existing shows
-        boolean isAutoAddingShows = prefs.getBoolean(
-                SeriesGuidePreferences.KEY_AUTO_ADD_TRAKT_SHOWS, true);
-        final HashSet<String> existingShows = new HashSet<String>();
-        if (isAutoAddingShows) {
-            final Cursor shows = resolver.query(Shows.CONTENT_URI,
-                    new String[] {
-                        Shows._ID
-                    }, null, null, null);
-            if (shows != null) {
-                while (shows.moveToNext()) {
-                    existingShows.add(shows.getString(0));
-                }
-                shows.close();
+        final HashSet<Integer> existingShowTvdbIds = new HashSet<>();
+        final Cursor shows = getContext().getContentResolver().query(Shows.CONTENT_URI,
+                new String[]{Shows._ID}, null, null, null);
+        if (shows == null) {
+            return UpdateResult.INCOMPLETE;
+        }
+        while (shows.moveToNext()) {
+            existingShowTvdbIds.add(shows.getInt(0));
+        }
+        shows.close();
+
+        // build an update batch for episode flag changes of existing shows, detect new shows
+        mNewShows = new ArrayList<>();
+        boolean isAutoAddingShows = TraktSettings.isAutoAddingShows(getContext());
+        final HashSet<Integer> newShowTvdbIds = new HashSet<>();
+        final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+        for (ActivityItem activity : activities.activity) {
+            if (activity == null || activity.show == null
+                    || activity.show.tvdb_id == null) {
+                // invalid activity, skip
+                continue;
+            }
+            if (isAutoAddingShows && !existingShowTvdbIds.contains(activity.show.tvdb_id)
+                    && !newShowTvdbIds.contains(activity.show.tvdb_id)) {
+                // new show detected to add locally later
+                SearchResult show = new SearchResult();
+                show.title = activity.show.title;
+                show.tvdbid = activity.show.tvdb_id;
+                mNewShows.add(show);
+                newShowTvdbIds.add(activity.show.tvdb_id); // prevent duplicates
+            } else if (existingShowTvdbIds.contains(activity.show.tvdb_id)) {
+                // show exists locally, get episode flag changes
+                buildActionBatch(getContext(), batch, activity);
             }
         }
 
-        // build an update batch
-        mNewShows = Lists.newArrayList();
-        final HashSet<Integer> newShowIds = new HashSet<Integer>();
-        final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
-        for (ActivityItem item : activity.activity) {
-            // check for null (potential fix for reported crash)
-            if (item.action != null && item.show != null) {
-                if (isAutoAddingShows && !existingShows.contains(item.show.tvdb_id)
-                        && !newShowIds.contains(item.show.tvdb_id)) {
-                    SearchResult show = new SearchResult();
-                    show.title = item.show.title;
-                    show.tvdbid = item.show.tvdb_id;
-                    mNewShows.add(show);
-                    newShowIds.add(item.show.tvdb_id); // prevent duplicates
-                } else {
-                    // show added, get watched episodes
-                    switch (item.action) {
-                        case Seen: {
-                            // seen uses an array of episodes
-                            List<TvShowEpisode> episodes = item.episodes;
-                            int season = -1;
-                            int number = -1;
-                            for (TvShowEpisode episode : episodes) {
-                                if (episode.season > season || episode.number > number) {
-                                    season = episode.season;
-                                    number = episode.number;
-                                }
-                                addEpisodeSeenUpdateOp(batch, episode, item.show.tvdb_id);
-                            }
-                            // set highest season + number combo as last
-                            // watched
-                            if (season != -1 && number != -1) {
-                                addLastWatchedUpdateOp(resolver, batch, season, number,
-                                        item.show.tvdb_id);
-                            }
-                            break;
-                        }
-                        case Checkin:
-                        case Scrobble: {
-                            // checkin and scrobble use a single episode
-                            TvShowEpisode episode = item.episode;
-                            addEpisodeSeenUpdateOp(batch, episode, item.show.tvdb_id);
-                            addLastWatchedUpdateOp(resolver, batch, episode.season,
-                                    episode.number, item.show.tvdb_id);
-                            break;
-                        }
-                        case Collection: {
-                            // collection uses an array of episodes
-                            List<TvShowEpisode> episodes = item.episodes;
-                            for (TvShowEpisode episode : episodes) {
-                                addEpisodeCollectedUpdateOp(batch, episode, item.show.tvdb_id);
-                            }
-                            break;
-                        }
-                        default:
-                            break;
-                    }
-                }
-            }
-        }
-
-        // execute the batch
-        try {
-            getContext().getContentResolver()
-                    .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
-        } catch (RemoteException | OperationApplicationException e) {
-            // RemoteException: Failed binder transactions aren't recoverable
-            // OperationApplicationException: Failures like constraint violation aren't
-            // recoverable
-            Utils.trackExceptionAndLog(TAG, e);
-            throw new RuntimeException("Problem applying batch operation", e);
-        }
+        // apply all episode updates from downloaded trakt activity
+        DBUtils.applyInSmallBatches(getContext(), batch);
 
         // store time of this update as seen by the trakt server
-        prefs.edit()
-                .putLong(SeriesGuidePreferences.KEY_LASTTRAKTUPDATE,
-                        activity.timestamps.current.getTime()).commit();
+        final SharedPreferences.Editor editor = PreferenceManager
+                .getDefaultSharedPreferences(getContext()).edit();
+        editor.putLong(TraktSettings.KEY_LAST_UPDATE,
+                activities.timestamps.current.getTime()).commit();
 
         return UpdateResult.SUCCESS;
+    }
+
+    /**
+     * Adds episode update ops based on the action of the given activity item.
+     */
+    private static void buildActionBatch(Context context, ArrayList<ContentProviderOperation> batch,
+            ActivityItem item) {
+        if (item.action == null) {
+            return;
+        }
+        switch (item.action) {
+            case Seen: {
+                // recently watched episode
+                if (item.episodes == null) {
+                    break;
+                }
+
+                // seen uses an array of episodes
+                List<TvShowEpisode> episodes = item.episodes;
+                int season = -1;
+                int number = -1;
+                for (TvShowEpisode episode : episodes) {
+                    if (episode == null) {
+                        continue;
+                    }
+                    if (episode.season > season || episode.number > number) {
+                        season = episode.season;
+                        number = episode.number;
+                    }
+                    addEpisodeSeenUpdateOp(batch, episode, item.show.tvdb_id);
+                }
+
+                // set highest season + number combo as last watched
+                if (season != -1 && number != -1) {
+                    addLastWatchedUpdateOp(context, batch, season, number, item.show.tvdb_id);
+                }
+
+                break;
+            }
+            case Checkin:
+            case Scrobble: {
+                if (item.episode == null) {
+                    break;
+                }
+                // checkin and scrobble use a single episode
+                TvShowEpisode episode = item.episode;
+                addEpisodeSeenUpdateOp(batch, episode, item.show.tvdb_id);
+                addLastWatchedUpdateOp(context, batch, episode.season, episode.number,
+                        item.show.tvdb_id);
+                break;
+            }
+            case Collection: {
+                if (item.episodes == null) {
+                    break;
+                }
+
+                // collection uses an array of episodes
+                List<TvShowEpisode> episodes = item.episodes;
+                for (TvShowEpisode episode : episodes) {
+                    if (episode == null) {
+                        continue;
+                    }
+                    addEpisodeCollectedUpdateOp(batch, episode, item.show.tvdb_id);
+                }
+                break;
+            }
+            default:
+                break;
+        }
     }
 
     /**
@@ -502,7 +513,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     private static void addEpisodeSeenUpdateOp(final ArrayList<ContentProviderOperation> batch,
             TvShowEpisode episode, int showTvdbId) {
         batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodesOfShowUri(showTvdbId))
-                .withSelection(Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[] {
+                .withSelection(Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[]{
                         String.valueOf(episode.number), String.valueOf(episode.season)
                 }).withValue(Episodes.WATCHED, EpisodeFlags.WATCHED).build());
     }
@@ -513,24 +524,24 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     private static void addEpisodeCollectedUpdateOp(ArrayList<ContentProviderOperation> batch,
             TvShowEpisode episode, int showTvdbId) {
         batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodesOfShowUri(showTvdbId))
-                .withSelection(Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[] {
+                .withSelection(Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[]{
                         String.valueOf(episode.number), String.valueOf(episode.season)
                 }).withValue(Episodes.COLLECTED, true).build());
     }
 
     /**
-     * Queries for an episode id and adds a content provider op to set it as
-     * last watched for the given show.
+     * Queries for an episode id and adds a content provider op to set it as last watched for the
+     * given show.
      */
-    private static void addLastWatchedUpdateOp(ContentResolver resolver,
+    private static void addLastWatchedUpdateOp(Context context,
             ArrayList<ContentProviderOperation> batch, int season, int number, int showTvdbId) {
         // query for the episode id
-        final Cursor episode = resolver.query(
+        final Cursor episode = context.getContentResolver().query(
                 Episodes.buildEpisodesOfShowUri(showTvdbId),
-                new String[] {
-                    Episodes._ID
+                new String[]{
+                        Episodes._ID
                 }, Episodes.SEASON + "=" + season + " AND "
-                        + Episodes.NUMBER + "=" + number, null, null);
+                + Episodes.NUMBER + "=" + number, null, null);
 
         // store the episode id as last watched for the given show
         if (episode != null) {
