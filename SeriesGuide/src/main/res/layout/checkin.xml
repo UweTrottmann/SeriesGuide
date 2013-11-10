@@ -4,28 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/editTextCheckinSearch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="@dimen/large_padding"
-        android:layout_marginStart="@dimen/large_padding"
-        android:layout_marginTop="@dimen/large_padding"
-        android:layout_toLeftOf="@+id/imageButtonClearSearch"
-        android:layout_toStartOf="@+id/imageButtonClearSearch"
-        android:ems="10"
-        android:hint="@string/checkin_searchhint"
-        android:inputType="text"
-        android:paddingBottom="@dimen/default_padding">
+        <EditText
+            android:id="@+id/editTextCheckinSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginStart="@dimen/large_padding"
+            android:layout_marginTop="@dimen/large_padding"
+            android:layout_toLeftOf="@+id/imageButtonClearSearch"
+            android:layout_toStartOf="@+id/imageButtonClearSearch"
+            android:ems="10"
+            android:hint="@string/checkin_searchhint"
+            android:inputType="text"
+            android:paddingBottom="@dimen/default_padding">
 
             <requestFocus />
         </EditText>
@@ -45,7 +45,6 @@
             android:id="@+id/gridViewCheckinShows"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
             android:layout_below="@+id/empty"
             android:clipToPadding="@bool/gridClipToPadding"
             android:columnWidth="@dimen/showgrid_columnWidth"
@@ -55,25 +54,25 @@
             android:numColumns="auto_fit"
             android:padding="@dimen/showgrid_padding"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="@dimen/showgrid_spacing"/>
+            android:verticalSpacing="@dimen/showgrid_spacing" />
 
-    <ImageButton
-        android:id="@+id/imageButtonClearSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editTextCheckinSearch"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignTop="@+id/editTextCheckinSearch"
-        android:layout_marginEnd="@dimen/large_padding"
-        android:layout_marginRight="@dimen/large_padding"
-        android:layout_marginTop="@dimen/large_padding"
-        android:background="?custom_list_selector"
-        android:contentDescription="@string/clear"
-        android:paddingLeft="@dimen/inline_padding"
-        android:paddingRight="@dimen/inline_padding"
-        android:src="?attr/drawableCancel" />
+        <ImageButton
+            android:id="@+id/imageButtonClearSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/editTextCheckinSearch"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignTop="@+id/editTextCheckinSearch"
+            android:layout_marginEnd="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginTop="@dimen/large_padding"
+            android:background="?custom_list_selector"
+            android:contentDescription="@string/clear"
+            android:paddingLeft="@dimen/inline_padding"
+            android:paddingRight="@dimen/inline_padding"
+            android:src="?attr/drawableCancel" />
 
     </RelativeLayout>
 
