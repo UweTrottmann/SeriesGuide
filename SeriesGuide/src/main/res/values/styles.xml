@@ -276,18 +276,22 @@
     </style>
 
     <!-- Easy layouting -->
-    <style name="DefaultPadding"></style>
+    <style name="DefaultPadding"/>
 
     <style name="DefaultPadding.Page">
         <item name="android:paddingTop">@dimen/default_padding</item>
         <item name="android:paddingBottom">@dimen/default_padding</item>
         <item name="android:paddingLeft">@dimen/large_padding</item>
+        <item name="android:paddingStart" tools:ignore="NewApi">@dimen/large_padding</item>
         <item name="android:paddingRight">@dimen/large_padding</item>
+        <item name="android:paddingEnd" tools:ignore="NewApi">@dimen/large_padding</item>
     </style>
 
     <style name="DefaultPadding.Blocks">
         <item name="android:paddingLeft">@dimen/default_padding</item>
+        <item name="android:paddingStart" tools:ignore="NewApi">@dimen/default_padding</item>
         <item name="android:paddingRight">@dimen/default_padding</item>
+        <item name="android:paddingEnd" tools:ignore="NewApi">@dimen/default_padding</item>
     </style>
 
     <style name="DefaultPadding.Blocks.WithTopMargin">
@@ -296,6 +300,7 @@
 
     <style name="DefaultPadding.Blocks.WithBottomMargin">
         <item name="android:layout_marginBottom">@dimen/default_padding</item>
+        <item name="android:textAlignment" tools:ignore="NewApi">viewStart</item>
     </style>
 
     <style name="DefaultPadding.Blocks.WithBottomMargin.FlowText">
