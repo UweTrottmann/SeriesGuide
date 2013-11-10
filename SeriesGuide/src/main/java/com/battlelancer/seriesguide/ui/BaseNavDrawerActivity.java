@@ -54,17 +54,17 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
     private DrawerAdapter mDrawerAdapter;
 
-    private static final int MENU_ITEM_SHOWS_ID = 0;
+    public static final int MENU_ITEM_SHOWS_POSITION = 0;
 
-    private static final int MENU_ITEM_LISTS_ID = 1;
+    public static final int MENU_ITEM_LISTS_POSITION = 1;
 
-    private static final int MENU_ITEM_ACTIVITY_ID = 3;
+    public static final int MENU_ITEM_ACTIVITY_POSITION = 2;
 
-    private static final int MENU_ITEM_SEARCH_ID = 4;
+    public static final int MENU_ITEM_MOVIES_POSITION = 3;
 
-    private static final int MENU_ITEM_MOVIES_ID = 5;
+    public static final int MENU_ITEM_STATS_POSITION = 4;
 
-    private static final int MENU_ITEM_STATS_ID = 6;
+    public static final int MENU_ITEM_SEARCH_POSITION = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,21 +85,15 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
         // setup menu adapter
         mDrawerAdapter = new DrawerAdapter(this);
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.shows), R.drawable.ic_action_tv,
-                MENU_ITEM_SHOWS_ID));
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.lists), R.drawable.ic_action_list,
-                MENU_ITEM_LISTS_ID));
+        mDrawerAdapter.add(new DrawerItem(getString(R.string.shows), R.drawable.ic_action_tv));
+        mDrawerAdapter.add(new DrawerItem(getString(R.string.lists), R.drawable.ic_action_list));
         mDrawerAdapter
-                .add(new DrawerItem(getString(R.string.activity), R.drawable.ic_action_upcoming,
-                        MENU_ITEM_ACTIVITY_ID));
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.movies), R.drawable.ic_action_movie,
-                MENU_ITEM_MOVIES_ID));
+                .add(new DrawerItem(getString(R.string.activity), R.drawable.ic_action_upcoming));
+        mDrawerAdapter.add(new DrawerItem(getString(R.string.movies), R.drawable.ic_action_movie));
         mDrawerAdapter.add(new DrawerItem(getString(R.string.statistics),
-                R.drawable.ic_action_bargraph, MENU_ITEM_STATS_ID));
-        mDrawerAdapter.add(new DrawerCategory());
+                R.drawable.ic_action_bargraph));
         mDrawerAdapter
-                .add(new DrawerItem(getString(R.string.search_hint), R.drawable.ic_action_search,
-                        MENU_ITEM_SEARCH_ID));
+                .add(new DrawerItem(getString(R.string.search_hint), R.drawable.ic_action_search));
 
         mDrawerList.setAdapter(mDrawerAdapter);
         mDrawerList.setOnItemClickListener(this);
@@ -143,35 +137,34 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
             }
         }, 200);
 
-        int menuId = ((DrawerItem) mDrawerAdapter.getItem(position)).mId;
-        switch (menuId) {
-            case MENU_ITEM_SHOWS_ID:
+        switch (position) {
+            case MENU_ITEM_SHOWS_POSITION:
                 startActivity(new Intent(this, ShowsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
                                 | Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Shows");
                 break;
-            case MENU_ITEM_LISTS_ID:
+            case MENU_ITEM_LISTS_POSITION:
                 startActivity(new Intent(this, ListsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Lists");
                 break;
-            case MENU_ITEM_ACTIVITY_ID:
+            case MENU_ITEM_ACTIVITY_POSITION:
                 startActivity(new Intent(this, UpcomingRecentActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Activity");
                 break;
-            case MENU_ITEM_MOVIES_ID:
+            case MENU_ITEM_MOVIES_POSITION:
                 startActivity(new Intent(this, MoviesActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Movies");
                 break;
-            case MENU_ITEM_STATS_ID:
+            case MENU_ITEM_STATS_POSITION:
                 startActivity(new Intent(this, StatsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Statistics");
                 break;
-            case MENU_ITEM_SEARCH_ID:
+            case MENU_ITEM_SEARCH_POSITION:
                 startActivity(new Intent(this, SearchActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Search");
@@ -190,6 +183,10 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
     public void setDrawerIndicatorEnabled(boolean isEnabled) {
         mDrawerToggle.setDrawerIndicatorEnabled(isEnabled);
+    }
+
+    public void setDrawerSelectedItem(int menuItemPosition) {
+        mDrawerList.setItemChecked(menuItemPosition, true);
     }
 
     public boolean toggleDrawer(MenuItem item) {
@@ -211,12 +208,9 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
         int mIconRes;
 
-        int mId;
-
-        public DrawerItem(String title, int iconRes, int id) {
+        public DrawerItem(String title, int iconRes) {
             mTitle = title;
             mIconRes = iconRes;
-            mId = id;
         }
     }
 
