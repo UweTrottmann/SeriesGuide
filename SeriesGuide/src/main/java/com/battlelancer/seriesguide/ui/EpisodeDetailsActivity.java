@@ -45,7 +45,6 @@ import android.support.v4.view.ViewPager;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * Hosts a {@link ViewPager} displaying an episode per fragment of a complete season. Used on
@@ -148,7 +147,6 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         mPager.setCurrentItem(startPosition, false);
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void setCustomTheme() {
         // use a special immersive theme
