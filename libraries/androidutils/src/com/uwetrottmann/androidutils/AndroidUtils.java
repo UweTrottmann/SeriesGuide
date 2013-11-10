@@ -36,7 +36,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.util.Locale;
@@ -198,10 +197,7 @@ public class AndroidUtils {
      * Returns an {@link HttpURLConnection} using sensible default settings for mobile and taking
      * care of buggy behavior prior to Froyo.
      */
-    public static HttpURLConnection buildHttpUrlConnection(String urlString)
-            throws MalformedURLException, IOException {
-        AndroidUtils.disableConnectionReuseIfNecessary();
-
+    public static HttpURLConnection buildHttpUrlConnection(String urlString) throws IOException {
         URL url = new URL(urlString);
 
         OkHttpClient client = new OkHttpClient();
@@ -212,15 +208,4 @@ public class AndroidUtils {
         return conn;
     }
 
-    /**
-     * Prior to Android 2.2 (Froyo), {@link HttpURLConnection} had some frustrating bugs. In
-     * particular, calling close() on a readable InputStream could poison the connection pool. Work
-     * around this by disabling connection pooling.
-     */
-    public static void disableConnectionReuseIfNecessary() {
-        // HTTP connection reuse which was buggy pre-froyo
-        if (!isFroyoOrHigher()) {
-            System.setProperty("http.keepAlive", "false");
-        }
-    }
 }
