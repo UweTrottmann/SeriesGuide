@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
     android:id="@+id/headerGetGlueObjects"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/large_padding" >
+    android:paddingTop="@dimen/large_padding">
 
     <TextView
         android:id="@+id/textViewFixGetGlueHeader"
@@ -13,6 +14,7 @@
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:text="@string/select_show"
+        android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.Large.Light" />
 
     <TextView
@@ -20,9 +22,11 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewFixGetGlueHeader"
+        android:layout_marginEnd="@dimen/large_padding"
         android:layout_marginRight="@dimen/large_padding"
         android:ellipsize="end"
         android:paddingLeft="@dimen/default_padding"
+        android:paddingStart="@dimen/default_padding"
         android:text="@string/check_into"
         android:textAllCaps="true"
         android:textStyle="bold" />
@@ -32,17 +36,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewFixGetGlueHeader"
+        android:layout_toEndOf="@+id/textViewSelectedShowHeader"
         android:layout_toRightOf="@+id/textViewSelectedShowHeader"
+        android:paddingEnd="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:text="@string/no_selection" />
 
     <include
         android:id="@+id/divider1"
+        layout="@layout/divider_horizontal"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/textViewSelectedShowValue"
-        android:layout_marginTop="@dimen/large_padding"
-        layout="@layout/divider_horizontal" >
-    </include>
+        android:layout_marginTop="@dimen/large_padding" />
 
 </RelativeLayout>

@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/imageViewMoviePoster"
@@ -20,13 +20,13 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <RelativeLayout
             style="@style/DefaultPadding.Page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true" >
+            android:animateLayoutChanges="true">
 
             <TextView
                 android:id="@+id/textViewMovieTitle"
@@ -34,10 +34,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:textAppearance="@style/TextAppearance.Large.Light"
                 android:textIsSelectable="true"
-                android:textSize="@dimen/text_size_ultralarge" />
+                android:textSize="@dimen/text_size_ultralarge"
+                tools:text="Awesome Movie Title"
+                android:textAlignment="viewStart" />
 
             <TextView
                 android:id="@+id/textViewMovieDate"
@@ -45,18 +48,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/textViewMovieTitle"
                 android:layout_marginBottom="@dimen/large_padding"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textAppearance="@style/TextAppearance.Small"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="true"
+                tools:text="20 Oct 2013" />
 
             <Button
                 android:id="@+id/buttonMovieCheckIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/textViewMovieDate"
                 android:layout_marginBottom="@dimen/large_padding"
                 android:text="@string/checkin"
@@ -68,19 +74,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/buttonMovieCheckIn"
                 android:maxWidth="400dp"
                 android:textAppearance="@style/TextAppearance.Light"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="true"
+                tools:text="Description for a super awesome movie..." />
 
             <include
                 android:id="@+id/dividerHorizontalMovieDetails"
+                layout="@layout/divider_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/textViewMovieDescription"
                 android:layout_alignLeft="@+id/textViewMovieDescription"
                 android:layout_alignRight="@+id/textViewMovieDescription"
+                android:layout_alignStart="@+id/textViewMovieDescription"
                 android:layout_below="@+id/textViewMovieDescription"
-                layout="@layout/divider_horizontal"
                 android:visibility="gone" />
 
             <LinearLayout
@@ -88,10 +98,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/dividerHorizontalMovieDetails"
                 android:baselineAligned="false"
                 android:gravity="center_vertical"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/buttonMovieComments"

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/widget_margin" >
+    android:padding="@dimen/widget_margin">
 
     <!-- Need parent FrameLayout for padding backwards compatibility -->
 
@@ -13,13 +13,13 @@
         android:layout_height="match_parent"
         android:background="@color/widget_default_background"
         android:orientation="vertical"
-        tools:ignore="UselessParent" >
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:baselineAligned="false"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <FrameLayout
                 android:id="@+id/widget_title"
@@ -31,13 +31,13 @@
                 android:paddingBottom="@dimen/inline_padding"
                 android:paddingLeft="@dimen/default_padding"
                 android:paddingRight="@dimen/default_padding"
-                android:paddingTop="@dimen/inline_padding" >
+                android:paddingTop="@dimen/inline_padding">
 
                 <TextView
                     android:id="@+id/widgetTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="center_vertical|start"
                     android:fontFamily="sans-serif-light"
                     android:text="@string/upcoming"
                     android:textAllCaps="true"
@@ -54,7 +54,7 @@
                 android:paddingBottom="@dimen/inline_padding"
                 android:paddingLeft="@dimen/default_padding"
                 android:paddingRight="@dimen/default_padding"
-                android:paddingTop="@dimen/inline_padding" >
+                android:paddingTop="@dimen/inline_padding">
 
                 <ImageView
                     android:id="@+id/imageViewSettings"
@@ -74,7 +74,7 @@
                 android:paddingBottom="@dimen/inline_padding"
                 android:paddingLeft="@dimen/default_padding"
                 android:paddingRight="@dimen/default_padding"
-                android:paddingTop="@dimen/inline_padding" >
+                android:paddingTop="@dimen/inline_padding">
 
                 <ImageView
                     android:id="@+id/imageViewLauncher"
