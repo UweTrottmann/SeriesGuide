@@ -163,6 +163,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
     protected void onStart() {
         super.onStart();
 
+        setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_SHOWS_POSITION);
         EasyTracker.getInstance(this).activityStart(this);
     }
 

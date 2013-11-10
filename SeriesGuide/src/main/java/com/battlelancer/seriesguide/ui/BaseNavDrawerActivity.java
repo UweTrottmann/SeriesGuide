@@ -185,6 +185,10 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         mDrawerToggle.setDrawerIndicatorEnabled(isEnabled);
     }
 
+    /**
+     * Highlights the given position in the drawer menu. Activities listed in the drawer should call
+     * this in {@link #onStart()}.
+     */
     public void setDrawerSelectedItem(int menuItemPosition) {
         mDrawerList.setItemChecked(menuItemPosition, true);
     }

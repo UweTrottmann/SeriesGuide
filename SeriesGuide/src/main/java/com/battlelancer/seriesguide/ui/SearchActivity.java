@@ -57,6 +57,8 @@ public class SearchActivity extends BaseTopActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_SEARCH_POSITION);
         EasyTracker.getInstance(this).activityStart(this);
     }
 

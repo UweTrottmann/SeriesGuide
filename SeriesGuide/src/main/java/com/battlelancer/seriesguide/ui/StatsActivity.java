@@ -54,6 +54,8 @@ public class StatsActivity extends BaseTopActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_STATS_POSITION);
         EasyTracker.getInstance(this).activityStart(this);
     }
 

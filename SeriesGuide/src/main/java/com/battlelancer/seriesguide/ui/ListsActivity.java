@@ -69,6 +69,8 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
     @Override
     protected void onStart() {
         super.onStart();
+
+        setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_LISTS_POSITION);
         EasyTracker.getInstance(this).activityStart(this);
     }
 

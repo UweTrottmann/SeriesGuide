@@ -73,6 +73,13 @@ public class MoviesActivity extends BaseTopActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_MOVIES_POSITION);
+    }
+
+    @Override
     protected void fireTrackerEvent(String label) {
         Utils.trackAction(this, TAG, label);
     }

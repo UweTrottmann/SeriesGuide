@@ -122,6 +122,13 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_ACTIVITY_POSITION);
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("index", getSupportActionBar().getSelectedNavigationIndex());
