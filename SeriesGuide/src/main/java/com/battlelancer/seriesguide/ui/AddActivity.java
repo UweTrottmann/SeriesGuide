@@ -154,15 +154,14 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
 
         public static final int SEARCH_TAB_CONNECTED_POSITION = 1;
 
-        private static final String CURRENT_COUNT = "current_count";
+        private final boolean mIsConnectedToTrakt;
 
         private Context mContext;
-
-        private int mCurrentCount;
 
         public AddPagerAdapter(FragmentManager fm, Context context) {
             super(fm);
             mContext = context;
+            mIsConnectedToTrakt = TraktSettings.hasTraktCredentials(mContext);
         }
 
         @Override
@@ -179,27 +178,13 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
 
         @Override
         public int getCount() {
-            int newCount;
-
-            final boolean isValidCredentials = TraktSettings.hasTraktCredentials(mContext);
-            if (isValidCredentials) {
+            if (mIsConnectedToTrakt) {
                 // show trakt recommended and libraried shows, too
-                newCount = TRAKT_CONNECTED_TABCOUNT;
+                return TRAKT_CONNECTED_TABCOUNT;
             } else {
                 // show search results and trakt trending shows
-                newCount = DEFAULT_TABCOUNT;
+                return DEFAULT_TABCOUNT;
             }
-
-            /**
-             * Background check on trakt credentials could invalidate them while user is still
-             * within this activity. We need to notify the adapter that the number of pages changed.
-             */
-            if (mCurrentCount != 0 && newCount != mCurrentCount) {
-                notifyDataSetChanged();
-            }
-            mCurrentCount = newCount;
-
-            return newCount;
         }
 
         @Override
@@ -233,21 +218,6 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
                 }
             }
             return "";
-        }
-
-        @Override
-        public Parcelable saveState() {
-            Bundle bundle = new Bundle();
-            bundle.putInt(CURRENT_COUNT, mCurrentCount);
-            return bundle;
-        }
-
-        @Override
-        public void restoreState(Parcelable state, ClassLoader loader) {
-            if (state instanceof Bundle) {
-                Bundle bundle = (Bundle) state;
-                mCurrentCount = bundle.getInt(CURRENT_COUNT);
-            }
         }
     }
 
