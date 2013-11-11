@@ -45,8 +45,7 @@ import android.widget.EditText;
 import java.util.Locale;
 
 /**
- * Hosts various fragments in a {@link ViewPager} which allow adding shows to
- * the database.
+ * Hosts various fragments in a {@link ViewPager} which allow adding shows to the database.
  */
 public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListener {
 
@@ -55,6 +54,7 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
     private ViewPager mPager;
 
     public interface InitBundle {
+
         /**
          * Which tab to select upon launch.
          */
@@ -139,17 +139,26 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
     public static class AddPagerAdapter extends FragmentPagerAdapter {
 
         private static final int DEFAULT_TABCOUNT = 2;
+
         private static final int TRAKT_CONNECTED_TABCOUNT = 5;
 
         public static final int TRENDING_TAB_POSITION = 0;
+
         public static final int RECOMMENDED_TAB_POSITION = 2;
+
         public static final int LIBRARY_TAB_POSITION = 3;
+
         public static final int WATCHLIST_TAB_POSITION = 4;
 
         public static final int SEARCH_TAB_DEFAULT_POSITION = 1;
+
         public static final int SEARCH_TAB_CONNECTED_POSITION = 1;
 
+        private static final String CURRENT_COUNT = "current_count";
+
         private Context mContext;
+
+        private int mCurrentCount;
 
         public AddPagerAdapter(FragmentManager fm, Context context) {
             super(fm);
@@ -160,7 +169,8 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
         public Fragment getItem(int position) {
             int count = getCount();
             if ((count == DEFAULT_TABCOUNT && position == SEARCH_TAB_DEFAULT_POSITION)
-                    || (count == TRAKT_CONNECTED_TABCOUNT && position == SEARCH_TAB_CONNECTED_POSITION)) {
+                    || (count == TRAKT_CONNECTED_TABCOUNT
+                    && position == SEARCH_TAB_CONNECTED_POSITION)) {
                 return TvdbAddFragment.newInstance();
             } else {
                 return TraktAddFragment.newInstance(position);
@@ -169,14 +179,27 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
 
         @Override
         public int getCount() {
+            int newCount;
+
             final boolean isValidCredentials = TraktSettings.hasTraktCredentials(mContext);
             if (isValidCredentials) {
                 // show trakt recommended and libraried shows, too
-                return TRAKT_CONNECTED_TABCOUNT;
+                newCount = TRAKT_CONNECTED_TABCOUNT;
             } else {
                 // show search results and trakt trending shows
-                return DEFAULT_TABCOUNT;
+                newCount = DEFAULT_TABCOUNT;
             }
+
+            /**
+             * Background check on trakt credentials could invalidate them while user is still
+             * within this activity. We need to notify the adapter that the number of pages changed.
+             */
+            if (mCurrentCount != 0 && newCount != mCurrentCount) {
+                notifyDataSetChanged();
+            }
+            mCurrentCount = newCount;
+
+            return newCount;
         }
 
         @Override
@@ -212,6 +235,20 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
             return "";
         }
 
+        @Override
+        public Parcelable saveState() {
+            Bundle bundle = new Bundle();
+            bundle.putInt(CURRENT_COUNT, mCurrentCount);
+            return bundle;
+        }
+
+        @Override
+        public void restoreState(Parcelable state, ClassLoader loader) {
+            if (state instanceof Bundle) {
+                Bundle bundle = (Bundle) state;
+                mCurrentCount = bundle.getInt(CURRENT_COUNT);
+            }
+        }
     }
 
     @Override
