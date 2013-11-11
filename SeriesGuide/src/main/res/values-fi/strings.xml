@@ -111,7 +111,7 @@
   <string name="delete_has_list_items">Ei onnistu. Poista %s kaikilta listoiltasi ensin.</string>
   <string name="delete_show">Poista</string>
   <string name="dontdelete_show">Älä poista</string>
-  <string name="no_nextepisode">seuraavaa jaksoa ei löynyt</string>
+  <string name="no_nextepisode">seuraavaa jaksoa ei löytynyt</string>
   <string name="context_favorite">Lisää suosikkeihin</string>
   <string name="context_unfavorite">Poista suosikeista</string>
   <string name="favorited">Lisätty suosikkeihin</string>

@@ -32,7 +32,7 @@
   <string name="offline">Bez připojení k síti. Zkuste to později.</string>
   <string name="app_not_available">Není k dispozici použitelná aplikace.</string>
   <string name="onlyx">K dispozici pouze po odemknutí rozšířených funkcí</string>
-  <string name="add_empty">Nejsou tu žádné pořady nebo váš přístroj není připojený k internetu.</string>
+  <string name="add_empty">Nejsou uloženy žádné seriály nebo váš přístroj není připojený k internetu.</string>
   <string name="share_show">Sdílet seriál</string>
   <string name="share_episode">Sdílet epizodu</string>
   <string name="share_checkout">Podívejte se na</string>
@@ -100,8 +100,8 @@
   <string name="uncollect">Epizoda chybí ve sbírce</string>
   <string name="collect_all">Přidat sérii do sbírky</string>
   <string name="uncollect_all">Odebráno ze sbírky</string>
-  <string name="action_skip">Skip</string>
-  <string name="action_dont_skip">Don\'t skip</string>
+  <string name="action_skip">Přeskočit</string>
+  <string name="action_dont_skip">Nepřeskakovat</string>
   <string name="trakt_submitqueued">Odesíláno na trakt.</string>
   <string name="trakt_seen">%s zhlédnuto.</string>
   <string name="trakt_notseen">%s nových.</string>
@@ -118,8 +118,8 @@
   <string name="unfavorited">Odebráno z oblíbených</string>
   <string name="context_hide">Skrýt</string>
   <string name="context_unhide">Obnovit</string>
-  <string name="hidden">Skytý pořad</string>
-  <string name="unhidden">Obnovený pořad</string>
+  <string name="hidden">Skytý seriál</string>
+  <string name="unhidden">Obnovený seriál</string>
   <string name="action_shows_add">Přidat seriál</string>
   <string name="action_shows_filter">Filtrovat seriály</string>
   <string name="empty_filter">Zrušit všechny filtry</string>
@@ -141,7 +141,7 @@
   <string name="friends_empty">Žádná aktivita přátel na traktu.</string>
   <string name="noupcoming">Žádné nadcházející epizody.</string>
   <string name="norecent">Žádné nedávné epizody.</string>
-  <string name="only_favorites">Pouze oblíbené pořady</string>
+  <string name="only_favorites">Pouze oblíbené seriály</string>
   <string name="togglewatched">Přepnout zhlédnutí</string>
   <string name="pref_infinite_scrolling">Aktivita bez omezení časem</string>
   <string name="update_scheduled">Probíhá aktualizace…</string>
@@ -160,13 +160,13 @@
   <string name="oneotherepisode">jiná epizoda</string>
   <string name="otherepisodes">jiné epizody</string>
   <string name="remaining">Zbývá %s</string>
-  <string name="search_hint_add">Název pořadu</string>
+  <string name="search_hint_add">Název seriálu</string>
   <string name="no_results">Bez výsledku, zkuste celá slova.</string>
   <string name="search_error">Vyhledání selhalo, zkuste to později.</string>
   <string name="add_all">Přidat vše</string>
   <string name="dont_add_show">Nepřidávat</string>
-  <string name="add_multiple">Všechny pořady se brzy objeví ve Vašem seznamu pořadů.</string>
-  <string name="add_started">se brzy objeví na Vašem seznamu pořadů.</string>
+  <string name="add_multiple">Všechny seriály se brzy objeví ve Vašem seznamu pořadů.</string>
+  <string name="add_started">se brzy objeví na Vašem seznamu seriálů.</string>
   <string name="add_success">úspěšně přidán.</string>
   <string name="add_error_begin">Nelze přidat\"</string>
   <string name="add_error_end">\".</string>
@@ -185,7 +185,7 @@
   <string name="list_empty">Do seznamu můžete přidat seriály, série nebo epizody.</string>
   <string name="connect_trakt">Připojit trakt.tv</string>
   <string name="connect_trakt_done">Připojeno k trakt.tv!</string>
-  <string name="add_trakt_shows">Přidat pořady z vaší knihovny:</string>
+  <string name="add_trakt_shows">Přidat seriály z vaší knihovny:</string>
   <string name="show_library">Ukázat vaši knihovnu</string>
   <string name="upload_shows">Nahrát váš SeriesGuide seznam pořadů:</string>
   <string name="upload_existing_shows">Nahrát existující pořady</string>
@@ -269,7 +269,7 @@
   <string name="paste_title">Vložit název</string>
   <string name="checkinsuccess">Ohlášeno do %s na GetGlue.</string>
   <string name="checkinfailed">Ohlášení GetGlue selhalo. Zkuste to znovu později.</string>
-  <string name="getglue_authentication">Connect GetGlue</string>
+  <string name="getglue_authentication">Připojit GetGlue</string>
   <string name="getglue_authfailed">Ověření u GetGlue selhalo. Zkuste to později.</string>
   <string name="checkin_success_trakt">Ohlášen u %s na traktu.</string>
   <string name="checkin_canceled_success_trakt">Ohlášení na traktu zrušeno.</string>
@@ -323,10 +323,10 @@
   <string name="dashclock_extension_description">Zobrazuje nadcházející epizodu z pořadů v SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Zobrazovat epizody nadcházející během</string>
   <string name="action_migrate">Přesunutí z verze X</string>
-  <string name="migration_description">SeriesGuide X nyný odblokuje rozšířené funkce v bezplatné verzi (\"doživotní verze X\"). Prosím přeneste své seriály na bezplatnou verzi SeriesGuide. Nechte verzi X nainstalovanou pro odemknutí všech funkcí v bezplatné verzi.</string>
+  <string name="migration_description">SeriesGuide X nyní slouží k odemknutí Rozšířených funkcí v bezplatné verzi (\"doživotní verze X\"). Prosím přesuňte své seriály na bezplatnou verzi SeriesGuide. Nechte verzi X nainstalovanou pro odemknutí všech funkcí v bezplatné verzi.</string>
   <string name="migration_import">Klikněte dole pro importování zálohy vytvořené ve verzi X.</string>
   <string name="migration_action_import">Importovat a nahradit stávající seriály</string>
-  <string name="action_upgrade">Get X features</string>
+  <string name="action_upgrade">Získat rozšířené funkce</string>
   <string name="upgrade_description">Získejte přístup k oznámení, další možnosti widgetu a všechny budoucí vlastnosti verze X. Podpořte budoucí vývoj.\n\nPokud jste již zakoupili SeriesGuide X, proveďte instalaci k odemknutí tohoto upgradu.</string>
   <string name="upgrade_success">Děkujeme, nyní máte odemknuty všechny rozšířené funkce!</string>
   <string name="subscription_activated">Nyní máte zpřístuněny rozšířené funkce.</string>
@@ -334,7 +334,7 @@
   <string name="subscription_expired_details">Vaše zakoupení rozšířených funkcí vypršelo.</string>
   <string name="add_to_homescreen">Přidat na domovskou obrazovku</string>
   <string name="search_within_show">Hledat v %s</string>
-  <string name="web_search">Web search</string>
+  <string name="web_search">Webové vyhledávání</string>
   <string-array name="sesorting">
     <item>Od nejnovější</item>
     <item>Od nejstarší</item>
