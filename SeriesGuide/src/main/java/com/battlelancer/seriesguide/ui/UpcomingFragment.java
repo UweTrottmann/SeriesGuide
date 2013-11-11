@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.WatchedBox;
+import com.battlelancer.seriesguide.adapters.UpcomingSlowAdapter;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -29,49 +30,34 @@ import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
-import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
-import com.uwetrottmann.androidutils.CheatSheet;
-import com.uwetrottmann.androidutils.Lists;
-import com.uwetrottmann.androidutils.Maps;
 import com.uwetrottmann.seriesguide.R;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.CursorAdapter;
-import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
 
 public class UpcomingFragment extends SherlockFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener,
-        OnSharedPreferenceChangeListener {
+        OnSharedPreferenceChangeListener, UpcomingSlowAdapter.CheckInListener {
 
     private static final int CONTEXT_FLAG_WATCHED_ID = 0;
 
@@ -79,7 +65,7 @@ public class UpcomingFragment extends SherlockFragment implements
 
     private static final int CONTEXT_CHECKIN_ID = 2;
 
-    private SlowAdapter mAdapter;
+    private UpcomingSlowAdapter mAdapter;
 
     private boolean mDualPane;
 
@@ -88,10 +74,11 @@ public class UpcomingFragment extends SherlockFragment implements
     private TextView mEmptyView;
 
     /**
-     * Data which has to be passed when creating {@link UpcomingFragment}. All
-     * Bundle extras are strings, except LOADER_ID and EMPTY_STRING_ID.
+     * Data which has to be passed when creating {@link UpcomingFragment}. All Bundle extras are
+     * strings, except LOADER_ID and EMPTY_STRING_ID.
      */
     public interface InitBundle {
+
         String TYPE = "type";
 
         String ANALYTICS_TAG = "analyticstag";
@@ -102,12 +89,14 @@ public class UpcomingFragment extends SherlockFragment implements
     }
 
     public interface ActivityType {
+
         public String UPCOMING = "upcoming";
         public String RECENT = "recent";
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.upcoming_fragment, container, false);
 
         mEmptyView = (TextView) v.findViewById(R.id.emptyViewUpcoming);
@@ -130,7 +119,7 @@ public class UpcomingFragment extends SherlockFragment implements
         mDualPane = detailsFragment != null && detailsFragment.getVisibility() == View.VISIBLE;
 
         // setup adapter
-        mAdapter = new SlowAdapter(getActivity(), null, 0);
+        mAdapter = new UpcomingSlowAdapter(getActivity(), null, 0, this);
         mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteActivity(getActivity()));
 
         // setup grid view
@@ -202,7 +191,8 @@ public class UpcomingFragment extends SherlockFragment implements
         return super.onContextItemSelected(item);
     }
 
-    private void onCheckinEpisode(int episodeTvdbId) {
+    @Override
+    public void onCheckinEpisode(int episodeTvdbId) {
         CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(), episodeTvdbId);
         f.show(getFragmentManager(), "checkin-dialog");
     }
@@ -288,7 +278,8 @@ public class UpcomingFragment extends SherlockFragment implements
     }
 
     public interface UpcomingQuery {
-        String[] PROJECTION = new String[] {
+
+        String[] PROJECTION = new String[]{
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
                 Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIREDMS, Shows.TITLE,
                 Shows.AIRSTIME, Shows.NETWORK, Shows.POSTER, Shows.REF_SHOW_ID, Shows.IMDBID
@@ -332,301 +323,4 @@ public class UpcomingFragment extends SherlockFragment implements
 
     }
 
-    private class SlowAdapter extends CursorAdapter implements StickyGridHeadersBaseAdapter {
-
-        private final int LAYOUT = R.layout.upcoming_row;
-
-        private final int LAYOUT_HEADER = R.layout.upcoming_header;
-
-        private LayoutInflater mLayoutInflater;
-
-        private SharedPreferences mPrefs;
-
-        private List<HeaderData> mHeaders;
-
-        private DataSetObserverExtension mHeaderChangeDataObserver;
-
-        public SlowAdapter(Context context, Cursor c, int flags) {
-            super(context, c, flags);
-            mLayoutInflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        }
-
-        /**
-         * Whether to show episodes grouped by day with header. Disable headers
-         * for larger data sets as calculating them is expensive.
-         */
-        public void setIsShowingHeaders(boolean isShowingHeaders) {
-            if (isShowingHeaders) {
-                if (mHeaderChangeDataObserver == null) {
-                    mHeaderChangeDataObserver = new DataSetObserverExtension();
-                    registerDataSetObserver(mHeaderChangeDataObserver);
-                }
-            } else {
-                if (mHeaderChangeDataObserver != null) {
-                    unregisterDataSetObserver(mHeaderChangeDataObserver);
-                }
-                mHeaders = null;
-                mHeaderChangeDataObserver = null;
-            }
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (!mDataValid) {
-                throw new IllegalStateException(
-                        "this should only be called when the cursor is valid");
-            }
-            if (!mCursor.moveToPosition(position)) {
-                throw new IllegalStateException("couldn't move cursor to position " + position);
-            }
-
-            final ViewHolder viewHolder;
-
-            if (convertView == null) {
-                convertView = mLayoutInflater.inflate(LAYOUT, null);
-
-                viewHolder = new ViewHolder();
-                viewHolder.episode = (TextView) convertView
-                        .findViewById(R.id.textViewUpcomingEpisode);
-                viewHolder.show = (TextView) convertView.findViewById(R.id.textViewUpcomingShow);
-                viewHolder.watchedBox = (WatchedBox) convertView
-                        .findViewById(R.id.watchedBoxUpcoming);
-                viewHolder.meta = (TextView) convertView
-                        .findViewById(R.id.textViewUpcomingMeta);
-                viewHolder.poster = (ImageView) convertView.findViewById(R.id.poster);
-                viewHolder.buttonCheckin = convertView.findViewById(R.id.imageViewUpcomingCheckIn);
-
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-
-            // watched box
-            // save rowid to hand over to OnClick event listener
-            final int showTvdbId = mCursor.getInt(UpcomingQuery.REF_SHOW_ID);
-            final int season = mCursor.getInt(UpcomingQuery.SEASON);
-            final int episodeTvdbId = mCursor.getInt(UpcomingQuery._ID);
-            final int episode = mCursor.getInt(UpcomingQuery.NUMBER);
-            viewHolder.watchedBox.setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
-                    WatchedBox box = (WatchedBox) v;
-                    new FlagTask(mContext, showTvdbId)
-                            .episodeWatched(episodeTvdbId, season, episode,
-                                    EpisodeTools.isWatched(box.getEpisodeFlag())
-                                            ? EpisodeFlags.UNWATCHED : EpisodeFlags.WATCHED)
-                            .execute();
-                }
-            });
-            viewHolder.watchedBox.setEpisodeFlag(mCursor.getInt(UpcomingQuery.WATCHED));
-            CheatSheet.setup(viewHolder.watchedBox,
-                    EpisodeTools.isWatched(viewHolder.watchedBox.getEpisodeFlag())
-                            ? R.string.unmark_episode : R.string.mark_episode);
-
-            // checkin button (not avail in all layouts)
-            if (viewHolder.buttonCheckin != null) {
-                viewHolder.buttonCheckin.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onCheckinEpisode(episodeTvdbId);
-                    }
-                });
-                CheatSheet.setup(viewHolder.buttonCheckin, R.string.checkin);
-            }
-
-            // number and show
-            final String number = Utils.getEpisodeNumber(mContext, season, episode);
-            viewHolder.show.setText(number + " | " + mCursor.getString(UpcomingQuery.SHOW_TITLE));
-
-            // title
-            viewHolder.episode.setText(mCursor.getString(UpcomingQuery.TITLE));
-
-            // meta data: time, day and network
-            StringBuilder metaText = new StringBuilder();
-            final long airtime = mCursor.getLong(UpcomingQuery.FIRSTAIREDMS);
-            if (airtime != -1) {
-                String[] timeAndDay = Utils.formatToTimeAndDay(airtime, mContext);
-                // 10:00 | Fri in 3 days, 10:00 PM | Mon 23 Jul
-                metaText.append(timeAndDay[0]).append(" | ").append(timeAndDay[1]).append(" ")
-                        .append(timeAndDay[2]);
-            }
-            final String network = mCursor.getString(UpcomingQuery.SHOW_NETWORK);
-            if (!TextUtils.isEmpty(network)) {
-                metaText.append("\n").append(network);
-            }
-            viewHolder.meta.setText(metaText);
-
-            // set poster
-            final String imagePath = mCursor.getString(UpcomingQuery.SHOW_POSTER);
-            ImageProvider.getInstance(mContext).loadPosterThumb(viewHolder.poster, imagePath);
-
-            return convertView;
-        }
-
-        @Override
-        public void bindView(View view, Context context, Cursor cursor) {
-            // do nothing here
-        }
-
-        @Override
-        public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            return mLayoutInflater.inflate(LAYOUT, parent, false);
-        }
-
-        private long getHeaderId(int position) {
-            Object obj = getItem(position);
-            if (obj != null) {
-                /*
-                 * Maps all episodes airing the same day to the same id (which
-                 * equals the time midnight of their air day).
-                 */
-                @SuppressWarnings("resource")
-                Cursor item = (Cursor) obj;
-                long airtime = item.getLong(UpcomingQuery.FIRSTAIREDMS);
-                Calendar cal = Utils.getAirtimeCalendar(airtime, mPrefs);
-                cal.set(Calendar.HOUR_OF_DAY, 1);
-                cal.set(Calendar.MINUTE, 0);
-                cal.set(Calendar.SECOND, 0);
-                cal.set(Calendar.MILLISECOND, 0);
-                long airDay = cal.getTimeInMillis();
-                return airDay;
-            }
-            return 0;
-        }
-
-        @Override
-        public int getCountForHeader(int position) {
-            if (mHeaders != null) {
-                return mHeaders.get(position).getCount();
-            }
-            return 0;
-        }
-
-        @Override
-        public int getNumHeaders() {
-            if (mHeaders != null) {
-                return mHeaders.size();
-            }
-            return 0;
-        }
-
-        @Override
-        public View getHeaderView(int position, View convertView, ViewGroup parent) {
-            // get header position for item position
-            position = mHeaders.get(position).getRefPosition();
-
-            Object obj = getItem(position);
-            if (obj == null) {
-                return null;
-            }
-
-            HeaderViewHolder holder;
-            if (convertView == null) {
-                convertView = mLayoutInflater.inflate(LAYOUT_HEADER, null);
-
-                holder = new HeaderViewHolder();
-                holder.day = (TextView) convertView.findViewById(R.id.textViewUpcomingHeader);
-
-                convertView.setTag(holder);
-            } else {
-                holder = (HeaderViewHolder) convertView.getTag();
-            }
-
-            @SuppressWarnings("resource")
-            Cursor item = (Cursor) obj;
-            long airtime = item.getLong(UpcomingQuery.FIRSTAIREDMS);
-            Calendar cal = Utils.getAirtimeCalendar(airtime, mPrefs);
-            cal.set(Calendar.HOUR_OF_DAY, 1);
-            cal.set(Calendar.MINUTE, 0);
-            cal.set(Calendar.SECOND, 0);
-            cal.set(Calendar.MILLISECOND, 0);
-            long airDay = cal.getTimeInMillis();
-
-            String dayAndTime = Utils.formatToDayAndTimeWithoutOffsets(mContext, airDay);
-
-            holder.day.setText(dayAndTime);
-
-            return convertView;
-        }
-
-        protected List<HeaderData> generateHeaderList() {
-            Map<Long, HeaderData> mapping = Maps.newHashMap();
-            List<HeaderData> headers = Lists.newArrayList();
-
-            for (int i = 0; i < getCount(); i++) {
-                long headerId = getHeaderId(i);
-                HeaderData headerData = mapping.get(headerId);
-                if (headerData == null) {
-                    headerData = new HeaderData(i);
-                    headers.add(headerData);
-                }
-                headerData.incrementCount();
-                mapping.put(headerId, headerData);
-            }
-
-            return headers;
-        }
-
-        @Override
-        public Cursor swapCursor(Cursor newCursor) {
-            mHeaders = null;
-            return super.swapCursor(newCursor);
-        }
-
-        private final class DataSetObserverExtension extends DataSetObserver {
-            @Override
-            public void onChanged() {
-                mHeaders = generateHeaderList();
-            }
-
-            @Override
-            public void onInvalidated() {
-                mHeaders = generateHeaderList();
-            }
-        }
-
-        private class HeaderData {
-            private int mCount;
-            private int mRefPosition;
-
-            public HeaderData(int refPosition) {
-                mRefPosition = refPosition;
-                mCount = 0;
-            }
-
-            public int getCount() {
-                return mCount;
-            }
-
-            public int getRefPosition() {
-                return mRefPosition;
-            }
-
-            public void incrementCount() {
-                mCount++;
-            }
-        }
-    }
-
-    static class ViewHolder {
-
-        public TextView show;
-
-        public TextView episode;
-
-        public WatchedBox watchedBox;
-
-        public View buttonCheckin;
-
-        public TextView meta;
-
-        public ImageView poster;
-    }
-
-    static class HeaderViewHolder {
-
-        public TextView day;
-
-    }
 }
