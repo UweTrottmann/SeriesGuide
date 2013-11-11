@@ -543,17 +543,17 @@ public class DBUtils {
      * 
      * @return HashMap containing the shows existing episodes
      */
-    public static HashMap<Long, Long> getEpisodeMapForShow(Context context, int showTvdbId) {
-        Cursor eptest = context.getContentResolver().query(
+    public static HashMap<Integer, Long> getEpisodeMapForShow(Context context, int showTvdbId) {
+        Cursor episodes = context.getContentResolver().query(
                 Episodes.buildEpisodesOfShowUri(showTvdbId), new String[] {
                         Episodes._ID, Episodes.LAST_EDITED
                 }, null, null, null);
-        HashMap<Long, Long> episodeMap = new HashMap<Long, Long>();
-        if (eptest != null) {
-            while (eptest.moveToNext()) {
-                episodeMap.put(eptest.getLong(0), eptest.getLong(1));
+        HashMap<Integer, Long> episodeMap = new HashMap<>();
+        if (episodes != null) {
+            while (episodes.moveToNext()) {
+                episodeMap.put(episodes.getInt(0), episodes.getLong(1));
             }
-            eptest.close();
+            episodes.close();
         }
         return episodeMap;
     }
@@ -564,20 +564,20 @@ public class DBUtils {
      * 
      * @return HashMap containing the shows existing seasons
      */
-    public static HashSet<Long> getSeasonIDsForShow(Context context, int showTvdbId) {
-        Cursor setest = context.getContentResolver().query(
+    public static HashSet<Integer> getSeasonIdsOfShow(Context context, int showTvdbId) {
+        Cursor seasons = context.getContentResolver().query(
                 Seasons.buildSeasonsOfShowUri(showTvdbId),
                 new String[] {
                     Seasons._ID
                 }, null, null, null);
-        HashSet<Long> seasonIDs = new HashSet<Long>();
-        if (setest != null) {
-            while (setest.moveToNext()) {
-                seasonIDs.add(setest.getLong(0));
+        HashSet<Integer> seasonIds = new HashSet<>();
+        if (seasons != null) {
+            while (seasons.moveToNext()) {
+                seasonIds.add(seasons.getInt(0));
             }
-            setest.close();
+            seasons.close();
         }
-        return seasonIDs;
+        return seasonIds;
     }
 
     /**

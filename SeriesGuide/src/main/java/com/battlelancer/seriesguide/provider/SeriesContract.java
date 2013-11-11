@@ -323,6 +323,10 @@ public class SeriesContract {
             return CONTENT_URI.buildUpon().appendPath(episodeId).build();
         }
 
+        public static Uri buildEpisodeUri(int episodeId) {
+            return buildEpisodeUri(String.valueOf(episodeId));
+        }
+
         public static String getEpisodeId(Uri uri) {
             return uri.getLastPathSegment();
         }
