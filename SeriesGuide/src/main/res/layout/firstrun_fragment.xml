@@ -25,6 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/default_padding"
+                android:paddingStart="@dimen/default_padding"
                 android:paddingTop="@dimen/default_padding"
                 android:text="@string/welcome_add_part1"
                 android:textAppearance="@style/TextAppearance.Large.Light" />
@@ -35,8 +36,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_padding"
-                android:drawableLeft="?attr/drawableAddIcon"
+                android:layout_marginStart="@dimen/default_padding"
                 android:drawablePadding="5dp"
+                android:drawableStart="?attr/drawableAddIcon"
                 android:paddingLeft="@dimen/default_padding"
                 android:paddingRight="@dimen/default_padding"
                 android:text="@string/action_shows_add"
@@ -56,7 +58,7 @@
                 style="@style/Widget.SeriesGuide.Button.Borderless.Small.Highlight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical|left"
+                android:gravity="center_vertical|left|start"
                 android:paddingLeft="@dimen/default_padding"
                 android:paddingRight="@dimen/default_padding"
                 android:text="@string/action_migrate" />
@@ -106,8 +108,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/default_padding"
-                    android:drawableLeft="@drawable/ic_trakt"
                     android:drawablePadding="8dp"
+                    android:drawableStart="@drawable/ic_trakt"
                     android:text="@string/connect_trakt" />
             </LinearLayout>
         </LinearLayout>
@@ -117,7 +119,8 @@
         android:id="@+id/buttonFirstRunDismiss"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_gravity="top|right"
+        android:layout_gravity="top|end|right"
+        android:layout_marginEnd="@dimen/default_padding"
         android:layout_marginRight="@dimen/default_padding"
         android:layout_marginTop="@dimen/default_padding"
         android:background="?attr/custom_list_selector"
