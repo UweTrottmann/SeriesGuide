@@ -8,6 +8,10 @@ All dates are in the European Central timezone.
 Version 9.1 *(in testing)*
 --------------------------
 
+Resolved crashes and layout issues. Latest translations.
+
+### Detailed changes:
+
 * TWEAK Highlight currently active navigation drawer item. Only available on Android 3.0 (Honeycomb) and up.
 * TWEAK Reorganize settings. Notably extracted notification related settings to their own page. Notify about all shows by default (previously only favorites).
 * TWEAK Updated shouts screen to be more in line with the rest of the app, e.g. added action bar.
