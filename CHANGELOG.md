@@ -5,6 +5,20 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 9.1 *(in testing)*
+--------------------------
+
+* TWEAK Highlight currently active navigation drawer item. Only available on Android 3.0 (Honeycomb) and up.
+* TWEAK Reorganize settings. Notably extracted notification related settings to their own page. Notify about all shows by default (previously only favorites).
+* TWEAK Updated shouts screen to be more in line with the rest of the app, e.g. added action bar.
+* TWEAK Removed navigation drawer from some not directly content related screens (e.g. help, tools).
+* FIX Screen partially blacks out on certain Nexus devices. Also see #309.
+* FIX Crashes when connecting to trakt, showing manage lists dialog.
+* FIX Crash in full screen mode on Android 3.x (Honeycomb) devices.
+* FIX Slow-down in add activity when trakt was offline, crash when trakt was disconnected.
+* FIX In some cases the subscription check crashes if the user leaves the app in the meantime.
+* NOTICE Latest translations from crowdin.
+
 Version 9 *(2013-11-08)*
 ----------------------------
 
