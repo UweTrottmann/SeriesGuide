@@ -43,8 +43,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Displays a dialog displaying all lists, allowing to add the given show,
- * season or episode to any number of them.
+ * Displays a dialog displaying all lists, allowing to add the given show, season or episode to any
+ * number of them.
  */
 public class ListsDialogFragment extends DialogFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener {
@@ -59,6 +59,7 @@ public class ListsDialogFragment extends DialogFragment implements
     }
 
     private ListView mListView;
+
     private ListsAdapter mAdapter;
 
     @Override
@@ -74,7 +75,8 @@ public class ListsDialogFragment extends DialogFragment implements
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         final View layout = inflater.inflate(R.layout.list_dialog, null);
 
         // buttons
@@ -96,7 +98,8 @@ public class ListsDialogFragment extends DialogFragment implements
                 int itemType = getArguments().getInt("itemtype");
                 SparseBooleanArray checkedLists = mAdapter.getCheckedPositions();
 
-                final ArrayList<ContentProviderOperation> batch = com.uwetrottmann.androidutils.Lists
+                final ArrayList<ContentProviderOperation> batch = com.uwetrottmann.androidutils
+                        .Lists
                         .newArrayList();
 
                 for (int position = 0; position < mAdapter.getCount(); position++) {
@@ -161,21 +164,21 @@ public class ListsDialogFragment extends DialogFragment implements
             case 1:
                 // show
                 uri = Shows.buildShowUri(itemId);
-                projection = new String[] {
+                projection = new String[]{
                         Shows._ID, Shows.TITLE
                 };
                 break;
             case 2:
                 // season
                 uri = Seasons.buildSeasonUri(itemId);
-                projection = new String[] {
+                projection = new String[]{
                         Seasons._ID, Seasons.COMBINED
                 };
                 break;
             case 3:
                 // episode
                 uri = Episodes.buildEpisodeUri(itemId);
-                projection = new String[] {
+                projection = new String[]{
                         Episodes._ID, Episodes.TITLE
                 };
                 break;
@@ -241,6 +244,7 @@ public class ListsDialogFragment extends DialogFragment implements
     private class ListsAdapter extends CursorAdapter {
 
         private LayoutInflater mInflater;
+
         private SparseBooleanArray mCheckedItems;
 
         public ListsAdapter(Context context, Cursor c, int flags) {
@@ -299,7 +303,8 @@ public class ListsDialogFragment extends DialogFragment implements
     }
 
     interface ListsQuery {
-        String[] PROJECTION = new String[] {
+
+        String[] PROJECTION = new String[]{
                 Tables.LISTS + "." + Lists._ID, Tables.LISTS + "." + Lists.LIST_ID, Lists.NAME,
                 ListItems.LIST_ITEM_ID
         };
@@ -312,14 +317,16 @@ public class ListsDialogFragment extends DialogFragment implements
     }
 
     /**
-     * Display a dialog which asks if the user wants to add the given show to
-     * one or more lists.
-     * 
-     * @param itemId TVDb/database id of the item to add
+     * Display a dialog which asks if the user wants to add the given show to one or more lists.
+     *
+     * @param itemId   TVDb/database id of the item to add
      * @param itemType type of the item to add (show, season or episode)
-     * @param fm
      */
     public static void showListsDialog(String itemId, int itemType, FragmentManager fm) {
+        if (fm == null) {
+            return;
+        }
+
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction. We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.
