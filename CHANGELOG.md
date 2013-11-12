@@ -5,7 +5,7 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 9.1 *(in testing)*
+Version 9.1 *(2013-11-12)*
 --------------------------
 
 Resolved crashes and layout issues. Latest translations.
