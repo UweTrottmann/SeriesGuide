@@ -29,7 +29,7 @@
             android:layout_toLeftOf="@+id/textViewEpisodeNumber"
             android:layout_toRightOf="@id/watchedBoxEpisode"
             android:layout_toStartOf="@+id/textViewEpisodeNumber"
-            android:textAlignment="viewStart"
+
             android:textAppearance="@style/TextAppearance.Medium.Light"
             tools:text="Episode Title" />
 
@@ -81,7 +81,7 @@
             android:layout_toStartOf="@+id/textViewEpisodeNumber"
             android:paddingBottom="@dimen/default_padding"
             android:text="@string/episode_number_absolute"
-            android:textAlignment="viewStart"
+
             android:textAppearance="@style/TextAppearance.XSmall.Dim" />
 
         <ImageView

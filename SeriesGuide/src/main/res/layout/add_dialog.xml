@@ -21,15 +21,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/poster"
-                android:layout_toStartOf="@+id/poster"
                 android:paddingBottom="@dimen/default_padding"
                 android:paddingEnd="@dimen/default_padding"
                 android:paddingLeft="@dimen/default_padding"
                 android:paddingRight="@dimen/default_padding"
-                android:paddingStart="@dimen/default_padding"
                 android:text="@string/action_shows_add"
                 android:textAppearance="@style/TextAppearance.Large.Light"
                 android:textIsSelectable="true" />
@@ -40,12 +37,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_below="@+id/title"
                 android:layout_toLeftOf="@+id/poster"
-                android:layout_toStartOf="@+id/poster"
                 android:text="@string/description_overview"
-                android:textAlignment="viewStart"
                 android:textAppearance="@style/TextAppearance.Light"
                 android:textIsSelectable="true" />
 

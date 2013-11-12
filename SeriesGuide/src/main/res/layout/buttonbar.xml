@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><!-- Will never be a root layout, overdraw is expected -->
-<LinearLayout android:id="@+id/buttonbar"
+<LinearLayout
+    android:id="@+id/buttonbar"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,7 +18,6 @@
         android:paddingEnd="@dimen/default_padding"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
-        android:paddingStart="@dimen/default_padding"
         android:src="?attr/drawableCheckin" />
 
     <ImageButton
@@ -29,7 +29,6 @@
         android:paddingEnd="@dimen/default_padding"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
-        android:paddingStart="@dimen/default_padding"
         android:src="?attr/drawableWatch" />
 
     <ImageButton
@@ -41,7 +40,6 @@
         android:paddingEnd="@dimen/default_padding"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
-        android:paddingStart="@dimen/default_padding"
         android:src="?attr/drawableCollect" />
 
     <ImageButton
@@ -53,7 +51,6 @@
         android:paddingEnd="@dimen/default_padding"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
-        android:paddingStart="@dimen/default_padding"
         android:src="?attr/drawableSkip" />
 
     <View
@@ -71,7 +68,6 @@
         android:paddingEnd="@dimen/default_padding"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
-        android:paddingStart="@dimen/default_padding"
         android:src="?attr/drawableDropdown" />
 
 </LinearLayout>

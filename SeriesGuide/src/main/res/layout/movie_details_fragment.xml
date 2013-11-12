@@ -39,8 +39,7 @@
                 android:textAppearance="@style/TextAppearance.Large.Light"
                 android:textIsSelectable="true"
                 android:textSize="@dimen/text_size_ultralarge"
-                tools:text="Awesome Movie Title"
-                android:textAlignment="viewStart" />
+                tools:text="Awesome Movie Title" />
 
             <TextView
                 android:id="@+id/textViewMovieDate"

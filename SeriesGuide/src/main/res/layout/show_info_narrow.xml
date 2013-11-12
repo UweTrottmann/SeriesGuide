@@ -30,7 +30,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginRight="@dimen/default_padding"
-                android:textAlignment="viewStart"
                 android:textAppearance="@style/TextAppearance.Large.Light"
                 android:textIsSelectable="true"
                 tools:text="Show title" />
@@ -59,7 +58,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/default_padding"
-                    android:layout_marginStart="@dimen/default_padding"
                     android:layout_marginTop="@dimen/inline_padding"
                     android:layout_toEndOf="@+id/containerShowInfoPoster"
                     android:layout_toRightOf="@+id/containerShowInfoPoster"
@@ -74,7 +72,6 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/showStatus"
                     android:layout_marginLeft="@dimen/default_padding"
-                    android:layout_marginStart="@dimen/default_padding"
                     android:layout_marginTop="@dimen/default_padding"
                     android:layout_toEndOf="@+id/containerShowInfoPoster"
                     android:layout_toRightOf="@+id/containerShowInfoPoster"

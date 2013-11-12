@@ -67,7 +67,6 @@
             android:layout_marginEnd="@dimen/inline_padding"
             android:layout_marginRight="@dimen/inline_padding"
             android:layout_toLeftOf="@+id/shoutbutton"
-            android:layout_toStartOf="@+id/shoutbutton"
             android:gravity="top"
             android:hint="@string/shout_hint"
             android:maxLength="2000"

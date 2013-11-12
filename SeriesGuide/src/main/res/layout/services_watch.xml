@@ -10,9 +10,7 @@
         android:paddingEnd="@dimen/default_padding"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
-        android:paddingStart="@dimen/default_padding"
-        android:text="@string/googleplay"
-        android:textAlignment="viewStart" />
+        android:text="@string/googleplay" />
 
     <Button
         android:id="@+id/buttonAmazon"
@@ -23,9 +21,7 @@
         android:paddingEnd="@dimen/default_padding"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
-        android:paddingStart="@dimen/default_padding"
-        android:text="@string/amazon"
-        android:textAlignment="viewStart" />
+        android:text="@string/amazon" />
 
     <Button
         android:id="@+id/buttonYouTube"
@@ -36,8 +32,6 @@
         android:paddingEnd="@dimen/default_padding"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
-        android:paddingStart="@dimen/default_padding"
-        android:text="@string/youtube"
-        android:textAlignment="viewStart" />
+        android:text="@string/youtube" />
 
 </merge>

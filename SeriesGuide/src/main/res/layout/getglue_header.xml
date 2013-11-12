@@ -14,7 +14,7 @@
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:text="@string/select_show"
-        android:textAlignment="viewStart"
+
         android:textAppearance="@style/TextAppearance.Large.Light" />
 
     <TextView

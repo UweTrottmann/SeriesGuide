@@ -10,7 +10,6 @@
         android:layout_width="102dp"
         android:layout_height="150dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_marginEnd="@dimen/large_padding"
         android:layout_marginRight="@dimen/large_padding"
         android:contentDescription="@string/description_poster"
@@ -35,7 +34,6 @@
         android:layout_alignWithParentIfMissing="true"
         android:layout_marginTop="@dimen/inline_padding"
         android:layout_toLeftOf="@id/imageViewShowsContextMenu"
-        android:layout_toStartOf="@id/imageViewShowsContextMenu"
         android:background="?attr/custom_list_selector"
         android:contentDescription="@string/favorited"
         android:src="?attr/drawableStar" />
@@ -47,8 +45,6 @@
         android:layout_toEndOf="@id/showposter"
         android:layout_toLeftOf="@id/favoritedLabel"
         android:layout_toRightOf="@id/showposter"
-        android:layout_toStartOf="@id/favoritedLabel"
-        android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.Large.Light"
         tools:text="@string/show" />
 
@@ -71,7 +67,6 @@
         android:layout_toEndOf="@id/showposter"
         android:layout_toRightOf="@id/showposter"
         android:text="@string/no_nextepisode"
-        android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.Light" />
 
     <TextView
@@ -82,7 +77,6 @@
         android:layout_toEndOf="@id/showposter"
         android:layout_toRightOf="@id/showposter"
         android:paddingBottom="@dimen/item_padding"
-        android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.Small"
         tools:text="@string/episode" />
 

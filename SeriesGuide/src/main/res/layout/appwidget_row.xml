@@ -27,7 +27,7 @@
         android:layout_toStartOf="@+id/widgetAirtime"
         android:fontFamily="sans-serif-light"
         android:text="@string/app_name"
-        android:textAlignment="viewStart"
+
         android:textColor="@color/text_primary"
         android:textSize="@dimen/widget_text_large" />
 
@@ -42,7 +42,7 @@
         android:layout_toLeftOf="@+id/widgetNetwork"
         android:layout_toStartOf="@+id/widgetNetwork"
         android:text="@string/no_nextepisode"
-        android:textAlignment="viewStart"
+
         android:textSize="@dimen/widget_text_middle" />
 
     <TextView

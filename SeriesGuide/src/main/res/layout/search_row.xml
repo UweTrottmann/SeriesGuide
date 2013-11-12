@@ -20,11 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_marginBottom="@dimen/inline_padding"
         android:layout_toLeftOf="@id/imageViewWatchedStatus"
-        android:layout_toStartOf="@id/imageViewWatchedStatus"
-        android:textAlignment="viewStart"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.XSmall"
         android:textStyle="bold"
@@ -35,11 +32,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@id/textViewShowTitle"
         android:layout_toLeftOf="@id/imageViewWatchedStatus"
-        android:layout_toStartOf="@id/imageViewWatchedStatus"
-        android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.Medium.Light"
         tools:text="@string/episode" />
 
@@ -51,7 +45,6 @@
         android:paddingBottom="@dimen/inline_padding"
         android:paddingTop="@dimen/inline_padding"
         android:text="@string/no_nextepisode"
-        android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.Small.Dim" />
 
 </RelativeLayout>

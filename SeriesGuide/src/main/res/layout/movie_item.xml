@@ -35,17 +35,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/imageViewMoviePoster"
-            android:layout_alignStart="@+id/imageViewMoviePoster"
             android:layout_below="@+id/imageViewMoviePoster"
             android:layout_toLeftOf="@id/imageViewMovieItemContextMenu"
-            android:layout_toStartOf="@id/imageViewMovieItemContextMenu"
             android:ellipsize="end"
             android:maxLines="2"
             android:paddingLeft="@dimen/inline_padding"
             android:paddingRight="@dimen/inline_padding"
             android:textAppearance="@style/TextAppearance.Primary"
-            tools:text="Awesome Movie Title"
-            android:textAlignment="viewStart" />
+            tools:text="Awesome Movie Title" />
 
         <TextView
             android:id="@+id/textViewMovieDate"
@@ -54,15 +51,13 @@
             android:layout_alignEnd="@+id/imageViewMoviePoster"
             android:layout_alignLeft="@+id/imageViewMoviePoster"
             android:layout_alignRight="@+id/imageViewMoviePoster"
-            android:layout_alignStart="@+id/imageViewMoviePoster"
             android:layout_below="@+id/textViewMovieTitle"
             android:ellipsize="end"
             android:maxLines="1"
             android:paddingLeft="@dimen/inline_padding"
             android:paddingRight="@dimen/inline_padding"
             android:textAppearance="@style/TextAppearance.XSmall"
-            tools:text="20 Oct 2013"
-            android:textAlignment="viewStart" />
+            tools:text="20 Oct 2013" />
     </RelativeLayout>
 
 </FrameLayout>

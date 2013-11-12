@@ -25,7 +25,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/default_padding"
-                android:paddingStart="@dimen/default_padding"
                 android:paddingTop="@dimen/default_padding"
                 android:text="@string/welcome_add_part1"
                 android:textAppearance="@style/TextAppearance.Large.Light" />
@@ -36,9 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginStart="@dimen/default_padding"
                 android:drawablePadding="5dp"
-                android:drawableStart="?attr/drawableAddIcon"
                 android:paddingLeft="@dimen/default_padding"
                 android:paddingRight="@dimen/default_padding"
                 android:text="@string/action_shows_add"
@@ -58,7 +55,7 @@
                 style="@style/Widget.SeriesGuide.Button.Borderless.Small.Highlight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical|left|start"
+                android:gravity="center_vertical|left"
                 android:paddingLeft="@dimen/default_padding"
                 android:paddingRight="@dimen/default_padding"
                 android:text="@string/action_migrate" />

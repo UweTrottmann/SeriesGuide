@@ -8,7 +8,6 @@
     android:layout_marginEnd="@dimen/default_padding"
     android:layout_marginLeft="@dimen/default_padding"
     android:layout_marginRight="@dimen/default_padding"
-    android:layout_marginStart="@dimen/default_padding"
     android:background="?attr/custom_list_selector">
 
     <ImageView
@@ -106,7 +105,6 @@
             android:layout_toRightOf="@+id/textViewRatingsTraktValue"
             android:minWidth="30dp"
             android:text="@string/norating"
-            android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.Small.Dim" />
 
         <include
@@ -117,7 +115,6 @@
             android:layout_marginEnd="@dimen/default_padding"
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
-            android:layout_marginStart="@dimen/default_padding"
             android:layout_toEndOf="@+id/textViewRatingsTraktVotes"
             android:layout_toRightOf="@+id/textViewRatingsTraktVotes" />
 

@@ -11,7 +11,6 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="@dimen/default_padding"
         android:layout_marginRight="@dimen/default_padding"
@@ -31,7 +30,6 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:text="@string/app_name"
-            android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.XSmall.Dim" />
 
         <TextView
@@ -40,7 +38,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="@string/norating"
-            android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.XSmall.Dim" />
     </LinearLayout>
 

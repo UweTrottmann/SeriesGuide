@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/textViewMoviesWatchlistEmpty"
@@ -27,8 +27,7 @@
         android:numColumns="auto_fit"
         android:padding="@dimen/default_padding"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="@dimen/default_padding" >
-    </GridView>
+        android:verticalSpacing="@dimen/default_padding"></GridView>
 
     <TextView
         android:id="@+id/poweredby"
