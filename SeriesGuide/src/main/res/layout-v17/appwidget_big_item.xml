@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/appwidget_bit_item"
+    android:layout_width="fill_parent"
+    android:layout_height="37dp"
+    android:layout_marginBottom="1dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/widgetPoster"
+        android:layout_width="@dimen/widget_poster_width"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/textViewWidgetEpisode"
+        android:layout_alignTop="@+id/widgetAirtime"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/show_generic"></ImageView>
+
+    <TextView
+        android:id="@+id/textViewWidgetShow"
+        style="@style/WidgetTextView"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@+id/widgetAirtime"
+        android:layout_toEndOf="@+id/widgetPoster"
+        android:text="@string/app_name"
+        android:textColor="@color/text_primary"
+        android:textSize="13sp"></TextView>
+
+    <TextView
+        android:id="@+id/textViewWidgetEpisode"
+        style="@style/WidgetTextView"
+        android:layout_alignStart="@+id/textViewWidgetShow"
+        android:layout_below="@+id/textViewWidgetShow"
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@+id/widgetNetwork"
+        android:text="@string/no_nextepisode"
+        android:textSize="12sp"></TextView>
+
+    <TextView
+        android:id="@+id/widgetAirtime"
+        style="@style/WidgetTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/not_available"></TextView>
+
+    <TextView
+        android:id="@+id/widgetNetwork"
+        style="@style/WidgetTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/widgetAirtime"
+        android:text="@string/not_available"></TextView>
+
+</RelativeLayout>

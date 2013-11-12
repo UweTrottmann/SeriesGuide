@@ -7,7 +7,7 @@
     android:paddingBottom="@dimen/default_padding"
     android:paddingLeft="@dimen/large_padding"
     android:paddingRight="@dimen/large_padding"
-    android:paddingTop="@dimen/default_padding" >
+    android:paddingTop="@dimen/default_padding">
 
     <ProgressBar
         android:id="@+id/progressBar1"

@@ -2,13 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/widget_margin" >
+    android:padding="@dimen/widget_margin">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/appwidget_bg"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/LinearLayoutWidget"
@@ -20,8 +20,7 @@
             android:focusable="true"
             android:orientation="vertical"
             android:paddingLeft="@dimen/widget_paddingLeft"
-            android:paddingRight="@dimen/widget_paddingRight" >
-        </LinearLayout>
+            android:paddingRight="@dimen/widget_paddingRight"></LinearLayout>
 
         <ImageButton
             android:id="@+id/ImageButtonWidget"

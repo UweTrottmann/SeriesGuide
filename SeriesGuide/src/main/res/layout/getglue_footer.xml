@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/large_padding" >
+    android:paddingBottom="@dimen/large_padding">
 
     <include
         android:layout_width="match_parent"
@@ -16,7 +16,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/inline_padding"
-        android:layout_marginStart="@dimen/inline_padding"
         android:text="@string/looking_for_something_else" />
 
     <EditText
@@ -31,7 +30,7 @@
         android:inputType="text"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <requestFocus />
     </EditText>

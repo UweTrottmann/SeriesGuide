@@ -2,14 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/episodesdetails_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/episodedetails_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop" >
-    </ImageView>
+        android:scaleType="centerCrop"></ImageView>
 
     <ListView
         android:id="@android:id/list"

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- v17 introduced new start and end layout attributes replacing left and right variants -->
+
+    <!-- Easy layouting -->
+    <style name="DefaultPadding.Page">
+        <item name="android:paddingTop">@dimen/default_padding</item>
+        <item name="android:paddingBottom">@dimen/default_padding</item>
+        <item name="android:paddingStart">@dimen/large_padding</item>
+        <item name="android:paddingEnd">@dimen/large_padding</item>
+    </style>
+
+    <style name="DefaultPadding.Blocks">
+        <item name="android:paddingStart">@dimen/default_padding</item>
+        <item name="android:paddingEnd">@dimen/default_padding</item>
+    </style>
+
+    <style name="DefaultPadding.Blocks.WithBottomMargin">
+        <item name="android:layout_marginBottom">@dimen/default_padding</item>
+        <item name="android:textAlignment">viewStart</item>
+    </style>
+
+</resources>

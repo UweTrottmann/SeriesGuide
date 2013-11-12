@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true" >
+    android:animateLayoutChanges="true">
 
     <ProgressBar
         android:id="@+id/progressBarBilling"
@@ -13,7 +13,7 @@
     <RelativeLayout
         android:id="@+id/containerBilling"
         style="@style/Page.Centered"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/textViewBillingTitle"

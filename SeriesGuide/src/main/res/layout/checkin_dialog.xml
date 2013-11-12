@@ -18,7 +18,6 @@
         style="@style/Widget.SeriesGuide.Button.Borderless.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/pasteTitle"
         android:layout_toRightOf="@+id/pasteTitle"
         android:padding="@dimen/default_padding"
         android:text="@string/clear" />
@@ -43,7 +42,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/message"
         android:layout_marginTop="@dimen/default_padding"
-        android:drawableEnd="@drawable/ic_trakt"
         android:drawablePadding="@dimen/inline_padding"
         android:text="@string/trakt" />
 
@@ -52,7 +50,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toggleTrakt"
-        android:drawableEnd="@drawable/ic_getglue"
         android:drawablePadding="@dimen/inline_padding"
         android:nextFocusDown="@+id/checkinButton"
         android:text="@string/getglue" />
@@ -62,7 +59,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/toggleGetGlue"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="@dimen/default_padding"
         android:text="@string/checkin" />

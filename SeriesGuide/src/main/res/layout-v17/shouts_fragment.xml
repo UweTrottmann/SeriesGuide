@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Page.Centered"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/shouts_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ProgressBar
+            android:id="@+id/progress_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="visible" />
+
+        <FrameLayout
+            android:id="@+id/list_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+android:id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="@bool/gridClipToPadding"
+                android:divider="?attr/drawableDivider"
+                android:listSelector="?attr/custom_list_selector" />
+
+            <TextView
+                android:id="@+android:id/empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="@dimen/large_padding"
+                android:text="@string/no_shouts" />
+        </FrameLayout>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/labelRefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/inline_padding"
+        android:text="@string/autorefresh"
+        android:textSize="@dimen/text_size_xsmall" />
+
+    <include
+        android:id="@+id/divider"
+        layout="@layout/divider_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_padding">
+
+        <EditText
+            android:id="@+id/shouttext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/inline_padding"
+            android:layout_toStartOf="@+id/shoutbutton"
+            android:gravity="top"
+            android:hint="@string/shout_hint"
+            android:maxLength="2000"
+            android:maxLines="3" />
+
+        <ImageButton
+            android:id="@+id/shoutbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/shouttext"
+            android:contentDescription="@string/shout"
+            android:src="@drawable/ic_action_send" />
+
+        <CheckBox
+            android:id="@+id/checkIsSpoiler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/shouttext"
+            android:text="@string/isspoiler" />
+    </RelativeLayout>
+
+</LinearLayout>

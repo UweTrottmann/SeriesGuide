@@ -6,7 +6,7 @@
     android:layout_marginBottom="@dimen/default_padding"
     android:layout_marginLeft="@dimen/default_padding"
     android:layout_marginRight="@dimen/default_padding"
-    android:background="?attr/custom_list_selector" >
+    android:background="?attr/custom_list_selector">
 
     <ImageView
         android:id="@+id/imageViewRatingsStar"
@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="38dp"
         android:layout_below="@id/imageViewRatingsStar"
-        android:layout_marginTop="@dimen/default_padding" >
+        android:layout_marginTop="@dimen/default_padding">
 
         <ImageView
             android:id="@+id/imageViewRatingsLove"

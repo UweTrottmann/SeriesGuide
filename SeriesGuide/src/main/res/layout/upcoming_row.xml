@@ -8,7 +8,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingEnd="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding">
 
         <ImageView
@@ -16,8 +15,6 @@
             android:layout_width="68dp"
             android:layout_height="100dp"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginEnd="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
             android:contentDescription="@string/description_poster"
             android:scaleType="centerCrop"
@@ -28,12 +25,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:layout_toEndOf="@+id/poster"
             android:layout_toRightOf="@+id/poster"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/app_name"
-            android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.Small.Dim" />
 
         <TextView
@@ -41,12 +36,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewUpcomingShow"
-            android:layout_toEndOf="@+id/poster"
             android:layout_toRightOf="@+id/poster"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/no_nextepisode"
-            android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.Medium.Light" />
 
         <TextView
@@ -55,12 +48,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewUpcomingEpisode"
             android:layout_marginTop="2dp"
-            android:layout_toEndOf="@+id/poster"
             android:layout_toRightOf="@+id/poster"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@string/norating"
-            android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.Small.Light" />
     </RelativeLayout>
 

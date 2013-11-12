@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:id="@+id/layout_root"
+<FrameLayout
+    android:id="@+id/layout_root"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -53,10 +54,8 @@
                         android:id="@+id/seriesname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/default_padding"
                         android:layout_marginLeft="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
-                        android:layout_marginStart="@dimen/default_padding"
                         android:ellipsize="marquee"
                         android:textAppearance="@style/TextAppearance.Large.Light"
                         tools:text="Show title" />
@@ -66,12 +65,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
                         android:layout_below="@id/seriesname"
-                        android:layout_marginEnd="@dimen/default_padding"
                         android:layout_marginLeft="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
-                        android:layout_marginStart="@dimen/default_padding"
                         android:textAllCaps="true"
                         android:textAppearance="@style/TextAppearance.Small"
                         tools:text="Status" />
@@ -82,9 +78,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/seriesname"
                         android:layout_marginBottom="@dimen/default_padding"
-                        android:layout_marginEnd="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
-                        android:layout_toEndOf="@+id/showStatus"
                         android:layout_toRightOf="@+id/showStatus"
                         android:textAppearance="@style/TextAppearance.Small"
                         tools:text="Show meta" />
@@ -169,10 +163,8 @@
                             android:layout_gravity="bottom"
                             android:background="?attr/colorOverlay"
                             android:paddingBottom="@dimen/default_padding"
-                            android:paddingEnd="@dimen/default_padding"
                             android:paddingLeft="@dimen/default_padding"
                             android:paddingRight="@dimen/default_padding"
-                            android:paddingStart="@dimen/default_padding"
                             android:paddingTop="@dimen/inline_padding">
 
                             <TextView
@@ -181,15 +173,13 @@
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
                                 android:maxLines="2"
-                                android:textAlignment="viewStart"
-                                android:textAppearance="@style/TextAppearance.Large.Light"/>
+                                android:textAppearance="@style/TextAppearance.Large.Light" />
 
                             <TextView
                                 android:id="@+id/episodeTime"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/episodeTitle"
-                                android:layout_marginEnd="@dimen/default_padding"
                                 android:layout_marginRight="@dimen/default_padding"
                                 android:textAllCaps="true"
                                 android:textAppearance="@style/TextAppearance.Small" />
@@ -199,7 +189,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/episodeTitle"
-                                android:layout_toEndOf="@+id/episodeTime"
                                 android:layout_toRightOf="@+id/episodeTime"
                                 android:textAllCaps="true"
                                 android:textAppearance="@style/TextAppearance.Small.Dim" />
