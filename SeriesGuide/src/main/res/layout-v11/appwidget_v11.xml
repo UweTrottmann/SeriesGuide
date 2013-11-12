@@ -37,7 +37,7 @@
                     android:id="@+id/widgetTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|start"
+                    android:layout_gravity="center_vertical|left"
                     android:fontFamily="sans-serif-light"
                     android:text="@string/upcoming"
                     android:textAllCaps="true"
