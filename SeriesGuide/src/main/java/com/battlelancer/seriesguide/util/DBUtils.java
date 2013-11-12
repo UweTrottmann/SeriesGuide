@@ -28,7 +28,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.ActivityType;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
@@ -249,9 +249,7 @@ public class DBUtils {
      */
     public static String[][] buildActivityQuery(Context context, String type,
             int numberOfDaysToInclude) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-        boolean isNoWatched = prefs.getBoolean(SeriesGuidePreferences.KEY_NOWATCHED, false);
+        boolean isNoWatched = DisplaySettings.isNoWatchedEpisodes(context);
 
         return buildActivityQuery(context, type, isNoWatched, numberOfDaysToInclude);
     }
@@ -303,7 +301,7 @@ public class DBUtils {
         }
 
         // append no specials selection if necessary
-        boolean isNoSpecials = ActivitySettings.isHidingSpecials(context);
+        boolean isNoSpecials = DisplaySettings.isHidingSpecials(context);
         if (isNoSpecials) {
             query += Episodes.SELECTION_NOSPECIALS;
         }
@@ -545,17 +543,17 @@ public class DBUtils {
      * 
      * @return HashMap containing the shows existing episodes
      */
-    public static HashMap<Long, Long> getEpisodeMapForShow(Context context, int showTvdbId) {
-        Cursor eptest = context.getContentResolver().query(
+    public static HashMap<Integer, Long> getEpisodeMapForShow(Context context, int showTvdbId) {
+        Cursor episodes = context.getContentResolver().query(
                 Episodes.buildEpisodesOfShowUri(showTvdbId), new String[] {
                         Episodes._ID, Episodes.LAST_EDITED
                 }, null, null, null);
-        HashMap<Long, Long> episodeMap = new HashMap<Long, Long>();
-        if (eptest != null) {
-            while (eptest.moveToNext()) {
-                episodeMap.put(eptest.getLong(0), eptest.getLong(1));
+        HashMap<Integer, Long> episodeMap = new HashMap<>();
+        if (episodes != null) {
+            while (episodes.moveToNext()) {
+                episodeMap.put(episodes.getInt(0), episodes.getLong(1));
             }
-            eptest.close();
+            episodes.close();
         }
         return episodeMap;
     }
@@ -566,20 +564,20 @@ public class DBUtils {
      * 
      * @return HashMap containing the shows existing seasons
      */
-    public static HashSet<Long> getSeasonIDsForShow(Context context, int showTvdbId) {
-        Cursor setest = context.getContentResolver().query(
+    public static HashSet<Integer> getSeasonIdsOfShow(Context context, int showTvdbId) {
+        Cursor seasons = context.getContentResolver().query(
                 Seasons.buildSeasonsOfShowUri(showTvdbId),
                 new String[] {
                     Seasons._ID
                 }, null, null, null);
-        HashSet<Long> seasonIDs = new HashSet<Long>();
-        if (setest != null) {
-            while (setest.moveToNext()) {
-                seasonIDs.add(setest.getLong(0));
+        HashSet<Integer> seasonIds = new HashSet<>();
+        if (seasons != null) {
+            while (seasons.moveToNext()) {
+                seasonIds.add(seasons.getInt(0));
             }
-            setest.close();
+            seasons.close();
         }
-        return seasonIDs;
+        return seasonIds;
     }
 
     /**
@@ -626,10 +624,9 @@ public class DBUtils {
      */
     public static long updateLatestEpisode(Context context, int showTvdbId) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        final boolean isOnlyFutureEpisodes = prefs.getBoolean(
-                SeriesGuidePreferences.KEY_ONLY_FUTURE_EPISODES, false);
-        final boolean isNoSpecials = ActivitySettings.isHidingSpecials(context);
-        return updateLatestEpisode(context, showTvdbId, isOnlyFutureEpisodes, isNoSpecials, prefs);
+        final boolean isNoReleasedEpisodes = DisplaySettings.isNoReleasedEpisodes(context);
+        final boolean isNoSpecials = DisplaySettings.isHidingSpecials(context);
+        return updateLatestEpisode(context, showTvdbId, isNoReleasedEpisodes, isNoSpecials, prefs);
     }
 
     /**
@@ -638,7 +635,7 @@ public class DBUtils {
      * @return The TVDb id of the calculated next episode.
      */
     public static long updateLatestEpisode(Context context, int showTvdbId,
-            boolean isOnlyFutureEpisodes, boolean isNoSpecials, SharedPreferences prefs) {
+            boolean isNoReleasedEpisodes, boolean isNoSpecials, SharedPreferences prefs) {
         final Uri episodesWithShow = Episodes.buildEpisodesOfShowUri(showTvdbId);
         final StringBuilder selectQuery = new StringBuilder();
 
@@ -686,7 +683,7 @@ public class DBUtils {
             // do not take specials into account
             selectQuery.append(Episodes.SELECTION_NOSPECIALS);
         }
-        if (isOnlyFutureEpisodes) {
+        if (isNoReleasedEpisodes) {
             // restrict to episodes with future air date
             selectQuery.append(NextEpisodeQuery.SELECT_ONLYFUTURE);
             final String now = String.valueOf(Utils.getFakeCurrentTime(prefs));
@@ -710,7 +707,7 @@ public class DBUtils {
         final ContentValues update = new ContentValues();
         if (next != null && next.moveToFirst()) {
             // next episode text, e.g. '0x12 Episode Name'
-            final String nextEpisodeString = Utils.getNextEpisodeString(prefs,
+            final String nextEpisodeString = Utils.getNextEpisodeString(context,
                     next.getInt(NextEpisodeQuery.SEASON), next.getInt(NextEpisodeQuery.NUMBER),
                     next.getString(NextEpisodeQuery.TITLE));
 

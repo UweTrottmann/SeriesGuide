@@ -1,8 +1,9 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.os.Build;
 import android.view.View;
 import android.view.WindowManager;
@@ -43,7 +44,7 @@ public class SystemUiHiderHoneycomb extends SystemUiHiderBase {
      * Constructor not intended to be called by clients. Use
      * {@link SystemUiHider#getInstance} to obtain an instance.
      */
-    protected SystemUiHiderHoneycomb(Activity activity, View anchorView, int flags) {
+    protected SystemUiHiderHoneycomb(SherlockFragmentActivity activity, View anchorView, int flags) {
         super(activity, anchorView, flags);
 
         mShowFlags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
@@ -100,7 +101,7 @@ public class SystemUiHiderHoneycomb extends SystemUiHiderBase {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
                     // Pre-Jelly Bean, we must manually hide the action bar
                     // and use the old window flags API.
-                    mActivity.getActionBar().hide();
+                    mActivity.getSupportActionBar().hide();
                     mActivity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                             WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 }
@@ -115,7 +116,7 @@ public class SystemUiHiderHoneycomb extends SystemUiHiderBase {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
                     // Pre-Jelly Bean, we must manually show the action bar
                     // and use the old window flags API.
-                    mActivity.getActionBar().show();
+                    mActivity.getSupportActionBar().show();
                     mActivity.getWindow().setFlags(0, WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 }
 

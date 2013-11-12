@@ -17,6 +17,17 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Window;
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
+import com.battlelancer.seriesguide.util.TaskManager;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -31,22 +42,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.widget.EditText;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Window;
-import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.TaskManager;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
-
 import java.util.Locale;
 
 /**
- * Hosts various fragments in a {@link ViewPager} which allow adding shows to
- * the database.
+ * Hosts various fragments in a {@link ViewPager} which allow adding shows to the database.
  */
 public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListener {
 
@@ -55,6 +54,7 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
     private ViewPager mPager;
 
     public interface InitBundle {
+
         /**
          * Which tab to select upon launch.
          */
@@ -66,8 +66,8 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
         // The TvdbAddFragment uses a progress bar
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
-
-        getMenu().setContentView(R.layout.addactivity_pager);
+        setContentView(R.layout.addactivity_pager);
+        setupNavDrawer();
 
         setupActionBar();
 
@@ -139,28 +139,37 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
     public static class AddPagerAdapter extends FragmentPagerAdapter {
 
         private static final int DEFAULT_TABCOUNT = 2;
+
         private static final int TRAKT_CONNECTED_TABCOUNT = 5;
 
         public static final int TRENDING_TAB_POSITION = 0;
+
         public static final int RECOMMENDED_TAB_POSITION = 2;
+
         public static final int LIBRARY_TAB_POSITION = 3;
+
         public static final int WATCHLIST_TAB_POSITION = 4;
 
         public static final int SEARCH_TAB_DEFAULT_POSITION = 1;
+
         public static final int SEARCH_TAB_CONNECTED_POSITION = 1;
+
+        private final boolean mIsConnectedToTrakt;
 
         private Context mContext;
 
         public AddPagerAdapter(FragmentManager fm, Context context) {
             super(fm);
             mContext = context;
+            mIsConnectedToTrakt = TraktSettings.hasTraktCredentials(mContext);
         }
 
         @Override
         public Fragment getItem(int position) {
             int count = getCount();
             if ((count == DEFAULT_TABCOUNT && position == SEARCH_TAB_DEFAULT_POSITION)
-                    || (count == TRAKT_CONNECTED_TABCOUNT && position == SEARCH_TAB_CONNECTED_POSITION)) {
+                    || (count == TRAKT_CONNECTED_TABCOUNT
+                    && position == SEARCH_TAB_CONNECTED_POSITION)) {
                 return TvdbAddFragment.newInstance();
             } else {
                 return TraktAddFragment.newInstance(position);
@@ -169,8 +178,7 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
 
         @Override
         public int getCount() {
-            final boolean isValidCredentials = ServiceUtils.hasTraktCredentials(mContext);
-            if (isValidCredentials) {
+            if (mIsConnectedToTrakt) {
                 // show trakt recommended and libraried shows, too
                 return TRAKT_CONNECTED_TABCOUNT;
             } else {
@@ -211,7 +219,6 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
             }
             return "";
         }
-
     }
 
     @Override

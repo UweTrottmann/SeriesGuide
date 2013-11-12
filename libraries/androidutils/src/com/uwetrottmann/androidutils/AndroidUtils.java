@@ -17,6 +17,8 @@
 
 package com.uwetrottmann.androidutils;
 
+import com.squareup.okhttp.OkHttpClient;
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -24,6 +26,8 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
+import android.text.TextUtils;
+import android.view.View;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,9 +36,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.FileChannel;
+import java.util.Locale;
 
 public class AndroidUtils {
 
@@ -42,6 +46,10 @@ public class AndroidUtils {
 
     public static boolean isKitKatOrHigher() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+    }
+
+    public static boolean isJellyBeanMR1OrHigher() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
     }
 
     public static boolean isJellyBeanOrHigher() {
@@ -63,17 +71,14 @@ public class AndroidUtils {
     public static boolean isFroyoOrHigher() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO;
     }
-    
-    public static boolean isGoogleTV(Context context){
+
+    public static boolean isGoogleTV(Context context) {
         return context.getPackageManager().hasSystemFeature("com.google.android.tv");
     }
 
     /**
-     * Checks if {@link Environment}.MEDIA_MOUNTED is returned by
-     * {@code getExternalStorageState()} and therefore external storage is read-
-     * and writeable.
-     * 
-     * @return
+     * Checks if {@link Environment}.MEDIA_MOUNTED is returned by {@code getExternalStorageState()}
+     * and therefore external storage is read- and writeable.
      */
     public static boolean isExtStorageAvailable() {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
@@ -81,9 +86,6 @@ public class AndroidUtils {
 
     /**
      * Whether there is any network with a usable connection.
-     * 
-     * @param context
-     * @return
      */
     public static boolean isNetworkConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context
@@ -95,11 +97,17 @@ public class AndroidUtils {
         return false;
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public static boolean isRtlLayout() {
+        if (AndroidUtils.isJellyBeanMR1OrHigher()) {
+            int direction = TextUtils.getLayoutDirectionFromLocale(Locale.getDefault());
+            return direction == View.LAYOUT_DIRECTION_RTL;
+        }
+        return false;
+    }
+
     /**
      * Whether WiFi has an active, usable connection.
-     * 
-     * @param context
-     * @return
      */
     public static boolean isWifiConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context
@@ -114,10 +122,9 @@ public class AndroidUtils {
 
     /**
      * Copies the contents of one file to the other using {@link FileChannel}s.
-     * 
+     *
      * @param src source {@link File}
      * @param dst destination {@link File}
-     * @throws IOException
      */
     public static void copyFile(File src, File dst) throws IOException {
         FileInputStream in = new FileInputStream(src);
@@ -141,13 +148,10 @@ public class AndroidUtils {
     }
 
     /**
-     * Copies data from one input stream to the other using a buffer of 8
-     * kilobyte in size.
-     * 
-     * @param input {@link InputStream}
+     * Copies data from one input stream to the other using a buffer of 8 kilobyte in size.
+     *
+     * @param input  {@link InputStream}
      * @param output {@link OutputStream}
-     * @return
-     * @throws IOException
      */
     public static int copy(InputStream input, OutputStream output) throws IOException {
         byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
@@ -162,11 +166,10 @@ public class AndroidUtils {
 
     /**
      * Execute an {@link AsyncTask} on a thread pool.
-     * 
+     *
      * @param task Task to execute.
-     * @param args Optional arguments to pass to
-     *            {@link AsyncTask#execute(Object[])}.
-     * @param <T> Task argument type.
+     * @param args Optional arguments to pass to {@link AsyncTask#execute(Object[])}.
+     * @param <T>  Task argument type.
      */
     @TargetApi(11)
     public static <T> void executeAsyncTask(AsyncTask<T, ?, ?> task, T... args) {
@@ -180,8 +183,7 @@ public class AndroidUtils {
     }
 
     /**
-     * Returns an {@link InputStream} using {@link HttpURLConnection} to connect
-     * to the given URL.
+     * Returns an {@link InputStream} using {@link HttpURLConnection} to connect to the given URL.
      */
     public static InputStream downloadUrl(String urlString) throws IOException {
         HttpURLConnection conn = buildHttpUrlConnection(urlString);
@@ -192,33 +194,18 @@ public class AndroidUtils {
     }
 
     /**
-     * Returns an {@link HttpURLConnection} using sensible default settings for
-     * mobile and taking care of buggy behavior prior to Froyo.
+     * Returns an {@link HttpURLConnection} using sensible default settings for mobile and taking
+     * care of buggy behavior prior to Froyo.
      */
-    public static HttpURLConnection buildHttpUrlConnection(String urlString)
-            throws MalformedURLException, IOException {
-        AndroidUtils.disableConnectionReuseIfNecessary();
-
+    public static HttpURLConnection buildHttpUrlConnection(String urlString) throws IOException {
         URL url = new URL(urlString);
 
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setReadTimeout(10000 /* milliseconds */);
-        conn.setConnectTimeout(15000 /* milliseconds */);
-        conn.setDoInput(true);
-        conn.setRequestMethod("GET");
+        OkHttpClient client = new OkHttpClient();
+
+        HttpURLConnection conn = client.open(url);
+        conn.setConnectTimeout(15 * 1000 /* milliseconds */);
+        conn.setReadTimeout(20 * 1000 /* milliseconds */);
         return conn;
     }
 
-    /**
-     * Prior to Android 2.2 (Froyo), {@link HttpURLConnection} had some
-     * frustrating bugs. In particular, calling close() on a readable
-     * InputStream could poison the connection pool. Work around this by
-     * disabling connection pooling.
-     */
-    public static void disableConnectionReuseIfNecessary() {
-        // HTTP connection reuse which was buggy pre-froyo
-        if (!isFroyoOrHigher()) {
-            System.setProperty("http.keepAlive", "false");
-        }
-    }
 }

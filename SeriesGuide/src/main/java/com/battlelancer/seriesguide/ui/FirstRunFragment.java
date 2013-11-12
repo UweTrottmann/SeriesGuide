@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.migration.MigrationActivity;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
@@ -135,9 +136,6 @@ public class FirstRunFragment extends SherlockFragment {
                 setFirstRunDismissed();
             }
         });
-
-        // peek menu
-        ((BaseNavDrawerActivity) getActivity()).getMenu().peekDrawer();
     }
 
     @Override
@@ -161,7 +159,7 @@ public class FirstRunFragment extends SherlockFragment {
             final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(getActivity());
             final String value = getResources().getStringArray(R.array.languageData)[pos];
-            prefs.edit().putString(SeriesGuidePreferences.KEY_LANGUAGE, value).commit();
+            prefs.edit().putString(DisplaySettings.KEY_LANGUAGE, value).commit();
         }
 
         public void onNothingSelected(AdapterView<?> parent) {

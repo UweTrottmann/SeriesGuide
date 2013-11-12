@@ -17,96 +17,278 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
-import net.simonvt.menudrawer.MenuDrawer;
-import net.simonvt.menudrawer.MenuDrawer.OnDrawerStateChangeListener;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 /**
  * Adds onto {@link BaseActivity} by attaching a navigation drawer.
  */
-public abstract class BaseNavDrawerActivity extends BaseActivity {
+public abstract class BaseNavDrawerActivity extends BaseActivity
+        implements AdapterView.OnItemClickListener {
 
-    private MenuDrawer mMenuDrawer;
+    private static final String TAG_NAV_DRAWER = "Navigation Drawer";
+
+    private DrawerLayout mDrawerLayout;
+
+    private ListView mDrawerList;
+
+    private ActionBarDrawerToggle mDrawerToggle;
+
+    private DrawerAdapter mDrawerAdapter;
+
+    public static final int MENU_ITEM_SHOWS_POSITION = 0;
+
+    public static final int MENU_ITEM_LISTS_POSITION = 1;
+
+    public static final int MENU_ITEM_ACTIVITY_POSITION = 2;
+
+    public static final int MENU_ITEM_MOVIES_POSITION = 3;
+
+    public static final int MENU_ITEM_STATS_POSITION = 4;
+
+    public static final int MENU_ITEM_SEARCH_POSITION = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // set a theme based on user preference
         setTheme(SeriesGuidePreferences.THEME);
         super.onCreate(savedInstanceState);
-
-        mMenuDrawer = getAttachedMenuDrawer();
-
-        mMenuDrawer.setTouchMode(MenuDrawer.TOUCH_MODE_BEZEL);
-        // setting size in pixels, oh come on...
-        int menuSize = (int) getResources().getDimension(R.dimen.slidingmenu_width);
-        mMenuDrawer.setMenuSize(menuSize);
-        mMenuDrawer.setOnDrawerStateChangeListener(new OnDrawerStateChangeListener() {
-            @Override
-            public void onDrawerStateChange(int oldState, int newState) {
-                // helps hiding actions when the drawer is opening
-                if (newState == MenuDrawer.STATE_CLOSED
-                        || (oldState == MenuDrawer.STATE_CLOSED &&
-                        (newState == MenuDrawer.STATE_OPENING || newState == MenuDrawer.STATE_DRAGGING))) {
-                    supportInvalidateOptionsMenu();
-                }
-            }
-
-            @Override
-            public void onDrawerSlide(float openRatio, int offsetPixels) {
-                // Nothing to do
-            }
-        });
-
-        // Don't recreate the MenuDrawer content on orientation changes
-        if (savedInstanceState == null) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            Fragment f = new SlidingMenuFragment();
-            ft.add(R.id.menu_frame, f);
-            ft.commit();
-        }
-    }
-
-    /*
-     * Creates an {@link MenuDrawer} attached to this activity as an overlay.
-     * Subclasses may override this to set their own layout and drawer type.
-     */
-    protected MenuDrawer getAttachedMenuDrawer() {
-        MenuDrawer menuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.OVERLAY);
-        menuDrawer.setMenuView(R.layout.menu_frame);
-        return menuDrawer;
-    }
-
-    @Override
-    public void onBackPressed() {
-        // close an open menu first
-        final int drawerState = mMenuDrawer.getDrawerState();
-        if (drawerState == MenuDrawer.STATE_OPEN || drawerState == MenuDrawer.STATE_OPENING) {
-            mMenuDrawer.closeMenu();
-            return;
-        }
-
-        super.onBackPressed();
-    }
-
-    protected MenuDrawer getMenu() {
-        return mMenuDrawer;
     }
 
     /**
-     * Returns true if the navigation drawer is visible in any way (opening,
-     * closing, peeking, open).
+     * Initializes the navigation drawer. Overriding activities should call this in their {@link
+     * #onCreate(android.os.Bundle)} after {@link #setContentView(int)}.
      */
-    protected boolean isMenuDrawerOpen() {
-        return getMenu().getDrawerState() != MenuDrawer.STATE_CLOSED;
+    public void setupNavDrawer() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+        // setup menu adapter
+        mDrawerAdapter = new DrawerAdapter(this);
+        mDrawerAdapter.add(new DrawerItem(getString(R.string.shows), R.drawable.ic_action_tv));
+        mDrawerAdapter.add(new DrawerItem(getString(R.string.lists), R.drawable.ic_action_list));
+        mDrawerAdapter
+                .add(new DrawerItem(getString(R.string.activity), R.drawable.ic_action_upcoming));
+        mDrawerAdapter.add(new DrawerItem(getString(R.string.movies), R.drawable.ic_action_movie));
+        mDrawerAdapter.add(new DrawerItem(getString(R.string.statistics),
+                R.drawable.ic_action_bargraph));
+        mDrawerAdapter
+                .add(new DrawerItem(getString(R.string.search_hint), R.drawable.ic_action_search));
+
+        mDrawerList.setAdapter(mDrawerAdapter);
+        mDrawerList.setOnItemClickListener(this);
+
+        // setup drawer indicator
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer,
+                R.string.drawer_open, R.string.drawer_close) {
+            public void onDrawerClosed(View view) {
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+        // don't show the indicator by default
+        mDrawerToggle.setDrawerIndicatorEnabled(false);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-    protected void toggleMenu() {
-        mMenuDrawer.toggleMenu();
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // close menu any way
+        Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mDrawerLayout.closeDrawer(mDrawerList);
+            }
+        }, 200);
+
+        switch (position) {
+            case MENU_ITEM_SHOWS_POSITION:
+                startActivity(new Intent(this, ShowsActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
+                                | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                Utils.trackAction(this, TAG_NAV_DRAWER, "Shows");
+                break;
+            case MENU_ITEM_LISTS_POSITION:
+                startActivity(new Intent(this, ListsActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                Utils.trackAction(this, TAG_NAV_DRAWER, "Lists");
+                break;
+            case MENU_ITEM_ACTIVITY_POSITION:
+                startActivity(new Intent(this, UpcomingRecentActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                Utils.trackAction(this, TAG_NAV_DRAWER, "Activity");
+                break;
+            case MENU_ITEM_MOVIES_POSITION:
+                startActivity(new Intent(this, MoviesActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                Utils.trackAction(this, TAG_NAV_DRAWER, "Movies");
+                break;
+            case MENU_ITEM_STATS_POSITION:
+                startActivity(new Intent(this, StatsActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                Utils.trackAction(this, TAG_NAV_DRAWER, "Statistics");
+                break;
+            case MENU_ITEM_SEARCH_POSITION:
+                startActivity(new Intent(this, SearchActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                Utils.trackAction(this, TAG_NAV_DRAWER, "Search");
+                break;
+        }
+
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    /**
+     * Returns true if the navigation drawer is open.
+     */
+    protected boolean isDrawerOpen() {
+        return mDrawerLayout.isDrawerOpen(mDrawerList);
+    }
+
+    public void setDrawerIndicatorEnabled(boolean isEnabled) {
+        mDrawerToggle.setDrawerIndicatorEnabled(isEnabled);
+    }
+
+    /**
+     * Highlights the given position in the drawer menu. Activities listed in the drawer should call
+     * this in {@link #onStart()}.
+     */
+    public void setDrawerSelectedItem(int menuItemPosition) {
+        mDrawerList.setItemChecked(menuItemPosition, true);
+    }
+
+    public boolean toggleDrawer(MenuItem item) {
+        if (item != null && item.getItemId() == android.R.id.home && mDrawerToggle
+                .isDrawerIndicatorEnabled()) {
+            if (mDrawerLayout.isDrawerVisible(GravityCompat.START)) {
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+            } else {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private class DrawerItem {
+
+        String mTitle;
+
+        int mIconRes;
+
+        public DrawerItem(String title, int iconRes) {
+            mTitle = title;
+            mIconRes = iconRes;
+        }
+    }
+
+    private class DrawerCategory {
+
+        public DrawerCategory() {
+        }
+    }
+
+    public class DrawerAdapter extends ArrayAdapter<Object> {
+
+        public DrawerAdapter(Context context) {
+            super(context, 0);
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return getItem(position) instanceof DrawerItem ? 0 : 1;
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            return 2;
+        }
+
+        @Override
+        public boolean isEnabled(int position) {
+            return getItem(position) instanceof DrawerItem;
+        }
+
+        @Override
+        public boolean areAllItemsEnabled() {
+            return false;
+        }
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+            Object item = getItem(position);
+
+            if (item instanceof DrawerItem) {
+                ViewHolder holder;
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(getContext()).inflate(
+                            R.layout.drawer_item, parent, false);
+                    holder = new ViewHolder();
+                    holder.attach(convertView);
+                    convertView.setTag(holder);
+                } else {
+                    holder = (ViewHolder) convertView.getTag();
+                }
+
+                DrawerItem menuItem = (DrawerItem) item;
+                holder.icon.setImageResource(menuItem.mIconRes);
+                holder.title.setText(menuItem.mTitle);
+            } else {
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(getContext()).inflate(
+                            R.layout.drawer_category, parent, false);
+                }
+            }
+
+            return convertView;
+        }
+    }
+
+    private static class ViewHolder {
+
+        public TextView title;
+
+        public ImageView icon;
+
+        public void attach(View v) {
+            icon = (ImageView) v.findViewById(R.id.menu_icon);
+            title = (TextView) v.findViewById(R.id.menu_title);
+        }
     }
 
 }

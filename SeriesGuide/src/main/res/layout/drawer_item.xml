@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:background="@drawable/activated_background_sg">
 
     <ImageView
         android:id="@+id/menu_icon"
@@ -14,11 +16,14 @@
         android:id="@+id/menu_title"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_toEndOf="@+id/menu_icon"
         android:layout_toRightOf="@+id/menu_icon"
         android:gravity="center_vertical"
-        android:text="@string/app_name"
+        android:paddingEnd="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
         android:textAppearance="@style/TextAppearance.Medium.Light"
         android:textColor="@color/text_primary"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        tools:text="@string/app_name" />
 
 </RelativeLayout>

@@ -29,10 +29,8 @@ import com.uwetrottmann.seriesguide.R;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -212,12 +210,10 @@ public class ListsFragment extends SherlockFragment implements
     private class ListItemAdapter extends CursorAdapter {
 
         private LayoutInflater mInflater;
-        private SharedPreferences mPrefs;
 
         public ListItemAdapter(Context context, Cursor c, int flags) {
             super(context, c, flags);
             mInflater = LayoutInflater.from(context);
-            mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         }
 
         @Override
@@ -311,7 +307,7 @@ public class ListsFragment extends SherlockFragment implements
                 case 3:
                     // episodes
                     viewHolder.timeAndNetwork.setText(R.string.episode);
-                    viewHolder.episode.setText(Utils.getNextEpisodeString(mPrefs,
+                    viewHolder.episode.setText(Utils.getNextEpisodeString(mContext,
                             mCursor.getInt(ListItemsQuery.SHOW_NEXTTEXT),
                             mCursor.getInt(ListItemsQuery.SHOW_NEXTAIRDATETEXT),
                             mCursor.getString(ListItemsQuery.ITEM_TITLE)));

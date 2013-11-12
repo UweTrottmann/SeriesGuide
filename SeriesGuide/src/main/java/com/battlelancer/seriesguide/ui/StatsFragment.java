@@ -17,6 +17,13 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.uwetrottmann.androidutils.AsyncTask;
+import com.uwetrottmann.seriesguide.R;
+
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -26,12 +33,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.uwetrottmann.androidutils.AsyncTask;
-import com.uwetrottmann.seriesguide.R;
 
 import java.util.Locale;
 
@@ -110,7 +111,7 @@ public class StatsFragment extends SherlockFragment {
                 // ...watched episodes
                 final Cursor episodesWatched = mResolver.query(Episodes.CONTENT_URI, new String[] {
                         Episodes._ID
-                }, Episodes.WATCHED + "=1", null, null);
+                }, Episodes.WATCHED + "=" + EpisodeFlags.WATCHED, null, null);
                 if (episodesWatched != null) {
                     stats.episodesWatched(episodesWatched.getCount());
                     episodesWatched.close();

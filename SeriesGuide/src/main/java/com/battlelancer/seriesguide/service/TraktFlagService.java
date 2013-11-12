@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.service;
 
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.FlagTapeEntry;
 import com.battlelancer.seriesguide.util.FlagTapeEntryQueue;
@@ -101,7 +102,7 @@ public class TraktFlagService extends Service implements Callback {
     @Override
     public void onFailure(boolean isNotConnected) {
         // The user has disconnected from trakt in the meanwhile
-        if (!ServiceUtils.hasTraktCredentials(getApplicationContext())) {
+        if (!TraktSettings.hasTraktCredentials(getApplicationContext())) {
             // clear all remaining tasks
             while (mQueue.size() > 0) {
                 mQueue.remove();

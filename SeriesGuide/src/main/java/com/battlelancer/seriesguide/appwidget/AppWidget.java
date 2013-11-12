@@ -16,6 +16,14 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
+import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
+import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -29,14 +37,6 @@ import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
 import android.support.v4.app.TaskStackBuilder;
 import android.widget.RemoteViews;
-
-import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
-import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
 
 public class AppWidget extends AppWidgetProvider {
     public static final String REFRESH = "com.battlelancer.seriesguide.appwidget.REFRESH";
@@ -125,9 +125,8 @@ public class AppWidget extends AppWidgetProvider {
                     int seasonNumber = upcomingEpisodes.getInt(UpcomingQuery.SEASON);
                     int episodeNumber = upcomingEpisodes.getInt(UpcomingQuery.NUMBER);
                     String title = upcomingEpisodes.getString(UpcomingQuery.TITLE);
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     item.setTextViewText(R.id.textViewWidgetEpisode,
-                            Utils.getNextEpisodeString(prefs, seasonNumber, episodeNumber, title));
+                            Utils.getNextEpisodeString(this, seasonNumber, episodeNumber, title));
 
                     // relative airtime
                     long airtime = upcomingEpisodes.getLong(UpcomingQuery.FIRSTAIREDMS);

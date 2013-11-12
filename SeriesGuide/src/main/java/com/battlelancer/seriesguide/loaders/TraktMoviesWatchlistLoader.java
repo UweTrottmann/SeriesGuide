@@ -1,6 +1,7 @@
 
 package com.battlelancer.seriesguide.loaders;
 
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
@@ -30,7 +31,7 @@ public class TraktMoviesWatchlistLoader extends GenericSimpleLoader<List<Movie>>
 
         try {
             return manager.userService()
-                    .watchlistMovies(ServiceUtils.getTraktUsername(getContext()));
+                    .watchlistMovies(TraktSettings.getUsername(getContext()));
         } catch (RetrofitError e) {
             Utils.trackExceptionAndLog(getContext(), TAG, e);
         }

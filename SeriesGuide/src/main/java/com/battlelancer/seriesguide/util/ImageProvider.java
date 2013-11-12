@@ -350,8 +350,10 @@ public class ImageProvider {
 
         if (prefs.getBoolean(SeriesGuidePreferences.KEY_HIDEIMAGES, true)) {
             try {
-                Log.d(TAG, "Creating .nomedia file");
-                new File(noMediaFilePath).createNewFile();
+                boolean created = new File(noMediaFilePath).createNewFile();
+                if (created) {
+                    Log.d(TAG, "Created .nomedia file");
+                }
             } catch (IOException e) {
                 Log.w(TAG, "Could not create .nomedia file");
             }

@@ -2,6 +2,7 @@ apply plugin: 'android-library'
 
 dependencies {
     compile 'com.android.support:support-v4:19.0.+'
+    compile 'com.squareup.okhttp:okhttp:1.2.1'
 }
 
 android {

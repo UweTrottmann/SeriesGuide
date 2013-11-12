@@ -19,8 +19,8 @@ android {
     productFlavors {
         free {
             packageName "com.battlelancer.seriesguide"
-            versionCode 187
-            versionName "9"
+            versionCode 190
+            versionName "9.1"
         }
         beta {
             packageName "com.battlelancer.seriesguide.beta"
@@ -44,7 +44,6 @@ android {
 
 dependencies {
     compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
-    compile 'net.simonvt.menudrawer:menudrawer:3.0.4@aar'
     compile project(':libraries:androidutils')
     compile project(':libraries:pagerslidingtabstrip')
     compile project(':libraries:stickygridheaders')

@@ -33,6 +33,7 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.sync.SyncUtils;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -96,7 +97,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getMenu().setContentView(R.layout.shows);
+        setContentView(R.layout.shows);
+        setupNavDrawer();
 
         // Set up a sync account if needed
         SyncUtils.createSyncAccount(this);
@@ -161,6 +163,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
     protected void onStart() {
         super.onStart();
 
+        setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_SHOWS_POSITION);
         EasyTracker.getInstance(this).activityStart(this);
     }
 
@@ -256,7 +259,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
 
         // If the nav drawer is open, hide action items related to the content
         // view
-        boolean isDrawerOpen = isMenuDrawerOpen();
+        boolean isDrawerOpen = isDrawerOpen();
         menu.findItem(R.id.menu_add_show).setVisible(!isDrawerOpen);
 
         return super.onPrepareOptionsMenu(menu);
@@ -451,8 +454,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
                 }
 
                 if (lastVersion < VER_TRAKT_SEC_CHANGES) {
-                    // clear trakt credentials
-                    editor.putString(SeriesGuidePreferences.KEY_TRAKTPWD, null);
+                    ServiceUtils.clearTraktCredentials(this);
                     editor.putString(SeriesGuidePreferences.KEY_SECURE, null);
                 }
                 if (lastVersion < VER_SUMMERTIME_FIX) {

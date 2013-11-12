@@ -32,7 +32,8 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getMenu().setContentView(R.layout.lists);
+        setContentView(R.layout.lists);
+        setupNavDrawer();
 
         setupActionBar();
 
@@ -68,6 +69,8 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
     @Override
     protected void onStart() {
         super.onStart();
+
+        setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_LISTS_POSITION);
         EasyTracker.getInstance(this).activityStart(this);
     }
 
@@ -93,7 +96,7 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content
         // view
-        boolean isDrawerOpen = isMenuDrawerOpen();
+        boolean isDrawerOpen = isDrawerOpen();
         menu.findItem(R.id.menu_list_add).setVisible(!isDrawerOpen);
 
         return super.onPrepareOptionsMenu(menu);

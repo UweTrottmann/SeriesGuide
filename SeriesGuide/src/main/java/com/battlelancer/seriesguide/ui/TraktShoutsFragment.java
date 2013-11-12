@@ -154,7 +154,6 @@ public class TraktShoutsFragment extends SherlockFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.shouts_fragment, container, false);
-        final TextView item = (TextView) v.findViewById(R.id.shouts_item);
         final EditText shouttext = (EditText) v.findViewById(R.id.shouttext);
         final CheckBox checkIsSpoiler = (CheckBox) v.findViewById(R.id.checkIsSpoiler);
 
@@ -195,10 +194,6 @@ public class TraktShoutsFragment extends SherlockFragment implements
                 }
             }
         });
-
-        if (item != null) {
-            item.setText(getArguments().getString(ShareItems.SHARESTRING));
-        }
 
         return v;
     }

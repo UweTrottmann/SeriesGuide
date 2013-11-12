@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
     android:id="@+id/root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/editTextCheckinSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="@dimen/large_padding"
+        android:layout_marginStart="@dimen/large_padding"
         android:layout_marginTop="@dimen/large_padding"
         android:layout_toLeftOf="@+id/imageButtonClearSearch"
+        android:layout_toStartOf="@+id/imageButtonClearSearch"
         android:ems="10"
         android:hint="@string/movies_search_hint"
         android:imeOptions="actionSearch"
@@ -25,9 +29,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/editTextCheckinSearch"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_alignTop="@+id/editTextCheckinSearch"
+        android:layout_marginEnd="@dimen/large_padding"
         android:layout_marginRight="@dimen/large_padding"
         android:layout_marginTop="@dimen/large_padding"
         android:background="?custom_list_selector"
@@ -58,15 +64,15 @@
         android:listSelector="@color/transparent"
         android:numColumns="auto_fit"
         android:padding="@dimen/default_padding"
-        android:stretchMode="spacingWidthUniform"
-        android:verticalSpacing="@dimen/default_padding" >
-    </GridView>
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="@dimen/default_padding" />
 
     <TextView
         android:id="@+id/poweredby"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:background="#bf000000"
         android:padding="@dimen/default_padding"

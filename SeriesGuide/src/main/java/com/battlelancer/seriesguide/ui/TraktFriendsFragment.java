@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -38,11 +39,9 @@ import com.uwetrottmann.seriesguide.R;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
@@ -189,7 +188,7 @@ public class TraktFriendsFragment extends ListFragment implements
 
         @Override
         public List<UserProfile> loadInBackground() {
-            if (ServiceUtils.hasTraktCredentials(getContext())) {
+            if (TraktSettings.hasTraktCredentials(getContext())) {
                 Trakt manager = ServiceUtils.getTraktServiceManagerWithAuth(getContext(), false);
                 if (manager == null) {
                     return null;
@@ -200,7 +199,7 @@ public class TraktFriendsFragment extends ListFragment implements
                 try {
                     final UserService userService = manager.userService();
                     List<UserProfile> friends = userService
-                            .friends(ServiceUtils.getTraktUsername(getContext()));
+                            .friends(TraktSettings.getUsername(getContext()));
 
                     for (UserProfile friend : friends) {
                         // get the detailed profile
@@ -255,12 +254,9 @@ public class TraktFriendsFragment extends ListFragment implements
 
         private final LayoutInflater mInflater;
 
-        private final SharedPreferences mPrefs;
-
         public TraktFriendsAdapter(Context context) {
             super(context, R.layout.friend);
             mImageDownloader = ImageDownloader.getInstance(context);
-            mPrefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
             mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
@@ -311,7 +307,7 @@ public class TraktFriendsFragment extends ListFragment implements
                 switch (watching.type) {
                     case Episode:
                         show = watching.show.title;
-                        String episodenumber = Utils.getEpisodeNumber(mPrefs,
+                        String episodenumber = Utils.getEpisodeNumber(getContext(),
                                 watching.episode.season, watching.episode.number);
                         episode = episodenumber + " " + watching.episode.title;
                         timestamp = getContext().getString(R.string.now);
@@ -333,7 +329,7 @@ public class TraktFriendsFragment extends ListFragment implements
 
                 if (latestShow != null) {
                     show = latestShow.show.title;
-                    String episodenumber = Utils.getEpisodeNumber(mPrefs,
+                    String episodenumber = Utils.getEpisodeNumber(getContext(),
                             latestShow.episode.season, latestShow.episode.number);
                     episode = episodenumber + " " + latestShow.episode.title;
                     timestamp = (String) DateUtils.getRelativeTimeSpanString(

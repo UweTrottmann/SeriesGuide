@@ -100,8 +100,8 @@
   <string name="uncollect">标记剧集为未收藏</string>
   <string name="collect_all">标记全部剧集为已收藏</string>
   <string name="uncollect_all">标记全部剧集为未收藏</string>
-  <string name="action_skip">Skip</string>
-  <string name="action_dont_skip">Don\'t skip</string>
+  <string name="action_skip">跳过</string>
+  <string name="action_dont_skip">不要跳过</string>
   <string name="trakt_submitqueued">正在提交到 trakt</string>
   <string name="trakt_seen">%s 已观看。</string>
   <string name="trakt_notseen">%s 未观看。</string>
@@ -269,7 +269,7 @@
   <string name="paste_title">粘贴名称</string>
   <string name="checkinsuccess">在 GetGlue 上标记 %s。</string>
   <string name="checkinfailed">GetGlue 登录失败，请稍后再试。</string>
-  <string name="getglue_authentication">Connect GetGlue</string>
+  <string name="getglue_authentication">连接到GetGlue</string>
   <string name="getglue_authfailed">GetGlue 认证失败，请稍后重试。</string>
   <string name="checkin_success_trakt">在 trakt 上标记 %s。</string>
   <string name="checkin_canceled_success_trakt">放弃 trakt 登录</string>
@@ -326,7 +326,7 @@
   <string name="migration_description">现在追剧助手X是免费版(\"X Life-Time Pass\")的X特性解锁文件。请迁移您的剧目到追剧助手免费版。确保X已安装以解锁免费版的全部特性。</string>
   <string name="migration_import">触摸下面导入追剧助手X中创建的备份。</string>
   <string name="migration_action_import">导入并替换现有剧集</string>
-  <string name="action_upgrade">Get X features</string>
+  <string name="action_upgrade">获取X特性</string>
   <string name="upgrade_description">获取通知功能，更多的小插件选项和未来全部的X特性。支持未来的更新。\n\n如果你已经购买了追剧助手X，安装它以解锁升级。</string>
   <string name="upgrade_success">谢谢，您已经订阅全部的X特性！</string>
   <string name="subscription_activated">您已经订阅X特性。</string>
@@ -334,7 +334,7 @@
   <string name="subscription_expired_details">您的X特性订阅已过期。</string>
   <string name="add_to_homescreen">添加到主屏幕</string>
   <string name="search_within_show">在%s中搜索</string>
-  <string name="web_search">Web search</string>
+  <string name="web_search">网页搜索</string>
   <string-array name="sesorting">
     <item>最新在最上</item>
     <item>最旧在最上</item>

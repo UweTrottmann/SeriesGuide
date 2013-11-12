@@ -22,6 +22,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -37,6 +38,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -157,6 +159,8 @@ public class TraktAddFragment extends AddFragment {
 
     public class GetTraktShowsTask extends AsyncTask<Integer, Void, List<SearchResult>> {
 
+        private static final String TAG = "GetTraktShowsTask";
+
         private Context mContext;
 
         public GetTraktShowsTask(Context context) {
@@ -165,10 +169,11 @@ public class TraktAddFragment extends AddFragment {
 
         @Override
         protected List<SearchResult> doInBackground(Integer... params) {
+            Log.d(TAG, "Getting shows from trakt...");
             int type = params[0];
-            List<SearchResult> showList = new ArrayList<SearchResult>();
+            List<SearchResult> showList = new ArrayList<>();
 
-            List<TvShow> shows = new ArrayList<TvShow>();
+            List<TvShow> shows = new ArrayList<>();
 
             if (type == AddPagerAdapter.TRENDING_TAB_POSITION) {
                 try {
@@ -186,17 +191,22 @@ public class TraktAddFragment extends AddFragment {
                                 break;
                             case AddPagerAdapter.LIBRARY_TAB_POSITION:
                                 shows = manager.userService()
-                                        .libraryShowsAll(ServiceUtils.getTraktUsername(mContext));
+                                        .libraryShowsAll(TraktSettings.getUsername(mContext));
                                 break;
                             case AddPagerAdapter.WATCHLIST_TAB_POSITION:
                                 shows = manager.userService()
-                                        .watchlistShows(ServiceUtils.getTraktUsername(mContext));
+                                        .watchlistShows(TraktSettings.getUsername(mContext));
                                 break;
                         }
                     }
                 } catch (RetrofitError e) {
                     // we don't care
                 }
+            }
+
+            // return empty list right away if there are no results
+            if (shows == null || shows.size() == 0) {
+                return showList;
             }
 
             // get a list of existing shows to filter against
