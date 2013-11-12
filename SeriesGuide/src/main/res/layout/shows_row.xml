@@ -48,13 +48,12 @@
         android:layout_alignParentRight="true"
         android:layout_below="@id/favoritedLabel"
         android:layout_gravity="right"
-        android:gravity="right|end"
+        android:gravity="right"
         android:lineSpacingExtra="2sp"
         android:maxWidth="90dp"
         android:paddingRight="@dimen/default_padding"
         android:paddingTop="@dimen/inline_padding"
-        android:text="@string/norating"
-        android:textAlignment="viewEnd" />
+        android:text="@string/norating" />
 
     <TextView
         android:id="@+id/seriesname"

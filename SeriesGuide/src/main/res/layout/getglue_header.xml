@@ -25,7 +25,6 @@
         android:layout_marginRight="@dimen/large_padding"
         android:ellipsize="end"
         android:paddingLeft="@dimen/default_padding"
-        android:paddingStart="@dimen/default_padding"
         android:text="@string/check_into"
         android:textAllCaps="true"
         android:textStyle="bold" />

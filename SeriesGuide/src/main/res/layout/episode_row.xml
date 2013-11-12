@@ -14,7 +14,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:background="?custom_list_selector"
             android:padding="16dp"
@@ -27,8 +26,6 @@
             android:layout_marginTop="@dimen/default_padding"
             android:layout_toLeftOf="@+id/textViewEpisodeNumber"
             android:layout_toRightOf="@id/watchedBoxEpisode"
-            android:layout_toStartOf="@+id/textViewEpisodeNumber"
-
             android:textAppearance="@style/TextAppearance.Medium.Light"
             tools:text="Episode Title" />
 
@@ -39,7 +36,6 @@
             android:layout_alignParentRight="true"
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="24dp"
-            android:layout_marginStart="@dimen/default_padding"
             android:layout_marginTop="@dimen/default_padding"
             android:text="@string/norating"
             android:textAppearance="@style/TextAppearance.Medium.Light.Dim" />
@@ -62,8 +58,7 @@
             android:layout_marginBottom="@dimen/inline_padding"
             android:layout_marginTop="@dimen/inline_padding"
             android:layout_toLeftOf="@+id/textViewEpisodeNumber"
-            android:layout_toRightOf="@id/watchedBoxEpisode"
-            android:layout_toStartOf="@+id/textViewEpisodeNumber" />
+            android:layout_toRightOf="@id/watchedBoxEpisode" />
 
         <TextView
             android:id="@+id/textViewEpisodeAlternativeNumbers"
@@ -72,10 +67,8 @@
             android:layout_below="@id/divider"
             android:layout_toLeftOf="@+id/textViewEpisodeNumber"
             android:layout_toRightOf="@id/watchedBoxEpisode"
-            android:layout_toStartOf="@+id/textViewEpisodeNumber"
             android:paddingBottom="@dimen/default_padding"
             android:text="@string/episode_number_absolute"
-
             android:textAppearance="@style/TextAppearance.XSmall.Dim" />
 
         <ImageView
