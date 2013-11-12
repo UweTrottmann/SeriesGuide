@@ -19,7 +19,7 @@
             android:id="@+id/textViewBillingTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:text="@string/action_upgrade"
             android:textAppearance="@style/TextAppearance.Large.Light" />
@@ -28,7 +28,7 @@
             android:id="@+id/textViewBillingDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/textViewBillingTitle"
             android:text="@string/upgrade_description"
             android:textAppearance="@style/TextAppearance" />
@@ -47,7 +47,7 @@
             android:id="@+id/textViewBillingExisting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/buttonBillingGetUpgrade"
             android:layout_marginTop="@dimen/large_padding"
             android:text="@string/upgrade_success"

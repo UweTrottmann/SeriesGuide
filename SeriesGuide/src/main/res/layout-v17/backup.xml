@@ -26,14 +26,14 @@
                 android:id="@+id/ButtonExportDBtoSD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/inline_padding"
+                android:layout_marginEnd="@dimen/inline_padding"
                 android:text="@string/backup_button" />
 
             <Button
                 android:id="@+id/ButtonImportDBfromSD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/inline_padding"
+                android:layout_marginStart="@dimen/inline_padding"
                 android:text="@string/import_button" />
         </LinearLayout>
     </LinearLayout>

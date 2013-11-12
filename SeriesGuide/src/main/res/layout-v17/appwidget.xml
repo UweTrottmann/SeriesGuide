@@ -19,8 +19,8 @@
             android:background="@drawable/appwidget_button_center"
             android:focusable="true"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/widget_paddingLeft"
-            android:paddingRight="@dimen/widget_paddingRight"></LinearLayout>
+            android:paddingStart="@dimen/widget_paddingLeft"
+            android:paddingEnd="@dimen/widget_paddingRight"></LinearLayout>
 
         <ImageButton
             android:id="@+id/ImageButtonWidget"

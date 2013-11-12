@@ -21,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/default_padding"
-                android:drawableRight="@drawable/ic_trakt"
+                android:drawableEnd="@drawable/ic_trakt"
                 android:text="@string/connect_trakt"
                 android:textAppearance="@style/TextAppearance.Large.Light" />
 
@@ -41,8 +41,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/default_padding"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginRight="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginEnd="@dimen/default_padding"
                 android:layout_marginTop="16dp"
                 android:text="@string/integration_trakt_items"
 

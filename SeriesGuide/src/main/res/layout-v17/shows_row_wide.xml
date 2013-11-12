@@ -9,8 +9,8 @@
         android:id="@+id/showposter"
         android:layout_width="102dp"
         android:layout_height="150dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="@dimen/large_padding"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="@dimen/large_padding"
         android:contentDescription="@string/description_poster"
         android:scaleType="centerCrop"
         android:src="@drawable/show_generic" />
@@ -19,7 +19,7 @@
         android:id="@+id/imageViewShowsContextMenu"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:background="?attr/custom_list_selector"
         android:scaleType="center"
         android:src="?attr/drawableDropdown"
@@ -31,7 +31,7 @@
         android:layout_height="25dp"
         android:layout_alignWithParentIfMissing="true"
         android:layout_marginTop="@dimen/inline_padding"
-        android:layout_toLeftOf="@id/imageViewShowsContextMenu"
+        android:layout_toStartOf="@id/imageViewShowsContextMenu"
         android:background="?attr/custom_list_selector"
         android:contentDescription="@string/favorited"
         android:src="?attr/drawableStar" />
@@ -40,8 +40,8 @@
         android:id="@+id/seriesname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/favoritedLabel"
-        android:layout_toRightOf="@id/showposter"
+        android:layout_toStartOf="@id/favoritedLabel"
+        android:layout_toEndOf="@id/showposter"
         android:textAppearance="@style/TextAppearance.Large.Light"
         tools:text="@string/show" />
 
@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/seriesname"
-        android:layout_toRightOf="@id/showposter"
+        android:layout_toEndOf="@id/showposter"
         android:paddingBottom="@dimen/default_padding"
         android:text="@string/norating"
         android:textAppearance="@style/TextAppearance.Small.Dim" />
@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewShowsTimeAndNetwork"
-        android:layout_toRightOf="@id/showposter"
+        android:layout_toEndOf="@id/showposter"
         android:text="@string/no_nextepisode"
         android:textAppearance="@style/TextAppearance.Light" />
 
@@ -69,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/TextViewShowListNextEpisode"
-        android:layout_toRightOf="@id/showposter"
+        android:layout_toEndOf="@id/showposter"
         android:paddingBottom="@dimen/item_padding"
         android:textAppearance="@style/TextAppearance.Small"
         tools:text="@string/episode" />

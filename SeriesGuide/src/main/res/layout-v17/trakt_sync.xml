@@ -11,7 +11,7 @@
             android:id="@+id/textViewTitleSync"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:text="@string/pref_traktsync"
             android:textAppearance="@style/TextAppearance.Large.Light" />
 
@@ -19,7 +19,7 @@
             android:id="@+id/textViewIntro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@id/textViewTitleSync"
             android:text="@string/trakt_sync_intro" />
 
@@ -27,7 +27,7 @@
             android:id="@+id/textViewDownloadHint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@id/textViewIntro"
             android:layout_marginTop="@dimen/default_padding"
             android:text="@string/trakt_download_hint" />
@@ -46,7 +46,7 @@
             android:id="@+id/textViewUploadHint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@id/syncToDeviceButton"
             android:layout_marginTop="@dimen/large_padding"
             android:text="@string/trakt_upload_hint" />
@@ -55,8 +55,8 @@
             android:id="@+id/syncToTraktButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/syncToDeviceButton"
-            android:layout_alignRight="@+id/syncToDeviceButton"
+            android:layout_alignStart="@+id/syncToDeviceButton"
+            android:layout_alignEnd="@+id/syncToDeviceButton"
             android:layout_below="@id/textViewUploadHint"
             android:layout_marginTop="@dimen/default_padding"
             android:text="@string/trakt_upload" />
@@ -65,8 +65,8 @@
             android:id="@+id/checkBoxSyncUnseen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/syncToTraktButton"
-            android:layout_alignRight="@+id/syncToTraktButton"
+            android:layout_alignStart="@+id/syncToTraktButton"
+            android:layout_alignEnd="@+id/syncToTraktButton"
             android:layout_below="@+id/syncToTraktButton"
             android:layout_marginTop="20dp"
             android:text="@string/trakt_syncunwatched" />
@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/syncToTraktButton"
             android:layout_alignTop="@+id/syncToTraktButton"
-            android:layout_toRightOf="@+id/syncToTraktButton"
+            android:layout_toEndOf="@+id/syncToTraktButton"
             android:visibility="gone" />
 
         <ProgressBar
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/syncToDeviceButton"
             android:layout_alignTop="@+id/syncToDeviceButton"
-            android:layout_toRightOf="@+id/syncToDeviceButton"
+            android:layout_toEndOf="@+id/syncToDeviceButton"
             android:visibility="gone" />
     </RelativeLayout>
 

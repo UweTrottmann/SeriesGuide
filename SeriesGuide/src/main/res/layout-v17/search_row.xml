@@ -9,7 +9,7 @@
         android:id="@+id/imageViewWatchedStatus"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginBottom="@dimen/inline_padding"
         android:layout_marginTop="@dimen/inline_padding"
         android:src="?attr/drawableWatch" />
@@ -18,9 +18,9 @@
         android:id="@+id/textViewShowTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_marginBottom="@dimen/inline_padding"
-        android:layout_toLeftOf="@id/imageViewWatchedStatus"
+        android:layout_toStartOf="@id/imageViewWatchedStatus"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.XSmall"
         android:textStyle="bold"
@@ -30,9 +30,9 @@
         android:id="@+id/textViewEpisodeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@id/textViewShowTitle"
-        android:layout_toLeftOf="@id/imageViewWatchedStatus"
+        android:layout_toStartOf="@id/imageViewWatchedStatus"
         android:textAppearance="@style/TextAppearance.Medium.Light"
         tools:text="@string/episode" />
 

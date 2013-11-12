@@ -41,7 +41,7 @@
             android:id="@+id/textViewShowsWithNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/progressBarShowsWithNext"
             android:textIsSelectable="true"
             android:visibility="invisible" />
@@ -59,7 +59,7 @@
             android:id="@+id/textViewShowsContinuing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/progressBarShowsContinuing"
             android:textIsSelectable="true"
             android:visibility="invisible" />
@@ -98,7 +98,7 @@
             android:id="@+id/textViewEpisodesWatched"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/progressBarEpisodesWatched"
             android:textIsSelectable="true"
             android:visibility="invisible" />
@@ -122,7 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textViewEpisodesRuntime"
             android:layout_alignTop="@+id/textViewEpisodesRuntime"
-            android:layout_toRightOf="@+id/textViewEpisodesRuntime" />
+            android:layout_toEndOf="@+id/textViewEpisodesRuntime" />
 
         <TextView
             android:id="@+id/textView3"

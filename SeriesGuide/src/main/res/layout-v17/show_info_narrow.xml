@@ -21,15 +21,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/default_padding"
-            android:paddingRight="@dimen/default_padding">
+            android:paddingStart="@dimen/default_padding"
+            android:paddingEnd="@dimen/default_padding">
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginRight="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginEnd="@dimen/default_padding"
                 android:textAppearance="@style/TextAppearance.Large.Light"
                 android:textIsSelectable="true"
                 tools:text="Show title" />
@@ -57,9 +57,9 @@
                     android:id="@+id/showStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/default_padding"
+                    android:layout_marginStart="@dimen/default_padding"
                     android:layout_marginTop="@dimen/inline_padding"
-                    android:layout_toRightOf="@+id/containerShowInfoPoster"
+                    android:layout_toEndOf="@+id/containerShowInfoPoster"
                     android:textAllCaps="true"
                     android:textAppearance="@style/TextAppearance.Light"
                     android:textIsSelectable="true"
@@ -70,9 +70,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/showStatus"
-                    android:layout_marginLeft="@dimen/default_padding"
+                    android:layout_marginStart="@dimen/default_padding"
                     android:layout_marginTop="@dimen/default_padding"
-                    android:layout_toRightOf="@+id/containerShowInfoPoster"
+                    android:layout_toEndOf="@+id/containerShowInfoPoster"
                     android:textAppearance="@style/TextAppearance.Light"
                     android:textIsSelectable="true"
                     tools:text="Show Info" />

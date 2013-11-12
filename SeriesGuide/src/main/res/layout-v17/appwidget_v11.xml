@@ -29,8 +29,8 @@
                 android:background="@drawable/list_selector_sg"
                 android:focusable="true"
                 android:paddingBottom="@dimen/inline_padding"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
+                android:paddingStart="@dimen/default_padding"
+                android:paddingEnd="@dimen/default_padding"
                 android:paddingTop="@dimen/inline_padding">
 
                 <TextView
@@ -52,8 +52,8 @@
                 android:background="@drawable/list_selector_sg"
                 android:focusable="true"
                 android:paddingBottom="@dimen/inline_padding"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
+                android:paddingStart="@dimen/default_padding"
+                android:paddingEnd="@dimen/default_padding"
                 android:paddingTop="@dimen/inline_padding">
 
                 <ImageView
@@ -72,8 +72,8 @@
                 android:background="@drawable/list_selector_sg"
                 android:focusable="true"
                 android:paddingBottom="@dimen/inline_padding"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
+                android:paddingStart="@dimen/default_padding"
+                android:paddingEnd="@dimen/default_padding"
                 android:paddingTop="@dimen/inline_padding">
 
                 <ImageView
@@ -93,8 +93,8 @@
             android:clipToPadding="@bool/gridClipToPadding"
             android:divider="@null"
             android:listSelector="@drawable/list_selector_sg"
-            android:paddingLeft="@dimen/inline_padding"
-            android:paddingRight="@dimen/inline_padding" />
+            android:paddingStart="@dimen/inline_padding"
+            android:paddingEnd="@dimen/inline_padding" />
 
         <TextView
             android:id="@+id/empty_view"

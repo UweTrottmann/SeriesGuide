@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/layout_padding"
-    android:paddingRight="@dimen/layout_padding">
+    android:paddingStart="@dimen/layout_padding"
+    android:paddingEnd="@dimen/layout_padding">
 
     <Button
         android:id="@+id/pasteTitle"
@@ -18,7 +18,7 @@
         style="@style/Widget.SeriesGuide.Button.Borderless.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/pasteTitle"
+        android:layout_toEndOf="@+id/pasteTitle"
         android:padding="@dimen/default_padding"
         android:text="@string/clear" />
 
@@ -59,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/toggleGetGlue"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginBottom="@dimen/default_padding"
         android:text="@string/checkin" />
 

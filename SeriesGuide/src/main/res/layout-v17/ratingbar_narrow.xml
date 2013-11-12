@@ -4,8 +4,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/default_padding"
-    android:layout_marginLeft="@dimen/default_padding"
-    android:layout_marginRight="@dimen/default_padding"
+    android:layout_marginStart="@dimen/default_padding"
+    android:layout_marginEnd="@dimen/default_padding"
     android:background="?attr/custom_list_selector">
 
     <ImageView
@@ -13,7 +13,7 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginRight="@dimen/inline_padding"
+        android:layout_marginEnd="@dimen/inline_padding"
         android:padding="4dp"
         android:src="?attr/drawableStar" />
 
@@ -21,8 +21,8 @@
         android:id="@+id/textViewRatingsTvdbValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/default_padding"
-        android:layout_toRightOf="@+id/imageViewRatingsStar"
+        android:layout_marginEnd="@dimen/default_padding"
+        android:layout_toEndOf="@+id/imageViewRatingsStar"
         android:text="@string/norating"
         android:textAppearance="@style/TextAppearance.Large.Light"
         android:textColor="?attr/textColorSgDefault"
@@ -32,8 +32,8 @@
         android:id="@+id/textViewRatingsTvdbLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/inline_padding"
-        android:layout_toRightOf="@+id/textViewRatingsTvdbValue"
+        android:layout_marginStart="@dimen/inline_padding"
+        android:layout_toEndOf="@+id/textViewRatingsTvdbValue"
         android:text="@string/tvdb"
         android:textAppearance="@style/TextAppearance.Small.Dim" />
 
@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewRatingsTvdbLabel"
-        android:layout_toRightOf="@+id/textViewRatingsTvdbValue"
+        android:layout_toEndOf="@+id/textViewRatingsTvdbValue"
         android:text="@string/tvdb_range"
         android:textAppearance="@style/TextAppearance.Small.Dim" />
 
@@ -58,7 +58,7 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="@dimen/inline_padding"
+            android:layout_marginEnd="@dimen/inline_padding"
             android:contentDescription="@string/love"
             android:gravity="center_vertical"
             android:padding="4dp"
@@ -68,8 +68,8 @@
             android:id="@+id/textViewRatingsTraktValue"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginRight="@dimen/inline_padding"
-            android:layout_toRightOf="@+id/imageViewRatingsLove"
+            android:layout_marginEnd="@dimen/inline_padding"
+            android:layout_toEndOf="@+id/imageViewRatingsLove"
             android:gravity="center_vertical"
             android:text="@string/notraktrating"
             android:textAppearance="@style/TextAppearance.Large.Light"
@@ -80,16 +80,16 @@
             android:id="@+id/dividerRatingsVertical"
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/default_padding"
-            android:layout_marginRight="@dimen/default_padding"
-            android:layout_toRightOf="@+id/textViewRatingsTraktValue"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            android:layout_toEndOf="@+id/textViewRatingsTraktValue"
             layout="@layout/divider_vertical" />
 
         <TextView
             android:id="@+id/textViewRatingsTraktUserLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/dividerRatingsVertical"
+            android:layout_toEndOf="@+id/dividerRatingsVertical"
             android:ellipsize="marquee"
             android:lines="1"
             android:text="@string/your_rating"
@@ -100,7 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewRatingsTraktUserLabel"
-            android:layout_toRightOf="@+id/dividerRatingsVertical"
+            android:layout_toEndOf="@+id/dividerRatingsVertical"
             android:ellipsize="marquee"
             android:lines="1"
             android:text="@string/norating"
@@ -120,8 +120,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/containerRatingsTrakt"
-        android:layout_marginLeft="@dimen/inline_padding"
-        android:layout_toRightOf="@+id/textViewRatingsTraktVotes"
+        android:layout_marginStart="@dimen/inline_padding"
+        android:layout_toEndOf="@+id/textViewRatingsTraktVotes"
         android:text="@string/trakt"
         android:textAppearance="@style/TextAppearance.Small.Dim" />
 

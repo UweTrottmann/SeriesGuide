@@ -42,7 +42,7 @@
         android:id="@+id/poweredby"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="bottom|end"
         android:background="#bf000000"
         android:padding="@dimen/default_padding"
         android:text="@string/powered_by_trakt"

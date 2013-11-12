@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/large_padding"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
+        android:paddingStart="@dimen/default_padding"
+        android:paddingEnd="@dimen/default_padding"
         android:text="@string/select_show"
 
         android:textAppearance="@style/TextAppearance.Large.Light" />
@@ -22,9 +22,8 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewFixGetGlueHeader"
-        android:layout_marginRight="@dimen/large_padding"
+        android:layout_marginEnd="@dimen/large_padding"
         android:ellipsize="end"
-        android:paddingLeft="@dimen/default_padding"
         android:paddingStart="@dimen/default_padding"
         android:text="@string/check_into"
         android:textAllCaps="true"
@@ -35,8 +34,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewFixGetGlueHeader"
-        android:layout_toRightOf="@+id/textViewSelectedShowHeader"
-        android:paddingRight="@dimen/default_padding"
+        android:layout_toEndOf="@+id/textViewSelectedShowHeader"
+        android:paddingEnd="@dimen/default_padding"
         android:text="@string/no_selection" />
 
     <include

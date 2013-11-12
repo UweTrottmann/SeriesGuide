@@ -8,8 +8,8 @@
         android:id="@+id/poster"
         android:layout_width="100dp"
         android:layout_height="147dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="@dimen/default_padding"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="@dimen/default_padding"
         android:contentDescription="@string/description_poster"
         android:scaleType="centerCrop"
         android:src="@drawable/appwidget_bg" />
@@ -17,7 +17,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="147dp"
-        android:layout_toRightOf="@id/poster"
+        android:layout_toEndOf="@id/poster"
         android:orientation="vertical">
 
         <LinearLayout
@@ -29,7 +29,7 @@
             android:clickable="true"
             android:focusable="true"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/default_padding">
+            android:paddingStart="@dimen/default_padding">
 
             <TextView
                 android:id="@+id/title"
@@ -38,7 +38,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:paddingBottom="@dimen/inline_padding"
-                android:paddingRight="@dimen/default_padding"
+                android:paddingEnd="@dimen/default_padding"
                 android:text="@string/app_name"
                 android:textAppearance="@style/TextAppearance.Large.Light" />
 
@@ -49,7 +49,7 @@
                 android:ellipsize="end"
                 android:maxLines="3"
                 android:paddingBottom="@dimen/inline_padding"
-                android:paddingRight="@dimen/default_padding"
+                android:paddingEnd="@dimen/default_padding"
                 android:text="@string/app_name"
                 android:textAppearance="@style/TextAppearance.Small" />
         </LinearLayout>

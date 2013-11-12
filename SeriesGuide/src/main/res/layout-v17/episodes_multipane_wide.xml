@@ -61,7 +61,7 @@
         <View
             android:layout_width="2dp"
             android:layout_height="match_parent"
-            android:layout_gravity="left"
+            android:layout_gravity="start"
             android:background="?attr/colorSeparator" />
 
         <View

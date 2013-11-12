@@ -6,7 +6,7 @@
     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
     android:ellipsize="marquee"
     android:gravity="center_vertical"
-    android:paddingLeft="@dimen/large_padding"
-    android:paddingRight="@dimen/large_padding"
+    android:paddingStart="@dimen/large_padding"
+    android:paddingEnd="@dimen/large_padding"
     android:textAppearance="@style/TextAppearance.Small.Primary"
     android:textColor="@color/text_default" />

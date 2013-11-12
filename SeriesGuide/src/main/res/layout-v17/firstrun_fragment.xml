@@ -24,7 +24,7 @@
                 android:id="@+id/textViewFirstRunTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/default_padding"
+                android:paddingStart="@dimen/default_padding"
                 android:paddingTop="@dimen/default_padding"
                 android:text="@string/welcome_add_part1"
                 android:textAppearance="@style/TextAppearance.Large.Light" />
@@ -34,10 +34,10 @@
                 style="@style/Widget.SeriesGuide.Button.Borderless.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
                 android:drawablePadding="5dp"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
+                android:paddingStart="@dimen/default_padding"
+                android:paddingEnd="@dimen/default_padding"
                 android:text="@string/action_shows_add"
                 android:textAllCaps="true"
                 android:textColor="?attr/textColorSgPrimary"
@@ -55,9 +55,9 @@
                 style="@style/Widget.SeriesGuide.Button.Borderless.Small.Highlight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical|left"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
+                android:gravity="center_vertical|start"
+                android:paddingStart="@dimen/default_padding"
+                android:paddingEnd="@dimen/default_padding"
                 android:text="@string/action_migrate" />
 
             <include
@@ -71,8 +71,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/large_padding"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginRight="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginEnd="@dimen/default_padding"
                 android:layout_marginTop="@dimen/large_padding"
                 android:orientation="vertical">
 
@@ -116,8 +116,8 @@
         android:id="@+id/buttonFirstRunDismiss"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_gravity="top|right"
-        android:layout_marginRight="@dimen/default_padding"
+        android:layout_gravity="top|end"
+        android:layout_marginEnd="@dimen/default_padding"
         android:layout_marginTop="@dimen/default_padding"
         android:background="?attr/custom_list_selector"
         android:contentDescription="@string/dismiss"

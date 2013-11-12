@@ -20,20 +20,20 @@
             style="@style/TabStrip"
             android:layout_width="match_parent"
             android:layout_height="@dimen/tab_strip_height"
-            android:layout_toLeftOf="@id/separatorUpcoming" />
+            android:layout_toStartOf="@id/separatorUpcoming" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pagerUpcoming"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/tabsUpcoming"
-            android:layout_toLeftOf="@id/separatorUpcoming" />
+            android:layout_toStartOf="@id/separatorUpcoming" />
 
         <FrameLayout
             android:id="@+id/fragment_details"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@id/separatorUpcoming" />
+            android:layout_toEndOf="@id/separatorUpcoming" />
 
     </RelativeLayout>
 

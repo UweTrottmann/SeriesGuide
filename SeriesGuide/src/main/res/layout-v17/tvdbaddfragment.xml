@@ -13,8 +13,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/default_padding"
-            android:layout_marginLeft="@dimen/large_padding"
-            android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginStart="@dimen/large_padding"
+            android:layout_marginEnd="@dimen/large_padding"
             android:layout_marginTop="@dimen/large_padding">
 
             <EditText
@@ -56,7 +56,7 @@
         android:id="@+id/poweredby"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="bottom|end"
         android:background="#bf000000"
         android:padding="@dimen/default_padding"
         android:text="@string/powered_by_thetvdb"

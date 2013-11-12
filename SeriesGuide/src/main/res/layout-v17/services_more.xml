@@ -6,9 +6,9 @@
         style="@style/Widget.SeriesGuide.Button.Borderless.Default"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:gravity="center_vertical|left"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
+        android:gravity="center_vertical|start"
+        android:paddingStart="@dimen/default_padding"
+        android:paddingEnd="@dimen/default_padding"
         android:text="@string/imdb" />
 
     <Button
@@ -16,9 +16,9 @@
         style="@style/Widget.SeriesGuide.Button.Borderless.Default"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:gravity="center_vertical|left"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
+        android:gravity="center_vertical|start"
+        android:paddingStart="@dimen/default_padding"
+        android:paddingEnd="@dimen/default_padding"
         android:text="@string/tvdb" />
 
     <Button
@@ -26,9 +26,9 @@
         style="@style/Widget.SeriesGuide.Button.Borderless.Default"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:gravity="center_vertical|left"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
+        android:gravity="center_vertical|start"
+        android:paddingStart="@dimen/default_padding"
+        android:paddingEnd="@dimen/default_padding"
         android:text="@string/trakt" />
 
     <Button
@@ -36,9 +36,9 @@
         style="@style/Widget.SeriesGuide.Button.Borderless.Default"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:gravity="center_vertical|left"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
+        android:gravity="center_vertical|start"
+        android:paddingStart="@dimen/default_padding"
+        android:paddingEnd="@dimen/default_padding"
         android:text="@string/web_search" />
 
     <Button
@@ -46,9 +46,9 @@
         style="@style/Widget.SeriesGuide.Button.Borderless.Default"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:gravity="center_vertical|left"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
+        android:gravity="center_vertical|start"
+        android:paddingStart="@dimen/default_padding"
+        android:paddingEnd="@dimen/default_padding"
         android:text="@string/comments" />
 
 </merge>

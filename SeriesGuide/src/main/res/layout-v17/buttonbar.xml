@@ -15,8 +15,8 @@
         android:layout_width="56dp"
         android:layout_height="match_parent"
         android:contentDescription="@string/checkin"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
+        android:paddingStart="@dimen/default_padding"
+        android:paddingEnd="@dimen/default_padding"
         android:src="?attr/drawableCheckin" />
 
     <ImageButton
@@ -25,8 +25,8 @@
         android:layout_width="@dimen/buttonbar_button_width"
         android:layout_height="match_parent"
         android:contentDescription="@string/togglewatched"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
+        android:paddingStart="@dimen/default_padding"
+        android:paddingEnd="@dimen/default_padding"
         android:src="?attr/drawableWatch" />
 
     <ImageButton
@@ -35,8 +35,8 @@
         android:layout_width="@dimen/buttonbar_button_width"
         android:layout_height="match_parent"
         android:contentDescription="@string/collect"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
+        android:paddingStart="@dimen/default_padding"
+        android:paddingEnd="@dimen/default_padding"
         android:src="?attr/drawableCollect" />
 
     <ImageButton
@@ -45,8 +45,8 @@
         android:layout_width="@dimen/buttonbar_button_width"
         android:layout_height="match_parent"
         android:contentDescription="@string/action_skip"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
+        android:paddingStart="@dimen/default_padding"
+        android:paddingEnd="@dimen/default_padding"
         android:src="?attr/drawableSkip" />
 
     <View
@@ -61,8 +61,8 @@
         style="@style/Widget.SeriesGuide.Button.Borderless"
         android:layout_width="@dimen/buttonbar_button_width"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
+        android:paddingStart="@dimen/default_padding"
+        android:paddingEnd="@dimen/default_padding"
         android:src="?attr/drawableDropdown" />
 
 </LinearLayout>
