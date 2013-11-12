@@ -86,7 +86,7 @@ public class TraktShoutsActivity extends BaseActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(R.string.shouts);
+        actionBar.setTitle(R.string.comments);
         actionBar.setSubtitle(getIntent().getExtras().getString(ShareItems.SHARESTRING));
     }
 

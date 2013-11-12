@@ -52,7 +52,6 @@
     <string name="share_checkout">Check out</string>
 
     <!-- Shouts -->
-    <string name="shouts">Shouts</string>
     <string name="comments">Comments</string>
     <string name="shout_hint">Type a shout (in English)</string>
     <string name="shout">Shout!</string>
