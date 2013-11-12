@@ -11,7 +11,6 @@
         android:layout_width="@dimen/widget_item_width"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:paddingEnd="@dimen/inline_padding"
         android:paddingRight="@dimen/inline_padding"
         android:src="@drawable/appwidget_bg" />
 
@@ -19,9 +18,7 @@
         android:id="@+id/textViewWidgetShow"
         style="@style/WidgetTextView"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
-        android:layout_toEndOf="@+id/widgetPoster"
         android:layout_toLeftOf="@+id/widgetAirtime"
         android:layout_toRightOf="@+id/widgetPoster"
         android:layout_toStartOf="@+id/widgetAirtime"
@@ -37,7 +34,6 @@
         android:layout_alignLeft="@+id/textViewWidgetShow"
         android:layout_alignStart="@+id/textViewWidgetShow"
         android:layout_below="@+id/textViewWidgetShow"
-        android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:layout_toLeftOf="@+id/widgetNetwork"
         android:layout_toStartOf="@+id/widgetNetwork"
@@ -48,7 +44,6 @@
     <TextView
         android:id="@+id/widgetAirtime"
         style="@style/WidgetTextView"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:text="@string/norating"
@@ -57,7 +52,6 @@
     <TextView
         android:id="@+id/widgetNetwork"
         style="@style/WidgetTextView"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/widgetAirtime"
         android:text="@string/norating"

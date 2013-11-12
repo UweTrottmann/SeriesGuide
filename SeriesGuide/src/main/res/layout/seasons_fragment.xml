@@ -19,14 +19,12 @@
         layout="@layout/divider_vertical"
         android:layout_width="1dp"
         android:layout_height="48dp"
-        android:layout_toEndOf="@+id/imageViewSeasonsWatchedToggle"
         android:layout_toRightOf="@+id/imageViewSeasonsWatchedToggle" />
 
     <ImageView
         android:id="@+id/imageViewSeasonsCollectedToggle"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_toEndOf="@+id/dividerSeasons1"
         android:layout_toRightOf="@+id/dividerSeasons1"
         android:background="?custom_list_selector"
         android:padding="@dimen/default_padding"
@@ -37,14 +35,12 @@
         layout="@layout/divider_vertical"
         android:layout_width="1dp"
         android:layout_height="48dp"
-        android:layout_toEndOf="@+id/imageViewSeasonsCollectedToggle"
         android:layout_toRightOf="@+id/imageViewSeasonsCollectedToggle" />
 
     <TextView
         android:id="@+id/textViewSeasonsRemaining"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_toEndOf="@+id/dividerSeasons2"
         android:layout_toRightOf="@+id/dividerSeasons2"
         android:ellipsize="end"
         android:gravity="center_vertical"
@@ -73,7 +69,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="@bool/gridClipToPadding"
             android:fastScrollEnabled="true"
-            android:listSelector="?custom_list_selector"></ListView>
+            android:listSelector="?custom_list_selector"/>
 
         <TextView
             android:id="@+android:id/empty"

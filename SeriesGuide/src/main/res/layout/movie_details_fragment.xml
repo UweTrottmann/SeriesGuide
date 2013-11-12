@@ -85,7 +85,6 @@
                 layout="@layout/divider_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/textViewMovieDescription"
                 android:layout_alignLeft="@+id/textViewMovieDescription"
                 android:layout_alignRight="@+id/textViewMovieDescription"
                 android:layout_alignStart="@+id/textViewMovieDescription"

@@ -14,7 +14,7 @@
         android:layout_weight="1"
         android:clipToPadding="@bool/gridClipToPadding"
         android:listSelector="?custom_list_selector"
-        android:scrollbarStyle="outsideInset"></ListView>
+        android:scrollbarStyle="outsideInset"/>
 
     <include
         android:layout_width="match_parent"

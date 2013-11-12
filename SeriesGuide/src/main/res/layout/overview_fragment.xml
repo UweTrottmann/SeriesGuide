@@ -54,7 +54,6 @@
                         android:id="@+id/seriesname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/default_padding"
                         android:layout_marginLeft="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
                         android:ellipsize="marquee"
@@ -67,7 +66,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_below="@id/seriesname"
-                        android:layout_marginEnd="@dimen/default_padding"
                         android:layout_marginLeft="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
                         android:textAllCaps="true"
@@ -80,9 +78,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/seriesname"
                         android:layout_marginBottom="@dimen/default_padding"
-                        android:layout_marginEnd="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
-                        android:layout_toEndOf="@+id/showStatus"
                         android:layout_toRightOf="@+id/showStatus"
                         android:textAppearance="@style/TextAppearance.Small"
                         tools:text="Show meta" />
@@ -167,7 +163,6 @@
                             android:layout_gravity="bottom"
                             android:background="?attr/colorOverlay"
                             android:paddingBottom="@dimen/default_padding"
-                            android:paddingEnd="@dimen/default_padding"
                             android:paddingLeft="@dimen/default_padding"
                             android:paddingRight="@dimen/default_padding"
                             android:paddingTop="@dimen/inline_padding">
@@ -185,7 +180,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/episodeTitle"
-                                android:layout_marginEnd="@dimen/default_padding"
                                 android:layout_marginRight="@dimen/default_padding"
                                 android:textAllCaps="true"
                                 android:textAppearance="@style/TextAppearance.Small" />
@@ -195,7 +189,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/episodeTitle"
-                                android:layout_toEndOf="@+id/episodeTime"
                                 android:layout_toRightOf="@+id/episodeTime"
                                 android:textAllCaps="true"
                                 android:textAppearance="@style/TextAppearance.Small.Dim" />

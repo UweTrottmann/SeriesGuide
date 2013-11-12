@@ -7,7 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="center_vertical|left"
-        android:paddingEnd="@dimen/default_padding"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:text="@string/imdb" />
@@ -18,7 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="center_vertical|left"
-        android:paddingEnd="@dimen/default_padding"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:text="@string/tvdb" />
@@ -29,7 +27,6 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="center_vertical|left"
-        android:paddingEnd="@dimen/default_padding"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:text="@string/trakt" />
@@ -40,7 +37,6 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="center_vertical|left"
-        android:paddingEnd="@dimen/default_padding"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:text="@string/web_search" />
@@ -51,7 +47,6 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="center_vertical|left"
-        android:paddingEnd="@dimen/default_padding"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:text="@string/comments" />

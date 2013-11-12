@@ -9,7 +9,6 @@
         android:id="@+id/imageViewWatchedStatus"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="@dimen/inline_padding"
         android:layout_marginTop="@dimen/inline_padding"

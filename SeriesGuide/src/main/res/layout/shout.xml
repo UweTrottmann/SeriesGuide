@@ -12,7 +12,6 @@
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="@dimen/default_padding"
         android:layout_marginRight="@dimen/default_padding"
         android:src="@drawable/ic_launcher" />
 
@@ -20,7 +19,6 @@
         android:id="@+id/userstrip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/avatar"
         android:layout_toRightOf="@+id/avatar">
 
         <TextView
@@ -46,7 +44,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/userstrip"
-        android:layout_toEndOf="@+id/avatar"
         android:layout_toRightOf="@+id/avatar"
         android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.Small" />

@@ -22,7 +22,6 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewFixGetGlueHeader"
-        android:layout_marginEnd="@dimen/large_padding"
         android:layout_marginRight="@dimen/large_padding"
         android:ellipsize="end"
         android:paddingLeft="@dimen/default_padding"
@@ -36,9 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewFixGetGlueHeader"
-        android:layout_toEndOf="@+id/textViewSelectedShowHeader"
         android:layout_toRightOf="@+id/textViewSelectedShowHeader"
-        android:paddingEnd="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:text="@string/no_selection" />
 
