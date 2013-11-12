@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:id="@+id/layout_root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/description_poster"
+        android:scaleType="centerCrop"></ImageView>
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="?attr/colorSeparator" />
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="?attr/colorSeparator" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/overview_container"
+            style="@style/DefaultPadding.Page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/containerOverviewShow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:focusable="true"
+                    android:nextFocusDown="@+id/checkinButton"
+                    android:paddingBottom="@dimen/default_padding">
+
+                    <TextView
+                        android:id="@+id/seriesname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_padding"
+                        android:layout_marginEnd="@dimen/default_padding"
+                        android:ellipsize="marquee"
+                        android:textAppearance="@style/TextAppearance.Large.Light"
+                        tools:text="Show title" />
+
+                    <TextView
+                        android:id="@+id/showStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@id/seriesname"
+                        android:layout_marginStart="@dimen/default_padding"
+                        android:layout_marginEnd="@dimen/default_padding"
+                        android:textAllCaps="true"
+                        android:textAppearance="@style/TextAppearance.Small"
+                        tools:text="Status" />
+
+                    <TextView
+                        android:id="@+id/showmeta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/seriesname"
+                        android:layout_marginBottom="@dimen/default_padding"
+                        android:layout_marginEnd="@dimen/default_padding"
+                        android:layout_toEndOf="@+id/showStatus"
+                        android:textAppearance="@style/TextAppearance.Small"
+                        tools:text="Show meta" />
+                </RelativeLayout>
+
+                <include layout="@layout/divider_vertical" />
+
+                <ImageView
+                    android:id="@+id/imageViewFavorite"
+                    style="@style/Widget.SeriesGuide.Button.Borderless"
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent"
+                    android:focusable="true"
+                    android:padding="14dp"
+                    android:src="@drawable/ic_action_star_0" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/spacerOverviewShow"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:visibility="gone" />
+
+            <include
+                android:id="@+id/dividerHorizontalOverviewShow"
+                layout="@layout/divider_horizontal" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <include
+                    android:id="@+id/progress_container"
+                    layout="@layout/progress_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/content_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <FrameLayout
+                        android:id="@+id/episode_primary_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/imagecontainer_height"
+                        android:foreground="?attr/custom_list_selector">
+
+                        <FrameLayout
+                            android:id="@+id/imageContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <LinearLayout
+                                android:id="@+id/image_progress_container"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/imagecontainer_height"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:visibility="gone">
+
+                                <ProgressBar
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/ImageViewEpisodeImage"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/imagecontainer_height"
+                                android:layout_gravity="center_vertical"
+                                android:contentDescription="@string/description_image"
+                                android:scaleType="centerCrop" />
+                        </FrameLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:background="?attr/colorOverlay"
+                            android:paddingBottom="@dimen/default_padding"
+                            android:paddingStart="@dimen/default_padding"
+                            android:paddingEnd="@dimen/default_padding"
+                            android:paddingTop="@dimen/inline_padding">
+
+                            <TextView
+                                android:id="@+id/episodeTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="2"
+                                android:textAppearance="@style/TextAppearance.Large.Light" />
+
+                            <TextView
+                                android:id="@+id/episodeTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/episodeTitle"
+                                android:layout_marginEnd="@dimen/default_padding"
+                                android:textAllCaps="true"
+                                android:textAppearance="@style/TextAppearance.Small" />
+
+                            <TextView
+                                android:id="@+id/episodeInfo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/episodeTitle"
+                                android:layout_toEndOf="@+id/episodeTime"
+                                android:textAllCaps="true"
+                                android:textAppearance="@style/TextAppearance.Small.Dim" />
+                        </RelativeLayout>
+                    </FrameLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?attr/colorAccent" />
+
+                    <include layout="@layout/buttonbar" />
+
+                    <LinearLayout
+                        android:id="@+id/episode_meta_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_padding"
+                        android:orientation="vertical">
+
+                        <include layout="@layout/ratingbar" />
+
+                        <TextView
+                            android:id="@+id/TextViewEpisodeDescription"
+                            style="@style/DefaultPadding.Blocks.WithBottomMargin.FlowText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.Light"
+                            android:textIsSelectable="true" />
+
+                        <TextView
+                            android:id="@+id/labelGuestStars"
+                            style="@style/DefaultPadding.Blocks.WithTopMargin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/episode_gueststars"
+                            android:textAppearance="@style/TextAppearance.Small.Label" />
+
+                        <TextView
+                            android:id="@+id/TextViewEpisodeGuestStars"
+                            style="@style/DefaultPadding.Blocks.WithBottomMargin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.Light"
+                            android:textIsSelectable="true" />
+
+                        <TextView
+                            android:id="@+id/labelDvd"
+                            style="@style/DefaultPadding.Blocks.WithTopMargin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/episode_dvdnumber"
+                            android:textAppearance="@style/TextAppearance.Small.Label" />
+
+                        <TextView
+                            android:id="@+id/textViewEpisodeDVDnumber"
+                            style="@style/DefaultPadding.Blocks.WithBottomMargin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.Light" />
+
+                        <include
+                            android:id="@+id/buttonbar_ref"
+                            layout="@layout/buttonbar_services"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

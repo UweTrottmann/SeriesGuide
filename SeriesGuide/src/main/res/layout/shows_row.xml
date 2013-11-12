@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:paddingBottom="@dimen/default_padding"
     android:paddingLeft="@dimen/default_padding"
-    android:paddingStart="@dimen/default_padding"
     android:paddingTop="@dimen/default_padding">
 
     <ImageView
@@ -13,8 +12,6 @@
         android:layout_width="68dp"
         android:layout_height="100dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginEnd="@dimen/default_padding"
         android:layout_marginRight="@dimen/default_padding"
         android:contentDescription="@string/description_poster"
         android:scaleType="centerInside"
@@ -24,10 +21,8 @@
         android:id="@+id/imageViewShowsContextMenu"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:background="?attr/custom_list_selector"
-        android:paddingEnd="@dimen/default_padding"
         android:paddingLeft="5dp"
         android:paddingRight="@dimen/default_padding"
         android:scaleType="center"
@@ -40,11 +35,9 @@
         android:layout_height="25dp"
         android:layout_alignWithParentIfMissing="true"
         android:layout_toLeftOf="@id/imageViewShowsContextMenu"
-        android:layout_toStartOf="@id/imageViewShowsContextMenu"
         android:background="?attr/custom_list_selector"
         android:contentDescription="@string/favorited"
         android:paddingLeft="5dp"
-        android:paddingStart="5dp"
         android:src="?attr/drawableStar" />
 
     <TextView
@@ -52,34 +45,27 @@
         style="@style/TextAppearance.XSmall.Dim"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_below="@id/favoritedLabel"
-        android:layout_gravity="right|end"
-        android:gravity="right|end"
+        android:layout_gravity="right"
+        android:gravity="right"
         android:lineSpacingExtra="2sp"
         android:maxWidth="90dp"
-        android:paddingEnd="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:paddingTop="@dimen/inline_padding"
-        android:text="@string/norating"
-        android:textAlignment="viewEnd" />
+        android:text="@string/norating" />
 
     <TextView
         android:id="@+id/seriesname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/showposter"
         android:layout_toLeftOf="@id/textViewShowsTimeAndNetwork"
         android:layout_toRightOf="@id/showposter"
-        android:layout_toStartOf="@id/textViewShowsTimeAndNetwork"
         android:ellipsize="end"
         android:maxLines="1"
         android:paddingBottom="0dp"
-        android:paddingEnd="@dimen/inline_padding"
         android:paddingRight="@dimen/inline_padding"
         android:paddingTop="2dp"
-        android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.Medium.Light"
         tools:text="@string/show" />
 
@@ -88,15 +74,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/seriesname"
-        android:layout_toEndOf="@id/showposter"
         android:layout_toLeftOf="@id/textViewShowsTimeAndNetwork"
         android:layout_toRightOf="@id/showposter"
-        android:layout_toStartOf="@id/textViewShowsTimeAndNetwork"
         android:ellipsize="end"
         android:maxLines="2"
-        android:paddingEnd="@dimen/inline_padding"
         android:paddingRight="@dimen/inline_padding"
-        android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.Light"
         tools:text="@string/episode" />
 
@@ -105,13 +87,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/TextViewShowListNextEpisode"
-        android:layout_toEndOf="@id/showposter"
         android:layout_toLeftOf="@id/textViewShowsTimeAndNetwork"
         android:layout_toRightOf="@id/showposter"
-        android:layout_toStartOf="@id/textViewShowsTimeAndNetwork"
-        android:paddingEnd="@dimen/inline_padding"
         android:paddingRight="@dimen/inline_padding"
-        android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.XSmall.Dim"
         tools:text="@string/episode" />
 

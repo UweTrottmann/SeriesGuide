@@ -9,13 +9,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_marginLeft="@dimen/default_padding"
-        android:layout_marginStart="@dimen/default_padding"
         android:layout_toLeftOf="@+id/textViewSeasonProgress"
-        android:layout_toStartOf="@+id/textViewSeasonProgress"
         android:paddingTop="@dimen/default_padding"
-        android:textAlignment="viewStart"
+
         android:textAppearance="@style/TextAppearance.Medium.Light"
         tools:text="@string/season_number" />
 
@@ -24,7 +21,6 @@
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textViewSeasonWatchCount"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/textViewSeasonTitle"
         android:background="?attr/custom_list_selector"
@@ -36,9 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/default_padding"
-        android:layout_marginStart="@dimen/default_padding"
         android:layout_toLeftOf="@id/imageViewContextMenu"
-        android:layout_toStartOf="@id/imageViewContextMenu"
         android:paddingTop="@dimen/default_padding"
         android:text="@string/norating"
         android:textAppearance="@style/TextAppearance.Medium.Light.Dim" />
@@ -50,21 +44,16 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewSeasonTitle"
         android:layout_marginLeft="@dimen/default_padding"
-        android:layout_marginStart="@dimen/default_padding"
-        android:layout_toLeftOf="@id/imageViewContextMenu"
-        android:layout_toStartOf="@id/imageViewContextMenu" />
+        android:layout_toLeftOf="@id/imageViewContextMenu" />
 
     <ImageView
         android:id="@+id/imageViewSeasonSkipped"
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@id/progressBarSeason"
-        android:layout_marginEnd="-4dp"
         android:layout_marginLeft="@dimen/default_padding"
         android:layout_marginRight="-4dp"
-        android:layout_marginStart="@dimen/default_padding"
         android:src="@drawable/ic_action_playback_next_highlight"
         android:visibility="visible" />
 
@@ -74,13 +63,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/progressBarSeason"
         android:layout_marginLeft="@dimen/default_padding"
-        android:layout_marginStart="@dimen/default_padding"
-        android:layout_toEndOf="@id/imageViewSeasonSkipped"
         android:layout_toLeftOf="@id/imageViewContextMenu"
         android:layout_toRightOf="@id/imageViewSeasonSkipped"
-        android:layout_toStartOf="@id/imageViewContextMenu"
         android:paddingBottom="@dimen/default_padding"
-        android:textAlignment="viewStart"
+
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.XSmall"
         tools:text="10 episodes not watched yet" />

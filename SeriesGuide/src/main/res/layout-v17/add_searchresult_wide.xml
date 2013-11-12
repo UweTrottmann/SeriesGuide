@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/default_padding">
+
+    <ImageView
+        android:id="@+id/poster"
+        android:layout_width="100dp"
+        android:layout_height="147dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="@dimen/default_padding"
+        android:contentDescription="@string/description_poster"
+        android:scaleType="centerCrop"
+        android:src="@drawable/appwidget_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="147dp"
+        android:layout_toEndOf="@id/poster"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/details"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="?attr/custom_list_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/default_padding">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/inline_padding"
+                android:paddingEnd="@dimen/default_padding"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.Large.Light" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:paddingBottom="@dimen/inline_padding"
+                android:paddingEnd="@dimen/default_padding"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.Small" />
+        </LinearLayout>
+
+        <include layout="@layout/divider_horizontal" />
+
+        <LinearLayout
+            android:id="@+id/addbutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?custom_list_selector"
+            android:orientation="horizontal"
+            android:padding="@dimen/inline_padding">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="@string/action_shows_add"
+                android:padding="@dimen/inline_padding"
+                android:src="?attr/drawableAddIcon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/action_shows_add"
+                android:textAppearance="@style/TextAppearance.Small.Label" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

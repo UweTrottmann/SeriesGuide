@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <ListView
         android:id="@+id/listViewGetGlueResults"
@@ -14,8 +14,7 @@
         android:layout_weight="1"
         android:clipToPadding="@bool/gridClipToPadding"
         android:listSelector="?custom_list_selector"
-        android:scrollbarStyle="outsideInset" >
-    </ListView>
+        android:scrollbarStyle="outsideInset"/>
 
     <include
         android:layout_width="match_parent"
@@ -25,7 +24,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/buttonDiscard"

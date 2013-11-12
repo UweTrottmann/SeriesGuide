@@ -9,4 +9,4 @@
     android:paddingLeft="@dimen/large_padding"
     android:paddingRight="@dimen/large_padding"
     android:textAppearance="@style/TextAppearance.Small.Primary"
-    android:textColor="@color/text_default"/>
+    android:textColor="@color/text_default" />
