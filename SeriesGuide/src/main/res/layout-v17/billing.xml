@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
+
+    <ProgressBar
+        android:id="@+id/progressBarBilling"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+    <RelativeLayout
+        android:id="@+id/containerBilling"
+        style="@style/Page.Centered"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/textViewBillingTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/action_upgrade"
+            android:textAppearance="@style/TextAppearance.Large.Light" />
+
+        <TextView
+            android:id="@+id/textViewBillingDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textViewBillingTitle"
+            android:text="@string/upgrade_description"
+            android:textAppearance="@style/TextAppearance" />
+
+        <Button
+            android:id="@+id/buttonBillingGetUpgrade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewBillingDescription"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/large_padding"
+            android:enabled="false"
+            android:text="@string/action_upgrade" />
+
+        <TextView
+            android:id="@+id/textViewBillingExisting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/buttonBillingGetUpgrade"
+            android:layout_marginTop="@dimen/large_padding"
+            android:text="@string/upgrade_success"
+            android:textAppearance="@style/TextAppearance.Small.Highlight"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</FrameLayout>

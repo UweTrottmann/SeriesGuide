@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView
+        android:id="@+id/gridViewUpcoming"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="@bool/gridClipToPadding"
+        android:fastScrollEnabled="true"
+        android:listSelector="?custom_list_selector"
+        android:numColumns="1"
+        android:paddingBottom="8dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp" />
+
+    <TextView
+        android:id="@+id/emptyViewUpcoming"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="10dp"
+        android:visibility="gone" />
+
+</FrameLayout>

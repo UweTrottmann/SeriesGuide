@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="?actionBarSize">
+
+            <com.astuetz.viewpager.extensions.PagerSlidingTabStrip
+                android:id="@+id/tabsEpisodeDetails"
+                style="@style/TabStrip"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tab_strip_height" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pagerEpisodeDetails"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <ListView
+        android:id="@+id/left_drawer"
+        android:layout_width="@dimen/slidingmenu_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:background="@color/background_lighter"
+        android:choiceMode="singleChoice"
+        android:clipToPadding="@bool/gridClipToPadding"
+        android:listSelector="?attr/custom_list_selector"
+        android:paddingTop="?actionBarSize" />
+
+</android.support.v4.widget.DrawerLayout>

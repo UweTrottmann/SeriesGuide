@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    style="@style/DefaultPadding.Page"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageViewSeasonsWatchedToggle"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?custom_list_selector"
+        android:padding="@dimen/default_padding"
+        android:src="?attr/drawableWatch" />
+
+    <include
+        android:id="@+id/dividerSeasons1"
+        layout="@layout/divider_vertical"
+        android:layout_width="1dp"
+        android:layout_height="48dp"
+        android:layout_toRightOf="@+id/imageViewSeasonsWatchedToggle" />
+
+    <ImageView
+        android:id="@+id/imageViewSeasonsCollectedToggle"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_toRightOf="@+id/dividerSeasons1"
+        android:background="?custom_list_selector"
+        android:padding="@dimen/default_padding"
+        android:src="?attr/drawableCollect" />
+
+    <include
+        android:id="@+id/dividerSeasons2"
+        layout="@layout/divider_vertical"
+        android:layout_width="1dp"
+        android:layout_height="48dp"
+        android:layout_toRightOf="@+id/imageViewSeasonsCollectedToggle" />
+
+    <TextView
+        android:id="@+id/textViewSeasonsRemaining"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_toRightOf="@+id/dividerSeasons2"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="2"
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
+        android:text="@string/norating"
+        android:textAppearance="@style/TextAppearance.Light"
+        tools:text="199 episodes remaining" />
+
+    <include
+        android:id="@+id/dividerSeasonsHorizontal"
+        layout="@layout/divider_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/textViewSeasonsRemaining" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/imageViewSeasonsWatchedToggle">
+
+        <ListView
+            android:id="@+android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="@bool/gridClipToPadding"
+            android:fastScrollEnabled="true"
+            android:listSelector="?custom_list_selector"/>
+
+        <TextView
+            android:id="@+android:id/empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+</RelativeLayout>

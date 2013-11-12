@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <!-- Weight is added through styles depending on screen -->
+
+        <FrameLayout
+            android:id="@+id/fragment_episodes"
+            style="@style/EpisodesPane"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            tools:ignore="Suspicious0dp" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="?attr/colorSeparator" />
+
+        <!-- Weight is added through styles depending on screen -->
+
+        <FrameLayout
+            style="@style/DetailsPane"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            tools:ignore="Suspicious0dp">
+
+            <ImageView
+                android:id="@+id/background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/description_poster"
+                android:scaleType="centerCrop" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.astuetz.viewpager.extensions.PagerSlidingTabStrip
+                    android:id="@+id/tabsEpisodes"
+                    style="@style/TabStrip"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/tab_strip_height" />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/pagerEpisodes"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/drawer_left" />
+
+</android.support.v4.widget.DrawerLayout>

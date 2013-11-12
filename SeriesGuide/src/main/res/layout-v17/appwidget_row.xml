@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/appwidget_row"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/inline_padding">
+
+    <ImageView
+        android:id="@+id/widgetPoster"
+        android:layout_width="@dimen/widget_item_width"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:paddingRight="@dimen/inline_padding"
+        android:src="@drawable/appwidget_bg" />
+
+    <TextView
+        android:id="@+id/textViewWidgetShow"
+        style="@style/WidgetTextView"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/widgetAirtime"
+        android:layout_toRightOf="@+id/widgetPoster"
+        android:layout_toStartOf="@+id/widgetAirtime"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/app_name"
+
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/widget_text_large" />
+
+    <TextView
+        android:id="@+id/textViewWidgetEpisode"
+        style="@style/WidgetTextView"
+        android:layout_alignLeft="@+id/textViewWidgetShow"
+        android:layout_alignStart="@+id/textViewWidgetShow"
+        android:layout_below="@+id/textViewWidgetShow"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/widgetNetwork"
+        android:layout_toStartOf="@+id/widgetNetwork"
+        android:text="@string/no_nextepisode"
+
+        android:textSize="@dimen/widget_text_middle" />
+
+    <TextView
+        android:id="@+id/widgetAirtime"
+        style="@style/WidgetTextView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/norating"
+        android:textSize="@dimen/widget_text_small" />
+
+    <TextView
+        android:id="@+id/widgetNetwork"
+        style="@style/WidgetTextView"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/widgetAirtime"
+        android:text="@string/norating"
+        android:textSize="@dimen/widget_text_small" />
+
+</RelativeLayout>

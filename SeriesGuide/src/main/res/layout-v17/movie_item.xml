@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:foreground="?custom_list_selector">
+
+    <!-- Added FrameLayout wrapper to avoid grid view layout issues -->
+
+    <RelativeLayout
+        android:layout_width="@dimen/movie_item_width"
+        android:layout_height="@dimen/movie_item_height"
+        tools:ignore="UselessParent">
+
+        <ImageView
+            android:id="@+id/imageViewMoviePoster"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/movie_item_poster_height"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/imageViewMovieItemContextMenu"
+            android:layout_width="16dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/imageViewMoviePoster"
+            android:background="?attr/custom_list_selector"
+            android:paddingBottom="@dimen/inline_padding"
+            android:scaleType="center"
+            android:src="?attr/drawableDropdown" />
+
+        <TextView
+            android:id="@+id/textViewMovieTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imageViewMoviePoster"
+            android:layout_below="@+id/imageViewMoviePoster"
+            android:layout_toLeftOf="@id/imageViewMovieItemContextMenu"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingLeft="@dimen/inline_padding"
+            android:paddingRight="@dimen/inline_padding"
+            android:textAppearance="@style/TextAppearance.Primary"
+            tools:text="Awesome Movie Title" />
+
+        <TextView
+            android:id="@+id/textViewMovieDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imageViewMoviePoster"
+            android:layout_alignRight="@+id/imageViewMoviePoster"
+            android:layout_below="@+id/textViewMovieTitle"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/inline_padding"
+            android:paddingRight="@dimen/inline_padding"
+            android:textAppearance="@style/TextAppearance.XSmall"
+            tools:text="20 Oct 2013" />
+    </RelativeLayout>
+
+</FrameLayout>
