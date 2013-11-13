@@ -19,8 +19,8 @@ android {
     productFlavors {
         free {
             packageName "com.battlelancer.seriesguide"
-            versionCode 191
-            versionName "9.2"
+            versionCode 192
+            versionName "9.3"
         }
         beta {
             packageName "com.battlelancer.seriesguide.beta"

@@ -106,6 +106,9 @@ public class GetGlueAuthActivity extends BaseActivity {
 
         // mWebview.getSettings().setJavaScriptEnabled(true);
 
+        // make sure we start fresh
+        mWebview.clearCache(true);
+
         Log.d(TAG, "Initiating authorization request...");
         Resources res = getResources();
         try {
