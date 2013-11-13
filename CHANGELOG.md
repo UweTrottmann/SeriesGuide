@@ -5,6 +5,11 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 9.3 *(2013-11-13)*
+--------------------------
+
+Disable encryption when talking to GetGlue. Android can't validate the certificate chain (either certificates were switched or RC 128 encryption is not supported).
+
 Version 9.1 *(2013-11-12)*
 --------------------------
 
