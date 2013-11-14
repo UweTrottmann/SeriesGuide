@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/default_padding"
                 android:drawablePadding="5dp"
+                android:drawableStart="?attr/drawableAddIcon"
                 android:paddingStart="@dimen/default_padding"
                 android:paddingEnd="@dimen/default_padding"
                 android:text="@string/action_shows_add"
