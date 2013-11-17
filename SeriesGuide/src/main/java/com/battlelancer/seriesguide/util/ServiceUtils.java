@@ -24,6 +24,7 @@ import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Response;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
+import com.uwetrottmann.tmdb.Tmdb;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -84,7 +85,7 @@ public final class ServiceUtils {
 
     private static Trakt sTraktServiceManagerWithAuthInstance;
 
-    private static com.uwetrottmann.tmdb.ServiceManager sTmdbServiceManagerInstance;
+    private static Tmdb sTmdbServiceManagerInstance;
 
     /* This class is never initialized */
     private ServiceUtils() {
@@ -93,12 +94,10 @@ public final class ServiceUtils {
     /**
      * Get a tmdb-java ServiceManager with our API key set.
      */
-    public static synchronized com.uwetrottmann.tmdb.ServiceManager getTmdbServiceManager(
+    public static synchronized Tmdb getTmdbServiceManager(
             Context context) {
         if (sTmdbServiceManagerInstance == null) {
-            sTmdbServiceManagerInstance = new com.uwetrottmann.tmdb.ServiceManager();
-            sTmdbServiceManagerInstance.setReadTimeout(10000);
-            sTmdbServiceManagerInstance.setConnectionTimeout(15000);
+            sTmdbServiceManagerInstance = new Tmdb();
             sTmdbServiceManagerInstance.setApiKey(context.getResources().getString(
                     R.string.tmdb_apikey));
         }
