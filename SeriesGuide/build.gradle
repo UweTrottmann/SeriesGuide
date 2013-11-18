@@ -49,6 +49,7 @@ dependencies {
     compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
     compile 'com.android.support:support-v4:19.0.+'
     compile 'com.github.chrisbanes.photoview:library:1.2.2'
+    compile 'com.google.android.apps.dashclock:dashclock-api:2.0.+'
     compile 'com.squareup.okhttp:okhttp:1.2.1'
     compile 'com.squareup.retrofit:retrofit:1.2.2'
     compile 'de.greenrobot:eventbus:2.2.0'
