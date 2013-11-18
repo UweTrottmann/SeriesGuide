@@ -1,12 +1,5 @@
 package com.uwetrottmann.seriesguide;
 
-import java.io.IOException;
-import java.net.URLEncoder;
-
-import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
-
 import com.google.android.gcm.GCMBaseIntentService;
 import com.google.android.gcm.GCMRegistrar;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -16,6 +9,13 @@ import com.google.api.client.json.jackson.JacksonFactory;
 
 import com.uwetrottmann.seriesguide.deviceinfoendpoint.Deviceinfoendpoint;
 import com.uwetrottmann.seriesguide.deviceinfoendpoint.model.DeviceInfo;
+
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+
+import java.io.IOException;
+import java.net.URLEncoder;
 
 /**
  * This class is started up as a service of the Android application. It listens
@@ -44,7 +44,7 @@ public class GCMIntentService extends GCMBaseIntentService {
    * http://developers.google.com/eclipse/docs/cloud_endpoint for more
    * information.
    */
-  protected static final String PROJECT_NUMBER = "";
+  protected static final String PROJECT_NUMBER = "137959300653";
 
   /**
    * Register the device for GCM.
