@@ -50,3 +50,12 @@ $RECYCLE.BIN/
 .gradle/
 build/
 out/
+
+#Maven
+target
+release.properties
+pom.xml.*
+
+### AppEngine
+google_generated/
+datanucleus.log
