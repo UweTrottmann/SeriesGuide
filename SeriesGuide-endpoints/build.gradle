@@ -1,0 +1,31 @@
+buildscript {
+    repositories {
+        maven { url 'http://repo1.maven.org/maven2' }
+    }
+}
+
+apply plugin: 'android-library'
+
+dependencies {
+    compile files('libs/gcm.jar')
+    compile ('com.google.api-client:google-api-client-android:1.15.0-rc') {
+        exclude group: 'com.google.android.google-play-services'
+    }
+    compile 'com.google.http-client:google-http-client-jackson:1.15.0-rc'
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.0.0"
+
+    defaultConfig {
+        minSdkVersion 7
+        targetSdkVersion 16
+    }
+
+    sourceSets {
+      main {
+        java.srcDirs = ['src/main/java', 'src/endpoint-src/java']
+      }
+    }
+}
