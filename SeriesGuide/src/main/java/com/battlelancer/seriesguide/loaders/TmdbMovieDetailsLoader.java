@@ -18,6 +18,7 @@
 package com.battlelancer.seriesguide.loaders;
 
 import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader.MovieDetails;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
@@ -27,6 +28,7 @@ import com.uwetrottmann.tmdb.entities.Trailers;
 import com.uwetrottmann.tmdb.services.MoviesService;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import retrofit.RetrofitError;
@@ -47,12 +49,20 @@ public class TmdbMovieDetailsLoader extends GenericSimpleLoader<MovieDetails> {
 
     @Override
     public MovieDetails loadInBackground() {
+        String languageCode = DisplaySettings.getContentLanguage(getContext());
+
         try {
             MoviesService movieService = ServiceUtils.getTmdbServiceManager(getContext())
                     .moviesService();
 
             MovieDetails details = new MovieDetails();
-            details.movie(movieService.summary(mTmdbId));
+            details.movie(movieService.summary(mTmdbId, languageCode));
+
+            if (TextUtils.isEmpty(details.movie().overview)) {
+                // fall back to English content
+                details.movie(movieService.summary(mTmdbId));
+            }
+
             details.trailers(movieService.trailers(mTmdbId));
 
             return details;

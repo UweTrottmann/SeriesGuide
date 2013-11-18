@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.loaders;
 
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
@@ -49,14 +50,16 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<List<Movie>> {
     @Override
     public List<Movie> loadInBackground() {
         Tmdb tmdb = ServiceUtils.getTmdbServiceManager(getContext());
+        String languageCode = DisplaySettings.getContentLanguage(getContext());
 
         try {
             ResultsPage page;
 
             if (TextUtils.isEmpty(mQuery)) {
-                page = tmdb.moviesService().nowPlaying();
+                page = tmdb.moviesService().nowPlaying(null, languageCode);
             } else {
-                page = tmdb.searchService().movie(mQuery);
+                page = tmdb.searchService()
+                        .movie(mQuery, null, languageCode, false, null, null, null);
             }
             if (page != null && page.results != null) {
                 return page.results;
