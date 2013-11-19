@@ -6,8 +6,8 @@
     <dimen name="widget_paddingBottom">10dp</dimen>
     <dimen name="widget_paddingLeft">10dp</dimen>
     <dimen name="widget_poster_width">40dp</dimen>
-    <dimen name="widget_item_width">34dp</dimen>
-    <dimen name="widget_item_height">50dp</dimen>
+    <dimen name="widget_item_width">31dp</dimen>
+    <dimen name="widget_item_height">45dp</dimen>
     <dimen name="widget_text_small">12sp</dimen>
     <dimen name="widget_text_middle">14sp</dimen>
     <dimen name="widget_text_large">16sp</dimen>
