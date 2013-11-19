@@ -29,7 +29,7 @@
                 android:focusable="true"
                 android:paddingBottom="@dimen/inline_padding"
                 android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
+                android:paddingRight="@dimen/inline_padding"
                 android:paddingTop="@dimen/inline_padding">
 
                 <ImageView
