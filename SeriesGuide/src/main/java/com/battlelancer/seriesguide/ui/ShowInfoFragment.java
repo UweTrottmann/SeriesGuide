@@ -139,7 +139,7 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
     }
 
     public void onEvent(TraktActionCompleteEvent event) {
-        if (event.mTraktTaskArgs.getInt(TraktTask.InitBundle.TRAKTACTION) == TraktAction.RATE_EPISODE.index) {
+        if (event.mTraktTaskArgs.getInt(TraktTask.InitBundle.TRAKTACTION) == TraktAction.RATE_SHOW.index) {
             onLoadTraktRatings(false);
         }
     }

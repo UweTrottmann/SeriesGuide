@@ -292,7 +292,10 @@
 
             <meta-data
                 android:name="protocolVersion"
-                android:value="1" />
+                android:value="2" />
+            <meta-data
+                android:name="worldReadable"
+                android:value="true" />
             <meta-data
                 android:name="description"
                 android:value="@string/dashclock_extension_description" />

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="widget_item_width">35dp</dimen>
+    <dimen name="widget_item_width">31dp</dimen>
+    <dimen name="widget_item_height">45dp</dimen>
     <dimen name="widget_text_small">12sp</dimen>
     <dimen name="widget_text_middle">14sp</dimen>
     <dimen name="widget_text_large">16sp</dimen>
