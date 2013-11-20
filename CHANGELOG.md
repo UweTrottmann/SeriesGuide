@@ -5,6 +5,15 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 10 *(in development)*
+-----------------------------
+
+#### 10-beta1 *(2013-11-20)*
+
+* TWEAK trakt credentials are sanitized more rigorously. If you have issues, try disconnecting and re-connecting again.
+* TWEAK Movie search results and movie details are displayed in the content language set in Settings, if a translation is available on themoviedb.org.
+* TWEAK Use Android 4.4 style settings icon on the list widget, change its layout a little.
+
 Version 9.3 *(2013-11-13)*
 --------------------------
 
