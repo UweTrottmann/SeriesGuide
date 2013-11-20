@@ -9,6 +9,8 @@
   <string name="search">Szukaj</string>
   <string name="preferences">Ustawienia</string>
   <string name="help">Pomoc</string>
+  <string name="drawer_open">Otwórz szufladę nawigacji</string>
+  <string name="drawer_close">Zamknij szufladę nawigacji</string>
   <string name="show">Pokaż</string>
   <string name="episode">Odcinek</string>
   <string name="episode_number">Odcinek %s</string>
@@ -36,13 +38,11 @@
   <string name="share_show">Współdziel serial</string>
   <string name="share_episode">Udostępnij</string>
   <string name="share_checkout">Odłącz się</string>
-  <string name="shouts">Krzyki</string>
   <string name="comments">Komentarze</string>
   <string name="shout_hint">Wpisz krzyk (w języku angielskim)</string>
   <string name="shout">Krzyk!</string>
   <string name="isspoiler">Ostrzeżenie o spoilerach!</string>
   <string name="no_shouts">Krzycz jako pierwszy!</string>
-  <string name="shouts_for">Krzyków: %s</string>
   <string name="autorefresh">Odświeżanie automagicznie ;)</string>
   <string name="movies_watchlist">Lista oglądanych (trakt)</string>
   <string name="watchlist_add">Dodaj do listy oglądanych</string>

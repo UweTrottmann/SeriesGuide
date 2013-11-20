@@ -9,6 +9,8 @@
   <string name="search">搜尋</string>
   <string name="preferences">設定</string>
   <string name="help">說明</string>
+  <string name="drawer_open">Open navigation drawer</string>
+  <string name="drawer_close">Close navigation drawer</string>
   <string name="show">節目</string>
   <string name="episode">集數</string>
   <string name="episode_number">第 %s 集</string>
@@ -36,13 +38,11 @@
   <string name="share_show">分享節目</string>
   <string name="share_episode">分享此集</string>
   <string name="share_checkout">登出</string>
-  <string name="shouts">觀看留言</string>
   <string name="comments">評論</string>
   <string name="shout_hint">輸入留言（需用英文）</string>
   <string name="shout">留言</string>
   <string name="isspoiler">警告爆雷</string>
   <string name="no_shouts">成為第一個留言者</string>
-  <string name="shouts_for">留言數 %s</string>
   <string name="autorefresh">神奇自動更新中 XD</string>
   <string name="movies_watchlist">待看清單 (trakt)</string>
   <string name="watchlist_add">新增至待看清單</string>

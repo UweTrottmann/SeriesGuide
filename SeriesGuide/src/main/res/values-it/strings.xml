@@ -9,6 +9,8 @@
   <string name="search">Cerca</string>
   <string name="preferences">Impostazioni</string>
   <string name="help">Guida</string>
+  <string name="drawer_open">Open navigation drawer</string>
+  <string name="drawer_close">Close navigation drawer</string>
   <string name="show">Spettacolo</string>
   <string name="episode">Episodio</string>
   <string name="episode_number">Episodio %s</string>
@@ -36,13 +38,11 @@
   <string name="share_show">Cindividi spettacolo</string>
   <string name="share_episode">Condividi episodio</string>
   <string name="share_checkout">Check-out</string>
-  <string name="shouts">Dì la tua</string>
   <string name="comments">Commenti</string>
   <string name="shout_hint">Digitare un messaggio (in inglese)</string>
   <string name="shout">Segnalato!</string>
   <string name="isspoiler">Attenzione Spoiler!</string>
   <string name="no_shouts">Essere il primo a segnalare!</string>
-  <string name="shouts_for">Segnalato per %s</string>
   <string name="autorefresh">Riaggiorna "automagicamente"</string>
   <string name="movies_watchlist">Memo (trakt)</string>
   <string name="watchlist_add">Aggiungi alla lista</string>

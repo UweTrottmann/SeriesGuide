@@ -9,6 +9,8 @@
   <string name="search">검색</string>
   <string name="preferences">설정</string>
   <string name="help">도움말</string>
+  <string name="drawer_open">Open navigation drawer</string>
+  <string name="drawer_close">Close navigation drawer</string>
   <string name="show">쇼</string>
   <string name="episode">에피소드</string>
   <string name="episode_number">에피소드 %s</string>
@@ -36,13 +38,11 @@
   <string name="share_show">쇼 공유</string>
   <string name="share_episode">에피소드 공유</string>
   <string name="share_checkout">체크 아웃</string>
-  <string name="shouts">감상평</string>
   <string name="comments">코멘트</string>
   <string name="shout_hint">감상평쓰기 (영어로 쓰세요)</string>
   <string name="shout">외쳐! (이이)</string>
   <string name="isspoiler">스포일러 경고!</string>
   <string name="no_shouts">첫 감상평의 주인공이 되세요!</string>
-  <string name="shouts_for">%s에 대한 감상평</string>
   <string name="autorefresh">자동으로 새로고침</string>
   <string name="movies_watchlist">관심목록 (trakt)</string>
   <string name="watchlist_add">관심목록에 추가</string>

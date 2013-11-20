@@ -9,6 +9,8 @@
   <string name="search">Căutare</string>
   <string name="preferences">Setări</string>
   <string name="help">Ajutor</string>
+  <string name="drawer_open">Open navigation drawer</string>
+  <string name="drawer_close">Close navigation drawer</string>
   <string name="show">Arată</string>
   <string name="episode">Episod</string>
   <string name="episode_number">Episod %s</string>
@@ -36,13 +38,11 @@
   <string name="share_show">Share show</string>
   <string name="share_episode">Share episod</string>
   <string name="share_checkout">Consultați</string>
-  <string name="shouts">Păreri</string>
   <string name="comments">Comentarii</string>
   <string name="shout_hint">Scrie o părere (in engleză)</string>
   <string name="shout">Părere!</string>
   <string name="isspoiler">Spoiler alert!</string>
   <string name="no_shouts">Fi primul care-si spune părerea!</string>
-  <string name="shouts_for">Parerea ta pentru %s</string>
   <string name="autorefresh">Reîmprospătare automagică</string>
   <string name="movies_watchlist">Vizionate (trakt)</string>
   <string name="watchlist_add">Add to watchlist</string>

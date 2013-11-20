@@ -9,6 +9,8 @@
   <string name="search">Търсене</string>
   <string name="preferences">Настройки</string>
   <string name="help">Помощ</string>
+  <string name="drawer_open">Open navigation drawer</string>
+  <string name="drawer_close">Close navigation drawer</string>
   <string name="show">Show</string>
   <string name="episode">Епизод</string>
   <string name="episode_number">Episode %s</string>
@@ -36,13 +38,11 @@
   <string name="share_show">Share show</string>
   <string name="share_episode">Сподели епизод</string>
   <string name="share_checkout">Отписване</string>
-  <string name="shouts">Мнения</string>
   <string name="comments">Comments</string>
   <string name="shout_hint">Напишете мнение (in English)</string>
   <string name="shout">Мнение!</string>
   <string name="isspoiler">Предупреждение за издаване!</string>
   <string name="no_shouts">Напишете мнение пръв!</string>
-  <string name="shouts_for">Мнения за %s</string>
   <string name="autorefresh">Автоматично обновяване</string>
   <string name="movies_watchlist">Watchlist (trakt)</string>
   <string name="watchlist_add">Add to watchlist</string>

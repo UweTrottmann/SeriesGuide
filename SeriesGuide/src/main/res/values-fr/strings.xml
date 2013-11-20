@@ -9,6 +9,8 @@
   <string name="search">Rechercher</string>
   <string name="preferences">Paramètres</string>
   <string name="help">Aide</string>
+  <string name="drawer_open">Ouvrir le tiroir de navigation</string>
+  <string name="drawer_close">Fermer le tiroir de navigation</string>
   <string name="show">Série</string>
   <string name="episode">Épisode</string>
   <string name="episode_number">Episode %s</string>
@@ -36,13 +38,11 @@
   <string name="share_show">Partager la série</string>
   <string name="share_episode">Partager l\'épisode</string>
   <string name="share_checkout">Jette un oeil sur</string>
-  <string name="shouts">Commentaires</string>
   <string name="comments">Commentaires</string>
   <string name="shout_hint">Commenter (en anglais)</string>
   <string name="shout">Commentez !</string>
   <string name="isspoiler">Alerte au spoiler !</string>
   <string name="no_shouts">Soyez le premier à commenter !</string>
-  <string name="shouts_for">Commentaires pour %s</string>
   <string name="autorefresh">S\'actualise automagiquement</string>
   <string name="movies_watchlist">Liste à voir (trakt)</string>
   <string name="watchlist_add">Ajouter dans la liste à voir</string>
