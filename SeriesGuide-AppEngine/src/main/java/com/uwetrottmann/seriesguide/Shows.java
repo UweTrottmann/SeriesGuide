@@ -3,6 +3,7 @@ package com.uwetrottmann.seriesguide;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
+import com.google.appengine.api.oauth.OAuthRequestException;
 import com.google.appengine.api.users.User;
 
 import java.util.ArrayList;
@@ -34,7 +35,10 @@ public class Shows {
     }
 
     @ApiMethod(name = "shows.authed", path = "show/authed")
-    public Show authedShow(User user) {
+    public Show authedShow(User user) throws OAuthRequestException {
+        if (user == null) {
+            throw new OAuthRequestException("Not authorized. Please make sure you are logged in.");
+        }
         Show response = new Show(123, user.getEmail());
         return response;
     }
