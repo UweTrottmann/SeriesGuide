@@ -75,6 +75,11 @@
             <artifactId>gcm-server</artifactId>
             <version>1.0.2</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>2.0.1</version>
+        </dependency>
 
         <!-- Test Dependencies -->
         <dependency>
@@ -87,12 +92,6 @@
             <groupId>com.google.appengine</groupId>
             <artifactId>appengine-api-stubs</artifactId>
             <version>${appengine.target.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.findbugs</groupId>
-            <artifactId>jsr305</artifactId>
-            <version>2.0.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
