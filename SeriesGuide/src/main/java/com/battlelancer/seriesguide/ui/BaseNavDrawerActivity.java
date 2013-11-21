@@ -20,6 +20,7 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
+import com.uwetrottmann.seriesguide.RegisterActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -66,6 +67,8 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
     public static final int MENU_ITEM_SEARCH_POSITION = 5;
 
+    public static final int MENU_ITEM_CLOUD_POSITION = 6;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // set a theme based on user preference
@@ -94,6 +97,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 R.drawable.ic_action_bargraph));
         mDrawerAdapter
                 .add(new DrawerItem(getString(R.string.search_hint), R.drawable.ic_action_search));
+        mDrawerAdapter.add(new DrawerItem("Cloud beta", R.drawable.ic_launcher));
 
         mDrawerList.setAdapter(mDrawerAdapter);
         mDrawerList.setOnItemClickListener(this);
@@ -168,6 +172,10 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 startActivity(new Intent(this, SearchActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Search");
+                break;
+            case MENU_ITEM_CLOUD_POSITION:
+                startActivity(new Intent(this, RegisterActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 break;
         }
 
