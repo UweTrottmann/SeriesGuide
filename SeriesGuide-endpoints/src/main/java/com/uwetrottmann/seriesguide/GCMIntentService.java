@@ -39,11 +39,6 @@ import java.net.URLEncoder;
 public class GCMIntentService extends GCMBaseIntentService {
   private final Deviceinfoendpoint endpoint;
 
-  /*
-   * TODO: Set this to a valid project number. See
-   * http://developers.google.com/eclipse/docs/cloud_endpoint for more
-   * information.
-   */
   protected static final String PROJECT_NUMBER = "137959300653";
 
   /**
