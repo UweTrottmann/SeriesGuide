@@ -2,11 +2,12 @@ package com.uwetrottmann.seriesguide;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
-import com.google.api.server.spi.config.Named;
 import com.google.appengine.api.oauth.OAuthRequestException;
 import com.google.appengine.api.users.User;
 
 import java.util.ArrayList;
+
+import javax.inject.Named;
 
 @Api(
         name = "shows",
