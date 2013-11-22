@@ -2,6 +2,9 @@
     package="com.battlelancer.seriesguide"
     android:installLocation="auto" >
 
+    <permission android:name="com.battlelancer.seriesguide.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
+    <uses-permission android:name="com.battlelancer.seriesguide.permission.C2D_MESSAGE"/>
+
     <application
         android:name="com.battlelancer.seriesguide.SeriesGuideApplication"
         android:allowBackup="true"
@@ -56,6 +59,7 @@
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/sync_seriesguide" />
         </service>
+
     </application>
 
 </manifest>
