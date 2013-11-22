@@ -649,7 +649,7 @@ public class ShowsFragment extends SherlockFragment implements
                     mCursor.getLong(ShowsQuery.AIRSTIME),
                     mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), mContext);
             // one line: 'Network | Tue 08:00 PM'
-            viewHolder.timeAndNetwork.setText(mCursor.getString(ShowsQuery.NETWORK) + " | "
+            viewHolder.timeAndNetwork.setText(mCursor.getString(ShowsQuery.NETWORK) + " / "
                     + values[1] + " " + values[0]);
 
             // set poster
