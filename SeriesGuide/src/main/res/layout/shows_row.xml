@@ -39,7 +39,8 @@
             android:background="?attr/custom_list_selector"
             android:paddingRight="0dp"
             android:paddingLeft="4dp"
-            android:src="?attr/drawableDropdown" />
+            android:src="?attr/drawableDropdown"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/textViewShowsTimeAndNetwork"
