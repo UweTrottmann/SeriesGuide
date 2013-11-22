@@ -37,7 +37,7 @@
         android:fastScrollEnabled="true"
         android:gravity="center"
         android:horizontalSpacing="@dimen/showgrid_spacing"
-        android:listSelector="?custom_list_selector"
+        android:listSelector="@android:color/transparent"
         android:numColumns="auto_fit"
         android:padding="@dimen/showgrid_padding"
         android:stretchMode="columnWidth"

@@ -648,15 +648,9 @@ public class ShowsFragment extends SherlockFragment implements
             final String[] values = Utils.parseMillisecondsToTime(
                     mCursor.getLong(ShowsQuery.AIRSTIME),
                     mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), mContext);
-            if (getResources().getBoolean(R.bool.isLargeTablet)) {
-                // network first, then time, one line
-                viewHolder.timeAndNetwork.setText(mCursor.getString(ShowsQuery.NETWORK) + " / "
-                        + values[1] + " " + values[0]);
-            } else {
-                // smaller screen, time first, network second line
-                viewHolder.timeAndNetwork.setText(values[1] + " " + values[0] + "\n"
-                        + mCursor.getString(ShowsQuery.NETWORK));
-            }
+            // one line: 'Network | Tue 08:00 PM'
+            viewHolder.timeAndNetwork.setText(mCursor.getString(ShowsQuery.NETWORK) + " | "
+                    + values[1] + " " + values[0]);
 
             // set poster
             final String imagePath = mCursor.getString(ShowsQuery.POSTER);
