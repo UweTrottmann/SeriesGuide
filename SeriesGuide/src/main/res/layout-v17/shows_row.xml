@@ -16,7 +16,6 @@
             android:layout_height="100dp"
             android:layout_alignParentStart="true"
             android:layout_marginEnd="@dimen/default_padding"
-            android:background="@color/background_placeholder"
             android:contentDescription="@string/description_poster"
             android:scaleType="centerCrop" />
 

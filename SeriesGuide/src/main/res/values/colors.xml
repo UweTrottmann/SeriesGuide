@@ -35,7 +35,6 @@
     <color name="background_lighter">#ff171717</color>
     <color name="background_dim">#80111111</color>
     <color name="background_dim_inverse">#80ffffff</color>
-    <color name="background_placeholder">#50111111</color>
     <color name="background_translucent">#30000000</color>
     <color name="disabled">#80333333</color>
     <color name="overlay">#cc111111</color>
