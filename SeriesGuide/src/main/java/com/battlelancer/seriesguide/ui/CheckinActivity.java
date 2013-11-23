@@ -20,9 +20,9 @@ package com.battlelancer.seriesguide.ui;
 import com.google.analytics.tracking.android.EasyTracker;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
-import com.battlelancer.seriesguide.ui.ShowsFragment.ViewHolder;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
@@ -37,12 +37,10 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.CursorAdapter;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.format.DateUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -50,8 +48,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 /**
  * Displays a searchable list of shows to allow quickly checking into a shows next episode.
@@ -62,7 +58,7 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
 
     private EditText mSearchBox;
 
-    private SlowAdapter mAdapter;
+    private CheckinAdapter mAdapter;
 
     private String mSearchFilter;
 
@@ -108,7 +104,7 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
         mSearchBox.requestFocus();
 
         // setup adapter
-        mAdapter = new SlowAdapter(this, null, 0);
+        mAdapter = new CheckinAdapter(this, null, 0);
 
         // setup grid view
         GridView list = (GridView) findViewById(R.id.gridViewCheckinShows);
@@ -173,21 +169,15 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
         mAdapter.swapCursor(null);
     }
 
-    private class SlowAdapter extends CursorAdapter {
+    private class CheckinAdapter extends BaseShowsAdapter {
 
-        private LayoutInflater mLayoutInflater;
-
-        private final int LAYOUT = R.layout.shows_row;
-
-        public SlowAdapter(Context context, Cursor c, int flags) {
+        public CheckinAdapter(Context context, Cursor c, int flags) {
             super(context, c, flags);
-            mLayoutInflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
-            ViewHolder viewHolder = (ViewHolder) view.getTag();
+            BaseShowsAdapter.ViewHolder viewHolder = (BaseShowsAdapter.ViewHolder) view.getTag();
 
             // title
             viewHolder.name.setText(mCursor.getString(CheckinQuery.TITLE));
@@ -232,20 +222,10 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
 
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            View v = mLayoutInflater.inflate(LAYOUT, null);
+            View v = super.newView(context, cursor, parent);
 
-            ViewHolder viewHolder = new ViewHolder();
-            viewHolder.name = (TextView) v.findViewById(R.id.seriesname);
-            viewHolder.timeAndNetwork = (TextView) v
-                    .findViewById(R.id.textViewShowsTimeAndNetwork);
-            viewHolder.episode = (TextView) v
-                    .findViewById(R.id.TextViewShowListNextEpisode);
-            viewHolder.episodeTime = (TextView) v.findViewById(R.id.episodetime);
-            viewHolder.poster = (ImageView) v.findViewById(R.id.showposter);
-            viewHolder.favorited = (ImageView) v.findViewById(R.id.favoritedLabel);
+            ViewHolder viewHolder = (ViewHolder) v.getTag();
             viewHolder.favorited.setBackgroundResource(0); // remove selectable background
-
-            v.setTag(viewHolder);
 
             return v;
         }
