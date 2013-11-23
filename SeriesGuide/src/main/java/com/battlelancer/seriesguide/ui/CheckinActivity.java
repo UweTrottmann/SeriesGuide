@@ -54,8 +54,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * Displays a searchable list of shows to allow quickly checking into a shows
- * next episode.
+ * Displays a searchable list of shows to allow quickly checking into a shows next episode.
  */
 public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCallbacks<Cursor> {
 
@@ -159,7 +158,7 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
                 + DateUtils.HOUR_IN_MILLIS);
 
         return new CursorLoader(this, baseUri, CheckinQuery.PROJECTION, CheckinQuery.SELECTION,
-                new String[] {
+                new String[]{
                         fakeInAnHour
                 }, ShowsDistillationSettings.ShowsSortOrder.EPISODE_REVERSE);
     }
@@ -187,46 +186,20 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (!mDataValid) {
-                throw new IllegalStateException(
-                        "this should only be called when the cursor is valid");
-            }
-            if (!mCursor.moveToPosition(position)) {
-                throw new IllegalStateException("couldn't move cursor to position " + position);
-            }
+        public void bindView(View view, Context context, Cursor cursor) {
+            ViewHolder viewHolder = (ViewHolder) view.getTag();
 
-            final ViewHolder viewHolder;
-
-            if (convertView == null) {
-                convertView = mLayoutInflater.inflate(LAYOUT, null);
-
-                viewHolder = new ViewHolder();
-                viewHolder.name = (TextView) convertView.findViewById(R.id.seriesname);
-                viewHolder.timeAndNetwork = (TextView) convertView
-                        .findViewById(R.id.textViewShowsTimeAndNetwork);
-                viewHolder.episode = (TextView) convertView
-                        .findViewById(R.id.TextViewShowListNextEpisode);
-                viewHolder.episodeTime = (TextView) convertView.findViewById(R.id.episodetime);
-                viewHolder.poster = (ImageView) convertView.findViewById(R.id.showposter);
-                viewHolder.favorited = (ImageView) convertView.findViewById(R.id.favoritedLabel);
-
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-
-            // set text properties immediately
+            // title
             viewHolder.name.setText(mCursor.getString(CheckinQuery.TITLE));
 
+            // favorited label
             final boolean isFavorited = mCursor.getInt(CheckinQuery.FAVORITE) == 1;
             viewHolder.favorited.setVisibility(isFavorited ? View.VISIBLE : View.GONE);
 
             // next episode info
-            String fieldValue = mCursor.getString(CheckinQuery.NEXTTEXT);
-            if (fieldValue.length() == 0) {
-                // show show status if there are currently no more
-                // episodes
+            String nextText = mCursor.getString(CheckinQuery.NEXTTEXT);
+            if (TextUtils.isEmpty(nextText)) {
+                // show show status if there are currently no more episodes
                 int status = mCursor.getInt(CheckinQuery.STATUS);
 
                 // Continuing == 1 and Ended == 0
@@ -239,44 +212,47 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
                 }
                 viewHolder.episode.setText("");
             } else {
-                viewHolder.episode.setText(fieldValue);
-                fieldValue = mCursor.getString(CheckinQuery.NEXTAIRDATETEXT);
-                viewHolder.episodeTime.setText(fieldValue);
+                viewHolder.episode.setText(nextText);
+                nextText = mCursor.getString(CheckinQuery.NEXTAIRDATETEXT);
+                viewHolder.episodeTime.setText(nextText);
             }
 
-            // airday
+            // network and release day
             final String[] values = Utils.parseMillisecondsToTime(
-                    mCursor.getLong(CheckinQuery.AIRSTIME),
-                    mCursor.getString(CheckinQuery.AIRSDAYOFWEEK), mContext);
-            if (getResources().getBoolean(R.bool.isLargeTablet)) {
-                // network first, then time, one line
-                viewHolder.timeAndNetwork.setText(mCursor.getString(CheckinQuery.NETWORK) + " / "
-                        + values[1] + " " + values[0]);
-            } else {
-                // smaller screen, time first, network second line
-                viewHolder.timeAndNetwork.setText(values[1] + " " + values[0] + "\n"
-                        + mCursor.getString(CheckinQuery.NETWORK));
-            }
+                    cursor.getLong(CheckinQuery.AIRSTIME),
+                    cursor.getString(CheckinQuery.AIRSDAYOFWEEK), context);
+            // one line: 'Network | Tue 08:00 PM'
+            viewHolder.timeAndNetwork.setText(cursor.getString(CheckinQuery.NETWORK) + " / "
+                    + values[1] + " " + values[0]);
 
-            // set poster
-            final String imagePath = mCursor.getString(CheckinQuery.POSTER);
-            ImageProvider.getInstance(mContext).loadPosterThumb(viewHolder.poster, imagePath);
-
-            return convertView;
+            // poster
+            final String imagePath = cursor.getString(CheckinQuery.POSTER);
+            ImageProvider.getInstance(context).loadPosterThumb(viewHolder.poster, imagePath);
         }
 
         @Override
-        public void bindView(View arg0, Context arg1, Cursor arg2) {
-            // do nothing here
-        }
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            View v = mLayoutInflater.inflate(LAYOUT, null);
 
-        @Override
-        public View newView(Context arg0, Cursor arg1, ViewGroup arg2) {
-            return null;
+            ViewHolder viewHolder = new ViewHolder();
+            viewHolder.name = (TextView) v.findViewById(R.id.seriesname);
+            viewHolder.timeAndNetwork = (TextView) v
+                    .findViewById(R.id.textViewShowsTimeAndNetwork);
+            viewHolder.episode = (TextView) v
+                    .findViewById(R.id.TextViewShowListNextEpisode);
+            viewHolder.episodeTime = (TextView) v.findViewById(R.id.episodetime);
+            viewHolder.poster = (ImageView) v.findViewById(R.id.showposter);
+            viewHolder.favorited = (ImageView) v.findViewById(R.id.favoritedLabel);
+            viewHolder.favorited.setBackgroundResource(0); // remove selectable background
+
+            v.setTag(viewHolder);
+
+            return v;
         }
     }
 
     interface CheckinQuery {
+
         String[] PROJECTION = {
                 Shows._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.AIRSTIME, Shows.NETWORK,
                 Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT,
