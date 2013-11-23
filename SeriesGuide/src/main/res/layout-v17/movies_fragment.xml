@@ -33,8 +33,8 @@
         android:layout_marginTop="@dimen/large_padding"
         android:background="?custom_list_selector"
         android:contentDescription="@string/clear"
-        android:paddingStart="@dimen/inline_padding"
         android:paddingEnd="@dimen/inline_padding"
+        android:paddingStart="@dimen/inline_padding"
         android:src="?attr/drawableCancel" />
 
     <TextView
@@ -56,11 +56,12 @@
         android:clipToPadding="@bool/gridClipToPadding"
         android:columnWidth="@dimen/movie_item_width"
         android:fastScrollEnabled="true"
+        android:horizontalSpacing="@dimen/grid_horizontal_spacing"
         android:listSelector="@color/transparent"
         android:numColumns="auto_fit"
         android:padding="@dimen/default_padding"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="@dimen/default_padding" />
+        android:verticalSpacing="@dimen/grid_vertical_spacing" />
 
     <TextView
         android:id="@+id/poweredby"
