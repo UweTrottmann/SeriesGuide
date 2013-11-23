@@ -76,7 +76,7 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
 
     private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setIcon(R.drawable.ic_action_add);
+        actionBar.setIcon(R.drawable.ic_action_new_show);
         actionBar.setDisplayHomeAsUpEnabled(true);
         setProgressBarIndeterminateVisibility(Boolean.FALSE);
         setSupportProgressBarIndeterminateVisibility(false);
