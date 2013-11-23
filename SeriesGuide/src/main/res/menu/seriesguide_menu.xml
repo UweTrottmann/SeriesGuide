@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/menu_add_show"
-        android:icon="@drawable/ic_action_add"
+        android:icon="@drawable/ic_action_new_show"
         android:orderInCategory="1"
         android:showAsAction="always"
         android:title="@string/action_shows_add" />
