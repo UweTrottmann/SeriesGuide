@@ -1,45 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:foreground="?custom_list_selector">
-
-    <!-- Added FrameLayout wrapper to avoid grid view layout issues -->
+    android:layout_width="@dimen/movie_item_width"
+    android:layout_height="@dimen/movie_item_height"
+    android:background="?attr/drawableCardBackground"
+    android:foreground="?custom_list_selector"
+    android:minHeight="@dimen/movie_item_height"
+    android:minWidth="@dimen/movie_item_width">
 
     <RelativeLayout
-        android:layout_width="@dimen/movie_item_width"
-        android:layout_height="@dimen/movie_item_height"
-        tools:ignore="UselessParent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/imageViewMoviePoster"
             android:layout_width="match_parent"
             android:layout_height="@dimen/movie_item_poster_height"
+            android:layout_alignParentTop="true"
             android:scaleType="centerCrop" />
 
         <ImageView
             android:id="@+id/imageViewMovieItemContextMenu"
-            android:layout_width="16dp"
+            android:layout_width="28dp"
             android:layout_height="32dp"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/imageViewMoviePoster"
             android:background="?attr/custom_list_selector"
-            android:paddingBottom="@dimen/inline_padding"
-            android:scaleType="center"
+            android:paddingBottom="8dp"
+            android:paddingStart="8dp"
+            android:scaleType="centerInside"
             android:src="?attr/drawableDropdown" />
 
         <TextView
             android:id="@+id/textViewMovieTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/imageViewMoviePoster"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/imageViewMoviePoster"
-            android:layout_toStartOf="@id/imageViewMovieItemContextMenu"
+            android:layout_marginEnd="@dimen/inline_padding"
+            android:layout_marginStart="@dimen/inline_padding"
+            android:layout_toStartOf="@+id/imageViewMovieItemContextMenu"
             android:ellipsize="end"
             android:maxLines="2"
-            android:paddingStart="@dimen/inline_padding"
-            android:paddingEnd="@dimen/inline_padding"
             android:textAppearance="@style/TextAppearance.Primary"
             tools:text="Awesome Movie Title" />
 
@@ -47,15 +49,13 @@
             android:id="@+id/textViewMovieDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/imageViewMoviePoster"
-            android:layout_alignEnd="@+id/imageViewMoviePoster"
             android:layout_below="@+id/textViewMovieTitle"
+            android:layout_marginEnd="@dimen/inline_padding"
+            android:layout_marginStart="@dimen/inline_padding"
             android:ellipsize="end"
             android:maxLines="1"
-            android:paddingStart="@dimen/inline_padding"
-            android:paddingEnd="@dimen/inline_padding"
             android:textAppearance="@style/TextAppearance.XSmall"
-            tools:text="20 Oct 2013" />
+            tools:text="November 13, 2013" />
     </RelativeLayout>
 
 </FrameLayout>
