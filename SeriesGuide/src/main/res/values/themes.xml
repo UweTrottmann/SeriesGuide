@@ -46,6 +46,7 @@
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
         <item name="drawableCalendarIcon">@drawable/ic_action_calendar</item>
+        <item name="drawableCardBackground">@drawable/card_background</item>
         <item name="drawableDivider">@drawable/divider</item>
         <item name="drawableStar">@drawable/ic_action_star_10</item>
         <item name="drawableStar0">@drawable/ic_action_star_0</item>
@@ -96,6 +97,7 @@
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
         <item name="drawableCalendarIcon">@drawable/ic_action_calendar</item>
+        <item name="drawableCardBackground">@drawable/card_background</item>
         <item name="drawableDivider">@drawable/divider</item>
         <item name="drawableStar">@drawable/ic_action_star_10</item>
         <item name="drawableStar0">@drawable/ic_action_star_0</item>
@@ -162,6 +164,7 @@
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add_inverse</item>
         <item name="drawableCalendarIcon">@drawable/ic_action_calendar_inverse</item>
+        <item name="drawableCardBackground">@drawable/card_background_inverse</item>
         <item name="drawableDivider">@drawable/divider_light</item>
         <item name="drawableStar">@drawable/ic_action_star_10_inverse</item>
         <item name="drawableStar0">@drawable/ic_action_star_0_inverse</item>

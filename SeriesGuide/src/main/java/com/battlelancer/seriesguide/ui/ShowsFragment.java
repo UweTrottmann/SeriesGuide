@@ -21,6 +21,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
@@ -49,7 +50,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.CursorAdapter;
 import android.text.format.DateUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -61,8 +61,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import de.greenrobot.event.EventBus;
@@ -97,7 +95,7 @@ public class ShowsFragment extends SherlockFragment implements
 
     private static final int CONTEXT_CHECKIN_ID = 208;
 
-    private SlowAdapter mAdapter;
+    private ShowsAdapter mAdapter;
 
     private GridView mGrid;
 
@@ -160,7 +158,7 @@ public class ShowsFragment extends SherlockFragment implements
                 R.attr.drawableStar);
         int resIdStarZero = Utils.resolveAttributeToResourceId(getSherlockActivity().getTheme(),
                 R.attr.drawableStar0);
-        mAdapter = new SlowAdapter(getActivity(), null, 0, resIdStar, resIdStarZero, this);
+        mAdapter = new ShowsAdapter(getActivity(), null, 0, resIdStar, resIdStarZero, this);
 
         // setup grid view
         mGrid = (GridView) getView().findViewById(R.id.gridViewShows);
@@ -553,11 +551,7 @@ public class ShowsFragment extends SherlockFragment implements
         mAdapter.swapCursor(null);
     }
 
-    private class SlowAdapter extends CursorAdapter {
-
-        private final int LAYOUT = R.layout.shows_row;
-
-        private LayoutInflater mLayoutInflater;
+    private class ShowsAdapter extends BaseShowsAdapter {
 
         private OnClickListener mOnClickListener;
 
@@ -565,54 +559,24 @@ public class ShowsFragment extends SherlockFragment implements
 
         private int mStarZeroDrawableId;
 
-        public SlowAdapter(Context context, Cursor c, int flags, int starDrawableResId,
+        public ShowsAdapter(Context context, Cursor c, int flags, int starDrawableResId,
                 int starZeroDrawableId, OnClickListener listener) {
             super(context, c, flags);
-            mLayoutInflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             mStarDrawableId = starDrawableResId;
             mStarZeroDrawableId = starZeroDrawableId;
             mOnClickListener = listener;
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (!mDataValid) {
-                throw new IllegalStateException(
-                        "this should only be called when the cursor is valid");
-            }
-            if (!mCursor.moveToPosition(position)) {
-                throw new IllegalStateException("couldn't move cursor to position " + position);
-            }
-
-            final ViewHolder viewHolder;
-
-            if (convertView == null) {
-                convertView = mLayoutInflater.inflate(LAYOUT, null);
-
-                viewHolder = new ViewHolder();
-                viewHolder.name = (TextView) convertView.findViewById(R.id.seriesname);
-                viewHolder.timeAndNetwork = (TextView) convertView
-                        .findViewById(R.id.textViewShowsTimeAndNetwork);
-                viewHolder.episode = (TextView) convertView
-                        .findViewById(R.id.TextViewShowListNextEpisode);
-                viewHolder.episodeTime = (TextView) convertView.findViewById(R.id.episodetime);
-                viewHolder.poster = (ImageView) convertView.findViewById(R.id.showposter);
-                viewHolder.favorited = (ImageView) convertView.findViewById(R.id.favoritedLabel);
-                viewHolder.contextMenu = (ImageView) convertView
-                        .findViewById(R.id.imageViewShowsContextMenu);
-
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
+        public void bindView(View view, Context context, Cursor cursor) {
+            BaseShowsAdapter.ViewHolder viewHolder = (BaseShowsAdapter.ViewHolder) view.getTag();
 
             // set text properties immediately
-            viewHolder.name.setText(mCursor.getString(ShowsQuery.TITLE));
+            viewHolder.name.setText(cursor.getString(ShowsQuery.TITLE));
 
             // favorite toggle
-            final String showId = mCursor.getString(ShowsQuery._ID);
-            final boolean isFavorited = mCursor.getInt(ShowsQuery.FAVORITE) == 1;
+            final String showId = cursor.getString(ShowsQuery._ID);
+            final boolean isFavorited = cursor.getInt(ShowsQuery.FAVORITE) == 1;
             viewHolder.favorited.setImageResource(isFavorited ? mStarDrawableId
                     : mStarZeroDrawableId);
             viewHolder.favorited.setOnClickListener(new OnClickListener() {
@@ -623,11 +587,11 @@ public class ShowsFragment extends SherlockFragment implements
             });
 
             // next episode info
-            String fieldValue = mCursor.getString(ShowsQuery.NEXTTEXT);
+            String fieldValue = cursor.getString(ShowsQuery.NEXTTEXT);
             if (fieldValue.length() == 0) {
                 // show show status if there are currently no more
                 // episodes
-                int status = mCursor.getInt(ShowsQuery.STATUS);
+                int status = cursor.getInt(ShowsQuery.STATUS);
 
                 // Continuing == 1 and Ended == 0
                 if (status == 1) {
@@ -640,62 +604,26 @@ public class ShowsFragment extends SherlockFragment implements
                 viewHolder.episode.setText("");
             } else {
                 viewHolder.episode.setText(fieldValue);
-                fieldValue = mCursor.getString(ShowsQuery.NEXTAIRDATETEXT);
+                fieldValue = cursor.getString(ShowsQuery.NEXTAIRDATETEXT);
                 viewHolder.episodeTime.setText(fieldValue);
             }
 
             // airday
             final String[] values = Utils.parseMillisecondsToTime(
-                    mCursor.getLong(ShowsQuery.AIRSTIME),
-                    mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), mContext);
-            if (getResources().getBoolean(R.bool.isLargeTablet)) {
-                // network first, then time, one line
-                viewHolder.timeAndNetwork.setText(mCursor.getString(ShowsQuery.NETWORK) + " / "
-                        + values[1] + " " + values[0]);
-            } else {
-                // smaller screen, time first, network second line
-                viewHolder.timeAndNetwork.setText(values[1] + " " + values[0] + "\n"
-                        + mCursor.getString(ShowsQuery.NETWORK));
-            }
+                    cursor.getLong(ShowsQuery.AIRSTIME),
+                    cursor.getString(ShowsQuery.AIRSDAYOFWEEK), context);
+            // one line: 'Network | Tue 08:00 PM'
+            viewHolder.timeAndNetwork.setText(cursor.getString(ShowsQuery.NETWORK) + " / "
+                    + values[1] + " " + values[0]);
 
             // set poster
-            final String imagePath = mCursor.getString(ShowsQuery.POSTER);
-            ImageProvider.getInstance(mContext).loadPosterThumb(viewHolder.poster, imagePath);
+            final String imagePath = cursor.getString(ShowsQuery.POSTER);
+            ImageProvider.getInstance(context).loadPosterThumb(viewHolder.poster, imagePath);
 
             // context menu
             viewHolder.contextMenu.setVisibility(View.VISIBLE);
             viewHolder.contextMenu.setOnClickListener(mOnClickListener);
-
-            return convertView;
         }
-
-        @Override
-        public void bindView(View view, Context context, Cursor cursor) {
-            // do nothing here
-        }
-
-        @Override
-        public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            return mLayoutInflater.inflate(LAYOUT, parent, false);
-        }
-    }
-
-    static class ViewHolder {
-
-        public TextView name;
-
-        public TextView timeAndNetwork;
-
-        public TextView episode;
-
-        public TextView episodeTime;
-
-        public ImageView poster;
-
-        public ImageView favorited;
-
-        public ImageView contextMenu;
-
     }
 
     private interface ShowsQuery {

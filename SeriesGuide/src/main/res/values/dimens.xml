@@ -27,7 +27,8 @@
     <dimen name="widget_text_large">13sp</dimen>
     <dimen name="showgrid_padding">8dp</dimen>
     <dimen name="showgrid_columnWidth">290dp</dimen>
-    <dimen name="showgrid_spacing">0dp</dimen>
+    <dimen name="grid_vertical_spacing">5dp</dimen>
+    <dimen name="grid_horizontal_spacing">8dp</dimen>
     <dimen name="imagecontainer_height">180dp</dimen>
     <dimen name="slidingmenu_width">240dp</dimen>
     <dimen name="movie_item_width">100dp</dimen>
