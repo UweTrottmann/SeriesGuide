@@ -20,7 +20,6 @@
     <!-- Drawables -->
     <attr name="drawableAddIcon" format="reference" />
     <attr name="drawableCardBackground" format="reference" />
-    <attr name="drawableCalendarIcon" format="reference" />
     <attr name="drawableDivider" format="reference" />
     <attr name="drawableStar" format="reference" />
     <attr name="drawableStar0" format="reference" />
