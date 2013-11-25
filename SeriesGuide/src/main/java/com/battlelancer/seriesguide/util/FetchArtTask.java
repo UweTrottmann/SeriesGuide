@@ -17,6 +17,9 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.thetvdbapi.TheTVDB;
+import com.uwetrottmann.seriesguide.R;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -24,9 +27,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-
-import com.battlelancer.thetvdbapi.TheTVDB;
-import com.uwetrottmann.seriesguide.R;
 
 public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
 
@@ -109,11 +109,13 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
     @Override
     protected void onPostExecute(Bitmap bitmap) {
         if (bitmap != null) {
+            mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             mImageView.setImageBitmap(bitmap);
         } else {
             // we can be sure that there must be an image here, we just couldn't
             // get it somehow, so set a place holder
-            mImageView.setImageResource(R.drawable.show_generic);
+            mImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            mImageView.setImageResource(R.drawable.ic_image_missing);
         }
 
         // make image view visible
