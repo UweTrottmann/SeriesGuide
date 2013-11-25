@@ -18,6 +18,7 @@
 package com.battlelancer.seriesguide.ui.dialogs;
 
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.Utils;
@@ -114,7 +115,7 @@ public class AddDialogFragment extends DialogFragment {
         });
 
         // poster
-        if (getResources().getBoolean(R.bool.isLargeTablet)) {
+        if (DisplaySettings.isVeryLargeScreen(getActivity())) {
             if (show.poster != null) {
                 ImageView posterView = (ImageView) layout.findViewById(R.id.poster);
                 posterView.setVisibility(View.VISIBLE);

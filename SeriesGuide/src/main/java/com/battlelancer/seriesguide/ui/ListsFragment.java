@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
@@ -232,7 +233,7 @@ public class ListsFragment extends SherlockFragment implements
                     final String[] values = Utils.parseMillisecondsToTime(
                             cursor.getLong(ListItemsQuery.AIRSTIME),
                             cursor.getString(ListItemsQuery.SHOW_AIRSDAY), context);
-                    if (getResources().getBoolean(R.bool.isLargeTablet)) {
+                    if (DisplaySettings.isVeryLargeScreen(context)) {
                         // network first, then time, one line
                         viewHolder.timeAndNetwork.setText(cursor
                                 .getString(ListItemsQuery.SHOW_NETWORK) + " / "
