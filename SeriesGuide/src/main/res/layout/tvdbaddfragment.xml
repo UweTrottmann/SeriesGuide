@@ -13,8 +13,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/default_padding"
-            android:layout_marginLeft="@dimen/large_padding"
-            android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginLeft="@dimen/default_padding"
+            android:layout_marginRight="@dimen/default_padding"
             android:layout_marginTop="@dimen/large_padding">
 
             <EditText
@@ -22,8 +22,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:contentDescription="@string/search_hint_add"
-                android:hint="@string/search_hint_add"
+                android:hint="@string/checkin_searchhint"
                 android:imeOptions="actionSearch"
                 android:inputType="text" />
 
