@@ -5,7 +5,7 @@
         android:id="@+id/menu_list_add"
         android:icon="@drawable/ic_action_new_list"
         android:orderInCategory="1"
-        android:showAsAction="always|withText"
+        android:showAsAction="always"
         android:title="@string/list_add"/>
 
 </menu>
