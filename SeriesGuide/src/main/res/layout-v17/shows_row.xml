@@ -79,7 +79,7 @@
             android:layout_below="@id/seriesname"
             android:layout_toEndOf="@id/showposter"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLines="1"
             android:paddingEnd="@dimen/inline_padding"
             android:textAppearance="@style/TextAppearance.Light"
             tools:text="10x456 Some Very Cool Episode Title Therefore" />
