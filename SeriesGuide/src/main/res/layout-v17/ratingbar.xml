@@ -50,7 +50,7 @@
     <RelativeLayout
         android:id="@+id/traktrating"
         android:layout_width="wrap_content"
-        android:layout_height="36dp"
+        android:layout_height="38dp"
         android:layout_below="@id/textViewRatingsTvdbValue"
         android:layout_marginTop="@dimen/default_padding">
 
