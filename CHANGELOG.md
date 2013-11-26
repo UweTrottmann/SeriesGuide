@@ -8,6 +8,10 @@ All dates are in the European Central timezone.
 Version 10 *(in development)*
 -----------------------------
 
+#### 10-beta2 *(2013-11-26)*
+
+* TWEAK Some design updates (more visually separated items, icon tweaks).
+
 #### 10-beta1 *(2013-11-20)*
 
 * TWEAK trakt credentials are sanitized more rigorously. If you have issues, try disconnecting and re-connecting again.
