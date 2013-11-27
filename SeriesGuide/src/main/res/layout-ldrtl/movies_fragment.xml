@@ -52,7 +52,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/editTextMoviesSearch"
-        android:animateLayoutChanges="true"
         android:clipToPadding="@bool/gridClipToPadding"
         android:columnWidth="@dimen/movie_item_width"
         android:fastScrollEnabled="true"
