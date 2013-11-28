@@ -1,25 +1,13 @@
 package com.uwetrottmann.seriesguide;
 
-public class Show {
+import javax.persistence.Entity;
+
+@Entity
+public class Show extends BaseEntity {
 
     public int tvdbId;
 
-    public String owner;
-
     public Show() {
-    }
-
-    public Show(int tvdbId, String owner) {
-        setTvdbId(tvdbId);
-        setOwner(owner);
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
     }
 
     public int getTvdbId() {
