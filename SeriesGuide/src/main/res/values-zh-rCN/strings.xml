@@ -9,6 +9,8 @@
   <string name="search">搜索</string>
   <string name="preferences">设置</string>
   <string name="help">帮助</string>
+  <string name="drawer_open">Open navigation drawer</string>
+  <string name="drawer_close">Close navigation drawer</string>
   <string name="show">剧目</string>
   <string name="episode">剧集</string>
   <string name="episode_number">第 %s 集</string>
@@ -36,13 +38,11 @@
   <string name="share_show">分享剧目</string>
   <string name="share_episode">剧集分享</string>
   <string name="share_checkout">标记已观看</string>
-  <string name="shouts">吐槽</string>
   <string name="comments">评论</string>
   <string name="shout_hint">输入一段吐槽（仅限英语）</string>
   <string name="shout">提交</string>
   <string name="isspoiler">（剧透警告）</string>
   <string name="no_shouts">做第一个吐槽的人！</string>
-  <string name="shouts_for">有关 %s 的吐槽</string>
   <string name="autorefresh">自动刷新</string>
   <string name="movies_watchlist">观看列表 (trakt)</string>
   <string name="watchlist_add">加入观看列表</string>

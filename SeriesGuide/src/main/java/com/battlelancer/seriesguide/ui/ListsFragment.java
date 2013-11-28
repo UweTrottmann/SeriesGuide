@@ -18,10 +18,11 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.ui.ShowsFragment.ViewHolder;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
@@ -34,7 +35,6 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.CursorAdapter;
 import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -46,8 +46,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 /**
  * Displays one user created mList which includes a mixture of shows, seasons
@@ -207,54 +205,25 @@ public class ListsFragment extends SherlockFragment implements
         mAdapter.swapCursor(null);
     }
 
-    private class ListItemAdapter extends CursorAdapter {
-
-        private LayoutInflater mInflater;
+    private class ListItemAdapter extends BaseShowsAdapter {
 
         public ListItemAdapter(Context context, Cursor c, int flags) {
             super(context, c, flags);
-            mInflater = LayoutInflater.from(context);
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (!mDataValid) {
-                throw new IllegalStateException(
-                        "this should only be called when the cursor is valid");
-            }
-            if (!mCursor.moveToPosition(position)) {
-                throw new IllegalStateException("couldn't move cursor to position " + position);
-            }
-
-            final ViewHolder viewHolder;
-
-            if (convertView == null) {
-                convertView = mInflater.inflate(R.layout.shows_row, null);
-
-                viewHolder = new ViewHolder();
-                viewHolder.name = (TextView) convertView.findViewById(R.id.seriesname);
-                viewHolder.timeAndNetwork = (TextView) convertView
-                        .findViewById(R.id.textViewShowsTimeAndNetwork);
-                viewHolder.episode = (TextView) convertView
-                        .findViewById(R.id.TextViewShowListNextEpisode);
-                viewHolder.episodeTime = (TextView) convertView.findViewById(R.id.episodetime);
-                viewHolder.poster = (ImageView) convertView.findViewById(R.id.showposter);
-                viewHolder.favorited = (ImageView) convertView.findViewById(R.id.favoritedLabel);
-
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
+        public void bindView(View view, Context context, Cursor cursor) {
+            BaseShowsAdapter.ViewHolder viewHolder = (BaseShowsAdapter.ViewHolder) view.getTag();
 
             // show title
-            viewHolder.name.setText(mCursor.getString(ListItemsQuery.SHOW_TITLE));
+            viewHolder.name.setText(cursor.getString(ListItemsQuery.SHOW_TITLE));
 
-            // favorite star
-            final boolean isFavorited = mCursor.getInt(ListItemsQuery.SHOW_FAVORITE) == 1;
+            // favorited label
+            final boolean isFavorited = cursor.getInt(ListItemsQuery.SHOW_FAVORITE) == 1;
             viewHolder.favorited.setVisibility(isFavorited ? View.VISIBLE : View.GONE);
 
             // item title
-            int itemType = mCursor.getInt(ListItemsQuery.ITEM_TYPE);
+            int itemType = cursor.getInt(ListItemsQuery.ITEM_TYPE);
             switch (itemType) {
                 default:
                 case 1:
@@ -262,25 +231,25 @@ public class ListsFragment extends SherlockFragment implements
 
                     // air time and network
                     final String[] values = Utils.parseMillisecondsToTime(
-                            mCursor.getLong(ListItemsQuery.AIRSTIME),
-                            mCursor.getString(ListItemsQuery.SHOW_AIRSDAY), mContext);
-                    if (getResources().getBoolean(R.bool.isLargeTablet)) {
+                            cursor.getLong(ListItemsQuery.AIRSTIME),
+                            cursor.getString(ListItemsQuery.SHOW_AIRSDAY), context);
+                    if (DisplaySettings.isVeryLargeScreen(context)) {
                         // network first, then time, one line
-                        viewHolder.timeAndNetwork.setText(mCursor
+                        viewHolder.timeAndNetwork.setText(cursor
                                 .getString(ListItemsQuery.SHOW_NETWORK) + " / "
                                 + values[1] + " " + values[0]);
                     } else {
                         // smaller screen, time first, network second line
                         viewHolder.timeAndNetwork.setText(values[1] + " " + values[0] + "\n"
-                                + mCursor.getString(ListItemsQuery.SHOW_NETWORK));
+                                + cursor.getString(ListItemsQuery.SHOW_NETWORK));
                     }
 
                     // next episode info
-                    String fieldValue = mCursor.getString(ListItemsQuery.SHOW_NEXTTEXT);
+                    String fieldValue = cursor.getString(ListItemsQuery.SHOW_NEXTTEXT);
                     if (TextUtils.isEmpty(fieldValue)) {
                         // show show status if there are currently no more
                         // episodes
-                        int status = mCursor.getInt(ListItemsQuery.SHOW_STATUS);
+                        int status = cursor.getInt(ListItemsQuery.SHOW_STATUS);
 
                         // Continuing == 1 and Ended == 0
                         if (status == 1) {
@@ -293,25 +262,25 @@ public class ListsFragment extends SherlockFragment implements
                         viewHolder.episode.setText("");
                     } else {
                         viewHolder.episode.setText(fieldValue);
-                        fieldValue = mCursor.getString(ListItemsQuery.SHOW_NEXTAIRDATETEXT);
+                        fieldValue = cursor.getString(ListItemsQuery.SHOW_NEXTAIRDATETEXT);
                         viewHolder.episodeTime.setText(fieldValue);
                     }
                     break;
                 case 2:
                     // seasons
                     viewHolder.timeAndNetwork.setText(R.string.season);
-                    viewHolder.episode.setText(Utils.getSeasonString(mContext,
-                            mCursor.getInt(ListItemsQuery.ITEM_TITLE)));
+                    viewHolder.episode.setText(Utils.getSeasonString(context,
+                            cursor.getInt(ListItemsQuery.ITEM_TITLE)));
                     viewHolder.episodeTime.setText("");
                     break;
                 case 3:
                     // episodes
                     viewHolder.timeAndNetwork.setText(R.string.episode);
-                    viewHolder.episode.setText(Utils.getNextEpisodeString(mContext,
-                            mCursor.getInt(ListItemsQuery.SHOW_NEXTTEXT),
-                            mCursor.getInt(ListItemsQuery.SHOW_NEXTAIRDATETEXT),
-                            mCursor.getString(ListItemsQuery.ITEM_TITLE)));
-                    long airtime = mCursor.getLong(ListItemsQuery.AIRSTIME);
+                    viewHolder.episode.setText(Utils.getNextEpisodeString(context,
+                            cursor.getInt(ListItemsQuery.SHOW_NEXTTEXT),
+                            cursor.getInt(ListItemsQuery.SHOW_NEXTAIRDATETEXT),
+                            cursor.getString(ListItemsQuery.ITEM_TITLE)));
+                    long airtime = cursor.getLong(ListItemsQuery.AIRSTIME);
                     if (airtime != -1) {
                         final String[] dayAndTime = Utils
                                 .formatToTimeAndDay(airtime, getActivity());
@@ -324,20 +293,18 @@ public class ListsFragment extends SherlockFragment implements
             }
 
             // poster
-            final String imagePath = mCursor.getString(ListItemsQuery.SHOW_POSTER);
-            ImageProvider.getInstance(mContext).loadPosterThumb(viewHolder.poster, imagePath);
-
-            return convertView;
+            final String imagePath = cursor.getString(ListItemsQuery.SHOW_POSTER);
+            ImageProvider.getInstance(context).loadPosterThumb(viewHolder.poster, imagePath);
         }
 
         @Override
-        public void bindView(View arg0, Context arg1, Cursor arg2) {
-            // do nothing here
-        }
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            View v = super.newView(context, cursor, parent);
 
-        @Override
-        public View newView(Context arg0, Cursor arg1, ViewGroup arg2) {
-            return null;
+            ViewHolder viewHolder = (ViewHolder) v.getTag();
+            viewHolder.favorited.setBackgroundResource(0); // remove selectable background
+
+            return v;
         }
 
     }

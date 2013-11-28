@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/editTextCheckinSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginTop="@dimen/large_padding"
+            android:layout_toStartOf="@+id/imageButtonClearSearch"
+            android:ems="10"
+            android:hint="@string/checkin_searchhint"
+            android:inputType="text"
+            android:paddingBottom="@dimen/default_padding">
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/empty"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editTextCheckinSearch"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:text="@string/checkin_empty"
+            android:visibility="gone" />
+
+        <GridView
+            android:id="@+id/gridViewCheckinShows"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/empty"
+            android:clipToPadding="@bool/gridClipToPadding"
+            android:columnWidth="@dimen/showgrid_columnWidth"
+            android:gravity="center"
+            android:horizontalSpacing="@dimen/grid_horizontal_spacing"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="auto_fit"
+            android:padding="@dimen/showgrid_padding"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="@dimen/grid_vertical_spacing" />
+
+        <ImageButton
+            android:id="@+id/imageButtonClearSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/editTextCheckinSearch"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignTop="@+id/editTextCheckinSearch"
+            android:layout_marginEnd="@dimen/default_padding"
+            android:layout_marginTop="@dimen/large_padding"
+            android:background="?custom_list_selector"
+            android:contentDescription="@string/clear"
+            android:paddingStart="@dimen/inline_padding"
+            android:paddingEnd="@dimen/inline_padding"
+            android:src="?attr/drawableCancel" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/drawer_left" />
+
+</android.support.v4.widget.DrawerLayout>

@@ -1,9 +1,11 @@
 package com.battlelancer.seriesguide.settings;
 
 import com.battlelancer.seriesguide.Constants;
+import com.uwetrottmann.seriesguide.R;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 
 /**
  * Settings related to appearance, display formats and sort orders.
@@ -30,6 +32,22 @@ public class DisplaySettings {
     public static final String KEY_EPISODE_SORT_ORDER = "episodeSorting";
 
     public static final String KEY_HIDE_SPECIALS = "onlySeasonEpisodes";
+
+    /**
+     * Returns true for xlarge, xlarge-land or sw720dp screens.
+     */
+    public static boolean isVeryLargeScreen(Context context) {
+        return context.getResources().getBoolean(R.bool.isLargeTablet);
+    }
+
+    /**
+     * Returns true for xlarge, xlarge-land or sw720dp screens with xhdpi or higher dpi screens.
+     */
+    public static boolean isVeryLargeAndHighResScreen(Context context) {
+        return isVeryLargeScreen(context)
+                && context.getResources().getDisplayMetrics().densityDpi
+                > DisplayMetrics.DENSITY_HIGH;
+    }
 
     public static String getThemeIndex(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).

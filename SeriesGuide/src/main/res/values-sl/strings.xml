@@ -9,6 +9,8 @@
   <string name="search">Iskanje</string>
   <string name="preferences">Nastavitve</string>
   <string name="help">Pomoč</string>
+  <string name="drawer_open">Open navigation drawer</string>
+  <string name="drawer_close">Close navigation drawer</string>
   <string name="show">Show</string>
   <string name="episode">Epizoda</string>
   <string name="episode_number">Episode %s</string>
@@ -36,13 +38,11 @@
   <string name="share_show">Share show</string>
   <string name="share_episode">Deli epizodo</string>
   <string name="share_checkout">Odjavi</string>
-  <string name="shouts">Vzkliki</string>
   <string name="comments">Comments</string>
   <string name="shout_hint">Vpiši vzklik (v angleščini)</string>
   <string name="shout">Zakliči!</string>
   <string name="isspoiler">Pozor! Razkrita vsebina!</string>
   <string name="no_shouts">Bodi prvi(a), ki bo zaklical(a)!</string>
-  <string name="shouts_for">Klici za %s</string>
   <string name="autorefresh">Osvežujem automagično</string>
   <string name="movies_watchlist">Watchlist (trakt)</string>
   <string name="watchlist_add">Add to watchlist</string>

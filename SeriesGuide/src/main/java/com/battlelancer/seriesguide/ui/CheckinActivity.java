@@ -20,9 +20,9 @@ package com.battlelancer.seriesguide.ui;
 import com.google.analytics.tracking.android.EasyTracker;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
-import com.battlelancer.seriesguide.ui.ShowsFragment.ViewHolder;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
@@ -37,12 +37,10 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.CursorAdapter;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.format.DateUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -50,12 +48,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 /**
- * Displays a searchable list of shows to allow quickly checking into a shows
- * next episode.
+ * Displays a searchable list of shows to allow quickly checking into a shows next episode.
  */
 public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCallbacks<Cursor> {
 
@@ -63,7 +58,7 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
 
     private EditText mSearchBox;
 
-    private SlowAdapter mAdapter;
+    private CheckinAdapter mAdapter;
 
     private String mSearchFilter;
 
@@ -109,7 +104,7 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
         mSearchBox.requestFocus();
 
         // setup adapter
-        mAdapter = new SlowAdapter(this, null, 0);
+        mAdapter = new CheckinAdapter(this, null, 0);
 
         // setup grid view
         GridView list = (GridView) findViewById(R.id.gridViewCheckinShows);
@@ -159,7 +154,7 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
                 + DateUtils.HOUR_IN_MILLIS);
 
         return new CursorLoader(this, baseUri, CheckinQuery.PROJECTION, CheckinQuery.SELECTION,
-                new String[] {
+                new String[]{
                         fakeInAnHour
                 }, ShowsDistillationSettings.ShowsSortOrder.EPISODE_REVERSE);
     }
@@ -174,59 +169,27 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
         mAdapter.swapCursor(null);
     }
 
-    private class SlowAdapter extends CursorAdapter {
+    private class CheckinAdapter extends BaseShowsAdapter {
 
-        private LayoutInflater mLayoutInflater;
-
-        private final int LAYOUT = R.layout.shows_row;
-
-        public SlowAdapter(Context context, Cursor c, int flags) {
+        public CheckinAdapter(Context context, Cursor c, int flags) {
             super(context, c, flags);
-            mLayoutInflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (!mDataValid) {
-                throw new IllegalStateException(
-                        "this should only be called when the cursor is valid");
-            }
-            if (!mCursor.moveToPosition(position)) {
-                throw new IllegalStateException("couldn't move cursor to position " + position);
-            }
+        public void bindView(View view, Context context, Cursor cursor) {
+            BaseShowsAdapter.ViewHolder viewHolder = (BaseShowsAdapter.ViewHolder) view.getTag();
 
-            final ViewHolder viewHolder;
-
-            if (convertView == null) {
-                convertView = mLayoutInflater.inflate(LAYOUT, null);
-
-                viewHolder = new ViewHolder();
-                viewHolder.name = (TextView) convertView.findViewById(R.id.seriesname);
-                viewHolder.timeAndNetwork = (TextView) convertView
-                        .findViewById(R.id.textViewShowsTimeAndNetwork);
-                viewHolder.episode = (TextView) convertView
-                        .findViewById(R.id.TextViewShowListNextEpisode);
-                viewHolder.episodeTime = (TextView) convertView.findViewById(R.id.episodetime);
-                viewHolder.poster = (ImageView) convertView.findViewById(R.id.showposter);
-                viewHolder.favorited = (ImageView) convertView.findViewById(R.id.favoritedLabel);
-
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-
-            // set text properties immediately
+            // title
             viewHolder.name.setText(mCursor.getString(CheckinQuery.TITLE));
 
+            // favorited label
             final boolean isFavorited = mCursor.getInt(CheckinQuery.FAVORITE) == 1;
             viewHolder.favorited.setVisibility(isFavorited ? View.VISIBLE : View.GONE);
 
             // next episode info
-            String fieldValue = mCursor.getString(CheckinQuery.NEXTTEXT);
-            if (fieldValue.length() == 0) {
-                // show show status if there are currently no more
-                // episodes
+            String nextText = mCursor.getString(CheckinQuery.NEXTTEXT);
+            if (TextUtils.isEmpty(nextText)) {
+                // show show status if there are currently no more episodes
                 int status = mCursor.getInt(CheckinQuery.STATUS);
 
                 // Continuing == 1 and Ended == 0
@@ -239,44 +202,37 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
                 }
                 viewHolder.episode.setText("");
             } else {
-                viewHolder.episode.setText(fieldValue);
-                fieldValue = mCursor.getString(CheckinQuery.NEXTAIRDATETEXT);
-                viewHolder.episodeTime.setText(fieldValue);
+                viewHolder.episode.setText(nextText);
+                nextText = mCursor.getString(CheckinQuery.NEXTAIRDATETEXT);
+                viewHolder.episodeTime.setText(nextText);
             }
 
-            // airday
+            // network and release day
             final String[] values = Utils.parseMillisecondsToTime(
-                    mCursor.getLong(CheckinQuery.AIRSTIME),
-                    mCursor.getString(CheckinQuery.AIRSDAYOFWEEK), mContext);
-            if (getResources().getBoolean(R.bool.isLargeTablet)) {
-                // network first, then time, one line
-                viewHolder.timeAndNetwork.setText(mCursor.getString(CheckinQuery.NETWORK) + " / "
-                        + values[1] + " " + values[0]);
-            } else {
-                // smaller screen, time first, network second line
-                viewHolder.timeAndNetwork.setText(values[1] + " " + values[0] + "\n"
-                        + mCursor.getString(CheckinQuery.NETWORK));
-            }
+                    cursor.getLong(CheckinQuery.AIRSTIME),
+                    cursor.getString(CheckinQuery.AIRSDAYOFWEEK), context);
+            // one line: 'Network | Tue 08:00 PM'
+            viewHolder.timeAndNetwork.setText(cursor.getString(CheckinQuery.NETWORK) + " / "
+                    + values[1] + " " + values[0]);
 
-            // set poster
-            final String imagePath = mCursor.getString(CheckinQuery.POSTER);
-            ImageProvider.getInstance(mContext).loadPosterThumb(viewHolder.poster, imagePath);
-
-            return convertView;
+            // poster
+            final String imagePath = cursor.getString(CheckinQuery.POSTER);
+            ImageProvider.getInstance(context).loadPosterThumb(viewHolder.poster, imagePath);
         }
 
         @Override
-        public void bindView(View arg0, Context arg1, Cursor arg2) {
-            // do nothing here
-        }
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            View v = super.newView(context, cursor, parent);
 
-        @Override
-        public View newView(Context arg0, Cursor arg1, ViewGroup arg2) {
-            return null;
+            ViewHolder viewHolder = (ViewHolder) v.getTag();
+            viewHolder.favorited.setBackgroundResource(0); // remove selectable background
+
+            return v;
         }
     }
 
     interface CheckinQuery {
+
         String[] PROJECTION = {
                 Shows._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.AIRSTIME, Shows.NETWORK,
                 Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT,

@@ -17,11 +17,14 @@
 
 package com.battlelancer.seriesguide.adapters;
 
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.util.ImageDownloader;
+import com.jakewharton.trakt.entities.Movie;
+import com.uwetrottmann.seriesguide.R;
+
 import android.content.Context;
-import android.content.res.Resources;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,10 +32,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.jakewharton.trakt.entities.Movie;
-import com.uwetrottmann.seriesguide.R;
 
 import java.util.List;
 
@@ -59,9 +58,7 @@ public class MoviesWatchListAdapter extends ArrayAdapter<Movie> {
 
         // figure out which size of posters to load based on screen density and
         // size
-        Resources res = context.getResources();
-        if (res.getBoolean(R.bool.isLargeTablet)
-                && res.getDisplayMetrics().densityDpi >= DisplayMetrics.DENSITY_XHIGH) {
+        if (DisplaySettings.isVeryLargeAndHighResScreen(context)) {
             mSizeSpec = "-300.jpg";
         } else {
             mSizeSpec = "-138.jpg";

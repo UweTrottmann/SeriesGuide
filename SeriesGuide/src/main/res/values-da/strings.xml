@@ -9,6 +9,8 @@
   <string name="search">Søg</string>
   <string name="preferences">Indstillinger</string>
   <string name="help">Hjælp</string>
+  <string name="drawer_open">Open navigation drawer</string>
+  <string name="drawer_close">Close navigation drawer</string>
   <string name="show">Serie</string>
   <string name="episode">Episode</string>
   <string name="episode_number">Episode %s</string>
@@ -36,13 +38,11 @@
   <string name="share_show">Del serie</string>
   <string name="share_episode">Del episode</string>
   <string name="share_checkout">Tjek ud</string>
-  <string name="shouts">Kommentarer</string>
   <string name="comments">Kommentarer</string>
   <string name="shout_hint">Skriv en kommentar (på engelsk)</string>
   <string name="shout">Kommentar!</string>
   <string name="isspoiler">Spoiler alert!</string>
   <string name="no_shouts">Vær den første til at kommentere!</string>
-  <string name="shouts_for">Kommentarer for %s</string>
   <string name="autorefresh">Opdaterer automagisk</string>
   <string name="movies_watchlist">Overvågningsliste (trakt)</string>
   <string name="watchlist_add">Tilføj overvågningsliste</string>

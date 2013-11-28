@@ -9,6 +9,8 @@
   <string name="search">Hae</string>
   <string name="preferences">Asetukset</string>
   <string name="help">Apua</string>
+  <string name="drawer_open">Open navigation drawer</string>
+  <string name="drawer_close">Close navigation drawer</string>
   <string name="show">Ohjelma</string>
   <string name="episode">Jakso</string>
   <string name="episode_number">Jakso %s</string>
@@ -36,13 +38,11 @@
   <string name="share_show">Jaa ohjelma</string>
   <string name="share_episode">Jaa jakso</string>
   <string name="share_checkout">Kuittaa ulos</string>
-  <string name="shouts">Huudahdukset</string>
   <string name="comments">Kommentit</string>
   <string name="shout_hint">Kirjoita huudahdus (englanniksi)</string>
   <string name="shout">Huudahda!</string>
   <string name="isspoiler">Juonipaljastusvaroitus!</string>
   <string name="no_shouts">Huudahda ensimmäisenä!</string>
-  <string name="shouts_for">Huudahdukset ohjelmalle %s</string>
   <string name="autorefresh">Päivitetään automaagisesti</string>
   <string name="movies_watchlist">Seurantalista (trakt)</string>
   <string name="watchlist_add">Lisää seurantalistalle</string>

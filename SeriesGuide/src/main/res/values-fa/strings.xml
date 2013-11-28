@@ -9,6 +9,8 @@
   <string name="search">جستجو</string>
   <string name="preferences">تنظیمات</string>
   <string name="help">راهنما</string>
+  <string name="drawer_open">Open navigation drawer</string>
+  <string name="drawer_close">Close navigation drawer</string>
   <string name="show">سریال</string>
   <string name="episode">قسمت</string>
   <string name="episode_number">قسمت %s</string>
@@ -36,13 +38,11 @@
   <string name="share_show">اشتراک سریال</string>
   <string name="share_episode">اشتراک قسمت</string>
   <string name="share_checkout">Check out</string>
-  <string name="shouts">فریادها</string>
   <string name="comments">نظرات</string>
   <string name="shout_hint">یک فریاد بنویس (به زبان انگلیسی)</string>
   <string name="shout">فریاد!</string>
   <string name="isspoiler">Spoiler alert!</string>
   <string name="no_shouts">Be the first to shout!</string>
-  <string name="shouts_for">فریادها برای %s</string>
   <string name="autorefresh">به روز شدن بصورت خودکار و جادویی</string>
   <string name="movies_watchlist">فهرست نمایش (trakt)</string>
   <string name="watchlist_add">Add to watchlist</string>

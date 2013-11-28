@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.AsyncTask;
@@ -300,7 +301,7 @@ public class ImageProvider {
                 int scaledWidth;
                 int scaledHeight;
                 // create bigger thumbnails on large screen devices
-                if (mContext.getResources().getBoolean(R.bool.isLargeTablet)) {
+                if (DisplaySettings.isVeryLargeScreen(mContext)) {
                     scaledWidth = (int) (THUMBNAIL_WIDTH_LARGE * mScale + 0.5f);
                     scaledHeight = (int) (THUMBNAIL_HEIGHT_LARGE * mScale + 0.5f);
                 } else {

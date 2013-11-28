@@ -42,6 +42,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -140,14 +141,23 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment {
                 connectbtn.setEnabled(false);
                 disconnectbtn.setEnabled(false);
 
-                final String username = ((EditText) layout.findViewById(R.id.username)).getText()
-                        .toString();
-                final String passwordHash = Utils.toSHA1(context, ((EditText) layout
-                        .findViewById(R.id.password)).getText().toString());
-                final String email = ((EditText) layout.findViewById(R.id.email)).getText()
-                        .toString();
+                // username and password
+                Editable editableUsername = ((EditText) layout.findViewById(R.id.username))
+                        .getText();
+                final String username = editableUsername != null ?
+                        editableUsername.toString().trim() : null;
+                Editable editablePassword = ((EditText) layout.findViewById(R.id.password))
+                        .getText();
+                final String passwordHash = editablePassword != null ?
+                        Utils.toSHA1(context, editablePassword.toString().trim()) : null;
+
+                // new account data
                 final boolean isNewAccount = ((CheckBox) layout.findViewById(R.id.checkNewAccount))
                         .isChecked();
+                Editable editableEmail = ((EditText) layout.findViewById(R.id.email)).getText();
+                final String email = editableEmail != null ? editableEmail.toString().trim() : null;
+
+                // trakt API key
                 final String traktApiKey = getResources().getString(R.string.trakt_apikey);
 
                 AsyncTask<String, Void, Response> accountValidatorTask
@@ -163,7 +173,8 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment {
                     @Override
                     protected Response doInBackground(String... params) {
                         // check if we have any usable data
-                        if (username.length() == 0 || passwordHash == null) {
+                        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(passwordHash)
+                                || (isNewAccount && TextUtils.isEmpty(email))) {
                             return null;
                         }
 
@@ -264,7 +275,8 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment {
                                 // show options after successful connection
                                 FragmentManager fm = getFragmentManager();
                                 if (fm != null) {
-                                    ConnectTraktFinishedFragment f = new ConnectTraktFinishedFragment();
+                                    ConnectTraktFinishedFragment f
+                                            = new ConnectTraktFinishedFragment();
                                     FragmentTransaction ft = fm.beginTransaction();
                                     ft.replace(android.R.id.content, f);
                                     ft.commit();

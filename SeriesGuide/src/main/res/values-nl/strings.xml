@@ -9,6 +9,8 @@
   <string name="search">Zoeken</string>
   <string name="preferences">Instellingen</string>
   <string name="help">Help</string>
+  <string name="drawer_open">Open navigation drawer</string>
+  <string name="drawer_close">Close navigation drawer</string>
   <string name="show">Serie</string>
   <string name="episode">Aflevering</string>
   <string name="episode_number">Aflevering %s</string>
@@ -36,13 +38,11 @@
   <string name="share_show">Serie delen</string>
   <string name="share_episode">Aflevering delen</string>
   <string name="share_checkout">Uitchecken</string>
-  <string name="shouts">Shouts</string>
   <string name="comments">Reacties</string>
   <string name="shout_hint">Typ een shout (in het Engels)</string>
   <string name="shout">Shout!</string>
   <string name="isspoiler">Spoiler waarschuwing!</string>
   <string name="no_shouts">Wees de eerste die shout!</string>
-  <string name="shouts_for">Shouts voor %s</string>
   <string name="autorefresh">Automatisch vernieuwen</string>
   <string name="movies_watchlist">Watchlist (trakt)</string>
   <string name="watchlist_add">Toevoegen aan watchlist</string>

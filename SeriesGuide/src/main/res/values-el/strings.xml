@@ -9,6 +9,8 @@
   <string name="search">Αναζήτηση</string>
   <string name="preferences">Ρυθμίσεις</string>
   <string name="help">Βοήθεια</string>
+  <string name="drawer_open">Open navigation drawer</string>
+  <string name="drawer_close">Close navigation drawer</string>
   <string name="show">Σειρά</string>
   <string name="episode">Επεισόδιο</string>
   <string name="episode_number">Επεισόδιο %s</string>
@@ -36,13 +38,11 @@
   <string name="share_show">κοινοποίηση σειράς</string>
   <string name="share_episode">Κοινή χρήση επεισοδίου</string>
   <string name="share_checkout">Check out</string>
-  <string name="shouts">Shouts</string>
   <string name="comments">Σχόλια</string>
   <string name="shout_hint">Πληκτρολογήστε ένα shout (στα Αγγλικά)</string>
   <string name="shout">Shout!</string>
   <string name="isspoiler">Προειδοποίηση spoiler!</string>
   <string name="no_shouts">Be the first to shout!</string>
-  <string name="shouts_for">Shouts for %s</string>
   <string name="autorefresh">Αυτόματη ανανέωση</string>
   <string name="movies_watchlist">Λίστα παρακολούθησης (trakt)</string>
   <string name="watchlist_add">Προσθήκη στη λίστα παρακολούθησης</string>
