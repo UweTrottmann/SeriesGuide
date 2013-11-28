@@ -9,6 +9,9 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
 
     <application>
+
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+
         <service android:name="com.uwetrottmann.seriesguide.GCMIntentService"/>
         <receiver android:name="com.uwetrottmann.seriesguide.GCMBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
