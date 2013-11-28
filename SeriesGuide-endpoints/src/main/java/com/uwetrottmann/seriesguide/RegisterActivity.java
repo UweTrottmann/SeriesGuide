@@ -1,6 +1,9 @@
 package com.uwetrottmann.seriesguide;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.json.jackson.JacksonFactory;
@@ -8,19 +11,25 @@ import com.google.api.client.json.jackson.JacksonFactory;
 import com.uwetrottmann.seriesguide.messageEndpoint.MessageEndpoint;
 import com.uwetrottmann.seriesguide.messageEndpoint.model.CollectionResponseMessageData;
 import com.uwetrottmann.seriesguide.messageEndpoint.model.MessageData;
+import com.uwetrottmann.seriesguide.settings.HexagonSettings;
 
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -48,6 +57,14 @@ import java.io.IOException;
  */
 public class RegisterActivity extends Activity {
 
+    private static final int REQUEST_ACCOUNT_PICKER = 0;
+
+    private static final int REQUEST_GOOGLE_PLAY_SERVICES = 1;
+
+    private static final String TAG = "Hexagon";
+
+    private GoogleAccountCredential mCredential;
+
     enum State {
         REGISTERED, REGISTERING, UNREGISTERED, UNREGISTERING
     }
@@ -64,6 +81,40 @@ public class RegisterActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        mCredential = GoogleAccountCredential.usingAudience(this, HexagonSettings.AUDIENCE);
+        setAccountName(HexagonSettings.getAccountName(this));
+
+        setupViews();
+
+        /*
+         * build the messaging endpoint so we can access old messages via an endpoint call
+         */
+        MessageEndpoint.Builder endpointBuilder = new MessageEndpoint.Builder(
+                AndroidHttp.newCompatibleTransport(),
+                new JacksonFactory(),
+                new HttpRequestInitializer() {
+                    public void initialize(HttpRequest httpRequest) {
+                    }
+                });
+
+        messageEndpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
+    }
+
+    private void setupViews() {
+        Button signInButton = (Button) findViewById(R.id.buttonRegisterSignIn);
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isSignedIn = mCredential.getSelectedAccountName() != null;
+                if (isSignedIn) {
+                    signOut();
+                    Toast.makeText(RegisterActivity.this, "Signed out.", Toast.LENGTH_SHORT).show();
+                } else {
+                    signIn();
+                }
+            }
+        });
 
         Button regButton = (Button) findViewById(R.id.regButton);
 
@@ -121,19 +172,30 @@ public class RegisterActivity extends Activity {
         };
 
         regButton.setOnTouchListener(registerListener);
+    }
 
-    /*
-     * build the messaging endpoint so we can access old messages via an endpoint call
-     */
-        MessageEndpoint.Builder endpointBuilder = new MessageEndpoint.Builder(
-                AndroidHttp.newCompatibleTransport(),
-                new JacksonFactory(),
-                new HttpRequestInitializer() {
-                    public void initialize(HttpRequest httpRequest) {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkGooglePlayServicesAvailable();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_ACCOUNT_PICKER: {
+                if (data != null && data.getExtras() != null) {
+                    String accountName = data.getExtras()
+                            .getString(AccountManager.KEY_ACCOUNT_NAME);
+                    if (!TextUtils.isEmpty(accountName)) {
+                        storeAccountName(accountName);
+                        setAccountName(accountName);
                     }
-                });
-
-        messageEndpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
+                }
+                break;
+            }
+        }
     }
 
     @Override
@@ -185,6 +247,47 @@ public class RegisterActivity extends Activity {
                 new QueryMessagesTask(this, messageEndpoint).execute();
             }
         }
+    }
+
+    /**
+     * Ensure Google Play Services is up to date, if not help the user update it.
+     */
+    private void checkGooglePlayServicesAvailable() {
+        final int connectionStatusCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (GooglePlayServicesUtil.isUserRecoverableError(connectionStatusCode)) {
+            GooglePlayServicesUtil
+                    .getErrorDialog(connectionStatusCode, this, REQUEST_GOOGLE_PLAY_SERVICES)
+                    .show();
+        } else if (connectionStatusCode != ConnectionResult.SUCCESS) {
+            Log.i(TAG, "This device is not supported.");
+            finish();
+        }
+    }
+
+    private void setAccountName(String accountName) {
+        mCredential.setSelectedAccountName(accountName);
+    }
+
+    private void storeAccountName(String accountName) {
+        // store account name in settings
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this)
+                .edit();
+        editor.putString(HexagonSettings.KEY_ACCOUNT_NAME, accountName);
+        editor.commit();
+    }
+
+    private void signIn() {
+        // launch account picker
+        startActivityForResult(mCredential.newChooseAccountIntent(), REQUEST_ACCOUNT_PICKER);
+    }
+
+    private void signOut() {
+        // remove account name from settings
+        mCredential.setSelectedAccountName(null);
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this)
+                .edit();
+        editor.putString(HexagonSettings.KEY_ACCOUNT_NAME, null);
+        editor.commit();
     }
 
     private void updateState(State newState) {
