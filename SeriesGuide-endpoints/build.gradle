@@ -12,6 +12,7 @@ dependencies {
         exclude group: 'com.google.android.google-play-services'
     }
     compile 'com.google.http-client:google-http-client-jackson:1.15.0-rc'
+    compile 'com.google.android.gms:play-services:4.0.30'
 }
 
 android {
