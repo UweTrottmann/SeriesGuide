@@ -22,6 +22,8 @@ public abstract class BaseEntity {
 
     private Date updatedAt;
 
+    private String owner;
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -38,6 +40,14 @@ public abstract class BaseEntity {
         this.key = key;
     }
 
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
     public Date getUpdatedAt() {
         return updatedAt;
     }
@@ -45,5 +55,4 @@ public abstract class BaseEntity {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
-
 }
