@@ -7,7 +7,17 @@ public class Show extends BaseEntity {
 
     public int tvdbId;
 
+    public boolean isFavorite;
+
     public Show() {
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean isFavorite) {
+        this.isFavorite = isFavorite;
     }
 
     public int getTvdbId() {
