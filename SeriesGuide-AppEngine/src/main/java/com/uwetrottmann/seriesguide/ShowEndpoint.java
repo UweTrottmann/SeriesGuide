@@ -10,8 +10,14 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.users.User;
 import com.google.appengine.datanucleus.query.JPACursorHelper;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nullable;
 import javax.inject.Named;
@@ -104,36 +110,87 @@ public class ShowEndpoint {
         return show;
     }
 
+    /**
+     * Inserts or updates the given show in(to) the Datastore.
+     */
     @ApiMethod(
             name = "save",
             path = "save"
     )
     public ShowList saveShows(ShowList shows, User user) throws UnauthorizedException {
-
+        // create user-specific keys for all shows
         for (Show show : shows.getShows()) {
-            if (show.getTvdbId() <= 0) {
-                continue;
-            }
-
-            // create user-specific key
             show.setKey(Security.get().createKey(Show.class.getSimpleName(),
                     String.valueOf(show.getTvdbId()), user));
-            // create metadata
-            show.setCreatedAt(new Date());
-            show.setUpdatedAt(show.getCreatedAt());
+        }
 
+        // update existing shows
+        Map<Integer, Show> existingShows = findAndUpdateExistingShows(shows.getShows(), user);
+
+        // insert new shows
+        List<Show> newShows = insertNewShows(shows.getShows(), existingShows.keySet(), user);
+
+        // return all shows
+        newShows.addAll(existingShows.values());
+        shows.setShows(newShows);
+
+        return shows;
+    }
+
+    private Map<Integer, Show> findAndUpdateExistingShows(List<Show> shows, User user)
+            throws UnauthorizedException {
+        Map<Integer, Show> existingShows = new HashMap<Integer, Show>();
+
+        for (Show show : shows) {
             EntityManager mgr = getEntityManager();
             try {
-                if (containsShow(show)) {
-                    throw new EntityExistsException("Object already exists");
+                // show with this key already exists?
+                Show existingShow = mgr.find(Show.class, show.getKey());
+                if (existingShow != null) {
+                    // set updated values
+                    existingShow.copyPropertyValues(show);
+                    existingShow.setUpdatedAt(new Date());
+
+                    // save back to Datastore
+                    mgr.merge(existingShow);
+
+                    // flag as existing
+                    existingShows.put(existingShow.getTvdbId(), existingShow);
                 }
-                mgr.persist(show);
             } finally {
                 mgr.close();
             }
         }
 
-        return shows;
+        return existingShows;
+    }
+
+    private List<Show> insertNewShows(List<Show> shows, Set<Integer> existingShows, User user) {
+        List<Show> newShows = new LinkedList<Show>();
+
+        for (Show show : shows) {
+            if (existingShows.contains(show.getTvdbId())) {
+                // already was updated
+                continue;
+            }
+
+            // create metadata
+            show.setCreatedAt(new Date());
+            show.setUpdatedAt(show.getCreatedAt());
+            show.setOwner(user.getEmail());
+
+            // insert into Datastore
+            EntityManager mgr = getEntityManager();
+            try {
+                mgr.persist(show);
+            } finally {
+                mgr.close();
+            }
+
+            newShows.add(show);
+        }
+
+        return newShows;
     }
 
     /**
