@@ -30,7 +30,7 @@ public class Security {
 
     public static final String USERS_PROP_USERID = "userId";
 
-    public static final String USER_ID_PREFIX = "USER:";
+    public static final String USER_ID_PREFIX = "USER_";
 
     private static final Security _instance = new Security();
 
