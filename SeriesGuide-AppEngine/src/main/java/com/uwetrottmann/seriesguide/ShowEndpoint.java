@@ -104,32 +104,36 @@ public class ShowEndpoint {
         return show;
     }
 
-    /**
-     * This inserts a new entity into App Engine datastore. If the entity already exists in the
-     * datastore, an exception is thrown. It uses HTTP POST method.
-     */
     @ApiMethod(
             name = "save",
             path = "save"
     )
-    public Show insertShow(Show show, User user) throws UnauthorizedException {
-        // create user-specific key
-        show.setKey(Security.get().createKey(Show.class.getSimpleName(),
-                String.valueOf(show.getTvdbId()), user));
-        // create metadata
-        show.setCreatedAt(new Date());
-        show.setUpdatedAt(show.getCreatedAt());
+    public ShowList saveShows(ShowList shows, User user) throws UnauthorizedException {
 
-        EntityManager mgr = getEntityManager();
-        try {
-            if (containsShow(show)) {
-                throw new EntityExistsException("Object already exists");
+        for (Show show : shows.getShows()) {
+            if (show.getTvdbId() <= 0) {
+                continue;
             }
-            mgr.persist(show);
-        } finally {
-            mgr.close();
+
+            // create user-specific key
+            show.setKey(Security.get().createKey(Show.class.getSimpleName(),
+                    String.valueOf(show.getTvdbId()), user));
+            // create metadata
+            show.setCreatedAt(new Date());
+            show.setUpdatedAt(show.getCreatedAt());
+
+            EntityManager mgr = getEntityManager();
+            try {
+                if (containsShow(show)) {
+                    throw new EntityExistsException("Object already exists");
+                }
+                mgr.persist(show);
+            } finally {
+                mgr.close();
+            }
         }
-        return show;
+
+        return shows;
     }
 
     /**
