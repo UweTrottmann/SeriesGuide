@@ -10,6 +10,7 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.users.User;
 import com.google.appengine.datanucleus.query.JPACursorHelper;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -19,11 +20,14 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-@Api(name = "shows",
+@Api(
+        name = "shows",
+        version = "v1",
         scopes = {Constants.EMAIL_SCOPE},
         clientIds = {com.google.api.server.spi.Constant.API_EXPLORER_CLIENT_ID},
         namespace = @ApiNamespace(ownerDomain = "uwetrottmann.com", ownerName = "uwetrottmann.com",
-                packagePath = "seriesguide"))
+                packagePath = "seriesguide")
+)
 public class ShowEndpoint {
 
     /**
@@ -83,15 +87,17 @@ public class ShowEndpoint {
      * This method gets the entity having primary key id. It uses HTTP GET method.
      */
     @ApiMethod(
-            name = "shows.get",
-            path = "shows/{id}"
+            name = "get",
+            path = "get/{tvdbid}"
     )
-    public Show getShow(@Named("id") Key id, User user) throws UnauthorizedException {
-        Security.ensureIsValidUser(user);
+    public Show getShow(@Named("tvdbid") int tvdbId, User user) throws UnauthorizedException {
+        Key key = Security.get()
+                .createKey(Show.class.getSimpleName(), String.valueOf(tvdbId), user);
+
         EntityManager mgr = getEntityManager();
         Show show = null;
         try {
-            show = mgr.find(Show.class, id);
+            show = mgr.find(Show.class, key);
         } finally {
             mgr.close();
         }
@@ -103,13 +109,16 @@ public class ShowEndpoint {
      * datastore, an exception is thrown. It uses HTTP POST method.
      */
     @ApiMethod(
-            name = "shows.insert",
-            path = "shows/add"
+            name = "save",
+            path = "save"
     )
     public Show insertShow(Show show, User user) throws UnauthorizedException {
         // create user-specific key
         show.setKey(Security.get().createKey(Show.class.getSimpleName(),
                 String.valueOf(show.getTvdbId()), user));
+        // create metadata
+        show.setCreatedAt(new Date());
+        show.setUpdatedAt(show.getCreatedAt());
 
         EntityManager mgr = getEntityManager();
         try {
@@ -144,18 +153,18 @@ public class ShowEndpoint {
         return show;
     }
 
-    /**
-     * This method removes the entity with primary key id. It uses HTTP DELETE method.
-     *
-     * @param id the primary key of the entity to be deleted.
-     * @return The deleted entity.
-     */
-    @ApiMethod(name = "removeShow")
-    public Show removeShow(@Named("id") Key id) {
+    @ApiMethod(
+            name = "remove",
+            path = "remove/{tvdbid}"
+    )
+    public Show removeShow(@Named("tvdbid") int tvdbId, User user) throws UnauthorizedException {
+        Key key = Security.get()
+                .createKey(Show.class.getSimpleName(), String.valueOf(tvdbId), user);
+
         EntityManager mgr = getEntityManager();
         Show show = null;
         try {
-            show = mgr.find(Show.class, id);
+            show = mgr.find(Show.class, key);
             mgr.remove(show);
         } finally {
             mgr.close();
