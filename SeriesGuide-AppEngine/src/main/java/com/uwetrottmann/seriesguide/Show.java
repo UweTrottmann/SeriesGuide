@@ -5,9 +5,9 @@ import javax.persistence.Entity;
 @Entity
 public class Show extends BaseEntity {
 
-    public int tvdbId;
+    private int tvdbId;
 
-    public boolean isFavorite;
+    private boolean isFavorite;
 
     public Show() {
     }
@@ -28,4 +28,7 @@ public class Show extends BaseEntity {
         this.tvdbId = tvdbId;
     }
 
+    public void copyPropertyValues(Show show) {
+        setFavorite(show.isFavorite());
+    }
 }
