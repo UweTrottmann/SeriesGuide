@@ -5,6 +5,7 @@ import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.api.server.spi.response.UnauthorizedException;
+import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.users.User;
@@ -44,15 +45,22 @@ public class ShowEndpoint {
      * to the next page.
      */
     @SuppressWarnings({"unchecked", "unused"})
-    @ApiMethod(name = "listShow")
+    @ApiMethod(
+            name = "list",
+            path = "list"
+    )
     public CollectionResponse<Show> listShow(
             @Nullable @Named("cursor") String cursorString,
-            @Nullable @Named("limit") Integer limit) {
-
+            @Nullable @Named("limit") Integer limit,
+            User user) throws UnauthorizedException {
         EntityManager mgr = null;
         List<Show> execute = null;
 
+        String origNamespace = NamespaceManager.get();
         try {
+            // access user specific namespace
+            NamespaceManager.set(Security.get().getUserId(user));
+
             mgr = getEntityManager();
             Query query = mgr.createQuery("select from Show as Show");
             Cursor cursor;
@@ -81,6 +89,7 @@ public class ShowEndpoint {
             if (mgr != null) {
                 mgr.close();
             }
+            NamespaceManager.set(origNamespace);
         }
 
         return CollectionResponse.<Show>builder()

@@ -72,7 +72,7 @@ public class Security {
      * Returns a user id for the given user and persists it in the Datastore, or looks it up if it
      * is already.
      */
-    private String getUserId(User user) throws UnauthorizedException {
+    public String getUserId(User user) throws UnauthorizedException {
         ensureIsValidUser(user);
 
         // check if valid email is available
