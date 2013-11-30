@@ -193,27 +193,6 @@ public class ShowEndpoint {
         return newShows;
     }
 
-    /**
-     * This method is used for updating an existing entity. If the entity does not exist in the
-     * datastore, an exception is thrown. It uses HTTP PUT method.
-     *
-     * @param show the entity to be updated.
-     * @return The updated entity.
-     */
-    @ApiMethod(name = "updateShow")
-    public Show updateShow(Show show) {
-        EntityManager mgr = getEntityManager();
-        try {
-            if (!containsShow(show)) {
-                throw new EntityNotFoundException("Object does not exist");
-            }
-            mgr.persist(show);
-        } finally {
-            mgr.close();
-        }
-        return show;
-    }
-
     @ApiMethod(
             name = "remove",
             path = "remove/{tvdbid}"
@@ -231,20 +210,6 @@ public class ShowEndpoint {
             mgr.close();
         }
         return show;
-    }
-
-    private boolean containsShow(Show show) {
-        EntityManager mgr = getEntityManager();
-        boolean contains = true;
-        try {
-            Show item = mgr.find(Show.class, show.getKey());
-            if (item == null) {
-                contains = false;
-            }
-        } finally {
-            mgr.close();
-        }
-        return contains;
     }
 
     private static EntityManager getEntityManager() {
