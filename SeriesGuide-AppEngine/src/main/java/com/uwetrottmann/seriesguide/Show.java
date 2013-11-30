@@ -9,6 +9,12 @@ public class Show extends BaseEntity {
 
     private boolean isFavorite;
 
+    private boolean isHidden;
+
+    private boolean isSyncEnabled;
+
+    private String getGlueId;
+
     public Show() {
     }
 
@@ -30,5 +36,29 @@ public class Show extends BaseEntity {
 
     public void copyPropertyValues(Show show) {
         setFavorite(show.isFavorite());
+    }
+
+    public boolean isHidden() {
+        return isHidden;
+    }
+
+    public void setHidden(boolean isHidden) {
+        this.isHidden = isHidden;
+    }
+
+    public boolean isSyncEnabled() {
+        return isSyncEnabled;
+    }
+
+    public void setSyncEnabled(boolean isSyncEnabled) {
+        this.isSyncEnabled = isSyncEnabled;
+    }
+
+    public String getGetGlueId() {
+        return getGlueId;
+    }
+
+    public void setGetGlueId(String getGlueId) {
+        this.getGlueId = getGlueId;
     }
 }
