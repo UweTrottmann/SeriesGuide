@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/default_padding">
+    android:layout_height="147dp"
+    android:background="?attr/drawableCardBackground">
 
     <ImageView
         android:id="@+id/poster"
         android:layout_width="100dp"
         android:layout_height="147dp"
         android:layout_alignParentStart="true"
-        android:layout_marginEnd="@dimen/default_padding"
         android:contentDescription="@string/description_poster"
         android:scaleType="centerCrop"
-        android:src="@drawable/appwidget_bg" />
+        tools:src="@color/background_dim" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,8 +50,8 @@
                 android:maxLines="3"
                 android:paddingBottom="@dimen/inline_padding"
                 android:paddingEnd="@dimen/default_padding"
-                android:text="@string/app_name"
-                android:textAppearance="@style/TextAppearance.Small" />
+                android:textAppearance="@style/TextAppearance.Small"
+                tools:text="Some awesome\nthree-line\ndescription" />
         </LinearLayout>
 
         <include layout="@layout/divider_horizontal" />
