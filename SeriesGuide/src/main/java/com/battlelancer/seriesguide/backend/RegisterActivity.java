@@ -8,6 +8,7 @@ import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.json.jackson.JacksonFactory;
 
+import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.uwetrottmann.seriesguide.R;
 import com.uwetrottmann.seriesguide.messageEndpoint.MessageEndpoint;
 import com.uwetrottmann.seriesguide.messageEndpoint.model.CollectionResponseMessageData;
@@ -23,6 +24,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -339,22 +341,35 @@ public class RegisterActivity extends Activity {
     }
 
     private void uploadShows() {
-
+        new ShowsUploadTask().execute();
     }
 
     class ShowsUploadTask extends AsyncTask<Void, Void, Void> {
 
         @Override
+        protected void onPreExecute() {
+            mButtonUpload.setEnabled(false);
+        }
+
+        @Override
         protected Void doInBackground(Void... params) {
+            // get a list of all local shows
+            List<Show> shows = getLocalShowsAsList();
+            if (shows == null || shows.size() == 0) {
+                return null;
+            }
+            ShowList showList = new ShowList();
+            showList.setShows(shows);
+
+            // build show service endpoint
             Shows.Builder builder = new Shows.Builder(
                     AndroidHttp.newCompatibleTransport(), new JacksonFactory(), mCredential
             );
             Shows service = builder.build();
 
-            ShowList shows = getLocalShowsAsList();
-
+            // upload shows
             try {
-                ShowList savedShows = service.save(shows).execute();
+                ShowList savedShows = service.save(showList).execute();
             } catch (IOException e) {
                 Log.w(TAG, e.getMessage(), e);
             }
@@ -362,9 +377,32 @@ public class RegisterActivity extends Activity {
             return null;
         }
 
-        private ShowList getLocalShowsAsList() {
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            mButtonUpload.setEnabled(true);
+        }
+
+        private List<Show> getLocalShowsAsList() {
             List<Show> shows = new LinkedList<>();
-            return null;
+
+            Cursor query = getContentResolver()
+                    .query(SeriesContract.Shows.CONTENT_URI, new String[]{
+                            SeriesContract.Shows._ID, SeriesContract.Shows.FAVORITE
+                    }, null, null, null);
+            if (query == null) {
+                return null;
+            }
+
+            while (query.moveToNext()) {
+                Show show = new Show();
+                show.setTvdbId(query.getInt(0));
+                show.setFavorite(query.getInt(1) == 1);
+                shows.add(show);
+            }
+
+            query.close();
+
+            return shows;
         }
     }
 
