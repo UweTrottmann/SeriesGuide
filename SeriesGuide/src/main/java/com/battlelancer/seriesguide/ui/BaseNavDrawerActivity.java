@@ -20,7 +20,7 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
-import com.uwetrottmann.seriesguide.RegisterActivity;
+import com.battlelancer.seriesguide.backend.RegisterActivity;
 
 import android.content.Context;
 import android.content.Intent;

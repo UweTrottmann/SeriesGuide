@@ -1,4 +1,4 @@
-package com.uwetrottmann.seriesguide;
+package com.battlelancer.seriesguide.backend;
 
 import com.google.android.gcm.GCMBaseIntentService;
 import com.google.android.gcm.GCMRegistrar;

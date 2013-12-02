@@ -1,4 +1,4 @@
-package com.uwetrottmann.seriesguide.settings;
+package com.battlelancer.seriesguide.backend.settings;
 
 import android.content.Context;
 import android.preference.PreferenceManager;

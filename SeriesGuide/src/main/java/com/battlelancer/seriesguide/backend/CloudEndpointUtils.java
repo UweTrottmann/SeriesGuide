@@ -1,4 +1,4 @@
-package com.uwetrottmann.seriesguide;
+package com.battlelancer.seriesguide.backend;
 
 import com.google.api.client.googleapis.json.GoogleJsonError;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;

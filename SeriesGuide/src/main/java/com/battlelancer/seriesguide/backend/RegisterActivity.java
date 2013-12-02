@@ -1,4 +1,4 @@
-package com.uwetrottmann.seriesguide;
+package com.battlelancer.seriesguide.backend;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -8,10 +8,14 @@ import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.json.jackson.JacksonFactory;
 
+import com.uwetrottmann.seriesguide.R;
 import com.uwetrottmann.seriesguide.messageEndpoint.MessageEndpoint;
 import com.uwetrottmann.seriesguide.messageEndpoint.model.CollectionResponseMessageData;
 import com.uwetrottmann.seriesguide.messageEndpoint.model.MessageData;
-import com.uwetrottmann.seriesguide.settings.HexagonSettings;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
+import com.uwetrottmann.seriesguide.shows.Shows;
+import com.uwetrottmann.seriesguide.shows.model.Show;
+import com.uwetrottmann.seriesguide.shows.model.ShowList;
 
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -32,6 +36,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * An activity that communicates with your App Engine backend via Cloud Endpoints.
@@ -64,6 +70,8 @@ public class RegisterActivity extends Activity {
     private static final String TAG = "Hexagon";
 
     private GoogleAccountCredential mCredential;
+
+    private Button mButtonUpload;
 
     enum State {
         REGISTERED, REGISTERING, UNREGISTERED, UNREGISTERING
@@ -106,8 +114,7 @@ public class RegisterActivity extends Activity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isSignedIn = mCredential.getSelectedAccountName() != null;
-                if (isSignedIn) {
+                if (isSignedIn()) {
                     signOut();
                     Toast.makeText(RegisterActivity.this, "Signed out.", Toast.LENGTH_SHORT).show();
                 } else {
@@ -115,6 +122,15 @@ public class RegisterActivity extends Activity {
                 }
             }
         });
+
+        mButtonUpload = (Button) findViewById(R.id.buttonRegisterUpload);
+        mButtonUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadShows();
+            }
+        });
+        mButtonUpload.setEnabled(isSignedIn());
 
         Button regButton = (Button) findViewById(R.id.regButton);
 
@@ -264,6 +280,10 @@ public class RegisterActivity extends Activity {
         }
     }
 
+    private boolean isSignedIn() {
+        return mCredential.getSelectedAccountName() != null;
+    }
+
     private void setAccountName(String accountName) {
         mCredential.setSelectedAccountName(accountName);
     }
@@ -316,6 +336,36 @@ public class RegisterActivity extends Activity {
                 break;
         }
         curState = newState;
+    }
+
+    private void uploadShows() {
+
+    }
+
+    class ShowsUploadTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            Shows.Builder builder = new Shows.Builder(
+                    AndroidHttp.newCompatibleTransport(), new JacksonFactory(), mCredential
+            );
+            Shows service = builder.build();
+
+            ShowList shows = getLocalShowsAsList();
+
+            try {
+                ShowList savedShows = service.save(shows).execute();
+            } catch (IOException e) {
+                Log.w(TAG, e.getMessage(), e);
+            }
+
+            return null;
+        }
+
+        private ShowList getLocalShowsAsList() {
+            List<Show> shows = new LinkedList<>();
+            return null;
+        }
     }
 
     private void showDialog(String message) {

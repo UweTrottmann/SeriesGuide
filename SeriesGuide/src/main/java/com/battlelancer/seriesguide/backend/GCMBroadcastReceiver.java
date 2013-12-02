@@ -1,4 +1,4 @@
-package com.uwetrottmann.seriesguide;
+package com.battlelancer.seriesguide.backend;
 
 import android.content.Context;
 
@@ -6,6 +6,6 @@ public class GCMBroadcastReceiver extends com.google.android.gcm.GCMBroadcastRec
 
     @Override
     protected String getGCMIntentServiceClassName(Context context) {
-        return "com.uwetrottmann.seriesguide.GCMIntentService";
+        return "com.battlelancer.seriesguide.backend.GCMIntentService";
     }
 }
