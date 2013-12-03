@@ -9,8 +9,8 @@
   <string name="search">Procurar</string>
   <string name="preferences">Configurações</string>
   <string name="help">Ajuda</string>
-  <string name="drawer_open">Open navigation drawer</string>
-  <string name="drawer_close">Close navigation drawer</string>
+  <string name="drawer_open">Abrir gaveta de navegação</string>
+  <string name="drawer_close">Fechar gaveta de navegação</string>
   <string name="show">Série</string>
   <string name="episode">Episódio</string>
   <string name="episode_number">Episódio %s</string>
@@ -33,7 +33,7 @@
   <string name="unknown">desconhecido</string>
   <string name="offline">Sem conexão. Tente novamente mais tarde.</string>
   <string name="app_not_available">Nenhum aplicativo disponível que suporte isso.</string>
-  <string name="onlyx">Disponível apenas com a Inscrição X</string>
+  <string name="onlyx">Disponível apenas com a Assinatura do X</string>
   <string name="add_empty">Não há séries aqui ou o seu dispositivo não tem conexão com a internet.</string>
   <string name="share_show">Compartilhar série</string>
   <string name="share_episode">Compartilhar episódio</string>
@@ -100,8 +100,8 @@
   <string name="uncollect">Episódio ainda não colecionado</string>
   <string name="collect_all">Todos coletados</string>
   <string name="uncollect_all">Nenhum coletado</string>
-  <string name="action_skip">Skip</string>
-  <string name="action_dont_skip">Don\'t skip</string>
+  <string name="action_skip">Avançar</string>
+  <string name="action_dont_skip">Não avançar</string>
   <string name="trakt_submitqueued">Enviando ao trakt.</string>
   <string name="trakt_seen">%s visto.</string>
   <string name="trakt_notseen">%s não visto.</string>
@@ -126,8 +126,8 @@
   <string name="action_shows_filter_favorites">Favoritos</string>
   <string name="action_shows_filter_unwatched">Não assistidos</string>
   <string name="action_shows_filter_upcoming">Próximos</string>
-  <string name="action_shows_filter_hidden">Ocultado</string>
-  <string name="action_shows_sort">Filtrar séries</string>
+  <string name="action_shows_filter_hidden">Ocultos</string>
+  <string name="action_shows_sort">Ordenar séries</string>
   <string name="action_shows_sort_title">Título</string>
   <string name="action_shows_sort_episode">Próximo episódio</string>
   <string name="action_shows_sort_favorites">Favoritos primeiro</string>
@@ -139,20 +139,20 @@
   <string name="recent">Recente</string>
   <string name="friends">Amigos</string>
   <string name="friends_empty">Sem atividade de amigos no trakt.</string>
-  <string name="noupcoming">Não há próximos episódios.</string>
+  <string name="noupcoming">Não há episódios futuros.</string>
   <string name="norecent">Não há episódios recentes.</string>
   <string name="only_favorites">Somente séries favoritas</string>
   <string name="togglewatched">Alternar visto</string>
   <string name="pref_infinite_scrolling">Atividade infinita</string>
   <string name="update_scheduled">Atualizando...</string>
-  <string name="update_no_connection">Para atualizar, conecte com a Internet.</string>
-  <string name="update_no_wifi">Para atualizar, conecte o WiFi ou permita outras conexões em Configurações.</string>
+  <string name="update_no_connection">Para atualizar, conecte-se à Internet.</string>
+  <string name="update_no_wifi">Para atualizar, conecte-se ao WiFi ou permita outras conexões em Configurações.</string>
   <string name="update_inprogress">Atualização em andamento, tente novamente mais tarde.</string>
   <string name="menu_updateart">Carregar cartazes</string>
   <string name="arttask_incomplete">Alguns cartazes não carregaram, tente novamente mais tarde.</string>
   <string name="arttask_start">Carregando cartazes…</string>
   <string name="arttask_nosdcard">Carregar cartazes requer armazenamento externo (cartão SD).</string>
-  <string name="show_on_network">em %s</string>
+  <string name="show_on_network">na %s</string>
   <string name="season_watchcount">episódios não assistidos</string>
   <string name="season_allwatched">Todos os episódios assistidos</string>
   <string name="season_onenotwatched">episódio não assistido</string>
@@ -193,10 +193,10 @@
   <string name="integration_trakt_items">- adicione séries da sua coleção e da lista de \'séries para assistir\'\n\n- veja suas recomendações e atividade dos amigos\n\n- sinalizações de \'assistido\' e \'colecionado\' são sincronizadas automaticamente\n\n- novas séries que você assistir são adicionadas automaticamente</string>
   <string name="trakt_sync_intro">Nenhuma série será adicionada ou removida no SeriesGuide, faça isso na lista de séries.</string>
   <string name="trakt_download_hint">Marca todos os episódios assistidos no trakt como assistidos no SeriesGuide:</string>
-  <string name="trakt_upload_hint">Marca os episódios assistidos SeriesGuide no como assistidos no trakt:</string>
+  <string name="trakt_upload_hint">Marca os episódios assistidos no SeriesGuide como assistidos no trakt:</string>
   <string name="trakt_download">Baixar para o SeriesGuide</string>
   <string name="trakt_upload">Enviar para o trakt.tv</string>
-  <string name="trakt_syncunwatched">Ao sincronizar, remover sinalizações de \'assistido\' para episódios não assistidos</string>
+  <string name="trakt_syncunwatched">Remover sinalizações de \'assistido\' para episódios não assistidos ao sincronizar</string>
   <string name="prefs_category_basic">Básico</string>
   <string name="prefs_category_sharing">Serviços</string>
   <string name="prefs_category_advanced">Avançado</string>
@@ -227,16 +227,16 @@
   <string name="pref_autobackupsummary">Backup semanal da database de suas séries na pasta de Download</string>
   <string name="backup">Backup/Restauração</string>
   <string name="backup_summary">Fazer backup ou restaurar as suas séries</string>
-  <string name="pref_upcominglimit">Exibir próximas séries em até…</string>
+  <string name="pref_upcominglimit">Exibir séries futuras em até…</string>
   <string name="pref_number">Formato de número</string>
   <string name="pref_offset">Deslocamento de tempo manual</string>
   <string name="pref_offsetsummary">Deslocar horário de exibição em %s horas</string>
   <string name="clear_cache">Apagar cache de imagens</string>
   <string name="clear_cache_summary">Remover todas as imagens em cache do seu dispositivo</string>
-  <string name="pref_ganalyticssummary">Armazena o uso de recursos para ajudar a melhorar o SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Coleta dados de uso para ajudar a melhorar o SeriesGuide</string>
   <string name="pref_hideimages">Ocultar imagens</string>
   <string name="pref_hideimagessummary">Ocultar imagens de sua galeria de fotos (será necessário reiniciar)</string>
-  <string name="backup_description"><b>Backup</b> irá exportar suas séries, temporadas, episódios e listas para um arquivo JSON na pasta abaixo. \nTo <b>Restaurar</b> certificar-se de que os arquivos JSON criados pelo backup estão na pasta abaixo.</string>
+  <string name="backup_description">O <b>Backup</b> irá exportar suas séries, temporadas, episódios e listas para um arquivo JSON na pasta abaixo. \nPara <b>restaurar</b>, certifique-se de que os arquivos JSON criados pelo backup estão na pasta abaixo.</string>
   <string name="backup_full_dump">Incluir todas os meta-dados como descrições, atores e classificações.</string>
   <string name="backup_path">Pasta de backup</string>
   <string name="backup_version">Versão do banco de dados</string>
@@ -259,7 +259,7 @@
   <string name="import_no">Não Restaurar</string>
   <string name="import_warning">Eu entendo que minhas séries e listas atuais serão perdidas!</string>
   <string name="last_auto_backup">Último backup automático: %s</string>
-  <string name="restore_auto_backup">Restaurar Backup Automático</string>
+  <string name="restore_auto_backup">Restaurar backup automático</string>
   <string name="checkin">Check-in</string>
   <string name="checkin_noaction">Nenhum serviço habilitado, faça check-in uma vez com o SeriesGuide.</string>
   <string name="checkin_searchhint">Digite o nome da série</string>
@@ -267,11 +267,11 @@
   <string name="checkin_hint">Digite uma mensagem (opcional)</string>
   <string name="checkin_fixgetglue">Consertar check-in do GetGlue</string>
   <string name="paste_title">Colar título</string>
-  <string name="checkinsuccess">Verificado em %s no GetGlue.</string>
+  <string name="checkinsuccess">Feito check-in de %s no GetGlue.</string>
   <string name="checkinfailed">Falha no check-in no GetGlue. Tente mais tarde.</string>
-  <string name="getglue_authentication">Connect GetGlue</string>
-  <string name="getglue_authfailed">Autenticação com GetGlue falhou. Tente novamente.</string>
-  <string name="checkin_success_trakt">Feito check-in em %s no trakt.</string>
+  <string name="getglue_authentication">Conectar ao GetGlue</string>
+  <string name="getglue_authfailed">Autenticação com GetGlue falhou. Tente mais tarde.</string>
+  <string name="checkin_success_trakt">Feito check-in de %s no trakt.</string>
   <string name="checkin_canceled_success_trakt">Check-in no trakt cancelado.</string>
   <string name="select_show">Selecionar seriado</string>
   <string name="check_into">Realizar check-in</string>
@@ -297,14 +297,14 @@
   <string name="trakt_createaccount">Criar nova conta</string>
   <string name="welcome_setuplanguage">Escolha o idioma</string>
   <string name="welcome_traktmessage">Acesse sua coleção do trakt.tv e as atividades dos seus amigos</string>
-  <string name="dismiss">Recusar</string>
-  <string name="welcome_add_part1">Para iniciar aperte</string>
+  <string name="dismiss">Dispensar</string>
+  <string name="welcome_add_part1">Para iniciar, aperte</string>
   <string name="upcoming_show">%s está chegando</string>
   <string name="upcoming_episodes">Novos episódios estão chegando</string>
   <string name="upcoming_episodes_number">%s novos episódios</string>
-  <string name="upcoming_show_detailed">%1$s em %2$s</string>
+  <string name="upcoming_show_detailed">%1$s na %2$s</string>
   <string name="more">e outros %s</string>
-  <string name="upcoming_display">Exibir próximas exibições</string>
+  <string name="upcoming_display">Selecione para mostrar séries futuras</string>
   <string name="pref_notifications">Notificações</string>
   <string name="pref_notificationssummary">Notificar sobre novos episódios</string>
   <string name="pref_notifyfavonly">Apenas favoritos</string>
@@ -319,22 +319,22 @@
   <string name="hide_watched">Ocultar episódios já assistidos</string>
   <string name="pref_widget_opacity">Plano de fundo do widget</string>
   <string name="pref_widget_type">Tipo de widget</string>
-  <string name="dashclock_extension_label">Próximo episódio</string>
+  <string name="dashclock_extension_label">Episódio futuro</string>
   <string name="dashclock_extension_description">Exibe o próximo episódio das suas séries do SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Mostrar próximos episódios</string>
   <string name="action_migrate">Migrar do X</string>
-  <string name="migration_description">SeriesGuide X agora é uma chave de desbloqueio para os recursos X na versão gratuita (\"X Life-Time Pass\"). Por favor, migre suas séries para a versão gratuita do SeriesGuide. Mantenha  o Series Guide X instalado para desbloquear todos os recursos na versão gratuita.</string>
-  <string name="migration_import">Toque abaixo para importar o backup criado em SeriesGuide X.</string>
+  <string name="migration_description">SeriesGuide X agora é uma chave de desbloqueio para os recursos X na versão gratuita (Passe X). Por favor, migre suas séries para a versão gratuita do SeriesGuide. Mantenha o X instalado para desbloquear todos os recursos na versão gratuita.</string>
+  <string name="migration_import">Toque abaixo para importar o backup criado no SeriesGuide X.</string>
   <string name="migration_action_import">Importar e substituir as séries existentes</string>
-  <string name="action_upgrade">Get X features</string>
-  <string name="upgrade_description">Tenha acesso a notificações, mais opções de listas de widgets e novas funcionalidades X. Apoie o desenvolvimento.\n\nSe você já comprou o SeriesGuide X, instale-o para acessar este upgrade.</string>
-  <string name="upgrade_success">Obrigado, você já tem todas as funcionalidades X!</string>
+  <string name="action_upgrade">Obtenha as funcionalidades X</string>
+  <string name="upgrade_description">Tenha acesso a notificações, mais opções de listas em widgets e todas as possíveis funcionalidades X. Apoie o desenvolvimento futuro.\n\nSe você já tiver comprado o SeriesGuide X, instale-o para desbloquear esta atualização.</string>
+  <string name="upgrade_success">Obrigado, você já assinou todas as funcionalidades X!</string>
   <string name="subscription_activated">Você agora tem as funcionalidades X.</string>
-  <string name="subscription_expired">Inscrição expirada</string>
-  <string name="subscription_expired_details">Sua inscrição X expirou.</string>
-  <string name="add_to_homescreen">Adicionar à Página inicial</string>
+  <string name="subscription_expired">Assinatura expirada</string>
+  <string name="subscription_expired_details">Sua assinatura das funcionalidades X expirou.</string>
+  <string name="add_to_homescreen">Adicionar à tela inicial</string>
   <string name="search_within_show">Procurar dentro de %s</string>
-  <string name="web_search">Web search</string>
+  <string name="web_search">Pesquisa na Web</string>
   <string-array name="sesorting">
     <item>Mais recentes primeiro</item>
     <item>Mais antigos primeiro</item>
@@ -349,7 +349,7 @@
     <item>Mais antigos primeiro (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>Agora</item>
+    <item>agora</item>
     <item>um dia</item>
     <item>3 dias</item>
     <item>uma semana</item>
