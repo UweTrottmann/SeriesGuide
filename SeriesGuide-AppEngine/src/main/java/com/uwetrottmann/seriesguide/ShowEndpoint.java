@@ -157,13 +157,17 @@ public class ShowEndpoint {
             try {
                 // show with this key already exists?
                 Show existingShow = mgr.find(Show.class, show.getKey());
-                if (existingShow != null) {
-                    // set updated values
-                    existingShow.copyPropertyValues(show);
-                    existingShow.setUpdatedAt(new Date());
 
-                    // save back to Datastore
-                    mgr.merge(existingShow);
+                if (existingShow != null) {
+                    // only update if there are changes
+                    if (!existingShow.hasSameValues(show)) {
+                        // set updated values
+                        existingShow.copyPropertyValues(show);
+                        existingShow.setUpdatedAt(new Date());
+
+                        // save back to Datastore
+                        mgr.merge(existingShow);
+                    }
 
                     // flag as existing
                     existingShows.put(existingShow.getTvdbId(), existingShow);
