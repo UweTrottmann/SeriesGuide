@@ -442,7 +442,7 @@ public class RegisterActivity extends Activity {
                 values.clear();
             }
 
-            return null;
+            return batch;
         }
 
         private void putSyncedShowPropertyValues(Show show, ContentValues values) {
