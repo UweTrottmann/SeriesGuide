@@ -391,7 +391,9 @@ public class RegisterActivity extends Activity {
 
             Cursor query = getContentResolver()
                     .query(SeriesContract.Shows.CONTENT_URI, new String[]{
-                            SeriesContract.Shows._ID, SeriesContract.Shows.FAVORITE
+                            SeriesContract.Shows._ID, SeriesContract.Shows.FAVORITE,
+                            SeriesContract.Shows.HIDDEN, SeriesContract.Shows.GETGLUEID,
+                            SeriesContract.Shows.SYNCENABLED
                     }, null, null, null);
             if (query == null) {
                 return null;
@@ -401,6 +403,9 @@ public class RegisterActivity extends Activity {
                 Show show = new Show();
                 show.setTvdbId(query.getInt(0));
                 show.setFavorite(query.getInt(1) == 1);
+                show.setHidden(query.getInt(2) == 1);
+                show.setGetGlueId(query.getString(3));
+                show.setSyncEnabled(query.getInt(4) == 1);
                 shows.add(show);
             }
 
