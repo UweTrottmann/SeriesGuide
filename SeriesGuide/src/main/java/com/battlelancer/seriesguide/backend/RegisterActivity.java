@@ -101,7 +101,7 @@ public class RegisterActivity extends Activity {
         Shows.Builder builder = new Shows.Builder(
                 AndroidHttp.newCompatibleTransport(), new JacksonFactory(), mCredential
         );
-        mShowsService = builder.build();
+        mShowsService = CloudEndpointUtils.updateBuilder(builder).build();
 
         setupViews();
 
