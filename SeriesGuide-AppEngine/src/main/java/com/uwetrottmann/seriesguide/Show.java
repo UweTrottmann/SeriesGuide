@@ -1,5 +1,7 @@
 package com.uwetrottmann.seriesguide;
 
+import org.datanucleus.util.StringUtils;
+
 import javax.persistence.Entity;
 
 @Entity
@@ -34,8 +36,30 @@ public class Show extends BaseEntity {
         this.tvdbId = tvdbId;
     }
 
+    /**
+     * If any of the show specific properties differ returns false.
+     */
+    public boolean hasSameValues(Show show) {
+        if (isFavorite() != show.isFavorite()) {
+            return false;
+        }
+        if (isHidden() != show.isHidden()) {
+            return false;
+        }
+        if (isSyncEnabled() != show.isSyncEnabled()) {
+            return false;
+        }
+        if (!StringUtils.areStringsEqual(getGetGlueId(), show.getGetGlueId())) {
+            return false;
+        }
+        return true;
+    }
+
     public void copyPropertyValues(Show show) {
         setFavorite(show.isFavorite());
+        setHidden(show.isHidden());
+        setSyncEnabled(show.isSyncEnabled());
+        setGetGlueId(show.getGetGlueId());
     }
 
     public boolean isHidden() {
