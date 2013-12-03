@@ -8,6 +8,13 @@ All dates are in the European Central timezone.
 Version 10 *(in development)*
 -----------------------------
 
+#### 10-beta3 *(2013-12-03)*
+
+* TWEAK Also use new card layout in 'Add show' screen.
+* TWEAK Use new placeholder image for show list as well, fix placeholder blinking on list update.
+* FIX Certain Android 4.1 tablets incorrectly use 4.2 and up RTL layouts.
+* NOTICE Latest translations from crowdin.
+
 #### 10-beta2 *(2013-11-26)*
 
 * TWEAK Some design updates (more visually separated items, icon tweaks).
