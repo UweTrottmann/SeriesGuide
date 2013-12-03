@@ -9,18 +9,24 @@ import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.json.jackson.JacksonFactory;
 
 import com.battlelancer.seriesguide.provider.SeriesContract;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.uwetrottmann.seriesguide.R;
 import com.uwetrottmann.seriesguide.messageEndpoint.MessageEndpoint;
 import com.uwetrottmann.seriesguide.messageEndpoint.model.CollectionResponseMessageData;
 import com.uwetrottmann.seriesguide.messageEndpoint.model.MessageData;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.uwetrottmann.seriesguide.shows.Shows;
+import com.uwetrottmann.seriesguide.shows.model.CollectionResponseShow;
 import com.uwetrottmann.seriesguide.shows.model.Show;
 import com.uwetrottmann.seriesguide.shows.model.ShowList;
 
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentProvider;
+import android.content.ContentProviderOperation;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -38,6 +44,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -74,6 +82,8 @@ public class RegisterActivity extends Activity {
     private GoogleAccountCredential mCredential;
 
     private Shows mShowsService;
+
+    private Button mButtonDownload;
 
     private Button mButtonUpload;
 
@@ -141,6 +151,15 @@ public class RegisterActivity extends Activity {
             }
         });
         mButtonUpload.setEnabled(isSignedIn());
+
+        mButtonDownload = (Button) findViewById(R.id.buttonRegisterDownload);
+        mButtonDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                downloadShows();
+            }
+        });
+        mButtonDownload.setEnabled(isSignedIn());
 
         Button regButton = (Button) findViewById(R.id.regButton);
 
@@ -350,11 +369,108 @@ public class RegisterActivity extends Activity {
         curState = newState;
     }
 
-    private void uploadShows() {
-        new ShowsUploadTask().execute();
+    private void downloadShows() {
+        new ShowsDownloadTask(this, mShowsService, mButtonDownload).execute();
     }
 
-    class ShowsUploadTask extends AsyncTask<Void, Void, Void> {
+    private static class ShowsDownloadTask extends AsyncTask<Void, Void, Void> {
+
+        private final Context mContext;
+
+        private final Shows mShowsService;
+
+        private final View mButtonDownload;
+
+        public ShowsDownloadTask(Context context, Shows showsService, View buttonDownload) {
+            mContext = context;
+            mShowsService = showsService;
+            mButtonDownload = buttonDownload;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            mButtonDownload.setEnabled(false);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            // download shows
+            CollectionResponseShow remoteShows = null;
+            try {
+                remoteShows = mShowsService.list().execute();
+            } catch (IOException e) {
+                Log.w(TAG, e.getMessage(), e);
+            }
+
+            // abort if no response
+            if (remoteShows == null) {
+                return null;
+            }
+
+            // extract list of remote shows
+            List<Show> shows = remoteShows.getItems();
+            if (shows == null || shows.size() == 0) {
+                return null;
+            }
+
+            // update all received shows, ContentProvider will ignore those not added locally
+            ArrayList<ContentProviderOperation> batch = buildShowUpdateOps(shows);
+            DBUtils.applyInSmallBatches(mContext, batch);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            mButtonDownload.setEnabled(true);
+        }
+
+        private ArrayList<ContentProviderOperation> buildShowUpdateOps(List<Show> shows) {
+            ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+
+            ContentValues values = new ContentValues();
+            for (Show show : shows) {
+                putSyncedShowPropertyValues(show, values);
+
+                // build update op
+                ContentProviderOperation op = ContentProviderOperation
+                        .newUpdate(SeriesContract.Shows.buildShowUri(show.getTvdbId()))
+                        .withValues(values).build();
+                batch.add(op);
+
+                // clean up for re-use
+                values.clear();
+            }
+
+            return null;
+        }
+
+        private void putSyncedShowPropertyValues(Show show, ContentValues values) {
+            values.put(SeriesContract.Shows.FAVORITE, show.getFavorite());
+            values.put(SeriesContract.Shows.HIDDEN, show.getHidden());
+            values.put(SeriesContract.Shows.GETGLUEID, show.getGetGlueId());
+            values.put(SeriesContract.Shows.SYNCENABLED, show.getSyncEnabled());
+        }
+
+    }
+
+    private void uploadShows() {
+        new ShowsUploadTask(this, mShowsService, mButtonUpload).execute();
+    }
+
+    private static class ShowsUploadTask extends AsyncTask<Void, Void, Void> {
+
+        private final Context mContext;
+
+        private Shows mShowsService;
+
+        private View mButtonUpload;
+
+        public ShowsUploadTask(Context context, Shows showsService, View buttonUpload) {
+            mContext = context;
+            mShowsService = showsService;
+            mButtonUpload = buttonUpload;
+        }
 
         @Override
         protected void onPreExecute() {
@@ -389,7 +505,7 @@ public class RegisterActivity extends Activity {
         private List<Show> getLocalShowsAsList() {
             List<Show> shows = new LinkedList<>();
 
-            Cursor query = getContentResolver()
+            Cursor query = mContext.getContentResolver()
                     .query(SeriesContract.Shows.CONTENT_URI, new String[]{
                             SeriesContract.Shows._ID, SeriesContract.Shows.FAVORITE,
                             SeriesContract.Shows.HIDDEN, SeriesContract.Shows.GETGLUEID,
