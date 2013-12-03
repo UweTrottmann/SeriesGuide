@@ -9,8 +9,8 @@
   <string name="search">Zoeken</string>
   <string name="preferences">Instellingen</string>
   <string name="help">Help</string>
-  <string name="drawer_open">Open navigation drawer</string>
-  <string name="drawer_close">Close navigation drawer</string>
+  <string name="drawer_open">Navigatiedrawer openen</string>
+  <string name="drawer_close">Navigatiedrawer sluiten</string>
   <string name="show">Serie</string>
   <string name="episode">Aflevering</string>
   <string name="episode_number">Aflevering %s</string>
@@ -100,8 +100,8 @@
   <string name="uncollect">Niet-verzamelde aflevering</string>
   <string name="collect_all">Alles verzameld</string>
   <string name="uncollect_all">Niets verzameld</string>
-  <string name="action_skip">Skip</string>
-  <string name="action_dont_skip">Don\'t skip</string>
+  <string name="action_skip">Overslaan</string>
+  <string name="action_dont_skip">Niet overslaan</string>
   <string name="trakt_submitqueued">Toevoegen aan trakt.</string>
   <string name="trakt_seen">%s bekeken.</string>
   <string name="trakt_notseen">%s niet bekeken.</string>
@@ -269,7 +269,7 @@
   <string name="paste_title">Titel plakken</string>
   <string name="checkinsuccess">Ingecheckt in %s op GetGlue.</string>
   <string name="checkinfailed">GetGlue aanmelding mislukt. Probeer het later opnieuw.</string>
-  <string name="getglue_authentication">Connect GetGlue</string>
+  <string name="getglue_authentication">GetGlue verbinden</string>
   <string name="getglue_authfailed">GetGlue authenticatie mislukt. Probeer het later opnieuw.</string>
   <string name="checkin_success_trakt">Aangemeld bij %s op trakt.</string>
   <string name="checkin_canceled_success_trakt">Check-in bij trakt geannuleerd.</string>
@@ -326,7 +326,7 @@
   <string name="migration_description">SeriesGuide X is nu een sleutel om X functies in de gratis versie (\"X Life-Time Pass\") te ontgrendelen. Gelieve uw shows te migreren naar de gratis versie van SeriesGuide. Houd X geïnstalleerd om alle eigenschappen in de gratis versie beschikbaar te maken.</string>
   <string name="migration_import">Druk hieronder om de in SeriesGuide X gemaakte back-up te importeren.</string>
   <string name="migration_action_import">Importeer en vervang bestaande series</string>
-  <string name="action_upgrade">Get X features</string>
+  <string name="action_upgrade">X-functies verkrijgen</string>
   <string name="upgrade_description">Krijg toegang tot meldingen, meer lijst widget opties en alle toekomstige X functies. Ondersteun verdere ontwikkeling.\n\nAls u al SeriesGuide X heeft gekocht, installeer deze dan om deze upgrade te ontgrendelen.</string>
   <string name="upgrade_success">Bedankt, u bent al geabonneerd op alle X functies!</string>
   <string name="subscription_activated">U bent nu geabonneerd op X functies.</string>
@@ -334,7 +334,7 @@
   <string name="subscription_expired_details">Uw X abonnement is verlopen.</string>
   <string name="add_to_homescreen">Toevoegen aan startscherm</string>
   <string name="search_within_show">Zoek binnen %s</string>
-  <string name="web_search">Web search</string>
+  <string name="web_search">Zoeken op het web</string>
   <string-array name="sesorting">
     <item>Nieuwste eerst</item>
     <item>Oudste eerst</item>

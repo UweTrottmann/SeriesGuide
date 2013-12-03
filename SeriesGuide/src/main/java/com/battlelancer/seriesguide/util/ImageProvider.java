@@ -47,10 +47,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * Built with code from http://code.google.com/p/iogallery of Google I/O 2012 by
- * Jeff Sharkey.
- * 
- * @author Uwe Trottmann
+ * Retrieves and stores images from/to disk, uses a low-memory auto-evicting LRU cache to speed up
+ * responses.
+ *
+ * Built with code from http://code.google.com/p/iogallery of Google I/O 2012 by Jeff Sharkey.
  */
 public class ImageProvider {
 
@@ -176,46 +176,37 @@ public class ImageProvider {
     }
 
     /**
-     * Sets the image bitmap, either directly from cache or loads it
-     * asynchronously from external storage.
-     * 
-     * @param imageView
-     * @param imagePath
-     * @param loadThumbnail
+     * Sets the image bitmap, either directly from cache or loads it asynchronously from external
+     * storage.
      */
     public void loadImage(ImageView imageView, String imagePath, boolean loadThumbnail) {
         if (TextUtils.isEmpty(imagePath)) {
-            // There is no poster for this show, display a generic one
-            imageView.setImageResource(R.drawable.show_generic);
-            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            // there is no image available
+            setPlaceholderToImageView(imageView);
             return;
-        } else {
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
 
-        // Cancel any pending thumbnail task, since this view is now bound
-        // to new thumbnail
+        // cancel any pending loader task, since this view is now bound to a new image
         final ImageLoaderTask oldTask = (ImageLoaderTask) imageView.getTag();
         if (oldTask != null) {
             oldTask.cancel(false);
         }
 
+        // looking for a smaller size?
         if (loadThumbnail) {
-            // look for the thumbnail of this poster
             imagePath += THUMB_SUFFIX;
         }
 
-        // Check the cache for this image
+        // check the cache for this image
         final Bitmap cachedResult = mCache.get(imagePath);
         if (cachedResult != null) {
-            imageView.setImageBitmap(cachedResult);
+            // found it!
+            setImageToImageView(imageView, cachedResult);
             return;
         }
 
-        // If we arrived here, either cache is disabled or cache miss, so we
-        // need to kick task to load manually
+        // cache miss, so we need to load from disk
         final ImageLoaderTask task = new ImageLoaderTask(imageView);
-        imageView.setImageBitmap(null);
         imageView.setTag(task);
         
         /*
@@ -227,13 +218,8 @@ public class ImageProvider {
     }
 
     /**
-     * This will synchronously (!) access external storage to get the image if
-     * it is not cached already. Make sure to run this on a background thread or
-     * use {@code loadPoster} instead.
-     * 
-     * @param imagePath
-     * @param loadThumbnail
-     * @return
+     * This will synchronously (!) access external storage to get the image if it is not cached
+     * already. Make sure to run this on a background thread or use {@code loadPoster} instead.
      */
     public Bitmap getImage(String imagePath, boolean loadThumbnail) {
         if (TextUtils.isEmpty(imagePath)) {
@@ -290,8 +276,6 @@ public class ImageProvider {
                 } finally {
                     ostream.close();
                 }
-            } catch (FileNotFoundException e) {
-                Log.e(TAG, e.getMessage());
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
             }
@@ -315,10 +299,7 @@ public class ImageProvider {
     }
 
     /**
-     * Remove the given image and a potentially existing thumbnail from the
-     * external storage cache.
-     * 
-     * @param imagePath
+     * Remove the given image and a potentially existing thumbnail from the external storage cache.
      */
     public void removeImage(String imagePath) {
         try {
@@ -385,6 +366,16 @@ public class ImageProvider {
         }
     }
 
+    private void setPlaceholderToImageView(ImageView imageView) {
+        imageView.setScaleType(ScaleType.CENTER_INSIDE);
+        imageView.setImageResource(R.drawable.ic_image_missing);
+    }
+
+    private void setImageToImageView(ImageView imageView, Bitmap bitmap) {
+        imageView.setScaleType(ScaleType.CENTER_CROP);
+        imageView.setImageBitmap(bitmap);
+    }
+
     public class ImageLoaderTask extends AsyncTask<String, Void, Bitmap> {
 
         private ImageView mImageView;
@@ -401,7 +392,6 @@ public class ImageProvider {
         @Override
         protected Bitmap doInBackground(String... params) {
             final String imagePath = params[0];
-
             return getImageFromExternalStorage(imagePath);
         }
 
@@ -409,11 +399,9 @@ public class ImageProvider {
         protected void onPostExecute(Bitmap result) {
             if (mImageView.getTag() == this) {
                 if (result != null) {
-                    mImageView.setScaleType(ScaleType.CENTER_CROP);
-                    mImageView.setImageBitmap(result);
+                    setImageToImageView(mImageView, result);
                 } else {
-                    mImageView.setScaleType(ScaleType.FIT_CENTER);
-                    mImageView.setImageResource(R.drawable.show_generic);
+                    setPlaceholderToImageView(mImageView);
                 }
                 mImageView.setTag(null);
             }

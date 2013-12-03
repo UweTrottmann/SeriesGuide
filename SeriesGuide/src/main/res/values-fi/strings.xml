@@ -9,8 +9,8 @@
   <string name="search">Hae</string>
   <string name="preferences">Asetukset</string>
   <string name="help">Apua</string>
-  <string name="drawer_open">Open navigation drawer</string>
-  <string name="drawer_close">Close navigation drawer</string>
+  <string name="drawer_open">Avaa sivuvalikko</string>
+  <string name="drawer_close">Sulje sivuvalikko</string>
   <string name="show">Ohjelma</string>
   <string name="episode">Jakso</string>
   <string name="episode_number">Jakso %s</string>
