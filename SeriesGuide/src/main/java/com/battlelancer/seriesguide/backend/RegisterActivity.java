@@ -113,8 +113,6 @@ public class RegisterActivity extends Activity {
         );
         mShowsService = CloudEndpointUtils.updateBuilder(builder).build();
 
-        setupViews();
-
         /*
          * build the messaging endpoint so we can access old messages via an endpoint call
          */
@@ -127,6 +125,8 @@ public class RegisterActivity extends Activity {
                 });
 
         messageEndpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
+
+        setupViews();
     }
 
     private void setupViews() {
