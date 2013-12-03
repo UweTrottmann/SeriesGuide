@@ -73,6 +73,8 @@ public class RegisterActivity extends Activity {
 
     private GoogleAccountCredential mCredential;
 
+    private Shows mShowsService;
+
     private Button mButtonUpload;
 
     enum State {
@@ -94,6 +96,12 @@ public class RegisterActivity extends Activity {
 
         mCredential = GoogleAccountCredential.usingAudience(this, HexagonSettings.AUDIENCE);
         setAccountName(HexagonSettings.getAccountName(this));
+
+        // build show service endpoint
+        Shows.Builder builder = new Shows.Builder(
+                AndroidHttp.newCompatibleTransport(), new JacksonFactory(), mCredential
+        );
+        mShowsService = builder.build();
 
         setupViews();
 
@@ -209,6 +217,7 @@ public class RegisterActivity extends Activity {
                     if (!TextUtils.isEmpty(accountName)) {
                         storeAccountName(accountName);
                         setAccountName(accountName);
+                        mButtonUpload.setEnabled(true);
                     }
                 }
                 break;
@@ -310,6 +319,7 @@ public class RegisterActivity extends Activity {
                 .edit();
         editor.putString(HexagonSettings.KEY_ACCOUNT_NAME, null);
         editor.commit();
+        mButtonUpload.setEnabled(false);
     }
 
     private void updateState(State newState) {
@@ -361,15 +371,9 @@ public class RegisterActivity extends Activity {
             ShowList showList = new ShowList();
             showList.setShows(shows);
 
-            // build show service endpoint
-            Shows.Builder builder = new Shows.Builder(
-                    AndroidHttp.newCompatibleTransport(), new JacksonFactory(), mCredential
-            );
-            Shows service = builder.build();
-
             // upload shows
             try {
-                ShowList savedShows = service.save(showList).execute();
+                ShowList savedShows = mShowsService.save(showList).execute();
             } catch (IOException e) {
                 Log.w(TAG, e.getMessage(), e);
             }
