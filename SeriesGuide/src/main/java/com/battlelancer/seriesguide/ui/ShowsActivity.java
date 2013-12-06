@@ -29,6 +29,7 @@ import com.battlelancer.seriesguide.billing.IabResult;
 import com.battlelancer.seriesguide.billing.Inventory;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.AppSettings;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.sync.SyncUtils;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
@@ -461,7 +462,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
                     scheduleAllShowsUpdate();
                 }
                 if (lastVersion < VER_HIGHRES_THUMBS
-                        && getResources().getBoolean(R.bool.isLargeTablet)) {
+                        && DisplaySettings.isVeryLargeScreen(getApplicationContext())) {
                     // clear image cache
                     ImageProvider.getInstance(this).clearCache();
                     ImageProvider.getInstance(this).clearExternalStorageCache();

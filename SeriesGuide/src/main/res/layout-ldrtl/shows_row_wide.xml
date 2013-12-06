@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="153dp"
+    android:background="?attr/drawableCardBackground"
+    android:foreground="?attr/custom_list_selector">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <ImageView
+            android:id="@+id/showposter"
+            android:layout_width="102dp"
+            android:layout_height="150dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="@dimen/default_padding"
+            android:contentDescription="@string/description_poster"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/favoritedLabel"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:background="?attr/custom_list_selector"
+            android:contentDescription="@string/favorited"
+            android:padding="4dp"
+            android:src="?attr/drawableStar" />
+
+        <ImageView
+            android:id="@+id/imageViewShowsContextMenu"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:background="?attr/custom_list_selector"
+            android:paddingStart="8dp"
+            android:scaleType="centerInside"
+            android:src="?attr/drawableDropdown"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/seriesname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/showposter"
+            android:layout_toStartOf="@id/favoritedLabel"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Large.Light"
+            tools:text="@string/show" />
+
+        <TextView
+            android:id="@+id/textViewShowsTimeAndNetwork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seriesname"
+            android:layout_toEndOf="@id/showposter"
+            android:layout_toStartOf="@id/favoritedLabel"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingBottom="@dimen/default_padding"
+            android:textAppearance="@style/TextAppearance.Small.Dim"
+            tools:text="Tue 08:00 PM | Showtime Network" />
+
+        <TextView
+            android:id="@+id/TextViewShowListNextEpisode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewShowsTimeAndNetwork"
+            android:layout_marginEnd="@dimen/default_padding"
+            android:layout_toEndOf="@id/showposter"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textAppearance="@style/TextAppearance.Light"
+            tools:text="10x456 Some Very Cool Episode Title Therefore" />
+
+        <TextView
+            android:id="@+id/episodetime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/TextViewShowListNextEpisode"
+            android:layout_marginEnd="@dimen/default_padding"
+            android:layout_toEndOf="@id/showposter"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingBottom="@dimen/item_padding"
+            android:textAppearance="@style/TextAppearance.Small"
+            tools:text="Jan 8, 2009 (Thu)" />
+
+    </RelativeLayout>
+</FrameLayout>

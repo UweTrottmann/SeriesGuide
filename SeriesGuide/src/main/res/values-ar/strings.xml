@@ -9,6 +9,8 @@
   <string name="search">بحث</string>
   <string name="preferences">إعدادات</string>
   <string name="help">مساعدة</string>
+  <string name="drawer_open">Open navigation drawer</string>
+  <string name="drawer_close">Close navigation drawer</string>
   <string name="show">العرض</string>
   <string name="episode">الحلقة</string>
   <string name="episode_number">الحلقة %s</string>
@@ -36,13 +38,11 @@
   <string name="share_show">مشاركة العرض</string>
   <string name="share_episode">مشاركة الحلقة</string>
   <string name="share_checkout">تسجيل المغادرة</string>
-  <string name="shouts">التعليقات</string>
   <string name="comments">التعليقات</string>
   <string name="shout_hint">أكتب تعليق(بالإنجليزي)</string>
   <string name="shout">تعليق</string>
   <string name="isspoiler">تنبيه</string>
   <string name="no_shouts">أكتب أول تعليق</string>
-  <string name="shouts_for">تعليقات لـ %s</string>
   <string name="autorefresh">تحديث تلقائي</string>
   <string name="movies_watchlist">قائمة المشاهدة (تراكت)</string>
   <string name="watchlist_add">إضافة لقائمة المشاهدة</string>

@@ -5,6 +5,30 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 10 *(2013-12-06)*
+-------------------------
+
+* Movie search results and movie details are displayed in the content language set in Settings (if available).
+* Small design tweaks, icon updates.
+* Layout fixes for some Android 4.1 tablets.
+
+#### 10-beta3 *(2013-12-03)*
+
+* TWEAK Also use new card layout in 'Add show' screen.
+* TWEAK Use new placeholder image for show list as well, fix placeholder blinking on list update.
+* FIX Certain Android 4.1 tablets incorrectly use 4.2 and up RTL layouts.
+* NOTICE Latest translations from crowdin.
+
+#### 10-beta2 *(2013-11-26)*
+
+* TWEAK Some design updates (more visually separated items, icon tweaks).
+
+#### 10-beta1 *(2013-11-20)*
+
+* TWEAK trakt credentials are sanitized more rigorously. If you have issues, try disconnecting and re-connecting again.
+* TWEAK Movie search results and movie details are displayed in the content language set in Settings, if a translation is available on themoviedb.org.
+* TWEAK Use Android 4.4 style settings icon on the list widget, change its layout a little.
+
 Version 9.3 *(2013-11-13)*
 --------------------------
 

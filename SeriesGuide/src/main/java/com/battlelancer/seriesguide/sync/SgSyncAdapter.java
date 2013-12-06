@@ -14,7 +14,6 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
-import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Activity;
 import com.jakewharton.trakt.entities.ActivityItem;
@@ -23,7 +22,6 @@ import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.jakewharton.trakt.enumerations.ActivityType;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
-import com.uwetrottmann.tmdb.TmdbException;
 import com.uwetrottmann.tmdb.entities.Configuration;
 
 import org.xml.sax.SAXException;
@@ -257,15 +255,14 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             // get latest TMDb configuration
             try {
                 Configuration config = ServiceUtils.getTmdbServiceManager(getContext())
-                        .configurationService()
-                        .configuration().fire();
+                        .configurationService().configuration();
                 if (config != null && config.images != null
                         && !TextUtils.isEmpty(config.images.base_url)) {
                     prefs.edit()
                             .putString(SeriesGuidePreferences.KEY_TMDB_BASE_URL,
                                     config.images.base_url).commit();
                 }
-            } catch (TmdbException | ApiException e) {
+            } catch (RetrofitError e) {
                 Utils.trackExceptionAndLog(getContext(), TAG, e);
             }
 

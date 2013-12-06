@@ -9,6 +9,8 @@
   <string name="search">Ara</string>
   <string name="preferences">Ayarlar</string>
   <string name="help">Yardım</string>
+  <string name="drawer_open">Open navigation drawer</string>
+  <string name="drawer_close">Close navigation drawer</string>
   <string name="show">Dizi</string>
   <string name="episode">Bölüm</string>
   <string name="episode_number">Bölüm %s</string>
@@ -36,13 +38,11 @@
   <string name="share_show">Diziyi paylaş</string>
   <string name="share_episode">Bölümü paylaş</string>
   <string name="share_checkout">Kontrol et</string>
-  <string name="shouts">Notlar</string>
   <string name="comments">Yorumlar</string>
   <string name="shout_hint">Bir not yazın (İngilizce)</string>
   <string name="shout">Not!</string>
   <string name="isspoiler">Spoiler Uyarısı!</string>
   <string name="no_shouts">İlk not yazan ol!</string>
-  <string name="shouts_for">%S için notlar</string>
   <string name="autorefresh">Otomatik yenileniyor</string>
   <string name="movies_watchlist">İzleme Listesi (trakt)</string>
   <string name="watchlist_add">İzleme Listesine Ekle</string>

@@ -9,6 +9,8 @@
   <string name="search">Поиск</string>
   <string name="preferences">Настройки</string>
   <string name="help">Справка</string>
+  <string name="drawer_open">Open navigation drawer</string>
+  <string name="drawer_close">Close navigation drawer</string>
   <string name="show">Инфо</string>
   <string name="episode">Эпизод</string>
   <string name="episode_number">Эпизод %s</string>
@@ -36,13 +38,11 @@
   <string name="share_show">Share show</string>
   <string name="share_episode">Поделиться эпизодом</string>
   <string name="share_checkout">Извлечь</string>
-  <string name="shouts">Отзывы</string>
   <string name="comments">Комментарии</string>
   <string name="shout_hint">Напишите отзыв (на английском)</string>
   <string name="shout">Отзыв!</string>
   <string name="isspoiler">Внимание, спойлер!</string>
   <string name="no_shouts">Оставь первый отзыв!</string>
-  <string name="shouts_for">Отзывы для %s</string>
   <string name="autorefresh">Автоматическое обновление</string>
   <string name="movies_watchlist">Список просмотра(trakt)</string>
   <string name="watchlist_add">Добавить в список</string>

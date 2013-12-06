@@ -9,6 +9,8 @@
   <string name="search">Keresés</string>
   <string name="preferences">Beállítások</string>
   <string name="help">Súgó</string>
+  <string name="drawer_open">Open navigation drawer</string>
+  <string name="drawer_close">Close navigation drawer</string>
   <string name="show">Műsor</string>
   <string name="episode">Epizód</string>
   <string name="episode_number">Epizód %s</string>
@@ -36,13 +38,11 @@
   <string name="share_show">Műsor megosztása</string>
   <string name="share_episode">Epizód megosztása</string>
   <string name="share_checkout">Kijelentkezés</string>
-  <string name="shouts">Üzenetek</string>
   <string name="comments">Hozzászólások</string>
   <string name="shout_hint">Közlemény beírása (angolul)</string>
   <string name="shout">Szólj hozzá!</string>
   <string name="isspoiler">Spoiler veszély!</string>
   <string name="no_shouts">Szólj hozzá elsőként!</string>
-  <string name="shouts_for">%s hozzászólások</string>
   <string name="autorefresh">Automágikus frissítés</string>
   <string name="movies_watchlist">Figyelőlista (trakt)</string>
   <string name="watchlist_add">Figyelőlistához ad</string>

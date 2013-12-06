@@ -9,6 +9,8 @@
   <string name="search">Пошук</string>
   <string name="preferences">Налаштування</string>
   <string name="help">Допомога</string>
+  <string name="drawer_open">Open navigation drawer</string>
+  <string name="drawer_close">Close navigation drawer</string>
   <string name="show">Про фільм</string>
   <string name="episode">Серія</string>
   <string name="episode_number">Серія %s</string>
@@ -36,13 +38,11 @@
   <string name="share_show">Поділитись фільмом</string>
   <string name="share_episode">Поділитись серією</string>
   <string name="share_checkout">Зняти позначку</string>
-  <string name="shouts">Відгуки</string>
   <string name="comments">Коментарі</string>
   <string name="shout_hint">Написати відгук (англійською)</string>
   <string name="shout">Відгук!</string>
   <string name="isspoiler">Увага спойлер!</string>
   <string name="no_shouts">Залиште відгук першим!</string>
-  <string name="shouts_for">Відгуки на %s</string>
   <string name="autorefresh">Автоматичне оновлення</string>
   <string name="movies_watchlist">Список перегляду (trakt)</string>
   <string name="watchlist_add">Додати до списку перегляду</string>

@@ -21,11 +21,11 @@
         android:clipToPadding="@bool/gridClipToPadding"
         android:columnWidth="@dimen/showgrid_columnWidth"
         android:gravity="center"
-        android:horizontalSpacing="@dimen/showgrid_spacing"
-        android:listSelector="?custom_list_selector"
+        android:horizontalSpacing="@dimen/grid_horizontal_spacing"
+        android:listSelector="@android:color/transparent"
         android:numColumns="auto_fit"
         android:padding="@dimen/showgrid_padding"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="@dimen/showgrid_spacing"></GridView>
+        android:verticalSpacing="@dimen/grid_vertical_spacing"/>
 
 </FrameLayout>

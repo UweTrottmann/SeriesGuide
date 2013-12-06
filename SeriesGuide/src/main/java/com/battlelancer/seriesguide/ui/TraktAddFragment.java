@@ -22,6 +22,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -37,7 +38,6 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -257,8 +257,7 @@ public class TraktAddFragment extends AddFragment {
                     // use larger images on high-res tablets (e.g. Nexus 10)
                     Resources res = context.getResources();
                     String sizeSpec;
-                    if (res.getBoolean(R.bool.isLargeTablet)
-                            && res.getDisplayMetrics().densityDpi >= DisplayMetrics.DENSITY_XHIGH) {
+                    if (DisplaySettings.isVeryLargeAndHighResScreen(context)) {
                         sizeSpec = "-300";
                     } else {
                         sizeSpec = "-138";

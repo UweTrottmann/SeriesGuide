@@ -5,7 +5,7 @@
         android:id="@+id/menu_show_manage_lists"
         android:icon="@drawable/ic_action_list"
         android:orderInCategory="0"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="ifRoom"
         android:title="@string/list_item_manage"/>
     <item
         android:id="@+id/menu_show_share"

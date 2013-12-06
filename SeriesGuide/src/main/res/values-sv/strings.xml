@@ -9,6 +9,8 @@
   <string name="search">Sök</string>
   <string name="preferences">Inställningar</string>
   <string name="help">Hjälp</string>
+  <string name="drawer_open">Open navigation drawer</string>
+  <string name="drawer_close">Close navigation drawer</string>
   <string name="show">Serie</string>
   <string name="episode">Avsnitt</string>
   <string name="episode_number">Avsnitt %s</string>
@@ -36,13 +38,11 @@
   <string name="share_show">Dela serie</string>
   <string name="share_episode">Dela avsnitt</string>
   <string name="share_checkout">Checka ut</string>
-  <string name="shouts">Rop</string>
   <string name="comments">Kommentarer</string>
   <string name="shout_hint">Skriv ett rop (på engelska)</string>
   <string name="shout">Ropa!</string>
   <string name="isspoiler">Varning för spoiler!</string>
   <string name="no_shouts">Bli först att ropa!</string>
-  <string name="shouts_for">Rop för %s</string>
   <string name="autorefresh">Uppdatera automatiskt</string>
   <string name="movies_watchlist">Bevakningslista (trakt)</string>
   <string name="watchlist_add">Lägg till bevakningslistan</string>

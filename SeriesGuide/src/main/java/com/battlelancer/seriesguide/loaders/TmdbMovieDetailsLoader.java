@@ -17,23 +17,24 @@
 
 package com.battlelancer.seriesguide.loaders;
 
-import android.content.Context;
-import android.util.Log;
-
 import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader.MovieDetails;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.apibuilder.ApiException;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.tmdb.ServiceManager;
-import com.uwetrottmann.tmdb.TmdbException;
-import com.uwetrottmann.tmdb.entities.Casts;
+import com.uwetrottmann.tmdb.entities.Credits;
 import com.uwetrottmann.tmdb.entities.Movie;
 import com.uwetrottmann.tmdb.entities.Trailers;
+import com.uwetrottmann.tmdb.services.MoviesService;
+
+import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
+
+import retrofit.RetrofitError;
 
 /**
- * Loads details, trailers and cast of a movie from TMDb wrapped in a
- * {@link MovieDetails} object.
+ * Loads details, trailers and cast of a movie from TMDb wrapped in a {@link MovieDetails} object.
  */
 public class TmdbMovieDetailsLoader extends GenericSimpleLoader<MovieDetails> {
 
@@ -48,15 +49,25 @@ public class TmdbMovieDetailsLoader extends GenericSimpleLoader<MovieDetails> {
 
     @Override
     public MovieDetails loadInBackground() {
-        ServiceManager manager = ServiceUtils.getTmdbServiceManager(getContext());
+        String languageCode = DisplaySettings.getContentLanguage(getContext());
 
         try {
+            MoviesService movieService = ServiceUtils.getTmdbServiceManager(getContext())
+                    .moviesService();
+
             MovieDetails details = new MovieDetails();
-            details.movie(manager.moviesService().summary(mTmdbId).fire());
-            details.trailers(manager.moviesService().trailers(mTmdbId).fire());
-            details.casts(manager.moviesService().casts(mTmdbId).fire());
+            details.movie(movieService.summary(mTmdbId, languageCode));
+
+            if (TextUtils.isEmpty(details.movie().overview)) {
+                // fall back to English content
+                details.movie(movieService.summary(mTmdbId));
+            }
+
+            details.trailers(movieService.trailers(mTmdbId));
+
             return details;
-        } catch (TmdbException | ApiException e) {
+
+        } catch (RetrofitError e) {
             Utils.trackException(getContext(), TAG, e);
             Log.w(TAG, e);
         }
@@ -65,9 +76,12 @@ public class TmdbMovieDetailsLoader extends GenericSimpleLoader<MovieDetails> {
     }
 
     public static class MovieDetails {
+
         private Movie mMovie;
+
         private Trailers mTrailers;
-        private Casts mCasts;
+
+        private Credits mCredits;
 
         public Movie movie() {
             return mMovie;
@@ -87,12 +101,12 @@ public class TmdbMovieDetailsLoader extends GenericSimpleLoader<MovieDetails> {
             return this;
         }
 
-        public Casts casts() {
-            return mCasts;
+        public Credits credits() {
+            return mCredits;
         }
 
-        public MovieDetails casts(Casts casts) {
-            mCasts = casts;
+        public MovieDetails credits(Credits credits) {
+            mCredits = credits;
             return this;
         }
     }

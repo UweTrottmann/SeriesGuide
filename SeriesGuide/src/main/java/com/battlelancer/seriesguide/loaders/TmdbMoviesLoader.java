@@ -17,20 +17,21 @@
 
 package com.battlelancer.seriesguide.loaders;
 
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.GenericSimpleLoader;
+import com.uwetrottmann.tmdb.Tmdb;
+import com.uwetrottmann.tmdb.entities.Movie;
+import com.uwetrottmann.tmdb.entities.ResultsPage;
+
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.apibuilder.ApiException;
-import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.tmdb.ServiceManager;
-import com.uwetrottmann.tmdb.TmdbException;
-import com.uwetrottmann.tmdb.entities.Movie;
-import com.uwetrottmann.tmdb.entities.ResultsPage;
-
 import java.util.List;
+
+import retrofit.RetrofitError;
 
 /**
  * Loads a list of movies from TMDb.
@@ -48,19 +49,22 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<List<Movie>> {
 
     @Override
     public List<Movie> loadInBackground() {
-        ServiceManager manager = ServiceUtils.getTmdbServiceManager(getContext());
+        Tmdb tmdb = ServiceUtils.getTmdbServiceManager(getContext());
+        String languageCode = DisplaySettings.getContentLanguage(getContext());
 
         try {
             ResultsPage page;
+
             if (TextUtils.isEmpty(mQuery)) {
-                page = manager.moviesService().nowPlaying().fire();
+                page = tmdb.moviesService().nowPlaying(null, languageCode);
             } else {
-                page = manager.searchService().movieSearch(mQuery).fire();
+                page = tmdb.searchService()
+                        .movie(mQuery, null, languageCode, false, null, null, null);
             }
             if (page != null && page.results != null) {
                 return page.results;
             }
-        } catch (TmdbException | ApiException e) {
+        } catch (RetrofitError e) {
             Utils.trackException(getContext(), TAG, e);
             Log.w(TAG, e);
         }

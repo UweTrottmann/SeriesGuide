@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_padding"
                 android:drawablePadding="5dp"
+                android:drawableLeft="?attr/drawableAddIcon"
                 android:paddingLeft="@dimen/default_padding"
                 android:paddingRight="@dimen/default_padding"
                 android:text="@string/action_shows_add"
@@ -106,7 +107,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/default_padding"
                     android:drawablePadding="8dp"
-                    android:drawableStart="@drawable/ic_trakt"
+                    android:drawableLeft="@drawable/ic_trakt"
                     android:text="@string/connect_trakt" />
             </LinearLayout>
         </LinearLayout>

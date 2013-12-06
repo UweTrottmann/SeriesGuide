@@ -9,6 +9,8 @@
   <string name="search">Paieška</string>
   <string name="preferences">Nustatymai</string>
   <string name="help">Pagalba</string>
+  <string name="drawer_open">Open navigation drawer</string>
+  <string name="drawer_close">Close navigation drawer</string>
   <string name="show">Serialas</string>
   <string name="episode">Serija</string>
   <string name="episode_number">Episode %s</string>
@@ -36,13 +38,11 @@
   <string name="share_show">Share show</string>
   <string name="share_episode">Dalintis serija</string>
   <string name="share_checkout">Peržiūrėti</string>
-  <string name="shouts">Shouts</string>
   <string name="comments">Komentarai</string>
   <string name="shout_hint">Type a shout (in English)</string>
   <string name="shout">Shout!</string>
   <string name="isspoiler">Galimas turinio atskleidimas!</string>
   <string name="no_shouts">Be the first to shout!</string>
-  <string name="shouts_for">Shouts for %s</string>
   <string name="autorefresh">Automatiškai atsinaujinantis</string>
   <string name="movies_watchlist">Watchlist (trakt)</string>
   <string name="watchlist_add">Add to watchlist</string>

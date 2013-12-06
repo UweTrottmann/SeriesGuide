@@ -77,7 +77,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
         View v = inflater.inflate(R.layout.movies_fragment, container, false);
 
         // setup search box
-        mSearchBox = (EditText) v.findViewById(R.id.editTextCheckinSearch);
+        mSearchBox = (EditText) v.findViewById(R.id.editTextMoviesSearch);
         mSearchBox.setOnEditorActionListener(this);
 
         // setup clear button
