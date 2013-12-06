@@ -5,8 +5,12 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 10 *(in development)*
------------------------------
+Version 10 *(2013-12-06)*
+-------------------------
+
+* Movie search results and movie details are displayed in the content language set in Settings (if available).
+* Small design tweaks, icon updates.
+* Layout fixes for some Android 4.1 tablets
 
 #### 10-beta3 *(2013-12-03)*
 
