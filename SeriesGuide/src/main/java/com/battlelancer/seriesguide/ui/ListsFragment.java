@@ -48,11 +48,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
 /**
- * Displays one user created mList which includes a mixture of shows, seasons
- * and episodes.
+ * Displays one user created list which includes a mixture of shows, seasons and episodes.
  */
 public class ListsFragment extends SherlockFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener {
+        LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener, View.OnClickListener {
 
     private static final int LOADER_ID = R.layout.lists_fragment;
 
@@ -73,6 +72,7 @@ public class ListsFragment extends SherlockFragment implements
     }
 
     interface InitBundle {
+
         String LIST_ID = "list_id";
     }
 
@@ -81,7 +81,8 @@ public class ListsFragment extends SherlockFragment implements
     private GridView mList;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         return inflater.inflate(R.layout.lists_fragment, container, false);
     }
 
@@ -89,7 +90,7 @@ public class ListsFragment extends SherlockFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new ListItemAdapter(getActivity(), null, 0);
+        mAdapter = new ListItemAdapter(getActivity(), null, 0, this);
 
         // setup grid view
         mList = (GridView) getView().findViewById(android.R.id.list);
@@ -152,6 +153,11 @@ public class ListsFragment extends SherlockFragment implements
     }
 
     @Override
+    public void onClick(View v) {
+        getActivity().openContextMenu(v);
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         final Cursor listItem = (Cursor) mAdapter.getItem(position);
         int itemType = listItem.getInt(ListItemsQuery.ITEM_TYPE);
@@ -161,7 +167,8 @@ public class ListsFragment extends SherlockFragment implements
             case 1: {
                 // display show overview
                 Intent intent = new Intent(getActivity(), OverviewActivity.class);
-                intent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, Integer.valueOf(itemRefId));
+                intent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID,
+                        Integer.valueOf(itemRefId));
                 startActivity(intent);
                 break;
             }
@@ -190,7 +197,7 @@ public class ListsFragment extends SherlockFragment implements
         return new CursorLoader(getActivity(), ListItems.CONTENT_WITH_DETAILS_URI,
                 ListItemsQuery.PROJECTION,
                 Lists.LIST_ID + "=?",
-                new String[] {
+                new String[]{
                         listId
                 }, ListItemsQuery.SORTING);
     }
@@ -207,8 +214,12 @@ public class ListsFragment extends SherlockFragment implements
 
     private class ListItemAdapter extends BaseShowsAdapter {
 
-        public ListItemAdapter(Context context, Cursor c, int flags) {
+        private final View.OnClickListener mListenerContextMenu;
+
+        public ListItemAdapter(Context context, Cursor c, int flags,
+                View.OnClickListener listenerContextMenu) {
             super(context, c, flags);
+            mListenerContextMenu = listenerContextMenu;
         }
 
         @Override
@@ -233,16 +244,10 @@ public class ListsFragment extends SherlockFragment implements
                     final String[] values = Utils.parseMillisecondsToTime(
                             cursor.getLong(ListItemsQuery.AIRSTIME),
                             cursor.getString(ListItemsQuery.SHOW_AIRSDAY), context);
-                    if (DisplaySettings.isVeryLargeScreen(context)) {
-                        // network first, then time, one line
-                        viewHolder.timeAndNetwork.setText(cursor
-                                .getString(ListItemsQuery.SHOW_NETWORK) + " / "
-                                + values[1] + " " + values[0]);
-                    } else {
-                        // smaller screen, time first, network second line
-                        viewHolder.timeAndNetwork.setText(values[1] + " " + values[0] + "\n"
-                                + cursor.getString(ListItemsQuery.SHOW_NETWORK));
-                    }
+                    // network first, then time, one line
+                    viewHolder.timeAndNetwork.setText(cursor
+                            .getString(ListItemsQuery.SHOW_NETWORK) + " / "
+                            + values[1] + " " + values[0]);
 
                     // next episode info
                     String fieldValue = cursor.getString(ListItemsQuery.SHOW_NEXTTEXT);
@@ -295,6 +300,10 @@ public class ListsFragment extends SherlockFragment implements
             // poster
             final String imagePath = cursor.getString(ListItemsQuery.SHOW_POSTER);
             ImageProvider.getInstance(context).loadPosterThumb(viewHolder.poster, imagePath);
+
+            // context menu
+            viewHolder.contextMenu.setVisibility(View.VISIBLE);
+            viewHolder.contextMenu.setOnClickListener(mListenerContextMenu);
         }
 
         @Override
@@ -311,7 +320,7 @@ public class ListsFragment extends SherlockFragment implements
 
     interface ListItemsQuery {
 
-        String[] PROJECTION = new String[] {
+        String[] PROJECTION = new String[]{
                 ListItems._ID, ListItems.LIST_ITEM_ID, ListItems.ITEM_REF_ID, ListItems.TYPE,
                 Shows.REF_SHOW_ID, Shows.TITLE, Shows.OVERVIEW, Shows.POSTER, Shows.NETWORK,
                 Shows.AIRSTIME, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTTEXT,
