@@ -446,10 +446,23 @@ public class RegisterActivity extends Activity {
         }
 
         private void putSyncedShowPropertyValues(Show show, ContentValues values) {
-            values.put(SeriesContract.Shows.FAVORITE, show.getFavorite());
-            values.put(SeriesContract.Shows.HIDDEN, show.getHidden());
-            values.put(SeriesContract.Shows.GETGLUEID, show.getGetGlueId());
-            values.put(SeriesContract.Shows.SYNCENABLED, show.getSyncEnabled());
+            putPropertyValueIfNotNull(values, SeriesContract.Shows.FAVORITE, show.getIsFavorite());
+            putPropertyValueIfNotNull(values, SeriesContract.Shows.HIDDEN, show.getIsHidden());
+            putPropertyValueIfNotNull(values, SeriesContract.Shows.SYNCENABLED,
+                    show.getIsSyncEnabled());
+            putPropertyValueIfNotNull(values, SeriesContract.Shows.GETGLUEID, show.getGetGlueId());
+        }
+
+        private void putPropertyValueIfNotNull(ContentValues values, String key, Boolean value) {
+            if (value != null) {
+                values.put(key, value.booleanValue());
+            }
+        }
+
+        private void putPropertyValueIfNotNull(ContentValues values, String key, String value) {
+            if (value != null) {
+                values.put(key, value);
+            }
         }
 
     }
@@ -518,10 +531,10 @@ public class RegisterActivity extends Activity {
             while (query.moveToNext()) {
                 Show show = new Show();
                 show.setTvdbId(query.getInt(0));
-                show.setFavorite(query.getInt(1) == 1);
-                show.setHidden(query.getInt(2) == 1);
+                show.setIsFavorite(query.getInt(1) == 1);
+                show.setIsHidden(query.getInt(2) == 1);
                 show.setGetGlueId(query.getString(3));
-                show.setSyncEnabled(query.getInt(4) == 1);
+                show.setIsSyncEnabled(query.getInt(4) == 1);
                 shows.add(show);
             }
 
