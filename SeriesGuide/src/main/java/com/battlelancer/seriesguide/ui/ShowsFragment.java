@@ -291,25 +291,19 @@ public class ShowsFragment extends SherlockFragment implements
                 return true;
             }
             case CONTEXT_HIDE_ID: {
-                fireTrackerEventContext("Hide show");
-
-                ContentValues values = new ContentValues();
-                values.put(Shows.HIDDEN, true);
-                getActivity().getContentResolver().update(
-                        Shows.buildShowUri(String.valueOf(info.id)), values, null, null);
+                ShowTools.get(getActivity()).storeIsHidden((int) info.id, true);
                 Toast.makeText(getActivity(), getString(R.string.hidden), Toast.LENGTH_SHORT)
                         .show();
+
+                fireTrackerEventContext("Hide show");
                 return true;
             }
             case CONTEXT_UNHIDE_ID: {
-                fireTrackerEventContext("Unhide show");
-
-                ContentValues values = new ContentValues();
-                values.put(Shows.HIDDEN, false);
-                getActivity().getContentResolver().update(
-                        Shows.buildShowUri(String.valueOf(info.id)), values, null, null);
+                ShowTools.get(getActivity()).storeIsHidden((int) info.id, false);
                 Toast.makeText(getActivity(), getString(R.string.unhidden), Toast.LENGTH_SHORT)
                         .show();
+
+                fireTrackerEventContext("Unhide show");
                 return true;
             }
             case CONTEXT_DELETE_ID:

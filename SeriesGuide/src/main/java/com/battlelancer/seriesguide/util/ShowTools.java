@@ -58,6 +58,9 @@ public class ShowTools {
         mCredential.setSelectedAccountName(accountName);
     }
 
+    /**
+     * Saves new favorite flag to the local database and, if signed in, up into the cloud as well.
+     */
     public void storeIsFavorite(int showTvdbId, boolean isFavorite) {
         // save to local database
         ContentValues values = new ContentValues();
@@ -67,23 +70,40 @@ public class ShowTools {
 
         if (isSignedIn()) {
             // send to cloud
-            storeIsFavoriteRemote(showTvdbId, isFavorite);
+            Show show = new Show();
+            show.setTvdbId(showTvdbId);
+            show.setIsFavorite(isFavorite);
+            uploadShow(show);
         }
     }
 
-    private void storeIsFavoriteRemote(int showTvdbId, boolean isFavorite) {
-        Show show = new Show();
-        show.setTvdbId(showTvdbId);
-        show.setIsFavorite(isFavorite);
+    /**
+     * Saves new hidden flag to the local database and, if signed in, up into the cloud as well.
+     */
+    public void storeIsHidden(int showTvdbId, boolean isHidden) {
+        // save to local database
+        ContentValues values = new ContentValues();
+        values.put(SeriesContract.Shows.HIDDEN, isHidden);
+        mContext.getContentResolver().update(
+                SeriesContract.Shows.buildShowUri(showTvdbId), values, null, null);
 
-        List<Show> shows = new LinkedList<>();
-        shows.add(show);
-
-        new ShowsUploadTask(mShowsService, shows).execute();
+        if (isSignedIn()) {
+            // send to cloud
+            Show show = new Show();
+            show.setTvdbId(showTvdbId);
+            show.setIsHidden(isHidden);
+            uploadShow(show);
+        }
     }
 
     private boolean isSignedIn() {
         return mCredential.getSelectedAccountName() != null;
+    }
+
+    private void uploadShow(Show show) {
+        List<Show> shows = new LinkedList<>();
+        shows.add(show);
+        new ShowsUploadTask(mShowsService, shows).execute();
     }
 
     private static class ShowsUploadTask extends AsyncTask<Void, Void, Void> {
