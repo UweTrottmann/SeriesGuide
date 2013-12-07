@@ -9,23 +9,15 @@ public class Show extends BaseEntity {
 
     private int tvdbId;
 
-    private boolean isFavorite;
+    private Boolean isFavorite;
 
-    private boolean isHidden;
+    private Boolean isHidden;
 
-    private boolean isSyncEnabled;
+    private Boolean isSyncEnabled;
 
     private String getGlueId;
 
     public Show() {
-    }
-
-    public boolean isFavorite() {
-        return isFavorite;
-    }
-
-    public void setFavorite(boolean isFavorite) {
-        this.isFavorite = isFavorite;
     }
 
     public int getTvdbId() {
@@ -37,44 +29,82 @@ public class Show extends BaseEntity {
     }
 
     /**
-     * If any of the show specific properties differ returns false.
+     * Returns false if any of the property values of the given show (except TVDb id) are not equal
+     * to ours. However, if a new value is null (e.g. not set) it is seen as equal, regardless of
+     * our value.
      */
     public boolean hasSameValues(Show show) {
-        if (isFavorite() != show.isFavorite()) {
+        if (hasDifferentValueExceptNull(show.getIsFavorite(), getIsFavorite())) {
             return false;
         }
-        if (isHidden() != show.isHidden()) {
+        if (hasDifferentValueExceptNull(show.getIsHidden(), getIsHidden())) {
             return false;
         }
-        if (isSyncEnabled() != show.isSyncEnabled()) {
+        if (hasDifferentValueExceptNull(show.getIsSyncEnabled(), getIsSyncEnabled())) {
             return false;
         }
-        if (!StringUtils.areStringsEqual(getGetGlueId(), show.getGetGlueId())) {
+        if (hasDifferentValueExceptNull(show.getGetGlueId(), getGetGlueId())) {
             return false;
         }
         return true;
     }
 
-    public void copyPropertyValues(Show show) {
-        setFavorite(show.isFavorite());
-        setHidden(show.isHidden());
-        setSyncEnabled(show.isSyncEnabled());
-        setGetGlueId(show.getGetGlueId());
+    private boolean hasDifferentValueExceptNull(Boolean boolNew, Boolean boolOld) {
+        return boolNew != null && boolNew != boolOld;
     }
 
-    public boolean isHidden() {
+    private boolean hasDifferentValueExceptNull(String stringNew, String stringOld) {
+        if (stringNew == null && stringOld == null) {
+            return false;
+        }
+        if (stringNew != null && stringOld == null) {
+            return true;
+        }
+        if (stringNew == null && stringOld != null) {
+            return false;
+        }
+        return !stringOld.equals(stringNew);
+    }
+
+    /**
+     * Copies all values other than the TVDb id if they are not null into this entity.
+     */
+    public void copyPropertyValues(Show show) {
+        if (show.getIsFavorite() != null) {
+            setIsFavorite(show.getIsFavorite());
+        }
+        if (show.getIsHidden() != null) {
+            setIsHidden(show.getIsHidden());
+        }
+        if (show.getIsSyncEnabled() != null) {
+            setIsSyncEnabled(show.getIsSyncEnabled());
+        }
+        if (show.getGetGlueId() != null) {
+            setGetGlueId(show.getGetGlueId());
+        }
+    }
+
+    public Boolean getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(Boolean isFavorite) {
+        this.isFavorite = isFavorite;
+    }
+
+    public Boolean getIsHidden() {
         return isHidden;
     }
 
-    public void setHidden(boolean isHidden) {
+    public void setIsHidden(Boolean isHidden) {
         this.isHidden = isHidden;
     }
 
-    public boolean isSyncEnabled() {
+    public Boolean getIsSyncEnabled() {
         return isSyncEnabled;
     }
 
-    public void setSyncEnabled(boolean isSyncEnabled) {
+    public void setIsSyncEnabled(Boolean isSyncEnabled) {
         this.isSyncEnabled = isSyncEnabled;
     }
 
