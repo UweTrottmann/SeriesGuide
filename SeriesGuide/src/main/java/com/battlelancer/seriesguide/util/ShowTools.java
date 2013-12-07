@@ -96,6 +96,25 @@ public class ShowTools {
         }
     }
 
+    /**
+     * Saves new GetGlue id to the local database and, if signed in, up into the cloud as well.
+     */
+    public void storeGetGlueId(int showTvdbId, String getglueId) {
+        // save to local database
+        ContentValues values = new ContentValues();
+        values.put(SeriesContract.Shows.GETGLUEID, getglueId);
+        mContext.getContentResolver()
+                .update(SeriesContract.Shows.buildShowUri(showTvdbId), values, null, null);
+
+        if (isSignedIn()) {
+            // send to cloud
+            Show show = new Show();
+            show.setTvdbId(showTvdbId);
+            show.setGetGlueId(getglueId);
+            uploadShow(show);
+        }
+    }
+
     private boolean isSignedIn() {
         return mCredential.getSelectedAccountName() != null;
     }
