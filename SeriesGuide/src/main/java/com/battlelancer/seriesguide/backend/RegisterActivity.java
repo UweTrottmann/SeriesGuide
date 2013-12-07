@@ -10,6 +10,7 @@ import com.google.api.client.json.jackson.JacksonFactory;
 
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.uwetrottmann.seriesguide.R;
 import com.uwetrottmann.seriesguide.messageEndpoint.MessageEndpoint;
 import com.uwetrottmann.seriesguide.messageEndpoint.model.CollectionResponseMessageData;
@@ -324,6 +325,8 @@ public class RegisterActivity extends Activity {
                 .edit();
         editor.putString(HexagonSettings.KEY_ACCOUNT_NAME, accountName);
         editor.commit();
+
+        ShowTools.get(this).setShowsServiceAccountName(accountName);
     }
 
     private void signIn() {
@@ -339,6 +342,8 @@ public class RegisterActivity extends Activity {
         editor.putString(HexagonSettings.KEY_ACCOUNT_NAME, null);
         editor.commit();
         mButtonUpload.setEnabled(false);
+        
+        ShowTools.get(this).setShowsServiceAccountName(null);
     }
 
     private void updateState(State newState) {
