@@ -421,8 +421,9 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             if (airTime != -1) {
                 airdateText.setText(Utils.formatToDate(airTime, getActivity()));
                 String[] dayAndTime = Utils.formatToTimeAndDay(airTime, getActivity());
-                airTimeAndNumberText.append((dayAndTime[2] + " (" + dayAndTime[1] + ")")
-                        .toUpperCase(Locale.getDefault()))
+                airTimeAndNumberText
+                        .append(getString(R.string.release_date_and_day, dayAndTime[2],
+                                dayAndTime[1]).toUpperCase(Locale.getDefault()))
                         .append("  ");
             } else {
                 airdateText.setText(R.string.unknown);
