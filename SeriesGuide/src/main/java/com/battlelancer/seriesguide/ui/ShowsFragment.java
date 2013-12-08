@@ -405,6 +405,27 @@ public class ShowsFragment extends SherlockFragment implements
 
             fireTrackerEventAction("Filter Hidden");
             return true;
+        } else if (itemId == R.id.menu_action_shows_filter_remove) {
+            mIsFilterFavorites = false;
+            mIsFilterUnwatched = false;
+            mIsFilterUpcoming = false;
+            mIsFilterHidden = false;
+
+            // already start loading, do not need to wait on saving prefs
+            getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, null, this);
+
+            // update menu item state, then save at last
+            PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+                    .putBoolean(ShowsDistillationSettings.KEY_FILTER_FAVORITES, false)
+                    .putBoolean(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, false)
+                    .putBoolean(ShowsDistillationSettings.KEY_FILTER_UPCOMING, false)
+                    .putBoolean(ShowsDistillationSettings.KEY_FILTER_HIDDEN, false)
+                    .commit();
+            // refresh filter icon state
+            getActivity().supportInvalidateOptionsMenu();
+
+            fireTrackerEventAction("Filter Removed");
+            return true;
         } else if (itemId == R.id.menu_action_shows_sort_title) {
             if (mSortOrderId == ShowsDistillationSettings.ShowsSortOrder.TITLE_ID) {
                 mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.TITLE_REVERSE_ID;
@@ -441,10 +462,10 @@ public class ShowsFragment extends SherlockFragment implements
         // already start loading, do not need to wait on saving prefs
         getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, null, this);
 
-        // update menu item state, then save at last
-        item.setChecked(state);
+        // save new setting
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
                 .putBoolean(key, state).commit();
+        
         // refresh filter icon state
         getActivity().supportInvalidateOptionsMenu();
     }

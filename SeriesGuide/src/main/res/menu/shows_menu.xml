@@ -25,6 +25,9 @@
                 android:id="@+id/menu_action_shows_filter_hidden"
                 android:checkable="true"
                 android:title="@string/action_shows_filter_hidden" />
+            <item
+                android:id="@+id/menu_action_shows_filter_remove"
+                android:title="@string/empty_filter" />
         </menu>
     </item>
 
