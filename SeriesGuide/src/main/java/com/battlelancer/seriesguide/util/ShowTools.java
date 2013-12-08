@@ -8,15 +8,18 @@ import com.battlelancer.seriesguide.backend.CloudEndpointUtils;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.uwetrottmann.seriesguide.shows.Shows;
+import com.uwetrottmann.seriesguide.shows.model.CollectionResponseShow;
 import com.uwetrottmann.seriesguide.shows.model.Show;
 import com.uwetrottmann.seriesguide.shows.model.ShowList;
 
+import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -127,7 +130,7 @@ public class ShowTools {
 
     private static class ShowsUploadTask extends AsyncTask<Void, Void, Void> {
 
-        private static final String TAG = "Show Upload";
+        private static final String TAG = "ShowTools.Upload";
 
         private final Shows mShowsService;
 
@@ -143,6 +146,8 @@ public class ShowTools {
             ShowList showList = new ShowList();
             showList.setShows(mShows);
 
+            Log.d(TAG, "Uploading show(s)...");
+
             // upload shows
             try {
                 mShowsService.save(showList).execute();
@@ -150,7 +155,88 @@ public class ShowTools {
                 Log.w(TAG, e.getMessage(), e);
             }
 
+            Log.d(TAG, "Uploading show(s)...DONE");
+
             return null;
+        }
+
+    }
+
+    public static class Download {
+
+        private static final String TAG = "ShowTools.Download";
+
+        public static void getAllRemoteShows(Context context) {
+            // download shows
+            Log.d(TAG, "Downloading shows...");
+
+            CollectionResponseShow remoteShows = null;
+            try {
+                remoteShows = ShowTools.get(context).mShowsService.list().execute();
+            } catch (IOException e) {
+                Log.w(TAG, e.getMessage(), e);
+            }
+
+            Log.d(TAG, "Downloading shows...DONE");
+
+            // abort if no response
+            if (remoteShows == null) {
+                return;
+            }
+
+            // extract list of remote shows
+            List<Show> shows = remoteShows.getItems();
+            if (shows == null || shows.size() == 0) {
+                return;
+            }
+
+            // update all received shows, ContentProvider will ignore those not added locally
+            Log.d(TAG, "Integrating into database...");
+            ArrayList<ContentProviderOperation> batch = buildShowUpdateOps(shows);
+            DBUtils.applyInSmallBatches(context, batch);
+            Log.d(TAG, "Integrating into database...DONE");
+        }
+
+        private static ArrayList<ContentProviderOperation> buildShowUpdateOps(List<Show> shows) {
+            ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+
+            ContentValues values = new ContentValues();
+            for (Show show : shows) {
+                putSyncedShowPropertyValues(show, values);
+
+                // build update op
+                ContentProviderOperation op = ContentProviderOperation
+                        .newUpdate(SeriesContract.Shows.buildShowUri(show.getTvdbId()))
+                        .withValues(values).build();
+                batch.add(op);
+
+                // clean up for re-use
+                values.clear();
+            }
+
+            return batch;
+        }
+
+        private static void putSyncedShowPropertyValues(Show show, ContentValues values) {
+            putPropertyValueIfNotNull(values, SeriesContract.Shows.FAVORITE, show.getIsFavorite());
+            putPropertyValueIfNotNull(values, SeriesContract.Shows.HIDDEN, show.getIsHidden());
+            putPropertyValueIfNotNull(values, SeriesContract.Shows.SYNCENABLED,
+                    show.getIsSyncEnabled());
+            putPropertyValueIfNotNull(values, SeriesContract.Shows.GETGLUEID, show.getGetGlueId());
+        }
+
+        private static void putPropertyValueIfNotNull(ContentValues values, String key,
+                Boolean value) {
+            if (value != null) {
+                values.put(key, value.booleanValue());
+            }
+        }
+
+        private static void putPropertyValueIfNotNull(ContentValues values, String key,
+                String value) {
+            if (value != null) {
+                values.put(key, value);
+            }
         }
 
     }

@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
@@ -265,6 +266,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             } catch (RetrofitError e) {
                 Utils.trackExceptionAndLog(getContext(), TAG, e);
             }
+
+            // get shows from cloud
+            ShowTools.Download.getAllRemoteShows(getContext());
 
             // validate trakt credentials
             ServiceUtils.checkTraktCredentials(getContext());
