@@ -557,9 +557,8 @@ public class OverviewFragment extends SherlockFragment implements
             long airtime = episode.getLong(EpisodeQuery.FIRSTAIREDMS);
             if (airtime != -1) {
                 final String[] dayAndTime = Utils.formatToTimeAndDay(airtime, getActivity());
-                episodeTime.setText(new StringBuilder().append(dayAndTime[2]).append(" (")
-                        .append(dayAndTime[1])
-                        .append(")"));
+                episodeTime.setText(
+                        getString(R.string.release_date_and_day, dayAndTime[2], dayAndTime[1]));
                 episodeTime.setVisibility(View.VISIBLE);
             }
 

@@ -150,6 +150,7 @@
     <string name="today">today</string>
     <string name="now">now</string>
     <string name="daily">Daily</string>
+    <string name="release_date_and_day">%1$s (%2$s)</string>
 
     <!-- Flagging -->
     <string name="mark_episode">Watched episode</string>
