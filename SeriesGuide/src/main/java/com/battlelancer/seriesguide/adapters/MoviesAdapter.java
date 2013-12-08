@@ -17,11 +17,15 @@
 
 package com.battlelancer.seriesguide.adapters;
 
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.ImageDownloader;
+import com.uwetrottmann.seriesguide.R;
+import com.uwetrottmann.tmdb.entities.Movie;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,11 +34,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.uwetrottmann.seriesguide.R;
-import com.uwetrottmann.tmdb.entities.Movie;
-
+import java.text.DateFormat;
 import java.util.List;
 
 /**
@@ -51,6 +51,8 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
     private OnClickListener mOnClickListener;
 
     private String mBaseUrl;
+
+    private DateFormat dateFormatMovieReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
     public MoviesAdapter(Context context, OnClickListener listener) {
         super(context, LAYOUT);
@@ -89,9 +91,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
         holder.title.setText(movie.title);
         if (movie.release_date != null) {
-            holder.date.setText(DateUtils.formatDateTime(getContext(),
-                    movie.release_date.getTime(),
-                    DateUtils.FORMAT_SHOW_DATE));
+            holder.date.setText(dateFormatMovieReleaseDate.format(movie.release_date));
         } else {
             holder.date.setText("");
         }
@@ -118,9 +118,13 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
     }
 
     static class ViewHolder {
+
         TextView title;
+
         TextView date;
+
         ImageView poster;
+
         ImageView contextMenu;
     }
 

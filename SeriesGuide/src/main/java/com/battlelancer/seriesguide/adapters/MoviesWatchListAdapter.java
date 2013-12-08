@@ -24,7 +24,6 @@ import com.uwetrottmann.seriesguide.R;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,6 +32,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
 import java.util.List;
 
 /**
@@ -45,10 +45,12 @@ public class MoviesWatchListAdapter extends ArrayAdapter<Movie> {
     private LayoutInflater mInflater;
 
     private ImageDownloader mImageDownloader;
-    
+
     private OnClickListener mOnClickListener;
 
     private String mSizeSpec;
+
+    private DateFormat dateFormatMovieReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
     public MoviesWatchListAdapter(Context context, OnClickListener listener) {
         super(context, LAYOUT);
@@ -78,7 +80,8 @@ public class MoviesWatchListAdapter extends ArrayAdapter<Movie> {
             holder.title = (TextView) convertView.findViewById(R.id.textViewMovieTitle);
             holder.date = (TextView) convertView.findViewById(R.id.textViewMovieDate);
             holder.poster = (ImageView) convertView.findViewById(R.id.imageViewMoviePoster);
-            holder.contextMenu = (ImageView) convertView.findViewById(R.id.imageViewMovieItemContextMenu);
+            holder.contextMenu = (ImageView) convertView
+                    .findViewById(R.id.imageViewMovieItemContextMenu);
 
             convertView.setTag(holder);
         } else {
@@ -90,9 +93,7 @@ public class MoviesWatchListAdapter extends ArrayAdapter<Movie> {
 
         holder.title.setText(movie.title);
         if (movie.released != null) {
-            holder.date.setText(DateUtils.formatDateTime(getContext(),
-                    movie.released.getTime(),
-                    DateUtils.FORMAT_SHOW_DATE));
+            holder.date.setText(dateFormatMovieReleaseDate.format(movie.released));
         } else {
             holder.date.setText("");
         }
@@ -101,7 +102,7 @@ public class MoviesWatchListAdapter extends ArrayAdapter<Movie> {
                     + mSizeSpec;
             mImageDownloader.download(posterPath, holder.poster, true);
         }
-        
+
         // context menu
         holder.contextMenu.setOnClickListener(mOnClickListener);
 
@@ -118,9 +119,13 @@ public class MoviesWatchListAdapter extends ArrayAdapter<Movie> {
     }
 
     static class ViewHolder {
+
         TextView title;
+
         TextView date;
+
         ImageView poster;
+
         ImageView contextMenu;
     }
 
