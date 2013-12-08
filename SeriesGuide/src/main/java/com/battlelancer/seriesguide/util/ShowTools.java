@@ -118,7 +118,7 @@ public class ShowTools {
         }
     }
 
-    private boolean isSignedIn() {
+    public boolean isSignedIn() {
         return mCredential.getSelectedAccountName() != null;
     }
 

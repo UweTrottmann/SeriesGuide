@@ -267,8 +267,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 Utils.trackExceptionAndLog(getContext(), TAG, e);
             }
 
-            // get shows from cloud
-            ShowTools.Download.getAllRemoteShows(getContext());
+            if (ShowTools.get(getContext()).isSignedIn()) {
+                // get shows from cloud
+                ShowTools.Download.getAllRemoteShows(getContext());
+            }
 
             // validate trakt credentials
             ServiceUtils.checkTraktCredentials(getContext());
