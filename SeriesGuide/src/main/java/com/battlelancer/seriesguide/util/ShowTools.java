@@ -220,7 +220,7 @@ public class ShowTools {
             ContentValues values = new ContentValues();
             for (Show show : shows) {
                 // skip shows flagged as removed (null will fall back to false)
-                if (show.getIsRemoved()) {
+                if (show.getIsRemoved() != null && show.getIsRemoved()) {
                     continue;
                 }
 
