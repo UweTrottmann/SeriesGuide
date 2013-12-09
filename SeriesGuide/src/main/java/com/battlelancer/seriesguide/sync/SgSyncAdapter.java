@@ -271,7 +271,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 }
 
                 // validate trakt credentials with trakt servers
+                Log.d(TAG, "Check trakt credentials...");
                 ServiceUtils.checkTraktCredentials(getContext());
+                Log.d(TAG, "Check trakt credentials...DONE");
 
                 // get latest trakt activity
                 Log.d(TAG, "Get trakt activity...");

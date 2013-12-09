@@ -172,8 +172,6 @@ public final class ServiceUtils {
      * etc.).<br> <b>Never</b> run this on the main thread.
      */
     public static void checkTraktCredentials(Context context) {
-        Log.d(TAG, "Checking trakt credentials...");
-
         // no username or password? stop right here
         if (!TraktSettings.hasTraktCredentials(context)) {
             return;
