@@ -206,6 +206,11 @@ public class ShowTools {
 
             ContentValues values = new ContentValues();
             for (Show show : shows) {
+                // skip shows flagged as removed (null will fall back to false)
+                if (show.getIsRemoved()) {
+                    continue;
+                }
+
                 // skip shows not in local database
                 if (!showsExisting.contains(show.getTvdbId())) {
                     if (!showsNew.containsKey(show.getTvdbId())) {
