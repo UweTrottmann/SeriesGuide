@@ -174,16 +174,12 @@ public class ShowTools {
         public static UpdateResult getAllRemoteShows(Context context,
                 HashSet<Integer> showsExisting, HashMap<Integer, SearchResult> showsNew) {
             // download shows
-            Log.d(TAG, "Downloading shows...");
-
             CollectionResponseShow remoteShows = null;
             try {
                 remoteShows = ShowTools.get(context).mShowsService.list().execute();
             } catch (IOException e) {
                 Log.w(TAG, e.getMessage(), e);
             }
-
-            Log.d(TAG, "Downloading shows...DONE");
 
             // abort if no response
             if (remoteShows == null) {
@@ -197,11 +193,9 @@ public class ShowTools {
             }
 
             // update all received shows, ContentProvider will ignore those not added locally
-            Log.d(TAG, "Integrating into database...");
             ArrayList<ContentProviderOperation> batch = buildShowUpdateOps(shows, showsExisting,
                     showsNew);
             DBUtils.applyInSmallBatches(context, batch);
-            Log.d(TAG, "Integrating into database...DONE");
 
             return UpdateResult.SUCCESS;
         }

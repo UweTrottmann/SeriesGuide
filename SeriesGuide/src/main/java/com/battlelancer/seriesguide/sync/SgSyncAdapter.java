@@ -260,8 +260,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
                 // get shows from Hexagon
                 if (ShowTools.get(getContext()).isSignedIn()) {
+                    Log.d(TAG, "Download hexagon shows...");
                     UpdateResult resultHexagon = ShowTools.Download
                             .getAllRemoteShows(getContext(), showsExisting, showsNew);
+                    Log.d(TAG, "Download hexagon shows..." + resultHexagon.toString());
                     // don't overwrite earlier failure
                     if (resultCode == UpdateResult.SUCCESS) {
                         resultCode = resultHexagon;
@@ -272,7 +274,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 ServiceUtils.checkTraktCredentials(getContext());
 
                 // get latest trakt activity
+                Log.d(TAG, "Get trakt activity...");
                 UpdateResult resultTrakt = getTraktActivity(getContext(), showsExisting, showsNew);
+                Log.d(TAG, "Get trakt activity..." + resultTrakt.toString());
                 // don't overwrite earlier failure
                 if (resultCode == UpdateResult.SUCCESS) {
                     resultCode = resultTrakt;
@@ -403,7 +407,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      */
     private static UpdateResult getTraktActivity(Context context, HashSet<Integer> showsExisting,
             HashMap<Integer, SearchResult> showsNew) {
-        Log.d(TAG, "Get trakt.tv activity.");
         if (!TraktSettings.hasTraktCredentials(context)) {
             // trakt is not connected, we are done here
             return UpdateResult.SUCCESS;
