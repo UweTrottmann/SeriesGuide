@@ -6,6 +6,7 @@ import com.google.api.client.json.jackson.JacksonFactory;
 
 import com.battlelancer.seriesguide.backend.CloudEndpointUtils;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
+import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.uwetrottmann.seriesguide.shows.Shows;
 import com.uwetrottmann.seriesguide.shows.model.CollectionResponseShow;
@@ -20,8 +21,12 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult;
 
 /**
  * Common activities and tools useful when interacting with shows.
@@ -166,7 +171,8 @@ public class ShowTools {
 
         private static final String TAG = "ShowTools.Download";
 
-        public static void getAllRemoteShows(Context context) {
+        public static UpdateResult getAllRemoteShows(Context context,
+                HashSet<Integer> showsExisting, HashMap<Integer, SearchResult> showsNew) {
             // download shows
             Log.d(TAG, "Downloading shows...");
 
@@ -181,27 +187,44 @@ public class ShowTools {
 
             // abort if no response
             if (remoteShows == null) {
-                return;
+                return UpdateResult.INCOMPLETE;
             }
 
             // extract list of remote shows
             List<Show> shows = remoteShows.getItems();
             if (shows == null || shows.size() == 0) {
-                return;
+                return UpdateResult.SUCCESS;
             }
 
             // update all received shows, ContentProvider will ignore those not added locally
             Log.d(TAG, "Integrating into database...");
-            ArrayList<ContentProviderOperation> batch = buildShowUpdateOps(shows);
+            ArrayList<ContentProviderOperation> batch = buildShowUpdateOps(shows, showsExisting,
+                    showsNew);
             DBUtils.applyInSmallBatches(context, batch);
             Log.d(TAG, "Integrating into database...DONE");
+
+            return UpdateResult.SUCCESS;
         }
 
-        private static ArrayList<ContentProviderOperation> buildShowUpdateOps(List<Show> shows) {
+        private static ArrayList<ContentProviderOperation> buildShowUpdateOps(List<Show> shows,
+                HashSet<Integer> showsExisting, HashMap<Integer, SearchResult> showsNew) {
             ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
             ContentValues values = new ContentValues();
             for (Show show : shows) {
+                // skip shows not in local database
+                if (!showsExisting.contains(show.getTvdbId())) {
+                    if (!showsNew.containsKey(show.getTvdbId())) {
+                        // add show later
+                        SearchResult item = new SearchResult();
+                        item.tvdbid = show.getTvdbId();
+                        item.title = "";
+                        showsNew.put(show.getTvdbId(), item);
+                    }
+                    // do not create an update op for show
+                    continue;
+                }
+
                 putSyncedShowPropertyValues(show, values);
 
                 // build update op
