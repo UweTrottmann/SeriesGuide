@@ -465,7 +465,7 @@ public class ShowsFragment extends SherlockFragment implements
         // save new setting
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
                 .putBoolean(key, state).commit();
-        
+
         // refresh filter icon state
         getActivity().supportInvalidateOptionsMenu();
     }
@@ -699,8 +699,8 @@ public class ShowsFragment extends SherlockFragment implements
 
     private void showDeleteDialog(long showId) {
         FragmentManager fm = getFragmentManager();
-        ConfirmDeleteDialogFragment deleteDialog = ConfirmDeleteDialogFragment.newInstance(String
-                .valueOf(showId));
+        ConfirmDeleteDialogFragment deleteDialog = ConfirmDeleteDialogFragment
+                .newInstance((int) showId);
         deleteDialog.show(fm, "fragment_delete");
     }
 

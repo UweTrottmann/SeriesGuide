@@ -67,6 +67,19 @@ public class ShowTools {
     }
 
     /**
+     * Sends new removed flag, if signed in, up into the cloud.
+     */
+    public void sendIsRemoved(int showTvdbId, boolean isRemoved) {
+        if (isSignedIn()) {
+            // send to cloud
+            Show show = new Show();
+            show.setTvdbId(showTvdbId);
+            show.setIsRemoved(isRemoved);
+            uploadShow(show);
+        }
+    }
+
+    /**
      * Saves new favorite flag to the local database and, if signed in, up into the cloud as well.
      */
     public void storeIsFavorite(int showTvdbId, boolean isFavorite) {

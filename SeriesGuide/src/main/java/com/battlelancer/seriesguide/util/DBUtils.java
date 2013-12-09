@@ -451,12 +451,12 @@ public class DBUtils {
      * Delete a show and manually delete its seasons and episodes. Also cleans up the poster and
      * images.
      */
-    public static void deleteShow(Context context, String showId, ProgressDialog progress) {
+    public static void deleteShow(Context context, int showTvdbId, ProgressDialog progress) {
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
         final ImageProvider imageProvider = ImageProvider.getInstance(context);
 
         // get poster path of show
-        final Cursor poster = context.getContentResolver().query(Shows.buildShowUri(showId),
+        final Cursor poster = context.getContentResolver().query(Shows.buildShowUri(showTvdbId),
                 new String[]{
                         Shows.POSTER
                 }, null, null, null);
@@ -468,7 +468,7 @@ public class DBUtils {
             poster.close();
         }
 
-        batch.add(ContentProviderOperation.newDelete(Shows.buildShowUri(showId)).build());
+        batch.add(ContentProviderOperation.newDelete(Shows.buildShowUri(showTvdbId)).build());
 
         // remove show entry already so we can hide the progress dialog
         try {
@@ -490,7 +490,7 @@ public class DBUtils {
 
         // delete episode images
         final Cursor episodes = context.getContentResolver().query(
-                Episodes.buildEpisodesOfShowUri(showId), new String[]{
+                Episodes.buildEpisodesOfShowUri(showTvdbId), new String[]{
                 Episodes._ID, Episodes.IMAGE
         }, null, null, null);
         if (episodes != null) {
@@ -515,12 +515,15 @@ public class DBUtils {
             }
         }
 
-        batch.add(
-                ContentProviderOperation.newDelete(Seasons.buildSeasonsOfShowUri(showId)).build());
-        batch.add(ContentProviderOperation.newDelete(Episodes.buildEpisodesOfShowUri(showId))
+        batch.add(ContentProviderOperation.newDelete(Seasons.buildSeasonsOfShowUri(showTvdbId))
+                .build());
+        batch.add(ContentProviderOperation.newDelete(Episodes.buildEpisodesOfShowUri(showTvdbId))
                 .build());
 
         applyInSmallBatches(context, batch);
+
+        // set removed flag on Hexagon
+        ShowTools.get(context).sendIsRemoved(showTvdbId, true);
 
         // hide progress dialog now
         if (progress.isShowing()) {
