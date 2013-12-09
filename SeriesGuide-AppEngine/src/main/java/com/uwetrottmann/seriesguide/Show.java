@@ -11,7 +11,16 @@ public class Show extends BaseEntity {
 
     private Boolean isFavorite;
 
+    /**
+     * If this show is hidden from the show list.
+     */
     private Boolean isHidden;
+
+    /**
+     * If this show was removed on at least one device. Check this flag before auto-adding to your
+     * local database.
+     */
+    private Boolean isRemoved;
 
     private Boolean isSyncEnabled;
 
@@ -38,6 +47,9 @@ public class Show extends BaseEntity {
             return false;
         }
         if (hasDifferentValueExceptNull(show.getIsHidden(), getIsHidden())) {
+            return false;
+        }
+        if (hasDifferentValueExceptNull(show.getIsRemoved(), getIsRemoved())) {
             return false;
         }
         if (hasDifferentValueExceptNull(show.getIsSyncEnabled(), getIsSyncEnabled())) {
@@ -76,6 +88,9 @@ public class Show extends BaseEntity {
         if (show.getIsHidden() != null) {
             setIsHidden(show.getIsHidden());
         }
+        if (show.getIsRemoved() != null) {
+            setIsRemoved(show.getIsRemoved());
+        }
         if (show.getIsSyncEnabled() != null) {
             setIsSyncEnabled(show.getIsSyncEnabled());
         }
@@ -104,6 +119,14 @@ public class Show extends BaseEntity {
         return isSyncEnabled;
     }
 
+    public Boolean getIsRemoved() {
+        return isRemoved;
+    }
+
+    public void setIsRemoved(Boolean isRemoved) {
+        this.isRemoved = isRemoved;
+    }
+
     public void setIsSyncEnabled(Boolean isSyncEnabled) {
         this.isSyncEnabled = isSyncEnabled;
     }
@@ -115,4 +138,5 @@ public class Show extends BaseEntity {
     public void setGetGlueId(String getGlueId) {
         this.getGlueId = getGlueId;
     }
+
 }
