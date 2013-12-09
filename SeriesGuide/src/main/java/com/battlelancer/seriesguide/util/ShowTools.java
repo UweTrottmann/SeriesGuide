@@ -219,13 +219,13 @@ public class ShowTools {
 
             ContentValues values = new ContentValues();
             for (Show show : shows) {
-                // skip shows flagged as removed (null will fall back to false)
-                if (show.getIsRemoved() != null && show.getIsRemoved()) {
-                    continue;
-                }
-
                 // skip shows not in local database
                 if (!showsExisting.contains(show.getTvdbId())) {
+                    // skip shows flagged as removed
+                    if (show.getIsRemoved() != null && show.getIsRemoved()) {
+                        continue;
+                    }
+
                     if (!showsNew.containsKey(show.getTvdbId())) {
                         // add show later
                         SearchResult item = new SearchResult();
@@ -233,6 +233,7 @@ public class ShowTools {
                         item.title = "";
                         showsNew.put(show.getTvdbId(), item);
                     }
+                    
                     // do not create an update op for show
                     continue;
                 }
