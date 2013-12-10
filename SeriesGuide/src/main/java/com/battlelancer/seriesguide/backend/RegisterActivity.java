@@ -12,7 +12,6 @@ import com.battlelancer.seriesguide.util.ShowTools;
 import com.uwetrottmann.seriesguide.R;
 import com.uwetrottmann.seriesguide.shows.Shows;
 import com.uwetrottmann.seriesguide.shows.model.Show;
-import com.uwetrottmann.seriesguide.shows.model.ShowList;
 
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -29,7 +28,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -85,7 +83,7 @@ public class RegisterActivity extends Activity {
         mButtonUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadShows();
+                doInitialUpload();
             }
         });
         mButtonUpload.setEnabled(isSignedIn());
@@ -166,21 +164,21 @@ public class RegisterActivity extends Activity {
         ShowTools.get(this).setShowsServiceAccountName(null);
     }
 
-    private void uploadShows() {
-        new ShowsUploadTask(this, mShowsService, mButtonUpload).execute();
+    /**
+     * Uploads new shows to Hexagon, offers to upload all of them (overwriting existing shows).
+     */
+    private void doInitialUpload() {
+        new InitialUploadTask(this, mButtonUpload).execute();
     }
 
-    private static class ShowsUploadTask extends AsyncTask<Void, Void, Void> {
+    private static class InitialUploadTask extends AsyncTask<Void, Void, List<Show>> {
 
         private final Context mContext;
 
-        private Shows mShowsService;
-
         private View mButtonUpload;
 
-        public ShowsUploadTask(Context context, Shows showsService, View buttonUpload) {
+        public InitialUploadTask(Context context, View buttonUpload) {
             mContext = context;
-            mShowsService = showsService;
             mButtonUpload = buttonUpload;
         }
 
@@ -190,27 +188,17 @@ public class RegisterActivity extends Activity {
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
-            // get a list of all local shows
-            List<Show> shows = getLocalShowsAsList();
-            if (shows == null || shows.size() == 0) {
-                return null;
-            }
-            ShowList showList = new ShowList();
-            showList.setShows(shows);
+        protected List<Show> doInBackground(Void... params) {
+            // TODO existing show detection, upload only new ones, offer to upload all
 
-            // upload shows
-            try {
-                ShowList savedShows = mShowsService.save(showList).execute();
-            } catch (IOException e) {
-                Log.w(TAG, e.getMessage(), e);
-            }
+            // upload all local shows
+            ShowTools.Upload.showsAllLocal(mContext);
 
             return null;
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
+        protected void onPostExecute(List<Show> result) {
             mButtonUpload.setEnabled(true);
         }
 

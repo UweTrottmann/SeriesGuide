@@ -16,6 +16,7 @@ import com.uwetrottmann.seriesguide.shows.model.ShowList;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -75,7 +76,7 @@ public class ShowTools {
             Show show = new Show();
             show.setTvdbId(showTvdbId);
             show.setIsRemoved(isRemoved);
-            uploadShow(show);
+            uploadShowAsync(show);
         }
     }
 
@@ -94,7 +95,7 @@ public class ShowTools {
             Show show = new Show();
             show.setTvdbId(showTvdbId);
             show.setIsFavorite(isFavorite);
-            uploadShow(show);
+            uploadShowAsync(show);
         }
     }
 
@@ -113,7 +114,7 @@ public class ShowTools {
             Show show = new Show();
             show.setTvdbId(showTvdbId);
             show.setIsHidden(isHidden);
-            uploadShow(show);
+            uploadShowAsync(show);
         }
     }
 
@@ -132,7 +133,7 @@ public class ShowTools {
             Show show = new Show();
             show.setTvdbId(showTvdbId);
             show.setGetGlueId(getglueId);
-            uploadShow(show);
+            uploadShowAsync(show);
         }
     }
 
@@ -140,44 +141,91 @@ public class ShowTools {
         return mCredential.getSelectedAccountName() != null;
     }
 
-    private void uploadShow(Show show) {
+    private void uploadShowAsync(Show show) {
         List<Show> shows = new LinkedList<>();
         shows.add(show);
-        new ShowsUploadTask(mShowsService, shows).execute();
+        new ShowsUploadTask(mContext, shows).execute();
     }
 
     private static class ShowsUploadTask extends AsyncTask<Void, Void, Void> {
 
-        private static final String TAG = "ShowTools.Upload";
-
-        private final Shows mShowsService;
+        private final Context mContext;
 
         private final List<Show> mShows;
 
-        public ShowsUploadTask(Shows showsService, List<Show> shows) {
-            mShowsService = showsService;
+        public ShowsUploadTask(Context context, List<Show> shows) {
+            mContext = context;
             mShows = shows;
         }
 
         @Override
         protected Void doInBackground(Void... params) {
+
+            Upload.shows(mContext, mShows);
+
+            return null;
+        }
+
+    }
+
+    public static class Upload {
+
+        private static final String TAG = "ShowTools.Upload";
+
+        /**
+         * Tries to upload the given list of shows to Hexagon.
+         */
+        public static void shows(Context context, List<Show> shows) {
+            // wrap into helper object
             ShowList showList = new ShowList();
-            showList.setShows(mShows);
+            showList.setShows(shows);
 
             Log.d(TAG, "Uploading show(s)...");
 
             // upload shows
             try {
-                mShowsService.save(showList).execute();
+                ShowTools.get(context).mShowsService.save(showList).execute();
             } catch (IOException e) {
-                Log.w(TAG, e.getMessage(), e);
+                Utils.trackExceptionAndLog(context, TAG, e);
             }
 
             Log.d(TAG, "Uploading show(s)...DONE");
-
-            return null;
         }
 
+        /**
+         * Tries to upload all shows in the local database to Hexagon.
+         */
+        public static void showsAllLocal(Context context) {
+            shows(context, getLocalShowsAsList(context));
+        }
+
+        public static List<Show> getLocalShowsAsList(Context context) {
+            List<Show> shows = new LinkedList<>();
+
+            Cursor query = context.getContentResolver()
+                    .query(SeriesContract.Shows.CONTENT_URI, new String[]{
+                            SeriesContract.Shows._ID, SeriesContract.Shows.FAVORITE,
+                            SeriesContract.Shows.HIDDEN, SeriesContract.Shows.GETGLUEID,
+                            SeriesContract.Shows.SYNCENABLED
+                    }, null, null, null);
+            if (query == null) {
+                return null;
+            }
+
+            while (query.moveToNext()) {
+                Show show = new Show();
+                show.setTvdbId(query.getInt(0));
+                show.setIsFavorite(query.getInt(1) == 1);
+                show.setIsHidden(query.getInt(2) == 1);
+                show.setGetGlueId(query.getString(3));
+                show.setIsSyncEnabled(query.getInt(4) == 1);
+                shows.add(show);
+            }
+
+            query.close();
+
+            return shows;
+        }
     }
 
     public static class Download {
@@ -191,7 +239,7 @@ public class ShowTools {
             try {
                 remoteShows = ShowTools.get(context).mShowsService.list().execute();
             } catch (IOException e) {
-                Log.w(TAG, e.getMessage(), e);
+                Utils.trackExceptionAndLog(context, TAG, e);
             }
 
             // abort if no response
@@ -233,7 +281,7 @@ public class ShowTools {
                         item.title = "";
                         showsNew.put(show.getTvdbId(), item);
                     }
-                    
+
                     // do not create an update op for show
                     continue;
                 }
