@@ -5,18 +5,6 @@
     android:gravity="center_vertical|center_horizontal|center"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/msgView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <Button
-        android:id="@+id/regButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Register" />
-
     <Button
         android:id="@+id/buttonRegisterSignIn"
         android:layout_width="match_parent"
@@ -30,12 +18,5 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Upload shows" />
-
-    <Button
-        android:id="@+id/buttonRegisterDownload"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Download shows" />
 
 </LinearLayout>
