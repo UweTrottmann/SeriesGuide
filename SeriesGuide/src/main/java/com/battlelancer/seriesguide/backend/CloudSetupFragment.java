@@ -284,7 +284,7 @@ public class CloudSetupFragment extends SherlockFragment {
 
             // are there local shows?
             HashSet<Integer> showsLocal = ShowTools.getShowTvdbIdsAsSet(mContext);
-            if (showsLocal == null) {
+            if (showsLocal == null || isCancelled()) {
                 // that did go wrong
                 return FAILURE;
             }
@@ -295,7 +295,7 @@ public class CloudSetupFragment extends SherlockFragment {
 
             // are there shows on Hexagon?
             List<Show> showsRemote = ShowTools.Download.getRemoteShows(mContext);
-            if (showsRemote == null) {
+            if (showsRemote == null || isCancelled()) {
                 // that did go wrong
                 return FAILURE;
             }
