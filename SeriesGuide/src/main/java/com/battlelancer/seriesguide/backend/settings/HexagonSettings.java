@@ -30,4 +30,13 @@ public class HexagonSettings {
                 .getBoolean(KEY_SETUP_COMPLETED, true);
     }
 
+    public static void setSetupCompleted(Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit().putBoolean(HexagonSettings.KEY_SETUP_COMPLETED, true).commit();
+    }
+
+    public static void setSetupIncomplete(Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit().putBoolean(HexagonSettings.KEY_SETUP_COMPLETED, false).commit();
+    }
 }
