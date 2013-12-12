@@ -47,7 +47,7 @@ public class CloudSetupActivity extends BaseTopActivity {
 
         if (savedInstanceState == null) {
             CloudSetupFragment f = new CloudSetupFragment();
-            getSupportFragmentManager().beginTransaction().add(android.R.id.content, f).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.content_frame, f).commit();
         }
     }
 
