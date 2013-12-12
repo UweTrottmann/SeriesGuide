@@ -199,6 +199,17 @@ public class CloudSetupFragment extends SherlockFragment {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        if (mHexagonSetupTask != null
+                && mHexagonSetupTask.getStatus() != AsyncTask.Status.FINISHED) {
+            mHexagonSetupTask.cancel(true);
+        }
+        mHexagonSetupTask = null;
+
+        super.onDestroy();
+    }
+
     private boolean isSignedIn() {
         return mCredential.getSelectedAccountName() != null;
     }
