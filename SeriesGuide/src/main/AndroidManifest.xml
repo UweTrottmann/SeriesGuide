@@ -63,7 +63,7 @@
         </activity>
 
         <!-- Hexagon -->
-        <activity android:name="com.battlelancer.seriesguide.backend.RegisterActivity"/>
+        <activity android:name="com.battlelancer.seriesguide.backend.CloudSetupActivity"/>
 
         <!-- Shows -->
         <activity

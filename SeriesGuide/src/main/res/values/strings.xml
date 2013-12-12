@@ -270,7 +270,7 @@
     <string name="hexagon_signout">Sign Out</string>
     <string name="hexagon_setup_incomplete">Setting up SeriesGuide cloud was not completed.</string>
     <string name="hexagon_setup_complete">Complete setup</string>
-    <string name="hexagon_priority">Some of your shows are already in the cloud. Which version do you prefer?</string>
+    <string name="hexagon_priority_choice_required">Some of your shows are already in the cloud. Which version do you prefer?</string>
     <string name="hexagon_priority_local">On this device</string>
     <string name="hexagon_priority_cloud">In the cloud</string>
     <string name="hexagon_priority_select">Select version</string>

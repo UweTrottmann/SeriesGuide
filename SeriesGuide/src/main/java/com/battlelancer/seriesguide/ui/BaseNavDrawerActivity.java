@@ -18,9 +18,9 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.backend.CloudSetupActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
-import com.battlelancer.seriesguide.backend.RegisterActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -174,7 +174,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Search");
                 break;
             case MENU_ITEM_CLOUD_POSITION:
-                startActivity(new Intent(this, RegisterActivity.class)
+                startActivity(new Intent(this, CloudSetupActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 break;
         }

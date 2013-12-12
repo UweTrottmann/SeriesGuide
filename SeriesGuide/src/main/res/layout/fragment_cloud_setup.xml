@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        style="@style/Page.Centered"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewRegisterTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hexagon_setup"
+            android:textAppearance="@style/TextAppearance.Large.Light" />
+
+        <TextView
+            android:id="@+id/textViewRegisterWarning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding"
+            android:text="@string/hexagon_warning"
+            android:textAppearance="@style/TextAppearance.Small.Highlight" />
+
+        <TextView
+            android:id="@+id/textViewRegisterDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding"
+            android:text="@string/hexagon_description"
+            android:textAppearance="@style/TextAppearance" />
+
+        <ProgressBar
+            android:id="@+id/progressBarRegister"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_padding"
+            android:indeterminateOnly="true" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupRegisterPriority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_padding">
+
+            <RadioButton
+                android:id="@+id/radioButtonRegisterPriorityCloud"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hexagon_priority_cloud" />
+
+            <RadioButton
+                android:id="@+id/radioButtonRegisterPriorityDevice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hexagon_priority_local" />
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/buttonRegisterAction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_padding"
+            android:text="@string/hexagon_signin" />
+
+    </LinearLayout>
+
+</ScrollView>
