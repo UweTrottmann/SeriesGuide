@@ -158,7 +158,7 @@ public class CloudSetupFragment extends SherlockFragment {
         }
 
         // setup failed, offer action to re-try
-        mTextViewDescription.setText(R.string.hexagon_signed_in);
+        mTextViewDescription.setText(R.string.hexagon_setup_incomplete);
         mButtonAction.setText(R.string.hexagon_setup_complete);
         mButtonAction.setOnClickListener(new View.OnClickListener() {
             @Override
