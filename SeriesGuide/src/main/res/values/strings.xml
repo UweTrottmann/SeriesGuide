@@ -266,7 +266,12 @@
     <string name="hexagon_setup">Set up SeriesGuide cloud</string>
     <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
     <string name="hexagon_signin">Sign In</string>
+    <string name="hexagon_signed_in">You are connected to SeriesGuide cloud.</string>
     <string name="hexagon_signout">Sign Out</string>
+    <string name="hexagon_priority">Some of your shows are already in the cloud. Which version do you prefer?</string>
+    <string name="hexagon_priority_local">On this device</string>
+    <string name="hexagon_priority_cloud">In the cloud</string>
+    <string name="hexagon_priority_select">Select version</string>
 
     <!-- Connect trakt -->
     <string name="connect_trakt">Connect trakt</string>

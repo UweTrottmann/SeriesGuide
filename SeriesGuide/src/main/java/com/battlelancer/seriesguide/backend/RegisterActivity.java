@@ -26,6 +26,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +50,8 @@ public class RegisterActivity extends Activity {
 
     private TextView mTextViewDescription;
 
+    private RadioGroup mRadioGroupPriority;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +66,9 @@ public class RegisterActivity extends Activity {
     private void setupViews() {
         mButtonAction = (Button) findViewById(R.id.buttonRegisterAction);
         mTextViewDescription = (TextView) findViewById(R.id.textViewRegisterDescription);
+        mRadioGroupPriority = (RadioGroup) findViewById(R.id.radioGroupRegisterPriority);
+
+        updateViewsStates();
     }
 
     @Override
@@ -82,6 +88,7 @@ public class RegisterActivity extends Activity {
                     if (!TextUtils.isEmpty(accountName)) {
                         storeAccountName(accountName);
                         setAccountName(accountName);
+                        updateViewsStates();
                     }
                 }
                 break;
@@ -129,13 +136,35 @@ public class RegisterActivity extends Activity {
 
     private void signOut() {
         // remove account name from settings
-        mCredential.setSelectedAccountName(null);
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this)
-                .edit();
-        editor.putString(HexagonSettings.KEY_ACCOUNT_NAME, null);
-        editor.commit();
+        storeAccountName(null);
+        setAccountName(null);
 
-        ShowTools.get(this).setShowsServiceAccountName(null);
+        updateViewsStates();
+    }
+
+    private void updateViewsStates() {
+        if (isSignedIn()) {
+            mButtonAction.setText(R.string.hexagon_signout);
+            mButtonAction.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    signOut();
+                }
+            });
+            mTextViewDescription.setText(R.string.hexagon_signed_in);
+            mRadioGroupPriority.setVisibility(View.GONE);
+        } else {
+            // not signed in
+            mButtonAction.setText(R.string.hexagon_signin);
+            mButtonAction.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    signIn();
+                }
+            });
+            mTextViewDescription.setText(R.string.hexagon_description);
+            mRadioGroupPriority.setVisibility(View.GONE);
+        }
     }
 
     /**

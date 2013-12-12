@@ -41,6 +41,27 @@
             android:layout_marginTop="@dimen/large_padding"
             android:visibility="gone" />
 
+        <RadioGroup
+            android:id="@+id/radioGroupRegisterPriority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_padding"
+            android:visibility="visible">
+
+            <RadioButton
+                android:id="@+id/radioButtonRegisterPriorityCloud"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hexagon_priority_cloud" />
+
+            <RadioButton
+                android:id="@+id/radioButtonRegisterPriorityDevice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hexagon_priority_local" />
+
+        </RadioGroup>
+
         <Button
             android:id="@+id/buttonRegisterAction"
             android:layout_width="match_parent"
