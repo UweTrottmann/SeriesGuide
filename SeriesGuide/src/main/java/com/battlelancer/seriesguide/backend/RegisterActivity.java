@@ -44,8 +44,6 @@ public class RegisterActivity extends Activity {
 
     private GoogleAccountCredential mCredential;
 
-    private Shows mShowsService;
-
     private Button mButtonUpload;
 
     @Override
@@ -55,12 +53,6 @@ public class RegisterActivity extends Activity {
 
         mCredential = GoogleAccountCredential.usingAudience(this, HexagonSettings.AUDIENCE);
         setAccountName(HexagonSettings.getAccountName(this));
-
-        // build show service endpoint
-        Shows.Builder builder = new Shows.Builder(
-                AndroidHttp.newCompatibleTransport(), new JacksonFactory(), mCredential
-        );
-        mShowsService = CloudEndpointUtils.updateBuilder(builder).build();
 
         setupViews();
     }
