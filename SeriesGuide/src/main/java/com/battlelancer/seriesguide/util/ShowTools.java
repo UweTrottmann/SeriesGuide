@@ -170,12 +170,20 @@ public class ShowTools {
 
     public static class Upload {
 
+        public static final int SUCCESS = 0;
+
+        public static final int FAILURE = -1;
+
         private static final String TAG = "ShowTools.Upload";
 
         /**
          * Tries to upload the given list of shows to Hexagon.
+         *
+         * @return 0 if successful, -1 if something went wrong.
          */
-        public static void shows(Context context, List<Show> shows) {
+        public static int shows(Context context, List<Show> shows) {
+            int resultCode = SUCCESS;
+
             // wrap into helper object
             ShowList showList = new ShowList();
             showList.setShows(shows);
@@ -187,16 +195,21 @@ public class ShowTools {
                 ShowTools.get(context).mShowsService.save(showList).execute();
             } catch (IOException e) {
                 Utils.trackExceptionAndLog(context, TAG, e);
+                resultCode = FAILURE;
             }
 
             Log.d(TAG, "Uploading show(s)...DONE");
+
+            return resultCode;
         }
 
         /**
          * Tries to upload all shows in the local database to Hexagon.
+         *
+         * @return 0 if successful, -1 if something went wrong.
          */
-        public static void showsAllLocal(Context context) {
-            shows(context, getLocalShowsAsList(context));
+        public static int showsAll(Context context) {
+            return shows(context, getLocalShowsAsList(context));
         }
 
         public static List<Show> getLocalShowsAsList(Context context) {
@@ -232,8 +245,36 @@ public class ShowTools {
 
         private static final String TAG = "ShowTools.Download";
 
-        public static UpdateResult getAllRemoteShows(Context context,
+        /**
+         * Downloads shows from Hexagon and updates existing shows with new property values. Any
+         * shows not yet in the local database, determined by the given TVDb id set, will be added
+         * to the given map.
+         */
+        public static UpdateResult syncRemoteShows(Context context,
                 HashSet<Integer> showsExisting, HashMap<Integer, SearchResult> showsNew) {
+            // download shows
+            List<Show> shows = getRemoteShows(context);
+            if (shows == null) {
+                // response got screwed up
+                return UpdateResult.INCOMPLETE;
+            }
+            if (shows.size() == 0) {
+                // no shows on hexagon, nothing to do
+                return UpdateResult.SUCCESS;
+            }
+
+            // update all received shows, ContentProvider will ignore those not added locally
+            ArrayList<ContentProviderOperation> batch = buildShowUpdateOps(shows, showsExisting,
+                    showsNew);
+            DBUtils.applyInSmallBatches(context, batch);
+
+            return UpdateResult.SUCCESS;
+        }
+
+        /**
+         * Downloads a list of all shows on Hexagon.
+         */
+        public static List<Show> getRemoteShows(Context context) {
             // download shows
             CollectionResponseShow remoteShows = null;
             try {
@@ -244,21 +285,11 @@ public class ShowTools {
 
             // abort if no response
             if (remoteShows == null) {
-                return UpdateResult.INCOMPLETE;
+                return null;
             }
 
             // extract list of remote shows
-            List<Show> shows = remoteShows.getItems();
-            if (shows == null || shows.size() == 0) {
-                return UpdateResult.SUCCESS;
-            }
-
-            // update all received shows, ContentProvider will ignore those not added locally
-            ArrayList<ContentProviderOperation> batch = buildShowUpdateOps(shows, showsExisting,
-                    showsNew);
-            DBUtils.applyInSmallBatches(context, batch);
-
-            return UpdateResult.SUCCESS;
+            return remoteShows.getItems();
         }
 
         private static ArrayList<ContentProviderOperation> buildShowUpdateOps(List<Show> shows,
@@ -323,6 +354,29 @@ public class ShowTools {
             }
         }
 
+    }
+
+    /**
+     * Returns a set of the TVDb ids of all shows in the local database.
+     *
+     * @return null if there was an error, empty list if there are no shows.
+     */
+    public static HashSet<Integer> getShowTvdbIdsAsSet(Context context) {
+        HashSet<Integer> existingShows = new HashSet<>();
+
+        Cursor shows = context.getContentResolver().query(SeriesContract.Shows.CONTENT_URI,
+                new String[]{SeriesContract.Shows._ID}, null, null, null);
+        if (shows == null) {
+            return null;
+        }
+
+        while (shows.moveToNext()) {
+            existingShows.add(shows.getInt(0));
+        }
+
+        shows.close();
+
+        return existingShows;
     }
 
 }

@@ -252,7 +252,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             getTmdbConfiguration(getContext(), prefs);
 
             // prepare for finding shows not yet added to local database
-            final HashSet<Integer> showsExisting = getLocalShowsAsSet(getContext());
+            final HashSet<Integer> showsExisting = ShowTools.getShowTvdbIdsAsSet(getContext());
             final HashMap<Integer, SearchResult> showsNew = new HashMap<>();
             if (showsExisting == null) {
                 resultCode = UpdateResult.INCOMPLETE;
@@ -262,7 +262,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 if (ShowTools.get(getContext()).isSignedIn()) {
                     Log.d(TAG, "Download hexagon shows...");
                     UpdateResult resultHexagon = ShowTools.Download
-                            .getAllRemoteShows(getContext(), showsExisting, showsNew);
+                            .syncRemoteShows(getContext(), showsExisting, showsNew);
                     Log.d(TAG, "Download hexagon shows..." + resultHexagon.toString());
                     // don't overwrite earlier failure
                     if (resultCode == UpdateResult.SUCCESS) {
@@ -330,29 +330,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         Utils.runNotificationService(getContext());
 
         Log.d(TAG, "Finished syncing shows (" + showTvdbId + "): " + resultCode.toString());
-    }
-
-    /**
-     * Build a set of the TVDb ids of all shows in the local database.
-     *
-     * @return null if there was an error, empty list if there are no shows.
-     */
-    private static HashSet<Integer> getLocalShowsAsSet(Context context) {
-        HashSet<Integer> existingShows = new HashSet<>();
-
-        Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI,
-                new String[]{Shows._ID}, null, null, null);
-        if (shows == null) {
-            return null;
-        }
-
-        while (shows.moveToNext()) {
-            existingShows.add(shows.getInt(0));
-        }
-
-        shows.close();
-
-        return existingShows;
     }
 
     /**
