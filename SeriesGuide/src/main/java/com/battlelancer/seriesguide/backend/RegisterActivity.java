@@ -26,6 +26,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.LinkedList;
@@ -44,7 +45,9 @@ public class RegisterActivity extends Activity {
 
     private GoogleAccountCredential mCredential;
 
-    private Button mButtonUpload;
+    private Button mButtonAction;
+
+    private TextView mTextViewDescription;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,27 +61,8 @@ public class RegisterActivity extends Activity {
     }
 
     private void setupViews() {
-        Button signInButton = (Button) findViewById(R.id.buttonRegisterSignIn);
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isSignedIn()) {
-                    signOut();
-                    Toast.makeText(RegisterActivity.this, "Signed out.", Toast.LENGTH_SHORT).show();
-                } else {
-                    signIn();
-                }
-            }
-        });
-
-        mButtonUpload = (Button) findViewById(R.id.buttonRegisterUpload);
-        mButtonUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                doInitialUpload();
-            }
-        });
-        mButtonUpload.setEnabled(isSignedIn());
+        mButtonAction = (Button) findViewById(R.id.buttonRegisterAction);
+        mTextViewDescription = (TextView) findViewById(R.id.textViewRegisterDescription);
     }
 
     @Override
@@ -98,7 +82,6 @@ public class RegisterActivity extends Activity {
                     if (!TextUtils.isEmpty(accountName)) {
                         storeAccountName(accountName);
                         setAccountName(accountName);
-                        mButtonUpload.setEnabled(true);
                     }
                 }
                 break;
@@ -151,7 +134,6 @@ public class RegisterActivity extends Activity {
                 .edit();
         editor.putString(HexagonSettings.KEY_ACCOUNT_NAME, null);
         editor.commit();
-        mButtonUpload.setEnabled(false);
 
         ShowTools.get(this).setShowsServiceAccountName(null);
     }
@@ -160,7 +142,7 @@ public class RegisterActivity extends Activity {
      * Uploads new shows to Hexagon, offers to upload all of them (overwriting existing shows).
      */
     private void doInitialUpload() {
-        new InitialUploadTask(this, mButtonUpload).execute();
+        new InitialUploadTask(this, mButtonAction).execute();
     }
 
     private static class InitialUploadTask extends AsyncTask<Void, Void, List<Show>> {

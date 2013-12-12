@@ -262,6 +262,12 @@
     <string name="list_item_remove">Remove from list</string>
     <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
 
+    <!-- Hexagon -->
+    <string name="hexagon_setup">Set up SeriesGuide cloud</string>
+    <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
+    <string name="hexagon_signin">Sign In</string>
+    <string name="hexagon_signout">Sign Out</string>
+
     <!-- Connect trakt -->
     <string name="connect_trakt">Connect trakt</string>
     <string name="connect_trakt_done">Connected to trakt!</string>
