@@ -1,74 +1,84 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        style="@style/Page.Centered"
+    <!-- The main content view -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textViewRegisterTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/hexagon_setup"
-            android:textAppearance="@style/TextAppearance.Large.Light" />
-
-        <TextView
-            android:id="@+id/textViewRegisterWarning"
+        <LinearLayout
+            style="@style/Page.Centered"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_padding"
-            android:text="@string/hexagon_warning"
-            android:textAppearance="@style/TextAppearance.Small.Highlight" />
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textViewRegisterDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_padding"
-            android:text="@string/hexagon_description"
-            android:textAppearance="@style/TextAppearance" />
-
-        <ProgressBar
-            android:id="@+id/progressBarRegister"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large_padding"
-            android:visibility="gone" />
-
-        <RadioGroup
-            android:id="@+id/radioGroupRegisterPriority"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large_padding"
-            android:visibility="visible">
-
-            <RadioButton
-                android:id="@+id/radioButtonRegisterPriorityCloud"
+            <TextView
+                android:id="@+id/textViewRegisterTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hexagon_priority_cloud" />
+                android:text="@string/hexagon_setup"
+                android:textAppearance="@style/TextAppearance.Large.Light" />
 
-            <RadioButton
-                android:id="@+id/radioButtonRegisterPriorityDevice"
+            <TextView
+                android:id="@+id/textViewRegisterWarning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_padding"
+                android:text="@string/hexagon_warning"
+                android:textAppearance="@style/TextAppearance.Small.Highlight" />
+
+            <TextView
+                android:id="@+id/textViewRegisterDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_padding"
+                android:text="@string/hexagon_description"
+                android:textAppearance="@style/TextAppearance" />
+
+            <ProgressBar
+                android:id="@+id/progressBarRegister"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_padding" />
+
+            <RadioGroup
+                android:id="@+id/radioGroupRegisterPriority"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hexagon_priority_local" />
+                android:layout_marginTop="@dimen/large_padding">
 
-        </RadioGroup>
+                <RadioButton
+                    android:id="@+id/radioButtonRegisterPriorityCloud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hexagon_priority_cloud" />
 
-        <Button
-            android:id="@+id/buttonRegisterAction"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large_padding"
-            android:text="@string/hexagon_signin" />
+                <RadioButton
+                    android:id="@+id/radioButtonRegisterPriorityDevice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hexagon_priority_local" />
 
-    </LinearLayout>
+            </RadioGroup>
 
-</ScrollView>
+            <Button
+                android:id="@+id/buttonRegisterAction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_padding"
+                android:text="@string/hexagon_signin" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <include layout="@layout/drawer_left" />
+
+</android.support.v4.widget.DrawerLayout>
+

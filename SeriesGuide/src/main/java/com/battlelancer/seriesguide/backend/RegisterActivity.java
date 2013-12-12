@@ -2,19 +2,18 @@ package com.battlelancer.seriesguide.backend;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.json.jackson.JacksonFactory;
 
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SeriesContract;
+import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
+import com.battlelancer.seriesguide.ui.BaseTopActivity;
 import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
-import com.uwetrottmann.seriesguide.shows.Shows;
 import com.uwetrottmann.seriesguide.shows.model.Show;
 
 import android.accounts.AccountManager;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,7 +27,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -36,13 +34,13 @@ import java.util.List;
 /**
  * Helps connecting a device to Hexagon: sign in via Google account, initial uploading of shows.
  */
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends BaseTopActivity {
+
+    public static final String TAG = "Hexagon";
 
     private static final int REQUEST_ACCOUNT_PICKER = 0;
 
     private static final int REQUEST_GOOGLE_PLAY_SERVICES = 1;
-
-    private static final String TAG = "Hexagon";
 
     private GoogleAccountCredential mCredential;
 
@@ -56,6 +54,7 @@ public class RegisterActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        setupNavDrawer();
 
         mCredential = GoogleAccountCredential.usingAudience(this, HexagonSettings.AUDIENCE);
         setAccountName(HexagonSettings.getAccountName(this));
@@ -75,6 +74,12 @@ public class RegisterActivity extends Activity {
     protected void onResume() {
         super.onResume();
         checkGooglePlayServicesAvailable();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_CLOUD_POSITION);
     }
 
     @Override
@@ -232,5 +237,10 @@ public class RegisterActivity extends Activity {
 
             return shows;
         }
+    }
+
+    @Override
+    protected void fireTrackerEvent(String label) {
+        Utils.trackAction(this, TAG, label);
     }
 }
