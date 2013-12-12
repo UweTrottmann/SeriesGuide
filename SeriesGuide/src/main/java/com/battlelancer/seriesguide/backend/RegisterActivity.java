@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -48,6 +49,8 @@ public class RegisterActivity extends BaseTopActivity {
 
     private TextView mTextViewDescription;
 
+    private ProgressBar mProgressBar;
+
     private RadioGroup mRadioGroupPriority;
 
     @Override
@@ -65,6 +68,7 @@ public class RegisterActivity extends BaseTopActivity {
     private void setupViews() {
         mButtonAction = (Button) findViewById(R.id.buttonRegisterAction);
         mTextViewDescription = (TextView) findViewById(R.id.textViewRegisterDescription);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBarRegister);
         mRadioGroupPriority = (RadioGroup) findViewById(R.id.radioGroupRegisterPriority);
 
         updateViewsStates();
@@ -93,7 +97,11 @@ public class RegisterActivity extends BaseTopActivity {
                     if (!TextUtils.isEmpty(accountName)) {
                         storeAccountName(accountName);
                         setAccountName(accountName);
-                        updateViewsStates();
+                        if (isSignedIn()) {
+                            setupHexagon();
+                        } else {
+                            updateViewsStates();
+                        }
                     }
                 }
                 break;
@@ -124,6 +132,16 @@ public class RegisterActivity extends BaseTopActivity {
         mCredential.setSelectedAccountName(accountName);
     }
 
+    private void setupHexagon() {
+        // set setup incomplete flag
+        PreferenceManager.getDefaultSharedPreferences(this).edit()
+                .putBoolean(HexagonSettings.KEY_SETUP_COMPLETED, false).commit();
+
+        mProgressBar.setVisibility(View.VISIBLE);
+
+        // TODO
+    }
+
     private void storeAccountName(String accountName) {
         // store account name in settings
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this)
@@ -149,15 +167,29 @@ public class RegisterActivity extends BaseTopActivity {
 
     private void updateViewsStates() {
         if (isSignedIn()) {
-            mButtonAction.setText(R.string.hexagon_signout);
-            mButtonAction.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    signOut();
-                }
-            });
-            mTextViewDescription.setText(R.string.hexagon_signed_in);
-            mRadioGroupPriority.setVisibility(View.GONE);
+            if (HexagonSettings.hasCompletedSetup(this)) {
+                mButtonAction.setText(R.string.hexagon_signout);
+                mButtonAction.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        signOut();
+                    }
+                });
+                mTextViewDescription.setText(R.string.hexagon_signed_in);
+                mProgressBar.setVisibility(View.GONE);
+                mRadioGroupPriority.setVisibility(View.GONE);
+            } else {
+                mButtonAction.setText(R.string.hexagon_setup_complete);
+                mButtonAction.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setupHexagon();
+                    }
+                });
+                mTextViewDescription.setText(R.string.hexagon_setup_incomplete);
+                mProgressBar.setVisibility(View.GONE);
+                mRadioGroupPriority.setVisibility(View.GONE);
+            }
         } else {
             // not signed in
             mButtonAction.setText(R.string.hexagon_signin);
@@ -168,6 +200,7 @@ public class RegisterActivity extends BaseTopActivity {
                 }
             });
             mTextViewDescription.setText(R.string.hexagon_description);
+            mProgressBar.setVisibility(View.GONE);
             mRadioGroupPriority.setVisibility(View.GONE);
         }
     }
