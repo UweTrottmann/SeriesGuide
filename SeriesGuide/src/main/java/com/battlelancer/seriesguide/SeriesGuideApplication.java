@@ -23,6 +23,7 @@ import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
+import com.squareup.okhttp.OkHttpClient;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.BuildConfig;
 import com.uwetrottmann.seriesguide.R;
@@ -34,6 +35,8 @@ import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.os.StrictMode.VmPolicy;
 import android.preference.PreferenceManager;
+
+import java.net.URL;
 
 /**
  * Initializes settings and services and on pre-ICS implements actions for low
@@ -62,6 +65,12 @@ public class SeriesGuideApplication extends Application {
 
         // Load the current theme into a global variable
         Utils.updateTheme(DisplaySettings.getThemeIndex(this));
+
+        // OkHttp changes the global SSL context, breaks other HTTP clients like used by e.g. Google
+        // Analytics.
+        // https://github.com/square/okhttp/issues/184
+        // So set OkHttp to handle all connections
+        URL.setURLStreamHandlerFactory(new OkHttpClient());
 
         // Ensure GA opt-out
         GoogleAnalytics.getInstance(this).setAppOptOut(AppSettings.isGaAppOptOut(this));
