@@ -269,7 +269,7 @@ public class CloudSetupFragment extends SherlockFragment {
         private OnSetupFinishedListener mOnSetupFinishedListener;
 
         public HexagonSetupTask(Context context, OnSetupFinishedListener listener) {
-            mContext = context;
+            mContext = context.getApplicationContext();
             mOnSetupFinishedListener = listener;
         }
 
