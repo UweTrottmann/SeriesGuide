@@ -40,7 +40,6 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.HashSet;
 import java.util.List;
@@ -121,12 +120,12 @@ public class CloudSetupFragment extends SherlockFragment {
                 @Override
                 public void onClick(View v) {
                     // create new setup task, give it user decision on duplicates
-                    boolean isUploadMissingOnly = mRadioGroupPriority.getCheckedRadioButtonId()
-                            == R.id.radioButtonRegisterPriorityDevice;
+                    boolean isCloudOverwrites = mRadioGroupPriority.getCheckedRadioButtonId()
+                            == R.id.radioButtonRegisterPriorityCloud;
 
                     setProgressLock(true);  // prevent duplicate tasks
                     mHexagonSetupTask = new HexagonSetupTask(getActivity(), mSetupFinishedListener,
-                            isUploadMissingOnly);
+                            isCloudOverwrites);
                     mHexagonSetupTask.execute();
                 }
             });
@@ -277,7 +276,7 @@ public class CloudSetupFragment extends SherlockFragment {
 
         private boolean mIsDecidingOnDuplicates;
 
-        private boolean mIsUploadMissing;
+        private boolean mIsCloudOverwrites;
 
         /**
          * Checks for local and remote shows and uploads shows accordingly. If there are some shows
@@ -296,11 +295,11 @@ public class CloudSetupFragment extends SherlockFragment {
          * intervention based on the given flag.
          */
         public HexagonSetupTask(Context context, OnSetupFinishedListener listener,
-                boolean isUploadMissing) {
+                boolean isCloudOverwrites) {
             mContext = context.getApplicationContext();
             mOnSetupFinishedListener = listener;
             mIsDecidingOnDuplicates = true;
-            mIsUploadMissing = isUploadMissing;
+            mIsCloudOverwrites = isCloudOverwrites;
         }
 
         @Override
@@ -352,7 +351,11 @@ public class CloudSetupFragment extends SherlockFragment {
             // user intervention required on duplicates?
             if (mIsDecidingOnDuplicates) {
                 // no, was instructed with decision
-                if (mIsUploadMissing) {
+                if (mIsCloudOverwrites) {
+                    if (showsLocal.size() == 0) {
+                        // all shows are already on hexagon, done!
+                        return SUCCESS;
+                    }
                     // uploading only shows missing from the cloud
                     List<Show> showsMissing = ShowTools.Upload
                             .getSelectedLocalShowsAsList(mContext, showsLocal);
