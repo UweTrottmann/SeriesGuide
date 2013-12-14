@@ -213,6 +213,11 @@ public class ShowTools {
         }
 
         public static List<Show> getLocalShowsAsList(Context context) {
+            return getSelectedLocalShowsAsList(context, null);
+        }
+
+        public static List<Show> getSelectedLocalShowsAsList(Context context,
+                HashSet<Integer> showTvdbIds) {
             List<Show> shows = new LinkedList<>();
 
             Cursor query = context.getContentResolver()
@@ -226,8 +231,13 @@ public class ShowTools {
             }
 
             while (query.moveToNext()) {
+                int showTvdbId = query.getInt(0);
+                if (showTvdbIds != null && !showTvdbIds.contains(showTvdbId)) {
+                    // skip this show
+                    continue;
+                }
                 Show show = new Show();
-                show.setTvdbId(query.getInt(0));
+                show.setTvdbId(showTvdbId);
                 show.setIsFavorite(query.getInt(1) == 1);
                 show.setIsHidden(query.getInt(2) == 1);
                 show.setGetGlueId(query.getString(3));

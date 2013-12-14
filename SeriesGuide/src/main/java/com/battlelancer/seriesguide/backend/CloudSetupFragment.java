@@ -102,8 +102,7 @@ public class CloudSetupFragment extends SherlockFragment {
         // lock down UI if task is still running
         if (mHexagonSetupTask != null
                 && mHexagonSetupTask.getStatus() != AsyncTask.Status.FINISHED) {
-            setProgressLock(true);
-            mHexagonSetupTask.setOnFinishedListener(mSetupFinishedListener);
+            setProgressLock(true); // prevent duplicate tasks
         }
     }
 
@@ -115,13 +114,20 @@ public class CloudSetupFragment extends SherlockFragment {
         if (enableVersionDecision) {
             // require decision before upload: show options
             mRadioGroupPriority.setVisibility(View.VISIBLE);
+            mRadioGroupPriority.check(R.id.radioButtonRegisterPriorityCloud); // default to cloud
             mTextViewDescription.setText(R.string.hexagon_priority_choice_required);
             mButtonAction.setText(R.string.hexagon_priority_select);
             mButtonAction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO upload all or only local only shows
-                    Toast.makeText(getActivity(), "NO OP", Toast.LENGTH_LONG).show();
+                    // create new setup task, give it user decision on duplicates
+                    boolean isUploadMissingOnly = mRadioGroupPriority.getCheckedRadioButtonId()
+                            == R.id.radioButtonRegisterPriorityDevice;
+
+                    setProgressLock(true);  // prevent duplicate tasks
+                    mHexagonSetupTask = new HexagonSetupTask(getActivity(), mSetupFinishedListener,
+                            isUploadMissingOnly);
+                    mHexagonSetupTask.execute();
                 }
             });
             return;
@@ -243,7 +249,7 @@ public class CloudSetupFragment extends SherlockFragment {
     }
 
     private void setupHexagon() {
-        setProgressLock(true);
+        setProgressLock(true);  // prevent duplicate tasks
 
         mHexagonSetupTask = new HexagonSetupTask(getActivity(), mSetupFinishedListener);
         mHexagonSetupTask.execute();
@@ -262,15 +268,39 @@ public class CloudSetupFragment extends SherlockFragment {
         public interface OnSetupFinishedListener {
 
             public void onSetupFinished(int resultCode);
+
         }
 
         private final Context mContext;
 
         private OnSetupFinishedListener mOnSetupFinishedListener;
 
+        private boolean mIsDecidingOnDuplicates;
+
+        private boolean mIsUploadMissing;
+
+        /**
+         * Checks for local and remote shows and uploads shows accordingly. If there are some shows
+         * in the local database as well as on hexagon, will abort with result code indicating
+         * required user intervention.
+         */
         public HexagonSetupTask(Context context, OnSetupFinishedListener listener) {
             mContext = context.getApplicationContext();
             mOnSetupFinishedListener = listener;
+            mIsDecidingOnDuplicates = false;
+        }
+
+        /**
+         * Same as regular task, but if there are some shows in the local database as well as on
+         * hexagon, does make a decision on uploading only missing or all shows without user
+         * intervention based on the given flag.
+         */
+        public HexagonSetupTask(Context context, OnSetupFinishedListener listener,
+                boolean isUploadMissing) {
+            mContext = context.getApplicationContext();
+            mOnSetupFinishedListener = listener;
+            mIsDecidingOnDuplicates = true;
+            mIsUploadMissing = isUploadMissing;
         }
 
         @Override
@@ -302,13 +332,7 @@ public class CloudSetupFragment extends SherlockFragment {
             if (showsRemote.size() == 0) {
                 // no shows on Hexagon
                 // upload all local shows
-                if (ShowTools.Upload.showsAll(mContext) == ShowTools.Upload.FAILURE) {
-                    // that did go wrong
-                    return FAILURE;
-                } else {
-                    // all good!
-                    return SUCCESS;
-                }
+                return uploadAllShows();
             }
 
             // are any of the local shows already on Hexagon?
@@ -316,12 +340,33 @@ public class CloudSetupFragment extends SherlockFragment {
             pruneShowsAlreadyOnHexagon(showsLocal, showsRemote);
             if (showsLocal.size() == showsLocalCount) {
                 // none of the local shows are on Hexagon, upload all
-                if (ShowTools.Upload.showsAll(mContext) == -1) {
+                if (ShowTools.Upload.showsAll(mContext) == ShowTools.Upload.FAILURE) {
                     // that did go wrong
                     return FAILURE;
                 } else {
                     // good, now download the other shows from hexagon
                     return SYNC_REQUIRED;
+                }
+            }
+
+            // user intervention required on duplicates?
+            if (mIsDecidingOnDuplicates) {
+                // no, was instructed with decision
+                if (mIsUploadMissing) {
+                    // uploading only shows missing from the cloud
+                    List<Show> showsMissing = ShowTools.Upload
+                            .getSelectedLocalShowsAsList(mContext, showsLocal);
+                    if (ShowTools.Upload.shows(mContext, showsMissing)
+                            == ShowTools.Upload.FAILURE) {
+                        // that did go wrong
+                        return FAILURE;
+                    } else {
+                        // good, now sync the other shows from hexagon
+                        return SYNC_REQUIRED;
+                    }
+                } else {
+                    // upload all, overwriting duplicates in the cloud
+                    return uploadAllShows();
                 }
             }
 
@@ -336,15 +381,21 @@ public class CloudSetupFragment extends SherlockFragment {
             }
         }
 
-        public void setOnFinishedListener(OnSetupFinishedListener listener) {
-            mOnSetupFinishedListener = listener;
-        }
-
         private void pruneShowsAlreadyOnHexagon(HashSet<Integer> showsLocal,
                 List<Show> showsRemote) {
             for (Show show : showsRemote) {
                 // try removing the id
                 showsLocal.remove(show.getTvdbId());
+            }
+        }
+
+        private Integer uploadAllShows() {
+            if (ShowTools.Upload.showsAll(mContext) == ShowTools.Upload.FAILURE) {
+                // that did go wrong
+                return FAILURE;
+            } else {
+                // all good!
+                return SUCCESS;
             }
         }
     }
@@ -371,13 +422,13 @@ public class CloudSetupFragment extends SherlockFragment {
                     updateViewsStates(false);
                     break;
                 }
-                default:
                 case HexagonSetupTask.SUCCESS:
-                    // nothing to do!
+                    // nothing further to do!
+                    HexagonSettings.setSetupCompleted(getActivity());
                     break;
             }
 
-            setProgressLock(false);
+            setProgressLock(false); // allow new task
         }
     };
 
