@@ -414,6 +414,7 @@ public class CloudSetupFragment extends SherlockFragment {
                     // schedule full sync
                     SgSyncAdapter.requestSync(getActivity(), -1);
                     HexagonSettings.setSetupCompleted(getActivity());
+                    updateViewsStates(false);
                     break;
                 }
                 case HexagonSetupTask.FAILURE: {
@@ -425,6 +426,7 @@ public class CloudSetupFragment extends SherlockFragment {
                 case HexagonSetupTask.SUCCESS:
                     // nothing further to do!
                     HexagonSettings.setSetupCompleted(getActivity());
+                    updateViewsStates(false);
                     break;
             }
 
