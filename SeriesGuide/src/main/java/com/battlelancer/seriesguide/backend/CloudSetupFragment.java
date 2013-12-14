@@ -23,6 +23,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 import com.uwetrottmann.seriesguide.shows.model.Show;
 
@@ -142,7 +143,12 @@ public class CloudSetupFragment extends SherlockFragment {
             mButtonAction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    signIn();
+                    // restrict access to supporters
+                    if (Utils.hasAccessToX(getActivity())) {
+                        signIn();
+                    } else {
+                        Utils.advertiseSubscription(getActivity());
+                    }
                 }
             });
             return;
