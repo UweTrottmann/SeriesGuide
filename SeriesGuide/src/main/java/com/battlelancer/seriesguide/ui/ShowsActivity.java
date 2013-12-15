@@ -275,12 +275,12 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             return true;
         } else if (itemId == R.id.menu_update) {
-            SgSyncAdapter.requestSync(this, 0);
+            SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.UPDATE_TVDB_DELTA, true);
             fireTrackerEvent("Update (outdated)");
 
             return true;
         } else if (itemId == R.id.menu_fullupdate) {
-            SgSyncAdapter.requestSync(this, -1);
+            SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.UPDATE_TVDB_FULL, true);
             fireTrackerEvent("Update (all)");
 
             return true;

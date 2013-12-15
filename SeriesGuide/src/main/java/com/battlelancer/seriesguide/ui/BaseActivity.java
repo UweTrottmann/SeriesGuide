@@ -60,7 +60,7 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
         super.onStart();
         // make sync interfering with backup task less likely
         if (!onAutoBackup()) {
-            SgSyncAdapter.requestSync(this);
+            SgSyncAdapter.requestSyncIfTime(this);
         }
     }
 
