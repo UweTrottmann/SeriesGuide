@@ -16,10 +16,12 @@
 
     <TextView
         android:id="@+id/android:empty"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/empty_view_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:gravity="center"
         android:padding="@dimen/default_padding"
-        android:text="@string/no_results" />
+        android:text="@string/no_results"
+        android:textAppearance="@style/TextAppearance.Light" />
 
 </FrameLayout>

@@ -29,13 +29,15 @@
 
         <TextView
             android:id="@+id/empty"
-            android:layout_width="250dp"
+            android:layout_width="@dimen/empty_view_width"
             android:layout_height="wrap_content"
             android:layout_below="@+id/editTextCheckinSearch"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
+            android:gravity="center"
             android:padding="10dp"
             android:text="@string/checkin_empty"
+            android:textAppearance="@style/TextAppearance.Light"
             android:visibility="gone" />
 
         <GridView
