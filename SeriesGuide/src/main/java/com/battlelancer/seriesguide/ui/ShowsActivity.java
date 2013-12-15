@@ -37,7 +37,6 @@ import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.BuildConfig;
 import com.uwetrottmann.seriesguide.R;
 
@@ -55,6 +54,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -289,11 +289,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
             if (isArtTaskRunning()) {
                 return true;
             }
-            // already fail if there is no external storage
-            if (!AndroidUtils.isExtStorageAvailable()) {
-                Toast.makeText(this, getString(R.string.arttask_nosdcard), Toast.LENGTH_LONG)
-                        .show();
-            } else {
+            if (Utils.isAllowedLargeDataConnection(this, true)) {
                 Toast.makeText(this, getString(R.string.arttask_start), Toast.LENGTH_LONG).show();
                 mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
             }
@@ -339,20 +335,24 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
                 Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[]{
                         Shows.POSTER
                 }, null, null, null);
-
-                // finish fast if there is no image to download
+                if (shows == null) {
+                    return UPDATE_INCOMPLETE;
+                }
                 if (shows.getCount() == 0) {
+                    // there are no shows
                     shows.close();
                     return UPDATE_SUCCESS;
                 }
 
-                mPaths = new ArrayList<String>();
+                // build a list of poster paths
+                mPaths = new ArrayList<>();
                 while (shows.moveToNext()) {
-                    String imagePath = shows.getString(shows.getColumnIndexOrThrow(Shows.POSTER));
-                    if (imagePath.length() != 0) {
+                    String imagePath = shows.getString(0);
+                    if (!TextUtils.isEmpty(imagePath)) {
                         mPaths.add(imagePath);
                     }
                 }
+
                 shows.close();
             }
 
@@ -363,8 +363,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
 
             // try to fetch image for each path
             for (int i = fetchCount.get(); i < count; i++) {
-                if (isCancelled()) {
-                    // code doesn't matter as onPostExecute will not be called
+                if (isCancelled() ||
+                        Utils.isAllowedLargeDataConnection(ShowsActivity.this, false)) {
+                    // cancelled or connection not available any longer
                     return UPDATE_INCOMPLETE;
                 }
 

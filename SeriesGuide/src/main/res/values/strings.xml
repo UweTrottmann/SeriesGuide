@@ -221,7 +221,6 @@
     <string name="menu_updateart">Load posters</string>
     <string name="arttask_incomplete">Some posters did not load, try again later.</string>
     <string name="arttask_start">Loading posters…</string>
-    <string name="arttask_nosdcard">Loading posters requires external storage (SD card).</string>
 
     <!-- Show info -->
     <string name="show_on_network">on %s</string>
