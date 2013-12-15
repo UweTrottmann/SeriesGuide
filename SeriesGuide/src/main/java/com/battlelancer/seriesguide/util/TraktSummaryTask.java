@@ -24,6 +24,7 @@ import com.jakewharton.trakt.entities.Ratings;
 import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.enumerations.Rating;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 import android.content.Context;
@@ -114,7 +115,7 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
         try {
             // decide whether we have a show or an episode
             if (mSeason == -1) {
-                if (Utils.isAllowedLargeDataConnection(mContext, false)) {
+                if (AndroidUtils.isNetworkConnected(mContext)) {
                     // get the shows summary from trakt
                     TvShow entity = getTrakt().showService().summary(mShowTvdbId);
                     if (entity != null) {
@@ -138,7 +139,7 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
                 }
 
                 // on cache miss load the summary from trakt
-                if (entity == null && Utils.isAllowedLargeDataConnection(mContext, false)) {
+                if (entity == null && AndroidUtils.isNetworkConnected(mContext)) {
                     entity = getTrakt().showService()
                             .episodeSummary(mShowTvdbId, mSeason, mEpisode);
                 }
