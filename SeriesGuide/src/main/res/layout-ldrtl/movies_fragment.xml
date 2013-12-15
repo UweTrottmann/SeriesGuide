@@ -38,7 +38,7 @@
         android:src="?attr/drawableCancel" />
 
     <TextView
-        android:id="@+id/empty"
+        android:id="@+id/emptyViewMovieSearch"
         android:layout_width="@dimen/empty_view_width"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

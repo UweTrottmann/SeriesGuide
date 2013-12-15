@@ -64,9 +64,11 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
 
     private static final int CONTEXT_ADD_TO_WATCHLIST_ID = 0;
 
+    private MoviesAdapter mAdapter;
+
     private EditText mSearchBox;
 
-    private MoviesAdapter mAdapter;
+    private TextView mEmptyView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,8 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.movies_fragment, container, false);
+
+        mEmptyView = (TextView) v.findViewById(R.id.emptyViewMovieSearch);
 
         // setup search box
         mSearchBox = (EditText) v.findViewById(R.id.editTextMoviesSearch);
@@ -108,7 +112,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
         GridView list = (GridView) getView().findViewById(R.id.gridViewMovies);
         list.setAdapter(mAdapter);
         list.setOnItemClickListener(this);
-        list.setEmptyView(getView().findViewById(R.id.empty));
+        list.setEmptyView(mEmptyView);
 
         registerForContextMenu(list);
 
@@ -192,6 +196,11 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
 
     @Override
     public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> data) {
+        if (AndroidUtils.isNetworkConnected(getActivity())) {
+            mEmptyView.setText(R.string.movies_empty);
+        } else {
+            mEmptyView.setText(R.string.offline);
+        }
         mAdapter.setData(data);
         getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
     }
