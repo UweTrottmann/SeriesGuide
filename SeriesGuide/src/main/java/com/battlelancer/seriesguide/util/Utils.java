@@ -851,8 +851,10 @@ public class Utils {
      */
     public static boolean isAllowedLargeDataConnection(Context context, boolean showOfflineToast) {
         boolean isConnected;
+        boolean largeDataOverWifiOnly = UpdateSettings.isLargeDataOverWifiOnly(context);
 
-        if (UpdateSettings.isLargeDataOverWifiOnly(context)) {
+        // check connection state
+        if (largeDataOverWifiOnly) {
             isConnected = AndroidUtils.isWifiConnected(context);
         } else {
             isConnected = AndroidUtils.isNetworkConnected(context);
@@ -860,7 +862,9 @@ public class Utils {
 
         // display optional offline toast
         if (showOfflineToast && !isConnected) {
-            Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show();
+            Toast.makeText(context,
+                    largeDataOverWifiOnly ? R.string.offline_no_wifi : R.string.offline,
+                    Toast.LENGTH_LONG).show();
         }
 
         return isConnected;
