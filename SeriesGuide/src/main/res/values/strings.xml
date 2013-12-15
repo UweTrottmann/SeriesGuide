@@ -44,7 +44,7 @@
     <string name="offline_no_wifi">Connect to Wi-Fi or allow all connections, then try again.</string>
     <string name="app_not_available">No app available to handle this.</string>
     <string name="onlyx">Only available with X Subscription</string>
-    <string name="add_empty">There are no shows here or your device has no internet connection.</string>
+    <string name="add_empty">There are no shows here.</string>
 
 
     <!-- Sharing -->
