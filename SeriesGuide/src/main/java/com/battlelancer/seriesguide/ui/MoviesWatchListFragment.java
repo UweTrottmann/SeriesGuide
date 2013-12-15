@@ -43,6 +43,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -55,17 +56,25 @@ public class MoviesWatchListFragment extends SherlockFragment implements
         LoaderCallbacks<List<Movie>>, OnItemClickListener, OnClickListener {
 
     private static final String TAG = "Movie Watchlist";
+
     private static final int LOADER_ID = R.layout.movies_watchlist_fragment;
+
     private static final int CONTEXT_REMOVE_ID = 0;
+
     private MoviesWatchListAdapter mAdapter;
+
     private GridView mGridView;
 
+    private TextView mEmptyView;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.movies_watchlist_fragment, container, false);
 
         mGridView = (GridView) v.findViewById(R.id.gridViewMoviesWatchlist);
-        mGridView.setEmptyView(v.findViewById(R.id.textViewMoviesWatchlistEmpty));
+        mEmptyView = (TextView) v.findViewById(R.id.textViewMoviesWatchlistEmpty);
+        mGridView.setEmptyView(mEmptyView);
         mGridView.setOnItemClickListener(this);
 
         return v;
@@ -126,7 +135,7 @@ public class MoviesWatchListFragment extends SherlockFragment implements
                 AndroidUtils.executeAsyncTask(
                         new TraktTask(getActivity(), null)
                                 .unwatchlistMovie(Integer.valueOf(movie.tmdbId)),
-                        new Void[] {});
+                        new Void[]{});
                 fireTrackerEvent("Remove from watchlist");
                 return true;
             }
@@ -157,6 +166,11 @@ public class MoviesWatchListFragment extends SherlockFragment implements
 
     @Override
     public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> data) {
+        if (AndroidUtils.isNetworkConnected(getActivity())) {
+            mEmptyView.setText(R.string.movies_watchlist_empty);
+        } else {
+            mEmptyView.setText(R.string.offline);
+        }
         mAdapter.setData(data);
     }
 

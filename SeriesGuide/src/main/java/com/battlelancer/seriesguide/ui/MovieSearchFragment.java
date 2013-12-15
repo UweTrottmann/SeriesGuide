@@ -51,18 +51,21 @@ import android.widget.TextView.OnEditorActionListener;
 import java.util.List;
 
 /**
- * Allows searching for movies on themoviedb.org, displays results in a nice
- * grid.
+ * Allows searching for movies on themoviedb.org, displays results in a nice grid.
  */
 public class MovieSearchFragment extends SherlockFragment implements OnEditorActionListener,
         LoaderCallbacks<List<Movie>>, OnItemClickListener, OnClickListener {
 
     private static final String SEARCH_QUERY_KEY = "search_query";
+
     private static final int LOADER_ID = R.layout.movies_fragment;
+
     protected static final String TAG = "Movies Search";
+
     private static final int CONTEXT_ADD_TO_WATCHLIST_ID = 0;
 
     private EditText mSearchBox;
+
     private MoviesAdapter mAdapter;
 
     @Override
@@ -73,7 +76,8 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.movies_fragment, container, false);
 
         // setup search box
@@ -144,7 +148,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
                     AndroidUtils.executeAsyncTask(
                             new TraktTask(getActivity(), null)
                                     .watchlistMovie(movie.id),
-                            new Void[] {});
+                            new Void[]{});
                 }
                 fireTrackerEvent("Add to watchlist");
                 return true;
