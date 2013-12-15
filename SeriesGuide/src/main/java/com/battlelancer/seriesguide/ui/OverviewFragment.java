@@ -395,7 +395,7 @@ public class OverviewFragment extends SherlockFragment implements
         public Cursor loadInBackground() {
             // get episode id, set query params
             int episodeId = (int) DBUtils.updateLatestEpisode(getContext(), mShowTvdbId);
-            setUri(Episodes.buildEpisodeWithShowUri(String.valueOf(episodeId)));
+            setUri(Episodes.buildEpisodeUri(episodeId));
 
             return super.loadInBackground();
         }
@@ -405,45 +405,42 @@ public class OverviewFragment extends SherlockFragment implements
     interface EpisodeQuery {
 
         String[] PROJECTION = new String[]{
-                Tables.EPISODES + "." + Episodes._ID, Shows.REF_SHOW_ID, Episodes.OVERVIEW,
-                Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIREDMS,
-                Episodes.GUESTSTARS, Tables.EPISODES + "." + Episodes.RATING,
-                Episodes.IMAGE, Episodes.DVDNUMBER, Episodes.TITLE, Seasons.REF_SEASON_ID,
-                Episodes.COLLECTED, Episodes.IMDBID, Episodes.ABSOLUTE_NUMBER
+                Episodes._ID, Episodes.OVERVIEW, Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED,
+                Episodes.FIRSTAIREDMS, Episodes.GUESTSTARS, Episodes.RATING, Episodes.IMAGE,
+                Episodes.DVDNUMBER, Episodes.TITLE, Seasons.REF_SEASON_ID, Episodes.COLLECTED,
+                Episodes.IMDBID, Episodes.ABSOLUTE_NUMBER
 
         };
 
         int _ID = 0;
 
-        int REF_SHOW_ID = 1;
+        int OVERVIEW = 1;
 
-        int OVERVIEW = 2;
+        int NUMBER = 2;
 
-        int NUMBER = 3;
+        int SEASON = 3;
 
-        int SEASON = 4;
+        int WATCHED = 4;
 
-        int WATCHED = 5;
+        int FIRSTAIREDMS = 5;
 
-        int FIRSTAIREDMS = 6;
+        int GUESTSTARS = 6;
 
-        int GUESTSTARS = 7;
+        int RATING = 7;
 
-        int RATING = 8;
+        int IMAGE = 8;
 
-        int IMAGE = 9;
+        int DVDNUMBER = 9;
 
-        int DVDNUMBER = 10;
+        int TITLE = 10;
 
-        int TITLE = 11;
+        int REF_SEASON_ID = 11;
 
-        int REF_SEASON_ID = 12;
+        int COLLECTED = 12;
 
-        int COLLECTED = 13;
+        int IMDBID = 13;
 
-        int IMDBID = 14;
-
-        int ABSOLUTE_NUMBER = 15;
+        int ABSOLUTE_NUMBER = 14;
 
     }
 
