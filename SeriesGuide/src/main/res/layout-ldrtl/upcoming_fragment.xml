@@ -18,11 +18,12 @@
 
     <TextView
         android:id="@+id/emptyViewUpcoming"
-        android:layout_width="200dp"
+        android:layout_width="@dimen/empty_view_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
         android:padding="10dp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:textAppearance="@style/TextAppearance.Light" />
 
 </FrameLayout>

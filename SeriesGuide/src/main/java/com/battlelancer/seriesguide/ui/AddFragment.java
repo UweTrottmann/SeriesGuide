@@ -40,16 +40,17 @@ import com.uwetrottmann.seriesguide.R;
 import java.util.List;
 
 /**
- * Super class for fragments displaying a list of shows and allowing to add them
- * to the database.
+ * Super class for fragments displaying a list of shows and allowing to add them to the database.
  */
-public class AddFragment extends SherlockFragment {
+public abstract class AddFragment extends SherlockFragment {
 
     protected List<SearchResult> mSearchResults;
 
     protected AddAdapter mAdapter;
 
     protected GridView mGrid;
+
+    private TextView mEmptyView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,15 +65,22 @@ public class AddFragment extends SherlockFragment {
 
         // basic setup of grid view
         mGrid = (GridView) getView().findViewById(android.R.id.list);
-        View emptyView = getView().findViewById(android.R.id.empty);
-        if (emptyView != null) {
-            mGrid.setEmptyView(emptyView);
+        mEmptyView = (TextView) getView().findViewById(R.id.emptyViewAdd);
+        if (mEmptyView != null) {
+            mGrid.setEmptyView(mEmptyView);
         }
 
         // restore an existing adapter
         if (mAdapter != null) {
             mGrid.setAdapter(mAdapter);
         }
+    }
+
+    /**
+     * Changes the empty message.
+     */
+    protected void setEmptyMessage(int stringResourceId) {
+        mEmptyView.setText(stringResourceId);
     }
 
     @TargetApi(11)

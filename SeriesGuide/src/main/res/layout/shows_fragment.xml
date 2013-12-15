@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/emptyViewShows"
-        android:layout_width="200dp"
+        android:layout_width="@dimen/empty_view_width"
         android:layout_height="200dp"
         android:layout_gravity="center"
         android:drawableTop="?attr/drawableAddIcon"
@@ -14,11 +14,12 @@
         android:paddingBottom="70dp"
         android:paddingTop="70dp"
         android:text="@string/action_shows_add"
+        android:textAppearance="@style/TextAppearance.Light"
         android:visibility="gone" />
 
     <TextView
         android:id="@+id/emptyViewShowsFilter"
-        android:layout_width="200dp"
+        android:layout_width="@dimen/empty_view_width"
         android:layout_height="200dp"
         android:layout_gravity="center"
         android:drawableTop="?attr/drawableFilter"
@@ -26,6 +27,7 @@
         android:paddingBottom="70dp"
         android:paddingTop="70dp"
         android:text="@string/empty_filter"
+        android:textAppearance="@style/TextAppearance.Light"
         android:visibility="gone" />
 
     <GridView

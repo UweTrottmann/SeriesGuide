@@ -38,13 +38,15 @@
         android:src="?attr/drawableCancel" />
 
     <TextView
-        android:id="@+id/empty"
-        android:layout_width="wrap_content"
+        android:id="@+id/emptyViewMovieSearch"
+        android:layout_width="@dimen/empty_view_width"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:gravity="center"
         android:drawableTop="?attr/drawableArrowUp"
         android:padding="10dp"
         android:text="@string/movies_empty"
+        android:textAppearance="@style/TextAppearance.Light"
         android:visibility="gone" />
 
     <GridView

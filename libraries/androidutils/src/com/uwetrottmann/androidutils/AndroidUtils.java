@@ -85,16 +85,13 @@ public class AndroidUtils {
     }
 
     /**
-     * Whether there is any network with a usable connection.
+     * Whether there is any network connected.
      */
     public static boolean isNetworkConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        if (activeNetworkInfo != null) {
-            return activeNetworkInfo.isConnected();
-        }
-        return false;
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -107,17 +104,14 @@ public class AndroidUtils {
     }
 
     /**
-     * Whether WiFi has an active, usable connection.
+     * Whether there is an active WiFi connection.
      */
     public static boolean isWifiConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiNetworkInfo = connectivityManager
                 .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (wifiNetworkInfo != null) {
-            return wifiNetworkInfo.isConnected();
-        }
-        return false;
+        return wifiNetworkInfo != null && wifiNetworkInfo.isConnected();
     }
 
     /**

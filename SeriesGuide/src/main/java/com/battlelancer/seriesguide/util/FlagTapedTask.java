@@ -20,6 +20,7 @@ package com.battlelancer.seriesguide.util;
 import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
 import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
 import com.jakewharton.trakt.services.ShowService;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.Context;
 import android.os.Handler;
@@ -69,7 +70,7 @@ public class FlagTapedTask {
             @Override
             public void run() {
                 // do not even try if we are offline
-                if (!Utils.isAllowedConnection(mContext)) {
+                if (!AndroidUtils.isNetworkConnected(mContext)) {
                     postFailure(true);
                     return;
                 }
