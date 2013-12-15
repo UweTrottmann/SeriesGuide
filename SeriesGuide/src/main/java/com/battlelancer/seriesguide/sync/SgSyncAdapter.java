@@ -17,6 +17,7 @@ import com.battlelancer.thetvdbapi.TheTVDB;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Activity;
 import com.jakewharton.trakt.entities.ActivityItem;
+import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.jakewharton.trakt.enumerations.ActivityType;
@@ -454,6 +455,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 List<TvShowEpisode> episodes = item.episodes;
                 int season = -1;
                 int number = -1;
+                TvShowEpisode highestEpisode = null;
                 for (TvShowEpisode episode : episodes) {
                     if (episode == null) {
                         continue;
@@ -461,13 +463,14 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     if (episode.season > season || episode.number > number) {
                         season = episode.season;
                         number = episode.number;
+                        highestEpisode = episode;
                     }
-                    addEpisodeSeenUpdateOp(batch, episode, item.show.tvdb_id);
+                    addEpisodeSeenUpdateOp(batch, episode);
                 }
 
                 // set highest season + number combo as last watched
-                if (season != -1 && number != -1) {
-                    addLastWatchedUpdateOp(context, batch, season, number, item.show.tvdb_id);
+                if (highestEpisode != null) {
+                    addLastWatchedUpdateOp(batch, item.show, highestEpisode);
                 }
 
                 break;
@@ -479,9 +482,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 }
                 // checkin and scrobble use a single episode
                 TvShowEpisode episode = item.episode;
-                addEpisodeSeenUpdateOp(batch, episode, item.show.tvdb_id);
-                addLastWatchedUpdateOp(context, batch, episode.season, episode.number,
-                        item.show.tvdb_id);
+                addEpisodeSeenUpdateOp(batch, episode);
+                addLastWatchedUpdateOp(batch, item.show, episode);
                 break;
             }
             case Collection: {
@@ -495,7 +497,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     if (episode == null) {
                         continue;
                     }
-                    addEpisodeCollectedUpdateOp(batch, episode, item.show.tvdb_id);
+                    addEpisodeCollectedUpdateOp(batch, episode);
                 }
                 break;
             }
@@ -508,47 +510,28 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Helper method to build update to flag an episode watched.
      */
     private static void addEpisodeSeenUpdateOp(final ArrayList<ContentProviderOperation> batch,
-            TvShowEpisode episode, int showTvdbId) {
-        batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodesOfShowUri(showTvdbId))
-                .withSelection(Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[]{
-                        String.valueOf(episode.number), String.valueOf(episode.season)
-                }).withValue(Episodes.WATCHED, EpisodeFlags.WATCHED).build());
+            TvShowEpisode episode) {
+        batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodeUri(episode.tvdb_id))
+                .withValue(Episodes.WATCHED, EpisodeFlags.WATCHED).build());
     }
 
     /**
      * Helper method to build update to flag an episode collected.
      */
     private static void addEpisodeCollectedUpdateOp(ArrayList<ContentProviderOperation> batch,
-            TvShowEpisode episode, int showTvdbId) {
-        batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodesOfShowUri(showTvdbId))
-                .withSelection(Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[]{
-                        String.valueOf(episode.number), String.valueOf(episode.season)
-                }).withValue(Episodes.COLLECTED, true).build());
+            TvShowEpisode episode) {
+        batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodeUri(episode.tvdb_id))
+                .withValue(Episodes.COLLECTED, true).build());
     }
 
     /**
-     * Queries for an episode id and adds a content provider op to set it as last watched for the
-     * given show.
+     * Adds a content provider op to set the episode TVDb id as last watched for the given show.
      */
-    private static void addLastWatchedUpdateOp(Context context,
-            ArrayList<ContentProviderOperation> batch, int season, int number, int showTvdbId) {
-        // query for the episode id
-        final Cursor episode = context.getContentResolver().query(
-                Episodes.buildEpisodesOfShowUri(showTvdbId),
-                new String[]{
-                        Episodes._ID
-                }, Episodes.SEASON + "=" + season + " AND "
-                + Episodes.NUMBER + "=" + number, null, null);
-
+    private static void addLastWatchedUpdateOp(ArrayList<ContentProviderOperation> batch,
+            TvShow show, TvShowEpisode episode) {
         // store the episode id as last watched for the given show
-        if (episode != null) {
-            if (episode.moveToFirst()) {
-                batch.add(ContentProviderOperation.newUpdate(Shows.buildShowUri(showTvdbId))
-                        .withValue(Shows.LASTWATCHEDID, episode.getInt(0)).build());
-            }
-
-            episode.close();
-        }
+        batch.add(ContentProviderOperation.newUpdate(Shows.buildShowUri(show.tvdb_id))
+                .withValue(Shows.LASTWATCHEDID, episode.tvdb_id).build());
     }
 
 }
