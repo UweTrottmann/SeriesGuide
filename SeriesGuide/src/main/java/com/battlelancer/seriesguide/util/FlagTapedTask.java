@@ -69,7 +69,7 @@ public class FlagTapedTask {
             @Override
             public void run() {
                 // do not even try if we are offline
-                if (!Utils.isAllowedConnection(mContext)) {
+                if (!Utils.isAllowedLargeDataConnection(mContext, false)) {
                     postFailure(true);
                     return;
                 }

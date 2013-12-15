@@ -101,8 +101,8 @@ public class Utils {
             Locale.US);
 
     /**
-     * Parse a shows TVDb air time value to a ms value in Pacific Standard Time
-     * (always without daylight saving).
+     * Parse a shows TVDb air time value to a ms value in Pacific Standard Time (always without
+     * daylight saving).
      */
     public static long parseTimeToMilliseconds(String tvdbTimeString) {
         Date time = null;
@@ -145,15 +145,14 @@ public class Utils {
     }
 
     /**
-     * Parse a shows airtime ms value to an actual time. If given a TVDb day
-     * string the day will get determined, too, all respecting user settings
-     * like time zone and time offset.
+     * Parse a shows airtime ms value to an actual time. If given a TVDb day string the day will get
+     * determined, too, all respecting user settings like time zone and time offset.
      */
     public static String[] parseMillisecondsToTime(long milliseconds, String dayofweek,
             Context context) {
         // return empty strings if time is missing
         if (context == null || milliseconds == -1) {
-            return new String[] {
+            return new String[]{
                     "", ""
             };
         }
@@ -208,16 +207,15 @@ public class Utils {
             daystring = dayFormat.format(date);
         }
 
-        return new String[] {
+        return new String[]{
                 timeFormat.format(date), daystring
         };
     }
 
     /**
-     * Returns the Calendar constant (e.g. <code>Calendar.SUNDAY</code>) for a
-     * given TVDb airday string (Monday through Sunday and Daily). If no match
-     * is found -1 will be returned.
-     * 
+     * Returns the Calendar constant (e.g. <code>Calendar.SUNDAY</code>) for a given TVDb airday
+     * string (Monday through Sunday and Daily). If no match is found -1 will be returned.
+     *
      * @param day TVDb day string
      */
     private static int getDayOfWeek(String day) {
@@ -241,9 +239,8 @@ public class Utils {
     }
 
     /**
-     * Returns an array with absolute time [0], day [1] and relative time [2] of
-     * the given millisecond time. Respects user offsets and 'Use my time zone'
-     * setting.
+     * Returns an array with absolute time [0], day [1] and relative time [2] of the given
+     * millisecond time. Respects user offsets and 'Use my time zone' setting.
      */
     public static String[] formatToTimeAndDay(long airtime, Context context) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -264,16 +261,15 @@ public class Utils {
                 .getRelativeTimeSpanString(cal.getTimeInMillis(), System.currentTimeMillis(),
                         DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString();
 
-        return new String[] {
+        return new String[]{
                 absoluteTime, day, relativeTime
         };
     }
 
     /**
-     * Returns a string like 'Mon in 3 days', the day followed by how far it is
-     * away in relative time.<br>
-     * Does <b>not</b> respect user offsets or 'Use my time zone' setting. The
-     * time to be passed is expected to be already corrected for that.
+     * Returns a string like 'Mon in 3 days', the day followed by how far it is away in relative
+     * time.<br> Does <b>not</b> respect user offsets or 'Use my time zone' setting. The time to be
+     * passed is expected to be already corrected for that.
      */
     public static String formatToDayAndTimeWithoutOffsets(Context context, long airtime) {
         StringBuilder timeAndDay = new StringBuilder();
@@ -302,8 +298,8 @@ public class Utils {
     }
 
     /**
-     * Return date string of the given time, prefixed with the actual day of the
-     * week (e.g. 'Mon, ') or 'today, ' if applicable.
+     * Return date string of the given time, prefixed with the actual day of the week (e.g. 'Mon, ')
+     * or 'today, ' if applicable.
      */
     public static String formatToDate(long airtime, Context context) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -328,8 +324,8 @@ public class Utils {
     }
 
     /**
-     * Create a calendar set to the given airtime, time is adjusted according to
-     * 'Use my time zone', 'Time Offset' settings and user time zone.
+     * Create a calendar set to the given airtime, time is adjusted according to 'Use my time zone',
+     * 'Time Offset' settings and user time zone.
      */
     public static Calendar getAirtimeCalendar(long airtime, final SharedPreferences prefs) {
         Calendar cal = Calendar.getInstance();
@@ -358,7 +354,8 @@ public class Utils {
                 // for US Central subtract one hour more
                 // shows always air an hour earlier
                 offset -= 3;
-            } else if (tzId.equals(TIMEZONE_US_EASTERN) || tzId.equals(TIMEZONE_US_EASTERN_DETROIT)) {
+            } else if (tzId.equals(TIMEZONE_US_EASTERN) || tzId
+                    .equals(TIMEZONE_US_EASTERN_DETROIT)) {
                 offset -= 3;
             } else if (tzId.equals(TIMEZONE_US_ARIZONA)) {
                 // Arizona has no daylight saving, correct for that
@@ -382,18 +379,19 @@ public class Utils {
     }
 
     /**
-     * To correctly display and calculate upcoming episodes we need to modify
-     * the current time to be later/earlier. Also respecting user-set offsets.
+     * To correctly display and calculate upcoming episodes we need to modify the current time to be
+     * later/earlier. Also respecting user-set offsets.
      */
     public static long getFakeCurrentTime(SharedPreferences prefs) {
         return convertToFakeTime(System.currentTimeMillis(), prefs, true);
     }
 
     /**
-     * Modify a time to be earlier/later respecting user-set offsets and
-     * automatic offsets based on time zone.
+     * Modify a time to be earlier/later respecting user-set offsets and automatic offsets based on
+     * time zone.
      */
-    public static long convertToFakeTime(long time, SharedPreferences prefs, boolean isCurrentTime) {
+    public static long convertToFakeTime(long time, SharedPreferences prefs,
+            boolean isCurrentTime) {
         boolean pacificInDaylight = TimeZone.getTimeZone(TIMEZONE_US_PACIFIC).inDaylightTime(
                 new Date(time));
 
@@ -408,7 +406,8 @@ public class Utils {
                 // for US Central subtract one hour more
                 // shows always air an hour earlier
                 offset -= 3;
-            } else if (tzId.equals(TIMEZONE_US_EASTERN) || tzId.equals(TIMEZONE_US_EASTERN_DETROIT)) {
+            } else if (tzId.equals(TIMEZONE_US_EASTERN) || tzId
+                    .equals(TIMEZONE_US_EASTERN_DETROIT)) {
                 // Eastern Time
                 offset -= 3;
             } else if (tzId.equals(TIMEZONE_US_ARIZONA)) {
@@ -469,8 +468,7 @@ public class Utils {
     }
 
     /**
-     * Returns a string in format "1x01 title" or "S1E01 title" dependent on a
-     * user preference.
+     * Returns a string in format "1x01 title" or "S1E01 title" dependent on a user preference.
      */
     public static String getNextEpisodeString(Context context, int season, int episode,
             String title) {
@@ -480,8 +478,8 @@ public class Utils {
     }
 
     /**
-     * Returns the episode number formatted according to the users preference
-     * (e.g. '1x01', 'S01E01', ...).
+     * Returns the episode number formatted according to the users preference (e.g. '1x01',
+     * 'S01E01', ...).
      */
     public static String getEpisodeNumber(Context context, int season, int episode) {
         String format = DisplaySettings.getNumberFormat(context);
@@ -514,8 +512,8 @@ public class Utils {
     }
 
     /**
-     * Splits the string and reassembles it, separating the items with commas.
-     * The given object is returned with the new string.
+     * Splits the string and reassembles it, separating the items with commas. The given object is
+     * returned with the new string.
      */
     public static String splitAndKitTVDBStrings(String tvdbstring) {
         if (tvdbstring == null) {
@@ -549,6 +547,7 @@ public class Utils {
     }
 
     public static class UpdateLatestEpisodeThread extends Thread {
+
         private Context mContext;
 
         private int mShowTvdbId;
@@ -570,13 +569,14 @@ public class Utils {
 
             if (mShowTvdbId > 0) {
                 // update single show
-                DBUtils.updateLatestEpisode(mContext, mShowTvdbId, isNoReleasedEpisodes, isNoSpecials,
+                DBUtils.updateLatestEpisode(mContext, mShowTvdbId, isNoReleasedEpisodes,
+                        isNoSpecials,
                         prefs);
             } else {
                 // update all shows
                 final Cursor shows = mContext.getContentResolver().query(Shows.CONTENT_URI,
-                        new String[] {
-                            Shows._ID
+                        new String[]{
+                                Shows._ID
                         }, null, null, null);
                 if (shows != null) {
                     while (shows.moveToNext()) {
@@ -606,8 +606,7 @@ public class Utils {
     }
 
     /**
-     * Put the TVDb season number in, get a full 'Season X' or 'Special
-     * Episodes' string out.
+     * Put the TVDb season number in, get a full 'Season X' or 'Special Episodes' string out.
      */
     public static String getSeasonString(Context context, int seasonNumber) {
         if (seasonNumber == 0) {
@@ -618,8 +617,7 @@ public class Utils {
     }
 
     /**
-     * Run the notification service to display and (re)schedule upcoming episode
-     * alarms.
+     * Run the notification service to display and (re)schedule upcoming episode alarms.
      */
     public static void runNotificationService(Context context) {
         Intent i = new Intent(context, NotificationService.class);
@@ -627,8 +625,8 @@ public class Utils {
     }
 
     /**
-     * Run the notification service delayed by a minute to display and
-     * (re)schedule upcoming episode alarms.
+     * Run the notification service delayed by a minute to display and (re)schedule upcoming episode
+     * alarms.
      */
     public static void runNotificationServiceDelayed(Context context) {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -679,8 +677,8 @@ public class Utils {
     }
 
     /**
-     * Returns whether a regular check with the Google Play app is necessary to
-     * determine access to X features (e.g. the subscription is still valid).
+     * Returns whether a regular check with the Google Play app is necessary to determine access to
+     * X features (e.g. the subscription is still valid).
      */
     public static boolean requiresPurchaseCheck(Context context) {
         // dev builds and the SeriesGuide X key app are not handled through the
@@ -706,8 +704,8 @@ public class Utils {
     }
 
     /**
-     * Returns true if the user has the legacy SeriesGuide X version installed,
-     * signed with the same key as we are.
+     * Returns true if the user has the legacy SeriesGuide X version installed, signed with the same
+     * key as we are.
      */
     public static boolean hasUnlockKeyInstalled(Context context) {
         try {
@@ -767,7 +765,8 @@ public class Utils {
 
     @TargetApi(16)
     @SuppressWarnings("deprecation")
-    public static void setPosterBackground(ImageView background, String posterPath, Context context) {
+    public static void setPosterBackground(ImageView background, String posterPath,
+            Context context) {
         if (AndroidUtils.isJellyBeanOrHigher()) {
             background.setImageAlpha(30);
         } else {
@@ -777,8 +776,7 @@ public class Utils {
     }
 
     /**
-     * Sets the global app theme variable. Applied by all activities once they
-     * are created.
+     * Sets the global app theme variable. Applied by all activities once they are created.
      */
     public static synchronized void updateTheme(String themeIndex) {
         int theme = Integer.valueOf(themeIndex);
@@ -805,8 +803,7 @@ public class Utils {
     }
 
     /**
-     * Tracks an exception using the Google Analytics {@link EasyTracker} and
-     * the local log.
+     * Tracks an exception using the Google Analytics {@link EasyTracker} and the local log.
      */
     public static void trackExceptionAndLog(Context context, String tag, Exception e) {
         trackException(context, tag, e);
@@ -846,20 +843,32 @@ public class Utils {
     }
 
     /**
-     * Returns true if we are on a user-permitted and connected internet
-     * connection.
+     * Returns true if there is an active connection which is approved by the user for large data
+     * downloads (e.g. images).
+     *
+     * @param showOfflineToast If true, displays a toast informing the user if there is no network
+     *                         connection.
      */
-    public static boolean isAllowedConnection(Context context) {
-        if (UpdateSettings.isOnlyUpdateOverWifi(context)) {
-            return AndroidUtils.isWifiConnected(context);
+    public static boolean isAllowedLargeDataConnection(Context context, boolean showOfflineToast) {
+        boolean isConnected;
+
+        if (UpdateSettings.isLargeDataOverWifiOnly(context)) {
+            isConnected = AndroidUtils.isWifiConnected(context);
         } else {
-            return AndroidUtils.isNetworkConnected(context);
+            isConnected = AndroidUtils.isNetworkConnected(context);
         }
+
+        // display optional offline toast
+        if (showOfflineToast && !isConnected) {
+            Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show();
+        }
+
+        return isConnected;
     }
 
     /**
-     * Launches {@link BillingActivity} and notifies that something is only
-     * available with the X subscription.
+     * Launches {@link BillingActivity} and notifies that something is only available with the X
+     * subscription.
      */
     public static void advertiseSubscription(Context context) {
         Toast.makeText(context, R.string.onlyx, Toast.LENGTH_SHORT).show();
@@ -867,15 +876,12 @@ public class Utils {
     }
 
     /**
-     * Calls {@link Context#startActivity(Intent)} with the given
-     * <b>implicit</b> {@link Intent} after making sure there is an
-     * {@link Activity} to handle it. Can show an error toast, if not. <br>
-     * <br>
-     * This may happen if e.g. the web browser has been disabled through
-     * restricted profiles.
-     * 
-     * @return Whether there was an {@link Activity} to handle the given
-     *         {@link Intent}.
+     * Calls {@link Context#startActivity(Intent)} with the given <b>implicit</b> {@link Intent}
+     * after making sure there is an {@link Activity} to handle it. Can show an error toast, if not.
+     * <br> <br> This may happen if e.g. the web browser has been disabled through restricted
+     * profiles.
+     *
+     * @return Whether there was an {@link Activity} to handle the given {@link Intent}.
      */
     public static boolean tryStartActivity(Context context, Intent intent, boolean displayError) {
         if (intent.resolveActivity(context.getPackageManager()) != null) {

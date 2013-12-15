@@ -669,7 +669,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
         // prepare trakt stuff
         if (mIsTraktInvolved) {
-            if (!Utils.isAllowedConnection(mContext)) {
+            if (!Utils.isAllowedLargeDataConnection(mContext, false)) {
                 return -1;
             }
 

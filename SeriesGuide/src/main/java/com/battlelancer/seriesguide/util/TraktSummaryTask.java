@@ -114,7 +114,7 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
         try {
             // decide whether we have a show or an episode
             if (mSeason == -1) {
-                if (Utils.isAllowedConnection(mContext)) {
+                if (Utils.isAllowedLargeDataConnection(mContext, false)) {
                     // get the shows summary from trakt
                     TvShow entity = getTrakt().showService().summary(mShowTvdbId);
                     if (entity != null) {
@@ -138,7 +138,7 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
                 }
 
                 // on cache miss load the summary from trakt
-                if (entity == null && Utils.isAllowedConnection(mContext)) {
+                if (entity == null && Utils.isAllowedLargeDataConnection(mContext, false)) {
                     entity = getTrakt().showService()
                             .episodeSummary(mShowTvdbId, mSeason, mEpisode);
                 }

@@ -77,7 +77,7 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
 
         } else {
             // abort if we are cancelled or have no connection
-            if (isCancelled() || !Utils.isAllowedConnection(mContext)) {
+            if (isCancelled() || !Utils.isAllowedLargeDataConnection(mContext, false)) {
                 return null;
             }
 
