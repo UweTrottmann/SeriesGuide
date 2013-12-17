@@ -21,6 +21,7 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
+import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -345,7 +346,7 @@ public class CloudSetupFragment extends SherlockFragment {
             pruneShowsAlreadyOnHexagon(showsLocal, showsRemote);
             if (showsLocal.size() == showsLocalCount) {
                 // none of the local shows are on Hexagon, upload all
-                if (ShowTools.Upload.showsAll(mContext) == ShowTools.Upload.FAILURE) {
+                if (ShowTools.Upload.showsAll(mContext) == Result.ERROR) {
                     // that did go wrong
                     return FAILURE;
                 } else {
@@ -365,8 +366,7 @@ public class CloudSetupFragment extends SherlockFragment {
                     // uploading only shows missing from the cloud
                     List<Show> showsMissing = ShowTools.Upload
                             .getSelectedLocalShowsAsList(mContext, showsLocal);
-                    if (ShowTools.Upload.shows(mContext, showsMissing)
-                            == ShowTools.Upload.FAILURE) {
+                    if (ShowTools.Upload.shows(mContext, showsMissing) == Result.ERROR) {
                         // that did go wrong
                         return FAILURE;
                     } else {
@@ -399,7 +399,7 @@ public class CloudSetupFragment extends SherlockFragment {
         }
 
         private Integer uploadAllShows() {
-            if (ShowTools.Upload.showsAll(mContext) == ShowTools.Upload.FAILURE) {
+            if (ShowTools.Upload.showsAll(mContext) == Result.ERROR) {
                 // that did go wrong
                 return FAILURE;
             } else {

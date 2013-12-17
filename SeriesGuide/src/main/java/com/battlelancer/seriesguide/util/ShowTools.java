@@ -6,6 +6,7 @@ import com.google.api.client.json.jackson.JacksonFactory;
 
 import com.battlelancer.seriesguide.backend.CloudEndpointUtils;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
+import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract;
@@ -75,12 +76,12 @@ public class ShowTools {
      * Removes a show and its seasons and episodes, including all images. Sends isRemoved flag to
      * Hexagon.
      *
-     * @return One of {@link com.battlelancer.seriesguide.enums.Result}.
+     * @return One of {@link com.battlelancer.seriesguide.enums.NetworkResult}.
      */
     public int removeShow(int showTvdbId) {
         if (isSignedIn()) {
             if (!AndroidUtils.isNetworkConnected(mContext)) {
-                return Result.OFFLINE;
+                return NetworkResult.OFFLINE;
             }
             // send to cloud
             sendIsRemoved(showTvdbId, true);
@@ -98,7 +99,7 @@ public class ShowTools {
         }, null, null, null);
         if (episodes == null) {
             // failed
-            return Result.GENERIC_ERROR;
+            return Result.ERROR;
         }
         List<String> episodeTvdbIds = new LinkedList<>(); // need those for search entries
         while (episodes.moveToNext()) {
@@ -118,7 +119,7 @@ public class ShowTools {
                 }, null, null, null);
         if (show == null || !show.moveToFirst()) {
             // failed
-            return Result.GENERIC_ERROR;
+            return Result.ERROR;
         }
         String posterPath = show.getString(0);
         if (!TextUtils.isEmpty(posterPath)) {
@@ -262,19 +263,15 @@ public class ShowTools {
 
     public static class Upload {
 
-        public static final int SUCCESS = 0;
-
-        public static final int FAILURE = -1;
-
         private static final String TAG = "ShowTools.Upload";
 
         /**
          * Tries to upload the given list of shows to Hexagon.
          *
-         * @return 0 if successful, -1 if something went wrong.
+         * @return One of {@link com.battlelancer.seriesguide.enums.Result}.
          */
         public static int shows(Context context, List<Show> shows) {
-            int resultCode = SUCCESS;
+            int resultCode = Result.SUCCESS;
 
             // wrap into helper object
             ShowList showList = new ShowList();
@@ -287,7 +284,7 @@ public class ShowTools {
                 ShowTools.get(context).mShowsService.save(showList).execute();
             } catch (IOException e) {
                 Utils.trackExceptionAndLog(context, TAG, e);
-                resultCode = FAILURE;
+                resultCode = Result.ERROR;
             }
 
             Log.d(TAG, "Uploading show(s)...DONE");

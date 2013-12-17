@@ -148,7 +148,7 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
         protected void onPostExecute(Integer result) {
             if (result == Result.OFFLINE) {
                 Toast.makeText(mContext, R.string.offline, Toast.LENGTH_LONG).show();
-            } else if (result == Result.GENERIC_ERROR) {
+            } else if (result == Result.ERROR) {
                 Toast.makeText(mContext, R.string.delete_error, Toast.LENGTH_LONG).show();
             }
             // hide progress dialog

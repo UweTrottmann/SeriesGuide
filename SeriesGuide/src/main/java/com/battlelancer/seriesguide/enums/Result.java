@@ -1,11 +1,12 @@
 package com.battlelancer.seriesguide.enums;
 
+/**
+ * Basic success or error result.
+ */
 public interface Result {
 
     public int SUCCESS = 0;
 
-    public int GENERIC_ERROR = -1;
-
-    public int OFFLINE = -2;
+    public int ERROR = -1;
 
 }
