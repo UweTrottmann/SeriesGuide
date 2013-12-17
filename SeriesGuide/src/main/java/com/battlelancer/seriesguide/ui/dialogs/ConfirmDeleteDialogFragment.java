@@ -17,21 +17,25 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.widget.Toast;
 
 /**
  * Handles removing a show from the show list, ensures it can be removed (its seasons or episodes or
@@ -110,19 +114,47 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
                     getString(R.string.delete_show), new OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    final ProgressDialog progress = new ProgressDialog(getActivity());
-                    progress.setCancelable(false);
-                    progress.show();
-
-                    new Thread(new Runnable() {
-                        public void run() {
-                            DBUtils.deleteShow(getActivity(), showTvdbId, progress);
-                        }
-                    }).start();
+                    new DeleteShowTask(getActivity()).execute(showTvdbId);
                 }
             });
         }
 
         return builder.create();
+    }
+
+    private static class DeleteShowTask extends AsyncTask<Integer, Void, Integer> {
+
+        private final Context mContext;
+
+        private ProgressDialog mProgressDialog;
+
+        public DeleteShowTask(Context context) {
+            mContext = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            mProgressDialog = new ProgressDialog(mContext);
+            mProgressDialog.setCancelable(false);
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected Integer doInBackground(Integer... params) {
+            return ShowTools.get(mContext).removeShow(params[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            if (result == Result.OFFLINE) {
+                Toast.makeText(mContext, R.string.offline, Toast.LENGTH_LONG).show();
+            } else if (result == Result.GENERIC_ERROR) {
+                Toast.makeText(mContext, R.string.delete_error, Toast.LENGTH_LONG).show();
+            }
+            // hide progress dialog
+            if (mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+        }
     }
 }

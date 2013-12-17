@@ -23,7 +23,6 @@ import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.enums.SeasonTags;
 import com.battlelancer.seriesguide.items.Series;
-import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -32,10 +31,8 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.ActivityType;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
-import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.seriesguide.R;
 
-import android.app.ProgressDialog;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -46,7 +43,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 
 import java.util.ArrayList;
@@ -445,90 +441,6 @@ public class DBUtils {
         }
         values.put(Shows.STATUS, status);
         return values;
-    }
-
-    /**
-     * Delete a show and manually delete its seasons and episodes. Also cleans up the poster and
-     * images.
-     */
-    public static void deleteShow(Context context, int showTvdbId, ProgressDialog progress) {
-        final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
-        final ImageProvider imageProvider = ImageProvider.getInstance(context);
-
-        // get poster path of show
-        final Cursor poster = context.getContentResolver().query(Shows.buildShowUri(showTvdbId),
-                new String[]{
-                        Shows.POSTER
-                }, null, null, null);
-        String posterPath = null;
-        if (poster != null) {
-            if (poster.moveToFirst()) {
-                posterPath = poster.getString(0);
-            }
-            poster.close();
-        }
-
-        batch.add(ContentProviderOperation.newDelete(Shows.buildShowUri(showTvdbId)).build());
-
-        // remove show entry already so we can hide the progress dialog
-        try {
-            context.getContentResolver()
-                    .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
-        } catch (RemoteException | OperationApplicationException e) {
-            // RemoteException: Failed binder transactions aren't recoverable
-            // OperationApplicationException: Failures like constraint violation aren't
-            // recoverable
-            throw new RuntimeException("Problem applying batch operation", e);
-        }
-
-        batch.clear();
-
-        // delete show poster
-        if (posterPath != null) {
-            imageProvider.removeImage(posterPath);
-        }
-
-        // delete episode images
-        final Cursor episodes = context.getContentResolver().query(
-                Episodes.buildEpisodesOfShowUri(showTvdbId), new String[]{
-                Episodes._ID, Episodes.IMAGE
-        }, null, null, null);
-        if (episodes != null) {
-            final String[] episodeIDs = new String[episodes.getCount()];
-            int counter = 0;
-
-            episodes.moveToFirst();
-            while (!episodes.isAfterLast()) {
-                episodeIDs[counter++] = episodes.getString(0);
-                String imageUrl = episodes.getString(1);
-                if (!TextUtils.isEmpty(imageUrl)) {
-                    imageProvider.removeImage(imageUrl);
-                }
-                episodes.moveToNext();
-            }
-            episodes.close();
-
-            // delete search database entries
-            for (String episodeID : episodeIDs) {
-                batch.add(ContentProviderOperation.newDelete(
-                        EpisodeSearch.buildDocIdUri(String.valueOf(episodeID))).build());
-            }
-        }
-
-        batch.add(ContentProviderOperation.newDelete(Seasons.buildSeasonsOfShowUri(showTvdbId))
-                .build());
-        batch.add(ContentProviderOperation.newDelete(Episodes.buildEpisodesOfShowUri(showTvdbId))
-                .build());
-
-        applyInSmallBatches(context, batch);
-
-        // set removed flag on Hexagon
-        ShowTools.get(context).sendIsRemoved(showTvdbId, true);
-
-        // hide progress dialog now
-        if (progress.isShowing()) {
-            progress.dismiss();
-        }
     }
 
     /**

@@ -6,8 +6,11 @@ import com.google.api.client.json.jackson.JacksonFactory;
 
 import com.battlelancer.seriesguide.backend.CloudEndpointUtils;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
+import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.seriesguide.shows.Shows;
 import com.uwetrottmann.seriesguide.shows.model.CollectionResponseShow;
 import com.uwetrottmann.seriesguide.shows.model.Show;
@@ -18,6 +21,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.IOException;
@@ -68,6 +72,85 @@ public class ShowTools {
     }
 
     /**
+     * Removes a show and its seasons and episodes, including all images. Sends isRemoved flag to
+     * Hexagon.
+     *
+     * @return One of {@link com.battlelancer.seriesguide.enums.Result}.
+     */
+    public int removeShow(int showTvdbId) {
+        if (isSignedIn()) {
+            if (!AndroidUtils.isNetworkConnected(mContext)) {
+                return Result.OFFLINE;
+            }
+            // send to cloud
+            sendIsRemoved(showTvdbId, true);
+        }
+
+        // remove database entries in last stage, so if an earlier stage fails, user can at least try again
+
+        // IMAGES
+        final ImageProvider imageProvider = ImageProvider.getInstance(mContext);
+
+        // remove episode images
+        final Cursor episodes = mContext.getContentResolver().query(
+                SeriesContract.Episodes.buildEpisodesOfShowUri(showTvdbId), new String[]{
+                SeriesContract.Episodes._ID, SeriesContract.Episodes.IMAGE
+        }, null, null, null);
+        if (episodes == null) {
+            // failed
+            return Result.GENERIC_ERROR;
+        }
+        List<String> episodeTvdbIds = new LinkedList<>(); // need those for search entries
+        while (episodes.moveToNext()) {
+            episodeTvdbIds.add(episodes.getString(0));
+            String imageUrl = episodes.getString(1);
+            if (!TextUtils.isEmpty(imageUrl)) {
+                imageProvider.removeImage(imageUrl);
+            }
+        }
+        episodes.close();
+
+        // remove show poster
+        final Cursor show = mContext.getContentResolver().query(
+                SeriesContract.Shows.buildShowUri(showTvdbId),
+                new String[]{
+                        SeriesContract.Shows.POSTER
+                }, null, null, null);
+        if (show == null || !show.moveToFirst()) {
+            // failed
+            return Result.GENERIC_ERROR;
+        }
+        String posterPath = show.getString(0);
+        if (!TextUtils.isEmpty(posterPath)) {
+            imageProvider.removeImage(posterPath);
+        }
+        show.close();
+
+        // DATABASE ENTRIES
+        // apply batches early to save memory
+        final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
+
+        // remove episode search database entries
+        for (String episodeTvdbId : episodeTvdbIds) {
+            batch.add(ContentProviderOperation.newDelete(
+                    SeriesContract.EpisodeSearch.buildDocIdUri(episodeTvdbId)).build());
+        }
+        DBUtils.applyInSmallBatches(mContext, batch);
+        batch.clear();
+
+        // remove episodes, seasons and show
+        batch.add(ContentProviderOperation.newDelete(
+                SeriesContract.Episodes.buildEpisodesOfShowUri(showTvdbId)).build());
+        batch.add(ContentProviderOperation.newDelete(
+                SeriesContract.Seasons.buildSeasonsOfShowUri(showTvdbId)).build());
+        batch.add(ContentProviderOperation.newDelete(
+                SeriesContract.Shows.buildShowUri(showTvdbId)).build());
+        DBUtils.applyInSmallBatches(mContext, batch);
+
+        return Result.SUCCESS;
+    }
+
+    /**
      * Sends new removed flag, if signed in, up into the cloud.
      */
     public void sendIsRemoved(int showTvdbId, boolean isRemoved) {
@@ -84,57 +167,66 @@ public class ShowTools {
      * Saves new favorite flag to the local database and, if signed in, up into the cloud as well.
      */
     public void storeIsFavorite(int showTvdbId, boolean isFavorite) {
-        // save to local database
-        ContentValues values = new ContentValues();
-        values.put(SeriesContract.Shows.FAVORITE, isFavorite);
-        mContext.getContentResolver().update(
-                SeriesContract.Shows.buildShowUri(showTvdbId), values, null, null);
-
         if (isSignedIn()) {
+            if (!Utils.isConnected(mContext, true)) {
+                return;
+            }
             // send to cloud
             Show show = new Show();
             show.setTvdbId(showTvdbId);
             show.setIsFavorite(isFavorite);
             uploadShowAsync(show);
         }
+
+        // save to local database
+        ContentValues values = new ContentValues();
+        values.put(SeriesContract.Shows.FAVORITE, isFavorite);
+        mContext.getContentResolver().update(
+                SeriesContract.Shows.buildShowUri(showTvdbId), values, null, null);
     }
 
     /**
      * Saves new hidden flag to the local database and, if signed in, up into the cloud as well.
      */
     public void storeIsHidden(int showTvdbId, boolean isHidden) {
-        // save to local database
-        ContentValues values = new ContentValues();
-        values.put(SeriesContract.Shows.HIDDEN, isHidden);
-        mContext.getContentResolver().update(
-                SeriesContract.Shows.buildShowUri(showTvdbId), values, null, null);
-
         if (isSignedIn()) {
+            if (!Utils.isConnected(mContext, true)) {
+                return;
+            }
             // send to cloud
             Show show = new Show();
             show.setTvdbId(showTvdbId);
             show.setIsHidden(isHidden);
             uploadShowAsync(show);
         }
+
+        // save to local database
+        ContentValues values = new ContentValues();
+        values.put(SeriesContract.Shows.HIDDEN, isHidden);
+        mContext.getContentResolver().update(
+                SeriesContract.Shows.buildShowUri(showTvdbId), values, null, null);
     }
 
     /**
      * Saves new GetGlue id to the local database and, if signed in, up into the cloud as well.
      */
     public void storeGetGlueId(int showTvdbId, String getglueId) {
-        // save to local database
-        ContentValues values = new ContentValues();
-        values.put(SeriesContract.Shows.GETGLUEID, getglueId);
-        mContext.getContentResolver()
-                .update(SeriesContract.Shows.buildShowUri(showTvdbId), values, null, null);
-
         if (isSignedIn()) {
+            if (!Utils.isConnected(mContext, true)) {
+                return;
+            }
             // send to cloud
             Show show = new Show();
             show.setTvdbId(showTvdbId);
             show.setGetGlueId(getglueId);
             uploadShowAsync(show);
         }
+
+        // save to local database
+        ContentValues values = new ContentValues();
+        values.put(SeriesContract.Shows.GETGLUEID, getglueId);
+        mContext.getContentResolver()
+                .update(SeriesContract.Shows.buildShowUri(showTvdbId), values, null, null);
     }
 
     public boolean isSignedIn() {
