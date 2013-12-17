@@ -48,7 +48,16 @@
             android:numColumns="auto_fit"
             android:padding="@dimen/showgrid_padding"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="@dimen/grid_vertical_spacing"/>
+            android:verticalSpacing="@dimen/grid_vertical_spacing" />
+
+        <TextView
+            android:id="@+id/emptyViewAdd"
+            android:layout_width="@dimen/empty_view_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/no_results"
+            android:textAppearance="@style/TextAppearance.Light" />
     </LinearLayout>
 
     <TextView

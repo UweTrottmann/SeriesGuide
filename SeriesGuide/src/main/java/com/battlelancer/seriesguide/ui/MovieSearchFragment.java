@@ -51,19 +51,24 @@ import android.widget.TextView.OnEditorActionListener;
 import java.util.List;
 
 /**
- * Allows searching for movies on themoviedb.org, displays results in a nice
- * grid.
+ * Allows searching for movies on themoviedb.org, displays results in a nice grid.
  */
 public class MovieSearchFragment extends SherlockFragment implements OnEditorActionListener,
         LoaderCallbacks<List<Movie>>, OnItemClickListener, OnClickListener {
 
     private static final String SEARCH_QUERY_KEY = "search_query";
+
     private static final int LOADER_ID = R.layout.movies_fragment;
+
     protected static final String TAG = "Movies Search";
+
     private static final int CONTEXT_ADD_TO_WATCHLIST_ID = 0;
 
-    private EditText mSearchBox;
     private MoviesAdapter mAdapter;
+
+    private EditText mSearchBox;
+
+    private TextView mEmptyView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,8 +78,11 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.movies_fragment, container, false);
+
+        mEmptyView = (TextView) v.findViewById(R.id.emptyViewMovieSearch);
 
         // setup search box
         mSearchBox = (EditText) v.findViewById(R.id.editTextMoviesSearch);
@@ -104,7 +112,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
         GridView list = (GridView) getView().findViewById(R.id.gridViewMovies);
         list.setAdapter(mAdapter);
         list.setOnItemClickListener(this);
-        list.setEmptyView(getView().findViewById(R.id.empty));
+        list.setEmptyView(mEmptyView);
 
         registerForContextMenu(list);
 
@@ -144,7 +152,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
                     AndroidUtils.executeAsyncTask(
                             new TraktTask(getActivity(), null)
                                     .watchlistMovie(movie.id),
-                            new Void[] {});
+                            new Void[]{});
                 }
                 fireTrackerEvent("Add to watchlist");
                 return true;
@@ -188,6 +196,11 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
 
     @Override
     public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> data) {
+        if (AndroidUtils.isNetworkConnected(getActivity())) {
+            mEmptyView.setText(R.string.movies_empty);
+        } else {
+            mEmptyView.setText(R.string.offline);
+        }
         mAdapter.setData(data);
         getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
     }

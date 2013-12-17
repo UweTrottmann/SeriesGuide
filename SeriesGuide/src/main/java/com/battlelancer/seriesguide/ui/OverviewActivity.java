@@ -306,7 +306,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    SgSyncAdapter.requestSync(context, mShowId, false);
+                    SgSyncAdapter.requestSyncIfConnected(context, mShowId);
                 }
             }, 1000);
         }

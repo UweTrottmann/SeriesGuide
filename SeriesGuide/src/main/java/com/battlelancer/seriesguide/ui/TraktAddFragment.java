@@ -89,6 +89,17 @@ public class TraktAddFragment extends AddFragment {
         mContentContainer = getView().findViewById(R.id.contentContainer);
         mProgressIndicator = getView().findViewById(R.id.progressIndicator);
 
+        if (!AndroidUtils.isNetworkConnected(getActivity())) {
+            // show offline message, abort
+            setEmptyMessage(R.string.offline);
+            mContentContainer.setVisibility(View.VISIBLE);
+            mProgressIndicator.setVisibility(View.GONE);
+            return;
+        }
+
+        // set empty message
+        setEmptyMessage(R.string.add_empty);
+
         // only create and fill a new adapter if there is no previous one
         // (e.g. after config/page changed)
         if (mAdapter == null) {

@@ -435,9 +435,9 @@ public class TheTVDB {
         });
         show.getChild("poster").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.poster = body;
-                if (body.length() != 0) {
-                    fetchArt(body, true, context);
+                currentShow.poster = body != null ? body.trim() : "";
+                if (Utils.isAllowedLargeDataConnection(context, false)) {
+                    fetchArt(currentShow.poster, true, context);
                 }
             }
         });
@@ -697,7 +697,7 @@ public class TheTVDB {
      * downloaded
      */
     public static boolean fetchArt(String fileName, boolean isPoster, Context context) {
-        if (TextUtils.isEmpty(fileName) || context == null) {
+        if (context == null || TextUtils.isEmpty(fileName)) {
             return true;
         }
 
