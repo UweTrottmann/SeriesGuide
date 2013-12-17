@@ -97,7 +97,8 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 R.drawable.ic_action_bargraph));
         mDrawerAdapter
                 .add(new DrawerItem(getString(R.string.search_hint), R.drawable.ic_action_search));
-        mDrawerAdapter.add(new DrawerItem("Cloud beta", R.drawable.ic_launcher));
+        mDrawerAdapter
+                .add(new DrawerItem(getString(R.string.hexagon_short), R.drawable.ic_action_lab));
 
         mDrawerList.setAdapter(mDrawerAdapter);
         mDrawerList.setOnItemClickListener(this);

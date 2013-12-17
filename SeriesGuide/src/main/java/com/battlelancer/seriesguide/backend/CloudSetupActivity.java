@@ -20,6 +20,7 @@ package com.battlelancer.seriesguide.backend;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.BaseTopActivity;
 import com.battlelancer.seriesguide.util.Utils;
@@ -45,10 +46,18 @@ public class CloudSetupActivity extends BaseTopActivity {
         setContentView(R.layout.activity_singlepane_drawer);
         setupNavDrawer();
 
+        setupActionBar();
+
         if (savedInstanceState == null) {
             CloudSetupFragment f = new CloudSetupFragment();
             getSupportFragmentManager().beginTransaction().add(R.id.content_frame, f).commit();
         }
+    }
+
+    private void setupActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.hexagon);
+        actionBar.setIcon(R.drawable.ic_action_lab);
     }
 
     @Override
