@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
@@ -146,9 +147,9 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
 
         @Override
         protected void onPostExecute(Integer result) {
-            if (result == Result.OFFLINE) {
+            if (result == NetworkResult.OFFLINE) {
                 Toast.makeText(mContext, R.string.offline, Toast.LENGTH_LONG).show();
-            } else if (result == Result.ERROR) {
+            } else if (result == NetworkResult.ERROR) {
                 Toast.makeText(mContext, R.string.delete_error, Toast.LENGTH_LONG).show();
             }
             // hide progress dialog
