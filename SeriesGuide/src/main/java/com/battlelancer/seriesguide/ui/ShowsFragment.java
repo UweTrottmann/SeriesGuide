@@ -292,17 +292,11 @@ public class ShowsFragment extends SherlockFragment implements
             }
             case CONTEXT_HIDE_ID: {
                 ShowTools.get(getActivity()).storeIsHidden((int) info.id, true);
-                Toast.makeText(getActivity(), getString(R.string.hidden), Toast.LENGTH_SHORT)
-                        .show();
-
                 fireTrackerEventContext("Hide show");
                 return true;
             }
             case CONTEXT_UNHIDE_ID: {
                 ShowTools.get(getActivity()).storeIsHidden((int) info.id, false);
-                Toast.makeText(getActivity(), getString(R.string.unhidden), Toast.LENGTH_SHORT)
-                        .show();
-
                 fireTrackerEventContext("Unhide show");
                 return true;
             }
@@ -688,11 +682,6 @@ public class ShowsFragment extends SherlockFragment implements
 
         // favoriting makes show eligible for notifications
         Utils.runNotificationService(getActivity());
-
-        Toast.makeText(getActivity(),
-                getString(isFavorite ? R.string.favorited : R.string.unfavorited),
-                Toast.LENGTH_SHORT)
-                .show();
 
         fireTrackerEventContext(isFavorite ? "Favorite show" : "Unfavorite show");
     }

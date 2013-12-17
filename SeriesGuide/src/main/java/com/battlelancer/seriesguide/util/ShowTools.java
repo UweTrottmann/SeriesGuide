@@ -12,6 +12,7 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.Lists;
+import com.uwetrottmann.seriesguide.R;
 import com.uwetrottmann.seriesguide.shows.Shows;
 import com.uwetrottmann.seriesguide.shows.model.CollectionResponseShow;
 import com.uwetrottmann.seriesguide.shows.model.Show;
@@ -24,6 +25,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -184,6 +186,9 @@ public class ShowTools {
         values.put(SeriesContract.Shows.FAVORITE, isFavorite);
         mContext.getContentResolver().update(
                 SeriesContract.Shows.buildShowUri(showTvdbId), values, null, null);
+
+        Toast.makeText(mContext, mContext.getString(isFavorite ?
+                R.string.favorited : R.string.unfavorited), Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -206,6 +211,9 @@ public class ShowTools {
         values.put(SeriesContract.Shows.HIDDEN, isHidden);
         mContext.getContentResolver().update(
                 SeriesContract.Shows.buildShowUri(showTvdbId), values, null, null);
+
+        Toast.makeText(mContext, mContext.getString(isHidden ?
+                R.string.hidden : R.string.unhidden), Toast.LENGTH_SHORT).show();
     }
 
     /**
