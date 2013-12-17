@@ -294,7 +294,7 @@ public class TraktFriendsFragment extends ListFragment implements
             UserProfile friend = getItem(position);
 
             holder.name.setText(friend.username);
-            mImageDownloader.download(friend.avatar, holder.avatar);
+            mImageDownloader.downloadAndStore(friend.avatar, holder.avatar);
 
             holder.timestamp.setTextColor(Color.GRAY);
 

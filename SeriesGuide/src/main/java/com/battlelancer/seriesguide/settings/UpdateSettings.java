@@ -14,7 +14,11 @@ public class UpdateSettings {
 
     public static final String KEY_FAILED_COUNTER = "com.battlelancer.seriesguide.failedcounter";
 
-    public static boolean isOnlyUpdateOverWifi(Context context) {
+    /**
+     * Whether the user wants us to download larger chunks of data (e.g. images) only over a Wi-Fi
+     * connection.
+     */
+    public static boolean isLargeDataOverWifiOnly(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
                 KEY_ONLYWIFI, false
         );

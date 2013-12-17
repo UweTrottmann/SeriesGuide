@@ -314,7 +314,7 @@ public class ShowsFragment extends SherlockFragment implements
                 fireTrackerEventContext("Delete show");
                 return true;
             case CONTEXT_UPDATE_ID:
-                SgSyncAdapter.requestSync(getActivity(), (int) info.id);
+                SgSyncAdapter.requestSyncImmediate(getActivity(), (int) info.id, true);
 
                 fireTrackerEventContext("Update show");
                 return true;

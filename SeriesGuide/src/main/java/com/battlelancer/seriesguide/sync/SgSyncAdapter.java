@@ -18,6 +18,7 @@ import com.battlelancer.thetvdbapi.TheTVDB;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Activity;
 import com.jakewharton.trakt.entities.ActivityItem;
+import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.jakewharton.trakt.enumerations.ActivityType;
@@ -57,17 +58,21 @@ import retrofit.RetrofitError;
  */
 public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
-    private static final String TAG = "SgSyncAdapter";
+    public static final String TAG = "SgSyncAdapter";
 
-    public static final int UPDATE_INTERVAL_MINUTES = 20;
+    public static final int UPDATE_TVDB_DELTA = 0;
 
-    public static final String SHOW_TVDB_ID = "com.battlelancer.seriesguide.update_type";
+    public static final int UPDATE_TVDB_FULL = -1;
+
+    private static final String SHOW_TVDB_ID = "com.battlelancer.seriesguide.update_type";
+
+    private static final int UPDATE_INTERVAL_MINUTES = 20;
 
     /**
-     * Helper which eventually calls {@link ContentResolver} {@code .requestSync()}, but only if at
-     * least UPDATE_INTERVAL has passed.
+     * Calls {@link ContentResolver} {@code .requestSyncIfConnected()} if at least
+     * <code>UPDATE_INTERVAL_MINUTES</code> has passed.
      */
-    public static void requestSync(Context context) {
+    public static void requestSyncIfTime(Context context) {
         // only request sync if at least UPDATE_INTERVAL has passed
         long now = System.currentTimeMillis();
         long previousUpdateTime = UpdateSettings.getLastAutoUpdateTime(context);
@@ -76,56 +81,67 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 UPDATE_INTERVAL_MINUTES * DateUtils.MINUTE_IN_MILLIS;
 
         if (isTime) {
-            SgSyncAdapter.requestSync(context, 0, false);
+            SgSyncAdapter.requestSyncIfConnected(context, UPDATE_TVDB_DELTA);
         }
     }
 
     /**
-     * Same as {@link #requestSync(Context, int, boolean)} with {@code isUserRequested} set to
-     * true.
-     */
-    public static void requestSync(Context context, int showTvdbId) {
-        requestSync(context, showTvdbId, true);
-    }
-
-    /**
-     * Update just a single shows data, or do a delta update or a full update. Will only queue a
-     * sync request if there is a network connection.
+     * Schedules a sync. Will only queue a sync request if there is a network connection and
+     * auto-sync is enabled.
      *
-     * @param showTvdbId      Update the show with the given TVDbid, if 0 does a delta update, if
-     *                        less than 0 does a full update.
-     * @param isUserRequested If true, will show feedback toasts and force syncing even if (global)
-     *                        sync is off.
+     * @param showTvdbId Update the show with the given TVDb id. If 0 does a delta update, if -1 or
+     *                   less does a full update of all shows.
      */
-    public static void requestSync(Context context, int showTvdbId, boolean isUserRequested) {
-        if (!Utils.isAllowedConnection(context)) {
-            // abort if no connection available
-            if (isUserRequested) {
-                final boolean isWifiOnly = UpdateSettings.isOnlyUpdateOverWifi(context);
-                Toast.makeText(context,
-                        isWifiOnly ? R.string.update_no_wifi : R.string.update_no_connection,
-                        Toast.LENGTH_LONG).show();
-            }
-            return;
-        } else if (!isUserRequested && !isSyncAutomatically(context)) {
-            // abort if sync is disabled
+    public static void requestSyncIfConnected(Context context, int showTvdbId) {
+        if (!AndroidUtils.isNetworkConnected(context) || !isSyncAutomatically(context)) {
+            // offline or auto-sync disabled: abort
             return;
         }
 
         Bundle args = new Bundle();
         args.putInt(SHOW_TVDB_ID, showTvdbId);
 
+        requestSync(context, args);
+    }
+
+    /**
+     * Schedules an immediate sync even if auto-sync is disabled, it runs as soon as there is a
+     * connection.
+     *
+     * @param showTvdbId      Update the show with the given TVDb id. If 0 does a delta update, if
+     *                        less than 0 does a full update of all shows.
+     * @param isUserRequested If set, shows a status toast and aborts if offline.
+     */
+    public static void requestSyncImmediate(Context context, int showTvdbId,
+            boolean isUserRequested) {
         if (isUserRequested) {
-            // notify
+            if (!AndroidUtils.isNetworkConnected(context)) {
+                // offline: notify and abort
+                Toast.makeText(context, R.string.update_no_connection, Toast.LENGTH_LONG).show();
+                return;
+            }
+            // notify about upcoming sync
             Toast.makeText(context, R.string.update_scheduled, Toast.LENGTH_SHORT).show();
-            // force the sync
-            args.putBoolean(ContentResolver.SYNC_EXTRAS_IGNORE_SETTINGS, true);
         }
 
+        Bundle args = new Bundle();
+        args.putInt(SHOW_TVDB_ID, showTvdbId);
+
+        // ignore sync settings and backoff
+        args.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
+        // push to front of sync queue
+        args.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+
+        requestSync(context, args);
+    }
+
+    /**
+     * Schedules a sync with the given arguments.
+     */
+    private static void requestSync(Context context, Bundle args) {
         final Account account = SyncUtils.getSyncAccount(context);
         ContentResolver.requestSync(account,
                 SeriesGuideApplication.CONTENT_AUTHORITY, args);
-
     }
 
     /**
@@ -477,6 +493,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 List<TvShowEpisode> episodes = item.episodes;
                 int season = -1;
                 int number = -1;
+                TvShowEpisode highestEpisode = null;
                 for (TvShowEpisode episode : episodes) {
                     if (episode == null) {
                         continue;
@@ -484,13 +501,14 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     if (episode.season > season || episode.number > number) {
                         season = episode.season;
                         number = episode.number;
+                        highestEpisode = episode;
                     }
-                    addEpisodeSeenUpdateOp(batch, episode, item.show.tvdb_id);
+                    addEpisodeSeenUpdateOp(batch, episode);
                 }
 
                 // set highest season + number combo as last watched
-                if (season != -1 && number != -1) {
-                    addLastWatchedUpdateOp(context, batch, season, number, item.show.tvdb_id);
+                if (highestEpisode != null) {
+                    addLastWatchedUpdateOp(batch, item.show, highestEpisode);
                 }
 
                 break;
@@ -502,9 +520,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 }
                 // checkin and scrobble use a single episode
                 TvShowEpisode episode = item.episode;
-                addEpisodeSeenUpdateOp(batch, episode, item.show.tvdb_id);
-                addLastWatchedUpdateOp(context, batch, episode.season, episode.number,
-                        item.show.tvdb_id);
+                addEpisodeSeenUpdateOp(batch, episode);
+                addLastWatchedUpdateOp(batch, item.show, episode);
                 break;
             }
             case Collection: {
@@ -518,7 +535,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     if (episode == null) {
                         continue;
                     }
-                    addEpisodeCollectedUpdateOp(batch, episode, item.show.tvdb_id);
+                    addEpisodeCollectedUpdateOp(batch, episode);
                 }
                 break;
             }
@@ -531,47 +548,28 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Helper method to build update to flag an episode watched.
      */
     private static void addEpisodeSeenUpdateOp(final ArrayList<ContentProviderOperation> batch,
-            TvShowEpisode episode, int showTvdbId) {
-        batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodesOfShowUri(showTvdbId))
-                .withSelection(Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[]{
-                        String.valueOf(episode.number), String.valueOf(episode.season)
-                }).withValue(Episodes.WATCHED, EpisodeFlags.WATCHED).build());
+            TvShowEpisode episode) {
+        batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodeUri(episode.tvdb_id))
+                .withValue(Episodes.WATCHED, EpisodeFlags.WATCHED).build());
     }
 
     /**
      * Helper method to build update to flag an episode collected.
      */
     private static void addEpisodeCollectedUpdateOp(ArrayList<ContentProviderOperation> batch,
-            TvShowEpisode episode, int showTvdbId) {
-        batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodesOfShowUri(showTvdbId))
-                .withSelection(Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[]{
-                        String.valueOf(episode.number), String.valueOf(episode.season)
-                }).withValue(Episodes.COLLECTED, true).build());
+            TvShowEpisode episode) {
+        batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodeUri(episode.tvdb_id))
+                .withValue(Episodes.COLLECTED, true).build());
     }
 
     /**
-     * Queries for an episode id and adds a content provider op to set it as last watched for the
-     * given show.
+     * Adds a content provider op to set the episode TVDb id as last watched for the given show.
      */
-    private static void addLastWatchedUpdateOp(Context context,
-            ArrayList<ContentProviderOperation> batch, int season, int number, int showTvdbId) {
-        // query for the episode id
-        final Cursor episode = context.getContentResolver().query(
-                Episodes.buildEpisodesOfShowUri(showTvdbId),
-                new String[]{
-                        Episodes._ID
-                }, Episodes.SEASON + "=" + season + " AND "
-                + Episodes.NUMBER + "=" + number, null, null);
-
+    private static void addLastWatchedUpdateOp(ArrayList<ContentProviderOperation> batch,
+            TvShow show, TvShowEpisode episode) {
         // store the episode id as last watched for the given show
-        if (episode != null) {
-            if (episode.moveToFirst()) {
-                batch.add(ContentProviderOperation.newUpdate(Shows.buildShowUri(showTvdbId))
-                        .withValue(Shows.LASTWATCHEDID, episode.getInt(0)).build());
-            }
-
-            episode.close();
-        }
+        batch.add(ContentProviderOperation.newUpdate(Shows.buildShowUri(show.tvdb_id))
+                .withValue(Shows.LASTWATCHEDID, episode.tvdb_id).build());
     }
 
 }
