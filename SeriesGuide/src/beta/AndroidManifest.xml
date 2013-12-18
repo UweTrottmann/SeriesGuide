@@ -2,9 +2,6 @@
     package="com.battlelancer.seriesguide.beta"
     android:installLocation="auto" >
 
-    <permission android:name="com.battlelancer.seriesguide.beta.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
-    <uses-permission android:name="com.battlelancer.seriesguide.beta.permission.C2D_MESSAGE"/>
-
     <application
         android:name="com.battlelancer.seriesguide.SeriesGuideApplication"
         android:allowBackup="true"
