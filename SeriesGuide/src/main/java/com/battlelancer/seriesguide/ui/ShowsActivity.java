@@ -364,7 +364,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
             // try to fetch image for each path
             for (int i = fetchCount.get(); i < count; i++) {
                 if (isCancelled() ||
-                        Utils.isAllowedLargeDataConnection(ShowsActivity.this, false)) {
+                        !Utils.isAllowedLargeDataConnection(ShowsActivity.this, false)) {
                     // cancelled or connection not available any longer
                     return UPDATE_INCOMPLETE;
                 }
