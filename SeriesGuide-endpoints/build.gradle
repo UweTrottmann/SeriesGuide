@@ -7,7 +7,7 @@ buildscript {
 apply plugin: 'android-library'
 
 dependencies {
-    compile files('libs/gcm.jar')
+    compile files('libs/seriesguide-shows-v1-1.17.0-rc-SNAPSHOT.jar')
     compile ('com.google.api-client:google-api-client-android:1.17.0-rc') {
         exclude group: 'com.google.android.google-play-services'
     }
@@ -26,7 +26,7 @@ android {
 
     sourceSets {
       main {
-        java.srcDirs = ['src/main/java', 'src/endpoint-src/java']
+        java.srcDirs = ['src/main/java']
       }
     }
 }
