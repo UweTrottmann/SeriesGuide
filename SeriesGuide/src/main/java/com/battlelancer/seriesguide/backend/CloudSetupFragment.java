@@ -17,6 +17,8 @@
 
 package com.battlelancer.seriesguide.backend;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -35,6 +37,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +45,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashSet;
 import java.util.List;
@@ -64,6 +68,10 @@ public class CloudSetupFragment extends SherlockFragment {
     private GoogleAccountCredential mCredential;
 
     private HexagonSetupTask mHexagonSetupTask;
+
+    private boolean mIsProgressLocked;
+
+    private boolean mIsGooglePlayMissingLocked;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -181,10 +189,31 @@ public class CloudSetupFragment extends SherlockFragment {
     }
 
     /**
-     * Disable the action button and show a progress bar.
+     * Disables the action button and shows a progress bar.
      */
     private void setProgressLock(boolean isLocked) {
+        mIsProgressLocked = isLocked;
         mProgressBar.setVisibility(isLocked ? View.VISIBLE : View.GONE);
+
+        // always disable if no Google Play services available
+        if (mIsGooglePlayMissingLocked) {
+            mButtonAction.setEnabled(false);
+            return;
+        }
+        mButtonAction.setEnabled(!isLocked);
+    }
+
+    /**
+     * Disables the action button.
+     */
+    private void setLock(boolean isLocked) {
+        mIsGooglePlayMissingLocked = isLocked;
+
+        // always disable if ongoing progress
+        if (mIsProgressLocked) {
+            mButtonAction.setEnabled(false);
+            return;
+        }
         mButtonAction.setEnabled(!isLocked);
     }
 
@@ -212,6 +241,14 @@ public class CloudSetupFragment extends SherlockFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        // disable UI if no Google Play services available
+        checkGooglePlayServicesAvailable();
+    }
+
+    @Override
     public void onDestroy() {
         if (mHexagonSetupTask != null
                 && mHexagonSetupTask.getStatus() != AsyncTask.Status.FINISHED) {
@@ -220,6 +257,29 @@ public class CloudSetupFragment extends SherlockFragment {
         mHexagonSetupTask = null;
 
         super.onDestroy();
+    }
+
+    /**
+     * Ensure Google Play Services is up to date, if not help the user update it.
+     */
+    private void checkGooglePlayServicesAvailable() {
+        final int connectionStatusCode = GooglePlayServicesUtil
+                .isGooglePlayServicesAvailable(getActivity());
+        if (GooglePlayServicesUtil.isUserRecoverableError(connectionStatusCode)) {
+            GooglePlayServicesUtil
+                    .getErrorDialog(connectionStatusCode, getActivity(),
+                            CloudSetupActivity.REQUEST_GOOGLE_PLAY_SERVICES).show();
+            setLock(true);
+            return;
+        }
+        if (connectionStatusCode != ConnectionResult.SUCCESS) {
+            Log.i(TAG, "This device is not supported.");
+            Toast.makeText(getActivity(), "This device is not supported.", Toast.LENGTH_LONG)
+                    .show();
+            setLock(true);
+            return;
+        }
+        setLock(false);
     }
 
     private boolean isSignedIn() {

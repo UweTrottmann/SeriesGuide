@@ -17,9 +17,6 @@
 
 package com.battlelancer.seriesguide.backend;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.BaseTopActivity;
@@ -27,7 +24,6 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
 import android.os.Bundle;
-import android.util.Log;
 
 /**
  * Prepares for Hexagon setup by checking Google Play services availability.
@@ -61,30 +57,9 @@ public class CloudSetupActivity extends BaseTopActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        checkGooglePlayServicesAvailable();
-    }
-
-    @Override
     protected void onStart() {
         super.onStart();
         setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_CLOUD_POSITION);
-    }
-
-    /**
-     * Ensure Google Play Services is up to date, if not help the user update it.
-     */
-    private void checkGooglePlayServicesAvailable() {
-        final int connectionStatusCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        if (GooglePlayServicesUtil.isUserRecoverableError(connectionStatusCode)) {
-            GooglePlayServicesUtil
-                    .getErrorDialog(connectionStatusCode, this, REQUEST_GOOGLE_PLAY_SERVICES)
-                    .show();
-        } else if (connectionStatusCode != ConnectionResult.SUCCESS) {
-            Log.i(TAG, "This device is not supported.");
-            finish();
-        }
     }
 
     @Override
