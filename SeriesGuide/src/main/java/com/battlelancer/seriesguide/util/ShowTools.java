@@ -2,7 +2,7 @@ package com.battlelancer.seriesguide.util;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.json.jackson.JacksonFactory;
+import com.google.api.client.json.gson.GsonFactory;
 
 import com.battlelancer.seriesguide.backend.CloudEndpointUtils;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
@@ -65,7 +65,7 @@ public class ShowTools {
 
         // build show service endpoint
         Shows.Builder builder = new Shows.Builder(
-                AndroidHttp.newCompatibleTransport(), new JacksonFactory(), mCredential
+                AndroidHttp.newCompatibleTransport(), new GsonFactory(), mCredential
         );
         mShowsService = CloudEndpointUtils.updateBuilder(builder).build();
     }

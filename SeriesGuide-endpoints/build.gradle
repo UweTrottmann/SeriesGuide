@@ -8,10 +8,10 @@ apply plugin: 'android-library'
 
 dependencies {
     compile files('libs/gcm.jar')
-    compile ('com.google.api-client:google-api-client-android:1.15.0-rc') {
+    compile ('com.google.api-client:google-api-client-android:1.17.0-rc') {
         exclude group: 'com.google.android.google-play-services'
     }
-    compile 'com.google.http-client:google-http-client-jackson:1.15.0-rc'
+    compile 'com.google.http-client:google-http-client-gson:1.17.0-rc'
     compile 'com.google.android.gms:play-services:4.0.30'
 }
 
