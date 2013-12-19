@@ -383,16 +383,24 @@ public class ShowTools {
          */
         public static List<Show> getRemoteShows(Context context) {
             // download shows
+            Log.d(TAG, "Downloading shows from Hexagon...");
             CollectionResponseShow remoteShows = null;
             try {
                 remoteShows = ShowTools.get(context).mShowsService.list().execute();
             } catch (IOException e) {
                 Utils.trackExceptionAndLog(context, TAG, e);
             }
+            Log.d(TAG, "Downloading shows from Hexagon...DONE");
 
             // abort if no response
             if (remoteShows == null) {
                 return null;
+            }
+
+            // no remote shows
+            if (remoteShows.getItems() == null) {
+                // return empty list
+                return new LinkedList<>();
             }
 
             // extract list of remote shows

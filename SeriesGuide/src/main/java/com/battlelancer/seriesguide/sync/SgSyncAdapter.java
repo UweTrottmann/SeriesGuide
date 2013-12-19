@@ -276,10 +276,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
                 // get shows from Hexagon
                 if (ShowTools.get(getContext()).isSignedIn()) {
-                    Log.d(TAG, "Download hexagon shows...");
                     UpdateResult resultHexagon = ShowTools.Download
                             .syncRemoteShows(getContext(), showsExisting, showsNew);
-                    Log.d(TAG, "Download hexagon shows..." + resultHexagon.toString());
                     // don't overwrite earlier failure
                     if (resultCode == UpdateResult.SUCCESS) {
                         resultCode = resultHexagon;
