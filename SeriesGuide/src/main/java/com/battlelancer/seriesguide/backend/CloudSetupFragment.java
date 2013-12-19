@@ -376,6 +376,7 @@ public class CloudSetupFragment extends SherlockFragment {
         @Override
         protected Integer doInBackground(Void... params) {
             // set setup incomplete flag
+            Log.d(TAG, "Setting up Hexagon...");
             HexagonSettings.setSetupIncomplete(mContext);
 
             // are there local shows?
@@ -476,11 +477,13 @@ public class CloudSetupFragment extends SherlockFragment {
             switch (resultCode) {
                 case HexagonSetupTask.USER_ACTION_REQUIRED: {
                     // task user to select which version of shows to keep
+                    Log.d(TAG, "Setting up Hexagon...USER_ACTION_REQUIRED");
                     updateViewsStates(true);
                     break;
                 }
                 case HexagonSetupTask.SYNC_REQUIRED: {
                     // schedule full sync
+                    Log.d(TAG, "Setting up Hexagon...SYNC_REQUIRED");
                     SgSyncAdapter.requestSyncImmediate(getActivity(), -1, false);
                     HexagonSettings.setSetupCompleted(getActivity());
                     updateViewsStates(false);
@@ -489,11 +492,13 @@ public class CloudSetupFragment extends SherlockFragment {
                 case HexagonSetupTask.FAILURE: {
                     // TODO error toast
                     // show setup incomplete message
+                    Log.d(TAG, "Setting up Hexagon...FAILED");
                     updateViewsStates(false);
                     break;
                 }
                 case HexagonSetupTask.SUCCESS:
                     // nothing further to do!
+                    Log.d(TAG, "Setting up Hexagon...SUCCESS");
                     HexagonSettings.setSetupCompleted(getActivity());
                     updateViewsStates(false);
                     break;
