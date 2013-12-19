@@ -46,7 +46,6 @@ dependencies {
     compile project(':libraries:androidutils')
     compile project(':libraries:pagerslidingtabstrip')
     compile project(':libraries:stickygridheaders')
-    compile project(':SeriesGuide-endpoints')
     compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
     compile 'com.android.support:support-v4:19.0.+'
     compile 'com.github.chrisbanes.photoview:library:1.2.2'
@@ -54,7 +53,18 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:1.2.1'
     compile 'com.squareup.retrofit:retrofit:1.2.2'
     compile 'de.greenrobot:eventbus:2.2.0'
+
+    // OAuth 2.0
     compile 'org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:0.31'
+
+    // App Engine
+    compile ('com.google.api-client:google-api-client-android:1.17.0-rc') {
+        exclude group: 'com.google.android.google-play-services'
+    }
+    compile 'com.google.http-client:google-http-client-gson:1.17.0-rc'
+    compile 'com.google.android.gms:play-services:4.0.30'
+
+    // libs folder
     compile fileTree(dir: 'libs', include: '*.jar')
 
     testCompile 'junit:junit:4.10'
