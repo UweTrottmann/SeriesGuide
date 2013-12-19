@@ -846,8 +846,7 @@ public class Utils {
      * Returns true if there is an active connection which is approved by the user for large data
      * downloads (e.g. images).
      *
-     * @param showOfflineToast If true, displays a toast informing the user if there is no network
-     *                         connection.
+     * @param showOfflineToast If true, displays a toast asking the user to connect to a network.
      */
     public static boolean isAllowedLargeDataConnection(Context context, boolean showOfflineToast) {
         boolean isConnected;
@@ -865,6 +864,22 @@ public class Utils {
             Toast.makeText(context,
                     largeDataOverWifiOnly ? R.string.offline_no_wifi : R.string.offline,
                     Toast.LENGTH_LONG).show();
+        }
+
+        return isConnected;
+    }
+
+    /**
+     * Returns true if a network connection exists.
+     *
+     * @param showOfflineToast If true, displays a toast asking the user to connect to a network.
+     */
+    public static boolean isConnected(Context context, boolean showOfflineToast) {
+        boolean isConnected = AndroidUtils.isNetworkConnected(context);
+
+        // display optional offline toast
+        if (!isConnected && showOfflineToast) {
+            Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show();
         }
 
         return isConnected;

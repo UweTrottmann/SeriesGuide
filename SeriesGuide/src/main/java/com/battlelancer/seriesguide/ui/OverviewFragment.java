@@ -37,6 +37,7 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
@@ -370,14 +371,11 @@ public class OverviewFragment extends SherlockFragment implements
             return;
         }
 
-        boolean isFavorited = (Boolean) v.getTag();
+        // store new value
+        boolean isFavorite = (Boolean) v.getTag();
+        ShowTools.get(getActivity()).storeIsFavorite(getShowId(), !isFavorite);
 
-        ContentValues values = new ContentValues();
-        values.put(Shows.FAVORITE, !isFavorited);
-
-        getActivity().getContentResolver().update(
-                Shows.buildShowUri(String.valueOf(getShowId())), values, null, null);
-
+        // favoriting makes show eligible for notifications
         Utils.runNotificationService(getActivity());
     }
 
