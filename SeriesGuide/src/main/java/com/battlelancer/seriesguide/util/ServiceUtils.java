@@ -192,7 +192,7 @@ public final class ServiceUtils {
                 // credentials invalid according to trakt, remove them
                 clearTraktCredentials(context);
             }
-        } catch (RetrofitError e) {
+        } catch (RetrofitError ignored) {
         }
         /*
          * Ignore exceptions, trakt may be offline, etc. We expect the user to
