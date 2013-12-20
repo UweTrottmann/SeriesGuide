@@ -328,11 +328,10 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
     }
 
     /**
-     * Updates the episode list, using the current sorting. Always returns 0 as
-     * the starting position.
+     * Updates the episode list, using the current sort order.
      */
-    private int updateEpisodeList() {
-        return updateEpisodeList(0);
+    private void updateEpisodeList() {
+        updateEpisodeList(0);
     }
 
     /**
