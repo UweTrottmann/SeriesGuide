@@ -174,6 +174,7 @@
     <!-- Shows -->
     <string name="confirm_delete">Do you really want to remove %s?</string>
     <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
+    <string name="delete_error">Could not remove show. Try again later.</string>
     <string name="delete_show">Remove</string>
     <string name="dontdelete_show">Don\'t remove</string>
     <string name="no_nextepisode">no next episode found</string>
@@ -260,6 +261,19 @@
     <string name="list_item_manage">Manage lists</string>
     <string name="list_item_remove">Remove from list</string>
     <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
+
+    <!-- Hexagon -->
+    <string name="hexagon_setup">Set up SeriesGuide cloud</string>
+    <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
+    <string name="hexagon_signin">Sign In</string>
+    <string name="hexagon_signed_in">You are connected to SeriesGuide cloud.</string>
+    <string name="hexagon_signout">Sign Out</string>
+    <string name="hexagon_setup_incomplete">Setting up SeriesGuide cloud was not completed.</string>
+    <string name="hexagon_setup_complete">Complete setup</string>
+    <string name="hexagon_priority_choice_required">Some of your shows are already in the cloud. Which version do you prefer?</string>
+    <string name="hexagon_priority_local">On this device</string>
+    <string name="hexagon_priority_cloud">In the cloud</string>
+    <string name="hexagon_priority_select">Select version</string>
 
     <!-- Connect trakt -->
     <string name="connect_trakt">Connect trakt</string>

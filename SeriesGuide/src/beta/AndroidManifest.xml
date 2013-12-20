@@ -58,6 +58,7 @@
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/sync_seriesguide" />
         </service>
+        
     </application>
 
 </manifest>

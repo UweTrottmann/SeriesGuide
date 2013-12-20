@@ -7,10 +7,11 @@ import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.adapters.GetGlueObjectAdapter;
 import com.battlelancer.seriesguide.loaders.GetGlueObjectLoader;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.uwetrottmann.getglue.entities.GetGlueObject;
 import com.uwetrottmann.seriesguide.R;
 
-import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -29,23 +30,31 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * Displays a list of GetGlue search results to choose from which are used to
- * provide object ids for GetGlue check ins.
+ * Displays a list of GetGlue search results to choose from which are used to provide object ids for
+ * GetGlue check ins.
  */
 public class FixGetGlueCheckInActivity extends BaseActivity implements
         LoaderManager.LoaderCallbacks<List<GetGlueObject>>, OnItemClickListener {
 
     public interface InitBundle {
+
         String SHOW_TVDB_ID = "showtvdbid";
     }
 
     private ListView mList;
+
     private GetGlueObjectAdapter mAdapter;
+
     private TextView mSelectedValue;
+
     private View mHeaderView;
+
     private EditText mSearchBox;
+
     private View mFooterView;
+
     private String mShowId;
+
     private View mSaveButton;
 
     @Override
@@ -54,7 +63,7 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
         setContentView(R.layout.activity_fix_get_glue);
 
         setTitle(R.string.checkin_fixgetglue);
-        
+
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
 
@@ -71,7 +80,7 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
         mList.setOnItemClickListener(this);
 
         // query for show title
-        final Cursor show = getContentResolver().query(Shows.buildShowUri(mShowId), new String[] {
+        final Cursor show = getContentResolver().query(Shows.buildShowUri(mShowId), new String[]{
                 Shows._ID, Shows.TITLE, Shows.GETGLUEID
         }, null, null, null);
         if (show != null) {
@@ -93,7 +102,7 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
         }
 
     }
-    
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -145,15 +154,16 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
             }
         });
 
+        final Context context = this;
         mSaveButton = findViewById(R.id.buttonSaveSelection);
         mSaveButton.setEnabled(false);
         mSaveButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // save new GetGlue object id
-                ContentValues values = new ContentValues();
-                values.put(Shows.GETGLUEID, mSelectedValue.getText().toString());
-                getContentResolver().update(Shows.buildShowUri(mShowId), values, null, null);
+                CharSequence text = mSelectedValue.getText();
+                ShowTools.get(context).storeGetGlueId(
+                        Integer.valueOf(mShowId), text != null ? text.toString() : "");
                 finish();
             }
         });

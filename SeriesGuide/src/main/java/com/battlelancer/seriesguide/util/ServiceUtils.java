@@ -122,7 +122,7 @@ public final class ServiceUtils {
      * Get the trakt-java ServiceManger with user credentials and our API key set.
      *
      * @param refreshCredentials Set this flag to refresh the user credentials.
-     * @throws Exception When decrypting the password failed.
+     * @return null if the credentials are invalid.
      */
     public static synchronized Trakt getTraktServiceManagerWithAuth(Context context,
             boolean refreshCredentials) {
@@ -172,8 +172,6 @@ public final class ServiceUtils {
      * etc.).<br> <b>Never</b> run this on the main thread.
      */
     public static void checkTraktCredentials(Context context) {
-        Log.d(TAG, "Checking trakt credentials...");
-
         // no username or password? stop right here
         if (!TraktSettings.hasTraktCredentials(context)) {
             return;

@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
@@ -44,7 +45,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -64,8 +67,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     private static final String SHOW_TVDB_ID = "com.battlelancer.seriesguide.update_type";
 
     private static final int UPDATE_INTERVAL_MINUTES = 20;
-
-    private ArrayList<SearchResult> mNewShows;
 
     /**
      * Calls {@link ContentResolver} {@code .requestSyncIfConnected()} if at least
@@ -179,7 +180,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         Log.d(TAG, "Creating SyncAdapter");
     }
 
-    enum UpdateResult {
+    public enum UpdateResult {
         SUCCESS, INCOMPLETE;
     }
 
@@ -263,34 +264,50 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
          */
         if (type != UpdateType.SINGLE) {
 
-            if (updateCount.get() > 0 && mShows.length > 0) {
-                // renew search table
-                TheTVDB.onRenewFTSTable(getContext());
-            }
-
             // get latest TMDb configuration
-            try {
-                Configuration config = ServiceUtils.getTmdbServiceManager(getContext())
-                        .configurationService().configuration();
-                if (config != null && config.images != null
-                        && !TextUtils.isEmpty(config.images.base_url)) {
-                    prefs.edit()
-                            .putString(SeriesGuidePreferences.KEY_TMDB_BASE_URL,
-                                    config.images.base_url).commit();
+            getTmdbConfiguration(getContext(), prefs);
+
+            // prepare for finding shows not yet added to local database
+            final HashSet<Integer> showsExisting = ShowTools.getShowTvdbIdsAsSet(getContext());
+            final HashMap<Integer, SearchResult> showsNew = new HashMap<>();
+            if (showsExisting == null) {
+                resultCode = UpdateResult.INCOMPLETE;
+            } else {
+
+                // get shows from Hexagon
+                if (ShowTools.get(getContext()).isSignedIn()) {
+                    UpdateResult resultHexagon = ShowTools.Download
+                            .syncRemoteShows(getContext(), showsExisting, showsNew);
+                    // don't overwrite earlier failure
+                    if (resultCode == UpdateResult.SUCCESS) {
+                        resultCode = resultHexagon;
+                    }
                 }
-            } catch (RetrofitError e) {
-                Utils.trackExceptionAndLog(getContext(), TAG, e);
+
+                // validate trakt credentials with trakt servers
+                Log.d(TAG, "Check trakt credentials...");
+                ServiceUtils.checkTraktCredentials(getContext());
+                Log.d(TAG, "Check trakt credentials...DONE");
+
+                // get latest trakt activity
+                Log.d(TAG, "Get trakt activity...");
+                UpdateResult resultTrakt = getTraktActivity(getContext(), showsExisting, showsNew);
+                Log.d(TAG, "Get trakt activity..." + resultTrakt.toString());
+                // don't overwrite earlier failure
+                if (resultCode == UpdateResult.SUCCESS) {
+                    resultCode = resultTrakt;
+                }
+
+                // add newly discovered shows to database
+                if (showsNew.size() > 0) {
+                    List<SearchResult> showsNewList = new LinkedList<>(showsNew.values());
+                    TaskManager.getInstance(getContext()).performAddTask(showsNewList, true);
+                }
             }
 
-            // validate trakt credentials
-            ServiceUtils.checkTraktCredentials(getContext());
-
-            // get newly watched episodes from trakt
-            final UpdateResult traktResult = getTraktActivity();
-
-            // do not overwrite earlier failure codes
-            if (resultCode == UpdateResult.SUCCESS) {
-                resultCode = traktResult;
+            // renew search table if shows were updated and it will not be renewed by add task
+            if (updateCount.get() > 0 && mShows.length > 0 && showsNew.size() == 0) {
+                TheTVDB.onRenewFTSTable(getContext());
             }
 
             // store time of update, set retry counter on failure
@@ -321,11 +338,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                         .putLong(UpdateSettings.KEY_LASTUPDATE, fakeLastUpdateTime)
                         .putInt(UpdateSettings.KEY_FAILED_COUNTER, failed).commit();
             }
-        }
-
-        // add newly discovered shows to database
-        if (mNewShows != null && mNewShows.size() > 0) {
-            TaskManager.getInstance(getContext()).performAddTask(mNewShows, true);
         }
 
         // There could have been new episodes added after an update
@@ -363,38 +375,61 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
     }
 
-    private UpdateResult getTraktActivity() {
-        Log.d(TAG, "Getting trakt activity...");
-        if (!TraktSettings.hasTraktCredentials(getContext())) {
+    /**
+     * Downloads and stores the latest image url configuration from themoviedb.org.
+     */
+    private static void getTmdbConfiguration(Context context, SharedPreferences prefs) {
+        try {
+            Configuration config = ServiceUtils.getTmdbServiceManager(context)
+                    .configurationService().configuration();
+            if (config != null && config.images != null
+                    && !TextUtils.isEmpty(config.images.base_url)) {
+                prefs.edit()
+                        .putString(SeriesGuidePreferences.KEY_TMDB_BASE_URL,
+                                config.images.base_url).commit();
+            }
+        } catch (RetrofitError e) {
+            Utils.trackExceptionAndLog(context, TAG, e);
+        }
+    }
+
+    /**
+     * Downloads trakt episode activity stream (checkins, seen, scrobbles, collected), filters for
+     * existing shows and applies resulting episode flag changes (watched, collected) to the local
+     * database. Detects shows from activity stream not yet added to the local database.
+     */
+    private static UpdateResult getTraktActivity(Context context, HashSet<Integer> showsExisting,
+            HashMap<Integer, SearchResult> showsNew) {
+        if (!TraktSettings.hasTraktCredentials(context)) {
             // trakt is not connected, we are done here
             return UpdateResult.SUCCESS;
         }
 
         // return if connectivity is lost
-        if (!AndroidUtils.isNetworkConnected(getContext())) {
+        if (!AndroidUtils.isNetworkConnected(context)) {
             return UpdateResult.INCOMPLETE;
         }
 
-        Trakt manager = ServiceUtils.getTraktServiceManagerWithAuth(getContext(), false);
+        Trakt manager = ServiceUtils.getTraktServiceManagerWithAuth(context, false);
         if (manager == null) {
             return UpdateResult.INCOMPLETE;
         }
 
         // get last trakt update timestamp
-        final long startTimeTrakt = TraktSettings.getLastUpdateTime(getContext()) / 1000;
+        final long startTimeTrakt = TraktSettings.getLastUpdateTime(context) / 1000;
 
         // get activity from trakt
         Activity activities;
         try {
             activities = manager
                     .activityService()
-                    .user(TraktSettings.getUsername(getContext()),
+                    .user(TraktSettings.getUsername(context),
                             ActivityType.Episode.toString(),
                             ActivityAction.Checkin + "," + ActivityAction.Seen + "," +
                                     ActivityAction.Scrobble + "," + ActivityAction.Collection,
                             startTimeTrakt, 1, 0);
         } catch (RetrofitError e) {
-            Utils.trackExceptionAndLog(getContext(), TAG, e);
+            Utils.trackExceptionAndLog(context, TAG, e);
             return UpdateResult.INCOMPLETE;
         }
 
@@ -402,49 +437,35 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             return UpdateResult.INCOMPLETE;
         }
 
-        // get a list of existing shows
-        final HashSet<Integer> existingShowTvdbIds = new HashSet<>();
-        final Cursor shows = getContext().getContentResolver().query(Shows.CONTENT_URI,
-                new String[]{Shows._ID}, null, null, null);
-        if (shows == null) {
-            return UpdateResult.INCOMPLETE;
-        }
-        while (shows.moveToNext()) {
-            existingShowTvdbIds.add(shows.getInt(0));
-        }
-        shows.close();
-
         // build an update batch for episode flag changes of existing shows, detect new shows
-        mNewShows = new ArrayList<>();
-        boolean isAutoAddingShows = TraktSettings.isAutoAddingShows(getContext());
-        final HashSet<Integer> newShowTvdbIds = new HashSet<>();
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+        final boolean isAutoAddingShows = TraktSettings.isAutoAddingShows(context);
+
         for (ActivityItem activity : activities.activity) {
             if (activity == null || activity.show == null
                     || activity.show.tvdb_id == null) {
                 // invalid activity, skip
                 continue;
             }
-            if (isAutoAddingShows && !existingShowTvdbIds.contains(activity.show.tvdb_id)
-                    && !newShowTvdbIds.contains(activity.show.tvdb_id)) {
-                // new show detected to add locally later
-                SearchResult show = new SearchResult();
-                show.title = activity.show.title;
-                show.tvdbid = activity.show.tvdb_id;
-                mNewShows.add(show);
-                newShowTvdbIds.add(activity.show.tvdb_id); // prevent duplicates
-            } else if (existingShowTvdbIds.contains(activity.show.tvdb_id)) {
+
+            if (showsExisting.contains(activity.show.tvdb_id)) {
                 // show exists locally, get episode flag changes
-                buildActionBatch(getContext(), batch, activity);
+                buildActionBatch(context, batch, activity);
+            } else if (isAutoAddingShows && !showsNew.containsKey(activity.show.tvdb_id)) {
+                // new show, remember to add to local database later
+                SearchResult show = new SearchResult();
+                show.tvdbid = activity.show.tvdb_id;
+                show.title = activity.show.title;
+                showsNew.put(activity.show.tvdb_id, show);
             }
         }
 
         // apply all episode updates from downloaded trakt activity
-        DBUtils.applyInSmallBatches(getContext(), batch);
+        DBUtils.applyInSmallBatches(context, batch);
 
         // store time of this update as seen by the trakt server
-        final SharedPreferences.Editor editor = PreferenceManager
-                .getDefaultSharedPreferences(getContext()).edit();
+        SharedPreferences.Editor editor = PreferenceManager
+                .getDefaultSharedPreferences(context).edit();
         editor.putLong(TraktSettings.KEY_LAST_UPDATE,
                 activities.timestamps.current.getTime()).commit();
 

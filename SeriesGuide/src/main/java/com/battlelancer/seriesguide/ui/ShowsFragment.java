@@ -33,6 +33,7 @@ import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -282,33 +283,21 @@ public class ShowsFragment extends SherlockFragment implements
                 return true;
             }
             case CONTEXT_FAVORITE_ID: {
-                onFavoriteShow(String.valueOf(info.id), true);
+                onFavoriteShow((int) info.id, true);
                 return true;
             }
             case CONTEXT_UNFAVORITE_ID: {
-                onFavoriteShow(String.valueOf(info.id), false);
+                onFavoriteShow((int) info.id, false);
                 return true;
             }
             case CONTEXT_HIDE_ID: {
+                ShowTools.get(getActivity()).storeIsHidden((int) info.id, true);
                 fireTrackerEventContext("Hide show");
-
-                ContentValues values = new ContentValues();
-                values.put(Shows.HIDDEN, true);
-                getActivity().getContentResolver().update(
-                        Shows.buildShowUri(String.valueOf(info.id)), values, null, null);
-                Toast.makeText(getActivity(), getString(R.string.hidden), Toast.LENGTH_SHORT)
-                        .show();
                 return true;
             }
             case CONTEXT_UNHIDE_ID: {
+                ShowTools.get(getActivity()).storeIsHidden((int) info.id, false);
                 fireTrackerEventContext("Unhide show");
-
-                ContentValues values = new ContentValues();
-                values.put(Shows.HIDDEN, false);
-                getActivity().getContentResolver().update(
-                        Shows.buildShowUri(String.valueOf(info.id)), values, null, null);
-                Toast.makeText(getActivity(), getString(R.string.unhidden), Toast.LENGTH_SHORT)
-                        .show();
                 return true;
             }
             case CONTEXT_DELETE_ID:
@@ -470,7 +459,7 @@ public class ShowsFragment extends SherlockFragment implements
         // save new setting
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
                 .putBoolean(key, state).commit();
-        
+
         // refresh filter icon state
         getActivity().supportInvalidateOptionsMenu();
     }
@@ -605,7 +594,7 @@ public class ShowsFragment extends SherlockFragment implements
             viewHolder.name.setText(cursor.getString(ShowsQuery.TITLE));
 
             // favorite toggle
-            final String showId = cursor.getString(ShowsQuery._ID);
+            final int showId = cursor.getInt(ShowsQuery._ID);
             final boolean isFavorited = cursor.getInt(ShowsQuery.FAVORITE) == 1;
             viewHolder.favorited.setImageResource(isFavorited ? mStarDrawableId
                     : mStarZeroDrawableId);
@@ -687,26 +676,20 @@ public class ShowsFragment extends SherlockFragment implements
         int NEXTEPISODE = 10;
     }
 
-    private void onFavoriteShow(String showId, boolean isFavorite) {
-        ContentValues values = new ContentValues();
-        values.put(Shows.FAVORITE, isFavorite);
-        getActivity().getContentResolver().update(
-                Shows.buildShowUri(showId), values, null, null);
+    private void onFavoriteShow(int showTvdbId, boolean isFavorite) {
+        // store new value
+        ShowTools.get(getActivity()).storeIsFavorite(showTvdbId, isFavorite);
 
+        // favoriting makes show eligible for notifications
         Utils.runNotificationService(getActivity());
-
-        Toast.makeText(getActivity(),
-                getString(isFavorite ? R.string.favorited : R.string.unfavorited),
-                Toast.LENGTH_SHORT)
-                .show();
 
         fireTrackerEventContext(isFavorite ? "Favorite show" : "Unfavorite show");
     }
 
     private void showDeleteDialog(long showId) {
         FragmentManager fm = getFragmentManager();
-        ConfirmDeleteDialogFragment deleteDialog = ConfirmDeleteDialogFragment.newInstance(String
-                .valueOf(showId));
+        ConfirmDeleteDialogFragment deleteDialog = ConfirmDeleteDialogFragment
+                .newInstance((int) showId);
         deleteDialog.show(fm, "fragment_delete");
     }
 

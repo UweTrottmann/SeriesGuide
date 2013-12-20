@@ -727,16 +727,17 @@ public class TheTVDB {
 
     private static Bitmap downloadBitmap(String url, Context context) {
         InputStream inputStream = null;
+        HttpURLConnection urlConnection = null;
         try {
-            HttpURLConnection conn = AndroidUtils.buildHttpUrlConnection(url);
-            conn.connect();
-            long imageSize = conn.getContentLength();
+            urlConnection = AndroidUtils.buildHttpUrlConnection(url);
+            urlConnection.connect();
+            long imageSize = urlConnection.getContentLength();
             // allow images up to 300K (although size is always around
             // 30K for posters and 100K for episode images)
             if (imageSize > 300000) {
                 return null;
             } else {
-                inputStream = conn.getInputStream();
+                inputStream = urlConnection.getInputStream();
                 // return BitmapFactory.decodeStream(inputStream);
                 // Bug on slow connections, fixed in future release.
                 return BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
@@ -758,6 +759,10 @@ public class TheTVDB {
                     Log.w(TAG, "I/O error while retrieving bitmap from " + url, e);
                     Utils.trackException(context, TAG + " I/O error retrieving bitmap from " + url,
                             e);
+                }
+            } else {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
                 }
             }
         }

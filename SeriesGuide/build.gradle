@@ -19,8 +19,8 @@ android {
     productFlavors {
         free {
             packageName "com.battlelancer.seriesguide"
-            versionCode 197
-            versionName "10"
+            versionCode 199
+            versionName "11-beta1"
         }
         beta {
             packageName "com.battlelancer.seriesguide.beta"
@@ -53,7 +53,18 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:1.2.1'
     compile 'com.squareup.retrofit:retrofit:1.2.2'
     compile 'de.greenrobot:eventbus:2.2.0'
+
+    // OAuth 2.0
     compile 'org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:0.31'
+
+    // App Engine
+    compile ('com.google.api-client:google-api-client-android:1.17.0-rc') {
+        exclude group: 'com.google.android.google-play-services'
+    }
+    compile 'com.google.http-client:google-http-client-gson:1.17.0-rc'
+    compile 'com.google.android.gms:play-services:4.0.30'
+
+    // libs folder
     compile fileTree(dir: 'libs', include: '*.jar')
 
     testCompile 'junit:junit:4.10'

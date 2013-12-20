@@ -152,6 +152,9 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 if (TheTVDB.addShow(nextShow.tvdbid, watched, collection, mContext)) {
                     // success
                     result = ADD_SUCCESS;
+
+                    // remove isRemoved flag on Hexagon
+                    ShowTools.get(mContext).sendIsRemoved(nextShow.tvdbid, false);
                 } else {
                     // already exists
                     result = ADD_ALREADYEXISTS;
