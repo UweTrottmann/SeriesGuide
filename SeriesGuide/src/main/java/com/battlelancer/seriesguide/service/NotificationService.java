@@ -247,7 +247,7 @@ public class NotificationService extends IntentService {
                     prefs.edit().putLong(NotificationSettings.KEY_LAST_NOTIFIED, latestAirtime)
                             .commit();
 
-                    onNotify(prefs, upcomingEpisodes, count, latestAirtime);
+                    onNotify(upcomingEpisodes, count, latestAirtime);
                 }
 
                 /*
@@ -316,7 +316,7 @@ public class NotificationService extends IntentService {
         prefs.edit().putLong(NotificationSettings.KEY_LAST_NOTIFIED, 0).commit();
     }
 
-    private void onNotify(final SharedPreferences prefs, final Cursor upcomingEpisodes, int count,
+    private void onNotify(final Cursor upcomingEpisodes, int count,
             long latestAirtime) {
         final Context context = getApplicationContext();
         CharSequence tickerText = "";

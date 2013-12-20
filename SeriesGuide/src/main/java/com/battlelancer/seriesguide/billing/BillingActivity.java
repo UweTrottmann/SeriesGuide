@@ -104,7 +104,7 @@ public class BillingActivity extends BaseActivity {
         mSubscribeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                onSubscribeToXButtonClicked(v);
+                onSubscribeToXButtonClicked();
             }
         });
 
@@ -272,7 +272,7 @@ public class BillingActivity extends BaseActivity {
     }
 
     // User clicked the "Subscribe" button.
-    private void onSubscribeToXButtonClicked(View button) {
+    private void onSubscribeToXButtonClicked() {
         Log.d(TAG, "Subscribe button clicked; launching purchase flow for X subscription.");
 
         String payload = SOME_STRING;

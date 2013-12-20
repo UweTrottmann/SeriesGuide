@@ -169,7 +169,7 @@ public class ImageDownloader {
         return null;
     }
 
-    private static Bitmap getBitmapFromDisk(String urlString, File imageFile) {
+    private static Bitmap getBitmapFromDisk(File imageFile) {
         if (AndroidUtils.isExtStorageAvailable()) {
             if (imageFile.exists()) {
                 // disk cache hit
@@ -291,7 +291,7 @@ public class ImageDownloader {
 
             // try to get bitmap from disk cache first
             if (mIsDiskCaching) {
-                Bitmap bitmap = getBitmapFromDisk(mUrl, imageFile);
+                Bitmap bitmap = getBitmapFromDisk(imageFile);
                 if (bitmap != null) {
                     return bitmap;
                 }
