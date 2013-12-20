@@ -174,7 +174,6 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
                     Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_LONG)
                             .show();
                     mToggleGetGlueButton.setChecked(false);
-                    return;
                 } else {
                     // authenticate already here
                     Intent i = new Intent(getSherlockActivity(),
