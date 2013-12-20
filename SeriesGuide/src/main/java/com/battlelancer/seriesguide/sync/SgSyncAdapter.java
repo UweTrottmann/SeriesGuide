@@ -181,7 +181,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     public enum UpdateResult {
-        SUCCESS, INCOMPLETE;
+        SUCCESS, INCOMPLETE
     }
 
     public enum UpdateType {

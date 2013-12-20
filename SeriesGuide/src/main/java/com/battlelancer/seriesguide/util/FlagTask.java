@@ -69,7 +69,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
         SHOW_WATCHED,
 
-        SHOW_COLLECTED;
+        SHOW_COLLECTED
     }
 
     public static abstract class FlagTaskType {
