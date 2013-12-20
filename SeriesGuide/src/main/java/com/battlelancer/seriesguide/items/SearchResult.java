@@ -76,7 +76,7 @@ public class SearchResult implements Parcelable {
         dest.writeString(title);
         dest.writeString(overview);
         dest.writeString(poster);
-        dest.writeInt(isAdded == true ? 1 : 0);
+        dest.writeInt(isAdded ? 1 : 0);
     }
 
 }

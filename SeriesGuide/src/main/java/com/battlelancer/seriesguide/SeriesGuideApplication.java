@@ -91,6 +91,7 @@ public class SeriesGuideApplication extends Application {
     /**
      * Used to enable {@link StrictMode} during production
      */
+    @SuppressWarnings("PointlessBooleanExpression")
     @SuppressLint("NewApi")
     public static void enableStrictMode() {
         if (!BuildConfig.DEBUG || !AndroidUtils.isGingerbreadOrHigher()) {

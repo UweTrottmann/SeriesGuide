@@ -301,12 +301,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
 
     @Override
     public boolean onKeyLongPress(int keyCode, KeyEvent event) {
-        // always navigate back to the home activity
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            // do nothing as we are already on top
-            return true;
-        }
-        return false;
+        // prevent navigating to top activity as this is the top activity
+        return keyCode == KeyEvent.KEYCODE_BACK;
     }
 
     private class FetchPosterTask extends AsyncTask<Void, Void, Integer> {
