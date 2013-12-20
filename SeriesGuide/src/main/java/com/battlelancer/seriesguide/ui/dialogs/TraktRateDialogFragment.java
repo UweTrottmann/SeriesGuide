@@ -34,15 +34,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 /**
- * Displays the trakt advanced rating scale, submits the chosen rating to the
- * given item on trakt.
+ * Displays the trakt advanced rating scale, submits the chosen rating to the given item on trakt.
  */
 public class TraktRateDialogFragment extends DialogFragment {
 
     /**
      * Create {@link TraktRateDialogFragment} to rate a show.
-     * 
-     * @param tvdbid
+     *
      * @return TraktRateDialogFragment
      */
     public static TraktRateDialogFragment newInstance(int tvdbid) {
@@ -56,10 +54,7 @@ public class TraktRateDialogFragment extends DialogFragment {
 
     /**
      * Create {@link TraktRateDialogFragment} to rate an episode.
-     * 
-     * @param showTvdbid
-     * @param season
-     * @param episode
+     *
      * @return TraktRateDialogFragment
      */
     public static TraktRateDialogFragment newInstance(int showTvdbid, int season, int episode) {
@@ -153,8 +148,8 @@ public class TraktRateDialogFragment extends DialogFragment {
         getArguments().putString(ShareItems.RATING, rating.toString());
         AndroidUtils.executeAsyncTask(
                 new TraktTask(context, getArguments(), null),
-                new Void[] {
-                    null
+                new Void[]{
+                        null
                 });
         dismiss();
     }

@@ -20,8 +20,6 @@ package com.battlelancer.seriesguide.settings;
 import android.content.Context;
 import android.preference.PreferenceManager;
 
-import com.battlelancer.seriesguide.Constants;
-
 import static com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 
 /**

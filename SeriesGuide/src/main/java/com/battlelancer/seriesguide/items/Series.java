@@ -54,8 +54,6 @@ public class Series {
 
     /**
      * Equivalent to the theTVDb.com series id.
-     * 
-     * @param id
      */
     public void setId(String id) {
         this.id = id;
@@ -174,16 +172,16 @@ public class Series {
     }
 
     /**
-     * The shows running status: returns 1 for Continuing and 0 for Ended. Might
-     * be -1 if the status could not be parsed.
+     * The shows running status: returns 1 for Continuing and 0 for Ended. Might be -1 if the status
+     * could not be parsed.
      */
     public int getStatus() {
         return status;
     }
 
     /**
-     * The shows running status: set 1 for Continuing and 0 for Ended. Set to -1
-     * if the status could not be parsed.
+     * The shows running status: set 1 for Continuing and 0 for Ended. Set to -1 if the status could
+     * not be parsed.
      */
     public void setStatus(int status) {
         this.status = status;

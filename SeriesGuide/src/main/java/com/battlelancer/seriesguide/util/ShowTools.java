@@ -458,7 +458,7 @@ public class ShowTools {
         private static void putPropertyValueIfNotNull(ContentValues values, String key,
                 Boolean value) {
             if (value != null) {
-                values.put(key, value.booleanValue());
+                values.put(key, value);
             }
         }
 

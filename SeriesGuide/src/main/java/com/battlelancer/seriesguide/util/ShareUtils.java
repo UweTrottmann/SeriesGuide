@@ -41,9 +41,9 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 /**
- * Contains various ways to share something about an episode (android share
- * intent, trakt, calendar event, ...).
- * 
+ * Contains various ways to share something about an episode (android share intent, trakt, calendar
+ * event, ...).
+ *
  * @author Uwe Trottmann
  */
 public class ShareUtils {
@@ -63,6 +63,7 @@ public class ShareUtils {
     }
 
     public interface ShareItems {
+
         String SEASON = "season";
 
         String IMDBID = "imdbId";
@@ -86,10 +87,8 @@ public class ShareUtils {
 
     /**
      * Share an episode via the given {@link ShareMethod}.
-     * 
-     * @param activity
-     * @param args - a {@link Bundle} including all
-     *            {@link ShareUtils.ShareItems}
+     *
+     * @param args        a {@link Bundle} including all {@link ShareUtils.ShareItems}
      * @param shareMethod the {@link ShareMethod} to use
      */
     public static void onShareEpisode(FragmentActivity activity, Bundle args,

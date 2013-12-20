@@ -24,8 +24,6 @@ import com.battlelancer.thetvdbapi.TheTVDB;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
-import org.xml.sax.SAXException;
-
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,7 +35,6 @@ import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;

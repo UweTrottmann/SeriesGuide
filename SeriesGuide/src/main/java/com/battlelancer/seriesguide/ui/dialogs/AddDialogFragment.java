@@ -39,12 +39,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * A DialogFragment allowing the user to decide whether to add a show to his
- * show database.
+ * A DialogFragment allowing the user to decide whether to add a show to his show database.
  */
 public class AddDialogFragment extends DialogFragment {
 
     public interface OnAddShowListener {
+
         public void onAddShow(SearchResult show);
     }
 
@@ -87,7 +87,8 @@ public class AddDialogFragment extends DialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         final View layout = inflater.inflate(R.layout.add_dialog, null);
         final SearchResult show = getArguments().getParcelable("show");
 
@@ -127,12 +128,8 @@ public class AddDialogFragment extends DialogFragment {
     }
 
     /**
-     * Display a dialog which asks if the user wants to add the given show to
-     * his show database. If necessary an AsyncTask will be started which takes
-     * care of adding the show.
-     * 
-     * @param show
-     * @param fm
+     * Display a dialog which asks if the user wants to add the given show to his show database. If
+     * necessary an AsyncTask will be started which takes care of adding the show.
      */
     public static void showAddDialog(SearchResult show, FragmentManager fm) {
         // DialogFragment.show() will take care of adding the fragment

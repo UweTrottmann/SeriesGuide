@@ -17,14 +17,13 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
