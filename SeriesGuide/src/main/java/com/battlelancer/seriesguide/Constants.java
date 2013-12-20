@@ -29,7 +29,7 @@ import java.util.Map;
 
 public class Constants {
 
-    public static final SimpleDateFormat theTVDBDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat theTVDBDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
     public static enum EpisodeSorting {
         LATEST_FIRST(0, "latestfirst", Episodes.NUMBER + " DESC"),
