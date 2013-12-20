@@ -57,8 +57,7 @@ public class ListsPagerAdapter extends MultiPagerAdapter {
         if (mLists == null) {
             return 1;
         }
-        int count = mLists.getCount();
-        return count;
+        return mLists.getCount();
     }
 
     @Override

@@ -113,8 +113,7 @@ public class ShowsFragment extends SherlockFragment implements
     private boolean mIsFilterHidden;
 
     public static ShowsFragment newInstance() {
-        ShowsFragment f = new ShowsFragment();
-        return f;
+        return new ShowsFragment();
     }
 
     @Override

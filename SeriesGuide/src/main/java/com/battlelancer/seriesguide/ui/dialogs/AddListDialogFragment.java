@@ -30,8 +30,7 @@ import android.widget.TextView;
 public class AddListDialogFragment extends DialogFragment {
 
     public static AddListDialogFragment newInstance() {
-        AddListDialogFragment f = new AddListDialogFragment();
-        return f;
+        return new AddListDialogFragment();
     }
 
     private EditText mTitle;

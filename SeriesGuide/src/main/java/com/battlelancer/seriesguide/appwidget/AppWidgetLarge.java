@@ -17,14 +17,15 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
+import com.uwetrottmann.seriesguide.R;
+
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
-import com.uwetrottmann.seriesguide.R;
-
 public class AppWidgetLarge extends AppWidget {
+
     private static final String LIMIT = "7";
 
     private static final int LAYOUT = R.layout.appwidget_big;
@@ -33,8 +34,7 @@ public class AppWidgetLarge extends AppWidget {
 
     @Override
     public Intent createUpdateIntent(Context context) {
-        Intent i = new Intent(context, UpdateServiceLarge.class);
-        return i;
+        return new Intent(context, UpdateServiceLarge.class);
     }
 
     public static class UpdateServiceLarge extends UpdateService {

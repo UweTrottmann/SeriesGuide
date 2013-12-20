@@ -183,8 +183,7 @@ public class UpcomingSlowAdapter extends CursorAdapter implements StickyGridHead
             cal.set(Calendar.MINUTE, 0);
             cal.set(Calendar.SECOND, 0);
             cal.set(Calendar.MILLISECOND, 0);
-            long airDay = cal.getTimeInMillis();
-            return airDay;
+            return cal.getTimeInMillis();
         }
         return 0;
     }

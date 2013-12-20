@@ -31,14 +31,13 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.preference.PreferenceManager;
 import android.support.v4.app.TaskStackBuilder;
 import android.widget.RemoteViews;
 
 public class AppWidget extends AppWidgetProvider {
+
     public static final String REFRESH = "com.battlelancer.seriesguide.appwidget.REFRESH";
 
     private static final String LIMIT = "1";
@@ -63,13 +62,9 @@ public class AppWidget extends AppWidgetProvider {
 
     /**
      * Creates an intent which must include the update service class to start.
-     * 
-     * @param context
-     * @return
      */
     public Intent createUpdateIntent(Context context) {
-        Intent i = new Intent(context, UpdateService.class);
-        return i;
+        return new Intent(context, UpdateService.class);
     }
 
     public static class UpdateService extends IntentService {

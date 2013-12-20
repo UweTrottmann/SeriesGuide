@@ -47,8 +47,7 @@ import java.util.List;
 public class TvdbAddFragment extends AddFragment {
 
     public static TvdbAddFragment newInstance() {
-        TvdbAddFragment f = new TvdbAddFragment();
-        return f;
+        return new TvdbAddFragment();
     }
 
     private EditText mSearchBox;

@@ -54,8 +54,7 @@ public class FirstRunFragment extends SherlockFragment {
     private OnFirstRunDismissedListener mListener;
 
     public static FirstRunFragment newInstance() {
-        FirstRunFragment f = new FirstRunFragment();
-        return f;
+        return new FirstRunFragment();
     }
 
     public interface OnFirstRunDismissedListener {
