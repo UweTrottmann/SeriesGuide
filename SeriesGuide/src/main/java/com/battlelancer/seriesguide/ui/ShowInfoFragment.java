@@ -315,7 +315,7 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
                 && (mTraktTask == null || mTraktTask.getStatus() != AsyncTask.Status.RUNNING)) {
             mTraktTask = new TraktSummaryTask(getActivity(), getView().findViewById(
                     R.id.ratingbar), isUseCachedValues).show(getShowTvdbId());
-            AndroidUtils.executeAsyncTask(mTraktTask, new Void[]{});
+            AndroidUtils.executeAsyncTask(mTraktTask);
         }
     }
 

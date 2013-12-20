@@ -134,8 +134,8 @@ public class MoviesWatchListFragment extends SherlockFragment implements
                 Movie movie = mAdapter.getItem(info.position);
                 AndroidUtils.executeAsyncTask(
                         new TraktTask(getActivity(), null)
-                                .unwatchlistMovie(Integer.valueOf(movie.tmdbId)),
-                        new Void[]{});
+                                .unwatchlistMovie(Integer.valueOf(movie.tmdbId))
+                );
                 fireTrackerEvent("Remove from watchlist");
                 return true;
             }

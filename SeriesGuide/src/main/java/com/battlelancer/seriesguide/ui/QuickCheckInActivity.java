@@ -108,8 +108,8 @@ public class QuickCheckInActivity extends SherlockFragmentActivity implements
             AndroidUtils
                     .executeAsyncTask(
                             new TraktTask(this, this)
-                                    .checkInEpisode(showTvdbId, season, episode, defaultMessage),
-                            new Void[] {});
+                                    .checkInEpisode(showTvdbId, season, episode, defaultMessage)
+                    );
         }
 
         if (isShareWithGetGlue) {
@@ -144,7 +144,7 @@ public class QuickCheckInActivity extends SherlockFragmentActivity implements
             if (!isAbortingCheckIn) {
                 // check in, use task on thread pool
                 AndroidUtils.executeAsyncTask(new CheckInTask(objectId, defaultMessage,
-                        this), new Void[] {});
+                        this));
             }
         }
 

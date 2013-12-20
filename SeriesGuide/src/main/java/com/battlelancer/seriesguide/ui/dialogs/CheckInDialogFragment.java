@@ -147,7 +147,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
         } else {
             // check in, use task on thread pool
             AndroidUtils.executeAsyncTask(new CheckInTask(mGetGlueId, message,
-                    getActivity()), new Void[]{});
+                    getActivity()));
         }
 
         return isAbortingCheckIn;

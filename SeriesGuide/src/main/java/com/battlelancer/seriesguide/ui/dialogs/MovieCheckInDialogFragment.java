@@ -79,7 +79,7 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
         } else {
             // check in, use task on thread pool
             AndroidUtils.executeAsyncTask(new CheckInTask(title, message,
-                    getActivity()), new Void[]{});
+                    getActivity()));
         }
 
         return isAbortingCheckIn;
