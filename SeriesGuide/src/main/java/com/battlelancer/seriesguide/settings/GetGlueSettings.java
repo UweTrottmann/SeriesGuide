@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.settings;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 
 public class GetGlueSettings {
@@ -28,7 +29,8 @@ public class GetGlueSettings {
     }
 
     public static boolean isAuthenticated(Context context) {
-        return !(getAuthToken(context) == "" || getRefreshToken(context) == "");
+        return !(TextUtils.isEmpty(getAuthToken(context))
+                || TextUtils.isEmpty(getRefreshToken(context)));
     }
 
     /**
