@@ -87,8 +87,6 @@ public class OverviewFragment extends SherlockFragment implements
 
     private static final int CONTEXT_CREATE_CALENDAR_EVENT_ID = 201;
 
-    private boolean mMultiPane;
-
     private FetchArtTask mArtTask;
 
     private TraktSummaryTask mTraktTask;
@@ -152,12 +150,13 @@ public class OverviewFragment extends SherlockFragment implements
 
         // Are we in a multi-pane layout?
         View seasonsFragment = getActivity().findViewById(R.id.fragment_seasons);
-        mMultiPane = seasonsFragment != null && seasonsFragment.getVisibility() == View.VISIBLE;
+        boolean multiPane = seasonsFragment != null
+                && seasonsFragment.getVisibility() == View.VISIBLE;
 
         // do not display show info header in multi pane layout
-        mContainerShow.setVisibility(mMultiPane ? View.GONE : View.VISIBLE);
-        mDividerShow.setVisibility(mMultiPane ? View.GONE : View.VISIBLE);
-        mSpacerShow.setVisibility(mMultiPane ? View.VISIBLE : View.GONE);
+        mContainerShow.setVisibility(multiPane ? View.GONE : View.VISIBLE);
+        mDividerShow.setVisibility(multiPane ? View.GONE : View.VISIBLE);
+        mSpacerShow.setVisibility(multiPane ? View.VISIBLE : View.GONE);
 
         getLoaderManager().initLoader(SHOW_LOADER_ID, null, this);
         getLoaderManager().initLoader(EPISODE_LOADER_ID, null, this);

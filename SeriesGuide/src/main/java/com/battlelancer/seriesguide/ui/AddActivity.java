@@ -49,10 +49,6 @@ import java.util.Locale;
  */
 public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListener {
 
-    private AddPagerAdapter mAdapter;
-
-    private ViewPager mPager;
-
     public interface InitBundle {
 
         /**
@@ -83,19 +79,19 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
     }
 
     private void setupViews() {
-        mAdapter = new AddPagerAdapter(getSupportFragmentManager(), this);
+        AddPagerAdapter adapter = new AddPagerAdapter(getSupportFragmentManager(), this);
 
-        mPager = (ViewPager) findViewById(R.id.pagerAddShows);
-        mPager.setAdapter(mAdapter);
+        ViewPager pager = (ViewPager) findViewById(R.id.pagerAddShows);
+        pager.setAdapter(adapter);
 
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsAddShows);
-        tabs.setViewPager(mPager);
+        tabs.setViewPager(pager);
 
         // set default tab
         if (getIntent() != null && getIntent().getExtras() != null) {
             int defaultTab = getIntent().getExtras().getInt(InitBundle.DEFAULT_TAB);
-            if (defaultTab < mAdapter.getCount()) {
-                mPager.setCurrentItem(defaultTab);
+            if (defaultTab < adapter.getCount()) {
+                pager.setCurrentItem(defaultTab);
             }
         }
     }

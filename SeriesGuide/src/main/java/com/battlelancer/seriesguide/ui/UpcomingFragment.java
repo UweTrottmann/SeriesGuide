@@ -71,8 +71,6 @@ public class UpcomingFragment extends SherlockFragment implements
 
     private StickyGridHeadersGridView mGridView;
 
-    private TextView mEmptyView;
-
     /**
      * Data which has to be passed when creating {@link UpcomingFragment}. All Bundle extras are
      * strings, except LOADER_ID and EMPTY_STRING_ID.
@@ -99,11 +97,11 @@ public class UpcomingFragment extends SherlockFragment implements
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.upcoming_fragment, container, false);
 
-        mEmptyView = (TextView) v.findViewById(R.id.emptyViewUpcoming);
-        mEmptyView.setText(getString(getArguments().getInt(InitBundle.EMPTY_STRING_ID)));
+        TextView emptyView = (TextView) v.findViewById(R.id.emptyViewUpcoming);
+        emptyView.setText(getString(getArguments().getInt(InitBundle.EMPTY_STRING_ID)));
 
         mGridView = (StickyGridHeadersGridView) v.findViewById(R.id.gridViewUpcoming);
-        mGridView.setEmptyView(mEmptyView);
+        mGridView.setEmptyView(emptyView);
         mGridView.setAreHeadersSticky(true);
 
         return v;

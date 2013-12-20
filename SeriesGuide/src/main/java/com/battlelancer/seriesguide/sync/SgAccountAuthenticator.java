@@ -11,11 +11,8 @@ import android.os.Bundle;
 
 public class SgAccountAuthenticator extends AbstractAccountAuthenticator {
 
-    private Context mContext;
-
     public SgAccountAuthenticator(Context context) {
         super(context);
-        mContext = context;
     }
 
     @Override

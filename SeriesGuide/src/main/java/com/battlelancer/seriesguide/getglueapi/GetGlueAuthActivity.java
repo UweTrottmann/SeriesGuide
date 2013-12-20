@@ -51,8 +51,6 @@ public class GetGlueAuthActivity extends BaseActivity {
 
     static final String TAG = "GetGlueAuthActivity";
 
-    private WebView mWebview;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // webview uses a progress bar
@@ -60,8 +58,8 @@ public class GetGlueAuthActivity extends BaseActivity {
 
         super.onCreate(savedInstanceState);
 
-        mWebview = new WebView(this);
-        setContentView(mWebview);
+        WebView webview = new WebView(this);
+        setContentView(webview);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.getglue_authentication));
@@ -70,7 +68,7 @@ public class GetGlueAuthActivity extends BaseActivity {
         setSupportProgressBarVisibility(true);
 
         final SherlockFragmentActivity activity = this;
-        mWebview.setWebChromeClient(new WebChromeClient() {
+        webview.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 /*
                  * Activities and WebViews measure progress with different
@@ -80,7 +78,7 @@ public class GetGlueAuthActivity extends BaseActivity {
                 activity.setSupportProgress(progress * 1000);
             }
         });
-        mWebview.setWebViewClient(new WebViewClient() {
+        webview.setWebViewClient(new WebViewClient() {
             public void onReceivedError(WebView view, int errorCode, String description,
                     String failingUrl) {
                 Toast.makeText(activity,
@@ -107,7 +105,7 @@ public class GetGlueAuthActivity extends BaseActivity {
         // mWebview.getSettings().setJavaScriptEnabled(true);
 
         // make sure we start fresh
-        mWebview.clearCache(true);
+        webview.clearCache(true);
 
         Log.d(TAG, "Initiating authorization request...");
         Resources res = getResources();
@@ -115,7 +113,7 @@ public class GetGlueAuthActivity extends BaseActivity {
             OAuthClientRequest request = com.uwetrottmann.getglue.GetGlue
                     .getAuthorizationRequest(res.getString(R.string.getglue_client_id),
                             GetGlueCheckin.OAUTH_CALLBACK_URL);
-            mWebview.loadUrl(request.getLocationUri());
+            webview.loadUrl(request.getLocationUri());
         } catch (OAuthSystemException e) {
             Utils.trackExceptionAndLog(this, TAG, e);
         }

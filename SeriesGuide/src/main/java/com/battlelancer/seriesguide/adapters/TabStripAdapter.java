@@ -38,8 +38,6 @@ public class TabStripAdapter extends FragmentPagerAdapter {
 
     private Context mContext;
 
-    private ViewPager mViewPager;
-
     private PagerSlidingTabStrip mTabStrip;
 
     static final class TabInfo {
@@ -61,10 +59,10 @@ public class TabStripAdapter extends FragmentPagerAdapter {
             PagerSlidingTabStrip tabs) {
         super(fm);
         mContext = context;
-        mViewPager = pager;
         mTabStrip = tabs;
-        mViewPager.setAdapter(this);
-        mTabStrip.setViewPager(mViewPager);
+        ViewPager viewPager = pager;
+        viewPager.setAdapter(this);
+        mTabStrip.setViewPager(viewPager);
     }
 
     /**

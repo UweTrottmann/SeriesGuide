@@ -78,8 +78,6 @@ public class ListsFragment extends SherlockFragment implements
 
     private ListItemAdapter mAdapter;
 
-    private GridView mList;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -93,12 +91,12 @@ public class ListsFragment extends SherlockFragment implements
         mAdapter = new ListItemAdapter(getActivity(), null, 0, this);
 
         // setup grid view
-        mList = (GridView) getView().findViewById(android.R.id.list);
-        mList.setAdapter(mAdapter);
-        mList.setOnItemClickListener(this);
-        mList.setEmptyView(getView().findViewById(android.R.id.empty));
+        GridView list = (GridView) getView().findViewById(android.R.id.list);
+        list.setAdapter(mAdapter);
+        list.setOnItemClickListener(this);
+        list.setEmptyView(getView().findViewById(android.R.id.empty));
 
-        registerForContextMenu(mList);
+        registerForContextMenu(list);
 
         getLoaderManager().initLoader(LOADER_ID, getArguments(), this);
     }

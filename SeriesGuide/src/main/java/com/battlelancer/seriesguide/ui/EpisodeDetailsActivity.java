@@ -55,10 +55,6 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
     protected static final String TAG = "Episode Details";
 
-    private EpisodePagerAdapter mAdapter;
-
-    private ViewPager mPager;
-
     private int mSeasonId;
 
     private int mShowId;
@@ -136,15 +132,16 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         episode.close();
 
-        mAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(), episodes, true);
+        EpisodePagerAdapter adapter = new EpisodePagerAdapter(this, getSupportFragmentManager(),
+                episodes, true);
 
-        mPager = (ViewPager) findViewById(R.id.pagerEpisodeDetails);
-        mPager.setAdapter(mAdapter);
+        ViewPager pager = (ViewPager) findViewById(R.id.pagerEpisodeDetails);
+        pager.setAdapter(adapter);
 
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsEpisodeDetails);
         tabs.setAllCaps(false);
-        tabs.setViewPager(mPager);
-        mPager.setCurrentItem(startPosition, false);
+        tabs.setViewPager(pager);
+        pager.setCurrentItem(startPosition, false);
     }
 
     @Override

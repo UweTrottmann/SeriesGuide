@@ -63,10 +63,6 @@ public class BackupDeleteActivity extends BaseActivity {
 
     private static final int IMPORT_PROGRESS = 4;
 
-    private Button mExportDbToSdButton;
-
-    private Button mImportDbFromSdButton;
-
     private ExportDatabaseTask mExportTask;
 
     private ImportDatabaseTask mImportTask;
@@ -93,15 +89,15 @@ public class BackupDeleteActivity extends BaseActivity {
     }
 
     private void setupViews() {
-        mExportDbToSdButton = (Button) findViewById(R.id.ButtonExportDBtoSD);
-        mExportDbToSdButton.setOnClickListener(new OnClickListener() {
+        Button exportDbToSdButton = (Button) findViewById(R.id.ButtonExportDBtoSD);
+        exportDbToSdButton.setOnClickListener(new OnClickListener() {
             public void onClick(final View v) {
                 showDialog(EXPORT_DIALOG);
             }
         });
 
-        mImportDbFromSdButton = (Button) findViewById(R.id.ButtonImportDBfromSD);
-        mImportDbFromSdButton.setOnClickListener(new OnClickListener() {
+        Button importDbFromSdButton = (Button) findViewById(R.id.ButtonImportDBfromSD);
+        importDbFromSdButton.setOnClickListener(new OnClickListener() {
             public void onClick(final View v) {
                 showDialog(IMPORT_DIALOG);
             }

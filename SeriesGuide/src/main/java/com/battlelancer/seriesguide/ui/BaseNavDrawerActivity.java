@@ -53,8 +53,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
     private ActionBarDrawerToggle mDrawerToggle;
 
-    private DrawerAdapter mDrawerAdapter;
-
     public static final int MENU_ITEM_SHOWS_POSITION = 0;
 
     public static final int MENU_ITEM_LISTS_POSITION = 1;
@@ -87,20 +85,20 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
         // setup menu adapter
-        mDrawerAdapter = new DrawerAdapter(this);
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.shows), R.drawable.ic_action_tv));
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.lists), R.drawable.ic_action_list));
-        mDrawerAdapter
+        DrawerAdapter drawerAdapter = new DrawerAdapter(this);
+        drawerAdapter.add(new DrawerItem(getString(R.string.shows), R.drawable.ic_action_tv));
+        drawerAdapter.add(new DrawerItem(getString(R.string.lists), R.drawable.ic_action_list));
+        drawerAdapter
                 .add(new DrawerItem(getString(R.string.activity), R.drawable.ic_action_upcoming));
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.movies), R.drawable.ic_action_movie));
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.statistics),
+        drawerAdapter.add(new DrawerItem(getString(R.string.movies), R.drawable.ic_action_movie));
+        drawerAdapter.add(new DrawerItem(getString(R.string.statistics),
                 R.drawable.ic_action_bargraph));
-        mDrawerAdapter
+        drawerAdapter
                 .add(new DrawerItem(getString(R.string.search_hint), R.drawable.ic_action_search));
-        mDrawerAdapter
+        drawerAdapter
                 .add(new DrawerItem(getString(R.string.hexagon_short), R.drawable.ic_action_lab));
 
-        mDrawerList.setAdapter(mDrawerAdapter);
+        mDrawerList.setAdapter(drawerAdapter);
         mDrawerList.setOnItemClickListener(this);
 
         // setup drawer indicator

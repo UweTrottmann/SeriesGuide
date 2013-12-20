@@ -41,8 +41,6 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
         String SHOW_TVDB_ID = "showtvdbid";
     }
 
-    private ListView mList;
-
     private GetGlueObjectAdapter mAdapter;
 
     private TextView mSelectedValue;
@@ -73,11 +71,11 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
         mShowId = getIntent().getExtras().getString(InitBundle.SHOW_TVDB_ID);
 
         mAdapter = new GetGlueObjectAdapter(this);
-        mList = (ListView) findViewById(R.id.listViewGetGlueResults);
-        mList.addHeaderView(mHeaderView, null, false);
-        mList.addFooterView(mFooterView, null, false);
-        mList.setAdapter(mAdapter);
-        mList.setOnItemClickListener(this);
+        ListView list = (ListView) findViewById(R.id.listViewGetGlueResults);
+        list.addHeaderView(mHeaderView, null, false);
+        list.addFooterView(mFooterView, null, false);
+        list.setAdapter(mAdapter);
+        list.setOnItemClickListener(this);
 
         // query for show title
         final Cursor show = getContentResolver().query(Shows.buildShowUri(mShowId), new String[]{

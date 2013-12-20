@@ -28,13 +28,10 @@ public class SearchResultsAdapter extends CursorAdapter {
 
     private LayoutInflater mLayoutInflater;
 
-    private SharedPreferences mPrefs;
-
     public SearchResultsAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
         mLayoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Override

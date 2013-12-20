@@ -42,7 +42,6 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -78,7 +77,7 @@ public class ImageProvider {
 
     private Context mContext;
 
-    private OnSharedPreferenceChangeListener listener;
+    private OnSharedPreferenceChangeListener mListener;
 
     private float mScale;
 
@@ -149,7 +148,7 @@ public class ImageProvider {
 
         // listen if user toggles .nomedia file pref
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-        listener = new OnSharedPreferenceChangeListener() {
+        mListener = new OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
                 if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_HIDEIMAGES)) {
                     updateNoMediaFile(sharedPreferences);
@@ -161,7 +160,7 @@ public class ImageProvider {
                 }
             }
         };
-        prefs.registerOnSharedPreferenceChangeListener(listener);
+        prefs.registerOnSharedPreferenceChangeListener(mListener);
     }
 
     public static synchronized ImageProvider getInstance(Context ctx) {
