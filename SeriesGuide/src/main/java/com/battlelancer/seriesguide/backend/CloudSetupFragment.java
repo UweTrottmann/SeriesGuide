@@ -490,7 +490,6 @@ public class CloudSetupFragment extends SherlockFragment {
                     break;
                 }
                 case HexagonSetupTask.FAILURE: {
-                    // TODO error toast
                     // show setup incomplete message
                     Log.d(TAG, "Setting up Hexagon...FAILED");
                     updateViewsStates(false);

@@ -141,7 +141,6 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
                 v.setVisibility(View.GONE);
                 mSearchBox.setVisibility(View.VISIBLE);
                 mSearchBox.requestFocus();
-                // TODO animate
             }
         });
 

@@ -16,6 +16,9 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.AsyncTask;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -27,9 +30,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
-
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.AsyncTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -59,8 +59,7 @@ public class ImageDownloader {
 
     private ImageDownloader(Context context) {
         mContext = context.getApplicationContext();
-        // TODO replace with getExternalFilesDir (but can be null!) once we are
-        // min API level 8
+        // TODO replace with getExternalFilesDir (but can be null!) once we are min API level 8
         mDiskCacheDir = Environment.getExternalStorageDirectory().getAbsolutePath()
                 + "/Android/data/" + mContext.getPackageName() + "/files";
     }
@@ -207,10 +206,7 @@ public class ImageDownloader {
                     bitmap = BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
                 }
 
-                /*
-                 * TODO look if we can return the bitmap first, then save in the
-                 * background
-                 */
+                // TODO look if we can return the bitmap first, then save in the background
                 // if (Utils.isExtStorageAvailable()) {
                 // // write the bitmap to the disk cache
                 // FileOutputStream os = new FileOutputStream(imagefile);
