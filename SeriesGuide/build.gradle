@@ -31,7 +31,7 @@ android {
         beta {
             packageName "com.battlelancer.seriesguide.beta"
             versionCode 215
-            versionName "10-internal"
+            versionName "11-internal"
         }
     }
 
