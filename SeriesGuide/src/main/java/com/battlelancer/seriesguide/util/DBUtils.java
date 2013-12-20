@@ -388,7 +388,10 @@ public class DBUtils {
                 new String[]{
                         Shows._ID
                 }, null, null, null);
-        boolean isShowExists = testsearch.getCount() != 0 ? true : false;
+        if (testsearch == null) {
+            return false;
+        }
+        boolean isShowExists = testsearch.getCount() != 0;
         testsearch.close();
         return isShowExists;
     }

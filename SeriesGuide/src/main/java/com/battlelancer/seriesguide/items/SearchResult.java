@@ -52,7 +52,7 @@ public class SearchResult implements Parcelable {
         title = in.readString();
         overview = in.readString();
         poster = in.readString();
-        isAdded = in.readInt() == 1 ? true : false;
+        isAdded = in.readInt() == 1;
     }
 
     public SearchResult copy() {

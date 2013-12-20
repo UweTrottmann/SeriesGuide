@@ -160,7 +160,7 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
         if (mProgressBar == null) {
             return;
         }
-        mProgressBar.setIndeterminate(values[0] == values[1] ? true : false);
+        mProgressBar.setIndeterminate(values[0] == values[1]);
         mProgressBar.setMax(values[0]);
         mProgressBar.setProgress(values[1]);
     }
