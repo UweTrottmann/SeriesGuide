@@ -206,6 +206,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
      * Based on the widget size determines whether to use a compact layout. Defaults to false on
      * ICS and below.
      */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private static boolean isCompactLayout(AppWidgetManager appWidgetManager, int appWidgetId) {
         if (AndroidUtils.isJellyBeanOrHigher()) {
             Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
