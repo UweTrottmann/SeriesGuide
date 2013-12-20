@@ -5,6 +5,19 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 11 *(in development)*
+-----------------------------
+
+#### 11-beta1 *(2013-12-20)*
+
+* FEATURE SeriesGuide cloud experiment which can backup/sync your shows across devices. Episodes and movies are NOT yet included, use trakt.tv integration for that.
+* TWEAK Better offline detection in many places.
+* TWEAK New 'Images via Wi-Fi only' setting. By default SeriesGuide uses mobile networks as well. If the new setting is set, SeriesGuide will not download images if only a mobile connection is available keeping the mobile data charges at a minimum. ('Update only via Wi-Fi' setting is removed.)
+* TWEAK 'Remove all filters' action in 'Filter shows' menu.
+* TWEAK Display shorter movie release date in movie grids.
+* FIX Episode not updating in overview after trakt sync flagged it watched/collected (e.g. shortly after a check-in).
+* NOTICE Latest translations from crowdin, now including Latvian.
+
 Version 10 *(2013-12-06)*
 -------------------------
 
