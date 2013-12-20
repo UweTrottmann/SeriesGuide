@@ -683,11 +683,7 @@ public class Utils {
     public static boolean requiresPurchaseCheck(Context context) {
         // dev builds and the SeriesGuide X key app are not handled through the
         // Play store
-        if (getChannel(context) != SGChannel.STABLE || hasUnlockKeyInstalled(context)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !(getChannel(context) != SGChannel.STABLE || hasUnlockKeyInstalled(context));
     }
 
     /**
@@ -696,11 +692,7 @@ public class Utils {
     public static boolean hasAccessToX(Context context) {
         // dev builds, SeriesGuide X installed or a valid purchase unlock X
         // features
-        if (!requiresPurchaseCheck(context) || AdvancedSettings.isSubscribedToX(context)) {
-            return true;
-        } else {
-            return false;
-        }
+        return !requiresPurchaseCheck(context) || AdvancedSettings.isSubscribedToX(context);
     }
 
     /**

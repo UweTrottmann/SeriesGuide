@@ -48,12 +48,8 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
             HARD_CACHE_CAPACITY / 2, 0.75f, true) {
         @Override
         protected boolean removeEldestEntry(LinkedHashMap.Entry<String, TvEntity> eldest) {
-            if (size() > HARD_CACHE_CAPACITY) {
-                // remove eldest if capacity is exceeded
-                return true;
-            } else {
-                return false;
-            }
+            // remove eldest if capacity is exceeded
+            return size() > HARD_CACHE_CAPACITY;
         }
     };
 

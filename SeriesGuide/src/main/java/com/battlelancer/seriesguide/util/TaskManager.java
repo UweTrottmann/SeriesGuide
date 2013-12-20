@@ -104,11 +104,7 @@ public class TaskManager {
     }
 
     public boolean isAddTaskRunning() {
-        if (mAddTask == null || mAddTask.getStatus() == AsyncTask.Status.FINISHED) {
-            return false;
-        } else {
-            return true;
-        }
+        return !(mAddTask == null || mAddTask.getStatus() == AsyncTask.Status.FINISHED);
     }
 
     /**
