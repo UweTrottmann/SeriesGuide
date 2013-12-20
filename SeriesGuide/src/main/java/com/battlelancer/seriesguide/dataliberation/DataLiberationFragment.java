@@ -17,6 +17,12 @@
 
 package com.battlelancer.seriesguide.dataliberation;
 
+import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.uwetrottmann.seriesguide.R;
+
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,12 +37,6 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.uwetrottmann.seriesguide.R;
 
 /**
  * One button export or import of the show database using a JSON file on
@@ -160,7 +160,7 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
         if (mProgressBar == null) {
             return;
         }
-        mProgressBar.setIndeterminate(values[0] == values[1]);
+        mProgressBar.setIndeterminate(values[0].equals(values[1]));
         mProgressBar.setMax(values[0]);
         mProgressBar.setProgress(values[1]);
     }

@@ -101,7 +101,7 @@ public class MigrationActivity extends BaseActivity
         if (mProgressBar == null) {
             return;
         }
-        mProgressBar.setIndeterminate(values[0] == values[1]);
+        mProgressBar.setIndeterminate(values[0].equals(values[1]));
         mProgressBar.setMax(values[0]);
         mProgressBar.setProgress(values[1]);
     }
