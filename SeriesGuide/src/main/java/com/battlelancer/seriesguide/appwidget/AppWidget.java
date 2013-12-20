@@ -74,11 +74,6 @@ public class AppWidget extends AppWidgetProvider {
         }
 
         @Override
-        public void onCreate() {
-            super.onCreate();
-        }
-
-        @Override
         public void onHandleIntent(Intent intent) {
             ComponentName me = new ComponentName(this, AppWidget.class);
             AppWidgetManager mgr = AppWidgetManager.getInstance(this);
