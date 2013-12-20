@@ -166,8 +166,6 @@ public class TvdbAddFragment extends AddFragment {
                 results = TheTVDB.searchShow(query, mContext);
             } catch (IOException e) {
                 return null;
-            } catch (SAXException e) {
-                return null;
             }
 
             return results;

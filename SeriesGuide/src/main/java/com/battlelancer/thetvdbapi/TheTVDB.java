@@ -158,8 +158,7 @@ public class TheTVDB {
      *
      * @return a List with SearchResult objects, max 100
      */
-    public static List<SearchResult> searchShow(String title, Context context) throws IOException,
-            SAXException {
+    public static List<SearchResult> searchShow(String title, Context context) throws IOException {
         String language = DisplaySettings.getContentLanguage(context);
 
         URL url;
