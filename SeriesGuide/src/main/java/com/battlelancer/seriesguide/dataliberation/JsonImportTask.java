@@ -17,10 +17,9 @@
 
 package com.battlelancer.seriesguide.dataliberation;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.os.AsyncTask;
-import android.widget.Toast;
+import com.google.myjson.Gson;
+import com.google.myjson.JsonParseException;
+import com.google.myjson.stream.JsonReader;
 
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
@@ -42,11 +41,13 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
-import com.google.myjson.Gson;
-import com.google.myjson.JsonParseException;
-import com.google.myjson.stream.JsonReader;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -243,12 +244,10 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         ContentValues[][] seasonsAndEpisodes = buildSeasonAndEpisodeBatches(show);
 
         // Insert all seasons
-        mContext.getContentResolver().bulkInsert(Seasons.CONTENT_URI,
-                (ContentValues[]) seasonsAndEpisodes[0]);
+        mContext.getContentResolver().bulkInsert(Seasons.CONTENT_URI, seasonsAndEpisodes[0]);
 
         // Insert all episodes
-        mContext.getContentResolver().bulkInsert(Episodes.CONTENT_URI,
-                (ContentValues[]) seasonsAndEpisodes[1]);
+        mContext.getContentResolver().bulkInsert(Episodes.CONTENT_URI, seasonsAndEpisodes[1]);
     }
 
     /**

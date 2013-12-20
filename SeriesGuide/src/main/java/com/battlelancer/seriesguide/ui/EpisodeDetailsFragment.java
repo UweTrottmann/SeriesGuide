@@ -309,7 +309,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     protected void onLoadImage(String imagePath, FrameLayout container) {
         if (mArtTask == null || mArtTask.getStatus() == AsyncTask.Status.FINISHED) {
-            mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity());
+            mArtTask = new FetchArtTask(imagePath, container, getActivity());
             AndroidUtils.executeAsyncTask(mArtTask, new Void[]{
                     null
             });
