@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Constants {
@@ -80,12 +81,12 @@ public class Constants {
 
         static {
             for (EpisodeSorting via : EpisodeSorting.values()) {
-                STRING_MAPPING.put(via.toString().toUpperCase(), via);
+                STRING_MAPPING.put(via.toString().toUpperCase(Locale.US), via);
             }
         }
 
         public static EpisodeSorting fromValue(String value) {
-            return STRING_MAPPING.get(value.toUpperCase());
+            return STRING_MAPPING.get(value.toUpperCase(Locale.US));
         }
     }
 
@@ -127,12 +128,12 @@ public class Constants {
 
         static {
             for (SeasonSorting via : SeasonSorting.values()) {
-                STRING_MAPPING.put(via.toString().toUpperCase(), via);
+                STRING_MAPPING.put(via.toString().toUpperCase(Locale.US), via);
             }
         }
 
         public static SeasonSorting fromValue(String value) {
-            return STRING_MAPPING.get(value.toUpperCase());
+            return STRING_MAPPING.get(value.toUpperCase(Locale.US));
         }
     }
 
