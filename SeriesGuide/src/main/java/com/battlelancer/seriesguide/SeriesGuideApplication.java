@@ -23,7 +23,6 @@ import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
-import com.squareup.okhttp.OkHttpClient;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.BuildConfig;
 import com.uwetrottmann.seriesguide.R;
@@ -39,16 +38,14 @@ import android.preference.PreferenceManager;
 import java.net.URL;
 
 /**
- * Initializes settings and services and on pre-ICS implements actions for low
- * memory state.
- * 
+ * Initializes settings and services and on pre-ICS implements actions for low memory state.
+ *
  * @author Uwe Trottmann
  */
 public class SeriesGuideApplication extends Application {
 
     /**
-     * The content authority used to identify the SeriesGuide
-     * {@link ContentProvider}
+     * The content authority used to identify the SeriesGuide {@link ContentProvider}
      */
     public static String CONTENT_AUTHORITY;
 
@@ -70,7 +67,7 @@ public class SeriesGuideApplication extends Application {
         // Analytics.
         // https://github.com/square/okhttp/issues/184
         // So set OkHttp to handle all connections
-        URL.setURLStreamHandlerFactory(new OkHttpClient());
+        URL.setURLStreamHandlerFactory(AndroidUtils.createOkHttpClient());
 
         // Ensure GA opt-out
         GoogleAnalytics.getInstance(this).setAppOptOut(AppSettings.isGaAppOptOut(this));
