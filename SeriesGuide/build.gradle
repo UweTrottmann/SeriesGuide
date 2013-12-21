@@ -58,6 +58,7 @@ dependencies {
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.+'
     compile 'com.squareup.okhttp:okhttp:1.2.1'
     compile 'com.squareup.retrofit:retrofit:1.3.0'
+    compile 'com.squareup:tape:1.1.1'
     compile 'de.greenrobot:eventbus:2.2.0'
 
     // OAuth 2.0
