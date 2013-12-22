@@ -435,13 +435,15 @@ public class ShowTools {
                 putSyncedShowPropertyValues(show, values);
 
                 // build update op
-                ContentProviderOperation op = ContentProviderOperation
-                        .newUpdate(SeriesContract.Shows.buildShowUri(show.getTvdbId()))
-                        .withValues(values).build();
-                batch.add(op);
+                if (values.size() > 0) {
+                    ContentProviderOperation op = ContentProviderOperation
+                            .newUpdate(SeriesContract.Shows.buildShowUri(show.getTvdbId()))
+                            .withValues(values).build();
+                    batch.add(op);
 
-                // clean up for re-use
-                values.clear();
+                    // clean up for re-use
+                    values.clear();
+                }
             }
 
             return batch;
