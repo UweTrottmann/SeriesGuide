@@ -8,6 +8,11 @@ All dates are in the European Central timezone.
 Version 11 *(in development)*
 -----------------------------
 
+#### 11-beta2 *(2013-12-22)*
+
+* FIX Crash when doing network operations in libssl due to issue with OkHttp (see commit c73265d240bdf168d02e704ecda43fa653068c49).
+* FIX Crash when downloading shows from hexagon, but no valid property values exist (all null).
+
 #### 11-beta1 *(2013-12-20)*
 
 * FEATURE SeriesGuide cloud experiment which can backup/sync your shows across devices. Episodes and movies are NOT yet included, use trakt.tv integration for that.
