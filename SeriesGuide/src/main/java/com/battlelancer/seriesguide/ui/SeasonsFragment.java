@@ -71,17 +71,25 @@ import de.greenrobot.event.EventBus;
 public class SeasonsFragment extends SherlockListFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnClickListener {
 
-    private static final int CONTEXT_FLAG_ALL_WATCHED_ID = 0;
+    private static final int CONTEXT_WATCHED_SHOW_ALL_ID = 0;
 
-    private static final int CONTEXT_FLAG_ALL_UNWATCHED_ID = 1;
+    private static final int CONTEXT_WATCHED_SHOW_NONE_ID = 1;
 
-    private static final int CONTEXT_FLAG_ALL_COLLECTED_ID = 2;
+    private static final int CONTEXT_COLLECTED_SHOW_ALL_ID = 2;
 
-    private static final int CONTEXT_FLAG_ALL_UNCOLLECTED_ID = 3;
+    private static final int CONTEXT_COLLECTED_SHOW_NONE_ID = 3;
 
-    private static final int CONTEXT_MANAGE_LISTS_ID = 4;
+    private static final int CONTEXT_WATCHED_SEASON_ALL_ID = 4;
 
-    private static  final int CONTEXT_FLAG_ALL_SKIPPED_ID = 5;
+    private static final int CONTEXT_WATCHED_SEASON_NONE_ID = 5;
+
+    private static final int CONTEXT_COLLECTED_SEASON_ALL_ID = 6;
+
+    private static final int CONTEXT_COLLECTED_SEASON_NONE_ID = 7;
+
+    private static final int CONTEXT_SKIPPED_SEASON_ALL_ID = 8;
+
+    private static final int CONTEXT_MANAGE_LISTS_SEASON_ID = 9;
 
     private static final int LOADER_ID = 1;
 
@@ -97,10 +105,15 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     private ImageView mButtonWatchedAll;
 
+    private boolean mWatchedAllEpisodes;
+
+    private boolean mCollectedAllEpisodes;
+
     /**
      * All values have to be integer.
      */
     public interface InitBundle {
+
         String SHOW_TVDBID = "show_tvdbid";
     }
 
@@ -116,64 +129,50 @@ public class SeasonsFragment extends SherlockListFragment implements
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.seasons_fragment, container, false);
 
         mButtonWatchedAll = (ImageView) v.findViewById(R.id.imageViewSeasonsWatchedToggle);
+        registerForContextMenu(mButtonWatchedAll);
 
         mButtonCollectedAll = (ImageView) v.findViewById(R.id.imageViewSeasonsCollectedToggle);
+        registerForContextMenu(mButtonCollectedAll);
 
         mTextViewRemaining = (TextView) v.findViewById(R.id.textViewSeasonsRemaining);
 
         return v;
     }
 
-    OnClickListener mListenerFlagAllWatched = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onFlagShowWatched(true);
-            fireTrackerEvent("Flag all watched (inline)");
-        }
-    };
-    OnClickListener mListenerFlagAllUnwatched = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onFlagShowWatched(false);
-            fireTrackerEvent("Flag all unwatched (inline)");
-        }
-    };
-    OnClickListener mListenerFlagAllCollected = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onFlagShowCollected(true);
-            fireTrackerEvent("Flag all collected (inline)");
-        }
-    };
-    OnClickListener mListenerFlagAllUncollected = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onFlagShowCollected(false);
-            fireTrackerEvent("Flag all uncollected (inline)");
-        }
-    };
-
-    private void setWatchedToggleState(Integer result) {
-        mButtonWatchedAll.setImageResource(result == 0 ? R.drawable.ic_ticked
-                : Utils.resolveAttributeToResourceId(getActivity().getTheme(), R.attr.drawableWatch));
-        mButtonWatchedAll
-                .setOnClickListener(result == 0 ? mListenerFlagAllUnwatched
-                        : mListenerFlagAllWatched);
-        CheatSheet.setup(mButtonWatchedAll, result == 0 ? R.string.unmark_all
+    private void setWatchedToggleState(int unwatchedEpisodes) {
+        mWatchedAllEpisodes = unwatchedEpisodes == 0;
+        mButtonWatchedAll.setImageResource(mWatchedAllEpisodes ? R.drawable.ic_ticked
+                : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                        R.attr.drawableWatch));
+        // set onClick listener not before here to avoid unexpected actions
+        mButtonWatchedAll.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().openContextMenu(v);
+            }
+        });
+        CheatSheet.setup(mButtonWatchedAll, mWatchedAllEpisodes ? R.string.unmark_all
                 : R.string.mark_all);
     }
 
-    private void setCollectedToggleState(Integer result) {
-        mButtonCollectedAll.setImageResource(result == 0 ? R.drawable.ic_collected
-                : Utils.resolveAttributeToResourceId(getActivity().getTheme(), R.attr.drawableCollect));
-        mButtonCollectedAll
-                .setOnClickListener(result == 0 ? mListenerFlagAllUncollected
-                        : mListenerFlagAllCollected);
-        CheatSheet.setup(mButtonCollectedAll, result == 0 ? R.string.uncollect_all
+    private void setCollectedToggleState(int uncollectedEpisodes) {
+        mCollectedAllEpisodes = uncollectedEpisodes == 0;
+        mButtonCollectedAll.setImageResource(mCollectedAllEpisodes ? R.drawable.ic_collected
+                : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                        R.attr.drawableCollect));
+        // set onClick listener not before here to avoid unexpected actions
+        mButtonCollectedAll.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().openContextMenu(v);
+            }
+        });
+        CheatSheet.setup(mButtonCollectedAll, mCollectedAllEpisodes ? R.string.uncollect_all
                 : R.string.collect_all);
     }
 
@@ -226,52 +225,98 @@ public class SeasonsFragment extends SherlockListFragment implements
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0, CONTEXT_FLAG_ALL_WATCHED_ID, 0, R.string.mark_all);
-        menu.add(0, CONTEXT_FLAG_ALL_UNWATCHED_ID, 1, R.string.unmark_all);
-        menu.add(0, CONTEXT_FLAG_ALL_SKIPPED_ID, 2, R.string.action_skip);
-        menu.add(0, CONTEXT_FLAG_ALL_COLLECTED_ID, 3, R.string.collect_all);
-        menu.add(0, CONTEXT_FLAG_ALL_UNCOLLECTED_ID, 4, R.string.uncollect_all);
-        menu.add(0, CONTEXT_MANAGE_LISTS_ID, 5, R.string.list_item_manage);
+
+        int viewId = v.getId();
+        if (viewId == R.id.imageViewSeasonsWatchedToggle) {
+            // display watch actions for show
+            if (mWatchedAllEpisodes) {
+                menu.add(0, CONTEXT_WATCHED_SHOW_NONE_ID, 0, R.string.unmark_all);
+            } else {
+                menu.add(0, CONTEXT_WATCHED_SHOW_ALL_ID, 0, R.string.mark_all);
+            }
+            return;
+        }
+        if (viewId == R.id.imageViewSeasonsCollectedToggle) {
+            // display collect actions for show
+            if (mCollectedAllEpisodes) {
+                menu.add(0, CONTEXT_COLLECTED_SHOW_NONE_ID, 0, R.string.uncollect_all);
+            } else {
+                menu.add(0, CONTEXT_COLLECTED_SHOW_ALL_ID, 0, R.string.collect_all);
+            }
+            return;
+        }
+        // display actions for season
+        menu.add(0, CONTEXT_WATCHED_SEASON_ALL_ID, 0, R.string.mark_all);
+        menu.add(0, CONTEXT_WATCHED_SEASON_NONE_ID, 1, R.string.unmark_all);
+        menu.add(0, CONTEXT_SKIPPED_SEASON_ALL_ID, 2, R.string.action_skip);
+        menu.add(0, CONTEXT_COLLECTED_SEASON_ALL_ID, 3, R.string.collect_all);
+        menu.add(0, CONTEXT_COLLECTED_SEASON_NONE_ID, 4, R.string.uncollect_all);
+        menu.add(0, CONTEXT_MANAGE_LISTS_SEASON_ID, 5, R.string.list_item_manage);
     }
 
     @Override
     public boolean onContextItemSelected(android.view.MenuItem item) {
+        switch (item.getItemId()) {
+            case CONTEXT_WATCHED_SHOW_ALL_ID: {
+                onFlagShowWatched(true);
+                fireTrackerEvent("Flag all watched (inline)");
+                return true;
+            }
+            case CONTEXT_WATCHED_SHOW_NONE_ID: {
+                onFlagShowWatched(false);
+                fireTrackerEvent("Flag all unwatched (inline)");
+                return true;
+            }
+            case CONTEXT_COLLECTED_SHOW_ALL_ID: {
+                onFlagShowCollected(true);
+                fireTrackerEvent("Flag all collected (inline)");
+                return true;
+            }
+            case CONTEXT_COLLECTED_SHOW_NONE_ID: {
+                onFlagShowCollected(false);
+                fireTrackerEvent("Flag all uncollected (inline)");
+                return true;
+            }
+        }
+
+        // need the season cursor for all of the following items
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
         Cursor season = (Cursor) mAdapter.getItem(info.position);
 
         switch (item.getItemId()) {
-            case CONTEXT_FLAG_ALL_WATCHED_ID: {
+            case CONTEXT_WATCHED_SEASON_ALL_ID: {
                 onFlagSeasonWatched(info.id, season.getInt(SeasonsQuery.COMBINED), true);
                 fireTrackerEventContextMenu("Flag all watched");
                 return true;
             }
-            case CONTEXT_FLAG_ALL_UNWATCHED_ID: {
+            case CONTEXT_WATCHED_SEASON_NONE_ID: {
                 onFlagSeasonWatched(info.id, season.getInt(SeasonsQuery.COMBINED), false);
                 fireTrackerEventContextMenu("Flag all unwatched");
                 return true;
             }
-            case CONTEXT_FLAG_ALL_COLLECTED_ID: {
+            case CONTEXT_COLLECTED_SEASON_ALL_ID: {
                 onFlagSeasonCollected(info.id, season.getInt(SeasonsQuery.COMBINED), true);
                 fireTrackerEventContextMenu("Flag all collected");
                 return true;
             }
-            case CONTEXT_FLAG_ALL_UNCOLLECTED_ID: {
+            case CONTEXT_COLLECTED_SEASON_NONE_ID: {
                 onFlagSeasonCollected(info.id, season.getInt(SeasonsQuery.COMBINED), false);
                 fireTrackerEventContextMenu("Flag all uncollected");
                 return true;
             }
-            case CONTEXT_FLAG_ALL_SKIPPED_ID: {
+            case CONTEXT_SKIPPED_SEASON_ALL_ID: {
                 onFlagSeasonSkipped(info.id, season.getInt(SeasonsQuery.COMBINED));
                 fireTrackerEventContextMenu("Flag all skipped");
                 return true;
             }
-            case CONTEXT_MANAGE_LISTS_ID: {
+            case CONTEXT_MANAGE_LISTS_SEASON_ID: {
                 fireTrackerEventContextMenu("Manage lists");
                 ListsDialogFragment.showListsDialog(String.valueOf(info.id), ListItemTypes.SEASON,
                         getFragmentManager());
                 return true;
             }
         }
+
         return super.onContextItemSelected(item);
     }
 
@@ -339,8 +384,7 @@ public class SeasonsFragment extends SherlockListFragment implements
     }
 
     /**
-     * Changes the seasons episodes watched flags, updates the status label of
-     * the season.
+     * Changes the seasons episodes watched flags, updates the status label of the season.
      */
     private void onFlagSeasonWatched(long seasonId, int seasonNumber, boolean isWatched) {
         new FlagTask(getActivity(), getShowId())
@@ -359,8 +403,8 @@ public class SeasonsFragment extends SherlockListFragment implements
     }
 
     /**
-     * Changes the watched flag for all episodes of the given show, updates the
-     * status labels of all seasons.
+     * Changes the watched flag for all episodes of the given show, updates the status labels of all
+     * seasons.
      */
     private void onFlagShowWatched(boolean isWatched) {
         new FlagTask(getActivity(), getShowId())
@@ -369,8 +413,8 @@ public class SeasonsFragment extends SherlockListFragment implements
     }
 
     /**
-     * Changes the collected flag for all episodes of the given show, updates
-     * the status labels of all seasons.
+     * Changes the collected flag for all episodes of the given show, updates the status labels of
+     * all seasons.
      */
     private void onFlagShowCollected(boolean isCollected) {
         new FlagTask(getActivity(), getShowId())
@@ -379,8 +423,8 @@ public class SeasonsFragment extends SherlockListFragment implements
     }
 
     /**
-     * Update unwatched stats for all seasons of this fragments show. Requeries
-     * the list afterwards.
+     * Update unwatched stats for all seasons of this fragments show. Requeries the list
+     * afterwards.
      */
     protected void updateUnwatchedCounts() {
         Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()));
@@ -388,6 +432,7 @@ public class SeasonsFragment extends SherlockListFragment implements
     }
 
     private class UpdateUnwatchThread extends Thread {
+
         private String mSeasonId;
 
         private String mShowId;
@@ -417,9 +462,9 @@ public class SeasonsFragment extends SherlockListFragment implements
                 // update all seasons of this show, start with the most recent
                 // one
                 final Cursor seasons = context.getContentResolver().query(
-                        Seasons.buildSeasonsOfShowUri(mShowId), new String[] {
-                            Seasons._ID
-                        }, null, null, Seasons.COMBINED + " DESC");
+                        Seasons.buildSeasonsOfShowUri(mShowId), new String[]{
+                        Seasons._ID
+                }, null, null, Seasons.COMBINED + " DESC");
                 while (seasons.moveToNext()) {
                     String seasonId = seasons.getString(0);
                     DBUtils.updateUnwatchedCount(context, seasonId, prefs);
@@ -538,7 +583,8 @@ public class SeasonsFragment extends SherlockListFragment implements
         sortDialog.show(fm, "fragment_sort");
     }
 
-    private final OnSharedPreferenceChangeListener mPrefsListener = new OnSharedPreferenceChangeListener() {
+    private final OnSharedPreferenceChangeListener mPrefsListener
+            = new OnSharedPreferenceChangeListener() {
 
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (DisplaySettings.KEY_SEASON_SORT_ORDER.equals(key)) {
