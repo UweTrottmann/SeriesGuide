@@ -258,10 +258,9 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     }
 
                     if (com.jakewharton.trakt.enumerations.Status.SUCCESS.equals(r.status)) {
-                        r.message = mContext
-                                .getString(R.string.checkin_success_trakt,
-                                        (r.show != null ? r.show.title + " " : "")
-                                                + Utils.getEpisodeNumber(mContext, season, episode));
+                        r.message = mContext.getString(R.string.checkin_success_trakt,
+                                (r.show != null ? r.show.title + " " : "")
+                                        + Utils.getEpisodeNumber(mContext, season, episode));
                     }
 
                     break;
@@ -281,9 +280,9 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     }
 
                     if (com.jakewharton.trakt.enumerations.Status.SUCCESS.equals(r.status)) {
-                        r.message = mContext
-                                .getString(R.string.checkin_success_trakt,
-                                        (r.movie != null ? r.movie.title + " " : ""));
+                        r.message = mContext.getString(R.string.checkin_success_trakt,
+                                (r.movie != null ?
+                                        r.movie.title : mContext.getString(R.string.unknown)));
                     }
 
                     break;
