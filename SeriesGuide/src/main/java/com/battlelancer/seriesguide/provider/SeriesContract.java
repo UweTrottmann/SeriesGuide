@@ -231,6 +231,40 @@ public class SeriesContract {
         int EPISODE = 3;
     }
 
+    interface MoviesColumns {
+
+        String TITLE = "movies_title";
+
+        String IMDB_ID = "movies_imdbid";
+
+        String TMDB_ID = "movies_tmdbid";
+
+        String POSTER = "movies_poster";
+
+        String GENRES = "movies_genres";
+
+        String OVERVIEW = "movies_overview";
+
+        String RELEASED = "movies_released";
+
+        String RUNTIME = "movies_runtime";
+
+        String TRAILER = "movies_trailer";
+
+        String CERTIFICATION = "movies_certification";
+
+        String IN_COLLECTION = "movies_incollection";
+
+        String IN_WATCHLIST = "movies_inwatchlist";
+
+        String PLAYS = "movies_plays";
+
+        String WATCHED = "movies_watched";
+
+        String LAST_UPDATED = "movies_last_updated";
+
+    }
+
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://"
             + SeriesGuideApplication.CONTENT_AUTHORITY);
 
