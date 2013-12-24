@@ -109,7 +109,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
         mAdapter = new MoviesAdapter(getActivity(), this);
 
         // setup grid view
-        GridView list = (GridView) getView().findViewById(R.id.gridViewMovies);
+        GridView list = (GridView) getView().findViewById(android.R.id.list);
         list.setAdapter(mAdapter);
         list.setOnItemClickListener(this);
         list.setEmptyView(mEmptyView);

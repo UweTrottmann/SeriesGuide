@@ -164,7 +164,7 @@ public class ShowsFragment extends SherlockFragment implements
         mAdapter = new ShowsAdapter(getActivity(), null, 0, resIdStar, resIdStarZero, this);
 
         // setup grid view
-        mGrid = (GridView) getView().findViewById(R.id.gridViewShows);
+        mGrid = (GridView) getView().findViewById(android.R.id.list);
         mGrid.setAdapter(mAdapter);
         mGrid.setOnItemClickListener(this);
         registerForContextMenu(mGrid);

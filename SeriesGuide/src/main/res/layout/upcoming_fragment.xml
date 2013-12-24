@@ -14,15 +14,17 @@
         android:paddingBottom="8dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="10dp" />
+        android:paddingTop="10dp"
+        android:scrollbarStyle="outsideOverlay" />
 
     <TextView
         android:id="@+id/emptyViewUpcoming"
-        android:layout_width="200dp"
+        android:layout_width="@dimen/empty_view_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
         android:padding="10dp"
+        android:textAppearance="@style/TextAppearance.Light"
         android:visibility="gone" />
 
 </FrameLayout>

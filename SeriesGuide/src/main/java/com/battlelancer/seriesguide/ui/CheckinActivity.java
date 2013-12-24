@@ -107,7 +107,7 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
         mAdapter = new CheckinAdapter(this, null, 0);
 
         // setup grid view
-        GridView list = (GridView) findViewById(R.id.gridViewCheckinShows);
+        GridView list = (GridView) findViewById(android.R.id.list);
         list.setAdapter(mAdapter);
         list.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {

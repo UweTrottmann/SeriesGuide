@@ -72,7 +72,7 @@ public class MoviesWatchListFragment extends SherlockFragment implements
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.movies_watchlist_fragment, container, false);
 
-        mGridView = (GridView) v.findViewById(R.id.gridViewMoviesWatchlist);
+        mGridView = (GridView) v.findViewById(android.R.id.list);
         mEmptyView = (TextView) v.findViewById(R.id.textViewMoviesWatchlistEmpty);
         mGridView.setEmptyView(mEmptyView);
         mGridView.setOnItemClickListener(this);
