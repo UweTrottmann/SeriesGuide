@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.SeriesGuide.RtlGridViewItem"
     android:layout_width="@dimen/movie_item_width"
     android:layout_height="@dimen/movie_item_height"
     android:background="?attr/drawableCardBackground"
@@ -43,6 +44,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:textAppearance="@style/TextAppearance.Primary"
+            android:textAlignment="viewStart"
             tools:text="Awesome Movie Title" />
 
         <TextView
@@ -55,6 +57,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.XSmall"
+            android:textAlignment="viewStart"
             tools:text="November 13, 2013" />
     </RelativeLayout>
 
