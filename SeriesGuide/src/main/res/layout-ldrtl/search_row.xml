@@ -23,6 +23,7 @@
         android:layout_toStartOf="@id/imageViewWatchedStatus"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.XSmall"
+        android:textAlignment="viewStart"
         android:textStyle="bold"
         tools:text="@string/show" />
 
@@ -34,6 +35,7 @@
         android:layout_below="@id/textViewShowTitle"
         android:layout_toStartOf="@id/imageViewWatchedStatus"
         android:textAppearance="@style/TextAppearance.Medium.Light"
+        android:textAlignment="viewStart"
         tools:text="@string/episode" />
 
     <TextView
@@ -44,6 +46,7 @@
         android:paddingBottom="@dimen/inline_padding"
         android:paddingTop="@dimen/inline_padding"
         android:text="@string/no_nextepisode"
-        android:textAppearance="@style/TextAppearance.Small.Dim" />
+        android:textAppearance="@style/TextAppearance.Small.Dim"
+        android:textAlignment="viewStart" />
 
 </RelativeLayout>
