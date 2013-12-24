@@ -27,6 +27,7 @@
             android:layout_toStartOf="@+id/textViewEpisodeNumber"
             android:layout_toEndOf="@id/watchedBoxEpisode"
             android:textAppearance="@style/TextAppearance.Medium.Light"
+            android:textAlignment="viewStart"
             tools:text="Episode Title" />
 
         <TextView
@@ -69,8 +70,8 @@
             android:layout_toEndOf="@id/watchedBoxEpisode"
             android:paddingBottom="@dimen/default_padding"
             android:text="@string/episode_number_absolute"
-
-            android:textAppearance="@style/TextAppearance.XSmall.Dim" />
+            android:textAppearance="@style/TextAppearance.XSmall.Dim"
+            android:textAlignment="viewStart" />
 
         <ImageView
             android:id="@+id/imageViewCollected"

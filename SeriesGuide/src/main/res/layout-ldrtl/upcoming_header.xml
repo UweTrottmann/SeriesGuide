@@ -12,7 +12,8 @@
         android:gravity="center_vertical"
         android:paddingStart="@dimen/default_padding"
         android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.Small.Label" />
+        android:textAppearance="@style/TextAppearance.Small.Label"
+        android:textAlignment="viewStart" />
 
     <View
         android:layout_width="match_parent"

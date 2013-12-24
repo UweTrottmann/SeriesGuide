@@ -70,6 +70,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.Medium.Light"
+            android:textAlignment="viewStart"
             tools:text="@string/show" />
 
         <TextView

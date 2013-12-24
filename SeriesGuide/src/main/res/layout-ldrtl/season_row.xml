@@ -12,8 +12,8 @@
         android:layout_marginStart="@dimen/default_padding"
         android:layout_toStartOf="@+id/textViewSeasonProgress"
         android:paddingTop="@dimen/default_padding"
-
         android:textAppearance="@style/TextAppearance.Medium.Light"
+        android:textAlignment="viewStart"
         tools:text="@string/season_number" />
 
     <ImageView
@@ -66,9 +66,9 @@
         android:layout_toStartOf="@id/imageViewContextMenu"
         android:layout_toEndOf="@id/imageViewSeasonSkipped"
         android:paddingBottom="@dimen/default_padding"
-
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.XSmall"
+        android:textAlignment="viewStart"
         tools:text="10 episodes not watched yet" />
 
 </RelativeLayout>
