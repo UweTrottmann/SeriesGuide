@@ -201,8 +201,8 @@ public class TraktAddFragment extends AddFragment {
                                 shows = manager.recommendationsService().shows();
                                 break;
                             case AddPagerAdapter.LIBRARY_TAB_POSITION:
-                                shows = manager.userService()
-                                        .libraryShowsAll(TraktSettings.getUsername(mContext));
+                                shows = manager.userService().libraryShowsAllExtended(
+                                        TraktSettings.getUsername(mContext));
                                 break;
                             case AddPagerAdapter.WATCHLIST_TAB_POSITION:
                                 shows = manager.userService()
