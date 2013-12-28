@@ -29,7 +29,8 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.Small.Dim" />
+            android:textAppearance="@style/TextAppearance.Small.Dim"
+            android:textAlignment="viewStart" />
 
         <TextView
             android:id="@+id/textViewUpcomingEpisode"
@@ -40,7 +41,8 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/no_nextepisode"
-            android:textAppearance="@style/TextAppearance.Medium.Light" />
+            android:textAppearance="@style/TextAppearance.Medium.Light"
+            android:textAlignment="viewStart" />
 
         <TextView
             android:id="@+id/textViewUpcomingMeta"
@@ -52,7 +54,8 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@string/norating"
-            android:textAppearance="@style/TextAppearance.Small.Light" />
+            android:textAppearance="@style/TextAppearance.Small.Light"
+            android:textAlignment="viewStart" />
     </RelativeLayout>
 
     <include layout="@layout/divider_vertical" />

@@ -32,8 +32,8 @@
         android:layout_marginStart="@dimen/default_padding"
         android:layout_marginEnd="@dimen/default_padding"
         android:text="@string/app_name"
-
         android:textAppearance="@style/TextAppearance.Large.Light"
+        android:textAlignment="viewStart"
         android:textIsSelectable="true" />
 
     <TextView

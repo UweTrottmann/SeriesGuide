@@ -28,6 +28,7 @@
                 android:paddingEnd="@dimen/default_padding"
                 android:text="@string/action_shows_add"
                 android:textAppearance="@style/TextAppearance.Large.Light"
+                android:textAlignment="viewStart"
                 android:textIsSelectable="true" />
 
             <TextView
