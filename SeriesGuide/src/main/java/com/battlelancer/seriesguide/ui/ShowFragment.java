@@ -42,17 +42,22 @@ import android.widget.TextView;
 
 import de.greenrobot.event.EventBus;
 
-public class ShowInfoFragment extends SherlockFragment implements LoaderCallbacks<Series> {
+/**
+ *
+ */
+public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Series> {
 
     public interface InitBundle {
+
         String SHOW_TVDBID = "tvdbid";
     }
 
     private static final String TAG = "Show Info";
-    private static final int LOADER_ID = R.layout.show_info;
 
-    public static ShowInfoFragment newInstance(int showTvdbId) {
-        ShowInfoFragment f = new ShowInfoFragment();
+    private static final int LOADER_ID = R.layout.fragment_show;
+
+    public static ShowFragment newInstance(int showTvdbId) {
+        ShowFragment f = new ShowFragment();
 
         Bundle args = new Bundle();
         args.putInt(InitBundle.SHOW_TVDBID, showTvdbId);
@@ -62,11 +67,13 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
     }
 
     private Series mShow;
+
     private TraktSummaryTask mTraktTask;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.show_info, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_show, container, false);
     }
 
     @Override
@@ -139,7 +146,8 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
     }
 
     public void onEvent(TraktActionCompleteEvent event) {
-        if (event.mTraktTaskArgs.getInt(TraktTask.InitBundle.TRAKTACTION) == TraktAction.RATE_SHOW.index) {
+        if (event.mTraktTaskArgs.getInt(TraktTask.InitBundle.TRAKTACTION)
+                == TraktAction.RATE_SHOW.index) {
             onLoadTraktRatings(false);
         }
     }
@@ -149,38 +157,8 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
             return;
         }
 
-        TextView seriesname = (TextView) getView().findViewById(R.id.title);
-        TextView overview = (TextView) getView().findViewById(R.id.TextViewShowInfoOverview);
-        TextView info = (TextView) getView().findViewById(R.id.showInfo);
-        TextView status = (TextView) getView().findViewById(R.id.showStatus);
-
-        // Name
-        seriesname.setText(mShow.getTitle());
-
-        // Overview
-        if (TextUtils.isEmpty(mShow.getOverview())) {
-            overview.setText("");
-        } else {
-            overview.setText(mShow.getOverview());
-        }
-
-        // air time
-        StringBuilder infoText = new StringBuilder();
-        if (!TextUtils.isEmpty(mShow.getAirsDayOfWeek()) && mShow.getAirsTime() != -1) {
-            String[] values = Utils.parseMillisecondsToTime(mShow.getAirsTime(),
-                    mShow.getAirsDayOfWeek(), getActivity());
-            infoText.append(values[1])
-                    .append(" ")
-                    .append(values[0])
-                    .append(" ");
-        }
-        // network
-        if (mShow.getNetwork().length() != 0) {
-            infoText.append(getString(R.string.show_on_network, mShow.getNetwork()));
-        }
-        info.setText(infoText);
-
-        // Running state
+        // status
+        TextView status = (TextView) getView().findViewById(R.id.textViewShowStatus);
         if (mShow.getStatus() == 1) {
             status.setTextColor(getResources().getColor(Utils.resolveAttributeToResourceId(
                     getActivity().getTheme(), R.attr.textColorSgGreen)));
@@ -190,21 +168,40 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
             status.setText(getString(R.string.show_isnotalive));
         }
 
+        // release time
+        TextView releaseTime = (TextView) getView().findViewById(R.id.textViewShowReleaseTime);
+        if (!TextUtils.isEmpty(mShow.getAirsDayOfWeek()) && mShow.getAirsTime() != -1) {
+            String[] values = Utils.parseMillisecondsToTime(mShow.getAirsTime(),
+                    mShow.getAirsDayOfWeek(), getActivity());
+            releaseTime.setText(values[1] + " " + values[0]);
+        } else {
+            releaseTime.setText(null);
+        }
+
+        // runtime
+        TextView runtime = (TextView) getView().findViewById(R.id.textViewShowRuntime);
+        runtime.setText(getString(R.string.runtime_minutes, mShow.getRuntime()));
+
+        // network
+        TextView network = (TextView) getView().findViewById(R.id.textViewShowNetwork);
+        network.setText(TextUtils.isEmpty(mShow.getNetwork()) ? null : mShow.getNetwork());
+
+        // overview
+        TextView overview = (TextView) getView().findViewById(R.id.textViewShowOverview);
+        overview.setText(TextUtils.isEmpty(mShow.getOverview()) ? null : mShow.getOverview());
+
         // first airdate
         long airtime = Utils.buildEpisodeAirtime(mShow.getFirstAired(), mShow.getAirsTime());
-        Utils.setValueOrPlaceholder(getView().findViewById(R.id.TextViewShowInfoFirstAirdate),
+        Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewShowFirstAirdate),
                 Utils.formatToDate(airtime, getActivity()));
 
         // Others
-        Utils.setValueOrPlaceholder(getView().findViewById(R.id.TextViewShowInfoActors),
+        Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewShowActors),
                 Utils.splitAndKitTVDBStrings(mShow.getActors()));
-        Utils.setValueOrPlaceholder(getView().findViewById(R.id.TextViewShowInfoContentRating),
+        Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewShowContentRating),
                 mShow.getContentRating());
-        Utils.setValueOrPlaceholder(getView().findViewById(R.id.TextViewShowInfoGenres),
+        Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewShowGenres),
                 Utils.splitAndKitTVDBStrings(mShow.getGenres()));
-        Utils.setValueOrPlaceholder(getView().findViewById(R.id.TextViewShowInfoRuntime),
-                mShow.getRuntime()
-                        + " " + getString(R.string.show_airtimeunit));
 
         // TVDb rating
         String ratingText = mShow.getRating();
@@ -223,7 +220,7 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
         CheatSheet.setup(ratings, R.string.menu_rate_show);
 
         // Last edit date
-        TextView lastEdit = (TextView) getView().findViewById(R.id.lastEdit);
+        TextView lastEdit = (TextView) getView().findViewById(R.id.textViewShowLastEdit);
         long lastEditRaw = mShow.getLastEdit();
         if (lastEditRaw > 0) {
             lastEdit.setText(DateUtils.formatDateTime(getActivity(), lastEditRaw * 1000,
@@ -274,8 +271,9 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
         });
 
         // Poster
-        final View posterContainer = getView().findViewById(R.id.containerShowInfoPoster);
-        final ImageView posterView = (ImageView) posterContainer.findViewById(R.id.imageViewShowInfoPoster);
+        final View posterContainer = getView().findViewById(R.id.containerShowPoster);
+        final ImageView posterView = (ImageView) posterContainer
+                .findViewById(R.id.imageViewShowPoster);
         final String imagePath = mShow.getPoster();
         ImageProvider.getInstance(getActivity()).loadImage(posterView, imagePath, false);
         posterContainer.setOnClickListener(new View.OnClickListener() {
@@ -283,12 +281,19 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
             public void onClick(View v) {
                 Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
                 fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH, imagePath);
-                fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_TITLE, mShow.getTitle());
+                fullscreen
+                        .putExtra(FullscreenImageActivity.InitBundle.IMAGE_TITLE, mShow.getTitle());
                 ActivityCompat.startActivity(getActivity(), fullscreen,
                         ActivityOptionsCompat
-                                .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight()).toBundle());
+                                .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
+                                .toBundle());
             }
         });
+
+        // background poster
+        ImageView background = (ImageView) getView()
+                .findViewById(R.id.imageViewShowPosterBackground);
+        Utils.setPosterBackground(background, imagePath, getActivity());
 
         // trakt ratings
         onLoadTraktRatings(true);

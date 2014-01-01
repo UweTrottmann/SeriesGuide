@@ -95,9 +95,9 @@
     </style>
 
     <!-- Widget styles -->
-    <style name="Widget"></style>
+    <style name="Widget"/>
 
-    <style name="Widget.SeriesGuide" parent="Widget"></style>
+    <style name="Widget.SeriesGuide" parent="Widget"/>
 
     <!-- Buttons -->
     <style name="Widget.SeriesGuide.Button" parent="android:Widget.Button">
@@ -148,6 +148,19 @@
     <style name="Widget.SeriesGuide.EditText" parent="android:Widget.EditText">
         <item name="android:background">@drawable/edit_text_sg</item>
         <item name="android:textColor">@color/text_primary_sg</item>
+    </style>
+
+    <!-- TextView -->
+    <style name="Widget.SeriesGuide.TextView"/>
+
+    <style name="Widget.SeriesGuide.TextView.ShowLabels">
+        <item name="android:layout_marginLeft">@dimen/default_padding</item>
+        <item name="android:layout_marginRight">@dimen/default_padding</item>
+        <item name="android:layout_marginTop">@dimen/default_padding</item>
+        <item name="android:textIsSelectable" tools:targetApi="Honeycomb">true</item>
+        <item name="android:textAppearance">@style/TextAppearance.Medium.Light</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
     </style>
 
     <!-- ProgressBar -->

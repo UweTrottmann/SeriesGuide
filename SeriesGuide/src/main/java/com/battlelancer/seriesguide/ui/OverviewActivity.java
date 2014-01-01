@@ -155,7 +155,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     }
 
     private void setupPanes() {
-        Fragment showsFragment = ShowInfoFragment.newInstance(mShowId);
+        Fragment showsFragment = ShowFragment.newInstance(mShowId);
         FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
         ft1.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         ft1.replace(R.id.fragment_show, showsFragment);
@@ -182,8 +182,8 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         TabStripAdapter tabsAdapter = new TabStripAdapter(
                 getSupportFragmentManager(), this, pager, tabs);
         Bundle argsShow = new Bundle();
-        argsShow.putInt(ShowInfoFragment.InitBundle.SHOW_TVDBID, mShowId);
-        tabsAdapter.addTab(R.string.show, ShowInfoFragment.class, argsShow);
+        argsShow.putInt(ShowFragment.InitBundle.SHOW_TVDBID, mShowId);
+        tabsAdapter.addTab(R.string.show, ShowFragment.class, argsShow);
 
         tabsAdapter.addTab(R.string.description_overview, OverviewFragment.class, getIntent()
                 .getExtras());
