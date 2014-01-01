@@ -1,93 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
-
-    <ScrollView
-        android:id="@+id/showinfo_container"
+    <LinearLayout
+        style="@style/DefaultPadding.Page"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
+        android:orientation="vertical">
 
-        <LinearLayout
-            style="@style/DefaultPadding.Page"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingStart="@dimen/default_padding"
-            android:paddingEnd="@dimen/default_padding">
+            android:layout_height="153dp"
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginBottom="@dimen/default_padding"
+            android:background="?attr/drawableCardBackground">
+
+            <FrameLayout
+                android:id="@+id/containerShowPoster"
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                android:foreground="?attr/custom_list_selector">
+
+                <ImageView
+                    android:id="@+id/imageViewShowPoster"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/description_poster"
+                    android:scaleType="centerCrop" />
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/imageViewShowPosterBackground"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_toEndOf="@+id/containerShowPoster"
+                android:scaleType="centerCrop" />
 
             <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
+                android:id="@+id/textViewShowStatus"
+                style="@style/Widget.SeriesGuide.TextView.ShowLabels"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_padding"
-                android:layout_marginEnd="@dimen/default_padding"
-                android:textAppearance="@style/TextAppearance.Large.Light"
-                android:textIsSelectable="true"
-                tools:text="Show title" />
+                android:layout_marginTop="@dimen/inline_padding"
+                android:layout_toEndOf="@+id/containerShowPoster"
+                android:textAllCaps="true"
+                tools:text="Continuing" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textViewShowReleaseTime"
+                style="@style/Widget.SeriesGuide.TextView.ShowLabels"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_padding">
+                android:layout_below="@+id/textViewShowStatus"
+                android:layout_toEndOf="@+id/containerShowPoster"
+                tools:text="Sat 08:00 PM" />
 
-                <FrameLayout
-                    android:id="@+id/containerShowInfoPoster"
-                    android:layout_width="84dp"
-                    android:layout_height="123dp"
-                    android:foreground="?attr/custom_list_selector">
+            <TextView
+                android:id="@+id/textViewShowNetwork"
+                style="@style/Widget.SeriesGuide.TextView.ShowLabels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewShowReleaseTime"
+                android:layout_toEndOf="@+id/containerShowPoster"
+                tools:text="YouTube" />
 
-                    <ImageView
-                        android:id="@+id/imageViewShowInfoPoster"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:contentDescription="@string/description_poster"
-                        android:scaleType="centerCrop" />
-                </FrameLayout>
+            <TextView
+                android:id="@+id/textViewShowRuntime"
+                style="@style/Widget.SeriesGuide.TextView.ShowLabels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewShowNetwork"
+                android:layout_toEndOf="@+id/containerShowPoster"
+                tools:text="60 min" />
+        </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/showStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/default_padding"
-                    android:layout_marginTop="@dimen/inline_padding"
-                    android:layout_toEndOf="@+id/containerShowInfoPoster"
-                    android:textAllCaps="true"
-                    android:textAppearance="@style/TextAppearance.Light"
-                    android:textIsSelectable="true"
-                    tools:text="Status" />
+        <include layout="@layout/ratingbar_narrow" />
 
-                <TextView
-                    android:id="@+id/showInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/showStatus"
-                    android:layout_marginStart="@dimen/default_padding"
-                    android:layout_marginTop="@dimen/default_padding"
-                    android:layout_toEndOf="@+id/containerShowInfoPoster"
-                    android:textAppearance="@style/TextAppearance.Light"
-                    android:textIsSelectable="true"
-                    tools:text="Show Info" />
-            </RelativeLayout>
+        <include layout="@layout/fragment_show_meta" />
 
-            <include layout="@layout/ratingbar_narrow" />
-
-            <include layout="@layout/fragment_show_meta" />
-
-            <include
-                android:id="@+id/buttonbar_ref"
-                layout="@layout/buttonbar_services_stacked"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </ScrollView>
-
-</RelativeLayout>
+        <include
+            layout="@layout/buttonbar_services_stacked"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</ScrollView>
