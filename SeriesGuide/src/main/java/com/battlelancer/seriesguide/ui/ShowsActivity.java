@@ -30,8 +30,8 @@ import com.battlelancer.seriesguide.billing.Inventory;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.sync.SyncUtils;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -102,7 +102,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
         setupNavDrawer();
 
         // Set up a sync account if needed
-        SyncUtils.createSyncAccount(this);
+        if (!AccountUtils.isAccountExists(this)) {
+            AccountUtils.createAccount(this);
+        }
 
         onUpgrade();
 
@@ -561,7 +563,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
                  */
                 @Override
                 public void run() {
-                    Account account = SyncUtils.getSyncAccount(ShowsActivity.this);
+                    Account account = AccountUtils.getAccount(ShowsActivity.this);
                     if (account == null) {
                         // GetAccount() returned an invalid value. This
                         // shouldn't happen.

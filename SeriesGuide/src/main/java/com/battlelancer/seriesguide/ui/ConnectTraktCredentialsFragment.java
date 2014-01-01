@@ -225,6 +225,9 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment {
                             return;
                         }
 
+                        // store password within our account in AccountManager
+                        TraktSettings.storePassword(context, passwordHash);
+
                         // try to encrypt the password before storing it
                         String passwordEncr = SimpleCrypto.encrypt(passwordHash, context);
                         if (passwordEncr == null) {

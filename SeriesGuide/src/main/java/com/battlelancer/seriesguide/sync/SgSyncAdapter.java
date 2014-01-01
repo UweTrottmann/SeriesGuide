@@ -139,7 +139,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Schedules a sync with the given arguments.
      */
     private static void requestSync(Context context, Bundle args) {
-        final Account account = SyncUtils.getSyncAccount(context);
+        final Account account = AccountUtils.getAccount(context);
         ContentResolver.requestSync(account,
                 SeriesGuideApplication.CONTENT_AUTHORITY, args);
     }
@@ -148,7 +148,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Set whether or not the provider is synced when it receives a network tickle.
      */
     public static void setSyncAutomatically(Context context, boolean sync) {
-        final Account account = SyncUtils.getSyncAccount(context);
+        final Account account = AccountUtils.getAccount(context);
         ContentResolver.setSyncAutomatically(account, SeriesGuideApplication.CONTENT_AUTHORITY,
                 sync);
     }
@@ -157,7 +157,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Check if the provider should be synced when a network tickle is received.
      */
     public static boolean isSyncAutomatically(Context context) {
-        return ContentResolver.getSyncAutomatically(SyncUtils.getSyncAccount(context),
+        return ContentResolver.getSyncAutomatically(AccountUtils.getAccount(context),
                 SeriesGuideApplication.CONTENT_AUTHORITY);
     }
 
@@ -167,7 +167,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      */
     public static boolean isSyncActive(Context context, boolean isDisplayWarning) {
         boolean isSyncActive = ContentResolver.isSyncActive(
-                SyncUtils.getSyncAccount(context),
+                AccountUtils.getAccount(context),
                 SeriesGuideApplication.CONTENT_AUTHORITY);
         if (isSyncActive && isDisplayWarning) {
             Toast.makeText(context, R.string.update_inprogress, Toast.LENGTH_LONG).show();
