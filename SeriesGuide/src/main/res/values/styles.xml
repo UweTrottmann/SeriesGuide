@@ -154,13 +154,13 @@
     <style name="Widget.SeriesGuide.TextView"/>
 
     <style name="Widget.SeriesGuide.TextView.ShowLabels">
-        <item name="android:maxLines">1</item>
-        <item name="android:ellipsize">end</item>
         <item name="android:layout_marginLeft">@dimen/default_padding</item>
         <item name="android:layout_marginRight">@dimen/default_padding</item>
         <item name="android:layout_marginTop">@dimen/default_padding</item>
         <item name="android:textIsSelectable" tools:targetApi="Honeycomb">true</item>
         <item name="android:textAppearance">@style/TextAppearance.Medium.Light</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
     </style>
 
     <!-- ProgressBar -->
