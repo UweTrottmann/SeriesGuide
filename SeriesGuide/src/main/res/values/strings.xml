@@ -137,7 +137,6 @@
     <string name="episode_directors">Directors</string>
     <string name="episode_gueststars">Guest Stars</string>
     <string name="episode_writers">Writers</string>
-    <string name="show_airtimeunit">min</string>
     <string name="show_isalive">Continuing</string>
     <string name="show_isnotalive">Ended</string>
     <string name="lastEdit">Last Edit // TVDb</string>
@@ -152,6 +151,7 @@
     <string name="now">now</string>
     <string name="daily">Daily</string>
     <string name="release_date_and_day">%1$s (%2$s)</string>
+    <string name="runtime_minutes">%s min</string>
 
     <!-- Flagging -->
     <string name="mark_episode">Watched episode</string>

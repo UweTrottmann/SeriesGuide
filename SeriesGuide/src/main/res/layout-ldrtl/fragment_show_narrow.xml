@@ -80,7 +80,7 @@
 
             <include layout="@layout/ratingbar_narrow" />
 
-            <include layout="@layout/show_info_metamore" />
+            <include layout="@layout/fragment_show_meta" />
 
             <include
                 android:id="@+id/buttonbar_ref"
