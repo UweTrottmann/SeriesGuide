@@ -61,8 +61,8 @@
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/inline_padding"
             android:contentDescription="@string/love"
-            android:padding="4dp"
-            android:src="@drawable/trakt_love_large" />
+            android:padding="6dp"
+            android:src="@drawable/trakt_heart" />
 
         <TextView
             android:id="@+id/textViewRatingsTraktValue"
