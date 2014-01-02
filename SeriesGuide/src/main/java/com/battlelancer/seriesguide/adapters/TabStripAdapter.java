@@ -66,17 +66,25 @@ public class TabStripAdapter extends FragmentPagerAdapter {
     }
 
     /**
-     * Adds a new tab. Make sure to call {@link #updateTabs} after you have added them all.
+     * Adds a new tab. Make sure to call {@link #notifyTabsChanged} after you have added them all.
      */
     public void addTab(int titleRes, Class<?> fragmentClass, Bundle args) {
-        TabInfo tab = new TabInfo(fragmentClass, args, titleRes);
-        mTabs.add(tab);
+        mTabs.add(new TabInfo(fragmentClass, args, titleRes));
+    }
+
+    /**
+     * Update an existing tab. Make sure to call {@link #notifyTabsChanged} afterwards.
+     */
+    public void updateTab(int titleRes, Class<?> fragmentClass, Bundle args, int position) {
+        if (position >= 0 && position < mTabs.size()) {
+            mTabs.set(position, new TabInfo(fragmentClass, args, titleRes));
+        }
     }
 
     /**
      * Notifies the adapter and tab strip that the tabs have changed.
      */
-    public void updateTabs() {
+    public void notifyTabsChanged() {
         notifyDataSetChanged();
         mTabStrip.notifyDataSetChanged();
     }

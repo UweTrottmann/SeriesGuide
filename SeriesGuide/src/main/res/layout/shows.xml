@@ -9,10 +9,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
-            android:id="@+id/shows_fragment"
+        <com.astuetz.PagerSlidingTabStrip
+            android:id="@+id/tabsShows"
+            style="@style/TabStrip"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="@dimen/tab_strip_height" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pagerShows"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/tab_strip_height" />
 
         <ProgressBar
             android:id="@+id/progressBarShows"

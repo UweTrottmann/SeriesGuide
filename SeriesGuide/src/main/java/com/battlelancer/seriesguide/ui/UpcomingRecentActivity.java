@@ -98,7 +98,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         }
 
         // display new tabs
-        tabsAdapter.updateTabs();
+        tabsAdapter.notifyTabsChanged();
 
         // set starting tab
         int selection = 0;
