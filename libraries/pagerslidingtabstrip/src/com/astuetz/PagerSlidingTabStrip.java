@@ -16,6 +16,8 @@
 
 package com.astuetz;
 
+import com.astuetz.pagerslidingtabstrip.R;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -41,8 +43,6 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
-import com.astuetz.pagerslidingtabstrip.R;
-
 public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 	public interface IconTabProvider {
@@ -61,6 +61,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 	private final PageListener pageListener = new PageListener();
 	public OnPageChangeListener delegatePageListener;
+
+    private OnTabClickListener delegateOnTabClickListener;
 
 	private LinearLayout tabsContainer;
 	private ViewPager pager;
@@ -186,6 +188,14 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		this.delegatePageListener = listener;
 	}
 
+    public interface OnTabClickListener {
+        public void onTabClick(int position);
+    }
+
+    public void setOnTabClickListener(OnTabClickListener listener) {
+        this.delegateOnTabClickListener = listener;
+    }
+
 	public void notifyDataSetChanged() {
 
 		tabsContainer.removeAllViews();
@@ -248,7 +258,10 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		tab.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				pager.setCurrentItem(position);
+                if (delegateOnTabClickListener != null) {
+                    delegateOnTabClickListener.onTabClick(position);
+                }
+                pager.setCurrentItem(position);
 			}
 		});
 
