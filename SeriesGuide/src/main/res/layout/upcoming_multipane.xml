@@ -15,7 +15,7 @@
             android:layout_centerHorizontal="true"
             android:background="?attr/colorSeparator" />
 
-        <com.astuetz.viewpager.extensions.PagerSlidingTabStrip
+        <com.astuetz.PagerSlidingTabStrip
             android:id="@+id/tabsUpcoming"
             style="@style/TabStrip"
             android:layout_width="match_parent"

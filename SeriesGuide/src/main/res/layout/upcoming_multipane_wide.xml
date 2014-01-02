@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             android:layout_weight="3">
 
-            <com.astuetz.viewpager.extensions.PagerSlidingTabStrip
+            <com.astuetz.PagerSlidingTabStrip
                 android:id="@+id/tabsUpcoming"
                 style="@style/TabStrip"
                 android:layout_width="match_parent"
