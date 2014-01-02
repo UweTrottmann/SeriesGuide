@@ -17,7 +17,7 @@
 
 package com.battlelancer.seriesguide.adapters;
 
-import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.astuetz.PagerSlidingTabStrip;
 
 import android.content.Context;
 import android.os.Bundle;

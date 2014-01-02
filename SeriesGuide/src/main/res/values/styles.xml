@@ -252,9 +252,9 @@
     <!-- PagerSlidingTabStrip -->
     <style name="TabStrip">
         <item name="android:textColor">?attr/colorTabStripText</item>
-        <item name="dividerColor">?attr/colorDivider</item>
-        <item name="indicatorColor">?attr/colorAccent</item>
-        <item name="underlineColor">?attr/colorAccent</item>
+        <item name="pstsDividerColor">?attr/colorDivider</item>
+        <item name="pstsIndicatorColor">?attr/colorAccent</item>
+        <item name="pstsUnderlineColor">?attr/colorAccent</item>
     </style>
 
     <style name="Header">
