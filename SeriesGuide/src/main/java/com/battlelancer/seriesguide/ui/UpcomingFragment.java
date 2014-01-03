@@ -43,7 +43,6 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -70,8 +69,6 @@ public class UpcomingFragment extends SherlockFragment implements
     private static final int CONTEXT_CHECKIN_ID = 2;
 
     private UpcomingSlowAdapter mAdapter;
-
-    private boolean mDualPane;
 
     private StickyGridHeadersGridView mGridView;
 
@@ -114,11 +111,6 @@ public class UpcomingFragment extends SherlockFragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        // Check to see if we have a frame in which to embed the details
-        // fragment directly in the containing UI.
-        View detailsFragment = getActivity().findViewById(R.id.fragment_details);
-        mDualPane = detailsFragment != null && detailsFragment.getVisibility() == View.VISIBLE;
 
         // setup adapter
         mAdapter = new UpcomingSlowAdapter(getActivity(), null, 0, this);
@@ -254,29 +246,12 @@ public class UpcomingFragment extends SherlockFragment implements
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         int episodeId = (int) id;
 
-        if (mDualPane) {
-            // Check if fragment is shown, create new if needed.
-            EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
-                    .findFragmentById(R.id.fragment_details);
-            if (detailsFragment == null || detailsFragment.getEpisodeTvdbId() != episodeId) {
-                // Make new fragment to show this selection.
-                detailsFragment = EpisodeDetailsFragment.newInstance(episodeId, true, true);
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), EpisodesActivity.class);
+        intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
 
-                // Execute a transaction, replacing any existing
-                // fragment with this one inside the frame.
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.anim.fragment_slide_left_enter,
-                        R.anim.fragment_slide_right_exit);
-                ft.replace(R.id.fragment_details, detailsFragment, "fragmentDetails").commit();
-            }
-        } else {
-            Intent intent = new Intent();
-            intent.setClass(getActivity(), EpisodesActivity.class);
-            intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
-
-            startActivity(intent);
-            getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
-        }
+        startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
     }
 
     public void onRequery() {
