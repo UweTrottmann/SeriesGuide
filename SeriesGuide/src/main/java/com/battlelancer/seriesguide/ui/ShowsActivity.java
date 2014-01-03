@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.billing.IabResult;
 import com.battlelancer.seriesguide.billing.Inventory;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -120,6 +121,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         SyncUtils.createSyncAccount(this);
 
         onUpgrade();
+
+        // may launch from a notification, then set last cleared time
+        NotificationService.handleDeleteIntent(this, getIntent());
 
         setUpActionBar();
         setupViews(savedInstanceState);
