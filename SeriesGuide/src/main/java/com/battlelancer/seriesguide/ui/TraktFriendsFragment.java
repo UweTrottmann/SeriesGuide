@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.settings.TraktSettings;
@@ -41,7 +42,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.format.DateUtils;
@@ -49,9 +49,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -59,40 +60,57 @@ import java.util.List;
 
 import retrofit.RetrofitError;
 
-public class TraktFriendsFragment extends ListFragment implements
-        LoaderManager.LoaderCallbacks<List<UserProfile>> {
+public class TraktFriendsFragment extends SherlockFragment implements
+        LoaderManager.LoaderCallbacks<List<UserProfile>>, AdapterView.OnItemClickListener {
 
     public static final String TAG = "TraktFriendsFragment";
 
     private TraktFriendsAdapter mAdapter;
 
+    private View mContentContainer;
+
+    private GridView mGridView;
+
+    private View mProgressBar;
+
+    private TextView mEmptyView;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_friends, container, false);
+
+        mContentContainer = v.findViewById(R.id.contentContainer);
+        mProgressBar = v.findViewById(R.id.progressIndicator);
+
+        mEmptyView = (TextView) v.findViewById(R.id.emptyViewFriends);
+        mGridView = (GridView) v.findViewById(android.R.id.list);
+        mGridView.setOnItemClickListener(this);
+        mGridView.setEmptyView(mEmptyView);
+
+        return v;
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new TraktFriendsAdapter(getActivity());
-        setListAdapter(mAdapter);
-        final ListView list = getListView();
-        list.setDivider(null);
-        if (SeriesGuidePreferences.THEME != R.style.AndroidTheme) {
-            list.setSelector(R.drawable.list_selector_sg);
-        }
-        list.setClipToPadding(!AndroidUtils.isHoneycombOrHigher());
-        final float scale = getResources().getDisplayMetrics().density;
-        int layoutPadding = (int) (10 * scale + 0.5f);
-        int defaultPadding = (int) (8 * scale + 0.5f);
-        list.setPadding(layoutPadding, layoutPadding, layoutPadding, defaultPadding);
-
-        // nag about no connectivity
+        // abort if offline
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
-            setEmptyText(getString(R.string.offline));
-            setListShown(true);
-        } else {
-            setEmptyText(getString(R.string.friends_empty));
-            setListShown(false);
-            getLoaderManager().initLoader(0, null, this);
+            mEmptyView.setText(R.string.offline);
+            setProgressLock(false);
+            return;
         }
 
+        setProgressLock(true);
+        mEmptyView.setText(R.string.friends_empty);
+
+        if (mAdapter == null) {
+            mAdapter = new TraktFriendsAdapter(getActivity());
+        }
+        mGridView.setAdapter(mAdapter);
+
+        getLoaderManager().initLoader(0, null, this);
     }
 
     @Override
@@ -102,8 +120,8 @@ public class TraktFriendsFragment extends ListFragment implements
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        UserProfile friend = (UserProfile) getListView().getItemAtPosition(position);
+    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+        UserProfile friend = (UserProfile) mGridView.getItemAtPosition(position);
 
         TvShow show = null;
         TvShowEpisode episode = null;
@@ -340,12 +358,7 @@ public class TraktFriendsFragment extends ListFragment implements
     @Override
     public void onLoadFinished(Loader<List<UserProfile>> loader, List<UserProfile> data) {
         mAdapter.setData(data);
-
-        if (isResumed()) {
-            setListShown(true);
-        } else {
-            setListShownNoAnimation(true);
-        }
+        setProgressLock(false);
     }
 
     @Override
@@ -353,4 +366,8 @@ public class TraktFriendsFragment extends ListFragment implements
         mAdapter.setData(null);
     }
 
+    public void setProgressLock(boolean isLocked) {
+        mContentContainer.setVisibility(isLocked ? View.GONE : View.VISIBLE);
+        mProgressBar.setVisibility(isLocked ? View.VISIBLE : View.GONE);
+    }
 }
