@@ -36,13 +36,11 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.seriesguide.R;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -68,16 +66,9 @@ public class TraktFriendsFragment extends ListFragment implements
 
     private TraktFriendsAdapter mAdapter;
 
-    private boolean mDualPane;
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        // Check to see if we have a frame in which to embed the details
-        // fragment directly in the containing UI.
-        View detailsFragment = getActivity().findViewById(R.id.fragment_details);
-        mDualPane = detailsFragment != null && detailsFragment.getVisibility() == View.VISIBLE;
 
         mAdapter = new TraktFriendsAdapter(getActivity());
         setListAdapter(mAdapter);
@@ -139,7 +130,7 @@ public class TraktFriendsFragment extends ListFragment implements
                 episodeidquery.moveToFirst();
 
                 int episodeId = episodeidquery.getInt(0);
-                showDetails(episodeId, v);
+                showDetails(episodeId);
             } else {
                 // offer to add the show if it's not in the show database yet
                 SearchResult newshow = new SearchResult();
@@ -153,31 +144,13 @@ public class TraktFriendsFragment extends ListFragment implements
         }
     }
 
-    @TargetApi(16)
-    private void showDetails(int episodeId, View sourceView) {
-        if (mDualPane) {
-            // Check if fragment is shown, create new if needed.
-            EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
-                    .findFragmentById(R.id.fragment_details);
-            if (detailsFragment == null || detailsFragment.getEpisodeTvdbId() != episodeId) {
-                // Make new fragment to show this selection.
-                detailsFragment = EpisodeDetailsFragment.newInstance(episodeId, true, true);
+    private void showDetails(int episodeId) {
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), EpisodesActivity.class);
+        intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
 
-                // Execute a transaction, replacing any existing
-                // fragment with this one inside the frame.
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.anim.fragment_slide_right_enter,
-                        R.anim.fragment_slide_right_exit);
-                ft.replace(R.id.fragment_details, detailsFragment, "fragmentDetails").commit();
-            }
-        } else {
-            Intent intent = new Intent();
-            intent.setClass(getActivity(), EpisodesActivity.class);
-            intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
-
-            startActivity(intent);
-            getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
-        }
+        startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
     }
 
     private static class TraktFriendsLoader extends GenericSimpleLoader<List<UserProfile>> {

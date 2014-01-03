@@ -22,7 +22,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
@@ -191,7 +191,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         Bundle argsSeason = new Bundle();
         argsSeason.putInt(SeasonsFragment.InitBundle.SHOW_TVDBID, mShowId);
         tabsAdapter.addTab(R.string.seasons, SeasonsFragment.class, argsSeason);
-        tabsAdapter.updateTabs();
+        tabsAdapter.notifyTabsChanged();
 
         // select overview to be shown initially
         pager.setCurrentItem(1);

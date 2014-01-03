@@ -3,6 +3,5 @@
 
     <item name="episodes" type="layout">@layout/episodes_multipane_wide</item>
     <item name="fragment_show" type="layout">@layout/fragment_show_regular</item>
-    <item name="upcoming" type="layout">@layout/upcoming_multipane_wide</item>
 
 </resources>

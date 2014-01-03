@@ -22,19 +22,27 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.IabHelper;
 import com.battlelancer.seriesguide.billing.IabResult;
 import com.battlelancer.seriesguide.billing.Inventory;
+import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.service.NotificationService;
+import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.sync.SyncUtils;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
+import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.uwetrottmann.seriesguide.BuildConfig;
@@ -43,6 +51,7 @@ import com.uwetrottmann.seriesguide.R;
 import android.accounts.Account;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -53,7 +62,8 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -68,7 +78,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Provides the apps main screen, displaying a list of shows and their next episodes.
  */
-public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDismissedListener {
+public class ShowsActivity extends BaseTopShowsActivity implements
+        AddDialogFragment.OnAddShowListener, OnFirstRunDismissedListener {
 
     protected static final String TAG = "Shows";
 
@@ -89,11 +100,20 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
 
     private FetchPosterTask mArtTask;
 
-    private Fragment mFragment;
-
     private ProgressBar mProgressBar;
 
     private Object mSyncObserverHandle;
+
+    private ShowsTabPageAdapter mTabsAdapter;
+
+    public interface InitBundle {
+
+        String SELECTED_TAB = "selectedtab";
+
+        int INDEX_TAB_SHOWS = 0;
+        int INDEX_TAB_UPCOMING = 1;
+        int INDEX_TAB_RECENT = 2;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +125,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
         SyncUtils.createSyncAccount(this);
 
         onUpgrade();
+
+        // may launch from a notification, then set last cleared time
+        NotificationService.handleDeleteIntent(this, getIntent());
 
         setUpActionBar();
         setupViews(savedInstanceState);
@@ -145,18 +168,67 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
     }
 
     private void setupViews(Bundle savedInstanceState) {
-        // setup fragments
+        ViewPager pager = (ViewPager) findViewById(R.id.pagerShows);
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsShows);
+
+        mTabsAdapter = new ShowsTabPageAdapter(getSupportFragmentManager(),
+                this, pager, tabs);
+
+        // shows tab (or first run fragment)
         if (!FirstRunFragment.hasSeenFirstRunFragment(this)) {
-            mFragment = FirstRunFragment.newInstance();
-            getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment, mFragment)
-                    .commit();
-        } else if (savedInstanceState == null) {
-            onShowShowsFragment();
+            mTabsAdapter.addTab(R.string.shows, FirstRunFragment.class, null);
         } else {
-            mFragment = getSupportFragmentManager().findFragmentById(R.id.shows_fragment);
+            mTabsAdapter.addTab(R.string.shows, ShowsFragment.class, null);
         }
 
-        // setup progress bar
+        // upcoming tab
+        final Bundle argsUpcoming = new Bundle();
+        argsUpcoming.putString(ActivityFragment.InitBundle.TYPE,
+                ActivityFragment.ActivityType.UPCOMING);
+        argsUpcoming.putString(ActivityFragment.InitBundle.ANALYTICS_TAG, "Upcoming");
+        argsUpcoming.putInt(ActivityFragment.InitBundle.LOADER_ID, 10);
+        argsUpcoming.putInt(ActivityFragment.InitBundle.EMPTY_STRING_ID, R.string.noupcoming);
+        mTabsAdapter.addTab(R.string.upcoming, ActivityFragment.class, argsUpcoming);
+
+        // recent tab
+        final Bundle argsRecent = new Bundle();
+        argsRecent
+                .putString(ActivityFragment.InitBundle.TYPE, ActivityFragment.ActivityType.RECENT);
+        argsRecent.putString(ActivityFragment.InitBundle.ANALYTICS_TAG, "Recent");
+        argsRecent.putInt(ActivityFragment.InitBundle.LOADER_ID, 20);
+        argsRecent.putInt(ActivityFragment.InitBundle.EMPTY_STRING_ID, R.string.norecent);
+        mTabsAdapter.addTab(R.string.recent, ActivityFragment.class, argsRecent);
+
+        // trakt friends tab
+        final boolean isTraktSetup = TraktSettings.hasTraktCredentials(this);
+        if (isTraktSetup) {
+            mTabsAdapter.addTab(R.string.friends, TraktFriendsFragment.class, null);
+        }
+
+        // display new tabs
+        mTabsAdapter.notifyTabsChanged();
+
+        // set starting tab
+        int selection = 0;
+        if (savedInstanceState != null) {
+            selection = savedInstanceState.getInt("index");
+        } else {
+            Intent intent = getIntent();
+            Bundle extras = intent.getExtras();
+            if (extras != null) {
+                selection = extras.getInt(InitBundle.SELECTED_TAB, 0);
+            } else {
+                // use saved selection
+                selection = ActivitySettings.getDefaultActivityTabPosition(this);
+            }
+        }
+        // never select a non-existent tab
+        if (selection > mTabsAdapter.getCount() - 1) {
+            selection = 0;
+        }
+        pager.setCurrentItem(selection);
+
+        // progress bar
         mProgressBar = (ProgressBar) findViewById(R.id.progressBarShows);
     }
 
@@ -217,6 +289,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         saveArtTask(outState);
+        outState.putInt("index", getSupportActionBar().getSelectedNavigationIndex());
         mSavedState = outState;
     }
 
@@ -413,6 +486,11 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
         }
     }
 
+    @Override
+    public void onAddShow(SearchResult show) {
+        TaskManager.getInstance(this).performAddTask(show);
+    }
+
     public void onCancelTasks() {
         if (mArtTask != null && mArtTask.getStatus() == AsyncTask.Status.RUNNING) {
             mArtTask.cancel(true);
@@ -489,18 +567,14 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
 
     @Override
     public void onFirstRunDismissed() {
-        onShowShowsFragment();
+        // replace the first run fragment with a show fragment
+        mTabsAdapter.updateTab(R.string.shows, ShowsFragment.class, null, 0);
+        mTabsAdapter.notifyTabsChanged();
     }
 
     @Override
     protected void fireTrackerEvent(String label) {
         Utils.trackAction(this, TAG, label);
-    }
-
-    private void onShowShowsFragment() {
-        mFragment = ShowsFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment, mFragment)
-                .commit();
     }
 
     /**
@@ -581,4 +655,46 @@ public class ShowsActivity extends BaseTopShowsActivity implements OnFirstRunDis
             });
         }
     };
+
+    /**
+     * Special {@link TabStripAdapter} which saves the currently selected page to preferences, so we
+     * can restore it when the user comes back later.
+     */
+    public static class ShowsTabPageAdapter extends TabStripAdapter
+            implements ViewPager.OnPageChangeListener {
+
+        private SharedPreferences mPrefs;
+
+        public ShowsTabPageAdapter(FragmentManager fm, Context context, ViewPager pager,
+                PagerSlidingTabStrip tabs) {
+            super(fm, context, pager, tabs);
+            mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+            tabs.setOnPageChangeListener(this);
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            if (object instanceof FirstRunFragment) {
+                return POSITION_NONE;
+            } else {
+                return super.getItemPosition(object);
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            // save selected tab index
+            mPrefs.edit().putInt(ActivitySettings.KEY_ACTIVITYTAB, position).commit();
+        }
+
+    }
+
 }
