@@ -109,19 +109,6 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
                 EpisodeTools.isWatched(viewHolder.watchedBox.getEpisodeFlag())
                         ? R.string.unmark_episode : R.string.mark_episode);
 
-        // checkin button (not avail in all layouts)
-        if (viewHolder.buttonCheckin != null) {
-            viewHolder.buttonCheckin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mCheckInListener != null) {
-                        mCheckInListener.onCheckinEpisode(episodeTvdbId);
-                    }
-                }
-            });
-            CheatSheet.setup(viewHolder.buttonCheckin, R.string.checkin);
-        }
-
         // number and show
         final String number = Utils.getEpisodeNumber(context, season, episode);
         viewHolder.show.setText(number + " | " + cursor.getString(ActivityFragment.ActivityQuery.SHOW_TITLE));
@@ -154,13 +141,11 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         View v = mLayoutInflater.inflate(LAYOUT, parent, false);
 
         ViewHolder viewHolder = new ViewHolder();
-        viewHolder.episode = (TextView) v
-                .findViewById(R.id.textViewUpcomingEpisode);
+        viewHolder.episode = (TextView) v.findViewById(R.id.textViewUpcomingEpisode);
         viewHolder.show = (TextView) v.findViewById(R.id.textViewUpcomingShow);
         viewHolder.watchedBox = (WatchedBox) v.findViewById(R.id.watchedBoxUpcoming);
         viewHolder.meta = (TextView) v.findViewById(R.id.textViewUpcomingMeta);
         viewHolder.poster = (ImageView) v.findViewById(R.id.poster);
-        viewHolder.buttonCheckin = v.findViewById(R.id.imageViewUpcomingCheckIn);
 
         v.setTag(viewHolder);
 
@@ -310,8 +295,6 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         public TextView episode;
 
         public WatchedBox watchedBox;
-
-        public View buttonCheckin;
 
         public TextView meta;
 

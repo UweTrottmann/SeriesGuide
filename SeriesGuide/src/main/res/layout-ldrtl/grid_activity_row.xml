@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="103dp"
+    android:background="?attr/drawableCardBackground"
     android:orientation="horizontal">
 
     <RelativeLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_weight="1"
-        android:paddingEnd="@dimen/default_padding">
+        android:paddingEnd="@dimen/default_padding"
+        android:background="?attr/custom_list_selector">
 
         <ImageView
             android:id="@+id/poster"
