@@ -23,12 +23,12 @@
         android:drawable="@drawable/progress_bg_holo_light"/>
     <item android:id="@android:id/secondaryProgress">
         <scale
-            android:drawable="@drawable/progress_secondary_holo_light"
+            android:drawable="@drawable/progress_secondary_holo_dark"
             android:scaleWidth="100%" />
     </item>
     <item android:id="@android:id/progress">
         <scale
-            android:drawable="@drawable/progress_primary_holo_light"
+            android:drawable="@drawable/progress_primary_holo_dark"
             android:scaleWidth="100%" />
     </item>
 
