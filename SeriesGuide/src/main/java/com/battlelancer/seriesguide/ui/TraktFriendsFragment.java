@@ -40,7 +40,6 @@ import com.uwetrottmann.seriesguide.R;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -287,7 +286,7 @@ public class TraktFriendsFragment extends SherlockFragment implements
             holder.name.setText(friend.username);
             mImageDownloader.downloadAndStore(friend.avatar, holder.avatar);
 
-            holder.timestamp.setTextColor(Color.GRAY);
+            holder.timestamp.setTextAppearance(getContext(), R.style.TextAppearance_Small_Dim);
 
             String show = "";
             String episode = "";
@@ -302,7 +301,8 @@ public class TraktFriendsFragment extends SherlockFragment implements
                                 watching.episode.season, watching.episode.number);
                         episode = episodenumber + " " + watching.episode.title;
                         timestamp = getContext().getString(R.string.now);
-                        holder.timestamp.setTextColor(Color.RED);
+                        holder.timestamp.setTextAppearance(getContext(),
+                                R.style.TextAppearance_Small_Highlight_Red);
                         break;
                     default:
                         break;
