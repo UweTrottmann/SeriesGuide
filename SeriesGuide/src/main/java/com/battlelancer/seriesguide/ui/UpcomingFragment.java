@@ -18,6 +18,9 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.adapters.UpcomingSlowAdapter;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -47,7 +50,6 @@ import android.support.v4.content.Loader;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -58,6 +60,8 @@ import android.widget.TextView;
 public class UpcomingFragment extends SherlockFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener,
         OnSharedPreferenceChangeListener, UpcomingSlowAdapter.CheckInListener {
+
+    private static final String TAG = "Activity";
 
     private static final int CONTEXT_FLAG_WATCHED_ID = 0;
 
@@ -128,6 +132,8 @@ public class UpcomingFragment extends SherlockFragment implements
                 .registerOnSharedPreferenceChangeListener(this);
 
         registerForContextMenu(mGridView);
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -169,7 +175,7 @@ public class UpcomingFragment extends SherlockFragment implements
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
+    public boolean onContextItemSelected(android.view.MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
@@ -187,6 +193,45 @@ public class UpcomingFragment extends SherlockFragment implements
             }
         }
         return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.activity_menu, menu);
+
+        // set menu items to current values
+        menu.findItem(R.id.menu_onlyfavorites)
+                .setChecked(ActivitySettings.isOnlyFavorites(getActivity()));
+        menu.findItem(R.id.menu_nospecials)
+                .setChecked(DisplaySettings.isHidingSpecials(getActivity()));
+        menu.findItem(R.id.menu_nowatched)
+                .setChecked(DisplaySettings.isNoWatchedEpisodes(getActivity()));
+        menu.findItem(R.id.menu_infinite_scrolling).setChecked(
+                ActivitySettings.isInfiniteActivity(getActivity()));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_onlyfavorites) {
+            storeBooleanPreference(item, ActivitySettings.KEY_ONLY_FAVORITE_SHOWS);
+            fireTrackerEvent("Only favorite shows Toggle");
+            return true;
+        } else if (itemId == R.id.menu_nospecials) {
+            storeBooleanPreference(item, DisplaySettings.KEY_HIDE_SPECIALS);
+            fireTrackerEvent("Hide specials Toggle");
+            return true;
+        } else if (itemId == R.id.menu_nowatched) {
+            storeBooleanPreference(item, DisplaySettings.KEY_NO_WATCHED_EPISODES);
+            fireTrackerEvent("Hide watched Toggle");
+            return true;
+        } else if (itemId == R.id.menu_infinite_scrolling) {
+            storeBooleanPreference(item, ActivitySettings.KEY_INFINITE_ACTIVITY);
+            fireTrackerEvent("Infinite Scrolling Toggle");
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -273,6 +318,16 @@ public class UpcomingFragment extends SherlockFragment implements
                 || ActivitySettings.KEY_INFINITE_ACTIVITY.equals(key)) {
             onRequery();
         }
+    }
+
+    private void fireTrackerEvent(String label) {
+        Utils.trackAction(getActivity(), TAG, label);
+    }
+
+    private void storeBooleanPreference(MenuItem item, String key) {
+        item.setChecked(!item.isChecked());
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        prefs.edit().putBoolean(key, item.isChecked()).commit();
     }
 
     public interface UpcomingQuery {
