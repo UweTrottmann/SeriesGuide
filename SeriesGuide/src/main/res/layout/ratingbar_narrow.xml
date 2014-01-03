@@ -58,7 +58,7 @@
         android:layout_marginRight="@dimen/inline_padding"
         android:layout_marginTop="@dimen/default_padding"
         android:padding="6dp"
-        android:src="@drawable/trakt_heart" />
+        android:src="?attr/drawableTraktHeart" />
 
     <TextView
         android:id="@+id/textViewRatingsTraktValue"
