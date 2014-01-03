@@ -40,6 +40,7 @@
     <dimen name="buttonbar_button_width">56dp</dimen>
     <dimen name="empty_view_width">250dp</dimen>
 
+    <integer name="grid_columns">1</integer>
     <integer name="animation_duration">200</integer>
 
 </resources>

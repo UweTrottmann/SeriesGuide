@@ -10,7 +10,7 @@
         android:clipToPadding="@bool/gridClipToPadding"
         android:fastScrollEnabled="true"
         android:listSelector="?custom_list_selector"
-        android:numColumns="1"
+        android:numColumns="@integer/grid_columns"
         android:paddingBottom="8dp"
         android:paddingEnd="10dp"
         android:paddingStart="10dp"
