@@ -2,7 +2,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item name="episodes" type="layout">@layout/episodes_multipane</item>
-    <item name="upcoming" type="layout">@layout/upcoming_multipane</item>
     <item name="search" type="layout">@layout/activity_singlepane_drawer_wide</item>
 
 </resources>
