@@ -22,7 +22,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.WatchedBox;
-import com.battlelancer.seriesguide.adapters.UpcomingSlowAdapter;
+import com.battlelancer.seriesguide.adapters.ActivitySlowAdapter;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -56,9 +56,9 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
-public class UpcomingFragment extends SherlockFragment implements
+public class ActivityFragment extends SherlockFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener,
-        OnSharedPreferenceChangeListener, UpcomingSlowAdapter.CheckInListener {
+        OnSharedPreferenceChangeListener, ActivitySlowAdapter.CheckInListener {
 
     private static final String TAG = "Activity";
 
@@ -68,12 +68,12 @@ public class UpcomingFragment extends SherlockFragment implements
 
     private static final int CONTEXT_CHECKIN_ID = 2;
 
-    private UpcomingSlowAdapter mAdapter;
+    private ActivitySlowAdapter mAdapter;
 
     private StickyGridHeadersGridView mGridView;
 
     /**
-     * Data which has to be passed when creating {@link UpcomingFragment}. All Bundle extras are
+     * Data which has to be passed when creating {@link ActivityFragment}. All Bundle extras are
      * strings, except LOADER_ID and EMPTY_STRING_ID.
      */
     public interface InitBundle {
@@ -96,7 +96,7 @@ public class UpcomingFragment extends SherlockFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.upcoming_fragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_activity, container, false);
 
         TextView emptyView = (TextView) v.findViewById(R.id.emptyViewUpcoming);
         emptyView.setText(getString(getArguments().getInt(InitBundle.EMPTY_STRING_ID)));
@@ -113,7 +113,7 @@ public class UpcomingFragment extends SherlockFragment implements
         super.onActivityCreated(savedInstanceState);
 
         // setup adapter
-        mAdapter = new UpcomingSlowAdapter(getActivity(), null, 0, this);
+        mAdapter = new ActivitySlowAdapter(getActivity(), null, 0, this);
         mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteActivity(getActivity()));
 
         // setup grid view
@@ -235,9 +235,9 @@ public class UpcomingFragment extends SherlockFragment implements
     private void onFlagEpisodeWatched(AdapterContextMenuInfo info, boolean isWatched) {
         Cursor item = (Cursor) mAdapter.getItem(info.position);
 
-        new FlagTask(getActivity(), item.getInt(UpcomingQuery.REF_SHOW_ID))
-                .episodeWatched((int) info.id, item.getInt(UpcomingQuery.SEASON),
-                        item.getInt(UpcomingQuery.NUMBER),
+        new FlagTask(getActivity(), item.getInt(ActivityQuery.REF_SHOW_ID))
+                .episodeWatched((int) info.id, item.getInt(ActivityQuery.SEASON),
+                        item.getInt(ActivityQuery.NUMBER),
                         isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED)
                 .execute();
     }
@@ -271,7 +271,7 @@ public class UpcomingFragment extends SherlockFragment implements
                 isInfiniteScrolling ? -1 : 30);
 
         return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,
-                UpcomingQuery.PROJECTION, queryArgs[0][0], queryArgs[1], queryArgs[2][0]);
+                ActivityQuery.PROJECTION, queryArgs[0][0], queryArgs[1], queryArgs[2][0]);
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -305,7 +305,7 @@ public class UpcomingFragment extends SherlockFragment implements
         prefs.edit().putBoolean(key, item.isChecked()).commit();
     }
 
-    public interface UpcomingQuery {
+    public interface ActivityQuery {
 
         String[] PROJECTION = new String[]{
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,

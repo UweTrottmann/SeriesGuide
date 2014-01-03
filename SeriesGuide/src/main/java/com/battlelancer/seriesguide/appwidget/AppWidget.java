@@ -16,8 +16,8 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
+import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
@@ -111,32 +111,32 @@ public class AppWidget extends AppWidgetProvider {
 
                     RemoteViews item = new RemoteViews(context.getPackageName(), itemLayout);
                     // upcoming episode
-                    int seasonNumber = upcomingEpisodes.getInt(UpcomingQuery.SEASON);
-                    int episodeNumber = upcomingEpisodes.getInt(UpcomingQuery.NUMBER);
-                    String title = upcomingEpisodes.getString(UpcomingQuery.TITLE);
+                    int seasonNumber = upcomingEpisodes.getInt(ActivityFragment.ActivityQuery.SEASON);
+                    int episodeNumber = upcomingEpisodes.getInt(ActivityFragment.ActivityQuery.NUMBER);
+                    String title = upcomingEpisodes.getString(ActivityFragment.ActivityQuery.TITLE);
                     item.setTextViewText(R.id.textViewWidgetEpisode,
                             Utils.getNextEpisodeString(this, seasonNumber, episodeNumber, title));
 
                     // relative airtime
-                    long airtime = upcomingEpisodes.getLong(UpcomingQuery.FIRSTAIREDMS);
+                    long airtime = upcomingEpisodes.getLong(ActivityFragment.ActivityQuery.FIRSTAIREDMS);
                     String[] dayAndTime = Utils.formatToTimeAndDay(airtime, context);
                     value = dayAndTime[2] + " (" + dayAndTime[1] + ")";
                     item.setTextViewText(R.id.widgetAirtime, value);
 
                     // absolute airtime and network (if any)
                     value = dayAndTime[0];
-                    String network = upcomingEpisodes.getString(UpcomingQuery.SHOW_NETWORK);
+                    String network = upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
                     if (network.length() != 0) {
                         value += " " + network;
                     }
                     item.setTextViewText(R.id.widgetNetwork, value);
 
                     // show name
-                    value = upcomingEpisodes.getString(UpcomingQuery.SHOW_TITLE);
+                    value = upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_TITLE);
                     item.setTextViewText(R.id.textViewWidgetShow, value);
 
                     // show poster
-                    value = upcomingEpisodes.getString(UpcomingQuery.SHOW_POSTER);
+                    value = upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_POSTER);
                     final Bitmap poster = ImageProvider.getInstance(context).getImage(value, true);
                     if (poster != null) {
                         item.setImageViewBitmap(R.id.widgetPoster, poster);

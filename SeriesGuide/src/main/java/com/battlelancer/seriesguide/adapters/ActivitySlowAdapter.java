@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.adapters;
 
 import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ImageProvider;
@@ -29,17 +30,15 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-import static com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
-
 /**
- * Adapter for {@link com.battlelancer.seriesguide.ui.UpcomingFragment} with optimizations for image
+ * Adapter for {@link com.battlelancer.seriesguide.ui.ActivityFragment} with optimizations for image
  * loading for smoother scrolling.
  */
-public class UpcomingSlowAdapter extends CursorAdapter implements StickyGridHeadersBaseAdapter {
+public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHeadersBaseAdapter {
 
-    private final int LAYOUT = R.layout.upcoming_row;
+    private final int LAYOUT = R.layout.grid_activity_row;
 
-    private final int LAYOUT_HEADER = R.layout.upcoming_header;
+    private final int LAYOUT_HEADER = R.layout.grid_activity_header;
 
     private final CheckInListener mCheckInListener;
 
@@ -57,7 +56,7 @@ public class UpcomingSlowAdapter extends CursorAdapter implements StickyGridHead
         
     }
 
-    public UpcomingSlowAdapter(Context context, Cursor c, int flags,
+    public ActivitySlowAdapter(Context context, Cursor c, int flags,
             CheckInListener checkInListener) {
         super(context, c, flags);
         mLayoutInflater = (LayoutInflater) context
@@ -91,10 +90,10 @@ public class UpcomingSlowAdapter extends CursorAdapter implements StickyGridHead
 
         // watched box
         // save rowid to hand over to OnClick event listener
-        final int showTvdbId = cursor.getInt(UpcomingQuery.REF_SHOW_ID);
-        final int season = cursor.getInt(UpcomingQuery.SEASON);
-        final int episodeTvdbId = cursor.getInt(UpcomingQuery._ID);
-        final int episode = cursor.getInt(UpcomingQuery.NUMBER);
+        final int showTvdbId = cursor.getInt(ActivityFragment.ActivityQuery.REF_SHOW_ID);
+        final int season = cursor.getInt(ActivityFragment.ActivityQuery.SEASON);
+        final int episodeTvdbId = cursor.getInt(ActivityFragment.ActivityQuery._ID);
+        final int episode = cursor.getInt(ActivityFragment.ActivityQuery.NUMBER);
         viewHolder.watchedBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 WatchedBox box = (WatchedBox) v;
@@ -105,7 +104,7 @@ public class UpcomingSlowAdapter extends CursorAdapter implements StickyGridHead
                         .execute();
             }
         });
-        viewHolder.watchedBox.setEpisodeFlag(cursor.getInt(UpcomingQuery.WATCHED));
+        viewHolder.watchedBox.setEpisodeFlag(cursor.getInt(ActivityFragment.ActivityQuery.WATCHED));
         CheatSheet.setup(viewHolder.watchedBox,
                 EpisodeTools.isWatched(viewHolder.watchedBox.getEpisodeFlag())
                         ? R.string.unmark_episode : R.string.mark_episode);
@@ -125,28 +124,28 @@ public class UpcomingSlowAdapter extends CursorAdapter implements StickyGridHead
 
         // number and show
         final String number = Utils.getEpisodeNumber(context, season, episode);
-        viewHolder.show.setText(number + " | " + cursor.getString(UpcomingQuery.SHOW_TITLE));
+        viewHolder.show.setText(number + " | " + cursor.getString(ActivityFragment.ActivityQuery.SHOW_TITLE));
 
         // title
-        viewHolder.episode.setText(cursor.getString(UpcomingQuery.TITLE));
+        viewHolder.episode.setText(cursor.getString(ActivityFragment.ActivityQuery.TITLE));
 
         // meta data: time, day and network
         StringBuilder metaText = new StringBuilder();
-        final long airtime = cursor.getLong(UpcomingQuery.FIRSTAIREDMS);
+        final long airtime = cursor.getLong(ActivityFragment.ActivityQuery.FIRSTAIREDMS);
         if (airtime != -1) {
             String[] timeAndDay = Utils.formatToTimeAndDay(airtime, context);
             // 10:00 | Fri in 3 days, 10:00 PM | Mon 23 Jul
             metaText.append(timeAndDay[0]).append(" | ").append(timeAndDay[1]).append(" ")
                     .append(timeAndDay[2]);
         }
-        final String network = cursor.getString(UpcomingQuery.SHOW_NETWORK);
+        final String network = cursor.getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
         if (!TextUtils.isEmpty(network)) {
             metaText.append("\n").append(network);
         }
         viewHolder.meta.setText(metaText);
 
         // set poster
-        final String imagePath = cursor.getString(UpcomingQuery.SHOW_POSTER);
+        final String imagePath = cursor.getString(ActivityFragment.ActivityQuery.SHOW_POSTER);
         ImageProvider.getInstance(context).loadPosterThumb(viewHolder.poster, imagePath);
     }
 
@@ -177,7 +176,7 @@ public class UpcomingSlowAdapter extends CursorAdapter implements StickyGridHead
                  */
             @SuppressWarnings("resource")
             Cursor item = (Cursor) obj;
-            long airtime = item.getLong(UpcomingQuery.FIRSTAIREDMS);
+            long airtime = item.getLong(ActivityFragment.ActivityQuery.FIRSTAIREDMS);
             Calendar cal = Utils.getAirtimeCalendar(airtime, mPrefs);
             cal.set(Calendar.HOUR_OF_DAY, 1);
             cal.set(Calendar.MINUTE, 0);
@@ -228,7 +227,7 @@ public class UpcomingSlowAdapter extends CursorAdapter implements StickyGridHead
 
         @SuppressWarnings("resource")
         Cursor item = (Cursor) obj;
-        long airtime = item.getLong(UpcomingQuery.FIRSTAIREDMS);
+        long airtime = item.getLong(ActivityFragment.ActivityQuery.FIRSTAIREDMS);
         Calendar cal = Utils.getAirtimeCalendar(airtime, mPrefs);
         cal.set(Calendar.HOUR_OF_DAY, 1);
         cal.set(Calendar.MINUTE, 0);

@@ -6,6 +6,6 @@
     <item name="episode_pager" type="layout">@layout/episode_pager_wide</item>
     <item name="search" type="layout">@layout/activity_singlepane_drawer_wide</item>
     <item name="fragment_show" type="layout">@layout/fragment_show_narrow</item>
-    <item name="upcoming_row" type="layout">@layout/upcoming_row_wide</item>
+    <item name="upcoming_row" type="layout">@layout/grid_activity_row_wide</item>
 
 </resources>

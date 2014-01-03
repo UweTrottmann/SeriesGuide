@@ -183,21 +183,21 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
-        argsUpcoming.putString(UpcomingFragment.InitBundle.TYPE,
-                UpcomingFragment.ActivityType.UPCOMING);
-        argsUpcoming.putString(UpcomingFragment.InitBundle.ANALYTICS_TAG, "Upcoming");
-        argsUpcoming.putInt(UpcomingFragment.InitBundle.LOADER_ID, 10);
-        argsUpcoming.putInt(UpcomingFragment.InitBundle.EMPTY_STRING_ID, R.string.noupcoming);
-        mTabsAdapter.addTab(R.string.upcoming, UpcomingFragment.class, argsUpcoming);
+        argsUpcoming.putString(ActivityFragment.InitBundle.TYPE,
+                ActivityFragment.ActivityType.UPCOMING);
+        argsUpcoming.putString(ActivityFragment.InitBundle.ANALYTICS_TAG, "Upcoming");
+        argsUpcoming.putInt(ActivityFragment.InitBundle.LOADER_ID, 10);
+        argsUpcoming.putInt(ActivityFragment.InitBundle.EMPTY_STRING_ID, R.string.noupcoming);
+        mTabsAdapter.addTab(R.string.upcoming, ActivityFragment.class, argsUpcoming);
 
         // recent tab
         final Bundle argsRecent = new Bundle();
         argsRecent
-                .putString(UpcomingFragment.InitBundle.TYPE, UpcomingFragment.ActivityType.RECENT);
-        argsRecent.putString(UpcomingFragment.InitBundle.ANALYTICS_TAG, "Recent");
-        argsRecent.putInt(UpcomingFragment.InitBundle.LOADER_ID, 20);
-        argsRecent.putInt(UpcomingFragment.InitBundle.EMPTY_STRING_ID, R.string.norecent);
-        mTabsAdapter.addTab(R.string.recent, UpcomingFragment.class, argsRecent);
+                .putString(ActivityFragment.InitBundle.TYPE, ActivityFragment.ActivityType.RECENT);
+        argsRecent.putString(ActivityFragment.InitBundle.ANALYTICS_TAG, "Recent");
+        argsRecent.putInt(ActivityFragment.InitBundle.LOADER_ID, 20);
+        argsRecent.putInt(ActivityFragment.InitBundle.EMPTY_STRING_ID, R.string.norecent);
+        mTabsAdapter.addTab(R.string.recent, ActivityFragment.class, argsRecent);
 
         // trakt friends tab
         final boolean isTraktSetup = TraktSettings.hasTraktCredentials(this);
