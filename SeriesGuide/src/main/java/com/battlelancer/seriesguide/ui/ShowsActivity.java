@@ -669,7 +669,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
             if (object instanceof FirstRunFragment) {
                 return POSITION_NONE;
             } else {
-                return POSITION_UNCHANGED;
+                return super.getItemPosition(object);
             }
         }
 
@@ -686,6 +686,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
             // save selected tab index
             mPrefs.edit().putInt(ActivitySettings.KEY_ACTIVITYTAB, position).commit();
         }
+
     }
 
 }

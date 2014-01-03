@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 
 import java.util.ArrayList;
@@ -36,9 +37,13 @@ public class TabStripAdapter extends FragmentPagerAdapter {
 
     private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
 
-    private Context mContext;
+    private final Context mContext;
 
-    private PagerSlidingTabStrip mTabStrip;
+    private final FragmentManager mFragmentManager;
+
+    private final ViewPager mViewPager;
+
+    private final PagerSlidingTabStrip mTabStrip;
 
     static final class TabInfo {
 
@@ -58,11 +63,12 @@ public class TabStripAdapter extends FragmentPagerAdapter {
     public TabStripAdapter(FragmentManager fm, Context context, ViewPager pager,
             PagerSlidingTabStrip tabs) {
         super(fm);
+        mFragmentManager = fm;
         mContext = context;
         mTabStrip = tabs;
-        ViewPager viewPager = pager;
-        viewPager.setAdapter(this);
-        mTabStrip.setViewPager(viewPager);
+        mViewPager = pager;
+        mViewPager.setAdapter(this);
+        mTabStrip.setViewPager(mViewPager);
     }
 
     /**
@@ -77,7 +83,17 @@ public class TabStripAdapter extends FragmentPagerAdapter {
      */
     public void updateTab(int titleRes, Class<?> fragmentClass, Bundle args, int position) {
         if (position >= 0 && position < mTabs.size()) {
+            // update tab info
             mTabs.set(position, new TabInfo(fragmentClass, args, titleRes));
+
+            // find current fragment of tab
+            Fragment oldFragment = mFragmentManager
+                    .findFragmentByTag(makeFragmentName(mViewPager.getId(), getItemId(position)));
+            // remove it
+            FragmentTransaction transaction = mFragmentManager.beginTransaction();
+            transaction.remove(oldFragment);
+            transaction.commitAllowingStateLoss();
+            mFragmentManager.executePendingTransactions();
         }
     }
 
@@ -107,6 +123,13 @@ public class TabStripAdapter extends FragmentPagerAdapter {
             return mContext.getString(tabInfo.mTitleRes).toUpperCase(Locale.getDefault());
         }
         return "";
+    }
+
+    /**
+     * Copied from FragmentPagerAdapter.
+     */
+    private static String makeFragmentName(int viewId, long id) {
+        return "android:switcher:" + viewId + ":" + id;
     }
 
 }
