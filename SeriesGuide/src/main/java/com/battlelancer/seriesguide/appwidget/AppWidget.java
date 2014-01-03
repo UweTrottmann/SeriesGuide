@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.appwidget;
 
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
-import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
@@ -152,11 +151,11 @@ public class AppWidget extends AppWidgetProvider {
             }
 
             // Create an Intent to launch Upcoming
-            Intent activityIntent = new Intent(context, UpcomingRecentActivity.class);
-            activityIntent.putExtra(UpcomingRecentActivity.InitBundle.SELECTED_TAB, 0);
+            Intent activityIntent = new Intent(context, ShowsActivity.class);
+            activityIntent.putExtra(ShowsActivity.InitBundle.SELECTED_TAB,
+                    ShowsActivity.InitBundle.INDEX_TAB_UPCOMING);
             PendingIntent activityPendingIntent = TaskStackBuilder
                     .create(context)
-                    .addNextIntent(new Intent(context, ShowsActivity.class))
                     .addNextIntent(activityIntent)
                     .getPendingIntent(0, 0);
             views.setOnClickPendingIntent(R.id.LinearLayoutWidget, activityPendingIntent);

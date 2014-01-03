@@ -109,6 +109,10 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     public interface InitBundle {
 
         String SELECTED_TAB = "selectedtab";
+
+        int INDEX_TAB_SHOWS = 0;
+        int INDEX_TAB_UPCOMING = 1;
+        int INDEX_TAB_RECENT = 2;
     }
 
     @Override
