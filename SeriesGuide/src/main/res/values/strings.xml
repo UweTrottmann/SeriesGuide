@@ -36,7 +36,6 @@
 
     <!-- Status messages -->
     <string name="updated">Updated to latest version.</string>
-    <string name="loading">Loading…</string>
     <string name="norating">n/a</string>
     <string name="unknown">unknown</string>
     <string name="offline">Connect to a network, then try again.</string>
