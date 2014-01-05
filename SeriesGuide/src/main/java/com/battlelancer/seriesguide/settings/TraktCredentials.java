@@ -75,10 +75,10 @@ public class TraktCredentials {
      * Only removes the password, but keeps the username.
      */
     public void removePassword() {
-        mHasCredentials = false;
-
         // clear all in-memory credentials from Trakt service manager in any case
         ServiceUtils.getTraktWithAuth(mContext).setAuthentication(null, null);
+
+        mHasCredentials = false;
 
         setPassword(null);
     }
