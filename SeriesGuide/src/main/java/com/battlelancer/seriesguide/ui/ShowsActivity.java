@@ -61,6 +61,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
@@ -501,62 +502,53 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     }
 
     /**
-     * Called once on activity creation to load initial settings and display one-time information
-     * dialogs.
+     * Runs any upgrades necessary if coming from earlier versions.
      */
     private void onUpgrade() {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        // between-version upgrade code
-        try {
-            final int lastVersion = AppSettings.getLastVersionCode(this);
-            final int currentVersion = getPackageManager().getPackageInfo(getPackageName(),
-                    PackageManager.GET_META_DATA).versionCode;
-            if (currentVersion > lastVersion) {
-                Editor editor = prefs.edit();
+        final int lastVersion = AppSettings.getLastVersionCode(this);
+        final int currentVersion = BuildConfig.VERSION_CODE;
 
-                int VER_TRAKT_SEC_CHANGES;
-                int VER_SUMMERTIME_FIX;
-                int VER_HIGHRES_THUMBS;
-                if (getPackageName().contains("beta")) {
-                    VER_TRAKT_SEC_CHANGES = 131;
-                    VER_SUMMERTIME_FIX = 155;
-                    VER_HIGHRES_THUMBS = 177;
-                } else if (getPackageName().contains("x")) {
-                    VER_TRAKT_SEC_CHANGES = 129;
-                    VER_SUMMERTIME_FIX = 136;
-                    VER_HIGHRES_THUMBS = 141;
-                } else {
-                    VER_TRAKT_SEC_CHANGES = 129;
-                    VER_SUMMERTIME_FIX = 136;
-                    VER_HIGHRES_THUMBS = 140;
-                }
+        if (lastVersion < currentVersion) {
+            Editor editor = prefs.edit();
 
-                if (lastVersion < VER_TRAKT_SEC_CHANGES) {
-                    TraktCredentials.get(this).removeCredentials();
-                    editor.putString(SeriesGuidePreferences.KEY_SECURE, null);
-                }
-                if (lastVersion < VER_SUMMERTIME_FIX) {
-                    scheduleAllShowsUpdate();
-                }
-                if (lastVersion < VER_HIGHRES_THUMBS
-                        && DisplaySettings.isVeryLargeScreen(getApplicationContext())) {
-                    // clear image cache
-                    ImageProvider.getInstance(this).clearCache();
-                    ImageProvider.getInstance(this).clearExternalStorageCache();
-                    scheduleAllShowsUpdate();
-                }
-
-                // update notification
-                Toast.makeText(this, R.string.updated, Toast.LENGTH_LONG).show();
-
-                // set this as lastVersion
-                editor.putInt(AppSettings.KEY_VERSION, currentVersion);
-
-                editor.commit();
+            int VER_TRAKT_SEC_CHANGES;
+            int VER_SUMMERTIME_FIX;
+            int VER_HIGHRES_THUMBS;
+            if ("beta".equals(BuildConfig.FLAVOR)) {
+                // internal dev version
+                VER_TRAKT_SEC_CHANGES = 131;
+                VER_SUMMERTIME_FIX = 155;
+                VER_HIGHRES_THUMBS = 177;
+            } else {
+                // public release version
+                VER_TRAKT_SEC_CHANGES = 129;
+                VER_SUMMERTIME_FIX = 136;
+                VER_HIGHRES_THUMBS = 140;
             }
 
-        } catch (NameNotFoundException e) {
-            // this should never happen
+            if (lastVersion < VER_TRAKT_SEC_CHANGES) {
+                TraktCredentials.get(this).removeCredentials();
+                editor.putString(SeriesGuidePreferences.KEY_SECURE, null);
+            }
+            if (lastVersion < VER_SUMMERTIME_FIX) {
+                scheduleAllShowsUpdate();
+            }
+            if (lastVersion < VER_HIGHRES_THUMBS
+                    && DisplaySettings.isVeryLargeScreen(getApplicationContext())) {
+                // clear image cache
+                ImageProvider.getInstance(this).clearCache();
+                ImageProvider.getInstance(this).clearExternalStorageCache();
+                scheduleAllShowsUpdate();
+            }
+
+            // update notification
+            Toast.makeText(this, R.string.updated, Toast.LENGTH_LONG).show();
+
+            // set this as lastVersion
+            editor.putInt(AppSettings.KEY_VERSION, currentVersion);
+
+            editor.commit();
         }
     }
 
