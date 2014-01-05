@@ -189,24 +189,23 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment implements
     }
 
     private void setupViews() {
-        // enable buttons based on if there are valid credentials
-        if (!TraktCredentials.get(getActivity()).hasCredentials()) {
-            // user has to connect
-            setButtonStates(true, false);
-        } else {
-            // user can only disconnect
+        boolean hasCredentials = TraktCredentials.get(getActivity()).hasCredentials();
+
+        // buttons
+        if (hasCredentials) {
             setButtonStates(false, true);
-
-            // make it obvious trakt is connected
-            mEditTextUsername.setEnabled(false);
-            // restore an existing username from settings
             mEditTextUsername.setText(TraktCredentials.get(getActivity()).getUsername());
-
-            mEditTextPassword.setEnabled(false);
-            mEditTextPassword.setText("********"); // fake password
-
-            mCheckBoxNewAccount.setEnabled(false);
+        } else {
+            setButtonStates(true, false);
         }
+
+        // username and password
+        mEditTextUsername.setEnabled(!hasCredentials);
+        mEditTextPassword.setEnabled(!hasCredentials);
+        mEditTextPassword.setText(hasCredentials ? "********" : null); // fake password
+
+        // new account check box
+        mCheckBoxNewAccount.setEnabled(!hasCredentials);
     }
 
     @Override
