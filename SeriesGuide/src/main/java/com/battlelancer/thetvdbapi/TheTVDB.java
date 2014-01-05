@@ -302,7 +302,7 @@ public class TheTVDB {
             throws SAXException {
         // Try to get some show details from trakt
         TvShow traktShow = null;
-        Trakt manager = ServiceUtils.getTraktServiceManager(context);
+        Trakt manager = ServiceUtils.getTrakt(context);
         if (manager != null) {
             try {
                 traktShow = manager.showService().summary(showTvdbId);

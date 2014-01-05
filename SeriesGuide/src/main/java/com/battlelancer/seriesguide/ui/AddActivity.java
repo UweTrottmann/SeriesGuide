@@ -21,6 +21,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
 import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
@@ -157,7 +158,7 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
         public AddPagerAdapter(FragmentManager fm, Context context) {
             super(fm);
             mContext = context;
-            mIsConnectedToTrakt = TraktSettings.hasTraktCredentials(mContext);
+            mIsConnectedToTrakt = TraktCredentials.get(mContext).hasCredentials();
         }
 
         @Override

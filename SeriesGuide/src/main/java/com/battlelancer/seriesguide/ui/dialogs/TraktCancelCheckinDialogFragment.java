@@ -102,8 +102,8 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
                     @Override
                     protected Response doInBackground(String... params) {
 
-                        Trakt manager = ServiceUtils.getTraktServiceManagerWithAuth(
-                                context, false);
+                        Trakt manager = ServiceUtils.getTraktWithAuth(
+                                context);
                         if (manager == null) {
                             // password could not be decrypted
                             Response r = new Response();

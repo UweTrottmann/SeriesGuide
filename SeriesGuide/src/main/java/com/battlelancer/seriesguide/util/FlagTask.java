@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -665,7 +666,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
          */
         // check for valid trakt credentials
         mIsTraktInvolved = !EpisodeTools.isSkipped(mType.mEpisodeFlag)
-                && TraktSettings.hasTraktCredentials(mContext);
+                && TraktCredentials.get(mContext).hasCredentials();
 
         // prepare trakt stuff
         if (mIsTraktInvolved) {
