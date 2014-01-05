@@ -6,6 +6,7 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
@@ -139,7 +140,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Schedules a sync with the given arguments.
      */
     private static void requestSync(Context context, Bundle args) {
-        final Account account = SyncUtils.getSyncAccount(context);
+        final Account account = AccountUtils.getAccount(context);
         ContentResolver.requestSync(account,
                 SeriesGuideApplication.CONTENT_AUTHORITY, args);
     }
@@ -148,7 +149,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Set whether or not the provider is synced when it receives a network tickle.
      */
     public static void setSyncAutomatically(Context context, boolean sync) {
-        final Account account = SyncUtils.getSyncAccount(context);
+        final Account account = AccountUtils.getAccount(context);
         ContentResolver.setSyncAutomatically(account, SeriesGuideApplication.CONTENT_AUTHORITY,
                 sync);
     }
@@ -157,7 +158,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Check if the provider should be synced when a network tickle is received.
      */
     public static boolean isSyncAutomatically(Context context) {
-        return ContentResolver.getSyncAutomatically(SyncUtils.getSyncAccount(context),
+        return ContentResolver.getSyncAutomatically(AccountUtils.getAccount(context),
                 SeriesGuideApplication.CONTENT_AUTHORITY);
     }
 
@@ -167,7 +168,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      */
     public static boolean isSyncActive(Context context, boolean isDisplayWarning) {
         boolean isSyncActive = ContentResolver.isSyncActive(
-                SyncUtils.getSyncAccount(context),
+                AccountUtils.getAccount(context),
                 SeriesGuideApplication.CONTENT_AUTHORITY);
         if (isSyncActive && isDisplayWarning) {
             Toast.makeText(context, R.string.update_inprogress, Toast.LENGTH_LONG).show();
@@ -286,7 +287,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
                 // validate trakt credentials with trakt servers
                 Log.d(TAG, "Check trakt credentials...");
-                ServiceUtils.checkTraktCredentials(getContext());
+                TraktCredentials.get(getContext()).validateCredentials();
                 Log.d(TAG, "Check trakt credentials...DONE");
 
                 // get latest trakt activity
@@ -400,18 +401,14 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      */
     private static UpdateResult getTraktActivity(Context context, HashSet<Integer> showsExisting,
             HashMap<Integer, SearchResult> showsNew) {
-        if (!TraktSettings.hasTraktCredentials(context)) {
+        Trakt manager = ServiceUtils.getTraktWithAuth(context);
+        if (manager == null) {
             // trakt is not connected, we are done here
             return UpdateResult.SUCCESS;
         }
 
         // return if connectivity is lost
         if (!AndroidUtils.isNetworkConnected(context)) {
-            return UpdateResult.INCOMPLETE;
-        }
-
-        Trakt manager = ServiceUtils.getTraktServiceManagerWithAuth(context, false);
-        if (manager == null) {
             return UpdateResult.INCOMPLETE;
         }
 
@@ -423,7 +420,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         try {
             activities = manager
                     .activityService()
-                    .user(TraktSettings.getUsername(context),
+                    .user(TraktCredentials.get(context).getUsername(),
                             ActivityType.Episode.toString(),
                             ActivityAction.Checkin + "," + ActivityAction.Seen + "," +
                                     ActivityAction.Scrobble + "," + ActivityAction.Collection,

@@ -35,9 +35,10 @@ import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.sync.SyncUtils;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
@@ -60,6 +61,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
@@ -122,7 +124,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         setupNavDrawer();
 
         // Set up a sync account if needed
-        SyncUtils.createSyncAccount(this);
+        if (!AccountUtils.isAccountExists(this)) {
+            AccountUtils.createAccount(this);
+        }
 
         onUpgrade();
 
@@ -200,8 +204,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         mTabsAdapter.addTab(R.string.recent, ActivityFragment.class, argsRecent);
 
         // trakt friends tab
-        final boolean isTraktSetup = TraktSettings.hasTraktCredentials(this);
-        if (isTraktSetup) {
+        if (TraktCredentials.get(this).hasCredentials()) {
             mTabsAdapter.addTab(R.string.friends, TraktFriendsFragment.class, null);
         }
 
@@ -499,62 +502,53 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     }
 
     /**
-     * Called once on activity creation to load initial settings and display one-time information
-     * dialogs.
+     * Runs any upgrades necessary if coming from earlier versions.
      */
     private void onUpgrade() {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        // between-version upgrade code
-        try {
-            final int lastVersion = AppSettings.getLastVersionCode(this);
-            final int currentVersion = getPackageManager().getPackageInfo(getPackageName(),
-                    PackageManager.GET_META_DATA).versionCode;
-            if (currentVersion > lastVersion) {
-                Editor editor = prefs.edit();
+        final int lastVersion = AppSettings.getLastVersionCode(this);
+        final int currentVersion = BuildConfig.VERSION_CODE;
 
-                int VER_TRAKT_SEC_CHANGES;
-                int VER_SUMMERTIME_FIX;
-                int VER_HIGHRES_THUMBS;
-                if (getPackageName().contains("beta")) {
-                    VER_TRAKT_SEC_CHANGES = 131;
-                    VER_SUMMERTIME_FIX = 155;
-                    VER_HIGHRES_THUMBS = 177;
-                } else if (getPackageName().contains("x")) {
-                    VER_TRAKT_SEC_CHANGES = 129;
-                    VER_SUMMERTIME_FIX = 136;
-                    VER_HIGHRES_THUMBS = 141;
-                } else {
-                    VER_TRAKT_SEC_CHANGES = 129;
-                    VER_SUMMERTIME_FIX = 136;
-                    VER_HIGHRES_THUMBS = 140;
-                }
+        if (lastVersion < currentVersion) {
+            Editor editor = prefs.edit();
 
-                if (lastVersion < VER_TRAKT_SEC_CHANGES) {
-                    ServiceUtils.clearTraktCredentials(this);
-                    editor.putString(SeriesGuidePreferences.KEY_SECURE, null);
-                }
-                if (lastVersion < VER_SUMMERTIME_FIX) {
-                    scheduleAllShowsUpdate();
-                }
-                if (lastVersion < VER_HIGHRES_THUMBS
-                        && DisplaySettings.isVeryLargeScreen(getApplicationContext())) {
-                    // clear image cache
-                    ImageProvider.getInstance(this).clearCache();
-                    ImageProvider.getInstance(this).clearExternalStorageCache();
-                    scheduleAllShowsUpdate();
-                }
-
-                // update notification
-                Toast.makeText(this, R.string.updated, Toast.LENGTH_LONG).show();
-
-                // set this as lastVersion
-                editor.putInt(AppSettings.KEY_VERSION, currentVersion);
-
-                editor.commit();
+            int VER_TRAKT_SEC_CHANGES;
+            int VER_SUMMERTIME_FIX;
+            int VER_HIGHRES_THUMBS;
+            if ("beta".equals(BuildConfig.FLAVOR)) {
+                // internal dev version
+                VER_TRAKT_SEC_CHANGES = 131;
+                VER_SUMMERTIME_FIX = 155;
+                VER_HIGHRES_THUMBS = 177;
+            } else {
+                // public release version
+                VER_TRAKT_SEC_CHANGES = 129;
+                VER_SUMMERTIME_FIX = 136;
+                VER_HIGHRES_THUMBS = 140;
             }
 
-        } catch (NameNotFoundException e) {
-            // this should never happen
+            if (lastVersion < VER_TRAKT_SEC_CHANGES) {
+                TraktCredentials.get(this).removeCredentials();
+                editor.putString(SeriesGuidePreferences.KEY_SECURE, null);
+            }
+            if (lastVersion < VER_SUMMERTIME_FIX) {
+                scheduleAllShowsUpdate();
+            }
+            if (lastVersion < VER_HIGHRES_THUMBS
+                    && DisplaySettings.isVeryLargeScreen(getApplicationContext())) {
+                // clear image cache
+                ImageProvider.getInstance(this).clearCache();
+                ImageProvider.getInstance(this).clearExternalStorageCache();
+                scheduleAllShowsUpdate();
+            }
+
+            // update notification
+            Toast.makeText(this, R.string.updated, Toast.LENGTH_LONG).show();
+
+            // set this as lastVersion
+            editor.putInt(AppSettings.KEY_VERSION, currentVersion);
+
+            editor.commit();
         }
     }
 
@@ -635,7 +629,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
                  */
                 @Override
                 public void run() {
-                    Account account = SyncUtils.getSyncAccount(ShowsActivity.this);
+                    Account account = AccountUtils.getAccount(ShowsActivity.this);
                     if (account == null) {
                         // GetAccount() returned an invalid value. This
                         // shouldn't happen.

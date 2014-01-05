@@ -20,6 +20,7 @@ package com.battlelancer.seriesguide.ui.dialogs;
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
@@ -184,11 +185,8 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    if (!TraktSettings.hasTraktCredentials(getSherlockActivity())) {
-                        // authenticate already here
-                        Intent i = new Intent(getActivity(), ConnectTraktActivity.class);
-                        startActivity(i);
-                    }
+                    // ask the user for credentials if there are none
+                    TraktCredentials.get(getActivity()).ensureCredentials();
                 }
 
                 mTraktChecked = isChecked;
@@ -219,7 +217,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
                 }
 
                 if (mTraktChecked) {
-                    if (!TraktSettings.hasTraktCredentials(getActivity())) {
+                    if (!TraktCredentials.get(getActivity()).hasCredentials()) {
                         // cancel if required auth data is missing
                         mToggleTraktButton.setChecked(false);
                         mTraktChecked = false;

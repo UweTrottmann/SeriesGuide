@@ -9,6 +9,7 @@ import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.loaders.ShowLoader;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
@@ -308,7 +309,7 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
     }
 
     private void onRateOnTrakt() {
-        if (ServiceUtils.ensureTraktCredentials(getActivity())) {
+        if (TraktCredentials.get(getActivity()).ensureCredentials()) {
             TraktRateDialogFragment rateShow = TraktRateDialogFragment.newInstance(getShowTvdbId());
             rateShow.show(getFragmentManager(), "traktratedialog");
         }
