@@ -29,6 +29,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
@@ -244,7 +245,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     private void onRateOnTrakt() {
-        if (ServiceUtils.ensureTraktCredentials(getActivity())) {
+        if (TraktCredentials.get(getActivity()).ensureCredentials()) {
             onShareEpisode(ShareMethod.RATE_TRAKT);
         }
         fireTrackerEvent("Rate (trakt)");

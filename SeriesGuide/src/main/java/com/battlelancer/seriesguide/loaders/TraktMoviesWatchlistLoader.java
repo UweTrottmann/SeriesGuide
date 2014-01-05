@@ -1,6 +1,7 @@
 
 package com.battlelancer.seriesguide.loaders;
 
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
@@ -24,14 +25,14 @@ public class TraktMoviesWatchlistLoader extends GenericSimpleLoader<List<Movie>>
 
     @Override
     public List<Movie> loadInBackground() {
-        Trakt manager = ServiceUtils.getTraktServiceManagerWithAuth(getContext(), false);
+        Trakt manager = ServiceUtils.getTraktWithAuth(getContext());
         if (manager == null) {
             return null;
         }
 
         try {
             return manager.userService()
-                    .watchlistMovies(TraktSettings.getUsername(getContext()));
+                    .watchlistMovies(TraktCredentials.get(getContext()).getUsername());
         } catch (RetrofitError e) {
             Utils.trackExceptionAndLog(getContext(), TAG, e);
         }

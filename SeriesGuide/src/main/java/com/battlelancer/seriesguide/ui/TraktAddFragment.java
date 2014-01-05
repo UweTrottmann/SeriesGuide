@@ -23,7 +23,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -188,13 +188,13 @@ public class TraktAddFragment extends AddFragment {
 
             if (type == AddPagerAdapter.TRENDING_TAB_POSITION) {
                 try {
-                    shows = ServiceUtils.getTraktServiceManager(mContext).showService().trending();
+                    shows = ServiceUtils.getTrakt(mContext).showService().trending();
                 } catch (RetrofitError e) {
                     // we don't care
                 }
             } else {
                 try {
-                    Trakt manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
+                    Trakt manager = ServiceUtils.getTraktWithAuth(mContext);
                     if (manager != null) {
                         switch (type) {
                             case AddPagerAdapter.RECOMMENDED_TAB_POSITION:
@@ -202,11 +202,11 @@ public class TraktAddFragment extends AddFragment {
                                 break;
                             case AddPagerAdapter.LIBRARY_TAB_POSITION:
                                 shows = manager.userService().libraryShowsAllExtended(
-                                        TraktSettings.getUsername(mContext));
+                                        TraktCredentials.get(mContext).getUsername());
                                 break;
                             case AddPagerAdapter.WATCHLIST_TAB_POSITION:
-                                shows = manager.userService()
-                                        .watchlistShows(TraktSettings.getUsername(mContext));
+                                shows = manager.userService().watchlistShows(
+                                        TraktCredentials.get(mContext).getUsername());
                                 break;
                         }
                     }

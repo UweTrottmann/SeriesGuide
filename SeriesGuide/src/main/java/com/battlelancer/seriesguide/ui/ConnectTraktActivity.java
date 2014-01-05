@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.uwetrottmann.seriesguide.R;
 
@@ -22,7 +23,7 @@ public class ConnectTraktActivity extends BaseActivity {
         setupActionBar();
 
         if (savedInstanceState == null) {
-            if (TraktSettings.hasTraktCredentials(this)) {
+            if (TraktCredentials.get(this).hasCredentials()) {
                 // immediately show credentials to allow disconnecting
                 ConnectTraktCredentialsFragment f = ConnectTraktCredentialsFragment.newInstance();
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

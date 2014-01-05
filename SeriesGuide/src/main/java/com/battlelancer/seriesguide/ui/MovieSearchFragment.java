@@ -20,6 +20,7 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.adapters.MoviesAdapter;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
@@ -145,7 +146,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
 
         switch (item.getItemId()) {
             case CONTEXT_ADD_TO_WATCHLIST_ID: {
-                if (ServiceUtils.ensureTraktCredentials(getActivity())) {
+                if (TraktCredentials.get(getActivity()).ensureCredentials()) {
                     // Add item to watchlist
                     AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
                     Movie movie = mAdapter.getItem(info.position);

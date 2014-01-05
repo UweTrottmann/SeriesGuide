@@ -35,6 +35,8 @@ import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
@@ -201,8 +203,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         mTabsAdapter.addTab(R.string.recent, ActivityFragment.class, argsRecent);
 
         // trakt friends tab
-        final boolean isTraktSetup = TraktSettings.hasTraktCredentials(this);
-        if (isTraktSetup) {
+        if (TraktCredentials.get(this).hasCredentials()) {
             mTabsAdapter.addTab(R.string.friends, TraktFriendsFragment.class, null);
         }
 
@@ -531,7 +532,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
                 }
 
                 if (lastVersion < VER_TRAKT_SEC_CHANGES) {
-                    ServiceUtils.clearTraktCredentials(this);
+                    TraktCredentials.get(this).removeCredentials();
                     editor.putString(SeriesGuidePreferences.KEY_SECURE, null);
                 }
                 if (lastVersion < VER_SUMMERTIME_FIX) {

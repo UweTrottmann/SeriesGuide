@@ -20,6 +20,7 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
@@ -178,63 +179,59 @@ public class TraktFriendsFragment extends SherlockFragment implements
 
         @Override
         public List<UserProfile> loadInBackground() {
-            if (TraktSettings.hasTraktCredentials(getContext())) {
-                Trakt manager = ServiceUtils.getTraktServiceManagerWithAuth(getContext(), false);
-                if (manager == null) {
-                    return null;
-                }
+            Trakt manager = ServiceUtils.getTraktWithAuth(getContext());
+            if (manager == null) {
+                return null;
+            }
 
-                List<UserProfile> friendsActivity = new ArrayList<UserProfile>();
+            List<UserProfile> friendsActivity = new ArrayList<UserProfile>();
 
-                try {
-                    final UserService userService = manager.userService();
-                    List<UserProfile> friends = userService
-                            .friends(TraktSettings.getUsername(getContext()));
+            try {
+                final UserService userService = manager.userService();
+                List<UserProfile> friends = userService
+                        .friends(TraktCredentials.get(getContext()).getUsername());
 
-                    for (UserProfile friend : friends) {
-                        // get the detailed profile
-                        UserProfile profile = userService.profile(friend.username);
+                for (UserProfile friend : friends) {
+                    // get the detailed profile
+                    UserProfile profile = userService.profile(friend.username);
 
-                        if (profile.watching != null
-                                && profile.watching.type == ActivityType.Episode) {
-                            // followed is watching something now
-                            friendsActivity.add(profile);
-                        } else {
-                            // look if followed was watching something in the last 4 weeks
-                            for (ActivityItem activity : profile.watched) {
-                                // only look for episodes
-                                if (activity != null && activity.type == ActivityType.Episode) {
-                                    // is this activity no longer than 4 weeks old
-                                    // and not in the future?
-                                    long watchedTime = activity.watched.getTime();
-                                    if (watchedTime > System.currentTimeMillis()
-                                            - DateUtils.WEEK_IN_MILLIS * 4
-                                            && watchedTime <= System.currentTimeMillis()) {
-                                        UserProfile clonedfriend = new UserProfile();
-                                        clonedfriend.username = profile.username;
-                                        clonedfriend.avatar = profile.avatar;
+                    if (profile.watching != null
+                            && profile.watching.type == ActivityType.Episode) {
+                        // followed is watching something now
+                        friendsActivity.add(profile);
+                    } else {
+                        // look if followed was watching something in the last 4 weeks
+                        for (ActivityItem activity : profile.watched) {
+                            // only look for episodes
+                            if (activity != null && activity.type == ActivityType.Episode) {
+                                // is this activity no longer than 4 weeks old
+                                // and not in the future?
+                                long watchedTime = activity.watched.getTime();
+                                if (watchedTime > System.currentTimeMillis()
+                                        - DateUtils.WEEK_IN_MILLIS * 4
+                                        && watchedTime <= System.currentTimeMillis()) {
+                                    UserProfile clonedfriend = new UserProfile();
+                                    clonedfriend.username = profile.username;
+                                    clonedfriend.avatar = profile.avatar;
 
-                                        List<ActivityItem> watchedclone
-                                                = new ArrayList<ActivityItem>();
-                                        watchedclone.add(activity);
-                                        clonedfriend.watched = watchedclone;
+                                    List<ActivityItem> watchedclone
+                                            = new ArrayList<ActivityItem>();
+                                    watchedclone.add(activity);
+                                    clonedfriend.watched = watchedclone;
 
-                                        friendsActivity.add(clonedfriend);
+                                    friendsActivity.add(clonedfriend);
 
-                                        break;
-                                    }
+                                    break;
                                 }
                             }
                         }
                     }
-                } catch (RetrofitError e) {
-                    Log.w(TAG, e);
                 }
-
-                return friendsActivity;
+            } catch (RetrofitError e) {
+                Log.w(TAG, e);
             }
 
-            return null;
+            return friendsActivity;
         }
     }
 
