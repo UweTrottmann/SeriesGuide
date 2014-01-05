@@ -18,8 +18,11 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.WatchedBox;
-import com.battlelancer.seriesguide.adapters.UpcomingSlowAdapter;
+import com.battlelancer.seriesguide.adapters.ActivitySlowAdapter;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -40,14 +43,12 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -55,9 +56,11 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
-public class UpcomingFragment extends SherlockFragment implements
+public class ActivityFragment extends SherlockFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener,
-        OnSharedPreferenceChangeListener, UpcomingSlowAdapter.CheckInListener {
+        OnSharedPreferenceChangeListener, ActivitySlowAdapter.CheckInListener {
+
+    private static final String TAG = "Activity";
 
     private static final int CONTEXT_FLAG_WATCHED_ID = 0;
 
@@ -65,14 +68,12 @@ public class UpcomingFragment extends SherlockFragment implements
 
     private static final int CONTEXT_CHECKIN_ID = 2;
 
-    private UpcomingSlowAdapter mAdapter;
-
-    private boolean mDualPane;
+    private ActivitySlowAdapter mAdapter;
 
     private StickyGridHeadersGridView mGridView;
 
     /**
-     * Data which has to be passed when creating {@link UpcomingFragment}. All Bundle extras are
+     * Data which has to be passed when creating {@link ActivityFragment}. All Bundle extras are
      * strings, except LOADER_ID and EMPTY_STRING_ID.
      */
     public interface InitBundle {
@@ -95,7 +96,7 @@ public class UpcomingFragment extends SherlockFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.upcoming_fragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_activity, container, false);
 
         TextView emptyView = (TextView) v.findViewById(R.id.emptyViewUpcoming);
         emptyView.setText(getString(getArguments().getInt(InitBundle.EMPTY_STRING_ID)));
@@ -111,13 +112,8 @@ public class UpcomingFragment extends SherlockFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // Check to see if we have a frame in which to embed the details
-        // fragment directly in the containing UI.
-        View detailsFragment = getActivity().findViewById(R.id.fragment_details);
-        mDualPane = detailsFragment != null && detailsFragment.getVisibility() == View.VISIBLE;
-
         // setup adapter
-        mAdapter = new UpcomingSlowAdapter(getActivity(), null, 0, this);
+        mAdapter = new ActivitySlowAdapter(getActivity(), null, 0, this);
         mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteActivity(getActivity()));
 
         // setup grid view
@@ -128,6 +124,8 @@ public class UpcomingFragment extends SherlockFragment implements
                 .registerOnSharedPreferenceChangeListener(this);
 
         registerForContextMenu(mGridView);
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -169,7 +167,7 @@ public class UpcomingFragment extends SherlockFragment implements
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
+    public boolean onContextItemSelected(android.view.MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
@@ -190,6 +188,45 @@ public class UpcomingFragment extends SherlockFragment implements
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.activity_menu, menu);
+
+        // set menu items to current values
+        menu.findItem(R.id.menu_onlyfavorites)
+                .setChecked(ActivitySettings.isOnlyFavorites(getActivity()));
+        menu.findItem(R.id.menu_nospecials)
+                .setChecked(DisplaySettings.isHidingSpecials(getActivity()));
+        menu.findItem(R.id.menu_nowatched)
+                .setChecked(DisplaySettings.isNoWatchedEpisodes(getActivity()));
+        menu.findItem(R.id.menu_infinite_scrolling).setChecked(
+                ActivitySettings.isInfiniteActivity(getActivity()));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_onlyfavorites) {
+            storeBooleanPreference(item, ActivitySettings.KEY_ONLY_FAVORITE_SHOWS);
+            fireTrackerEvent("Only favorite shows Toggle");
+            return true;
+        } else if (itemId == R.id.menu_nospecials) {
+            storeBooleanPreference(item, DisplaySettings.KEY_HIDE_SPECIALS);
+            fireTrackerEvent("Hide specials Toggle");
+            return true;
+        } else if (itemId == R.id.menu_nowatched) {
+            storeBooleanPreference(item, DisplaySettings.KEY_NO_WATCHED_EPISODES);
+            fireTrackerEvent("Hide watched Toggle");
+            return true;
+        } else if (itemId == R.id.menu_infinite_scrolling) {
+            storeBooleanPreference(item, ActivitySettings.KEY_INFINITE_ACTIVITY);
+            fireTrackerEvent("Infinite Scrolling Toggle");
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onCheckinEpisode(int episodeTvdbId) {
         CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(), episodeTvdbId);
         f.show(getFragmentManager(), "checkin-dialog");
@@ -198,9 +235,9 @@ public class UpcomingFragment extends SherlockFragment implements
     private void onFlagEpisodeWatched(AdapterContextMenuInfo info, boolean isWatched) {
         Cursor item = (Cursor) mAdapter.getItem(info.position);
 
-        new FlagTask(getActivity(), item.getInt(UpcomingQuery.REF_SHOW_ID))
-                .episodeWatched((int) info.id, item.getInt(UpcomingQuery.SEASON),
-                        item.getInt(UpcomingQuery.NUMBER),
+        new FlagTask(getActivity(), item.getInt(ActivityQuery.REF_SHOW_ID))
+                .episodeWatched((int) info.id, item.getInt(ActivityQuery.SEASON),
+                        item.getInt(ActivityQuery.NUMBER),
                         isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED)
                 .execute();
     }
@@ -209,29 +246,12 @@ public class UpcomingFragment extends SherlockFragment implements
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         int episodeId = (int) id;
 
-        if (mDualPane) {
-            // Check if fragment is shown, create new if needed.
-            EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
-                    .findFragmentById(R.id.fragment_details);
-            if (detailsFragment == null || detailsFragment.getEpisodeTvdbId() != episodeId) {
-                // Make new fragment to show this selection.
-                detailsFragment = EpisodeDetailsFragment.newInstance(episodeId, true, true);
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), EpisodesActivity.class);
+        intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
 
-                // Execute a transaction, replacing any existing
-                // fragment with this one inside the frame.
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.anim.fragment_slide_left_enter,
-                        R.anim.fragment_slide_right_exit);
-                ft.replace(R.id.fragment_details, detailsFragment, "fragmentDetails").commit();
-            }
-        } else {
-            Intent intent = new Intent();
-            intent.setClass(getActivity(), EpisodesActivity.class);
-            intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
-
-            startActivity(intent);
-            getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
-        }
+        startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
     }
 
     public void onRequery() {
@@ -251,7 +271,7 @@ public class UpcomingFragment extends SherlockFragment implements
                 isInfiniteScrolling ? -1 : 30);
 
         return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,
-                UpcomingQuery.PROJECTION, queryArgs[0][0], queryArgs[1], queryArgs[2][0]);
+                ActivityQuery.PROJECTION, queryArgs[0][0], queryArgs[1], queryArgs[2][0]);
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -275,7 +295,17 @@ public class UpcomingFragment extends SherlockFragment implements
         }
     }
 
-    public interface UpcomingQuery {
+    private void fireTrackerEvent(String label) {
+        Utils.trackAction(getActivity(), TAG, label);
+    }
+
+    private void storeBooleanPreference(MenuItem item, String key) {
+        item.setChecked(!item.isChecked());
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        prefs.edit().putBoolean(key, item.isChecked()).commit();
+    }
+
+    public interface ActivityQuery {
 
         String[] PROJECTION = new String[]{
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,

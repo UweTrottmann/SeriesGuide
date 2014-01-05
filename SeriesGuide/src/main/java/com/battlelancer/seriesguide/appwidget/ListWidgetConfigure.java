@@ -17,6 +17,9 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.uwetrottmann.seriesguide.R;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.FragmentTransaction;
@@ -27,9 +30,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RemoteViews;
-
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.uwetrottmann.seriesguide.R;
 
 /**
  * Hosts a {@link ListWidgetPreferenceFragment} to allow changing settings of
@@ -91,6 +91,7 @@ public class ListWidgetConfigure extends Activity {
         RemoteViews views = ListWidgetProvider
                 .buildRemoteViews(this, appWidgetManager, mAppWidgetId);
         appWidgetManager.updateAppWidget(mAppWidgetId, views);
+        appWidgetManager.notifyAppWidgetViewDataChanged(mAppWidgetId, R.id.list_view);
 
         Intent resultValue = new Intent();
         resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);

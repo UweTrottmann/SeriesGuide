@@ -24,7 +24,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.QuickCheckInActivity;
-import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
+import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -359,8 +359,10 @@ public class NotificationService extends IntentService {
             contentTitle = getString(R.string.upcoming_episodes_number, count);
             contentText = getString(R.string.upcoming_display);
 
-            Intent notificationIntent = new Intent(context, UpcomingRecentActivity.class);
+            Intent notificationIntent = new Intent(context, ShowsActivity.class);
             notificationIntent.putExtra(KEY_EPISODE_CLEARED_TIME, latestAirtime);
+            notificationIntent.putExtra(ShowsActivity.InitBundle.SELECTED_TAB,
+                    ShowsActivity.InitBundle.INDEX_TAB_UPCOMING);
             contentIntent = PendingIntent.getActivity(context, REQUEST_CODE_MULTIPLE_EPISODES,
                     notificationIntent, 0);
         }

@@ -9,13 +9,12 @@
         android:layout_height="match_parent"
         android:clipToPadding="@bool/gridClipToPadding"
         android:fastScrollEnabled="true"
-        android:listSelector="?custom_list_selector"
-        android:numColumns="1"
-        android:paddingBottom="8dp"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp"
-        android:paddingTop="10dp"
-        android:scrollbarStyle="outsideOverlay" />
+        android:horizontalSpacing="@dimen/grid_horizontal_spacing"
+        android:listSelector="@color/transparent"
+        android:numColumns="@integer/grid_columns"
+        android:padding="@dimen/default_padding"
+        android:scrollbarStyle="outsideOverlay"
+        android:verticalSpacing="@dimen/grid_vertical_spacing" />
 
     <TextView
         android:id="@+id/emptyViewUpcoming"

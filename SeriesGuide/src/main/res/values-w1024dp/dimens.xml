@@ -4,4 +4,6 @@
     <dimen name="show_poster_width">336dp</dimen>
     <dimen name="show_poster_height">504dp</dimen>
 
+    <integer name="grid_columns">3</integer>
+
 </resources>

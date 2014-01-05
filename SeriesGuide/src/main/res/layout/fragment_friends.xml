@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/contentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/grid_shows" />
+
+        <TextView
+            android:id="@+id/emptyViewFriends"
+            android:layout_width="@dimen/empty_view_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/friends_empty"
+            android:textAppearance="@style/TextAppearance.Light" />
+    </FrameLayout>
+
+    <ProgressBar
+        android:id="@+id/progressIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/poweredby"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:background="#bf000000"
+        android:padding="@dimen/default_padding"
+        android:text="@string/powered_by_trakt"
+        android:textAppearance="@style/TextAppearance.XSmall"
+        android:textColor="@color/text_default" />
+
+</FrameLayout>
