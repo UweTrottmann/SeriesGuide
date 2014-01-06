@@ -46,11 +46,18 @@ import javax.persistence.Query;
 @Api(
         name = "shows",
         version = "v1",
-        scopes = {Constants.EMAIL_SCOPE},
-        clientIds = {com.google.api.server.spi.Constant.API_EXPLORER_CLIENT_ID,
-                Constants.WEB_CLIENT_ID, Constants.ANDROID_BETA_CLIENT_ID,
-                Constants.ANDROID_RELEASE_CLIENT_ID},
-        audiences = {Constants.ANDROID_AUDIENCE},
+        scopes = {
+                Constants.EMAIL_SCOPE
+        },
+        clientIds = {
+                Constants.API_EXPLORER_CLIENT_ID,
+                Constants.WEB_CLIENT_ID,
+                Constants.ANDROID_BETA_CLIENT_ID,
+                Constants.ANDROID_RELEASE_CLIENT_ID
+        },
+        audiences = {
+                Constants.ANDROID_AUDIENCE
+        },
         namespace = @ApiNamespace(ownerDomain = "uwetrottmann.com", ownerName = "uwetrottmann.com",
                 packagePath = "seriesguide")
 )
