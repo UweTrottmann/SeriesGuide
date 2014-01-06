@@ -1,7 +1,5 @@
 package com.uwetrottmann.seriesguide;
 
-import org.datanucleus.util.StringUtils;
-
 import javax.persistence.Entity;
 
 @Entity
