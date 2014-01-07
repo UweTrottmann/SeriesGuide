@@ -36,10 +36,9 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 import javax.inject.Named;
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 
 @Api(
         name = "episodes",
@@ -74,6 +73,8 @@ public class EpisodeEndpoint {
             path = "list"
     )
     public CollectionResponse<Episode> listEpisode(
+            @Nullable @Named("show_tvdbid") Integer showTvdbId,
+            @Nullable @Named("updated_after") Date updatedAfter,
             @Nullable @Named("cursor") String cursorString,
             @Nullable @Named("limit") Integer limit,
             User user) throws UnauthorizedException {
@@ -86,7 +87,28 @@ public class EpisodeEndpoint {
             NamespaceManager.set(Security.get().getUserId(user));
 
             mgr = getEntityManager();
-            Query query = mgr.createQuery("select from Episode as Episode");
+
+            // build query
+            StringBuilder queryString = new StringBuilder("select from Episode as Episode");
+            if (showTvdbId != null || updatedAfter != null) {
+                queryString.append(" where");
+            }
+            if (showTvdbId != null) {
+                // filter for episodes of specific show
+                queryString.append(" Episode.showTvdbId = ").append(showTvdbId);
+                if (updatedAfter != null) {
+                    queryString.append(" and");
+                }
+            }
+            if (updatedAfter != null) {
+                // filter for episodes updated after given UTC timestamp
+                queryString.append(" Episode.updatedAt > :updatedAfter");
+            }
+            Query query = mgr.createQuery(queryString.toString());
+            if (updatedAfter != null) {
+                query.setParameter("updatedAfter", updatedAfter, TemporalType.DATE);
+            }
+
             Cursor cursor;
             if (cursorString != null && cursorString.trim().length() > 0) {
                 cursor = Cursor.fromWebSafeString(cursorString);
