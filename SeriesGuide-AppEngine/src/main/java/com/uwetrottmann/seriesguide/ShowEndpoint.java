@@ -209,6 +209,11 @@ public class ShowEndpoint {
                 continue;
             }
 
+            if (!show.hasValidValues()) {
+                // invalid values, do not insert
+                continue;
+            }
+
             // create metadata
             show.setCreatedAt(new Date());
             show.setUpdatedAt(show.getCreatedAt());

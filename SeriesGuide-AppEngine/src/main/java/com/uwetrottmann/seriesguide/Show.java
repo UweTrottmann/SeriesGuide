@@ -51,6 +51,13 @@ public class Show extends BaseEntity {
         this.tvdbId = tvdbId;
     }
 
+    public boolean hasValidValues() {
+        if (getTvdbId() <= 0) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Returns false if any of the property values of the given show (except TVDb id) are not equal
      * to ours. However, if a new value is null (e.g. not set) it is seen as equal, regardless of
