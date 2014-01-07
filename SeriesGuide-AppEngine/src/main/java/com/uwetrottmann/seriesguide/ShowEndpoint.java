@@ -27,10 +27,8 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.users.User;
 import com.google.appengine.datanucleus.query.JPACursorHelper;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -38,8 +36,6 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 import javax.inject.Named;
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -184,9 +180,9 @@ public class ShowEndpoint {
 
                 if (existingShow != null) {
                     // only update if there are changes
-                    if (!existingShow.hasSameValues(show)) {
+                    if (!existingShow.shouldUpdateWith(show)) {
                         // set updated values
-                        existingShow.copyPropertyValues(show);
+                        existingShow.updateWith(show);
                         existingShow.setUpdatedAt(new Date());
 
                         // save back to Datastore

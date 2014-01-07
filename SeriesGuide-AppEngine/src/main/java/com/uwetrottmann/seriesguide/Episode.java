@@ -53,7 +53,7 @@ public class Episode extends BaseEntity {
      * equal to ours. However, if a new value is null (e.g. not set) it is seen as equal, regardless
      * of our value.
      */
-    public boolean hasSameValues(Episode episode) {
+    public boolean shouldUpdateWith(Episode episode) {
         if (hasDifferentValueExceptNull(episode.getWatchedFlag(), getWatchedFlag())) {
             return false;
         }
@@ -84,7 +84,7 @@ public class Episode extends BaseEntity {
     /**
      * Copies all values, other than the TVDb ids, if they are not null into this entity.
      */
-    public void copyPropertyValues(Episode episode) {
+    public void updateWith(Episode episode) {
         if (episode.getWatchedFlag() != null) {
             setWatchedFlag(episode.getWatchedFlag());
         }

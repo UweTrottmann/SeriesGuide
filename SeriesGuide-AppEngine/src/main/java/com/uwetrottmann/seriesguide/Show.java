@@ -56,7 +56,7 @@ public class Show extends BaseEntity {
      * to ours. However, if a new value is null (e.g. not set) it is seen as equal, regardless of
      * our value.
      */
-    public boolean hasSameValues(Show show) {
+    public boolean shouldUpdateWith(Show show) {
         if (hasDifferentValueExceptNull(show.getIsFavorite(), getIsFavorite())) {
             return false;
         }
@@ -95,7 +95,7 @@ public class Show extends BaseEntity {
     /**
      * Copies all values other than the TVDb id if they are not null into this entity.
      */
-    public void copyPropertyValues(Show show) {
+    public void updateWith(Show show) {
         if (show.getIsFavorite() != null) {
             setIsFavorite(show.getIsFavorite());
         }

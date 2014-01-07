@@ -206,9 +206,9 @@ public class EpisodeEndpoint {
 
                 if (existingEpisode != null) {
                     // only update if there are changes
-                    if (!existingEpisode.hasSameValues(episode)) {
+                    if (!existingEpisode.shouldUpdateWith(episode)) {
                         // set updated values
-                        existingEpisode.copyPropertyValues(episode);
+                        existingEpisode.updateWith(episode);
                         existingEpisode.setUpdatedAt(new Date());
 
                         // save back to Datastore
