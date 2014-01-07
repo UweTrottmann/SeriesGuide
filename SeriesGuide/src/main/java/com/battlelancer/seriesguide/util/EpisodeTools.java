@@ -17,8 +17,6 @@ public class EpisodeTools {
     }
 
     public static void validateFlags(int episodeFlags) {
-        boolean hasValidFlag = false;
-
         if (isUnwatched(episodeFlags)) {
             return;
         }
@@ -29,9 +27,7 @@ public class EpisodeTools {
             return;
         }
 
-        if (!hasValidFlag) {
-            throw new IllegalArgumentException(
-                    "Did not pass a valid episode flag. See EpisodeFlags class for details.");
-        }
+        throw new IllegalArgumentException(
+                "Did not pass a valid episode flag. See EpisodeFlags class for details.");
     }
 }
