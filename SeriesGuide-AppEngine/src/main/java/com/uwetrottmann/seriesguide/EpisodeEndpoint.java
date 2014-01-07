@@ -179,15 +179,15 @@ public class EpisodeEndpoint {
                     String.valueOf(episode.getTvdbId()), user));
         }
 
-        // update existing shows
+        // update existing episodes
         Map<Integer, Episode> existingEpisodes = findAndUpdateExistingEpisodes(
                 episodes.getEpisodes(), user);
 
-        // insert new shows
+        // insert new episodes
         List<Episode> newEpisodes = insertNewEpisodes(episodes.getEpisodes(),
                 existingEpisodes.keySet(), user);
 
-        // return all shows
+        // return all episodes added or modified in(to) Datastore
         newEpisodes.addAll(existingEpisodes.values());
         episodes.setEpisodes(newEpisodes);
 
@@ -233,6 +233,11 @@ public class EpisodeEndpoint {
         for (Episode episode : episodes) {
             if (existingEpisodes.contains(episode.getTvdbId())) {
                 // already was updated
+                continue;
+            }
+
+            if (!episode.hasValidValues()) {
+                // invalid values, do not insert
                 continue;
             }
 
