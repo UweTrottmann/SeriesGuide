@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">影集</string>
   <string name="lists">清單</string>
-  <string name="activity">活動</string>
   <string name="movies">電影</string>
   <string name="statistics">統計</string>
   <string name="search">搜尋</string>
@@ -28,7 +27,6 @@
   <string name="save_selection">儲存所選項目</string>
   <string name="search_hint">搜尋集數</string>
   <string name="updated">已更新到最新版本。</string>
-  <string name="loading">讀取中⋯</string>
   <string name="norating">無</string>
   <string name="unknown">不明</string>
   <string name="offline">Connect to a network, then try again.</string>
@@ -82,7 +80,6 @@
   <string name="episode_directors">導演</string>
   <string name="episode_gueststars">神秘嘉賓</string>
   <string name="episode_writers">編劇</string>
-  <string name="show_airtimeunit">分</string>
   <string name="show_isalive">待續</string>
   <string name="show_isnotalive">已完結</string>
   <string name="lastEdit">Last Edit // TVDb</string>
@@ -93,6 +90,7 @@
   <string name="now">目前</string>
   <string name="daily">每日</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">已看集數</string>
   <string name="unmark_episode">未看集數</string>
   <string name="mark_all">全部已觀看</string>
@@ -147,6 +145,7 @@
   <string name="only_favorites">僅顯示喜愛影集</string>
   <string name="togglewatched">切換已觀看</string>
   <string name="pref_infinite_scrolling">列表無限滾動</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">更新中......</string>
   <string name="update_no_connection">如需更新，請連接網路</string>
   <string name="update_inprogress">更新正在進行中，請稍後再試</string>

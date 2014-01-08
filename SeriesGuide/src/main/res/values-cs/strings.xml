@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Seriály</string>
   <string name="lists">Seznamy</string>
-  <string name="activity">Aktivita</string>
   <string name="movies">Filmy</string>
   <string name="statistics">Statistiky</string>
   <string name="search">Hledat</string>
@@ -28,7 +27,6 @@
   <string name="save_selection">Uložit výběr</string>
   <string name="search_hint">Hledat v epizodách</string>
   <string name="updated">Aktualizováno na nejnovější verzi.</string>
-  <string name="loading">Načítání…</string>
   <string name="norating">n/a</string>
   <string name="unknown">neznámo</string>
   <string name="offline">Connect to a network, then try again.</string>
@@ -82,7 +80,6 @@
   <string name="episode_directors">Režie</string>
   <string name="episode_gueststars">Hostující herci</string>
   <string name="episode_writers">Scénář</string>
-  <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Pokračuje</string>
   <string name="show_isnotalive">Ukončený</string>
   <string name="lastEdit">Naposledy editováno // TVDb</string>
@@ -93,6 +90,7 @@
   <string name="now">nyní</string>
   <string name="daily">Denně</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Epizoda zhlédnuta</string>
   <string name="unmark_episode">Epizoda zatím nezhlédnuta</string>
   <string name="mark_all">Zhlédnuty všechny</string>
@@ -147,6 +145,7 @@
   <string name="only_favorites">Pouze oblíbené seriály</string>
   <string name="togglewatched">Přepnout zhlédnutí</string>
   <string name="pref_infinite_scrolling">Aktivita bez omezení časem</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Probíhá aktualizace…</string>
   <string name="update_no_connection">Pro aktualizaci se připojte k internetu.</string>
   <string name="update_inprogress">Probíhá aktualizace, zkuste to později.</string>

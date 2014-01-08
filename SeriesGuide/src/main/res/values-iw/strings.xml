@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">סדרות</string>
   <string name="lists">רשימות</string>
-  <string name="activity">פעילות</string>
   <string name="movies">סרטים</string>
   <string name="statistics">סטטיסטיקה</string>
   <string name="search">חפש</string>
@@ -28,7 +27,6 @@
   <string name="save_selection">שמור בחירה</string>
   <string name="search_hint">חפש פרקים</string>
   <string name="updated">עדכן לגרסה האחרונה.</string>
-  <string name="loading">טוען</string>
   <string name="norating">לא ידוע</string>
   <string name="unknown">לא ידוע</string>
   <string name="offline">Connect to a network, then try again.</string>
@@ -82,7 +80,6 @@
   <string name="episode_directors">במאים</string>
   <string name="episode_gueststars">כוכבי אורח</string>
   <string name="episode_writers">כותבים</string>
-  <string name="show_airtimeunit">דקות</string>
   <string name="show_isalive">ממשיכה</string>
   <string name="show_isnotalive">הסתיימה</string>
   <string name="lastEdit">עדכון אחרון // TVDb</string>
@@ -93,6 +90,7 @@
   <string name="now">עכשיו</string>
   <string name="daily">יומי</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">פרק נצפה</string>
   <string name="unmark_episode">פרק שטרם נצפה</string>
   <string name="mark_all">הכל נצפה</string>
@@ -147,6 +145,7 @@
   <string name="only_favorites">סדרות מעודפות בלבד</string>
   <string name="togglewatched">החלף נצפו</string>
   <string name="pref_infinite_scrolling">פעילות אינסופית</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">מעדכן...</string>
   <string name="update_no_connection">התחבר לאינטרנט כדי לעדכן.</string>
   <string name="update_inprogress">מבצע תהליך עדכון, נסה מאוחר יותר.</string>

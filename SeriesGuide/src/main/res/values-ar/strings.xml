@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">مسلسلات</string>
   <string name="lists">القوائم</string>
-  <string name="activity">النشاط</string>
   <string name="movies">الأفلام</string>
   <string name="statistics">إحصائيات</string>
   <string name="search">بحث</string>
@@ -28,7 +27,6 @@
   <string name="save_selection">حفظ التحديد</string>
   <string name="search_hint">البحث في الحلقات</string>
   <string name="updated">تحديث إلى الإصدار الأخير.</string>
-  <string name="loading">جارِ التحميل…</string>
   <string name="norating">لا يوجد</string>
   <string name="unknown">غير معروف</string>
   <string name="offline">Connect to a network, then try again.</string>
@@ -82,7 +80,6 @@
   <string name="episode_directors">الإدارة</string>
   <string name="episode_gueststars">ضيف الحلقة</string>
   <string name="episode_writers">الكُتاب</string>
-  <string name="show_airtimeunit">دقيقة</string>
   <string name="show_isalive">مستمر</string>
   <string name="show_isnotalive">انتهى</string>
   <string name="lastEdit">آخر تحرير//TVDb</string>
@@ -93,6 +90,7 @@
   <string name="now">الآن</string>
   <string name="daily">يومي</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">حلقة مُشاهدة</string>
   <string name="unmark_episode">حلقة لم تُشاهد بعد</string>
   <string name="mark_all">مشاهدة الكل</string>
@@ -147,6 +145,7 @@
   <string name="only_favorites">فقط المسلسلات المفضلة</string>
   <string name="togglewatched">تبديل المُشاهدة</string>
   <string name="pref_infinite_scrolling">النشاط اللانهائي</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">جاري التحديث</string>
   <string name="update_no_connection">ليتم التحديث إتصل بالإنترنت.</string>
   <string name="update_inprogress">التحديث قيد التقدم, حاول مرة أخرى.</string>

@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Séries</string>
   <string name="lists">Listas</string>
-  <string name="activity">Atividade</string>
   <string name="movies">Filmes</string>
   <string name="statistics">Estatísticas</string>
   <string name="search">Procurar</string>
@@ -28,17 +27,16 @@
   <string name="save_selection">Salvar seleção</string>
   <string name="search_hint">Pesquisar episódios</string>
   <string name="updated">Atualizado para a versão mais recente.</string>
-  <string name="loading">Carregando...</string>
   <string name="norating">n/a</string>
   <string name="unknown">desconhecido</string>
-  <string name="offline">Connect to a network, then try again.</string>
-  <string name="offline_no_wifi">Connect to Wi-Fi or allow all connections, then try again.</string>
+  <string name="offline">Conecte-se a uma rede e tente novamente.</string>
+  <string name="offline_no_wifi">Conecte-se ao Wi-Fi ou permita todas as conexões e tente novamente.</string>
   <string name="app_not_available">Nenhum aplicativo disponível que suporte isso.</string>
-  <string name="onlyx">Disponível apenas com a Assinatura do X</string>
-  <string name="add_empty">There are no shows here.</string>
+  <string name="onlyx">Disponível apenas com a Assinatura X</string>
+  <string name="add_empty">Nenhuma série aqui.</string>
   <string name="share_show">Compartilhar série</string>
   <string name="share_episode">Compartilhar episódio</string>
-  <string name="share_checkout">Assistido</string>
+  <string name="share_checkout">Confira</string>
   <string name="comments">Comentários</string>
   <string name="shout_hint">Digite um grito (em inglês)</string>
   <string name="shout">Grite!</string>
@@ -52,7 +50,7 @@
   <string name="watchlist_removed">Removido da lista</string>
   <string name="movies_search_hint">Digite o título de um filme</string>
   <string name="movies_empty">Procure por um filme acima.</string>
-  <string name="movies_watchlist_empty">You have not added movies to your trakt watchlist.</string>
+  <string name="movies_watchlist_empty">Você não adicionou nenhum filme à sua watchlist do trakt.</string>
   <string name="trailer">Trailer</string>
   <string name="shows_with_next">%s com próximos episódios</string>
   <string name="shows_continuing">%s em exibição</string>
@@ -82,7 +80,6 @@
   <string name="episode_directors">Diretores</string>
   <string name="episode_gueststars">Convidados Especiais</string>
   <string name="episode_writers">Roteiristas</string>
-  <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Em exibição</string>
   <string name="show_isnotalive">Finalizada</string>
   <string name="lastEdit">Última Edição // TVDb</string>
@@ -93,6 +90,7 @@
   <string name="now">agora</string>
   <string name="daily">Diário</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Episódio assistido</string>
   <string name="unmark_episode">Episódio ainda não assistido</string>
   <string name="mark_all">Todos assistidos</string>
@@ -111,7 +109,7 @@
   <string name="trakt_notcollected">%s não colecionado.</string>
   <string name="confirm_delete">Você quer mesmo remover %s?</string>
   <string name="delete_has_list_items">Primeiro remova %s de todas as listas.</string>
-  <string name="delete_error">Could not remove show. Try again later.</string>
+  <string name="delete_error">Não foi possível remover a série. Tente novamente mais tarde.</string>
   <string name="delete_show">Remover</string>
   <string name="dontdelete_show">Não remover</string>
   <string name="no_nextepisode">nenhum próximo episódio encontrado</string>
@@ -128,14 +126,14 @@
   <string name="empty_filter">Remover todos os filtros</string>
   <string name="action_shows_filter_favorites">Favoritos</string>
   <string name="action_shows_filter_unwatched">Não assistidos</string>
-  <string name="action_shows_filter_upcoming">Próximos</string>
+  <string name="action_shows_filter_upcoming">Em breve</string>
   <string name="action_shows_filter_hidden">Ocultos</string>
   <string name="action_shows_sort">Ordenar séries</string>
   <string name="action_shows_sort_title">Título</string>
   <string name="action_shows_sort_episode">Próximo episódio</string>
   <string name="action_shows_sort_favorites">Favoritos primeiro</string>
   <string name="updateall_yes">Atualizar (tudo)</string>
-  <string name="menu_update_delta">Atualizar (apenas as desatualizadas)</string>
+  <string name="menu_update_delta">Atualizar (obsoletas apenas)</string>
   <string name="context_updateshow">Atualizar</string>
   <string name="context_marknext">Próximo episódio já assistido</string>
   <string name="upcoming">Próximos</string>
@@ -147,6 +145,7 @@
   <string name="only_favorites">Somente séries favoritas</string>
   <string name="togglewatched">Alternar visto</string>
   <string name="pref_infinite_scrolling">Atividade infinita</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Atualizando...</string>
   <string name="update_no_connection">Para atualizar, conecte-se à Internet.</string>
   <string name="update_inprogress">Atualização em andamento, tente novamente mais tarde.</string>
@@ -184,17 +183,17 @@
   <string name="list_item_manage">Gerenciar listas</string>
   <string name="list_item_remove">Remover da lista</string>
   <string name="list_empty">Você pode adicionar séries, temporadas ou episódios na lista.</string>
-  <string name="hexagon_setup">Set up SeriesGuide cloud</string>
-  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
-  <string name="hexagon_signin">Sign In</string>
-  <string name="hexagon_signed_in">You are connected to SeriesGuide cloud.</string>
-  <string name="hexagon_signout">Sign Out</string>
-  <string name="hexagon_setup_incomplete">Setting up SeriesGuide cloud was not completed.</string>
-  <string name="hexagon_setup_complete">Complete setup</string>
-  <string name="hexagon_priority_choice_required">Some of your shows are already in the cloud. Which version do you prefer?</string>
-  <string name="hexagon_priority_local">On this device</string>
-  <string name="hexagon_priority_cloud">In the cloud</string>
-  <string name="hexagon_priority_select">Select version</string>
+  <string name="hexagon_setup">Configurar a nuvem SeriesGuide</string>
+  <string name="hexagon_description">Conecte-se à nuvem para fazer backup e sincronizar suas séries.\nEpisódios e filmes não estão incluídos ainda, continue usando a integração com o trakt.tv para isso.</string>
+  <string name="hexagon_signin">Entrar</string>
+  <string name="hexagon_signed_in">Você está conectado à nuvem SeriesGuide.</string>
+  <string name="hexagon_signout">Sair</string>
+  <string name="hexagon_setup_incomplete">Não foi possível configurar a nuvem SeriesGuide.</string>
+  <string name="hexagon_setup_complete">Configuração completa</string>
+  <string name="hexagon_priority_choice_required">Algumas de suas séries já estão na nuvem. Qual versão você prefere?</string>
+  <string name="hexagon_priority_local">A deste dispositivo</string>
+  <string name="hexagon_priority_cloud">A da nuvem</string>
+  <string name="hexagon_priority_select">Selecionar versão</string>
   <string name="connect_trakt">Conectar trakt</string>
   <string name="connect_trakt_done">Conectado ao trakt!</string>
   <string name="add_trakt_shows">Adicione séries da sua coleção:</string>
@@ -220,8 +219,8 @@
   <string name="pref_seasonsorting">Ordenar temporadas por…</string>
   <string name="pref_episodesorting">Ordenar episódios por…</string>
   <string name="pref_language">Idioma do conteúdo</string>
-  <string name="pref_updatewifionly">Images via Wi-Fi only</string>
-  <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
+  <string name="pref_updatewifionly">Imagens apenas via Wi-Fi</string>
+  <string name="pref_updatewifionlysummary">Não baixar pela rede móvel para reduzir cobranças da operadora</string>
   <string name="about">Sobre o SeriesGuide</string>
   <string name="pref_credits">Créditos</string>
   <string name="clearGetGlueCredentials">Desconectar do GetGlue</string>
@@ -255,7 +254,7 @@
   <string name="backup_version">Versão do banco de dados</string>
   <string name="backup_failed_nosd">Não foi possível fazer o backup. A pasta de backup não está disponível.</string>
   <string name="backup_inprogress">Fazendo backup do banco de dados…</string>
-  <string name="backup_success">Backup bem sucedido.</string>
+  <string name="backup_success">Backup bem-sucedido.</string>
   <string name="backup_failed">Backup falhou.</string>
   <string name="import_inprogress">Restaurando banco de dados…</string>
   <string name="import_failed_nosd">Não foi possível restaurar o backup. A pasta de backup não está disponível.</string>
@@ -383,7 +382,7 @@
     <item>Preto</item>
   </string-array>
   <string-array name="widgetType">
-    <item>Próximos</item>
+    <item>Próximos episódios</item>
     <item>Recentes</item>
     <item>Favoritos</item>
   </string-array>

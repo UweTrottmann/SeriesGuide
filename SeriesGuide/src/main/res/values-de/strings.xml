@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Serien</string>
   <string name="lists">Listen</string>
-  <string name="activity">Aktivität</string>
   <string name="movies">Filme</string>
   <string name="statistics">Statistik</string>
   <string name="search">Suchen</string>
@@ -28,7 +27,6 @@
   <string name="save_selection">Auswahl speichern</string>
   <string name="search_hint">Suche Folgen</string>
   <string name="updated">Auf neueste Version aktualisiert.</string>
-  <string name="loading">Lädt…</string>
   <string name="norating">n/a</string>
   <string name="unknown">unbekannt</string>
   <string name="offline">Stellen Sie eine Netzwerkverbindung her, versuchen Sie es dann erneut.</string>
@@ -82,7 +80,6 @@
   <string name="episode_directors">Regisseure</string>
   <string name="episode_gueststars">Gastschauspieler</string>
   <string name="episode_writers">Autoren</string>
-  <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Wird fortgesetzt</string>
   <string name="show_isnotalive">Endete</string>
   <string name="lastEdit">Zuletzt bearbeitet // TVDb</string>
@@ -93,6 +90,7 @@
   <string name="now">jetzt</string>
   <string name="daily">Täglich</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Gesehen</string>
   <string name="unmark_episode">Noch nicht gesehen</string>
   <string name="mark_all">Alle gesehen</string>
@@ -147,6 +145,7 @@
   <string name="only_favorites">Nur Serien-Favoriten</string>
   <string name="togglewatched">"Gesehen" umschalten</string>
   <string name="pref_infinite_scrolling">Endlose Aktivität</string>
+  <string name="action_activity_filter">Aktivitäten filtern</string>
   <string name="update_scheduled">Aktualisiert…</string>
   <string name="update_no_connection">Zum Aktualisieren mit dem Internet verbinden.</string>
   <string name="update_inprogress">Eine Aktualisierung ist im Gange, versuchen Sie es später erneut.</string>

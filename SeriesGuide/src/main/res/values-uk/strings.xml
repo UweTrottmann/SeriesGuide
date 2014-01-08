@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Серіали</string>
   <string name="lists">Списки</string>
-  <string name="activity">Активність</string>
   <string name="movies">Фільми</string>
   <string name="statistics">Статистика</string>
   <string name="search">Пошук</string>
@@ -28,7 +27,6 @@
   <string name="save_selection">Зберегти вибране</string>
   <string name="search_hint">Пошук серій</string>
   <string name="updated">Оновлено до останньої версії.</string>
-  <string name="loading">Завантажується...</string>
   <string name="norating">Нема даних</string>
   <string name="unknown">Невідомо</string>
   <string name="offline">Connect to a network, then try again.</string>
@@ -82,7 +80,6 @@
   <string name="episode_directors">Режисери</string>
   <string name="episode_gueststars">Запрошені зірки</string>
   <string name="episode_writers">Сценаристи</string>
-  <string name="show_airtimeunit">хв</string>
   <string name="show_isalive">Продовжується</string>
   <string name="show_isnotalive">Закінчився</string>
   <string name="lastEdit">Останнє редагування / / TVDb</string>
@@ -93,6 +90,7 @@
   <string name="now">тепер</string>
   <string name="daily">Щодня</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Переглянута серія</string>
   <string name="unmark_episode">Не переглянута серія</string>
   <string name="mark_all">Всі переглянуті</string>
@@ -147,6 +145,7 @@
   <string name="only_favorites">Лише улюблені серіали</string>
   <string name="togglewatched">Перемикати переглянуті</string>
   <string name="pref_infinite_scrolling">Безкінечна активність</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Оновлюється...</string>
   <string name="update_no_connection">Для оновлення, з\'єднайтесь з інтернетом.</string>
   <string name="update_inprogress">Оновлення в процесі, спробуйте ще раз пізніше.</string>

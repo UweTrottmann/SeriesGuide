@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Séries</string>
   <string name="lists">Listes</string>
-  <string name="activity">Activité</string>
   <string name="movies">Films</string>
   <string name="statistics">Statistiques</string>
   <string name="search">Rechercher</string>
@@ -28,14 +27,13 @@
   <string name="save_selection">Enregistrer</string>
   <string name="search_hint">Recherche d\'épisodes</string>
   <string name="updated">Mis à jour avec la version la plus récente.</string>
-  <string name="loading">Chargement en cours…</string>
   <string name="norating">s/o</string>
   <string name="unknown">inconnu</string>
-  <string name="offline">Connect to a network, then try again.</string>
-  <string name="offline_no_wifi">Connect to Wi-Fi or allow all connections, then try again.</string>
+  <string name="offline">Connectez-vous à un réseau, puis réessayez.</string>
+  <string name="offline_no_wifi">Connectez-vous au Wi-Fi ou autorisez toutes les connexions, puis réessayez.</string>
   <string name="app_not_available">Aucune application n\'est disponible pour gérer ceci.</string>
   <string name="onlyx">Disponible uniquement avec l\'abonnement X</string>
-  <string name="add_empty">There are no shows here.</string>
+  <string name="add_empty">Il n\'y a aucune série ici.</string>
   <string name="share_show">Partager la série</string>
   <string name="share_episode">Partager l\'épisode</string>
   <string name="share_checkout">Jette un oeil sur</string>
@@ -52,7 +50,7 @@
   <string name="watchlist_removed">Retiré de la liste à voir</string>
   <string name="movies_search_hint">Entrez le titre du film</string>
   <string name="movies_empty">Recherchez un film ci-dessus.</string>
-  <string name="movies_watchlist_empty">You have not added movies to your trakt watchlist.</string>
+  <string name="movies_watchlist_empty">Vous n\'avez pas ajouté de films dans votre liste à voir trakt.</string>
   <string name="trailer">Bande-annonce</string>
   <string name="shows_with_next">%s avec des épisodes à venir</string>
   <string name="shows_continuing">%s en cours</string>
@@ -82,7 +80,6 @@
   <string name="episode_directors">Réalisateurs</string>
   <string name="episode_gueststars">Invités exceptionnels</string>
   <string name="episode_writers">Scénaristes</string>
-  <string name="show_airtimeunit">min</string>
   <string name="show_isalive">En cours</string>
   <string name="show_isnotalive">Terminé</string>
   <string name="lastEdit">Dernière modification // TVDb</string>
@@ -93,6 +90,7 @@
   <string name="now">maintenant</string>
   <string name="daily">Quotidiennement</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Episode vu</string>
   <string name="unmark_episode">Episode pas encore vu</string>
   <string name="mark_all">Tous vus</string>
@@ -111,7 +109,7 @@
   <string name="trakt_notcollected">%s n\'est pas dans votre collection.</string>
   <string name="confirm_delete">Voulez-vous vraiment supprimer %s?</string>
   <string name="delete_has_list_items">Impossible, supprimez d\'abord %s de toutes les listes.</string>
-  <string name="delete_error">Could not remove show. Try again later.</string>
+  <string name="delete_error">Impossible de retirer la série. Réessayez plus tard.</string>
   <string name="delete_show">Supprimer</string>
   <string name="dontdelete_show">Ne pas supprimer</string>
   <string name="no_nextepisode">pas de prochain épisode trouvé</string>
@@ -147,6 +145,7 @@
   <string name="only_favorites">Juste les séries préférées</string>
   <string name="togglewatched">Vu/Non vu</string>
   <string name="pref_infinite_scrolling">Activité infinie</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Mise à jour...</string>
   <string name="update_no_connection">Pour mettre à jour, connectez-vous à Internet.</string>
   <string name="update_inprogress">Une mise à jour est en cours, réessayez ultérieurement.</string>
@@ -184,17 +183,17 @@
   <string name="list_item_manage">Gérer les listes</string>
   <string name="list_item_remove">Retirer de la liste</string>
   <string name="list_empty">Vous pouvez ajouter des séries, des saisons ou des épisodes à cette liste.</string>
-  <string name="hexagon_setup">Set up SeriesGuide cloud</string>
-  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
-  <string name="hexagon_signin">Sign In</string>
-  <string name="hexagon_signed_in">You are connected to SeriesGuide cloud.</string>
-  <string name="hexagon_signout">Sign Out</string>
-  <string name="hexagon_setup_incomplete">Setting up SeriesGuide cloud was not completed.</string>
-  <string name="hexagon_setup_complete">Complete setup</string>
-  <string name="hexagon_priority_choice_required">Some of your shows are already in the cloud. Which version do you prefer?</string>
-  <string name="hexagon_priority_local">On this device</string>
-  <string name="hexagon_priority_cloud">In the cloud</string>
-  <string name="hexagon_priority_select">Select version</string>
+  <string name="hexagon_setup">Configurer le cloud SeriesGuide</string>
+  <string name="hexagon_description">Connectez-vous au cloud pour sauvegarder et synchroniser vos séries.\nLes épisodes et les films ne sont pas encore inclus, continuez à utiliser le service trakt.tv pour cela.</string>
+  <string name="hexagon_signin">Connexion</string>
+  <string name="hexagon_signed_in">Vous êtes connecté au cloud SeriesGuide.</string>
+  <string name="hexagon_signout">Déconnexion</string>
+  <string name="hexagon_setup_incomplete">La configuration du cloud SeriesGuide n\'était pas terminée.</string>
+  <string name="hexagon_setup_complete">Terminer la configuration</string>
+  <string name="hexagon_priority_choice_required">Certaines de vos séries sont déjà sur le cloud. Quelle version préférez-vous ?</string>
+  <string name="hexagon_priority_local">Sur cet appareil</string>
+  <string name="hexagon_priority_cloud">Dans le cloud</string>
+  <string name="hexagon_priority_select">Choisir cette version</string>
   <string name="connect_trakt">Me connecter à trakt</string>
   <string name="connect_trakt_done">Connecté à trakt !</string>
   <string name="add_trakt_shows">Ajoutez les séries de votre bibliothèque :</string>
@@ -220,8 +219,8 @@
   <string name="pref_seasonsorting">Trier les saisons par...</string>
   <string name="pref_episodesorting">Trier les épisodes par...</string>
   <string name="pref_language">Langue</string>
-  <string name="pref_updatewifionly">Images via Wi-Fi only</string>
-  <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
+  <string name="pref_updatewifionly">Images uniquement via Wi-Fi</string>
+  <string name="pref_updatewifionlysummary">Pour réduire les frais de consommation de données, ne pas les télécharger via un réseau mobile</string>
   <string name="about">A propos de SeriesGuide</string>
   <string name="pref_credits">Crédits</string>
   <string name="clearGetGlueCredentials">Déconnecter GetGlue</string>

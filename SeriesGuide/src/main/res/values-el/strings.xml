@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Σειρές</string>
   <string name="lists">Λίστες</string>
-  <string name="activity">Δραστηριότητα</string>
   <string name="movies">Ταινίες</string>
   <string name="statistics">Στατιστικά</string>
   <string name="search">Αναζήτηση</string>
@@ -28,7 +27,6 @@
   <string name="save_selection">Αποθήκευση επιλογής</string>
   <string name="search_hint">Αναζήτηση επεισοδίων</string>
   <string name="updated">Ενημέρωση για την πιο πρόσφατη έκδοση.</string>
-  <string name="loading">Φόρτωση…</string>
   <string name="norating">n/a</string>
   <string name="unknown">άγνωστο</string>
   <string name="offline">Connect to a network, then try again.</string>
@@ -82,7 +80,6 @@
   <string name="episode_directors">Σκηνοθέτες</string>
   <string name="episode_gueststars">Γκεστ Σταρ</string>
   <string name="episode_writers">Συγγραφείς</string>
-  <string name="show_airtimeunit">λεπτά</string>
   <string name="show_isalive">Συνεχίζεται</string>
   <string name="show_isnotalive">Σταμάτησε</string>
   <string name="lastEdit">Τελευταία επεξεργασία // TVDb</string>
@@ -93,6 +90,7 @@
   <string name="now">τώρα</string>
   <string name="daily">Καθημερινή</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Το επεισόδιο έχει παρακολουθηθεί</string>
   <string name="unmark_episode">Το επεισόδιο δεν έχει παρακολουθηθεί ακόμα</string>
   <string name="mark_all">Έχουν παρακολουθηθεί όλα</string>
@@ -147,6 +145,7 @@
   <string name="only_favorites">Μόνο αγαπημένες σειρές</string>
   <string name="togglewatched">Εναλλαγή παρακολουθημένων</string>
   <string name="pref_infinite_scrolling">Infinite activity</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Ενημέρωση…</string>
   <string name="update_no_connection">To update connect to the internet.</string>
   <string name="update_inprogress">Μια ενημέρωση βρίσκεται σε εξέλιξη, δοκιμάστε ξανά αργότερα.</string>

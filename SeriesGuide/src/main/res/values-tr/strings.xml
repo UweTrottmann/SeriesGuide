@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Diziler</string>
   <string name="lists">Listeler</string>
-  <string name="activity">Etkinlik</string>
   <string name="movies">Filmler</string>
   <string name="statistics">İstatistikler</string>
   <string name="search">Ara</string>
@@ -28,7 +27,6 @@
   <string name="save_selection">Seçimi kaydet</string>
   <string name="search_hint">Bölüm ara</string>
   <string name="updated">En son sürüme güncellendi.</string>
-  <string name="loading">Yükleniyor…</string>
   <string name="norating">Geçersiz</string>
   <string name="unknown">bilinmiyor</string>
   <string name="offline">Connect to a network, then try again.</string>
@@ -82,7 +80,6 @@
   <string name="episode_directors">Yönetmen</string>
   <string name="episode_gueststars">Konuk oyuncular</string>
   <string name="episode_writers">Yazarlar</string>
-  <string name="show_airtimeunit">dk</string>
   <string name="show_isalive">Devam ediyor</string>
   <string name="show_isnotalive">Sona erdi</string>
   <string name="lastEdit">Son Düzenleme // TVDb</string>
@@ -93,6 +90,7 @@
   <string name="now">şimdi</string>
   <string name="daily">Günlük</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">İzlenmiş bölüm</string>
   <string name="unmark_episode">İzlenmemiş bölüm</string>
   <string name="mark_all">Tümü izlendi</string>
@@ -147,6 +145,7 @@
   <string name="only_favorites">Sadece favori diziler</string>
   <string name="togglewatched">Seyredilme durumunu değiştir</string>
   <string name="pref_infinite_scrolling">Bütün etkinlikleri göster</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Güncelleniyor...</string>
   <string name="update_no_connection">Güncelleme amacıyla internete bağlayın.</string>
   <string name="update_inprogress">Devam eden bir güncelleme var, daha sonra tekrar deneyin.</string>

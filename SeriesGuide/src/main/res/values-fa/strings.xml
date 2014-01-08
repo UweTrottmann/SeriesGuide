@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">سریالها</string>
   <string name="lists">لیست ها</string>
-  <string name="activity">فعالیت</string>
   <string name="movies">فیلمها</string>
   <string name="statistics">آمار</string>
   <string name="search">جستجو</string>
@@ -28,7 +27,6 @@
   <string name="save_selection">ذخیره انتخاب</string>
   <string name="search_hint">جستجوی قسمتها</string>
   <string name="updated">Updated to latest version.</string>
-  <string name="loading">در حال بارگذاری…</string>
   <string name="norating">n/a</string>
   <string name="unknown">نامعلوم</string>
   <string name="offline">Connect to a network, then try again.</string>
@@ -82,7 +80,6 @@
   <string name="episode_directors">Directors</string>
   <string name="episode_gueststars">Guest Stars</string>
   <string name="episode_writers">Writers</string>
-  <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Continuing</string>
   <string name="show_isnotalive">Ended</string>
   <string name="lastEdit">Last Edit // TVDb</string>
@@ -93,6 +90,7 @@
   <string name="now">now</string>
   <string name="daily">Daily</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Watched episode</string>
   <string name="unmark_episode">Not yet watched episode</string>
   <string name="mark_all">Watched all</string>
@@ -147,6 +145,7 @@
   <string name="only_favorites">Only favorite shows</string>
   <string name="togglewatched">Toggle watched</string>
   <string name="pref_infinite_scrolling">Infinite activity</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Updating…</string>
   <string name="update_no_connection">To update connect to the internet.</string>
   <string name="update_inprogress">An update is in progress, try again later.</string>
