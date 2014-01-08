@@ -89,7 +89,7 @@
   <string name="today">сегодня</string>
   <string name="now">сейчас</string>
   <string name="daily">Ежедневно</string>
-  <string name="release_date_and_day">%1$ s (%2$ s)</string>
+  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Просмотренный эпизод</string>
   <string name="unmark_episode">Пока не просмотренный эпизод</string>
