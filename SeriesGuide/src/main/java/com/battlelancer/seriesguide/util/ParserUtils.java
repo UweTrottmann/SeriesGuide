@@ -21,10 +21,6 @@ import android.net.Uri;
 
 import java.util.regex.Pattern;
 
-/**
- * Various utility methods used by
- * {@link com.google.android.apps.iosched.io.JSONHandler}.
- */
 public class ParserUtils {
 
     /** Used to sanitize a string to be {@link Uri} safe. */
