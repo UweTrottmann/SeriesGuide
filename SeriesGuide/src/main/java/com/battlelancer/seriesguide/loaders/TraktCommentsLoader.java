@@ -52,7 +52,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<List<Comment>> {
         int tvdbId = mArgs.getInt(ShareItems.TVDBID);
         int episode = mArgs.getInt(ShareItems.EPISODE);
 
-        Trakt manager = ServiceUtils.getTraktServiceManager(getContext());
+        Trakt manager = ServiceUtils.getTrakt(getContext());
         List<Comment> comments = new ArrayList<Comment>();
         try {
             if (tvdbId == 0) {

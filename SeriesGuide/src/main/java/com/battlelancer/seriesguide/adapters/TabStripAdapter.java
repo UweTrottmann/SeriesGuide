@@ -17,13 +17,14 @@
 
 package com.battlelancer.seriesguide.adapters;
 
-import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.astuetz.PagerSlidingTabStrip;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 
 import java.util.ArrayList;
@@ -36,9 +37,13 @@ public class TabStripAdapter extends FragmentPagerAdapter {
 
     private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
 
-    private Context mContext;
+    private final Context mContext;
 
-    private PagerSlidingTabStrip mTabStrip;
+    private final FragmentManager mFragmentManager;
+
+    private final ViewPager mViewPager;
+
+    private final PagerSlidingTabStrip mTabStrip;
 
     static final class TabInfo {
 
@@ -58,25 +63,44 @@ public class TabStripAdapter extends FragmentPagerAdapter {
     public TabStripAdapter(FragmentManager fm, Context context, ViewPager pager,
             PagerSlidingTabStrip tabs) {
         super(fm);
+        mFragmentManager = fm;
         mContext = context;
         mTabStrip = tabs;
-        ViewPager viewPager = pager;
-        viewPager.setAdapter(this);
-        mTabStrip.setViewPager(viewPager);
+        mViewPager = pager;
+        mViewPager.setAdapter(this);
+        mTabStrip.setViewPager(mViewPager);
     }
 
     /**
-     * Adds a new tab. Make sure to call {@link #updateTabs} after you have added them all.
+     * Adds a new tab. Make sure to call {@link #notifyTabsChanged} after you have added them all.
      */
     public void addTab(int titleRes, Class<?> fragmentClass, Bundle args) {
-        TabInfo tab = new TabInfo(fragmentClass, args, titleRes);
-        mTabs.add(tab);
+        mTabs.add(new TabInfo(fragmentClass, args, titleRes));
+    }
+
+    /**
+     * Update an existing tab. Make sure to call {@link #notifyTabsChanged} afterwards.
+     */
+    public void updateTab(int titleRes, Class<?> fragmentClass, Bundle args, int position) {
+        if (position >= 0 && position < mTabs.size()) {
+            // update tab info
+            mTabs.set(position, new TabInfo(fragmentClass, args, titleRes));
+
+            // find current fragment of tab
+            Fragment oldFragment = mFragmentManager
+                    .findFragmentByTag(makeFragmentName(mViewPager.getId(), getItemId(position)));
+            // remove it
+            FragmentTransaction transaction = mFragmentManager.beginTransaction();
+            transaction.remove(oldFragment);
+            transaction.commitAllowingStateLoss();
+            mFragmentManager.executePendingTransactions();
+        }
     }
 
     /**
      * Notifies the adapter and tab strip that the tabs have changed.
      */
-    public void updateTabs() {
+    public void notifyTabsChanged() {
         notifyDataSetChanged();
         mTabStrip.notifyDataSetChanged();
     }
@@ -99,6 +123,13 @@ public class TabStripAdapter extends FragmentPagerAdapter {
             return mContext.getString(tabInfo.mTitleRes).toUpperCase(Locale.getDefault());
         }
         return "";
+    }
+
+    /**
+     * Copied from FragmentPagerAdapter.
+     */
+    private static String makeFragmentName(int viewId, long id) {
+        return "android:switcher:" + viewId + ":" + id;
     }
 
 }

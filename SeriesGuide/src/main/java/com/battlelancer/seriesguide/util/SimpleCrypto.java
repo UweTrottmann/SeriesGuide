@@ -49,21 +49,6 @@ public class SimpleCrypto {
     private static final String DATACORE = "datacore";
 
     /**
-     * Returns the given string in encrypted form, or {@code null} if encryption
-     * was unsuccessful.
-     */
-    public static String encrypt(String cleartext, Context context) {
-        try {
-            SecretKey key = getKey(context);
-            byte[] result = encrypt(key, cleartext.getBytes());
-            return toHex(result);
-        } catch (GeneralSecurityException | IOException e) {
-            Utils.trackExceptionAndLog(context, TAG + ".encrypt()", e);
-        }
-        return null;
-    }
-
-    /**
      * Decrypts the given string and returns the clear text, or {@code null} if
      * decryption was unsuccessful.
      */
@@ -147,26 +132,11 @@ public class SimpleCrypto {
         }
     }
 
-    private static byte[] encrypt(SecretKey key, byte[] clear) throws GeneralSecurityException {
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, key);
-        byte[] encrypted = cipher.doFinal(clear);
-        return encrypted;
-    }
-
     private static byte[] decrypt(SecretKey key, byte[] encrypted) throws GeneralSecurityException {
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.DECRYPT_MODE, key);
         byte[] decrypted = cipher.doFinal(encrypted);
         return decrypted;
-    }
-
-    public static String toHex(String txt) {
-        return toHex(txt.getBytes());
-    }
-
-    public static String fromHex(String hex) {
-        return new String(toByte(hex));
     }
 
     public static byte[] toByte(String hexString) {

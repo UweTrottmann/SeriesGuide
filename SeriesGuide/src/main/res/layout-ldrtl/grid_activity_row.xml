@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:padding="@dimen/default_padding">
-
-    <com.battlelancer.seriesguide.WatchedBox
-        android:id="@+id/watchedBoxUpcoming"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:background="?custom_list_selector"
-        android:padding="@dimen/default_padding"
-        android:scaleType="centerInside" />
+    android:layout_height="103dp"
+    android:background="?attr/drawableCardBackground"
+    android:orientation="horizontal">
 
     <RelativeLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_weight="1"
-        android:paddingEnd="@dimen/default_padding">
+        android:paddingEnd="@dimen/default_padding"
+        android:background="?attr/custom_list_selector">
 
         <ImageView
             android:id="@+id/poster"
@@ -33,27 +26,29 @@
             android:id="@+id/textViewUpcomingShow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="@dimen/inline_padding"
             android:layout_toEndOf="@+id/poster"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.Small.Dim" />
+            android:textAppearance="@style/TextAppearance.Small.Dim"
+            android:textAlignment="viewStart" />
 
         <TextView
             android:id="@+id/textViewUpcomingEpisode"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewUpcomingShow"
             android:layout_toEndOf="@+id/poster"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/no_nextepisode"
-            android:textAppearance="@style/TextAppearance.Medium.Light" />
+            android:textAppearance="@style/TextAppearance.Medium.Light"
+            android:textAlignment="viewStart" />
 
         <TextView
             android:id="@+id/textViewUpcomingMeta"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewUpcomingEpisode"
             android:layout_marginTop="2dp"
@@ -61,18 +56,18 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@string/norating"
-            android:textAppearance="@style/TextAppearance.Small.Light" />
+            android:textAppearance="@style/TextAppearance.Small.Light"
+            android:textAlignment="viewStart" />
     </RelativeLayout>
 
     <include layout="@layout/divider_vertical" />
 
-    <ImageView
-        android:id="@+id/imageViewUpcomingCheckIn"
+    <com.battlelancer.seriesguide.WatchedBox
+        android:id="@+id/watchedBoxUpcoming"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="?custom_list_selector"
         android:padding="@dimen/default_padding"
-        android:scaleType="centerInside"
-        android:src="?attr/drawableCheckin" />
+        android:scaleType="centerInside" />
 
 </LinearLayout>

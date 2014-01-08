@@ -21,6 +21,8 @@ import com.google.analytics.tracking.android.GoogleAnalytics;
 
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -30,10 +32,12 @@ import com.uwetrottmann.seriesguide.R;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.ContentProvider;
+import android.content.pm.PackageManager;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.os.StrictMode.VmPolicy;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 
 import java.net.URL;
 
@@ -74,6 +78,8 @@ public class SeriesGuideApplication extends Application {
 
         // Enable StrictMode
         enableStrictMode();
+
+        upgrade();
     }
 
     @Override
@@ -108,6 +114,28 @@ public class SeriesGuideApplication extends Application {
             vmPolicyBuilder.detectLeakedRegistrationObjects();
         }
         StrictMode.setVmPolicy(vmPolicyBuilder.build());
+    }
+
+    private void upgrade() {
+        /**
+         * These upgrade procedures will run on each app launch until the last version gets updated
+         * by launching the main activity.
+         */
+        final int lastVersion = AppSettings.getLastVersionCode(this);
+
+        boolean isBeta = "beta".equals(BuildConfig.FLAVOR);
+
+        // store trakt password in sync account
+        if (!isBeta && lastVersion < 204 || isBeta && lastVersion < 216) {
+            if (!TraktCredentials.get(this).hasCredentials()) {
+                String password = TraktSettings.getPasswordSha1(this);
+                if (!TextUtils.isEmpty(password)) {
+                    String username = TraktCredentials.get(this).getUsername();
+                    TraktCredentials.get(this).setCredentials(username, password);
+                }
+            }
+        }
+
     }
 
 }

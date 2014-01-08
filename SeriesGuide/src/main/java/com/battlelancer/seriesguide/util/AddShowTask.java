@@ -18,6 +18,7 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.jakewharton.trakt.Trakt;
@@ -115,19 +116,15 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         // already here, so we only have to get it once
         List<TvShow> watched = new ArrayList<TvShow>();
         List<TvShow> collection = new ArrayList<TvShow>();
-        if (TraktSettings.hasTraktCredentials(mContext)) {
+        Trakt manager = ServiceUtils.getTraktWithAuth(mContext);
+        if (manager != null) {
             Log.d(TAG, "Getting watched and collected episodes from trakt.");
-            Trakt manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
-            if (manager != null) {
-                try {
-                    watched = manager.userService()
-                            .libraryShowsWatchedMinimum(TraktSettings.getUsername(mContext));
-
-                    collection = manager.userService()
-                            .libraryShowsCollectionMinimum(TraktSettings.getUsername(mContext));
-                } catch (RetrofitError e) {
-                    // something went wrong, just go on
-                }
+            String username = TraktCredentials.get(mContext).getUsername();
+            try {
+                watched = manager.userService().libraryShowsWatchedMinimum(username);
+                collection = manager.userService().libraryShowsCollectionMinimum(username);
+            } catch (RetrofitError e) {
+                // something went wrong, just go on
             }
         }
 

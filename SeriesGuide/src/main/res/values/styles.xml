@@ -45,6 +45,11 @@
         <item name="android:textStyle">italic</item>
     </style>
 
+    <style name="TextAppearance.Small.Highlight.Red">
+        <item name="android:textColor">@color/text_red</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
     <style name="TextAppearance.Small.Dim">
         <item name="android:textColor">?attr/textColorSgDim</item>
     </style>
@@ -155,6 +160,19 @@
         <item name="android:textColor">@color/text_primary_sg</item>
     </style>
 
+    <!-- TextView -->
+    <style name="Widget.SeriesGuide.TextView"/>
+
+    <style name="Widget.SeriesGuide.TextView.ShowLabels">
+        <item name="android:layout_marginLeft">@dimen/default_padding</item>
+        <item name="android:layout_marginRight">@dimen/default_padding</item>
+        <item name="android:layout_marginTop">@dimen/default_padding</item>
+        <item name="android:textIsSelectable" tools:targetApi="Honeycomb">true</item>
+        <item name="android:textAppearance">@style/TextAppearance.Medium.Light</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+    </style>
+
     <!-- ProgressBar -->
     <!-- pre v11 -->
     <style name="ProgressBar" parent="android:Widget.ProgressBar.Horizontal">
@@ -244,9 +262,9 @@
     <!-- PagerSlidingTabStrip -->
     <style name="TabStrip">
         <item name="android:textColor">?attr/colorTabStripText</item>
-        <item name="dividerColor">?attr/colorDivider</item>
-        <item name="indicatorColor">?attr/colorAccent</item>
-        <item name="underlineColor">?attr/colorAccent</item>
+        <item name="pstsDividerColor">?attr/colorDivider</item>
+        <item name="pstsIndicatorColor">?attr/colorAccent</item>
+        <item name="pstsUnderlineColor">?attr/colorAccent</item>
     </style>
 
     <style name="Header">
