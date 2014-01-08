@@ -8,6 +8,13 @@ All dates are in the European Central timezone.
 Version 11 *(in development)*
 -----------------------------
 
+#### 11-beta4 *(2014-01-08)*
+
+* TWEAK Store trakt passwords with Android account system, will hopefully lead to less errors. Also, disconnecting from trakt will not force you back to the previous screen anymore.
+* TWEAK Rework sync account handling, leading to potentially less crashes.
+* FIX List widget does not refresh items immediately after changing its settings. Thanks Tomas for pushing me to fix this.
+* NOTICE Latest translations from crowdin, now including Latvian.
+
 #### 11-beta3 *(2014-01-03)*
 
 * TWEAK Require confirmation before toggling watched or collected flag for all seasons.
