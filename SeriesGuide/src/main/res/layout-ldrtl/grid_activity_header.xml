@@ -14,6 +14,7 @@
         android:paddingStart="@dimen/default_padding"
         android:paddingEnd="@dimen/default_padding"
         android:textAppearance="@style/TextAppearance.Small.Label"
+        android:textAlignment="viewStart"
         tools:text="Thu in 3 days" />
 
     <View

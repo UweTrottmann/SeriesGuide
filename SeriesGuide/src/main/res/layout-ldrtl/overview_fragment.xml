@@ -173,7 +173,8 @@
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
                                 android:maxLines="2"
-                                android:textAppearance="@style/TextAppearance.Large.Light" />
+                                android:textAppearance="@style/TextAppearance.Large.Light"
+                                android:textAlignment="viewStart" />
 
                             <TextView
                                 android:id="@+id/episodeTime"

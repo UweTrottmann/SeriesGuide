@@ -104,6 +104,11 @@
 
     <style name="Widget.SeriesGuide" parent="Widget"/>
 
+    <!-- RTL support for grid views -->
+    <style name="Widget.SeriesGuide.RtlGridView" />
+
+    <style name="Widget.SeriesGuide.RtlGridViewItem" />
+
     <!-- Buttons -->
     <style name="Widget.SeriesGuide.Button" parent="android:Widget.Button">
         <item name="android:background">@drawable/btn_default_sg</item>
