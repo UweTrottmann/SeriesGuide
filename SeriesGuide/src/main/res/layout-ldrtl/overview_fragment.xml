@@ -191,6 +191,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/episodeTitle"
                                 android:layout_toEndOf="@+id/episodeTime"
+                                android:singleLine="true"
+                                android:ellipsize="marquee"
                                 android:textAllCaps="true"
                                 android:textAppearance="@style/TextAppearance.Small.Dim" />
                         </RelativeLayout>
