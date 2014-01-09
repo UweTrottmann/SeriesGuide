@@ -8,7 +8,7 @@ All dates are in the European Central timezone.
 Version 11 *(in development)*
 -----------------------------
 
-#### 11-beta4 *(2014-01-08)*
+#### 11-beta4 *(2014-01-09)*
 
 * TWEAK Store trakt passwords with Android account system, will hopefully lead to less errors. Also, disconnecting from trakt will not force you back to the previous screen anymore.
 * TWEAK Rework sync account handling, leading to potentially less crashes.
