@@ -202,22 +202,37 @@ public class ActivityFragment extends SherlockFragment implements
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content view
+        boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
+
+        MenuItem filter = menu.findItem(R.id.menu_action_activity_filter);
+        filter.setVisible(!isDrawerOpen);
+        boolean isFilterApplied = ActivitySettings.isOnlyFavorites(getActivity()) ||
+                DisplaySettings.isHidingSpecials(getActivity()) ||
+                DisplaySettings.isNoWatchedEpisodes(getActivity()) ||
+                ActivitySettings.isInfiniteActivity(getActivity());
+        filter.setIcon(isFilterApplied ?
+                R.drawable.ic_action_filter_selected : R.drawable.ic_action_filter);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_onlyfavorites) {
-            storeBooleanPreference(item, ActivitySettings.KEY_ONLY_FAVORITE_SHOWS);
+            toggleFilterSetting(item, ActivitySettings.KEY_ONLY_FAVORITE_SHOWS);
             fireTrackerEvent("Only favorite shows Toggle");
             return true;
         } else if (itemId == R.id.menu_nospecials) {
-            storeBooleanPreference(item, DisplaySettings.KEY_HIDE_SPECIALS);
+            toggleFilterSetting(item, DisplaySettings.KEY_HIDE_SPECIALS);
             fireTrackerEvent("Hide specials Toggle");
             return true;
         } else if (itemId == R.id.menu_nowatched) {
-            storeBooleanPreference(item, DisplaySettings.KEY_NO_WATCHED_EPISODES);
+            toggleFilterSetting(item, DisplaySettings.KEY_NO_WATCHED_EPISODES);
             fireTrackerEvent("Hide watched Toggle");
             return true;
         } else if (itemId == R.id.menu_infinite_scrolling) {
-            storeBooleanPreference(item, ActivitySettings.KEY_INFINITE_ACTIVITY);
+            toggleFilterSetting(item, ActivitySettings.KEY_INFINITE_ACTIVITY);
             fireTrackerEvent("Infinite Scrolling Toggle");
             return true;
         } else {
@@ -298,10 +313,12 @@ public class ActivityFragment extends SherlockFragment implements
         Utils.trackAction(getActivity(), TAG, label);
     }
 
-    private void storeBooleanPreference(MenuItem item, String key) {
-        item.setChecked(!item.isChecked());
+    private void toggleFilterSetting(MenuItem item, String key) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        prefs.edit().putBoolean(key, item.isChecked()).commit();
+        prefs.edit().putBoolean(key, !item.isChecked()).commit();
+
+        // refresh filter icon state
+        getActivity().supportInvalidateOptionsMenu();
     }
 
     public interface ActivityQuery {
