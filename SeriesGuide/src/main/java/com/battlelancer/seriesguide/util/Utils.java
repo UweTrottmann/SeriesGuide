@@ -45,6 +45,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -910,6 +911,24 @@ public class Utils {
         TypedValue outValue = new TypedValue();
         theme.resolveAttribute(attributeResId, outValue, true);
         return outValue.resourceId;
+    }
+
+    /**
+     * Tries to launch a web browser loading the given URL. Sets a flag to exit the browser if
+     * coming back to the app.
+     */
+    public static void launchWebsite(Context context, String url, String logTag, String logItem) {
+        if (context == null || TextUtils.isEmpty(url)) {
+            return;
+        }
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+
+        // try to launch web browser
+        Utils.tryStartActivity(context, intent, true);
+
+        Utils.trackAction(context, logTag, logItem);
     }
 
 }

@@ -19,6 +19,8 @@
     <string name="tvdb_range">/10</string>
     <string name="notraktrating">--%</string>
     <string name="help_url">http://seriesgui.de/help</string>
+    <string name="url_whypay">http://seriesgui.de/whypay</string>
+    <string name="url_x_pass">http://play.google.com/store/apps/details?id=com.battlelancer.seriesguide.x</string>
     <string name="backup_legacy_warning">This is the legacy backup system. It will get removed with a future update. If you want to restore an old backup, now would be the time. You can then export again using the new export tool.</string>
 	<string name="not_available">n/a</string>
     <string name="hexagon_short">Cloud beta</string>
