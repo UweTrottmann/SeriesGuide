@@ -43,6 +43,9 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.BuildConfig;
 import com.uwetrottmann.seriesguide.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BillingActivity extends BaseActivity {
 
     public static final String TAG = "BillingActivity";
@@ -118,7 +121,9 @@ public class BillingActivity extends BaseActivity {
                 // Hooray, IAB is fully set up.
                 // Get an inventory of stuff we own, also get SKU details for pricing info
                 Log.d(TAG, "Setup successful. Querying inventory.");
-                mHelper.queryInventoryAsync(true, mGotInventoryListener);
+                List<String> detailSkus = new ArrayList<>();
+                detailSkus.add(SKU_X_SUBSCRIPTION);
+                mHelper.queryInventoryAsync(true, detailSkus, mGotInventoryListener);
             }
         });
     }
@@ -219,8 +224,13 @@ public class BillingActivity extends BaseActivity {
 
             Log.d(TAG, "Query inventory was successful.");
 
+            // get sub state
             boolean hasUpgrade = checkForSubscription(BillingActivity.this, inventory);
-            mSubPrice = inventory.getSkuDetails(SKU_X_SUBSCRIPTION).getPrice();
+            // get local sub price
+            SkuDetails skuDetails = inventory.getSkuDetails(SKU_X_SUBSCRIPTION);
+            if (skuDetails != null) {
+                mSubPrice = skuDetails.getPrice();
+            }
 
             updateViewStates(hasUpgrade);
             setWaitMode(false);
@@ -385,7 +395,8 @@ public class BillingActivity extends BaseActivity {
     private void updateViewStates(boolean hasUpgrade) {
         // Only enable purchase button if the user does not have the upgrade yet
         mButtonSub.setEnabled(!hasUpgrade);
-        mTextViewPriceSub.setText(getString(R.string.billing_price_subscribe, mSubPrice != null ? mSubPrice : "--"));
+        mTextViewPriceSub.setText(
+                getString(R.string.billing_price_subscribe, mSubPrice != null ? mSubPrice : "--"));
         mButtonPass.setEnabled(!hasUpgrade);
         mTextHasUpgrade.setVisibility(hasUpgrade ? View.VISIBLE : View.GONE);
     }
