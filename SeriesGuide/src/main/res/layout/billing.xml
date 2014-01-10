@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true">
@@ -10,49 +11,95 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
-    <RelativeLayout
+    <ScrollView
         android:id="@+id/containerBilling"
-        style="@style/Page.Centered"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:visibility="gone">
 
-        <TextView
-            android:id="@+id/textViewBillingTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/action_upgrade"
-            android:textAppearance="@style/TextAppearance.Large.Light" />
+        <RelativeLayout
+            style="@style/Page.Centered"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/textViewBillingDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/textViewBillingTitle"
-            android:text="@string/upgrade_description"
-            android:textAppearance="@style/TextAppearance" />
+            <TextView
+                android:id="@+id/textViewBillingTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/action_upgrade"
+                android:textAppearance="@style/TextAppearance.Large.Light" />
 
-        <Button
-            android:id="@+id/buttonBillingGetUpgrade"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewBillingDescription"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/large_padding"
-            android:enabled="false"
-            android:text="@string/action_upgrade" />
+            <TextView
+                android:id="@+id/textViewBillingDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewBillingTitle"
+                android:text="@string/upgrade_description"
+                android:textAppearance="@style/TextAppearance" />
 
-        <TextView
-            android:id="@+id/textViewBillingExisting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/buttonBillingGetUpgrade"
-            android:layout_marginTop="@dimen/large_padding"
-            android:text="@string/upgrade_success"
-            android:textAppearance="@style/TextAppearance.Small.Highlight"
-            android:visibility="gone" />
-    </RelativeLayout>
+            <Button
+                android:id="@+id/buttonBillingGetSubscription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewBillingDescription"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/large_padding"
+                android:enabled="false"
+                android:text="@string/billing_action_subscribe" />
+
+            <TextView
+                android:id="@+id/textViewBillingPriceSubscription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/buttonBillingGetSubscription"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/inline_padding"
+                tools:text="1.99 €/year, 30 day trial"
+                android:textAppearance="@style/TextAppearance.Small.Light"
+                android:textStyle="italic" />
+
+            <Button
+                android:id="@+id/buttonBillingGetPass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewBillingPriceSubscription"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/large_padding"
+                android:enabled="false"
+                android:text="@string/billing_action_pass" />
+
+            <TextView
+                android:id="@+id/textViewBillingPricePass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/buttonBillingGetPass"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/inline_padding"
+                android:text="@string/billing_price_pass"
+                android:textAppearance="@style/TextAppearance.Small.Light"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/textViewBillingExisting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewBillingPricePass"
+                android:layout_marginTop="@dimen/large_padding"
+                android:text="@string/upgrade_success"
+                android:textAppearance="@style/TextAppearance.Small.Highlight" />
+
+            <Button
+                android:id="@+id/textViewBillingMoreInfo"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Small.Highlight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewBillingExisting"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/billing_learn_more"
+                android:textAppearance="@style/TextAppearance.Small.Highlight" />
+        </RelativeLayout>
+
+    </ScrollView>
 
 </FrameLayout>
