@@ -82,8 +82,11 @@ public class BillingActivity extends BaseActivity {
 
         setupViews();
 
-        // do not set up in-app billing if already qualified for X upgrade
-        if (updateUi()) {
+        // do not query IAB if user has key
+        boolean hasUpgrade = !Utils.requiresPurchaseCheck(this);
+        updateViewStates(hasUpgrade);
+        // no need to go further if user has a key
+        if (hasUpgrade) {
             setWaitMode(false);
             return;
         }
@@ -216,27 +219,22 @@ public class BillingActivity extends BaseActivity {
 
             Log.d(TAG, "Query inventory was successful.");
 
-            checkForSubscription(BillingActivity.this, inventory);
-            udpateSubscriptionPrice(BillingActivity.this, inventory);
+            boolean hasUpgrade = checkForSubscription(BillingActivity.this, inventory);
+            mSubPrice = inventory.getSkuDetails(SKU_X_SUBSCRIPTION).getPrice();
 
-            updateUi();
+            updateViewStates(hasUpgrade);
             setWaitMode(false);
             Log.d(TAG, "Initial inventory query finished; enabling main UI.");
         }
 
     };
 
-    private void udpateSubscriptionPrice(Context context, Inventory inventory) {
-        SkuDetails xSub = inventory.getSkuDetails(SKU_X_SUBSCRIPTION);
-        mSubPrice = xSub.getPrice();
-    }
-
     /**
      * Checks if the user is subscribed to X features or has the deprecated X upgrade (so he gets
      * the subscription for life). Also sets the current state through {@link
      * AdvancedSettings#setSubscriptionState(Context, boolean)}.
      */
-    public static void checkForSubscription(Context context, Inventory inventory) {
+    public static boolean checkForSubscription(Context context, Inventory inventory) {
         /*
          * Check for items we own. Notice that for each purchase, we check the
          * developer payload to see if it's correct! See
@@ -273,6 +271,8 @@ public class BillingActivity extends BaseActivity {
 
         // Save current state until we query again
         AdvancedSettings.setSubscriptionState(context, isSubscribed);
+
+        return isSubscribed;
     }
 
     /**
@@ -368,7 +368,7 @@ public class BillingActivity extends BaseActivity {
                 Log.d(TAG, "Purchased X subscription. Congratulating user.");
                 // Save current state until we query again
                 AdvancedSettings.setSubscriptionState(BillingActivity.this, true);
-                updateUi();
+                updateViewStates(true);
                 setWaitMode(false);
             }
         }
@@ -382,14 +382,12 @@ public class BillingActivity extends BaseActivity {
                 + context.getString(R.string.key_c) + context.getString(R.string.key_d);
     }
 
-    private boolean updateUi() {
+    private void updateViewStates(boolean hasUpgrade) {
         // Only enable purchase button if the user does not have the upgrade yet
-        boolean hasUpgrade = Utils.hasAccessToX(this);
         mButtonSub.setEnabled(!hasUpgrade);
         mTextViewPriceSub.setText(getString(R.string.billing_price_subscribe, mSubPrice != null ? mSubPrice : "--"));
         mButtonPass.setEnabled(!hasUpgrade);
         mTextHasUpgrade.setVisibility(hasUpgrade ? View.VISIBLE : View.GONE);
-        return hasUpgrade;
     }
 
     /**
