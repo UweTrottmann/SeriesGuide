@@ -339,8 +339,13 @@
   <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
   <string name="migration_action_import">Import and replace existing shows</string>
   <string name="action_upgrade">Get X features</string>
+  <string name="billing_action_subscribe">Subscribe</string>
+  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+  <string name="billing_price_pass">one-time purchase</string>
   <string name="upgrade_description">Nabavi pristup obavijestima, više opcija za popise widgeta i sve buduće X mogućnosti. Podrži daljnji razvoj.\n\nAko si već kupio SeriesGuide X, instaliraj ga da oključaš ovu nadogradnju.</string>
   <string name="upgrade_success">Hvala, već si pretplaćen na sve X mogućnosti!</string>
+  <string name="billing_learn_more">Why pay? Learn more.</string>
   <string name="subscription_activated">Sada si pretplaćen na X mogućnosti.</string>
   <string name="subscription_expired">Pretplata istekla</string>
   <string name="subscription_expired_details">Tvoja pretplata na X mogućnosti je istekla.</string>

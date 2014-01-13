@@ -339,8 +339,13 @@
   <string name="migration_import">Торкніться нижче, щоб імпортувати резервну копію, створену в SeriesGuide X.</string>
   <string name="migration_action_import">Імпортувати та замінити існуючі серіали</string>
   <string name="action_upgrade">Отримати X функції</string>
+  <string name="billing_action_subscribe">Subscribe</string>
+  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+  <string name="billing_price_pass">one-time purchase</string>
   <string name="upgrade_description">Отримайте доступ до сповіщень, більший перелік  варіантів віджетів і всі майбутні X функцій. Підтримка подальшого розвитку.\n\nЯкщо ви вже придбали SeriesGuide X, установіть його, щоб розблокувати це оновлення.</string>
   <string name="upgrade_success">Дякуємо, ви вже підписані на всі X функції!</string>
+  <string name="billing_learn_more">Why pay? Learn more.</string>
   <string name="subscription_activated">Відтепер ви підписані на X функції.</string>
   <string name="subscription_expired">Закінчився термін дії підписки</string>
   <string name="subscription_expired_details">Підписка функцій X минула.</string>

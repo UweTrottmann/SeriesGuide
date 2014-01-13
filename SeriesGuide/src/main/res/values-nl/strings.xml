@@ -339,8 +339,13 @@
   <string name="migration_import">Druk hieronder om de in SeriesGuide X gemaakte back-up te importeren.</string>
   <string name="migration_action_import">Importeer en vervang bestaande series</string>
   <string name="action_upgrade">X-functies verkrijgen</string>
+  <string name="billing_action_subscribe">Subscribe</string>
+  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+  <string name="billing_price_pass">one-time purchase</string>
   <string name="upgrade_description">Krijg toegang tot meldingen, meer lijst widget opties en alle toekomstige X functies. Ondersteun verdere ontwikkeling.\n\nAls u al SeriesGuide X heeft gekocht, installeer deze dan om deze upgrade te ontgrendelen.</string>
   <string name="upgrade_success">Bedankt, u bent al geabonneerd op alle X functies!</string>
+  <string name="billing_learn_more">Why pay? Learn more.</string>
   <string name="subscription_activated">U bent nu geabonneerd op X functies.</string>
   <string name="subscription_expired">Abonnement verlopen</string>
   <string name="subscription_expired_details">Uw X abonnement is verlopen.</string>
