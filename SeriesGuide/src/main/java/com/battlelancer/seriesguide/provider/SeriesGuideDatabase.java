@@ -26,16 +26,16 @@ import android.os.Environment;
 import android.provider.BaseColumns;
 import android.util.Log;
 
-import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
-import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearchColumns;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.EpisodesColumns;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItemsColumns;
-import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListsColumns;
-import com.battlelancer.seriesguide.provider.SeriesContract.SeasonsColumns;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.provider.SeriesContract.ShowsColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearchColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodesColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemsColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListsColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SeasonsColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 

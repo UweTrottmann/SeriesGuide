@@ -18,9 +18,9 @@ package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;

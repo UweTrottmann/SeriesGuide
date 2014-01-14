@@ -20,7 +20,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;

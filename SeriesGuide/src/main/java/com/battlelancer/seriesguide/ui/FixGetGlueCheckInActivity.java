@@ -22,7 +22,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.adapters.GetGlueObjectAdapter;
 import com.battlelancer.seriesguide.loaders.GetGlueObjectLoader;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.uwetrottmann.getglue.entities.GetGlueObject;
 import com.uwetrottmann.seriesguide.R;

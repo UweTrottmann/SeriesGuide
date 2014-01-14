@@ -32,12 +32,12 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.SelectionBuilder;
@@ -95,57 +95,57 @@ public class SeriesGuideProvider extends ContentProvider {
         final String authority = context.getPackageName() + ".provider";
 
         // Shows
-        matcher.addURI(authority, SeriesContract.PATH_SHOWS, SHOWS);
-        matcher.addURI(authority, SeriesContract.PATH_SHOWS + "/" + SeriesContract.PATH_FILTER
+        matcher.addURI(authority, SeriesGuideContract.PATH_SHOWS, SHOWS);
+        matcher.addURI(authority, SeriesGuideContract.PATH_SHOWS + "/" + SeriesGuideContract.PATH_FILTER
                 + "/*", SHOWS_FILTERED);
-        matcher.addURI(authority, SeriesContract.PATH_SHOWS + "/"
-                + SeriesContract.PATH_WITH_EPISODE, SHOWS_WITH_EPISODE);
-        matcher.addURI(authority, SeriesContract.PATH_SHOWS + "/*", SHOWS_ID);
+        matcher.addURI(authority, SeriesGuideContract.PATH_SHOWS + "/"
+                + SeriesGuideContract.PATH_WITH_EPISODE, SHOWS_WITH_EPISODE);
+        matcher.addURI(authority, SeriesGuideContract.PATH_SHOWS + "/*", SHOWS_ID);
 
         // Episodes
-        matcher.addURI(authority, SeriesContract.PATH_EPISODES, EPISODES);
-        matcher.addURI(authority, SeriesContract.PATH_EPISODES + "/" + SeriesContract.PATH_OFSEASON
-                + "/" + SeriesContract.PATH_WITHSHOW + "/*", EPISODES_OFSEASON_WITHSHOW);
-        matcher.addURI(authority, SeriesContract.PATH_EPISODES + "/" + SeriesContract.PATH_OFSEASON
+        matcher.addURI(authority, SeriesGuideContract.PATH_EPISODES, EPISODES);
+        matcher.addURI(authority, SeriesGuideContract.PATH_EPISODES + "/" + SeriesGuideContract.PATH_OFSEASON
+                + "/" + SeriesGuideContract.PATH_WITHSHOW + "/*", EPISODES_OFSEASON_WITHSHOW);
+        matcher.addURI(authority, SeriesGuideContract.PATH_EPISODES + "/" + SeriesGuideContract.PATH_OFSEASON
                 + "/*", EPISODES_OFSEASON);
-        matcher.addURI(authority, SeriesContract.PATH_EPISODES + "/" + SeriesContract.PATH_OFSHOW
+        matcher.addURI(authority, SeriesGuideContract.PATH_EPISODES + "/" + SeriesGuideContract.PATH_OFSHOW
                 + "/*", EPISODES_OFSHOW);
         matcher.addURI(authority,
-                SeriesContract.PATH_EPISODES + "/" + SeriesContract.PATH_WITHSHOW,
+                SeriesGuideContract.PATH_EPISODES + "/" + SeriesGuideContract.PATH_WITHSHOW,
                 EPISODES_WITHSHOW);
-        matcher.addURI(authority, SeriesContract.PATH_EPISODES + "/" + SeriesContract.PATH_WITHSHOW
+        matcher.addURI(authority, SeriesGuideContract.PATH_EPISODES + "/" + SeriesGuideContract.PATH_WITHSHOW
                 + "/*", EPISODES_ID_WITHSHOW);
-        matcher.addURI(authority, SeriesContract.PATH_EPISODES + "/*", EPISODES_ID);
+        matcher.addURI(authority, SeriesGuideContract.PATH_EPISODES + "/*", EPISODES_ID);
 
         // Seasons
-        matcher.addURI(authority, SeriesContract.PATH_SEASONS, SEASONS);
-        matcher.addURI(authority, SeriesContract.PATH_SEASONS + "/" + SeriesContract.PATH_OFSHOW
+        matcher.addURI(authority, SeriesGuideContract.PATH_SEASONS, SEASONS);
+        matcher.addURI(authority, SeriesGuideContract.PATH_SEASONS + "/" + SeriesGuideContract.PATH_OFSHOW
                 + "/*", SEASONS_OFSHOW);
-        matcher.addURI(authority, SeriesContract.PATH_SEASONS + "/*", SEASONS_ID);
+        matcher.addURI(authority, SeriesGuideContract.PATH_SEASONS + "/*", SEASONS_ID);
 
         // Lists
-        matcher.addURI(authority, SeriesContract.PATH_LISTS, LISTS);
-        matcher.addURI(authority, SeriesContract.PATH_LISTS + "/"
-                + SeriesContract.PATH_WITH_LIST_ITEM_ID + "/*", LISTS_WITH_LIST_ITEM_ID);
-        matcher.addURI(authority, SeriesContract.PATH_LISTS + "/*", LISTS_ID);
+        matcher.addURI(authority, SeriesGuideContract.PATH_LISTS, LISTS);
+        matcher.addURI(authority, SeriesGuideContract.PATH_LISTS + "/"
+                + SeriesGuideContract.PATH_WITH_LIST_ITEM_ID + "/*", LISTS_WITH_LIST_ITEM_ID);
+        matcher.addURI(authority, SeriesGuideContract.PATH_LISTS + "/*", LISTS_ID);
 
         // List items
-        matcher.addURI(authority, SeriesContract.PATH_LIST_ITEMS, LIST_ITEMS);
-        matcher.addURI(authority, SeriesContract.PATH_LIST_ITEMS + "/"
-                + SeriesContract.PATH_WITH_DETAILS, LIST_ITEMS_WITH_DETAILS);
-        matcher.addURI(authority, SeriesContract.PATH_LIST_ITEMS + "/*", LIST_ITEMS_ID);
+        matcher.addURI(authority, SeriesGuideContract.PATH_LIST_ITEMS, LIST_ITEMS);
+        matcher.addURI(authority, SeriesGuideContract.PATH_LIST_ITEMS + "/"
+                + SeriesGuideContract.PATH_WITH_DETAILS, LIST_ITEMS_WITH_DETAILS);
+        matcher.addURI(authority, SeriesGuideContract.PATH_LIST_ITEMS + "/*", LIST_ITEMS_ID);
 
         // Search
-        matcher.addURI(authority, SeriesContract.PATH_EPISODESEARCH + "/"
-                + SeriesContract.PATH_SEARCH, EPISODESEARCH);
-        matcher.addURI(authority, SeriesContract.PATH_EPISODESEARCH + "/*", EPISODESEARCH_ID);
+        matcher.addURI(authority, SeriesGuideContract.PATH_EPISODESEARCH + "/"
+                + SeriesGuideContract.PATH_SEARCH, EPISODESEARCH);
+        matcher.addURI(authority, SeriesGuideContract.PATH_EPISODESEARCH + "/*", EPISODESEARCH_ID);
 
         // Suggestions
         matcher.addURI(authority, SearchManager.SUGGEST_URI_PATH_QUERY, SEARCH_SUGGEST);
         matcher.addURI(authority, SearchManager.SUGGEST_URI_PATH_QUERY + "/*", SEARCH_SUGGEST);
 
         // Ops
-        matcher.addURI(authority, SeriesContract.PATH_RENEWFTSTABLE, RENEW_FTSTABLE);
+        matcher.addURI(authority, SeriesGuideContract.PATH_RENEWFTSTABLE, RENEW_FTSTABLE);
 
         return matcher;
     }

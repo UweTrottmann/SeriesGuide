@@ -22,8 +22,8 @@ import com.google.analytics.tracking.android.MapBuilder;
 
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.billing.BillingActivity;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.service.OnAlarmReceiver;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;

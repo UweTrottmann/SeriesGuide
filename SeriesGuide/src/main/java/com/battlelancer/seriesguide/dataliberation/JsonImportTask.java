@@ -28,14 +28,14 @@ import com.battlelancer.seriesguide.dataliberation.model.ListItem;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.provider.SeriesContract;
-import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
@@ -102,7 +102,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         mContext.getContentResolver().delete(Shows.CONTENT_URI, null, null);
         mContext.getContentResolver().delete(Seasons.CONTENT_URI, null, null);
         mContext.getContentResolver().delete(Episodes.CONTENT_URI, null, null);
-        mContext.getContentResolver().delete(SeriesContract.Lists.CONTENT_URI, null, null);
+        mContext.getContentResolver().delete(SeriesGuideContract.Lists.CONTENT_URI, null, null);
         mContext.getContentResolver().delete(ListItems.CONTENT_URI, null, null);
 
         // Access JSON from backup folder to create new database

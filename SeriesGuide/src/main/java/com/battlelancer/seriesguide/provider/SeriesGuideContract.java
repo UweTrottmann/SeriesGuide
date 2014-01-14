@@ -23,7 +23,7 @@ import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.util.ParserUtils;
 import com.battlelancer.seriesguide.util.Utils;
 
-public class SeriesContract {
+public class SeriesGuideContract {
 
     interface ShowsColumns {
         /** This column is NOT in this table, it is for reference purposes only. */
@@ -500,6 +500,6 @@ public class SeriesContract {
         }
     }
 
-    private SeriesContract() {
+    private SeriesGuideContract() {
     }
 }

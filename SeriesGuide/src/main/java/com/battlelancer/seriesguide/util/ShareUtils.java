@@ -16,7 +16,7 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
 import com.uwetrottmann.seriesguide.R;
 
