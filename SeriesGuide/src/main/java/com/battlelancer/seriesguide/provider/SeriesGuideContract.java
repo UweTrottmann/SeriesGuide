@@ -359,6 +359,8 @@ public class SeriesGuideContract {
 
     public static final String PATH_WITH_EPISODE = "with_episode";
 
+    public static final String PATH_MOVIES = "movies";
+
     public static class Shows implements ShowsColumns, BaseColumns {
 
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SHOWS)
@@ -592,6 +594,32 @@ public class SeriesGuideContract {
         public static String generateListItemIdWildcard(String id, int type) {
             // The SQL % wildcard is added by the content provider
             return ParserUtils.sanitizeId(id + "-" + type + "-");
+        }
+    }
+
+    public static class Movies implements MoviesColumns, BaseColumns {
+
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_MOVIES)
+                .build();
+
+        /**
+         * Use if multiple items get returned
+         */
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.movie";
+
+        /**
+         * Use if a single item is returned
+         */
+        public static final String CONTENT_ITEM_TYPE
+                = "vnd.android.cursor.item/vnd.seriesguide.movie";
+
+        public static Uri buildMovieUri(Integer tmdbId) {
+            return CONTENT_URI.buildUpon().appendPath(String.valueOf(tmdbId)).build();
+        }
+
+        public static String getId(Uri uri) {
+            return uri.getPathSegments().get(1);
         }
     }
 

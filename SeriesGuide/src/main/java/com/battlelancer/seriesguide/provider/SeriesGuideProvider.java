@@ -20,6 +20,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
@@ -61,6 +62,7 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final int SHOWS_WITH_EPISODE = 103;
 
+
     private static final int EPISODES = 200;
 
     private static final int EPISODES_ID = 201;
@@ -75,15 +77,18 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final int EPISODES_ID_WITHSHOW = 206;
 
+
     private static final int SEASONS = 300;
 
     private static final int SEASONS_ID = 301;
 
     private static final int SEASONS_OFSHOW = 302;
 
+
     private static final int EPISODESEARCH = 400;
 
     private static final int EPISODESEARCH_ID = 401;
+
 
     private static final int LISTS = 500;
 
@@ -91,11 +96,18 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final int LISTS_WITH_LIST_ITEM_ID = 502;
 
+
     private static final int LIST_ITEMS = 600;
 
     private static final int LIST_ITEMS_ID = 601;
 
     private static final int LIST_ITEMS_WITH_DETAILS = 602;
+
+
+    private static final int MOVIES = 700;
+
+    private static final int MOVIES_ID = 701;
+
 
     private static final int SEARCH_SUGGEST = 800;
 
@@ -156,6 +168,10 @@ public class SeriesGuideProvider extends ContentProvider {
         matcher.addURI(authority, SeriesGuideContract.PATH_LIST_ITEMS + "/"
                 + SeriesGuideContract.PATH_WITH_DETAILS, LIST_ITEMS_WITH_DETAILS);
         matcher.addURI(authority, SeriesGuideContract.PATH_LIST_ITEMS + "/*", LIST_ITEMS_ID);
+
+        // Movies
+        matcher.addURI(authority, SeriesGuideContract.PATH_MOVIES, MOVIES);
+        matcher.addURI(authority, SeriesGuideContract.PATH_MOVIES + "/*", MOVIES_ID);
 
         // Search
         matcher.addURI(authority, SeriesGuideContract.PATH_EPISODESEARCH + "/"
@@ -244,6 +260,10 @@ public class SeriesGuideProvider extends ContentProvider {
                 return ListItems.CONTENT_ITEM_TYPE;
             case LIST_ITEMS_WITH_DETAILS:
                 return ListItems.CONTENT_TYPE;
+            case MOVIES:
+                return Movies.CONTENT_TYPE;
+            case MOVIES_ID:
+                return Movies.CONTENT_ITEM_TYPE;
             case SEARCH_SUGGEST:
                 return SearchManager.SUGGEST_MIME_TYPE;
             case RENEW_FTSTABLE:
@@ -287,6 +307,11 @@ public class SeriesGuideProvider extends ContentProvider {
                 getContext().getContentResolver().notifyChange(uri, null);
                 return ListItems.buildListItemUri(values.getAsString(ListItems.LIST_ITEM_ID));
             }
+            case MOVIES: {
+                db.insertOrThrow(Tables.MOVIES, null, values);
+                getContext().getContentResolver().notifyChange(uri, null);
+                return Movies.buildMovieUri(values.getAsInteger(Movies.TMDB_ID));
+            }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
             }
@@ -323,7 +348,7 @@ public class SeriesGuideProvider extends ContentProvider {
             }
             default: {
                 // Most cases are handled with simple SelectionBuilder
-                final SelectionBuilder builder = buildExpandedSelection(uri, match);
+                final SelectionBuilder builder = buildSelection(uri, match);
                 Cursor query = builder.where(selection, selectionArgs).query(db, projection,
                         sortOrder);
                 query.setNotificationUri(getContext().getContentResolver(), uri);
@@ -341,7 +366,7 @@ public class SeriesGuideProvider extends ContentProvider {
             Log.v(TAG, "update(uri=" + uri + ", values=" + values.toString() + ")");
         }
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        final SelectionBuilder builder = buildSimpleSelection(uri);
+        final SelectionBuilder builder = buildSelection(uri, sUriMatcher.match(uri));
         int retVal = builder.where(selection, selectionArgs).update(db, values);
         getContext().getContentResolver().notifyChange(uri, null);
         return retVal;
@@ -356,7 +381,7 @@ public class SeriesGuideProvider extends ContentProvider {
             Log.v(TAG, "delete(uri=" + uri + ")");
         }
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        final SelectionBuilder builder = buildSimpleSelection(uri);
+        final SelectionBuilder builder = buildSelection(uri, sUriMatcher.match(uri));
         int retVal = builder.where(selection, selectionArgs).delete(db);
         getContext().getContentResolver().notifyChange(uri, null);
         return retVal;
@@ -419,6 +444,11 @@ public class SeriesGuideProvider extends ContentProvider {
                 getContext().getContentResolver().notifyChange(uri, null);
                 break;
             }
+            case MOVIES: {
+                numValues = bulkInsertHelper(Tables.MOVIES, values);
+                getContext().getContentResolver().notifyChange(uri, null);
+                break;
+            }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
             }
@@ -444,78 +474,9 @@ public class SeriesGuideProvider extends ContentProvider {
     }
 
     /**
-     * Build a simple {@link SelectionBuilder} to match the requested {@link Uri}. This is usually
-     * enough to support {@link #insert}, {@link #update}, and {@link #delete} operations.
+     * Builds selection using a {@link SelectionBuilder} to match the requested {@link Uri}.
      */
-    private static SelectionBuilder buildSimpleSelection(Uri uri) {
-        final SelectionBuilder builder = new SelectionBuilder();
-        final int match = sUriMatcher.match(uri);
-        switch (match) {
-            case SHOWS: {
-                return builder.table(Tables.SHOWS);
-            }
-            case SHOWS_ID: {
-                final String showId = Shows.getShowId(uri);
-                return builder.table(Tables.SHOWS).where(Shows._ID + "=?", showId);
-            }
-            case EPISODES: {
-                return builder.table(Tables.EPISODES);
-            }
-            case EPISODES_OFSHOW: {
-                final String showId = uri.getPathSegments().get(2);
-                return builder.table(Tables.EPISODES).where(Shows.REF_SHOW_ID + "=?", showId);
-            }
-            case EPISODES_OFSEASON: {
-                final String seasonId = uri.getPathSegments().get(2);
-                return builder.table(Tables.EPISODES).where(Seasons.REF_SEASON_ID + "=?", seasonId);
-            }
-            case EPISODES_ID: {
-                final String episodeId = Episodes.getEpisodeId(uri);
-                return builder.table(Tables.EPISODES).where(Episodes._ID + "=?", episodeId);
-            }
-            case SEASONS_OFSHOW: {
-                final String showId = uri.getPathSegments().get(2);
-                return builder.table(Tables.SEASONS).where(Shows.REF_SHOW_ID + "=?", showId);
-            }
-            case SEASONS: {
-                return builder.table(Tables.SEASONS);
-            }
-            case SEASONS_ID: {
-                final String seasonId = Seasons.getSeasonId(uri);
-                return builder.table(Tables.SEASONS).where(Seasons._ID + "=?", seasonId);
-            }
-            case EPISODESEARCH_ID: {
-                final String rowid = EpisodeSearch.getDocId(uri);
-                return builder.table(Tables.EPISODES_SEARCH).where(EpisodeSearch._DOCID + "=?",
-                        rowid);
-            }
-            case LISTS: {
-                return builder.table(Tables.LISTS);
-            }
-            case LISTS_ID: {
-                final String list_id = Lists.getId(uri);
-                return builder.table(Tables.LISTS).where(Lists.LIST_ID + "=?", list_id);
-            }
-            case LIST_ITEMS: {
-                return builder.table(Tables.LIST_ITEMS);
-            }
-            case LIST_ITEMS_ID: {
-                final String list_item_id = ListItems.getId(uri);
-                return builder.table(Tables.LIST_ITEMS).where(ListItems.LIST_ITEM_ID + "=?",
-                        list_item_id);
-            }
-            default: {
-                throw new UnsupportedOperationException("Unknown uri: " + uri);
-            }
-        }
-    }
-
-    /**
-     * Build an advanced {@link SelectionBuilder} to match the requested {@link Uri}. This is
-     * usually only used by {@link #query}, since it performs table joins useful for {@link Cursor}
-     * data.
-     */
-    private static SelectionBuilder buildExpandedSelection(Uri uri, int match) {
+    private static SelectionBuilder buildSelection(Uri uri, int match) {
         final SelectionBuilder builder = new SelectionBuilder();
         switch (match) {
             case SHOWS: {
@@ -538,6 +499,10 @@ public class SeriesGuideProvider extends ContentProvider {
             case EPISODES: {
                 return builder.table(Tables.EPISODES);
             }
+            case EPISODES_ID: {
+                final String episodeId = Episodes.getEpisodeId(uri);
+                return builder.table(Tables.EPISODES).where(Episodes._ID + "=?", episodeId);
+            }
             case EPISODES_OFSHOW: {
                 final String showId = uri.getPathSegments().get(2);
                 return builder.table(Tables.EPISODES).where(Shows.REF_SHOW_ID + "=?", showId);
@@ -552,10 +517,6 @@ public class SeriesGuideProvider extends ContentProvider {
                         .mapToTable(Episodes._ID, Tables.EPISODES)
                         .mapToTable(Episodes.RATING, Tables.EPISODES)
                         .where(Seasons.REF_SEASON_ID + "=?", seasonId);
-            }
-            case EPISODES_ID: {
-                final String episodeId = Episodes.getEpisodeId(uri);
-                return builder.table(Tables.EPISODES).where(Episodes._ID + "=?", episodeId);
             }
             case EPISODES_WITHSHOW: {
                 return builder.table(Tables.EPISODES_JOIN_SHOWS)
@@ -580,6 +541,11 @@ public class SeriesGuideProvider extends ContentProvider {
                 final String showId = uri.getPathSegments().get(2);
                 return builder.table(Tables.SEASONS).where(Shows.REF_SHOW_ID + "=?", showId);
             }
+            case EPISODESEARCH_ID: {
+                final String rowid = EpisodeSearch.getDocId(uri);
+                return builder.table(Tables.EPISODES_SEARCH).where(EpisodeSearch._DOCID + "=?",
+                        rowid);
+            }
             case LISTS: {
                 return builder.table(Tables.LISTS);
             }
@@ -600,8 +566,20 @@ public class SeriesGuideProvider extends ContentProvider {
             case LIST_ITEMS: {
                 return builder.table(Tables.LIST_ITEMS);
             }
+            case LIST_ITEMS_ID: {
+                final String list_item_id = ListItems.getId(uri);
+                return builder.table(Tables.LIST_ITEMS).where(ListItems.LIST_ITEM_ID + "=?",
+                        list_item_id);
+            }
             case LIST_ITEMS_WITH_DETAILS: {
                 return builder.table(Tables.LIST_ITEMS_WITH_DETAILS);
+            }
+            case MOVIES: {
+                return builder.table(Tables.MOVIES);
+            }
+            case MOVIES_ID: {
+                final String movieId = Movies.getId(uri);
+                return builder.table(Tables.MOVIES).where(Movies.TMDB_ID + "=?", movieId);
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -617,7 +595,7 @@ public class SeriesGuideProvider extends ContentProvider {
     }
 
     /**
-     * {@link ScheduleContract} fields that are fully qualified with a specific parent {@link
+     * {@link SeriesGuideContract} fields that are fully qualified with a specific parent {@link
      * Tables}. Used when needed to work around SQL ambiguity.
      */
     private interface Qualified {
