@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.ui;
@@ -20,6 +19,7 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.adapters.MoviesAdapter;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
@@ -109,7 +109,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
         mAdapter = new MoviesAdapter(getActivity(), this);
 
         // setup grid view
-        GridView list = (GridView) getView().findViewById(R.id.gridViewMovies);
+        GridView list = (GridView) getView().findViewById(android.R.id.list);
         list.setAdapter(mAdapter);
         list.setOnItemClickListener(this);
         list.setEmptyView(mEmptyView);
@@ -145,7 +145,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
 
         switch (item.getItemId()) {
             case CONTEXT_ADD_TO_WATCHLIST_ID: {
-                if (ServiceUtils.ensureTraktCredentials(getActivity())) {
+                if (TraktCredentials.get(getActivity()).ensureCredentials()) {
                     // Add item to watchlist
                     AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
                     Movie movie = mAdapter.getItem(info.position);

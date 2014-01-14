@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:id="@+id/layout_root"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
 
     <ImageView
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/description_poster"
-        android:scaleType="centerCrop"></ImageView>
+        android:scaleType="centerCrop" />
 
     <View
         android:layout_width="2dp"
@@ -173,7 +173,8 @@
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
                                 android:maxLines="2"
-                                android:textAppearance="@style/TextAppearance.Large.Light" />
+                                android:textAppearance="@style/TextAppearance.Large.Light"
+                                android:textAlignment="viewStart" />
 
                             <TextView
                                 android:id="@+id/episodeTime"
@@ -190,6 +191,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/episodeTitle"
                                 android:layout_toEndOf="@+id/episodeTime"
+                                android:singleLine="true"
+                                android:ellipsize="marquee"
                                 android:textAllCaps="true"
                                 android:textAppearance="@style/TextAppearance.Small.Dim" />
                         </RelativeLayout>

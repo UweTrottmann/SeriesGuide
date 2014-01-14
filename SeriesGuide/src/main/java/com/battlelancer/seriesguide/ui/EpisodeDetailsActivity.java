@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.ui;
@@ -22,7 +21,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
-import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;

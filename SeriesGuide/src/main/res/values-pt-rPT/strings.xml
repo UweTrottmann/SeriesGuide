@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Series</string>
   <string name="lists">Listas</string>
-  <string name="activity">Actividade</string>
   <string name="movies">Filmes</string>
   <string name="statistics">Estatísticas</string>
   <string name="search">Procurar</string>
@@ -28,14 +27,13 @@
   <string name="save_selection">Guardar Selecção</string>
   <string name="search_hint">Procurar episódios</string>
   <string name="updated">Actualizado para a última versão.</string>
-  <string name="loading">A Carregar…</string>
   <string name="norating">n/a</string>
   <string name="unknown">desconhecido</string>
-  <string name="offline">Connect to a network, then try again.</string>
+  <string name="offline">liguei se a uma rede e tente novamente.</string>
   <string name="offline_no_wifi">Connect to Wi-Fi or allow all connections, then try again.</string>
   <string name="app_not_available">Nenhuma aplicação disponível para lidar com isto.</string>
   <string name="onlyx">Apenas disponível com a assinatura de X</string>
-  <string name="add_empty">There are no shows here.</string>
+  <string name="add_empty">Não existe nenhuma série.</string>
   <string name="share_show">Partilhar série</string>
   <string name="share_episode">Partilhar episódio</string>
   <string name="share_checkout">Check out</string>
@@ -82,7 +80,6 @@
   <string name="episode_directors">Directores</string>
   <string name="episode_gueststars">Participações especiais</string>
   <string name="episode_writers">Escritores</string>
-  <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Em exibição</string>
   <string name="show_isnotalive">Terminou</string>
   <string name="lastEdit">Última Edição // TVDb</string>
@@ -93,6 +90,7 @@
   <string name="now">agora</string>
   <string name="daily">Diário</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Episódio visto</string>
   <string name="unmark_episode">Episódio ainda por ver</string>
   <string name="mark_all">Assisti a todos</string>
@@ -147,6 +145,7 @@
   <string name="only_favorites">Apenas séries favoritas</string>
   <string name="togglewatched">Marcar como visto</string>
   <string name="pref_infinite_scrolling">Actividade infinita</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">A Actualizar…</string>
   <string name="update_no_connection">Para actualizar ligue-se à Internet.</string>
   <string name="update_inprogress">Uma actualização em curso, tente novamente mais tarde.</string>
@@ -194,7 +193,7 @@
   <string name="hexagon_priority_choice_required">Some of your shows are already in the cloud. Which version do you prefer?</string>
   <string name="hexagon_priority_local">On this device</string>
   <string name="hexagon_priority_cloud">In the cloud</string>
-  <string name="hexagon_priority_select">Select version</string>
+  <string name="hexagon_priority_select">Selecionar versão</string>
   <string name="connect_trakt">Conectar ao trakt</string>
   <string name="connect_trakt_done">Conectado ao trakt!</string>
   <string name="add_trakt_shows">Adiciona séries da tua biblioteca:</string>
@@ -220,7 +219,7 @@
   <string name="pref_seasonsorting">Ordenar temporadas por…</string>
   <string name="pref_episodesorting">Ordenar episódios por…</string>
   <string name="pref_language">Idioma</string>
-  <string name="pref_updatewifionly">Images via Wi-Fi only</string>
+  <string name="pref_updatewifionly">Atualizar imagens apenas por Wi-Fi</string>
   <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
   <string name="about">Sobre SeriesGuide</string>
   <string name="pref_credits">Créditos</string>
@@ -340,8 +339,13 @@
   <string name="migration_import">Prima em baixo para importar o backup criado no SeriesGuide X.</string>
   <string name="migration_action_import">Importar e substituir séries existentes</string>
   <string name="action_upgrade">Adquira X funcionalidades</string>
+  <string name="billing_action_subscribe">Subscribe</string>
+  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+  <string name="billing_price_pass">one-time purchase</string>
   <string name="upgrade_description">Obtenha acesso às notificações, mais opções de listagem no widget e todas as X funcionalidades vindouras. Apoie o desenvolvimento.\n\nSe já comprou o SeriesGuide X, instale-o para desbloquear estas capacidades.</string>
   <string name="upgrade_success">Obrigado, você já está inscritos em todos os X recursos!</string>
+  <string name="billing_learn_more">Why pay? Learn more.</string>
   <string name="subscription_activated">Agora você está inscrito para os X recursos.</string>
   <string name="subscription_expired">Assinatura expirada</string>
   <string name="subscription_expired_details">A sua assinatura dos recursos X expirou.</string>

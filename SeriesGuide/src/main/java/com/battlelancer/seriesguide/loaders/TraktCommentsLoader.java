@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.loaders;
@@ -52,7 +51,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<List<Comment>> {
         int tvdbId = mArgs.getInt(ShareItems.TVDBID);
         int episode = mArgs.getInt(ShareItems.EPISODE);
 
-        Trakt manager = ServiceUtils.getTraktServiceManager(getContext());
+        Trakt manager = ServiceUtils.getTrakt(getContext());
         List<Comment> comments = new ArrayList<Comment>();
         try {
             if (tvdbId == 0) {

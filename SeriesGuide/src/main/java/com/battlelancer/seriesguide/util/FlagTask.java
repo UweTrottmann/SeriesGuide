@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.util;
@@ -21,6 +20,7 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -665,7 +665,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
          */
         // check for valid trakt credentials
         mIsTraktInvolved = !EpisodeTools.isSkipped(mType.mEpisodeFlag)
-                && TraktSettings.hasTraktCredentials(mContext);
+                && TraktCredentials.get(mContext).hasCredentials();
 
         // prepare trakt stuff
         if (mIsTraktInvolved) {

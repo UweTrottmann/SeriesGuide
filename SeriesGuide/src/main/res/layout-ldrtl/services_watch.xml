@@ -6,10 +6,11 @@
         style="@style/Widget.SeriesGuide.Button.Borderless.Default"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:gravity="center_vertical|start"
+        android:gravity="center_vertical"
         android:paddingStart="@dimen/default_padding"
         android:paddingEnd="@dimen/default_padding"
-        android:text="@string/googleplay" />
+        android:text="@string/googleplay"
+        android:textAlignment="viewStart" />
 
     <Button
         android:id="@+id/buttonAmazon"
@@ -19,7 +20,8 @@
         android:gravity="center_vertical|start"
         android:paddingStart="@dimen/default_padding"
         android:paddingEnd="@dimen/default_padding"
-        android:text="@string/amazon" />
+        android:text="@string/amazon"
+        android:textAlignment="viewStart" />
 
     <Button
         android:id="@+id/buttonYouTube"
@@ -29,6 +31,7 @@
         android:gravity="center_vertical|start"
         android:paddingStart="@dimen/default_padding"
         android:paddingEnd="@dimen/default_padding"
-        android:text="@string/youtube" />
+        android:text="@string/youtube"
+        android:textAlignment="viewStart" />
 
 </merge>

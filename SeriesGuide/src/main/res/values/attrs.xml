@@ -32,5 +32,6 @@
     <attr name="drawableFilter" format="reference" />
     <attr name="drawableSkip" format="reference" />
     <attr name="drawableWatchSkipped" format="reference" />
+    <attr name="drawableTraktHeart" format="reference" />
 
 </resources>

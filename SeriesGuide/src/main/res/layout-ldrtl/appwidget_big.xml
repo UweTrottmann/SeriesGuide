@@ -22,7 +22,7 @@
             android:paddingBottom="@dimen/widget_paddingBottom"
             android:paddingStart="@dimen/widget_paddingLeft"
             android:paddingEnd="@dimen/widget_paddingRight"
-            android:paddingTop="@dimen/widget_paddingTop"></LinearLayout>
+            android:paddingTop="@dimen/widget_paddingTop"/>
 
         <include
             android:id="@+id/layout_buttons_ref"

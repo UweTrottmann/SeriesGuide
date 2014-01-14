@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">쇼</string>
   <string name="lists">목록</string>
-  <string name="activity">활동</string>
   <string name="movies">영화</string>
   <string name="statistics">통계</string>
   <string name="search">검색</string>
@@ -28,7 +27,6 @@
   <string name="save_selection">선택한 것 저장</string>
   <string name="search_hint">에피소드 검색</string>
   <string name="updated">최신버전으로 업데이트 완료.</string>
-  <string name="loading">로드 중</string>
   <string name="norating">n/a</string>
   <string name="unknown">알 수 없음</string>
   <string name="offline">Connect to a network, then try again.</string>
@@ -82,7 +80,6 @@
   <string name="episode_directors">감독</string>
   <string name="episode_gueststars">게스트</string>
   <string name="episode_writers">작가</string>
-  <string name="show_airtimeunit">분</string>
   <string name="show_isalive">방영중</string>
   <string name="show_isnotalive">종료</string>
   <string name="lastEdit">마지막 편집 // TVDb</string>
@@ -93,6 +90,7 @@
   <string name="now">지금</string>
   <string name="daily">매일</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">시청한 에피소드</string>
   <string name="unmark_episode">아직 안본 에피소드로 설정</string>
   <string name="mark_all">모두 시청 완료</string>
@@ -147,6 +145,7 @@
   <string name="only_favorites">즐겨찾기한 쇼만 보이기</string>
   <string name="togglewatched">시청/미시청 토글</string>
   <string name="pref_infinite_scrolling">무한스크롤</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">업데이트 중…</string>
   <string name="update_no_connection">업데이트를 하려면 인터넷에 연결하세요.</string>
   <string name="update_inprogress">업데이트가 진행 중 입니다. 잠시 후 다시 시도해주세요.</string>
@@ -340,8 +339,13 @@
   <string name="migration_import">시리즈가이드 X에서 만든 백업을 가져오려면 아래를 터치하세요.</string>
   <string name="migration_action_import">데이터를 가져온 후 기존 쇼 대체</string>
   <string name="action_upgrade">X 추가기능 다운받기</string>
+  <string name="billing_action_subscribe">Subscribe</string>
+  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+  <string name="billing_price_pass">one-time purchase</string>
   <string name="upgrade_description">알람기능 지원, 더 다양한 위젯 옵션과 모든 X의 기능을 즐기세요. 그리고 개발자를 지원해주세요.\n\n이미 시리즈가이드 X를 과거에 구매하였다면 무료로 지금 설치하여 기능을 언락하세요.</string>
   <string name="upgrade_success">이미 X 추가기능을 다운로드하였습니다. 감사합니다!</string>
+  <string name="billing_learn_more">Why pay? Learn more.</string>
   <string name="subscription_activated">이제 X의 모든 기능을 활용하실 수 있습니다.</string>
   <string name="subscription_expired">구독 만료되었습니다</string>
   <string name="subscription_expired_details">X 추가기능 구독 기간이 만료되었습니다.</string>

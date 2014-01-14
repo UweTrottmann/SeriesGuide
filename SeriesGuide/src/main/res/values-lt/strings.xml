@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Serialai</string>
   <string name="lists">Sąrašai</string>
-  <string name="activity">Veikla</string>
   <string name="movies">Filmai</string>
   <string name="statistics">Statistika</string>
   <string name="search">Paieška</string>
@@ -28,7 +27,6 @@
   <string name="save_selection">Išsaugoti pasirinkimą</string>
   <string name="search_hint">Ieškoti serijų</string>
   <string name="updated">Atnaujinta iki naujausios versijos.</string>
-  <string name="loading">Kraunasi...</string>
   <string name="norating">n/a</string>
   <string name="unknown">Nežinomas</string>
   <string name="offline">Connect to a network, then try again.</string>
@@ -82,7 +80,6 @@
   <string name="episode_directors">Režisieriai</string>
   <string name="episode_gueststars">Kviestinės žvaigždės</string>
   <string name="episode_writers">Rašytojai</string>
-  <string name="show_airtimeunit">min.</string>
   <string name="show_isalive">Rodomas</string>
   <string name="show_isnotalive">Pasibaigęs</string>
   <string name="lastEdit">Paskutinis redagavimas // TVDb</string>
@@ -93,6 +90,7 @@
   <string name="now">dabar</string>
   <string name="daily">Kasdien</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Pažiūrėta serija</string>
   <string name="unmark_episode">Dar nepažiūrėta serija</string>
   <string name="mark_all">Visos peržiūrėtos</string>
@@ -147,6 +145,7 @@
   <string name="only_favorites">Tik mėgstamiausi serialai</string>
   <string name="togglewatched">Toggle watched</string>
   <string name="pref_infinite_scrolling">Infinite activity</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Updating…</string>
   <string name="update_no_connection">To update connect to the internet.</string>
   <string name="update_inprogress">Vyksta atnaujinimas, pabandykite dar kartą vėliau.</string>
@@ -340,8 +339,13 @@
   <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
   <string name="migration_action_import">Import and replace existing shows</string>
   <string name="action_upgrade">Get X features</string>
+  <string name="billing_action_subscribe">Subscribe</string>
+  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+  <string name="billing_price_pass">one-time purchase</string>
   <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
   <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
+  <string name="billing_learn_more">Why pay? Learn more.</string>
   <string name="subscription_activated">You are now subscribed to X features.</string>
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>

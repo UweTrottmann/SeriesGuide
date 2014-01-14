@@ -2,9 +2,8 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item name="overview" type="layout">@layout/overview_multipane_wide</item>
-    <item name="show_info" type="layout">@layout/show_info_regular</item>
+    <item name="fragment_show" type="layout">@layout/fragment_show_regular</item>
     <item name="episodes" type="layout">@layout/episodes_multipane_wide</item>
-    <item name="upcoming" type="layout">@layout/upcoming_multipane_wide</item>
     <item name="search" type="layout">@layout/activity_singlepane_drawer_wide</item>
     <item name="episode_pager" type="layout">@layout/episode_pager_wide</item>
     <item name="add_searchresult" type="layout">@layout/add_searchresult_wide</item>

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?><!-- Will never be a root layout, overdraw is expected -->
-<LinearLayout
-    android:id="@+id/buttonbar"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/buttonbar"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
+    android:layout_height="@dimen/buttonbar_button_height"
     android:layout_marginBottom="@dimen/default_padding"
     android:background="?attr/colorBackgroundDim"
     tools:ignore="Overdraw">
@@ -12,7 +11,7 @@
     <ImageButton
         android:id="@+id/imageButtonBarCheckin"
         style="@style/Widget.SeriesGuide.Button.Borderless.Small"
-        android:layout_width="56dp"
+        android:layout_width="@dimen/buttonbar_button_width"
         android:layout_height="match_parent"
         android:contentDescription="@string/checkin"
         android:paddingStart="@dimen/default_padding"

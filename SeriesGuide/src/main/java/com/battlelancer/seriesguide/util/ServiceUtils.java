@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,34 +12,24 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.enums.TraktStatus;
-import com.battlelancer.seriesguide.settings.TraktSettings;
-import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.jakewharton.trakt.Trakt;
-import com.jakewharton.trakt.entities.Response;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 import com.uwetrottmann.tmdb.Tmdb;
 
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-
-import retrofit.RetrofitError;
 
 /**
  * Helper methods to interact with third-party services trakt and The Movie Database used within
@@ -81,9 +71,9 @@ public final class ServiceUtils {
 
     private static final String YOUTUBE_PACKAGE = "com.google.android.youtube";
 
-    private static Trakt sTraktServiceManagerInstance;
+    private static Trakt sTrakt;
 
-    private static Trakt sTraktServiceManagerWithAuthInstance;
+    private static Trakt sTraktWithAuth;
 
     private static Tmdb sTmdbServiceManagerInstance;
 
@@ -106,118 +96,41 @@ public final class ServiceUtils {
     }
 
     /**
-     * Get a trakt-java ServiceManager with just our API key set. NO user auth data.
-     */
-    public static synchronized Trakt getTraktServiceManager(Context context) {
-        if (ServiceUtils.sTraktServiceManagerInstance == null) {
-            ServiceUtils.sTraktServiceManagerInstance = new Trakt();
-            ServiceUtils.sTraktServiceManagerInstance.setApiKey(context.getResources().getString(
-                    R.string.trakt_apikey));
-        }
-
-        return ServiceUtils.sTraktServiceManagerInstance;
-    }
-
-    /**
-     * Get the trakt-java ServiceManger with user credentials and our API key set.
+     * Get a {@link com.jakewharton.trakt.Trakt} service manager with just the API key set. NO user
+     * auth data.
      *
-     * @param refreshCredentials Set this flag to refresh the user credentials.
-     * @return null if the credentials are invalid.
+     * @return A {@link com.jakewharton.trakt.Trakt} instance.
      */
-    public static synchronized Trakt getTraktServiceManagerWithAuth(Context context,
-            boolean refreshCredentials) {
-        if (ServiceUtils.sTraktServiceManagerWithAuthInstance == null) {
-            ServiceUtils.sTraktServiceManagerWithAuthInstance = new Trakt();
-            ServiceUtils.sTraktServiceManagerWithAuthInstance.setApiKey(context.getResources()
-                    .getString(
-                            R.string.trakt_apikey));
-            refreshCredentials = true;
+    public static synchronized Trakt getTrakt(Context context) {
+        if (sTrakt == null) {
+            sTrakt = new Trakt();
+            sTrakt.setApiKey(context.getResources().getString(R.string.trakt_apikey));
         }
 
-        if (refreshCredentials) {
-            final String username = TraktSettings.getUsername(context);
-            final String password = TraktSettings.getPasswordSha1(context);
-
-            if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
-                ServiceUtils.sTraktServiceManagerWithAuthInstance.setAuthentication(username,
-                        password);
-            } else {
-                clearTraktCredentials(context);
-                return null;
-            }
-        }
-
-        return ServiceUtils.sTraktServiceManagerWithAuthInstance;
+        return sTrakt;
     }
 
     /**
-     * Checks for existing trakt credentials. If there aren't any valid ones (determined by {@link
-     * TraktSettings#hasTraktCredentials(Context)}), launches the trakt connect flow.
+     * Get a {@link com.jakewharton.trakt.Trakt} service manager with user credentials and API key
+     * set.
      *
-     * @return <b>true</b> if credentials are valid, <b>false</b> if invalid and launching trakt
-     * connect flow.
+     * @return A {@link com.jakewharton.trakt.Trakt} instance or null if there are no valid
+     * credentials.
      */
-    public static boolean ensureTraktCredentials(Context context) {
-        if (!TraktSettings.hasTraktCredentials(context)) {
-            // launch trakt connect process
-            context.startActivity(new Intent(context, ConnectTraktActivity.class));
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Creates a network request to check if the current trakt credentials are still valid. Will
-     * assume valid credentials if there was no response from trakt (due to a network error,
-     * etc.).<br> <b>Never</b> run this on the main thread.
-     */
-    public static void checkTraktCredentials(Context context) {
-        // no username or password? stop right here
-        if (!TraktSettings.hasTraktCredentials(context)) {
-            return;
+    public static synchronized Trakt getTraktWithAuth(Context context) {
+        if (!TraktCredentials.get(context).hasCredentials()) {
+            return null;
         }
 
-        // check for connectivity
-        if (!AndroidUtils.isNetworkConnected(context)) {
-            return;
+        if (sTraktWithAuth == null) {
+            sTraktWithAuth = new Trakt();
+            sTraktWithAuth.setApiKey(context.getResources().getString(R.string.trakt_apikey));
+            final String username = TraktCredentials.get(context).getUsername();
+            final String password = TraktCredentials.get(context).getPassword();
+            sTraktWithAuth.setAuthentication(username, password);
         }
 
-        Trakt manager = getTraktServiceManagerWithAuth(context, false);
-        if (manager == null) {
-            return;
-        }
-        try {
-            Response r = manager.accountService().test();
-            if (r != null && TraktStatus.FAILURE.equals(r.status)) {
-                // credentials invalid according to trakt, remove them
-                clearTraktCredentials(context);
-            }
-        } catch (RetrofitError ignored) {
-        }
-        /*
-         * Ignore exceptions, trakt may be offline, etc. We expect the user to
-         * disconnect and reconnect himself.
-         */
-    }
-
-    /**
-     * Removes trakt username and password from settings as well as from the authenticated {@link
-     * com.jakewharton.trakt.Trakt} instance.
-     */
-    public static void clearTraktCredentials(Context context) {
-        Log.d(TAG, "Clearing trakt credentials...");
-
-        // remove from settings
-        Editor editor = PreferenceManager.getDefaultSharedPreferences(context
-                .getApplicationContext()).edit();
-        editor.putString(TraktSettings.KEY_USERNAME, "").putString(
-                TraktSettings.KEY_PASSWORD_SHA1_ENCR, "");
-        editor.commit();
-
-        // remove from memory
-        if (sTraktServiceManagerWithAuthInstance != null) {
-            sTraktServiceManagerWithAuthInstance.setAuthentication(null, null);
-        }
+        return sTraktWithAuth;
     }
 
     /**

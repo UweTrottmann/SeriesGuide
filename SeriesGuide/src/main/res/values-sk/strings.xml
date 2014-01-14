@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Seriály</string>
   <string name="lists">Zoznamy</string>
-  <string name="activity">Činnosť</string>
   <string name="movies">Filmy</string>
   <string name="statistics">Štatistiky</string>
   <string name="search">Hľadať</string>
@@ -28,7 +27,6 @@
   <string name="save_selection">Uložiť výber</string>
   <string name="search_hint">Hľadať epizódy</string>
   <string name="updated">Aktualizované na najnovšiu verziu.</string>
-  <string name="loading">Načítavam…</string>
   <string name="norating">nedostupné</string>
   <string name="unknown">neznámy</string>
   <string name="offline">Connect to a network, then try again.</string>
@@ -82,7 +80,6 @@
   <string name="episode_directors">Režiséri</string>
   <string name="episode_gueststars">Hosťujúci herci</string>
   <string name="episode_writers">Scenár</string>
-  <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Vysiela sa</string>
   <string name="show_isnotalive">Skončil</string>
   <string name="lastEdit">Posledné úpravy / / TVDb</string>
@@ -93,6 +90,7 @@
   <string name="now">teraz</string>
   <string name="daily">Deňne</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Pozretá epizóda</string>
   <string name="unmark_episode">Ešte nepozretá epizóda</string>
   <string name="mark_all">Pozreté všetky</string>
@@ -147,6 +145,7 @@
   <string name="only_favorites">Iba obľúbené seriály</string>
   <string name="togglewatched">Prepnúť zhliadnutie</string>
   <string name="pref_infinite_scrolling">Infinite activity</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Updating…</string>
   <string name="update_no_connection">To update connect to the internet.</string>
   <string name="update_inprogress">Prebieha aktualizácia, skúste to neskôr.</string>
@@ -340,8 +339,13 @@
   <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
   <string name="migration_action_import">Import and replace existing shows</string>
   <string name="action_upgrade">Get X features</string>
+  <string name="billing_action_subscribe">Subscribe</string>
+  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+  <string name="billing_price_pass">one-time purchase</string>
   <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
   <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
+  <string name="billing_learn_more">Why pay? Learn more.</string>
   <string name="subscription_activated">You are now subscribed to X features.</string>
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>

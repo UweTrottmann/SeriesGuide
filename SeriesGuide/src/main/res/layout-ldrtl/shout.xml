@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/shout_root"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/default_padding">
@@ -28,7 +28,8 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.XSmall.Dim" />
+            android:textAppearance="@style/TextAppearance.XSmall.Dim"
+            android:textAlignment="viewStart" />
 
         <TextView
             android:id="@+id/timestamp"
@@ -46,6 +47,7 @@
         android:layout_below="@+id/userstrip"
         android:layout_toEndOf="@+id/avatar"
         android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.Small" />
+        android:textAppearance="@style/TextAppearance.Small"
+        android:textAlignment="viewStart" />
 
 </RelativeLayout>

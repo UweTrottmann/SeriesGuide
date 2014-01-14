@@ -49,20 +49,11 @@
         android:textAppearance="@style/TextAppearance.Light"
         android:visibility="gone" />
 
-    <GridView
-        android:id="@+id/gridViewMovies"
+    <include
+        layout="@layout/grid_movies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/editTextMoviesSearch"
-        android:clipToPadding="@bool/gridClipToPadding"
-        android:columnWidth="@dimen/movie_item_width"
-        android:fastScrollEnabled="true"
-        android:horizontalSpacing="@dimen/grid_horizontal_spacing"
-        android:listSelector="@color/transparent"
-        android:numColumns="auto_fit"
-        android:padding="@dimen/default_padding"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="@dimen/grid_vertical_spacing" />
+        android:layout_below="@+id/editTextMoviesSearch" />
 
     <TextView
         android:id="@+id/poweredby"

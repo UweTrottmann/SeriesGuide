@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- RTL support for grid views -->
+    <style name="Widget.SeriesGuide.RtlGridView">
+        <item name="android:layoutDirection">ltr</item>
+        <item name="android:rotationY">180</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.RtlGridViewItem">
+        <item name="android:layoutDirection">rtl</item>
+        <item name="android:rotationY">180</item>
+    </style>
+
+</resources>

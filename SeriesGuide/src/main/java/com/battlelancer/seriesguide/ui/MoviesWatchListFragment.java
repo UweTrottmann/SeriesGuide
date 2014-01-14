@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.ui;
@@ -72,7 +71,7 @@ public class MoviesWatchListFragment extends SherlockFragment implements
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.movies_watchlist_fragment, container, false);
 
-        mGridView = (GridView) v.findViewById(R.id.gridViewMoviesWatchlist);
+        mGridView = (GridView) v.findViewById(android.R.id.list);
         mEmptyView = (TextView) v.findViewById(R.id.textViewMoviesWatchlistEmpty);
         mGridView.setEmptyView(mEmptyView);
         mGridView.setOnItemClickListener(this);

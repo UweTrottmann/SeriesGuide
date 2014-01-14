@@ -4,7 +4,6 @@
     <!-- Main Menu -->
     <string name="shows">Shows</string>
     <string name="lists">Lists</string>
-    <string name="activity">Activity</string>
     <string name="movies">Movies</string>
     <string name="statistics">Statistics</string>
     <string name="search">Search</string>
@@ -37,7 +36,6 @@
 
     <!-- Status messages -->
     <string name="updated">Updated to latest version.</string>
-    <string name="loading">Loading…</string>
     <string name="norating">n/a</string>
     <string name="unknown">unknown</string>
     <string name="offline">Connect to a network, then try again.</string>
@@ -137,7 +135,6 @@
     <string name="episode_directors">Directors</string>
     <string name="episode_gueststars">Guest Stars</string>
     <string name="episode_writers">Writers</string>
-    <string name="show_airtimeunit">min</string>
     <string name="show_isalive">Continuing</string>
     <string name="show_isnotalive">Ended</string>
     <string name="lastEdit">Last Edit // TVDb</string>
@@ -152,6 +149,7 @@
     <string name="now">now</string>
     <string name="daily">Daily</string>
     <string name="release_date_and_day">%1$s (%2$s)</string>
+    <string name="runtime_minutes">%s min</string>
 
     <!-- Flagging -->
     <string name="mark_episode">Watched episode</string>
@@ -212,6 +210,7 @@
     <string name="only_favorites">Only favorite shows</string>
     <string name="togglewatched">Toggle watched</string>
     <string name="pref_infinite_scrolling">Infinite activity</string>
+    <string name="action_activity_filter">Filter activity</string>
 
     <!-- Updating -->
     <string name="update_scheduled">Updating…</string>
@@ -504,8 +503,13 @@
 
     <!-- In-App Billing -->
     <string name="action_upgrade">Get X features</string>
+    <string name="billing_action_subscribe">Subscribe</string>
+    <string name="billing_action_pass">Get X Pass</string>
+    <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+    <string name="billing_price_pass">one-time purchase</string>
     <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
     <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
+    <string name="billing_learn_more">Why pay? Learn more.</string>
     <string name="subscription_activated">You are now subscribed to X features.</string>
     <string name="subscription_expired">Subscription expired</string>
     <string name="subscription_expired_details">Your X features subscription has expired.</string>

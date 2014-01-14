@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Σειρές</string>
   <string name="lists">Λίστες</string>
-  <string name="activity">Δραστηριότητα</string>
   <string name="movies">Ταινίες</string>
   <string name="statistics">Στατιστικά</string>
   <string name="search">Αναζήτηση</string>
@@ -28,7 +27,6 @@
   <string name="save_selection">Αποθήκευση επιλογής</string>
   <string name="search_hint">Αναζήτηση επεισοδίων</string>
   <string name="updated">Ενημέρωση για την πιο πρόσφατη έκδοση.</string>
-  <string name="loading">Φόρτωση…</string>
   <string name="norating">n/a</string>
   <string name="unknown">άγνωστο</string>
   <string name="offline">Connect to a network, then try again.</string>
@@ -82,17 +80,17 @@
   <string name="episode_directors">Σκηνοθέτες</string>
   <string name="episode_gueststars">Γκεστ Σταρ</string>
   <string name="episode_writers">Συγγραφείς</string>
-  <string name="show_airtimeunit">λεπτά</string>
   <string name="show_isalive">Συνεχίζεται</string>
   <string name="show_isnotalive">Σταμάτησε</string>
   <string name="lastEdit">Τελευταία επεξεργασία // TVDb</string>
   <string name="services_watch">Watch</string>
-  <string name="services_more">More</string>
+  <string name="services_more">Περισσότερα</string>
   <string name="sort">Ταξινόμηση κατά</string>
   <string name="today">Σήμερα</string>
   <string name="now">τώρα</string>
   <string name="daily">Καθημερινή</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Το επεισόδιο έχει παρακολουθηθεί</string>
   <string name="unmark_episode">Το επεισόδιο δεν έχει παρακολουθηθεί ακόμα</string>
   <string name="mark_all">Έχουν παρακολουθηθεί όλα</string>
@@ -102,7 +100,7 @@
   <string name="uncollect">Επεισόδιο εκτός συλλογής</string>
   <string name="collect_all">Collected all</string>
   <string name="uncollect_all">Collected none</string>
-  <string name="action_skip">Skip</string>
+  <string name="action_skip">Παράλειψη</string>
   <string name="action_dont_skip">Don\'t skip</string>
   <string name="trakt_submitqueued">Submitting to trakt.</string>
   <string name="trakt_seen">%s έχουν παρακολουθηθεί.</string>
@@ -125,13 +123,13 @@
   <string name="unhidden">μη-κρυφή σειρά</string>
   <string name="action_shows_add">Προσθήκη Σειράς</string>
   <string name="action_shows_filter">Φίλτρο</string>
-  <string name="empty_filter">Remove all filters</string>
+  <string name="empty_filter">Κατάργηση όλων των φίλτρων</string>
   <string name="action_shows_filter_favorites">Αγαπημένα</string>
   <string name="action_shows_filter_unwatched">Unwatched</string>
   <string name="action_shows_filter_upcoming">Επερχόμενα</string>
   <string name="action_shows_filter_hidden">Κρυφά</string>
   <string name="action_shows_sort">Sort shows</string>
-  <string name="action_shows_sort_title">Title</string>
+  <string name="action_shows_sort_title">Τίτλος</string>
   <string name="action_shows_sort_episode">Επόμενο επεισόδιο</string>
   <string name="action_shows_sort_favorites">Αγαπημένα πρώτα</string>
   <string name="updateall_yes">Ενημέρωση (όλα)</string>
@@ -147,8 +145,9 @@
   <string name="only_favorites">Μόνο αγαπημένες σειρές</string>
   <string name="togglewatched">Εναλλαγή παρακολουθημένων</string>
   <string name="pref_infinite_scrolling">Infinite activity</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Ενημέρωση…</string>
-  <string name="update_no_connection">To update connect to the internet.</string>
+  <string name="update_no_connection">Για ενημέρωση συνδεθείτε στο internet.</string>
   <string name="update_inprogress">Μια ενημέρωση βρίσκεται σε εξέλιξη, δοκιμάστε ξανά αργότερα.</string>
   <string name="menu_updateart">Φόρτωση αφισών</string>
   <string name="arttask_incomplete">Ορισμένες αφίσες δεν φόρτωσαν, δοκιμάστε ξανά αργότερα.</string>
@@ -186,18 +185,18 @@
   <string name="list_empty">Μπορείτε να προσθέσετε σειρές, σεζόν ή επεισόδια σε αυτή τη λίστα.</string>
   <string name="hexagon_setup">Set up SeriesGuide cloud</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
-  <string name="hexagon_signin">Sign In</string>
+  <string name="hexagon_signin">Είσοδος</string>
   <string name="hexagon_signed_in">You are connected to SeriesGuide cloud.</string>
   <string name="hexagon_signout">Sign Out</string>
   <string name="hexagon_setup_incomplete">Setting up SeriesGuide cloud was not completed.</string>
-  <string name="hexagon_setup_complete">Complete setup</string>
+  <string name="hexagon_setup_complete">Πλήρη παραμετροποίηση</string>
   <string name="hexagon_priority_choice_required">Some of your shows are already in the cloud. Which version do you prefer?</string>
-  <string name="hexagon_priority_local">On this device</string>
-  <string name="hexagon_priority_cloud">In the cloud</string>
+  <string name="hexagon_priority_local">Σε αυτήν την συσκευή</string>
+  <string name="hexagon_priority_cloud">Στο σύννεφο</string>
   <string name="hexagon_priority_select">Select version</string>
-  <string name="connect_trakt">Connect trakt</string>
-  <string name="connect_trakt_done">Connected to trakt!</string>
-  <string name="add_trakt_shows">Add shows from your library:</string>
+  <string name="connect_trakt">Σύνδεση trakt</string>
+  <string name="connect_trakt_done">Συνδεδεμένο με το trakt!</string>
+  <string name="add_trakt_shows">Προσθέστε shows από τη βιβλιοθήκη σας:</string>
   <string name="show_library">Show your library</string>
   <string name="upload_shows">Upload your SeriesGuide show list:</string>
   <string name="upload_existing_shows">Upload existing shows</string>
@@ -252,7 +251,7 @@
   <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
   <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
   <string name="backup_path">Φάκελος αντιγράφων ασφαλείας</string>
-  <string name="backup_version">Database version</string>
+  <string name="backup_version">Έκδοση βάσης δεδομένων</string>
   <string name="backup_failed_nosd">Δεν γίνεται να δημιουργηθούν αντίγραφα ασφαλείας. Ο φάκελος δεν είναι διαθέσιμος.</string>
   <string name="backup_inprogress">Δημιουργία αντιγράφων ασφαλείας βάσης δεδομένων…</string>
   <string name="backup_success">Επιτυχής δημιουργία αντιγράφου ασφαλείας.</string>
@@ -287,7 +286,7 @@
   <string name="checkin_success_trakt">Checked into %s on trakt.</string>
   <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="select_show">Επιλογή σειράς</string>
-  <string name="check_into">Check into</string>
+  <string name="check_into">Έλεγχος σε</string>
   <string name="no_selection">επιλογή ενός από τα παρακάτω</string>
   <string name="looking_for_something_else">Ψάχνετε για κάτι άλλο;</string>
   <string name="menu_rate_episode">Rate episode</string>
@@ -319,7 +318,7 @@
   <string name="more">%s περισσότερο</string>
   <string name="upcoming_display">Επιλέξτε, για να εμφανίσετε τις επερχόμενες σειρές</string>
   <string name="pref_notifications">Ειδοποιήσεις</string>
-  <string name="pref_notificationssummary">Notify about new episodes</string>
+  <string name="pref_notificationssummary">Ειδοποίηση για νέα επεισόδια</string>
   <string name="pref_notifyfavonly">Μόνο τα Αγαπημένα</string>
   <string name="pref_notifyfavonlysummary">Λήψη ειδοποιήσεων μόνο για τις αγαπημένες σειρές</string>
   <string name="pref_ringtone">Ήχος κλήσης</string>
@@ -332,16 +331,21 @@
   <string name="hide_watched">Απόκρυψη παρακολουθημένων επεισοδίων</string>
   <string name="pref_widget_opacity">Widget background</string>
   <string name="pref_widget_type">τύπος Widget</string>
-  <string name="dashclock_extension_label">Upcoming episode</string>
+  <string name="dashclock_extension_label">Επερχόμενο επεισόδιο</string>
   <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
-  <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
+  <string name="dashclock_pref_upcoming_threshold">Εμφάνιση επεισοδίων στην επόμενη</string>
   <string name="action_migrate">Migrate from X</string>
   <string name="migration_description">SeriesGuide X is now an unlock key for X features in the free version (X Pass). Please migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
   <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
   <string name="migration_action_import">Import and replace existing shows</string>
   <string name="action_upgrade">Get X features</string>
+  <string name="billing_action_subscribe">Subscribe</string>
+  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+  <string name="billing_price_pass">one-time purchase</string>
   <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
   <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
+  <string name="billing_learn_more">Why pay? Learn more.</string>
   <string name="subscription_activated">You are now subscribed to X features.</string>
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
@@ -380,7 +384,7 @@
     <item>25% black</item>
     <item>50% black</item>
     <item>75% black</item>
-    <item>Black</item>
+    <item>Μαύρο</item>
   </string-array>
   <string-array name="widgetType">
     <item>Επερχόμενα</item>
@@ -388,10 +392,10 @@
     <item>Αγαπημένα</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
-    <item>hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>24 hours</item>
+    <item>ώρα</item>
+    <item>6 ώρες</item>
+    <item>12 ώρες</item>
+    <item>24 ώρες</item>
     <item>3 ημέρες</item>
     <item>week</item>
   </string-array>
@@ -404,20 +408,20 @@
     <item quantity="other">%d days</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d hours</item>
+    <item quantity="zero">%d ώρες</item>
     <item quantity="one">%d hour</item>
-    <item quantity="two">%d hours</item>
-    <item quantity="few">%d hours</item>
-    <item quantity="many">%d hours</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="two">%d ώρες</item>
+    <item quantity="few">%d ώρες</item>
+    <item quantity="many">%d ώρες</item>
+    <item quantity="other">%d ώρες</item>
   </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d minutes</item>
-    <item quantity="one">%d minute</item>
-    <item quantity="two">%d minutes</item>
-    <item quantity="few">%d minutes</item>
-    <item quantity="many">%d minutes</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="zero">%d λεπτά</item>
+    <item quantity="one">%d λεπτό</item>
+    <item quantity="two">%d λεπτά</item>
+    <item quantity="few">%d λεπτά</item>
+    <item quantity="many">%d λεπτά</item>
+    <item quantity="other">%d λεπτά</item>
   </plurals>
   <plurals name="votes">
     <item quantity="zero">%d ψήφοι</item>

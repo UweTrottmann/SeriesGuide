@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,38 +12,27 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.enums.TraktStatus;
-import com.battlelancer.seriesguide.settings.TraktSettings;
-import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.util.ConnectTraktTask;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
-import com.battlelancer.seriesguide.util.SimpleCrypto;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.Trakt;
-import com.jakewharton.trakt.entities.Response;
-import com.jakewharton.trakt.services.AccountService;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
-import android.content.Context;
-import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,23 +43,168 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import retrofit.RetrofitError;
+/**
+ * Provides a user interface to connect or create a trakt account.
+ */
+public class ConnectTraktCredentialsFragment extends SherlockFragment implements
+        ConnectTraktTask.OnTaskFinishedListener {
 
-public class ConnectTraktCredentialsFragment extends SherlockFragment {
+    private boolean mIsForwardingGivenTask;
 
-    private boolean isForwardingGivenTask;
+    private ConnectTraktTask mTask;
+
+    private Button mButtonConnect;
+
+    private Button mButtonDisconnect;
+
+    private EditText mEditTextUsername;
+
+    private EditText mEditTextPassword;
+
+    private CheckBox mCheckBoxNewAccount;
+
+    private EditText mEditTextEmail;
+
+    private View mStatusView;
+
+    private TextView mTextViewStatus;
+
+    private View mProgressBar;
 
     public static ConnectTraktCredentialsFragment newInstance(Bundle traktData) {
         ConnectTraktCredentialsFragment f = new ConnectTraktCredentialsFragment();
         f.setArguments(traktData);
-        f.isForwardingGivenTask = true;
+        f.mIsForwardingGivenTask = true;
         return f;
     }
 
     public static ConnectTraktCredentialsFragment newInstance() {
         ConnectTraktCredentialsFragment f = new ConnectTraktCredentialsFragment();
-        f.isForwardingGivenTask = false;
+        f.mIsForwardingGivenTask = false;
         return f;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        /*
+         * Try to keep the fragment around on config changes so the credentials task
+         * does not have to be finished.
+         */
+        setRetainInstance(true);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.trakt_credentials_dialog, container, false);
+
+        // status strip
+        mTextViewStatus = (TextView) v.findViewById(R.id.status);
+        mProgressBar = v.findViewById(R.id.progressbar);
+        mStatusView = v.findViewById(R.id.progress);
+        mStatusView.setVisibility(View.GONE);
+
+        // buttons
+        mButtonConnect = (Button) v.findViewById(R.id.connectbutton);
+        mButtonDisconnect = (Button) v.findViewById(R.id.disconnectbutton);
+
+        // text fields
+        mEditTextUsername = (EditText) v.findViewById(R.id.username);
+        mEditTextPassword = (EditText) v.findViewById(R.id.password);
+        mEditTextEmail = (EditText) v.findViewById(R.id.email);
+
+        // new account toggle
+        final View newAccountViews = v.findViewById(R.id.mailviews);
+        newAccountViews.setVisibility(View.GONE);
+
+        mCheckBoxNewAccount = (CheckBox) v.findViewById(R.id.checkNewAccount);
+        mCheckBoxNewAccount.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    newAccountViews.setVisibility(View.VISIBLE);
+                } else {
+                    newAccountViews.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        return v;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        setupViews();
+
+        // unfinished task around?
+        if (mTask != null && mTask.getStatus() != AsyncTask.Status.FINISHED) {
+            // disable buttons, show status message
+            setButtonStates(false, false);
+            setStatus(true, true, R.string.waitplease);
+        }
+
+        // connect button
+        mButtonConnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // disable buttons, show status message
+                setButtonStates(false, false);
+                setStatus(true, true, R.string.waitplease);
+
+                // get username and password
+                Editable editableUsername = mEditTextUsername.getText();
+                String username = editableUsername != null ?
+                        editableUsername.toString().trim() : null;
+                Editable editablePassword = mEditTextPassword.getText();
+                String password = editablePassword != null ?
+                        editablePassword.toString().trim() : null;
+
+                // get email
+                String email = null;
+                if (mCheckBoxNewAccount.isChecked()) {
+                    Editable editableEmail = mEditTextEmail.getText();
+                    email = editableEmail != null ? editableEmail.toString().trim() : null;
+                }
+
+                mTask = new ConnectTraktTask(getActivity().getApplicationContext(),
+                        ConnectTraktCredentialsFragment.this);
+                mTask.execute(username, password, email);
+            }
+        });
+
+        // disconnect button
+        mButtonDisconnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO do this async
+                TraktCredentials.get(getActivity()).removeCredentials();
+                setupViews();
+            }
+        });
+
+    }
+
+    private void setupViews() {
+        boolean hasCredentials = TraktCredentials.get(getActivity()).hasCredentials();
+
+        // buttons
+        if (hasCredentials) {
+            setButtonStates(false, true);
+            mEditTextUsername.setText(TraktCredentials.get(getActivity()).getUsername());
+        } else {
+            setButtonStates(true, false);
+        }
+
+        // username and password
+        mEditTextUsername.setEnabled(!hasCredentials);
+        mEditTextPassword.setEnabled(!hasCredentials);
+        mEditTextPassword.setText(hasCredentials ? "********" : null); // fake password
+
+        // new account check box
+        mCheckBoxNewAccount.setEnabled(!hasCredentials);
     }
 
     @Override
@@ -79,234 +213,65 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment {
         Utils.trackView(getActivity(), "Connect Trakt Credentials");
     }
 
+    private void setButtonStates(boolean connectEnabled, boolean disconnectEnabled) {
+        mButtonConnect.setEnabled(connectEnabled);
+        mButtonDisconnect.setEnabled(disconnectEnabled);
+    }
+
+    private void setStatus(boolean visible, boolean inProgress, int statusTextResourceId) {
+        if (!visible) {
+            mStatusView.setVisibility(View.GONE);
+            return;
+        }
+        mStatusView.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(inProgress ? View.VISIBLE : View.GONE);
+        mTextViewStatus.setText(statusTextResourceId);
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        final Context context = getActivity().getApplicationContext();
-        final View layout = inflater.inflate(R.layout.trakt_credentials_dialog, container, false);
-        final FragmentManager fm = getFragmentManager();
-        final Bundle args = getArguments();
+    public void onTaskFinished(int resultCode) {
+        mTask = null;
 
-        // restore the username from settings
-        final String username = TraktSettings.getUsername(context);
-
-        // new account toggle
-        final View mailviews = layout.findViewById(R.id.mailviews);
-        mailviews.setVisibility(View.GONE);
-
-        CheckBox newAccCheckBox = (CheckBox) layout.findViewById(R.id.checkNewAccount);
-        newAccCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    mailviews.setVisibility(View.VISIBLE);
-                } else {
-                    mailviews.setVisibility(View.GONE);
-                }
-            }
-        });
-
-        // status strip
-        final TextView status = (TextView) layout.findViewById(R.id.status);
-        final View progressbar = layout.findViewById(R.id.progressbar);
-        final View progress = layout.findViewById(R.id.progress);
-        progress.setVisibility(View.GONE);
-
-        final Button connectbtn = (Button) layout.findViewById(R.id.connectbutton);
-        final Button disconnectbtn = (Button) layout.findViewById(R.id.disconnectbutton);
-
-        // enable buttons based on if there are saved credentials
-        if (TextUtils.isEmpty(username)) {
-            // user has to enable first
-            disconnectbtn.setEnabled(false);
-        } else {
-            // make it obvious trakt is connected
-            connectbtn.setEnabled(false);
-
-            EditText usernameField = (EditText) layout.findViewById(R.id.username);
-            usernameField.setEnabled(false);
-            usernameField.setText(username);
-
-            EditText passwordField = (EditText) layout.findViewById(R.id.password);
-            passwordField.setEnabled(false);
-            passwordField.setText("********"); // fake password
-
-            newAccCheckBox.setEnabled(false);
+        if (resultCode == NetworkResult.OFFLINE) {
+            setStatus(true, false, R.string.offline);
+            setButtonStates(true, false);
+            return;
         }
 
-        connectbtn.setOnClickListener(new View.OnClickListener() {
+        if (resultCode == NetworkResult.ERROR) {
+            setStatus(true, false, R.string.trakt_error_credentials);
+            setButtonStates(true, false);
+            return;
+        }
 
-            @Override
-            public void onClick(View v) {
-                // prevent multiple instances
-                connectbtn.setEnabled(false);
-                disconnectbtn.setEnabled(false);
+        // if we got here, looks like credentials were stored successfully
+        if (mIsForwardingGivenTask) {
+            // continue with original task
+            final Bundle args = getArguments();
 
-                // username and password
-                Editable editableUsername = ((EditText) layout.findViewById(R.id.username))
-                        .getText();
-                final String username = editableUsername != null ?
-                        editableUsername.toString().trim() : null;
-                Editable editablePassword = ((EditText) layout.findViewById(R.id.password))
-                        .getText();
-                final String passwordHash = editablePassword != null ?
-                        Utils.toSHA1(context, editablePassword.toString().trim()) : null;
-
-                // new account data
-                final boolean isNewAccount = ((CheckBox) layout.findViewById(R.id.checkNewAccount))
-                        .isChecked();
-                Editable editableEmail = ((EditText) layout.findViewById(R.id.email)).getText();
-                final String email = editableEmail != null ? editableEmail.toString().trim() : null;
-
-                // trakt API key
-                final String traktApiKey = getResources().getString(R.string.trakt_apikey);
-
-                AsyncTask<String, Void, Response> accountValidatorTask
-                        = new AsyncTask<String, Void, Response>() {
-
-                    @Override
-                    protected void onPreExecute() {
-                        progress.setVisibility(View.VISIBLE);
-                        progressbar.setVisibility(View.VISIBLE);
-                        status.setText(R.string.waitplease);
-                    }
-
-                    @Override
-                    protected Response doInBackground(String... params) {
-                        // check if we have any usable data
-                        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(passwordHash)
-                                || (isNewAccount && TextUtils.isEmpty(email))) {
-                            return null;
-                        }
-
-                        // check for connectivity
-                        if (!AndroidUtils.isNetworkConnected(context)) {
-                            Response r = new Response();
-                            r.status = TraktStatus.FAILURE;
-                            r.error = context.getString(R.string.offline);
-                            return r;
-                        }
-
-                        // use a separate ServiceManager here to avoid
-                        // setting wrong credentials
-                        final Trakt manager = new Trakt();
-                        manager.setApiKey(traktApiKey);
-                        manager.setAuthentication(username, passwordHash);
-
-                        Response response = null;
-
-                        try {
-                            if (isNewAccount) {
-                                // create new account
-                                response = manager.accountService().create(
-                                        new AccountService.NewAccount(username, passwordHash,
-                                                email));
-                            } else {
-                                // validate existing account
-                                response = manager.accountService().test();
-                            }
-                        } catch (RetrofitError e) {
-                            response = null;
-                        }
-
-                        return response;
-                    }
-
-                    @Override
-                    protected void onPostExecute(Response response) {
-                        progressbar.setVisibility(View.GONE);
-                        connectbtn.setEnabled(true);
-
-                        if (response == null) {
-                            status.setText(R.string.trakt_error_credentials);
-                            return;
-                        }
-                        if (response.status.equals(TraktStatus.FAILURE)) {
-                            status.setText(response.error);
-                            return;
-                        }
-
-                        // try to encrypt the password before storing it
-                        String passwordEncr = SimpleCrypto.encrypt(passwordHash, context);
-                        if (passwordEncr == null) {
-                            // password encryption failed
-                            status.setText(R.string.trakt_error_credentials);
-                            return;
-                        }
-
-                        // prepare writing credentials to settings
-                        final Editor editor = PreferenceManager.getDefaultSharedPreferences(context)
-                                .edit();
-                        editor.putString(TraktSettings.KEY_USERNAME, username).putString(
-                                TraktSettings.KEY_PASSWORD_SHA1_ENCR, passwordEncr);
-
-                        if (response.status.equals(TraktStatus.SUCCESS)
-                                && passwordEncr.length() != 0 && editor.commit()) {
-                            // try setting new auth data for service manager
-                            if (ServiceUtils.getTraktServiceManagerWithAuth(context, true)
-                                    == null) {
-                                status.setText(R.string.trakt_error_credentials);
-                                return;
-                            }
-
-                            if (isForwardingGivenTask) {
-                                // continue with original task
-                                if (TraktAction.values()[args.getInt(ShareItems.TRAKTACTION)]
-                                        == TraktAction.CHECKIN_EPISODE) {
-                                    FragmentTransaction ft = fm.beginTransaction();
-                                    Fragment prev = fm.findFragmentByTag("progress-dialog");
-                                    if (prev != null) {
-                                        ft.remove(prev);
-                                    }
-                                    ProgressDialog newFragment = ProgressDialog.newInstance();
-                                    newFragment.show(ft, "progress-dialog");
-                                }
-
-                                // relaunch the trakt task which called us
-                                AndroidUtils.executeAsyncTask(
-                                        new TraktTask(context, args, null), new Void[]{
-                                        null
-                                });
-
-                                FragmentActivity activity = getActivity();
-                                if (activity != null) {
-                                    activity.finish();
-                                }
-                            } else {
-                                // show options after successful connection
-                                FragmentManager fm = getFragmentManager();
-                                if (fm != null) {
-                                    ConnectTraktFinishedFragment f
-                                            = new ConnectTraktFinishedFragment();
-                                    FragmentTransaction ft = fm.beginTransaction();
-                                    ft.replace(android.R.id.content, f);
-                                    ft.commit();
-                                }
-                            }
-                        }
-                    }
-                };
-
-                accountValidatorTask.execute();
+            // if it was a check-in show a progress dialog first
+            if (TraktAction.values()[args.getInt(ShareItems.TRAKTACTION)]
+                    == TraktAction.CHECKIN_EPISODE) {
+                Fragment prev = getFragmentManager().findFragmentByTag("progress-dialog");
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ProgressDialog newFragment = ProgressDialog.newInstance();
+                newFragment.show(ft, "progress-dialog");
             }
-        });
 
-        disconnectbtn.setOnClickListener(new View.OnClickListener() {
+            // relaunch the trakt task which called us
+            AndroidUtils.executeAsyncTask(new TraktTask(getActivity(), args, null));
 
-            @Override
-            public void onClick(View v) {
-                // clear trakt credentials
-                new AsyncTask<Void, Void, Void>() {
-                    @Override
-                    protected Void doInBackground(Void... params) {
-                        ServiceUtils.clearTraktCredentials(context);
-                        return null;
-                    }
-                }.execute();
-
-                getActivity().finish();
-            }
-        });
-
-        return layout;
+            getActivity().finish();
+        } else {
+            // show download/upload options after successful connection
+            ConnectTraktFinishedFragment f = new ConnectTraktFinishedFragment();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(android.R.id.content, f);
+            ft.commit();
+        }
     }
+
 }

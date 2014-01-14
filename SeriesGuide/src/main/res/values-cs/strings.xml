@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Seriály</string>
   <string name="lists">Seznamy</string>
-  <string name="activity">Aktivita</string>
   <string name="movies">Filmy</string>
   <string name="statistics">Statistiky</string>
   <string name="search">Hledat</string>
@@ -28,7 +27,6 @@
   <string name="save_selection">Uložit výběr</string>
   <string name="search_hint">Hledat v epizodách</string>
   <string name="updated">Aktualizováno na nejnovější verzi.</string>
-  <string name="loading">Načítání…</string>
   <string name="norating">n/a</string>
   <string name="unknown">neznámo</string>
   <string name="offline">Connect to a network, then try again.</string>
@@ -82,7 +80,6 @@
   <string name="episode_directors">Režie</string>
   <string name="episode_gueststars">Hostující herci</string>
   <string name="episode_writers">Scénář</string>
-  <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Pokračuje</string>
   <string name="show_isnotalive">Ukončený</string>
   <string name="lastEdit">Naposledy editováno // TVDb</string>
@@ -93,6 +90,7 @@
   <string name="now">nyní</string>
   <string name="daily">Denně</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Epizoda zhlédnuta</string>
   <string name="unmark_episode">Epizoda zatím nezhlédnuta</string>
   <string name="mark_all">Zhlédnuty všechny</string>
@@ -147,6 +145,7 @@
   <string name="only_favorites">Pouze oblíbené seriály</string>
   <string name="togglewatched">Přepnout zhlédnutí</string>
   <string name="pref_infinite_scrolling">Aktivita bez omezení časem</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Probíhá aktualizace…</string>
   <string name="update_no_connection">Pro aktualizaci se připojte k internetu.</string>
   <string name="update_inprogress">Probíhá aktualizace, zkuste to později.</string>
@@ -186,9 +185,9 @@
   <string name="list_empty">Do seznamu můžete přidávat seriály, celé série nebo epizody.</string>
   <string name="hexagon_setup">Set up SeriesGuide cloud</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
-  <string name="hexagon_signin">Sign In</string>
+  <string name="hexagon_signin">Přihlásit se</string>
   <string name="hexagon_signed_in">You are connected to SeriesGuide cloud.</string>
-  <string name="hexagon_signout">Sign Out</string>
+  <string name="hexagon_signout">Odhlásit se</string>
   <string name="hexagon_setup_incomplete">Setting up SeriesGuide cloud was not completed.</string>
   <string name="hexagon_setup_complete">Complete setup</string>
   <string name="hexagon_priority_choice_required">Some of your shows are already in the cloud. Which version do you prefer?</string>
@@ -220,8 +219,8 @@
   <string name="pref_seasonsorting">Řadit série dle…</string>
   <string name="pref_episodesorting">Řadit epizody dle…</string>
   <string name="pref_language">Jazyk obsahu</string>
-  <string name="pref_updatewifionly">Images via Wi-Fi only</string>
-  <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
+  <string name="pref_updatewifionly">Obrázky pouze přes Wi-Fi</string>
+  <string name="pref_updatewifionlysummary">Pro snížení plateb operátorovi za data nestahovat obrázky přes mobilní síť</string>
   <string name="about">O SeriesGuide</string>
   <string name="pref_credits">Poděkování</string>
   <string name="clearGetGlueCredentials">Odpojit GetGlue</string>
@@ -340,8 +339,13 @@
   <string name="migration_import">Klikněte dole pro importování zálohy vytvořené ve verzi X.</string>
   <string name="migration_action_import">Importovat a nahradit stávající seriály</string>
   <string name="action_upgrade">Získat rozšířené funkce</string>
+  <string name="billing_action_subscribe">Subscribe</string>
+  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+  <string name="billing_price_pass">one-time purchase</string>
   <string name="upgrade_description">Získejte přístup k oznámením, dalším možnostem widgetu a všem budoucí vlastnostem Rozšířené verze. Podpořte budoucí vývoj.\n\nPokud jste již zakoupili SeriesGuide X, proveďte instalaci pro odemknutí tohoto upgradu.</string>
   <string name="upgrade_success">Děkujeme, nyní máte odemknuty všechny rozšířené funkce!</string>
+  <string name="billing_learn_more">Why pay? Learn more.</string>
   <string name="subscription_activated">Nyní máte zpřístuněny rozšířené funkce.</string>
   <string name="subscription_expired">Vypršela platnost</string>
   <string name="subscription_expired_details">Vaše zakoupení rozšířených funkcí vypršelo.</string>

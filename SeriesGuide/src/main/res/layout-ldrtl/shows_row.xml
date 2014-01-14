@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.SeriesGuide.RtlGridViewItem"
     android:layout_width="match_parent"
     android:layout_height="103dp"
     android:background="?attr/drawableCardBackground"
-    android:foreground="?attr/custom_list_selector">
+    android:foreground="?attr/custom_list_selector" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -53,9 +54,9 @@
             android:layout_marginEnd="-4dp"
             android:layout_toEndOf="@+id/showposter"
             android:layout_toStartOf="@+id/imageViewShowsContextMenu"
-            android:ellipsize="end"
             android:gravity="end"
-            android:maxLines="1"
+            android:ellipsize="marquee"
+            android:singleLine="true"
             android:text="@string/norating"
             android:textAlignment="viewEnd"
             tools:text="Tue 08:00 PM | Showtime Network" />
@@ -67,9 +68,10 @@
             android:layout_marginTop="2dp"
             android:layout_toEndOf="@id/showposter"
             android:layout_toStartOf="@id/favoritedLabel"
-            android:ellipsize="end"
-            android:maxLines="1"
+            android:ellipsize="marquee"
+            android:singleLine="true"
             android:textAppearance="@style/TextAppearance.Medium.Light"
+            android:textAlignment="viewStart"
             tools:text="@string/show" />
 
         <TextView
@@ -78,8 +80,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/seriesname"
             android:layout_toEndOf="@id/showposter"
-            android:ellipsize="end"
-            android:maxLines="1"
+            android:ellipsize="marquee"
+            android:singleLine="true"
             android:paddingEnd="@dimen/inline_padding"
             android:textAppearance="@style/TextAppearance.Light"
             tools:text="10x456 Some Very Cool Episode Title Therefore" />

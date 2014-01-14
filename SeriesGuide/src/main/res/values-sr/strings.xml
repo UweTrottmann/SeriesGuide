@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Serije</string>
   <string name="lists">Liste</string>
-  <string name="activity">Aktivnost</string>
   <string name="movies">Filmovi</string>
   <string name="statistics">Statistics</string>
   <string name="search">Pretraži</string>
@@ -28,7 +27,6 @@
   <string name="save_selection">Sačuvaj izabrano</string>
   <string name="search_hint">Pretraži epizode</string>
   <string name="updated">Ažurirano na poslednju verziju.</string>
-  <string name="loading">Učitavanje…</string>
   <string name="norating">nepoznato</string>
   <string name="unknown">nepoznato</string>
   <string name="offline">Connect to a network, then try again.</string>
@@ -82,7 +80,6 @@
   <string name="episode_directors">Režiseri</string>
   <string name="episode_gueststars">Gostujući glumci</string>
   <string name="episode_writers">Scenaristi</string>
-  <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Nastavlja se</string>
   <string name="show_isnotalive">Završena</string>
   <string name="lastEdit">Poslednje uređeno// TVDb</string>
@@ -93,6 +90,7 @@
   <string name="now">sada</string>
   <string name="daily">Dnevno</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Pogledana epizoda</string>
   <string name="unmark_episode">Nepogledana epizoda</string>
   <string name="mark_all">Pogledano sve</string>
@@ -147,6 +145,7 @@
   <string name="only_favorites">Samo omiljene serije</string>
   <string name="togglewatched">Pogledano/nepogledano</string>
   <string name="pref_infinite_scrolling">Infinite activity</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Updating…</string>
   <string name="update_no_connection">To update connect to the internet.</string>
   <string name="update_inprogress">Ažuriranje je u toku, pokušajte kasnije.</string>
@@ -340,8 +339,13 @@
   <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
   <string name="migration_action_import">Import and replace existing shows</string>
   <string name="action_upgrade">Get X features</string>
+  <string name="billing_action_subscribe">Subscribe</string>
+  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+  <string name="billing_price_pass">one-time purchase</string>
   <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
   <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
+  <string name="billing_learn_more">Why pay? Learn more.</string>
   <string name="subscription_activated">You are now subscribed to X features.</string>
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>

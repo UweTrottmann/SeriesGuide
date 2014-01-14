@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Sorozatok</string>
   <string name="lists">Listák</string>
-  <string name="activity">Tevékenység</string>
   <string name="movies">Filmek</string>
   <string name="statistics">Statisztika</string>
   <string name="search">Keresés</string>
@@ -28,7 +27,6 @@
   <string name="save_selection">Kijelöltek mentése</string>
   <string name="search_hint">Epizódok keresése</string>
   <string name="updated">Frissítve a legújabb verzióra.</string>
-  <string name="loading">Betöltés…</string>
   <string name="norating">n/a</string>
   <string name="unknown">ismeretlen</string>
   <string name="offline">Connect to a network, then try again.</string>
@@ -82,7 +80,6 @@
   <string name="episode_directors">Rendezte</string>
   <string name="episode_gueststars">Sztárvendég</string>
   <string name="episode_writers">Írta</string>
-  <string name="show_airtimeunit">perc</string>
   <string name="show_isalive">Még fut</string>
   <string name="show_isnotalive">Véget ért</string>
   <string name="lastEdit">Utolsó szerkesztés / / TVDb</string>
@@ -93,6 +90,7 @@
   <string name="now">most</string>
   <string name="daily">Napi</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Megnézett epizód</string>
   <string name="unmark_episode">Még nem látott epizód</string>
   <string name="mark_all">Mind megnézve</string>
@@ -147,6 +145,7 @@
   <string name="only_favorites">Csak kedvenc műsorok</string>
   <string name="togglewatched">Láttam igen/nem</string>
   <string name="pref_infinite_scrolling">Végtelen görgetés</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Frissítés…</string>
   <string name="update_no_connection">Frissítéshez csatlakozz az internetre.</string>
   <string name="update_inprogress">Egy frissítés folyamatban, próbálja később.</string>
@@ -340,8 +339,13 @@
   <string name="migration_import">Érintse meg alább a SeriesGuide X-ben készült mentés importálásához.</string>
   <string name="migration_action_import">Importálás és a létező sorozatok cseréje</string>
   <string name="action_upgrade">X funkciók beszerzése</string>
+  <string name="billing_action_subscribe">Subscribe</string>
+  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+  <string name="billing_price_pass">one-time purchase</string>
   <string name="upgrade_description">Szerezz elérést az értesítésekhez, több widget opcióhoz és a jövőbeli X funkciókhoz. Támogasd a további fejlesztést.\n\nHa már megvásároltad a SeriesGuide X verziót, akkor az engedélyezi ezeket a funkciókat.</string>
   <string name="upgrade_success">Már van X előfizetésed, köszönjük!</string>
+  <string name="billing_learn_more">Why pay? Learn more.</string>
   <string name="subscription_activated">Nincs X előfizetésed.</string>
   <string name="subscription_expired">Lejárt az előfizetés</string>
   <string name="subscription_expired_details">Lejárt az X előfizetésed.</string>

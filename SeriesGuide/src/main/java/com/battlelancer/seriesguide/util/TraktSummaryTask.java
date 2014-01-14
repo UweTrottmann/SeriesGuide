@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,12 +12,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.TraktSummaryTask.RatingsWrapper;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Ratings;
@@ -158,12 +156,10 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
     }
 
     private Trakt getTrakt() {
-        Trakt trakt;
-        if (TraktSettings.hasTraktCredentials(mContext)) {
-            trakt = ServiceUtils.getTraktServiceManagerWithAuth(mContext,
-                    false);
-        } else {
-            trakt = ServiceUtils.getTraktServiceManager(mContext);
+        Trakt trakt = ServiceUtils.getTraktWithAuth(mContext);
+        if (trakt == null) {
+            // don't have auth data
+            trakt = ServiceUtils.getTrakt(mContext);
         }
         return trakt;
     }

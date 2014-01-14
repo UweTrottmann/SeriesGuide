@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.ui;
@@ -164,7 +163,7 @@ public class ShowsFragment extends SherlockFragment implements
         mAdapter = new ShowsAdapter(getActivity(), null, 0, resIdStar, resIdStarZero, this);
 
         // setup grid view
-        mGrid = (GridView) getView().findViewById(R.id.gridViewShows);
+        mGrid = (GridView) getView().findViewById(android.R.id.list);
         mGrid.setAdapter(mAdapter);
         mGrid.setOnItemClickListener(this);
         registerForContextMenu(mGrid);

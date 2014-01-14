@@ -8,6 +8,29 @@ All dates are in the European Central timezone.
 Version 11 *(in development)*
 -----------------------------
 
+#### 11-beta5 *(2014-01-13)*
+
+* FIX Lists in shows section overlap with tab strip on Android 2.3 (Gingerbread).
+* TWEAK Better explanation of upgrade options, fall back to X Pass link if Billing service unavailable.
+* NOTICE Latest translations from crowdin.
+
+#### 11-beta4 *(2014-01-09)*
+
+* TWEAK Store trakt passwords with Android account system, will hopefully lead to less errors. Also, disconnecting from trakt will not force you back to the previous screen anymore.
+* TWEAK Rework sync account handling, leading to potentially less crashes.
+* FIX List widget does not refresh items immediately after changing its settings. Thanks Tomas for pushing me to fix this.
+* NOTICE Latest translations from crowdin, now including Latvian.
+
+#### 11-beta3 *(2014-01-03)*
+
+* TWEAK Require confirmation before toggling watched or collected flag for all seasons.
+* TWEAK Show tab displays more info right beside show poster.
+* TWEAK Finally move activity tabs into shows section now that filtering is done via an action item (funnel icon).
+* TWEAK Other minor layout tweaks.
+* FIX Superfluous space character in trakt movie check-in confirmation message.
+* FIX Scrollbars overlap content, make item actions hard to press.
+* FIX Library tab in 'Add shows' screen does not display show descriptions.
+
 #### 11-beta2 *(2013-12-22)*
 
 * FIX Crash when doing network operations in libssl due to issue with OkHttp (see commit c73265d240bdf168d02e704ecda43fa653068c49).

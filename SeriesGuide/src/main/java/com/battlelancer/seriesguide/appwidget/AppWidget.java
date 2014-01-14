@@ -1,24 +1,23 @@
 /*
- * Copyright (C) 2011 Uwe Trottmann 
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at 
+ * You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software 
+ * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and 
+ * See the License for the specific language governing permissions and
  * limitations under the License.
  */
 
 package com.battlelancer.seriesguide.appwidget;
 
+import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
-import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
@@ -112,32 +111,32 @@ public class AppWidget extends AppWidgetProvider {
 
                     RemoteViews item = new RemoteViews(context.getPackageName(), itemLayout);
                     // upcoming episode
-                    int seasonNumber = upcomingEpisodes.getInt(UpcomingQuery.SEASON);
-                    int episodeNumber = upcomingEpisodes.getInt(UpcomingQuery.NUMBER);
-                    String title = upcomingEpisodes.getString(UpcomingQuery.TITLE);
+                    int seasonNumber = upcomingEpisodes.getInt(ActivityFragment.ActivityQuery.SEASON);
+                    int episodeNumber = upcomingEpisodes.getInt(ActivityFragment.ActivityQuery.NUMBER);
+                    String title = upcomingEpisodes.getString(ActivityFragment.ActivityQuery.TITLE);
                     item.setTextViewText(R.id.textViewWidgetEpisode,
                             Utils.getNextEpisodeString(this, seasonNumber, episodeNumber, title));
 
                     // relative airtime
-                    long airtime = upcomingEpisodes.getLong(UpcomingQuery.FIRSTAIREDMS);
+                    long airtime = upcomingEpisodes.getLong(ActivityFragment.ActivityQuery.FIRSTAIREDMS);
                     String[] dayAndTime = Utils.formatToTimeAndDay(airtime, context);
                     value = dayAndTime[2] + " (" + dayAndTime[1] + ")";
                     item.setTextViewText(R.id.widgetAirtime, value);
 
                     // absolute airtime and network (if any)
                     value = dayAndTime[0];
-                    String network = upcomingEpisodes.getString(UpcomingQuery.SHOW_NETWORK);
+                    String network = upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
                     if (network.length() != 0) {
                         value += " " + network;
                     }
                     item.setTextViewText(R.id.widgetNetwork, value);
 
                     // show name
-                    value = upcomingEpisodes.getString(UpcomingQuery.SHOW_TITLE);
+                    value = upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_TITLE);
                     item.setTextViewText(R.id.textViewWidgetShow, value);
 
                     // show poster
-                    value = upcomingEpisodes.getString(UpcomingQuery.SHOW_POSTER);
+                    value = upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_POSTER);
                     final Bitmap poster = ImageProvider.getInstance(context).getImage(value, true);
                     if (poster != null) {
                         item.setImageViewBitmap(R.id.widgetPoster, poster);
@@ -152,11 +151,11 @@ public class AppWidget extends AppWidgetProvider {
             }
 
             // Create an Intent to launch Upcoming
-            Intent activityIntent = new Intent(context, UpcomingRecentActivity.class);
-            activityIntent.putExtra(UpcomingRecentActivity.InitBundle.SELECTED_TAB, 0);
+            Intent activityIntent = new Intent(context, ShowsActivity.class);
+            activityIntent.putExtra(ShowsActivity.InitBundle.SELECTED_TAB,
+                    ShowsActivity.InitBundle.INDEX_TAB_UPCOMING);
             PendingIntent activityPendingIntent = TaskStackBuilder
                     .create(context)
-                    .addNextIntent(new Intent(context, ShowsActivity.class))
                     .addNextIntent(activityIntent)
                     .getPendingIntent(0, 0);
             views.setOnClickPendingIntent(R.id.LinearLayoutWidget, activityPendingIntent);

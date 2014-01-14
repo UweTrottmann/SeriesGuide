@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Serier</string>
   <string name="lists">Listor</string>
-  <string name="activity">Aktivitet</string>
   <string name="movies">Filmer</string>
   <string name="statistics">Statistik</string>
   <string name="search">Sök</string>
@@ -29,7 +28,6 @@
   <string name="save_selection">Spara valda</string>
   <string name="search_hint">Sök avsnitt</string>
   <string name="updated">Uppdaterad till senaste versionen</string>
-  <string name="loading">Laddar…</string>
   <string name="norating">saknas</string>
   <string name="unknown">okänd</string>
   <string name="offline">Connect to a network, then try again.</string>
@@ -83,7 +81,6 @@
   <string name="episode_directors">Regissörer</string>
   <string name="episode_gueststars">Gästskådespelare</string>
   <string name="episode_writers">Författare</string>
-  <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Fortsätter</string>
   <string name="show_isnotalive">Avslutad</string>
   <string name="lastEdit">Senast redigerad // TVDb</string>
@@ -94,6 +91,7 @@
   <string name="now">nu</string>
   <string name="daily">Dagligen</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Sett avsnittet</string>
   <string name="unmark_episode">Ännu ej sett avsnittet</string>
   <string name="mark_all">Sett alla</string>
@@ -148,6 +146,7 @@
   <string name="only_favorites">Endast favoritserier</string>
   <string name="togglewatched">Växla sedda</string>
   <string name="pref_infinite_scrolling">Oändlig aktivitet</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Uppdaterar…</string>
   <string name="update_no_connection">För att uppdatera anslut till internet.</string>
   <string name="update_inprogress">En uppdatering pågår, försök igen senare.</string>
@@ -341,8 +340,13 @@
   <string name="migration_import">Klicka nedan för att importera den säkerhetskopia som skapats i SeriesGuide X.</string>
   <string name="migration_action_import">Importera och ersätt befintliga serier</string>
   <string name="action_upgrade">Få X-funktionerna </string>
+  <string name="billing_action_subscribe">Subscribe</string>
+  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+  <string name="billing_price_pass">one-time purchase</string>
   <string name="upgrade_description">Få tillgång till notifieringar, fler listwidgetalternativ och alla framtida X-funktioner. Stöd ytterligare utveckling.\n\nOm du har redan köpt SeriesGuide X, installera den för att låsa upp denna uppgradering.</string>
   <string name="upgrade_success">Tack, du prenumererar redan på alla X-funktioner!</string>
+  <string name="billing_learn_more">Why pay? Learn more.</string>
   <string name="subscription_activated">Du prenumerar nu på X-funktioner.</string>
   <string name="subscription_expired">Prenumerationen har gått ut</string>
   <string name="subscription_expired_details">Dina X-funktioners prenumeration har gått ut.</string>

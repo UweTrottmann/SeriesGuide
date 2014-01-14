@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.util;
@@ -28,8 +27,8 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.UpcomingFragment.ActivityType;
-import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
+import com.battlelancer.seriesguide.ui.ActivityFragment;
+import com.battlelancer.seriesguide.ui.ActivityFragment.ActivityType;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
 import com.uwetrottmann.seriesguide.R;
 
@@ -210,26 +209,26 @@ public class DBUtils {
      * Returns all episodes that air today or later. Using Pacific Time to determine today. Excludes
      * shows that are hidden.
      *
-     * @return Cursor using the projection of {@link UpcomingQuery}.
+     * @return Cursor using the projection of {@link com.battlelancer.seriesguide.ui.ActivityFragment.ActivityQuery}.
      */
     public static Cursor getUpcomingEpisodes(boolean isOnlyUnwatched, Context context) {
         String[][] args = buildActivityQuery(context, ActivityType.UPCOMING, isOnlyUnwatched, -1);
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
-                UpcomingQuery.PROJECTION, args[0][0], args[1], args[2][0]);
+                ActivityFragment.ActivityQuery.PROJECTION, args[0][0], args[1], args[2][0]);
     }
 
     /**
      * Return all episodes that aired the day before and earlier. Using Pacific Time to determine
      * today. Excludes shows that are hidden.
      *
-     * @return Cursor using the projection of {@link UpcomingQuery}.
+     * @return Cursor using the projection of {@link com.battlelancer.seriesguide.ui.ActivityFragment.ActivityQuery}.
      */
     public static Cursor getRecentEpisodes(boolean isOnlyUnwatched, Context context) {
         String[][] args = buildActivityQuery(context, ActivityType.RECENT, isOnlyUnwatched, -1);
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
-                UpcomingQuery.PROJECTION, args[0][0], args[1], args[2][0]);
+                ActivityFragment.ActivityQuery.PROJECTION, args[0][0], args[1], args[2][0]);
     }
 
     /**
@@ -261,8 +260,8 @@ public class DBUtils {
         long timeThreshold;
 
         if (ActivityType.RECENT.equals(type)) {
-            query = UpcomingQuery.QUERY_RECENT;
-            sortOrder = UpcomingQuery.SORTING_RECENT;
+            query = ActivityFragment.ActivityQuery.QUERY_RECENT;
+            sortOrder = ActivityFragment.ActivityQuery.SORTING_RECENT;
             if (numberOfDaysToInclude < 1) {
                 // at least has an air date
                 timeThreshold = 0;
@@ -272,8 +271,8 @@ public class DBUtils {
                         * numberOfDaysToInclude;
             }
         } else {
-            query = UpcomingQuery.QUERY_UPCOMING;
-            sortOrder = UpcomingQuery.SORTING_UPCOMING;
+            query = ActivityFragment.ActivityQuery.QUERY_UPCOMING;
+            sortOrder = ActivityFragment.ActivityQuery.SORTING_UPCOMING;
             if (numberOfDaysToInclude < 1) {
                 // to infinity!
                 timeThreshold = Long.MAX_VALUE;
