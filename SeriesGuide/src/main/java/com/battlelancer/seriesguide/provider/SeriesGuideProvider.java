@@ -16,6 +16,16 @@
 
 package com.battlelancer.seriesguide.provider;
 
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.SelectionBuilder;
+
 import android.app.SearchManager;
 import android.content.ContentProvider;
 import android.content.ContentProviderOperation;
@@ -32,16 +42,6 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.SelectionBuilder;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -54,32 +54,47 @@ public class SeriesGuideProvider extends ContentProvider {
     private static UriMatcher sUriMatcher;
 
     private static final int SHOWS = 100;
+
     private static final int SHOWS_ID = 101;
+
     private static final int SHOWS_FILTERED = 102;
+
     private static final int SHOWS_WITH_EPISODE = 103;
 
     private static final int EPISODES = 200;
+
     private static final int EPISODES_ID = 201;
+
     private static final int EPISODES_OFSHOW = 202;
+
     private static final int EPISODES_OFSEASON = 203;
+
     private static final int EPISODES_OFSEASON_WITHSHOW = 204;
 
     private static final int EPISODES_WITHSHOW = 205;
+
     private static final int EPISODES_ID_WITHSHOW = 206;
 
     private static final int SEASONS = 300;
+
     private static final int SEASONS_ID = 301;
+
     private static final int SEASONS_OFSHOW = 302;
 
     private static final int EPISODESEARCH = 400;
+
     private static final int EPISODESEARCH_ID = 401;
 
     private static final int LISTS = 500;
+
     private static final int LISTS_ID = 501;
+
     private static final int LISTS_WITH_LIST_ITEM_ID = 502;
 
     private static final int LIST_ITEMS = 600;
+
     private static final int LIST_ITEMS_ID = 601;
+
     private static final int LIST_ITEMS_WITH_DETAILS = 602;
 
     private static final int SEARCH_SUGGEST = 800;
@@ -87,8 +102,8 @@ public class SeriesGuideProvider extends ContentProvider {
     private static final int RENEW_FTSTABLE = 900;
 
     /**
-     * Build and return a {@link UriMatcher} that catches all {@link Uri}
-     * variations supported by this {@link ContentProvider}.
+     * Build and return a {@link UriMatcher} that catches all {@link Uri} variations supported by
+     * this {@link ContentProvider}.
      */
     private static UriMatcher buildUriMatcher(Context context) {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -96,31 +111,38 @@ public class SeriesGuideProvider extends ContentProvider {
 
         // Shows
         matcher.addURI(authority, SeriesGuideContract.PATH_SHOWS, SHOWS);
-        matcher.addURI(authority, SeriesGuideContract.PATH_SHOWS + "/" + SeriesGuideContract.PATH_FILTER
-                + "/*", SHOWS_FILTERED);
+        matcher.addURI(authority,
+                SeriesGuideContract.PATH_SHOWS + "/" + SeriesGuideContract.PATH_FILTER
+                        + "/*", SHOWS_FILTERED);
         matcher.addURI(authority, SeriesGuideContract.PATH_SHOWS + "/"
                 + SeriesGuideContract.PATH_WITH_EPISODE, SHOWS_WITH_EPISODE);
         matcher.addURI(authority, SeriesGuideContract.PATH_SHOWS + "/*", SHOWS_ID);
 
         // Episodes
         matcher.addURI(authority, SeriesGuideContract.PATH_EPISODES, EPISODES);
-        matcher.addURI(authority, SeriesGuideContract.PATH_EPISODES + "/" + SeriesGuideContract.PATH_OFSEASON
-                + "/" + SeriesGuideContract.PATH_WITHSHOW + "/*", EPISODES_OFSEASON_WITHSHOW);
-        matcher.addURI(authority, SeriesGuideContract.PATH_EPISODES + "/" + SeriesGuideContract.PATH_OFSEASON
-                + "/*", EPISODES_OFSEASON);
-        matcher.addURI(authority, SeriesGuideContract.PATH_EPISODES + "/" + SeriesGuideContract.PATH_OFSHOW
-                + "/*", EPISODES_OFSHOW);
+        matcher.addURI(authority,
+                SeriesGuideContract.PATH_EPISODES + "/" + SeriesGuideContract.PATH_OFSEASON
+                        + "/" + SeriesGuideContract.PATH_WITHSHOW + "/*",
+                EPISODES_OFSEASON_WITHSHOW);
+        matcher.addURI(authority,
+                SeriesGuideContract.PATH_EPISODES + "/" + SeriesGuideContract.PATH_OFSEASON
+                        + "/*", EPISODES_OFSEASON);
+        matcher.addURI(authority,
+                SeriesGuideContract.PATH_EPISODES + "/" + SeriesGuideContract.PATH_OFSHOW
+                        + "/*", EPISODES_OFSHOW);
         matcher.addURI(authority,
                 SeriesGuideContract.PATH_EPISODES + "/" + SeriesGuideContract.PATH_WITHSHOW,
                 EPISODES_WITHSHOW);
-        matcher.addURI(authority, SeriesGuideContract.PATH_EPISODES + "/" + SeriesGuideContract.PATH_WITHSHOW
-                + "/*", EPISODES_ID_WITHSHOW);
+        matcher.addURI(authority,
+                SeriesGuideContract.PATH_EPISODES + "/" + SeriesGuideContract.PATH_WITHSHOW
+                        + "/*", EPISODES_ID_WITHSHOW);
         matcher.addURI(authority, SeriesGuideContract.PATH_EPISODES + "/*", EPISODES_ID);
 
         // Seasons
         matcher.addURI(authority, SeriesGuideContract.PATH_SEASONS, SEASONS);
-        matcher.addURI(authority, SeriesGuideContract.PATH_SEASONS + "/" + SeriesGuideContract.PATH_OFSHOW
-                + "/*", SEASONS_OFSHOW);
+        matcher.addURI(authority,
+                SeriesGuideContract.PATH_SEASONS + "/" + SeriesGuideContract.PATH_OFSHOW
+                        + "/*", SEASONS_OFSHOW);
         matcher.addURI(authority, SeriesGuideContract.PATH_SEASONS + "/*", SEASONS_ID);
 
         // Lists
@@ -162,7 +184,8 @@ public class SeriesGuideProvider extends ContentProvider {
         return true;
     }
 
-    final OnSharedPreferenceChangeListener mImportListener = new OnSharedPreferenceChangeListener() {
+    final OnSharedPreferenceChangeListener mImportListener
+            = new OnSharedPreferenceChangeListener() {
 
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_DATABASEIMPORTED)) {
@@ -233,8 +256,9 @@ public class SeriesGuideProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        if (LOGV)
+        if (LOGV) {
             Log.v(TAG, "insert(uri=" + uri + ", values=" + values.toString() + ")");
+        }
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         switch (match) {
@@ -308,11 +332,14 @@ public class SeriesGuideProvider extends ContentProvider {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        if (LOGV)
+        if (LOGV) {
             Log.v(TAG, "update(uri=" + uri + ", values=" + values.toString() + ")");
+        }
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final SelectionBuilder builder = buildSimpleSelection(uri);
         int retVal = builder.where(selection, selectionArgs).update(db, values);
@@ -320,11 +347,14 @@ public class SeriesGuideProvider extends ContentProvider {
         return retVal;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        if (LOGV)
+        if (LOGV) {
             Log.v(TAG, "delete(uri=" + uri + ")");
+        }
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final SelectionBuilder builder = buildSimpleSelection(uri);
         int retVal = builder.where(selection, selectionArgs).delete(db);
@@ -333,9 +363,8 @@ public class SeriesGuideProvider extends ContentProvider {
     }
 
     /**
-     * Apply the given set of {@link ContentProviderOperation}, executing inside
-     * a {@link SQLiteDatabase} transaction. All changes will be rolled back if
-     * any single one fails.
+     * Apply the given set of {@link ContentProviderOperation}, executing inside a {@link
+     * SQLiteDatabase} transaction. All changes will be rolled back if any single one fails.
      */
     @Override
     public ContentProviderResult[] applyBatch(ArrayList<ContentProviderOperation> operations)
@@ -415,9 +444,8 @@ public class SeriesGuideProvider extends ContentProvider {
     }
 
     /**
-     * Build a simple {@link SelectionBuilder} to match the requested
-     * {@link Uri}. This is usually enough to support {@link #insert},
-     * {@link #update}, and {@link #delete} operations.
+     * Build a simple {@link SelectionBuilder} to match the requested {@link Uri}. This is usually
+     * enough to support {@link #insert}, {@link #update}, and {@link #delete} operations.
      */
     private static SelectionBuilder buildSimpleSelection(Uri uri) {
         final SelectionBuilder builder = new SelectionBuilder();
@@ -483,9 +511,9 @@ public class SeriesGuideProvider extends ContentProvider {
     }
 
     /**
-     * Build an advanced {@link SelectionBuilder} to match the requested
-     * {@link Uri}. This is usually only used by {@link #query}, since it
-     * performs table joins useful for {@link Cursor} data.
+     * Build an advanced {@link SelectionBuilder} to match the requested {@link Uri}. This is
+     * usually only used by {@link #query}, since it performs table joins useful for {@link Cursor}
+     * data.
      */
     private static SelectionBuilder buildExpandedSelection(Uri uri, int match) {
         final SelectionBuilder builder = new SelectionBuilder();
@@ -582,16 +610,18 @@ public class SeriesGuideProvider extends ContentProvider {
     }
 
     private interface SubQuery {
+
         String LISTS_LIST_ITEM_ID = "SELECT * FROM "
                 + Tables.LIST_ITEMS + " WHERE "
                 + ListItems.LIST_ITEM_ID + " LIKE ";
     }
 
     /**
-     * {@link ScheduleContract} fields that are fully qualified with a specific
-     * parent {@link Tables}. Used when needed to work around SQL ambiguity.
+     * {@link ScheduleContract} fields that are fully qualified with a specific parent {@link
+     * Tables}. Used when needed to work around SQL ambiguity.
      */
     private interface Qualified {
+
         String EPISODES_EPISODE_ID = Tables.EPISODES + "." + Episodes._ID;
 
         String LISTS_LIST_ID = Tables.LISTS + "." + Lists.LIST_ID;
