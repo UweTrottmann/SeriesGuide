@@ -22,7 +22,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Environment;
 import android.provider.BaseColumns;
 import android.util.Log;
 
@@ -33,14 +32,11 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodesColumns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListsColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.MoviesColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
-import java.io.File;
-import java.io.IOException;
 
 public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
@@ -76,9 +72,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_ABSOLUTE_NUMBERS = 30;
 
-    public static final int DBVER_LASTWATCHEDID = 31;
+    public static final int DBVER_31_LAST_WATCHED_ID = 31;
 
-    public static final int DATABASE_VERSION = DBVER_LASTWATCHEDID;
+    public static final int DBVER_32_MOVIES = 32;
+
+    public static final int DATABASE_VERSION = DBVER_31_LAST_WATCHED_ID;
 
     /**
      * Qualifies column names by prefixing their {@link Tables} name.
@@ -132,6 +130,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 + "((SELECT " + Selections.LIST_ITEMS_COLUMNS_INTERNAL
                 + " FROM listitems WHERE item_type=3) AS listitems LEFT OUTER JOIN ("
                 + EPISODES_JOIN_SHOWS + ") AS episodes ON listitems.item_ref_id=episodes._id))";
+
+        String MOVIES = "movies";
 
     }
 
@@ -338,6 +338,45 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ");";
 
+    private static final String CREATE_MOVIES_TABLE = "CREATE TABLE " + Tables.MOVIES
+            + " ("
+
+            + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+
+            + MoviesColumns.TMDB_ID + " INTEGER NOT NULL,"
+
+            + MoviesColumns.IMDB_ID + " TEXT,"
+
+            + MoviesColumns.TITLE + " TEXT,"
+
+            + MoviesColumns.POSTER + " TEXT,"
+
+            + MoviesColumns.GENRES + " TEXT,"
+
+            + MoviesColumns.OVERVIEW + " TEXT,"
+
+            + MoviesColumns.RELEASED + " INTEGER,"
+
+            + MoviesColumns.RUNTIME + " INTEGER,"
+
+            + MoviesColumns.TRAILER + " TEXT,"
+
+            + MoviesColumns.CERTIFICATION + " TEXT,"
+
+            + MoviesColumns.IN_COLLECTION + " INTEGER,"
+
+            + MoviesColumns.IN_WATCHLIST + " INTEGER,"
+
+            + MoviesColumns.PLAYS + " INTEGER,"
+
+            + MoviesColumns.WATCHED + " INTEGER,"
+
+            + MoviesColumns.LAST_UPDATED + " INTEGER,"
+
+            + "UNIQUE (" + MoviesColumns.TMDB_ID + ") ON CONFLICT REPLACE"
+
+            + ");";
+
     public SeriesGuideDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -355,6 +394,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL(CREATE_LISTS_TABLE);
 
         db.execSQL(CREATE_LIST_ITEMS_TABLE);
+
+        db.execSQL(CREATE_MOVIES_TABLE);
     }
 
     @Override
@@ -368,70 +409,42 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d(TAG, "onUpgrade() from " + oldVersion + " to " + newVersion);
 
-        // make a backup of the database file
-        if (AndroidUtils.isExtStorageAvailable()) {
-            File dbFile = new File(db.getPath());
-            File exportDir = new File(Environment.getExternalStorageDirectory(),
-                    "seriesguidebackup");
-            exportDir.mkdirs();
-            File file = new File(exportDir, dbFile.getName() + "_b4upgr.db");
-
-            try {
-                file.createNewFile();
-                AndroidUtils.copyFile(dbFile, file);
-            } catch (IOException e) {
-                Log.e(TAG, e.getMessage(), e);
-            }
-        }
-
         // run necessary upgrades
         int version = oldVersion;
         switch (version) {
             case 16:
                 upgradeToSeventeen(db);
-                version = 17;
             case 17:
                 upgradeToEighteen(db);
-                version = 18;
             case 18:
                 upgradeToNineteen(db);
-                version = 19;
             case 19:
                 upgradeToTwenty(db);
-                version = 20;
             case 20:
                 upgradeToTwentyOne(db);
-                version = 21;
             case 21:
                 upgradeToTwentyTwo(db);
-                version = 22;
             case 22:
                 upgradeToTwentyThree(db);
-                version = 23;
             case 23:
                 upgradeToTwentyFour(db);
-                version = 24;
             case 24:
                 upgradeToTwentyFive(db);
-                version = 25;
             case 25:
                 upgradeToTwentySix(db);
-                version = 26;
             case 26:
                 upgradeToTwentySeven(db);
-                version = 27;
             case 27:
                 upgradeToTwentyEight(db);
-                version = 28;
             case 28:
                 upgradeToTwentyNine(db);
-                version = 29;
             case 29:
                 upgradeToThirty(db);
-                version = 30;
             case 30:
                 upgradeToThirtyOne(db);
-                version = 31;
+            case DBVER_31_LAST_WATCHED_ID:
+                upgradeToThirtyTwo(db);
+                version = DBVER_32_MOVIES;
         }
 
         // drop all tables if version is not right
@@ -451,6 +464,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.LISTS);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.LIST_ITEMS);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.MOVIES);
 
         db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
 
@@ -466,6 +480,13 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     private static final String LATEST_ORDER = Episodes.FIRSTAIREDMS + " DESC,"
             + Episodes.SEASON + " DESC,"
             + Episodes.NUMBER + " DESC";
+
+    /**
+     * Add movies table.
+     */
+    private static void upgradeToThirtyTwo(SQLiteDatabase db) {
+        db.execSQL(CREATE_MOVIES_TABLE);
+    }
 
     /**
      * Add {@link Shows} column to store the last watched episode id for better prediction of next
@@ -572,7 +593,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Adds a column to the {@link Tables.EPISODES} table to store the airdate and possibly time in
+     * Adds a column to the {@link Tables#EPISODES} table to store the airdate and possibly time in
      * milliseconds.
      */
     private static void upgradeToTwentyFour(SQLiteDatabase db) {
@@ -619,7 +640,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Adds a column to the {@link Tables.SHOWS} table similar to the favorite boolean, but to allow
+     * Adds a column to the {@link Tables#SHOWS} table similar to the favorite boolean, but to allow
      * hiding shows.
      */
     private static void upgradeToTwentyThree(SQLiteDatabase db) {
