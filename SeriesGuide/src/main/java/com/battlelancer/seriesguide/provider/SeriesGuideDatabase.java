@@ -76,7 +76,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_32_MOVIES = 32;
 
-    public static final int DATABASE_VERSION = DBVER_31_LAST_WATCHED_ID;
+    public static final int DATABASE_VERSION = DBVER_32_MOVIES;
 
     /**
      * Qualifies column names by prefixing their {@link Tables} name.
