@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
+import com.jakewharton.trakt.enumerations.Extended;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -120,8 +121,8 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             Log.d(TAG, "Getting watched and collected episodes from trakt.");
             String username = TraktCredentials.get(mContext).getUsername();
             try {
-                watched = manager.userService().libraryShowsWatchedMinimum(username);
-                collection = manager.userService().libraryShowsCollectionMinimum(username);
+                watched = manager.userService().libraryShowsWatched(username, Extended.MIN);
+                collection = manager.userService().libraryShowsCollection(username, Extended.MIN);
             } catch (RetrofitError e) {
                 // something went wrong, just go on
             }

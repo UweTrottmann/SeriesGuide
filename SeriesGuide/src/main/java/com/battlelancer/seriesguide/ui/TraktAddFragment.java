@@ -29,6 +29,7 @@ import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
+import com.jakewharton.trakt.enumerations.Extended;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -200,8 +201,9 @@ public class TraktAddFragment extends AddFragment {
                                 shows = manager.recommendationsService().shows();
                                 break;
                             case AddPagerAdapter.LIBRARY_TAB_POSITION:
-                                shows = manager.userService().libraryShowsAllExtended(
-                                        TraktCredentials.get(mContext).getUsername());
+                                shows = manager.userService().libraryShowsAll(
+                                        TraktCredentials.get(mContext).getUsername(),
+                                        Extended.EXTENDED);
                                 break;
                             case AddPagerAdapter.WATCHLIST_TAB_POSITION:
                                 shows = manager.userService().watchlistShows(

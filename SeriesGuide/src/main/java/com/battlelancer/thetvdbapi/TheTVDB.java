@@ -33,6 +33,7 @@ import com.battlelancer.seriesguide.util.TraktSync;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
+import com.jakewharton.trakt.enumerations.Extended;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.seriesguide.R;
@@ -304,7 +305,7 @@ public class TheTVDB {
         Trakt manager = ServiceUtils.getTrakt(context);
         if (manager != null) {
             try {
-                traktShow = manager.showService().summary(showTvdbId);
+                traktShow = manager.showService().summary(showTvdbId, Extended.DEFAULT);
             } catch (RetrofitError e) {
                 Utils.trackExceptionAndLog(context, TAG, e);
             }

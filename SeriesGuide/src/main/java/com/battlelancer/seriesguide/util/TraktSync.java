@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowSeason;
+import com.jakewharton.trakt.enumerations.Extended;
 import com.jakewharton.trakt.services.ShowService;
 import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.seriesguide.R;
@@ -105,7 +106,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
         List<TvShow> shows;
         try {
             // get watched episodes from trakt
-            shows = manager.userService().libraryShowsWatchedMinimum(username);
+            shows = manager.userService().libraryShowsWatched(username, Extended.MIN);
         } catch (RetrofitError e) {
             Utils.trackExceptionAndLog(mContext, TAG, e);
             return FAILED_API;
