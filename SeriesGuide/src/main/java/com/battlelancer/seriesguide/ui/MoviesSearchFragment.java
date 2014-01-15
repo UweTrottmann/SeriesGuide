@@ -20,7 +20,6 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.adapters.MoviesAdapter;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -53,12 +52,12 @@ import java.util.List;
 /**
  * Allows searching for movies on themoviedb.org, displays results in a nice grid.
  */
-public class MovieSearchFragment extends SherlockFragment implements OnEditorActionListener,
+public class MoviesSearchFragment extends SherlockFragment implements OnEditorActionListener,
         LoaderCallbacks<List<Movie>>, OnItemClickListener, OnClickListener {
 
     private static final String SEARCH_QUERY_KEY = "search_query";
 
-    private static final int LOADER_ID = R.layout.movies_fragment;
+    private static final int LOADER_ID = R.layout.fragment_movies_search;
 
     protected static final String TAG = "Movies Search";
 
@@ -80,7 +79,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.movies_fragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_movies_search, container, false);
 
         mEmptyView = (TextView) v.findViewById(R.id.emptyViewMovieSearch);
 

@@ -21,7 +21,6 @@ import com.actionbarsherlock.view.Window;
 import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -68,7 +67,7 @@ public class MoviesActivity extends BaseTopActivity {
             tabsAdapter.addTab(R.string.movies_watchlist, MoviesWatchListFragment.class, null);
         }
         // movie search
-        tabsAdapter.addTab(R.string.search, MovieSearchFragment.class, null);
+        tabsAdapter.addTab(R.string.search, MoviesSearchFragment.class, null);
         tabsAdapter.notifyTabsChanged();
     }
 
