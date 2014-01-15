@@ -17,19 +17,19 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.adapters.MoviesWatchListAdapter;
+import com.battlelancer.seriesguide.adapters.MoviesCursorAdapter;
 import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.loaders.TraktMoviesWatchlistLoader;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.entities.Movie;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -44,36 +44,37 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import java.util.List;
-
 import de.greenrobot.event.EventBus;
+
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 /**
  * Loads and displays the users trakt movie watchlist.
  */
 public class MoviesWatchListFragment extends SherlockFragment implements
-        LoaderCallbacks<List<Movie>>, OnItemClickListener, OnClickListener {
+        LoaderCallbacks<Cursor>, OnItemClickListener, OnClickListener {
 
     private static final String TAG = "Movie Watchlist";
 
-    private static final int LOADER_ID = R.layout.movies_watchlist_fragment;
+    private static final int LAYOUT = R.layout.fragment_movies;
+
+    private static final int LOADER_ID = LAYOUT;
 
     private static final int CONTEXT_REMOVE_ID = 0;
 
-    private MoviesWatchListAdapter mAdapter;
-
     private GridView mGridView;
 
-    private TextView mEmptyView;
+    private MoviesCursorAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.movies_watchlist_fragment, container, false);
+        View v = inflater.inflate(LAYOUT, container, false);
 
         mGridView = (GridView) v.findViewById(android.R.id.list);
-        mEmptyView = (TextView) v.findViewById(R.id.textViewMoviesWatchlistEmpty);
-        mGridView.setEmptyView(mEmptyView);
+        TextView emptyView = (TextView) v.findViewById(R.id.textViewMoviesEmpty);
+        emptyView.setText(R.string.movies_watchlist_empty);
+        mGridView.setEmptyView(emptyView);
         mGridView.setOnItemClickListener(this);
 
         return v;
@@ -83,8 +84,7 @@ public class MoviesWatchListFragment extends SherlockFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new MoviesWatchListAdapter(getActivity(), this);
-
+        mAdapter = new MoviesCursorAdapter(getActivity(), this);
         mGridView.setAdapter(mAdapter);
 
         registerForContextMenu(mGridView);
@@ -130,10 +130,10 @@ public class MoviesWatchListFragment extends SherlockFragment implements
             case CONTEXT_REMOVE_ID: {
                 // Remove movie from watchlist
                 AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-                Movie movie = mAdapter.getItem(info.position);
+                Cursor movie = (Cursor) mAdapter.getItem(info.position);
+                int tmdbId = movie.getInt(MoviesCursorAdapter.MoviesQuery.TMDB_ID);
                 AndroidUtils.executeAsyncTask(
-                        new TraktTask(getActivity(), null)
-                                .unwatchlistMovie(Integer.valueOf(movie.tmdbId))
+                        new TraktTask(getActivity(), null).unwatchlistMovie(tmdbId)
                 );
                 fireTrackerEvent("Remove from watchlist");
                 return true;
@@ -150,32 +150,29 @@ public class MoviesWatchListFragment extends SherlockFragment implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Movie movie = mAdapter.getItem(position);
+        Cursor movie = (Cursor) mAdapter.getItem(position);
+        int tmdbId = movie.getInt(MoviesCursorAdapter.MoviesQuery.TMDB_ID);
 
         // launch details activity
         Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
-        i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, Integer.valueOf(movie.tmdbId));
+        i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, tmdbId);
         startActivity(i);
     }
 
     @Override
-    public Loader<List<Movie>> onCreateLoader(int loaderId, Bundle args) {
-        return new TraktMoviesWatchlistLoader(getActivity());
+    public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
+        return new CursorLoader(getActivity(), Movies.CONTENT_URI_WATCHLIST,
+                MoviesCursorAdapter.MoviesQuery.PROJECTION, null, null, Movies.DEFAULT_SORT);
     }
 
     @Override
-    public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> data) {
-        if (AndroidUtils.isNetworkConnected(getActivity())) {
-            mEmptyView.setText(R.string.movies_watchlist_empty);
-        } else {
-            mEmptyView.setText(R.string.offline);
-        }
-        mAdapter.setData(data);
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mAdapter.swapCursor(data);
     }
 
     @Override
-    public void onLoaderReset(Loader<List<Movie>> loader) {
-        mAdapter.setData(null);
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mAdapter.swapCursor(null);
     }
 
     public void onEvent(TraktActionCompleteEvent event) {

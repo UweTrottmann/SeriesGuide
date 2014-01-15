@@ -355,9 +355,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + MoviesColumns.OVERVIEW + " TEXT,"
 
-            + MoviesColumns.RELEASED + " INTEGER,"
+            + MoviesColumns.RELEASED_UTC_MS + " INTEGER,"
 
-            + MoviesColumns.RUNTIME + " INTEGER,"
+            + MoviesColumns.RUNTIME_MIN + " INTEGER,"
 
             + MoviesColumns.TRAILER + " TEXT,"
 

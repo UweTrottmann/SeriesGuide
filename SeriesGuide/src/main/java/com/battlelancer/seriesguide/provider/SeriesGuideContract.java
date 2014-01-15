@@ -306,9 +306,9 @@ public class SeriesGuideContract {
 
         String OVERVIEW = "movies_overview";
 
-        String RELEASED = "movies_released";
+        String RELEASED_UTC_MS = "movies_released";
 
-        String RUNTIME = "movies_runtime";
+        String RUNTIME_MIN = "movies_runtime";
 
         String TRAILER = "movies_trailer";
 
@@ -360,6 +360,10 @@ public class SeriesGuideContract {
     public static final String PATH_WITH_EPISODE = "with_episode";
 
     public static final String PATH_MOVIES = "movies";
+
+    public static final String PATH_COLLECTION = "collection";
+
+    public static final String PATH_WATCHLIST = "watchlist";
 
     public static class Shows implements ShowsColumns, BaseColumns {
 
@@ -602,6 +606,16 @@ public class SeriesGuideContract {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
                 .appendPath(PATH_MOVIES)
                 .build();
+
+        public static final Uri CONTENT_URI_COLLECTION = CONTENT_URI.buildUpon()
+                .appendPath(PATH_COLLECTION)
+                .build();
+
+        public static final Uri CONTENT_URI_WATCHLIST = CONTENT_URI.buildUpon()
+                .appendPath(PATH_WATCHLIST)
+                .build();
+
+        public static final String DEFAULT_SORT = Movies.TITLE + " ASC";
 
         /**
          * Use if multiple items get returned

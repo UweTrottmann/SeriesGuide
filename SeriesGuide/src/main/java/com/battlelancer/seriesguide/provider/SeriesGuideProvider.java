@@ -108,6 +108,10 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final int MOVIES_ID = 701;
 
+    private static final int MOVIES_COLLECTION = 702;
+
+    private static final int MOVIES_WATCHLIST = 703;
+
 
     private static final int SEARCH_SUGGEST = 800;
 
@@ -171,6 +175,12 @@ public class SeriesGuideProvider extends ContentProvider {
 
         // Movies
         matcher.addURI(authority, SeriesGuideContract.PATH_MOVIES, MOVIES);
+        matcher.addURI(authority,
+                SeriesGuideContract.PATH_MOVIES + "/" + SeriesGuideContract.PATH_COLLECTION,
+                MOVIES_COLLECTION);
+        matcher.addURI(authority,
+                SeriesGuideContract.PATH_MOVIES + "/" + SeriesGuideContract.PATH_WATCHLIST,
+                MOVIES_WATCHLIST);
         matcher.addURI(authority, SeriesGuideContract.PATH_MOVIES + "/*", MOVIES_ID);
 
         // Search
@@ -221,54 +231,45 @@ public class SeriesGuideProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case SHOWS:
+            case SHOWS_FILTERED:
+            case SHOWS_WITH_EPISODE:
                 return Shows.CONTENT_TYPE;
             case SHOWS_ID:
                 return Shows.CONTENT_ITEM_TYPE;
-            case SHOWS_FILTERED:
-                return Shows.CONTENT_TYPE;
-            case SHOWS_WITH_EPISODE:
-                return Shows.CONTENT_TYPE;
             case EPISODES:
-                return Episodes.CONTENT_TYPE;
             case EPISODES_OFSHOW:
-                return Episodes.CONTENT_TYPE;
             case EPISODES_OFSEASON:
-                return Episodes.CONTENT_TYPE;
             case EPISODES_OFSEASON_WITHSHOW:
-                return Episodes.CONTENT_TYPE;
-            case EPISODES_ID:
-                return Episodes.CONTENT_ITEM_TYPE;
             case EPISODES_WITHSHOW:
                 return Episodes.CONTENT_TYPE;
+            case EPISODES_ID:
             case EPISODES_ID_WITHSHOW:
                 return Episodes.CONTENT_ITEM_TYPE;
             case SEASONS:
-                return Seasons.CONTENT_TYPE;
             case SEASONS_OFSHOW:
                 return Seasons.CONTENT_TYPE;
             case SEASONS_ID:
                 return Seasons.CONTENT_ITEM_TYPE;
             case LISTS:
+            case LISTS_WITH_LIST_ITEM_ID:
                 return Lists.CONTENT_TYPE;
             case LISTS_ID:
                 return Lists.CONTENT_ITEM_TYPE;
-            case LISTS_WITH_LIST_ITEM_ID:
-                return Lists.CONTENT_TYPE;
             case LIST_ITEMS:
+            case LIST_ITEMS_WITH_DETAILS:
                 return ListItems.CONTENT_TYPE;
             case LIST_ITEMS_ID:
                 return ListItems.CONTENT_ITEM_TYPE;
-            case LIST_ITEMS_WITH_DETAILS:
-                return ListItems.CONTENT_TYPE;
             case MOVIES:
+            case MOVIES_COLLECTION:
+            case MOVIES_WATCHLIST:
                 return Movies.CONTENT_TYPE;
             case MOVIES_ID:
                 return Movies.CONTENT_ITEM_TYPE;
             case SEARCH_SUGGEST:
                 return SearchManager.SUGGEST_MIME_TYPE;
             case RENEW_FTSTABLE:
-                // however there is nothing returned
-                return Episodes.CONTENT_TYPE;
+                return Episodes.CONTENT_TYPE; // however there is nothing returned
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -283,39 +284,39 @@ public class SeriesGuideProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case SHOWS: {
-                db.insertOrThrow(Tables.SHOWS, null, values);
-                getContext().getContentResolver().notifyChange(uri, null);
+                insertAndNotify(db, uri, Tables.SHOWS, values);
                 return Shows.buildShowUri(values.getAsString(Shows._ID));
             }
             case SEASONS: {
-                db.insertOrThrow(Tables.SEASONS, null, values);
-                getContext().getContentResolver().notifyChange(uri, null);
+                insertAndNotify(db, uri, Tables.SEASONS, values);
                 return Seasons.buildSeasonUri(values.getAsString(Seasons._ID));
             }
             case EPISODES: {
-                long id = db.insertOrThrow(Tables.EPISODES, null, values);
-                getContext().getContentResolver().notifyChange(uri, null);
+                long id = insertAndNotify(db, uri, Tables.EPISODES, values);
                 return Lists.buildListUri(String.valueOf(id));
             }
             case LISTS: {
-                db.insertOrThrow(Tables.LISTS, null, values);
-                getContext().getContentResolver().notifyChange(uri, null);
+                insertAndNotify(db, uri, Tables.LISTS, values);
                 return Lists.buildListUri(values.getAsString(Lists.LIST_ID));
             }
             case LIST_ITEMS: {
-                db.insertOrThrow(Tables.LIST_ITEMS, null, values);
-                getContext().getContentResolver().notifyChange(uri, null);
+                insertAndNotify(db, uri, Tables.LIST_ITEMS, values);
                 return ListItems.buildListItemUri(values.getAsString(ListItems.LIST_ITEM_ID));
             }
             case MOVIES: {
-                db.insertOrThrow(Tables.MOVIES, null, values);
-                getContext().getContentResolver().notifyChange(uri, null);
+                insertAndNotify(db, uri, Tables.MOVIES, values);
                 return Movies.buildMovieUri(values.getAsInteger(Movies.TMDB_ID));
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
             }
         }
+    }
+
+    private long insertAndNotify(SQLiteDatabase db, Uri uri, String table, ContentValues values) {
+        long rowId = db.insertOrThrow(table, null, values);
+        getContext().getContentResolver().notifyChange(uri, null);
+        return rowId;
     }
 
     @Override
@@ -416,57 +417,46 @@ public class SeriesGuideProvider extends ContentProvider {
          * A more efficient version of bulkInsert which matches the URI only
          * once.
          */
-        int numValues;
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case SHOWS: {
-                numValues = bulkInsertHelper(Tables.SHOWS, values);
-                getContext().getContentResolver().notifyChange(uri, null);
-                break;
+                return bulkInsertHelper(uri, Tables.SHOWS, values);
             }
             case SEASONS: {
-                numValues = bulkInsertHelper(Tables.SEASONS, values);
-                getContext().getContentResolver().notifyChange(uri, null);
-                break;
+                return bulkInsertHelper(uri, Tables.SEASONS, values);
             }
             case EPISODES: {
-                numValues = bulkInsertHelper(Tables.EPISODES, values);
-                getContext().getContentResolver().notifyChange(uri, null);
-                break;
+                return bulkInsertHelper(uri, Tables.EPISODES, values);
             }
             case LISTS: {
-                numValues = bulkInsertHelper(Tables.LISTS, values);
-                getContext().getContentResolver().notifyChange(uri, null);
-                break;
+                return bulkInsertHelper(uri, Tables.LISTS, values);
             }
             case LIST_ITEMS: {
-                numValues = bulkInsertHelper(Tables.LIST_ITEMS, values);
-                getContext().getContentResolver().notifyChange(uri, null);
-                break;
+                return bulkInsertHelper(uri, Tables.LIST_ITEMS, values);
             }
             case MOVIES: {
-                numValues = bulkInsertHelper(Tables.MOVIES, values);
-                getContext().getContentResolver().notifyChange(uri, null);
-                break;
+                return bulkInsertHelper(uri, Tables.MOVIES, values);
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
             }
         }
-
-        return numValues;
     }
 
-    private int bulkInsertHelper(String table, ContentValues[] values) {
+    private int bulkInsertHelper(Uri uri, String table, ContentValues[] values) {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         db.beginTransaction();
         try {
             int numValues = values.length;
+
             for (int i = 0; i < numValues; i++) {
                 db.insertOrThrow(table, null, values[i]);
                 db.yieldIfContendedSafely();
             }
             db.setTransactionSuccessful();
+
+            getContext().getContentResolver().notifyChange(uri, null);
+
             return numValues;
         } finally {
             db.endTransaction();
@@ -576,6 +566,12 @@ public class SeriesGuideProvider extends ContentProvider {
             }
             case MOVIES: {
                 return builder.table(Tables.MOVIES);
+            }
+            case MOVIES_COLLECTION: {
+                return builder.table(Tables.MOVIES).where(Movies.IN_COLLECTION + "=1");
+            }
+            case MOVIES_WATCHLIST: {
+                return builder.table(Tables.MOVIES).where(Movies.IN_WATCHLIST + "=1");
             }
             case MOVIES_ID: {
                 final String movieId = Movies.getId(uri);
