@@ -212,17 +212,15 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
         // set starting tab
         int selection = 0;
-        if (savedInstanceState != null) {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            // notification intent has priority
+            selection = extras.getInt(InitBundle.SELECTED_TAB, 0);
+        } else if (savedInstanceState != null) {
             selection = savedInstanceState.getInt("index");
         } else {
-            Intent intent = getIntent();
-            Bundle extras = intent.getExtras();
-            if (extras != null) {
-                selection = extras.getInt(InitBundle.SELECTED_TAB, 0);
-            } else {
-                // use saved selection
-                selection = ActivitySettings.getDefaultActivityTabPosition(this);
-            }
+            // use last saved selection
+            selection = ActivitySettings.getDefaultActivityTabPosition(this);
         }
         // never select a non-existent tab
         if (selection > mTabsAdapter.getCount() - 1) {
