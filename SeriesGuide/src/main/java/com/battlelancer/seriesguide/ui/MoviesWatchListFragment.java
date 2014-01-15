@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.adapters.MoviesCursorAdapter;
 import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.Utils;
@@ -128,13 +129,12 @@ public class MoviesWatchListFragment extends SherlockFragment implements
 
         switch (item.getItemId()) {
             case CONTEXT_REMOVE_ID: {
-                // Remove movie from watchlist
                 AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
                 Cursor movie = (Cursor) mAdapter.getItem(info.position);
                 int tmdbId = movie.getInt(MoviesCursorAdapter.MoviesQuery.TMDB_ID);
-                AndroidUtils.executeAsyncTask(
-                        new TraktTask(getActivity(), null).unwatchlistMovie(tmdbId)
-                );
+
+                MovieTools.removeFromWatchlist(getActivity(), tmdbId);
+
                 fireTrackerEvent("Remove from watchlist");
                 return true;
             }

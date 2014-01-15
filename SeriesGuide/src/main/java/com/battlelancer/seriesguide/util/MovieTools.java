@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Movie;
@@ -49,6 +50,29 @@ public class MovieTools {
             updateMovie(context, movieTmdbId, Movies.IN_WATCHLIST, true);
         } else {
             addMovieAsync(context, movieTmdbId, AddMovieTask.AddTo.WATCHLIST);
+        }
+    }
+
+    public static void removeFromWatchlist(Context context, int movieTmdbId) {
+        if (TraktCredentials.get(context).hasCredentials()) {
+            if (!Utils.isConnected(context, true)) {
+                return;
+            }
+            AndroidUtils.executeAsyncTask(
+                    new TraktTask(context, null).unwatchlistMovie(movieTmdbId)
+            );
+        }
+
+        Boolean isInCollection = isMovieInCollection(context, movieTmdbId);
+        if (isInCollection == null) {
+            return;
+        }
+        if (isInCollection) {
+            // just update watchlist flag
+            updateMovie(context, movieTmdbId, Movies.IN_WATCHLIST, false);
+        } else {
+            // remove from database
+            deleteMovie(context, movieTmdbId);
         }
     }
 
@@ -110,6 +134,20 @@ public class MovieTools {
         }
     }
 
+    private static Boolean isMovieInCollection(Context context, int movieTmdbId) {
+        Cursor movie = context.getContentResolver().query(Movies.buildMovieUri(movieTmdbId),
+                new String[]{Movies.IN_COLLECTION}, null, null, null);
+        if (movie == null || !movie.moveToFirst()) {
+            return null;
+        }
+
+        boolean isInCollection = movie.getInt(0) == 1;
+
+        movie.close();
+
+        return isInCollection;
+    }
+
     private static Boolean isMovieExists(Context context, int movieTmdbId) {
         Cursor movie = context.getContentResolver().query(Movies.CONTENT_URI, new String[]{
                 Movies._ID}, Movies.TMDB_ID + "=" + movieTmdbId, null, null);
@@ -122,6 +160,10 @@ public class MovieTools {
         movie.close();
 
         return movieExists;
+    }
+
+    private static void deleteMovie(Context context, int movieTmdbId) {
+        context.getContentResolver().delete(Movies.buildMovieUri(movieTmdbId), null, null);
     }
 
     private static void updateMovie(Context context, int movieTmdbId, String column,
