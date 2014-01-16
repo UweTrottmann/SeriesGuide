@@ -27,6 +27,7 @@ import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -306,7 +307,16 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 TraktCredentials.get(getContext()).validateCredentials();
                 Log.d(TAG, "Check trakt credentials...DONE");
 
-                // get latest trakt activity
+                // sync movies with trakt
+                Log.d(TAG, "Sync movies with trakt...");
+                UpdateResult resultMovies = MovieTools.Download.syncMoviesFromTrakt(getContext());
+                Log.d(TAG, "Sync movies with trakt..." + resultMovies.toString());
+                // don't overwrite earlier failure
+                if (resultCode == UpdateResult.SUCCESS) {
+                    resultCode = resultMovies;
+                }
+
+                // get latest show activity from trakt
                 Log.d(TAG, "Get trakt activity...");
                 UpdateResult resultTrakt = getTraktActivity(getContext(), showsExisting, showsNew);
                 Log.d(TAG, "Get trakt activity..." + resultTrakt.toString());

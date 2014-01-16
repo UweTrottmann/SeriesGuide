@@ -16,18 +16,29 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Movie;
+import com.jakewharton.trakt.enumerations.Extended;
+import com.jakewharton.trakt.enumerations.Extended2;
+import com.jakewharton.trakt.services.MovieService;
+import com.jakewharton.trakt.services.UserService;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
+import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
+import retrofit.RetrofitError;
+
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
+import static com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult;
 
 public class MovieTools {
 
@@ -80,58 +91,72 @@ public class MovieTools {
         new AddMovieTask(context, addTo).execute(movieTmdbId);
     }
 
-    private static class AddMovieTask extends AsyncTask<Integer, Void, Integer> {
+    private static ContentValues[] buildMoviesContentValues(List<Movie> movies) {
+        ContentValues[] valuesArray = new ContentValues[movies.size()];
+        int index = 0;
+        for (Movie movie : movies) {
+            valuesArray[index] = buildMovieContentValues(movie);
+            index++;
+        }
+        return valuesArray;
+    }
 
-        private final Context mContext;
+    private static ContentValues buildMovieContentValues(Movie movie) {
+        ContentValues values = buildBasicMovieContentValues(movie);
 
-        private final AddTo mAddTo;
+        values.put(Movies.IN_COLLECTION, convertBooleanToInt(movie.inCollection));
+        values.put(Movies.IN_WATCHLIST, convertBooleanToInt(movie.inWatchlist));
 
-        public enum AddTo {
-            COLLECTION,
-            WATCHLIST
+        return values;
+    }
+
+    /**
+     * Extracts basic properties, except in_watchlist and in_collection.
+     */
+    private static ContentValues buildBasicMovieContentValues(Movie movie) {
+        ContentValues values = new ContentValues();
+
+        values.put(Movies.TMDB_ID, movie.tmdbId);
+        values.put(Movies.TITLE, movie.title);
+        values.put(Movies.RELEASED_UTC_MS, movie.released.getTime());
+        values.put(Movies.WATCHED, convertBooleanToInt(movie.watched));
+        values.put(Movies.POSTER, movie.images == null ? "" : movie.images.poster);
+
+        return values;
+    }
+
+    private static int convertBooleanToInt(Boolean value) {
+        if (value == null) {
+            return 0;
+        }
+        return value ? 1 : 0;
+    }
+
+    private static void deleteMovie(Context context, int movieTmdbId) {
+        context.getContentResolver().delete(Movies.buildMovieUri(movieTmdbId), null, null);
+    }
+
+    /**
+     * Returns a set of the TMDb ids of all movies in the local database.
+     *
+     * @return null if there was an error, empty list if there are no movies.
+     */
+    private static HashSet<Integer> getMovieTmdbIdsAsSet(Context context) {
+        HashSet<Integer> localMoviesIds = new HashSet<>();
+
+        Cursor movies = context.getContentResolver().query(Movies.CONTENT_URI,
+                new String[]{Movies._ID, Movies.TMDB_ID}, null, null, null);
+        if (movies == null) {
+            return null;
         }
 
-        public AddMovieTask(Context context, AddTo addTo) {
-            mContext = context;
-            mAddTo = addTo;
+        while (movies.moveToNext()) {
+            localMoviesIds.add(movies.getInt(1));
         }
 
-        @Override
-        protected Integer doInBackground(Integer... params) {
-            int movieTmdbId = params[0];
+        movies.close();
 
-            // get summary from trakt
-            Trakt trakt = ServiceUtils.getTraktWithAuth(mContext);
-            if (trakt == null) {
-                // fall back
-                trakt = ServiceUtils.getTrakt(mContext);
-            }
-
-            Movie movie = trakt.movieService().summary(movieTmdbId);
-
-            // store in database
-            ContentValues values = new ContentValues();
-            values.put(Movies.TMDB_ID, movie.tmdbId);
-            values.put(Movies.TITLE, movie.title);
-            values.put(Movies.RELEASED_UTC_MS, movie.released.getTime());
-            values.put(Movies.WATCHED, convertBooleanToInt(movie.watched));
-            values.put(Movies.POSTER, movie.images == null ? "" : movie.images.poster);
-            values.put(Movies.IN_COLLECTION, mAddTo == AddTo.COLLECTION ?
-                    1 : convertBooleanToInt(movie.inCollection));
-            values.put(Movies.IN_WATCHLIST, mAddTo == AddTo.WATCHLIST ?
-                    1 : convertBooleanToInt(movie.inWatchlist));
-
-            mContext.getContentResolver().insert(Movies.CONTENT_URI, values);
-
-            return movieTmdbId;
-        }
-
-        private static int convertBooleanToInt(Boolean value) {
-            if (value == null) {
-                return 0;
-            }
-            return value ? 1 : 0;
-        }
+        return localMoviesIds;
     }
 
     private static Boolean isMovieInCollection(Context context, int movieTmdbId) {
@@ -162,10 +187,6 @@ public class MovieTools {
         return movieExists;
     }
 
-    private static void deleteMovie(Context context, int movieTmdbId) {
-        context.getContentResolver().delete(Movies.buildMovieUri(movieTmdbId), null, null);
-    }
-
     private static void updateMovie(Context context, int movieTmdbId, String column,
             boolean value) {
         ContentValues values = new ContentValues();
@@ -173,72 +194,197 @@ public class MovieTools {
         context.getContentResolver().update(Movies.buildMovieUri(movieTmdbId), values, null, null);
     }
 
-//    public static class Download {
-//
-//        public static void syncMoviesFromTrakt(Context context) {
-//            Trakt trakt = ServiceUtils.getTraktWithAuth(context);
-//            if (trakt == null) {
-//                return;
-//            }
-//
-//            HashSet<Integer> localMovies = getMovieTmdbIdsAsSet(context);
-//
-//            // integrate trakt movie watchlist
-//            List<Movie> watchlistMovies = trakt.userService()
-//                    .watchlistMovies(TraktCredentials.get(context).getUsername());
-//
-//            DBUtils.applyInSmallBatches(context, buildMovieOps(watchlistMovies,
-//                    localMovies));
-//
-//            // integrate trakt movie collection
-//            List<Movie> collectionMovies = trakt.userService()
-//                    .libraryMoviesCollection(TraktCredentials.get(context).getUsername(),
-//                            Extended.EXTENDED);
-//
-//            DBUtils.applyInSmallBatches(context,
-//                    buildMovieOps(collectionMovies, localMovies));
-//        }
-//
-//        private static ArrayList<ContentProviderOperation> buildMovieOps(
-//                List<Movie> remoteMovies, HashSet<Integer> localMovies) {
-//            ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-//
-//            for (Movie movie : remoteMovies) {
-//                if (localMovies.contains(movie.tmdbId)) {
-//                    // update existing movie
-//
-//                } else {
-//                    // insert new movie
-//                    localMovies.add(movie.tmdbId);
-//                }
-//            }
-//
-//            return batch;
-//        }
-//
-//    }
-//
-//    /**
-//     * Returns a set of the TMDb ids of all movies in the local database.
-//     *
-//     * @return null if there was an error, empty list if there are no movies.
-//     */
-//    public static HashSet<Integer> getMovieTmdbIdsAsSet(Context context) {
-//        HashSet<Integer> localMoviesIds = new HashSet<>();
-//
-//        Cursor movies = context.getContentResolver().query(Movies.CONTENT_URI,
-//                new String[]{Movies._ID, Movies.TMDB_ID}, null, null, null);
-//        if (movies == null) {
-//            return null;
-//        }
-//
-//        while (movies.moveToNext()) {
-//            localMoviesIds.add(movies.getInt(1));
-//        }
-//
-//        movies.close();
-//
-//        return localMoviesIds;
-//    }
+    private static class AddMovieTask extends AsyncTask<Integer, Void, Void> {
+
+        private final Context mContext;
+
+        private final AddTo mAddTo;
+
+        public enum AddTo {
+            COLLECTION,
+            WATCHLIST
+        }
+
+        public AddMovieTask(Context context, AddTo addTo) {
+            mContext = context;
+            mAddTo = addTo;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... params) {
+            int movieTmdbId = params[0];
+
+            // get summary from trakt
+            Trakt trakt = ServiceUtils.getTraktWithAuth(mContext);
+            if (trakt == null) {
+                // fall back
+                trakt = ServiceUtils.getTrakt(mContext);
+            }
+
+            Movie movie = trakt.movieService().summary(movieTmdbId);
+
+            // store in database
+            ContentValues values = buildBasicMovieContentValues(movie);
+            values.put(Movies.IN_COLLECTION, mAddTo == AddTo.COLLECTION ?
+                    1 : convertBooleanToInt(movie.inCollection));
+            values.put(Movies.IN_WATCHLIST, mAddTo == AddTo.WATCHLIST ?
+                    1 : convertBooleanToInt(movie.inWatchlist));
+
+            mContext.getContentResolver().insert(Movies.CONTENT_URI, values);
+
+            return null;
+        }
+
+    }
+
+    public static class Download {
+
+        /**
+         * Updates the movie local database against trakt movie watchlist and collection, therefore
+         * adds, updates and removes movies in the database.<br/>Performs <b>synchronous network
+         * access</b>, so make sure to run this on a background thread!
+         */
+        public static UpdateResult syncMoviesFromTrakt(Context context) {
+            Trakt trakt = ServiceUtils.getTraktWithAuth(context);
+            if (trakt == null) {
+                // trakt is not connected, we are done here
+                return UpdateResult.SUCCESS;
+            }
+            UserService userService = trakt.userService();
+
+            // return if connectivity is lost
+            if (!AndroidUtils.isNetworkConnected(context)) {
+                return UpdateResult.INCOMPLETE;
+            }
+
+            HashSet<Integer> localMovies = getMovieTmdbIdsAsSet(context);
+            HashSet<Integer> moviesToRemove = new HashSet<>(localMovies);
+            HashSet<Integer> moviesToAdd = new HashSet<>();
+            ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+
+            // get trakt watchlist
+            List<Movie> watchlistMovies;
+            try {
+                watchlistMovies = userService
+                        .watchlistMovies(TraktCredentials.get(context).getUsername());
+            } catch (RetrofitError e) {
+                return UpdateResult.INCOMPLETE;
+            }
+
+            // build watchlist updates
+            ContentValues values = new ContentValues();
+            values.put(Movies.IN_WATCHLIST, true);
+            buildMovieUpdateOps(watchlistMovies, localMovies, moviesToAdd, moviesToRemove, batch,
+                    values);
+
+            // apply watchlist updates
+            DBUtils.applyInSmallBatches(context, batch);
+            batch.clear();
+            values.clear();
+
+            // return if connectivity is lost
+            if (!AndroidUtils.isNetworkConnected(context)) {
+                return UpdateResult.INCOMPLETE;
+            }
+
+            // get trakt collection
+            List<Movie> collectionMovies;
+            try {
+                collectionMovies = userService.libraryMoviesCollection(
+                        TraktCredentials.get(context).getUsername(), Extended.MIN);
+            } catch (RetrofitError e) {
+                return UpdateResult.INCOMPLETE;
+            }
+
+            // build collection updates
+            values.put(Movies.IN_COLLECTION, true);
+            buildMovieUpdateOps(collectionMovies, localMovies, moviesToAdd, moviesToRemove, batch,
+                    values);
+
+            // apply collection updates
+            DBUtils.applyInSmallBatches(context, batch);
+            batch.clear();
+
+            // remove movies not on trakt
+            buildMovieDeleteOps(moviesToRemove, batch);
+            DBUtils.applyInSmallBatches(context, batch);
+
+            // return if connectivity is lost
+            if (!AndroidUtils.isNetworkConnected(context)) {
+                return UpdateResult.INCOMPLETE;
+            }
+
+            // add movies new from trakt
+            return addMovies(context, trakt, moviesToAdd.toArray(new Integer[moviesToAdd.size()]));
+        }
+
+        /**
+         * Downloads movie summaries from trakt and adds them to the database.
+         */
+        private static UpdateResult addMovies(Context context, Trakt trakt,
+                Integer... movieTmdbIds) {
+            MovieService movieService = trakt.movieService();
+            StringBuilder tmdbIds = new StringBuilder();
+
+            for (int i = 0; i < movieTmdbIds.length; i++) {
+                if (tmdbIds.length() != 0) {
+                    // separate with commas
+                    tmdbIds.append(",");
+                }
+                tmdbIds.append(movieTmdbIds[i]);
+
+                // process in batches of 10 or less
+                if (i % 10 == 0 || i == movieTmdbIds.length - 1) {
+                    // get summaries from trakt
+                    List<Movie> movies;
+                    try {
+                        movies = movieService.summaries(tmdbIds.toString(), Extended2.FULL);
+                    } catch (RetrofitError e) {
+                        return UpdateResult.INCOMPLETE;
+                    }
+
+                    // insert into database
+                    context.getContentResolver()
+                            .bulkInsert(Movies.CONTENT_URI, buildMoviesContentValues(movies));
+
+                    // reset
+                    tmdbIds = new StringBuilder();
+                }
+            }
+
+            return UpdateResult.SUCCESS;
+        }
+
+        private static void buildMovieUpdateOps(List<Movie> remoteMovies,
+                HashSet<Integer> localMovies, HashSet<Integer> moviesToAdd,
+                HashSet<Integer> moviesToRemove, ArrayList<ContentProviderOperation> batch,
+                ContentValues values) {
+            for (Movie movie : remoteMovies) {
+                if (localMovies.contains(movie.tmdbId)) {
+                    // update existing movie
+                    ContentProviderOperation op = ContentProviderOperation
+                            .newUpdate(Movies.buildMovieUri(movie.tmdbId))
+                            .withValues(values).build();
+                    batch.add(op);
+
+                    // prevent movie from getting removed
+                    moviesToRemove.remove(movie.tmdbId);
+                } else {
+                    // insert new movie
+                    moviesToAdd.add(movie.tmdbId);
+                }
+            }
+        }
+
+        private static void buildMovieDeleteOps(HashSet<Integer> moviesToRemove,
+                ArrayList<ContentProviderOperation> batch) {
+            for (Integer movieTmdbId : moviesToRemove) {
+                ContentProviderOperation op = ContentProviderOperation
+                        .newDelete(Movies.buildMovieUri(movieTmdbId)).build();
+                batch.add(op);
+            }
+        }
+
+    }
 
 }
