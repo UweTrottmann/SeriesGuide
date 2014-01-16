@@ -67,7 +67,7 @@ public class MoviesCursorAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View v = mLayoutInflater.inflate(LAYOUT, parent, false);
+        View v = mLayoutInflater.inflate(LAYOUT, null);
 
         ViewHolder viewHolder = new ViewHolder();
         viewHolder.title = (TextView) v.findViewById(R.id.textViewMovieTitle);
