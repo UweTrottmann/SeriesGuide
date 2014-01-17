@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.ui;
@@ -110,7 +109,8 @@ public class EpisodesFragment extends SherlockListFragment implements
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         return inflater.inflate(R.layout.list_fragment, container, false);
     }
 
@@ -156,10 +156,8 @@ public class EpisodesFragment extends SherlockListFragment implements
     }
 
     /**
-     * Convenience method for showDetails(episodeId) which looks up the episode
-     * id in the list view at the given position.
-     * 
-     * @param position
+     * Convenience method for showDetails(episodeId) which looks up the episode id in the list view
+     * at the given position.
      */
     private void showDetails(int position) {
         getListView().setItemChecked(position, true);
@@ -167,10 +165,7 @@ public class EpisodesFragment extends SherlockListFragment implements
     }
 
     /**
-     * If not already shown, display a new fragment containing the given
-     * episodes information.
-     * 
-     * @param episodeId
+     * If not already shown, display a new fragment containing the given episodes information.
      */
     private void showDetails(long episodeId) {
         if (mDualPane) {
@@ -369,7 +364,7 @@ public class EpisodesFragment extends SherlockListFragment implements
 
     public interface EpisodesQuery {
 
-        String[] PROJECTION = new String[] {
+        String[] PROJECTION = new String[]{
                 Tables.EPISODES + "." + Episodes._ID, Episodes.WATCHED, Episodes.TITLE,
                 Episodes.NUMBER, Episodes.FIRSTAIREDMS, Episodes.DVDNUMBER,
                 Episodes.ABSOLUTE_NUMBER, Episodes.COLLECTED

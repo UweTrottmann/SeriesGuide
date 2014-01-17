@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Seriály</string>
   <string name="lists">Zoznamy</string>
-  <string name="activity">Činnosť</string>
   <string name="movies">Filmy</string>
   <string name="statistics">Štatistiky</string>
   <string name="search">Hľadať</string>
@@ -28,13 +27,13 @@
   <string name="save_selection">Uložiť výber</string>
   <string name="search_hint">Hľadať epizódy</string>
   <string name="updated">Aktualizované na najnovšiu verziu.</string>
-  <string name="loading">Načítavam…</string>
   <string name="norating">nedostupné</string>
   <string name="unknown">neznámy</string>
-  <string name="offline">Žiadne sieťové pripojenie. Skúste to neskôr.</string>
+  <string name="offline">Connect to a network, then try again.</string>
+  <string name="offline_no_wifi">Connect to Wi-Fi or allow all connections, then try again.</string>
   <string name="app_not_available">No app available to handle this.</string>
   <string name="onlyx">Only available with X Subscription</string>
-  <string name="add_empty">Nie sú žiadne seriály alebo Vaše zariadenie nemá pripojenie k internetu.</string>
+  <string name="add_empty">There are no shows here.</string>
   <string name="share_show">Zdieľať reláciu</string>
   <string name="share_episode">Zdieľať epizódu</string>
   <string name="share_checkout">Pozrite si</string>
@@ -51,7 +50,7 @@
   <string name="watchlist_removed">Odstránené zo zoznamu videných</string>
   <string name="movies_search_hint">Zadajte názov filmu</string>
   <string name="movies_empty">Hľadať zadaný film.</string>
-  <string name="movies_watchlist_empty">Nemáte pripojenie na internet alebo ste nepridali filmy do svojho zoznamu videných na trakte.</string>
+  <string name="movies_watchlist_empty">You have not added movies to your trakt watchlist.</string>
   <string name="trailer">Trailer</string>
   <string name="shows_with_next">%s with next episodes</string>
   <string name="shows_continuing">%s continuing</string>
@@ -81,7 +80,6 @@
   <string name="episode_directors">Režiséri</string>
   <string name="episode_gueststars">Hosťujúci herci</string>
   <string name="episode_writers">Scenár</string>
-  <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Vysiela sa</string>
   <string name="show_isnotalive">Skončil</string>
   <string name="lastEdit">Posledné úpravy / / TVDb</string>
@@ -91,6 +89,8 @@
   <string name="today">dnes</string>
   <string name="now">teraz</string>
   <string name="daily">Deňne</string>
+  <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Pozretá epizóda</string>
   <string name="unmark_episode">Ešte nepozretá epizóda</string>
   <string name="mark_all">Pozreté všetky</string>
@@ -109,6 +109,7 @@
   <string name="trakt_notcollected">%s nezozbieraných.</string>
   <string name="confirm_delete">Naozaj chcete odstrániť %s?</string>
   <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
+  <string name="delete_error">Could not remove show. Try again later.</string>
   <string name="delete_show">Odstrániť</string>
   <string name="dontdelete_show">Neodstraňovať</string>
   <string name="no_nextepisode">žiadne ďalšie epizódy sa nenašli</string>
@@ -144,14 +145,13 @@
   <string name="only_favorites">Iba obľúbené seriály</string>
   <string name="togglewatched">Prepnúť zhliadnutie</string>
   <string name="pref_infinite_scrolling">Infinite activity</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Updating…</string>
   <string name="update_no_connection">To update connect to the internet.</string>
-  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
   <string name="update_inprogress">Prebieha aktualizácia, skúste to neskôr.</string>
   <string name="menu_updateart">Načítať plagáty</string>
   <string name="arttask_incomplete">Niektoré plagáty sa nenačítali, skúste to neskôr.</string>
   <string name="arttask_start">Načítavam plagáty…</string>
-  <string name="arttask_nosdcard">Načítanie plagátov vyžaduje externé úložisko (SD kartu).</string>
   <string name="show_on_network">on %s</string>
   <string name="season_watchcount">nepozreté epizódy</string>
   <string name="season_allwatched">Všetky epizódy pozreté</string>
@@ -183,6 +183,17 @@
   <string name="list_item_manage">Spravovať zoznamy</string>
   <string name="list_item_remove">Odstrániť zo zoznamu</string>
   <string name="list_empty">Do tohto zoznamu môžete pridať seriály, sezóny alebo epizódy.</string>
+  <string name="hexagon_setup">Set up SeriesGuide cloud</string>
+  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
+  <string name="hexagon_signin">Sign In</string>
+  <string name="hexagon_signed_in">You are connected to SeriesGuide cloud.</string>
+  <string name="hexagon_signout">Sign Out</string>
+  <string name="hexagon_setup_incomplete">Setting up SeriesGuide cloud was not completed.</string>
+  <string name="hexagon_setup_complete">Complete setup</string>
+  <string name="hexagon_priority_choice_required">Some of your shows are already in the cloud. Which version do you prefer?</string>
+  <string name="hexagon_priority_local">On this device</string>
+  <string name="hexagon_priority_cloud">In the cloud</string>
+  <string name="hexagon_priority_select">Select version</string>
   <string name="connect_trakt">Pripojenie na trakt.tv</string>
   <string name="connect_trakt_done">Pripojený do trakt.tv!</string>
   <string name="add_trakt_shows">Pridať seriály z knižnice:</string>
@@ -208,7 +219,8 @@
   <string name="pref_seasonsorting">Zoradiť série podľa…</string>
   <string name="pref_episodesorting">Zoradiť epizódy podľa…</string>
   <string name="pref_language">Jazyk obsahu</string>
-  <string name="pref_updatewifionly">Aktualizovať iba cez Wi-Fi</string>
+  <string name="pref_updatewifionly">Images via Wi-Fi only</string>
+  <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
   <string name="about">O SeriesGuide</string>
   <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">Odpojiť GetGlue</string>
@@ -327,8 +339,13 @@
   <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
   <string name="migration_action_import">Import and replace existing shows</string>
   <string name="action_upgrade">Get X features</string>
+  <string name="billing_action_subscribe">Subscribe</string>
+  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+  <string name="billing_price_pass">one-time purchase</string>
   <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
   <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
+  <string name="billing_learn_more">Why pay? Learn more.</string>
   <string name="subscription_activated">You are now subscribed to X features.</string>
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>

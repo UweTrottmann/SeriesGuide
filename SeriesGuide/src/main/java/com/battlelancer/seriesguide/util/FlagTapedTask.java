@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.util;
@@ -20,6 +19,7 @@ package com.battlelancer.seriesguide.util;
 import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
 import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
 import com.jakewharton.trakt.services.ShowService;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.Context;
 import android.os.Handler;
@@ -69,7 +69,7 @@ public class FlagTapedTask {
             @Override
             public void run() {
                 // do not even try if we are offline
-                if (!Utils.isAllowedConnection(mContext)) {
+                if (!AndroidUtils.isNetworkConnected(mContext)) {
                     postFailure(true);
                     return;
                 }

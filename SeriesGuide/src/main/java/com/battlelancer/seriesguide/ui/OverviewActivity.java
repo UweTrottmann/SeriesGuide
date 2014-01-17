@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.ui;
@@ -22,7 +21,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
@@ -155,7 +154,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     }
 
     private void setupPanes() {
-        Fragment showsFragment = ShowInfoFragment.newInstance(mShowId);
+        Fragment showsFragment = ShowFragment.newInstance(mShowId);
         FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
         ft1.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         ft1.replace(R.id.fragment_show, showsFragment);
@@ -182,8 +181,8 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         TabStripAdapter tabsAdapter = new TabStripAdapter(
                 getSupportFragmentManager(), this, pager, tabs);
         Bundle argsShow = new Bundle();
-        argsShow.putInt(ShowInfoFragment.InitBundle.SHOW_TVDBID, mShowId);
-        tabsAdapter.addTab(R.string.show, ShowInfoFragment.class, argsShow);
+        argsShow.putInt(ShowFragment.InitBundle.SHOW_TVDBID, mShowId);
+        tabsAdapter.addTab(R.string.show, ShowFragment.class, argsShow);
 
         tabsAdapter.addTab(R.string.description_overview, OverviewFragment.class, getIntent()
                 .getExtras());
@@ -191,7 +190,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         Bundle argsSeason = new Bundle();
         argsSeason.putInt(SeasonsFragment.InitBundle.SHOW_TVDBID, mShowId);
         tabsAdapter.addTab(R.string.seasons, SeasonsFragment.class, argsSeason);
-        tabsAdapter.updateTabs();
+        tabsAdapter.notifyTabsChanged();
 
         // select overview to be shown initially
         pager.setCurrentItem(1);
@@ -306,7 +305,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    SgSyncAdapter.requestSync(context, mShowId, false);
+                    SgSyncAdapter.requestSyncIfConnected(context, mShowId);
                 }
             }, 1000);
         }

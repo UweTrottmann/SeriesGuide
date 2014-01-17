@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Series</string>
   <string name="lists">Listas</string>
-  <string name="activity">Actividade</string>
   <string name="movies">Filmes</string>
   <string name="statistics">Estatísticas</string>
   <string name="search">Procurar</string>
@@ -28,13 +27,13 @@
   <string name="save_selection">Guardar Selecção</string>
   <string name="search_hint">Procurar episódios</string>
   <string name="updated">Actualizado para a última versão.</string>
-  <string name="loading">A Carregar…</string>
   <string name="norating">n/a</string>
   <string name="unknown">desconhecido</string>
-  <string name="offline">Sem ligação à Internet. Tente novamente mais tarde.</string>
+  <string name="offline">liguei se a uma rede e tente novamente.</string>
+  <string name="offline_no_wifi">Connect to Wi-Fi or allow all connections, then try again.</string>
   <string name="app_not_available">Nenhuma aplicação disponível para lidar com isto.</string>
   <string name="onlyx">Apenas disponível com a assinatura de X</string>
-  <string name="add_empty">Não há séries ou o seu dispositivo não tem ligação à Internet.</string>
+  <string name="add_empty">Não existe nenhuma série.</string>
   <string name="share_show">Partilhar série</string>
   <string name="share_episode">Partilhar episódio</string>
   <string name="share_checkout">Check out</string>
@@ -51,7 +50,7 @@
   <string name="watchlist_removed">Apagado da lista</string>
   <string name="movies_search_hint">Escreve o título de um filme</string>
   <string name="movies_empty">Procure um filme acima.</string>
-  <string name="movies_watchlist_empty">Não tem qualquer ligação à internet ou não foram adicionados filmes à sua lista da trackt.</string>
+  <string name="movies_watchlist_empty">You have not added movies to your trakt watchlist.</string>
   <string name="trailer">Trailer</string>
   <string name="shows_with_next">%s com próximos episódios</string>
   <string name="shows_continuing">%s em exibição</string>
@@ -81,7 +80,6 @@
   <string name="episode_directors">Directores</string>
   <string name="episode_gueststars">Participações especiais</string>
   <string name="episode_writers">Escritores</string>
-  <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Em exibição</string>
   <string name="show_isnotalive">Terminou</string>
   <string name="lastEdit">Última Edição // TVDb</string>
@@ -91,6 +89,8 @@
   <string name="today">hoje</string>
   <string name="now">agora</string>
   <string name="daily">Diário</string>
+  <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Episódio visto</string>
   <string name="unmark_episode">Episódio ainda por ver</string>
   <string name="mark_all">Assisti a todos</string>
@@ -109,6 +109,7 @@
   <string name="trakt_notcollected">%s não adquirido.</string>
   <string name="confirm_delete">Deseja realmente remover %s?</string>
   <string name="delete_has_list_items">Remova primeiro o %s de todas as listas.</string>
+  <string name="delete_error">Could not remove show. Try again later.</string>
   <string name="delete_show">Remover</string>
   <string name="dontdelete_show">Não remover</string>
   <string name="no_nextepisode">Nenhum próximo episódio encontrado</string>
@@ -144,14 +145,13 @@
   <string name="only_favorites">Apenas séries favoritas</string>
   <string name="togglewatched">Marcar como visto</string>
   <string name="pref_infinite_scrolling">Actividade infinita</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">A Actualizar…</string>
   <string name="update_no_connection">Para actualizar ligue-se à Internet.</string>
-  <string name="update_no_wifi">Para actualizar ligue-se ao WiFi ou permita outras conexões nas configurações.</string>
   <string name="update_inprogress">Uma actualização em curso, tente novamente mais tarde.</string>
   <string name="menu_updateart">Transferir cartazes</string>
   <string name="arttask_incomplete">Não foi possível tranferir alguns cartazes, tente novamente mais tarde.</string>
   <string name="arttask_start">A transferir cartazes…</string>
-  <string name="arttask_nosdcard">Transferir cartazes requer armazenamento externo (cartão SD).</string>
   <string name="show_on_network">em %s</string>
   <string name="season_watchcount">episódios por assistir</string>
   <string name="season_allwatched">Todos os episódios vistos</string>
@@ -183,6 +183,17 @@
   <string name="list_item_manage">Gerir listas</string>
   <string name="list_item_remove">Remover da lista</string>
   <string name="list_empty">Pode adicionar séries, temporadas ou episódios a esta lista.</string>
+  <string name="hexagon_setup">Set up SeriesGuide cloud</string>
+  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
+  <string name="hexagon_signin">Sign In</string>
+  <string name="hexagon_signed_in">You are connected to SeriesGuide cloud.</string>
+  <string name="hexagon_signout">Sign Out</string>
+  <string name="hexagon_setup_incomplete">Setting up SeriesGuide cloud was not completed.</string>
+  <string name="hexagon_setup_complete">Complete setup</string>
+  <string name="hexagon_priority_choice_required">Some of your shows are already in the cloud. Which version do you prefer?</string>
+  <string name="hexagon_priority_local">On this device</string>
+  <string name="hexagon_priority_cloud">In the cloud</string>
+  <string name="hexagon_priority_select">Selecionar versão</string>
   <string name="connect_trakt">Conectar ao trakt</string>
   <string name="connect_trakt_done">Conectado ao trakt!</string>
   <string name="add_trakt_shows">Adiciona séries da tua biblioteca:</string>
@@ -208,7 +219,8 @@
   <string name="pref_seasonsorting">Ordenar temporadas por…</string>
   <string name="pref_episodesorting">Ordenar episódios por…</string>
   <string name="pref_language">Idioma</string>
-  <string name="pref_updatewifionly">Actualizar apenas através de Wi-Fi</string>
+  <string name="pref_updatewifionly">Atualizar imagens apenas por Wi-Fi</string>
+  <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
   <string name="about">Sobre SeriesGuide</string>
   <string name="pref_credits">Créditos</string>
   <string name="clearGetGlueCredentials">Desligar GetGlue</string>
@@ -327,8 +339,13 @@
   <string name="migration_import">Prima em baixo para importar o backup criado no SeriesGuide X.</string>
   <string name="migration_action_import">Importar e substituir séries existentes</string>
   <string name="action_upgrade">Adquira X funcionalidades</string>
+  <string name="billing_action_subscribe">Subscribe</string>
+  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+  <string name="billing_price_pass">one-time purchase</string>
   <string name="upgrade_description">Obtenha acesso às notificações, mais opções de listagem no widget e todas as X funcionalidades vindouras. Apoie o desenvolvimento.\n\nSe já comprou o SeriesGuide X, instale-o para desbloquear estas capacidades.</string>
   <string name="upgrade_success">Obrigado, você já está inscritos em todos os X recursos!</string>
+  <string name="billing_learn_more">Why pay? Learn more.</string>
   <string name="subscription_activated">Agora você está inscrito para os X recursos.</string>
   <string name="subscription_expired">Assinatura expirada</string>
   <string name="subscription_expired_details">A sua assinatura dos recursos X expirou.</string>

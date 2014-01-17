@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.ui;
@@ -33,11 +32,11 @@ import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
 import android.annotation.TargetApi;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -61,7 +60,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import de.greenrobot.event.EventBus;
 
@@ -100,20 +98,24 @@ public class ShowsFragment extends SherlockFragment implements
     private GridView mGrid;
 
     private int mSortOrderId;
+
     private boolean mIsSortFavoritesFirst;
 
     private boolean mIsFilterFavorites;
+
     private boolean mIsFilterUnwatched;
+
     private boolean mIsFilterUpcoming;
+
     private boolean mIsFilterHidden;
 
     public static ShowsFragment newInstance() {
-        ShowsFragment f = new ShowsFragment();
-        return f;
+        return new ShowsFragment();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.shows_fragment, container, false);
 
         v.findViewById(R.id.emptyViewShows).setOnClickListener(new OnClickListener() {
@@ -161,7 +163,7 @@ public class ShowsFragment extends SherlockFragment implements
         mAdapter = new ShowsAdapter(getActivity(), null, 0, resIdStar, resIdStarZero, this);
 
         // setup grid view
-        mGrid = (GridView) getView().findViewById(R.id.gridViewShows);
+        mGrid = (GridView) getView().findViewById(android.R.id.list);
         mGrid.setAdapter(mAdapter);
         mGrid.setOnItemClickListener(this);
         registerForContextMenu(mGrid);
@@ -232,9 +234,9 @@ public class ShowsFragment extends SherlockFragment implements
 
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         final Cursor show = getActivity().getContentResolver().query(
-                Shows.buildShowUri(String.valueOf(info.id)), new String[] {
-                        Shows.FAVORITE, Shows.HIDDEN
-                }, null, null, null);
+                Shows.buildShowUri(String.valueOf(info.id)), new String[]{
+                Shows.FAVORITE, Shows.HIDDEN
+        }, null, null, null);
         show.moveToFirst();
         if (show.getInt(0) == 0) {
             menu.add(0, CONTEXT_FAVORITE_ID, 2, R.string.context_favorite);
@@ -277,33 +279,21 @@ public class ShowsFragment extends SherlockFragment implements
                 return true;
             }
             case CONTEXT_FAVORITE_ID: {
-                onFavoriteShow(String.valueOf(info.id), true);
+                onFavoriteShow((int) info.id, true);
                 return true;
             }
             case CONTEXT_UNFAVORITE_ID: {
-                onFavoriteShow(String.valueOf(info.id), false);
+                onFavoriteShow((int) info.id, false);
                 return true;
             }
             case CONTEXT_HIDE_ID: {
+                ShowTools.get(getActivity()).storeIsHidden((int) info.id, true);
                 fireTrackerEventContext("Hide show");
-
-                ContentValues values = new ContentValues();
-                values.put(Shows.HIDDEN, true);
-                getActivity().getContentResolver().update(
-                        Shows.buildShowUri(String.valueOf(info.id)), values, null, null);
-                Toast.makeText(getActivity(), getString(R.string.hidden), Toast.LENGTH_SHORT)
-                        .show();
                 return true;
             }
             case CONTEXT_UNHIDE_ID: {
+                ShowTools.get(getActivity()).storeIsHidden((int) info.id, false);
                 fireTrackerEventContext("Unhide show");
-
-                ContentValues values = new ContentValues();
-                values.put(Shows.HIDDEN, false);
-                getActivity().getContentResolver().update(
-                        Shows.buildShowUri(String.valueOf(info.id)), values, null, null);
-                Toast.makeText(getActivity(), getString(R.string.unhidden), Toast.LENGTH_SHORT)
-                        .show();
                 return true;
             }
             case CONTEXT_DELETE_ID:
@@ -314,7 +304,7 @@ public class ShowsFragment extends SherlockFragment implements
                 fireTrackerEventContext("Delete show");
                 return true;
             case CONTEXT_UPDATE_ID:
-                SgSyncAdapter.requestSync(getActivity(), (int) info.id);
+                SgSyncAdapter.requestSyncImmediate(getActivity(), (int) info.id, true);
 
                 fireTrackerEventContext("Update show");
                 return true;
@@ -380,19 +370,22 @@ public class ShowsFragment extends SherlockFragment implements
             return super.onOptionsItemSelected(item);
         } else if (itemId == R.id.menu_action_shows_filter_favorites) {
             mIsFilterFavorites = !mIsFilterFavorites;
-            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_FAVORITES, mIsFilterFavorites, item);
+            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_FAVORITES, mIsFilterFavorites,
+                    item);
 
             fireTrackerEventAction("Filter Favorites");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_unwatched) {
             mIsFilterUnwatched = !mIsFilterUnwatched;
-            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, mIsFilterUnwatched, item);
+            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, mIsFilterUnwatched,
+                    item);
 
             fireTrackerEventAction("Filter Unwatched");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_upcoming) {
             mIsFilterUpcoming = !mIsFilterUpcoming;
-            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UPCOMING, mIsFilterUpcoming, item);
+            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UPCOMING, mIsFilterUpcoming,
+                    item);
 
             fireTrackerEventAction("Filter Upcoming");
             return true;
@@ -401,6 +394,27 @@ public class ShowsFragment extends SherlockFragment implements
             changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_HIDDEN, mIsFilterHidden, item);
 
             fireTrackerEventAction("Filter Hidden");
+            return true;
+        } else if (itemId == R.id.menu_action_shows_filter_remove) {
+            mIsFilterFavorites = false;
+            mIsFilterUnwatched = false;
+            mIsFilterUpcoming = false;
+            mIsFilterHidden = false;
+
+            // already start loading, do not need to wait on saving prefs
+            getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, null, this);
+
+            // update menu item state, then save at last
+            PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+                    .putBoolean(ShowsDistillationSettings.KEY_FILTER_FAVORITES, false)
+                    .putBoolean(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, false)
+                    .putBoolean(ShowsDistillationSettings.KEY_FILTER_UPCOMING, false)
+                    .putBoolean(ShowsDistillationSettings.KEY_FILTER_HIDDEN, false)
+                    .commit();
+            // refresh filter icon state
+            getActivity().supportInvalidateOptionsMenu();
+
+            fireTrackerEventAction("Filter Removed");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_title) {
             if (mSortOrderId == ShowsDistillationSettings.ShowsSortOrder.TITLE_ID) {
@@ -438,10 +452,10 @@ public class ShowsFragment extends SherlockFragment implements
         // already start loading, do not need to wait on saving prefs
         getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, null, this);
 
-        // update menu item state, then save at last
-        item.setChecked(state);
+        // save new setting
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
                 .putBoolean(key, state).commit();
+
         // refresh filter icon state
         getActivity().supportInvalidateOptionsMenu();
     }
@@ -493,7 +507,8 @@ public class ShowsFragment extends SherlockFragment implements
             if (selection.length() != 0) {
                 selection.append(" AND ");
             }
-            selection.append(Shows.NEXTAIRDATEMS).append("!=").append(DBUtils.UNKNOWN_NEXT_AIR_DATE);
+            selection.append(Shows.NEXTAIRDATEMS).append("!=")
+                    .append(DBUtils.UNKNOWN_NEXT_AIR_DATE);
 
             // exclude shows with upcoming next episode
             if (!isFilterUpcoming) {
@@ -575,7 +590,7 @@ public class ShowsFragment extends SherlockFragment implements
             viewHolder.name.setText(cursor.getString(ShowsQuery.TITLE));
 
             // favorite toggle
-            final String showId = cursor.getString(ShowsQuery._ID);
+            final int showId = cursor.getInt(ShowsQuery._ID);
             final boolean isFavorited = cursor.getInt(ShowsQuery.FAVORITE) == 1;
             viewHolder.favorited.setImageResource(isFavorited ? mStarDrawableId
                     : mStarZeroDrawableId);
@@ -657,30 +672,25 @@ public class ShowsFragment extends SherlockFragment implements
         int NEXTEPISODE = 10;
     }
 
-    private void onFavoriteShow(String showId, boolean isFavorite) {
-        ContentValues values = new ContentValues();
-        values.put(Shows.FAVORITE, isFavorite);
-        getActivity().getContentResolver().update(
-                Shows.buildShowUri(showId), values, null, null);
+    private void onFavoriteShow(int showTvdbId, boolean isFavorite) {
+        // store new value
+        ShowTools.get(getActivity()).storeIsFavorite(showTvdbId, isFavorite);
 
+        // favoriting makes show eligible for notifications
         Utils.runNotificationService(getActivity());
-
-        Toast.makeText(getActivity(),
-                getString(isFavorite ? R.string.favorited : R.string.unfavorited),
-                Toast.LENGTH_SHORT)
-                .show();
 
         fireTrackerEventContext(isFavorite ? "Favorite show" : "Unfavorite show");
     }
 
     private void showDeleteDialog(long showId) {
         FragmentManager fm = getFragmentManager();
-        ConfirmDeleteDialogFragment deleteDialog = ConfirmDeleteDialogFragment.newInstance(String
-                .valueOf(showId));
+        ConfirmDeleteDialogFragment deleteDialog = ConfirmDeleteDialogFragment
+                .newInstance((int) showId);
         deleteDialog.show(fm, "fragment_delete");
     }
 
-    private final OnSharedPreferenceChangeListener mPrefsListener = new OnSharedPreferenceChangeListener() {
+    private final OnSharedPreferenceChangeListener mPrefsListener
+            = new OnSharedPreferenceChangeListener() {
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

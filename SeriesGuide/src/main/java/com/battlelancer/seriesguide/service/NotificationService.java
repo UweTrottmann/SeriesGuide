@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.service;
@@ -24,7 +23,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.QuickCheckInActivity;
-import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
+import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -247,7 +246,7 @@ public class NotificationService extends IntentService {
                     prefs.edit().putLong(NotificationSettings.KEY_LAST_NOTIFIED, latestAirtime)
                             .commit();
 
-                    onNotify(prefs, upcomingEpisodes, count, latestAirtime);
+                    onNotify(upcomingEpisodes, count, latestAirtime);
                 }
 
                 /*
@@ -316,7 +315,7 @@ public class NotificationService extends IntentService {
         prefs.edit().putLong(NotificationSettings.KEY_LAST_NOTIFIED, 0).commit();
     }
 
-    private void onNotify(final SharedPreferences prefs, final Cursor upcomingEpisodes, int count,
+    private void onNotify(final Cursor upcomingEpisodes, int count,
             long latestAirtime) {
         final Context context = getApplicationContext();
         CharSequence tickerText = "";
@@ -359,8 +358,10 @@ public class NotificationService extends IntentService {
             contentTitle = getString(R.string.upcoming_episodes_number, count);
             contentText = getString(R.string.upcoming_display);
 
-            Intent notificationIntent = new Intent(context, UpcomingRecentActivity.class);
+            Intent notificationIntent = new Intent(context, ShowsActivity.class);
             notificationIntent.putExtra(KEY_EPISODE_CLEARED_TIME, latestAirtime);
+            notificationIntent.putExtra(ShowsActivity.InitBundle.SELECTED_TAB,
+                    ShowsActivity.InitBundle.INDEX_TAB_UPCOMING);
             contentIntent = PendingIntent.getActivity(context, REQUEST_CODE_MULTIPLE_EPISODES,
                     notificationIntent, 0);
         }

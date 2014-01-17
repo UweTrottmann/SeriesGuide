@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,9 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.AsyncTask;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -27,9 +30,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
-
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.AsyncTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -43,23 +43,25 @@ import java.util.LinkedHashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * From http://code.google.com/p/android-imagedownloader. This helper class
- * download images from the Internet and binds those with the provided
- * ImageView. A local cache of downloaded images is maintained internally to
- * improve performance.
+ * From http://code.google.com/p/android-imagedownloader. This helper class download images from the
+ * Internet and binds those with the provided ImageView. A local cache of downloaded images is
+ * maintained internally to improve performance.
  */
 public class ImageDownloader {
+
     private static final String LOG_TAG = "ImageDownloader";
 
     private static ImageDownloader _instance;
 
+    private final Context mContext;
+
     private String mDiskCacheDir;
 
     private ImageDownloader(Context context) {
-        // TODO replace with getExternalFilesDir (but can be null!) once we are
-        // min API level 8
+        mContext = context.getApplicationContext();
+        // TODO replace with getExternalFilesDir (but can be null!) once we are min API level 8
         mDiskCacheDir = Environment.getExternalStorageDirectory().getAbsolutePath()
-                + "/Android/data/" + context.getPackageName() + "/files";
+                + "/Android/data/" + mContext.getPackageName() + "/files";
     }
 
     public static synchronized ImageDownloader getInstance(Context context) {
@@ -70,26 +72,24 @@ public class ImageDownloader {
     }
 
     /**
-     * Download the specified image from the Internet and binds it to the
-     * provided ImageView. The binding is immediate if the image is found in the
-     * cache and will be done asynchronously otherwise. A null bitmap will be
-     * associated to the ImageView if an error occurs.
-     * 
-     * @param mUrl The URL of the image to download.
+     * Downloads the specified image from the Internet and binds it to the provided ImageView. The
+     * binding is immediate if the image is found in the cache and will be done asynchronously
+     * otherwise. A null bitmap will be associated to the ImageView if an error occurs.
+     *
+     * @param url       The URL of the image to download.
      * @param imageView The ImageView to bind the downloaded image to.
      */
-    public void download(String url, ImageView imageView) {
+    public void downloadAndStore(String url, ImageView imageView) {
         download(url, imageView, true);
     }
 
     /**
-     * Download the specified image from the Internet and binds it to the
-     * provided ImageView. The binding is immediate if the image is found in the
-     * cache and will be done asynchronously otherwise. A null bitmap will be
-     * associated to the ImageView if an error occurs.
-     * 
-     * @param mUrl The URL of the image to download.
-     * @param imageView The ImageView to bind the downloaded image to.
+     * Downloads the specified image from the Internet and binds it to the provided ImageView. The
+     * binding is immediate if the image is found in the cache and will be done asynchronously
+     * otherwise. A null bitmap will be associated to the ImageView if an error occurs.
+     *
+     * @param url           The URL of the image to download.
+     * @param imageView     The ImageView to bind the downloaded image to.
      * @param isDiskCaching Whether to cache the image to disk or just memory.
      */
     public void download(String url, ImageView imageView, boolean isDiskCaching) {
@@ -97,16 +97,18 @@ public class ImageDownloader {
         Bitmap bitmap = getBitmapFromCache(url);
 
         if (bitmap == null) {
+            // look on disk or download the image
             forceDownload(url, imageView, isDiskCaching);
         } else {
+            // found a cached bitmap
             cancelPotentialDownload(url, imageView);
             imageView.setImageBitmap(bitmap);
         }
     }
 
     /**
-     * Same as download but the image is always downloaded and the cache is not
-     * used. Kept private at the moment as its interest is not clear.
+     * Same as download but the image is always downloaded and the cache is not used. Kept private
+     * at the moment as its interest is not clear.
      */
     private void forceDownload(String url, ImageView imageView, boolean isDiskCaching) {
         // State sanity: mUrl is guaranteed to never be null in
@@ -131,10 +133,9 @@ public class ImageDownloader {
     }
 
     /**
-     * Returns true if the current download has been canceled or if there was no
-     * download in progress on this image view. Returns false if the download in
-     * progress deals with the same mUrl. The download is not stopped in that
-     * case.
+     * Returns true if the current download has been canceled or if there was no download in
+     * progress on this image view. Returns false if the download in progress deals with the same
+     * mUrl. The download is not stopped in that case.
      */
     private static boolean cancelPotentialDownload(String url, ImageView imageView) {
         BitmapDownloaderTask bitmapDownloaderTask = getBitmapDownloaderTask(imageView);
@@ -153,8 +154,8 @@ public class ImageDownloader {
 
     /**
      * @param imageView Any imageView
-     * @return Retrieve the currently active download task (if any) associated
-     *         with this imageView. null if there is no such task.
+     * @return Retrieve the currently active download task (if any) associated with this imageView.
+     * null if there is no such task.
      */
     private static BitmapDownloaderTask getBitmapDownloaderTask(ImageView imageView) {
         if (imageView != null) {
@@ -167,7 +168,7 @@ public class ImageDownloader {
         return null;
     }
 
-    private static Bitmap getBitmapFromDisk(String urlString, File imageFile) {
+    private static Bitmap getBitmapFromDisk(File imageFile) {
         if (AndroidUtils.isExtStorageAvailable()) {
             if (imageFile.exists()) {
                 // disk cache hit
@@ -205,10 +206,7 @@ public class ImageDownloader {
                     bitmap = BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
                 }
 
-                /*
-                 * TODO look if we can return the bitmap first, then save in the
-                 * background
-                 */
+                // TODO look if we can return the bitmap first, then save in the background
                 // if (Utils.isExtStorageAvailable()) {
                 // // write the bitmap to the disk cache
                 // FileOutputStream os = new FileOutputStream(imagefile);
@@ -236,6 +234,7 @@ public class ImageDownloader {
      * reaches EOF.
      */
     static class FlushedInputStream extends FilterInputStream {
+
         public FlushedInputStream(InputStream inputStream) {
             super(inputStream);
         }
@@ -263,6 +262,7 @@ public class ImageDownloader {
      * The actual AsyncTask that will asynchronously download the image.
      */
     class BitmapDownloaderTask extends AsyncTask<String, Void, Bitmap> {
+
         private String mUrl;
 
         private final WeakReference<ImageView> imageViewReference;
@@ -270,7 +270,7 @@ public class ImageDownloader {
         private final boolean mIsDiskCaching;
 
         public BitmapDownloaderTask(ImageView imageView, boolean isDiskCaching) {
-            imageViewReference = new WeakReference<ImageView>(imageView);
+            imageViewReference = new WeakReference<>(imageView);
             mIsDiskCaching = isDiskCaching;
         }
 
@@ -287,13 +287,13 @@ public class ImageDownloader {
 
             // try to get bitmap from disk cache first
             if (mIsDiskCaching) {
-                Bitmap bitmap = getBitmapFromDisk(mUrl, imageFile);
+                Bitmap bitmap = getBitmapFromDisk(imageFile);
                 if (bitmap != null) {
                     return bitmap;
                 }
             }
 
-            if (isCancelled()) {
+            if (isCancelled() || !Utils.isAllowedLargeDataConnection(mContext, false)) {
                 return null;
             }
 
@@ -315,10 +315,8 @@ public class ImageDownloader {
             if (imageViewReference != null) {
                 ImageView imageView = imageViewReference.get();
                 BitmapDownloaderTask bitmapDownloaderTask = getBitmapDownloaderTask(imageView);
-                // Change bitmap only if this process is still associated with
-                // it
-                // Or if we don't use any bitmap to task association
-                // (NO_DOWNLOADED_DRAWABLE mode)
+                // Change bitmap only if this process is still associated with it
+                // Or if we don't use any bitmap to task association (NO_DOWNLOADED_DRAWABLE mode)
                 if (this == bitmapDownloaderTask) {
                     imageView.setImageBitmap(bitmap);
                 }
@@ -327,16 +325,13 @@ public class ImageDownloader {
     }
 
     /**
-     * A fake Drawable that will be attached to the imageView while the download
-     * is in progress.
-     * <p>
-     * Contains a reference to the actual download task, so that a download task
-     * can be stopped if a new binding is required, and makes sure that only the
-     * last started download process can bind its result, independently of the
-     * download finish order.
-     * </p>
+     * A fake Drawable that will be attached to the imageView while the download is in progress. <p>
+     * Contains a reference to the actual download task, so that a download task can be stopped if a
+     * new binding is required, and makes sure that only the last started download process can bind
+     * its result, independently of the download finish order. </p>
      */
     static class DownloadedDrawable extends ColorDrawable {
+
         private final WeakReference<BitmapDownloaderTask> bitmapDownloaderTaskReference;
 
         public DownloadedDrawable(BitmapDownloaderTask bitmapDownloaderTask) {
@@ -370,13 +365,15 @@ public class ImageDownloader {
                 // soft reference cache
                 sSoftBitmapCache.put(eldest.getKey(), new SoftReference<Bitmap>(eldest.getValue()));
                 return true;
-            } else
+            } else {
                 return false;
+            }
         }
     };
 
     // Soft cache for bitmaps kicked out of hard cache
-    private final static ConcurrentHashMap<String, SoftReference<Bitmap>> sSoftBitmapCache = new ConcurrentHashMap<String, SoftReference<Bitmap>>(
+    private final static ConcurrentHashMap<String, SoftReference<Bitmap>> sSoftBitmapCache
+            = new ConcurrentHashMap<String, SoftReference<Bitmap>>(
             HARD_CACHE_CAPACITY / 2);
 
     private final Handler purgeHandler = new Handler();
@@ -389,7 +386,7 @@ public class ImageDownloader {
 
     /**
      * Adds this bitmap to the cache.
-     * 
+     *
      * @param bitmap The newly downloaded bitmap.
      */
     private void addBitmapToCache(String url, Bitmap bitmap) {
@@ -401,7 +398,7 @@ public class ImageDownloader {
     }
 
     /**
-     * @param mUrl The URL of the image that will be retrieved from the cache.
+     * @param url The URL of the image that will be retrieved from the cache.
      * @return The cached bitmap or null if it was not found.
      */
     private Bitmap getBitmapFromCache(String url) {
@@ -434,9 +431,9 @@ public class ImageDownloader {
     }
 
     /**
-     * Clears the image cache used internally to improve performance. Note that
-     * for memory efficiency reasons, the cache will automatically be cleared
-     * after a certain inactivity delay.
+     * Clears the image cache used internally to improve performance. Note that for memory
+     * efficiency reasons, the cache will automatically be cleared after a certain inactivity
+     * delay.
      */
     public void clearCache() {
         sHardBitmapCache.clear();

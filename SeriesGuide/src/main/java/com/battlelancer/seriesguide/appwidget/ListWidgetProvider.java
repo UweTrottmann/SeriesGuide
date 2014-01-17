@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,15 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.appwidget;
+
+import com.battlelancer.seriesguide.settings.WidgetSettings;
+import com.battlelancer.seriesguide.ui.EpisodesActivity;
+import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
 
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
@@ -33,18 +38,13 @@ import android.support.v4.app.TaskStackBuilder;
 import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 
-import com.battlelancer.seriesguide.settings.WidgetSettings;
-import com.battlelancer.seriesguide.ui.EpisodesActivity;
-import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
-
 @TargetApi(11)
 public class ListWidgetProvider extends AppWidgetProvider {
 
     public static final String UPDATE = "com.battlelancer.seriesguide.appwidget.UPDATE";
+
     public static final long REPETITION_INTERVAL = 5 * DateUtils.MINUTE_IN_MILLIS;
+
     private static final int DIP_THRESHOLD_COMPACT_LAYOUT = 80;
 
     @Override
@@ -92,14 +92,16 @@ public class ListWidgetProvider extends AppWidgetProvider {
     }
 
     @Override
-    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager,
+            int appWidgetId, Bundle newOptions) {
         RemoteViews rv = buildRemoteViews(context, appWidgetManager, appWidgetId);
 
         appWidgetManager.updateAppWidget(appWidgetId, rv);
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    public static RemoteViews buildRemoteViews(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
+    public static RemoteViews buildRemoteViews(Context context, AppWidgetManager appWidgetManager,
+            int appWidgetId) {
         // determine layout based on given size
         final boolean isCompactLayout = isCompactLayout(appWidgetManager, appWidgetId);
         // determine content type from widget settings
@@ -132,10 +134,17 @@ public class ListWidgetProvider extends AppWidgetProvider {
         int bgColor = WidgetSettings.getWidgetBackgroundColor(context, appWidgetId);
         rv.setInt(R.id.container, "setBackgroundColor", bgColor);
 
-        // determine the activity tab touching the widget title should open
-        int activityTab = typeIndex == WidgetSettings.Type.RECENT ? 1 : 0;
+        // determine the tab touching the widget title should open
+        int tabIndex;
+        if (typeIndex == WidgetSettings.Type.UPCOMING) {
+            tabIndex = ShowsActivity.InitBundle.INDEX_TAB_UPCOMING;
+        } else if (typeIndex == WidgetSettings.Type.RECENT) {
+            tabIndex = ShowsActivity.InitBundle.INDEX_TAB_RECENT;
+        } else {
+            tabIndex = ShowsActivity.InitBundle.INDEX_TAB_SHOWS;
+        }
 
-        // only regular layout has title
+        // only regular layout has text title
         if (!isCompactLayout) {
             // change title based on config
             if (typeIndex == WidgetSettings.Type.RECENT) {
@@ -146,52 +155,24 @@ public class ListWidgetProvider extends AppWidgetProvider {
             } else {
                 rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.upcoming));
             }
-
-            // Activity button
-            PendingIntent pendingIntent;
-            if (typeIndex == WidgetSettings.Type.FAVORITES) {
-                // launching the shows list
-                Intent activityIntent = new Intent(context, ShowsActivity.class);
-                pendingIntent = TaskStackBuilder
-                        .create(context)
-                        .addNextIntent(activityIntent)
-                        .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
-            } else {
-                // launching an activities list
-                Intent activityIntent = new Intent(context, UpcomingRecentActivity.class);
-                activityIntent.putExtra(UpcomingRecentActivity.InitBundle.SELECTED_TAB, activityTab);
-                pendingIntent = TaskStackBuilder
-                        .create(context)
-                        .addNextIntent(new Intent(context, ShowsActivity.class))
-                        .addNextIntent(activityIntent)
-                        .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
-            }
-            rv.setOnClickPendingIntent(R.id.widget_title, pendingIntent);
         }
 
-        // Intent template for items to launch an EpisodesActivity
-        TaskStackBuilder builder = TaskStackBuilder.create(context)
-                .addNextIntent(new Intent(context, ShowsActivity.class));
-        if (typeIndex != WidgetSettings.Type.FAVORITES) {
-            // only insert activity page for activity types
-            builder.addNextIntent(
-                    new Intent(context, UpcomingRecentActivity.class).putExtra(
-                            UpcomingRecentActivity.InitBundle.SELECTED_TAB, activityTab));
-        }
+        // app launch button
+        final Intent appLaunchIntent = new Intent(context, ShowsActivity.class)
+                .putExtra(ShowsActivity.InitBundle.SELECTED_TAB, tabIndex);
+        PendingIntent pendingIntent = TaskStackBuilder.create(context)
+                .addNextIntent(appLaunchIntent)
+                .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
+        rv.setOnClickPendingIntent(R.id.widget_title, pendingIntent);
+
+        // item intent template, launches episode detail view
+        TaskStackBuilder builder = TaskStackBuilder.create(context);
+        builder.addNextIntent(appLaunchIntent);
         builder.addNextIntent(new Intent(context, EpisodesActivity.class));
         rv.setPendingIntentTemplate(R.id.list_view,
                 builder.getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT));
 
-        // Show list button
-        Intent homeIntent = new Intent(context, ShowsActivity.class);
-        homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingHomeIntent = TaskStackBuilder
-                .create(context)
-                .addNextIntent(homeIntent)
-                .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
-        rv.setOnClickPendingIntent(R.id.widget_logo, pendingHomeIntent);
-
-        // Settings button
+        // settings button
         Intent settingsIntent = new Intent(context, ListWidgetConfigure.class)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
                 .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
@@ -203,9 +184,10 @@ public class ListWidgetProvider extends AppWidgetProvider {
     }
 
     /**
-     * Based on the widget size determines whether to use a compact layout. Defaults to false on
-     * ICS and below.
+     * Based on the widget size determines whether to use a compact layout. Defaults to false on ICS
+     * and below.
      */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private static boolean isCompactLayout(AppWidgetManager appWidgetManager, int appWidgetId) {
         if (AndroidUtils.isJellyBeanOrHigher()) {
             Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);

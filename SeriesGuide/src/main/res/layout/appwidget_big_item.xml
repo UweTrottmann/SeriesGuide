@@ -13,7 +13,7 @@
         android:layout_alignBottom="@+id/textViewWidgetEpisode"
         android:layout_alignTop="@+id/widgetAirtime"
         android:layout_marginRight="5dp"
-        android:src="@drawable/show_generic"></ImageView>
+        android:src="@drawable/show_generic"/>
 
     <TextView
         android:id="@+id/textViewWidgetShow"
@@ -24,7 +24,7 @@
         android:layout_toRightOf="@+id/widgetPoster"
         android:text="@string/app_name"
         android:textColor="@color/text_primary"
-        android:textSize="13sp"></TextView>
+        android:textSize="13sp"/>
 
     <TextView
         android:id="@+id/textViewWidgetEpisode"
@@ -34,20 +34,20 @@
         android:layout_marginRight="5dp"
         android:layout_toLeftOf="@+id/widgetNetwork"
         android:text="@string/no_nextepisode"
-        android:textSize="12sp"></TextView>
+        android:textSize="12sp"/>
 
     <TextView
         android:id="@+id/widgetAirtime"
         style="@style/WidgetTextView"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="@string/not_available"></TextView>
+        android:text="@string/not_available"/>
 
     <TextView
         android:id="@+id/widgetNetwork"
         style="@style/WidgetTextView"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/widgetAirtime"
-        android:text="@string/not_available"></TextView>
+        android:text="@string/not_available"/>
 
 </RelativeLayout>

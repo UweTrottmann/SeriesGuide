@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.ui.dialogs;
@@ -34,15 +33,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 /**
- * Displays the trakt advanced rating scale, submits the chosen rating to the
- * given item on trakt.
+ * Displays the trakt advanced rating scale, submits the chosen rating to the given item on trakt.
  */
 public class TraktRateDialogFragment extends DialogFragment {
 
     /**
      * Create {@link TraktRateDialogFragment} to rate a show.
-     * 
-     * @param tvdbid
+     *
      * @return TraktRateDialogFragment
      */
     public static TraktRateDialogFragment newInstance(int tvdbid) {
@@ -56,10 +53,7 @@ public class TraktRateDialogFragment extends DialogFragment {
 
     /**
      * Create {@link TraktRateDialogFragment} to rate an episode.
-     * 
-     * @param showTvdbid
-     * @param season
-     * @param episode
+     *
      * @return TraktRateDialogFragment
      */
     public static TraktRateDialogFragment newInstance(int showTvdbid, int season, int episode) {
@@ -153,8 +147,8 @@ public class TraktRateDialogFragment extends DialogFragment {
         getArguments().putString(ShareItems.RATING, rating.toString());
         AndroidUtils.executeAsyncTask(
                 new TraktTask(context, getArguments(), null),
-                new Void[] {
-                    null
+                new Void[]{
+                        null
                 });
         dismiss();
     }

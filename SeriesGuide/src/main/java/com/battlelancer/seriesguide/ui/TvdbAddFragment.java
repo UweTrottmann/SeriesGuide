@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.ui;
@@ -23,8 +22,6 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
-
-import org.xml.sax.SAXException;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -37,17 +34,16 @@ import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class TvdbAddFragment extends AddFragment {
 
     public static TvdbAddFragment newInstance() {
-        TvdbAddFragment f = new TvdbAddFragment();
-        return f;
+        return new TvdbAddFragment();
     }
 
     private EditText mSearchBox;
@@ -55,7 +51,8 @@ public class TvdbAddFragment extends AddFragment {
     private SearchTask mSearchTask;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         /*
          * never use this here (on config change the view needed before removing
          * the fragment)
@@ -89,8 +86,9 @@ public class TvdbAddFragment extends AddFragment {
 
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // we only want to react to down events
-                if (event.getAction() != KeyEvent.ACTION_DOWN)
+                if (event.getAction() != KeyEvent.ACTION_DOWN) {
                     return false;
+                }
 
                 if (keyCode == KeyEvent.KEYCODE_ENTER) {
                     search();
@@ -100,6 +98,10 @@ public class TvdbAddFragment extends AddFragment {
                 }
             }
         });
+
+        if (!AndroidUtils.isNetworkConnected(getActivity())) {
+            setEmptyMessage(R.string.offline);
+        }
     }
 
     protected void onClearInput() {
@@ -118,7 +120,8 @@ public class TvdbAddFragment extends AddFragment {
     protected void search() {
         // nag about no connectivity
         if (!AndroidUtils.isNetworkConnected(getSherlockActivity())) {
-            Toast.makeText(getSherlockActivity(), R.string.offline, Toast.LENGTH_LONG).show();
+            setEmptyMessage(R.string.offline);
+            setSearchResults(new LinkedList<SearchResult>());
             return;
         }
 
@@ -146,19 +149,18 @@ public class TvdbAddFragment extends AddFragment {
             if (activity != null) {
                 activity.setSupportProgressBarIndeterminateVisibility(true);
             }
+
         }
 
         @Override
         protected List<SearchResult> doInBackground(String... params) {
-            List<SearchResult> results = new ArrayList<SearchResult>();
+            List<SearchResult> results;
 
             String query = params[0];
 
             try {
                 results = TheTVDB.searchShow(query, mContext);
             } catch (IOException e) {
-                return null;
-            } catch (SAXException e) {
                 return null;
             }
 
@@ -172,12 +174,12 @@ public class TvdbAddFragment extends AddFragment {
                 activity.setSupportProgressBarIndeterminateVisibility(false);
             }
             if (result == null) {
-                Toast.makeText(mContext.getApplicationContext(), R.string.search_error,
-                        Toast.LENGTH_LONG).show();
-            } else if (result.isEmpty()) {
-                Toast.makeText(mContext.getApplicationContext(), R.string.no_results,
-                        Toast.LENGTH_LONG).show();
+                // display error in empty view
+                setEmptyMessage(R.string.search_error);
+                setSearchResults(new LinkedList<SearchResult>());
             } else {
+                // empty or there are shows
+                setEmptyMessage(R.string.no_results);
                 setSearchResults(result);
             }
         }

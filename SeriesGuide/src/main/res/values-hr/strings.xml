@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Serije</string>
   <string name="lists">Popisi</string>
-  <string name="activity">Aktivnost</string>
   <string name="movies">Filmovi</string>
   <string name="statistics">Statistike</string>
   <string name="search">Traži</string>
@@ -28,13 +27,13 @@
   <string name="save_selection">Pohrani odabrano</string>
   <string name="search_hint">Pretraži epizode</string>
   <string name="updated">Ažurirano u najnoviju verziju.</string>
-  <string name="loading">Učitavanje…</string>
   <string name="norating">nedostupno</string>
   <string name="unknown">nepoznato</string>
-  <string name="offline">Nema internet veze. Pokušaj kasnije.</string>
+  <string name="offline">Connect to a network, then try again.</string>
+  <string name="offline_no_wifi">Connect to Wi-Fi or allow all connections, then try again.</string>
   <string name="app_not_available">No app available to handle this.</string>
   <string name="onlyx">Dostupno samo s X pretplatom</string>
-  <string name="add_empty">Ovdje nema serija ili tvoj uređaj nije spojen na internet.</string>
+  <string name="add_empty">There are no shows here.</string>
   <string name="share_show">Podijeli seriju</string>
   <string name="share_episode">Podijeli epizodu</string>
   <string name="share_checkout">Odjava</string>
@@ -51,7 +50,7 @@
   <string name="watchlist_removed">Uklonjeno s popisa gledanja</string>
   <string name="movies_search_hint">Upiši naslov filma</string>
   <string name="movies_empty">Potraži film iznad.</string>
-  <string name="movies_watchlist_empty">Nisi povezan na internet ili nisi dodao filmove na svoj trakt popis gledanja.</string>
+  <string name="movies_watchlist_empty">You have not added movies to your trakt watchlist.</string>
   <string name="trailer">Trailer</string>
   <string name="shows_with_next">%s sa sljedećim epizodama</string>
   <string name="shows_continuing">%s se nastavlja</string>
@@ -81,7 +80,6 @@
   <string name="episode_directors">Režiseri</string>
   <string name="episode_gueststars">Gostujući glumci</string>
   <string name="episode_writers">Scenaristi</string>
-  <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Nastavlja se</string>
   <string name="show_isnotalive">Završilo</string>
   <string name="lastEdit">Zadnje uređeno // TVDb</string>
@@ -91,6 +89,8 @@
   <string name="today">danas</string>
   <string name="now">sada</string>
   <string name="daily">Dnevno</string>
+  <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Pogledana epizoda</string>
   <string name="unmark_episode">Nepogledana epizoda</string>
   <string name="mark_all">Sve pogledano</string>
@@ -109,6 +109,7 @@
   <string name="trakt_notcollected">%s neprikupljeno.</string>
   <string name="confirm_delete">Zaista želite ukloniti %s?</string>
   <string name="delete_has_list_items">Ne može se izvršiti, prvo uklonite %s sa svih popisa.</string>
+  <string name="delete_error">Could not remove show. Try again later.</string>
   <string name="delete_show">Izbriši</string>
   <string name="dontdelete_show">Nemoj odustati</string>
   <string name="no_nextepisode">nije pronađena sljedeća epizoda</string>
@@ -144,14 +145,13 @@
   <string name="only_favorites">Samo favoriti</string>
   <string name="togglewatched">Uključi pogledano</string>
   <string name="pref_infinite_scrolling">Neograničena aktivnost</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Ažuriranje…</string>
   <string name="update_no_connection">Poveži se na internet za ažuriranje.</string>
-  <string name="update_no_wifi">Za ažuriranje se poveži na bežični internet ili dozvoli drugi način povezivanja u Postavkama.</string>
   <string name="update_inprogress">Ažuriranje u tijeku, pokušajte kasnije.</string>
   <string name="menu_updateart">Učitaj postere</string>
   <string name="arttask_incomplete">Neki posteri se nisu učitali, pokušaj kasnije.</string>
   <string name="arttask_start">Učitavanje postera…</string>
-  <string name="arttask_nosdcard">Učitavanje postera zahtjeva vanjsku pohranu podataka (mem. kartica).</string>
   <string name="show_on_network">na %s</string>
   <string name="season_watchcount">Nepogledane epizode</string>
   <string name="season_allwatched">Sve epizode pogledane</string>
@@ -183,6 +183,17 @@
   <string name="list_item_manage">Uredi popise</string>
   <string name="list_item_remove">Ukloni s popisa</string>
   <string name="list_empty">Možeš dodati serije, sezone ili epizode na ovaj popis.</string>
+  <string name="hexagon_setup">Set up SeriesGuide cloud</string>
+  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
+  <string name="hexagon_signin">Sign In</string>
+  <string name="hexagon_signed_in">You are connected to SeriesGuide cloud.</string>
+  <string name="hexagon_signout">Sign Out</string>
+  <string name="hexagon_setup_incomplete">Setting up SeriesGuide cloud was not completed.</string>
+  <string name="hexagon_setup_complete">Complete setup</string>
+  <string name="hexagon_priority_choice_required">Some of your shows are already in the cloud. Which version do you prefer?</string>
+  <string name="hexagon_priority_local">On this device</string>
+  <string name="hexagon_priority_cloud">In the cloud</string>
+  <string name="hexagon_priority_select">Select version</string>
   <string name="connect_trakt">Poveži trakt</string>
   <string name="connect_trakt_done">Povezano na trakt!</string>
   <string name="add_trakt_shows">Dodaj serije iz svoje zbirke:</string>
@@ -208,7 +219,8 @@
   <string name="pref_seasonsorting">Poredaj sezone prema…</string>
   <string name="pref_episodesorting">Poredaj epizode prema…</string>
   <string name="pref_language">Jezik sadržaja</string>
-  <string name="pref_updatewifionly">Ažuriraj samo preko bežičnog interneta</string>
+  <string name="pref_updatewifionly">Images via Wi-Fi only</string>
+  <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
   <string name="about">O SeriesGuide</string>
   <string name="pref_credits">Zasluge</string>
   <string name="clearGetGlueCredentials">Odjavi se sa GetGlue</string>
@@ -327,8 +339,13 @@
   <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
   <string name="migration_action_import">Import and replace existing shows</string>
   <string name="action_upgrade">Get X features</string>
+  <string name="billing_action_subscribe">Subscribe</string>
+  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+  <string name="billing_price_pass">one-time purchase</string>
   <string name="upgrade_description">Nabavi pristup obavijestima, više opcija za popise widgeta i sve buduće X mogućnosti. Podrži daljnji razvoj.\n\nAko si već kupio SeriesGuide X, instaliraj ga da oključaš ovu nadogradnju.</string>
   <string name="upgrade_success">Hvala, već si pretplaćen na sve X mogućnosti!</string>
+  <string name="billing_learn_more">Why pay? Learn more.</string>
   <string name="subscription_activated">Sada si pretplaćen na X mogućnosti.</string>
   <string name="subscription_expired">Pretplata istekla</string>
   <string name="subscription_expired_details">Tvoja pretplata na X mogućnosti je istekla.</string>

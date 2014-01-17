@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.provider;
@@ -85,6 +84,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * Qualifies column names by prefixing their {@link Tables} name.
      */
     public interface Qualified {
+
         String SHOWS_ID = Tables.SHOWS + "." + Shows._ID;
         String SHOWS_NEXTEPISODE = Tables.SHOWS + "." + Shows.NEXTEPISODE;
         String EPISODES_ID = Tables.EPISODES + "." + Episodes._ID;
@@ -93,6 +93,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     public interface Tables {
+
         String SHOWS = "series";
 
         String SEASONS = "seasons";
@@ -135,6 +136,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     private interface Selections {
+
         String COMMON_SHOW_COLUMNS =
                 Shows.REF_SHOW_ID + ","
                         + Shows.TITLE + ","
@@ -143,9 +145,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                         + Shows.STATUS + ","
                         + Shows.AIRSDAYOFWEEK + ","
                         + Shows.FAVORITE;
-        String COMMON_LIST_ITEMS_COLUMNS = "listitem_id AS _id,list_item_id,list_id,item_type,item_ref_id";
+        String COMMON_LIST_ITEMS_COLUMNS
+                = "listitem_id AS _id,list_item_id,list_id,item_type,item_ref_id";
 
-        String LIST_ITEMS_COLUMNS_INTERNAL = "_id AS listitem_id,list_item_id,list_id,item_type,item_ref_id";
+        String LIST_ITEMS_COLUMNS_INTERNAL
+                = "_id AS listitem_id,list_item_id,list_id,item_type,item_ref_id";
         String SHOWS_COLUMNS_INTERNAL = Shows._ID + " AS " + COMMON_SHOW_COLUMNS + ","
                 + "overview,airstime,nexttext,series_nextairdatetext";
 
@@ -162,6 +166,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     interface References {
+
         String SHOW_ID = "REFERENCES " + Tables.SHOWS + "(" + BaseColumns._ID + ")";
 
         String SEASON_ID = "REFERENCES " + Tables.SEASONS + "(" + BaseColumns._ID + ")";
@@ -455,6 +460,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     // Must be watched and have an airdate
     private static final String LATEST_SELECTION = Episodes.WATCHED + "=1 AND "
             + Episodes.FIRSTAIREDMS + "!=-1 AND " + Shows.REF_SHOW_ID + "=?";
+
     // Latest aired first (ensures we get specials), if equal sort by season,
     // then number
     private static final String LATEST_ORDER = Episodes.FIRSTAIREDMS + " DESC,"
@@ -462,8 +468,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + Episodes.NUMBER + " DESC";
 
     /**
-     * Add {@link Shows} column to store the last watched episode id for better
-     * prediction of next episode.
+     * Add {@link Shows} column to store the last watched episode id for better prediction of next
+     * episode.
      */
     private static void upgradeToThirtyOne(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.LASTWATCHEDID
@@ -471,7 +477,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
         // pre populate with latest watched episode ids
         ContentValues values = new ContentValues();
-        final Cursor shows = db.query(Tables.SHOWS, new String[] {
+        final Cursor shows = db.query(Tables.SHOWS, new String[]{
                 Shows._ID,
         }, null, null, null, null, null);
         if (shows != null) {
@@ -481,16 +487,16 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
                 while (shows.moveToNext()) {
                     final String showId = shows.getString(0);
-                    final Cursor highestWatchedEpisode = db.query(Tables.EPISODES, new String[] {
+                    final Cursor highestWatchedEpisode = db.query(Tables.EPISODES, new String[]{
                             Episodes._ID
-                    }, LATEST_SELECTION, new String[] {
+                    }, LATEST_SELECTION, new String[]{
                             showId
                     }, null, null, LATEST_ORDER);
 
                     if (highestWatchedEpisode != null) {
                         if (highestWatchedEpisode.moveToFirst()) {
                             values.put(Shows.LASTWATCHEDID, highestWatchedEpisode.getInt(0));
-                            db.update(Tables.SHOWS, values, Shows._ID + "=?", new String[] {
+                            db.update(Tables.SHOWS, values, Shows._ID + "=?", new String[]{
                                     showId
                             });
                             values.clear();
@@ -535,11 +541,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Add {@link Episodes} columns for storing its IMDb id and last time of
-     * edit on theTVDB.com. Add {@link Shows} column for storing last time of
-     * edit as well.
-     * 
-     * @param db
+     * Add {@link Episodes} columns for storing its IMDb id and last time of edit on theTVDB.com.
+     * Add {@link Shows} column for storing last time of edit as well.
      */
     private static void upgradeToTwentySeven(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.LASTEDIT
@@ -551,10 +554,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Add a {@link Episodes} column for storing whether an episode was
-     * collected in digital or physical form.
-     * 
-     * @param db
+     * Add a {@link Episodes} column for storing whether an episode was collected in digital or
+     * physical form.
      */
     private static void upgradeToTwentySix(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN " + EpisodesColumns.COLLECTED
@@ -562,10 +563,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Add a {@link Shows} column for storing the next air date in ms as integer
-     * data type rather than as text.
-     * 
-     * @param db
+     * Add a {@link Shows} column for storing the next air date in ms as integer data type rather
+     * than as text.
      */
     private static void upgradeToTwentyFive(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.NEXTAIRDATEMS
@@ -573,17 +572,15 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Adds a column to the {@link Tables.EPISODES} table to store the airdate
-     * and possibly time in milliseconds.
-     * 
-     * @param db
+     * Adds a column to the {@link Tables.EPISODES} table to store the airdate and possibly time in
+     * milliseconds.
      */
     private static void upgradeToTwentyFour(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN " + EpisodesColumns.FIRSTAIREDMS
                 + " INTEGER DEFAULT -1;");
 
         // populate the new column from existing data
-        final Cursor shows = db.query(Tables.SHOWS, new String[] {
+        final Cursor shows = db.query(Tables.SHOWS, new String[]{
                 Shows._ID, Shows.AIRSTIME
         }, null, null, null, null, null);
 
@@ -591,9 +588,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             final String showId = shows.getString(0);
             final long airtime = shows.getLong(1);
 
-            final Cursor episodes = db.query(Tables.EPISODES, new String[] {
+            final Cursor episodes = db.query(Tables.EPISODES, new String[]{
                     Episodes._ID, Episodes.FIRSTAIRED
-            }, Shows.REF_SHOW_ID + "=?", new String[] {
+            }, Shows.REF_SHOW_ID + "=?", new String[]{
                     showId
             }, null, null, null);
 
@@ -605,7 +602,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                     long episodeAirtime = Utils.buildEpisodeAirtime(firstAired, airtime);
 
                     values.put(Episodes.FIRSTAIREDMS, episodeAirtime);
-                    db.update(Tables.EPISODES, values, Episodes._ID + "=?", new String[] {
+                    db.update(Tables.EPISODES, values, Episodes._ID + "=?", new String[]{
                             episodes.getString(0)
                     });
                     values.clear();
@@ -622,10 +619,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Adds a column to the {@link Tables.SHOWS} table similar to the favorite
-     * boolean, but to allow hiding shows.
-     * 
-     * @param db
+     * Adds a column to the {@link Tables.SHOWS} table similar to the favorite boolean, but to allow
+     * hiding shows.
      */
     private static void upgradeToTwentyThree(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.HIDDEN
@@ -633,12 +628,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Add a column to store the last time a show has been updated to allow for
-     * more precise control over which shows should get updated. This is in
-     * conjunction with a 7 day limit when a show will get updated regardless if
-     * it has been marked as updated or not.
-     * 
-     * @param db
+     * Add a column to store the last time a show has been updated to allow for more precise control
+     * over which shows should get updated. This is in conjunction with a 7 day limit when a show
+     * will get updated regardless if it has been marked as updated or not.
      */
     private static void upgradeToTwentyTwo(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.LASTUPDATED
@@ -657,8 +649,6 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     /**
      * In version 19 the season integer column totalcount was added.
-     * 
-     * @param db
      */
     private static void upgradeToNineteen(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SEASONS + " ADD COLUMN " + SeasonsColumns.TOTALCOUNT
@@ -667,15 +657,13 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     /**
      * In version 18 the series text column nextairdatetext was added.
-     * 
-     * @param db
      */
     private static void upgradeToEighteen(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.NEXTAIRDATETEXT
                 + " TEXT DEFAULT '';");
 
         // convert status text to 0/1 integer
-        final Cursor shows = db.query(Tables.SHOWS, new String[] {
+        final Cursor shows = db.query(Tables.SHOWS, new String[]{
                 Shows._ID, Shows.STATUS
         }, null, null, null, null, null);
         final ContentValues values = new ContentValues();
@@ -693,7 +681,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                     status = "";
                 }
                 values.put(Shows.STATUS, status);
-                db.update(Tables.SHOWS, values, Shows._ID + "=?", new String[] {
+                db.update(Tables.SHOWS, values, Shows._ID + "=?", new String[]{
                         shows.getString(0)
                 });
                 values.clear();
@@ -708,8 +696,6 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     /**
      * In version 17 the series boolean column favorite was added.
-     * 
-     * @param db
      */
     private static void upgradeToSeventeen(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.FAVORITE
@@ -835,7 +821,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 + " from episodes)" + "on _id=docid)" + "on sid=" + Shows.REF_SHOW_ID + ")");
 
         // search for anything starting with the given search term
-        return db.rawQuery(query.toString(), new String[] {
+        return db.rawQuery(query.toString(), new String[]{
                 "\"" + searchterm + "*\""
         });
     }

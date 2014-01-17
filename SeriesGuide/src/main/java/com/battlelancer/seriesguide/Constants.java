@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,23 +12,22 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide;
 
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Constants {
 
-    public static final SimpleDateFormat theTVDBDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat theTVDBDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
     public static enum EpisodeSorting {
         LATEST_FIRST(0, "latestfirst", Episodes.NUMBER + " DESC"),
@@ -80,12 +79,12 @@ public class Constants {
 
         static {
             for (EpisodeSorting via : EpisodeSorting.values()) {
-                STRING_MAPPING.put(via.toString().toUpperCase(), via);
+                STRING_MAPPING.put(via.toString().toUpperCase(Locale.US), via);
             }
         }
 
         public static EpisodeSorting fromValue(String value) {
-            return STRING_MAPPING.get(value.toUpperCase());
+            return STRING_MAPPING.get(value.toUpperCase(Locale.US));
         }
     }
 
@@ -127,12 +126,12 @@ public class Constants {
 
         static {
             for (SeasonSorting via : SeasonSorting.values()) {
-                STRING_MAPPING.put(via.toString().toUpperCase(), via);
+                STRING_MAPPING.put(via.toString().toUpperCase(Locale.US), via);
             }
         }
 
         public static SeasonSorting fromValue(String value) {
-            return STRING_MAPPING.get(value.toUpperCase());
+            return STRING_MAPPING.get(value.toUpperCase(Locale.US));
         }
     }
 

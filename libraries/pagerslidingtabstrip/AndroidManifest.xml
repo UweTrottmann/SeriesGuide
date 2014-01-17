@@ -1,8 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.astuetz.viewpager.extensions"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    package="com.astuetz.pagerslidingtabstrip">
 
-    <uses-sdk android:minSdkVersion="8" />
-
+    <application />
 </manifest>

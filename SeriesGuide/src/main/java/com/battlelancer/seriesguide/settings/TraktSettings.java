@@ -1,7 +1,26 @@
+/*
+ * Copyright 2014 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.battlelancer.seriesguide.settings;
 
+import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.util.SimpleCrypto;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -13,8 +32,6 @@ public class TraktSettings {
 
     public static final String KEY_PASSWORD_SHA1_ENCR = "com.battlelancer.seriesguide.traktpwd";
 
-    public static final String KEY_USERNAME = "com.battlelancer.seriesguide.traktuser";
-
     public static final String KEY_LAST_UPDATE = "com.battlelancer.seriesguide.lasttraktupdate";
 
     public static final String KEY_SHARE_WITH_TRAKT = "com.battlelancer.seriesguide.sharewithtrakt";
@@ -24,22 +41,6 @@ public class TraktSettings {
 
     public static final String KEY_SYNC_UNWATCHED_EPISODES
             = "com.battlelancer.seriesguide.syncunseenepisodes";
-
-    /**
-     * Checks if there are a non-empty trakt username and password. Returns false if either one is
-     * empty.
-     */
-    public static boolean hasTraktCredentials(Context context) {
-        String username = getUsername(context);
-        String password = getPasswordSha1(context);
-
-        return (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password));
-    }
-
-    public static String getUsername(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(
-                KEY_USERNAME, "");
-    }
 
     /**
      * Returns the SHA hash of the users trakt password.<br> <b>Never</b> store this yourself,

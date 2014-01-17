@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,15 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.dataliberation;
+
+import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.uwetrottmann.seriesguide.R;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -31,12 +36,6 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.uwetrottmann.seriesguide.R;
 
 /**
  * One button export or import of the show database using a JSON file on
@@ -160,7 +159,7 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
         if (mProgressBar == null) {
             return;
         }
-        mProgressBar.setIndeterminate(values[0] == values[1] ? true : false);
+        mProgressBar.setIndeterminate(values[0].equals(values[1]));
         mProgressBar.setMax(values[0]);
         mProgressBar.setProgress(values[1]);
     }

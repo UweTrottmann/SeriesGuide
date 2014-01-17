@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.ui;
@@ -22,7 +21,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
-import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -54,10 +53,6 @@ import java.util.ArrayList;
 public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
     protected static final String TAG = "Episode Details";
-
-    private EpisodePagerAdapter mAdapter;
-
-    private ViewPager mPager;
 
     private int mSeasonId;
 
@@ -136,15 +131,16 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         episode.close();
 
-        mAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(), episodes, true);
+        EpisodePagerAdapter adapter = new EpisodePagerAdapter(this, getSupportFragmentManager(),
+                episodes, true);
 
-        mPager = (ViewPager) findViewById(R.id.pagerEpisodeDetails);
-        mPager.setAdapter(mAdapter);
+        ViewPager pager = (ViewPager) findViewById(R.id.pagerEpisodeDetails);
+        pager.setAdapter(adapter);
 
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsEpisodeDetails);
         tabs.setAllCaps(false);
-        tabs.setViewPager(mPager);
-        mPager.setCurrentItem(startPosition, false);
+        tabs.setViewPager(pager);
+        pager.setCurrentItem(startPosition, false);
     }
 
     @Override

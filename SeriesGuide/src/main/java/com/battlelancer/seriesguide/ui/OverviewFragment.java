@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -37,6 +37,7 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
@@ -47,7 +48,6 @@ import com.uwetrottmann.seriesguide.R;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -85,8 +85,6 @@ public class OverviewFragment extends SherlockFragment implements
     private static final int SHOW_LOADER_ID = 101;
 
     private static final int CONTEXT_CREATE_CALENDAR_EVENT_ID = 201;
-
-    private boolean mMultiPane;
 
     private FetchArtTask mArtTask;
 
@@ -151,12 +149,13 @@ public class OverviewFragment extends SherlockFragment implements
 
         // Are we in a multi-pane layout?
         View seasonsFragment = getActivity().findViewById(R.id.fragment_seasons);
-        mMultiPane = seasonsFragment != null && seasonsFragment.getVisibility() == View.VISIBLE;
+        boolean multiPane = seasonsFragment != null
+                && seasonsFragment.getVisibility() == View.VISIBLE;
 
         // do not display show info header in multi pane layout
-        mContainerShow.setVisibility(mMultiPane ? View.GONE : View.VISIBLE);
-        mDividerShow.setVisibility(mMultiPane ? View.GONE : View.VISIBLE);
-        mSpacerShow.setVisibility(mMultiPane ? View.VISIBLE : View.GONE);
+        mContainerShow.setVisibility(multiPane ? View.GONE : View.VISIBLE);
+        mDividerShow.setVisibility(multiPane ? View.GONE : View.VISIBLE);
+        mSpacerShow.setVisibility(multiPane ? View.VISIBLE : View.GONE);
 
         getLoaderManager().initLoader(SHOW_LOADER_ID, null, this);
         getLoaderManager().initLoader(EPISODE_LOADER_ID, null, this);
@@ -313,7 +312,7 @@ public class OverviewFragment extends SherlockFragment implements
 
     private void onRateOnTrakt() {
         // rate episode on trakt.tv
-        if (ServiceUtils.ensureTraktCredentials(getActivity())) {
+        if (TraktCredentials.get(getActivity()).ensureCredentials()) {
             onShareEpisode(ShareMethod.RATE_TRAKT);
         }
         fireTrackerEvent("Rate (trakt)");
@@ -370,14 +369,11 @@ public class OverviewFragment extends SherlockFragment implements
             return;
         }
 
-        boolean isFavorited = (Boolean) v.getTag();
+        // store new value
+        boolean isFavorite = (Boolean) v.getTag();
+        ShowTools.get(getActivity()).storeIsFavorite(getShowId(), !isFavorite);
 
-        ContentValues values = new ContentValues();
-        values.put(Shows.FAVORITE, !isFavorited);
-
-        getActivity().getContentResolver().update(
-                Shows.buildShowUri(String.valueOf(getShowId())), values, null, null);
-
+        // favoriting makes show eligible for notifications
         Utils.runNotificationService(getActivity());
     }
 
@@ -395,7 +391,7 @@ public class OverviewFragment extends SherlockFragment implements
         public Cursor loadInBackground() {
             // get episode id, set query params
             int episodeId = (int) DBUtils.updateLatestEpisode(getContext(), mShowTvdbId);
-            setUri(Episodes.buildEpisodeWithShowUri(String.valueOf(episodeId)));
+            setUri(Episodes.buildEpisodeUri(episodeId));
 
             return super.loadInBackground();
         }
@@ -405,45 +401,42 @@ public class OverviewFragment extends SherlockFragment implements
     interface EpisodeQuery {
 
         String[] PROJECTION = new String[]{
-                Tables.EPISODES + "." + Episodes._ID, Shows.REF_SHOW_ID, Episodes.OVERVIEW,
-                Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIREDMS,
-                Episodes.GUESTSTARS, Tables.EPISODES + "." + Episodes.RATING,
-                Episodes.IMAGE, Episodes.DVDNUMBER, Episodes.TITLE, Seasons.REF_SEASON_ID,
-                Episodes.COLLECTED, Episodes.IMDBID, Episodes.ABSOLUTE_NUMBER
+                Episodes._ID, Episodes.OVERVIEW, Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED,
+                Episodes.FIRSTAIREDMS, Episodes.GUESTSTARS, Episodes.RATING, Episodes.IMAGE,
+                Episodes.DVDNUMBER, Episodes.TITLE, Seasons.REF_SEASON_ID, Episodes.COLLECTED,
+                Episodes.IMDBID, Episodes.ABSOLUTE_NUMBER
 
         };
 
         int _ID = 0;
 
-        int REF_SHOW_ID = 1;
+        int OVERVIEW = 1;
 
-        int OVERVIEW = 2;
+        int NUMBER = 2;
 
-        int NUMBER = 3;
+        int SEASON = 3;
 
-        int SEASON = 4;
+        int WATCHED = 4;
 
-        int WATCHED = 5;
+        int FIRSTAIREDMS = 5;
 
-        int FIRSTAIREDMS = 6;
+        int GUESTSTARS = 6;
 
-        int GUESTSTARS = 7;
+        int RATING = 7;
 
-        int RATING = 8;
+        int IMAGE = 8;
 
-        int IMAGE = 9;
+        int DVDNUMBER = 9;
 
-        int DVDNUMBER = 10;
+        int TITLE = 10;
 
-        int TITLE = 11;
+        int REF_SEASON_ID = 11;
 
-        int REF_SEASON_ID = 12;
+        int COLLECTED = 12;
 
-        int COLLECTED = 13;
+        int IMDBID = 13;
 
-        int IMDBID = 14;
-
-        int ABSOLUTE_NUMBER = 15;
+        int ABSOLUTE_NUMBER = 14;
 
     }
 
@@ -557,9 +550,8 @@ public class OverviewFragment extends SherlockFragment implements
             long airtime = episode.getLong(EpisodeQuery.FIRSTAIREDMS);
             if (airtime != -1) {
                 final String[] dayAndTime = Utils.formatToTimeAndDay(airtime, getActivity());
-                episodeTime.setText(new StringBuilder().append(dayAndTime[2]).append(" (")
-                        .append(dayAndTime[1])
-                        .append(")"));
+                episodeTime.setText(
+                        getString(R.string.release_date_and_day, dayAndTime[2], dayAndTime[1]));
                 episodeTime.setVisibility(View.VISIBLE);
             }
 

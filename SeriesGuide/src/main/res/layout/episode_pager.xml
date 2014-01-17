@@ -21,7 +21,7 @@
             android:orientation="vertical"
             android:paddingTop="?actionBarSize">
 
-            <com.astuetz.viewpager.extensions.PagerSlidingTabStrip
+            <com.astuetz.PagerSlidingTabStrip
                 android:id="@+id/tabsEpisodeDetails"
                 style="@style/TabStrip"
                 android:layout_width="match_parent"

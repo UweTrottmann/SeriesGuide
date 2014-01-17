@@ -20,7 +20,7 @@
             android:focusable="true"
             android:orientation="vertical"
             android:paddingStart="@dimen/widget_paddingLeft"
-            android:paddingEnd="@dimen/widget_paddingRight"></LinearLayout>
+            android:paddingEnd="@dimen/widget_paddingRight"/>
 
         <ImageButton
             android:id="@+id/ImageButtonWidget"

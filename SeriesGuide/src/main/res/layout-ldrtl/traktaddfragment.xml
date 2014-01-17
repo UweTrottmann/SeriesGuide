@@ -8,28 +8,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <GridView
-            android:id="@android:id/list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="@bool/gridClipToPadding"
-            android:columnWidth="@dimen/showgrid_columnWidth"
-            android:fastScrollEnabled="true"
-            android:gravity="center"
-            android:horizontalSpacing="@dimen/grid_horizontal_spacing"
-            android:listSelector="@android:color/transparent"
-            android:numColumns="auto_fit"
-            android:padding="@dimen/showgrid_padding"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="@dimen/grid_vertical_spacing"/>
+        <include layout="@layout/grid_shows" />
 
         <TextView
-            android:id="@android:id/empty"
-            android:layout_width="200dp"
+            android:id="@+id/emptyViewAdd"
+            android:layout_width="@dimen/empty_view_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/add_empty" />
+            android:text="@string/add_empty"
+            android:textAppearance="@style/TextAppearance.Light" />
     </FrameLayout>
 
     <ProgressBar

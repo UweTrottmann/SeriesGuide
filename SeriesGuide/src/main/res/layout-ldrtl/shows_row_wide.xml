@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.SeriesGuide.RtlGridViewItem"
     android:layout_width="match_parent"
     android:layout_height="153dp"
     android:background="?attr/drawableCardBackground"
-    android:foreground="?attr/custom_list_selector">
+    android:foreground="?attr/custom_list_selector" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -47,8 +48,8 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/showposter"
             android:layout_toStartOf="@id/favoritedLabel"
-            android:ellipsize="end"
-            android:maxLines="1"
+            android:ellipsize="marquee"
+            android:singleLine="true"
             android:textAppearance="@style/TextAppearance.Large.Light"
             tools:text="@string/show" />
 
@@ -59,8 +60,8 @@
             android:layout_below="@id/seriesname"
             android:layout_toEndOf="@id/showposter"
             android:layout_toStartOf="@id/favoritedLabel"
-            android:ellipsize="end"
-            android:maxLines="1"
+            android:ellipsize="marquee"
+            android:singleLine="true"
             android:paddingBottom="@dimen/default_padding"
             android:textAppearance="@style/TextAppearance.Small.Dim"
             tools:text="Tue 08:00 PM | Showtime Network" />
@@ -84,8 +85,8 @@
             android:layout_below="@+id/TextViewShowListNextEpisode"
             android:layout_marginEnd="@dimen/default_padding"
             android:layout_toEndOf="@id/showposter"
-            android:ellipsize="end"
-            android:maxLines="1"
+            android:ellipsize="marquee"
+            android:singleLine="true"
             android:paddingBottom="@dimen/item_padding"
             android:textAppearance="@style/TextAppearance.Small"
             tools:text="Jan 8, 2009 (Thu)" />

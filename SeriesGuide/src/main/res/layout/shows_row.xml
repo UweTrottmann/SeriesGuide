@@ -66,8 +66,8 @@
             android:layout_marginTop="2dp"
             android:layout_toRightOf="@id/showposter"
             android:layout_toLeftOf="@id/favoritedLabel"
-            android:ellipsize="end"
-            android:maxLines="1"
+            android:ellipsize="marquee"
+            android:singleLine="true"
             android:textAppearance="@style/TextAppearance.Medium.Light"
             tools:text="@string/show" />
 

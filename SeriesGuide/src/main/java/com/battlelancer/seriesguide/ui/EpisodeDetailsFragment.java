@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.ui;
@@ -29,6 +28,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
@@ -244,7 +244,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     private void onRateOnTrakt() {
-        if (ServiceUtils.ensureTraktCredentials(getActivity())) {
+        if (TraktCredentials.get(getActivity()).ensureCredentials()) {
             onShareEpisode(ShareMethod.RATE_TRAKT);
         }
         fireTrackerEvent("Rate (trakt)");
@@ -309,7 +309,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     protected void onLoadImage(String imagePath, FrameLayout container) {
         if (mArtTask == null || mArtTask.getStatus() == AsyncTask.Status.FINISHED) {
-            mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity());
+            mArtTask = new FetchArtTask(imagePath, container, getActivity());
             AndroidUtils.executeAsyncTask(mArtTask, new Void[]{
                     null
             });
@@ -421,8 +421,9 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             if (airTime != -1) {
                 airdateText.setText(Utils.formatToDate(airTime, getActivity()));
                 String[] dayAndTime = Utils.formatToTimeAndDay(airTime, getActivity());
-                airTimeAndNumberText.append((dayAndTime[2] + " (" + dayAndTime[1] + ")")
-                        .toUpperCase(Locale.getDefault()))
+                airTimeAndNumberText
+                        .append(getString(R.string.release_date_and_day, dayAndTime[2],
+                                dayAndTime[1]).toUpperCase(Locale.getDefault()))
                         .append("  ");
             } else {
                 airdateText.setText(R.string.unknown);

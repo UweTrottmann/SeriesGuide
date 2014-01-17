@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.ui;
@@ -63,10 +62,6 @@ public class BackupDeleteActivity extends BaseActivity {
 
     private static final int IMPORT_PROGRESS = 4;
 
-    private Button mExportDbToSdButton;
-
-    private Button mImportDbFromSdButton;
-
     private ExportDatabaseTask mExportTask;
 
     private ImportDatabaseTask mImportTask;
@@ -93,15 +88,15 @@ public class BackupDeleteActivity extends BaseActivity {
     }
 
     private void setupViews() {
-        mExportDbToSdButton = (Button) findViewById(R.id.ButtonExportDBtoSD);
-        mExportDbToSdButton.setOnClickListener(new OnClickListener() {
+        Button exportDbToSdButton = (Button) findViewById(R.id.ButtonExportDBtoSD);
+        exportDbToSdButton.setOnClickListener(new OnClickListener() {
             public void onClick(final View v) {
                 showDialog(EXPORT_DIALOG);
             }
         });
 
-        mImportDbFromSdButton = (Button) findViewById(R.id.ButtonImportDBfromSD);
-        mImportDbFromSdButton.setOnClickListener(new OnClickListener() {
+        Button importDbFromSdButton = (Button) findViewById(R.id.ButtonImportDBfromSD);
+        importDbFromSdButton.setOnClickListener(new OnClickListener() {
             public void onClick(final View v) {
                 showDialog(IMPORT_DIALOG);
             }

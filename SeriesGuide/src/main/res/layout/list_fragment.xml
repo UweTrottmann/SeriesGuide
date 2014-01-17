@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:clipToPadding="@bool/gridClipToPadding"
         android:fastScrollEnabled="true"
-        android:listSelector="?custom_list_selector"></ListView>
+        android:listSelector="?custom_list_selector"/>
 
     <TextView
         android:id="@+android:id/empty"

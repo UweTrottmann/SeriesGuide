@@ -3,14 +3,13 @@
 <resources>
   <string name="shows">Sorozatok</string>
   <string name="lists">Listák</string>
-  <string name="activity">Tevékenység</string>
   <string name="movies">Filmek</string>
   <string name="statistics">Statisztika</string>
   <string name="search">Keresés</string>
   <string name="preferences">Beállítások</string>
   <string name="help">Súgó</string>
-  <string name="drawer_open">Open navigation drawer</string>
-  <string name="drawer_close">Close navigation drawer</string>
+  <string name="drawer_open">Navigációs fiók megnyitása</string>
+  <string name="drawer_close">Navigációs fiók bezárása</string>
   <string name="show">Műsor</string>
   <string name="episode">Epizód</string>
   <string name="episode_number">Epizód %s</string>
@@ -28,13 +27,13 @@
   <string name="save_selection">Kijelöltek mentése</string>
   <string name="search_hint">Epizódok keresése</string>
   <string name="updated">Frissítve a legújabb verzióra.</string>
-  <string name="loading">Betöltés…</string>
   <string name="norating">n/a</string>
   <string name="unknown">ismeretlen</string>
-  <string name="offline">Nincs hálózati kapcsolat. Próbálja meg később.</string>
+  <string name="offline">Connect to a network, then try again.</string>
+  <string name="offline_no_wifi">Connect to Wi-Fi or allow all connections, then try again.</string>
   <string name="app_not_available">Nincs kezelő alkalmazás.</string>
   <string name="onlyx">Csak az X verzióval elérhető</string>
-  <string name="add_empty">Nincsenek sorozatok, vagy az eszköz nem rendelkezik Internet-kapcsolattal.</string>
+  <string name="add_empty">There are no shows here.</string>
   <string name="share_show">Műsor megosztása</string>
   <string name="share_episode">Epizód megosztása</string>
   <string name="share_checkout">Kijelentkezés</string>
@@ -51,7 +50,7 @@
   <string name="watchlist_removed">Eltávolítva a figyelőlistáról</string>
   <string name="movies_search_hint">Írj be egy filmcímet</string>
   <string name="movies_empty">Fenti film keresése.</string>
-  <string name="movies_watchlist_empty">Nincs internet kapcsolat vagy nem adtál még hozzá műsort a trakt figyelőlistádhoz.</string>
+  <string name="movies_watchlist_empty">You have not added movies to your trakt watchlist.</string>
   <string name="trailer">Előzetes</string>
   <string name="shows_with_next">%s új epizóddal</string>
   <string name="shows_continuing">%s folytatódik</string>
@@ -81,7 +80,6 @@
   <string name="episode_directors">Rendezte</string>
   <string name="episode_gueststars">Sztárvendég</string>
   <string name="episode_writers">Írta</string>
-  <string name="show_airtimeunit">perc</string>
   <string name="show_isalive">Még fut</string>
   <string name="show_isnotalive">Véget ért</string>
   <string name="lastEdit">Utolsó szerkesztés / / TVDb</string>
@@ -91,6 +89,8 @@
   <string name="today">ma</string>
   <string name="now">most</string>
   <string name="daily">Napi</string>
+  <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Megnézett epizód</string>
   <string name="unmark_episode">Még nem látott epizód</string>
   <string name="mark_all">Mind megnézve</string>
@@ -100,8 +100,8 @@
   <string name="uncollect">Még be nem szerzett epizód</string>
   <string name="collect_all">Mind begyűjtve</string>
   <string name="uncollect_all">Nincs begyűjtött</string>
-  <string name="action_skip">Skip</string>
-  <string name="action_dont_skip">Don\'t skip</string>
+  <string name="action_skip">Kihagyás</string>
+  <string name="action_dont_skip">Ne hagyja ki</string>
   <string name="trakt_submitqueued">Elküldés a traktnak.</string>
   <string name="trakt_seen">A(z) %s-t láttam.</string>
   <string name="trakt_notseen">A(z) %s-t nem láttam.</string>
@@ -109,6 +109,7 @@
   <string name="trakt_notcollected">%s kivéve a gyűjteményből.</string>
   <string name="confirm_delete">Biztosan törli a következőt: %s?</string>
   <string name="delete_has_list_items">Nem folytatható, távolítsa el a %s-t minden listáról előbb.</string>
+  <string name="delete_error">Could not remove show. Try again later.</string>
   <string name="delete_show">Törlés</string>
   <string name="dontdelete_show">Mégse</string>
   <string name="no_nextepisode">nem található köv. rész</string>
@@ -144,14 +145,13 @@
   <string name="only_favorites">Csak kedvenc műsorok</string>
   <string name="togglewatched">Láttam igen/nem</string>
   <string name="pref_infinite_scrolling">Végtelen görgetés</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Frissítés…</string>
   <string name="update_no_connection">Frissítéshez csatlakozz az internetre.</string>
-  <string name="update_no_wifi">Frissítéshez csatlakozz WiFin vagy engedélyezz más kapcsolatokat a Beállításokban.</string>
   <string name="update_inprogress">Egy frissítés folyamatban, próbálja később.</string>
   <string name="menu_updateart">Képek letöltése</string>
   <string name="arttask_incomplete">Néhány kép letöltése nem sikerült, próbálja meg később.</string>
   <string name="arttask_start">Képek letöltése…</string>
-  <string name="arttask_nosdcard">A képek letöltéséhez további tároló kapacitásra van szükség az SD kártyán.</string>
   <string name="show_on_network">%s csatornán</string>
   <string name="season_watchcount">nem látott epizód</string>
   <string name="season_allwatched">Minden epizód megnézve</string>
@@ -183,6 +183,17 @@
   <string name="list_item_manage">Listák kezelése</string>
   <string name="list_item_remove">Listáról törlés</string>
   <string name="list_empty">Sorozatokat, évadokat vagy epizódokat is adhat hozzá ehhez a listához.</string>
+  <string name="hexagon_setup">Set up SeriesGuide cloud</string>
+  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
+  <string name="hexagon_signin">Sign In</string>
+  <string name="hexagon_signed_in">You are connected to SeriesGuide cloud.</string>
+  <string name="hexagon_signout">Sign Out</string>
+  <string name="hexagon_setup_incomplete">Setting up SeriesGuide cloud was not completed.</string>
+  <string name="hexagon_setup_complete">Complete setup</string>
+  <string name="hexagon_priority_choice_required">Some of your shows are already in the cloud. Which version do you prefer?</string>
+  <string name="hexagon_priority_local">On this device</string>
+  <string name="hexagon_priority_cloud">In the cloud</string>
+  <string name="hexagon_priority_select">Select version</string>
   <string name="connect_trakt">Trakt csatlakozás</string>
   <string name="connect_trakt_done">Csatlakozott a trakthoz!</string>
   <string name="add_trakt_shows">Műsor hozzáadása a gyűjteményedből:</string>
@@ -208,7 +219,8 @@
   <string name="pref_seasonsorting">Évadok rendezése</string>
   <string name="pref_episodesorting">Epizódok rendezése</string>
   <string name="pref_language">Tartalom nyelve</string>
-  <string name="pref_updatewifionly">Frissítés csak Wi-Fi hálózaton keresztül</string>
+  <string name="pref_updatewifionly">Images via Wi-Fi only</string>
+  <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
   <string name="about">A SeriesGuide-ról</string>
   <string name="pref_credits">Készítők listája</string>
   <string name="clearGetGlueCredentials">GetGlue kapcsolat megszakítása</string>
@@ -269,7 +281,7 @@
   <string name="paste_title">Cím beillesztése</string>
   <string name="checkinsuccess">GetGlue-val bejelentkezve ide: %s.</string>
   <string name="checkinfailed">GetGlue bejelentkezés nem sikerült. Próbálja meg később.</string>
-  <string name="getglue_authentication">Connect GetGlue</string>
+  <string name="getglue_authentication">GetGlue kapcsolódás</string>
   <string name="getglue_authfailed">A GetGlue azonosítás nem sikerült. Próbálja meg később.</string>
   <string name="checkin_success_trakt">Bejelentkezve trakt-tal ide: %s.</string>
   <string name="checkin_canceled_success_trakt">Bejelentkezés törölve a trakt-on.</string>
@@ -326,15 +338,20 @@
   <string name="migration_description">A SeriesGuide X egy feloldó kulcs az ingyenes alkalmazás X lehetőségeihez. ("X Örökös tagság"). Kérem, vidd át a sorozataidat a SeriesGuide igyenes verziójába. Az X-et tartsd fent telepítve, hogy az ingyenes verzióban elérhesd az összes lehetőséget.</string>
   <string name="migration_import">Érintse meg alább a SeriesGuide X-ben készült mentés importálásához.</string>
   <string name="migration_action_import">Importálás és a létező sorozatok cseréje</string>
-  <string name="action_upgrade">Get X features</string>
+  <string name="action_upgrade">X funkciók beszerzése</string>
+  <string name="billing_action_subscribe">Subscribe</string>
+  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+  <string name="billing_price_pass">one-time purchase</string>
   <string name="upgrade_description">Szerezz elérést az értesítésekhez, több widget opcióhoz és a jövőbeli X funkciókhoz. Támogasd a további fejlesztést.\n\nHa már megvásároltad a SeriesGuide X verziót, akkor az engedélyezi ezeket a funkciókat.</string>
   <string name="upgrade_success">Már van X előfizetésed, köszönjük!</string>
+  <string name="billing_learn_more">Why pay? Learn more.</string>
   <string name="subscription_activated">Nincs X előfizetésed.</string>
   <string name="subscription_expired">Lejárt az előfizetés</string>
   <string name="subscription_expired_details">Lejárt az X előfizetésed.</string>
   <string name="add_to_homescreen">Kezdőképernyőhöz ad</string>
   <string name="search_within_show">Keresés itt %s</string>
-  <string name="web_search">Web search</string>
+  <string name="web_search">Internetes keresés</string>
   <string-array name="sesorting">
     <item>Újabbak előre</item>
     <item>Régebbiek előre</item>

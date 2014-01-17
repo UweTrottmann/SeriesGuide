@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.thetvdbapi;
@@ -158,8 +157,7 @@ public class TheTVDB {
      *
      * @return a List with SearchResult objects, max 100
      */
-    public static List<SearchResult> searchShow(String title, Context context) throws IOException,
-            SAXException {
+    public static List<SearchResult> searchShow(String title, Context context) throws IOException {
         String language = DisplaySettings.getContentLanguage(context);
 
         URL url;
@@ -303,7 +301,7 @@ public class TheTVDB {
             throws SAXException {
         // Try to get some show details from trakt
         TvShow traktShow = null;
-        Trakt manager = ServiceUtils.getTraktServiceManager(context);
+        Trakt manager = ServiceUtils.getTrakt(context);
         if (manager != null) {
             try {
                 traktShow = manager.showService().summary(showTvdbId);
@@ -435,9 +433,9 @@ public class TheTVDB {
         });
         show.getChild("poster").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.poster = body;
-                if (body.length() != 0) {
-                    fetchArt(body, true, context);
+                currentShow.poster = body != null ? body.trim() : "";
+                if (Utils.isAllowedLargeDataConnection(context, false)) {
+                    fetchArt(currentShow.poster, true, context);
                 }
             }
         });
@@ -697,7 +695,7 @@ public class TheTVDB {
      * downloaded
      */
     public static boolean fetchArt(String fileName, boolean isPoster, Context context) {
-        if (TextUtils.isEmpty(fileName) || context == null) {
+        if (context == null || TextUtils.isEmpty(fileName)) {
             return true;
         }
 
@@ -727,16 +725,17 @@ public class TheTVDB {
 
     private static Bitmap downloadBitmap(String url, Context context) {
         InputStream inputStream = null;
+        HttpURLConnection urlConnection = null;
         try {
-            HttpURLConnection conn = AndroidUtils.buildHttpUrlConnection(url);
-            conn.connect();
-            long imageSize = conn.getContentLength();
+            urlConnection = AndroidUtils.buildHttpUrlConnection(url);
+            urlConnection.connect();
+            long imageSize = urlConnection.getContentLength();
             // allow images up to 300K (although size is always around
             // 30K for posters and 100K for episode images)
             if (imageSize > 300000) {
                 return null;
             } else {
-                inputStream = conn.getInputStream();
+                inputStream = urlConnection.getInputStream();
                 // return BitmapFactory.decodeStream(inputStream);
                 // Bug on slow connections, fixed in future release.
                 return BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
@@ -758,6 +757,10 @@ public class TheTVDB {
                     Log.w(TAG, "I/O error while retrieving bitmap from " + url, e);
                     Utils.trackException(context, TAG + " I/O error retrieving bitmap from " + url,
                             e);
+                }
+            } else {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
                 }
             }
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.appwidget;
@@ -21,8 +20,8 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Qualified;
 import com.battlelancer.seriesguide.settings.WidgetSettings;
+import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
-import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
@@ -125,17 +124,17 @@ public class ListWidgetService extends RemoteViewsService {
 
             // episode description
             int seasonNumber = mDataCursor.getInt(isShowQuery ?
-                    ShowsQuery.EPISODE_SEASON : UpcomingQuery.SEASON);
+                    ShowsQuery.EPISODE_SEASON : ActivityFragment.ActivityQuery.SEASON);
             int episodeNumber = mDataCursor.getInt(isShowQuery ?
-                    ShowsQuery.EPISODE_NUMBER : UpcomingQuery.NUMBER);
+                    ShowsQuery.EPISODE_NUMBER : ActivityFragment.ActivityQuery.NUMBER);
             String title = mDataCursor.getString(isShowQuery ?
-                    ShowsQuery.EPISODE_TITLE : UpcomingQuery.TITLE);
+                    ShowsQuery.EPISODE_TITLE : ActivityFragment.ActivityQuery.TITLE);
             rv.setTextViewText(R.id.textViewWidgetEpisode,
                     Utils.getNextEpisodeString(mContext, seasonNumber, episodeNumber, title));
 
             // relative airtime
             long airtime = mDataCursor.getLong(isShowQuery ?
-                    ShowsQuery.EPISODE_FIRSTAIRED_MS : UpcomingQuery.FIRSTAIREDMS);
+                    ShowsQuery.EPISODE_FIRSTAIRED_MS : ActivityFragment.ActivityQuery.FIRSTAIREDMS);
             String[] dayAndTime = Utils.formatToTimeAndDay(airtime, mContext);
             String value = dayAndTime[2] + " (" + dayAndTime[1] + ")";
             rv.setTextViewText(R.id.widgetAirtime, value);
@@ -143,7 +142,7 @@ public class ListWidgetService extends RemoteViewsService {
             // absolute airtime and network (if any)
             value = dayAndTime[0];
             String network = mDataCursor.getString(isShowQuery ?
-                    ShowsQuery.SHOW_NETWORK : UpcomingQuery.SHOW_NETWORK);
+                    ShowsQuery.SHOW_NETWORK : ActivityFragment.ActivityQuery.SHOW_NETWORK);
             if (network.length() != 0) {
                 value += " " + network;
             }
@@ -151,12 +150,12 @@ public class ListWidgetService extends RemoteViewsService {
 
             // show name
             value = mDataCursor.getString(isShowQuery ?
-                    ShowsQuery.SHOW_TITLE : UpcomingQuery.SHOW_TITLE);
+                    ShowsQuery.SHOW_TITLE : ActivityFragment.ActivityQuery.SHOW_TITLE);
             rv.setTextViewText(R.id.textViewWidgetShow, value);
 
             // show poster
             value = mDataCursor.getString(isShowQuery
-                    ? ShowsQuery.SHOW_POSTER : UpcomingQuery.SHOW_POSTER);
+                    ? ShowsQuery.SHOW_POSTER : ActivityFragment.ActivityQuery.SHOW_POSTER);
             final Bitmap poster = ImageProvider.getInstance(mContext).getImage(value, true);
             if (poster != null) {
                 rv.setImageViewBitmap(R.id.widgetPoster, poster);
@@ -168,7 +167,7 @@ public class ListWidgetService extends RemoteViewsService {
             Bundle extras = new Bundle();
             extras.putInt(EpisodesActivity.InitBundle.EPISODE_TVDBID,
                     mDataCursor.getInt(isShowQuery ?
-                            ShowsQuery.SHOW_NEXT_EPISODE_ID : UpcomingQuery._ID));
+                            ShowsQuery.SHOW_NEXT_EPISODE_ID : ActivityFragment.ActivityQuery._ID));
             Intent fillInIntent = new Intent();
             fillInIntent.putExtras(extras);
             rv.setOnClickFillInIntent(R.id.appwidget_row, fillInIntent);

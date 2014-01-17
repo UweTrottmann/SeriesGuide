@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.ui;
@@ -107,7 +106,7 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
         mAdapter = new CheckinAdapter(this, null, 0);
 
         // setup grid view
-        GridView list = (GridView) findViewById(R.id.gridViewCheckinShows);
+        GridView list = (GridView) findViewById(android.R.id.list);
         list.setAdapter(mAdapter);
         list.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {

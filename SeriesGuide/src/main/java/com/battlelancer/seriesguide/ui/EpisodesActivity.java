@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.ui;
@@ -21,7 +20,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
-import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.items.Series;
@@ -54,8 +53,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Hosts a fragment which displays episodes of a season. On larger screen hosts
- * a {@link ViewPager} displaying the episodes.
+ * Hosts a fragment which displays episodes of a season. On larger screen hosts a {@link ViewPager}
+ * displaying the episodes.
  */
 public class EpisodesActivity extends BaseNavDrawerActivity implements
         OnSharedPreferenceChangeListener, OnPageChangeListener {
@@ -82,6 +81,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
      * All values have to be integer. Only one is required.
      */
     public interface InitBundle {
+
         String SEASON_TVDBID = "season_tvdbid";
 
         String EPISODE_TVDBID = "episode_tvdbid";
@@ -114,9 +114,9 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
             } else {
                 // get season id
                 final Cursor episode = getContentResolver().query(
-                        Episodes.buildEpisodeUri(String.valueOf(episodeId)), new String[] {
-                                Episodes._ID, Seasons.REF_SEASON_ID
-                        }, null, null, null);
+                        Episodes.buildEpisodeUri(String.valueOf(episodeId)), new String[]{
+                        Episodes._ID, Seasons.REF_SEASON_ID
+                }, null, null, null);
                 if (episode != null && episode.moveToFirst()) {
                     mSeasonId = episode.getInt(1);
                 } else {
@@ -140,9 +140,9 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
 
         // get show id and season number
         final Cursor season = getContentResolver().query(
-                Seasons.buildSeasonUri(String.valueOf(mSeasonId)), new String[] {
-                        Seasons._ID, Seasons.COMBINED, Shows.REF_SHOW_ID
-                }, null, null, null);
+                Seasons.buildSeasonUri(String.valueOf(mSeasonId)), new String[]{
+                Seasons._ID, Seasons.COMBINED, Shows.REF_SHOW_ID
+        }, null, null, null);
         if (season != null && season.moveToFirst()) {
             mSeasonNumber = season.getInt(1);
             mShowId = season.getInt(2);
@@ -283,8 +283,6 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
 
     /**
      * Switch the view pager page to show the given episode.
-     * 
-     * @param episodeId
      */
     public void onChangePage(int episodeId) {
         if (mDualPane) {
@@ -297,7 +295,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
             }
 
             // switch to the page immediately
-            mPager.setCurrentItem(i, false);
+            mPager.setCurrentItem(i, true);
         }
     }
 
@@ -328,23 +326,22 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
     }
 
     /**
-     * Updates the episode list, using the current sorting. Always returns 0 as
-     * the starting position.
+     * Updates the episode list, using the current sort order.
      */
-    private int updateEpisodeList() {
-        return updateEpisodeList(0);
+    private void updateEpisodeList() {
+        updateEpisodeList(0);
     }
 
     /**
-     * Updates the episode list, using the current sorting. If a valid initial
-     * episode id is given it will return its position in the created list.
+     * Updates the episode list, using the current sorting. If a valid initial episode id is given
+     * it will return its position in the created list.
      */
     private int updateEpisodeList(int initialEpisodeId) {
         Constants.EpisodeSorting sortOrder = DisplaySettings.getEpisodeSortOrder(this);
 
         Cursor episodeCursor = getContentResolver().query(
                 Episodes.buildEpisodesOfSeasonWithShowUri(String.valueOf(mSeasonId)),
-                new String[] {
+                new String[]{
                         Episodes._ID, Episodes.NUMBER
                 }, null, null, sortOrder.query());
 

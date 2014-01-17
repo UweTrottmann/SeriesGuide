@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.ui;
@@ -22,7 +21,6 @@ import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
@@ -78,8 +76,6 @@ public class ListsFragment extends SherlockFragment implements
 
     private ListItemAdapter mAdapter;
 
-    private GridView mList;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -93,12 +89,12 @@ public class ListsFragment extends SherlockFragment implements
         mAdapter = new ListItemAdapter(getActivity(), null, 0, this);
 
         // setup grid view
-        mList = (GridView) getView().findViewById(android.R.id.list);
-        mList.setAdapter(mAdapter);
-        mList.setOnItemClickListener(this);
-        mList.setEmptyView(getView().findViewById(android.R.id.empty));
+        GridView list = (GridView) getView().findViewById(android.R.id.list);
+        list.setAdapter(mAdapter);
+        list.setOnItemClickListener(this);
+        list.setEmptyView(getView().findViewById(android.R.id.empty));
 
-        registerForContextMenu(mList);
+        registerForContextMenu(list);
 
         getLoaderManager().initLoader(LOADER_ID, getArguments(), this);
     }

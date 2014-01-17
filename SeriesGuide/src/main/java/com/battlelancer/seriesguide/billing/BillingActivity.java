@@ -1,4 +1,20 @@
 
+/*
+ * Copyright 2014 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.battlelancer.seriesguide.billing;
 
 import android.app.AlertDialog;
@@ -14,6 +30,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -26,12 +43,16 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.BuildConfig;
 import com.uwetrottmann.seriesguide.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BillingActivity extends BaseActivity {
 
     public static final String TAG = "BillingActivity";
 
     // The SKU product ids as set in the Developer Console
     public static final String SKU_X = "x_upgrade";
+
     public static final String SKU_X_SUBSCRIPTION = "x_subscription";
 
     // (arbitrary) request code for the purchase flow
@@ -45,7 +66,13 @@ public class BillingActivity extends BaseActivity {
 
     private View mContentContainer;
 
-    private Button mSubscribeButton;
+    private Button mButtonSub;
+
+    private Button mButtonPass;
+
+    private TextView mTextViewPriceSub;
+
+    private String mSubPrice;
 
     private View mTextHasUpgrade;
 
@@ -58,8 +85,11 @@ public class BillingActivity extends BaseActivity {
 
         setupViews();
 
-        // do not set up in-app billing if already qualified for X upgrade
-        if (updateUi()) {
+        // do not query IAB if user has key
+        boolean hasUpgrade = !Utils.requiresPurchaseCheck(this);
+        updateViewStates(hasUpgrade);
+        // no need to go further if user has a key
+        if (hasUpgrade) {
             setWaitMode(false);
             return;
         }
@@ -78,18 +108,22 @@ public class BillingActivity extends BaseActivity {
                 if (!result.isSuccess()) {
                     // Oh noes, there was a problem.
                     complain("Problem setting up In-app Billing: " + result);
-                    disableUi();
+                    enableFallBackMode();
                     setWaitMode(false);
                     return;
                 }
 
                 // Have we been disposed of in the meantime? If so, quit.
-                if (mHelper == null) return;
+                if (mHelper == null) {
+                    return;
+                }
 
-                // Hooray, IAB is fully set up. Now, let's get an inventory of
-                // stuff we own.
+                // Hooray, IAB is fully set up.
+                // Get an inventory of stuff we own, also get SKU details for pricing info
                 Log.d(TAG, "Setup successful. Querying inventory.");
-                mHelper.queryInventoryAsync(mGotInventoryListener);
+                List<String> detailSkus = new ArrayList<>();
+                detailSkus.add(SKU_X_SUBSCRIPTION);
+                mHelper.queryInventoryAsync(true, detailSkus, mGotInventoryListener);
             }
         });
     }
@@ -100,11 +134,21 @@ public class BillingActivity extends BaseActivity {
     }
 
     private void setupViews() {
-        mSubscribeButton = (Button) findViewById(R.id.buttonBillingGetUpgrade);
-        mSubscribeButton.setOnClickListener(new OnClickListener() {
+        mButtonSub = (Button) findViewById(R.id.buttonBillingGetSubscription);
+        mButtonSub.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                onSubscribeToXButtonClicked(v);
+                onSubscribeToXButtonClicked();
+            }
+        });
+        mTextViewPriceSub = (TextView) findViewById(R.id.textViewBillingPriceSubscription);
+
+        mButtonPass = (Button) findViewById(R.id.buttonBillingGetPass);
+        mButtonPass.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.launchWebsite(BillingActivity.this, getString(R.string.url_x_pass), TAG,
+                        "X Pass");
             }
         });
 
@@ -112,6 +156,14 @@ public class BillingActivity extends BaseActivity {
 
         mProgressScreen = findViewById(R.id.progressBarBilling);
         mContentContainer = findViewById(R.id.containerBilling);
+
+        findViewById(R.id.textViewBillingMoreInfo).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.launchWebsite(BillingActivity.this, getString(R.string.url_whypay), TAG,
+                        "WhyPayWebsite");
+            }
+        });
     }
 
     @Override
@@ -127,7 +179,9 @@ public class BillingActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);
         // Have we been disposed of in the meantime? If so, quit.
-        if (mHelper == null) return;
+        if (mHelper == null) {
+            return;
+        }
 
         // Pass on the activity result to the helper for handling
         if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
@@ -135,8 +189,7 @@ public class BillingActivity extends BaseActivity {
             // perform any handling of activity results not related to in-app
             // billing...
             super.onActivityResult(requestCode, resultCode, data);
-        }
-        else {
+        } else {
             Log.d(TAG, "onActivityResult handled by IABUtil.");
         }
     }
@@ -154,12 +207,15 @@ public class BillingActivity extends BaseActivity {
 
     // Listener that's called when we finish querying the items and
     // subscriptions we own
-    IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
+    IabHelper.QueryInventoryFinishedListener mGotInventoryListener
+            = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
             Log.d(TAG, "Query inventory finished.");
 
             // Have we been disposed of in the meantime? If so, quit.
-            if (mHelper == null) return;
+            if (mHelper == null) {
+                return;
+            }
 
             if (result.isFailure()) {
                 complain("Could not query inventory: " + result);
@@ -168,9 +224,15 @@ public class BillingActivity extends BaseActivity {
 
             Log.d(TAG, "Query inventory was successful.");
 
-            checkForSubscription(BillingActivity.this, inventory);
+            // get sub state
+            boolean hasUpgrade = checkForSubscription(BillingActivity.this, inventory);
+            // get local sub price
+            SkuDetails skuDetails = inventory.getSkuDetails(SKU_X_SUBSCRIPTION);
+            if (skuDetails != null) {
+                mSubPrice = skuDetails.getPrice();
+            }
 
-            updateUi();
+            updateViewStates(hasUpgrade);
             setWaitMode(false);
             Log.d(TAG, "Initial inventory query finished; enabling main UI.");
         }
@@ -178,12 +240,11 @@ public class BillingActivity extends BaseActivity {
     };
 
     /**
-     * Checks if the user is subscribed to X features or has the deprecated X
-     * upgrade (so he gets the subscription for life). Also sets the current
-     * state through
-     * {@link AdvancedSettings#setSubscriptionState(Context, boolean)}.
+     * Checks if the user is subscribed to X features or has the deprecated X upgrade (so he gets
+     * the subscription for life). Also sets the current state through {@link
+     * AdvancedSettings#setSubscriptionState(Context, boolean)}.
      */
-    public static void checkForSubscription(Context context, Inventory inventory) {
+    public static boolean checkForSubscription(Context context, Inventory inventory) {
         /*
          * Check for items we own. Notice that for each purchase, we check the
          * developer payload to see if it's correct! See
@@ -220,11 +281,13 @@ public class BillingActivity extends BaseActivity {
 
         // Save current state until we query again
         AdvancedSettings.setSubscriptionState(context, isSubscribed);
+
+        return isSubscribed;
     }
 
     /**
-     * Displays a notification that the subscription has expired. Its action
-     * opens {@link BillingActivity}.
+     * Displays a notification that the subscription has expired. Its action opens {@link
+     * BillingActivity}.
      */
     public static void onExpiredNotification(Context context) {
         NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
@@ -259,7 +322,9 @@ public class BillingActivity extends BaseActivity {
         nm.notify(R.string.subscription_expired, notification);
     }
 
-    /** Verifies the developer payload of a purchase. */
+    /**
+     * Verifies the developer payload of a purchase.
+     */
     public static boolean verifyDeveloperPayload(Purchase p) {
         String payload = p.getDeveloperPayload();
 
@@ -272,7 +337,7 @@ public class BillingActivity extends BaseActivity {
     }
 
     // User clicked the "Subscribe" button.
-    private void onSubscribeToXButtonClicked(View button) {
+    private void onSubscribeToXButtonClicked() {
         Log.d(TAG, "Subscribe button clicked; launching purchase flow for X subscription.");
 
         String payload = SOME_STRING;
@@ -284,12 +349,15 @@ public class BillingActivity extends BaseActivity {
     }
 
     // Callback for when a purchase is finished
-    IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+    IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener
+            = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
             Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
 
             // Have we been disposed of in the meantime? If so, quit.
-            if (mHelper == null) return;
+            if (mHelper == null) {
+                return;
+            }
 
             if (result.isFailure()) {
                 if (result.getResponse() != IabHelper.IABHELPER_USER_CANCELLED) {
@@ -310,34 +378,35 @@ public class BillingActivity extends BaseActivity {
                 Log.d(TAG, "Purchased X subscription. Congratulating user.");
                 // Save current state until we query again
                 AdvancedSettings.setSubscriptionState(BillingActivity.this, true);
-                updateUi();
+                updateViewStates(true);
                 setWaitMode(false);
             }
         }
     };
 
     /**
-     * Returns the public key used for verification of purchases by
-     * {@link IabHelper}.
+     * Returns the public key used for verification of purchases by {@link IabHelper}.
      */
     public static String getPublicKey(Context context) {
         return context.getString(R.string.key_a) + context.getString(R.string.key_b)
                 + context.getString(R.string.key_c) + context.getString(R.string.key_d);
     }
 
-    private boolean updateUi() {
+    private void updateViewStates(boolean hasUpgrade) {
         // Only enable purchase button if the user does not have the upgrade yet
-        boolean isSubscribedToX = Utils.hasAccessToX(this);
-        mSubscribeButton.setEnabled(!isSubscribedToX);
-        mTextHasUpgrade.setVisibility(isSubscribedToX ? View.VISIBLE : View.GONE);
-        return isSubscribedToX;
+        mButtonSub.setEnabled(!hasUpgrade);
+        mTextViewPriceSub.setText(
+                getString(R.string.billing_price_subscribe, mSubPrice != null ? mSubPrice : "--"));
+        mButtonPass.setEnabled(!hasUpgrade);
+        mTextHasUpgrade.setVisibility(hasUpgrade ? View.VISIBLE : View.GONE);
     }
 
     /**
      * Disables the purchase button and hides the subscribed message.
      */
-    private void disableUi() {
-        mSubscribeButton.setEnabled(false);
+    private void enableFallBackMode() {
+        mButtonSub.setEnabled(false);
+        mButtonPass.setEnabled(true);
         mTextHasUpgrade.setVisibility(View.GONE);
     }
 

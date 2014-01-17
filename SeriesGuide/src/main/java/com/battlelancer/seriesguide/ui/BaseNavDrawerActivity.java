@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,12 +12,12 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.backend.CloudSetupActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -52,19 +52,17 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
     private ActionBarDrawerToggle mDrawerToggle;
 
-    private DrawerAdapter mDrawerAdapter;
-
     public static final int MENU_ITEM_SHOWS_POSITION = 0;
 
     public static final int MENU_ITEM_LISTS_POSITION = 1;
 
-    public static final int MENU_ITEM_ACTIVITY_POSITION = 2;
+    public static final int MENU_ITEM_MOVIES_POSITION = 2;
 
-    public static final int MENU_ITEM_MOVIES_POSITION = 3;
+    public static final int MENU_ITEM_STATS_POSITION = 3;
 
-    public static final int MENU_ITEM_STATS_POSITION = 4;
+    public static final int MENU_ITEM_SEARCH_POSITION = 4;
 
-    public static final int MENU_ITEM_SEARCH_POSITION = 5;
+    public static final int MENU_ITEM_CLOUD_POSITION = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,18 +82,19 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
         // setup menu adapter
-        mDrawerAdapter = new DrawerAdapter(this);
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.shows), R.drawable.ic_action_tv));
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.lists), R.drawable.ic_action_list));
-        mDrawerAdapter
-                .add(new DrawerItem(getString(R.string.activity), R.drawable.ic_action_upcoming));
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.movies), R.drawable.ic_action_movie));
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.statistics),
+        DrawerAdapter drawerAdapter = new DrawerAdapter(this);
+        drawerAdapter.add(new DrawerItem(getString(R.string.shows), R.drawable.ic_action_tv));
+        drawerAdapter.add(new DrawerItem(getString(R.string.lists), R.drawable.ic_action_list));
+        drawerAdapter.add(new DrawerItem(getString(R.string.movies), R.drawable.ic_action_movie));
+        drawerAdapter.add(new DrawerItem(getString(R.string.statistics),
                 R.drawable.ic_action_bargraph));
-        mDrawerAdapter
+        drawerAdapter
                 .add(new DrawerItem(getString(R.string.search_hint), R.drawable.ic_action_search));
+        // disabled in stable release
+        // drawerAdapter
+        //        .add(new DrawerItem(getString(R.string.hexagon_short), R.drawable.ic_action_lab));
 
-        mDrawerList.setAdapter(mDrawerAdapter);
+        mDrawerList.setAdapter(drawerAdapter);
         mDrawerList.setOnItemClickListener(this);
 
         // setup drawer indicator
@@ -149,11 +148,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Lists");
                 break;
-            case MENU_ITEM_ACTIVITY_POSITION:
-                startActivity(new Intent(this, UpcomingRecentActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
-                Utils.trackAction(this, TAG_NAV_DRAWER, "Activity");
-                break;
             case MENU_ITEM_MOVIES_POSITION:
                 startActivity(new Intent(this, MoviesActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
@@ -168,6 +162,10 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 startActivity(new Intent(this, SearchActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Search");
+                break;
+            case MENU_ITEM_CLOUD_POSITION:
+                startActivity(new Intent(this, CloudSetupActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 break;
         }
 

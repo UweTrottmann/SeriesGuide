@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/textViewShowOverview"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin.FlowText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxEms="20"
+        android:textAppearance="@style/TextAppearance.Light"
+        android:textIsSelectable="true"
+        tools:text="A multi-line description of this show." />
+
+    <TextView
+        style="@style/DefaultPadding.Blocks.WithTopMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show_genres"
+        android:textAppearance="@style/TextAppearance.Small.Label" />
+
+    <TextView
+        android:id="@+id/textViewShowGenres"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.Light"
+        android:textIsSelectable="true" />
+
+    <TextView
+        style="@style/DefaultPadding.Blocks.WithTopMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show_actors"
+        android:textAppearance="@style/TextAppearance.Small.Label" />
+
+    <TextView
+        android:id="@+id/textViewShowActors"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.Light"
+        android:textIsSelectable="true" />
+
+    <TextView
+        style="@style/DefaultPadding.Blocks.WithTopMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show_contentrating"
+        android:textAppearance="@style/TextAppearance.Small.Label" />
+
+    <TextView
+        android:id="@+id/textViewShowContentRating"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.Light"
+        android:textIsSelectable="true" />
+
+    <TextView
+        style="@style/DefaultPadding.Blocks.WithTopMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show_firstaired"
+        android:textAppearance="@style/TextAppearance.Small.Label" />
+
+    <TextView
+        android:id="@+id/textViewShowFirstAirdate"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.Light"
+        android:textIsSelectable="true" />
+
+    <TextView
+        style="@style/DefaultPadding.Blocks.WithTopMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lastEdit"
+        android:textAppearance="@style/TextAppearance.Small.Label" />
+
+    <TextView
+        android:id="@+id/textViewShowLastEdit"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.Light"
+        android:textIsSelectable="true" />
+
+</merge>

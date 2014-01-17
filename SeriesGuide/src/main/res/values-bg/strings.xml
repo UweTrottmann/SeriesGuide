@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Сериали</string>
   <string name="lists">Списъци</string>
-  <string name="activity">Дейност</string>
   <string name="movies">Филми</string>
   <string name="statistics">Статистика</string>
   <string name="search">Търсене</string>
@@ -28,13 +27,13 @@
   <string name="save_selection">Запази избраните</string>
   <string name="search_hint">Търсене на епизоди</string>
   <string name="updated">Актуализиран до последна версия.</string>
-  <string name="loading">Зарежда…</string>
   <string name="norating">няма</string>
   <string name="unknown">непозна</string>
-  <string name="offline">Няма интернет връзка. Моля опитайте по-късно.</string>
+  <string name="offline">Свържете се към мрежа и пробвайте отново.</string>
+  <string name="offline_no_wifi">Свържете с Wi-Fi или позволете всички връзки, а след това опитайте отново.</string>
   <string name="app_not_available">Няма налично приложение.</string>
   <string name="onlyx">Налично само с X абонамент</string>
-  <string name="add_empty">Няма никакви предания или устройство е без интернет връзка.</string>
+  <string name="add_empty">Тук няма сериали.</string>
   <string name="share_show">Сподели</string>
   <string name="share_episode">Сподели епизод</string>
   <string name="share_checkout">Отписване</string>
@@ -51,7 +50,7 @@
   <string name="watchlist_removed">Премахното от списъка</string>
   <string name="movies_search_hint">Въведете заглавие на филм</string>
   <string name="movies_empty">Търсене на филм отгоре.</string>
-  <string name="movies_watchlist_empty">Нямате интернет връзка или не сте добавили филми във вашият trakt лист за наблюдение.</string>
+  <string name="movies_watchlist_empty">You have not added movies to your trakt watchlist.</string>
   <string name="trailer">Трейлър</string>
   <string name="shows_with_next">%s със следващите епизоди</string>
   <string name="shows_continuing">%s продължаващи</string>
@@ -81,7 +80,6 @@
   <string name="episode_directors">Режисьори</string>
   <string name="episode_gueststars">Гост звезди</string>
   <string name="episode_writers">Сценаристи</string>
-  <string name="show_airtimeunit">мин.</string>
   <string name="show_isalive">Продължава</string>
   <string name="show_isnotalive">Завършил</string>
   <string name="lastEdit">Последна промяна // TVDb</string>
@@ -91,6 +89,8 @@
   <string name="today">днес</string>
   <string name="now">сега</string>
   <string name="daily">Ежедневно</string>
+  <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Гледан епизод</string>
   <string name="unmark_episode">Епизода все още не е гледан</string>
   <string name="mark_all">Всички са гледани</string>
@@ -109,6 +109,7 @@
   <string name="trakt_notcollected">%s не събрани.</string>
   <string name="confirm_delete">Искаш ли да премахнеш %s?</string>
   <string name="delete_has_list_items">Може\не може да се изпълни, първо премахнете %s от всички списъци.</string>
+  <string name="delete_error">Could not remove show. Try again later.</string>
   <string name="delete_show">Премахване</string>
   <string name="dontdelete_show">Не изтривайте</string>
   <string name="no_nextepisode">Не може да бъде намерен нов епизод</string>
@@ -144,14 +145,13 @@
   <string name="only_favorites">Само "Предпочитани"</string>
   <string name="togglewatched">Скрий гледаните</string>
   <string name="pref_infinite_scrolling">Пълен списък</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Обновяване</string>
   <string name="update_no_connection">За актуализация се свържете към интернет.</string>
-  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
   <string name="update_inprogress">Обновяване в процес, опитайте по-късно.</string>
   <string name="menu_updateart">Зареждане на плакати</string>
   <string name="arttask_incomplete">Някои плакати не се заредиха, опитайте отново по-късно.</string>
   <string name="arttask_start">Зарежда обложки…</string>
-  <string name="arttask_nosdcard">Зареждането на плакати изисква външна памет (SD карта).</string>
   <string name="show_on_network">на %s</string>
   <string name="season_watchcount">епизоди, които не са гледани</string>
   <string name="season_allwatched">Всички гледани епизоди</string>
@@ -183,6 +183,17 @@
   <string name="list_item_manage">Управление на списъци</string>
   <string name="list_item_remove">Премахни от списък</string>
   <string name="list_empty">Можете да добавите сериали, сезони или епизоди към този списък.</string>
+  <string name="hexagon_setup">Set up SeriesGuide cloud</string>
+  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
+  <string name="hexagon_signin">Sign In</string>
+  <string name="hexagon_signed_in">You are connected to SeriesGuide cloud.</string>
+  <string name="hexagon_signout">Sign Out</string>
+  <string name="hexagon_setup_incomplete">Setting up SeriesGuide cloud was not completed.</string>
+  <string name="hexagon_setup_complete">Пълна настройка</string>
+  <string name="hexagon_priority_choice_required">Някои от вашите сериали са вече в облака. Коя версия предпочитате?</string>
+  <string name="hexagon_priority_local">На това устройство</string>
+  <string name="hexagon_priority_cloud">В облака</string>
+  <string name="hexagon_priority_select">Изберете версия</string>
   <string name="connect_trakt">Свържете се с trakt</string>
   <string name="connect_trakt_done">Свързани сте с trakt!</string>
   <string name="add_trakt_shows">Добавете предавания към вашата библиотека:</string>
@@ -208,7 +219,8 @@
   <string name="pref_seasonsorting">Сортирай сезони…</string>
   <string name="pref_episodesorting">Сортирай епизоди…</string>
   <string name="pref_language">Език на съдържанието</string>
-  <string name="pref_updatewifionly">Актуализиране само през Wi-Fi</string>
+  <string name="pref_updatewifionly">Изображения само при Wi-Fi</string>
+  <string name="pref_updatewifionlysummary">За да намалите възможното таксуване за пренос на данни, не теглете през мобилната мрежа</string>
   <string name="about">Относно SeriesGuide</string>
   <string name="pref_credits">Заслуги</string>
   <string name="clearGetGlueCredentials">Прекъсни GetGlue</string>
@@ -224,7 +236,7 @@
   <string name="pref_autoupdate">Включване на автоматичното актуализиране</string>
   <string name="pref_autoupdatesummary">Периодично обновявайте сериалите си</string>
   <string name="pref_autobackup">Включете автоматичното архивиране</string>
-  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
+  <string name="pref_autobackupsummary">Седмичен архив на вашите сериали в папка "Download"</string>
   <string name="backup">Архивиране/Възстановяване</string>
   <string name="backup_summary">Архивиране или възстановяване на вашите сериали</string>
   <string name="pref_upcominglimit">Предстоящи епизоди след</string>
@@ -236,17 +248,17 @@
   <string name="pref_ganalyticssummary">Запивай данни за използването на отделните функции, с цел да подобрим SeriesGuide</string>
   <string name="pref_hideimages">Скрий изображенията</string>
   <string name="pref_hideimagessummary">Скрийте снимки от вашата фотогалерията (изисква рестарт)</string>
-  <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
-  <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
-  <string name="backup_path">Backup folder</string>
-  <string name="backup_version">Database version</string>
+  <string name="backup_description"><b>Архивиране</b> ще експортира вашите сериали, сезони, епизоди и списъците в JSON файл в папка по-долу. \nЗа да <b>възстановите</b> уверете се, че JSON файловете, създадени от функцията за архивиране са в папка по-долу.</string>
+  <string name="backup_full_dump">Включете всички мета-данни като описания, актьори и рейтинги.</string>
+  <string name="backup_path">Папка за архивиране</string>
+  <string name="backup_version">Версията на базата данни</string>
   <string name="backup_failed_nosd">Не може да се архивира. Папката за архивиране не е налична.</string>
   <string name="backup_inprogress">Архивиране на базата данни…</string>
   <string name="backup_success">Архивирането приключи успешно.</string>
   <string name="backup_failed">Архивирането не беше успешно.</string>
   <string name="import_inprogress">Възстановяване на базата от данни…</string>
   <string name="import_failed_nosd">Не може да се възстанови от архив. Папката за архивиране не е налична.</string>
-  <string name="import_failed_nofile">There is no readable backup file.</string>
+  <string name="import_failed_nofile">Няма архивен файл.</string>
   <string name="import_failed_noread">Архивният файл не се чете.</string>
   <string name="dbupgradefailed">Вашият архив може би е твърде стар или празен. Забележка: Първо, внесете архиви с версия по-малка от 2.0 във 1.9.х версия.</string>
   <string name="import_success">Архивирането беше успешно възстановено.</string>
@@ -257,9 +269,9 @@
   <string name="backup_no">Не архивирай</string>
   <string name="import_question">Текущият списък със предавания ще бъде загубен! Уверете се, че архивния файл е в папката за архиви.</string>
   <string name="import_no">Не възстановявай</string>
-  <string name="import_warning">I understand my current shows and lists will be lost!</string>
-  <string name="last_auto_backup">Last Auto Backup: %s</string>
-  <string name="restore_auto_backup">Restore Auto Backup</string>
+  <string name="import_warning">Разбирам, че моите текущи сериали и списъци ще бъдат загубени!</string>
+  <string name="last_auto_backup">Последно автоматично архивиране: %s</string>
+  <string name="restore_auto_backup">Възстанови автоматично архивиране</string>
   <string name="checkin">Гледано</string>
   <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Въведете име на предаването</string>
@@ -269,7 +281,7 @@
   <string name="paste_title">Поставете заглавие</string>
   <string name="checkinsuccess">Отметнато %s в GetGlue.</string>
   <string name="checkinfailed">Отмятането в GetGlue е неуспешно. Опитайте отново по-късно.</string>
-  <string name="getglue_authentication">Connect GetGlue</string>
+  <string name="getglue_authentication">Свържете GetGlue</string>
   <string name="getglue_authfailed">Удостоверяването в GetGlue е неуспешно. Опитайте отново по-късно.</string>
   <string name="checkin_success_trakt">Отметнато %s в trakt.</string>
   <string name="checkin_canceled_success_trakt">Отменяне на отмятането в trakt.</string>
@@ -277,8 +289,8 @@
   <string name="check_into">Отметнете в</string>
   <string name="no_selection">изберете един отдолу</string>
   <string name="looking_for_something_else">Друго ли търсите?</string>
-  <string name="menu_rate_episode">Rate episode</string>
-  <string name="menu_rate_show">Rate show</string>
+  <string name="menu_rate_episode">Оценете епизода</string>
+  <string name="menu_rate_show">Оценете сериала</string>
   <string name="traktcheckin_cancel">Замени</string>
   <string name="traktcheckin_inprogress">Вие вече отметнахте друг епизод или филм. Или заместете предишното отмятане или изчакайте %s и опитайте отново.</string>
   <string name="traktcheckin_wait">Ще изчакам</string>
@@ -292,8 +304,8 @@
   <string name="disconnect">Прекъсване на връзката</string>
   <string name="trakt_error">Свързването с trakt е неуспешно</string>
   <string name="trakt_decryptfail">паролата не може да се дешифрира</string>
-  <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
-  <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
+  <string name="trakt_error_credentials">Нещо се обърка. Проверете идентификационните си данни и опитайте отново.</string>
+  <string name="trakt_error_general">Няма връзка с trakt. Опитайте отново по-късно.</string>
   <string name="trakt_createaccount">Създаване на нов акаунт</string>
   <string name="welcome_setuplanguage">Избери език</string>
   <string name="welcome_traktmessage">Достъп до вашата trakt.tv библиотека и дейността на приятели</string>
@@ -301,7 +313,7 @@
   <string name="welcome_add_part1">За да започнете натиснете</string>
   <string name="upcoming_show">%s предстои</string>
   <string name="upcoming_episodes">Предстоят нови епизоди</string>
-  <string name="upcoming_episodes_number">%s new episodes</string>
+  <string name="upcoming_episodes_number">%s нови епизоди</string>
   <string name="upcoming_show_detailed">%1$s по %2$s</string>
   <string name="more">%s още</string>
   <string name="upcoming_display">Изберете да се показват предстоящи предавания</string>
@@ -321,14 +333,19 @@
   <string name="pref_widget_type">Вид на уиджета</string>
   <string name="dashclock_extension_label">Предстоящ епизод</string>
   <string name="dashclock_extension_description">Показва следващите епизоди на вашите SeriesGuide  сериали.</string>
-  <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
+  <string name="dashclock_pref_upcoming_threshold">Покажи епизодите в следващите</string>
   <string name="action_migrate">Прехвърляне от X</string>
   <string name="migration_description">SeriesGuide X is now an unlock key for X features in the free version (X Pass). Please migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
   <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
   <string name="migration_action_import">Import and replace existing shows</string>
-  <string name="action_upgrade">Get X features</string>
-  <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="action_upgrade">Вземете X функционалностите</string>
+  <string name="billing_action_subscribe">Subscribe</string>
+  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+  <string name="billing_price_pass">one-time purchase</string>
+  <string name="upgrade_description">Получете достъп до уведомления, повече опции за приставките и всички бъдещи X функции. Подкрепа по-нататъшната разработка.\n\nАко вече сте закупили SeriesGuide X, инсталирайте го за да отключите тази надстройка.</string>
   <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
+  <string name="billing_learn_more">Why pay? Learn more.</string>
   <string name="subscription_activated">You are now subscribed to X features.</string>
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
@@ -351,7 +368,7 @@
   <string-array name="upcominglimit">
     <item>сега</item>
     <item>един ден</item>
-    <item>три дни</item>
+    <item>3 дни</item>
     <item>седмица</item>
     <item>две седмици</item>
     <item>месец</item>
@@ -379,7 +396,7 @@
     <item>6 часа</item>
     <item>12 часа</item>
     <item>24 часа</item>
-    <item>три дни</item>
+    <item>3 дни</item>
     <item>седмица</item>
   </string-array>
   <plurals name="days_plural">

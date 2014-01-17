@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.util;
@@ -21,6 +20,7 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
@@ -88,20 +88,15 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected Integer doInBackground(Void... params) {
-        if (!TraktSettings.hasTraktCredentials(mContext)) {
-            return FAILED_CREDENTIALS;
-        }
-
-        Trakt manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
+        Trakt manager = ServiceUtils.getTraktWithAuth(mContext);
         if (manager == null) {
-            // password could not be decrypted
             return FAILED_CREDENTIALS;
         }
 
         if (mIsSyncToTrakt) {
             return syncToTrakt(manager);
         } else {
-            return syncToSeriesGuide(manager, TraktSettings.getUsername(mContext));
+            return syncToSeriesGuide(manager, TraktCredentials.get(mContext).getUsername());
         }
     }
 

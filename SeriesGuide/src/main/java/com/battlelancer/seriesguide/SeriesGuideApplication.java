@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide;
@@ -21,6 +20,8 @@ import com.google.analytics.tracking.android.GoogleAnalytics;
 
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -30,22 +31,24 @@ import com.uwetrottmann.seriesguide.R;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.ContentProvider;
+import android.content.pm.PackageManager;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.os.StrictMode.VmPolicy;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
+
+import java.net.URL;
 
 /**
- * Initializes settings and services and on pre-ICS implements actions for low
- * memory state.
- * 
+ * Initializes settings and services and on pre-ICS implements actions for low memory state.
+ *
  * @author Uwe Trottmann
  */
 public class SeriesGuideApplication extends Application {
 
     /**
-     * The content authority used to identify the SeriesGuide
-     * {@link ContentProvider}
+     * The content authority used to identify the SeriesGuide {@link ContentProvider}
      */
     public static String CONTENT_AUTHORITY;
 
@@ -63,11 +66,19 @@ public class SeriesGuideApplication extends Application {
         // Load the current theme into a global variable
         Utils.updateTheme(DisplaySettings.getThemeIndex(this));
 
+        // OkHttp changes the global SSL context, breaks other HTTP clients like used by e.g. Google
+        // Analytics.
+        // https://github.com/square/okhttp/issues/184
+        // So set OkHttp to handle all connections
+        URL.setURLStreamHandlerFactory(AndroidUtils.createOkHttpClient());
+
         // Ensure GA opt-out
         GoogleAnalytics.getInstance(this).setAppOptOut(AppSettings.isGaAppOptOut(this));
 
         // Enable StrictMode
         enableStrictMode();
+
+        upgrade();
     }
 
     @Override
@@ -82,6 +93,7 @@ public class SeriesGuideApplication extends Application {
     /**
      * Used to enable {@link StrictMode} during production
      */
+    @SuppressWarnings("PointlessBooleanExpression")
     @SuppressLint("NewApi")
     public static void enableStrictMode() {
         if (!BuildConfig.DEBUG || !AndroidUtils.isGingerbreadOrHigher()) {
@@ -101,6 +113,28 @@ public class SeriesGuideApplication extends Application {
             vmPolicyBuilder.detectLeakedRegistrationObjects();
         }
         StrictMode.setVmPolicy(vmPolicyBuilder.build());
+    }
+
+    private void upgrade() {
+        /**
+         * These upgrade procedures will run on each app launch until the last version gets updated
+         * by launching the main activity.
+         */
+        final int lastVersion = AppSettings.getLastVersionCode(this);
+
+        boolean isBeta = "beta".equals(BuildConfig.FLAVOR);
+
+        // store trakt password in sync account
+        if (!isBeta && lastVersion < 204 || isBeta && lastVersion < 216) {
+            if (!TraktCredentials.get(this).hasCredentials()) {
+                String password = TraktSettings.getPasswordSha1(this);
+                if (!TextUtils.isEmpty(password)) {
+                    String username = TraktCredentials.get(this).getUsername();
+                    TraktCredentials.get(this).setCredentials(username, password);
+                }
+            }
+        }
+
     }
 
 }

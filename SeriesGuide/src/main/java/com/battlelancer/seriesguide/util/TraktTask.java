@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,14 +12,13 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
-import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.CheckinResponse;
@@ -94,10 +93,10 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     }
 
     /**
-     * Initial constructor. Call <b>one</b> of the setup-methods, like {@code shout(tvdbid, shout,
-     *isSpoiler)}, afterwards.<br> <br> Make sure the user has valid trakt credentials (check with
-     * {@link ServiceUtils#hasTraktCredentials(Context)} and then possibly launch {@link
-     * ConnectTraktActivity}) or execution will fail.
+     * Initial constructor. Call <b>one</b> of the setup-methods like {@link #shout(int, int, int,
+     * String, boolean)} afterwards.<br> <br> Make sure the user has valid trakt credentials (check
+     * with {@link com.battlelancer.seriesguide.settings.TraktCredentials#hasCredentials()} and then
+     * possibly launch {@link ConnectTraktActivity}) or execution will fail.
      */
     public TraktTask(Context context, OnTraktActionCompleteListener listener) {
         mContext = context;
@@ -108,8 +107,8 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     /**
      * Fast constructor, allows passing of an already pre-built {@code args} {@link Bundle}.<br>
      * <br> Make sure the user has valid trakt credentials (check with {@link
-     * ServiceUtils#hasTraktCredentials(Context)} and then possibly launch {@link
-     * ConnectTraktActivity}) or execution will fail.
+     * com.battlelancer.seriesguide.settings.TraktCredentials#hasCredentials()} and then possibly
+     * launch {@link ConnectTraktActivity}) or execution will fail.
      */
     public TraktTask(Context context, Bundle args, OnTraktActionCompleteListener listener) {
         this(context, listener);
@@ -214,12 +213,12 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         }
 
         // check for valid credentials
-        if (!TraktSettings.hasTraktCredentials(mContext)) {
+        if (!TraktCredentials.get(mContext).hasCredentials()) {
             return null;
         }
 
         // get an authenticated trakt-java ServiceManager
-        Trakt manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
+        Trakt manager = ServiceUtils.getTraktWithAuth(mContext);
         if (manager == null) {
             // password could not be decrypted
             Response r = new Response();
@@ -258,10 +257,9 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     }
 
                     if (com.jakewharton.trakt.enumerations.Status.SUCCESS.equals(r.status)) {
-                        r.message = mContext
-                                .getString(R.string.checkin_success_trakt,
-                                        (r.show != null ? r.show.title + " " : "")
-                                                + Utils.getEpisodeNumber(mContext, season, episode));
+                        r.message = mContext.getString(R.string.checkin_success_trakt,
+                                (r.show != null ? r.show.title + " " : "")
+                                        + Utils.getEpisodeNumber(mContext, season, episode));
                     }
 
                     break;
@@ -281,9 +279,9 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     }
 
                     if (com.jakewharton.trakt.enumerations.Status.SUCCESS.equals(r.status)) {
-                        r.message = mContext
-                                .getString(R.string.checkin_success_trakt,
-                                        (r.movie != null ? r.movie.title + " " : ""));
+                        r.message = mContext.getString(R.string.checkin_success_trakt,
+                                (r.movie != null ?
+                                        r.movie.title : mContext.getString(R.string.unknown)));
                     }
 
                     break;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.ui;
@@ -40,16 +39,17 @@ import com.uwetrottmann.seriesguide.R;
 import java.util.List;
 
 /**
- * Super class for fragments displaying a list of shows and allowing to add them
- * to the database.
+ * Super class for fragments displaying a list of shows and allowing to add them to the database.
  */
-public class AddFragment extends SherlockFragment {
+public abstract class AddFragment extends SherlockFragment {
 
     protected List<SearchResult> mSearchResults;
 
     protected AddAdapter mAdapter;
 
     protected GridView mGrid;
+
+    private TextView mEmptyView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,15 +64,22 @@ public class AddFragment extends SherlockFragment {
 
         // basic setup of grid view
         mGrid = (GridView) getView().findViewById(android.R.id.list);
-        View emptyView = getView().findViewById(android.R.id.empty);
-        if (emptyView != null) {
-            mGrid.setEmptyView(emptyView);
+        mEmptyView = (TextView) getView().findViewById(R.id.emptyViewAdd);
+        if (mEmptyView != null) {
+            mGrid.setEmptyView(mEmptyView);
         }
 
         // restore an existing adapter
         if (mAdapter != null) {
             mGrid.setAdapter(mAdapter);
         }
+    }
+
+    /**
+     * Changes the empty message.
+     */
+    protected void setEmptyMessage(int stringResourceId) {
+        mEmptyView.setText(stringResourceId);
     }
 
     @TargetApi(11)

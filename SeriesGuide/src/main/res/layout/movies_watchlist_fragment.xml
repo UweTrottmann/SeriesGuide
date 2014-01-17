@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/textViewMoviesWatchlistEmpty"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/empty_view_width"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
@@ -15,19 +15,7 @@
         android:textAppearance="@style/TextAppearance.Light"
         android:visibility="gone" />
 
-    <GridView
-        android:id="@+id/gridViewMoviesWatchlist"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="@bool/gridClipToPadding"
-        android:columnWidth="@dimen/movie_item_width"
-        android:fastScrollEnabled="true"
-        android:listSelector="@color/transparent"
-        android:horizontalSpacing="@dimen/grid_horizontal_spacing"
-        android:numColumns="auto_fit"
-        android:padding="@dimen/default_padding"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="@dimen/grid_vertical_spacing"/>
+    <include layout="@layout/grid_movies" />
 
     <TextView
         android:id="@+id/poweredby"

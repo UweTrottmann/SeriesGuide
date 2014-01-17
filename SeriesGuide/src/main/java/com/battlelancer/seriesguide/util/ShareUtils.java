@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.util;
@@ -41,9 +40,9 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 /**
- * Contains various ways to share something about an episode (android share
- * intent, trakt, calendar event, ...).
- * 
+ * Contains various ways to share something about an episode (android share intent, trakt, calendar
+ * event, ...).
+ *
  * @author Uwe Trottmann
  */
 public class ShareUtils {
@@ -63,6 +62,7 @@ public class ShareUtils {
     }
 
     public interface ShareItems {
+
         String SEASON = "season";
 
         String IMDBID = "imdbId";
@@ -86,10 +86,8 @@ public class ShareUtils {
 
     /**
      * Share an episode via the given {@link ShareMethod}.
-     * 
-     * @param activity
-     * @param args - a {@link Bundle} including all
-     *            {@link ShareUtils.ShareItems}
+     *
+     * @param args        a {@link Bundle} including all {@link ShareUtils.ShareItems}
      * @param shareMethod the {@link ShareMethod} to use
      */
     public static void onShareEpisode(FragmentActivity activity, Bundle args,
@@ -173,8 +171,7 @@ public class ShareUtils {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View v = inflater.inflate(R.layout.progress_dialog, container, false);
-            return v;
+            return inflater.inflate(R.layout.progress_dialog, container, false);
         }
     }
 }

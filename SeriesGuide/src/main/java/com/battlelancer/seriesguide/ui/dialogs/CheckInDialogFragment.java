@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.ui.dialogs;
@@ -147,7 +146,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
         } else {
             // check in, use task on thread pool
             AndroidUtils.executeAsyncTask(new CheckInTask(mGetGlueId, message,
-                    getActivity()), new Void[]{});
+                    getActivity()));
         }
 
         return isAbortingCheckIn;
@@ -174,7 +173,6 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
                     Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_LONG)
                             .show();
                     mToggleGetGlueButton.setChecked(false);
-                    return;
                 } else {
                     // authenticate already here
                     Intent i = new Intent(getSherlockActivity(),

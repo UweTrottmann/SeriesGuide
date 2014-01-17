@@ -58,6 +58,7 @@
         <item name="drawableFilter">@drawable/ic_action_filter</item>
         <item name="drawableSkip">@drawable/ic_action_playback_next</item>
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped</item>
+        <item name="drawableTraktHeart">@drawable/trakt_heart</item>
     </style>
 
     <style name="SeriesGuideBaseTheme" parent="Theme.Sherlock">
@@ -108,6 +109,7 @@
         <item name="drawableFilter">@drawable/ic_action_filter</item>
         <item name="drawableSkip">@drawable/ic_action_playback_next</item>
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped</item>
+        <item name="drawableTraktHeart">@drawable/trakt_heart</item>
 
     </style>
 
@@ -174,6 +176,7 @@
         <item name="drawableFilter">@drawable/ic_action_filter_inverse</item>
         <item name="drawableSkip">@drawable/ic_action_playback_next_inverse</item>
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped_inverse</item>
+        <item name="drawableTraktHeart">@drawable/trakt_heart_inverse</item>
 
         <!-- Necessary to inherit the primary accent color in the DarkActionBar (ABS) -->
         <item name="actionBarWidgetTheme">@style/SeriesGuideTheme</item>

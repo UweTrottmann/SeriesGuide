@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 package com.battlelancer.seriesguide.items;
 
@@ -52,7 +51,7 @@ public class SearchResult implements Parcelable {
         title = in.readString();
         overview = in.readString();
         poster = in.readString();
-        isAdded = in.readInt() == 1 ? true : false;
+        isAdded = in.readInt() == 1;
     }
 
     public SearchResult copy() {
@@ -76,7 +75,7 @@ public class SearchResult implements Parcelable {
         dest.writeString(title);
         dest.writeString(overview);
         dest.writeString(poster);
-        dest.writeInt(isAdded == true ? 1 : 0);
+        dest.writeInt(isAdded ? 1 : 0);
     }
 
 }

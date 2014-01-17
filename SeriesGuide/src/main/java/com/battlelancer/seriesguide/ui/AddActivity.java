@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,15 +12,15 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
-import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
@@ -48,10 +48,6 @@ import java.util.Locale;
  * Hosts various fragments in a {@link ViewPager} which allow adding shows to the database.
  */
 public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListener {
-
-    private AddPagerAdapter mAdapter;
-
-    private ViewPager mPager;
 
     public interface InitBundle {
 
@@ -83,19 +79,19 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
     }
 
     private void setupViews() {
-        mAdapter = new AddPagerAdapter(getSupportFragmentManager(), this);
+        AddPagerAdapter adapter = new AddPagerAdapter(getSupportFragmentManager(), this);
 
-        mPager = (ViewPager) findViewById(R.id.pagerAddShows);
-        mPager.setAdapter(mAdapter);
+        ViewPager pager = (ViewPager) findViewById(R.id.pagerAddShows);
+        pager.setAdapter(adapter);
 
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsAddShows);
-        tabs.setViewPager(mPager);
+        tabs.setViewPager(pager);
 
         // set default tab
         if (getIntent() != null && getIntent().getExtras() != null) {
             int defaultTab = getIntent().getExtras().getInt(InitBundle.DEFAULT_TAB);
-            if (defaultTab < mAdapter.getCount()) {
-                mPager.setCurrentItem(defaultTab);
+            if (defaultTab < adapter.getCount()) {
+                pager.setCurrentItem(defaultTab);
             }
         }
     }
@@ -161,7 +157,7 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
         public AddPagerAdapter(FragmentManager fm, Context context) {
             super(fm);
             mContext = context;
-            mIsConnectedToTrakt = TraktSettings.hasTraktCredentials(mContext);
+            mIsConnectedToTrakt = TraktCredentials.get(mContext).hasCredentials();
         }
 
         @Override

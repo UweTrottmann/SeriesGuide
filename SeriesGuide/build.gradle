@@ -2,8 +2,8 @@ apply plugin: 'android'
 apply plugin: 'android-test'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.0.0"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         minSdkVersion 8
@@ -16,16 +16,22 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
 
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+
     productFlavors {
         free {
             packageName "com.battlelancer.seriesguide"
-            versionCode 197
-            versionName "10"
+            versionCode 207
+            versionName "11"
         }
         beta {
             packageName "com.battlelancer.seriesguide.beta"
-            versionCode 215
-            versionName "10-internal"
+            versionCode 216
+            versionName "11-internal"
         }
     }
 
@@ -46,14 +52,26 @@ dependencies {
     compile project(':libraries:androidutils')
     compile project(':libraries:pagerslidingtabstrip')
     compile project(':libraries:stickygridheaders')
+    compile rootProject.ext.libraries.okhttp
+    compile rootProject.ext.libraries.supportv4
     compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
-    compile 'com.android.support:support-v4:19.0.+'
     compile 'com.github.chrisbanes.photoview:library:1.2.2'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.+'
-    compile 'com.squareup.okhttp:okhttp:1.2.1'
-    compile 'com.squareup.retrofit:retrofit:1.2.2'
+    compile 'com.squareup.retrofit:retrofit:1.3.0'
+    compile 'com.squareup:tape:1.1.1'
     compile 'de.greenrobot:eventbus:2.2.0'
+
+    // OAuth 2.0
     compile 'org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:0.31'
+
+    // App Engine
+    compile ('com.google.api-client:google-api-client-android:1.17.0-rc') {
+        exclude group: 'com.google.android.google-play-services'
+    }
+    compile 'com.google.http-client:google-http-client-gson:1.17.0-rc'
+    compile 'com.google.android.gms:play-services:4.0.30'
+
+    // libs folder
     compile fileTree(dir: 'libs', include: '*.jar')
 
     testCompile 'junit:junit:4.10'

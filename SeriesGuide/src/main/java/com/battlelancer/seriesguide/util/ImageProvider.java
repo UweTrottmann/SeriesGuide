@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.util;
@@ -42,7 +41,6 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -78,7 +76,7 @@ public class ImageProvider {
 
     private Context mContext;
 
-    private OnSharedPreferenceChangeListener listener;
+    private OnSharedPreferenceChangeListener mListener;
 
     private float mScale;
 
@@ -149,7 +147,7 @@ public class ImageProvider {
 
         // listen if user toggles .nomedia file pref
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-        listener = new OnSharedPreferenceChangeListener() {
+        mListener = new OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
                 if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_HIDEIMAGES)) {
                     updateNoMediaFile(sharedPreferences);
@@ -161,7 +159,7 @@ public class ImageProvider {
                 }
             }
         };
-        prefs.registerOnSharedPreferenceChangeListener(listener);
+        prefs.registerOnSharedPreferenceChangeListener(mListener);
     }
 
     public static synchronized ImageProvider getInstance(Context ctx) {

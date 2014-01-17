@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Serier</string>
   <string name="lists">Lister</string>
-  <string name="activity">Aktiviteter</string>
   <string name="movies">Filmer</string>
   <string name="statistics">Statistikk</string>
   <string name="search">Søk</string>
@@ -28,13 +27,13 @@
   <string name="save_selection">Lagre valg</string>
   <string name="search_hint">Søk episoder</string>
   <string name="updated">Oppdatert til nyeste versjon.</string>
-  <string name="loading">Laster...</string>
   <string name="norating">n/a</string>
   <string name="unknown">ukjent</string>
-  <string name="offline">Ingen nettverksforbindelse. Prøv på nytt senere.</string>
+  <string name="offline">Connect to a network, then try again.</string>
+  <string name="offline_no_wifi">Connect to Wi-Fi or allow all connections, then try again.</string>
   <string name="app_not_available">No app available to handle this.</string>
   <string name="onlyx">Bare tilgjengelig med X abonnement</string>
-  <string name="add_empty">Det er ingen serier her eller du mangler internett-tilkobling.</string>
+  <string name="add_empty">There are no shows here.</string>
   <string name="share_show">Del serie</string>
   <string name="share_episode">Del episode</string>
   <string name="share_checkout">Sjekk ut</string>
@@ -51,7 +50,7 @@
   <string name="watchlist_removed">Fjernet fra overvåkningsliste</string>
   <string name="movies_search_hint">Skriv inn en filmtittel</string>
   <string name="movies_empty">Søk etter en film ovenfor.</string>
-  <string name="movies_watchlist_empty">You have no internet connection or not added movies to your trakt watchlist.</string>
+  <string name="movies_watchlist_empty">You have not added movies to your trakt watchlist.</string>
   <string name="trailer">Trailer</string>
   <string name="shows_with_next">%s med neste episoder</string>
   <string name="shows_continuing">%s fortsetter</string>
@@ -81,7 +80,6 @@
   <string name="episode_directors">Regissører</string>
   <string name="episode_gueststars">Gjester</string>
   <string name="episode_writers">Forfattere</string>
-  <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Fortsetter</string>
   <string name="show_isnotalive">Avsluttet</string>
   <string name="lastEdit">Sist endret // TVDb</string>
@@ -91,6 +89,8 @@
   <string name="today">i dag</string>
   <string name="now">nå</string>
   <string name="daily">Daglig</string>
+  <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Sett episode</string>
   <string name="unmark_episode">Ennå ikke sett episode</string>
   <string name="mark_all">Sett alle</string>
@@ -109,6 +109,7 @@
   <string name="trakt_notcollected">%s ikke anskaffet.</string>
   <string name="confirm_delete">Vil du virkelig fjerne %s?</string>
   <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
+  <string name="delete_error">Could not remove show. Try again later.</string>
   <string name="delete_show">Fjern</string>
   <string name="dontdelete_show">Ikke fjern</string>
   <string name="no_nextepisode">ingen ny episode funnet</string>
@@ -144,14 +145,13 @@
   <string name="only_favorites">Bare favoritter</string>
   <string name="togglewatched">Sett/ikke sett</string>
   <string name="pref_infinite_scrolling">Uendelig aktivitet</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Oppdaterer...</string>
   <string name="update_no_connection">Koble til internett for å oppdatere.</string>
-  <string name="update_no_wifi">Koble til WiFi eller tillat andre tilkoblinger i innstillingene for å oppdatere.</string>
   <string name="update_inprogress">En oppdatering er i gang, prøv på nytt senere.</string>
   <string name="menu_updateart">Last plakater</string>
   <string name="arttask_incomplete">Noen plakater ble ikke lasted, prøv på nytt senere.</string>
   <string name="arttask_start">Oppdaterer plakater...</string>
-  <string name="arttask_nosdcard">Lasting av plakater krever ekstern lagring (SD-kort).</string>
   <string name="show_on_network">på %s</string>
   <string name="season_watchcount">episoder ikke sett</string>
   <string name="season_allwatched">Alle episoder sett</string>
@@ -183,6 +183,17 @@
   <string name="list_item_manage">Behandle lister</string>
   <string name="list_item_remove">Fjern fra liste</string>
   <string name="list_empty">Du kan legge til serier, sesonger eller episoder til denne listen.</string>
+  <string name="hexagon_setup">Set up SeriesGuide cloud</string>
+  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
+  <string name="hexagon_signin">Sign In</string>
+  <string name="hexagon_signed_in">You are connected to SeriesGuide cloud.</string>
+  <string name="hexagon_signout">Sign Out</string>
+  <string name="hexagon_setup_incomplete">Setting up SeriesGuide cloud was not completed.</string>
+  <string name="hexagon_setup_complete">Complete setup</string>
+  <string name="hexagon_priority_choice_required">Some of your shows are already in the cloud. Which version do you prefer?</string>
+  <string name="hexagon_priority_local">On this device</string>
+  <string name="hexagon_priority_cloud">In the cloud</string>
+  <string name="hexagon_priority_select">Select version</string>
   <string name="connect_trakt">Koble til trakt</string>
   <string name="connect_trakt_done">Koblet til trakt!</string>
   <string name="add_trakt_shows">Legg til programmer fra biblioteket:</string>
@@ -208,7 +219,8 @@
   <string name="pref_seasonsorting">Sorter sesonger etter...</string>
   <string name="pref_episodesorting">Sorter episoder etter...</string>
   <string name="pref_language">Innholdsspråk</string>
-  <string name="pref_updatewifionly">Oppdater kun over Wi-Fi</string>
+  <string name="pref_updatewifionly">Images via Wi-Fi only</string>
+  <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
   <string name="about">Om SeriesGuide</string>
   <string name="pref_credits">Krediteringer</string>
   <string name="clearGetGlueCredentials">Koble fra GetGlue</string>
@@ -327,8 +339,13 @@
   <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
   <string name="migration_action_import">Import and replace existing shows</string>
   <string name="action_upgrade">Get X features</string>
+  <string name="billing_action_subscribe">Subscribe</string>
+  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+  <string name="billing_price_pass">one-time purchase</string>
   <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
   <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
+  <string name="billing_learn_more">Why pay? Learn more.</string>
   <string name="subscription_activated">You are now subscribed to X features.</string>
   <string name="subscription_expired">Abonnement utløpt</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>

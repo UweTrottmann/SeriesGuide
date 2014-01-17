@@ -3,7 +3,6 @@
 <resources>
   <string name="shows">Diziler</string>
   <string name="lists">Listeler</string>
-  <string name="activity">Etkinlik</string>
   <string name="movies">Filmler</string>
   <string name="statistics">İstatistikler</string>
   <string name="search">Ara</string>
@@ -28,13 +27,13 @@
   <string name="save_selection">Seçimi kaydet</string>
   <string name="search_hint">Bölüm ara</string>
   <string name="updated">En son sürüme güncellendi.</string>
-  <string name="loading">Yükleniyor…</string>
   <string name="norating">Geçersiz</string>
   <string name="unknown">bilinmiyor</string>
-  <string name="offline">Ağ bağlantısı yok. Daha sonra tekrar deneyin.</string>
+  <string name="offline">Connect to a network, then try again.</string>
+  <string name="offline_no_wifi">Connect to Wi-Fi or allow all connections, then try again.</string>
   <string name="app_not_available">İşlemi yapacak uygulama bulunamadı.</string>
   <string name="onlyx">Sadece X aboneleri kullanabilir</string>
-  <string name="add_empty">Burada hiç dizi yok ya da internet bağlantın yok.</string>
+  <string name="add_empty">There are no shows here.</string>
   <string name="share_show">Diziyi paylaş</string>
   <string name="share_episode">Bölümü paylaş</string>
   <string name="share_checkout">Kontrol et</string>
@@ -51,7 +50,7 @@
   <string name="watchlist_removed">İzleme Listesinden Kaldırıldı</string>
   <string name="movies_search_hint">Film adı girin</string>
   <string name="movies_empty">Üst kısımdan bir film arayın.</string>
-  <string name="movies_watchlist_empty">İnternet bağlantınız yok veya filmleriniz trakt izleme listenize eklenmedi.</string>
+  <string name="movies_watchlist_empty">You have not added movies to your trakt watchlist.</string>
   <string name="trailer">Fragman</string>
   <string name="shows_with_next">%s yeni bölümü olan dizi</string>
   <string name="shows_continuing">%s devam ediyor</string>
@@ -81,7 +80,6 @@
   <string name="episode_directors">Yönetmen</string>
   <string name="episode_gueststars">Konuk oyuncular</string>
   <string name="episode_writers">Yazarlar</string>
-  <string name="show_airtimeunit">dk</string>
   <string name="show_isalive">Devam ediyor</string>
   <string name="show_isnotalive">Sona erdi</string>
   <string name="lastEdit">Son Düzenleme // TVDb</string>
@@ -91,6 +89,8 @@
   <string name="today">bugün</string>
   <string name="now">şimdi</string>
   <string name="daily">Günlük</string>
+  <string name="release_date_and_day">%1$s (%2$s)</string>
+  <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">İzlenmiş bölüm</string>
   <string name="unmark_episode">İzlenmemiş bölüm</string>
   <string name="mark_all">Tümü izlendi</string>
@@ -109,6 +109,7 @@
   <string name="trakt_notcollected">Kolleksiyonda bulunmayan: %s.</string>
   <string name="confirm_delete">%s öğesini silmek istediğinize emin misiniz?</string>
   <string name="delete_has_list_items">Tamamen kaldırılamıyor, önce %s bütün listelerden kaldırın.</string>
+  <string name="delete_error">Could not remove show. Try again later.</string>
   <string name="delete_show">Kaldır</string>
   <string name="dontdelete_show">Kaldırma</string>
   <string name="no_nextepisode">sonraki bölüm bulunamadı</string>
@@ -144,14 +145,13 @@
   <string name="only_favorites">Sadece favori diziler</string>
   <string name="togglewatched">Seyredilme durumunu değiştir</string>
   <string name="pref_infinite_scrolling">Bütün etkinlikleri göster</string>
+  <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Güncelleniyor...</string>
   <string name="update_no_connection">Güncelleme amacıyla internete bağlayın.</string>
-  <string name="update_no_wifi">Güncelleme amacıyla WİFİ bağlantısı yapın yada Ayarlar\'dan diğer bağlantılara izin verin.</string>
   <string name="update_inprogress">Devam eden bir güncelleme var, daha sonra tekrar deneyin.</string>
   <string name="menu_updateart">Posterleri yükle</string>
   <string name="arttask_incomplete">Bazı posterler yüklenemedi, daha sonra tekrar deneyin.</string>
   <string name="arttask_start">Posterler yükleniyor...</string>
-  <string name="arttask_nosdcard">Posterleri yüklemek için harici depolama (SD kart) gereklidir.</string>
   <string name="show_on_network">kanal %s</string>
   <string name="season_watchcount">izlenilmemiş bölüm</string>
   <string name="season_allwatched">Tüm bölümler izlendi</string>
@@ -183,6 +183,17 @@
   <string name="list_item_manage">Listeleri yönet</string>
   <string name="list_item_remove">Listeden kaldır</string>
   <string name="list_empty">Dizileri, sezonları veya bölümleri listeye ekleyebilirsin.</string>
+  <string name="hexagon_setup">Set up SeriesGuide cloud</string>
+  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
+  <string name="hexagon_signin">Sign In</string>
+  <string name="hexagon_signed_in">You are connected to SeriesGuide cloud.</string>
+  <string name="hexagon_signout">Sign Out</string>
+  <string name="hexagon_setup_incomplete">Setting up SeriesGuide cloud was not completed.</string>
+  <string name="hexagon_setup_complete">Complete setup</string>
+  <string name="hexagon_priority_choice_required">Some of your shows are already in the cloud. Which version do you prefer?</string>
+  <string name="hexagon_priority_local">On this device</string>
+  <string name="hexagon_priority_cloud">In the cloud</string>
+  <string name="hexagon_priority_select">Select version</string>
   <string name="connect_trakt">trakt\'e bağlan</string>
   <string name="connect_trakt_done">trakt\'e bağlanıldı!</string>
   <string name="add_trakt_shows">Kütüphanenden diziler ekle:</string>
@@ -208,7 +219,8 @@
   <string name="pref_seasonsorting">Sezonları sırala:...</string>
   <string name="pref_episodesorting">Bölümleri sırala:...</string>
   <string name="pref_language">İçerik dili</string>
-  <string name="pref_updatewifionly">Yalnızca Wi-Fi ile güncelleştir.</string>
+  <string name="pref_updatewifionly">Images via Wi-Fi only</string>
+  <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
   <string name="about">SeriesGuide Hakkında</string>
   <string name="pref_credits">Katkıda Bulunanlar</string>
   <string name="clearGetGlueCredentials">GetGlue Bağlantısını Kes</string>
@@ -327,8 +339,13 @@
   <string name="migration_import">SeriesGuide X ile oluşturulmuş yedeği yüklemek için aşağıya dokunun.</string>
   <string name="migration_action_import">Yükle ve varolan dizileri değiştir</string>
   <string name="action_upgrade">Get X features</string>
+  <string name="billing_action_subscribe">Subscribe</string>
+  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+  <string name="billing_price_pass">one-time purchase</string>
   <string name="upgrade_description">Bildirimlere, daha çok widget seçeneklerine ve gelecekteki tüm X özelliklerine erişim sağlama. Geliştirmeye destek olma.\n\nEğer SeriesGuide X\'i aldıysanız, bu yükseltmeyi açmak için onu yükleyin.</string>
   <string name="upgrade_success">Teşekkürler, zaten tüm X özelliklerine abone olmuşsunuz!</string>
+  <string name="billing_learn_more">Why pay? Learn more.</string>
   <string name="subscription_activated">Şimdi X özelliklerine abone oldunuz.</string>
   <string name="subscription_expired">Abonelik sona erdi</string>
   <string name="subscription_expired_details">X özellikleri abonelik süresi doldu.</string>

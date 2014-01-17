@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,19 +12,19 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
  */
 
 package com.battlelancer.seriesguide.appwidget;
+
+import com.uwetrottmann.seriesguide.R;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
-import com.uwetrottmann.seriesguide.R;
-
 public class AppWidgetLarge extends AppWidget {
+
     private static final String LIMIT = "7";
 
     private static final int LAYOUT = R.layout.appwidget_big;
@@ -33,8 +33,7 @@ public class AppWidgetLarge extends AppWidget {
 
     @Override
     public Intent createUpdateIntent(Context context) {
-        Intent i = new Intent(context, UpdateServiceLarge.class);
-        return i;
+        return new Intent(context, UpdateServiceLarge.class);
     }
 
     public static class UpdateServiceLarge extends UpdateService {

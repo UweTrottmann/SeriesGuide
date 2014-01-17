@@ -1,61 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:id="@+id/friend_root"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/default_padding">
+    android:layout_height="match_parent"
+    android:foreground="?attr/custom_list_selector">
 
-    <ImageView
-        android:id="@+id/avatar"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="@dimen/default_padding"
-        android:src="@drawable/ic_launcher" />
-
-    <LinearLayout
-        android:id="@+id/userstrip"
+    <RelativeLayout
+        android:id="@+id/friend_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/avatar">
+        android:background="?attr/drawableCardBackground">
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:text="@string/app_name"
-
-            android:textAppearance="@style/TextAppearance.XSmall.Dim" />
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginRight="@dimen/default_padding"
+            tools:src="@color/overlay" />
 
         <TextView
             android:id="@+id/timestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="@string/norating"
-            android:textAppearance="@style/TextAppearance.XSmall.Dim" />
-    </LinearLayout>
+            android:layout_marginRight="@dimen/default_padding"
+            android:layout_marginTop="@dimen/inline_padding"
+            android:layout_alignParentRight="true"
+            tools:text="11 hours ago"
+            android:textAppearance="@style/TextAppearance.Small.Dim" />
 
-    <TextView
-        android:id="@+id/show"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/userstrip"
-        android:layout_toRightOf="@+id/avatar"
-        android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.Medium.Light" />
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/inline_padding"
+            android:layout_toRightOf="@+id/avatar"
+            android:layout_toLeftOf="@+id/timestamp"
+            android:ellipsize="marquee"
+            android:maxLines="1"
+            tools:text="sgtest"
+            android:textAppearance="@style/TextAppearance.Small.Dim" />
 
-    <TextView
-        android:id="@+id/episode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/show"
-        android:layout_toRightOf="@+id/avatar"
-        android:text="@string/app_name"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        <TextView
+            android:id="@+id/show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name"
+            android:layout_marginRight="@dimen/default_padding"
+            android:layout_toRightOf="@+id/avatar"
+            android:ellipsize="marquee"
+            android:maxLines="1"
+            tools:text="Community"
+            android:textAppearance="@style/TextAppearance.Medium.Light" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/episode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/show"
+            android:layout_marginRight="@dimen/default_padding"
+            android:layout_toRightOf="@+id/avatar"
+            android:ellipsize="marquee"
+            android:maxLines="1"
+            tools:text="5x02 Introcution to Teaching"
+            android:textAppearance="@style/TextAppearance.Small.Light" />
+
+    </RelativeLayout>
+</FrameLayout>

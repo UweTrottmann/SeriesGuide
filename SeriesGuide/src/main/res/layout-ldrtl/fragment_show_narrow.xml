@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        style="@style/DefaultPadding.Page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="153dp"
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginBottom="@dimen/default_padding"
+            android:background="?attr/drawableCardBackground">
+
+            <FrameLayout
+                android:id="@+id/containerShowPoster"
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                android:foreground="?attr/custom_list_selector">
+
+                <ImageView
+                    android:id="@+id/imageViewShowPoster"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/description_poster"
+                    android:scaleType="centerCrop" />
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/imageViewShowPosterBackground"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_toEndOf="@+id/containerShowPoster"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/textViewShowStatus"
+                style="@style/Widget.SeriesGuide.TextView.ShowLabels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/inline_padding"
+                android:layout_toEndOf="@+id/containerShowPoster"
+                android:textAllCaps="true"
+                tools:text="Continuing" />
+
+            <TextView
+                android:id="@+id/textViewShowReleaseTime"
+                style="@style/Widget.SeriesGuide.TextView.ShowLabels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewShowStatus"
+                android:layout_toEndOf="@+id/containerShowPoster"
+                tools:text="Sat 08:00 PM" />
+
+            <TextView
+                android:id="@+id/textViewShowNetwork"
+                style="@style/Widget.SeriesGuide.TextView.ShowLabels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewShowReleaseTime"
+                android:layout_toEndOf="@+id/containerShowPoster"
+                tools:text="YouTube" />
+
+            <TextView
+                android:id="@+id/textViewShowRuntime"
+                style="@style/Widget.SeriesGuide.TextView.ShowLabels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewShowNetwork"
+                android:layout_toEndOf="@+id/containerShowPoster"
+                tools:text="60 min" />
+        </RelativeLayout>
+
+        <include layout="@layout/ratingbar_narrow" />
+
+        <include layout="@layout/fragment_show_meta" />
+
+        <include
+            layout="@layout/buttonbar_services_stacked"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</ScrollView>

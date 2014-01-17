@@ -38,7 +38,10 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.channels.FileChannel;
+import java.security.GeneralSecurityException;
 import java.util.Locale;
+
+import javax.net.ssl.SSLContext;
 
 public class AndroidUtils {
 
@@ -85,16 +88,13 @@ public class AndroidUtils {
     }
 
     /**
-     * Whether there is any network with a usable connection.
+     * Whether there is any network connected.
      */
     public static boolean isNetworkConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        if (activeNetworkInfo != null) {
-            return activeNetworkInfo.isConnected();
-        }
-        return false;
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -107,17 +107,14 @@ public class AndroidUtils {
     }
 
     /**
-     * Whether WiFi has an active, usable connection.
+     * Whether there is an active WiFi connection.
      */
     public static boolean isWifiConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiNetworkInfo = connectivityManager
                 .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (wifiNetworkInfo != null) {
-            return wifiNetworkInfo.isConnected();
-        }
-        return false;
+        return wifiNetworkInfo != null && wifiNetworkInfo.isConnected();
     }
 
     /**
@@ -200,12 +197,32 @@ public class AndroidUtils {
     public static HttpURLConnection buildHttpUrlConnection(String urlString) throws IOException {
         URL url = new URL(urlString);
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = createOkHttpClient();
 
         HttpURLConnection conn = client.open(url);
         conn.setConnectTimeout(15 * 1000 /* milliseconds */);
         conn.setReadTimeout(20 * 1000 /* milliseconds */);
         return conn;
+    }
+
+    /**
+     * Create an OkHttpClient with its own private SSL context. Avoids libssl crash because other
+     * libraries do not expect the global SSL context to be changed. Also see
+     * https://github.com/square/okhttp/issues/184.
+     */
+    public static OkHttpClient createOkHttpClient() {
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+        SSLContext sslContext;
+        try {
+            sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, null, null);
+        } catch (GeneralSecurityException e) {
+            throw new AssertionError(); // The system has no TLS. Just give up.
+        }
+        okHttpClient.setSslSocketFactory(sslContext.getSocketFactory());
+
+        return okHttpClient;
     }
 
 }

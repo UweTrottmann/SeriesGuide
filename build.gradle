@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.6.+'
+        classpath 'com.android.tools.build:gradle:0.7.+'
         classpath 'com.squareup.gradle:gradle-android-test-plugin:0.9.1-SNAPSHOT'
     }
 }
@@ -17,3 +17,15 @@ allprojects {
         mavenCentral()
     }
 }
+
+project.ext {
+    compileSdkVersion = 19
+    buildToolsVersion = '19.0.1'
+}
+
+project.ext.libraries = [
+
+        supportv4: 'com.android.support:support-v4:19.0.+',
+        okhttp: 'com.squareup.okhttp:okhttp:1.2.1'
+
+]
