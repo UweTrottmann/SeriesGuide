@@ -145,7 +145,7 @@
   <string name="only_favorites">Somente séries favoritas</string>
   <string name="togglewatched">Alternar visto</string>
   <string name="pref_infinite_scrolling">Atividade infinita</string>
-  <string name="action_activity_filter">Filter activity</string>
+  <string name="action_activity_filter">Filtrar atividade</string>
   <string name="update_scheduled">Atualizando...</string>
   <string name="update_no_connection">Para atualizar, conecte-se à Internet.</string>
   <string name="update_inprogress">Atualização em andamento, tente novamente mais tarde.</string>
@@ -339,13 +339,13 @@
   <string name="migration_import">Toque abaixo para importar o backup criado no SeriesGuide X.</string>
   <string name="migration_action_import">Importar e substituir as séries existentes</string>
   <string name="action_upgrade">Obtenha as funcionalidades X</string>
-  <string name="billing_action_subscribe">Subscribe</string>
-  <string name="billing_action_pass">Get X Pass</string>
-  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
-  <string name="billing_price_pass">one-time purchase</string>
+  <string name="billing_action_subscribe">Inscrever</string>
+  <string name="billing_action_pass">Pegue o X Pass</string>
+  <string name="billing_price_subscribe">%s/ano, 30 dias de teste</string>
+  <string name="billing_price_pass">compra única</string>
   <string name="upgrade_description">Tenha acesso a notificações, mais opções de listas em widgets e todas as possíveis funcionalidades X. Apoie o desenvolvimento futuro.\n\nSe você já tiver comprado o SeriesGuide X, instale-o para desbloquear esta atualização.</string>
   <string name="upgrade_success">Obrigado, você já assinou todas as funcionalidades X!</string>
-  <string name="billing_learn_more">Why pay? Learn more.</string>
+  <string name="billing_learn_more">Por que pagar? Saiba Mais.</string>
   <string name="subscription_activated">Você agora tem as funcionalidades X.</string>
   <string name="subscription_expired">Assinatura expirada</string>
   <string name="subscription_expired_details">Sua assinatura das funcionalidades X expirou.</string>
