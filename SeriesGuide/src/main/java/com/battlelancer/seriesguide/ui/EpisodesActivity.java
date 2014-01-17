@@ -295,7 +295,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
             }
 
             // switch to the page immediately
-            mPager.setCurrentItem(i, false);
+            mPager.setCurrentItem(i, true);
         }
     }
 

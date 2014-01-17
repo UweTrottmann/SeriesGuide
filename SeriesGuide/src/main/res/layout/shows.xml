@@ -9,17 +9,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.astuetz.PagerSlidingTabStrip
-            android:id="@+id/tabsShows"
-            style="@style/TabStrip"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/tab_strip_height" />
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pagerShows"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/tab_strip_height" />
+            android:orientation="vertical">
+
+            <com.astuetz.PagerSlidingTabStrip
+                android:id="@+id/tabsShows"
+                style="@style/TabStrip"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tab_strip_height" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pagerShows"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
 
         <ProgressBar
             android:id="@+id/progressBarShows"

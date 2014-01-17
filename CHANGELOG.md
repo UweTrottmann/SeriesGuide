@@ -12,6 +12,12 @@ Version 11 *(in development)*
 * Better offline detection, new 'Images via Wi-Fi only' setting replaces previous 'Update via Wi-Fi only' setting.
 * Many small fixes (e.g. scroll bars, list widget config).
 
+#### 11-beta5 *(2014-01-13)*
+
+* FIX Lists in shows section overlap with tab strip on Android 2.3 (Gingerbread).
+* TWEAK Better explanation of upgrade options, fall back to X Pass link if Billing service unavailable.
+* NOTICE Latest translations from crowdin.
+
 #### 11-beta4 *(2014-01-09)*
 
 * TWEAK Store trakt passwords with Android account system, will hopefully lead to less errors. Also, disconnecting from trakt will not force you back to the previous screen anymore.

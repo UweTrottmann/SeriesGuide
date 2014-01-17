@@ -261,8 +261,8 @@
   <string name="import_failed_nofile">لا يوجد ملف نسخ إحتياطي للقراءة.</string>
   <string name="import_failed_noread">.ملف النسخ الاحتياطي غير قابل للقراءة</string>
   <string name="dbupgradefailed">قد تكون النسخة الاحتياطية قديمة جداً أو فارغة. ملاحظة: قم باستعادة ما قبل النسخة2.0 في النسخة 1.9.0 أولاً</string>
-  <string name="import_success">.استعادة النسخ الاحتياطي بنجاح</string>
-  <string name="import_failed">.فشل في استعادة النسخة الاحتياطية</string>
+  <string name="import_success">تم إستعادة النسخ الإحتياطي بنجاح.</string>
+  <string name="import_failed">فشل في إستعادة النسخ الإحتياطي.</string>
   <string name="backup_button">نسخ احتياطي</string>
   <string name="import_button">استعادة</string>
   <string name="backup_question">سوف يتم الكتابة فوق الملف النسخ الاحتياطي الحالية في مجلد النسخ الاحتياطي!</string>
