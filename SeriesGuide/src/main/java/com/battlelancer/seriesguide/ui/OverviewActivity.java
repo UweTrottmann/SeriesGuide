@@ -290,6 +290,10 @@ public class OverviewActivity extends BaseNavDrawerActivity {
             String poster = show.getPoster();
             ShortcutUtils.createShortcut(this, title, poster, mShowId);
 
+            // drop to home screen
+            startActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).setFlags(
+                    Intent.FLAG_ACTIVITY_NEW_TASK));
+
             // Analytics
             fireTrackerEvent("Add to Homescreen");
             return true;
