@@ -90,9 +90,8 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 R.drawable.ic_action_bargraph));
         drawerAdapter
                 .add(new DrawerItem(getString(R.string.search_hint), R.drawable.ic_action_search));
-        // disabled in stable release
-        // drawerAdapter
-        //        .add(new DrawerItem(getString(R.string.hexagon_short), R.drawable.ic_action_lab));
+        drawerAdapter
+                .add(new DrawerItem(getString(R.string.hexagon_short), R.drawable.ic_action_lab));
 
         mDrawerList.setAdapter(drawerAdapter);
         mDrawerList.setOnItemClickListener(this);
