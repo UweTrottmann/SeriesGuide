@@ -150,7 +150,7 @@
         <item name="textColorSgPrimaryInverse">@color/text_primary</item>
         <item name="textColorSgGreen">@color/green_dark</item>
         <item name="textColorSgDim">@color/text_dim_light</item>
-        <item name="textColorSgActionBar">@color/text_default</item>
+        <item name="textColorSgActionBar">@color/text_default_inverse</item>
         <item name="colorAccent">@color/accent_primary</item>
         <item name="colorOverlay">@color/overlay_inverse</item>
         <item name="colorBackgroundDim">@color/background_dim_inverse</item>
@@ -178,11 +178,11 @@
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped_inverse</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart_inverse</item>
 
-        <!-- Necessary to inherit the primary accent color in the DarkActionBar (ABS) -->
-        <item name="actionBarWidgetTheme">@style/SeriesGuideTheme</item>
+        <!-- Remove default action bar shadow -->
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="SeriesGuideBaseThemeLight" parent="Theme.Sherlock.Light.DarkActionBar">
+    <style name="SeriesGuideBaseThemeLight" parent="Theme.Sherlock.Light">
 
         <!-- System widgets -->
         <item name="android:editTextStyle">@style/Widget.SeriesGuide.Light.EditText</item>

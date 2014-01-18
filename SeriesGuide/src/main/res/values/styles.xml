@@ -432,7 +432,7 @@
     </style>
 
     <!-- ActionBar -->
-    <style name="ActionBar.Light" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+    <style name="ActionBar.Light" parent="Widget.Sherlock.Light.ActionBar.Solid">
         <item name="titleTextStyle">@style/TextAppearance.ActionBar</item>
         <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/TextAppearance.ActionBar</item>
     </style>
