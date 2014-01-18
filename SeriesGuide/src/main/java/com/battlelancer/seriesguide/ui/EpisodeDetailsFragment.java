@@ -211,7 +211,10 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.episodedetails_menu, menu);
+
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+        inflater.inflate(
+                isLightTheme ? R.menu.episodedetails_menu_light : R.menu.episodedetails_menu, menu);
     }
 
     @Override

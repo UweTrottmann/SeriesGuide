@@ -63,7 +63,7 @@
     <style name="ImmersiveTheme.Light" parent="SeriesGuideThemeLight">
 
         <!-- Action bar (native, v11+) -->
-        <item name="android:actionBarStyle">@style/ActionBar.Translucent</item>
+        <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
 
     </style>
 

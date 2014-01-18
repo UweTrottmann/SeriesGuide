@@ -226,7 +226,7 @@
     <style name="ImmersiveTheme.Light" parent="SeriesGuideThemeLight">
 
         <!-- Action bar (ABS) -->
-        <item name="actionBarStyle">@style/ActionBar.Translucent</item>
+        <item name="actionBarStyle">@style/ActionBar.Invisible</item>
 
     </style>
 
