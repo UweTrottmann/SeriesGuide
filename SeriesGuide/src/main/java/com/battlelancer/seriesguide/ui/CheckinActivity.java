@@ -68,10 +68,7 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
         setContentView(R.layout.checkin);
         setupNavDrawer();
 
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.checkin));
-        actionBar.setIcon(R.drawable.ic_action_checkin);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        setupActionBar();
 
         // setup search box
         mSearchBox = (EditText) findViewById(R.id.editTextCheckinSearch);
@@ -125,6 +122,13 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
         list.setEmptyView(findViewById(R.id.empty));
 
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
+    }
+
+    private void setupActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(getString(R.string.checkin));
+        actionBar.setIcon(Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableCheckin));
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
