@@ -54,7 +54,7 @@ public class MoviesActivity extends BaseTopActivity {
     private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.movies));
-        actionBar.setIcon(R.drawable.ic_action_movie);
+        actionBar.setIcon(Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableMovie));
     }
 
     private void setupViews() {

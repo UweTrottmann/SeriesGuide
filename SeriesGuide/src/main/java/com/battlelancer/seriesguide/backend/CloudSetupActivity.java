@@ -52,7 +52,7 @@ public class CloudSetupActivity extends BaseTopActivity {
     private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.hexagon);
-        actionBar.setIcon(R.drawable.ic_action_lab);
+        actionBar.setIcon(Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableLab));
     }
 
     @Override

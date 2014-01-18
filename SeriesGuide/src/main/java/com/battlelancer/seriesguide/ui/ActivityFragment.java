@@ -188,7 +188,8 @@ public class ActivityFragment extends SherlockFragment implements
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.activity_menu, menu);
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+        inflater.inflate(isLightTheme ? R.menu.activity_menu_light : R.menu.activity_menu, menu);
 
         // set menu items to current values
         menu.findItem(R.id.menu_onlyfavorites)
@@ -212,8 +213,12 @@ public class ActivityFragment extends SherlockFragment implements
                 DisplaySettings.isHidingSpecials(getActivity()) ||
                 DisplaySettings.isNoWatchedEpisodes(getActivity()) ||
                 ActivitySettings.isInfiniteActivity(getActivity());
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
         filter.setIcon(isFilterApplied ?
-                R.drawable.ic_action_filter_selected : R.drawable.ic_action_filter);
+                (isLightTheme ? R.drawable.ic_action_filter_selected_inverse
+                        : R.drawable.ic_action_filter_selected)
+                : (isLightTheme ? R.drawable.ic_action_filter_inverse
+                        : R.drawable.ic_action_filter));
     }
 
     @Override

@@ -49,8 +49,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * Displays details about one movie including plot, ratings, trailers and a
- * poster.
+ * Displays details about one movie including plot, ratings, trailers and a poster.
  */
 public class MovieDetailsFragment extends SherlockFragment implements
         LoaderManager.LoaderCallbacks<MovieDetails> {
@@ -66,18 +65,25 @@ public class MovieDetailsFragment extends SherlockFragment implements
     }
 
     public interface InitBundle {
+
         String TMDB_ID = "tmdbid";
     }
 
     private static final String TAG = "Movie Details";
+
     private static final int LOADER_ID = R.layout.movie_details_fragment;
+
     private ImageDownloader mImageDownloader;
+
     private String mBaseUrl;
+
     private View mProgressBar;
+
     private MovieDetails mMovieDetails;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.movie_details_fragment, container, false);
 
         mProgressBar = v.findViewById(R.id.progressBar);
@@ -113,7 +119,10 @@ public class MovieDetailsFragment extends SherlockFragment implements
         super.onCreateOptionsMenu(menu, inflater);
 
         if (mMovieDetails != null) {
-            inflater.inflate(R.menu.movie_details_menu, menu);
+            boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+            inflater.inflate(
+                    isLightTheme ? R.menu.movie_details_menu_light : R.menu.movie_details_menu,
+                    menu);
         }
     }
 
