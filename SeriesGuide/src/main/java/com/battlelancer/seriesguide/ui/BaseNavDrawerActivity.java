@@ -83,15 +83,18 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
         // setup menu adapter
         DrawerAdapter drawerAdapter = new DrawerAdapter(this);
-        drawerAdapter.add(new DrawerItem(getString(R.string.shows), R.drawable.ic_action_tv));
-        drawerAdapter.add(new DrawerItem(getString(R.string.lists), R.drawable.ic_action_list));
-        drawerAdapter.add(new DrawerItem(getString(R.string.movies), R.drawable.ic_action_movie));
+        drawerAdapter.add(new DrawerItem(getString(R.string.shows),
+                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableTv)));
+        drawerAdapter.add(new DrawerItem(getString(R.string.lists),
+                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableList)));
+        drawerAdapter.add(new DrawerItem(getString(R.string.movies),
+                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableMovie)));
         drawerAdapter.add(new DrawerItem(getString(R.string.statistics),
-                R.drawable.ic_action_bargraph));
-        drawerAdapter
-                .add(new DrawerItem(getString(R.string.search_hint), R.drawable.ic_action_search));
-        drawerAdapter
-                .add(new DrawerItem(getString(R.string.hexagon_short), R.drawable.ic_action_lab));
+                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableStats)));
+        drawerAdapter.add(new DrawerItem(getString(R.string.search_hint),
+                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableSearch)));
+        drawerAdapter.add(new DrawerItem(getString(R.string.hexagon_short),
+                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableLab)));
 
         mDrawerList.setAdapter(drawerAdapter);
         mDrawerList.setOnItemClickListener(this);

@@ -6,7 +6,7 @@
         android:layout_width="@dimen/slidingmenu_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/background_lighter"
+        android:background="?attr/colorNavDrawerBackground"
         android:choiceMode="singleChoice"
         android:clipToPadding="@bool/gridClipToPadding"
         android:listSelector="?attr/custom_list_selector" />

@@ -39,6 +39,7 @@
         <item name="colorSeparator">@color/separator</item>
         <item name="colorDivider">@color/divider</item>
         <item name="colorTabStripText">@color/text_default</item>
+        <item name="colorNavDrawerBackground">@color/background_lighter</item>
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
@@ -64,6 +65,8 @@
         <item name="drawableMovie">@drawable/ic_action_movie</item>
         <item name="drawableLab">@drawable/ic_action_lab</item>
         <item name="drawableStats">@drawable/ic_action_bargraph</item>
+        <item name="drawableSearch">@drawable/ic_action_search</item>
+        <item name="drawableTv">@drawable/ic_action_tv</item>
 
     </style>
 
@@ -99,6 +102,7 @@
         <item name="colorSeparator">@color/separator</item>
         <item name="colorDivider">@color/divider</item>
         <item name="colorTabStripText">@color/text_default</item>
+        <item name="colorNavDrawerBackground">@color/background_lighter</item>
 
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
@@ -121,6 +125,8 @@
         <item name="drawableMovie">@drawable/ic_action_movie</item>
         <item name="drawableLab">@drawable/ic_action_lab</item>
         <item name="drawableStats">@drawable/ic_action_bargraph</item>
+        <item name="drawableSearch">@drawable/ic_action_search</item>
+        <item name="drawableTv">@drawable/ic_action_tv</item>
 
     </style>
 
@@ -168,6 +174,7 @@
         <item name="colorSeparator">@color/separator_inverse</item>
         <item name="colorDivider">@color/divider_inverse</item>
         <item name="colorTabStripText">@color/text_default_inverse</item>
+        <item name="colorNavDrawerBackground">@color/background_white</item>
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
@@ -193,6 +200,8 @@
         <item name="drawableMovie">@drawable/ic_action_movie_inverse</item>
         <item name="drawableLab">@drawable/ic_action_lab_inverse</item>
         <item name="drawableStats">@drawable/ic_action_bargraph_inverse</item>
+        <item name="drawableSearch">@drawable/ic_action_search_inverse</item>
+        <item name="drawableTv">@drawable/ic_action_tv_inverse</item>
 
         <!-- Remove default action bar shadow -->
         <item name="android:windowContentOverlay">@null</item>

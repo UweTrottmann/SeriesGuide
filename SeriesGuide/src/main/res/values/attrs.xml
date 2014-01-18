@@ -16,6 +16,7 @@
     <attr name="colorSeparator" format="reference|color" />
     <attr name="colorDivider" format="reference|color" />
     <attr name="colorTabStripText" format="reference|color" />
+    <attr name="colorNavDrawerBackground" format="reference|color" />
 
     <!-- Drawables -->
     <attr name="drawableAddIcon" format="reference" />
@@ -31,11 +32,13 @@
     <attr name="drawableList" format="reference" />
     <attr name="drawableLab" format="reference" />
     <attr name="drawableMovie" format="reference" />
+    <attr name="drawableSearch" format="reference" />
     <attr name="drawableSkip" format="reference" />
     <attr name="drawableStar" format="reference" />
     <attr name="drawableStar0" format="reference" />
     <attr name="drawableStats" format="reference" />
     <attr name="drawableTraktHeart" format="reference" />
+    <attr name="drawableTv" format="reference" />
     <attr name="drawableWatch" format="reference" />
     <attr name="drawableWatchSkipped" format="reference" />
 
