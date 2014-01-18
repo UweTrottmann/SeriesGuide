@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2014 Uwe Trottmann
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_action_activity_filter"
+        android:icon="@drawable/ic_action_filter_inverse"
+        android:orderInCategory="2"
+        android:showAsAction="always"
+        android:title="@string/action_activity_filter">
+        <menu>
+            <item
+                android:id="@+id/menu_onlyfavorites"
+                android:checkable="true"
+                android:orderInCategory="0"
+                android:title="@string/only_favorites" />
+            <item
+                android:id="@+id/menu_nowatched"
+                android:checkable="true"
+                android:orderInCategory="1"
+                android:title="@string/hide_watched" />
+            <item
+                android:id="@+id/menu_nospecials"
+                android:checkable="true"
+                android:orderInCategory="2"
+                android:title="@string/pref_onlyseasoneps" />
+            <item
+                android:id="@+id/menu_infinite_scrolling"
+                android:checkable="true"
+                android:orderInCategory="3"
+                android:title="@string/pref_infinite_scrolling" />
+        </menu>
+    </item>
+</menu>

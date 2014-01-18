@@ -38,9 +38,7 @@ public class StatsActivity extends BaseTopActivity {
         setContentView(R.layout.activity_singlepane_drawer);
         setupNavDrawer();
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.statistics);
-        actionBar.setIcon(R.drawable.ic_action_bargraph);
+        setupActionBar();
 
         if (savedInstanceState == null) {
             StatsFragment f = new StatsFragment();
@@ -48,6 +46,12 @@ public class StatsActivity extends BaseTopActivity {
             ft.add(R.id.content_frame, f);
             ft.commit();
         }
+    }
+
+    private void setupActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.statistics);
+        actionBar.setIcon(Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableStats));
     }
 
     @Override

@@ -9,19 +9,16 @@
         android:title="@string/action_shows_add" />
     <item
         android:id="@+id/menu_updateart"
-        android:icon="@drawable/ic_action_refresh"
         android:orderInCategory="5"
         android:showAsAction="never"
         android:title="@string/menu_updateart" />
     <item
         android:id="@+id/menu_update"
-        android:icon="@drawable/ic_action_refresh"
         android:orderInCategory="6"
         android:showAsAction="never"
         android:title="@string/menu_update_delta" />
     <item
         android:id="@+id/menu_fullupdate"
-        android:icon="@drawable/ic_action_refresh"
         android:orderInCategory="7"
         android:showAsAction="never"
         android:title="@string/updateall_yes" />

@@ -61,6 +61,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     private static final String TAG = "Overview";
 
     private int mShowId;
+
     private NfcAdapter mNfcAdapter;
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -89,7 +90,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
                     public NdefMessage createNdefMessage(NfcEvent event) {
                         final Series show = DBUtils.getShow(OverviewActivity.this, mShowId);
                         // send id, also title and overview (both can be empty)
-                        NdefMessage msg = new NdefMessage(new NdefRecord[] {
+                        NdefMessage msg = new NdefMessage(new NdefRecord[]{
                                 createMimeRecord(
                                         "application/com.battlelancer.seriesguide.beam",
                                         String.valueOf(mShowId).getBytes()),
@@ -258,7 +259,10 @@ public class OverviewActivity extends BaseNavDrawerActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.overview_activity_menu, menu);
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+        getSupportMenuInflater().inflate(
+                isLightTheme ? R.menu.overview_activity_menu_light : R.menu.overview_activity_menu,
+                menu);
         return super.onCreateOptionsMenu(menu);
     }
 
