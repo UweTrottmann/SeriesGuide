@@ -30,7 +30,9 @@ public abstract class BaseTopShowsActivity extends BaseTopActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.base_show_menu, menu);
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+        getSupportMenuInflater()
+                .inflate(isLightTheme ? R.menu.base_show_menu_light : R.menu.base_show_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -45,7 +47,7 @@ public abstract class BaseTopShowsActivity extends BaseTopActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content
