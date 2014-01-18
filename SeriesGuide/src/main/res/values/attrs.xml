@@ -29,9 +29,12 @@
     <attr name="drawableDropdown" format="reference" />
     <attr name="drawableFilter" format="reference" />
     <attr name="drawableList" format="reference" />
+    <attr name="drawableLab" format="reference" />
+    <attr name="drawableMovie" format="reference" />
     <attr name="drawableSkip" format="reference" />
     <attr name="drawableStar" format="reference" />
     <attr name="drawableStar0" format="reference" />
+    <attr name="drawableStats" format="reference" />
     <attr name="drawableTraktHeart" format="reference" />
     <attr name="drawableWatch" format="reference" />
     <attr name="drawableWatchSkipped" format="reference" />
