@@ -211,7 +211,10 @@ public class OverviewFragment extends SherlockFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.overview_fragment_menu, menu);
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+        inflater.inflate(
+                isLightTheme ? R.menu.overview_fragment_menu_light : R.menu.overview_fragment_menu,
+                menu);
     }
 
     @Override
