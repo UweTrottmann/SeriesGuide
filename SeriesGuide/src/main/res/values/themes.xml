@@ -59,6 +59,8 @@
         <item name="drawableSkip">@drawable/ic_action_playback_next</item>
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart</item>
+        <item name="drawableAddShow">@drawable/ic_action_new_show</item>
+
     </style>
 
     <style name="SeriesGuideBaseTheme" parent="Theme.Sherlock">
@@ -110,6 +112,7 @@
         <item name="drawableSkip">@drawable/ic_action_playback_next</item>
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart</item>
+        <item name="drawableAddShow">@drawable/ic_action_new_show</item>
 
     </style>
 
@@ -177,6 +180,7 @@
         <item name="drawableSkip">@drawable/ic_action_playback_next_inverse</item>
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped_inverse</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart_inverse</item>
+        <item name="drawableAddShow">@drawable/ic_action_new_show_inverse</item>
 
         <!-- Remove default action bar shadow -->
         <item name="android:windowContentOverlay">@null</item>

@@ -33,5 +33,6 @@
     <attr name="drawableSkip" format="reference" />
     <attr name="drawableWatchSkipped" format="reference" />
     <attr name="drawableTraktHeart" format="reference" />
+    <attr name="drawableAddShow" format="reference" />
 
 </resources>
