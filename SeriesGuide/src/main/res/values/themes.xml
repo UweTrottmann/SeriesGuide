@@ -60,6 +60,7 @@
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart</item>
         <item name="drawableAddShow">@drawable/ic_action_new_show</item>
+        <item name="drawableList">@drawable/ic_action_list</item>
 
     </style>
 
@@ -113,6 +114,7 @@
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart</item>
         <item name="drawableAddShow">@drawable/ic_action_new_show</item>
+        <item name="drawableList">@drawable/ic_action_list</item>
 
     </style>
 
@@ -181,6 +183,7 @@
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped_inverse</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart_inverse</item>
         <item name="drawableAddShow">@drawable/ic_action_new_show_inverse</item>
+        <item name="drawableList">@drawable/ic_action_list_inverse</item>
 
         <!-- Remove default action bar shadow -->
         <item name="android:windowContentOverlay">@null</item>
