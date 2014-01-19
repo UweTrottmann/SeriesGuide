@@ -97,6 +97,9 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         if (!TextUtils.isEmpty(movie.poster_path)) {
             String posterPath = mBaseUrl + movie.poster_path;
             mImageDownloader.download(posterPath, holder.poster, false);
+        } else {
+            // clear image
+            holder.poster.setImageDrawable(null);
         }
 
         // context menu
