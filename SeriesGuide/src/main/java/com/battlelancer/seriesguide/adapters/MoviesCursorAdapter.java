@@ -99,7 +99,10 @@ public class MoviesCursorAdapter extends CursorAdapter {
         String poster = cursor.getString(MoviesQuery.POSTER);
         if (!TextUtils.isEmpty(poster)) {
             String posterPath = poster.substring(0, poster.length() - 4) + mSizeSpec;
-            mImageDownloader.downloadAndStore(posterPath, holder.poster);
+            mImageDownloader.download(posterPath, holder.poster, false);
+        } else {
+            // no image
+            holder.poster.setImageDrawable(null);
         }
 
         // context menu
