@@ -42,26 +42,58 @@ import static com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult;
 
 public class MovieTools {
 
+    public static void addToCollection(Context context, int movieTmdbId) {
+        if (TraktCredentials.get(context).hasCredentials()) {
+            if (!Utils.isConnected(context, true)) {
+                return;
+            }
+            // TODO add to trakt collection
+        }
+
+        // make modifications to local database
+        addToList(context, movieTmdbId, Movies.IN_COLLECTION, AddMovieTask.AddTo.COLLECTION);
+    }
+
     public static void addToWatchlist(Context context, int movieTmdbId) {
         if (TraktCredentials.get(context).hasCredentials()) {
             if (!Utils.isConnected(context, true)) {
                 return;
             }
+            // add to trakt watchlist
             AndroidUtils.executeAsyncTask(
                     new TraktTask(context, null).watchlistMovie(movieTmdbId)
             );
         }
 
         // make modifications to local database
+        addToList(context, movieTmdbId, Movies.IN_WATCHLIST, AddMovieTask.AddTo.WATCHLIST);
+    }
+
+    private static void addToList(Context context, int movieTmdbId, String listColumn,
+            AddMovieTask.AddTo list) {
+        // do we have this movie in the database already?
         Boolean movieExists = isMovieExists(context, movieTmdbId);
         if (movieExists == null) {
             return;
         }
         if (movieExists) {
-            updateMovie(context, movieTmdbId, Movies.IN_WATCHLIST, true);
+            updateMovie(context, movieTmdbId, listColumn, true);
         } else {
-            addMovieAsync(context, movieTmdbId, AddMovieTask.AddTo.WATCHLIST);
+            addMovieAsync(context, movieTmdbId, list);
         }
+    }
+
+    public static void removeFromCollection(Context context, int movieTmdbId) {
+        if (TraktCredentials.get(context).hasCredentials()) {
+            if (!Utils.isConnected(context, true)) {
+                return;
+            }
+            // TODO remove from trakt collection
+        }
+
+        // make modifications to local database
+        Boolean isInWatchlist = isMovieInList(context, movieTmdbId, Movies.IN_WATCHLIST);
+        removeFromList(context, movieTmdbId, isInWatchlist, Movies.IN_COLLECTION);
     }
 
     public static void removeFromWatchlist(Context context, int movieTmdbId) {
@@ -69,20 +101,27 @@ public class MovieTools {
             if (!Utils.isConnected(context, true)) {
                 return;
             }
+            // remove from trakt watchlist
             AndroidUtils.executeAsyncTask(
                     new TraktTask(context, null).unwatchlistMovie(movieTmdbId)
             );
         }
 
-        Boolean isInCollection = isMovieInCollection(context, movieTmdbId);
-        if (isInCollection == null) {
+        // make modifications to local database
+        Boolean isInCollection = isMovieInList(context, movieTmdbId, Movies.IN_COLLECTION);
+        removeFromList(context, movieTmdbId, isInCollection, Movies.IN_WATCHLIST);
+    }
+
+    private static void removeFromList(Context context, int movieTmdbId, Boolean isInOtherList,
+            String listColumn) {
+        if (isInOtherList == null) {
             return;
         }
-        if (isInCollection) {
-            // just update watchlist flag
-            updateMovie(context, movieTmdbId, Movies.IN_WATCHLIST, false);
+        if (isInOtherList) {
+            // just update list flag
+            updateMovie(context, movieTmdbId, listColumn, false);
         } else {
-            // remove from database
+            // completely remove from database
             deleteMovie(context, movieTmdbId);
         }
     }
@@ -159,18 +198,24 @@ public class MovieTools {
         return localMoviesIds;
     }
 
-    private static Boolean isMovieInCollection(Context context, int movieTmdbId) {
+    /**
+     * Determines if the given movie is in the list determined by the given database column name.
+     *
+     * @return true if the movie is in the given list, false otherwise. Can return {@code null} if
+     * the database could not be queried or the movie does not exist.
+     */
+    private static Boolean isMovieInList(Context context, int movieTmdbId, String listColumn) {
         Cursor movie = context.getContentResolver().query(Movies.buildMovieUri(movieTmdbId),
-                new String[]{Movies.IN_COLLECTION}, null, null, null);
+                new String[]{listColumn}, null, null, null);
         if (movie == null || !movie.moveToFirst()) {
             return null;
         }
 
-        boolean isInCollection = movie.getInt(0) == 1;
+        boolean isInList = movie.getInt(0) == 1;
 
         movie.close();
 
-        return isInCollection;
+        return isInList;
     }
 
     private static Boolean isMovieExists(Context context, int movieTmdbId) {

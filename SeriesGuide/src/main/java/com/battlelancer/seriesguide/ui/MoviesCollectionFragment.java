@@ -76,8 +76,12 @@ public class MoviesCollectionFragment extends MoviesBaseFragment {
 
         switch (item.getItemId()) {
             case CONTEXT_COLLECTION_REMOVE_ID: {
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
+                        .getMenuInfo();
+                Cursor movie = (Cursor) mAdapter.getItem(info.position);
+                int tmdbId = movie.getInt(MoviesCursorAdapter.MoviesQuery.TMDB_ID);
 
-                // TODO actually remove from collection
+                MovieTools.removeFromCollection(getActivity(), tmdbId);
 
                 fireTrackerEvent("Remove from collection");
                 return true;

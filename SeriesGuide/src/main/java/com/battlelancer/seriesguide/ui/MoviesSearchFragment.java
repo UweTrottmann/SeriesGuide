@@ -19,9 +19,7 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.adapters.MoviesAdapter;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.MovieTools;
-import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -62,7 +60,9 @@ public class MoviesSearchFragment extends SherlockFragment implements OnEditorAc
 
     protected static final String TAG = "Movies Search";
 
-    private static final int CONTEXT_ADD_TO_WATCHLIST_ID = 0;
+    private static final int CONTEXT_COLLECTION_ADD_ID = 0;
+
+    private static final int CONTEXT_WATCHLIST_ADD_ID = 1;
 
     private MoviesAdapter mAdapter;
 
@@ -129,7 +129,8 @@ public class MoviesSearchFragment extends SherlockFragment implements OnEditorAc
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        menu.add(0, CONTEXT_ADD_TO_WATCHLIST_ID, 0, R.string.watchlist_add);
+        menu.add(0, CONTEXT_COLLECTION_ADD_ID, 0, R.string.action_collection_add);
+        menu.add(0, CONTEXT_WATCHLIST_ADD_ID, 1, R.string.watchlist_add);
     }
 
     @Override
@@ -144,7 +145,14 @@ public class MoviesSearchFragment extends SherlockFragment implements OnEditorAc
         }
 
         switch (item.getItemId()) {
-            case CONTEXT_ADD_TO_WATCHLIST_ID: {
+            case CONTEXT_COLLECTION_ADD_ID: {
+                AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+                Movie movie = mAdapter.getItem(info.position);
+                MovieTools.addToCollection(getActivity(), movie.id);
+                fireTrackerEvent("Add to collection");
+                return true;
+            }
+            case CONTEXT_WATCHLIST_ADD_ID: {
                 AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
                 Movie movie = mAdapter.getItem(info.position);
                 MovieTools.addToWatchlist(getActivity(), movie.id);
