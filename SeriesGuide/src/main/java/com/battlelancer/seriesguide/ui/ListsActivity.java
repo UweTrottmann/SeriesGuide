@@ -35,14 +35,16 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
 /**
- * Hosts a view pager to display and manage lists of shows, seasons and
- * episodes.
+ * Hosts a view pager to display and manage lists of shows, seasons and episodes.
  */
 public class ListsActivity extends BaseTopShowsActivity implements OnListsChangedListener {
 
     public static final String TAG = "Lists";
+
     private ListsPagerAdapter mListsAdapter;
+
     private ViewPager mPager;
+
     private PagerSlidingTabStrip mTabs;
 
     @Override
@@ -58,7 +60,7 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
 
     private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setIcon(R.drawable.ic_action_list);
+        actionBar.setIcon(Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableList));
         actionBar.setTitle(R.string.lists);
     }
 
@@ -104,7 +106,9 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.lists_menu, menu);
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+        getSupportMenuInflater()
+                .inflate(isLightTheme ? R.menu.lists_menu_light : R.menu.lists_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

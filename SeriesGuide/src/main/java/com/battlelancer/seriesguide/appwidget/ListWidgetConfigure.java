@@ -31,8 +31,8 @@ import android.view.MenuItem;
 import android.widget.RemoteViews;
 
 /**
- * Hosts a {@link ListWidgetPreferenceFragment} to allow changing settings of
- * the associated app widget.
+ * Hosts a {@link ListWidgetPreferenceFragment} to allow changing settings of the associated app
+ * widget.
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ListWidgetConfigure extends Activity {
@@ -72,7 +72,10 @@ public class ListWidgetConfigure extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.widget_config_menu, menu);
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+        getMenuInflater()
+                .inflate(isLightTheme ? R.menu.widget_config_menu_light : R.menu.widget_config_menu,
+                        menu);
         return super.onCreateOptionsMenu(menu);
     }
 

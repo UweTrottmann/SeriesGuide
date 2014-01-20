@@ -145,7 +145,7 @@
   <string name="only_favorites">Juste les séries préférées</string>
   <string name="togglewatched">Vu/Non vu</string>
   <string name="pref_infinite_scrolling">Activité infinie</string>
-  <string name="action_activity_filter">Filter activity</string>
+  <string name="action_activity_filter">Filtrer l\'activité</string>
   <string name="update_scheduled">Mise à jour...</string>
   <string name="update_no_connection">Pour mettre à jour, connectez-vous à Internet.</string>
   <string name="update_inprogress">Une mise à jour est en cours, réessayez ultérieurement.</string>
@@ -339,13 +339,13 @@
   <string name="migration_import">Appuyez ci-dessous pour importer la sauvegarde créée dans SeriesGuide X.</string>
   <string name="migration_action_import">Importer et remplacer les séries existantes</string>
   <string name="action_upgrade">Obtenir les fonctionnalités X</string>
-  <string name="billing_action_subscribe">Subscribe</string>
-  <string name="billing_action_pass">Get X Pass</string>
-  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
-  <string name="billing_price_pass">one-time purchase</string>
+  <string name="billing_action_subscribe">Souscrire</string>
+  <string name="billing_action_pass">Obtenir le X Pass</string>
+  <string name="billing_price_subscribe">%s/an, 30 jours d\'essai</string>
+  <string name="billing_price_pass">Achat à vie</string>
   <string name="upgrade_description">Accédez aux notifications, à plus d\'options pour le widget et à toutes les fonctionnalités X futures. Supportez le développement.\n\nSi vous avez déjà acheté SeriesGuide X, installez-le pour déverrouiller cette mise à niveau.</string>
   <string name="upgrade_success">Merci, vous êtes déjà abonné à toutes les fonctionnalités X !</string>
-  <string name="billing_learn_more">Why pay? Learn more.</string>
+  <string name="billing_learn_more">Pourquoi payer ? En savoir plus.</string>
   <string name="subscription_activated">Vous avez dès à présent accès aux fonctionnalités X.</string>
   <string name="subscription_expired">Abonnement expiré</string>
   <string name="subscription_expired_details">Votre abonnement aux fonctionnalités X a expiré.</string>

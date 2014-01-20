@@ -25,7 +25,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/accent_primary" />
+                android:background="?attr/colorAccent" />
 
             <FrameLayout
                 android:id="@+id/fragment_seasons"

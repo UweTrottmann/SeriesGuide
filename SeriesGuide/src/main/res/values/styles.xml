@@ -220,11 +220,6 @@
         <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/TextAppearance.ActionBar</item>
     </style>
 
-    <style name="ActionBar.Translucent">
-        <item name="background">@color/background_translucent</item>
-        <item name="android:background">@color/background_translucent</item>
-    </style>
-
     <style name="ActionBar.Invisible">
         <item name="background">@null</item>
         <item name="android:background">@null</item>
@@ -437,7 +432,7 @@
     </style>
 
     <!-- ActionBar -->
-    <style name="ActionBar.Light" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+    <style name="ActionBar.Light" parent="Widget.Sherlock.Light.ActionBar.Solid">
         <item name="titleTextStyle">@style/TextAppearance.ActionBar</item>
         <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/TextAppearance.ActionBar</item>
     </style>

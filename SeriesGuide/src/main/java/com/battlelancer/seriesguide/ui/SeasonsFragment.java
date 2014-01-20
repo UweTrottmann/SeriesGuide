@@ -322,7 +322,7 @@ public class SeasonsFragment extends SherlockListFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.seasonlist_menu, menu);
+        inflater.inflate(R.menu.seasons_menu, menu);
     }
 
     @Override

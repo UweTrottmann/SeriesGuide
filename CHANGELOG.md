@@ -5,8 +5,23 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 11 *(in development)*
------------------------------
+Version 12 *(in development)*
+-------------------------
+
+#### 12-beta1 *(2014-01-20)*
+
+* TWEAK Light theme now features a light action bar and nav drawer. Both SeriesGuide Light and Android Dark theme have a more pleasant flat background.
+* TWEAK Drop user to home screen after creating show shortcut.
+* FIX Crash when rating while using SeriesGuide with ART.
+* FIX Incorrect movie posters displaying in movie search.
+* NOTICE Reenable access to SeriesGuide cloud.
+
+Version 11 *(2014-01-17)*
+-------------------------
+
+* Show activity integrated into shows section. Just swipe to get from your show list to upcoming episodes or friends activity (last one requires connecting to trakt).
+* Better offline detection, new 'Images via Wi-Fi only' setting replaces previous 'Update via Wi-Fi only' setting.
+* Many small fixes and tweaks (e.g. scroll bars, list widget config).
 
 #### 11-beta5 *(2014-01-13)*
 
