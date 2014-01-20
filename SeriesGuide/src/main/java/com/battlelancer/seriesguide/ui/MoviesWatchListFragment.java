@@ -161,8 +161,9 @@ public class MoviesWatchListFragment extends SherlockFragment implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
-        return new CursorLoader(getActivity(), Movies.CONTENT_URI_WATCHLIST,
-                MoviesCursorAdapter.MoviesQuery.PROJECTION, null, null, Movies.DEFAULT_SORT);
+        return new CursorLoader(getActivity(), Movies.CONTENT_URI,
+                MoviesCursorAdapter.MoviesQuery.PROJECTION, Movies.SELECTION_WATCHLIST, null,
+                Movies.DEFAULT_SORT);
     }
 
     @Override

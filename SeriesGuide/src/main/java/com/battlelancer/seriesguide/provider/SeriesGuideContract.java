@@ -361,10 +361,6 @@ public class SeriesGuideContract {
 
     public static final String PATH_MOVIES = "movies";
 
-    public static final String PATH_COLLECTION = "collection";
-
-    public static final String PATH_WATCHLIST = "watchlist";
-
     public static class Shows implements ShowsColumns, BaseColumns {
 
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SHOWS)
@@ -607,13 +603,9 @@ public class SeriesGuideContract {
                 .appendPath(PATH_MOVIES)
                 .build();
 
-        public static final Uri CONTENT_URI_COLLECTION = CONTENT_URI.buildUpon()
-                .appendPath(PATH_COLLECTION)
-                .build();
+        public static final String SELECTION_COLLECTION = Movies.IN_COLLECTION + "=1";
 
-        public static final Uri CONTENT_URI_WATCHLIST = CONTENT_URI.buildUpon()
-                .appendPath(PATH_WATCHLIST)
-                .build();
+        public static final String SELECTION_WATCHLIST = Movies.IN_WATCHLIST + "=1";
 
         public static final String DEFAULT_SORT = Movies.TITLE + " ASC";
 

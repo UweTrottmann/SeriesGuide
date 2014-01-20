@@ -108,11 +108,6 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final int MOVIES_ID = 701;
 
-    private static final int MOVIES_COLLECTION = 702;
-
-    private static final int MOVIES_WATCHLIST = 703;
-
-
     private static final int SEARCH_SUGGEST = 800;
 
     private static final int RENEW_FTSTABLE = 900;
@@ -175,12 +170,6 @@ public class SeriesGuideProvider extends ContentProvider {
 
         // Movies
         matcher.addURI(authority, SeriesGuideContract.PATH_MOVIES, MOVIES);
-        matcher.addURI(authority,
-                SeriesGuideContract.PATH_MOVIES + "/" + SeriesGuideContract.PATH_COLLECTION,
-                MOVIES_COLLECTION);
-        matcher.addURI(authority,
-                SeriesGuideContract.PATH_MOVIES + "/" + SeriesGuideContract.PATH_WATCHLIST,
-                MOVIES_WATCHLIST);
         matcher.addURI(authority, SeriesGuideContract.PATH_MOVIES + "/*", MOVIES_ID);
 
         // Search
@@ -261,8 +250,6 @@ public class SeriesGuideProvider extends ContentProvider {
             case LIST_ITEMS_ID:
                 return ListItems.CONTENT_ITEM_TYPE;
             case MOVIES:
-            case MOVIES_COLLECTION:
-            case MOVIES_WATCHLIST:
                 return Movies.CONTENT_TYPE;
             case MOVIES_ID:
                 return Movies.CONTENT_ITEM_TYPE;
@@ -566,12 +553,6 @@ public class SeriesGuideProvider extends ContentProvider {
             }
             case MOVIES: {
                 return builder.table(Tables.MOVIES);
-            }
-            case MOVIES_COLLECTION: {
-                return builder.table(Tables.MOVIES).where(Movies.IN_COLLECTION + "=1");
-            }
-            case MOVIES_WATCHLIST: {
-                return builder.table(Tables.MOVIES).where(Movies.IN_WATCHLIST + "=1");
             }
             case MOVIES_ID: {
                 final String movieId = Movies.getId(uri);
