@@ -84,6 +84,8 @@
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
+        <item name="android:colorBackground">@color/background</item>
+        <item name="android:windowBackground">@color/background</item>
         <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
 
         <!-- Action bar (ABS) -->
@@ -143,6 +145,8 @@
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
+        <item name="android:colorBackground">@color/background_inverse</item>
+        <item name="android:windowBackground">@color/background_inverse</item>
         <item name="custom_list_selector">@drawable/list_selector_sg</item>
 
         <!-- System widgets (ABS) -->

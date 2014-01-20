@@ -33,6 +33,7 @@
     <color name="accent_primary_light">#bb4800ff</color>
     <color name="dim">#ff313531</color>
     <color name="background">#ff222222</color>
+    <color name="background_inverse">#ffebebeb</color>
     <color name="background_lighter">#ff171717</color>
     <color name="background_white">#ffffffff</color>
     <color name="background_dim">#80111111</color>
