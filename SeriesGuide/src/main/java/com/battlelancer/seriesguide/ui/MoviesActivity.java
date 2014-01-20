@@ -66,6 +66,8 @@ public class MoviesActivity extends BaseTopActivity {
         tabsAdapter.addTab(R.string.movies_watchlist, MoviesWatchListFragment.class, null);
         // search
         tabsAdapter.addTab(R.string.search, MoviesSearchFragment.class, null);
+        // collection
+        tabsAdapter.addTab(R.string.movies_collection, MoviesCollectionFragment.class, null);
         tabsAdapter.notifyTabsChanged();
     }
 
