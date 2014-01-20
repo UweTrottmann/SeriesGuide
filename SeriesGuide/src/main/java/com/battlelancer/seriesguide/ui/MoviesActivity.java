@@ -28,8 +28,8 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
 /**
- * Users can search for a movie, display detailed information and then check in
- * with trakt or GetGlue.
+ * Users can search for a movie, display detailed information and then check in with trakt or
+ * GetGlue.
  */
 public class MoviesActivity extends BaseTopActivity {
 
@@ -62,11 +62,9 @@ public class MoviesActivity extends BaseTopActivity {
 
         TabStripAdapter tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this, pager,
                 tabs);
-        // only show the trakt watchlist with valid credentials
-        if (TraktCredentials.get(this).hasCredentials()) {
-            tabsAdapter.addTab(R.string.movies_watchlist, MoviesWatchListFragment.class, null);
-        }
-        // movie search
+        // watchlist
+        tabsAdapter.addTab(R.string.movies_watchlist, MoviesWatchListFragment.class, null);
+        // search
         tabsAdapter.addTab(R.string.search, MoviesSearchFragment.class, null);
         tabsAdapter.notifyTabsChanged();
     }

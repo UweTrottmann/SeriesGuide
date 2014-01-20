@@ -59,7 +59,7 @@
     <string name="autorefresh">Refreshing automagically</string>
 
     <!-- Movies -->
-    <string name="movies_watchlist">Watchlist (trakt)</string>
+    <string name="movies_watchlist">Watchlist</string>
     <string name="watchlist_add">Add to watchlist</string>
     <string name="watchlist_remove">Remove from watchlist</string>
     <string name="watchlist_added">Added to watchlist</string>
