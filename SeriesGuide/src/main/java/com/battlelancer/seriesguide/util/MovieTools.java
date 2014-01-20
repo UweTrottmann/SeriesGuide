@@ -221,7 +221,13 @@ public class MovieTools {
                 trakt = ServiceUtils.getTrakt(mContext);
             }
 
-            Movie movie = trakt.movieService().summary(movieTmdbId);
+            Movie movie;
+            try {
+                movie = trakt.movieService().summary(movieTmdbId);
+            } catch (RetrofitError e) {
+                // didn't work :(
+                return null;
+            }
 
             // store in database
             ContentValues values = buildBasicMovieContentValues(movie);
