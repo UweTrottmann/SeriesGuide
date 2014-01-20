@@ -37,6 +37,12 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 public class MoviesCursorAdapter extends CursorAdapter {
 
+    public static final String TRAKT_POSTER_SIZE_SPEC_DEFAULT = ".jpg";
+
+    public static final String TRAKT_POSTER_SIZE_SPEC_138 = "-138.jpg";
+
+    public static final String TRAKT_POSTER_SIZE_SPEC_300 = "-300.jpg";
+
     private final int LAYOUT = R.layout.movie_item;
 
     private LayoutInflater mLayoutInflater;
@@ -59,9 +65,9 @@ public class MoviesCursorAdapter extends CursorAdapter {
         // figure out which size of posters to load based on screen density and
         // size
         if (DisplaySettings.isVeryLargeAndHighResScreen(context)) {
-            mSizeSpec = "-300.jpg";
+            mSizeSpec = TRAKT_POSTER_SIZE_SPEC_300;
         } else {
-            mSizeSpec = "-138.jpg";
+            mSizeSpec = TRAKT_POSTER_SIZE_SPEC_138;
         }
     }
 
@@ -98,7 +104,7 @@ public class MoviesCursorAdapter extends CursorAdapter {
         // poster
         String poster = cursor.getString(MoviesQuery.POSTER);
         if (!TextUtils.isEmpty(poster)) {
-            String posterPath = poster.substring(0, poster.length() - 4) + mSizeSpec;
+            String posterPath = poster.replace(TRAKT_POSTER_SIZE_SPEC_DEFAULT, mSizeSpec);
             mImageDownloader.download(posterPath, holder.poster, false);
         } else {
             // no image
