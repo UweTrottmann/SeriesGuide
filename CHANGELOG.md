@@ -5,6 +5,17 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 12 *(in development)*
+-------------------------
+
+#### 12-beta1 *(2014-01-20)*
+
+* TWEAK Light theme now features a light action bar and nav drawer. Both SeriesGuide Light and Android Dark theme have a more pleasant flat background.
+* TWEAK Drop user to home screen after creating show shortcut.
+* FIX Crash when rating while using SeriesGuide with ART.
+* FIX Incorrect movie posters displaying in movie search.
+* NOTICE Reenable access to SeriesGuide cloud.
+
 Version 11 *(2014-01-17)*
 -------------------------
 
