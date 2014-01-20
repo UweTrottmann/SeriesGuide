@@ -185,7 +185,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // ask the user for credentials if there are none
-                    TraktCredentials.get(getActivity()).ensureCredentials();
+                    TraktCredentials.ensureCredentials(getActivity());
                 }
 
                 mTraktChecked = isChecked;

@@ -145,7 +145,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
 
         switch (item.getItemId()) {
             case CONTEXT_ADD_TO_WATCHLIST_ID: {
-                if (TraktCredentials.get(getActivity()).ensureCredentials()) {
+                if (TraktCredentials.ensureCredentials(getActivity())) {
                     // Add item to watchlist
                     AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
                     Movie movie = mAdapter.getItem(info.position);

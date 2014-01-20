@@ -154,10 +154,10 @@ public class TraktCredentials {
      * @return <b>true</b> if credentials are valid, <b>false</b> if invalid and launching trakt
      * connect flow.
      */
-    public boolean ensureCredentials() {
-        if (!hasCredentials()) {
+    public static boolean ensureCredentials(Context context) {
+        if (!TraktCredentials.get(context).hasCredentials()) {
             // launch trakt connect flow
-            mContext.startActivity(new Intent(mContext, ConnectTraktActivity.class));
+            context.startActivity(new Intent(context, ConnectTraktActivity.class));
             return false;
         }
         return true;
