@@ -5,6 +5,11 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 11.1 *(2014-01-21)*
+-------------------------
+
+* FIX Mirrored shows and movies grid on some Android 4.1 tablets.
+
 Version 11 *(2014-01-17)*
 -------------------------
 
