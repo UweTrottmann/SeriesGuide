@@ -16,6 +16,12 @@ Version 12 *(in development)*
 * FIX Incorrect movie posters displaying in movie search.
 * NOTICE Reenable access to SeriesGuide cloud.
 
+Version 11.1 *(2014-01-21)*
+-------------------------
+
+* FIX Mirrored shows and movies grid on some Android 4.1 tablets.
+* FIX Crash when rating episode if SeriesGuide is running on ART.
+
 Version 11 *(2014-01-17)*
 -------------------------
 
