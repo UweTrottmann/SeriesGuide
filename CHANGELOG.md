@@ -5,6 +5,12 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 11.1 *(2014-01-21)*
+-------------------------
+
+* FIX Mirrored shows and movies grid on some Android 4.1 tablets.
+* FIX Crash when rating episode if SeriesGuide is running on ART.
+
 Version 11 *(2014-01-17)*
 -------------------------
 
