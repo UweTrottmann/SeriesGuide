@@ -2,10 +2,11 @@
 
 <GridView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+android:id/list"
+    style="@style/Widget.SeriesGuide.RtlGridView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="@bool/gridClipToPadding"
-    android:columnWidth="@dimen/movie_item_width"
+    android:columnWidth="@dimen/showgrid_columnWidth"
     android:fastScrollEnabled="true"
     android:horizontalSpacing="@dimen/grid_horizontal_spacing"
     android:listSelector="@color/transparent"
