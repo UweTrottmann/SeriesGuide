@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.enumerations.Extended;
@@ -29,6 +30,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -362,9 +364,19 @@ public class MovieTools {
             DBUtils.applyInSmallBatches(context, batch);
             batch.clear();
 
-            // remove movies not on trakt
-            buildMovieDeleteOps(moviesToRemove, batch);
-            DBUtils.applyInSmallBatches(context, batch);
+            // merge on first run, delete on consequent runs
+            if (TraktSettings.hasMergedMovies(context)) {
+                // remove movies not on trakt
+                buildMovieDeleteOps(moviesToRemove, batch);
+                DBUtils.applyInSmallBatches(context, batch);
+            } else {
+                // upload movies not on trakt
+                UpdateResult result = Upload.uploadMovies(context, trakt, moviesToRemove);
+                if (result != UpdateResult.SUCCESS) {
+                    // abort here if there were issues
+                    return result;
+                }
+            }
 
             // return if connectivity is lost
             if (!AndroidUtils.isNetworkConnected(context)) {
@@ -434,6 +446,76 @@ public class MovieTools {
                         .newDelete(Movies.buildMovieUri(movieTmdbId)).build();
                 batch.add(op);
             }
+        }
+
+    }
+
+    private static class Upload {
+
+        /**
+         * Uploads the given movies to the appropriate list(s) on trakt.
+         */
+        public static UpdateResult uploadMovies(Context context, Trakt trakt,
+                HashSet<Integer> moviesToUpload) {
+            if (moviesToUpload.size() == 0) {
+                // nothing to upload
+                return UpdateResult.SUCCESS;
+            }
+
+            // return if connectivity is lost
+            if (!AndroidUtils.isNetworkConnected(context)) {
+                return UpdateResult.INCOMPLETE;
+            }
+
+            Cursor localMovies = context.getContentResolver().query(Movies.CONTENT_URI,
+                    new String[]{Movies._ID, Movies.TMDB_ID, Movies.IN_COLLECTION,
+                            Movies.IN_WATCHLIST}, null, null, null);
+            if (localMovies == null) {
+                return UpdateResult.INCOMPLETE;
+            }
+
+            // build list of collected, watchlisted movies to upload
+            List<MovieService.SeenMovie> moviesToCollect = new LinkedList<>();
+            List<MovieService.SeenMovie> moviesToWatchlist = new LinkedList<>();
+            while (localMovies.moveToNext()) {
+                int tmdbId = localMovies.getInt(1);
+                if (!moviesToUpload.contains(tmdbId)) {
+                    continue;
+                }
+
+                MovieService.SeenMovie movie = new MovieService.SeenMovie(tmdbId);
+
+                // in collection?
+                if (localMovies.getInt(2) == 1) {
+                    moviesToCollect.add(movie);
+                }
+                // in watchlist?
+                if (localMovies.getInt(3) == 1) {
+                    moviesToWatchlist.add(movie);
+                }
+            }
+
+            // clean up
+            localMovies.close();
+
+            // upload
+            try {
+                MovieService movieService = trakt.movieService();
+                if (moviesToCollect.size() > 0) {
+                    movieService.library(new MovieService.Movies(moviesToCollect));
+                }
+                if (moviesToWatchlist.size() > 0) {
+                    movieService.watchlist(new MovieService.Movies(moviesToWatchlist));
+                }
+            } catch (RetrofitError e) {
+                return UpdateResult.INCOMPLETE;
+            }
+
+            // flag that we ran a successful merge
+            PreferenceManager.getDefaultSharedPreferences(context).edit()
+                    .putBoolean(TraktSettings.KEY_HAS_MERGED_MOVIES, true).commit();
+
+            return UpdateResult.SUCCESS;
         }
 
     }
