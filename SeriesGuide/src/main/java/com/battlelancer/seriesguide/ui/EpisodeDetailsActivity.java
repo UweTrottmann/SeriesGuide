@@ -45,6 +45,8 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Hosts a {@link ViewPager} displaying an episode per fragment of a complete season. Used on
  * smaller screens which do not allow for multi-pane layouts or if coming from a search result
@@ -165,12 +167,14 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     protected void onStart() {
         super.onStart();
         EasyTracker.getInstance(this).activityStart(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         EasyTracker.getInstance(this).activityStop(this);
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

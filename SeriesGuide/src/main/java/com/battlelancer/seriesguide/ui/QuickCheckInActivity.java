@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.battlelancer.seriesguide.ui.dialogs.GenericCheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.TraktTask;
@@ -44,6 +45,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.widget.Toast;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Blank activity, just used to quickly check into a show/episode on
@@ -179,34 +182,40 @@ public class QuickCheckInActivity extends SherlockFragmentActivity implements
     }
 
     @Override
-    public void onTraktActionComplete(Bundle traktTaskArgs, boolean wasSuccessfull) {
-        dismissProgressDialog(traktTaskArgs);
+    protected void onStart() {
+        super.onStart();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void onEvent(TraktTask.TraktActionCompleteEvent event) {
+        event.handle(this);
+    }
+
+    @Override
+    public void onTraktActionComplete(TraktAction traktAction) {
+        if (traktAction == TraktAction.CHECKIN_EPISODE
+                || traktAction == TraktAction.CHECKIN_MOVIE) {
+            GenericCheckInDialogFragment.dismissProgressDialog(getSupportFragmentManager());
+        }
         finish();
     }
 
     @SuppressLint("CommitTransaction")
     @Override
-    public void onCheckinBlocked(Bundle traktTaskArgs, int wait) {
-        dismissProgressDialog(traktTaskArgs);
+    public void onCheckinBlocked(TraktAction traktAction, int wait, Bundle traktTaskArgs) {
+        GenericCheckInDialogFragment.dismissProgressDialog(getSupportFragmentManager());
         TraktCancelCheckinDialogFragment newFragment = TraktCancelCheckinDialogFragment
                 .newInstance(traktTaskArgs, wait);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         newFragment.show(ft, "cancel-checkin-dialog");
-    }
-
-    private void dismissProgressDialog(Bundle traktTaskArgs) {
-        TraktAction action = TraktAction.values()[traktTaskArgs
-                .getInt(TraktTask.InitBundle.TRAKTACTION)];
-        // dismiss a potential progress dialog
-        if (action == TraktAction.CHECKIN_EPISODE || action ==
-                TraktAction.CHECKIN_MOVIE) {
-            Fragment prev = getSupportFragmentManager().findFragmentByTag("progress-dialog");
-            if (prev != null) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.remove(prev);
-                ft.commit();
-            }
-        }
     }
 
 }

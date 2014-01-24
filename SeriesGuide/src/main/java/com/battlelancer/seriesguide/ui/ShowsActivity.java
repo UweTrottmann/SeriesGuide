@@ -71,6 +71,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Provides the apps main screen, displaying a list of shows and their next episodes.
  */
@@ -233,6 +235,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
         setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_SHOWS_POSITION);
         EasyTracker.getInstance(this).activityStart(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -264,6 +267,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     protected void onStop() {
         super.onStop();
         EasyTracker.getInstance(this).activityStop(this);
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

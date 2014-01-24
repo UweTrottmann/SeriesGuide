@@ -156,7 +156,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // we did not override, but that is what the user wanted
-                mListener.onTraktActionComplete(args, true);
+                mListener.onTraktActionComplete(TraktAction.values()[args.getInt(InitBundle.TRAKTACTION)]);
             }
         });
 

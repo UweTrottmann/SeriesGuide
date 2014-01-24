@@ -47,7 +47,10 @@ public class MovieTools {
             if (!Utils.isConnected(context, true)) {
                 return;
             }
-            // TODO add to trakt collection
+            // add to trakt collection
+            AndroidUtils.executeAsyncTask(
+                    new TraktTask(context, null).collectionAddMovie(movieTmdbId)
+            );
         }
 
         // make modifications to local database
@@ -88,7 +91,10 @@ public class MovieTools {
             if (!Utils.isConnected(context, true)) {
                 return;
             }
-            // TODO remove from trakt collection
+            // remove from trakt collection
+            AndroidUtils.executeAsyncTask(
+                    new TraktTask(context, null).collectionRemoveMovie(movieTmdbId)
+            );
         }
 
         // make modifications to local database

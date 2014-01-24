@@ -172,6 +172,8 @@
     <string name="trakt_notcollected">%s not collected.</string>
     <string name="action_collection_add">Add to collection</string>
     <string name="action_collection_remove">Remove from collection</string>
+    <string name="action_collection_added">Added to collection</string>
+    <string name="action_collection_removed">Removed from collection</string>
 
     <!-- Shows -->
     <string name="confirm_delete">Do you really want to remove %s?</string>
