@@ -20,7 +20,6 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.enumerations.Extended;
-import com.jakewharton.trakt.enumerations.Extended2;
 import com.jakewharton.trakt.services.MovieService;
 import com.jakewharton.trakt.services.UserService;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -33,6 +32,7 @@ import android.os.AsyncTask;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 
 import retrofit.RetrofitError;
@@ -381,31 +381,25 @@ public class MovieTools {
         private static UpdateResult addMovies(Context context, Trakt trakt,
                 Integer... movieTmdbIds) {
             MovieService movieService = trakt.movieService();
-            StringBuilder tmdbIds = new StringBuilder();
+            List<Movie> movies = new LinkedList<>();
 
             for (int i = 0; i < movieTmdbIds.length; i++) {
-                if (tmdbIds.length() != 0) {
-                    // separate with commas
-                    tmdbIds.append(",");
+                // get summary from trakt
+                try {
+                    Movie movie = movieService.summary(movieTmdbIds[i]);
+                    movies.add(movie);
+                } catch (RetrofitError e) {
+                    return UpdateResult.INCOMPLETE;
                 }
-                tmdbIds.append(movieTmdbIds[i]);
 
-                // process in batches of 10 or less
+                // process in batches of at most 10
                 if (i % 10 == 0 || i == movieTmdbIds.length - 1) {
-                    // get summaries from trakt
-                    List<Movie> movies;
-                    try {
-                        movies = movieService.summaries(tmdbIds.toString(), Extended2.FULL);
-                    } catch (RetrofitError e) {
-                        return UpdateResult.INCOMPLETE;
-                    }
-
                     // insert into database
                     context.getContentResolver()
                             .bulkInsert(Movies.CONTENT_URI, buildMoviesContentValues(movies));
 
                     // reset
-                    tmdbIds = new StringBuilder();
+                    movies.clear();
                 }
             }
 
