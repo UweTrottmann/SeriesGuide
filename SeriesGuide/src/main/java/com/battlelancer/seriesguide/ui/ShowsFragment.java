@@ -230,24 +230,33 @@ public class ShowsFragment extends SherlockFragment implements
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menuInfo.toString();
 
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         final Cursor show = getActivity().getContentResolver().query(
                 Shows.buildShowUri(String.valueOf(info.id)), new String[]{
-                Shows.FAVORITE, Shows.HIDDEN
+                Shows.FAVORITE, Shows.HIDDEN, Shows.TITLE
         }, null, null, null);
-        show.moveToFirst();
+        if (show == null || !show.moveToFirst()) {
+            // abort
+            return;
+        }
+        // context menu title
+        menu.setHeaderTitle(show.getString(2));
+
+        // favorite toggle
         if (show.getInt(0) == 0) {
             menu.add(0, CONTEXT_FAVORITE_ID, 2, R.string.context_favorite);
         } else {
             menu.add(0, CONTEXT_UNFAVORITE_ID, 2, R.string.context_unfavorite);
         }
+
+        // hidden toggle
         if (show.getInt(1) == 0) {
             menu.add(0, CONTEXT_HIDE_ID, 3, R.string.context_hide);
         } else {
             menu.add(0, CONTEXT_UNHIDE_ID, 3, R.string.context_unhide);
         }
+
         show.close();
 
         menu.add(0, CONTEXT_CHECKIN_ID, 0, R.string.checkin);

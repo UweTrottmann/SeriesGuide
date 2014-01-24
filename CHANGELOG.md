@@ -8,6 +8,10 @@ All dates are in the European Central timezone.
 Version 12 *(in development)*
 -------------------------
 
+#### 12-beta2 *(2014-01-21)*
+
+* FIX Mirrored shows and movies grid on some Android 4.1 tablets.
+
 #### 12-beta1 *(2014-01-20)*
 
 * TWEAK Light theme now features a light action bar and nav drawer. Both SeriesGuide Light and Android Dark theme have a more pleasant flat background.
@@ -15,6 +19,12 @@ Version 12 *(in development)*
 * FIX Crash when rating while using SeriesGuide with ART.
 * FIX Incorrect movie posters displaying in movie search.
 * NOTICE Reenable access to SeriesGuide cloud.
+
+Version 11.1 *(2014-01-21)*
+-------------------------
+
+* FIX Mirrored shows and movies grid on some Android 4.1 tablets.
+* FIX Crash when rating episode if SeriesGuide is running on ART.
 
 Version 11 *(2014-01-17)*
 -------------------------

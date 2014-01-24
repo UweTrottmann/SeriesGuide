@@ -32,6 +32,7 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
 import com.battlelancer.seriesguide.util.FlagTask.SeasonWatchedType;
+import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
@@ -244,6 +245,16 @@ public class SeasonsFragment extends SherlockListFragment implements
             }
             return;
         }
+
+        // display season in title
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+        Cursor season = (Cursor) mAdapter.getItem(info.position);
+        if (season == null) {
+            return;
+        }
+        menu.setHeaderTitle(
+                SeasonTools.getSeasonString(getActivity(), season.getInt(SeasonsQuery.COMBINED)));
+
         // display actions for season
         menu.add(0, CONTEXT_WATCHED_SEASON_ALL_ID, 0, R.string.mark_all);
         menu.add(0, CONTEXT_WATCHED_SEASON_NONE_ID, 1, R.string.unmark_all);

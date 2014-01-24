@@ -80,16 +80,8 @@ public class SeasonsAdapter extends CursorAdapter {
         }
 
         // title
-        final String seasonNumber = mCursor.getString(SeasonsQuery.COMBINED);
-        final String seasonName;
-        if (TextUtils.isEmpty(seasonNumber)) {
-            seasonName = mContext.getString(R.string.season_number, "?");
-        } else if ("0".equals(seasonNumber)) {
-            seasonName = mContext.getString(R.string.specialseason);
-        } else {
-            seasonName = mContext.getString(R.string.season_number, seasonNumber);
-        }
-        viewHolder.seasonTitle.setText(seasonName);
+        viewHolder.seasonTitle.setText(
+                SeasonTools.getSeasonString(mContext, mCursor.getInt(SeasonsQuery.COMBINED)));
 
         // progress
         final int count = mCursor.getInt(SeasonsQuery.WATCHCOUNT);

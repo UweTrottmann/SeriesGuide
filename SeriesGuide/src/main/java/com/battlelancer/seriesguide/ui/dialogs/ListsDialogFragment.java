@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -205,7 +206,7 @@ public class ListsDialogFragment extends DialogFragment implements
             if (item != null && item.moveToFirst()) {
                 if (itemType == 2) {
                     // season just has a number, build string
-                    itemTitle.setText(Utils.getSeasonString(getActivity(), item.getInt(1)));
+                    itemTitle.setText(SeasonTools.getSeasonString(getActivity(), item.getInt(1)));
                 } else {
                     // shows and episodes
                     itemTitle.setText(item.getString(1));

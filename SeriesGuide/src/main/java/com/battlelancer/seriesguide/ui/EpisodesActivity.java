@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -215,11 +216,8 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-        final String seasonTitle = Utils.getSeasonString(this, mSeasonNumber);
-        setTitle(show.getTitle() + " " + seasonTitle);
         actionBar.setTitle(show.getTitle());
-        actionBar.setSubtitle(seasonTitle);
+        actionBar.setSubtitle(SeasonTools.getSeasonString(this, mSeasonNumber));
     }
 
     @Override

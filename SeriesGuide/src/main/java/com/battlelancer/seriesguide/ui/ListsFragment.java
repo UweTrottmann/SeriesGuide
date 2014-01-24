@@ -23,6 +23,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -270,7 +271,7 @@ public class ListsFragment extends SherlockFragment implements
                 case 2:
                     // seasons
                     viewHolder.timeAndNetwork.setText(R.string.season);
-                    viewHolder.episode.setText(Utils.getSeasonString(context,
+                    viewHolder.episode.setText(SeasonTools.getSeasonString(context,
                             cursor.getInt(ListItemsQuery.ITEM_TITLE)));
                     viewHolder.episodeTime.setText("");
                     break;
