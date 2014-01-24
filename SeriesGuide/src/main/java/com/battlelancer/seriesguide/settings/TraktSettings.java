@@ -74,7 +74,7 @@ public class TraktSettings {
      */
     public static boolean hasMergedMovies(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(KEY_HAS_MERGED_MOVIES, true);
+                .getBoolean(KEY_HAS_MERGED_MOVIES, false);
     }
 
     public static boolean isSharingWithTrakt(Context context) {
