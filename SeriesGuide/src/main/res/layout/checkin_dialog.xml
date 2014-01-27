@@ -2,11 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/layout_padding"
-    android:paddingRight="@dimen/layout_padding">
+    android:paddingLeft="@dimen/default_padding"
+    android:paddingRight="@dimen/default_padding">
 
     <Button
-        android:id="@+id/pasteTitle"
+        android:id="@+id/buttonCheckInPasteTitle"
         style="@style/Widget.SeriesGuide.Button.Borderless.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,19 +14,19 @@
         android:text="@string/paste_title" />
 
     <Button
-        android:id="@+id/textViewClear"
+        android:id="@+id/buttonCheckInClear"
         style="@style/Widget.SeriesGuide.Button.Borderless.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/pasteTitle"
+        android:layout_toRightOf="@+id/buttonCheckInPasteTitle"
         android:padding="@dimen/default_padding"
         android:text="@string/clear" />
 
     <EditText
-        android:id="@+id/message"
+        android:id="@+id/editTextCheckInMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/pasteTitle"
+        android:layout_below="@+id/buttonCheckInPasteTitle"
         android:gravity="top"
         android:hint="@string/checkin_hint"
         android:inputType="textMultiLine"
@@ -37,47 +37,55 @@
     </EditText>
 
     <CheckBox
-        android:id="@+id/toggleTrakt"
+        android:id="@+id/checkBoxCheckInTrakt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/message"
+        android:layout_below="@+id/editTextCheckInMessage"
         android:layout_marginTop="@dimen/default_padding"
-        android:drawablePadding="@dimen/inline_padding"
-        android:drawableRight="@drawable/ic_trakt"
         android:text="@string/trakt" />
 
     <CheckBox
-        android:id="@+id/toggleGetGlue"
+        android:id="@+id/checkBoxCheckInGetGlue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toggleTrakt"
-        android:layout_marginBottom="@dimen/default_padding"
-        android:drawablePadding="@dimen/inline_padding"
-        android:drawableRight="@drawable/ic_getglue"
+        android:layout_below="@+id/checkBoxCheckInTrakt"
         android:nextFocusDown="@+id/checkinButton"
         android:text="@string/getglue" />
 
     <Button
-        android:id="@+id/checkinButton"
+        android:id="@+id/buttonCheckIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/toggleGetGlue"
+        android:layout_above="@+id/spacerCheckIn"
         android:layout_alignParentRight="true"
         android:text="@string/checkin" />
 
+    <ProgressBar
+        android:id="@+id/progressBarCheckIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/buttonCheckIn"
+        android:layout_toLeftOf="@+id/buttonCheckIn" />
+
+    <View
+        android:id="@+id/spacerCheckIn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_padding"
+        android:layout_below="@+id/checkBoxCheckInGetGlue"/>
+
     <include
-        android:id="@+id/divider"
+        android:id="@+id/dividerHorizontalCheckIn"
         layout="@layout/divider_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toggleGetGlue" />
+        android:layout_below="@+id/spacerCheckIn" />
 
     <Button
-        android:id="@+id/buttonFixGetGlue"
+        android:id="@+id/buttonCheckInFixGetGlue"
         style="@style/Widget.SeriesGuide.Button.Borderless.Small.Highlight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/divider"
+        android:layout_below="@+id/dividerHorizontalCheckIn"
         android:text="@string/checkin_fixgetglue" />
 
 </RelativeLayout>

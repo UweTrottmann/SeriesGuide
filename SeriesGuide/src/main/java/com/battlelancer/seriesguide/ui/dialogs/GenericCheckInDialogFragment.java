@@ -136,14 +136,14 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         mTraktChecked = TraktSettings.isSharingWithTrakt(getSherlockActivity());
 
         // Message box, set title as default comment
-        mMessageBox = (EditText) layout.findViewById(R.id.message);
+        mMessageBox = (EditText) layout.findViewById(R.id.editTextCheckInMessage);
         if (!TextUtils.isEmpty(defaultMessage)) {
             mMessageBox.setText(defaultMessage);
         }
 
         // Paste episode button
         if (!TextUtils.isEmpty(itemTitle)) {
-            layout.findViewById(R.id.pasteTitle).setOnClickListener(new OnClickListener() {
+            layout.findViewById(R.id.buttonCheckInPasteTitle).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int start = mMessageBox.getSelectionStart();
@@ -155,7 +155,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         }
 
         // Clear button
-        layout.findViewById(R.id.textViewClear).setOnClickListener(new OnClickListener() {
+        layout.findViewById(R.id.buttonCheckInClear).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 mMessageBox.setText(null);
@@ -163,7 +163,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         });
 
         // GetGlue toggle
-        mToggleGetGlueButton = (CompoundButton) layout.findViewById(R.id.toggleGetGlue);
+        mToggleGetGlueButton = (CompoundButton) layout.findViewById(R.id.checkBoxCheckInGetGlue);
         mToggleGetGlueButton.setChecked(mGetGlueChecked);
         mToggleGetGlueButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
@@ -178,7 +178,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         });
 
         // Trakt toggle
-        mToggleTraktButton = (CompoundButton) layout.findViewById(R.id.toggleTrakt);
+        mToggleTraktButton = (CompoundButton) layout.findViewById(R.id.checkBoxCheckInTrakt);
         mToggleTraktButton.setChecked(mTraktChecked);
         mToggleTraktButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
@@ -196,7 +196,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         });
 
         // Checkin Button
-        mCheckinButton = layout.findViewById(R.id.checkinButton);
+        mCheckinButton = layout.findViewById(R.id.buttonCheckIn);
         updateCheckInButtonState();
         mCheckinButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -260,8 +260,8 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
     }
 
     protected void setupFixGetGlueButton(View layout, boolean isEnabled, final int tvdbId) {
-        View fixButton = layout.findViewById(R.id.buttonFixGetGlue);
-        View divider = layout.findViewById(R.id.divider);
+        View fixButton = layout.findViewById(R.id.buttonCheckInFixGetGlue);
+        View divider = layout.findViewById(R.id.dividerHorizontalCheckIn);
         if (isEnabled) {
             fixButton.setOnClickListener(new OnClickListener() {
                 @Override
