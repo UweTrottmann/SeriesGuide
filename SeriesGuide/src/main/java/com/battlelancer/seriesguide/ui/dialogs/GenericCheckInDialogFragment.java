@@ -21,15 +21,12 @@ import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
-import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
-import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
+import com.battlelancer.seriesguide.util.TraktTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -37,6 +34,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -48,7 +46,11 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import de.greenrobot.event.EventBus;
+
 public abstract class GenericCheckInDialogFragment extends SherlockDialogFragment {
+
+    private static final String TAG_PROGRESS_FRAGMENT = "progress-dialog";
 
     public interface InitBundle {
 
@@ -97,15 +99,31 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
 
     protected boolean mTraktChecked;
 
-    protected CompoundButton mToggleTraktButton;
+    protected CompoundButton mCheckBoxTrakt;
 
-    protected CompoundButton mToggleGetGlueButton;
+    protected CompoundButton mCheckBoxGetGlue;
 
-    protected OnTraktActionCompleteListener mListener;
+    private EditText mEditTextMessage;
 
-    private EditText mMessageBox;
+    private View mButtonCheckIn;
 
-    private View mCheckinButton;
+    private View mProgressBar;
+
+    private View mButtonPasteTitle;
+
+    private View mButtonClear;
+
+    private View mButtonFixGetGlue;
+
+    public static void dismissProgressDialog(FragmentManager fragmentManager) {
+        // dismiss a potential progress dialog
+        Fragment prev = fragmentManager.findFragmentByTag(TAG_PROGRESS_FRAGMENT);
+        if (prev != null) {
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.remove(prev);
+            ft.commit();
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -127,7 +145,6 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
                 .getDefaultSharedPreferences(getSherlockActivity());
 
         // some required values
-        final String title = getArguments().getString(InitBundle.TITLE);
         final String defaultMessage = getArguments().getString(InitBundle.DEFAULT_MESSAGE);
         final String itemTitle = getArguments().getString(InitBundle.ITEM_TITLE);
 
@@ -136,36 +153,38 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         mTraktChecked = TraktSettings.isSharingWithTrakt(getSherlockActivity());
 
         // Message box, set title as default comment
-        mMessageBox = (EditText) layout.findViewById(R.id.message);
+        mEditTextMessage = (EditText) layout.findViewById(R.id.editTextCheckInMessage);
         if (!TextUtils.isEmpty(defaultMessage)) {
-            mMessageBox.setText(defaultMessage);
+            mEditTextMessage.setText(defaultMessage);
         }
 
         // Paste episode button
+        mButtonPasteTitle = layout.findViewById(R.id.buttonCheckInPasteTitle);
         if (!TextUtils.isEmpty(itemTitle)) {
-            layout.findViewById(R.id.pasteTitle).setOnClickListener(new OnClickListener() {
+            mButtonPasteTitle.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int start = mMessageBox.getSelectionStart();
-                    int end = mMessageBox.getSelectionEnd();
-                    mMessageBox.getText().replace(Math.min(start, end), Math.max(start, end),
+                    int start = mEditTextMessage.getSelectionStart();
+                    int end = mEditTextMessage.getSelectionEnd();
+                    mEditTextMessage.getText().replace(Math.min(start, end), Math.max(start, end),
                             itemTitle, 0, itemTitle.length());
                 }
             });
         }
 
         // Clear button
-        layout.findViewById(R.id.textViewClear).setOnClickListener(new OnClickListener() {
+        mButtonClear = layout.findViewById(R.id.buttonCheckInClear);
+        mButtonClear.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMessageBox.setText(null);
+                mEditTextMessage.setText(null);
             }
         });
 
         // GetGlue toggle
-        mToggleGetGlueButton = (CompoundButton) layout.findViewById(R.id.toggleGetGlue);
-        mToggleGetGlueButton.setChecked(mGetGlueChecked);
-        mToggleGetGlueButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        mCheckBoxGetGlue = (CompoundButton) layout.findViewById(R.id.checkBoxCheckInGetGlue);
+        mCheckBoxGetGlue.setChecked(mGetGlueChecked);
+        mCheckBoxGetGlue.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 handleGetGlueToggle(isChecked);
@@ -178,9 +197,9 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         });
 
         // Trakt toggle
-        mToggleTraktButton = (CompoundButton) layout.findViewById(R.id.toggleTrakt);
-        mToggleTraktButton.setChecked(mTraktChecked);
-        mToggleTraktButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        mCheckBoxTrakt = (CompoundButton) layout.findViewById(R.id.checkBoxCheckInTrakt);
+        mCheckBoxTrakt.setChecked(mTraktChecked);
+        mCheckBoxTrakt.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -196,83 +215,118 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         });
 
         // Checkin Button
-        mCheckinButton = layout.findViewById(R.id.checkinButton);
+        mButtonCheckIn = layout.findViewById(R.id.buttonCheckIn);
         updateCheckInButtonState();
-        mCheckinButton.setOnClickListener(new OnClickListener() {
+        mButtonCheckIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!AndroidUtils.isNetworkConnected(getActivity())) {
-                    Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                final String message = mMessageBox.getText().toString();
-
-                if (mGetGlueChecked) {
-                    boolean shouldAbort = onGetGlueCheckin(title, message);
-                    if (shouldAbort) {
-                        return;
-                    }
-                }
-
-                if (mTraktChecked) {
-                    if (!TraktCredentials.get(getActivity()).hasCredentials()) {
-                        // cancel if required auth data is missing
-                        mToggleTraktButton.setChecked(false);
-                        mTraktChecked = false;
-                        updateCheckInButtonState();
-                        return;
-                    } else {
-                        // check in
-
-                        // We want to remove any currently showing
-                        // dialog, so make our own transaction and
-                        // take care of that here.
-                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        Fragment prev = getFragmentManager().findFragmentByTag("progress-dialog");
-                        if (prev != null) {
-                            ft.remove(prev);
-                        }
-                        ProgressDialog newFragment = ProgressDialog.newInstance();
-                        newFragment.show(ft, "progress-dialog");
-
-                        onTraktCheckIn(message);
-                    }
-                }
-
-                dismiss();
+                checkIn();
             }
         });
+
+        // progress indicator
+        mProgressBar = layout.findViewById(R.id.progressBarCheckIn);
+
+        // fix getglue button
+        mButtonFixGetGlue = layout.findViewById(R.id.buttonCheckInFixGetGlue);
+
+        setProgressLock(false);
 
         return layout;
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onStart() {
+        super.onStart();
 
-        try {
-            mListener = (OnTraktActionCompleteListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnTraktActionCompleteListener");
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void onEvent(TraktTask.TraktActionCompleteEvent event) {
+        if (event.mWasSuccessful) {
+            dismissAllowingStateLoss();
+            return;
         }
+
+        // something went wrong, let the user try again
+        setProgressLock(false);
+    }
+
+    public void onEvent(TraktTask.TraktCheckInBlockedEvent event) {
+        // make sure we are still visible
+        if (!isVisible()) {
+            return;
+        }
+        // launch a check-in override dialog
+        TraktCancelCheckinDialogFragment newFragment = TraktCancelCheckinDialogFragment
+                .newInstance(event.traktTaskArgs, event.waitMinutes);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        newFragment.show(ft, "cancel-checkin-dialog");
     }
 
     protected void setupFixGetGlueButton(View layout, boolean isEnabled, final int tvdbId) {
-        View fixButton = layout.findViewById(R.id.buttonFixGetGlue);
-        View divider = layout.findViewById(R.id.divider);
+        View divider = layout.findViewById(R.id.dividerHorizontalCheckIn);
         if (isEnabled) {
-            fixButton.setOnClickListener(new OnClickListener() {
+            mButtonFixGetGlue.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     launchFixGetGlueCheckInActivity(v, tvdbId);
                 }
             });
         } else {
-            fixButton.setVisibility(View.GONE);
+            mButtonFixGetGlue.setVisibility(View.GONE);
             divider.setVisibility(View.GONE);
         }
+    }
+
+    private void checkIn() {
+        // connected?
+        if (!AndroidUtils.isNetworkConnected(getActivity())) {
+            Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // lock down UI
+        setProgressLock(true);
+
+        final String itemTitle = getArguments().getString(InitBundle.TITLE);
+        final String message = mEditTextMessage.getText().toString();
+
+        // try GetGlue check-in
+        if (mGetGlueChecked) {
+            boolean shouldAbort = checkInGetGlue(itemTitle, message);
+            if (shouldAbort) {
+                // something is missing, can't check in
+                setProgressLock(false);
+                return;
+            }
+        }
+
+        // try trakt check-in
+        if (mTraktChecked) {
+            if (!TraktCredentials.get(getActivity()).hasCredentials()) {
+                // not connected to trakt
+                mCheckBoxTrakt.setChecked(false);
+                mTraktChecked = false;
+                setProgressLock(false);
+                updateCheckInButtonState();
+                return;
+            }
+
+            checkInTrakt(message);
+            return;
+        }
+
+        // no trakt check-in? release UI and finish
+        setProgressLock(false);
+        dismiss();
     }
 
     /**
@@ -280,18 +334,18 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
      *
      * @return Return whether the check-in should be aborted.
      */
-    protected abstract boolean onGetGlueCheckin(final String title, final String comment);
+    protected abstract boolean checkInGetGlue(final String title, final String comment);
 
     /**
      * Start the trakt check-in task.
      */
-    protected abstract void onTraktCheckIn(String message);
+    protected abstract void checkInTrakt(String message);
 
     protected void updateCheckInButtonState() {
         if (mGetGlueChecked || mTraktChecked) {
-            mCheckinButton.setEnabled(true);
+            mButtonCheckIn.setEnabled(true);
         } else {
-            mCheckinButton.setEnabled(false);
+            mButtonCheckIn.setEnabled(false);
         }
     }
 
@@ -300,7 +354,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
     protected void ensureGetGlueAuthAndConnection() {
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
             Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_LONG).show();
-            mToggleGetGlueButton.setChecked(false);
+            mCheckBoxGetGlue.setChecked(false);
         } else {
             // authenticate already here
             Intent i = new Intent(getSherlockActivity(),
@@ -315,6 +369,20 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         ActivityCompat.startActivity(getActivity(), i,
                 ActivityOptionsCompat.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
                         .toBundle());
+    }
+
+    /**
+     * Disables all interactive UI elements and shows a progress indicator.
+     */
+    private void setProgressLock(boolean isEnabled) {
+        mProgressBar.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
+        mEditTextMessage.setEnabled(!isEnabled);
+        mButtonCheckIn.setEnabled(!isEnabled);
+        mCheckBoxTrakt.setEnabled(!isEnabled);
+        mCheckBoxGetGlue.setEnabled(!isEnabled);
+        mButtonPasteTitle.setEnabled(!isEnabled);
+        mButtonClear.setEnabled(!isEnabled);
+        mButtonFixGetGlue.setEnabled(!isEnabled);
     }
 
 }

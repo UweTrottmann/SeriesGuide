@@ -23,7 +23,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -39,8 +38,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 /**
- * Allows to check into an episode on trakt, into a show on GetGlue. Launching activities must
- * implement {@link OnTraktActionCompleteListener}.
+ * Allows to check into an episode on trakt, into a show on GetGlue. Launching activities should
+ * subscribe to {@link com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent} to
+ * display status toasts.
  */
 public class CheckInDialogFragment extends GenericCheckInDialogFragment {
 
@@ -115,7 +115,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
     }
 
     @Override
-    protected boolean onGetGlueCheckin(String title, String message) {
+    protected boolean checkInGetGlue(String title, String message) {
         boolean isAbortingCheckIn = false;
 
         // require GetGlue authentication
@@ -140,7 +140,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
         }
 
         if (isAbortingCheckIn) {
-            mToggleGetGlueButton.setChecked(false);
+            mCheckBoxGetGlue.setChecked(false);
             mGetGlueChecked = false;
             updateCheckInButtonState();
         } else {
@@ -153,16 +153,13 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
     }
 
     @Override
-    protected void onTraktCheckIn(String message) {
+    protected void checkInTrakt(String message) {
         final int season = getArguments().getInt(InitBundle.SEASON);
         final int episode = getArguments().getInt(InitBundle.EPISODE);
 
         AndroidUtils.executeAsyncTask(
-                new TraktTask(getActivity(), mListener)
-                        .checkInEpisode(mShowTvdbId, season, episode, message),
-                new Void[]{
-                        null
-                });
+                new TraktTask(getActivity())
+                        .checkInEpisode(mShowTvdbId, season, episode, message));
     }
 
     @Override
@@ -172,7 +169,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
                 if (!AndroidUtils.isNetworkConnected(getActivity())) {
                     Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_LONG)
                             .show();
-                    mToggleGetGlueButton.setChecked(false);
+                    mCheckBoxGetGlue.setChecked(false);
                 } else {
                     // authenticate already here
                     Intent i = new Intent(getSherlockActivity(),
@@ -181,7 +178,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
                 }
             } else if (TextUtils.isEmpty(mGetGlueId)) {
                 // the user has to set a GetGlue object id
-                launchFixGetGlueCheckInActivity(mToggleGetGlueButton, mShowTvdbId);
+                launchFixGetGlueCheckInActivity(mCheckBoxGetGlue, mShowTvdbId);
             }
         }
     }

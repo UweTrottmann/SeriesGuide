@@ -53,6 +53,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Hosts an {@link OverviewFragment}.
  */
@@ -235,12 +237,14 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     protected void onStart() {
         super.onStart();
         EasyTracker.getInstance(this).activityStart(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         EasyTracker.getInstance(this).activityStop(this);
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

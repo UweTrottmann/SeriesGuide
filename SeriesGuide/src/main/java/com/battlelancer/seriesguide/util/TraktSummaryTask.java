@@ -21,6 +21,7 @@ import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Ratings;
 import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
+import com.jakewharton.trakt.enumerations.Extended;
 import com.jakewharton.trakt.enumerations.Rating;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -111,7 +112,7 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
             if (mSeason == -1) {
                 if (AndroidUtils.isNetworkConnected(mContext)) {
                     // get the shows summary from trakt
-                    TvShow entity = getTrakt().showService().summary(mShowTvdbId);
+                    TvShow entity = getTrakt().showService().summary(mShowTvdbId, Extended.DEFAULT);
                     if (entity != null) {
                         RatingsWrapper results = new RatingsWrapper();
                         results.rating = entity.rating_advanced;

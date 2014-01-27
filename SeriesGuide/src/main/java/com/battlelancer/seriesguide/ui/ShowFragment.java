@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2014 Uwe Trottmann
  *
@@ -164,8 +163,7 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
     }
 
     public void onEvent(TraktActionCompleteEvent event) {
-        if (event.mTraktTaskArgs.getInt(TraktTask.InitBundle.TRAKTACTION)
-                == TraktAction.RATE_SHOW.index) {
+        if (event.mTraktAction == TraktAction.RATE_SHOW) {
             onLoadTraktRatings(false);
         }
     }

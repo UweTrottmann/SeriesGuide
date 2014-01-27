@@ -16,6 +16,17 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.adapters.TraktCommentsAdapter;
+import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.loaders.TraktCommentsLoader;
+import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.Utils;
+import com.jakewharton.trakt.entities.Comment;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -36,24 +47,15 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.adapters.TraktCommentsAdapter;
-import com.battlelancer.seriesguide.loaders.TraktCommentsLoader;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
-import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
-import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.entities.Comment;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
-
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * A custom {@link ListFragment} to display show or episode shouts and for posting own shouts.
  */
 public class TraktShoutsFragment extends SherlockFragment implements
-        LoaderCallbacks<List<Comment>>, OnTraktActionCompleteListener {
+        LoaderCallbacks<List<Comment>> {
 
     /**
      * Build a {@link TraktShoutsFragment} for shouts of an episode.
@@ -158,28 +160,33 @@ public class TraktShoutsFragment extends SherlockFragment implements
                 v.setEnabled(false);
 
                 final Bundle args = getArguments();
-                int tvdbid = args.getInt(ShareItems.TVDBID);
-                int episode = args.getInt(ShareItems.EPISODE);
                 final boolean isSpoiler = checkIsSpoiler.isChecked();
 
-                if (episode == 0) {
-                    // shout for a show
+                // shout for a movie?
+                int tmdbId = args.getInt(ShareItems.TMDBID);
+                if (tmdbId != 0) {
                     AndroidUtils.executeAsyncTask(
-                            new TraktTask(getSherlockActivity(), TraktShoutsFragment.this)
-                                    .shout(tvdbid, shout, isSpoiler),
-                            new Void[]{
-                                    null
-                            });
-                } else {
-                    // shout for an episode
+                            new TraktTask(getActivity(), null).shoutMovie(tmdbId, shout, isSpoiler)
+                    );
+                    return;
+                }
+
+                // shout for an episode?
+                int tvdbid = args.getInt(ShareItems.TVDBID);
+                int episode = args.getInt(ShareItems.EPISODE);
+                if (episode != 0) {
                     int season = args.getInt(ShareItems.SEASON);
                     AndroidUtils.executeAsyncTask(
-                            new TraktTask(getSherlockActivity(), TraktShoutsFragment.this)
-                                    .shout(tvdbid, season, episode, shout, isSpoiler),
-                            new Void[]{
-                                    null
-                            });
+                            new TraktTask(getActivity(), null)
+                                    .shoutEpisode(tvdbid, season, episode, shout, isSpoiler)
+                    );
+                    return;
                 }
+
+                // shout for a show!
+                AndroidUtils.executeAsyncTask(
+                        new TraktTask(getActivity(), null).shoutShow(tvdbid, shout, isSpoiler)
+                );
             }
         });
 
@@ -220,6 +227,20 @@ public class TraktShoutsFragment extends SherlockFragment implements
             mHandler.postDelayed(mUpdateShoutsRunnable, DateUtils.MINUTE_IN_MILLIS);
         }
     };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        EventBus.getDefault().unregister(this);
+    }
 
     /**
      * Detach from list view.
@@ -423,28 +444,24 @@ public class TraktShoutsFragment extends SherlockFragment implements
         mHandler.post(mRequestFocus);
     }
 
-    @Override
-    public void onTraktActionComplete(Bundle traktTaskArgs, boolean wasSuccessfull) {
-        if (getView() != null) {
+    public void onEvent(TraktTask.TraktActionCompleteEvent event) {
+        if (event.mTraktAction != TraktAction.SHOUT || getView() == null) {
+            return;
+        }
 
-            EditText shoutText = (EditText) getView().findViewById(R.id.shouttext);
-            View button = getView().findViewById(R.id.shoutbutton);
+        EditText shoutText = (EditText) getView().findViewById(R.id.shouttext);
+        View button = getView().findViewById(R.id.shoutbutton);
 
-            if (shoutText != null && button != null) {
-                // reenable the shout button
-                button.setEnabled(true);
+        if (shoutText != null && button != null) {
+            // reenable the shout button
+            button.setEnabled(true);
 
-                if (wasSuccessfull) {
-                    // clear the text field and show recent shout
-                    shoutText.setText("");
-                    getLoaderManager().restartLoader(0, getArguments(), this);
-                }
+            if (event.mWasSuccessful) {
+                // clear the text field and show recent shout
+                shoutText.setText("");
+                getLoaderManager().restartLoader(0, getArguments(), this);
             }
         }
     }
 
-    @Override
-    public void onCheckinBlocked(Bundle traktTaskArgs, int wait) {
-        // not relevant for us
-    }
 }

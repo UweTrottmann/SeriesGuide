@@ -262,7 +262,7 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment implements
             }
 
             // relaunch the trakt task which called us
-            AndroidUtils.executeAsyncTask(new TraktTask(getActivity(), args, null));
+            AndroidUtils.executeAsyncTask(new TraktTask(getActivity(), args));
 
             getActivity().finish();
         } else {

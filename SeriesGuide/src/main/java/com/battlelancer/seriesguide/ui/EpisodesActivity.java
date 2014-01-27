@@ -53,6 +53,8 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Hosts a fragment which displays episodes of a season. On larger screen hosts a {@link ViewPager}
  * displaying the episodes.
@@ -230,6 +232,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
         prefs.registerOnSharedPreferenceChangeListener(this);
 
         EasyTracker.getInstance(this).activityStart(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -242,6 +245,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
         prefs.unregisterOnSharedPreferenceChangeListener(this);
 
         EasyTracker.getInstance(this).activityStop(this);
+        EventBus.getDefault().unregister(this);
     }
 
     List<WeakReference<Fragment>> mFragments = new ArrayList<WeakReference<Fragment>>();
