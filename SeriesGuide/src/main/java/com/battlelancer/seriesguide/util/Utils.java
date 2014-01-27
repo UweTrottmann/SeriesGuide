@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.BuildConfig;
 import com.uwetrottmann.seriesguide.R;
 
 import android.annotation.TargetApi;
@@ -46,6 +47,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -683,7 +685,7 @@ public class Utils {
     public static boolean requiresPurchaseCheck(Context context) {
         // dev builds and the SeriesGuide X key app are not handled through the
         // Play store
-        return !(getChannel(context) != SGChannel.STABLE || hasUnlockKeyInstalled(context));
+        return !(BuildConfig.DEBUG || hasUnlockKeyInstalled(context));
     }
 
     /**
