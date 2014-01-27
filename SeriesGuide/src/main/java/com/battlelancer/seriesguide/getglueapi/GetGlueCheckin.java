@@ -16,6 +16,8 @@
 
 package com.battlelancer.seriesguide.getglueapi;
 
+import com.battlelancer.seriesguide.enums.NetworkResult;
+import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -31,6 +33,7 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import de.greenrobot.event.EventBus;
 import retrofit.RetrofitError;
 
 public class GetGlueCheckin {
@@ -41,11 +44,39 @@ public class GetGlueCheckin {
 
     public static class GetGlueCheckInTask extends AsyncTask<Void, Void, Integer> {
 
-        private static final int CHECKIN_SUCCESSFUL = 0;
+        public static class GetGlueCheckInCompleteEvent {
 
-        private static final int CHECKIN_FAILED = 1;
+            /**
+             * One of {@link com.battlelancer.seriesguide.enums.NetworkResult}.
+             */
+            public int statusCode;
 
-        private static final int CHECKIN_OFFLINE = 2;
+            /**
+             * The title of the show or movie that was checked in.
+             */
+            public String objectTitle;
+
+            public GetGlueCheckInCompleteEvent(int statusCode, String objectTitle) {
+                this.statusCode = statusCode;
+                this.objectTitle = objectTitle;
+            }
+
+            public void handle(Context context) {
+                switch (statusCode) {
+                    case Result.SUCCESS:
+                        Toast.makeText(context,
+                                context.getString(R.string.checkinsuccess, objectTitle),
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                    case Result.ERROR:
+                        Toast.makeText(context, context.getString(R.string.checkinfailed),
+                                Toast.LENGTH_LONG).show();
+                        break;
+                    case NetworkResult.OFFLINE:
+                        Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show();
+                }
+            }
+        }
 
         private String mObjectId;
 
@@ -62,7 +93,7 @@ public class GetGlueCheckin {
         @Override
         protected Integer doInBackground(Void... params) {
             if (!AndroidUtils.isNetworkConnected(mContext)) {
-                return CHECKIN_OFFLINE;
+                return NetworkResult.OFFLINE;
             }
 
             // ensure there is a valid access token, get a new one if it is expired
@@ -71,7 +102,7 @@ public class GetGlueCheckin {
                         GetGlueSettings.getRefreshToken(mContext));
                 if (!gotNewTokens) {
                     // abort, user needs to re-authenticate
-                    return CHECKIN_FAILED;
+                    return NetworkResult.ERROR;
                 }
             }
 
@@ -110,29 +141,25 @@ public class GetGlueCheckin {
                     mComment = "";
                 }
 
-                return CHECKIN_SUCCESSFUL;
+                return Result.SUCCESS;
             } catch (RetrofitError e) {
                 Utils.trackExceptionAndLog(mContext, TAG, e);
             }
 
-            return CHECKIN_FAILED;
+            return Result.ERROR;
         }
 
         @Override
         protected void onPostExecute(Integer result) {
+            EventBus.getDefault().post(new GetGlueCheckInCompleteEvent(result, mComment));
+
             switch (result) {
-                case CHECKIN_SUCCESSFUL:
-                    Toast.makeText(mContext, mContext.getString(R.string.checkinsuccess, mComment),
-                            Toast.LENGTH_SHORT).show();
+                case Result.SUCCESS:
                     Utils.trackCustomEvent(mContext, TAG, "Check-In", "Success");
                     break;
-                case CHECKIN_FAILED:
-                    Toast.makeText(mContext, mContext.getString(R.string.checkinfailed),
-                            Toast.LENGTH_LONG).show();
+                case Result.ERROR:
                     Utils.trackCustomEvent(mContext, TAG, "Check-In", "Failure");
                     break;
-                case CHECKIN_OFFLINE:
-                    Toast.makeText(mContext, R.string.offline, Toast.LENGTH_LONG).show();
             }
         }
 

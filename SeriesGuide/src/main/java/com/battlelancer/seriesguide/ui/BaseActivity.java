@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -85,7 +86,13 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void onEvent(GetGlueCheckin.GetGlueCheckInTask.GetGlueCheckInCompleteEvent event) {
+        // display status toast about GetGlue check-in
+        event.handle(this);
+    }
+
     public void onEvent(TraktTask.TraktActionCompleteEvent event) {
+        // display status toast about trakt action
         event.handle(this);
     }
 
