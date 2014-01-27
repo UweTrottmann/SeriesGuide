@@ -21,8 +21,10 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.ui.dialogs.GenericCheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.uwetrottmann.seriesguide.R;
@@ -30,14 +32,15 @@ import com.uwetrottmann.seriesguide.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
 
 /**
- * Provides some common functionality across all activities like setting the
- * theme, navigation shortcuts and triggering AutoUpdates and AutoBackups.
+ * Provides some common functionality across all activities like setting the theme, navigation
+ * shortcuts and triggering AutoUpdates and AutoBackups.
  */
 public abstract class BaseActivity extends SherlockFragmentActivity implements
         OnTraktActionCompleteListener {
@@ -91,34 +94,27 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onTraktActionComplete(Bundle traktTaskArgs, boolean wasSuccessfull) {
-        dismissProgressDialog(traktTaskArgs);
+    public void onEvent(TraktTask.TraktActionCompleteEvent event) {
+        event.handle(this);
     }
 
     @Override
-    public void onCheckinBlocked(Bundle traktTaskArgs, int wait) {
-        dismissProgressDialog(traktTaskArgs);
-        // Guard against the system reclaiming our resources
-        if (!isFinishing()) {
+    public void onTraktActionComplete(TraktAction traktAction) {
+        if (traktAction == TraktAction.CHECKIN_EPISODE
+                || traktAction == TraktAction.CHECKIN_MOVIE) {
+            GenericCheckInDialogFragment.dismissProgressDialog(getSupportFragmentManager());
+        }
+    }
+
+    @Override
+    public void onCheckinBlocked(TraktAction traktAction, int wait, Bundle traktTaskArgs) {
+        GenericCheckInDialogFragment.dismissProgressDialog(getSupportFragmentManager());
+        // display resolution dialog
+        if (!isFinishing()) { // guard against the system reclaiming our resources
             TraktCancelCheckinDialogFragment newFragment = TraktCancelCheckinDialogFragment
                     .newInstance(traktTaskArgs, wait);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             newFragment.show(ft, "cancel-checkin-dialog");
-        }
-    }
-
-    private void dismissProgressDialog(Bundle traktTaskArgs) {
-        TraktAction action = TraktAction.values()[traktTaskArgs.getInt(InitBundle.TRAKTACTION)];
-        // dismiss a potential progress dialog
-        if (action == TraktAction.CHECKIN_EPISODE || action ==
-                TraktAction.CHECKIN_MOVIE) {
-            Fragment prev = getSupportFragmentManager().findFragmentByTag("progress-dialog");
-            if (prev != null) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.remove(prev);
-                ft.commit();
-            }
         }
     }
 

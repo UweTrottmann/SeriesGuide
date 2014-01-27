@@ -179,9 +179,8 @@ public class MoviesWatchListFragment extends SherlockFragment implements
     }
 
     public void onEvent(TraktActionCompleteEvent event) {
-        int traktAction = event.mTraktTaskArgs.getInt(TraktTask.InitBundle.TRAKTACTION);
-        if (traktAction == TraktAction.WATCHLIST_MOVIE.index
-                || traktAction == TraktAction.UNWATCHLIST_MOVIE.index) {
+        if (event.mTraktAction == TraktAction.WATCHLIST_MOVIE
+                || event.mTraktAction == TraktAction.UNWATCHLIST_MOVIE) {
             // reload movie watchlist after user added/removed
             getLoaderManager().restartLoader(LOADER_ID, null, this);
         }

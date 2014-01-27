@@ -722,8 +722,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     public void onEvent(TraktActionCompleteEvent event) {
-        if (event.mTraktTaskArgs.getInt(TraktTask.InitBundle.TRAKTACTION)
-                == TraktAction.RATE_EPISODE.index) {
+        if (event.mTraktAction == TraktAction.RATE_EPISODE) {
             onLoadTraktRatings(getView().findViewById(R.id.ratingbar), false);
         }
     }

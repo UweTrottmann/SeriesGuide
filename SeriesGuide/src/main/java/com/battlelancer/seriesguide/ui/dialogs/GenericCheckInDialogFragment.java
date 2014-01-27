@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.ui.dialogs;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
+import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -35,6 +36,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,9 +49,9 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import de.greenrobot.event.EventBus;
-
 public abstract class GenericCheckInDialogFragment extends SherlockDialogFragment {
+
+    private static final String TAG_PROGRESS_FRAGMENT = "progress-dialog";
 
     public interface InitBundle {
 
@@ -113,6 +117,16 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
     private View mButtonClear;
 
     private View mButtonFixGetGlue;
+
+    public static void dismissProgressDialog(FragmentManager fragmentManager) {
+        // dismiss a potential progress dialog
+        Fragment prev = fragmentManager.findFragmentByTag(TAG_PROGRESS_FRAGMENT);
+        if (prev != null) {
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.remove(prev);
+            ft.commit();
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

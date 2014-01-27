@@ -23,6 +23,8 @@ import com.uwetrottmann.seriesguide.R;
 import android.content.Intent;
 import android.os.Bundle;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Hosts a {@link MovieDetailsFragment} displaying details about the movie
  * defined by the given TMDb id intent extra.
@@ -53,6 +55,20 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
             MovieDetailsFragment f = MovieDetailsFragment.newInstance(tmdbId);
             getSupportFragmentManager().beginTransaction().add(R.id.content_frame, f).commit();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
