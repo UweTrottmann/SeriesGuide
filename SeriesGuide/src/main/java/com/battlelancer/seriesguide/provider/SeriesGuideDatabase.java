@@ -357,19 +357,27 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + MoviesColumns.RELEASED_UTC_MS + " INTEGER,"
 
-            + MoviesColumns.RUNTIME_MIN + " INTEGER,"
+            + MoviesColumns.RUNTIME_MIN + " INTEGER DEFAULT 0,"
 
             + MoviesColumns.TRAILER + " TEXT,"
 
             + MoviesColumns.CERTIFICATION + " TEXT,"
 
-            + MoviesColumns.IN_COLLECTION + " INTEGER,"
+            + MoviesColumns.IN_COLLECTION + " INTEGER DEFAULT 0,"
 
-            + MoviesColumns.IN_WATCHLIST + " INTEGER,"
+            + MoviesColumns.IN_WATCHLIST + " INTEGER DEFAULT 0,"
 
-            + MoviesColumns.PLAYS + " INTEGER,"
+            + MoviesColumns.PLAYS + " INTEGER DEFAULT 0,"
 
-            + MoviesColumns.WATCHED + " INTEGER,"
+            + MoviesColumns.WATCHED + " INTEGER DEFAULT 0,"
+
+            + MoviesColumns.RATING_TMDB + " REAL DEFAULT 0,"
+
+            + MoviesColumns.RATING_VOTES_TMDB + " INTEGER DEFAULT 0,"
+
+            + MoviesColumns.RATING_TRAKT + " INTEGER DEFAULT 0,"
+
+            + MoviesColumns.RATING_VOTES_TRAKT + " INTEGER DEFAULT 0,"
 
             + MoviesColumns.LAST_UPDATED + " INTEGER,"
 

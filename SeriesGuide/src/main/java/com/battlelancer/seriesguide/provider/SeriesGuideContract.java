@@ -322,6 +322,14 @@ public class SeriesGuideContract {
 
         String WATCHED = "movies_watched";
 
+        String RATING_TMDB = "movies_rating_tmdb";
+
+        String RATING_VOTES_TMDB = "movies_rating_votes_tmdb";
+
+        String RATING_TRAKT = "movies_rating_trakt";
+
+        String RATING_VOTES_TRAKT = "movies_rating_votes_trakt";
+
         String LAST_UPDATED = "movies_last_updated";
 
     }
