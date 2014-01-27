@@ -19,7 +19,6 @@ package com.battlelancer.seriesguide.ui.dialogs;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
 import com.battlelancer.seriesguide.util.Utils;
@@ -37,12 +36,11 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.text.format.DateUtils;
 import android.widget.Toast;
 
+import de.greenrobot.event.EventBus;
 import retrofit.RetrofitError;
 
 /**
@@ -84,15 +82,6 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
             @Override
             @SuppressLint("CommitTransaction")
             public void onClick(DialogInterface dialog, int which) {
-                FragmentTransaction ft = fm.beginTransaction();
-                // ft is committed with .show()
-                Fragment prev = fm.findFragmentByTag("progress-dialog");
-                if (prev != null) {
-                    ft.remove(prev);
-                }
-                ProgressDialog newFragment = ProgressDialog.newInstance();
-                newFragment.show(ft, "progress-dialog");
-
                 AsyncTask<String, Void, Response> cancelCheckinTask
                         = new AsyncTask<String, Void, Response>() {
 
@@ -150,7 +139,9 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
         builder.setNegativeButton(R.string.traktcheckin_wait, new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // do nothing, dialog dismissed automatically
+                // broadcast check-in success
+                EventBus.getDefault().post(new TraktTask.TraktActionCompleteEvent(
+                        TraktAction.values()[args.getInt(InitBundle.TRAKTACTION)], true, null));
             }
         });
 

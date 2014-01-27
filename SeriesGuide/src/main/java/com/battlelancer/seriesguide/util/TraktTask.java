@@ -89,6 +89,10 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
          * Displays status toasts dependent on the result of the trakt action performed.
          */
         public void handle(Context context) {
+            if (TextUtils.isEmpty(mMessage)) {
+                return;
+            }
+
             if (!mWasSuccessful) {
                 // display error toast
                 Toast.makeText(context, mMessage, Toast.LENGTH_LONG).show();
