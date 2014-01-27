@@ -27,12 +27,10 @@ import com.battlelancer.seriesguide.ui.dialogs.GenericCheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -48,13 +46,14 @@ import android.widget.Toast;
 import de.greenrobot.event.EventBus;
 
 /**
- * Blank activity, just used to quickly check into a show/episode on
- * GetGlue/trakt.
+ * Blank activity, just used to quickly check into a show/episode on GetGlue/trakt.
  */
-public class QuickCheckInActivity extends SherlockFragmentActivity implements
-        OnTraktActionCompleteListener {
+public class QuickCheckInActivity extends SherlockFragmentActivity {
+
+    private static final String TAG_PROGRESS_FRAGMENT = "progress-dialog";
 
     public interface InitBundle {
+
         String EPISODE_TVDBID = "episode_tvdbid";
     }
 
@@ -77,7 +76,7 @@ public class QuickCheckInActivity extends SherlockFragmentActivity implements
 
         final Cursor episodeWithShow = getContentResolver()
                 .query(Episodes.buildEpisodeWithShowUri(String.valueOf(episodeId)),
-                        new String[] {
+                        new String[]{
                                 Episodes._ID, Episodes.TITLE, Episodes.SEASON, Episodes.NUMBER,
                                 Shows.REF_SHOW_ID, Shows.TITLE
                         },
@@ -102,7 +101,6 @@ public class QuickCheckInActivity extends SherlockFragmentActivity implements
         int season = episodeWithShow.getInt(2);
         int episode = episodeWithShow.getInt(3);
         int showTvdbId = episodeWithShow.getInt(4);
-        String showTitle = episodeWithShow.getString(5);
         episodeWithShow.close();
         String defaultMessage = Utils.getNextEpisodeString(this, season, episode, title);
 
@@ -115,19 +113,18 @@ public class QuickCheckInActivity extends SherlockFragmentActivity implements
             // dialog, so make our own transaction and
             // take care of that here.
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            Fragment prev = getSupportFragmentManager().findFragmentByTag("progress-dialog");
+            Fragment prev = getSupportFragmentManager().findFragmentByTag(TAG_PROGRESS_FRAGMENT);
             if (prev != null) {
                 ft.remove(prev);
             }
             ProgressDialog newFragment = ProgressDialog.newInstance();
-            newFragment.show(ft, "progress-dialog");
+            newFragment.show(ft, TAG_PROGRESS_FRAGMENT);
 
             // check in with trakt
-            AndroidUtils
-                    .executeAsyncTask(
-                            new TraktTask(this, this)
-                                    .checkInEpisode(showTvdbId, season, episode, defaultMessage)
-                    );
+            AndroidUtils.executeAsyncTask(
+                    new TraktTask(this)
+                            .checkInEpisode(showTvdbId, season, episode, defaultMessage)
+            );
         }
 
         if (isShareWithGetGlue) {
@@ -139,23 +136,18 @@ public class QuickCheckInActivity extends SherlockFragmentActivity implements
                 isAbortingCheckIn = true;
             } else {
                 Cursor show = getContentResolver().query(
-                        Shows.buildShowUri(String.valueOf(showTvdbId)), new String[] {
-                                Shows._ID, Shows.GETGLUEID
-                        }, null, null, null);
+                        Shows.buildShowUri(String.valueOf(showTvdbId)), new String[]{
+                        Shows._ID, Shows.GETGLUEID
+                }, null, null, null);
                 if (show != null) {
                     show.moveToFirst();
                     objectId = show.getString(1);
                     show.close();
                 }
 
-                // fall back to IMDb id
+                // check for GetGlue id
                 if (TextUtils.isEmpty(objectId)) {
-                    if (TextUtils.isEmpty(showTitle)) {
-                        // cancel if we don't know what to check into
-                        isAbortingCheckIn = true;
-                    } else {
-                        objectId = showTitle;
-                    }
+                    isAbortingCheckIn = true;
                 }
             }
 
@@ -195,26 +187,30 @@ public class QuickCheckInActivity extends SherlockFragmentActivity implements
     }
 
     public void onEvent(TraktTask.TraktActionCompleteEvent event) {
-        event.handle(this);
-    }
-
-    @Override
-    public void onTraktActionComplete(TraktAction traktAction) {
-        if (traktAction == TraktAction.CHECKIN_EPISODE
-                || traktAction == TraktAction.CHECKIN_MOVIE) {
-            GenericCheckInDialogFragment.dismissProgressDialog(getSupportFragmentManager());
+        // wrap up and finish
+        if (event.mTraktAction == TraktAction.CHECKIN_EPISODE) {
+            event.handle(this);
+            dismissProgressDialog();
+            finish();
         }
-        finish();
     }
 
-    @SuppressLint("CommitTransaction")
-    @Override
-    public void onCheckinBlocked(TraktAction traktAction, int wait, Bundle traktTaskArgs) {
+    public void onEvent(TraktTask.TraktCheckInBlockedEvent event) {
         GenericCheckInDialogFragment.dismissProgressDialog(getSupportFragmentManager());
         TraktCancelCheckinDialogFragment newFragment = TraktCancelCheckinDialogFragment
-                .newInstance(traktTaskArgs, wait);
+                .newInstance(event.traktTaskArgs, event.waitMinutes);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         newFragment.show(ft, "cancel-checkin-dialog");
+    }
+
+    private void dismissProgressDialog() {
+        // dismiss a potential progress dialog
+        Fragment prev = getSupportFragmentManager().findFragmentByTag(TAG_PROGRESS_FRAGMENT);
+        if (prev != null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.remove(prev);
+            ft.commit();
+        }
     }
 
 }

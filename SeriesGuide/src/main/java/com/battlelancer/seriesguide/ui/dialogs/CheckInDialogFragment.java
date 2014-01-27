@@ -23,7 +23,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -39,8 +38,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 /**
- * Allows to check into an episode on trakt, into a show on GetGlue. Launching activities must
- * implement {@link OnTraktActionCompleteListener}.
+ * Allows to check into an episode on trakt, into a show on GetGlue. Launching activities should
+ * subscribe to {@link com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent} to
+ * display status toasts.
  */
 public class CheckInDialogFragment extends GenericCheckInDialogFragment {
 
@@ -158,11 +158,8 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
         final int episode = getArguments().getInt(InitBundle.EPISODE);
 
         AndroidUtils.executeAsyncTask(
-                new TraktTask(getActivity(), mListener)
-                        .checkInEpisode(mShowTvdbId, season, episode, message),
-                new Void[]{
-                        null
-                });
+                new TraktTask(getActivity())
+                        .checkInEpisode(mShowTvdbId, season, episode, message));
     }
 
     @Override

@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.ui.dialogs;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
-import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -25,11 +24,9 @@ import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -48,6 +45,8 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import de.greenrobot.event.EventBus;
 
 public abstract class GenericCheckInDialogFragment extends SherlockDialogFragment {
 
@@ -103,8 +102,6 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
     protected CompoundButton mCheckBoxTrakt;
 
     protected CompoundButton mCheckBoxGetGlue;
-
-    protected OnTraktActionCompleteListener mListener;
 
     private EditText mEditTextMessage;
 
@@ -239,15 +236,39 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onStart() {
+        super.onStart();
 
-        try {
-            mListener = (OnTraktActionCompleteListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnTraktActionCompleteListener");
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void onEvent(TraktTask.TraktActionCompleteEvent event) {
+        if (event.mWasSuccessful) {
+            dismissAllowingStateLoss();
+            return;
         }
+
+        // something went wrong, let the user try again
+        setProgressLock(false);
+    }
+
+    public void onEvent(TraktTask.TraktCheckInBlockedEvent event) {
+        // make sure we are still visible
+        if (!isVisible()) {
+            return;
+        }
+        // launch a check-in override dialog
+        TraktCancelCheckinDialogFragment newFragment = TraktCancelCheckinDialogFragment
+                .newInstance(event.traktTaskArgs, event.waitMinutes);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        newFragment.show(ft, "cancel-checkin-dialog");
     }
 
     protected void setupFixGetGlueButton(View layout, boolean isEnabled, final int tvdbId) {
@@ -272,6 +293,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
             return;
         }
 
+        // lock down UI
         setProgressLock(true);
 
         final String itemTitle = getArguments().getString(InitBundle.TITLE);
@@ -281,6 +303,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         if (mGetGlueChecked) {
             boolean shouldAbort = checkInGetGlue(itemTitle, message);
             if (shouldAbort) {
+                // something is missing, can't check in
                 setProgressLock(false);
                 return;
             }
@@ -289,7 +312,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         // try trakt check-in
         if (mTraktChecked) {
             if (!TraktCredentials.get(getActivity()).hasCredentials()) {
-                // cancel if required auth data is missing
+                // not connected to trakt
                 mCheckBoxTrakt.setChecked(false);
                 mTraktChecked = false;
                 setProgressLock(false);
@@ -298,7 +321,12 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
             }
 
             checkInTrakt(message);
+            return;
         }
+
+        // no trakt check-in? release UI and finish
+        setProgressLock(false);
+        dismiss();
     }
 
     /**

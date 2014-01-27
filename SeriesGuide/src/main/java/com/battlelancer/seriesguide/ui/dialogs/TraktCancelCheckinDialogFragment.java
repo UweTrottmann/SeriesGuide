@@ -22,7 +22,6 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
-import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Response;
@@ -30,7 +29,6 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -48,13 +46,11 @@ import android.widget.Toast;
 import retrofit.RetrofitError;
 
 /**
- * Warns about an ongoing check-in, how long it takes until it is finished.
- * Offers to override or wait out. Launching activities must implement
- * {@link OnTraktActionCompleteListener}.
+ * Warns about an ongoing check-in, how long it takes until it is finished. Offers to override or
+ * wait out.
  */
 public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
-    private OnTraktActionCompleteListener mListener;
     private int mWait;
 
     public static TraktCancelCheckinDialogFragment newInstance(Bundle traktTaskData, int wait) {
@@ -75,7 +71,8 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
         final Context context = getActivity().getApplicationContext();
         final FragmentManager fm = getFragmentManager();
         final Bundle args = getArguments();
-        final boolean isEpisodeNotMovie = args.getInt(InitBundle.TRAKTACTION) == TraktAction.CHECKIN_EPISODE.index;
+        final boolean isEpisodeNotMovie = args.getInt(InitBundle.TRAKTACTION)
+                == TraktAction.CHECKIN_EPISODE.index;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -96,7 +93,8 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
                 ProgressDialog newFragment = ProgressDialog.newInstance();
                 newFragment.show(ft, "progress-dialog");
 
-                AsyncTask<String, Void, Response> cancelCheckinTask = new AsyncTask<String, Void, Response>() {
+                AsyncTask<String, Void, Response> cancelCheckinTask
+                        = new AsyncTask<String, Void, Response>() {
 
                     @Override
                     protected Response doInBackground(String... params) {
@@ -136,10 +134,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
                             // relaunch the trakt task which called us to
                             // try the check in again
-                            AndroidUtils.executeAsyncTask(new TraktTask(context, args, mListener),
-                                    new Void[] {
-                                        null
-                                    });
+                            AndroidUtils.executeAsyncTask(new TraktTask(context, args));
                         } else if (TraktStatus.FAILURE.equals(r.status)) {
                             // well, something went wrong
                             Toast.makeText(context,
@@ -155,23 +150,11 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
         builder.setNegativeButton(R.string.traktcheckin_wait, new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // we did not override, but that is what the user wanted
-                mListener.onTraktActionComplete(TraktAction.values()[args.getInt(InitBundle.TRAKTACTION)]);
+                // do nothing, dialog dismissed automatically
             }
         });
 
         return builder.create();
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        try {
-            mListener = (OnTraktActionCompleteListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnTraktActionCompleteListener");
-        }
-    }
 }
