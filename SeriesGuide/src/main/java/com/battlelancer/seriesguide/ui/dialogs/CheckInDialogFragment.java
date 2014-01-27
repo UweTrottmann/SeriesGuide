@@ -140,7 +140,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
         }
 
         if (isAbortingCheckIn) {
-            mToggleGetGlueButton.setChecked(false);
+            mCheckBoxGetGlue.setChecked(false);
             mGetGlueChecked = false;
             updateCheckInButtonState();
         } else {
@@ -172,7 +172,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
                 if (!AndroidUtils.isNetworkConnected(getActivity())) {
                     Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_LONG)
                             .show();
-                    mToggleGetGlueButton.setChecked(false);
+                    mCheckBoxGetGlue.setChecked(false);
                 } else {
                     // authenticate already here
                     Intent i = new Intent(getSherlockActivity(),
@@ -181,7 +181,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
                 }
             } else if (TextUtils.isEmpty(mGetGlueId)) {
                 // the user has to set a GetGlue object id
-                launchFixGetGlueCheckInActivity(mToggleGetGlueButton, mShowTvdbId);
+                launchFixGetGlueCheckInActivity(mCheckBoxGetGlue, mShowTvdbId);
             }
         }
     }

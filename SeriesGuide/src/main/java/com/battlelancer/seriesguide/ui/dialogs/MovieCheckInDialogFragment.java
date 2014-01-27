@@ -72,7 +72,7 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
         }
 
         if (isAbortingCheckIn) {
-            mToggleGetGlueButton.setChecked(false);
+            mCheckBoxGetGlue.setChecked(false);
             mGetGlueChecked = false;
             updateCheckInButtonState();
         } else {
