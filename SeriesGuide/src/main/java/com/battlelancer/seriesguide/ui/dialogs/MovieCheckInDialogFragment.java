@@ -63,7 +63,7 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
         Utils.trackView(getActivity(), "Movie Check-In Dialog");
     }
 
-    protected boolean onGetGlueCheckin(final String title, final String message) {
+    protected boolean checkInGetGlue(final String title, final String message) {
         boolean isAbortingCheckIn = false;
 
         // require GetGlue authentication
@@ -87,7 +87,7 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
     /**
      * Start the trakt check in task.
      */
-    protected void onTraktCheckIn(String message) {
+    protected void checkInTrakt(String message) {
         final String imdbId = getArguments().getString(InitBundle.MOVIE_IMDB_ID);
         AndroidUtils.executeAsyncTask(
                 new TraktTask(getActivity(), mListener).checkInMovie(imdbId, message),

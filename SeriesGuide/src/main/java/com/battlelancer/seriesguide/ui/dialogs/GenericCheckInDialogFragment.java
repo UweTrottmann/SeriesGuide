@@ -23,7 +23,7 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
+import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -35,8 +35,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +44,8 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import de.greenrobot.event.EventBus;
 
 public abstract class GenericCheckInDialogFragment extends SherlockDialogFragment {
 
@@ -134,7 +134,6 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
                 .getDefaultSharedPreferences(getSherlockActivity());
 
         // some required values
-        final String title = getArguments().getString(InitBundle.TITLE);
         final String defaultMessage = getArguments().getString(InitBundle.DEFAULT_MESSAGE);
         final String itemTitle = getArguments().getString(InitBundle.ITEM_TITLE);
 
@@ -210,46 +209,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         mButtonCheckIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!AndroidUtils.isNetworkConnected(getActivity())) {
-                    Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                final String message = mEditTextMessage.getText().toString();
-
-                if (mGetGlueChecked) {
-                    boolean shouldAbort = onGetGlueCheckin(title, message);
-                    if (shouldAbort) {
-                        return;
-                    }
-                }
-
-                if (mTraktChecked) {
-                    if (!TraktCredentials.get(getActivity()).hasCredentials()) {
-                        // cancel if required auth data is missing
-                        mCheckBoxTrakt.setChecked(false);
-                        mTraktChecked = false;
-                        updateCheckInButtonState();
-                        return;
-                    } else {
-                        // check in
-
-                        // We want to remove any currently showing
-                        // dialog, so make our own transaction and
-                        // take care of that here.
-                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        Fragment prev = getFragmentManager().findFragmentByTag("progress-dialog");
-                        if (prev != null) {
-                            ft.remove(prev);
-                        }
-                        ProgressDialog newFragment = ProgressDialog.newInstance();
-                        newFragment.show(ft, "progress-dialog");
-
-                        onTraktCheckIn(message);
-                    }
-                }
-
-                dismiss();
+                checkIn();
             }
         });
 
@@ -291,17 +251,53 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         }
     }
 
+    private void checkIn() {
+        // connected?
+        if (!AndroidUtils.isNetworkConnected(getActivity())) {
+            Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        setProgressLock(true);
+
+        final String itemTitle = getArguments().getString(InitBundle.TITLE);
+        final String message = mEditTextMessage.getText().toString();
+
+        // try GetGlue check-in
+        if (mGetGlueChecked) {
+            boolean shouldAbort = checkInGetGlue(itemTitle, message);
+            if (shouldAbort) {
+                setProgressLock(false);
+                return;
+            }
+        }
+
+        // try trakt check-in
+        if (mTraktChecked) {
+            if (!TraktCredentials.get(getActivity()).hasCredentials()) {
+                // cancel if required auth data is missing
+                mCheckBoxTrakt.setChecked(false);
+                mTraktChecked = false;
+                setProgressLock(false);
+                updateCheckInButtonState();
+                return;
+            }
+
+            checkInTrakt(message);
+        }
+    }
+
     /**
      * Start the GetGlue check-in task.
      *
      * @return Return whether the check-in should be aborted.
      */
-    protected abstract boolean onGetGlueCheckin(final String title, final String comment);
+    protected abstract boolean checkInGetGlue(final String title, final String comment);
 
     /**
      * Start the trakt check-in task.
      */
-    protected abstract void onTraktCheckIn(String message);
+    protected abstract void checkInTrakt(String message);
 
     protected void updateCheckInButtonState() {
         if (mGetGlueChecked || mTraktChecked) {

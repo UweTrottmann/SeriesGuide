@@ -115,7 +115,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
     }
 
     @Override
-    protected boolean onGetGlueCheckin(String title, String message) {
+    protected boolean checkInGetGlue(String title, String message) {
         boolean isAbortingCheckIn = false;
 
         // require GetGlue authentication
@@ -153,7 +153,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
     }
 
     @Override
-    protected void onTraktCheckIn(String message) {
+    protected void checkInTrakt(String message) {
         final int season = getArguments().getInt(InitBundle.SEASON);
         final int episode = getArguments().getInt(InitBundle.EPISODE);
 
