@@ -39,7 +39,7 @@ public class GetGlueCheckin {
 
     public static final String OAUTH_CALLBACK_URL = "http://seriesgui.de";
 
-    public static class CheckInTask extends AsyncTask<Void, Void, Integer> {
+    public static class GetGlueCheckInTask extends AsyncTask<Void, Void, Integer> {
 
         private static final int CHECKIN_SUCCESSFUL = 0;
 
@@ -53,7 +53,7 @@ public class GetGlueCheckin {
 
         private Context mContext;
 
-        public CheckInTask(String objectId, String comment, Context context) {
+        public GetGlueCheckInTask(String objectId, String comment, Context context) {
             mObjectId = objectId;
             mComment = comment;
             mContext = context;

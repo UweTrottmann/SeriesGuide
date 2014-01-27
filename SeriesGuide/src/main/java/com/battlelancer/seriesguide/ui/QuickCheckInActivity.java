@@ -18,7 +18,7 @@ package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin.CheckInTask;
+import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
@@ -153,7 +153,7 @@ public class QuickCheckInActivity extends SherlockFragmentActivity {
 
             if (!isAbortingCheckIn) {
                 // check in, use task on thread pool
-                AndroidUtils.executeAsyncTask(new CheckInTask(objectId, defaultMessage,
+                AndroidUtils.executeAsyncTask(new GetGlueCheckin.GetGlueCheckInTask(objectId, defaultMessage,
                         this));
             }
         }

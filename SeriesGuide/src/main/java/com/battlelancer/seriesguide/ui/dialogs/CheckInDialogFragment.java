@@ -17,7 +17,7 @@
 package com.battlelancer.seriesguide.ui.dialogs;
 
 import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
-import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin.CheckInTask;
+import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
@@ -145,7 +145,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
             updateCheckInButtonState();
         } else {
             // check in, use task on thread pool
-            AndroidUtils.executeAsyncTask(new CheckInTask(mGetGlueId, message,
+            AndroidUtils.executeAsyncTask(new GetGlueCheckin.GetGlueCheckInTask(mGetGlueId, message,
                     getActivity()));
         }
 
