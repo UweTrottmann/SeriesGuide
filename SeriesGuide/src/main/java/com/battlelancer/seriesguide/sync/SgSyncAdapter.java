@@ -127,6 +127,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             return;
         }
 
+        if (!isTimeForSync(context, System.currentTimeMillis())) {
+            return;
+        }
+
         SgSyncAdapter.requestSyncIfConnected(context, SyncType.DELTA, 0);
     }
 
