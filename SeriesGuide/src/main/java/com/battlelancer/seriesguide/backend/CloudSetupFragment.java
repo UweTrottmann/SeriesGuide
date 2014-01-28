@@ -483,7 +483,8 @@ public class CloudSetupFragment extends SherlockFragment {
                 case HexagonSetupTask.SYNC_REQUIRED: {
                     // schedule full sync
                     Log.d(TAG, "Setting up Hexagon...SYNC_REQUIRED");
-                    SgSyncAdapter.requestSyncImmediate(getActivity(), -1, false);
+                    SgSyncAdapter.requestSyncImmediate(getActivity(), SgSyncAdapter.SyncType.FULL,
+                            0, false);
                     HexagonSettings.setSetupCompleted(getActivity());
                     updateViewsStates(false);
                     break;
