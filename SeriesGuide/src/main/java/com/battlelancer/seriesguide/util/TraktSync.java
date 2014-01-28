@@ -18,20 +18,16 @@ package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowSeason;
 import com.jakewharton.trakt.enumerations.Extended;
 import com.jakewharton.trakt.services.ShowService;
-import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.seriesguide.R;
 
 import android.content.ContentProviderOperation;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -40,27 +36,28 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import retrofit.RetrofitError;
 
 public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
-    private static final int SUCCESS_WORK = 100;
+    private static final int SUCCESS_NOWORK = 0;
 
-    private static final int SUCCESS_NOWORK = 101;
+    private static final int SUCCESS = -1;
 
-    private static final int FAILED_CREDENTIALS = 102;
+    private static final int FAILED = -2;
 
-    private static final int FAILED_API = 103;
+    private static final int FAILED_API = -3;
 
-    private static final int FAILED = 104;
+    private static final int FAILED_CREDENTIALS = -4;
 
     private static final String TAG = "TraktSync";
 
     private FragmentActivity mContext;
 
-    private String mResult;
+    private int mSyncCount;
 
     private boolean mIsSyncToTrakt;
 
@@ -102,8 +99,6 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
     }
 
     private Integer syncToSeriesGuide(Trakt manager, String username) {
-        mResult = "";
-
         List<TvShow> shows;
         try {
             // get watched episodes from trakt
@@ -119,66 +114,33 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
             return SUCCESS_NOWORK;
         }
 
+        int syncCount = 0;
+
         // get show ids in local database
-        Cursor showTvdbIds = mContext.getContentResolver().query(Shows.CONTENT_URI, new String[]{
-                Shows._ID
-        }, null, null, null);
-        if (showTvdbIds == null) {
+        HashSet<Integer> localShowTvdbIds = ShowTools.getShowTvdbIdsAsSet(mContext);
+        if (localShowTvdbIds == null) {
             return FAILED;
         }
 
-        // assume we have a local list of which shows to sync (later...)
-        final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
-        while (showTvdbIds.moveToNext()) {
-            int showTvdbId = showTvdbIds.getInt(0);
-
-            // find a show with matching tvdb id
-            for (TvShow tvShow : shows) {
-                if (tvShow == null || tvShow.tvdb_id == null || tvShow.tvdb_id != showTvdbId) {
-                    // does not match, skip
-                    continue;
-                }
-
-                buildSeasonBatch(mContext, batch, tvShow, Episodes.WATCHED, EpisodeFlags.WATCHED);
-
-                // last chance to abort
-                if (isCancelled()) {
-                    showTvdbIds.close();
-                    return null;
-                }
-
-                // apply batch
-                if (mIsSyncingUnseen) {
-                    // remove any flags from all episodes
-                    ContentValues values = new ContentValues();
-                    values.put(Episodes.WATCHED, EpisodeFlags.UNWATCHED);
-                    mContext.getContentResolver().update(
-                            Episodes.buildEpisodesOfShowUri(showTvdbId), values, null, null);
-                }
-                DBUtils.applyInSmallBatches(mContext, batch);
-                batch.clear();
-
-                // add to result string
-                if (mResult.length() != 0) {
-                    mResult += ", ";
-                }
-                mResult += tvShow.title;
-
-                // remove synced show to reduce next max loop count
-                shows.remove(tvShow);
-
-                // found matching show, get next one from cursor
-                break;
+        // loop through shows on trakt, update the ones existing locally
+        for (TvShow tvShow : shows) {
+            if (tvShow == null || tvShow.tvdb_id == null
+                    || !localShowTvdbIds.contains(tvShow.tvdb_id)) {
+                // does not match, skip
+                continue;
             }
+
+            // last chance to abort
+            if (isCancelled()) {
+                return null;
+            }
+
+            applyEpisodeFlagChanges(mContext, tvShow, Episodes.WATCHED, mIsSyncingUnseen);
+
+            syncCount++;
         }
 
-        showTvdbIds.close();
-
-        if (mResult.length() != 0) {
-            return SUCCESS_WORK;
-        } else {
-            return SUCCESS_NOWORK;
-        }
+        return syncCount;
     }
 
     private Integer syncToTrakt(Trakt manager) {
@@ -244,7 +206,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
         }
 
         showTvdbIds.close();
-        return SUCCESS_WORK;
+        return SUCCESS;
     }
 
     @Override
@@ -259,26 +221,26 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
         int duration = Toast.LENGTH_SHORT;
 
         switch (result) {
-            case SUCCESS_WORK:
-                message = "Finished syncing";
-                if (mResult != null) {
-                    message += " (" + mResult + ")";
-                }
-                break;
-            case SUCCESS_NOWORK:
-                message = "There was nothing to sync.";
-                break;
-            case FAILED_CREDENTIALS:
-                message = "Your credentials are incomplete. Please enter them again.";
-                duration = Toast.LENGTH_LONG;
-                break;
             case FAILED:
                 message = "Something went wrong. Please try again.";
                 duration = Toast.LENGTH_LONG;
                 break;
             case FAILED_API:
-                message = "Could not communicate with trakt servers. Try again later.";
+                message = mContext.getString(R.string.trakt_error_general);
                 duration = Toast.LENGTH_LONG;
+                break;
+            case FAILED_CREDENTIALS:
+                message = "Your credentials are incomplete. Please enter them again.";
+                duration = Toast.LENGTH_LONG;
+                break;
+            case SUCCESS:
+                message = "Finished syncing.";
+                break;
+            case SUCCESS_NOWORK:
+                message = "There was nothing to sync.";
+                break;
+            default:
+                message = "Finished syncing " + mSyncCount + " show(s).";
                 break;
         }
 
@@ -306,48 +268,72 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
     }
 
     /**
-     * Adds database ops for episodes of seasons existing locally, with the op setting the given
-     * episode column to the given flag.
+     * Applies database ops in small increments for the given episodes, setting the appropriate flag
+     * in the given column.
+     *
+     * @param episodeFlagColumn  Which flag column the given data should change. Supports {@link
+     *                           Episodes#WATCHED} and {@link Episodes#COLLECTED}.
+     * @param clearExistingFlags If set, existing flags for all of this shows episodes will be set
+     *                           to the default flag prior applying other changes.
      */
-    public static void buildSeasonBatch(Context context, ArrayList<ContentProviderOperation> batch,
-            TvShow tvShow, String episodeFlagColumn, int episodeFlag) {
+    public static void applyEpisodeFlagChanges(Context context,
+            TvShow tvShow, String episodeFlagColumn, boolean clearExistingFlags) {
         if (tvShow.seasons == null) {
             return;
         }
 
-        // go through watched seasons, try to match them with local season
+        int episodeFlag;
+        int episodeDefaultFlag;
+        String clearSelection;
+        switch (episodeFlagColumn) {
+            case Episodes.WATCHED:
+                episodeFlag = EpisodeFlags.WATCHED;
+                episodeDefaultFlag = EpisodeFlags.UNWATCHED;
+                // do not remove flag of skipped episodes, only for watched ones
+                clearSelection = Episodes.SEASON + "=? AND "
+                        + Episodes.WATCHED + "=" + EpisodeFlags.WATCHED;
+                break;
+            case Episodes.COLLECTED:
+                episodeFlag = 1;
+                episodeDefaultFlag = 0;
+                // only remove flags for already collected episodes
+                clearSelection = Episodes.SEASON + "=? AND "
+                        + Episodes.COLLECTED + "=1";
+                break;
+            default:
+                return;
+        }
+
+        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+
         for (TvShowSeason season : tvShow.seasons) {
             if (season == null || season.season == null ||
                     season.episodes == null || season.episodes.numbers == null) {
                 continue;
             }
 
-            // get local season
-            Cursor seasonMatch = context.getContentResolver().query(
-                    Seasons.buildSeasonsOfShowUri(tvShow.tvdb_id), new String[]{
-                    Seasons._ID
-            }, Seasons.COMBINED + "=?", new String[]{
-                    season.season.toString()
-            }, null);
-            if (seasonMatch == null) {
-                continue;
+            if (clearExistingFlags) {
+                // remove all flags for episodes of the current season
+                batch.add(ContentProviderOperation
+                        .newUpdate(Episodes.buildEpisodesOfShowUri(tvShow.tvdb_id))
+                        .withSelection(clearSelection, new String[]{String.valueOf(season.season)})
+                        .withValue(episodeFlagColumn, episodeDefaultFlag)
+                        .build());
             }
 
-            // build db ops to flag local episodes according to given data
-            if (seasonMatch.moveToFirst()) {
-                String seasonId = seasonMatch.getString(0);
-
-                for (Integer episode : season.episodes.numbers) {
-                    batch.add(ContentProviderOperation
-                            .newUpdate(Episodes.buildEpisodesOfSeasonUri(seasonId))
-                            .withSelection(Episodes.NUMBER + "=?", new String[]{
-                                    episode.toString()
-                            }).withValue(episodeFlagColumn, episodeFlag)
-                            .build());
-                }
+            // build db ops to flag episodes according to given data
+            for (Integer episode : season.episodes.numbers) {
+                batch.add(ContentProviderOperation
+                        .newUpdate(Episodes.buildEpisodesOfShowUri(tvShow.tvdb_id))
+                        .withSelection(Episodes.SEASON + "=" + season.season + " AND "
+                                + Episodes.NUMBER + "=" + episode, null)
+                        .withValue(episodeFlagColumn, episodeFlag)
+                        .build());
             }
 
-            seasonMatch.close();
+            // apply batch of this season
+            DBUtils.applyInSmallBatches(context, batch);
+            batch.clear();
         }
     }
 

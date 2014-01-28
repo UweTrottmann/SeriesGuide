@@ -277,14 +277,8 @@ public class TheTVDB {
                 continue;
             }
 
-            final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-
-            TraktSync.buildSeasonBatch(context, batch, tvShow,
-                    isSeenFlags ? Episodes.WATCHED : Episodes.COLLECTED,
-                    EpisodeFlags.WATCHED);
-
-            // apply ops for this show
-            DBUtils.applyInSmallBatches(context, batch);
+            TraktSync.applyEpisodeFlagChanges(context, tvShow,
+                    isSeenFlags ? Episodes.WATCHED : Episodes.COLLECTED, false);
 
             // done, found the show we were looking for
             return;
