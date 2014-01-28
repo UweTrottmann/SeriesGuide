@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -25,6 +26,7 @@ import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowSeason;
 import com.jakewharton.trakt.enumerations.Extended;
 import com.jakewharton.trakt.services.ShowService;
+import com.jakewharton.trakt.services.UserService;
 import com.uwetrottmann.seriesguide.R;
 
 import android.content.ContentProviderOperation;
@@ -32,6 +34,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -56,8 +59,6 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
     private static final String TAG = "TraktSync";
 
     private FragmentActivity mContext;
-
-    private int mSyncCount;
 
     private boolean mIsSyncToTrakt;
 
@@ -86,6 +87,8 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected Integer doInBackground(Void... params) {
+        Log.d(TAG, "Syncing with trakt...");
+
         Trakt manager = ServiceUtils.getTraktWithAuth(mContext);
         if (manager == null) {
             return FAILED_CREDENTIALS;
@@ -99,48 +102,50 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
     }
 
     private Integer syncToSeriesGuide(Trakt manager, String username) {
-        List<TvShow> shows;
+        // get show ids in local database
+        HashSet<Integer> localShows = ShowTools.getShowTvdbIdsAsSet(mContext);
+        if (localShows == null) {
+            return FAILED;
+        }
+
+        UserService userService = manager.userService();
+
+        // watched episodes
+        List<TvShow> remoteShows;
         try {
             // get watched episodes from trakt
-            shows = manager.userService().libraryShowsWatched(username, Extended.MIN);
+            remoteShows = userService.libraryShowsWatched(username, Extended.MIN);
         } catch (RetrofitError e) {
             Utils.trackExceptionAndLog(mContext, TAG, e);
             return FAILED_API;
         }
-        if (shows == null) {
+        if (remoteShows == null) {
             return FAILED;
         }
-        if (shows.isEmpty()) {
-            return SUCCESS_NOWORK;
+        int syncCountWatched = 0;
+        if (!remoteShows.isEmpty()) {
+            syncCountWatched = applyEpisodeFlagChanges(mContext, remoteShows, localShows,
+                    Episodes.WATCHED, mIsSyncingUnseen);
         }
 
-        int syncCount = 0;
-
-        // get show ids in local database
-        HashSet<Integer> localShowTvdbIds = ShowTools.getShowTvdbIdsAsSet(mContext);
-        if (localShowTvdbIds == null) {
+        // collected episodes
+        try {
+            // get watched episodes from trakt
+            remoteShows = userService.libraryShowsCollection(username, Extended.MIN);
+        } catch (RetrofitError e) {
+            Utils.trackExceptionAndLog(mContext, TAG, e);
+            return FAILED_API;
+        }
+        if (remoteShows == null) {
             return FAILED;
         }
-
-        // loop through shows on trakt, update the ones existing locally
-        for (TvShow tvShow : shows) {
-            if (tvShow == null || tvShow.tvdb_id == null
-                    || !localShowTvdbIds.contains(tvShow.tvdb_id)) {
-                // does not match, skip
-                continue;
-            }
-
-            // last chance to abort
-            if (isCancelled()) {
-                return null;
-            }
-
-            applyEpisodeFlagChanges(mContext, tvShow, Episodes.WATCHED, mIsSyncingUnseen);
-
-            syncCount++;
+        int syncCountCollection = 0;
+        if (!remoteShows.isEmpty()) {
+            syncCountCollection = applyEpisodeFlagChanges(mContext, remoteShows, localShows,
+                    Episodes.COLLECTED, mIsSyncingUnseen);
         }
 
-        return syncCount;
+        return Math.max(syncCountCollection, syncCountWatched);
     }
 
     private Integer syncToTrakt(Trakt manager) {
@@ -211,12 +216,15 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected void onCancelled() {
+        Log.d(TAG, "Syncing with trakt...CANCELED");
         Toast.makeText(mContext, "Sync cancelled", Toast.LENGTH_LONG).show();
         restoreViewStates();
     }
 
     @Override
     protected void onPostExecute(Integer result) {
+        Log.d(TAG, "Syncing with trakt...DONE (" + result + ")");
+
         String message = "";
         int duration = Toast.LENGTH_SHORT;
 
@@ -240,7 +248,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                 message = "There was nothing to sync.";
                 break;
             default:
-                message = "Finished syncing " + mSyncCount + " show(s).";
+                message = "Finished syncing " + result + " show(s).";
                 break;
         }
 
@@ -265,6 +273,26 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
             int episode = seenEpisodes.getInt(1);
             watchedEpisodes.add(new ShowService.Episodes.Episode(season, episode));
         }
+    }
+
+    public static int applyEpisodeFlagChanges(Context context, List<TvShow> remoteShows,
+            HashSet<Integer> localShows, String episodeFlagColumn, boolean clearExistingFlags) {
+        int syncCount = 0;
+
+        // loop through shows on trakt, update the ones existing locally
+        for (TvShow tvShow : remoteShows) {
+            if (tvShow == null || tvShow.tvdb_id == null
+                    || !localShows.contains(tvShow.tvdb_id)) {
+                // does not match, skip
+                continue;
+            }
+
+            applyEpisodeFlagChanges(context, tvShow, episodeFlagColumn, clearExistingFlags);
+
+            syncCount++;
+        }
+
+        return syncCount;
     }
 
     /**
