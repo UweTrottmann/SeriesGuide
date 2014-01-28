@@ -235,8 +235,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority,
             ContentProviderClient provider, SyncResult syncResult) {
-        Log.d(TAG, "Syncing...");
-
         final long currentTime = System.currentTimeMillis();
 
         // determine type of sync
@@ -245,7 +243,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 extras.getInt(SyncInitBundle.SYNC_TYPE, SyncType.DELTA.id));
         Log.d(TAG, "Syncing...Type:" + syncType + " Immediate:" + syncImmediately);
 
-        if (!syncImmediately) {
+        if (!syncImmediately && syncType != SyncType.SINGLE) {
             // make sure we did not just sync
             if (!isTimeForSync(getContext(), currentTime)) {
                 Log.d(TAG, "Syncing...ABORT_DID_JUST_SYNC");
