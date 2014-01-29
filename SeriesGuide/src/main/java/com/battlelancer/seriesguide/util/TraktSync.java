@@ -263,6 +263,9 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
             return SUCCESS_NOWORK;
         }
 
+        Integer resultCode = SUCCESS;
+        ShowService showService = trakt.showService();
+
         while (showTvdbIds.moveToNext()) {
             int showTvdbId = showTvdbIds.getInt(0);
             List<ShowService.Episodes.Episode> watchedEpisodes = new ArrayList<>();
@@ -290,13 +293,12 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
             // last chance to abort
             if (isCancelled()) {
-                showTvdbIds.close();
-                return null;
+                resultCode = null;
+                break;
             }
 
             try {
                 // post to trakt
-                ShowService showService = trakt.showService();
                 if (watchedEpisodes.size() > 0) {
                     showService.episodeSeen(new ShowService.Episodes(
                             showTvdbId, watchedEpisodes
@@ -309,12 +311,13 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                 }
             } catch (RetrofitError e) {
                 Utils.trackExceptionAndLog(mContext, TAG, e);
-                return FAILED_API;
+                resultCode = FAILED_API;
+                break;
             }
         }
 
         showTvdbIds.close();
-        return SUCCESS;
+        return resultCode;
     }
 
     private static void buildEpisodeList(List<ShowService.Episodes.Episode> watchedEpisodes,
