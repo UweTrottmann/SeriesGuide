@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -48,13 +47,13 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
     private static final int SUCCESS_NOWORK = 0;
 
-    private static final int SUCCESS = -1;
+    private static final int FAILED_API = -1;
 
     private static final int FAILED = -2;
 
-    private static final int FAILED_API = -3;
+    private static final int FAILED_CREDENTIALS = -3;
 
-    private static final int FAILED_CREDENTIALS = -4;
+    private static final int SUCCESS = -4;
 
     private static final String TAG = "TraktSync";
 
@@ -89,43 +88,56 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
     protected Integer doInBackground(Void... params) {
         Log.d(TAG, "Syncing with trakt...");
 
-        Trakt manager = ServiceUtils.getTraktWithAuth(mContext);
-        if (manager == null) {
+        Trakt trakt = ServiceUtils.getTraktWithAuth(mContext);
+        if (trakt == null) {
             return FAILED_CREDENTIALS;
         }
 
         if (mIsSyncToTrakt) {
-            return syncToTrakt(manager);
+            return syncToTrakt(trakt);
         } else {
-            return syncToSeriesGuide(manager, TraktCredentials.get(mContext).getUsername());
+            // get show ids in local database
+            HashSet<Integer> localShows = ShowTools.getShowTvdbIdsAsSet(mContext);
+            if (localShows == null) {
+                return FAILED;
+            }
+            return syncToSeriesGuide(mContext, trakt, localShows, mIsSyncingUnseen);
         }
     }
 
-    private Integer syncToSeriesGuide(Trakt manager, String username) {
-        // get show ids in local database
-        HashSet<Integer> localShows = ShowTools.getShowTvdbIdsAsSet(mContext);
-        if (localShows == null) {
-            return FAILED;
+    /**
+     * Downloads and sets watched and collected flags from trakt on local episodes.
+     *
+     * @param clearExistingFlags If set, all watched and collected (and only those, e.g. skipped
+     *                           flag is preserved) flags will be removed prior to getting the
+     *                           actual flags from trakt (season by season).
+     * @return The number of shows synced (may be 0). Or -1 if there was an error.
+     */
+    public static int syncToSeriesGuide(Context context, Trakt trakt,
+            HashSet<Integer> localShows, boolean clearExistingFlags) {
+        if (localShows.size() == 0) {
+            return SUCCESS_NOWORK;
         }
 
-        UserService userService = manager.userService();
+        final UserService userService = trakt.userService();
+        final String username = TraktCredentials.get(context).getUsername();
+        List<TvShow> remoteShows;
 
         // watched episodes
-        List<TvShow> remoteShows;
         try {
             // get watched episodes from trakt
             remoteShows = userService.libraryShowsWatched(username, Extended.MIN);
         } catch (RetrofitError e) {
-            Utils.trackExceptionAndLog(mContext, TAG, e);
+            Utils.trackExceptionAndLog(context, TAG, e);
             return FAILED_API;
         }
         if (remoteShows == null) {
-            return FAILED;
+            return FAILED_API;
         }
         int syncCountWatched = 0;
         if (!remoteShows.isEmpty()) {
-            syncCountWatched = applyEpisodeFlagChanges(mContext, remoteShows, localShows,
-                    Episodes.WATCHED, mIsSyncingUnseen);
+            syncCountWatched = applyEpisodeFlagChanges(context, remoteShows, localShows,
+                    Episodes.WATCHED, clearExistingFlags);
         }
 
         // collected episodes
@@ -133,149 +145,22 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
             // get watched episodes from trakt
             remoteShows = userService.libraryShowsCollection(username, Extended.MIN);
         } catch (RetrofitError e) {
-            Utils.trackExceptionAndLog(mContext, TAG, e);
+            Utils.trackExceptionAndLog(context, TAG, e);
             return FAILED_API;
         }
         if (remoteShows == null) {
-            return FAILED;
+            return FAILED_API;
         }
         int syncCountCollection = 0;
         if (!remoteShows.isEmpty()) {
-            syncCountCollection = applyEpisodeFlagChanges(mContext, remoteShows, localShows,
-                    Episodes.COLLECTED, mIsSyncingUnseen);
+            syncCountCollection = applyEpisodeFlagChanges(context, remoteShows, localShows,
+                    Episodes.COLLECTED, clearExistingFlags);
         }
 
         return Math.max(syncCountCollection, syncCountWatched);
     }
 
-    private Integer syncToTrakt(Trakt manager) {
-        // get show ids in local database for which syncing is enabled
-        Cursor showTvdbIds = mContext.getContentResolver().query(Shows.CONTENT_URI, new String[]{
-                Shows._ID
-        }, Shows.SYNCENABLED + "=1", null, null);
-
-        if (showTvdbIds == null) {
-            return FAILED;
-        }
-        if (showTvdbIds.getCount() == 0) {
-            return SUCCESS_NOWORK;
-        }
-
-        while (showTvdbIds.moveToNext()) {
-            int showTvdbId = showTvdbIds.getInt(0);
-            List<ShowService.Episodes.Episode> watchedEpisodes = new ArrayList<>();
-
-            // build a list of all watched episodes
-            Cursor seenEpisodes = mContext.getContentResolver().query(
-                    Episodes.buildEpisodesOfShowUri(showTvdbId), TraktSyncQuery.PROJECTION,
-                    TraktSyncQuery.SELECTION_WATCHED, null, null);
-            if (seenEpisodes != null) {
-                buildEpisodeList(watchedEpisodes, seenEpisodes);
-                seenEpisodes.close();
-            }
-
-            // build unseen episodes trakt post
-            List<ShowService.Episodes.Episode> unwatchedEpisodes = new ArrayList<>();
-            if (mIsSyncingUnseen) {
-                Cursor unseenEpisodes = mContext.getContentResolver().query(
-                        Episodes.buildEpisodesOfShowUri(showTvdbId), TraktSyncQuery.PROJECTION,
-                        TraktSyncQuery.SELECTION_UNWATCHED, null, null);
-                if (unseenEpisodes != null) {
-                    buildEpisodeList(unwatchedEpisodes, unseenEpisodes);
-                    unseenEpisodes.close();
-                }
-            }
-
-            // last chance to abort
-            if (isCancelled()) {
-                showTvdbIds.close();
-                return null;
-            }
-
-            try {
-                // post to trakt
-                if (watchedEpisodes.size() > 0) {
-                    manager.showService().episodeSeen(new ShowService.Episodes(
-                            showTvdbId, watchedEpisodes
-                    ));
-                }
-                if (mIsSyncingUnseen && unwatchedEpisodes.size() > 0) {
-                    manager.showService().episodeUnseen(new ShowService.Episodes(
-                            showTvdbId, unwatchedEpisodes
-                    ));
-                }
-            } catch (RetrofitError e) {
-                Utils.trackExceptionAndLog(mContext, TAG, e);
-                return FAILED_API;
-            }
-        }
-
-        showTvdbIds.close();
-        return SUCCESS;
-    }
-
-    @Override
-    protected void onCancelled() {
-        Log.d(TAG, "Syncing with trakt...CANCELED");
-        Toast.makeText(mContext, "Sync cancelled", Toast.LENGTH_LONG).show();
-        restoreViewStates();
-    }
-
-    @Override
-    protected void onPostExecute(Integer result) {
-        Log.d(TAG, "Syncing with trakt...DONE (" + result + ")");
-
-        String message = "";
-        int duration = Toast.LENGTH_SHORT;
-
-        switch (result) {
-            case FAILED:
-                message = "Something went wrong. Please try again.";
-                duration = Toast.LENGTH_LONG;
-                break;
-            case FAILED_API:
-                message = mContext.getString(R.string.trakt_error_general);
-                duration = Toast.LENGTH_LONG;
-                break;
-            case FAILED_CREDENTIALS:
-                message = "Your credentials are incomplete. Please enter them again.";
-                duration = Toast.LENGTH_LONG;
-                break;
-            case SUCCESS:
-                message = "Finished syncing.";
-                break;
-            case SUCCESS_NOWORK:
-                message = "There was nothing to sync.";
-                break;
-            default:
-                message = "Finished syncing " + result + " show(s).";
-                break;
-        }
-
-        Toast.makeText(mContext, message, duration).show();
-        restoreViewStates();
-    }
-
-    private void restoreViewStates() {
-        if (mIsSyncToTrakt) {
-            mContainer.findViewById(R.id.progressBarToTraktSync).setVisibility(View.GONE);
-        } else {
-            mContainer.findViewById(R.id.progressBarToDeviceSync).setVisibility(View.GONE);
-        }
-        mContainer.findViewById(R.id.syncToDeviceButton).setEnabled(true);
-        mContainer.findViewById(R.id.syncToTraktButton).setEnabled(true);
-    }
-
-    private static void buildEpisodeList(List<ShowService.Episodes.Episode> watchedEpisodes,
-            Cursor seenEpisodes) {
-        while (seenEpisodes.moveToNext()) {
-            int season = seenEpisodes.getInt(0);
-            int episode = seenEpisodes.getInt(1);
-            watchedEpisodes.add(new ShowService.Episodes.Episode(season, episode));
-        }
-    }
-
-    public static int applyEpisodeFlagChanges(Context context, List<TvShow> remoteShows,
+    private static int applyEpisodeFlagChanges(Context context, List<TvShow> remoteShows,
             HashSet<Integer> localShows, String episodeFlagColumn, boolean clearExistingFlags) {
         int syncCount = 0;
 
@@ -363,6 +248,134 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
             DBUtils.applyInSmallBatches(context, batch);
             batch.clear();
         }
+    }
+
+    private Integer syncToTrakt(Trakt trakt) {
+        // get show ids in local database for which syncing is enabled
+        Cursor showTvdbIds = mContext.getContentResolver().query(Shows.CONTENT_URI, new String[]{
+                Shows._ID
+        }, Shows.SYNCENABLED + "=1", null, null);
+
+        if (showTvdbIds == null) {
+            return FAILED;
+        }
+        if (showTvdbIds.getCount() == 0) {
+            return SUCCESS_NOWORK;
+        }
+
+        while (showTvdbIds.moveToNext()) {
+            int showTvdbId = showTvdbIds.getInt(0);
+            List<ShowService.Episodes.Episode> watchedEpisodes = new ArrayList<>();
+
+            // build a list of all watched episodes
+            Cursor seenEpisodes = mContext.getContentResolver().query(
+                    Episodes.buildEpisodesOfShowUri(showTvdbId), TraktSyncQuery.PROJECTION,
+                    TraktSyncQuery.SELECTION_WATCHED, null, null);
+            if (seenEpisodes != null) {
+                buildEpisodeList(watchedEpisodes, seenEpisodes);
+                seenEpisodes.close();
+            }
+
+            // build unseen episodes trakt post
+            List<ShowService.Episodes.Episode> unwatchedEpisodes = new ArrayList<>();
+            if (mIsSyncingUnseen) {
+                Cursor unseenEpisodes = mContext.getContentResolver().query(
+                        Episodes.buildEpisodesOfShowUri(showTvdbId), TraktSyncQuery.PROJECTION,
+                        TraktSyncQuery.SELECTION_UNWATCHED, null, null);
+                if (unseenEpisodes != null) {
+                    buildEpisodeList(unwatchedEpisodes, unseenEpisodes);
+                    unseenEpisodes.close();
+                }
+            }
+
+            // last chance to abort
+            if (isCancelled()) {
+                showTvdbIds.close();
+                return null;
+            }
+
+            try {
+                // post to trakt
+                ShowService showService = trakt.showService();
+                if (watchedEpisodes.size() > 0) {
+                    showService.episodeSeen(new ShowService.Episodes(
+                            showTvdbId, watchedEpisodes
+                    ));
+                }
+                if (mIsSyncingUnseen && unwatchedEpisodes.size() > 0) {
+                    showService.episodeUnseen(new ShowService.Episodes(
+                            showTvdbId, unwatchedEpisodes
+                    ));
+                }
+            } catch (RetrofitError e) {
+                Utils.trackExceptionAndLog(mContext, TAG, e);
+                return FAILED_API;
+            }
+        }
+
+        showTvdbIds.close();
+        return SUCCESS;
+    }
+
+    private static void buildEpisodeList(List<ShowService.Episodes.Episode> watchedEpisodes,
+            Cursor seenEpisodes) {
+        while (seenEpisodes.moveToNext()) {
+            int season = seenEpisodes.getInt(0);
+            int episode = seenEpisodes.getInt(1);
+            watchedEpisodes.add(new ShowService.Episodes.Episode(season, episode));
+        }
+    }
+
+    @Override
+    protected void onCancelled() {
+        Log.d(TAG, "Syncing with trakt...CANCELED");
+        Toast.makeText(mContext, "Sync cancelled", Toast.LENGTH_LONG).show();
+        restoreViewStates();
+    }
+
+    @Override
+    protected void onPostExecute(Integer result) {
+        Log.d(TAG, "Syncing with trakt...DONE (" + result + ")");
+
+        String message = "";
+        int duration = Toast.LENGTH_SHORT;
+
+        switch (result) {
+            case FAILED:
+                message = "Something went wrong. Please try again.";
+                duration = Toast.LENGTH_LONG;
+                break;
+            case FAILED_API:
+                message = mContext.getString(R.string.trakt_error_general);
+                duration = Toast.LENGTH_LONG;
+                break;
+            case FAILED_CREDENTIALS:
+                message = "Your credentials are incomplete. Please enter them again.";
+                duration = Toast.LENGTH_LONG;
+                break;
+            case SUCCESS:
+                message = "Finished syncing.";
+                break;
+            case SUCCESS_NOWORK:
+                message = "There was nothing to sync.";
+                break;
+            default:
+                message = "Finished syncing " + result + " show(s).";
+                break;
+        }
+
+        Toast.makeText(mContext, message, duration).show();
+        restoreViewStates();
+    }
+
+    private void restoreViewStates() {
+        if (mIsSyncToTrakt) {
+            mContainer.findViewById(R.id.progressBarToTraktSync).setVisibility(View.GONE);
+        } else {
+            mContainer.findViewById(R.id.progressBarToDeviceSync).setVisibility(View.GONE);
+        }
+        mContainer.findViewById(R.id.syncToDeviceButton).setEnabled(true);
+        mContainer.findViewById(R.id.syncToTraktButton).setEnabled(true);
     }
 
     public interface TraktSyncQuery {

@@ -30,6 +30,7 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.TraktSync;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.jakewharton.trakt.Trakt;
@@ -229,7 +230,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
     public SgSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
-        Log.d(TAG, "Creating SyncAdapter");
+        Log.d(TAG, "Creating sync adapter");
     }
 
     public enum UpdateResult {
@@ -239,16 +240,15 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority,
             ContentProviderClient provider, SyncResult syncResult) {
-        final long currentTime = System.currentTimeMillis();
-
         // determine type of sync
         final boolean syncImmediately = extras.getBoolean(SyncInitBundle.SYNC_IMMEDIATE, false);
         final SyncType syncType = SyncType.from(
                 extras.getInt(SyncInitBundle.SYNC_TYPE, SyncType.DELTA.id));
-        Log.d(TAG, "Syncing...Type:" + syncType + " Immediate:" + syncImmediately);
+        Log.d(TAG, "Syncing..." + syncType + (syncImmediately ? "_IMMEDIATE" : "_REGULAR"));
 
+        // should we sync?
+        final long currentTime = System.currentTimeMillis();
         if (!syncImmediately && syncType != SyncType.SINGLE) {
-            // make sure we did not just sync
             if (!isTimeForSync(getContext(), currentTime)) {
                 Log.d(TAG, "Syncing...ABORT_DID_JUST_SYNC");
                 return;
@@ -256,18 +256,18 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // build a list of shows to update
-        int[] showsToSync;
+        int[] showsToUpdate;
         if (syncType == SyncType.SINGLE) {
             int showTvdbId = extras.getInt(SyncInitBundle.SYNC_SHOW_TVDB_ID, 0);
             if (showTvdbId == 0) {
                 Log.d(TAG, "Syncing...ERROR_INVALID_SHOW_TVDB_ID");
                 return;
             }
-            showsToSync = new int[]{
+            showsToUpdate = new int[]{
                     showTvdbId
             };
         } else {
-            showsToSync = getShowsToUpdate(syncType, currentTime);
+            showsToUpdate = getShowsToUpdate(syncType, currentTime);
         }
 
         // from here on we need more sophisticated abort handling, so keep track of errors
@@ -277,8 +277,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         Log.d(TAG, "Syncing...TVDb");
         final AtomicInteger updateCount = new AtomicInteger();
         final ContentResolver resolver = getContext().getContentResolver();
-        for (int i = updateCount.get(); i < showsToSync.length; i++) {
-            int id = showsToSync[i];
+        for (int i = updateCount.get(); i < showsToUpdate.length; i++) {
+            int id = showsToUpdate[i];
 
             // stop sync if connectivity is lost
             if (!AndroidUtils.isNetworkConnected(getContext())) {
@@ -301,7 +301,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             updateCount.incrementAndGet();
         }
 
-        // do some other things if this is a regular sync
+        // do some more things if this is not a quick update
         if (syncType != SyncType.SINGLE) {
             final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(getContext());
@@ -316,7 +316,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             if (showsExisting == null) {
                 resultCode = UpdateResult.INCOMPLETE;
             } else {
-                // get shows from Hexagon
+                // sync with hexagon
                 if (ShowTools.get(getContext()).isSignedIn()) {
                     UpdateResult resultHexagon = ShowTools.Download
                             .syncRemoteShows(getContext(), showsExisting, showsNew);
@@ -326,15 +326,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     }
                 }
 
-                // validate trakt credentials with trakt servers
-                Log.d(TAG, "Syncing...Check trakt credentials");
-                TraktCredentials.get(getContext()).validateCredentials();
-
-                // get latest trakt activity
-                Log.d(TAG, "Syncing...trakt activity...");
-                UpdateResult resultTrakt = getTraktActivity(getContext(), showsExisting, showsNew);
-                Log.d(TAG, "Syncing...trakt activity..." + resultTrakt.toString());
-                // don't overwrite earlier failure
+                // sync with trakt
+                UpdateResult resultTrakt = syncWithTrakt(getContext(), showsExisting, showsNew,
+                        syncImmediately, currentTime);
+                // don't overwrite earlier failure with success
                 if (resultCode == UpdateResult.SUCCESS) {
                     resultCode = resultTrakt;
                 }
@@ -347,7 +342,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             // renew search table if shows were updated and it will not be renewed by add task
-            if (updateCount.get() > 0 && showsToSync.length > 0 && showsNew.size() == 0) {
+            if (updateCount.get() > 0 && showsToUpdate.length > 0 && showsNew.size() == 0) {
                 TheTVDB.onRenewFTSTable(getContext());
             }
 
@@ -434,31 +429,67 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
     }
 
-    /**
-     * Downloads trakt episode activity stream (checkins, seen, scrobbles, collected), filters for
-     * existing shows and applies resulting episode flag changes (watched, collected) to the local
-     * database. Detects shows from activity stream not yet added to the local database.
-     */
-    private static UpdateResult getTraktActivity(Context context, HashSet<Integer> showsExisting,
-            HashMap<Integer, SearchResult> showsNew) {
-        Trakt manager = ServiceUtils.getTraktWithAuth(context);
-        if (manager == null) {
-            // trakt is not connected, we are done here
+    private static UpdateResult syncWithTrakt(Context context, HashSet<Integer> showsExisting,
+            HashMap<Integer, SearchResult> showsNew, boolean syncImmediately, long currentTime) {
+        // validate credentials with trakt servers
+        Log.d(TAG, "Syncing...trakt auth check");
+        TraktCredentials.get(context).validateCredentials();
+
+        // are we still authenticated?
+        Trakt trakt = ServiceUtils.getTraktWithAuth(context);
+        if (trakt == null) {
+            // no, we are done here
             return UpdateResult.SUCCESS;
         }
 
-        // return if connectivity is lost
         if (!AndroidUtils.isNetworkConnected(context)) {
             return UpdateResult.INCOMPLETE;
         }
 
-        // get last trakt update timestamp
+        // get trakt activity
+        Log.d(TAG, "Syncing...trakt activity...");
+        UpdateResult result = getTraktActivity(context, trakt, showsExisting, showsNew);
+        Log.d(TAG, "Syncing...trakt activity..." + result.toString());
+
+        // sync all watched and collected flags?
+        if (syncImmediately || TraktSettings.isTimeForFullSync(context, currentTime)) {
+            if (!AndroidUtils.isNetworkConnected(context)) {
+                return UpdateResult.INCOMPLETE;
+            }
+
+            Log.d(TAG, "Syncing...trakt full sync...");
+            int resultCode = TraktSync.syncToSeriesGuide(context, trakt, showsExisting, true);
+
+            if (resultCode < 0) {
+                result = UpdateResult.INCOMPLETE;
+                Log.d(TAG, "Syncing...trakt full sync...INCOMPLETE");
+            } else {
+                // set last full sync time
+                PreferenceManager.getDefaultSharedPreferences(context).edit()
+                        .putLong(TraktSettings.KEY_LAST_FULL_SYNC, currentTime)
+                        .commit();
+                Log.d(TAG, "Syncing...trakt full sync...SUCCESS");
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Downloads new trakt episode activity (checkins, seen, scrobbles, collected) and applies
+     * resulting episode flag changes (watched, collected) to the database for the given {@code
+     * showsExisting}.<br/>If {@link TraktSettings#isAutoAddingShows(android.content.Context)} is
+     * enabled, detects new shows based on {@code showsExisting} and adds them to {@code showsNew}.
+     */
+    private static UpdateResult getTraktActivity(Context context, Trakt trakt,
+            HashSet<Integer> showsExisting, HashMap<Integer, SearchResult> showsNew) {
+        // get cut-off for activity stream
         final long startTimeTrakt = TraktSettings.getLastUpdateTime(context) / 1000;
 
-        // get activity from trakt
+        // download activity stream
         Activity activities;
         try {
-            activities = manager
+            activities = trakt
                     .activityService()
                     .user(TraktCredentials.get(context).getUsername(),
                             ActivityType.Episode.toString(),
