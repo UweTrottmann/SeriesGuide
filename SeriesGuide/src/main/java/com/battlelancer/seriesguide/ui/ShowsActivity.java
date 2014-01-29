@@ -355,12 +355,12 @@ public class ShowsActivity extends BaseTopShowsActivity implements
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             return true;
         } else if (itemId == R.id.menu_update) {
-            SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.UPDATE_TVDB_DELTA, true);
+            SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.DELTA, 0, true);
             fireTrackerEvent("Update (outdated)");
 
             return true;
         } else if (itemId == R.id.menu_fullupdate) {
-            SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.UPDATE_TVDB_FULL, true);
+            SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, true);
             fireTrackerEvent("Update (all)");
 
             return true;

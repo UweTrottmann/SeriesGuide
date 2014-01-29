@@ -19,11 +19,10 @@ package com.battlelancer.seriesguide.settings;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.util.SimpleCrypto;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 
 /**
  * Settings related to trakt.tv integration.
@@ -34,6 +33,9 @@ public class TraktSettings {
 
     public static final String KEY_LAST_UPDATE = "com.battlelancer.seriesguide.lasttraktupdate";
 
+    public static final String KEY_LAST_FULL_SYNC
+            = "com.battlelancer.seriesguide.trakt.lastfullsync";
+
     public static final String KEY_SHARE_WITH_TRAKT = "com.battlelancer.seriesguide.sharewithtrakt";
 
     public static final String KEY_AUTO_ADD_TRAKT_SHOWS
@@ -41,6 +43,9 @@ public class TraktSettings {
 
     public static final String KEY_SYNC_UNWATCHED_EPISODES
             = "com.battlelancer.seriesguide.syncunseenepisodes";
+
+    private static final int DEFAULT_SYNC_INTERVAL_SECONDS = AccountUtils.SYNC_FREQUENCY - 60 * 60;
+    // 1 hour less as sync adapter schedule varies
 
     /**
      * Returns the SHA hash of the users trakt password.<br> <b>Never</b> store this yourself,
@@ -76,6 +81,16 @@ public class TraktSettings {
     public static boolean isSyncingUnwatchedEpisodes(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_SYNC_UNWATCHED_EPISODES, false);
+    }
+
+    /**
+     * Determines if enough time has passed since the last full trakt sync.
+     */
+    public static boolean isTimeForFullSync(Context context, long currentTime) {
+        long previousUpdateTime = PreferenceManager.getDefaultSharedPreferences(context)
+                .getLong(KEY_LAST_FULL_SYNC, currentTime);
+        return (currentTime - previousUpdateTime) >
+                DEFAULT_SYNC_INTERVAL_SECONDS * DateUtils.SECOND_IN_MILLIS;
     }
 
 }
