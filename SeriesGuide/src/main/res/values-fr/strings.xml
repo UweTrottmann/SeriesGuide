@@ -223,8 +223,8 @@
   <string name="pref_updatewifionlysummary">Pour réduire les frais de consommation de données, ne pas les télécharger via un réseau mobile</string>
   <string name="about">A propos de SeriesGuide</string>
   <string name="pref_credits">Crédits</string>
-  <string name="clearGetGlueCredentials">Déconnecter GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Faites un check-in avec GetGlue pour vous reconnecter</string>
+  <string name="clearGetGlueCredentials">Déconnecter tvtag</string>
+  <string name="clearGetGlueCredentialssummary">Faites un check-in avec tvtag pour vous reconnecter</string>
   <string name="pref_traktsummary">Ajouter ou modifier vos identifiants sur trakt.tv</string>
   <string name="pref_traktsync">Synchro manuelle avec trakt.tv</string>
   <string name="feedback">Envoyez vos commentaires</string>
@@ -281,8 +281,8 @@
   <string name="paste_title">Ajouter le titre</string>
   <string name="checkinsuccess">Check-in de %s sur GetGlue effectué.</string>
   <string name="checkinfailed">Échec du check-in sur GetGlue. Réessayez plus tard.</string>
-  <string name="getglue_authentication">Connecter GetGlue</string>
-  <string name="getglue_authfailed">Authentification à GetGlue échouée. Réessayez plus tard.</string>
+  <string name="getglue_authentication">Connecter tvtag</string>
+  <string name="getglue_authfailed">Authentification à tvtag échouée. Réessayez plus tard.</string>
   <string name="checkin_success_trakt">Check-in de %s sur trakt effectué.</string>
   <string name="checkin_canceled_success_trakt">Check-in sur trakt annulé.</string>
   <string name="select_show">Sélectionnez une série</string>

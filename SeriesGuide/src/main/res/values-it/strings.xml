@@ -281,7 +281,7 @@
   <string name="paste_title">Incolla titolo</string>
   <string name="checkinsuccess">Verificato in %s su GetGlue.</string>
   <string name="checkinfailed">Accesso a GetGlue fallito. Riprova più tardi.</string>
-  <string name="getglue_authentication">Connect GetGlue</string>
+  <string name="getglue_authentication">Connect tvtag</string>
   <string name="getglue_authfailed">GetGlue autenticazione non riuscita. Riprovare più tardi.</string>
   <string name="checkin_success_trakt">Verificato in %s su trakt.</string>
   <string name="checkin_canceled_success_trakt">Annullato il check-in su trakt.</string>

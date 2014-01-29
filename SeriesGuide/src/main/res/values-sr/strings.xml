@@ -281,7 +281,7 @@
   <string name="paste_title">Nalepi naziv</string>
   <string name="checkinsuccess">Prijavljeno gledanje %s na GetGlue.</string>
   <string name="checkinfailed">Prijava gledanja na GetGlue neuspešna. Pokušajte kasnije.</string>
-  <string name="getglue_authentication">Connect GetGlue</string>
+  <string name="getglue_authentication">Connect tvtag</string>
   <string name="getglue_authfailed">Neuspešna autentikacija na GetGlue. Pokušajte kasnije.</string>
   <string name="checkin_success_trakt">Prijavljeno gledanje %s na trakt.tv.</string>
   <string name="checkin_canceled_success_trakt">Otkazana prijava gledanja na traktu.</string>

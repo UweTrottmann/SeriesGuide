@@ -281,7 +281,7 @@
   <string name="paste_title">Zalijepi naziv</string>
   <string name="checkinsuccess">Prijavljen u %s na GetGlue.</string>
   <string name="checkinfailed">Prijava na GetGlue nije uspjela. Pokušaj kasnije.</string>
-  <string name="getglue_authentication">Connect GetGlue</string>
+  <string name="getglue_authentication">Connect tvtag</string>
   <string name="getglue_authfailed">GetGlue ovjera nije uspjela. Pokušaj kasnije.</string>
   <string name="checkin_success_trakt">Prijavljen u %s na traktu.</string>
   <string name="checkin_canceled_success_trakt">Otkazana prijava na trakt.</string>

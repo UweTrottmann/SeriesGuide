@@ -224,7 +224,7 @@
   <string name="about">關於 SeriesGuide</string>
   <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">中斷GetGlue的連線</string>
-  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
+  <string name="clearGetGlueCredentialssummary">Check in with tvtag to reconnect</string>
   <string name="pref_traktsummary">新增或編輯您的trakt.tv憑證</string>
   <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">傳送反饋意見</string>
@@ -277,12 +277,12 @@
   <string name="checkin_searchhint">Type a show name</string>
   <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Type a message (optional)</string>
-  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
+  <string name="checkin_fixgetglue">Fix tvtag check-in</string>
   <string name="paste_title">Paste title</string>
-  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
-  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
-  <string name="getglue_authentication">Connect GetGlue</string>
-  <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
+  <string name="checkinsuccess">Checked into %s on tvtag.</string>
+  <string name="checkinfailed">tvtag check-in failed. Try again later.</string>
+  <string name="getglue_authentication">Connect tvtag</string>
+  <string name="getglue_authfailed">tvtag authentication failed. Try again later.</string>
   <string name="checkin_success_trakt">Checked into %s on trakt.</string>
   <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="select_show">Select show</string>

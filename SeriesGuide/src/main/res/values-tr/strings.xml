@@ -281,7 +281,7 @@
   <string name="paste_title">Başlığı yapıştır</string>
   <string name="checkinsuccess">GetGlue ile %s bağlantısı sağlandı.</string>
   <string name="checkinfailed">GetGlue girişi başarısız. Daha sonra tekrar deneyin.</string>
-  <string name="getglue_authentication">Connect GetGlue</string>
+  <string name="getglue_authentication">Connect tvtag</string>
   <string name="getglue_authfailed">GetGlue kimlik doğrulaması başarısız oldu. Daha sonra yeniden deneyin.</string>
   <string name="checkin_success_trakt">trakt üzerinden %s girişi yapıldı.</string>
   <string name="checkin_canceled_success_trakt">trakt üzerinden giriş iptal edildi.</string>
