@@ -11,7 +11,7 @@
     <string name="tvdb">TVDb</string>
     <string name="trakt">trakt</string>
     <string name="ontrakt">on trakt</string>
-    <string name="getglue">GetGlue</string>
+    <string name="getglue">tvtag</string>
     <string name="analytics">Google Analytics</string>
     <string name="powered_by_thetvdb">powered by thetvdb.com</string>
     <string name="powered_by_trakt">powered by trakt.tv</string>
