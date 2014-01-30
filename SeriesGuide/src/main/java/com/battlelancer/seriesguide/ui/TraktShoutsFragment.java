@@ -166,7 +166,7 @@ public class TraktShoutsFragment extends SherlockFragment implements
                 int tmdbId = args.getInt(ShareItems.TMDBID);
                 if (tmdbId != 0) {
                     AndroidUtils.executeAsyncTask(
-                            new TraktTask(getActivity(), null).shoutMovie(tmdbId, shout, isSpoiler)
+                            new TraktTask(getActivity()).shoutMovie(tmdbId, shout, isSpoiler)
                     );
                     return;
                 }
@@ -177,7 +177,7 @@ public class TraktShoutsFragment extends SherlockFragment implements
                 if (episode != 0) {
                     int season = args.getInt(ShareItems.SEASON);
                     AndroidUtils.executeAsyncTask(
-                            new TraktTask(getActivity(), null)
+                            new TraktTask(getActivity())
                                     .shoutEpisode(tvdbid, season, episode, shout, isSpoiler)
                     );
                     return;
@@ -185,7 +185,7 @@ public class TraktShoutsFragment extends SherlockFragment implements
 
                 // shout for a show!
                 AndroidUtils.executeAsyncTask(
-                        new TraktTask(getActivity(), null).shoutShow(tvdbid, shout, isSpoiler)
+                        new TraktTask(getActivity()).shoutShow(tvdbid, shout, isSpoiler)
                 );
             }
         });
