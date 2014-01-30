@@ -8,12 +8,18 @@ All dates are in the European Central timezone.
 Version 12 *(in development)*
 -------------------------
 
+#### 12-beta4 *(2014-01-30)*
+
+* FIX Crash when adding/removing movie from watchlist, shouting.
+* NOTICE Latest translations from crowdin.
+
 #### 12-beta3 *(2014-01-29)*
 
 * NOTICE GetGlue is now tvtag.
 * TWEAK Check-in dialog waits for trakt and/or tvtag check-in to succeed before vanishing with your message (you can still dismiss anytime).
 * TWEAK Auto-Update gets watched and collected episodes from trakt and matches them in SeriesGuide. At most every 24 hours (always if update is triggered manually).
 * TWEAK Show show title in show list context menu, season number in seasons context menus.
+* NOTICE Latest translations from crowdin.
 
 #### 12-beta2 *(2014-01-21)*
 
