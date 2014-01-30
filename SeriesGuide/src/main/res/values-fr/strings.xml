@@ -277,10 +277,10 @@
   <string name="checkin_searchhint">Entrez un nom de série</string>
   <string name="checkin_empty">Aucune série correspondante</string>
   <string name="checkin_hint">Écrivez un message (optionnel)</string>
-  <string name="checkin_fixgetglue">Corriger le check-in de GetGlue</string>
+  <string name="checkin_fixgetglue">Corriger le check-in de tvtag</string>
   <string name="paste_title">Ajouter le titre</string>
-  <string name="checkinsuccess">Check-in de %s sur GetGlue effectué.</string>
-  <string name="checkinfailed">Échec du check-in sur GetGlue. Réessayez plus tard.</string>
+  <string name="checkinsuccess">Check-in de %s sur tvtag effectué.</string>
+  <string name="checkinfailed">Échec du check-in sur tvtag. Réessayez plus tard.</string>
   <string name="getglue_authentication">Connecter tvtag</string>
   <string name="getglue_authfailed">Authentification à tvtag échouée. Réessayez plus tard.</string>
   <string name="checkin_success_trakt">Check-in de %s sur trakt effectué.</string>

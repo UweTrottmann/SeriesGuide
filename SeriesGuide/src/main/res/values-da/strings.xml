@@ -54,8 +54,8 @@
   <string name="trailer">Trailer</string>
   <string name="shows_with_next">%s med næste episoder</string>
   <string name="shows_continuing">%s fortsætter</string>
-  <string name="episodes_watched">%s set</string>
-  <string name="runtime_all_episodes">Runtime af alle sete episoder</string>
+  <string name="episodes_watched">%s sete</string>
+  <string name="runtime_all_episodes">Varighed af alle sete episoder</string>
   <string name="your_rating">Din bedømmelse</string>
   <string name="love">Totalt ninja!</string>
   <string name="hate">Svag sovs :(</string>
@@ -105,8 +105,8 @@
   <string name="trakt_submitqueued">Gemmer i trakt.</string>
   <string name="trakt_seen">%s set.</string>
   <string name="trakt_notseen">%s ikke set.</string>
-  <string name="trakt_collected">%s valgt.</string>
-  <string name="trakt_notcollected">%s ikke valgt.</string>
+  <string name="trakt_collected">%s samlet.</string>
+  <string name="trakt_notcollected">%s ikke samlet.</string>
   <string name="confirm_delete">Vil du fjerne %s?</string>
   <string name="delete_has_list_items">Kan ikke udføres, fjern %s fra alle lister først.</string>
   <string name="delete_error">Kunne ikke fjerne serie. Prøv igen senere.</string>
@@ -175,7 +175,7 @@
   <string name="recommended">Anbefalet</string>
   <string name="library">Bibliotek</string>
   <string name="watchlist">Overvågningsliste</string>
-  <string name="first_list">First list</string>
+  <string name="first_list">Første liste</string>
   <string name="list_add">Tilføj liste</string>
   <string name="list_title_hint">Navngiv din liste</string>
   <string name="list_remove">Fjern liste</string>
@@ -213,9 +213,9 @@
   <string name="prefs_category_advanced">Avanceret</string>
   <string name="prefs_category_about">Om</string>
   <string name="pref_onlyfuture">Ingen sendte episoder</string>
-  <string name="pref_onlyfuturesummary">Vis aldrig allerede udkomne episoder</string>
+  <string name="pref_onlyfuturesummary">Vis aldrig allerede sendte episoder</string>
   <string name="pref_onlyseasoneps">Gem specielle episoder</string>
-  <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
+  <string name="pref_onlyseasonepssummary">Specielle episoder skjules overalt bortset fra sæson listen</string>
   <string name="pref_seasonsorting">Sortér sæsoner efter...</string>
   <string name="pref_episodesorting">Sortér afsnit efter...</string>
   <string name="pref_language">Sprog (indhold)</string>
@@ -228,7 +228,7 @@
   <string name="pref_traktsummary">Tilføj eller ret trakt.tv login-info</string>
   <string name="pref_traktsync">Manuel synkronisering med trakt.tv</string>
   <string name="feedback">Send feedback</string>
-  <string name="pref_autoaddshows">Tilføje nye trakt serier</string>
+  <string name="pref_autoaddshows">Tilføj nye trakt serier</string>
   <string name="pref_autoaddshowssummary">Tilføj automatisk serier fra dine trakt aktiviteter</string>
   <string name="pref_appearance">Udseende</string>
   <string name="pref_theme">App Tema</string>
@@ -345,7 +345,7 @@
   <string name="billing_price_pass">engangskøb</string>
   <string name="upgrade_description">Få adgang til notifikationer, flere muligheder til list widgeten og alle fremtidige X funktioner. Støt videre udvikling.\n\nHvis du allerede har købt SeriesGuide X, installer denne for at oplåse denne opgradering.</string>
   <string name="upgrade_success">Tak, du abonnerer allerede på alle X funktioner!</string>
-  <string name="billing_learn_more">Hvorfor betale? Lær mere.</string>
+  <string name="billing_learn_more">Hvorfor betale? Læs mere.</string>
   <string name="subscription_activated">Du abonnerer nu på X funktioner.</string>
   <string name="subscription_expired">Abonnement udløbet</string>
   <string name="subscription_expired_details">Dit abonnement på X funktioner er udløbet.</string>
