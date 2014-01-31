@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- SeriesGuides default theme v11+ customizations -->
+    <style name="SeriesGuideBaseTheme" parent="Theme.Sherlock">
+
+        <!-- System widgets (native) -->
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
+        <item name="android:editTextBackground">@drawable/edit_text_sg</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_sg</item>
+
+        <!-- Action bar (native, v11+) -->
+        <item name="android:actionBarStyle">@style/ActionBar</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
+        <item name="android:actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
+        <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
+        <item name="android:actionDropDownStyle">@style/DropDownNav</item>
+
+        <!-- Fast scroll thumb -->
+        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
+
+        <!-- Translucent navbar -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+
+    </style>
+
+    <!-- Dark Android theme v11+ customizations -->
+    <style name="AndroidBaseTheme" parent="Theme.Sherlock">
+
+        <!-- Action bar (native, v11+) -->
+        <item name="android:actionBarStyle">@style/ActionBarDark</item>
+
+        <!-- Translucent navbar -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+
+    </style>
+
+    <!-- SeriesGuide Light theme v11+ customizations -->
+    <style name="SeriesGuideBaseThemeLight" parent="Theme.Sherlock.Light">
+
+        <!-- System widgets (native) -->
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
+        <item name="android:editTextBackground">@drawable/edit_text_holo_light</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_light</item>
+
+        <!-- Action bar (native, v11+) -->
+        <item name="android:actionBarStyle">@style/ActionBar.Light</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
+        <item name="android:actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
+        <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
+        <item name="android:actionDropDownStyle">@style/DropDownNav.Light</item>
+
+        <!-- Fast scroll thumb -->
+        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
+
+        <!-- Translucent navbar -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+
+    </style>
+
+    <!-- Special themes -->
+    <style name="ImmersiveTheme" parent="SeriesGuideTheme">
+
+        <!-- Action bar (native, v11+) -->
+        <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
+
+    </style>
+
+    <style name="ImmersiveTheme.Light" parent="SeriesGuideThemeLight">
+
+        <!-- Action bar (native, v11+) -->
+        <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
+
+    </style>
+
+</resources>
