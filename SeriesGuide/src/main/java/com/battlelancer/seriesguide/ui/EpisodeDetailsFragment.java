@@ -167,10 +167,13 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     private void setupViews() {
         if (AndroidUtils.isKitKatOrHigher()) {
-            SystemBarTintManager.SystemBarConfig config = ((BaseActivity) getActivity())
-                    .getSystemBarTintManager().getConfig();
-            getListView().setClipToPadding(false);
-            getListView().setPadding(0, 0, 0, config.getPixelInsetBottom());
+            if (getActivity() instanceof EpisodeDetailsActivity) {
+                SystemBarTintManager.SystemBarConfig config
+                        = ((EpisodeDetailsActivity) getActivity())
+                        .getSystemBarTintManager().getConfig();
+                getListView().setClipToPadding(false);
+                getListView().setPadding(0, 0, 0, config.getPixelInsetBottom());
+            }
         }
     }
 

@@ -66,6 +66,8 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
     private int mShowId;
 
+    private SystemBarTintManager mSystemBarTintManager;
+
     /**
      * Data which has to be passed when creating this activity. All Bundle extras are integer.
      */
@@ -177,8 +179,8 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         // fix padding for translucent system bars
         if (AndroidUtils.isKitKatOrHigher()) {
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
+            mSystemBarTintManager = new SystemBarTintManager(this);
+            SystemBarTintManager.SystemBarConfig config = getSystemBarTintManager().getConfig();
             ViewGroup contentContainer = (ViewGroup) findViewById(
                     R.id.contentContainerEpisodeDetails);
             contentContainer.setClipToPadding(false);
@@ -188,6 +190,10 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         // set current item
         pager.setCurrentItem(startPosition, false);
+    }
+
+    public SystemBarTintManager getSystemBarTintManager() {
+        return mSystemBarTintManager;
     }
 
     @Override
