@@ -44,6 +44,7 @@
         android:background="?attr/colorNavDrawerBackground"
         android:choiceMode="singleChoice"
         android:clipToPadding="@bool/gridClipToPadding"
+        android:fitsSystemWindows="@bool/sgFitSystemWindows"
         android:listSelector="?attr/custom_list_selector"
         android:paddingTop="?actionBarSize" />
 
