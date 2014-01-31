@@ -23,9 +23,6 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.Utils;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 import android.content.Intent;
@@ -40,34 +37,15 @@ import android.view.KeyEvent;
  */
 public abstract class BaseActivity extends SherlockFragmentActivity {
 
-    private SystemBarTintManager mSystemBarTintManager;
-
     @Override
     protected void onCreate(Bundle arg0) {
         setCustomTheme();
         super.onCreate(arg0);
-
-        if (AndroidUtils.isKitKatOrHigher()) {
-            mSystemBarTintManager = new SystemBarTintManager(this);
-            setupSystemBarTintManager();
-        }
     }
 
     protected void setCustomTheme() {
         // set a theme based on user preference
         setTheme(SeriesGuidePreferences.THEME);
-    }
-
-    protected SystemBarTintManager getSystemBarTintManager() {
-        return mSystemBarTintManager;
-    }
-
-    protected void setupSystemBarTintManager() {
-        // set tint on status bar
-        getSystemBarTintManager().setStatusBarTintColor(
-                getResources().getColor(Utils.resolveAttributeToResourceId(getTheme(),
-                        R.attr.colorBackgroundStatusBar)));
-        getSystemBarTintManager().setStatusBarTintEnabled(true);
     }
 
     @Override

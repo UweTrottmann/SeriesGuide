@@ -35,7 +35,6 @@
         <item name="textColorSgActionBar">@color/text_default</item>
         <item name="colorAccent">@color/accent_primary</item>
         <item name="colorOverlay">@color/overlay</item>
-        <item name="colorBackgroundStatusBar">@color/background_statusbar</item>
         <item name="colorBackgroundDim">@color/background_dim</item>
         <item name="colorSeparator">@color/separator</item>
         <item name="colorDivider">@color/divider</item>
@@ -101,7 +100,6 @@
         <item name="textColorSgActionBar">@color/text_default</item>
         <item name="colorAccent">@color/accent_primary_android</item>
         <item name="colorOverlay">@color/overlay</item>
-        <item name="colorBackgroundStatusBar">@color/background_statusbar</item>
         <item name="colorBackgroundDim">@color/background_dim</item>
         <item name="colorSeparator">@color/separator</item>
         <item name="colorDivider">@color/divider</item>
@@ -176,7 +174,6 @@
         <item name="textColorSgActionBar">@color/text_default_inverse</item>
         <item name="colorAccent">@color/accent_primary</item>
         <item name="colorOverlay">@color/overlay_inverse</item>
-        <item name="colorBackgroundStatusBar">@color/background_statusbar_inverse</item>
         <item name="colorBackgroundDim">@color/background_dim_inverse</item>
         <item name="colorSeparator">@color/separator_inverse</item>
         <item name="colorDivider">@color/divider_inverse</item>
