@@ -164,6 +164,11 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     }
 
     @Override
+    protected void setupSystemBarTintManager() {
+        // do nothing: use no tint on system bars
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         EasyTracker.getInstance(this).activityStart(this);
