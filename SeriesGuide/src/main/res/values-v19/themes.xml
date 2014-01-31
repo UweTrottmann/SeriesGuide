@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Special themes -->
+    <style name="ImmersiveTheme" parent="SeriesGuideTheme">
+
+        <!-- Action bar (native, v11+) -->
+        <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
+
+        <!-- Translucent navbar -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+
+    </style>
+
+    <style name="ImmersiveTheme.Light" parent="SeriesGuideThemeLight">
+
+        <!-- Action bar (native, v11+) -->
+        <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
+
+        <!-- Translucent navbar -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+
+    </style>
+
+</resources>

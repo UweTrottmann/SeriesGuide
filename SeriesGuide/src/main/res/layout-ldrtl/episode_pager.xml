@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <FrameLayout
+        android:id="@+id/contentContainerEpisodeDetails"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -44,6 +45,7 @@
         android:background="?attr/colorNavDrawerBackground"
         android:choiceMode="singleChoice"
         android:clipToPadding="@bool/gridClipToPadding"
+        android:fitsSystemWindows="@bool/sgFitSystemWindows"
         android:listSelector="?attr/custom_list_selector"
         android:paddingTop="?actionBarSize" />
 

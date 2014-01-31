@@ -42,6 +42,7 @@ import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.Utils;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
@@ -154,13 +155,26 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new DetailsAdapter(getActivity(), null, 0);
+        setupViews();
 
+        mAdapter = new DetailsAdapter(getActivity(), null, 0);
         setListAdapter(mAdapter);
 
         getLoaderManager().initLoader(EPISODE_LOADER, null, this);
 
         setHasOptionsMenu(true);
+    }
+
+    private void setupViews() {
+        if (AndroidUtils.isKitKatOrHigher()) {
+            if (getActivity() instanceof EpisodeDetailsActivity) {
+                SystemBarTintManager.SystemBarConfig config
+                        = ((EpisodeDetailsActivity) getActivity())
+                        .getSystemBarTintManager().getConfig();
+                getListView().setClipToPadding(false);
+                getListView().setPadding(0, 0, 0, config.getPixelInsetBottom());
+            }
+        }
     }
 
     @Override
