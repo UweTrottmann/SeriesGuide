@@ -72,9 +72,9 @@ import java.util.TimeZone;
 
 public class Utils {
 
-    private static final String TIMEZONE_AMERICA_PREFIX = "America/";
-
     private static final String TAG = "Utils";
+
+    private static final String TIMEZONE_AMERICA_PREFIX = "America/";
 
     private static final String TIMEZONE_ALWAYS_PST = "GMT-08:00";
 
@@ -89,62 +89,6 @@ public class Utils {
     private static final String TIMEZONE_US_PACIFIC = "America/Los_Angeles";
 
     private static final String TIMEZONE_US_MOUNTAIN = "America/Denver";
-
-    public static final SimpleDateFormat thetvdbTimeFormatAMPM = new SimpleDateFormat("h:mm aa",
-            Locale.US);
-
-    public static final SimpleDateFormat thetvdbTimeFormatAMPMalt = new SimpleDateFormat("h:mmaa",
-            Locale.US);
-
-    public static final SimpleDateFormat thetvdbTimeFormatAMPMshort = new SimpleDateFormat("h aa",
-            Locale.US);
-
-    public static final SimpleDateFormat thetvdbTimeFormatNormal = new SimpleDateFormat("H:mm",
-            Locale.US);
-
-    /**
-     * Parse a shows TVDb air time value to a ms value in Pacific Standard Time (always without
-     * daylight saving).
-     */
-    public static long parseTimeToMilliseconds(String tvdbTimeString) {
-        Date time = null;
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_ALWAYS_PST));
-
-        // try parsing with three different formats, most of the time the first
-        // should match
-        if (tvdbTimeString.length() != 0) {
-            try {
-                time = thetvdbTimeFormatAMPM.parse(tvdbTimeString);
-            } catch (ParseException e) {
-                try {
-                    time = thetvdbTimeFormatAMPMalt.parse(tvdbTimeString);
-                } catch (ParseException e1) {
-                    try {
-                        time = thetvdbTimeFormatAMPMshort.parse(tvdbTimeString);
-                    } catch (ParseException e2) {
-                        try {
-                            time = thetvdbTimeFormatNormal.parse(tvdbTimeString);
-                        } catch (ParseException e3) {
-                            // string may be wrongly formatted
-                            time = null;
-                        }
-                    }
-                }
-            }
-        }
-
-        if (time != null) {
-            Calendar timeCal = Calendar.getInstance();
-            timeCal.setTime(time);
-            cal.set(Calendar.HOUR_OF_DAY, timeCal.get(Calendar.HOUR_OF_DAY));
-            cal.set(Calendar.MINUTE, timeCal.get(Calendar.MINUTE));
-            cal.set(Calendar.SECOND, 0);
-            cal.set(Calendar.MILLISECOND, 0);
-            return cal.getTimeInMillis();
-        } else {
-            return -1;
-        }
-    }
 
     /**
      * Parse a shows airtime ms value to an actual time. If given a TVDb day string the day will get

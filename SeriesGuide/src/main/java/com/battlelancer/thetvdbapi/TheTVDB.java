@@ -18,7 +18,6 @@ package com.battlelancer.thetvdbapi;
 
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -29,6 +28,7 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktSync;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
@@ -294,6 +294,11 @@ public class TheTVDB {
      */
     private static Show fetchShow(int showTvdbId, String language, Context context)
             throws SAXException {
+        String url = TVDB_API_URL + context.getResources().getString(R.string.tvdb_apikey)
+                + "/series/" + showTvdbId + "/" + (language != null ? language + ".xml" : "");
+
+        Show show = parseShow(url, context);
+
         // Try to get some show details from trakt
         TvShow traktShow = null;
         Trakt manager = ServiceUtils.getTrakt(context);
@@ -304,12 +309,6 @@ public class TheTVDB {
                 Utils.trackExceptionAndLog(context, TAG, e);
             }
         }
-
-        String url = TVDB_API_URL + context.getResources().getString(R.string.tvdb_apikey)
-                + "/series/" + showTvdbId + "/" + (language != null ? language + ".xml" : "");
-
-        Show show = parseShow(url, context);
-
         // correct air times for non-US shows
         if (traktShow != null && traktShow.country != null) {
             if ("United States".equals(traktShow.country)) {
@@ -373,7 +372,7 @@ public class TheTVDB {
         });
         show.getChild("Airs_Time").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.airtime = Utils.parseTimeToMilliseconds(body.trim());
+                currentShow.airtime = TimeTools.parseTimeToMilliseconds(body.trim());
             }
         });
         show.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
