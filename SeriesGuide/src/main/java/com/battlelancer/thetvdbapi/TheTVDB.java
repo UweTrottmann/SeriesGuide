@@ -321,6 +321,10 @@ public class TheTVDB {
                 // Correct to EST
                 // Sample: heute-show
                 show.airtime -= 9 * DateUtils.HOUR_IN_MILLIS;
+            } else if ("Japan".equals(traktShow.country)) {
+                // Correct to JST
+                // Sample: Naruto Shippuuden
+                show.airtime -= 17 * DateUtils.HOUR_IN_MILLIS;
             } else if ("Australia".equals(traktShow.country)) {
                 // Correct to Australian EST
                 // Sample: Offspring
