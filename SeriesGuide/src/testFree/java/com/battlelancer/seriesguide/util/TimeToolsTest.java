@@ -50,21 +50,27 @@ public class TimeToolsTest {
 
     @Test
     public void test_parseTimeToMillisecondsMidnight() {
+        long timeAfterLastMidnight = TimeTools.parseTimeToMilliseconds("1:00AM");
+        long timeBeforeMidnight = TimeTools.parseTimeToMilliseconds("11:55PM");
         long timeMidnight = TimeTools.parseTimeToMilliseconds("12:00AM");
-        long timeAfterMidnight = TimeTools.parseTimeToMilliseconds("1:00AM");
-        long timebeforeMidnightNextDay = TimeTools.parseTimeToMilliseconds("11:55PM");
 
-        // ensure 11:55 PM is about 24 hours later than 12:00 AM
+        // ensure 12:00 AM - 12:59 AM is 24 hours later than it should be by law
+        Date afterLastMidnight = new Date(timeAfterLastMidnight);
+        Date beforeMidnight = new Date(timeBeforeMidnight);
         Date midnight = new Date(timeMidnight);
-        Date afterMidnight = new Date(timeAfterMidnight);
-        Date beforeMidnight = new Date(timebeforeMidnightNextDay);
 
-        System.out.println(DATE_TIME_FORMAT_PST.format(midnight) + " or " + midnight);
-        System.out.println(DATE_TIME_FORMAT_PST.format(afterMidnight) + " or " + afterMidnight);
-        System.out.println(DATE_TIME_FORMAT_PST.format(beforeMidnight) + " or " + beforeMidnight);
+        System.out.println("After LAST midnight:     "
+                + DATE_TIME_FORMAT_PST.format(afterLastMidnight)
+                + " (" + timeAfterLastMidnight + ")");
+        System.out.println("Before CURRENT midnight: "
+                + DATE_TIME_FORMAT_PST.format(beforeMidnight)
+                + " (" + timeBeforeMidnight + ")");
+        System.out.println("CURRENT midnight:        "
+                + DATE_TIME_FORMAT_PST.format(midnight)
+                + " (" + timeMidnight + ")");
 
-        assertThat(afterMidnight).isAfter(midnight);
-        assertThat(beforeMidnight).isAfter(afterMidnight);
+        assertThat(midnight).isAfter(afterLastMidnight);
+        assertThat(midnight).isAfter(beforeMidnight);
     }
 
 }

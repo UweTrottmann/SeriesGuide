@@ -16,6 +16,8 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.text.format.DateUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -42,6 +44,10 @@ public class TimeTools {
     private static final SimpleDateFormat TIME_FORMAT_TVDB_24 = new SimpleDateFormat("H:mm",
             Locale.US);
 
+    private static final long MILLISECONDS_MIDNIGHT_PST = 8 * DateUtils.HOUR_IN_MILLIS;
+
+    private static final long MILLISECONDS_HOUR_PAST_MIDNIGHT_PST = MILLISECONDS_MIDNIGHT_PST + DateUtils.HOUR_IN_MILLIS;
+
     static {
         // assume all TVDb time strings are in PST
         TIME_FORMAT_TVDB_AMPM.setTimeZone(TimeZone.getTimeZone(TIMEZONE_ID_PST));
@@ -52,7 +58,10 @@ public class TimeTools {
 
     /**
      * Parse a TVDb air time to a UTC ms value. The air time from TVDb is assumed to be in Pacific
-     * Standard Time (always without daylight saving).
+     * Standard Time (always without daylight saving).<br/> If the time is between 12:00 AM and
+     * 12:59 AM it will be shifted 24 hours, as it is typical in the TV business to attribute shows
+     * airing at this time to the previous day. As 12:00 AM to 12:59 AM is by standard considered
+     * the first hour of a day a shift is necessary to make it the last hour.
      *
      * @return -1 if no conversion was possible, a UTC millisecond value otherwise.
      */
@@ -81,7 +90,13 @@ public class TimeTools {
         }
 
         if (time != null) {
-            return time.getTime();
+            // push 12:00 AM to 12:59 AM a day (24 hours) into the future
+            long timeMs = time.getTime();
+            if (timeMs >= MILLISECONDS_MIDNIGHT_PST && timeMs < MILLISECONDS_HOUR_PAST_MIDNIGHT_PST) {
+                timeMs += DateUtils.DAY_IN_MILLIS;
+            }
+            // TODO use a current date to make sure current time zone and daylight saving time laws are used when formatting to a string
+            return timeMs;
         } else {
             // times resolution is at most in minutes, so -1 (ms) can never exist
             return -1;
