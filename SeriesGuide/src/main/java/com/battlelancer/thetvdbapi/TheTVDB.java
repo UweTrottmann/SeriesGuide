@@ -541,7 +541,8 @@ public class TheTVDB {
                 });
         episode.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                long episodeAirTime = Utils.buildEpisodeAirtime(body, show.airtime);
+                long episodeAirTime = TimeTools
+                        .parseEpisodeReleaseTime(body, show.airtime, show.country);
                 values.put(Episodes.FIRSTAIREDMS, episodeAirTime);
                 values.put(Episodes.FIRSTAIRED, body.trim());
             }
