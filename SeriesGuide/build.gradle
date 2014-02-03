@@ -77,7 +77,7 @@ dependencies {
 
     testCompile 'junit:junit:4.10'
     testCompile 'com.squareup:fest-android:1.0.+'
-    testCompile 'org.robolectric:robolectric:2.2'
+    testCompile 'org.robolectric:robolectric:2.3-SNAPSHOT'
 }
 
 // get signing config from gradle.properties file

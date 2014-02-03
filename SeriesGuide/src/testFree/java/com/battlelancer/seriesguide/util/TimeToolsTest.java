@@ -1,6 +1,13 @@
 package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.seriesguide.util.TimeTools;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
+
+import android.content.Context;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,6 +16,7 @@ import java.util.TimeZone;
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.fest.assertions.api.Assertions.failBecauseExceptionWasNotThrown;
 
+@RunWith(RobolectricTestRunner.class)
 public class TimeToolsTest {
 
     private static final SimpleDateFormat TIME_FORMAT_CUSTOM_TIMEZONE = new SimpleDateFormat(
@@ -37,6 +45,15 @@ public class TimeToolsTest {
                 time + " is " + timeString + " or " + timeMs + "ms or " + new Date(timeMs));
 
         assertThat(timeString).isEqualTo(timeResult);
+    }
+
+    @Test
+    public void test_formatShowReleaseTimeAndDay() {
+        long releaseTime = TimeTools.parseTimeToMilliseconds("12:35am");
+        Context context = Robolectric.getShadowApplication().getApplicationContext();
+        String[] timeAndDay = TimeTools
+                .formatShowReleaseTimeAndDay(context, releaseTime, "United States", "Monday");
+        System.out.println("Time: " + timeAndDay[0] + "and day: " + timeAndDay[1]);
     }
 
 }
