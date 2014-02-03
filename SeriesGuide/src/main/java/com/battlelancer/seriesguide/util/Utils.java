@@ -114,18 +114,20 @@ public class Utils {
         // set the date back to today
         cal.set(year, month, day);
 
-        // determine the shows common air day (Mo through Sun or daily)
+        // move to correct release day (not for daily shows)
         int dayIndex = -1;
         if (dayofweek != null) {
             dayIndex = getDayOfWeek(dayofweek);
             if (dayIndex > 0) {
                 int today = cal.get(Calendar.DAY_OF_WEEK);
-                // make sure we always assume a day which is today or later
+                // make sure we always assume a release date which is today or in the future
+                // to get correct local DST information when converting
                 if (dayIndex - today < 0) {
-                    // we have a day before today
+                    // release is on a week day earlier in the week than today,
+                    // move calendar ahead to next week
                     cal.add(Calendar.DAY_OF_WEEK, (7 - today) + dayIndex);
                 } else {
-                    // we have today or in the future
+                    // release week day is today or ahead in the week
                     cal.set(Calendar.DAY_OF_WEEK, dayIndex);
                 }
             }
@@ -136,7 +138,7 @@ public class Utils {
         localCal.setTimeInMillis(cal.getTimeInMillis());
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        setOffsets(prefs, localCal, milliseconds);
+        setOffsets(prefs, localCal, localCal.getTimeInMillis());
 
         // create time string
         final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
