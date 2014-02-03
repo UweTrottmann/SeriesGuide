@@ -423,6 +423,7 @@ public class DBUtils {
         values.put(Shows.ACTORS, show.actors);
         values.put(Shows.AIRSDAYOFWEEK, show.airday);
         values.put(Shows.AIRSTIME, show.airtime);
+        values.put(Shows.RELEASE_COUNTRY, show.country);
         values.put(Shows.FIRSTAIRED, show.firstAired);
         values.put(Shows.GENRES, show.genres);
         values.put(Shows.NETWORK, show.network);
