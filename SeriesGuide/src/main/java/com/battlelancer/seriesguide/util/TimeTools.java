@@ -94,31 +94,8 @@ public class TimeTools {
         }
 
         // determine release timezone
-        String timeZoneId;
-        if (TextUtils.isEmpty(releaseCountry)) {
-            timeZoneId = TIMEZONE_ID_US_PACIFIC;
-        } else {
-            switch (releaseCountry) {
-                case "United States":
-                    timeZoneId = TIMEZONE_ID_US_PACIFIC;
-                    break;
-                case "United Kingdom":
-                    timeZoneId = TIMEZONE_ID_UK;
-                    break;
-                case "Japan":
-                    timeZoneId = TIMEZONE_ID_JAPAN;
-                    break;
-                case "Germany":
-                    timeZoneId = TIMEZONE_ID_GERMANY;
-                    break;
-                case "Australia":
-                    timeZoneId = TIMEZONE_ID_AUSTRALIA;
-                    break;
-                default:
-                    timeZoneId = TIMEZONE_ID_US_PACIFIC;
-                    break;
-            }
-        }
+        String timeZoneId = getTimeZoneIdForCountry(releaseCountry);
+        Calendar releaseTimeZoneCal = Calendar.getInstance(TimeZone.getTimeZone(timeZoneId));
 
         // get release "hours"
         Calendar customTimeCalendar = Calendar
@@ -129,7 +106,6 @@ public class TimeTools {
 
         // set release "hours" on release country calendar
         // has to be done as release time typically stays the same even if DST starts
-        Calendar releaseTimeZoneCal = Calendar.getInstance(TimeZone.getTimeZone(timeZoneId));
         releaseTimeZoneCal.set(Calendar.HOUR_OF_DAY, releaseHourOfDay);
         releaseTimeZoneCal.set(Calendar.MINUTE, releaseMinute);
         releaseTimeZoneCal.set(Calendar.SECOND, 0);
@@ -156,22 +132,11 @@ public class TimeTools {
 
         Date actualRelease = releaseTimeZoneCal.getTime();
 
-        // convert and format to local time
-        java.text.DateFormat localTimeFormat = DateFormat.getTimeFormat(context);
-        String localReleaseTime = localTimeFormat.format(actualRelease);
-
-        // convert and format to local day
-        String localReleaseDay;
-        if (releaseDayOfWeek == -1) {
-            localReleaseDay = "";
-        } else if (releaseDayOfWeek == 0) {
-            localReleaseDay = context.getString(R.string.daily);
-        } else {
-            SimpleDateFormat dayFormat = new SimpleDateFormat("E", Locale.getDefault());
-            localReleaseDay = dayFormat.format(actualRelease);
-        }
-
-        return new String[]{localReleaseTime, localReleaseDay};
+        // convert and format to local
+        return new String[]{
+                getLocalReleaseTime(context, actualRelease),
+                getLocalReleaseDay(context, releaseDayOfWeek, actualRelease)
+        };
     }
 
     /**
@@ -202,6 +167,54 @@ public class TimeTools {
 
         // no match
         return -1;
+    }
+
+    private static String getLocalReleaseDay(Context context, int releaseDayOfWeek,
+            Date actualRelease) {
+        String localReleaseDay;
+        if (releaseDayOfWeek == -1) {
+            localReleaseDay = "";
+        } else if (releaseDayOfWeek == 0) {
+            localReleaseDay = context.getString(R.string.daily);
+        } else {
+            SimpleDateFormat localDayFormat = new SimpleDateFormat("E", Locale.getDefault());
+            localReleaseDay = localDayFormat.format(actualRelease);
+        }
+        return localReleaseDay;
+    }
+
+    private static String getLocalReleaseTime(Context context, Date actualRelease) {
+        java.text.DateFormat localTimeFormat = DateFormat.getTimeFormat(context);
+        return localTimeFormat.format(actualRelease);
+    }
+
+    private static String getTimeZoneIdForCountry(String releaseCountry) {
+        String timeZoneId;
+        if (TextUtils.isEmpty(releaseCountry)) {
+            timeZoneId = TIMEZONE_ID_US_PACIFIC;
+        } else {
+            switch (releaseCountry) {
+                case "United States":
+                    timeZoneId = TIMEZONE_ID_US_PACIFIC;
+                    break;
+                case "United Kingdom":
+                    timeZoneId = TIMEZONE_ID_UK;
+                    break;
+                case "Japan":
+                    timeZoneId = TIMEZONE_ID_JAPAN;
+                    break;
+                case "Germany":
+                    timeZoneId = TIMEZONE_ID_GERMANY;
+                    break;
+                case "Australia":
+                    timeZoneId = TIMEZONE_ID_AUSTRALIA;
+                    break;
+                default:
+                    timeZoneId = TIMEZONE_ID_US_PACIFIC;
+                    break;
+            }
+        }
+        return timeZoneId;
     }
 
 }
