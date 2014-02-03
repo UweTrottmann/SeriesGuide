@@ -16,11 +16,8 @@
 
 package com.battlelancer.seriesguide.util;
 
-import android.text.format.DateUtils;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -30,7 +27,7 @@ import java.util.TimeZone;
  */
 public class TimeTools {
 
-    public static final String TIMEZONE_ID_PST = "GMT-08:00";
+    public static final String TIMEZONE_ID_CUSTOM = "GMT-08:00";
 
     private static final SimpleDateFormat TIME_FORMAT_TVDB_AMPM = new SimpleDateFormat("h:mm aa",
             Locale.US);
@@ -44,26 +41,22 @@ public class TimeTools {
     private static final SimpleDateFormat TIME_FORMAT_TVDB_24 = new SimpleDateFormat("H:mm",
             Locale.US);
 
-    private static final long MILLISECONDS_MIDNIGHT_PST = 8 * DateUtils.HOUR_IN_MILLIS;
-
-    private static final long MILLISECONDS_HOUR_PAST_MIDNIGHT_PST = MILLISECONDS_MIDNIGHT_PST + DateUtils.HOUR_IN_MILLIS;
-
     static {
-        // assume all TVDb time strings are in PST
-        TIME_FORMAT_TVDB_AMPM.setTimeZone(TimeZone.getTimeZone(TIMEZONE_ID_PST));
-        TIME_FORMAT_TVDB_AMPM_NOSPACE.setTimeZone(TimeZone.getTimeZone(TIMEZONE_ID_PST));
-        TIME_FORMAT_TVDB_AMPM_HOUR_ONLY.setTimeZone(TimeZone.getTimeZone(TIMEZONE_ID_PST));
-        TIME_FORMAT_TVDB_24.setTimeZone(TimeZone.getTimeZone(TIMEZONE_ID_PST));
+        // assume all TVDb times are in a custom time zone
+        TimeZone customTimeZone = TimeZone.getTimeZone(TIMEZONE_ID_CUSTOM);
+        TIME_FORMAT_TVDB_AMPM.setTimeZone(customTimeZone);
+        TIME_FORMAT_TVDB_AMPM_NOSPACE.setTimeZone(customTimeZone);
+        TIME_FORMAT_TVDB_AMPM_HOUR_ONLY.setTimeZone(customTimeZone);
+        TIME_FORMAT_TVDB_24.setTimeZone(customTimeZone);
     }
 
     /**
-     * Parse a TVDb air time to a UTC ms value. The air time from TVDb is assumed to be in Pacific
-     * Standard Time (always without daylight saving).<br/> If the time is between 12:00 AM and
-     * 12:59 AM it will be shifted 24 hours, as it is typical in the TV business to attribute shows
-     * airing at this time to the previous day. As 12:00 AM to 12:59 AM is by standard considered
-     * the first hour of a day a shift is necessary to make it the last hour.
+     * Converts a release time from TVDb (e.g. "12:00pm") into a millisecond value. The given time
+     * is assumed to be in a custom UTC-08:00 time zone.
      *
-     * @return -1 if no conversion was possible, a UTC millisecond value otherwise.
+     * @return -1 if no conversion was possible, a millisecond value storing the time in UTC-08:00
+     * otherwise. The date of the millisecond value should be considered as random, only the time
+     * matches the input.
      */
     public static long parseTimeToMilliseconds(String tvdbTimeString) {
         // try parsing with different formats, starting with the most likely
@@ -90,13 +83,7 @@ public class TimeTools {
         }
 
         if (time != null) {
-            // push 12:00 AM to 12:59 AM a day (24 hours) into the future
-            long timeMs = time.getTime();
-            if (timeMs >= MILLISECONDS_MIDNIGHT_PST && timeMs < MILLISECONDS_HOUR_PAST_MIDNIGHT_PST) {
-                timeMs += DateUtils.DAY_IN_MILLIS;
-            }
-            // TODO use a current date to make sure current time zone and daylight saving time laws are used when formatting to a string
-            return timeMs;
+            return time.getTime();
         } else {
             // times resolution is at most in minutes, so -1 (ms) can never exist
             return -1;
