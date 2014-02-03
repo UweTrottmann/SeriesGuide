@@ -20,13 +20,13 @@ public class TimeToolsTest {
 
     @Test
     public void test_parseTimeToMillisecondsFormats() {
+        parseAndCompare("8:00pm", "08:00 PM");
+        parseAndCompare("8:00am", "08:00 AM");
+
+        // test some variations to be sure
         parseAndCompare("8:00PM", "08:00 PM");
+        parseAndCompare("08:00pm", "08:00 PM");
         parseAndCompare("08:00PM", "08:00 PM");
-        parseAndCompare("8:00 PM", "08:00 PM");
-        parseAndCompare("08:00 PM", "08:00 PM");
-        parseAndCompare("8 PM", "08:00 PM");
-        parseAndCompare("8:00", "08:00 AM");
-        parseAndCompare("20:00", "08:00 PM");
     }
 
     private void parseAndCompare(String time, String timeResult) {
