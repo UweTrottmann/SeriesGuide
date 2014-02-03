@@ -207,7 +207,7 @@ public class TimeTools {
         }
 
         // US shows air at the same LOCAL time across all its time zones (with exceptions)
-        if (UNITED_STATES.equals(releaseCountry)) {
+        if (TextUtils.isEmpty(releaseCountry) || UNITED_STATES.equals(releaseCountry)) {
             correctUnitedStatesReleaseTime(releaseTimeZoneCal);
         }
 
