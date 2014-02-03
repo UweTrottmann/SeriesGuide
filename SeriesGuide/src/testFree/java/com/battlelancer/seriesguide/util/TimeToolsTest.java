@@ -16,7 +16,8 @@ import java.util.TimeZone;
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.fest.assertions.api.Assertions.failBecauseExceptionWasNotThrown;
 
-@RunWith(RobolectricTestRunner.class)
+// TODO Can't run Robolectric until it supports Android 4.4
+//@RunWith(RobolectricTestRunner.class)
 public class TimeToolsTest {
 
     private static final SimpleDateFormat TIME_FORMAT_CUSTOM_TIMEZONE = new SimpleDateFormat(
@@ -24,6 +25,26 @@ public class TimeToolsTest {
 
     static {
         TIME_FORMAT_CUSTOM_TIMEZONE.setTimeZone(TimeZone.getTimeZone(TimeTools.TIMEZONE_ID_CUSTOM));
+    }
+
+    @Test
+    public void test_parseEpisodeReleaseTime() {
+        long showReleaseTime = TimeTools.parseTimeToMilliseconds("8:00pm");
+        long episodeReleaseTime = TimeTools
+                .parseEpisodeReleaseTime("2013-05-31", showReleaseTime, "United States");
+        System.out.println(
+                "Release time: " + episodeReleaseTime + " " + new Date(episodeReleaseTime));
+        assertThat(episodeReleaseTime).isEqualTo(1370055600000L);
+    }
+
+    @Test
+    public void test_parseEpisodeReleaseTime_HourPastMidnight() {
+        long showReleaseTime = TimeTools.parseTimeToMilliseconds("12:35am");
+        long episodeReleaseTime = TimeTools
+                .parseEpisodeReleaseTime("2013-05-31", showReleaseTime, "United States");
+        System.out.println(
+                "Release time: " + episodeReleaseTime + " " + new Date(episodeReleaseTime));
+        assertThat(episodeReleaseTime).isEqualTo(1370072100000L);
     }
 
     @Test
@@ -47,13 +68,13 @@ public class TimeToolsTest {
         assertThat(timeString).isEqualTo(timeResult);
     }
 
-    @Test
-    public void test_formatShowReleaseTimeAndDay() {
-        long releaseTime = TimeTools.parseTimeToMilliseconds("12:35am");
-        Context context = Robolectric.getShadowApplication().getApplicationContext();
-        String[] timeAndDay = TimeTools
-                .formatShowReleaseTimeAndDay(context, releaseTime, "United States", "Monday");
-        System.out.println("Time: " + timeAndDay[0] + "and day: " + timeAndDay[1]);
-    }
+//    @Test
+//    public void test_formatShowReleaseTimeAndDay() {
+//        long releaseTime = TimeTools.parseTimeToMilliseconds("12:35am");
+//        Context context = Robolectric.getShadowApplication().getApplicationContext();
+//        String[] timeAndDay = TimeTools
+//                .formatShowReleaseTimeAndDay(context, releaseTime, "United States", "Monday");
+//        System.out.println("Time: " + timeAndDay[0] + "and day: " + timeAndDay[1]);
+//    }
 
 }

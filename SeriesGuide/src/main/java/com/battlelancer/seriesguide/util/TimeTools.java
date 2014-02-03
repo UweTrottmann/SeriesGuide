@@ -50,10 +50,14 @@ public class TimeTools {
     private static final SimpleDateFormat TIME_FORMAT_TRAKT = new SimpleDateFormat(
             "h:mmaa", Locale.US);
 
+    private static final SimpleDateFormat DATE_FORMAT_TVDB = new SimpleDateFormat("yyyy-MM-dd",
+            Locale.US);
+
     static {
-        // assume all TVDb times are in a custom time zone
+        // assume all times are in a custom time zone
         TimeZone customTimeZone = TimeZone.getTimeZone(TIMEZONE_ID_CUSTOM);
         TIME_FORMAT_TRAKT.setTimeZone(customTimeZone);
+        DATE_FORMAT_TVDB.setTimeZone(customTimeZone);
     }
 
     /**
@@ -82,6 +86,62 @@ public class TimeTools {
             // times resolution is at most in minutes, so -1 (ms) can never exist
             return -1;
         }
+    }
+
+    public static long parseEpisodeReleaseTime(String releaseDateEpisode, long releaseTimeShow,
+            String releaseCountry) {
+        // create calendar, set to custom time zone
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_ID_CUSTOM));
+
+        // extract day, month and year
+        Date releaseDate;
+        try {
+            releaseDate = DATE_FORMAT_TVDB.parse(releaseDateEpisode);
+        } catch (ParseException e) {
+            releaseDate = null;
+        }
+        if (releaseDate == null) {
+            return -1;
+        }
+        calendar.setTime(releaseDate);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        // extract hour and minute
+        int hour;
+        int minute;
+        if (releaseTimeShow != -1) {
+            calendar.setTimeInMillis(releaseTimeShow);
+            hour = calendar.get(Calendar.HOUR_OF_DAY);
+            minute = calendar.get(Calendar.MINUTE);
+        } else {
+            // no exact time? default to 5 in the morning
+            hour = 5;
+            minute = 0;
+        }
+
+        // set calendar to release time zone
+        String timeZoneId = getTimeZoneIdForCountry(releaseCountry);
+        calendar.setTimeZone(TimeZone.getTimeZone(timeZoneId));
+
+        // set parsed date and time
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        // TV scheduling madness: times between 12:00AM and 12:59AM are attributed to the hour
+        // after the end of the current day
+        if (hour == 0) {
+            // move ahead one day (24 hours)
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+        return calendar.getTimeInMillis();
     }
 
     public static String[] formatShowReleaseTimeAndDay(Context context, long releaseTime,
@@ -190,7 +250,7 @@ public class TimeTools {
 
     private static String getTimeZoneIdForCountry(String releaseCountry) {
         String timeZoneId;
-        if (TextUtils.isEmpty(releaseCountry)) {
+        if (releaseCountry == null || releaseCountry.length() == 0) {
             timeZoneId = TIMEZONE_ID_US_PACIFIC;
         } else {
             switch (releaseCountry) {
