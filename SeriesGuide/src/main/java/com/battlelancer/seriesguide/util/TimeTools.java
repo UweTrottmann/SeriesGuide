@@ -16,9 +16,11 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.uwetrottmann.seriesguide.R;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 
@@ -37,11 +39,23 @@ public class TimeTools {
 
     public static final String TIMEZONE_ID_CUSTOM = "GMT-08:00";
 
+    private static final String TIMEZONE_ID_PREFIX_AMERICA = "America/";
+
     private static final String TIMEZONE_ID_AUSTRALIA = "Australia/Sydney";
 
     private static final String TIMEZONE_ID_GERMANY = "Europe/Berlin";
 
     private static final String TIMEZONE_ID_JAPAN = "Asia/Tokyo";
+
+    private static final String TIMEZONE_ID_US_EASTERN = "America/New_York";
+
+    private static final Object TIMEZONE_ID_US_EASTERN_DETROIT = "America/Detroit";
+
+    private static final String TIMEZONE_ID_US_CENTRAL = "America/Chicago";
+
+    private static final String TIMEZONE_ID_US_MOUNTAIN = "America/Denver";
+
+    private static final String TIMEZONE_ID_US_ARIZONA = "America/Phoenix";
 
     private static final String TIMEZONE_ID_US_PACIFIC = "America/Los_Angeles";
 
@@ -59,6 +73,8 @@ public class TimeTools {
         TIME_FORMAT_TRAKT.setTimeZone(customTimeZone);
         DATE_FORMAT_TVDB.setTimeZone(customTimeZone);
     }
+
+    public static final String UNITED_STATES = "United States";
 
     /**
      * Converts a release time from trakt (e.g. "12:00pm") into a millisecond value. The given time
@@ -190,6 +206,13 @@ public class TimeTools {
             releaseTimeZoneCal.add(Calendar.DAY_OF_MONTH, 1);
         }
 
+        // US shows air at the same LOCAL time across all its time zones (with exceptions)
+        if (UNITED_STATES.equals(releaseCountry)) {
+            correctUnitedStatesReleaseTime(releaseTimeZoneCal);
+        }
+
+        setUserOffset(context, releaseTimeZoneCal);
+
         Date actualRelease = releaseTimeZoneCal.getTime();
 
         // convert and format to local
@@ -254,7 +277,7 @@ public class TimeTools {
             timeZoneId = TIMEZONE_ID_US_PACIFIC;
         } else {
             switch (releaseCountry) {
-                case "United States":
+                case UNITED_STATES:
                     timeZoneId = TIMEZONE_ID_US_PACIFIC;
                     break;
                 case "United Kingdom":
@@ -275,6 +298,59 @@ public class TimeTools {
             }
         }
         return timeZoneId;
+    }
+
+    private static void correctUnitedStatesReleaseTime(Calendar calendar) {
+        // get device time zone
+        final String localTimeZone = TimeZone.getDefault().getID();
+
+        // no-op if device is set to US Pacific or non-US time zone
+        if (!localTimeZone.startsWith(TIMEZONE_ID_PREFIX_AMERICA, 0)
+                || localTimeZone.equals(TIMEZONE_ID_US_PACIFIC)) {
+            return;
+        }
+
+        // by default US shows are either in PST UTC−8:00 or PDT UTC−7:00
+        // see #getTimeZoneIdForCountry()
+
+        int offset = 0;
+        boolean pacificInDaylight = calendar.getTimeZone().inDaylightTime(calendar.getTime());
+        if (localTimeZone.equals(TIMEZONE_ID_US_MOUNTAIN)) {
+            // MST UTC−7:00, MDT UTC−6:00
+            offset -= 1;
+        } else if (localTimeZone.equals(TIMEZONE_ID_US_ARIZONA)) {
+            // is always UTC-07:00, so like Mountain, but no DST
+            if (!pacificInDaylight) {
+                offset -= 1;
+            }
+        } else if (localTimeZone.equals(TIMEZONE_ID_US_CENTRAL)) {
+            // CST UTC−6:00, CDT UTC−5:00
+            // shows typically release an hour earlier, so subtract one hour more
+            offset -= (2 + 1);
+        } else if (localTimeZone.equals(TIMEZONE_ID_US_EASTERN) || localTimeZone
+                .equals(TIMEZONE_ID_US_EASTERN_DETROIT)) {
+            // EST UTC−5:00, EDT UTC−4:00
+            offset -= 3;
+        }
+
+        // TODO all applicable US time zones enter/leave DST at the same LOCAL time
+        // correct for the short period where eastern zones already enabled/disabled DST,
+        // but the given calendar is still in PST/PDT
+        // boolean isInDaylight = TimeZone.getTimeZone(localTimeZone).inDaylightTime();
+
+        if (offset != 0) {
+            calendar.add(Calendar.HOUR_OF_DAY, offset);
+        }
+    }
+
+    private static void setUserOffset(Context context, Calendar calendar) {
+        String offsetString = PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(SeriesGuidePreferences.KEY_OFFSET, "0");
+        int offset = Integer.valueOf(offsetString);
+
+        if (offset != 0) {
+            calendar.add(Calendar.HOUR_OF_DAY, offset);
+        }
     }
 
 }
