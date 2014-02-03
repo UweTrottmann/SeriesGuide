@@ -341,7 +341,7 @@ public class DBUtils {
             Shows._ID, Shows.ACTORS, Shows.AIRSDAYOFWEEK, Shows.AIRSTIME, Shows.CONTENTRATING,
             Shows.FIRSTAIRED, Shows.GENRES, Shows.NETWORK, Shows.OVERVIEW, Shows.POSTER,
             Shows.RATING, Shows.RUNTIME, Shows.TITLE, Shows.STATUS, Shows.IMDBID,
-            Shows.NEXTEPISODE, Shows.LASTEDIT
+            Shows.NEXTEPISODE, Shows.LASTEDIT, Shows.RELEASE_COUNTRY
     };
 
     /**
@@ -375,6 +375,7 @@ public class DBUtils {
                 show.setImdbId(details.getString(14));
                 show.setNextEpisode(details.getLong(15));
                 show.setLastEdit(details.getLong(16));
+                show.setCountry(details.getString(17));
             }
             details.close();
         }

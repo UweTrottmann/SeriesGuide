@@ -29,6 +29,7 @@ import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
@@ -187,8 +188,9 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
         // release time
         TextView releaseTime = (TextView) getView().findViewById(R.id.textViewShowReleaseTime);
         if (!TextUtils.isEmpty(mShow.getAirsDayOfWeek()) && mShow.getAirsTime() != -1) {
-            String[] values = Utils.parseMillisecondsToTime(mShow.getAirsTime(),
-                    mShow.getAirsDayOfWeek(), getActivity());
+            String[] values = TimeTools
+                    .formatShowReleaseTimeAndDay(getActivity(), mShow.getAirsTime(),
+                            mShow.getCountry(), mShow.getAirsDayOfWeek());
             releaseTime.setText(values[1] + " " + values[0]);
         } else {
             releaseTime.setText(null);
