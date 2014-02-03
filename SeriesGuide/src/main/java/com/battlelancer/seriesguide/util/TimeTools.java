@@ -68,7 +68,7 @@ public class TimeTools {
      * otherwise. The date of the millisecond value should be considered as random, only the time
      * matches the input.
      */
-    public static long parseTimeToMilliseconds(String traktAirTimeString) {
+    public static long parseShowReleaseTime(String traktAirTimeString) {
         // try parsing with different formats, starting with the most likely
         Date time = null;
         if (traktAirTimeString != null && traktAirTimeString.length() != 0) {

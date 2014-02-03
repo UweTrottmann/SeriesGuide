@@ -1,20 +1,14 @@
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.util.TimeTools;
-
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-
-import android.content.Context;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
 import static org.fest.assertions.api.Assertions.assertThat;
-import static org.fest.assertions.api.Assertions.failBecauseExceptionWasNotThrown;
 
 // TODO Can't run Robolectric until it supports Android 4.4
 //@RunWith(RobolectricTestRunner.class)
@@ -29,7 +23,7 @@ public class TimeToolsTest {
 
     @Test
     public void test_parseEpisodeReleaseTime() {
-        long showReleaseTime = TimeTools.parseTimeToMilliseconds("8:00pm");
+        long showReleaseTime = TimeTools.parseShowReleaseTime("8:00pm");
         long episodeReleaseTime = TimeTools
                 .parseEpisodeReleaseTime("2013-05-31", showReleaseTime, "United States");
         System.out.println(
@@ -39,7 +33,7 @@ public class TimeToolsTest {
 
     @Test
     public void test_parseEpisodeReleaseTime_HourPastMidnight() {
-        long showReleaseTime = TimeTools.parseTimeToMilliseconds("12:35am");
+        long showReleaseTime = TimeTools.parseShowReleaseTime("12:35am");
         long episodeReleaseTime = TimeTools
                 .parseEpisodeReleaseTime("2013-05-31", showReleaseTime, "United States");
         System.out.println(
@@ -59,7 +53,7 @@ public class TimeToolsTest {
     }
 
     private void parseAndCompare(String time, String timeResult) {
-        long timeMs = TimeTools.parseTimeToMilliseconds(time);
+        long timeMs = TimeTools.parseShowReleaseTime(time);
         String timeString = TIME_FORMAT_CUSTOM_TIMEZONE.format(new Date(timeMs));
 
         System.out.println(

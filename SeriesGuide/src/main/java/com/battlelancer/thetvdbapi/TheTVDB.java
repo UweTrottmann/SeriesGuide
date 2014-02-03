@@ -314,7 +314,7 @@ public class TheTVDB {
             throw new SAXException("Could not load show from trakt: " + showTvdbId);
         }
 
-        show.airtime = TimeTools.parseTimeToMilliseconds(traktShow.airTime);
+        show.airtime = TimeTools.parseShowReleaseTime(traktShow.airTime);
         show.country = traktShow.country;
 
         return show;
