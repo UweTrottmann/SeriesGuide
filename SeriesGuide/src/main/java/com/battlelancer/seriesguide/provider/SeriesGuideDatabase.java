@@ -219,7 +219,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ShowsColumns.SYNCENABLED + " INTEGER DEFAULT 1,"
 
-            + ShowsColumns.AIRTIME + " TEXT DEFAULT '',"
+            + ShowsColumns.RELEASE_COUNTRY + " TEXT DEFAULT '',"
 
             + ShowsColumns.HIDDEN + " INTEGER DEFAULT 0,"
 
@@ -638,7 +638,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     private static void upgradeToTwentyOne(SQLiteDatabase db) {
-        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.AIRTIME
+        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.RELEASE_COUNTRY
                 + " TEXT DEFAULT '';");
     }
 
