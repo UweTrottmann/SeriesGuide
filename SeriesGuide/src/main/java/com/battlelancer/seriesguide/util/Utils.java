@@ -89,34 +89,6 @@ public class Utils {
     private static final String TIMEZONE_US_MOUNTAIN = "America/Denver";
 
     /**
-     * Returns an array with absolute time [0], day [1] and relative time [2] of the given
-     * millisecond time. Respects user offsets and 'Use my time zone' setting.
-     */
-    public static String[] formatToTimeAndDay(long airtime, Context context) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-        Calendar cal = getAirtimeCalendar(airtime, prefs);
-        Date airDate = cal.getTime();
-
-        // absolute time
-        final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
-        String absoluteTime = timeFormat.format(airDate);
-
-        // day string
-        final SimpleDateFormat dayFormat = new SimpleDateFormat("E", Locale.getDefault());
-        String day = dayFormat.format(airDate);
-
-        // relative time
-        String relativeTime = DateUtils
-                .getRelativeTimeSpanString(cal.getTimeInMillis(), System.currentTimeMillis(),
-                        DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString();
-
-        return new String[]{
-                absoluteTime, day, relativeTime
-        };
-    }
-
-    /**
      * Returns a string like 'Mon in 3 days', the day followed by how far it is away in relative
      * time.<br> Does <b>not</b> respect user offsets or 'Use my time zone' setting. The time to be
      * passed is expected to be already corrected for that.
@@ -226,63 +198,6 @@ public class Utils {
         if (offset != 0) {
             cal.add(Calendar.HOUR_OF_DAY, offset);
         }
-    }
-
-    /**
-     * To correctly display and calculate upcoming episodes we need to modify the current time to be
-     * later/earlier. Also respecting user-set offsets.
-     */
-    public static long getFakeCurrentTime(SharedPreferences prefs) {
-        return convertToFakeTime(System.currentTimeMillis(), prefs, true);
-    }
-
-    /**
-     * Modify a time to be earlier/later respecting user-set offsets and automatic offsets based on
-     * time zone.
-     */
-    public static long convertToFakeTime(long time, SharedPreferences prefs,
-            boolean isCurrentTime) {
-        boolean pacificInDaylight = TimeZone.getTimeZone(TIMEZONE_US_PACIFIC).inDaylightTime(
-                new Date(time));
-
-        int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
-        final String tzId = TimeZone.getDefault().getID();
-
-        if (tzId.startsWith(TIMEZONE_AMERICA_PREFIX, 0)) {
-            if (tzId.equals(TIMEZONE_US_MOUNTAIN)) {
-                // Mountain Time
-                offset -= 1;
-            } else if (tzId.equals(TIMEZONE_US_CENTRAL)) {
-                // for US Central subtract one hour more
-                // shows always air an hour earlier
-                offset -= 3;
-            } else if (tzId.equals(TIMEZONE_US_EASTERN) || tzId
-                    .equals(TIMEZONE_US_EASTERN_DETROIT)) {
-                // Eastern Time
-                offset -= 3;
-            } else if (tzId.equals(TIMEZONE_US_ARIZONA)) {
-                // Arizona has no daylight saving, correct for that
-                if (!pacificInDaylight) {
-                    offset -= 1;
-                }
-            }
-        }
-
-        if (pacificInDaylight) {
-            offset -= 1;
-        }
-
-        if (offset != 0) {
-            if (isCurrentTime) {
-                // invert offset if we modify the current time
-                time -= (offset * DateUtils.HOUR_IN_MILLIS);
-            } else {
-                // add offset if we modify an episodes air time
-                time += (offset * DateUtils.HOUR_IN_MILLIS);
-            }
-        }
-
-        return time;
     }
 
     public static long buildEpisodeAirtime(String tvdbDateString, long airtime) {
@@ -420,8 +335,7 @@ public class Utils {
             if (mShowTvdbId > 0) {
                 // update single show
                 DBUtils.updateLatestEpisode(mContext, mShowTvdbId, isNoReleasedEpisodes,
-                        isNoSpecials,
-                        prefs);
+                        isNoSpecials);
             } else {
                 // update all shows
                 final Cursor shows = mContext.getContentResolver().query(Shows.CONTENT_URI,
@@ -432,7 +346,7 @@ public class Utils {
                     while (shows.moveToNext()) {
                         int showTvdbId = shows.getInt(0);
                         DBUtils.updateLatestEpisode(mContext, showTvdbId, isNoReleasedEpisodes,
-                                isNoSpecials, prefs);
+                                isNoSpecials);
                     }
                     shows.close();
                 }

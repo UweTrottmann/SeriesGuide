@@ -153,13 +153,14 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
             baseUri = Shows.CONTENT_URI;
         }
 
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String fakeInAnHour = String.valueOf(Utils.getFakeCurrentTime(prefs)
+        // query selects shows with next episodes before this point in time
+        // it does not make sense to check into episodes further in the future
+        String customTimeInOneHour = String.valueOf(TimeTools.getCurrentTime(this)
                 + DateUtils.HOUR_IN_MILLIS);
 
         return new CursorLoader(this, baseUri, CheckinQuery.PROJECTION, CheckinQuery.SELECTION,
                 new String[]{
-                        fakeInAnHour
+                        customTimeInOneHour
                 }, ShowsDistillationSettings.ShowsSortOrder.EPISODE_REVERSE);
     }
 

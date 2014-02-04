@@ -516,9 +516,6 @@ public class SeasonsFragment extends SherlockListFragment implements
     }
 
     private void onLoadRemainingCounter() {
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getActivity());
-
         AsyncTask<String, Void, int[]> task = new AsyncTask<String, Void, int[]>() {
 
             @Override
@@ -529,9 +526,7 @@ public class SeasonsFragment extends SherlockListFragment implements
 
                 int[] counts = new int[2];
 
-                counts[0] = DBUtils.getUnwatchedEpisodesOfShow(getActivity(),
-                        params[0],
-                        prefs);
+                counts[0] = DBUtils.getUnwatchedEpisodesOfShow(getActivity(), params[0]);
                 counts[1] = DBUtils.getUncollectedEpisodesOfShow(getActivity(), params[0]);
 
                 return counts;

@@ -83,10 +83,9 @@ public class DBUtils {
      * Looks up the episodes of a given season and stores the count of already aired, but not
      * watched ones in the seasons watchcount.
      */
-    public static void updateUnwatchedCount(Context context, String seasonid,
-            SharedPreferences prefs) {
+    public static void updateUnwatchedCount(Context context, String seasonid) {
         final ContentResolver resolver = context.getContentResolver();
-        final String fakenow = String.valueOf(Utils.getFakeCurrentTime(prefs));
+        final String customCurrentTime = String.valueOf(TimeTools.getCurrentTime(context));
         final Uri episodesOfSeasonUri = Episodes.buildEpisodesOfSeasonUri(seasonid);
 
         // all a seasons episodes
@@ -102,7 +101,7 @@ public class DBUtils {
         // unwatched, aired episodes
         final Cursor unwatched = resolver.query(episodesOfSeasonUri, UnwatchedQuery.PROJECTION,
                 UnwatchedQuery.AIRED_SELECTION, new String[]{
-                fakenow
+                customCurrentTime
         }, null);
         if (unwatched == null) {
             return;
@@ -113,7 +112,7 @@ public class DBUtils {
         // unwatched, aired in the future episodes
         final Cursor unAired = resolver.query(episodesOfSeasonUri, UnwatchedQuery.PROJECTION,
                 UnwatchedQuery.FUTURE_SELECTION, new String[]{
-                fakenow
+                customCurrentTime
         }, null);
         if (unAired == null) {
             return;
@@ -152,23 +151,22 @@ public class DBUtils {
      * Returns how many episodes of a show are left to watch (only aired and not watched, exclusive
      * episodes with no air date and without specials).
      */
-    public static int getUnwatchedEpisodesOfShow(Context context, String showId,
-            SharedPreferences prefs) {
+    public static int getUnwatchedEpisodesOfShow(Context context, String showId) {
         if (context == null) {
             return -1;
         }
-        final ContentResolver resolver = context.getContentResolver();
-        final String fakenow = String.valueOf(Utils.getFakeCurrentTime(prefs));
-        final Uri episodesOfShowUri = Episodes.buildEpisodesOfShowUri(showId);
 
         // unwatched, aired episodes
-        final Cursor unwatched = resolver.query(episodesOfShowUri, UnwatchedQuery.PROJECTION,
-                UnwatchedQuery.AIRED_SELECTION + Episodes.SELECTION_NOSPECIALS, new String[]{
-                fakenow
-        }, null);
+        final Cursor unwatched = context.getContentResolver()
+                .query(Episodes.buildEpisodesOfShowUri(showId), UnwatchedQuery.PROJECTION,
+                        UnwatchedQuery.AIRED_SELECTION + Episodes.SELECTION_NOSPECIALS,
+                        new String[]{
+                                String.valueOf(TimeTools.getCurrentTime(context))
+                        }, null);
         if (unwatched == null) {
             return -1;
         }
+
         final int count = unwatched.getCount();
         unwatched.close();
 
@@ -249,11 +247,8 @@ public class DBUtils {
 
     private static String[][] buildActivityQuery(Context context, String type,
             boolean isOnlyUnwatched, int numberOfDaysToInclude) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-        long fakeNow = Utils.getFakeCurrentTime(prefs);
         // go an hour back in time, so episodes move to recent one hour late
-        long recentThreshold = fakeNow - DateUtils.HOUR_IN_MILLIS;
+        long recentThreshold = TimeTools.getCurrentTime(context) - DateUtils.HOUR_IN_MILLIS;
 
         String query;
         String[] selectionArgs;
@@ -528,10 +523,9 @@ public class DBUtils {
      * multiple times, use the version which passes more data.
      */
     public static long updateLatestEpisode(Context context, int showTvdbId) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         final boolean isNoReleasedEpisodes = DisplaySettings.isNoReleasedEpisodes(context);
         final boolean isNoSpecials = DisplaySettings.isHidingSpecials(context);
-        return updateLatestEpisode(context, showTvdbId, isNoReleasedEpisodes, isNoSpecials, prefs);
+        return updateLatestEpisode(context, showTvdbId, isNoReleasedEpisodes, isNoSpecials);
     }
 
     /**
@@ -540,7 +534,7 @@ public class DBUtils {
      * @return The TVDb id of the calculated next episode.
      */
     public static long updateLatestEpisode(Context context, int showTvdbId,
-            boolean isNoReleasedEpisodes, boolean isNoSpecials, SharedPreferences prefs) {
+            boolean isNoReleasedEpisodes, boolean isNoSpecials) {
         final Uri episodesWithShow = Episodes.buildEpisodesOfShowUri(showTvdbId);
         final StringBuilder selectQuery = new StringBuilder();
 
@@ -589,11 +583,11 @@ public class DBUtils {
             selectQuery.append(Episodes.SELECTION_NOSPECIALS);
         }
         if (isNoReleasedEpisodes) {
-            // restrict to episodes with future air date
+            // restrict to episodes with future release date
             selectQuery.append(NextEpisodeQuery.SELECT_ONLYFUTURE);
-            final String now = String.valueOf(Utils.getFakeCurrentTime(prefs));
             selectionArgs = new String[]{
-                    airtime, number, season, airtime, now
+                    airtime, number, season, airtime,
+                    String.valueOf(TimeTools.getCurrentTime(context))
             };
         } else {
             // restrict to episodes with any valid air date

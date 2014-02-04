@@ -46,10 +46,9 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
     @Override
     protected void onUpdateData(int arg0) {
         final Cursor upcomingEpisodes = DBUtils.getUpcomingEpisodes(true, getApplicationContext());
-        final long fakeNow = Utils.getFakeCurrentTime(PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext()));
+        final long customCurrentTime = TimeTools.getCurrentTime(getApplicationContext());
         int hourThreshold = DashClockSettings.getUpcomingTreshold(getApplicationContext());
-        long latestTimeToInclude = fakeNow + hourThreshold * DateUtils.HOUR_IN_MILLIS;
+        long latestTimeToInclude = customCurrentTime + hourThreshold * DateUtils.HOUR_IN_MILLIS;
 
         // Ensure there are episodes to show
         if (upcomingEpisodes != null) {

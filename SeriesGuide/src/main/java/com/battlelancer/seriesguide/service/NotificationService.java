@@ -143,7 +143,6 @@ public class NotificationService extends IntentService {
          * match the users settings.
          */
         StringBuilder selection = new StringBuilder(SELECTION);
-        final long fakeNow = Utils.getFakeCurrentTime(prefs);
         boolean isFavsOnly = NotificationSettings.isNotifyAboutFavoritesOnly(this);
         if (isFavsOnly) {
             selection.append(Shows.SELECTION_FAVORITES);
@@ -152,9 +151,11 @@ public class NotificationService extends IntentService {
         if (isNoSpecials) {
             selection.append(Episodes.SELECTION_NOSPECIALS);
         }
+
+        final long customCurrentTime = TimeTools.getCurrentTime(this);
         final Cursor upcomingEpisodes = getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 PROJECTION, selection.toString(), new String[]{
-                String.valueOf(fakeNow - 12 * DateUtils.HOUR_IN_MILLIS)
+                String.valueOf(customCurrentTime - 12 * DateUtils.HOUR_IN_MILLIS)
         }, SORTING);
 
         if (upcomingEpisodes != null) {
@@ -166,11 +167,12 @@ public class NotificationService extends IntentService {
                 // notify again for same episodes
                 resetLastEpisodeAirtime(prefs);
             }
-            final long latestTimeToInclude = fakeNow
-                    + DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
-            final long nextTimePlanned = NotificationSettings.getNextToNotifyAbout(this);
-            final long nextWakeUpPlanned = Utils.convertToFakeTime(nextTimePlanned, prefs, false)
-                    - DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
+
+            final long nextEpisodeReleaseTime = NotificationSettings.getNextToNotifyAbout(this);
+            // wake user-defined amount of time earlier than next episode release time
+            final long plannedWakeUpTime =
+                    TimeTools.getEpisodeReleaseTime(this, nextEpisodeReleaseTime).getTime()
+                            - DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
 
             /*
              * Set to -1 as on first run nextTimePlanned will be 0. This assures
@@ -179,15 +181,15 @@ public class NotificationService extends IntentService {
             int newEpisodesAvailable = -1;
 
             // Check if we did wake up earlier than planned
-            if (System.currentTimeMillis() < nextWakeUpPlanned) {
+            if (System.currentTimeMillis() < plannedWakeUpTime) {
                 newEpisodesAvailable = 0;
                 long latestTimeNotified = NotificationSettings.getLastNotified(this);
 
                 // Check if there are any earlier episodes to notify about
                 while (upcomingEpisodes.moveToNext()) {
-                    final long airtime = upcomingEpisodes.getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS);
-                    if (airtime < nextTimePlanned) {
-                        if (airtime > latestTimeNotified) {
+                    final long releaseTime = upcomingEpisodes.getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS);
+                    if (releaseTime < nextEpisodeReleaseTime) {
+                        if (releaseTime > latestTimeNotified) {
                             /**
                              * This will not get new episodes which would have
                              * aired the same time as the last one we notified
@@ -204,24 +206,26 @@ public class NotificationService extends IntentService {
 
             if (newEpisodesAvailable == 0) {
                 // Go to sleep, wake up as planned
-                wakeUpTime = nextWakeUpPlanned;
+                wakeUpTime = plannedWakeUpTime;
             } else {
                 // Get episodes which are within the notification threshold
                 // (user set) and not yet cleared
                 int count = 0;
                 final List<Integer> notifyPositions = Lists.newArrayList();
                 final long latestTimeCleared = NotificationSettings.getLastCleared(this);
+                final long latestTimeToInclude = customCurrentTime
+                        + DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
 
                 upcomingEpisodes.moveToPosition(-1);
                 while (upcomingEpisodes.moveToNext()) {
-                    final long airtime = upcomingEpisodes.getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS);
-                    if (airtime <= latestTimeToInclude) {
+                    final long releaseTime = upcomingEpisodes.getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS);
+                    if (releaseTime <= latestTimeToInclude) {
                         count++;
                         /*
                          * Only add those after the last one the user cleared.
                          * At most those of the last 24 hours (see query above).
                          */
-                        if (airtime > latestTimeCleared) {
+                        if (releaseTime > latestTimeCleared) {
                             notifyPositions.add(count);
                         }
                     } else {
@@ -256,15 +260,14 @@ public class NotificationService extends IntentService {
                  */
                 upcomingEpisodes.moveToPosition(-1);
                 while (upcomingEpisodes.moveToNext()) {
-                    final long airtime = upcomingEpisodes.getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS);
-                    if (airtime > latestTimeToInclude) {
+                    final long releaseTime = upcomingEpisodes.getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS);
+                    if (releaseTime > latestTimeToInclude) {
                         // store next episode we plan to notify about
-                        prefs.edit().putLong(NotificationSettings.KEY_NEXT_TO_NOTIFY, airtime)
+                        prefs.edit().putLong(NotificationSettings.KEY_NEXT_TO_NOTIFY, releaseTime)
                                 .commit();
 
-                        // convert it to actual device time for setting the
-                        // alarm
-                        wakeUpTime = Utils.convertToFakeTime(airtime, prefs, false)
+                        // calc actual wake up time
+                        wakeUpTime = TimeTools.getEpisodeReleaseTime(this, releaseTime).getTime()
                                 - DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
 
                         break;
