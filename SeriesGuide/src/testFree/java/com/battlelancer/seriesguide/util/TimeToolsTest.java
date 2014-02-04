@@ -36,6 +36,17 @@ public class TimeToolsTest {
     }
 
     @Test
+    public void test_parseEpisodeReleaseTime_Country() {
+        long showReleaseTime = TimeTools.parseShowReleaseTime("8:00pm");
+        long episodeReleaseTime = TimeTools
+                .parseEpisodeReleaseTime("2013-05-31", showReleaseTime, "Germany");
+        usTimeZoneWarning();
+        System.out.println(
+                "Release time: " + episodeReleaseTime + " " + new Date(episodeReleaseTime));
+        assertThat(episodeReleaseTime).isEqualTo(1370023200000L);
+    }
+
+    @Test
     public void test_parseEpisodeReleaseTime_HourPastMidnight() {
         long showReleaseTime = TimeTools.parseShowReleaseTime("12:35am");
         long episodeReleaseTime = TimeTools
@@ -51,7 +62,7 @@ public class TimeToolsTest {
     }
 
     @Test
-    public void test_parseTimeToMillisecondsFormats() {
+    public void test_parseShowReleaseTime_Formats() {
         parseAndCompare("8:00pm", "08:00 PM");
         parseAndCompare("8:00am", "08:00 AM");
 
@@ -66,7 +77,7 @@ public class TimeToolsTest {
         String timeString = TIME_FORMAT_CUSTOM_TIMEZONE.format(new Date(timeMs));
 
         System.out.println(
-                time + " is " + timeString + " or " + timeMs + "ms or " + new Date(timeMs));
+                time + " is " + timeString + " " + timeMs + " " + new Date(timeMs));
 
         assertThat(timeString).isEqualTo(timeResult);
     }
