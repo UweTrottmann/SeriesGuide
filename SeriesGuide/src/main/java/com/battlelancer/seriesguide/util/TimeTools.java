@@ -162,7 +162,8 @@ public class TimeTools {
         // this depends on the current device time zone, so if it changes to/from a US time zone
         // updating all episode time stamps is necessary
         // as current episodes are updated regularly this should not be an issue
-        if (TextUtils.isEmpty(releaseCountry) || UNITED_STATES.equals(releaseCountry)) {
+        if (releaseCountry == null || releaseCountry.length() == 0
+                || UNITED_STATES.equals(releaseCountry)) {
             correctUnitedStatesReleaseTime(calendar);
         }
 
@@ -261,7 +262,8 @@ public class TimeTools {
         }
 
         // US shows air at the same LOCAL time across all its time zones (with exceptions)
-        if (TextUtils.isEmpty(releaseCountry) || UNITED_STATES.equals(releaseCountry)) {
+        if (releaseCountry == null || releaseCountry.length() == 0
+                || UNITED_STATES.equals(releaseCountry)) {
             correctUnitedStatesReleaseTime(releaseTimeZoneCal);
         }
 

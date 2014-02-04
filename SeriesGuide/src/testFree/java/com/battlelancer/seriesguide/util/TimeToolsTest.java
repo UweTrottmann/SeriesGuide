@@ -1,9 +1,12 @@
 package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.seriesguide.util.TimeTools;
+
 import org.junit.Test;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
+import java.lang.System;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -26,6 +29,7 @@ public class TimeToolsTest {
         long showReleaseTime = TimeTools.parseShowReleaseTime("8:00pm");
         long episodeReleaseTime = TimeTools
                 .parseEpisodeReleaseTime("2013-05-31", showReleaseTime, "United States");
+        usTimeZoneWarning();
         System.out.println(
                 "Release time: " + episodeReleaseTime + " " + new Date(episodeReleaseTime));
         assertThat(episodeReleaseTime).isEqualTo(1370055600000L);
@@ -36,9 +40,14 @@ public class TimeToolsTest {
         long showReleaseTime = TimeTools.parseShowReleaseTime("12:35am");
         long episodeReleaseTime = TimeTools
                 .parseEpisodeReleaseTime("2013-05-31", showReleaseTime, "United States");
+        usTimeZoneWarning();
         System.out.println(
                 "Release time: " + episodeReleaseTime + " " + new Date(episodeReleaseTime));
         assertThat(episodeReleaseTime).isEqualTo(1370072100000L);
+    }
+
+    private void usTimeZoneWarning() {
+        System.out.println("WARNING: This test WILL fail on any US time zone not US Pacific");
     }
 
     @Test
