@@ -23,6 +23,7 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.text.format.DateUtils;
 
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
@@ -217,9 +218,28 @@ public class TimeTools {
 
         // convert and format to local
         return new String[]{
-                getLocalReleaseTime(context, actualRelease),
-                getLocalReleaseDay(context, releaseDayOfWeek, actualRelease)
+                formatToLocalReleaseTime(context, actualRelease),
+                formatToLocalReleaseDay(context, releaseDayOfWeek, actualRelease)
         };
+    }
+
+    /**
+     * Takes the UTC time in ms of an episode release (see {@link #parseEpisodeReleaseTime(String,
+     * long, String)}) and adds device time zone-dependent or user-set offsets.
+     */
+    public static long getLocalEpisodeReleaseTime(Context context, long releaseTime,
+            String releaseCountry) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(releaseTime);
+
+        // US shows air at the same LOCAL time across all its time zones (with exceptions)
+        if (TextUtils.isEmpty(releaseCountry) || UNITED_STATES.equals(releaseCountry)) {
+            correctUnitedStatesReleaseTime(calendar);
+        }
+
+        setUserOffset(context, calendar);
+
+        return calendar.getTimeInMillis();
     }
 
     /**
@@ -252,7 +272,7 @@ public class TimeTools {
         return -1;
     }
 
-    private static String getLocalReleaseDay(Context context, int releaseDayOfWeek,
+    private static String formatToLocalReleaseDay(Context context, int releaseDayOfWeek,
             Date actualRelease) {
         String localReleaseDay;
         if (releaseDayOfWeek == -1) {
@@ -260,15 +280,36 @@ public class TimeTools {
         } else if (releaseDayOfWeek == 0) {
             localReleaseDay = context.getString(R.string.daily);
         } else {
-            SimpleDateFormat localDayFormat = new SimpleDateFormat("E", Locale.getDefault());
-            localReleaseDay = localDayFormat.format(actualRelease);
+            localReleaseDay = formatToLocalReleaseDay(actualRelease);
         }
         return localReleaseDay;
     }
 
-    private static String getLocalReleaseTime(Context context, Date actualRelease) {
+    /**
+     * Takes a UTC release time in ms and returns the week day abbreviation (e.g. "Mon") defined by
+     * the devices locale.
+     */
+    public static String formatToLocalReleaseDay(Date actualRelease) {
+        SimpleDateFormat localDayFormat = new SimpleDateFormat("E", Locale.getDefault());
+        return localDayFormat.format(actualRelease);
+    }
+
+    /**
+     * Takes a UTC release time in ms and converts it to the absolute time format (e.g. "08:00 PM")
+     * defined by the devices locale.
+     */
+    public static String formatToLocalReleaseTime(Context context, Date actualRelease) {
         java.text.DateFormat localTimeFormat = DateFormat.getTimeFormat(context);
         return localTimeFormat.format(actualRelease);
+    }
+
+    /**
+     * Takes a UTC release time in ms and returns the relative time until the current system time
+     * (e.g. "in 12 min") defined by the devices locale.
+     */
+    public static String formatToRelativeLocalReleaseTime(long releaseTime) {
+        return DateUtils.getRelativeTimeSpanString(releaseTime, System.currentTimeMillis(),
+                DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString();
     }
 
     private static String getTimeZoneIdForCountry(String releaseCountry) {
@@ -300,6 +341,11 @@ public class TimeTools {
         return timeZoneId;
     }
 
+    /**
+     * If the device is set to a US time zone, adjusts the time based on the assumption that all
+     * shows air at the same LOCAL time across US time zones (also handles exceptions for e.g. US
+     * Central time).
+     */
     private static void correctUnitedStatesReleaseTime(Calendar calendar) {
         // get device time zone
         final String localTimeZone = TimeZone.getDefault().getID();
@@ -314,12 +360,12 @@ public class TimeTools {
         // see #getTimeZoneIdForCountry()
 
         int offset = 0;
-        boolean pacificInDaylight = calendar.getTimeZone().inDaylightTime(calendar.getTime());
         if (localTimeZone.equals(TIMEZONE_ID_US_MOUNTAIN)) {
             // MST UTC−7:00, MDT UTC−6:00
             offset -= 1;
         } else if (localTimeZone.equals(TIMEZONE_ID_US_ARIZONA)) {
             // is always UTC-07:00, so like Mountain, but no DST
+            boolean pacificInDaylight = calendar.getTimeZone().inDaylightTime(calendar.getTime());
             if (!pacificInDaylight) {
                 offset -= 1;
             }
