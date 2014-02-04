@@ -224,7 +224,7 @@
   <string name="about">Acerca de SeriesGuide</string>
   <string name="pref_credits">Créditos</string>
   <string name="clearGetGlueCredentials">Desconectar de GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Registrarte con GetGlue para reconectar</string>
+  <string name="clearGetGlueCredentialssummary">Registrarte con tvtag para reconectar</string>
   <string name="pref_traktsummary">Agrega o modifica tus credenciales trakt.tv</string>
   <string name="pref_traktsync">Sincronización manual con trakt.tv</string>
   <string name="feedback">Enviar comentarios</string>
@@ -277,12 +277,12 @@
   <string name="checkin_searchhint">Escriba el nombre de la serie</string>
   <string name="checkin_empty">Sin coincidencias</string>
   <string name="checkin_hint">Escriba un mensaje (opcional)</string>
-  <string name="checkin_fixgetglue">Corregir Registro GetGlue</string>
+  <string name="checkin_fixgetglue">Corregir Registro tvtag</string>
   <string name="paste_title">Pegar título</string>
-  <string name="checkinsuccess">Registrado en %s en GetGlue.</string>
-  <string name="checkinfailed">Falló el Check-in en GetGlue. Inténtelo más tarde.</string>
-  <string name="getglue_authentication">Conectar a GetGlue</string>
-  <string name="getglue_authfailed">Error de autenticación de GetGlue. Intente más tarde.</string>
+  <string name="checkinsuccess">Registrado en %s en tvtag.</string>
+  <string name="checkinfailed">Falló el registro en tvtag. Inténtelo más tarde.</string>
+  <string name="getglue_authentication">Conectar a tvtag</string>
+  <string name="getglue_authfailed">Error de autenticación de tvtag. Inténtelo más tarde.</string>
   <string name="checkin_success_trakt">Registrado en %s en trakt.</string>
   <string name="checkin_canceled_success_trakt">Check-in en trakt cancelado.</string>
   <string name="select_show">Elegir serie</string>

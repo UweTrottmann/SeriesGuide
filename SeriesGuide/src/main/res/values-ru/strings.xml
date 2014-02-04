@@ -145,7 +145,7 @@
   <string name="only_favorites">Только избранные сериалы</string>
   <string name="togglewatched">Просмотрено</string>
   <string name="pref_infinite_scrolling">Бесконечная активность</string>
-  <string name="action_activity_filter">Filter activity</string>
+  <string name="action_activity_filter">Фильтр активностей</string>
   <string name="update_scheduled">Обновление...</string>
   <string name="update_no_connection">Для обновления подключите Интернет.</string>
   <string name="update_inprogress">Выполняется обновление, попробуйте еще раз позже.</string>
