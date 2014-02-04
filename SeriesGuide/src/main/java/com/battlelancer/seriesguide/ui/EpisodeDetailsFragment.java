@@ -277,11 +277,11 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             String showTitle = episode.getString(DetailsQuery.SHOW_TITLE);
             String episodeTitleAndNumber = ShareUtils.onCreateShareString(
                     getSherlockActivity(), episode);
-            long showAirTime = episode.getLong(DetailsQuery.FIRST_RELEASE_MS);
+            long episodeReleaseTime = episode.getLong(DetailsQuery.FIRST_RELEASE_MS);
             int showRunTime = episode.getInt(DetailsQuery.SHOW_RUNTIME);
 
             ShareUtils.onAddCalendarEvent(getActivity(), showTitle,
-                    episodeTitleAndNumber, showAirTime, showRunTime);
+                    episodeTitleAndNumber, episodeReleaseTime, showRunTime);
         }
     }
 
