@@ -467,7 +467,7 @@ public class SeasonsFragment extends SherlockListFragment implements
 
             if (mSeasonId != null) {
                 // update one season
-                DBUtils.updateUnwatchedCount(context, mSeasonId, prefs);
+                DBUtils.updateUnwatchedCount(context, mSeasonId);
             } else {
                 // update all seasons of this show, start with the most recent
                 // one
@@ -477,7 +477,7 @@ public class SeasonsFragment extends SherlockListFragment implements
                 }, null, null, Seasons.COMBINED + " DESC");
                 while (seasons.moveToNext()) {
                     String seasonId = seasons.getString(0);
-                    DBUtils.updateUnwatchedCount(context, seasonId, prefs);
+                    DBUtils.updateUnwatchedCount(context, seasonId);
 
                     notifyContentProvider(context);
                 }
