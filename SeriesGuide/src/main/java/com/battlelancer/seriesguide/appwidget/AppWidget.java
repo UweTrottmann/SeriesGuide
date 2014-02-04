@@ -20,6 +20,7 @@ import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -34,6 +35,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.support.v4.app.TaskStackBuilder;
 import android.widget.RemoteViews;
+
+import java.util.Date;
 
 public class AppWidget extends AppWidgetProvider {
 
@@ -103,8 +106,6 @@ public class AppWidget extends AppWidgetProvider {
                 item.setTextViewText(R.id.widgetNetwork, "");
                 views.addView(R.id.LinearLayoutWidget, item);
             } else {
-                String value;
-
                 int viewsToAdd = Integer.valueOf(limit);
                 while (upcomingEpisodes.moveToNext() && viewsToAdd != 0) {
                     viewsToAdd--;
@@ -117,27 +118,31 @@ public class AppWidget extends AppWidgetProvider {
                     item.setTextViewText(R.id.textViewWidgetEpisode,
                             Utils.getNextEpisodeString(this, seasonNumber, episodeNumber, title));
 
-                    // relative airtime
-                    long airtime = upcomingEpisodes.getLong(ActivityFragment.ActivityQuery.FIRSTAIREDMS);
-                    String[] dayAndTime = Utils.formatToTimeAndDay(airtime, context);
-                    value = dayAndTime[2] + " (" + dayAndTime[1] + ")";
-                    item.setTextViewText(R.id.widgetAirtime, value);
+                    Date actualRelease = TimeTools.getEpisodeReleaseTime(context,
+                            upcomingEpisodes.getLong(
+                                    ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS));
 
-                    // absolute airtime and network (if any)
-                    value = dayAndTime[0];
+                    // "in 13 mins (Fri)"
+                    item.setTextViewText(R.id.widgetAirtime,
+                            TimeTools.formatToRelativeLocalReleaseTime(actualRelease)
+                                    + " (" + TimeTools.formatToLocalReleaseDay(actualRelease)
+                                    + ")");
+
+                    // absolute release time and network (if any)
+                    String releaseTime = TimeTools.formatToLocalReleaseTime(context, actualRelease);
                     String network = upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
                     if (network.length() != 0) {
-                        value += " " + network;
+                        releaseTime += " " + network;
                     }
-                    item.setTextViewText(R.id.widgetNetwork, value);
+                    item.setTextViewText(R.id.widgetNetwork, releaseTime);
 
-                    // show name
-                    value = upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_TITLE);
-                    item.setTextViewText(R.id.textViewWidgetShow, value);
+                    // show title
+                    item.setTextViewText(R.id.textViewWidgetShow,
+                            upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_TITLE));
 
                     // show poster
-                    value = upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_POSTER);
-                    final Bitmap poster = ImageProvider.getInstance(context).getImage(value, true);
+                    String posterPath = upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_POSTER);
+                    final Bitmap poster = ImageProvider.getInstance(context).getImage(posterPath, true);
                     if (poster != null) {
                         item.setImageViewBitmap(R.id.widgetPoster, poster);
                     }

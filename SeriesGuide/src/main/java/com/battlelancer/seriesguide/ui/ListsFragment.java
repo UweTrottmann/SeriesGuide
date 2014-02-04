@@ -47,6 +47,8 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
+import java.util.Date;
+
 /**
  * Displays one user created list which includes a mixture of shows, seasons and episodes.
  */
@@ -240,7 +242,7 @@ public class ListsFragment extends SherlockFragment implements
 
                     // air time and network
                     String[] values = TimeTools.formatToShowReleaseTimeAndDay(context,
-                            cursor.getLong(ListItemsQuery.SHOW_RELEASE_TIME),
+                            cursor.getLong(ListItemsQuery.SHOW_OR_EPISODE_RELEASE_TIME),
                             cursor.getString(ListItemsQuery.SHOW_RELEASE_COUNTRY),
                             cursor.getString(ListItemsQuery.SHOW_RELEASE_DAY));
                     // network first, then time, one line
@@ -284,14 +286,13 @@ public class ListsFragment extends SherlockFragment implements
                             cursor.getInt(ListItemsQuery.SHOW_NEXTTEXT),
                             cursor.getInt(ListItemsQuery.SHOW_NEXTAIRDATETEXT),
                             cursor.getString(ListItemsQuery.ITEM_TITLE)));
-                    long airtime = cursor.getLong(ListItemsQuery.SHOW_RELEASE_TIME);
-                    if (airtime != -1) {
-                        final String[] dayAndTime = Utils
-                                .formatToTimeAndDay(airtime, getActivity());
-                        viewHolder.episodeTime.setText(new StringBuilder().append(dayAndTime[2])
-                                .append(" (")
-                                .append(dayAndTime[1])
-                                .append(")"));
+                    long releaseTime = cursor.getLong(ListItemsQuery.SHOW_OR_EPISODE_RELEASE_TIME);
+                    if (releaseTime != -1) {
+                        // "in 15 mins (Fri)"
+                        Date actualRelease = TimeTools.getEpisodeReleaseTime(context, releaseTime);
+                        viewHolder.episodeTime.setText(getString(R.string.release_date_and_day,
+                                TimeTools.formatToRelativeLocalReleaseTime(actualRelease),
+                                TimeTools.formatToLocalReleaseDay(actualRelease)));
                     }
                     break;
             }
@@ -344,7 +345,7 @@ public class ListsFragment extends SherlockFragment implements
 
         int SHOW_NETWORK = 8;
 
-        int SHOW_RELEASE_TIME = 9;
+        int SHOW_OR_EPISODE_RELEASE_TIME = 9;
 
         int SHOW_RELEASE_DAY = 10;
 

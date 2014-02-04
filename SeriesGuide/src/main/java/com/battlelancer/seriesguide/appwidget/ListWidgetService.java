@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -36,6 +37,8 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
+
+import java.util.Date;
 
 @TargetApi(11)
 public class ListWidgetService extends RemoteViewsService {
@@ -132,35 +135,38 @@ public class ListWidgetService extends RemoteViewsService {
             rv.setTextViewText(R.id.textViewWidgetEpisode,
                     Utils.getNextEpisodeString(mContext, seasonNumber, episodeNumber, title));
 
-            // relative airtime
-            long airtime = mDataCursor.getLong(isShowQuery ?
-                    ShowsQuery.EPISODE_FIRSTAIRED_MS : ActivityFragment.ActivityQuery.FIRSTAIREDMS);
-            String[] dayAndTime = Utils.formatToTimeAndDay(airtime, mContext);
-            String value = dayAndTime[2] + " (" + dayAndTime[1] + ")";
-            rv.setTextViewText(R.id.widgetAirtime, value);
+            // relative release time
+            Date actualRelease = TimeTools.getEpisodeReleaseTime(mContext,
+                    mDataCursor.getLong(isShowQuery ?
+                            ShowsQuery.EPISODE_FIRSTAIRED_MS
+                            : ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS));
+            // "in 13 mins (Fri)"
+            String relativeTime = getString(R.string.release_date_and_day,
+                    TimeTools.formatToRelativeLocalReleaseTime(actualRelease),
+                    TimeTools.formatToLocalReleaseDay(actualRelease));
+            rv.setTextViewText(R.id.widgetAirtime, relativeTime);
 
-            // absolute airtime and network (if any)
-            value = dayAndTime[0];
+            // absolute release time and network (if any)
+            String absoluteTime = TimeTools.formatToLocalReleaseTime(mContext, actualRelease);
             String network = mDataCursor.getString(isShowQuery ?
                     ShowsQuery.SHOW_NETWORK : ActivityFragment.ActivityQuery.SHOW_NETWORK);
             if (network.length() != 0) {
-                value += " " + network;
+                absoluteTime += " " + network;
             }
-            rv.setTextViewText(R.id.widgetNetwork, value);
+            rv.setTextViewText(R.id.widgetNetwork, absoluteTime);
 
             // show name
-            value = mDataCursor.getString(isShowQuery ?
-                    ShowsQuery.SHOW_TITLE : ActivityFragment.ActivityQuery.SHOW_TITLE);
-            rv.setTextViewText(R.id.textViewWidgetShow, value);
+            rv.setTextViewText(R.id.textViewWidgetShow, mDataCursor.getString(isShowQuery ?
+                    ShowsQuery.SHOW_TITLE : ActivityFragment.ActivityQuery.SHOW_TITLE));
 
             // show poster
-            value = mDataCursor.getString(isShowQuery
+            String posterPath = mDataCursor.getString(isShowQuery
                     ? ShowsQuery.SHOW_POSTER : ActivityFragment.ActivityQuery.SHOW_POSTER);
-            final Bitmap poster = ImageProvider.getInstance(mContext).getImage(value, true);
+            final Bitmap poster = ImageProvider.getInstance(mContext).getImage(posterPath, true);
             if (poster != null) {
                 rv.setImageViewBitmap(R.id.widgetPoster, poster);
             } else {
-                rv.setImageViewResource(R.id.widgetPoster, R.drawable.show_generic);
+                rv.setImageViewResource(R.id.widgetPoster, R.drawable.ic_image_missing);
             }
 
             // Set the fill-in intent for the list items

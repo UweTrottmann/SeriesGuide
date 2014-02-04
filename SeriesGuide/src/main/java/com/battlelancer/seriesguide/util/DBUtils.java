@@ -45,6 +45,7 @@ import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -566,7 +567,7 @@ public class DBUtils {
         if (lastEpisode != null && lastEpisode.moveToFirst()) {
             season = lastEpisode.getString(NextEpisodeQuery.SEASON);
             number = lastEpisode.getString(NextEpisodeQuery.NUMBER);
-            airtime = lastEpisode.getString(NextEpisodeQuery.FIRSTAIREDMS);
+            airtime = lastEpisode.getString(NextEpisodeQuery.FIRST_RELEASE_MS);
         } else {
             // no watched episodes, include all starting with
             // special 0
@@ -615,17 +616,18 @@ public class DBUtils {
                     next.getInt(NextEpisodeQuery.SEASON), next.getInt(NextEpisodeQuery.NUMBER),
                     next.getString(NextEpisodeQuery.TITLE));
 
-            // next air date text, e.g. 'Mon, Apr 2'
-            final long airTime = next.getLong(NextEpisodeQuery.FIRSTAIREDMS);
-            final String[] dayAndTimes = Utils.formatToTimeAndDay(airTime, context);
-            final String nextAirdateString = context
-                    .getString(R.string.release_date_and_day, dayAndTimes[2], dayAndTimes[1]);
+            // next release date text, e.g. "in 15 mins (Fri)"
+            long releaseTime = next.getLong(NextEpisodeQuery.FIRST_RELEASE_MS);
+            Date actualRelease = TimeTools.getEpisodeReleaseTime(context, releaseTime);
+            final String nextReleaseDateString = context.getString(R.string.release_date_and_day,
+                    TimeTools.formatToRelativeLocalReleaseTime(actualRelease),
+                    TimeTools.formatToLocalReleaseDay(actualRelease));
 
             episodeId = next.getLong(NextEpisodeQuery._ID);
             update.put(Shows.NEXTEPISODE, episodeId);
-            update.put(Shows.NEXTAIRDATEMS, airTime);
+            update.put(Shows.NEXTAIRDATEMS, releaseTime);
             update.put(Shows.NEXTTEXT, nextEpisodeString);
-            update.put(Shows.NEXTAIRDATETEXT, nextAirdateString);
+            update.put(Shows.NEXTAIRDATETEXT, nextReleaseDateString);
         } else {
             episodeId = 0;
             update.put(Shows.NEXTEPISODE, "");
@@ -724,7 +726,7 @@ public class DBUtils {
 
         int NUMBER = 2;
 
-        int FIRSTAIREDMS = 3;
+        int FIRST_RELEASE_MS = 3;
 
         int TITLE = 4;
     }

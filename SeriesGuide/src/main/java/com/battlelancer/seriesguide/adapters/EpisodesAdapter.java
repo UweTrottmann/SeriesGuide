@@ -30,9 +30,12 @@ import android.widget.TextView;
 import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.ui.EpisodesFragment.EpisodesQuery;
 import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
+
+import java.util.Date;
 
 public class EpisodesAdapter extends CursorAdapter {
 
@@ -135,10 +138,13 @@ public class EpisodesAdapter extends CursorAdapter {
         }
         viewHolder.episodeAlternativeNumbers.setText(altNumbers);
 
-        // air date
-        long airtime = mCursor.getLong(EpisodesQuery.FIRSTAIREDMS);
-        if (airtime != -1) {
-            viewHolder.episodeAirdate.setText(Utils.formatToTimeAndDay(airtime, mContext)[2]);
+        // release time
+        long releaseTime = mCursor.getLong(EpisodesQuery.FIRSTAIREDMS);
+        if (releaseTime != -1) {
+            Date actualRelease = TimeTools.getEpisodeReleaseTime(mContext, releaseTime);
+            // "in 15 mins" or "15 July 2001"
+            viewHolder.episodeAirdate
+                    .setText(TimeTools.formatToRelativeLocalReleaseTime(actualRelease));
         } else {
             viewHolder.episodeAirdate.setText(mContext
                     .getString(R.string.episode_firstaired_unknown));

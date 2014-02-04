@@ -70,6 +70,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Date;
+
 import de.greenrobot.event.EventBus;
 
 /**
@@ -275,7 +277,7 @@ public class OverviewFragment extends SherlockFragment implements
                     getActivity(),
                     mShowCursor.getString(ShowQuery.SHOW_TITLE),
                     Utils.getNextEpisodeString(getActivity(), seasonNumber, episodeNumber,
-                            episodeTitle), mEpisodeCursor.getLong(EpisodeQuery.FIRSTAIREDMS),
+                            episodeTitle), mEpisodeCursor.getLong(EpisodeQuery.FIRST_RELEASE_MS),
                     mShowCursor.getInt(ShowQuery.SHOW_RUNTIME));
         }
     }
@@ -421,7 +423,7 @@ public class OverviewFragment extends SherlockFragment implements
 
         int WATCHED = 4;
 
-        int FIRSTAIREDMS = 5;
+        int FIRST_RELEASE_MS = 5;
 
         int GUESTSTARS = 6;
 
@@ -551,11 +553,13 @@ public class OverviewFragment extends SherlockFragment implements
             episodeInfo.setVisibility(View.VISIBLE);
 
             // air date
-            long airtime = episode.getLong(EpisodeQuery.FIRSTAIREDMS);
-            if (airtime != -1) {
-                final String[] dayAndTime = Utils.formatToTimeAndDay(airtime, getActivity());
-                episodeTime.setText(
-                        getString(R.string.release_date_and_day, dayAndTime[2], dayAndTime[1]));
+            long releaseTime = episode.getLong(EpisodeQuery.FIRST_RELEASE_MS);
+            if (releaseTime != -1) {
+                Date actualRelease = TimeTools.getEpisodeReleaseTime(getActivity(), releaseTime);
+                // "in 14 mins (Fri)"
+                episodeTime.setText(getString(R.string.release_date_and_day,
+                        TimeTools.formatToRelativeLocalReleaseTime(actualRelease),
+                        TimeTools.formatToLocalReleaseDay(actualRelease)));
                 episodeTime.setVisibility(View.VISIBLE);
             }
 

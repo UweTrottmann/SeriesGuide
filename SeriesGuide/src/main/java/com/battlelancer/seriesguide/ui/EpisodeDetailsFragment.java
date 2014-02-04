@@ -38,8 +38,8 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
-import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.Utils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -76,6 +76,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.Date;
 import java.util.Locale;
 
 import de.greenrobot.event.EventBus;
@@ -276,7 +277,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             String showTitle = episode.getString(DetailsQuery.SHOW_TITLE);
             String episodeTitleAndNumber = ShareUtils.onCreateShareString(
                     getSherlockActivity(), episode);
-            long showAirTime = episode.getLong(DetailsQuery.FIRSTAIREDMS);
+            long showAirTime = episode.getLong(DetailsQuery.FIRST_RELEASE_MS);
             int showRunTime = episode.getInt(DetailsQuery.SHOW_RUNTIME);
 
             ShareUtils.onAddCalendarEvent(getActivity(), showTitle,
@@ -394,7 +395,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             mEpisodeNumber = cursor.getInt(DetailsQuery.NUMBER);
             final String showTitle = cursor.getString(DetailsQuery.SHOW_TITLE);
             final String episodeTitle = cursor.getString(DetailsQuery.TITLE);
-            final long airTime = cursor.getLong(DetailsQuery.FIRSTAIREDMS);
 
             // Title and description
             ((TextView) view.findViewById(R.id.title))
@@ -431,39 +431,47 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                         cursor.getString(DetailsQuery.SHOW_POSTER), getActivity());
             }
 
-            SpannableStringBuilder airTimeAndNumberText = new SpannableStringBuilder();
-            // Air day and time
-            TextView airdateText = (TextView) view.findViewById(R.id.airDay);
-            TextView airtimeText = (TextView) view.findViewById(R.id.airTime);
-            if (airTime != -1) {
-                airdateText.setText(Utils.formatToDate(airTime, getActivity()));
-                String[] dayAndTime = Utils.formatToTimeAndDay(airTime, getActivity());
-                airTimeAndNumberText
-                        .append(getString(R.string.release_date_and_day, dayAndTime[2],
-                                dayAndTime[1]).toUpperCase(Locale.getDefault()))
-                        .append("  ");
+            // release time and day, numbers: "in 15 mins (Fri) Season 1 Episode 14"
+            SpannableStringBuilder timeAndNumbersText = new SpannableStringBuilder();
+
+            // release time and day
+            TextView releaseDate = (TextView) view.findViewById(R.id.airDay);
+            long releaseTime = cursor.getLong(DetailsQuery.FIRST_RELEASE_MS);
+            if (releaseTime != -1) {
+                releaseDate.setText(Utils.formatToDate(releaseTime, getActivity()));
+                Date actualRelease = TimeTools.getEpisodeReleaseTime(getActivity(), releaseTime);
+                // "in 15 mins (Fri)"
+                timeAndNumbersText
+                        .append(getString(R.string.release_date_and_day,
+                                TimeTools.formatToRelativeLocalReleaseTime(actualRelease),
+                                TimeTools.formatToLocalReleaseDay(actualRelease))
+                                .toUpperCase(Locale.getDefault()));
+                timeAndNumbersText.append("  ");
             } else {
-                airdateText.setText(R.string.unknown);
+                releaseDate.setText(R.string.unknown);
             }
 
-            // number
-            int numberStartIndex = airTimeAndNumberText.length();
-            airTimeAndNumberText
+            // numbers: "Season 1 Episode 14"
+            // also add span to de-emphasize
+            int numberStartIndex = timeAndNumbersText.length();
+            timeAndNumbersText
                     .append(getString(R.string.season_number, mSeasonNumber).toUpperCase(
                             Locale.getDefault()));
-            airTimeAndNumberText.append(" ");
-            airTimeAndNumberText
+            timeAndNumbersText.append(" ");
+            timeAndNumbersText
                     .append(getString(R.string.episode_number, mEpisodeNumber).toUpperCase(
                             Locale.getDefault()));
             final int episodeAbsoluteNumber = cursor.getInt(DetailsQuery.ABSOLUTE_NUMBER);
             if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != mEpisodeNumber) {
-                airTimeAndNumberText.append(" (").append(String.valueOf(episodeAbsoluteNumber))
+                timeAndNumbersText.append(" (").append(String.valueOf(episodeAbsoluteNumber))
                         .append(")");
             }
-            airTimeAndNumberText.setSpan(new TextAppearanceSpan(mContext,
+            timeAndNumbersText.setSpan(new TextAppearanceSpan(mContext,
                     R.style.TextAppearance_Small_Dim), numberStartIndex,
-                    airTimeAndNumberText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            airtimeText.setText(airTimeAndNumberText);
+                    timeAndNumbersText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            TextView timeAndNumbers = (TextView) view.findViewById(R.id.airTime);
+            timeAndNumbers.setText(timeAndNumbersText);
 
             // Last edit date
             TextView lastEdit = (TextView) view.findViewById(R.id.lastEdit);
@@ -684,7 +692,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
         int WATCHED = 5;
 
-        int FIRSTAIREDMS = 6;
+        int FIRST_RELEASE_MS = 6;
 
         int DIRECTORS = 7;
 

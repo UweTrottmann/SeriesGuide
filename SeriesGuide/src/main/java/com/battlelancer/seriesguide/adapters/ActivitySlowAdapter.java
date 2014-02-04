@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
 import com.uwetrottmann.androidutils.CheatSheet;
@@ -43,6 +44,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -69,7 +71,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
     public interface CheckInListener {
 
         public void onCheckinEpisode(int episodeTvdbId);
-        
+
     }
 
     public ActivitySlowAdapter(Context context, Cursor c, int flags,
@@ -134,12 +136,16 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
         // meta data: time, day and network
         StringBuilder metaText = new StringBuilder();
-        final long airtime = cursor.getLong(ActivityFragment.ActivityQuery.FIRSTAIREDMS);
-        if (airtime != -1) {
-            String[] timeAndDay = Utils.formatToTimeAndDay(airtime, context);
+        long releaseTime = cursor.getLong(
+                ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS);
+        if (releaseTime != -1) {
+            Date actualRelease = TimeTools.getEpisodeReleaseTime(context, releaseTime);
             // 10:00 | Fri in 3 days, 10:00 PM | Mon 23 Jul
-            metaText.append(timeAndDay[0]).append(" | ").append(timeAndDay[1]).append(" ")
-                    .append(timeAndDay[2]);
+            metaText.append(TimeTools.formatToLocalReleaseTime(context, actualRelease))
+                    .append(" | ")
+                    .append(TimeTools.formatToLocalReleaseDay(actualRelease))
+                    .append(" ")
+                    .append(TimeTools.formatToRelativeLocalReleaseTime(actualRelease));
         }
         final String network = cursor.getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
         if (!TextUtils.isEmpty(network)) {
@@ -177,7 +183,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
                  */
             @SuppressWarnings("resource")
             Cursor item = (Cursor) obj;
-            long airtime = item.getLong(ActivityFragment.ActivityQuery.FIRSTAIREDMS);
+            long airtime = item.getLong(ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS);
             Calendar cal = Utils.getAirtimeCalendar(airtime, mPrefs);
             cal.set(Calendar.HOUR_OF_DAY, 1);
             cal.set(Calendar.MINUTE, 0);
@@ -228,7 +234,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
         @SuppressWarnings("resource")
         Cursor item = (Cursor) obj;
-        long airtime = item.getLong(ActivityFragment.ActivityQuery.FIRSTAIREDMS);
+        long airtime = item.getLong(ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS);
         Calendar cal = Utils.getAirtimeCalendar(airtime, mPrefs);
         cal.set(Calendar.HOUR_OF_DAY, 1);
         cal.set(Calendar.MINUTE, 0);

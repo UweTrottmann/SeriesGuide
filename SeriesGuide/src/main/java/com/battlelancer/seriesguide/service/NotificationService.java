@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.QuickCheckInActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.Lists;
@@ -87,7 +88,7 @@ public class NotificationService extends IntentService {
 
         int TITLE = 1;
 
-        int FIRSTAIREDMS = 2;
+        int EPISODE_FIRST_RELEASE_MS = 2;
 
         int SHOW_TITLE = 3;
 
@@ -184,7 +185,7 @@ public class NotificationService extends IntentService {
 
                 // Check if there are any earlier episodes to notify about
                 while (upcomingEpisodes.moveToNext()) {
-                    final long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
+                    final long airtime = upcomingEpisodes.getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS);
                     if (airtime < nextTimePlanned) {
                         if (airtime > latestTimeNotified) {
                             /**
@@ -213,7 +214,7 @@ public class NotificationService extends IntentService {
 
                 upcomingEpisodes.moveToPosition(-1);
                 while (upcomingEpisodes.moveToNext()) {
-                    final long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
+                    final long airtime = upcomingEpisodes.getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS);
                     if (airtime <= latestTimeToInclude) {
                         count++;
                         /*
@@ -234,7 +235,7 @@ public class NotificationService extends IntentService {
                     // store latest air time of all episodes we notified about
                     upcomingEpisodes
                             .moveToPosition(notifyPositions.get(notifyPositions.size() - 1));
-                    long latestAirtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
+                    long latestAirtime = upcomingEpisodes.getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS);
                     if (!AndroidUtils.isHoneycombOrHigher()) {
                         /*
                          * Everything below HC does not have delete intents, so
@@ -255,7 +256,7 @@ public class NotificationService extends IntentService {
                  */
                 upcomingEpisodes.moveToPosition(-1);
                 while (upcomingEpisodes.moveToNext()) {
-                    final long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
+                    final long airtime = upcomingEpisodes.getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS);
                     if (airtime > latestTimeToInclude) {
                         // store next episode we plan to notify about
                         prefs.edit().putLong(NotificationSettings.KEY_NEXT_TO_NOTIFY, airtime)
@@ -331,12 +332,8 @@ public class NotificationService extends IntentService {
         if (count == 1) {
             // notify in detail about one episode
             upcomingEpisodes.moveToFirst();
-            final String showTitle = upcomingEpisodes
-                    .getString(NotificationQuery.SHOW_TITLE);
-            final String airs = Utils.formatToTimeAndDay(
-                    upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS), this)[0];
-            final String network = upcomingEpisodes.getString(NotificationQuery.NETWORK);
 
+            final String showTitle = upcomingEpisodes.getString(NotificationQuery.SHOW_TITLE);
             tickerText = getString(R.string.upcoming_show, showTitle);
             contentTitle = showTitle
                     + " "
@@ -344,7 +341,13 @@ public class NotificationService extends IntentService {
                     this,
                     upcomingEpisodes.getInt(NotificationQuery.SEASON),
                     upcomingEpisodes.getInt(NotificationQuery.NUMBER));
-            contentText = getString(R.string.upcoming_show_detailed, airs, network);
+
+            // "8:00 PM on Network"
+            final String releaseTime = TimeTools.formatToLocalReleaseTime(this, TimeTools
+                    .getEpisodeReleaseTime(this,
+                            upcomingEpisodes.getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS)));
+            final String network = upcomingEpisodes.getString(NotificationQuery.NETWORK);
+            contentText = getString(R.string.upcoming_show_detailed, releaseTime, network);
 
             Intent notificationIntent = new Intent(context, EpisodesActivity.class);
             notificationIntent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
@@ -411,20 +414,25 @@ public class NotificationService extends IntentService {
                 final int displayCount = Math.min(count, 5);
                 for (int i = 0; i < displayCount; i++) {
                     if (upcomingEpisodes.moveToPosition(i)) {
-                        // add show title, air time and network
                         final SpannableStringBuilder lineText = new SpannableStringBuilder();
+
+                        // show title
                         lineText.append(upcomingEpisodes
                                 .getString(NotificationQuery.SHOW_TITLE));
                         lineText.setSpan(new ForegroundColorSpan(Color.WHITE), 0,
                                 lineText.length(), 0);
+
                         lineText.append(" ");
-                        String airs = Utils.formatToTimeAndDay(
-                                upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS),
-                                this)[0];
+
+                        // "8:00 PM on Network"
+                        String releaseTime = TimeTools.formatToLocalReleaseTime(this, TimeTools
+                                .getEpisodeReleaseTime(this, upcomingEpisodes
+                                        .getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS)));
                         String network = upcomingEpisodes
                                 .getString(NotificationQuery.NETWORK);
-                        lineText.append(getString(R.string.upcoming_show_detailed, airs,
+                        lineText.append(getString(R.string.upcoming_show_detailed, releaseTime,
                                 network));
+
                         inboxStyle.addLine(lineText);
                     }
                 }

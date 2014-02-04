@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.settings.DashClockSettings;
 import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -31,6 +32,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
+
+import java.util.Date;
 
 public class UpcomingEpisodeExtension extends DashClockExtension {
 
@@ -53,12 +56,10 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
             if (upcomingEpisodes.moveToFirst()) {
 
                 // Ensure those episodes are within the user set time frame
-                long firstairedms = upcomingEpisodes.getLong(ActivityFragment.ActivityQuery.FIRSTAIREDMS);
-                if (firstairedms <= latestTimeToInclude) {
-
+                long releaseTime = upcomingEpisodes
+                        .getLong(ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS);
+                if (releaseTime <= latestTimeToInclude) {
                     // build our DashClock panel
-                    final String[] timeAndDay = Utils.formatToTimeAndDay(
-                            firstairedms, this);
 
                     // Looks like 'Community, NBC' when expanded
                     String expandedBody = upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_TITLE)
@@ -66,22 +67,29 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
                             + upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
                     // Show all episodes airing the same time as the first one
                     while (upcomingEpisodes.moveToNext()
-                            && firstairedms == upcomingEpisodes
-                            .getLong(ActivityFragment.ActivityQuery.FIRSTAIREDMS)) {
+                            && releaseTime == upcomingEpisodes
+                            .getLong(ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS)) {
                         expandedBody += "\n" + upcomingEpisodes.getString(
                                 ActivityFragment.ActivityQuery.SHOW_TITLE)
                                 + ", "
                                 + upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
                     }
 
+                    // get the actual release time
+                    Date actualRelease = TimeTools.getEpisodeReleaseTime(this, releaseTime);
+                    String releaseDay = TimeTools.formatToLocalReleaseDay(actualRelease);
+                    String absoluteTime = TimeTools.formatToLocalReleaseTime(this, actualRelease);
+                    String relativeTime = TimeTools
+                            .formatToRelativeLocalReleaseTime(actualRelease);
+
                     publishUpdate(new ExtensionData()
                             .visible(true)
                             .icon(R.drawable.ic_notification)
-                                    // 'Fri \n 15:00'
-                            .status(timeAndDay[1] + "\n" + timeAndDay[0])
+                                    // 'Fri\n15:00'
+                            .status(releaseDay + "\n" + absoluteTime)
                                     // 'in 10 mins, Fri 15:00'
                             .expandedTitle(
-                                    timeAndDay[2] + ", " + timeAndDay[1] + " " + timeAndDay[0])
+                                    relativeTime + ", " + releaseDay + " " + absoluteTime)
                             .expandedBody(expandedBody)
                             .clickIntent(
                                     new Intent(getApplicationContext(),

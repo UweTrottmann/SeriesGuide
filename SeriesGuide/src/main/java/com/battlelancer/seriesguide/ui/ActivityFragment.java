@@ -356,7 +356,7 @@ public class ActivityFragment extends SherlockFragment implements
 
         int SEASON = 4;
 
-        int FIRSTAIREDMS = 5;
+        int EPISODE_FIRST_RELEASE_MS = 5;
 
         int SHOW_TITLE = 6;
 
