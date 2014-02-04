@@ -267,6 +267,17 @@ public class TimeTools {
         return calendar.getTimeInMillis();
     }
 
+    /**
+     * Returns the current system time with user-set offsets applied.
+     */
+    public static long getCurrentTime(Context context) {
+        Calendar calendar = Calendar.getInstance();
+
+        setUserOffset(context, calendar);
+
+        return calendar.getTimeInMillis();
+    }
+
     private static String formatToLocalReleaseDay(Context context, int releaseDayOfWeek,
             Date actualRelease) {
         String localReleaseDay;
