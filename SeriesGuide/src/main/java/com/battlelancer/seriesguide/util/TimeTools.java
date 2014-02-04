@@ -258,13 +258,13 @@ public class TimeTools {
      * Takes the UTC time in ms of an episode release (see {@link #parseEpisodeReleaseTime(String,
      * long, String)}) and adds user-set offsets.
      */
-    public static long getEpisodeReleaseTime(Context context, long releaseTime) {
+    public static Date getEpisodeReleaseTime(Context context, long releaseTime) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(releaseTime);
 
         setUserOffset(context, calendar);
 
-        return calendar.getTimeInMillis();
+        return calendar.getTime();
     }
 
     /**
@@ -292,7 +292,7 @@ public class TimeTools {
     }
 
     /**
-     * Takes a UTC release time in ms and returns the week day abbreviation (e.g. "Mon") defined by
+     * Takes a UTC release time and returns the week day abbreviation (e.g. "Mon") defined by
      * the devices locale.
      */
     public static String formatToLocalReleaseDay(Date actualRelease) {
@@ -301,7 +301,7 @@ public class TimeTools {
     }
 
     /**
-     * Takes a UTC release time in ms and converts it to the absolute time format (e.g. "08:00 PM")
+     * Takes a UTC release time and converts it to the absolute time format (e.g. "08:00 PM")
      * defined by the devices locale.
      */
     public static String formatToLocalReleaseTime(Context context, Date actualRelease) {
@@ -310,12 +310,13 @@ public class TimeTools {
     }
 
     /**
-     * Takes a UTC release time in ms and returns the relative time until the current system time
+     * Takes a UTC release time and returns the relative time until the current system time
      * (e.g. "in 12 min") defined by the devices locale.
      */
-    public static String formatToRelativeLocalReleaseTime(long releaseTime) {
-        return DateUtils.getRelativeTimeSpanString(releaseTime, System.currentTimeMillis(),
-                DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString();
+    public static String formatToRelativeLocalReleaseTime(Date actualRelease) {
+        return DateUtils
+                .getRelativeTimeSpanString(actualRelease.getTime(), System.currentTimeMillis(),
+                        DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString();
     }
 
     /**
