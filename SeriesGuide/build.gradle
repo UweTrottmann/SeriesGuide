@@ -26,7 +26,7 @@ android {
         free {
             packageName "com.battlelancer.seriesguide"
             versionCode 218
-            versionName "12-beta4"
+            versionName "12-beta5"
         }
         beta {
             packageName "com.battlelancer.seriesguide.beta"
