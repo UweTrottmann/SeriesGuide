@@ -21,7 +21,6 @@ import android.provider.BaseColumns;
 
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.util.ParserUtils;
-import com.battlelancer.seriesguide.util.Utils;
 
 public class SeriesContract {
 
@@ -52,13 +51,13 @@ public class SeriesContract {
         String FIRSTAIRED = "firstaired";
 
         /**
-         * Air time (e.g. 20:00 PM) in ms as parsed by {@link Utils}
-         * .parseTimeToMilliseconds().
+         * Release time (e.g. 08:00pm), but encoded in ms. See {@link com.battlelancer.seriesguide.util.TimeTools#parseShowReleaseTime(String)}.
          */
         String AIRSTIME = "airstime";
 
-        /** Added in db version 21 to store the air time in pure text. */
-        String AIRTIME = "series_airtime";
+        /** CURRENT: Stores the country episodes release originally in.<br/>
+         * ORIGINALLY: Was added in db version 21 to store the air time in pure text. */
+        String RELEASE_COUNTRY = "series_airtime";
 
         String AIRSDAYOFWEEK = "airsdayofweek";
 
