@@ -151,21 +151,11 @@ public class TimeTools {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
 
-        // TV scheduling madness: times between 12:00AM and 12:59AM are attributed to the hour
-        // after the end of the current day
-        if (hour == 0) {
-            // move ahead one day (24 hours)
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
-        }
-
         // US shows air at the same LOCAL time across all its time zones (with exceptions)
         // this depends on the current device time zone, so if it changes to/from a US time zone
         // updating all episode time stamps is necessary
         // as current episodes are updated regularly this should not be an issue
-        if (releaseCountry == null || releaseCountry.length() == 0
-                || UNITED_STATES.equals(releaseCountry)) {
-            correctUnitedStatesReleaseTime(calendar);
-        }
+        applyCustomCorrections(calendar, hour, releaseCountry);
 
         return calendar.getTimeInMillis();
     }
@@ -225,49 +215,43 @@ public class TimeTools {
 
     private static Calendar getShowReleaseTime(long releaseTime, String releaseCountry,
             int releaseDayOfWeek) {
-        // determine release timezone
-        String timeZoneId = getTimeZoneIdForCountry(releaseCountry);
-        Calendar releaseTimeZoneCal = Calendar.getInstance(TimeZone.getTimeZone(timeZoneId));
+        // create calendar, set to custom time zone
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_ID_CUSTOM));
 
         // get release "hours"
-        Calendar customTimeCalendar = Calendar
-                .getInstance(TimeZone.getTimeZone(TIMEZONE_ID_CUSTOM));
-        customTimeCalendar.setTimeInMillis(releaseTime);
-        int releaseHourOfDay = customTimeCalendar.get(Calendar.HOUR_OF_DAY);
-        int releaseMinute = customTimeCalendar.get(Calendar.MINUTE);
+        calendar.setTimeInMillis(releaseTime);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        // set calendar to release time zone
+        String timeZoneId = getTimeZoneIdForCountry(releaseCountry);
+        calendar.setTimeZone(TimeZone.getTimeZone(timeZoneId));
+
+        // set to today
+        calendar.setTimeInMillis(System.currentTimeMillis());
 
         // set release "hours" on release country calendar
         // has to be done as release time typically stays the same even if DST starts
-        releaseTimeZoneCal.set(Calendar.HOUR_OF_DAY, releaseHourOfDay);
-        releaseTimeZoneCal.set(Calendar.MINUTE, releaseMinute);
-        releaseTimeZoneCal.set(Calendar.SECOND, 0);
-        releaseTimeZoneCal.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
 
         // move to correct release day (not for daily shows)
         if (releaseDayOfWeek > 0) {
             // make sure we always assume a release date which is today or in the future
             // to get correct local DST information when converting
-            int todayDayOfWeek = releaseTimeZoneCal.get(Calendar.DAY_OF_WEEK);
+            int todayDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
             // get how far release day is ahead of today
             int daysToMoveAhead = (releaseDayOfWeek + 7 - todayDayOfWeek) % 7;
             // move ahead accordingly
-            releaseTimeZoneCal.add(Calendar.DAY_OF_MONTH, daysToMoveAhead);
+            calendar.add(Calendar.DAY_OF_MONTH, daysToMoveAhead);
         }
 
-        // TV scheduling madness: times between 12:00AM and 12:59AM are attributed to the hour
-        // after the end of the current day
-        if (releaseHourOfDay == 0) {
-            // move ahead one day (24 hours)
-            releaseTimeZoneCal.add(Calendar.DAY_OF_MONTH, 1);
-        }
+        // apply some TV specific corrections
+        applyCustomCorrections(calendar, hour, releaseCountry);
 
-        // US shows air at the same LOCAL time across all its time zones (with exceptions)
-        if (releaseCountry == null || releaseCountry.length() == 0
-                || UNITED_STATES.equals(releaseCountry)) {
-            correctUnitedStatesReleaseTime(releaseTimeZoneCal);
-        }
-
-        return releaseTimeZoneCal;
+        return calendar;
     }
 
     /**
@@ -323,41 +307,33 @@ public class TimeTools {
                 DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString();
     }
 
-    private static String getTimeZoneIdForCountry(String releaseCountry) {
-        String timeZoneId;
-        if (releaseCountry == null || releaseCountry.length() == 0) {
-            timeZoneId = TIMEZONE_ID_US_PACIFIC;
-        } else {
-            switch (releaseCountry) {
-                case UNITED_STATES:
-                    timeZoneId = TIMEZONE_ID_US_PACIFIC;
-                    break;
-                case "United Kingdom":
-                    timeZoneId = TIMEZONE_ID_UK;
-                    break;
-                case "Japan":
-                    timeZoneId = TIMEZONE_ID_JAPAN;
-                    break;
-                case "Germany":
-                    timeZoneId = TIMEZONE_ID_GERMANY;
-                    break;
-                case "Australia":
-                    timeZoneId = TIMEZONE_ID_AUSTRALIA;
-                    break;
-                default:
-                    timeZoneId = TIMEZONE_ID_US_PACIFIC;
-                    break;
-            }
+    /**
+     * Corrects the "hour past midnight" and for US shows the release time if the device is set to a
+     * US time zone.
+     */
+    private static void applyCustomCorrections(Calendar calendar, int releaseHourOfDay,
+            String releaseCountry) {
+        // TV scheduling madness: times between 12:00AM (midnight) and 12:59AM are attributed
+        // to the hour after the end of the current day
+        // example: Late Night with Jimmy Fallon
+        if (releaseHourOfDay == 0) {
+            // move ahead one day (24 hours)
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
-        return timeZoneId;
+
+        // US shows air at the same LOCAL time across all its time zones (with exceptions)
+        if (releaseCountry == null || releaseCountry.length() == 0
+                || UNITED_STATES.equals(releaseCountry)) {
+            applyUnitedStatesCorrections(calendar);
+        }
     }
 
     /**
-     * If the device is set to a US time zone, adjusts the time based on the assumption that all
+     * If the device is set to a US time zone, adjusts the time based on the assumption that all US
      * shows air at the same LOCAL time across US time zones (also handles exceptions for e.g. US
-     * Central time).
+     * Central time).<br/> <b>Do only call this for TV shows released in the US!</b>
      */
-    private static void correctUnitedStatesReleaseTime(Calendar calendar) {
+    private static void applyUnitedStatesCorrections(Calendar calendar) {
         // get device time zone
         final String localTimeZone = TimeZone.getDefault().getID();
 
@@ -398,6 +374,35 @@ public class TimeTools {
         if (offset != 0) {
             calendar.add(Calendar.HOUR_OF_DAY, offset);
         }
+    }
+
+    private static String getTimeZoneIdForCountry(String releaseCountry) {
+        String timeZoneId;
+        if (releaseCountry == null || releaseCountry.length() == 0) {
+            timeZoneId = TIMEZONE_ID_US_PACIFIC;
+        } else {
+            switch (releaseCountry) {
+                case UNITED_STATES:
+                    timeZoneId = TIMEZONE_ID_US_PACIFIC;
+                    break;
+                case "United Kingdom":
+                    timeZoneId = TIMEZONE_ID_UK;
+                    break;
+                case "Japan":
+                    timeZoneId = TIMEZONE_ID_JAPAN;
+                    break;
+                case "Germany":
+                    timeZoneId = TIMEZONE_ID_GERMANY;
+                    break;
+                case "Australia":
+                    timeZoneId = TIMEZONE_ID_AUSTRALIA;
+                    break;
+                default:
+                    timeZoneId = TIMEZONE_ID_US_PACIFIC;
+                    break;
+            }
+        }
+        return timeZoneId;
     }
 
     private static void setUserOffset(Context context, Calendar calendar) {
