@@ -438,8 +438,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             TextView releaseDate = (TextView) view.findViewById(R.id.airDay);
             long releaseTime = cursor.getLong(DetailsQuery.FIRST_RELEASE_MS);
             if (releaseTime != -1) {
-                releaseDate.setText(Utils.formatToDate(releaseTime, getActivity()));
                 Date actualRelease = TimeTools.getEpisodeReleaseTime(getActivity(), releaseTime);
+                releaseDate.setText(TimeTools.formatToDate(getActivity(), actualRelease));
                 // "in 15 mins (Fri)"
                 timeAndNumbersText
                         .append(getString(R.string.release_date_and_day,

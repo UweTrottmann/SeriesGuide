@@ -56,6 +56,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Date;
+
 import de.greenrobot.event.EventBus;
 
 /**
@@ -213,10 +215,11 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
         releaseCountry.setText(TextUtils.isEmpty(mShow.getCountry())
                 ? TimeTools.UNITED_STATES : mShow.getCountry());
 
-        // first airdate
-        long airtime = Utils.buildEpisodeAirtime(mShow.getFirstAired(), mShow.getAirsTime());
+        // first release: use the same parser as for episodes, because we have an exact date
+        long actualRelease = TimeTools.parseEpisodeReleaseTime(mShow.getFirstAired(),
+                mShow.getAirsTime(), mShow.getCountry());
         Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewShowFirstAirdate),
-                Utils.formatToDate(airtime, getActivity()));
+                TimeTools.formatToDate(getActivity(), new Date(actualRelease)));
 
         // Others
         Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewShowActors),

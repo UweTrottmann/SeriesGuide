@@ -347,6 +347,35 @@ public class TimeTools {
     }
 
     /**
+     * Takes a UTC release time and returns the date and time zone (e.g. "2014/02/04 CET") as
+     * defined by the devices locale. If the given time is today, the date is prefixed with the
+     * local equivalent of "today, ".
+     */
+    public static String formatToDate(Context context, Date actualRelease) {
+        StringBuilder date = new StringBuilder();
+
+        // date, e.g. "2014/05/31"
+        date.append(DateFormat.getDateFormat(context).format(actualRelease));
+
+        date.append(" ");
+
+        // time zone, e.g. "CEST"
+        TimeZone timeZone = TimeZone.getDefault();
+        date.append(timeZone.getDisplayName(timeZone.inDaylightTime(actualRelease), TimeZone.SHORT,
+                Locale.getDefault()));
+
+        // Show 'today' instead of e.g. 'Mon'
+        String day;
+        if (DateUtils.isToday(actualRelease.getTime())) {
+            day = context.getString(R.string.today);
+        } else {
+            day = formatToLocalReleaseDay(actualRelease);
+        }
+
+        return context.getString(R.string.release_date_and_day, date.toString(), day);
+    }
+
+    /**
      * Corrects the "hour past midnight" and for US shows the release time if the device is set to a
      * US time zone.
      */
