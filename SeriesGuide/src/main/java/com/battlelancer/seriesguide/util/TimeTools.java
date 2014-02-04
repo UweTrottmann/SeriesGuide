@@ -158,6 +158,14 @@ public class TimeTools {
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
 
+        // US shows air at the same LOCAL time across all its time zones (with exceptions)
+        // this depends on the current device time zone, so if it changes to/from a US time zone
+        // updating all episode time stamps is necessary
+        // as current episodes are updated regularly this should not be an issue
+        if (TextUtils.isEmpty(releaseCountry) || UNITED_STATES.equals(releaseCountry)) {
+            correctUnitedStatesReleaseTime(calendar);
+        }
+
         return calendar.getTimeInMillis();
     }
 
@@ -225,17 +233,11 @@ public class TimeTools {
 
     /**
      * Takes the UTC time in ms of an episode release (see {@link #parseEpisodeReleaseTime(String,
-     * long, String)}) and adds device time zone-dependent or user-set offsets.
+     * long, String)}) and adds user-set offsets.
      */
-    public static long getLocalEpisodeReleaseTime(Context context, long releaseTime,
-            String releaseCountry) {
+    public static long getEpisodeReleaseTimeWithUserOffset(Context context, long releaseTime) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(releaseTime);
-
-        // US shows air at the same LOCAL time across all its time zones (with exceptions)
-        if (TextUtils.isEmpty(releaseCountry) || UNITED_STATES.equals(releaseCountry)) {
-            correctUnitedStatesReleaseTime(calendar);
-        }
 
         setUserOffset(context, calendar);
 
