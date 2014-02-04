@@ -291,7 +291,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
                 // make sure overview and details loaders are notified
                 resolver.notifyChange(Episodes.CONTENT_URI_WITHSHOW, null);
-                break;
             } catch (SAXException e) {
                 // failed, continue with other shows
                 resultCode = UpdateResult.INCOMPLETE;
