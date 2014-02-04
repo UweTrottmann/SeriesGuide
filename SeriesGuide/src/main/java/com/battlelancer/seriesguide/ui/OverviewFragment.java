@@ -38,8 +38,8 @@ import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
 import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
-import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -69,6 +69,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.Date;
 
 import de.greenrobot.event.EventBus;
 
@@ -275,7 +277,7 @@ public class OverviewFragment extends SherlockFragment implements
                     getActivity(),
                     mShowCursor.getString(ShowQuery.SHOW_TITLE),
                     Utils.getNextEpisodeString(getActivity(), seasonNumber, episodeNumber,
-                            episodeTitle), mEpisodeCursor.getLong(EpisodeQuery.FIRSTAIREDMS),
+                            episodeTitle), mEpisodeCursor.getLong(EpisodeQuery.FIRST_RELEASE_MS),
                     mShowCursor.getInt(ShowQuery.SHOW_RUNTIME));
         }
     }
@@ -421,7 +423,7 @@ public class OverviewFragment extends SherlockFragment implements
 
         int WATCHED = 4;
 
-        int FIRSTAIREDMS = 5;
+        int FIRST_RELEASE_MS = 5;
 
         int GUESTSTARS = 6;
 
@@ -447,18 +449,20 @@ public class OverviewFragment extends SherlockFragment implements
 
         String[] PROJECTION = new String[]{
                 Shows._ID, Shows.TITLE, Shows.STATUS, Shows.AIRSTIME, Shows.AIRSDAYOFWEEK,
-                Shows.NETWORK, Shows.POSTER, Shows.IMDBID, Shows.RUNTIME, Shows.FAVORITE
+                Shows.NETWORK, Shows.POSTER, Shows.IMDBID, Shows.RUNTIME, Shows.FAVORITE,
+                Shows.RELEASE_COUNTRY
         };
 
         int SHOW_TITLE = 1;
         int SHOW_STATUS = 2;
-        int SHOW_AIRSTIME = 3;
-        int SHOW_AIRSDAYOFWEEK = 4;
+        int SHOW_RELEASE_TIME = 3;
+        int SHOW_RELEASE_DAY = 4;
         int SHOW_NETWORK = 5;
         int SHOW_POSTER = 6;
         int SHOW_IMDBID = 7;
         int SHOW_RUNTIME = 8;
         int SHOW_FAVORITE = 9;
+        int SHOW_RELEASE_COUNTRY = 10;
     }
 
     @Override
@@ -549,11 +553,13 @@ public class OverviewFragment extends SherlockFragment implements
             episodeInfo.setVisibility(View.VISIBLE);
 
             // air date
-            long airtime = episode.getLong(EpisodeQuery.FIRSTAIREDMS);
-            if (airtime != -1) {
-                final String[] dayAndTime = Utils.formatToTimeAndDay(airtime, getActivity());
-                episodeTime.setText(
-                        getString(R.string.release_date_and_day, dayAndTime[2], dayAndTime[1]));
+            long releaseTime = episode.getLong(EpisodeQuery.FIRST_RELEASE_MS);
+            if (releaseTime != -1) {
+                Date actualRelease = TimeTools.getEpisodeReleaseTime(getActivity(), releaseTime);
+                // "in 14 mins (Fri)"
+                episodeTime.setText(getString(R.string.release_date_and_day,
+                        TimeTools.formatToRelativeLocalReleaseTime(actualRelease),
+                        TimeTools.formatToLocalReleaseDay(actualRelease)));
                 episodeTime.setVisibility(View.VISIBLE);
             }
 
@@ -827,11 +833,12 @@ public class OverviewFragment extends SherlockFragment implements
 
         // air time and network
         final StringBuilder timeAndNetwork = new StringBuilder();
-        final String airsDay = show.getString(ShowQuery.SHOW_AIRSDAYOFWEEK);
-        final long airstime = show.getLong(ShowQuery.SHOW_AIRSTIME);
-        if (!TextUtils.isEmpty(airsDay) && airstime != -1) {
-            String[] values = Utils.parseMillisecondsToTime(airstime,
-                    airsDay, getActivity());
+        final long releaseTime = show.getLong(ShowQuery.SHOW_RELEASE_TIME);
+        final String releaseCountry = show.getString(ShowQuery.SHOW_RELEASE_COUNTRY);
+        final String releaseDay = show.getString(ShowQuery.SHOW_RELEASE_DAY);
+        if (!TextUtils.isEmpty(releaseDay) && releaseTime != -1) {
+            String[] values = TimeTools.formatToShowReleaseTimeAndDay(getActivity(),
+                    releaseTime, releaseCountry, releaseDay);
             timeAndNetwork.append(values[1])
                     .append(" ")
                     .append(values[0])

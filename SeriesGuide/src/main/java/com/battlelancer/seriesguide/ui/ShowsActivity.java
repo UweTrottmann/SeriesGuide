@@ -29,6 +29,7 @@ import com.battlelancer.seriesguide.billing.IabHelper;
 import com.battlelancer.seriesguide.billing.IabResult;
 import com.battlelancer.seriesguide.billing.Inventory;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
@@ -544,6 +545,15 @@ public class ShowsActivity extends BaseTopShowsActivity implements
                 ImageProvider.getInstance(this).clearCache();
                 ImageProvider.getInstance(this).clearExternalStorageCache();
                 scheduleAllShowsUpdate();
+            }
+            // time calculation has changed, all episodes need re-calculation
+            if (lastVersion < 218) {
+                // flag all episodes as outdated
+                ContentValues values = new ContentValues();
+                values.put(SeriesContract.Episodes.LAST_EDITED, 0);
+                getContentResolver().update(SeriesContract.Episodes.CONTENT_URI, values, null, null);
+                // trigger full sync
+                SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, false);
             }
 
             // update notification

@@ -129,20 +129,15 @@ public class ShareUtils {
         return Utils.getNextEpisodeString(context, season, number, title);
     }
 
-    public static void onAddCalendarEvent(Context context, String title, String description,
-            long airtime, int runtime) {
+    public static void onAddCalendarEvent(Context context, String showTitle, String episodeTitle,
+            long episodeReleaseTime, int showRunTime) {
         Intent intent = new Intent(Intent.ACTION_EDIT);
         intent.setType("vnd.android.cursor.item/event");
-        intent.putExtra("title", title);
-        intent.putExtra("description", description);
+        intent.putExtra("title", showTitle);
+        intent.putExtra("description", episodeTitle);
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                .getApplicationContext());
-
-        Calendar cal = Utils.getAirtimeCalendar(airtime, prefs);
-
-        long startTime = cal.getTimeInMillis();
-        long endTime = startTime + runtime * DateUtils.MINUTE_IN_MILLIS;
+        long startTime = TimeTools.getEpisodeReleaseTime(context, episodeReleaseTime).getTime();
+        long endTime = startTime + showRunTime * DateUtils.MINUTE_IN_MILLIS;
         intent.putExtra("beginTime", startTime);
         intent.putExtra("endTime", endTime);
 

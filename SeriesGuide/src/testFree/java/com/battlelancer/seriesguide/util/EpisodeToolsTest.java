@@ -16,12 +16,14 @@ public class EpisodeToolsTest {
         assertThat(EpisodeTools.isWatched(EpisodeFlags.UNWATCHED)).isFalse();
     }
 
+    @Test
     public void test_isUnwatched() {
         assertThat(EpisodeTools.isUnwatched(EpisodeFlags.UNWATCHED)).isTrue();
         assertThat(EpisodeTools.isUnwatched(EpisodeFlags.WATCHED)).isFalse();
         assertThat(EpisodeTools.isUnwatched(EpisodeFlags.SKIPPED)).isFalse();
     }
 
+    @Test
     public void test_validateFlags() {
         EpisodeTools.validateFlags(EpisodeFlags.UNWATCHED);
         EpisodeTools.validateFlags(EpisodeFlags.WATCHED);

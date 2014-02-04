@@ -18,7 +18,6 @@ package com.battlelancer.thetvdbapi;
 
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -29,6 +28,7 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktSync;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
@@ -294,7 +294,12 @@ public class TheTVDB {
      */
     private static Show fetchShow(int showTvdbId, String language, Context context)
             throws SAXException {
-        // Try to get some show details from trakt
+        // get localized content from TVDb
+        String url = TVDB_API_URL + context.getResources().getString(R.string.tvdb_apikey)
+                + "/series/" + showTvdbId + "/" + (language != null ? language + ".xml" : "");
+        Show show = parseShow(url, context);
+
+        // get some more details from trakt
         TvShow traktShow = null;
         Trakt manager = ServiceUtils.getTrakt(context);
         if (manager != null) {
@@ -304,30 +309,13 @@ public class TheTVDB {
                 Utils.trackExceptionAndLog(context, TAG, e);
             }
         }
-
-        String url = TVDB_API_URL + context.getResources().getString(R.string.tvdb_apikey)
-                + "/series/" + showTvdbId + "/" + (language != null ? language + ".xml" : "");
-
-        Show show = parseShow(url, context);
-
-        // correct air times for non-US shows
-        if (traktShow != null && traktShow.country != null) {
-            if ("United States".equals(traktShow.country)) {
-                // catch US, is already correct then
-            } else if ("United Kingdom".equals(traktShow.country)) {
-                // Correct to BST (no summer time)
-                // Sample: Doctor Who (2005)
-                show.airtime -= 8 * DateUtils.HOUR_IN_MILLIS;
-            } else if ("Germany".equals(traktShow.country)) {
-                // Correct to EST
-                // Sample: heute-show
-                show.airtime -= 9 * DateUtils.HOUR_IN_MILLIS;
-            } else if ("Australia".equals(traktShow.country)) {
-                // Correct to Australian EST
-                // Sample: Offspring
-                show.airtime -= 18 * DateUtils.HOUR_IN_MILLIS;
-            }
+        if (traktShow == null) {
+            // TODO use proper error codes
+            throw new SAXException("Could not load show from trakt: " + showTvdbId);
         }
+
+        show.airtime = TimeTools.parseShowReleaseTime(traktShow.airTime);
+        show.country = traktShow.country;
 
         return show;
     }
@@ -369,11 +357,6 @@ public class TheTVDB {
         show.getChild("Airs_DayOfWeek").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 currentShow.airday = body.trim();
-            }
-        });
-        show.getChild("Airs_Time").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.airtime = Utils.parseTimeToMilliseconds(body.trim());
             }
         });
         show.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
@@ -558,7 +541,8 @@ public class TheTVDB {
                 });
         episode.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                long episodeAirTime = Utils.buildEpisodeAirtime(body, show.airtime);
+                long episodeAirTime = TimeTools
+                        .parseEpisodeReleaseTime(body, show.airtime, show.country);
                 values.put(Episodes.FIRSTAIREDMS, episodeAirTime);
                 values.put(Episodes.FIRSTAIRED, body.trim());
             }

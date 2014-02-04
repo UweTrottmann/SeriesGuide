@@ -226,6 +226,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
             status = ShowStatus.UNKNOWN;
         }
         showValues.put(Shows.STATUS, status);
+        showValues.put(Shows.RELEASE_COUNTRY, show.country);
         // Full dump values
         showValues.put(Shows.OVERVIEW, show.overview);
         showValues.put(Shows.RATING, show.rating);

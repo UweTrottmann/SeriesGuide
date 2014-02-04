@@ -36,6 +36,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListsColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesContract.ShowsColumns;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
@@ -219,7 +220,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ShowsColumns.SYNCENABLED + " INTEGER DEFAULT 1,"
 
-            + ShowsColumns.AIRTIME + " TEXT DEFAULT '',"
+            + ShowsColumns.RELEASE_COUNTRY + " TEXT DEFAULT '',"
 
             + ShowsColumns.HIDDEN + " INTEGER DEFAULT 0,"
 
@@ -572,7 +573,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Adds a column to the {@link Tables.EPISODES} table to store the airdate and possibly time in
+     * Adds a column to the {@link Tables#EPISODES} table to store the airdate and possibly time in
      * milliseconds.
      */
     private static void upgradeToTwentyFour(SQLiteDatabase db) {
@@ -599,7 +600,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 ContentValues values = new ContentValues();
                 while (episodes.moveToNext()) {
                     String firstAired = episodes.getString(1);
-                    long episodeAirtime = Utils.buildEpisodeAirtime(firstAired, airtime);
+                    long episodeAirtime = TimeTools.parseEpisodeReleaseTime(firstAired, airtime, null);
 
                     values.put(Episodes.FIRSTAIREDMS, episodeAirtime);
                     db.update(Tables.EPISODES, values, Episodes._ID + "=?", new String[]{
@@ -619,7 +620,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Adds a column to the {@link Tables.SHOWS} table similar to the favorite boolean, but to allow
+     * Adds a column to the {@link Tables#SHOWS} table similar to the favorite boolean, but to allow
      * hiding shows.
      */
     private static void upgradeToTwentyThree(SQLiteDatabase db) {
@@ -638,7 +639,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     private static void upgradeToTwentyOne(SQLiteDatabase db) {
-        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.AIRTIME
+        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.RELEASE_COUNTRY
                 + " TEXT DEFAULT '';");
     }
 
