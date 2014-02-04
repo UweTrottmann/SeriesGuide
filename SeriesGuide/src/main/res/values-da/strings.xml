@@ -77,6 +77,7 @@
   <string name="show_genres">Genrer</string>
   <string name="show_runtime">Spilletid</string>
   <string name="show_contentrating">Indholdsklassifikation</string>
+  <string name="show_release_times">Release times</string>
   <string name="episode_directors">Instruktører</string>
   <string name="episode_gueststars">Gæstestjerner</string>
   <string name="episode_writers">Forfattere</string>

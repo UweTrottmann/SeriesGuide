@@ -77,6 +77,7 @@
   <string name="show_genres">类型</string>
   <string name="show_runtime">节目时长</string>
   <string name="show_contentrating">内容分级</string>
+  <string name="show_release_times">Release times</string>
   <string name="episode_directors">导演</string>
   <string name="episode_gueststars">客串</string>
   <string name="episode_writers">编剧</string>

@@ -77,6 +77,7 @@
   <string name="show_genres">Genuri</string>
   <string name="show_runtime">Durata</string>
   <string name="show_contentrating">Punctajul conţinutului</string>
+  <string name="show_release_times">Release times</string>
   <string name="episode_directors">Regizori</string>
   <string name="episode_gueststars">Invitaţi Speciali</string>
   <string name="episode_writers">Scenarişti</string>

@@ -77,6 +77,7 @@
   <string name="show_genres">الأنواع</string>
   <string name="show_runtime">وقت التشغيل</string>
   <string name="show_contentrating">تقييم المحتوى</string>
+  <string name="show_release_times">Release times</string>
   <string name="episode_directors">الإدارة</string>
   <string name="episode_gueststars">ضيف الحلقة</string>
   <string name="episode_writers">الكُتاب</string>

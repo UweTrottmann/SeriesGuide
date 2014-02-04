@@ -77,6 +77,7 @@
   <string name="show_genres">Žánr</string>
   <string name="show_runtime">Celková délka</string>
   <string name="show_contentrating">Hodnocení obsahu</string>
+  <string name="show_release_times">Release times</string>
   <string name="episode_directors">Režie</string>
   <string name="episode_gueststars">Hostující herci</string>
   <string name="episode_writers">Scénář</string>

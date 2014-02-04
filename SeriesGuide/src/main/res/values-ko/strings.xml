@@ -77,6 +77,7 @@
   <string name="show_genres">장르</string>
   <string name="show_runtime">런타임</string>
   <string name="show_contentrating">콘텐츠 등급</string>
+  <string name="show_release_times">Release times</string>
   <string name="episode_directors">감독</string>
   <string name="episode_gueststars">게스트</string>
   <string name="episode_writers">작가</string>

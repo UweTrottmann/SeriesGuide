@@ -77,6 +77,7 @@
   <string name="show_genres">Žanrai</string>
   <string name="show_runtime">Runtime</string>
   <string name="show_contentrating">Turinio įvertinimas</string>
+  <string name="show_release_times">Release times</string>
   <string name="episode_directors">Režisieriai</string>
   <string name="episode_gueststars">Kviestinės žvaigždės</string>
   <string name="episode_writers">Rašytojai</string>

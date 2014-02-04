@@ -77,6 +77,7 @@
   <string name="show_genres">Genres</string>
   <string name="show_runtime">Laufzeit</string>
   <string name="show_contentrating">Inhaltsklassifikation</string>
+  <string name="show_release_times">Release times</string>
   <string name="episode_directors">Regisseure</string>
   <string name="episode_gueststars">Gastschauspieler</string>
   <string name="episode_writers">Autoren</string>

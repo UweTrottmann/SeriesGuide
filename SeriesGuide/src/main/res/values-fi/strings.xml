@@ -77,6 +77,7 @@
   <string name="show_genres">Genret</string>
   <string name="show_runtime">Kesto</string>
   <string name="show_contentrating">Sisällön luokitus</string>
+  <string name="show_release_times">Release times</string>
   <string name="episode_directors">Ohjaajat</string>
   <string name="episode_gueststars">Vierailevat tähdet</string>
   <string name="episode_writers">Kirjoittajat</string>

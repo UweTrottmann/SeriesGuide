@@ -77,6 +77,7 @@
   <string name="show_genres">戲劇類別</string>
   <string name="show_runtime">影片長度</string>
   <string name="show_contentrating">節目分級</string>
+  <string name="show_release_times">Release times</string>
   <string name="episode_directors">導演</string>
   <string name="episode_gueststars">神秘嘉賓</string>
   <string name="episode_writers">編劇</string>

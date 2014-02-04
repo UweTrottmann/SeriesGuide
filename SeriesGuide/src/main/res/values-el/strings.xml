@@ -77,6 +77,7 @@
   <string name="show_genres">Είδη</string>
   <string name="show_runtime">Διάρκεια</string>
   <string name="show_contentrating">Αξιολόγηση περιεχομένου</string>
+  <string name="show_release_times">Release times</string>
   <string name="episode_directors">Σκηνοθέτες</string>
   <string name="episode_gueststars">Γκεστ Σταρ</string>
   <string name="episode_writers">Συγγραφείς</string>
