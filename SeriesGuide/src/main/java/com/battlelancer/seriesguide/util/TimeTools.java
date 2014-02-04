@@ -169,7 +169,7 @@ public class TimeTools {
         return calendar.getTimeInMillis();
     }
 
-    public static String[] formatShowReleaseTimeAndDay(Context context, long releaseTime,
+    public static String[] formatToShowReleaseTimeAndDay(Context context, long releaseTime,
             String releaseCountry, String releaseDay) {
         // return empty strings if time is missing
         if (releaseTime == -1) {
@@ -178,70 +178,18 @@ public class TimeTools {
             };
         }
 
-        // determine release timezone
-        String timeZoneId = getTimeZoneIdForCountry(releaseCountry);
-        Calendar releaseTimeZoneCal = Calendar.getInstance(TimeZone.getTimeZone(timeZoneId));
-
-        // get release "hours"
-        Calendar customTimeCalendar = Calendar
-                .getInstance(TimeZone.getTimeZone(TIMEZONE_ID_CUSTOM));
-        customTimeCalendar.setTimeInMillis(releaseTime);
-        int releaseHourOfDay = customTimeCalendar.get(Calendar.HOUR_OF_DAY);
-        int releaseMinute = customTimeCalendar.get(Calendar.MINUTE);
-
-        // set release "hours" on release country calendar
-        // has to be done as release time typically stays the same even if DST starts
-        releaseTimeZoneCal.set(Calendar.HOUR_OF_DAY, releaseHourOfDay);
-        releaseTimeZoneCal.set(Calendar.MINUTE, releaseMinute);
-        releaseTimeZoneCal.set(Calendar.SECOND, 0);
-        releaseTimeZoneCal.set(Calendar.MILLISECOND, 0);
-
-        // move to correct release day (not for daily shows)
         int releaseDayOfWeek = getDayOfWeek(releaseDay);
-        if (releaseDayOfWeek > 0) {
-            // make sure we always assume a release date which is today or in the future
-            // to get correct local DST information when converting
-            int todayDayOfWeek = releaseTimeZoneCal.get(Calendar.DAY_OF_WEEK);
-            // get how far release day is ahead of today
-            int daysToMoveAhead = (releaseDayOfWeek + 7 - todayDayOfWeek) % 7;
-            // move ahead accordingly
-            releaseTimeZoneCal.add(Calendar.DAY_OF_MONTH, daysToMoveAhead);
-        }
 
-        // TV scheduling madness: times between 12:00AM and 12:59AM are attributed to the hour
-        // after the end of the current day
-        if (releaseHourOfDay == 0) {
-            // move ahead one day (24 hours)
-            releaseTimeZoneCal.add(Calendar.DAY_OF_MONTH, 1);
-        }
+        Calendar calendar = getShowReleaseTime(releaseTime, releaseCountry, releaseDayOfWeek);
 
-        // US shows air at the same LOCAL time across all its time zones (with exceptions)
-        if (TextUtils.isEmpty(releaseCountry) || UNITED_STATES.equals(releaseCountry)) {
-            correctUnitedStatesReleaseTime(releaseTimeZoneCal);
-        }
-
-        setUserOffset(context, releaseTimeZoneCal);
-
-        Date actualRelease = releaseTimeZoneCal.getTime();
+        setUserOffset(context, calendar);
 
         // convert and format to local
+        Date actualRelease = calendar.getTime();
         return new String[]{
                 formatToLocalReleaseTime(context, actualRelease),
                 formatToLocalReleaseDay(context, releaseDayOfWeek, actualRelease)
         };
-    }
-
-    /**
-     * Takes the UTC time in ms of an episode release (see {@link #parseEpisodeReleaseTime(String,
-     * long, String)}) and adds user-set offsets.
-     */
-    public static long getEpisodeReleaseTimeWithUserOffset(Context context, long releaseTime) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(releaseTime);
-
-        setUserOffset(context, calendar);
-
-        return calendar.getTimeInMillis();
     }
 
     /**
@@ -272,6 +220,65 @@ public class TimeTools {
 
         // no match
         return -1;
+    }
+
+    private static Calendar getShowReleaseTime(long releaseTime, String releaseCountry,
+            int releaseDayOfWeek) {
+        // determine release timezone
+        String timeZoneId = getTimeZoneIdForCountry(releaseCountry);
+        Calendar releaseTimeZoneCal = Calendar.getInstance(TimeZone.getTimeZone(timeZoneId));
+
+        // get release "hours"
+        Calendar customTimeCalendar = Calendar
+                .getInstance(TimeZone.getTimeZone(TIMEZONE_ID_CUSTOM));
+        customTimeCalendar.setTimeInMillis(releaseTime);
+        int releaseHourOfDay = customTimeCalendar.get(Calendar.HOUR_OF_DAY);
+        int releaseMinute = customTimeCalendar.get(Calendar.MINUTE);
+
+        // set release "hours" on release country calendar
+        // has to be done as release time typically stays the same even if DST starts
+        releaseTimeZoneCal.set(Calendar.HOUR_OF_DAY, releaseHourOfDay);
+        releaseTimeZoneCal.set(Calendar.MINUTE, releaseMinute);
+        releaseTimeZoneCal.set(Calendar.SECOND, 0);
+        releaseTimeZoneCal.set(Calendar.MILLISECOND, 0);
+
+        // move to correct release day (not for daily shows)
+        if (releaseDayOfWeek > 0) {
+            // make sure we always assume a release date which is today or in the future
+            // to get correct local DST information when converting
+            int todayDayOfWeek = releaseTimeZoneCal.get(Calendar.DAY_OF_WEEK);
+            // get how far release day is ahead of today
+            int daysToMoveAhead = (releaseDayOfWeek + 7 - todayDayOfWeek) % 7;
+            // move ahead accordingly
+            releaseTimeZoneCal.add(Calendar.DAY_OF_MONTH, daysToMoveAhead);
+        }
+
+        // TV scheduling madness: times between 12:00AM and 12:59AM are attributed to the hour
+        // after the end of the current day
+        if (releaseHourOfDay == 0) {
+            // move ahead one day (24 hours)
+            releaseTimeZoneCal.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+        // US shows air at the same LOCAL time across all its time zones (with exceptions)
+        if (TextUtils.isEmpty(releaseCountry) || UNITED_STATES.equals(releaseCountry)) {
+            correctUnitedStatesReleaseTime(releaseTimeZoneCal);
+        }
+
+        return releaseTimeZoneCal;
+    }
+
+    /**
+     * Takes the UTC time in ms of an episode release (see {@link #parseEpisodeReleaseTime(String,
+     * long, String)}) and adds user-set offsets.
+     */
+    public static long getEpisodeReleaseTime(Context context, long releaseTime) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(releaseTime);
+
+        setUserOffset(context, calendar);
+
+        return calendar.getTimeInMillis();
     }
 
     private static String formatToLocalReleaseDay(Context context, int releaseDayOfWeek,
