@@ -207,6 +207,12 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
         TextView overview = (TextView) getView().findViewById(R.id.textViewShowOverview);
         overview.setText(TextUtils.isEmpty(mShow.getOverview()) ? null : mShow.getOverview());
 
+        // release country (or assumed one)
+        TextView releaseCountry = (TextView) getView()
+                .findViewById(R.id.textViewShowReleaseCountry);
+        releaseCountry.setText(TextUtils.isEmpty(mShow.getCountry())
+                ? TimeTools.UNITED_STATES : mShow.getCountry());
+
         // first airdate
         long airtime = Utils.buildEpisodeAirtime(mShow.getFirstAired(), mShow.getAirsTime());
         Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewShowFirstAirdate),
