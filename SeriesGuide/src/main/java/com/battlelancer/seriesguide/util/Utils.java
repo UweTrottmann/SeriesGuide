@@ -89,37 +89,6 @@ public class Utils {
     private static final String TIMEZONE_US_MOUNTAIN = "America/Denver";
 
     /**
-     * Returns a string like 'Mon in 3 days', the day followed by how far it is away in relative
-     * time.<br> Does <b>not</b> respect user offsets or 'Use my time zone' setting. The time to be
-     * passed is expected to be already corrected for that.
-     */
-    public static String formatToDayAndTimeWithoutOffsets(Context context, long airtime) {
-        StringBuilder timeAndDay = new StringBuilder();
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(airtime);
-
-        final SimpleDateFormat dayFormat = new SimpleDateFormat("E", Locale.getDefault());
-        timeAndDay.append(dayFormat.format(cal.getTime()));
-
-        timeAndDay.append(" ");
-
-        // Show 'today' instead of '0 days ago'
-        if (DateUtils.isToday(cal.getTimeInMillis())) {
-            timeAndDay.append(context.getString(R.string.today));
-        } else {
-            timeAndDay.append(DateUtils
-                    .getRelativeTimeSpanString(
-                            cal.getTimeInMillis(),
-                            System.currentTimeMillis(),
-                            DateUtils.DAY_IN_MILLIS,
-                            DateUtils.FORMAT_ABBREV_ALL));
-        }
-
-        return timeAndDay.toString();
-    }
-
-    /**
      * Return date string of the given time, prefixed with the actual day of the week (e.g. 'Mon, ')
      * or 'today, ' if applicable.
      */

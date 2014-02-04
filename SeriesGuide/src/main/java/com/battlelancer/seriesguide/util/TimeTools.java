@@ -292,8 +292,8 @@ public class TimeTools {
     }
 
     /**
-     * Takes a UTC release time and returns the week day abbreviation (e.g. "Mon") defined by
-     * the devices locale.
+     * Takes a UTC release time and returns the week day abbreviation (e.g. "Mon") defined by the
+     * devices locale.
      */
     public static String formatToLocalReleaseDay(Date actualRelease) {
         SimpleDateFormat localDayFormat = new SimpleDateFormat("E", Locale.getDefault());
@@ -310,13 +310,40 @@ public class TimeTools {
     }
 
     /**
-     * Takes a UTC release time and returns the relative time until the current system time
-     * (e.g. "in 12 min") defined by the devices locale.
+     * Takes a UTC release time and returns the relative time until the current system time (e.g.
+     * "in 12 min") defined by the devices locale.
      */
     public static String formatToRelativeLocalReleaseTime(Date actualRelease) {
         return DateUtils
                 .getRelativeTimeSpanString(actualRelease.getTime(), System.currentTimeMillis(),
                         DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString();
+    }
+
+    /**
+     * Takes a UTC release time and returns the day as well as relative time until the current
+     * system time (e.g. "Mon in 3 days") as defined by the devices locale. If the time is today,
+     * only the local equivalent for "today" will be returned.
+     */
+    public static String formatToDayAndRelativeTime(Context context, Date actualRelease) {
+        StringBuilder timeAndDay = new StringBuilder();
+
+        timeAndDay.append(formatToLocalReleaseDay(actualRelease));
+
+        timeAndDay.append(" ");
+
+        // Show 'today' instead of '0 days ago'
+        if (DateUtils.isToday(actualRelease.getTime())) {
+            timeAndDay.append(context.getString(R.string.today));
+        } else {
+            timeAndDay.append(DateUtils
+                    .getRelativeTimeSpanString(
+                            actualRelease.getTime(),
+                            System.currentTimeMillis(),
+                            DateUtils.DAY_IN_MILLIS,
+                            DateUtils.FORMAT_ABBREV_ALL));
+        }
+
+        return timeAndDay.toString();
     }
 
     /**

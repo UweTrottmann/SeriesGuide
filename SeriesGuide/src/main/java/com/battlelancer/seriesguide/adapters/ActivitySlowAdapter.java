@@ -68,6 +68,8 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
     private DataSetObserverExtension mHeaderChangeDataObserver;
 
+    private Calendar mCalendar;
+
     public interface CheckInListener {
 
         public void onCheckinEpisode(int episodeTvdbId);
@@ -81,6 +83,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         mCheckInListener = checkInListener;
+        mCalendar = Calendar.getInstance();
     }
 
     /**
@@ -129,7 +132,8 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
         // number and show
         final String number = Utils.getEpisodeNumber(context, season, episode);
-        viewHolder.show.setText(number + " | " + cursor.getString(ActivityFragment.ActivityQuery.SHOW_TITLE));
+        viewHolder.show.setText(
+                number + " | " + cursor.getString(ActivityFragment.ActivityQuery.SHOW_TITLE));
 
         // title
         viewHolder.episode.setText(cursor.getString(ActivityFragment.ActivityQuery.TITLE));
@@ -177,21 +181,30 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
     private long getHeaderId(int position) {
         Object obj = getItem(position);
         if (obj != null) {
-                /*
-                 * Maps all episodes airing the same day to the same id (which
-                 * equals the time midnight of their air day).
-                 */
+            /*
+             * Map all episodes releasing the same day to the same id (which
+             * equals the time midnight of their release day).
+             */
             @SuppressWarnings("resource")
             Cursor item = (Cursor) obj;
-            long airtime = item.getLong(ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS);
-            Calendar cal = Utils.getAirtimeCalendar(airtime, mPrefs);
-            cal.set(Calendar.HOUR_OF_DAY, 1);
-            cal.set(Calendar.MINUTE, 0);
-            cal.set(Calendar.SECOND, 0);
-            cal.set(Calendar.MILLISECOND, 0);
-            return cal.getTimeInMillis();
+            return getHeaderTime(item);
         }
         return 0;
+    }
+
+    private long getHeaderTime(Cursor item) {
+        long releaseTime = item.getLong(ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS);
+        Date actualRelease = TimeTools.getEpisodeReleaseTime(mContext, releaseTime);
+
+        mCalendar.setTime(actualRelease);
+        // not midnight because upcoming->recent is delayed 1 hour
+        // so header would display wrong relative time close to midnight
+        mCalendar.set(Calendar.HOUR_OF_DAY, 1);
+        mCalendar.set(Calendar.MINUTE, 0);
+        mCalendar.set(Calendar.SECOND, 0);
+        mCalendar.set(Calendar.MILLISECOND, 0);
+
+        return mCalendar.getTimeInMillis();
     }
 
     @Override
@@ -234,17 +247,9 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
         @SuppressWarnings("resource")
         Cursor item = (Cursor) obj;
-        long airtime = item.getLong(ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS);
-        Calendar cal = Utils.getAirtimeCalendar(airtime, mPrefs);
-        cal.set(Calendar.HOUR_OF_DAY, 1);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        long airDay = cal.getTimeInMillis();
-
-        String dayAndTime = Utils.formatToDayAndTimeWithoutOffsets(mContext, airDay);
-
-        holder.day.setText(dayAndTime);
+        long headerTime = getHeaderTime(item);
+        // display headers like "Mon in 3 days", also "today" when applicable
+        holder.day.setText(TimeTools.formatToDayAndRelativeTime(mContext, new Date(headerTime)));
 
         return convertView;
     }
