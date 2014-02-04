@@ -33,6 +33,7 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -638,11 +639,12 @@ public class ShowsFragment extends SherlockFragment implements
                 viewHolder.episodeTime.setText(fieldValue);
             }
 
-            // airday
-            final String[] values = Utils.parseMillisecondsToTime(
-                    cursor.getLong(ShowsQuery.AIRSTIME),
-                    cursor.getString(ShowsQuery.AIRSDAYOFWEEK), context);
-            // one line: 'Network | Tue 08:00 PM'
+            // network, day and time
+            String[] values = TimeTools.formatToShowReleaseTimeAndDay(context,
+                    cursor.getLong(ShowsQuery.RELEASE_TIME),
+                    cursor.getString(ShowsQuery.RELEASE_COUNTRY),
+                    cursor.getString(ShowsQuery.RELEASE_DAY));
+            // one line: 'Network / Tue 08:00 PM'
             viewHolder.timeAndNetwork.setText(cursor.getString(ShowsQuery.NETWORK) + " / "
                     + values[1] + " " + values[0]);
 
@@ -661,7 +663,7 @@ public class ShowsFragment extends SherlockFragment implements
         String[] PROJECTION = {
                 BaseColumns._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.AIRSTIME, Shows.NETWORK,
                 Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT,
-                Shows.FAVORITE, Shows.NEXTEPISODE
+                Shows.FAVORITE, Shows.NEXTEPISODE, Shows.RELEASE_COUNTRY
         };
 
         int _ID = 0;
@@ -670,13 +672,13 @@ public class ShowsFragment extends SherlockFragment implements
 
         int NEXTTEXT = 2;
 
-        int AIRSTIME = 3;
+        int RELEASE_TIME = 3;
 
         int NETWORK = 4;
 
         int POSTER = 5;
 
-        int AIRSDAYOFWEEK = 6;
+        int RELEASE_DAY = 6;
 
         int STATUS = 7;
 
@@ -685,6 +687,8 @@ public class ShowsFragment extends SherlockFragment implements
         int FAVORITE = 9;
 
         int NEXTEPISODE = 10;
+
+        int RELEASE_COUNTRY = 11;
     }
 
     private void onFavoriteShow(int showTvdbId, boolean isFavorite) {

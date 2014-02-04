@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -211,9 +212,10 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
             }
 
             // network and release day
-            final String[] values = Utils.parseMillisecondsToTime(
-                    cursor.getLong(CheckinQuery.AIRSTIME),
-                    cursor.getString(CheckinQuery.AIRSDAYOFWEEK), context);
+            String[] values = TimeTools.formatToShowReleaseTimeAndDay(context,
+                    cursor.getLong(CheckinQuery.RELEASE_TIME),
+                    cursor.getString(CheckinQuery.RELEASE_COUNTRY),
+                    cursor.getString(CheckinQuery.RELEASE_DAY));
             // one line: 'Network | Tue 08:00 PM'
             viewHolder.timeAndNetwork.setText(cursor.getString(CheckinQuery.NETWORK) + " / "
                     + values[1] + " " + values[0]);
@@ -239,7 +241,8 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
         String[] PROJECTION = {
                 Shows._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.AIRSTIME, Shows.NETWORK,
                 Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT,
-                Shows.FAVORITE, Shows.IMDBID, Shows.NEXTEPISODE, Shows.HIDDEN, Shows.NEXTAIRDATEMS
+                Shows.FAVORITE, Shows.IMDBID, Shows.NEXTEPISODE, Shows.HIDDEN, Shows.NEXTAIRDATEMS,
+                Shows.RELEASE_COUNTRY
         };
 
         String SELECTION = Shows.NEXTEPISODE + "!='' AND " + Shows.HIDDEN + "=0 AND "
@@ -251,13 +254,13 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
 
         int NEXTTEXT = 2;
 
-        int AIRSTIME = 3;
+        int RELEASE_TIME = 3;
 
         int NETWORK = 4;
 
         int POSTER = 5;
 
-        int AIRSDAYOFWEEK = 6;
+        int RELEASE_DAY = 6;
 
         int STATUS = 7;
 
@@ -268,5 +271,7 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
         int IMDBID = 10;
 
         int NEXTEPISODE = 11;
+
+        int RELEASE_COUNTRY = 12;
     }
 }

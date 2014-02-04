@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.SeasonTools;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -238,9 +239,10 @@ public class ListsFragment extends SherlockFragment implements
                     // shows
 
                     // air time and network
-                    final String[] values = Utils.parseMillisecondsToTime(
-                            cursor.getLong(ListItemsQuery.AIRSTIME),
-                            cursor.getString(ListItemsQuery.SHOW_AIRSDAY), context);
+                    String[] values = TimeTools.formatToShowReleaseTimeAndDay(context,
+                            cursor.getLong(ListItemsQuery.SHOW_RELEASE_TIME),
+                            cursor.getString(ListItemsQuery.SHOW_RELEASE_COUNTRY),
+                            cursor.getString(ListItemsQuery.SHOW_RELEASE_DAY));
                     // network first, then time, one line
                     viewHolder.timeAndNetwork.setText(cursor
                             .getString(ListItemsQuery.SHOW_NETWORK) + " / "
@@ -282,7 +284,7 @@ public class ListsFragment extends SherlockFragment implements
                             cursor.getInt(ListItemsQuery.SHOW_NEXTTEXT),
                             cursor.getInt(ListItemsQuery.SHOW_NEXTAIRDATETEXT),
                             cursor.getString(ListItemsQuery.ITEM_TITLE)));
-                    long airtime = cursor.getLong(ListItemsQuery.AIRSTIME);
+                    long airtime = cursor.getLong(ListItemsQuery.SHOW_RELEASE_TIME);
                     if (airtime != -1) {
                         final String[] dayAndTime = Utils
                                 .formatToTimeAndDay(airtime, getActivity());
@@ -321,7 +323,7 @@ public class ListsFragment extends SherlockFragment implements
                 ListItems._ID, ListItems.LIST_ITEM_ID, ListItems.ITEM_REF_ID, ListItems.TYPE,
                 Shows.REF_SHOW_ID, Shows.TITLE, Shows.OVERVIEW, Shows.POSTER, Shows.NETWORK,
                 Shows.AIRSTIME, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTTEXT,
-                Shows.NEXTAIRDATETEXT, Shows.FAVORITE
+                Shows.NEXTAIRDATETEXT, Shows.FAVORITE, Shows.RELEASE_COUNTRY
         };
 
         String SORTING = Shows.TITLE + " COLLATE NOCASE ASC, " + ListItems.TYPE + " ASC";
@@ -342,9 +344,9 @@ public class ListsFragment extends SherlockFragment implements
 
         int SHOW_NETWORK = 8;
 
-        int AIRSTIME = 9;
+        int SHOW_RELEASE_TIME = 9;
 
-        int SHOW_AIRSDAY = 10;
+        int SHOW_RELEASE_DAY = 10;
 
         int SHOW_STATUS = 11;
 
@@ -353,6 +355,8 @@ public class ListsFragment extends SherlockFragment implements
         int SHOW_NEXTAIRDATETEXT = 13;
 
         int SHOW_FAVORITE = 14;
+
+        int SHOW_RELEASE_COUNTRY = 15;
 
     }
 
