@@ -278,6 +278,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             show.network = shows.getString(ShowsQuery.NETWORK);
             show.imdbId = shows.getString(ShowsQuery.IMDBID);
             show.firstAired = shows.getString(ShowsQuery.FIRSTAIRED);
+            show.country = shows.getString(ShowsQuery.RELEASE_COUNTRY);
             if (mIsFullDump) {
                 show.overview = shows.getString(ShowsQuery.OVERVIEW);
                 show.rating = shows.getDouble(ShowsQuery.RATING);
@@ -432,13 +433,13 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 Shows._ID, Shows.TITLE, Shows.FAVORITE, Shows.HIDDEN, Shows.AIRSTIME,
                 Shows.AIRSDAYOFWEEK, Shows.GETGLUEID, Shows.LASTWATCHEDID,
                 Shows.POSTER, Shows.CONTENTRATING, Shows.STATUS, Shows.RUNTIME, Shows.NETWORK,
-                Shows.IMDBID, Shows.SYNCENABLED, Shows.FIRSTAIRED,
+                Shows.IMDBID, Shows.SYNCENABLED, Shows.FIRSTAIRED, Shows.RELEASE_COUNTRY
         };
         String[] PROJECTION_FULL = new String[] {
                 Shows._ID, Shows.TITLE, Shows.FAVORITE, Shows.HIDDEN, Shows.AIRSTIME,
                 Shows.AIRSDAYOFWEEK, Shows.GETGLUEID, Shows.LASTWATCHEDID,
                 Shows.POSTER, Shows.CONTENTRATING, Shows.STATUS, Shows.RUNTIME, Shows.NETWORK,
-                Shows.IMDBID, Shows.SYNCENABLED, Shows.FIRSTAIRED,
+                Shows.IMDBID, Shows.SYNCENABLED, Shows.FIRSTAIRED, Shows.RELEASE_COUNTRY,
                 Shows.OVERVIEW, Shows.RATING, Shows.GENRES, Shows.ACTORS,
                 Shows.LASTUPDATED, Shows.LASTEDIT
         };
@@ -461,13 +462,14 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         int IMDBID = 13;
         int SYNC = 14;
         int FIRSTAIRED = 15;
+        int RELEASE_COUNTRY = 16;
         // Full dump only
-        int OVERVIEW = 16;
-        int RATING = 17;
-        int GENRES = 18;
-        int ACTORS = 19;
-        int LAST_UPDATED = 20;
-        int LAST_EDITED = 21;
+        int OVERVIEW = 17;
+        int RATING = 18;
+        int GENRES = 19;
+        int ACTORS = 20;
+        int LAST_UPDATED = 21;
+        int LAST_EDITED = 22;
     }
 
     public interface EpisodesQuery {
