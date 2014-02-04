@@ -47,7 +47,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -62,7 +61,6 @@ import android.widget.Toast;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -89,102 +87,6 @@ public class Utils {
     private static final String TIMEZONE_US_PACIFIC = "America/Los_Angeles";
 
     private static final String TIMEZONE_US_MOUNTAIN = "America/Denver";
-
-    /**
-     * Parse a shows airtime ms value to an actual time. If given a TVDb day string the day will get
-     * determined, too, all respecting user settings like time zone and time offset.
-     */
-    public static String[] parseMillisecondsToTime(long milliseconds, String dayofweek,
-            Context context) {
-        // return empty strings if time is missing
-        if (context == null || milliseconds == -1) {
-            return new String[]{
-                    "", ""
-            };
-        }
-
-        // set calendar time and day on always PST calendar
-        // this is a workaround so we can convert the air day to a another time
-        // zone without actually having a date
-        final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_ALWAYS_PST));
-        final int year = cal.get(Calendar.YEAR);
-        final int month = cal.get(Calendar.MONTH);
-        final int day = cal.get(Calendar.DAY_OF_MONTH);
-        cal.setTimeInMillis(milliseconds);
-        // set the date back to today
-        cal.set(year, month, day);
-
-        // move to correct release day (not for daily shows)
-        int dayIndex = -1;
-        if (dayofweek != null) {
-            dayIndex = getDayOfWeek(dayofweek);
-            if (dayIndex > 0) {
-                int today = cal.get(Calendar.DAY_OF_WEEK);
-                // make sure we always assume a release date which is today or in the future
-                // to get correct local DST information when converting
-                if (dayIndex - today < 0) {
-                    // release is on a week day earlier in the week than today,
-                    // move calendar ahead to next week
-                    cal.add(Calendar.DAY_OF_WEEK, (7 - today) + dayIndex);
-                } else {
-                    // release week day is today or ahead in the week
-                    cal.set(Calendar.DAY_OF_WEEK, dayIndex);
-                }
-            }
-        }
-
-        // convert time to local, including the day
-        final Calendar localCal = Calendar.getInstance();
-        localCal.setTimeInMillis(cal.getTimeInMillis());
-
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        setOffsets(prefs, localCal, localCal.getTimeInMillis());
-
-        // create time string
-        final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
-        final SimpleDateFormat dayFormat = new SimpleDateFormat("E");
-        final Date date = localCal.getTime();
-
-        timeFormat.setTimeZone(TimeZone.getDefault());
-        dayFormat.setTimeZone(TimeZone.getDefault());
-
-        String daystring = "";
-        if (dayIndex == 0) {
-            daystring = context.getString(R.string.daily);
-        } else if (dayIndex != -1) {
-            daystring = dayFormat.format(date);
-        }
-
-        return new String[]{
-                timeFormat.format(date), daystring
-        };
-    }
-
-    /**
-     * Returns the Calendar constant (e.g. <code>Calendar.SUNDAY</code>) for a given TVDb airday
-     * string (Monday through Sunday and Daily). If no match is found -1 will be returned.
-     *
-     * @param day TVDb day string
-     */
-    private static int getDayOfWeek(String day) {
-        // catch Daily
-        if (day.equalsIgnoreCase("Daily")) {
-            return 0;
-        }
-
-        // catch Monday through Sunday
-        DateFormatSymbols dfs = new DateFormatSymbols(Locale.US);
-        String[] weekdays = dfs.getWeekdays();
-
-        for (int i = 1; i < weekdays.length; i++) {
-            if (day.equalsIgnoreCase(weekdays[i])) {
-                return i;
-            }
-        }
-
-        // no match
-        return -1;
-    }
 
     /**
      * Returns an array with absolute time [0], day [1] and relative time [2] of the given
@@ -554,17 +456,6 @@ public class Utils {
     }
 
     /**
-     * Put the TVDb season number in, get a full 'Season X' or 'Special Episodes' string out.
-     */
-    public static String getSeasonString(Context context, int seasonNumber) {
-        if (seasonNumber == 0) {
-            return context.getString(R.string.specialseason);
-        } else {
-            return context.getString(R.string.season_number, seasonNumber);
-        }
-    }
-
-    /**
      * Run the notification service to display and (re)schedule upcoming episode alarms.
      */
     public static void runNotificationService(Context context) {
@@ -600,28 +491,6 @@ public class Utils {
             Utils.trackExceptionAndLog(context, TAG, e);
         }
         return null;
-    }
-
-    public enum SGChannel {
-        STABLE("com.battlelancer.seriesguide"), BETA("com.battlelancer.seriesguide.beta"), X(
-                "com.battlelancer.seriesguide.x");
-
-        String packageName;
-
-        private SGChannel(String packageName) {
-            this.packageName = packageName;
-        }
-    }
-
-    public static SGChannel getChannel(Context context) {
-        String thisPackageName = context.getApplicationContext().getPackageName();
-        if (thisPackageName.equals(SGChannel.BETA.packageName)) {
-            return SGChannel.BETA;
-        }
-        if (thisPackageName.equals(SGChannel.X.packageName)) {
-            return SGChannel.X;
-        }
-        return SGChannel.STABLE;
     }
 
     /**
