@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -39,6 +40,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 
 import retrofit.RetrofitError;
@@ -163,6 +165,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
     private static int applyEpisodeFlagChanges(Context context, List<TvShow> remoteShows,
             HashSet<Integer> localShows, String episodeFlagColumn, boolean clearExistingFlags) {
         int syncCount = 0;
+        HashSet<Integer> skippedShows = new HashSet<>(localShows);
 
         // loop through shows on trakt, update the ones existing locally
         for (TvShow tvShow : remoteShows) {
@@ -174,10 +177,38 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
             applyEpisodeFlagChanges(context, tvShow, episodeFlagColumn, clearExistingFlags);
 
+            skippedShows.remove(tvShow.tvdb_id);
             syncCount++;
         }
 
+        // clear flags on all shows not synced
+        if (clearExistingFlags && skippedShows.size() > 0) {
+            clearFlagsOfShow(context, episodeFlagColumn, skippedShows);
+        }
+
         return syncCount;
+    }
+
+    private static void clearFlagsOfShow(Context context, String episodeFlagColumn,
+            HashSet<Integer> skippedShows) {
+        int episodeDefaultFlag;
+        switch (episodeFlagColumn) {
+            case Episodes.WATCHED:
+                episodeDefaultFlag = EpisodeFlags.UNWATCHED;
+                break;
+            case Episodes.COLLECTED:
+            default:
+                episodeDefaultFlag = 0;
+                break;
+        }
+
+        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+        for (Integer tvShowTvdbId : skippedShows) {
+            batch.add(ContentProviderOperation
+                    .newUpdate(Episodes.buildEpisodesOfShowUri(tvShowTvdbId))
+                    .withValue(episodeFlagColumn, episodeDefaultFlag).build());
+        }
+        DBUtils.applyInSmallBatches(context, batch);
     }
 
     /**
@@ -219,19 +250,21 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
         ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
+        if (clearExistingFlags) {
+            // remove all flags for episodes of this show
+            // loop below will run at least once (would not be here if not at least one season),
+            // so op-apply is ensured
+            batch.add(ContentProviderOperation
+                    .newUpdate(Episodes.buildEpisodesOfShowUri(tvShow.tvdb_id))
+                    .withSelection(clearSelection, null)
+                    .withValue(episodeFlagColumn, episodeDefaultFlag)
+                    .build());
+        }
+
         for (TvShowSeason season : tvShow.seasons) {
             if (season == null || season.season == null ||
                     season.episodes == null || season.episodes.numbers == null) {
                 continue;
-            }
-
-            if (clearExistingFlags) {
-                // remove all flags for episodes of the current season
-                batch.add(ContentProviderOperation
-                        .newUpdate(Episodes.buildEpisodesOfShowUri(tvShow.tvdb_id))
-                        .withSelection(clearSelection, new String[]{String.valueOf(season.season)})
-                        .withValue(episodeFlagColumn, episodeDefaultFlag)
-                        .build());
             }
 
             // build db ops to flag episodes according to given data
