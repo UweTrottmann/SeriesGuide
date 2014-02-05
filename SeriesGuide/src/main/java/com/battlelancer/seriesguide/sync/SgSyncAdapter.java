@@ -20,13 +20,15 @@ package com.battlelancer.seriesguide.sync;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -420,8 +422,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             if (config != null && config.images != null
                     && !TextUtils.isEmpty(config.images.base_url)) {
                 prefs.edit()
-                        .putString(SeriesGuidePreferences.KEY_TMDB_BASE_URL,
-                                config.images.base_url).commit();
+                        .putString(TmdbSettings.KEY_TMDB_BASE_URL, config.images.base_url).commit();
             }
         } catch (RetrofitError e) {
             Utils.trackExceptionAndLog(context, TAG, e);
@@ -454,13 +455,13 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
             if (resultCode < 0) {
                 result = UpdateResult.INCOMPLETE;
-                Log.d(TAG, "Syncing...trakt full sync...INCOMPLETE");
+                Log.d(TAG, "Syncing...trakt shows...INCOMPLETE");
             } else {
                 // set last full sync time
                 PreferenceManager.getDefaultSharedPreferences(context).edit()
                         .putLong(TraktSettings.KEY_LAST_FULL_SYNC, currentTime)
                         .commit();
-                Log.d(TAG, "Syncing...trakt full sync...SUCCESS");
+                Log.d(TAG, "Syncing...trakt shows...SUCCESS");
             }
 
             if (!AndroidUtils.isNetworkConnected(context)) {
@@ -469,13 +470,23 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // get trakt activity
-        Log.d(TAG, "Syncing...trakt activity...");
+        Log.d(TAG, "Syncing...trakt episode activity...");
         UpdateResult activityResult = getTraktActivity(context, trakt, showsExisting, showsNew);
-        Log.d(TAG, "Syncing...trakt activity..." + activityResult.toString());
+        Log.d(TAG, "Syncing...trakt episode activity..." + activityResult.toString());
 
         // don't overwrite failure
         if (result == UpdateResult.SUCCESS) {
             result = activityResult;
+        }
+
+        // sync movies with trakt
+        Log.d(TAG, "Syncing...trakt movies...");
+        UpdateResult resultMovies = MovieTools.Download.syncMoviesFromTrakt(context);
+        Log.d(TAG, "Syncing...trakt movies..." + resultMovies.toString());
+
+        // don't overwrite earlier failure
+        if (result == UpdateResult.SUCCESS) {
+            result = resultMovies;
         }
 
         return result;

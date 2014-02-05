@@ -22,7 +22,7 @@ import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
@@ -99,8 +99,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     public static final String SUPPORT_MAIL = "support@seriesgui.de";
 
     private static final String KEY_ABOUT = "aboutPref";
-
-    public static final String KEY_TMDB_BASE_URL = "com.battlelancer.seriesguide.tmdb.baseurl";
 
     public static final String KEY_TAPE_INTERVAL = "com.battlelancer.seriesguide.tapeinterval";
 

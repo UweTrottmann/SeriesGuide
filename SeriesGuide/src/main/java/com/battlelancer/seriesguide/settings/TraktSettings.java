@@ -16,7 +16,6 @@
 
 package com.battlelancer.seriesguide.settings;
 
-import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.util.SimpleCrypto;
 
 import android.content.Context;
@@ -44,7 +43,15 @@ public class TraktSettings {
     public static final String KEY_SYNC_UNWATCHED_EPISODES
             = "com.battlelancer.seriesguide.syncunseenepisodes";
 
+    public static final String KEY_HAS_MERGED_MOVIES
+            = "com.battlelancer.seriesguide.trakt.mergedmovies";
+
     private static final long FULL_SYNC_INTERVAL_MILLIS = 24 * DateUtils.HOUR_IN_MILLIS;
+
+    public static long getLastUpdateTime(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getLong(KEY_LAST_UPDATE, System.currentTimeMillis());
+    }
 
     /**
      * Returns the SHA hash of the users trakt password.<br> <b>Never</b> store this yourself,
@@ -62,19 +69,23 @@ public class TraktSettings {
         return hash;
     }
 
-    public static boolean isSharingWithTrakt(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(KEY_SHARE_WITH_TRAKT, false);
-    }
-
-    public static long getLastUpdateTime(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getLong(KEY_LAST_UPDATE, System.currentTimeMillis());
-    }
-
     public static boolean isAutoAddingShows(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_AUTO_ADD_TRAKT_SHOWS, true);
+    }
+
+    /**
+     * Whether the local movie database was merged with trakt after the last time connecting to
+     * trakt.
+     */
+    public static boolean hasMergedMovies(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_HAS_MERGED_MOVIES, false);
+    }
+
+    public static boolean isSharingWithTrakt(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_SHARE_WITH_TRAKT, false);
     }
 
     public static boolean isSyncingUnwatchedEpisodes(Context context) {

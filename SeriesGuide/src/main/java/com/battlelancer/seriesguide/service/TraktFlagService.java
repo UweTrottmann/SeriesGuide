@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.service;
 
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.FlagTapeEntry;
 import com.battlelancer.seriesguide.util.FlagTapeEntryQueue;

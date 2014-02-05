@@ -25,12 +25,10 @@ import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 
 import java.util.Date;

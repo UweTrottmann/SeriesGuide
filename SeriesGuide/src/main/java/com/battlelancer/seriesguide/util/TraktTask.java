@@ -170,6 +170,18 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         return this;
     }
 
+    public TraktTask collectionAddMovie(int movieTmdbId) {
+        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.COLLECTION_ADD_MOVIE.index);
+        mArgs.putInt(InitBundle.TMDB_ID, movieTmdbId);
+        return this;
+    }
+
+    public TraktTask collectionRemoveMovie(int movieTmdbId) {
+        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.COLLECTION_REMOVE_MOVIE.index);
+        mArgs.putInt(InitBundle.TMDB_ID, movieTmdbId);
+        return this;
+    }
+
     /**
      * Rate an episode.
      */
@@ -363,6 +375,24 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     r = manager.commentService().show(new CommentService.ShowComment(
                             showTvdbId, shout
                     ).spoiler(isSpoiler));
+                    break;
+                }
+                case COLLECTION_ADD_MOVIE: {
+                    int tmdbId = mArgs.getInt(InitBundle.TMDB_ID);
+                    r = manager.movieService().library(new MovieService.Movies(
+                            new MovieService.SeenMovie(tmdbId)
+                    ));
+                    // always returns success, even if movie is already in collection
+                    r.message = mContext.getString(R.string.action_collection_added);
+                    break;
+                }
+                case COLLECTION_REMOVE_MOVIE: {
+                    int tmdbId = mArgs.getInt(InitBundle.TMDB_ID);
+                    r = manager.movieService().unlibrary(new MovieService.Movies(
+                            new MovieService.SeenMovie(tmdbId)
+                    ));
+                    // always returns success, even if movie was never in collection
+                    r.message = mContext.getString(R.string.action_collection_removed);
                     break;
                 }
                 case WATCHLIST_MOVIE: {

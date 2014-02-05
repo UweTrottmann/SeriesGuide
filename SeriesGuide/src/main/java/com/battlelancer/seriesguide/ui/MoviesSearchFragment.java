@@ -19,9 +19,7 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.adapters.MoviesAdapter;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -53,16 +51,18 @@ import java.util.List;
 /**
  * Allows searching for movies on themoviedb.org, displays results in a nice grid.
  */
-public class MovieSearchFragment extends SherlockFragment implements OnEditorActionListener,
+public class MoviesSearchFragment extends SherlockFragment implements OnEditorActionListener,
         LoaderCallbacks<List<Movie>>, OnItemClickListener, OnClickListener {
 
     private static final String SEARCH_QUERY_KEY = "search_query";
 
-    private static final int LOADER_ID = R.layout.movies_fragment;
+    private static final int LOADER_ID = R.layout.fragment_movies_search;
 
     protected static final String TAG = "Movies Search";
 
-    private static final int CONTEXT_ADD_TO_WATCHLIST_ID = 0;
+    private static final int CONTEXT_COLLECTION_ADD_ID = 0;
+
+    private static final int CONTEXT_WATCHLIST_ADD_ID = 1;
 
     private MoviesAdapter mAdapter;
 
@@ -80,7 +80,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.movies_fragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_movies_search, container, false);
 
         mEmptyView = (TextView) v.findViewById(R.id.emptyViewMovieSearch);
 
@@ -129,7 +129,8 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        menu.add(0, CONTEXT_ADD_TO_WATCHLIST_ID, 0, R.string.watchlist_add);
+        menu.add(0, CONTEXT_COLLECTION_ADD_ID, 0, R.string.action_collection_add);
+        menu.add(0, CONTEXT_WATCHLIST_ADD_ID, 1, R.string.watchlist_add);
     }
 
     @Override
@@ -144,15 +145,17 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
         }
 
         switch (item.getItemId()) {
-            case CONTEXT_ADD_TO_WATCHLIST_ID: {
-                if (TraktCredentials.ensureCredentials(getActivity())) {
-                    // Add item to watchlist
-                    AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-                    Movie movie = mAdapter.getItem(info.position);
-                    AndroidUtils.executeAsyncTask(
-                            new TraktTask(getActivity()).watchlistMovie(movie.id)
-                    );
-                }
+            case CONTEXT_COLLECTION_ADD_ID: {
+                AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+                Movie movie = mAdapter.getItem(info.position);
+                MovieTools.addToCollection(getActivity(), movie.id);
+                fireTrackerEvent("Add to collection");
+                return true;
+            }
+            case CONTEXT_WATCHLIST_ADD_ID: {
+                AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+                Movie movie = mAdapter.getItem(info.position);
+                MovieTools.addToWatchlist(getActivity(), movie.id);
                 fireTrackerEvent("Add to watchlist");
                 return true;
             }
