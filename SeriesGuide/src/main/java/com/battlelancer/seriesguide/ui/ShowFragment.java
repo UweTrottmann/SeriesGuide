@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2014 Uwe Trottmann
  *
@@ -30,8 +29,8 @@ import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
-import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -56,6 +55,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.Date;
 
 import de.greenrobot.event.EventBus;
 
@@ -188,8 +189,9 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
         // release time
         TextView releaseTime = (TextView) getView().findViewById(R.id.textViewShowReleaseTime);
         if (!TextUtils.isEmpty(mShow.getAirsDayOfWeek()) && mShow.getAirsTime() != -1) {
-            String[] values = Utils.parseMillisecondsToTime(mShow.getAirsTime(),
-                    mShow.getAirsDayOfWeek(), getActivity());
+            String[] values = TimeTools
+                    .formatToShowReleaseTimeAndDay(getActivity(), mShow.getAirsTime(),
+                            mShow.getCountry(), mShow.getAirsDayOfWeek());
             releaseTime.setText(values[1] + " " + values[0]);
         } else {
             releaseTime.setText(null);
@@ -207,10 +209,18 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
         TextView overview = (TextView) getView().findViewById(R.id.textViewShowOverview);
         overview.setText(TextUtils.isEmpty(mShow.getOverview()) ? null : mShow.getOverview());
 
-        // first airdate
-        long airtime = Utils.buildEpisodeAirtime(mShow.getFirstAired(), mShow.getAirsTime());
+        // country for release times (or assumed one)
+        // show "United States" if country is not supported
+        TextView releaseCountry = (TextView) getView()
+                .findViewById(R.id.textViewShowReleaseCountry);
+        releaseCountry.setText(TimeTools.isUnsupportedCountryOrUs(mShow.getCountry())
+                ? TimeTools.UNITED_STATES : mShow.getCountry());
+
+        // first release: use the same parser as for episodes, because we have an exact date
+        long actualRelease = TimeTools.parseEpisodeReleaseTime(mShow.getFirstAired(),
+                mShow.getAirsTime(), mShow.getCountry());
         Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewShowFirstAirdate),
-                Utils.formatToDate(airtime, getActivity()));
+                TimeTools.formatToDate(getActivity(), new Date(actualRelease)));
 
         // Others
         Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewShowActors),

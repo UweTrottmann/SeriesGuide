@@ -29,17 +29,20 @@ import com.battlelancer.seriesguide.billing.IabHelper;
 import com.battlelancer.seriesguide.billing.IabResult;
 import com.battlelancer.seriesguide.billing.Inventory;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
@@ -54,8 +57,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SyncStatusObserver;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
@@ -350,12 +356,12 @@ public class ShowsActivity extends BaseTopShowsActivity implements
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             return true;
         } else if (itemId == R.id.menu_update) {
-            SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.UPDATE_TVDB_DELTA, true);
+            SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.DELTA, 0, true);
             fireTrackerEvent("Update (outdated)");
 
             return true;
         } else if (itemId == R.id.menu_fullupdate) {
-            SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.UPDATE_TVDB_FULL, true);
+            SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, true);
             fireTrackerEvent("Update (all)");
 
             return true;
@@ -539,6 +545,15 @@ public class ShowsActivity extends BaseTopShowsActivity implements
                 ImageProvider.getInstance(this).clearCache();
                 ImageProvider.getInstance(this).clearExternalStorageCache();
                 scheduleAllShowsUpdate();
+            }
+            // time calculation has changed, all episodes need re-calculation
+            if (lastVersion < 218) {
+                // flag all episodes as outdated
+                ContentValues values = new ContentValues();
+                values.put(SeriesContract.Episodes.LAST_EDITED, 0);
+                getContentResolver().update(SeriesContract.Episodes.CONTENT_URI, values, null, null);
+                // trigger full sync
+                SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, false);
             }
 
             // update notification

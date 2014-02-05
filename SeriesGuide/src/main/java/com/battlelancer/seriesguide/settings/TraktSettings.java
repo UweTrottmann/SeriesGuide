@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.util.SimpleCrypto;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 
 /**
  * Settings related to trakt.tv integration.
@@ -30,6 +31,9 @@ public class TraktSettings {
     public static final String KEY_PASSWORD_SHA1_ENCR = "com.battlelancer.seriesguide.traktpwd";
 
     public static final String KEY_LAST_UPDATE = "com.battlelancer.seriesguide.lasttraktupdate";
+
+    public static final String KEY_LAST_FULL_SYNC
+            = "com.battlelancer.seriesguide.trakt.lastfullsync";
 
     public static final String KEY_SHARE_WITH_TRAKT = "com.battlelancer.seriesguide.sharewithtrakt";
 
@@ -41,6 +45,8 @@ public class TraktSettings {
 
     public static final String KEY_HAS_MERGED_MOVIES
             = "com.battlelancer.seriesguide.trakt.mergedmovies";
+
+    private static final long FULL_SYNC_INTERVAL_MILLIS = 24 * DateUtils.HOUR_IN_MILLIS;
 
     public static long getLastUpdateTime(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
@@ -85,6 +91,15 @@ public class TraktSettings {
     public static boolean isSyncingUnwatchedEpisodes(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_SYNC_UNWATCHED_EPISODES, false);
+    }
+
+    /**
+     * Determines if enough time has passed since the last full trakt sync.
+     */
+    public static boolean isTimeForFullSync(Context context, long currentTime) {
+        long previousUpdateTime = PreferenceManager.getDefaultSharedPreferences(context)
+                .getLong(KEY_LAST_FULL_SYNC, currentTime);
+        return (currentTime - previousUpdateTime) > FULL_SYNC_INTERVAL_MILLIS;
     }
 
 }

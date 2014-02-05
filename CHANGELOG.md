@@ -8,6 +8,32 @@ All dates are in the European Central timezone.
 Version 12 *(in development)*
 -------------------------
 
+#### 12-beta5 *(2014-02-04)*
+
+* NOTICE A full sync is scheduled after upgrading. Details below.
+* TWEAK Release times are calculated with a show's country of origin (sourced from trakt) in mind. When upgrading a full sync is triggered. You might see incorrect release times and receive incorrect notifications until the upgrade is complete.
+* TWEAK On the info tab of a show 'Release times' will list the country that determines which time zone is used to calculate the episode release times. Currently supported are Australia, Germany, Japan, United States, United Kingdom. United States is used for all others. Please share others you want supported!
+* TWEAK Shows airing from 12:00am to 12:59am are now associated with the day before (e.g. Late Night with Jimmy Fallon).
+* TWEAK On Android 4.4 (KitKat) and up the episode details screen uses translucent system bars (phones only).
+* FIX Daily trakt sync now properly removes watched or collected flags for shows with no watched or collected episode on trakt.
+* FIX Crash when connecting to trakt and credentials could not be stored correctly.
+* FIX Sync did not update all shows it was told to update.
+* NOTICE The JSON import/export tool now exports the 'country' property for shows.
+* NOTICE Latest translations from crowdin.
+
+#### 12-beta4 *(2014-01-30)*
+
+* FIX Crash when adding/removing movie from watchlist, shouting.
+* NOTICE Latest translations from crowdin.
+
+#### 12-beta3 *(2014-01-29)*
+
+* NOTICE GetGlue is now tvtag.
+* TWEAK Check-in dialog waits for trakt and/or tvtag check-in to succeed before vanishing with your message (you can still dismiss anytime).
+* TWEAK Auto-Update gets watched and collected episodes from trakt and matches them in SeriesGuide. At most every 24 hours (always if update is triggered manually).
+* TWEAK Show show title in show list context menu, season number in seasons context menus.
+* NOTICE Latest translations from crowdin.
+
 #### 12-beta2 *(2014-01-21)*
 
 * FIX Mirrored shows and movies grid on some Android 4.1 tablets.

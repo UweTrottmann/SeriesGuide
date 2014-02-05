@@ -15,15 +15,21 @@ buildscript {
 allprojects {
     repositories {
         mavenCentral()
+        maven {
+            url 'https://oss.sonatype.org/content/repositories/snapshots/'
+        }
     }
 }
 
-project.ext {
+ext {
     compileSdkVersion = 19
     buildToolsVersion = '19.0.1'
+
+    versionCode = 220
+    versionName = '12-beta5'
 }
 
-project.ext.libraries = [
+ext.libraries = [
 
         supportv4: 'com.android.support:support-v4:19.0.+',
         okhttp: 'com.squareup.okhttp:okhttp:1.2.1'

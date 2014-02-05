@@ -3,4 +3,5 @@
     <bool name="isGingerbreadOrLower">true</bool>
     <bool name="isIceCreamSandwichOrLower">true</bool>
     <bool name="gridClipToPadding">true</bool>
+    <bool name="sgFitSystemWindows">false</bool>
 </resources>

@@ -49,8 +49,6 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
     private TraktAction mAction;
 
-    private OnTraktActionCompleteListener mListener;
-
     public interface InitBundle {
 
         String TRAKTACTION = "traktaction";
@@ -72,13 +70,6 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         String ISSPOILER = "isspoiler";
     }
 
-    public interface OnTraktActionCompleteListener {
-
-        public void onTraktActionComplete(TraktAction traktAction);
-
-        public void onCheckinBlocked(TraktAction traktAction, int wait, Bundle traktTaskArgs);
-    }
-
     public static class TraktActionCompleteEvent {
 
         public TraktAction mTraktAction;
@@ -98,6 +89,10 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
          * Displays status toasts dependent on the result of the trakt action performed.
          */
         public void handle(Context context) {
+            if (TextUtils.isEmpty(mMessage)) {
+                return;
+            }
+
             if (!mWasSuccessful) {
                 // display error toast
                 Toast.makeText(context, mMessage, Toast.LENGTH_LONG).show();
@@ -119,15 +114,26 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         }
     }
 
+    public static class TraktCheckInBlockedEvent {
+
+        public Bundle traktTaskArgs;
+
+        public int waitMinutes;
+
+        public TraktCheckInBlockedEvent(Bundle traktTaskArgs, int waitMinutes) {
+            this.traktTaskArgs = traktTaskArgs;
+            this.waitMinutes = waitMinutes;
+        }
+    }
+
     /**
      * Initial constructor. Call <b>one</b> of the setup-methods like {@link #shoutEpisode(int, int,
      * int, String, boolean)} afterwards.<br> <br> Make sure the user has valid trakt credentials
      * (check with {@link com.battlelancer.seriesguide.settings.TraktCredentials#hasCredentials()}
      * and then possibly launch {@link ConnectTraktActivity}) or execution will fail.
      */
-    public TraktTask(Context context, OnTraktActionCompleteListener listener) {
+    public TraktTask(Context context) {
         mContext = context;
-        mListener = listener;
         mArgs = new Bundle();
     }
 
@@ -137,8 +143,8 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
      * com.battlelancer.seriesguide.settings.TraktCredentials#hasCredentials()} and then possibly
      * launch {@link ConnectTraktActivity}) or execution will fail.
      */
-    public TraktTask(Context context, Bundle args, OnTraktActionCompleteListener listener) {
-        this(context, listener);
+    public TraktTask(Context context, Bundle args) {
+        this(context);
         mArgs = args;
     }
 
@@ -436,9 +442,8 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     CheckinResponse checkinResponse = (CheckinResponse) r;
                     if (checkinResponse.wait != 0) {
                         // looks like a check in is already in progress
-                        if (mListener != null) {
-                            mListener.onCheckinBlocked(mAction, checkinResponse.wait, mArgs);
-                        }
+                        EventBus.getDefault().post(
+                                new TraktCheckInBlockedEvent(mArgs, checkinResponse.wait));
                         return;
                     }
                 }
@@ -446,11 +451,6 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
             // well, something went wrong
             EventBus.getDefault().post(new TraktActionCompleteEvent(mAction, false, r.error));
-        }
-
-        // notify activity that it may hide a visible progress dialog
-        if (mListener != null) {
-            mListener.onTraktActionComplete(mAction);
         }
     }
 }

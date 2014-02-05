@@ -1,0 +1,1 @@
+Run tests here with `gradlew testFreeDebug`. Test results appear in `/SeriesGuide/build/test-report`.

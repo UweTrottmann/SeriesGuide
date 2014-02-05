@@ -77,6 +77,7 @@
   <string name="show_genres">Žanrovi</string>
   <string name="show_runtime">Trajanje</string>
   <string name="show_contentrating">Ocena sadržaja</string>
+  <string name="show_release_times">Release times</string>
   <string name="episode_directors">Režiseri</string>
   <string name="episode_gueststars">Gostujući glumci</string>
   <string name="episode_writers">Scenaristi</string>
@@ -281,7 +282,7 @@
   <string name="paste_title">Nalepi naziv</string>
   <string name="checkinsuccess">Prijavljeno gledanje %s na GetGlue.</string>
   <string name="checkinfailed">Prijava gledanja na GetGlue neuspešna. Pokušajte kasnije.</string>
-  <string name="getglue_authentication">Connect GetGlue</string>
+  <string name="getglue_authentication">Connect tvtag</string>
   <string name="getglue_authfailed">Neuspešna autentikacija na GetGlue. Pokušajte kasnije.</string>
   <string name="checkin_success_trakt">Prijavljeno gledanje %s na trakt.tv.</string>
   <string name="checkin_canceled_success_trakt">Otkazana prijava gledanja na traktu.</string>

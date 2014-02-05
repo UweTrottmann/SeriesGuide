@@ -29,11 +29,11 @@ import android.util.Log;
 
 public class AccountUtils {
 
+    public static final int SYNC_FREQUENCY = 24 * 60 * 60; // 1 day (in seconds)
+
     private static final String TAG = "AccountUtils";
 
     private static final String ACCOUNT_NAME = "SeriesGuide Sync";
-
-    private static final int SYNC_FREQUENCY = 24 * 60 * 60; // 1 day (in seconds)
 
     public static void createAccount(Context context) {
         Log.d(TAG, "Setting up account...");

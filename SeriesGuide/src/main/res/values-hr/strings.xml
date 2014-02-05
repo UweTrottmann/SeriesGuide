@@ -8,8 +8,8 @@
   <string name="search">Traži</string>
   <string name="preferences">Postavke</string>
   <string name="help">Pomoć</string>
-  <string name="drawer_open">Open navigation drawer</string>
-  <string name="drawer_close">Close navigation drawer</string>
+  <string name="drawer_open">Otvori izbornik za navigaciju</string>
+  <string name="drawer_close">Zatvori izbornik za navigaciju</string>
   <string name="show">Serija</string>
   <string name="episode">Epizoda</string>
   <string name="episode_number">Epizoda %s</string>
@@ -29,11 +29,11 @@
   <string name="updated">Ažurirano u najnoviju verziju.</string>
   <string name="norating">nedostupno</string>
   <string name="unknown">nepoznato</string>
-  <string name="offline">Connect to a network, then try again.</string>
-  <string name="offline_no_wifi">Connect to Wi-Fi or allow all connections, then try again.</string>
-  <string name="app_not_available">No app available to handle this.</string>
+  <string name="offline">Spojite se na mrežu i probajte ponovno.</string>
+  <string name="offline_no_wifi">Spojite se pomoću Wi-Fi ili omogućite sve veze i pokušajte ponovno.</string>
+  <string name="app_not_available">Ne postoji aplikacija koja moze ovo otvoriti.</string>
   <string name="onlyx">Dostupno samo s X pretplatom</string>
-  <string name="add_empty">There are no shows here.</string>
+  <string name="add_empty">Ovdje ne postoje serije.</string>
   <string name="share_show">Podijeli seriju</string>
   <string name="share_episode">Podijeli epizodu</string>
   <string name="share_checkout">Odjava</string>
@@ -50,7 +50,7 @@
   <string name="watchlist_removed">Uklonjeno s popisa gledanja</string>
   <string name="movies_search_hint">Upiši naslov filma</string>
   <string name="movies_empty">Potraži film iznad.</string>
-  <string name="movies_watchlist_empty">You have not added movies to your trakt watchlist.</string>
+  <string name="movies_watchlist_empty">Niste dodali filmove u vaš trakt popis.</string>
   <string name="trailer">Trailer</string>
   <string name="shows_with_next">%s sa sljedećim epizodama</string>
   <string name="shows_continuing">%s se nastavlja</string>
@@ -77,6 +77,7 @@
   <string name="show_genres">Žanrovi</string>
   <string name="show_runtime">Trajanje</string>
   <string name="show_contentrating">Ocjena sadržaja</string>
+  <string name="show_release_times">Release times</string>
   <string name="episode_directors">Režiseri</string>
   <string name="episode_gueststars">Gostujući glumci</string>
   <string name="episode_writers">Scenaristi</string>
@@ -281,7 +282,7 @@
   <string name="paste_title">Zalijepi naziv</string>
   <string name="checkinsuccess">Prijavljen u %s na GetGlue.</string>
   <string name="checkinfailed">Prijava na GetGlue nije uspjela. Pokušaj kasnije.</string>
-  <string name="getglue_authentication">Connect GetGlue</string>
+  <string name="getglue_authentication">Connect tvtag</string>
   <string name="getglue_authfailed">GetGlue ovjera nije uspjela. Pokušaj kasnije.</string>
   <string name="checkin_success_trakt">Prijavljen u %s na traktu.</string>
   <string name="checkin_canceled_success_trakt">Otkazana prijava na trakt.</string>

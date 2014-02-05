@@ -36,6 +36,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.MoviesColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 
 public class SeriesGuideDatabase extends SQLiteOpenHelper {
@@ -219,7 +220,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ShowsColumns.SYNCENABLED + " INTEGER DEFAULT 1,"
 
-            + ShowsColumns.AIRTIME + " TEXT DEFAULT '',"
+            + ShowsColumns.RELEASE_COUNTRY + " TEXT DEFAULT '',"
 
             + ShowsColumns.HIDDEN + " INTEGER DEFAULT 0,"
 
@@ -628,7 +629,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 ContentValues values = new ContentValues();
                 while (episodes.moveToNext()) {
                     String firstAired = episodes.getString(1);
-                    long episodeAirtime = Utils.buildEpisodeAirtime(firstAired, airtime);
+                    long episodeAirtime = TimeTools.parseEpisodeReleaseTime(firstAired, airtime, null);
 
                     values.put(Episodes.FIRSTAIREDMS, episodeAirtime);
                     db.update(Tables.EPISODES, values, Episodes._ID + "=?", new String[]{
@@ -667,7 +668,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     private static void upgradeToTwentyOne(SQLiteDatabase db) {
-        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.AIRTIME
+        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.RELEASE_COUNTRY
                 + " TEXT DEFAULT '';");
     }
 

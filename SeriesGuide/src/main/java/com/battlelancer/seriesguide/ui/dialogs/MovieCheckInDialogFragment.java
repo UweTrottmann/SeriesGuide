@@ -16,21 +16,19 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin.CheckInTask;
+import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 /**
- * Allows to check into movies on trakt or GetGlue. Launching activities must
- * implement {@link OnTraktActionCompleteListener}.
+ * Allows to check into movies on trakt or GetGlue. Launching activities should subscribe to {@link
+ * com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent} to display status toasts.
  */
 public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
 
@@ -49,51 +47,24 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
     protected final static String TAG = "Movie Check-In Dialog";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View layout = super.onCreateView(inflater, container, savedInstanceState);
-
-        setupFixGetGlueButton(layout, false, 0);
-
-        return layout;
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
         Utils.trackView(getActivity(), "Movie Check-In Dialog");
     }
 
-    protected boolean onGetGlueCheckin(final String title, final String message) {
-        boolean isAbortingCheckIn = false;
-
-        // require GetGlue authentication
-        if (!GetGlueSettings.isAuthenticated(getActivity())) {
-            isAbortingCheckIn = true;
-        }
-
-        if (isAbortingCheckIn) {
-            mToggleGetGlueButton.setChecked(false);
-            mGetGlueChecked = false;
-            updateCheckInButtonState();
-        } else {
-            // check in, use task on thread pool
-            AndroidUtils.executeAsyncTask(new CheckInTask(title, message,
-                    getActivity()));
-        }
-
-        return isAbortingCheckIn;
+    protected void checkInGetGlue(final String title, final String message) {
+        // check in, use task on thread pool
+        AndroidUtils.executeAsyncTask(new GetGlueCheckin.GetGlueCheckInTask(title, message,
+                getActivity()));
     }
 
     /**
      * Start the trakt check in task.
      */
-    protected void onTraktCheckIn(String message) {
+    protected void checkInTrakt(String message) {
         final String imdbId = getArguments().getString(InitBundle.MOVIE_IMDB_ID);
         AndroidUtils.executeAsyncTask(
-                new TraktTask(getActivity(), mListener).checkInMovie(imdbId, message),
-                new Void[]{
-                        null
-                });
+                new TraktTask(getActivity()).checkInMovie(imdbId, message));
     }
 
     protected void handleGetGlueToggle(boolean isChecked) {
@@ -104,4 +75,10 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
         }
     }
 
+    @Override
+    protected void setupButtonFixGetGlue(View layout) {
+        View divider = layout.findViewById(R.id.dividerHorizontalCheckIn);
+        divider.setVisibility(View.GONE);
+        mButtonFixGetGlue.setVisibility(View.GONE);
+    }
 }

@@ -78,6 +78,7 @@
   <string name="show_genres">Genrer</string>
   <string name="show_runtime">Längd</string>
   <string name="show_contentrating">Åldersgräns</string>
+  <string name="show_release_times">Release times</string>
   <string name="episode_directors">Regissörer</string>
   <string name="episode_gueststars">Gästskådespelare</string>
   <string name="episode_writers">Författare</string>

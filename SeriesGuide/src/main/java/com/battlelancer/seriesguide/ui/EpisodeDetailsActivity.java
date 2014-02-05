@@ -24,11 +24,14 @@ import com.actionbarsherlock.view.Window;
 import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.items.Episode;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.Utils;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 import android.content.Context;
@@ -41,7 +44,10 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
@@ -60,6 +66,8 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
     private int mShowId;
 
+    private SystemBarTintManager mSystemBarTintManager;
+
     /**
      * Data which has to be passed when creating this activity. All Bundle extras are integer.
      */
@@ -77,72 +85,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         setupActionBar();
 
-        final int episodeId = getIntent().getIntExtra(InitBundle.EPISODE_TVDBID, 0);
-        if (episodeId == 0) {
-            // nothing to display
-            finish();
-            return;
-        }
-
-        ArrayList<Episode> episodes = new ArrayList<Episode>();
-        int startPosition = 0;
-
-        // Lookup show and season of episode
-        final Cursor episode = getContentResolver().query(
-                Episodes.buildEpisodeWithShowUri(String.valueOf(episodeId)), new String[]{
-                Seasons.REF_SEASON_ID, Shows.POSTER, Shows.REF_SHOW_ID
-        }, null, null, null);
-
-        if (episode == null || !episode.moveToFirst()) {
-            // nothing to display
-            finish();
-            return;
-        }
-
-        // set show poster as background
-        final ImageView background = (ImageView) findViewById(R.id.background);
-        Utils.setPosterBackground(background, episode.getString(1), this);
-
-        // lookup episodes of season
-        mShowId = episode.getInt(2);
-        mSeasonId = episode.getInt(0);
-        Constants.EpisodeSorting sortOrder = DisplaySettings.getEpisodeSortOrder(this);
-
-        Cursor episodeCursor = getContentResolver().query(
-                Episodes.buildEpisodesOfSeasonUri(String.valueOf(mSeasonId)), new String[]{
-                Episodes._ID, Episodes.NUMBER, Episodes.SEASON
-        }, null, null, sortOrder.query());
-
-        if (episodeCursor != null) {
-            int i = 0;
-            while (episodeCursor.moveToNext()) {
-                Episode ep = new Episode();
-                int curEpisodeId = episodeCursor.getInt(0);
-                // look for episode to show initially
-                if (curEpisodeId == episodeId) {
-                    startPosition = i;
-                }
-                ep.episodeId = curEpisodeId;
-                ep.episodeNumber = episodeCursor.getInt(1);
-                ep.seasonNumber = episodeCursor.getInt(2);
-                episodes.add(ep);
-                i++;
-            }
-            episodeCursor.close();
-        }
-
-        episode.close();
-
-        EpisodePagerAdapter adapter = new EpisodePagerAdapter(this, getSupportFragmentManager(),
-                episodes, true);
-
-        ViewPager pager = (ViewPager) findViewById(R.id.pagerEpisodeDetails);
-        pager.setAdapter(adapter);
-
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsEpisodeDetails);
-        tabs.setAllCaps(false);
-        tabs.setViewPager(pager);
-        pager.setCurrentItem(startPosition, false);
+        setupViews();
     }
 
     @Override
@@ -161,6 +104,96 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void setupViews() {
+        // get episode id
+        final int episodeId = getIntent().getIntExtra(InitBundle.EPISODE_TVDBID, 0);
+        if (episodeId == 0) {
+            // nothing to display
+            finish();
+            return;
+        }
+
+        // get show and season id, poster path
+        final Cursor episode = getContentResolver().query(
+                Episodes.buildEpisodeWithShowUri(String.valueOf(episodeId)), new String[]{
+                Seasons.REF_SEASON_ID, Shows.POSTER, Shows.REF_SHOW_ID
+        }, null, null, null);
+        if (episode == null || !episode.moveToFirst()) {
+            // nothing to display
+            if (episode != null) {
+                episode.close();
+            }
+            finish();
+            return;
+        }
+
+        // set show poster as background
+        ImageView background = (ImageView) findViewById(R.id.background);
+        Utils.setPosterBackground(background, episode.getString(1), this);
+
+        mShowId = episode.getInt(2);
+        mSeasonId = episode.getInt(0);
+        episode.close();
+
+        // get episodes of season
+        Constants.EpisodeSorting sortOrder = DisplaySettings.getEpisodeSortOrder(this);
+        Cursor episodesOfSeason = getContentResolver().query(
+                Episodes.buildEpisodesOfSeasonUri(String.valueOf(mSeasonId)), new String[]{
+                Episodes._ID, Episodes.NUMBER, Episodes.SEASON
+        }, null, null, sortOrder.query());
+
+        ArrayList<Episode> episodes = new ArrayList<>();
+        int startPosition = 0;
+        if (episodesOfSeason != null) {
+            int i = 0;
+            while (episodesOfSeason.moveToNext()) {
+                Episode ep = new Episode();
+                int curEpisodeId = episodesOfSeason.getInt(0);
+                // look for episode to show initially
+                if (curEpisodeId == episodeId) {
+                    startPosition = i;
+                }
+                ep.episodeId = curEpisodeId;
+                ep.episodeNumber = episodesOfSeason.getInt(1);
+                ep.seasonNumber = episodesOfSeason.getInt(2);
+                episodes.add(ep);
+                i++;
+            }
+            episodesOfSeason.close();
+        }
+
+        // setup adapter
+        EpisodePagerAdapter adapter = new EpisodePagerAdapter(this, getSupportFragmentManager(),
+                episodes, true);
+
+        // setup view pager
+        ViewPager pager = (ViewPager) findViewById(R.id.pagerEpisodeDetails);
+        pager.setAdapter(adapter);
+
+        // setup tabs
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsEpisodeDetails);
+        tabs.setAllCaps(false);
+        tabs.setViewPager(pager);
+
+        // fix padding for translucent system bars
+        if (AndroidUtils.isKitKatOrHigher()) {
+            mSystemBarTintManager = new SystemBarTintManager(this);
+            SystemBarTintManager.SystemBarConfig config = getSystemBarTintManager().getConfig();
+            ViewGroup contentContainer = (ViewGroup) findViewById(
+                    R.id.contentContainerEpisodeDetails);
+            contentContainer.setClipToPadding(false);
+            contentContainer.setPadding(0, config.getPixelInsetTop(true),
+                    config.getPixelInsetRight(), 0);
+        }
+
+        // set current item
+        pager.setCurrentItem(startPosition, false);
+    }
+
+    public SystemBarTintManager getSystemBarTintManager() {
+        return mSystemBarTintManager;
     }
 
     @Override

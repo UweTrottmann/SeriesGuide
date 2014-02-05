@@ -81,18 +81,18 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
 
         // check validity
         // use a new Trakt instance for testing
-        final Trakt manager = new Trakt();
-        manager.setApiKey(mContext.getResources().getString(R.string.trakt_apikey));
-        manager.setAuthentication(username, password);
+        Trakt trakt = new Trakt();
+        trakt.setApiKey(mContext.getResources().getString(R.string.trakt_apikey));
+        trakt.setAuthentication(username, password);
 
         Response response = null;
         try {
             if (TextUtils.isEmpty(email)) {
                 // validate existing account
-                response = manager.accountService().test();
+                response = trakt.accountService().test();
             } else {
                 // create new account
-                response = manager.accountService().create(
+                response = trakt.accountService().create(
                         new AccountService.NewAccount(username, password, email));
             }
         } catch (RetrofitError e) {
@@ -107,8 +107,13 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         // store the new credentials
         TraktCredentials.get(mContext).setCredentials(username, password);
 
-        // set new auth data for service manager
-        Trakt trakt = ServiceUtils.getTraktWithAuth(mContext);
+        // try to get service manager
+        trakt = ServiceUtils.getTraktWithAuth(mContext);
+        if (trakt == null) {
+            // looks like credentials weren't saved properly
+            return Result.ERROR;
+        }
+        // set new credentials
         trakt.setAuthentication(username, password);
 
         // reset merged movies flag

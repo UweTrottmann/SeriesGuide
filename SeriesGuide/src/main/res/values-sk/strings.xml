@@ -77,6 +77,7 @@
   <string name="show_genres">Žánre</string>
   <string name="show_runtime">Dĺžka</string>
   <string name="show_contentrating">Hodnotenie obsahu</string>
+  <string name="show_release_times">Release times</string>
   <string name="episode_directors">Režiséri</string>
   <string name="episode_gueststars">Hosťujúci herci</string>
   <string name="episode_writers">Scenár</string>
@@ -224,7 +225,7 @@
   <string name="about">O SeriesGuide</string>
   <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">Odpojiť GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
+  <string name="clearGetGlueCredentialssummary">Check in with tvtag to reconnect</string>
   <string name="pref_traktsummary">Pridajte alebo upravte vaše prihlasovacie údaje</string>
   <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">Poslať reakciu</string>
@@ -277,11 +278,11 @@
   <string name="checkin_searchhint">Napíšte názov seriálu</string>
   <string name="checkin_empty">Seriál sa nenašiel</string>
   <string name="checkin_hint">Napíšte správu (nepovinné)</string>
-  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
+  <string name="checkin_fixgetglue">Fix tvtag check-in</string>
   <string name="paste_title">Paste title</string>
-  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
-  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
-  <string name="getglue_authentication">Connect GetGlue</string>
+  <string name="checkinsuccess">Checked into %s on tvtag.</string>
+  <string name="checkinfailed">tvtag check-in failed. Try again later.</string>
+  <string name="getglue_authentication">Connect tvtag</string>
   <string name="getglue_authfailed">GetGlue overenie zlyhalo. Skúste to znova neskôr.</string>
   <string name="checkin_success_trakt">Checked into %s on trakt.</string>
   <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>

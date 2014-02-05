@@ -317,7 +317,8 @@ public class OverviewActivity extends BaseNavDrawerActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    SgSyncAdapter.requestSyncIfConnected(context, mShowId);
+                    SgSyncAdapter.requestSyncIfConnected(context, SgSyncAdapter.SyncType.SINGLE,
+                            mShowId);
                 }
             }, 1000);
         }
