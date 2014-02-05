@@ -20,7 +20,6 @@ import com.battlelancer.seriesguide.enums.SeasonTags;
 import com.uwetrottmann.seriesguide.R;
 
 import android.content.Context;
-import android.text.TextUtils;
 
 public class SeasonTools {
 

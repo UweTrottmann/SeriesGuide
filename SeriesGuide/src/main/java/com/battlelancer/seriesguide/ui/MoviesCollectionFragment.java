@@ -26,41 +26,41 @@ import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.AdapterView;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 /**
- * Loads and displays the users trakt movie watchlist.
+ * Displays a users collection of movies in a grid.
  */
-public class MoviesWatchListFragment extends MoviesBaseFragment {
+public class MoviesCollectionFragment extends MoviesBaseFragment {
 
-    protected static final int LOADER_ID = 300;
+    protected static final int LOADER_ID = 301;
 
-    private static final String TAG = "Movie Watchlist";
+    private static final String TAG = "Movie Collection";
 
-    private static final int CONTEXT_WATCHLIST_REMOVE_ID = 0;
+    private static final int CONTEXT_COLLECTION_REMOVE_ID = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
 
-        mEmptyView.setText(R.string.movies_watchlist_empty);
+        mEmptyView.setText(R.string.movies_collection_empty);
 
         return v;
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+    public void onCreateContextMenu(ContextMenu menu, View v,
+            ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        menu.add(0, CONTEXT_WATCHLIST_REMOVE_ID, 0, R.string.watchlist_remove);
+        menu.add(0, CONTEXT_COLLECTION_REMOVE_ID, 0, R.string.action_collection_remove);
     }
 
     @Override
@@ -75,14 +75,15 @@ public class MoviesWatchListFragment extends MoviesBaseFragment {
         }
 
         switch (item.getItemId()) {
-            case CONTEXT_WATCHLIST_REMOVE_ID: {
-                AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+            case CONTEXT_COLLECTION_REMOVE_ID: {
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
+                        .getMenuInfo();
                 Cursor movie = (Cursor) mAdapter.getItem(info.position);
                 int tmdbId = movie.getInt(MoviesCursorAdapter.MoviesQuery.TMDB_ID);
 
-                MovieTools.removeFromWatchlist(getActivity(), tmdbId);
+                MovieTools.removeFromCollection(getActivity(), tmdbId);
 
-                fireTrackerEvent("Remove from watchlist");
+                fireTrackerEvent("Remove from collection");
                 return true;
             }
         }
@@ -91,19 +92,18 @@ public class MoviesWatchListFragment extends MoviesBaseFragment {
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(getActivity(), Movies.CONTENT_URI,
-                MoviesCursorAdapter.MoviesQuery.PROJECTION, Movies.SELECTION_WATCHLIST, null,
+                MoviesCursorAdapter.MoviesQuery.PROJECTION, Movies.SELECTION_COLLECTION, null,
                 Movies.DEFAULT_SORT);
     }
 
     @Override
     protected int getLoaderId() {
-        return 0;
+        return LOADER_ID;
     }
 
     private void fireTrackerEvent(String label) {
         Utils.trackAction(getActivity(), TAG, label);
     }
-
 }

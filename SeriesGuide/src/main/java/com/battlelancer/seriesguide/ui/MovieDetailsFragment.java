@@ -23,6 +23,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader;
 import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader.MovieDetails;
+import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -103,9 +104,7 @@ public class MovieDetailsFragment extends SherlockFragment implements
 
         mImageDownloader = ImageDownloader.getInstance(getActivity());
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        mBaseUrl = prefs.getString(SeriesGuidePreferences.KEY_TMDB_BASE_URL,
-                "http://cf2.imgobject.com/t/p/") + "w342";
+        mBaseUrl = TmdbSettings.getImageBaseUrl(getActivity()) + TmdbSettings.POSTER_SIZE_SPEC_W342;
 
         Bundle args = new Bundle();
         args.putInt(InitBundle.TMDB_ID, tmdbId);

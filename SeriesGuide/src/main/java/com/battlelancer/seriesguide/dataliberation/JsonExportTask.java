@@ -29,12 +29,12 @@ import com.battlelancer.seriesguide.dataliberation.model.List;
 import com.battlelancer.seriesguide.dataliberation.model.ListItem;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.provider.SeriesContract;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -168,7 +168,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         /*
          * Export lists.
          */
-        final Cursor lists = mContext.getContentResolver().query(SeriesContract.Lists.CONTENT_URI,
+        final Cursor lists = mContext.getContentResolver().query(SeriesGuideContract.Lists.CONTENT_URI,
                 ListsQuery.PROJECTION, null, null, ListsQuery.SORT);
         if (lists == null) {
             return ERROR;
@@ -509,10 +509,10 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
     public interface ListsQuery {
         String[] PROJECTION = new String[] {
-                SeriesContract.Lists.LIST_ID, SeriesContract.Lists.NAME
+                SeriesGuideContract.Lists.LIST_ID, SeriesGuideContract.Lists.NAME
         };
 
-        String SORT = SeriesContract.Lists.NAME + " COLLATE NOCASE ASC";
+        String SORT = SeriesGuideContract.Lists.NAME + " COLLATE NOCASE ASC";
 
         int ID = 0;
         int NAME = 1;
@@ -520,11 +520,11 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
     public interface ListItemsQuery {
         String[] PROJECTION = new String[] {
-                ListItems.LIST_ITEM_ID, SeriesContract.Lists.LIST_ID, ListItems.ITEM_REF_ID,
+                ListItems.LIST_ITEM_ID, SeriesGuideContract.Lists.LIST_ID, ListItems.ITEM_REF_ID,
                 ListItems.TYPE
         };
 
-        String SELECTION = SeriesContract.Lists.LIST_ID + "=?";
+        String SELECTION = SeriesGuideContract.Lists.LIST_ID + "=?";
 
         int ID = 0;
         int LIST_ID = 1;

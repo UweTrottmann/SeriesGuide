@@ -20,6 +20,7 @@ import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.services.AccountService;
@@ -28,13 +29,14 @@ import com.uwetrottmann.seriesguide.R;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import retrofit.RetrofitError;
 
 /**
  * Expects a trakt username, password and email (can be null) as parameters. Checks the validity
- * with trakt servers or creates a new account if an email adress is given. If successful, the
+ * with trakt servers or creates a new account if an email address is given. If successful, the
  * credentials are stored.
  */
 public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
@@ -113,6 +115,10 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         }
         // set new credentials
         trakt.setAuthentication(username, password);
+
+        // reset merged movies flag
+        PreferenceManager.getDefaultSharedPreferences(mContext).edit()
+                .putBoolean(TraktSettings.KEY_HAS_MERGED_MOVIES, false).commit();
 
         return Result.SUCCESS;
     }

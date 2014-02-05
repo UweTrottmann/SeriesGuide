@@ -30,7 +30,9 @@ public enum TraktAction {
     RATE_SHOW(4),
     CHECKIN_MOVIE(5),
     WATCHLIST_MOVIE(6),
-    UNWATCHLIST_MOVIE(7);
+    UNWATCHLIST_MOVIE(7),
+    COLLECTION_ADD_MOVIE(8),
+    COLLECTION_REMOVE_MOVIE(9);
 
     public final int index;
 

@@ -25,7 +25,7 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.provider.SeriesContract;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.seriesguide.R;
@@ -112,8 +112,8 @@ public class ShowTools {
 
         // remove episode images
         final Cursor episodes = mContext.getContentResolver().query(
-                SeriesContract.Episodes.buildEpisodesOfShowUri(showTvdbId), new String[]{
-                SeriesContract.Episodes._ID, SeriesContract.Episodes.IMAGE
+                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId), new String[]{
+                SeriesGuideContract.Episodes._ID, SeriesGuideContract.Episodes.IMAGE
         }, null, null, null);
         if (episodes == null) {
             // failed
@@ -131,9 +131,9 @@ public class ShowTools {
 
         // remove show poster
         final Cursor show = mContext.getContentResolver().query(
-                SeriesContract.Shows.buildShowUri(showTvdbId),
+                SeriesGuideContract.Shows.buildShowUri(showTvdbId),
                 new String[]{
-                        SeriesContract.Shows.POSTER
+                        SeriesGuideContract.Shows.POSTER
                 }, null, null, null);
         if (show == null || !show.moveToFirst()) {
             // failed
@@ -152,18 +152,18 @@ public class ShowTools {
         // remove episode search database entries
         for (String episodeTvdbId : episodeTvdbIds) {
             batch.add(ContentProviderOperation.newDelete(
-                    SeriesContract.EpisodeSearch.buildDocIdUri(episodeTvdbId)).build());
+                    SeriesGuideContract.EpisodeSearch.buildDocIdUri(episodeTvdbId)).build());
         }
         DBUtils.applyInSmallBatches(mContext, batch);
         batch.clear();
 
         // remove episodes, seasons and show
         batch.add(ContentProviderOperation.newDelete(
-                SeriesContract.Episodes.buildEpisodesOfShowUri(showTvdbId)).build());
+                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId)).build());
         batch.add(ContentProviderOperation.newDelete(
-                SeriesContract.Seasons.buildSeasonsOfShowUri(showTvdbId)).build());
+                SeriesGuideContract.Seasons.buildSeasonsOfShowUri(showTvdbId)).build());
         batch.add(ContentProviderOperation.newDelete(
-                SeriesContract.Shows.buildShowUri(showTvdbId)).build());
+                SeriesGuideContract.Shows.buildShowUri(showTvdbId)).build());
         DBUtils.applyInSmallBatches(mContext, batch);
 
         return Result.SUCCESS;
@@ -199,9 +199,9 @@ public class ShowTools {
 
         // save to local database
         ContentValues values = new ContentValues();
-        values.put(SeriesContract.Shows.FAVORITE, isFavorite);
+        values.put(SeriesGuideContract.Shows.FAVORITE, isFavorite);
         mContext.getContentResolver().update(
-                SeriesContract.Shows.buildShowUri(showTvdbId), values, null, null);
+                SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
 
         Toast.makeText(mContext, mContext.getString(isFavorite ?
                 R.string.favorited : R.string.unfavorited), Toast.LENGTH_SHORT).show();
@@ -224,9 +224,9 @@ public class ShowTools {
 
         // save to local database
         ContentValues values = new ContentValues();
-        values.put(SeriesContract.Shows.HIDDEN, isHidden);
+        values.put(SeriesGuideContract.Shows.HIDDEN, isHidden);
         mContext.getContentResolver().update(
-                SeriesContract.Shows.buildShowUri(showTvdbId), values, null, null);
+                SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
 
         Toast.makeText(mContext, mContext.getString(isHidden ?
                 R.string.hidden : R.string.unhidden), Toast.LENGTH_SHORT).show();
@@ -249,9 +249,9 @@ public class ShowTools {
 
         // save to local database
         ContentValues values = new ContentValues();
-        values.put(SeriesContract.Shows.GETGLUEID, getglueId);
+        values.put(SeriesGuideContract.Shows.GETGLUEID, getglueId);
         mContext.getContentResolver()
-                .update(SeriesContract.Shows.buildShowUri(showTvdbId), values, null, null);
+                .update(SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
     }
 
     public boolean isSignedIn() {
@@ -334,10 +334,10 @@ public class ShowTools {
             List<Show> shows = new LinkedList<>();
 
             Cursor query = context.getContentResolver()
-                    .query(SeriesContract.Shows.CONTENT_URI, new String[]{
-                            SeriesContract.Shows._ID, SeriesContract.Shows.FAVORITE,
-                            SeriesContract.Shows.HIDDEN, SeriesContract.Shows.GETGLUEID,
-                            SeriesContract.Shows.SYNCENABLED
+                    .query(SeriesGuideContract.Shows.CONTENT_URI, new String[]{
+                            SeriesGuideContract.Shows._ID, SeriesGuideContract.Shows.FAVORITE,
+                            SeriesGuideContract.Shows.HIDDEN, SeriesGuideContract.Shows.GETGLUEID,
+                            SeriesGuideContract.Shows.SYNCENABLED
                     }, null, null, null);
             if (query == null) {
                 return null;
@@ -453,7 +453,7 @@ public class ShowTools {
                 // build update op
                 if (values.size() > 0) {
                     ContentProviderOperation op = ContentProviderOperation
-                            .newUpdate(SeriesContract.Shows.buildShowUri(show.getTvdbId()))
+                            .newUpdate(SeriesGuideContract.Shows.buildShowUri(show.getTvdbId()))
                             .withValues(values).build();
                     batch.add(op);
 
@@ -466,11 +466,11 @@ public class ShowTools {
         }
 
         private static void putSyncedShowPropertyValues(Show show, ContentValues values) {
-            putPropertyValueIfNotNull(values, SeriesContract.Shows.FAVORITE, show.getIsFavorite());
-            putPropertyValueIfNotNull(values, SeriesContract.Shows.HIDDEN, show.getIsHidden());
-            putPropertyValueIfNotNull(values, SeriesContract.Shows.SYNCENABLED,
+            putPropertyValueIfNotNull(values, SeriesGuideContract.Shows.FAVORITE, show.getIsFavorite());
+            putPropertyValueIfNotNull(values, SeriesGuideContract.Shows.HIDDEN, show.getIsHidden());
+            putPropertyValueIfNotNull(values, SeriesGuideContract.Shows.SYNCENABLED,
                     show.getIsSyncEnabled());
-            putPropertyValueIfNotNull(values, SeriesContract.Shows.GETGLUEID, show.getGetGlueId());
+            putPropertyValueIfNotNull(values, SeriesGuideContract.Shows.GETGLUEID, show.getGetGlueId());
         }
 
         private static void putPropertyValueIfNotNull(ContentValues values, String key,
@@ -497,8 +497,8 @@ public class ShowTools {
     public static HashSet<Integer> getShowTvdbIdsAsSet(Context context) {
         HashSet<Integer> existingShows = new HashSet<>();
 
-        Cursor shows = context.getContentResolver().query(SeriesContract.Shows.CONTENT_URI,
-                new String[]{SeriesContract.Shows._ID}, null, null, null);
+        Cursor shows = context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,
+                new String[]{SeriesGuideContract.Shows._ID}, null, null, null);
         if (shows == null) {
             return null;
         }
