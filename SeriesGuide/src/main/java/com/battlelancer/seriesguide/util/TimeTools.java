@@ -44,6 +44,8 @@ public class TimeTools {
 
     private static final String TIMEZONE_ID_AUSTRALIA = "Australia/Sydney";
 
+    private static final String TIMEZONE_ID_FINLAND = "Europe/Helsinki";
+
     private static final String TIMEZONE_ID_GERMANY = "Europe/Berlin";
 
     private static final String TIMEZONE_ID_JAPAN = "Asia/Tokyo";
@@ -462,15 +464,23 @@ public class TimeTools {
                     timeZoneId = TIMEZONE_ID_US_PACIFIC;
                     break;
                 case "United Kingdom":
+                    // example: Top Gear
                     timeZoneId = TIMEZONE_ID_UK;
                     break;
                 case "Japan":
+                    // example: Naruto Shippuuden
                     timeZoneId = TIMEZONE_ID_JAPAN;
                     break;
+                case "Finland":
+                    // example: Madventures
+                    timeZoneId = TIMEZONE_ID_FINLAND;
+                    break;
                 case "Germany":
+                    // example: heute show
                     timeZoneId = TIMEZONE_ID_GERMANY;
                     break;
                 case "Australia":
+                    // example:
                     timeZoneId = TIMEZONE_ID_AUSTRALIA;
                     break;
                 default:
