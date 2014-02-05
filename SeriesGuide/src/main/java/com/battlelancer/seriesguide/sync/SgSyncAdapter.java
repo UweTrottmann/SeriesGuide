@@ -445,17 +445,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             return UpdateResult.INCOMPLETE;
         }
 
-        // get trakt activity
-        Log.d(TAG, "Syncing...trakt activity...");
-        UpdateResult result = getTraktActivity(context, trakt, showsExisting, showsNew);
-        Log.d(TAG, "Syncing...trakt activity..." + result.toString());
+        UpdateResult result = UpdateResult.SUCCESS;
 
         // sync all watched and collected flags?
         if (syncImmediately || TraktSettings.isTimeForFullSync(context, currentTime)) {
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                return UpdateResult.INCOMPLETE;
-            }
-
             Log.d(TAG, "Syncing...trakt full sync...");
             int resultCode = TraktSync.syncToSeriesGuide(context, trakt, showsExisting, true);
 
@@ -469,6 +462,20 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                         .commit();
                 Log.d(TAG, "Syncing...trakt full sync...SUCCESS");
             }
+
+            if (!AndroidUtils.isNetworkConnected(context)) {
+                return UpdateResult.INCOMPLETE;
+            }
+        }
+
+        // get trakt activity
+        Log.d(TAG, "Syncing...trakt activity...");
+        UpdateResult activityResult = getTraktActivity(context, trakt, showsExisting, showsNew);
+        Log.d(TAG, "Syncing...trakt activity..." + activityResult.toString());
+
+        // don't overwrite failure
+        if (result == UpdateResult.SUCCESS) {
+            result = activityResult;
         }
 
         return result;
