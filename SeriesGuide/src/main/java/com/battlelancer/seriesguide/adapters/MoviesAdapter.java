@@ -16,6 +16,8 @@
 
 package com.battlelancer.seriesguide.adapters;
 
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.uwetrottmann.seriesguide.R;
@@ -49,7 +51,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
     private OnClickListener mOnClickListener;
 
-    private String mBaseUrl;
+    private String mImageBaseUrl;
 
     private DateFormat dateFormatMovieReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
@@ -59,9 +61,14 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         mImageDownloader = ImageDownloader.getInstance(context);
         mOnClickListener = listener;
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        mBaseUrl = prefs.getString(SeriesGuidePreferences.KEY_TMDB_BASE_URL,
-                "http://cf2.imgobject.com/t/p/") + "w185";
+        // figure out which size of posters to load based on screen density
+        if (DisplaySettings.isVeryHighDensityScreen(context)) {
+            mImageBaseUrl = TmdbSettings.getImageBaseUrl(context)
+                    + TmdbSettings.POSTER_SIZE_SPEC_W342;
+        } else {
+            mImageBaseUrl = TmdbSettings.getImageBaseUrl(context)
+                    + TmdbSettings.POSTER_SIZE_SPEC_W154;
+        }
     }
 
     @Override
@@ -95,8 +102,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
             holder.date.setText("");
         }
         if (!TextUtils.isEmpty(movie.poster_path)) {
-            String posterPath = mBaseUrl + movie.poster_path;
-            mImageDownloader.download(posterPath, holder.poster, false);
+            mImageDownloader.download(mImageBaseUrl + movie.poster_path, holder.poster, false);
         } else {
             // clear image
             holder.poster.setImageDrawable(null);

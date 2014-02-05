@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.adapters;
 
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.uwetrottmann.seriesguide.R;
 
@@ -37,12 +38,6 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 public class MoviesCursorAdapter extends CursorAdapter {
 
-    public static final String TRAKT_POSTER_SIZE_SPEC_DEFAULT = ".jpg";
-
-    public static final String TRAKT_POSTER_SIZE_SPEC_138 = "-138.jpg";
-
-    public static final String TRAKT_POSTER_SIZE_SPEC_300 = "-300.jpg";
-
     private final int LAYOUT = R.layout.movie_item;
 
     private LayoutInflater mLayoutInflater;
@@ -51,7 +46,7 @@ public class MoviesCursorAdapter extends CursorAdapter {
 
     private final View.OnClickListener mContextMenuListener;
 
-    private final String mSizeSpec;
+    private final String mImageBaseUrl;
 
     private DateFormat dateFormatMovieReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
@@ -62,12 +57,13 @@ public class MoviesCursorAdapter extends CursorAdapter {
         mImageDownloader = ImageDownloader.getInstance(context);
         mContextMenuListener = contextMenuListener;
 
-        // figure out which size of posters to load based on screen density and
-        // size
-        if (DisplaySettings.isVeryLargeAndHighResScreen(context)) {
-            mSizeSpec = TRAKT_POSTER_SIZE_SPEC_300;
+        // figure out which size of posters to load based on screen density
+        if (DisplaySettings.isVeryHighDensityScreen(context)) {
+            mImageBaseUrl = TmdbSettings.getImageBaseUrl(context)
+                    + TmdbSettings.POSTER_SIZE_SPEC_W342;
         } else {
-            mSizeSpec = TRAKT_POSTER_SIZE_SPEC_138;
+            mImageBaseUrl = TmdbSettings.getImageBaseUrl(context)
+                    + TmdbSettings.POSTER_SIZE_SPEC_W154;
         }
     }
 
@@ -102,10 +98,9 @@ public class MoviesCursorAdapter extends CursorAdapter {
         }
 
         // poster
-        String poster = cursor.getString(MoviesQuery.POSTER);
-        if (!TextUtils.isEmpty(poster)) {
-            String posterPath = poster.replace(TRAKT_POSTER_SIZE_SPEC_DEFAULT, mSizeSpec);
-            mImageDownloader.download(posterPath, holder.poster, false);
+        String posterPath = cursor.getString(MoviesQuery.POSTER);
+        if (!TextUtils.isEmpty(posterPath)) {
+            mImageDownloader.download(mImageBaseUrl + posterPath, holder.poster, false);
         } else {
             // no image
             holder.poster.setImageDrawable(null);

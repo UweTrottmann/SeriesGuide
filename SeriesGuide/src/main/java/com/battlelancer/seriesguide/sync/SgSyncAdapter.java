@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
@@ -430,8 +431,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             if (config != null && config.images != null
                     && !TextUtils.isEmpty(config.images.base_url)) {
                 prefs.edit()
-                        .putString(SeriesGuidePreferences.KEY_TMDB_BASE_URL,
-                                config.images.base_url).commit();
+                        .putString(TmdbSettings.KEY_TMDB_BASE_URL, config.images.base_url).commit();
             }
         } catch (RetrofitError e) {
             Utils.trackExceptionAndLog(context, TAG, e);

@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.jakewharton.trakt.Trakt;
@@ -24,6 +25,8 @@ import com.jakewharton.trakt.enumerations.Extended;
 import com.jakewharton.trakt.services.MovieService;
 import com.jakewharton.trakt.services.UserService;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.tmdb.Tmdb;
+import com.uwetrottmann.tmdb.services.MoviesService;
 
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
@@ -31,6 +34,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -165,6 +169,7 @@ public class MovieTools {
 
         values.put(Movies.TMDB_ID, movie.tmdbId);
         values.put(Movies.TITLE, movie.title);
+        values.put(Movies.OVERVIEW, movie.overview);
         values.put(Movies.RELEASED_UTC_MS, movie.released.getTime());
         values.put(Movies.WATCHED, convertBooleanToInt(movie.watched));
         values.put(Movies.POSTER, movie.images == null ? "" : movie.images.poster);
@@ -267,22 +272,22 @@ public class MovieTools {
         protected Void doInBackground(Integer... params) {
             int movieTmdbId = params[0];
 
-            // get summary from trakt
+            // prepare services
             Trakt trakt = ServiceUtils.getTraktWithAuth(mContext);
             if (trakt == null) {
                 // fall back
                 trakt = ServiceUtils.getTrakt(mContext);
             }
+            Tmdb tmdb = ServiceUtils.getTmdbServiceManager(mContext);
 
-            Movie movie;
-            try {
-                movie = trakt.movieService().summary(movieTmdbId);
-            } catch (RetrofitError e) {
-                // didn't work :(
+            // get movie info
+            Movie movie = Download.getMovie(trakt.movieService(), tmdb.moviesService(),
+                    DisplaySettings.getContentLanguage(mContext), movieTmdbId);
+            if (movie == null) {
                 return null;
             }
 
-            // store in database
+            // store in database, overwrite in_collection and in_watchlist
             ContentValues values = buildBasicMovieContentValues(movie);
             values.put(Movies.IN_COLLECTION, mAddTo == AddTo.COLLECTION ?
                     1 : convertBooleanToInt(movie.inCollection));
@@ -392,17 +397,20 @@ public class MovieTools {
          */
         private static UpdateResult addMovies(Context context, Trakt trakt,
                 Integer... movieTmdbIds) {
-            MovieService movieService = trakt.movieService();
+            MovieService movieServiceTrakt = trakt.movieService();
+            MoviesService moviesServiceTmdb = ServiceUtils.getTmdbServiceManager(context)
+                    .moviesService();
+            String languageCode = DisplaySettings.getContentLanguage(context);
             List<Movie> movies = new LinkedList<>();
 
             for (int i = 0; i < movieTmdbIds.length; i++) {
-                // get summary from trakt
-                try {
-                    Movie movie = movieService.summary(movieTmdbIds[i]);
-                    movies.add(movie);
-                } catch (RetrofitError e) {
+                Movie movie = getMovie(movieServiceTrakt, moviesServiceTmdb, languageCode,
+                        movieTmdbIds[i]);
+                if (movie == null) {
                     return UpdateResult.INCOMPLETE;
                 }
+
+                movies.add(movie);
 
                 // process in batches of at most 10
                 if (i % 10 == 0 || i == movieTmdbIds.length - 1) {
@@ -416,6 +424,33 @@ public class MovieTools {
             }
 
             return UpdateResult.SUCCESS;
+        }
+
+        /**
+         * Download movie data from trakt and TMDb. Always returns with a TMDb poster path, if
+         * available, a local movie title and overview.
+         */
+        private static Movie getMovie(MovieService movieServiceTrakt,
+                MoviesService moviesServiceTmdb, String languageCode, int movieTmdbId) {
+            try {
+                // get summary from trakt, includes watched, in_watchlist and in_collection
+                Movie movie = movieServiceTrakt.summary(movieTmdbId);
+
+                // get summary from tmdb, may have localized title and overview
+                com.uwetrottmann.tmdb.entities.Movie summaryTmdb = moviesServiceTmdb
+                        .summary(movieTmdbId, languageCode);
+                if (!TextUtils.isEmpty(summaryTmdb.overview)) {
+                    // if there is localized data, use it instead of English version
+                    movie.title = summaryTmdb.title;
+                    movie.overview = summaryTmdb.overview;
+                }
+                // always use the poster from tmdb
+                movie.images.poster = summaryTmdb.poster_path;
+
+                return movie;
+            } catch (RetrofitError e) {
+                return null;
+            }
         }
 
         private static void buildMovieUpdateOps(List<Movie> remoteMovies,
