@@ -327,15 +327,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     }
                 }
 
-                // sync movies with trakt
-                Log.d(TAG, "Sync movies with trakt...");
-                UpdateResult resultMovies = MovieTools.Download.syncMoviesFromTrakt(getContext());
-                Log.d(TAG, "Sync movies with trakt..." + resultMovies.toString());
-                // don't overwrite earlier failure
-                if (resultCode == UpdateResult.SUCCESS) {
-                    resultCode = resultMovies;
-                }
-
                 // sync with trakt
                 UpdateResult resultTrakt = syncWithTrakt(getContext(), showsExisting, showsNew,
                         syncImmediately, currentTime);
@@ -464,13 +455,13 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
             if (resultCode < 0) {
                 result = UpdateResult.INCOMPLETE;
-                Log.d(TAG, "Syncing...trakt full sync...INCOMPLETE");
+                Log.d(TAG, "Syncing...trakt shows...INCOMPLETE");
             } else {
                 // set last full sync time
                 PreferenceManager.getDefaultSharedPreferences(context).edit()
                         .putLong(TraktSettings.KEY_LAST_FULL_SYNC, currentTime)
                         .commit();
-                Log.d(TAG, "Syncing...trakt full sync...SUCCESS");
+                Log.d(TAG, "Syncing...trakt shows...SUCCESS");
             }
 
             if (!AndroidUtils.isNetworkConnected(context)) {
@@ -479,13 +470,23 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // get trakt activity
-        Log.d(TAG, "Syncing...trakt activity...");
+        Log.d(TAG, "Syncing...trakt episode activity...");
         UpdateResult activityResult = getTraktActivity(context, trakt, showsExisting, showsNew);
-        Log.d(TAG, "Syncing...trakt activity..." + activityResult.toString());
+        Log.d(TAG, "Syncing...trakt episode activity..." + activityResult.toString());
 
         // don't overwrite failure
         if (result == UpdateResult.SUCCESS) {
             result = activityResult;
+        }
+
+        // sync movies with trakt
+        Log.d(TAG, "Syncing...trakt movies...");
+        UpdateResult resultMovies = MovieTools.Download.syncMoviesFromTrakt(context);
+        Log.d(TAG, "Syncing...trakt movies..." + resultMovies.toString());
+
+        // don't overwrite earlier failure
+        if (result == UpdateResult.SUCCESS) {
+            result = resultMovies;
         }
 
         return result;
