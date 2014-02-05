@@ -44,8 +44,7 @@ public class TraktSettings {
     public static final String KEY_SYNC_UNWATCHED_EPISODES
             = "com.battlelancer.seriesguide.syncunseenepisodes";
 
-    private static final int DEFAULT_SYNC_INTERVAL_SECONDS = AccountUtils.SYNC_FREQUENCY - 60 * 60;
-    // 1 hour less as sync adapter schedule varies
+    private static final long FULL_SYNC_INTERVAL_MILLIS = 24 * DateUtils.HOUR_IN_MILLIS;
 
     /**
      * Returns the SHA hash of the users trakt password.<br> <b>Never</b> store this yourself,
@@ -89,8 +88,7 @@ public class TraktSettings {
     public static boolean isTimeForFullSync(Context context, long currentTime) {
         long previousUpdateTime = PreferenceManager.getDefaultSharedPreferences(context)
                 .getLong(KEY_LAST_FULL_SYNC, currentTime);
-        return (currentTime - previousUpdateTime) >
-                DEFAULT_SYNC_INTERVAL_SECONDS * DateUtils.SECOND_IN_MILLIS;
+        return (currentTime - previousUpdateTime) > FULL_SYNC_INTERVAL_MILLIS;
     }
 
 }
