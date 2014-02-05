@@ -25,7 +25,7 @@ ext {
     compileSdkVersion = 19
     buildToolsVersion = '19.0.1'
 
-    versionCode = 219
+    versionCode = 220
     versionName = '12-beta5'
 }
 
