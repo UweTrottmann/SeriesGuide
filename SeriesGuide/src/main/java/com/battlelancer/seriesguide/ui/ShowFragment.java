@@ -209,10 +209,11 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
         TextView overview = (TextView) getView().findViewById(R.id.textViewShowOverview);
         overview.setText(TextUtils.isEmpty(mShow.getOverview()) ? null : mShow.getOverview());
 
-        // release country (or assumed one)
+        // country for release times (or assumed one)
+        // show "United States" if country is not supported
         TextView releaseCountry = (TextView) getView()
                 .findViewById(R.id.textViewShowReleaseCountry);
-        releaseCountry.setText(TextUtils.isEmpty(mShow.getCountry())
+        releaseCountry.setText(TimeTools.isUnsupportedCountryOrUs(mShow.getCountry())
                 ? TimeTools.UNITED_STATES : mShow.getCountry());
 
         // first release: use the same parser as for episodes, because we have an exact date

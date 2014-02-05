@@ -444,6 +444,14 @@ public class TimeTools {
         }
     }
 
+    /**
+     * If the country is not supported for calculating release times in the countries time zone and
+     * falls back to US Pacific time (or country is the United States).
+     */
+    public static boolean isUnsupportedCountryOrUs(String releaseCountry) {
+        return TIMEZONE_ID_US_PACIFIC.equals(getTimeZoneIdForCountry(releaseCountry));
+    }
+
     private static String getTimeZoneIdForCountry(String releaseCountry) {
         String timeZoneId;
         if (releaseCountry == null || releaseCountry.length() == 0) {
