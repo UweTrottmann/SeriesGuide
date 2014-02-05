@@ -37,11 +37,9 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
-import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 
 import java.util.ArrayList;

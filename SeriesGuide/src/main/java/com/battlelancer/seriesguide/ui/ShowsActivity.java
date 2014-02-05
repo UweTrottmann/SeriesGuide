@@ -36,13 +36,11 @@ import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
@@ -57,11 +55,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SyncStatusObserver;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
@@ -550,8 +545,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements
             if (lastVersion < 218) {
                 // flag all episodes as outdated
                 ContentValues values = new ContentValues();
-                values.put(SeriesContract.Episodes.LAST_EDITED, 0);
-                getContentResolver().update(SeriesContract.Episodes.CONTENT_URI, values, null, null);
+                values.put(SeriesGuideContract.Episodes.LAST_EDITED, 0);
+                getContentResolver().update(SeriesGuideContract.Episodes.CONTENT_URI, values, null, null);
                 // trigger full sync
                 SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, false);
             }

@@ -31,7 +31,6 @@ import com.uwetrottmann.seriesguide.R;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.ContentProvider;
-import android.content.pm.PackageManager;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.os.StrictMode.VmPolicy;

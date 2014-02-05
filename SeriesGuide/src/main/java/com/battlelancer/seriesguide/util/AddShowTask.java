@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;

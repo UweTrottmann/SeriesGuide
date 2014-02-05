@@ -29,8 +29,6 @@ import android.os.Bundle;
 
 import de.greenrobot.event.EventBus;
 
-import de.greenrobot.event.EventBus;
-
 /**
  * Blank activity, just used to quickly check into a show/episode on GetGlue/trakt.
  */
