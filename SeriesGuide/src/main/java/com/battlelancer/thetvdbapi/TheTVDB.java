@@ -29,7 +29,7 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.TraktSync;
+import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
@@ -277,7 +277,7 @@ public class TheTVDB {
                 continue;
             }
 
-            TraktSync.applyEpisodeFlagChanges(context, tvShow,
+            TraktTools.applyEpisodeFlagChanges(context, tvShow,
                     isSeenFlags ? Episodes.WATCHED : Episodes.COLLECTED, false);
 
             // done, found the show we were looking for

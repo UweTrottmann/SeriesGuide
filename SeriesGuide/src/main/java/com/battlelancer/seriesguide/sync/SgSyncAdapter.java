@@ -26,13 +26,12 @@ import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.TraktSync;
+import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.jakewharton.trakt.Trakt;
@@ -451,7 +450,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         // sync all watched and collected flags?
         if (syncImmediately || TraktSettings.isTimeForFullSync(context, currentTime)) {
             Log.d(TAG, "Syncing...trakt full sync...");
-            int resultCode = TraktSync.syncToSeriesGuide(context, trakt, showsExisting, true);
+            int resultCode = TraktTools.syncToSeriesGuide(context, trakt, showsExisting, true);
 
             if (resultCode < 0) {
                 result = UpdateResult.INCOMPLETE;
