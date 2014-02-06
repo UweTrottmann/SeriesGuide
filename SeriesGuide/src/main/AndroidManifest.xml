@@ -46,6 +46,13 @@
         <!-- Google Play services version tag -->
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
 
+        <!-- Content provider -->
+        <provider
+            android:name="com.battlelancer.seriesguide.provider.SeriesGuideProvider"
+            android:authorities="@string/provider_authority"
+            android:exported="true" >
+        </provider>
+
         <!-- Launch activity -->
         <activity android:name="com.battlelancer.seriesguide.ui.ShowsActivity" >
             <intent-filter>

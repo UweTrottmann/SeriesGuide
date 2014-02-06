@@ -17,13 +17,6 @@
             android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAIToXnISqkDzDlKt206D1VdujnhhoFa0mAEM8Veg" />
 
-        <!-- Content provider -->
-        <provider
-            android:name="com.battlelancer.seriesguide.provider.SeriesGuideProvider"
-            android:authorities="com.battlelancer.seriesguide.provider"
-            android:exported="true" >
-        </provider>
-
         <!-- List widget configuration -->
         <activity
             android:name="com.battlelancer.seriesguide.appwidget.ListWidgetConfigure"
