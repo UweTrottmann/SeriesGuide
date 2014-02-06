@@ -31,14 +31,15 @@
     </uses-feature>
 
     <application
-            android:name="com.battlelancer.seriesguide.SeriesGuideApplication"
-            android:allowBackup="true"
-            android:backupAgent="com.battlelancer.seriesguide.PrefBackupHelper"
-            android:hardwareAccelerated="true"
-            android:icon="@drawable/ic_launcher"
-            android:label="@string/app_name"
-            android:supportsRtl="false"
-            android:theme="@style/SeriesGuideTheme">
+        android:name="com.battlelancer.seriesguide.SeriesGuideApplication"
+        android:allowBackup="true"
+        android:backupAgent="com.battlelancer.seriesguide.PrefBackupHelper"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:restrictedAccountType="@string/package_name"
+        android:supportsRtl="false"
+        android:theme="@style/SeriesGuideTheme">
 
         <!-- Crashlytics -->
         <meta-data android:name="com.crashlytics.ApiKey" android:value="@string/crashlytics_key"/>
