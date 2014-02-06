@@ -16,18 +16,6 @@
 
 package com.battlelancer.seriesguide;
 
-import com.google.analytics.tracking.android.GoogleAnalytics;
-
-import com.battlelancer.seriesguide.settings.AppSettings;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.settings.TraktSettings;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.BuildConfig;
-import com.uwetrottmann.seriesguide.R;
-
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.ContentProvider;
@@ -36,7 +24,17 @@ import android.os.StrictMode.ThreadPolicy;
 import android.os.StrictMode.VmPolicy;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
-
+import com.battlelancer.seriesguide.settings.AppSettings;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.Utils;
+import com.crashlytics.android.Crashlytics;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.BuildConfig;
+import com.uwetrottmann.seriesguide.R;
 import java.net.URL;
 
 /**
@@ -54,6 +52,10 @@ public class SeriesGuideApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        if (!BuildConfig.DEBUG || BuildConfig.FLAVOR == "beta") {
+            Crashlytics.start(this);
+        }
 
         // Set provider authority
         CONTENT_AUTHORITY = getPackageName() + ".provider";
@@ -133,7 +135,5 @@ public class SeriesGuideApplication extends Application {
                 }
             }
         }
-
     }
-
 }

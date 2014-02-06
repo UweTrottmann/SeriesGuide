@@ -1,5 +1,6 @@
 apply plugin: 'android'
 apply plugin: 'android-test'
+apply plugin: 'crashlytics'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -78,6 +79,9 @@ dependencies {
     testCompile 'junit:junit:4.10'
     testCompile 'com.squareup:fest-android:1.0.+'
     testCompile 'org.robolectric:robolectric:2.3-SNAPSHOT'
+
+    // Crashlytics
+    compile 'com.crashlytics.android:crashlytics:1.+'
 }
 
 // get signing config from gradle.properties file

@@ -40,6 +40,9 @@
             android:supportsRtl="false"
             android:theme="@style/SeriesGuideTheme">
 
+        <!-- Crashlytics -->
+        <meta-data android:name="com.crashlytics.ApiKey" android:value="@string/crashlytics_key"/>
+
         <!-- Google Play services version tag -->
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
 

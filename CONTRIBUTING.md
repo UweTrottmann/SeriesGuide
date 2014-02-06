@@ -33,11 +33,16 @@ This project is built with Gradle and the [Android Gradle plugin][3] using the A
 To successfully build with ADT, you should also create a keys.xml file in the `SeriesGuide/src/main/res/values` folder and add the string values 
 
     <resources>
+        <string name="crashlytics_key"></string>
+        <string name="getglue_client_id"></string>
+        <string name="getglue_client_secret"></string>
         <string name="tvdb_apikey"></string>
         <string name="tmdb_apikey"></string>
-        <string name="getglue_consumer_key"></string>
-        <string name="getglue_consumer_secret"></string>
         <string name="trakt_apikey"></string>
+        <string name="key_a"></string>
+        <string name="key_b"></string>
+        <string name="key_c"></string>
+        <string name="key_d"></string>
     </resources>
   
 to it. These are not shared with the public mainly for security reasons.
