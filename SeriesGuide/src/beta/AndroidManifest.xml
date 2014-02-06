@@ -16,15 +16,6 @@
         <meta-data
             android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAIlG-fXzOx6u3ozZ1ah_9eqMnUD70jCFA1FPzJnQ" />
-
-        <!-- List widget configuration -->
-        <activity
-            android:name="com.battlelancer.seriesguide.appwidget.ListWidgetConfigure"
-            android:taskAffinity="com.battlelancer.seriesguide.beta.widgetconfiguration" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-            </intent-filter>
-        </activity>
         
     </application>
 

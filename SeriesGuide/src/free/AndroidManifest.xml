@@ -17,15 +17,6 @@
             android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAIToXnISqkDzDlKt206D1VdujnhhoFa0mAEM8Veg" />
 
-        <!-- List widget configuration -->
-        <activity
-            android:name="com.battlelancer.seriesguide.appwidget.ListWidgetConfigure"
-            android:taskAffinity="com.battlelancer.seriesguide.widgetconfiguration" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-            </intent-filter>
-        </activity>
-
     </application>
 
 </manifest>

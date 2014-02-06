@@ -215,6 +215,15 @@
             </intent-filter>
         </receiver>
 
+        <!-- List widget configuration -->
+        <activity
+            android:name="com.battlelancer.seriesguide.appwidget.ListWidgetConfigure"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
         <!-- Widgets -->
         <receiver
             android:name="com.battlelancer.seriesguide.appwidget.ListWidgetProvider"
