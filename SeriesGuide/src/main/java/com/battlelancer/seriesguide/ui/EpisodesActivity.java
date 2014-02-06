@@ -33,7 +33,7 @@ import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapte
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Intent;
 import android.content.SharedPreferences;

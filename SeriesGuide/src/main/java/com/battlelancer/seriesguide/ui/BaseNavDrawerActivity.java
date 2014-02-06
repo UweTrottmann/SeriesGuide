@@ -19,7 +19,7 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Context;
 import android.content.Intent;

@@ -28,7 +28,7 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.Lists;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 import com.uwetrottmann.seriesguide.shows.Shows;
 import com.uwetrottmann.seriesguide.shows.model.CollectionResponseShow;
 import com.uwetrottmann.seriesguide.shows.model.Show;

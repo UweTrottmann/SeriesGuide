@@ -26,7 +26,7 @@ import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 import com.uwetrottmann.seriesguide.shows.model.Show;
 
 import android.accounts.AccountManager;

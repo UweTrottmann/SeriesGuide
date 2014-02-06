@@ -26,7 +26,7 @@ import com.uwetrottmann.getglue.entities.GetGlueInteraction;
 import com.uwetrottmann.getglue.entities.GetGlueInteractionResource;
 import com.uwetrottmann.getglue.entities.GetGlueObject;
 import com.uwetrottmann.getglue.entities.GetGlueObjects;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Context;
 import android.os.AsyncTask;

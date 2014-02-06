@@ -40,8 +40,8 @@ import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.BuildConfig;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.BuildConfig;
+import com.battlelancer.seriesguide.R;
 
 import java.util.ArrayList;
 import java.util.List;

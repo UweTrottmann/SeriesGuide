@@ -34,7 +34,7 @@ import com.jakewharton.trakt.enumerations.ActivityType;
 import com.jakewharton.trakt.services.UserService;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Context;
 import android.content.Intent;

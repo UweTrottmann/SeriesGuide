@@ -44,8 +44,8 @@ import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
-import com.uwetrottmann.seriesguide.BuildConfig;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.BuildConfig;
+import com.battlelancer.seriesguide.R;
 
 import android.accounts.Account;
 import android.content.ContentResolver;

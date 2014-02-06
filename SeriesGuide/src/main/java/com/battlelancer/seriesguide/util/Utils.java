@@ -30,8 +30,8 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.BuildConfig;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.BuildConfig;
+import com.battlelancer.seriesguide.R;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

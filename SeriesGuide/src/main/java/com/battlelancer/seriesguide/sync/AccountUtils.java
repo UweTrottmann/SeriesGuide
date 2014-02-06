@@ -18,7 +18,7 @@
 package com.battlelancer.seriesguide.sync;
 
 import com.battlelancer.seriesguide.SeriesGuideApplication;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;

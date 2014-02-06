@@ -33,8 +33,8 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.Crashlytics;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.BuildConfig;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.BuildConfig;
+import com.battlelancer.seriesguide.R;
 import java.net.URL;
 
 /**

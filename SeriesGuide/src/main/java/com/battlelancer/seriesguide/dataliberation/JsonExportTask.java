@@ -44,7 +44,7 @@ import com.google.myjson.JsonIOException;
 import com.google.myjson.stream.JsonWriter;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.Lists;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import java.io.File;
 import java.io.FileOutputStream;

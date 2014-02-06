@@ -21,7 +21,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.services.ShowService;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.database.Cursor;
 import android.os.AsyncTask;

@@ -25,7 +25,7 @@ import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.services.AccountService;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Context;
 import android.os.AsyncTask;
