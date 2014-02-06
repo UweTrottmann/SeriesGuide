@@ -57,6 +57,13 @@
 
     </style>
 
+    <style name="ImmersiveTheme.Stock" parent="AndroidTheme">
+
+        <!-- Action bar (native, v11+) -->
+        <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
+
+    </style>
+
     <style name="ImmersiveTheme.Light" parent="SeriesGuideThemeLight">
 
         <!-- Action bar (native, v11+) -->

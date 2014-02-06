@@ -252,6 +252,13 @@
 
     </style>
 
+    <style name="ImmersiveTheme.Stock" parent="AndroidTheme">
+
+        <!-- Action bar (ABS) -->
+        <item name="actionBarStyle">@style/ActionBar.Invisible</item>
+
+    </style>
+
     <style name="ImmersiveTheme.Light" parent="SeriesGuideThemeLight">
 
         <!-- Action bar (ABS) -->

@@ -93,7 +93,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         } else if (SeriesGuidePreferences.THEME == R.style.SeriesGuideTheme) {
             setTheme(R.style.ImmersiveTheme);
         } else {
-            setTheme(R.style.AndroidTheme);
+            setTheme(R.style.ImmersiveTheme_Stock);
         }
     }
 
