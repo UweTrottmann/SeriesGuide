@@ -1,4 +1,5 @@
-﻿dist
+﻿# Specific files to exclude
+dist
 analytics.xml
 com_crashlytics_export_strings.xml
 keys.xml
