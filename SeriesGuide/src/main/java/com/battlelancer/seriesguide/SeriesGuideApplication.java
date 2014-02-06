@@ -44,6 +44,8 @@ import java.net.URL;
  */
 public class SeriesGuideApplication extends Application {
 
+    public static final String FLAVOR_INTERNAL = "internal";
+
     /**
      * The content authority used to identify the SeriesGuide {@link ContentProvider}
      */
@@ -53,7 +55,7 @@ public class SeriesGuideApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        if (!BuildConfig.DEBUG || BuildConfig.FLAVOR == "beta") {
+        if (!BuildConfig.DEBUG || FLAVOR_INTERNAL.equals(BuildConfig.FLAVOR)) {
             Crashlytics.start(this);
         }
 
@@ -123,7 +125,7 @@ public class SeriesGuideApplication extends Application {
          */
         final int lastVersion = AppSettings.getLastVersionCode(this);
 
-        boolean isBeta = "beta".equals(BuildConfig.FLAVOR);
+        boolean isBeta = FLAVOR_INTERNAL.equals(BuildConfig.FLAVOR);
 
         // store trakt password in sync account
         if (!isBeta && lastVersion < 204 || isBeta && lastVersion < 216) {

@@ -29,7 +29,7 @@ android {
             versionCode rootProject.ext.versionCode
             versionName rootProject.ext.versionName
         }
-        beta {
+        internal {
             packageName "com.battlelancer.seriesguide.beta"
             versionCode rootProject.ext.versionCode
             versionName rootProject.ext.versionName + "-internal"

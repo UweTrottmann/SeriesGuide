@@ -515,7 +515,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
             int VER_TRAKT_SEC_CHANGES;
             int VER_SUMMERTIME_FIX;
             int VER_HIGHRES_THUMBS;
-            if ("beta".equals(BuildConfig.FLAVOR)) {
+            if (SeriesGuideApplication.FLAVOR_INTERNAL.equals(BuildConfig.FLAVOR)) {
                 // internal dev version
                 VER_TRAKT_SEC_CHANGES = 131;
                 VER_SUMMERTIME_FIX = 155;
