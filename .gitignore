@@ -3,6 +3,8 @@ analytics.xml
 com_crashlytics_export_strings.xml
 keys.xml
 *.keystore
+SeriesGuide/src/beta/AndroidManifest.xml
+SeriesGuide/src/free/AndroidManifest.xml
 
 ### Android
 ###########
