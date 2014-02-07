@@ -29,7 +29,7 @@ import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;

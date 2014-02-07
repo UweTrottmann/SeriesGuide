@@ -30,7 +30,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.ui.ActivityFragment.ActivityType;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;

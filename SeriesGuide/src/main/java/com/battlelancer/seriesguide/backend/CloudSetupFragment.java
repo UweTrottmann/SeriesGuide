@@ -16,19 +16,6 @@
 
 package com.battlelancer.seriesguide.backend;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.enums.Result;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.util.ShowTools;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
-import com.uwetrottmann.seriesguide.shows.model.Show;
-
 import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
@@ -36,7 +23,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,16 +31,25 @@ import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
+import com.battlelancer.seriesguide.enums.Result;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.Utils;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.uwetrottmann.seriesguide.shows.model.Show;
 import java.util.HashSet;
 import java.util.List;
+import timber.log.Timber;
 
 /**
  * Helps connecting a device to Hexagon: sign in via Google account, initial uploading of shows.
  */
 public class CloudSetupFragment extends SherlockFragment {
-
-    public static final String TAG = "Hexagon";
 
     private Button mButtonAction;
 
@@ -272,7 +267,7 @@ public class CloudSetupFragment extends SherlockFragment {
             return;
         }
         if (connectionStatusCode != ConnectionResult.SUCCESS) {
-            Log.i(TAG, "This device is not supported.");
+            Timber.i("This device is not supported.");
             Toast.makeText(getActivity(), "This device is not supported.", Toast.LENGTH_LONG)
                     .show();
             setLock(true);
@@ -375,7 +370,7 @@ public class CloudSetupFragment extends SherlockFragment {
         @Override
         protected Integer doInBackground(Void... params) {
             // set setup incomplete flag
-            Log.d(TAG, "Setting up Hexagon...");
+            Timber.i("Setting up Hexagon...");
             HexagonSettings.setSetupIncomplete(mContext);
 
             // are there local shows?
@@ -476,13 +471,13 @@ public class CloudSetupFragment extends SherlockFragment {
             switch (resultCode) {
                 case HexagonSetupTask.USER_ACTION_REQUIRED: {
                     // task user to select which version of shows to keep
-                    Log.d(TAG, "Setting up Hexagon...USER_ACTION_REQUIRED");
+                    Timber.d("Setting up Hexagon...USER_ACTION_REQUIRED");
                     updateViewsStates(true);
                     break;
                 }
                 case HexagonSetupTask.SYNC_REQUIRED: {
                     // schedule full sync
-                    Log.d(TAG, "Setting up Hexagon...SYNC_REQUIRED");
+                    Timber.d("Setting up Hexagon...SYNC_REQUIRED");
                     SgSyncAdapter.requestSyncImmediate(getActivity(), SgSyncAdapter.SyncType.FULL,
                             0, false);
                     HexagonSettings.setSetupCompleted(getActivity());
@@ -491,13 +486,13 @@ public class CloudSetupFragment extends SherlockFragment {
                 }
                 case HexagonSetupTask.FAILURE: {
                     // show setup incomplete message
-                    Log.d(TAG, "Setting up Hexagon...FAILED");
+                    Timber.d("Setting up Hexagon...FAILED");
                     updateViewsStates(false);
                     break;
                 }
                 case HexagonSetupTask.SUCCESS:
                     // nothing further to do!
-                    Log.d(TAG, "Setting up Hexagon...SUCCESS");
+                    Timber.d("Setting up Hexagon...SUCCESS");
                     HexagonSettings.setSetupCompleted(getActivity());
                     updateViewsStates(false);
                     break;

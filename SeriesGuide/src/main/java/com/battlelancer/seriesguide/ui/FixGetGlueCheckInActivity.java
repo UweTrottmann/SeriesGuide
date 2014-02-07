@@ -25,7 +25,7 @@ import com.battlelancer.seriesguide.loaders.GetGlueObjectLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.uwetrottmann.getglue.entities.GetGlueObject;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Context;
 import android.database.Cursor;

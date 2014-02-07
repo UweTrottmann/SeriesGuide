@@ -17,7 +17,7 @@
 package com.battlelancer.seriesguide.appwidget;
 
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

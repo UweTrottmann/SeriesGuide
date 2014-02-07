@@ -16,9 +16,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.AsyncTask;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -28,9 +25,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.ImageView;
-
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.AsyncTask;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FilterInputStream;
@@ -41,6 +38,7 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.concurrent.ConcurrentHashMap;
+import timber.log.Timber;
 
 /**
  * From http://code.google.com/p/android-imagedownloader. This helper class download images from the
@@ -48,8 +46,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * maintained internally to improve performance.
  */
 public class ImageDownloader {
-
-    private static final String LOG_TAG = "ImageDownloader";
 
     private static ImageDownloader _instance;
 
@@ -222,9 +218,9 @@ public class ImageDownloader {
                 inputStream.close();
             }
         } catch (IOException e) {
-            Log.w(LOG_TAG, "I/O error while retrieving bitmap from " + urlString, e);
+            Timber.e(e, "I/O error while retrieving bitmap from " + urlString, e);
         } catch (Exception e) {
-            Log.w(LOG_TAG, "Error while retrieving bitmap from " + urlString, e);
+            Timber.e(e, "Error while retrieving bitmap from " + urlString, e);
         }
         return null;
     }

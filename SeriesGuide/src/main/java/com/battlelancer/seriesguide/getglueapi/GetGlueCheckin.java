@@ -16,6 +16,11 @@
 
 package com.battlelancer.seriesguide.getglueapi;
 
+import android.content.Context;
+import android.os.AsyncTask;
+import android.text.TextUtils;
+import android.widget.Toast;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
@@ -26,15 +31,9 @@ import com.uwetrottmann.getglue.entities.GetGlueInteraction;
 import com.uwetrottmann.getglue.entities.GetGlueInteractionResource;
 import com.uwetrottmann.getglue.entities.GetGlueObject;
 import com.uwetrottmann.getglue.entities.GetGlueObjects;
-import com.uwetrottmann.seriesguide.R;
-
-import android.content.Context;
-import android.os.AsyncTask;
-import android.text.TextUtils;
-import android.widget.Toast;
-
 import de.greenrobot.event.EventBus;
 import retrofit.RetrofitError;
+import timber.log.Timber;
 
 public class GetGlueCheckin {
 
@@ -143,7 +142,7 @@ public class GetGlueCheckin {
 
                 return Result.SUCCESS;
             } catch (RetrofitError e) {
-                Utils.trackExceptionAndLog(mContext, TAG, e);
+                Timber.e(e, "GetGlue check-in failed");
             }
 
             return Result.ERROR;

@@ -18,7 +18,7 @@ package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.jakewharton.trakt.Trakt;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 import com.uwetrottmann.tmdb.Tmdb;
 
 import android.app.SearchManager;

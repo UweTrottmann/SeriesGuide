@@ -21,7 +21,7 @@ import com.battlelancer.seriesguide.migration.MigrationActivity;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.CheatSheet;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.app.Activity;
 import android.content.Context;

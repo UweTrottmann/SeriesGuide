@@ -19,7 +19,7 @@ package com.battlelancer.seriesguide.adapters;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Context;
 import android.database.Cursor;

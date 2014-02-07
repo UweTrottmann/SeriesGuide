@@ -16,17 +16,6 @@
 
 package com.battlelancer.seriesguide.provider;
 
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.SelectionBuilder;
-
 import android.app.SearchManager;
 import android.content.ContentProvider;
 import android.content.ContentProviderOperation;
@@ -41,16 +30,23 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.util.Log;
-
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.SelectionBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import timber.log.Timber;
 
 public class SeriesGuideProvider extends ContentProvider {
 
-    private static final String TAG = "SeriesGuideProvider";
-
-    private static final boolean LOGV = false;
+    public static final boolean LOGV = false;
 
     private static UriMatcher sUriMatcher;
 
@@ -265,7 +261,7 @@ public class SeriesGuideProvider extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         if (LOGV) {
-            Log.v(TAG, "insert(uri=" + uri + ", values=" + values.toString() + ")");
+            Timber.v("insert(uri=" + uri + ", values=" + values.toString() + ")");
         }
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
@@ -310,7 +306,7 @@ public class SeriesGuideProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
             String sortOrder) {
         if (LOGV) {
-            Log.v(TAG, "query(uri=" + uri + ", proj=" + Arrays.toString(projection) + ")");
+            Timber.v("query(uri=" + uri + ", proj=" + Arrays.toString(projection) + ")");
         }
         final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
 
@@ -351,7 +347,7 @@ public class SeriesGuideProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         if (LOGV) {
-            Log.v(TAG, "update(uri=" + uri + ", values=" + values.toString() + ")");
+            Timber.v("update(uri=" + uri + ", values=" + values.toString() + ")");
         }
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final SelectionBuilder builder = buildSelection(uri, sUriMatcher.match(uri));
@@ -366,7 +362,7 @@ public class SeriesGuideProvider extends ContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         if (LOGV) {
-            Log.v(TAG, "delete(uri=" + uri + ")");
+            Timber.v("delete(uri=" + uri + ")");
         }
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final SelectionBuilder builder = buildSelection(uri, sUriMatcher.match(uri));

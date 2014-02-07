@@ -25,7 +25,7 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Response;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;

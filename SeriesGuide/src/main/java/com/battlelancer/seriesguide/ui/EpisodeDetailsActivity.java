@@ -31,7 +31,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Context;
 import android.content.Intent;

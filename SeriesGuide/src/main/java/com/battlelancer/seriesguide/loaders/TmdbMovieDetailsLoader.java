@@ -16,28 +16,23 @@
 
 package com.battlelancer.seriesguide.loaders;
 
+import android.content.Context;
+import android.text.TextUtils;
 import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader.MovieDetails;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb.entities.Credits;
 import com.uwetrottmann.tmdb.entities.Movie;
 import com.uwetrottmann.tmdb.entities.Trailers;
 import com.uwetrottmann.tmdb.services.MoviesService;
-
-import android.content.Context;
-import android.text.TextUtils;
-import android.util.Log;
-
 import retrofit.RetrofitError;
+import timber.log.Timber;
 
 /**
  * Loads details, trailers and cast of a movie from TMDb wrapped in a {@link MovieDetails} object.
  */
 public class TmdbMovieDetailsLoader extends GenericSimpleLoader<MovieDetails> {
-
-    private static final String TAG = "TmdbMovieDetailsLoader";
 
     private int mTmdbId;
 
@@ -67,8 +62,7 @@ public class TmdbMovieDetailsLoader extends GenericSimpleLoader<MovieDetails> {
             return details;
 
         } catch (RetrofitError e) {
-            Utils.trackException(getContext(), TAG, e);
-            Log.w(TAG, e);
+            Timber.e(e, "Downloading movie info failed");
         }
 
         return null;

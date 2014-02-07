@@ -16,18 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -38,14 +26,23 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
-
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
 import java.io.IOException;
+import timber.log.Timber;
 
 /**
  * Allows to back up or restore the show database to external storage.
@@ -176,7 +173,7 @@ public class BackupDeleteActivity extends BaseActivity {
                 file.createNewFile();
                 AndroidUtils.copyFile(dbFile, file);
             } catch (IOException e) {
-                Log.e(TAG, e.getMessage(), e);
+                Timber.e(e, "Creating backup failed");
                 errorMsg = e.getMessage();
             }
             return errorMsg;
@@ -248,7 +245,7 @@ public class BackupDeleteActivity extends BaseActivity {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    Log.e(TAG, e.getMessage(), e);
+                    Timber.e(e, "Failed to sleep");
                 }
 
                 // tell user something might have gone wrong if there are no
@@ -265,13 +262,13 @@ public class BackupDeleteActivity extends BaseActivity {
                         shows.close();
                     }
                 } catch (SQLiteException e) {
-                    Log.e(TAG, e.getMessage(), e);
+                    Timber.e(e, "Failed to import backup");
                     return e.getMessage();
                 }
 
                 return null;
             } catch (IOException e) {
-                Log.e(TAG, e.getMessage(), e);
+                Timber.e(e, "Failed to import backup");
                 return e.getMessage();
             }
         }

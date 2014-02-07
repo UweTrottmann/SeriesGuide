@@ -24,7 +24,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.TraktSync;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

@@ -25,7 +25,7 @@ import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.services.AccountService;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -77,7 +77,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         }
 
         // create SHA1 of password
-        password = Utils.toSHA1(mContext, password);
+        password = Utils.toSHA1(password);
 
         // check validity
         // use a new Trakt instance for testing

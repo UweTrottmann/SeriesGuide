@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.uwetrottmann.seriesguide">
+          package="com.battlelancer.seriesguide">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -31,17 +31,25 @@
     </uses-feature>
 
     <application
-            android:name="com.battlelancer.seriesguide.SeriesGuideApplication"
-            android:allowBackup="true"
-            android:backupAgent="com.battlelancer.seriesguide.PrefBackupHelper"
-            android:hardwareAccelerated="true"
-            android:icon="@drawable/ic_launcher"
-            android:label="@string/app_name"
-            android:supportsRtl="false"
-            android:theme="@style/SeriesGuideTheme">
+        android:name="com.battlelancer.seriesguide.SeriesGuideApplication"
+        android:allowBackup="true"
+        android:backupAgent="com.battlelancer.seriesguide.PrefBackupHelper"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:restrictedAccountType="@string/package_name"
+        android:supportsRtl="false"
+        android:theme="@style/SeriesGuideTheme">
 
         <!-- Google Play services version tag -->
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+
+        <!-- Content provider -->
+        <provider
+            android:name="com.battlelancer.seriesguide.provider.SeriesGuideProvider"
+            android:authorities="@string/provider_authority"
+            android:exported="true" >
+        </provider>
 
         <!-- Launch activity -->
         <activity android:name="com.battlelancer.seriesguide.ui.ShowsActivity" >
@@ -205,6 +213,15 @@
             </intent-filter>
         </receiver>
 
+        <!-- List widget configuration -->
+        <activity
+            android:name="com.battlelancer.seriesguide.appwidget.ListWidgetConfigure"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
         <!-- Widgets -->
         <receiver
             android:name="com.battlelancer.seriesguide.appwidget.ListWidgetProvider"
@@ -305,6 +322,30 @@
             android:name="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity"
             android:exported="true" >
         </activity>
+
+        <!-- Sync service -->
+        <service
+            android:name="com.battlelancer.seriesguide.sync.SgAuthenticationService"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/accountauth" />
+        </service>
+        <service
+            android:name="com.battlelancer.seriesguide.sync.SgSyncService"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/sync_seriesguide" />
+        </service>
     </application>
 
 </manifest>

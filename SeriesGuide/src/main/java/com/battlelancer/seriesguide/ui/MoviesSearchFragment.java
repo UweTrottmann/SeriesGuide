@@ -22,7 +22,7 @@ import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 import com.uwetrottmann.tmdb.entities.Movie;
 
 import android.content.Intent;
