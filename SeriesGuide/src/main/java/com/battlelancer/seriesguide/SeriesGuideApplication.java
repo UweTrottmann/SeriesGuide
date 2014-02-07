@@ -70,7 +70,7 @@ public class SeriesGuideApplication extends Application {
         }
 
         // Set provider authority
-        CONTENT_AUTHORITY = getPackageName() + ".provider";
+        CONTENT_AUTHORITY = getString(R.string.provider_authority);
 
         // Initialize settings on first run
         PreferenceManager.setDefaultValues(this, R.xml.settings_basic, false);
