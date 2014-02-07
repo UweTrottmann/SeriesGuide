@@ -16,28 +16,10 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader;
-import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader.MovieDetails;
-import com.battlelancer.seriesguide.settings.TmdbSettings;
-import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
-import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.battlelancer.seriesguide.R;
-import com.uwetrottmann.tmdb.entities.Movie;
-
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
@@ -46,8 +28,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader;
+import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader.MovieDetails;
+import com.battlelancer.seriesguide.settings.TmdbSettings;
+import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
+import com.battlelancer.seriesguide.util.ImageDownloader;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.CheatSheet;
+import com.uwetrottmann.tmdb.entities.Movie;
 
 /**
  * Displays details about one movie including plot, ratings, trailers and a poster.
@@ -78,7 +80,27 @@ public class MovieDetailsFragment extends SherlockFragment implements
 
     private String mBaseUrl;
 
-    private View mProgressBar;
+    @InjectView(R.id.textViewMovieTitle) TextView mMovieTitle;
+
+    @InjectView(R.id.textViewMovieDate) TextView mMovieReleaseDate;
+
+    @InjectView(R.id.textViewMovieDescription) TextView mMovieDescription;
+
+    @InjectView(R.id.imageViewMoviePoster) ImageView mMoviePosterBackground;
+
+    @InjectView(R.id.containerMovieButtons) View mButtonContainer;
+
+    @InjectView(R.id.buttonMovieCheckIn) ImageButton mCheckinButton;
+
+    @InjectView(R.id.buttonMovieWatched) ImageButton mWatchedButton;
+
+    @InjectView(R.id.buttonMovieCollected) ImageButton mCollectedButton;
+
+    @InjectView(R.id.buttonMovieComments) Button mCommentsButton;
+
+    @InjectView(R.id.progressBar) View mProgressBar;
+
+    @InjectView(R.id.dividerHorizontalMovieDetails) View mDivider;
 
     private MovieDetails mMovieDetails;
 
@@ -86,8 +108,16 @@ public class MovieDetailsFragment extends SherlockFragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.movie_details_fragment, container, false);
+        ButterKnife.inject(this, v);
 
-        mProgressBar = v.findViewById(R.id.progressBar);
+        mProgressBar.setVisibility(View.VISIBLE);
+
+        // important action buttons
+        mButtonContainer.setVisibility(View.GONE);
+
+        // comments button
+        mDivider.setVisibility(View.GONE);
+        mCommentsButton.setVisibility(View.GONE);
 
         return v;
     }
@@ -111,6 +141,12 @@ public class MovieDetailsFragment extends SherlockFragment implements
         getLoaderManager().initLoader(LOADER_ID, args, this);
 
         setHasOptionsMenu(true);
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+
+        ButterKnife.reset(this);
     }
 
     @Override
@@ -210,39 +246,35 @@ public class MovieDetailsFragment extends SherlockFragment implements
             actionBar.setTitle(movie.title);
 
             // set non-content views visible
-            getView().findViewById(R.id.dividerHorizontalMovieDetails).setVisibility(View.VISIBLE);
+            mDivider.setVisibility(View.VISIBLE);
 
-            ((TextView) getView().findViewById(R.id.textViewMovieTitle)).setText(movie.title);
+            mMovieTitle.setText(movie.title);
 
-            TextView textViewDate = (TextView) getView().findViewById(R.id.textViewMovieDate);
             if (movie.release_date != null) {
-                textViewDate.setText(DateUtils.formatDateTime(getActivity(),
+                mMovieReleaseDate.setText(DateUtils.formatDateTime(getActivity(),
                         movie.release_date.getTime(),
                         DateUtils.FORMAT_SHOW_DATE));
             } else {
-                textViewDate.setText("");
+                mMovieReleaseDate.setText("");
             }
 
-            ((TextView) getView().findViewById(R.id.textViewMovieDescription))
-                    .setText(movie.overview);
+            mMovieDescription.setText(movie.overview);
 
             if (!TextUtils.isEmpty(movie.poster_path)) {
-                ImageView background = (ImageView) getView()
-                        .findViewById(R.id.imageViewMoviePoster);
                 if (AndroidUtils.isJellyBeanOrHigher()) {
-                    background.setImageAlpha(30);
+                    mMoviePosterBackground.setImageAlpha(30);
                 } else {
-                    background.setAlpha(30);
+                    mMoviePosterBackground.setAlpha(30);
                 }
 
                 String posterPath = mBaseUrl + movie.poster_path;
-                mImageDownloader.download(posterPath, background, false);
+                mImageDownloader.download(posterPath, mMoviePosterBackground, false);
             }
 
-            View checkinButton = getView().findViewById(R.id.buttonMovieCheckIn);
-            checkinButton.setVisibility(View.VISIBLE);
+            mButtonContainer.setVisibility(View.VISIBLE);
+            CheatSheet.setup(mCheckinButton);
             if (!TextUtils.isEmpty(movie.imdb_id)) {
-                checkinButton.setOnClickListener(
+                mCheckinButton.setOnClickListener(
                         new OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -254,12 +286,11 @@ public class MovieDetailsFragment extends SherlockFragment implements
                             }
                         });
             } else {
-                checkinButton.setEnabled(false);
+                mCheckinButton.setEnabled(false);
             }
 
-            View commentButton = getView().findViewById(R.id.buttonMovieComments);
-            commentButton.setVisibility(View.VISIBLE);
-            commentButton.setOnClickListener(new OnClickListener() {
+            mCommentsButton.setVisibility(View.VISIBLE);
+            mCommentsButton.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
