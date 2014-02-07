@@ -28,7 +28,7 @@ import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.androidutils.Maps;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -19,7 +19,7 @@ package com.battlelancer.seriesguide.adapters;
 
 import com.battlelancer.seriesguide.ui.SeasonsFragment.SeasonsQuery;
 import com.battlelancer.seriesguide.util.SeasonTools;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Context;
 import android.database.Cursor;

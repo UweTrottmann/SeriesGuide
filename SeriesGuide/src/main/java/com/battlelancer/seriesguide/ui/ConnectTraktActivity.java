@@ -20,7 +20,7 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;

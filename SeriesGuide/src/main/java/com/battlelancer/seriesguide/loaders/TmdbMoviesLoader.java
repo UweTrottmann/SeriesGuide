@@ -31,13 +31,12 @@ import android.util.Log;
 import java.util.List;
 
 import retrofit.RetrofitError;
+import timber.log.Timber;
 
 /**
  * Loads a list of movies from TMDb.
  */
 public class TmdbMoviesLoader extends GenericSimpleLoader<List<Movie>> {
-
-    private static final String TAG = "TmdbMoviesLoader";
 
     private String mQuery;
 
@@ -64,8 +63,7 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<List<Movie>> {
                 return page.results;
             }
         } catch (RetrofitError e) {
-            Utils.trackException(getContext(), TAG, e);
-            Log.w(TAG, e);
+            Timber.e(e, "Downloading now playing movies failed");
         }
 
         return null;

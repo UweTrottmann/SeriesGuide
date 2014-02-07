@@ -16,16 +16,6 @@
 
 package com.battlelancer.seriesguide.service;
 
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.FlagTapeEntry;
-import com.battlelancer.seriesguide.util.FlagTapeEntryQueue;
-import com.battlelancer.seriesguide.util.FlagTapedTask;
-import com.battlelancer.seriesguide.util.FlagTapedTask.Callback;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.jakewharton.trakt.Trakt;
-import com.jakewharton.trakt.services.ShowService;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -35,11 +25,18 @@ import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
-import android.util.Log;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.FlagTapeEntry;
+import com.battlelancer.seriesguide.util.FlagTapeEntryQueue;
+import com.battlelancer.seriesguide.util.FlagTapedTask;
+import com.battlelancer.seriesguide.util.FlagTapedTask.Callback;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.jakewharton.trakt.Trakt;
+import com.jakewharton.trakt.services.ShowService;
+import timber.log.Timber;
 
 public class TraktFlagService extends Service implements Callback {
-
-    private static final String TAG = "TraktFlagService";
 
     private static final long MAX_RETRY_INTERVAL = 15 * DateUtils.MINUTE_IN_MILLIS;
 
@@ -51,7 +48,7 @@ public class TraktFlagService extends Service implements Callback {
     public void onCreate() {
         super.onCreate();
         mQueue = FlagTapeEntryQueue.getInstance(getApplicationContext());
-        Log.i(TAG, "Starting service.");
+        Timber.i("Starting service.");
     }
 
     @Override
@@ -87,7 +84,7 @@ public class TraktFlagService extends Service implements Callback {
     }
 
     private void stop() {
-        Log.i(TAG, "Stopping service.");
+        Timber.i("Stopping service.");
         stopSelf();
     }
 

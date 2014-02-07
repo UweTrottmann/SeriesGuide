@@ -24,7 +24,7 @@ import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.enumerations.Extended;
 import com.jakewharton.trakt.enumerations.Rating;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Context;
 import android.os.AsyncTask;

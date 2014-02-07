@@ -17,26 +17,23 @@
 
 package com.battlelancer.seriesguide.sync;
 
-import com.battlelancer.seriesguide.SeriesGuideApplication;
-import com.uwetrottmann.seriesguide.R;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SeriesGuideApplication;
+import timber.log.Timber;
 
 public class AccountUtils {
 
     public static final int SYNC_FREQUENCY = 24 * 60 * 60; // 1 day (in seconds)
 
-    private static final String TAG = "AccountUtils";
-
     private static final String ACCOUNT_NAME = "SeriesGuide Sync";
 
     public static void createAccount(Context context) {
-        Log.d(TAG, "Setting up account...");
+        Timber.d("Setting up account...");
 
         // remove any existing accounts
         removeAccount(context);
@@ -58,11 +55,11 @@ public class AccountUtils {
                     new Bundle(), SYNC_FREQUENCY);
         }
 
-        Log.d(TAG, "Setting up account...DONE");
+        Timber.d("Setting up account...DONE");
     }
 
     private static void removeAccount(Context context) {
-        Log.d(TAG, "Removing existing accounts...");
+        Timber.d("Removing existing accounts...");
 
         AccountManager manager = AccountManager.get(context);
         Account[] accounts = manager.getAccountsByType(context.getString(R.string.package_name));
@@ -70,7 +67,7 @@ public class AccountUtils {
             manager.removeAccount(account, null, null);
         }
 
-        Log.d(TAG, "Removing existing accounts...DONE");
+        Timber.d("Removing existing accounts...DONE");
     }
 
     public static boolean isAccountExists(Context context) {

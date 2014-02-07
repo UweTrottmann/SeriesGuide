@@ -18,7 +18,7 @@ package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Intent;
 import android.os.Bundle;

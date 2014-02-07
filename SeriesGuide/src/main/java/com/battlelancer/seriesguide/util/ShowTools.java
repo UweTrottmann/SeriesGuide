@@ -16,39 +16,36 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.json.gson.GsonFactory;
-
-import com.battlelancer.seriesguide.backend.CloudEndpointUtils;
-import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.enums.NetworkResult;
-import com.battlelancer.seriesguide.enums.Result;
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.Lists;
-import com.uwetrottmann.seriesguide.R;
-import com.uwetrottmann.seriesguide.shows.Shows;
-import com.uwetrottmann.seriesguide.shows.model.CollectionResponseShow;
-import com.uwetrottmann.seriesguide.shows.model.Show;
-import com.uwetrottmann.seriesguide.shows.model.ShowList;
-
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Toast;
-
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.backend.CloudEndpointUtils;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
+import com.battlelancer.seriesguide.enums.NetworkResult;
+import com.battlelancer.seriesguide.enums.Result;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.json.gson.GsonFactory;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.Lists;
+import com.uwetrottmann.seriesguide.shows.Shows;
+import com.uwetrottmann.seriesguide.shows.model.CollectionResponseShow;
+import com.uwetrottmann.seriesguide.shows.model.Show;
+import com.uwetrottmann.seriesguide.shows.model.ShowList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import timber.log.Timber;
 
 import static com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult;
 
@@ -287,8 +284,6 @@ public class ShowTools {
 
     public static class Upload {
 
-        private static final String TAG = "ShowTools.Upload";
-
         /**
          * Tries to upload the given list of shows to Hexagon.
          *
@@ -301,17 +296,17 @@ public class ShowTools {
             ShowList showList = new ShowList();
             showList.setShows(shows);
 
-            Log.d(TAG, "Uploading show(s)...");
+            Timber.d("Uploading show(s)...");
 
             // upload shows
             try {
                 ShowTools.get(context).mShowsService.save(showList).execute();
             } catch (IOException e) {
-                Utils.trackExceptionAndLog(context, TAG, e);
+                Timber.e(e, "Uploading shows failed");
                 resultCode = Result.ERROR;
             }
 
-            Log.d(TAG, "Uploading show(s)...DONE");
+            Timber.d("Uploading show(s)...DONE");
 
             return resultCode;
         }
@@ -366,8 +361,6 @@ public class ShowTools {
 
     public static class Download {
 
-        private static final String TAG = "ShowTools.Download";
-
         /**
          * Downloads shows from Hexagon and updates existing shows with new property values. Any
          * shows not yet in the local database, determined by the given TVDb id set, will be added
@@ -399,14 +392,14 @@ public class ShowTools {
          */
         public static List<Show> getRemoteShows(Context context) {
             // download shows
-            Log.d(TAG, "Downloading shows from Hexagon...");
+            Timber.d("Downloading shows from Hexagon...");
             CollectionResponseShow remoteShows = null;
             try {
                 remoteShows = ShowTools.get(context).mShowsService.list().execute();
             } catch (IOException e) {
-                Utils.trackExceptionAndLog(context, TAG, e);
+                Timber.e(e, "Downloading shows failed");
             }
-            Log.d(TAG, "Downloading shows from Hexagon...DONE");
+            Timber.d("Downloading shows from Hexagon...DONE");
 
             // abort if no response
             if (remoteShows == null) {

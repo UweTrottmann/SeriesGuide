@@ -31,7 +31,7 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 
 import com.battlelancer.seriesguide.settings.DashClockSettings;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 /**
  * Allow setting the threshold for upcoming episodes to appear in DashClock.

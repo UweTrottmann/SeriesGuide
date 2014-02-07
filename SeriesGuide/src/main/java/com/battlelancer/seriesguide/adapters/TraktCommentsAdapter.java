@@ -28,7 +28,7 @@ import android.widget.TextView;
 
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.jakewharton.trakt.entities.Comment;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import java.util.List;
 

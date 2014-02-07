@@ -16,6 +16,13 @@
 
 package com.battlelancer.seriesguide.provider;
 
+import android.app.SearchManager;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.BaseColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearchColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -28,19 +35,9 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
 import com.battlelancer.seriesguide.util.TimeTools;
-
-import android.app.SearchManager;
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.BaseColumns;
-import android.util.Log;
+import timber.log.Timber;
 
 public class SeriesGuideDatabase extends SQLiteOpenHelper {
-
-    private static final String TAG = "SeriesGuideDatabase";
 
     public static final String DATABASE_NAME = "seriesdatabase";
 
@@ -408,14 +405,13 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.d(TAG, "Can't downgrade database from version " +
-                oldVersion + " to " + newVersion);
+        Timber.d("Can't downgrade from version " + oldVersion + " to " + newVersion);
         onResetDatabase(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.d(TAG, "onUpgrade() from " + oldVersion + " to " + newVersion);
+        Timber.d("Upgrading from " + oldVersion + " to " + newVersion);
 
         // run necessary upgrades
         int version = oldVersion;
@@ -456,7 +452,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         }
 
         // drop all tables if version is not right
-        Log.d(TAG, "after upgrade logic, at version " + version);
+        Timber.d("After upgrade at version " + version);
         if (version != DATABASE_VERSION) {
             onResetDatabase(db);
         }
@@ -466,7 +462,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * Drops all tables and creates an empty database.
      */
     private void onResetDatabase(SQLiteDatabase db) {
-        Log.w(TAG, "Database has incompatible version, starting from scratch");
+        Timber.w("Resetting database");
         db.execSQL("DROP TABLE IF EXISTS " + Tables.SHOWS);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.SEASONS);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES);

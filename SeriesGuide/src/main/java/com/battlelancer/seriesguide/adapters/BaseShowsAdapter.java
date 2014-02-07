@@ -16,7 +16,7 @@
 
 package com.battlelancer.seriesguide.adapters;
 
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Context;
 import android.database.Cursor;

@@ -16,6 +16,22 @@
 
 package com.battlelancer.thetvdbapi;
 
+import android.content.ContentProviderOperation;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
+import android.sax.Element;
+import android.sax.EndElementListener;
+import android.sax.EndTextElementListener;
+import android.sax.RootElement;
+import android.text.TextUtils;
+import android.text.format.DateUtils;
+import android.util.Xml;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
@@ -36,28 +52,6 @@ import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.enumerations.Extended;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.Lists;
-import com.uwetrottmann.seriesguide.R;
-
-import org.xml.sax.ContentHandler;
-import org.xml.sax.SAXException;
-
-import android.content.ContentProviderOperation;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.preference.PreferenceManager;
-import android.sax.Element;
-import android.sax.EndElementListener;
-import android.sax.EndTextElementListener;
-import android.sax.RootElement;
-import android.text.TextUtils;
-import android.text.format.DateUtils;
-import android.util.Log;
-import android.util.Xml;
-
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -70,8 +64,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.zip.ZipInputStream;
-
+import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
 import retrofit.RetrofitError;
+import timber.log.Timber;
 
 /**
  * Provides access to the TheTVDb.com XML API throwing in some additional data from trakt.tv here
@@ -89,8 +85,6 @@ public class TheTVDB {
     private static final String TVDB_MIRROR_BANNERS = "http://thetvdb.com/banners";
 
     private static final String TVDB_API_URL = "http://thetvdb.com/api/";
-
-    private static final String TAG = "TheTVDB";
 
     /**
      * Returns true if the given show has not been updated in the last 12 hours.
@@ -306,7 +300,7 @@ public class TheTVDB {
             try {
                 traktShow = manager.showService().summary(showTvdbId, Extended.DEFAULT);
             } catch (RetrofitError e) {
-                Utils.trackExceptionAndLog(context, TAG, e);
+                Timber.e(e, "Downloading summary failed");
             }
         }
         if (traktShow == null) {
@@ -720,22 +714,17 @@ public class TheTVDB {
                 return BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
             }
         } catch (IOException e) {
-            Log.w(TAG, "I/O error retrieving bitmap from " + url, e);
-            Utils.trackException(context, TAG + " I/O error retrieving bitmap from " + url, e);
+            Timber.e(e, "I/O error retrieving bitmap from " + url);
         } catch (IllegalStateException e) {
-            Log.w(TAG, "Incorrect URL: " + url);
-            Utils.trackException(context, TAG + " Incorrect URL " + url, e);
+            Timber.e(e, "Incorrect URL: " + url);
         } catch (Exception e) {
-            Log.w(TAG, "Error while retrieving bitmap from " + url, e);
-            Utils.trackException(context, TAG + " Error while retrieving bitmap from " + url, e);
+            Timber.e(e, "Error while retrieving bitmap from " + url);
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    Log.w(TAG, "I/O error while retrieving bitmap from " + url, e);
-                    Utils.trackException(context, TAG + " I/O error retrieving bitmap from " + url,
-                            e);
+                    Timber.e(e, "I/O error retrieving bitmap from " + url);
                 }
             } else {
                 if (urlConnection != null) {
@@ -776,7 +765,7 @@ public class TheTVDB {
     }
 
     public static void onRenewFTSTable(Context context) {
-        Log.d(TAG, "Query to renew FTS table");
+        Timber.d("Query to renew FTS table");
         context.getContentResolver().query(EpisodeSearch.CONTENT_URI_RENEWFTSTABLE, null, null,
                 null, null);
     }

@@ -29,7 +29,7 @@ import android.preference.PreferenceScreen;
 
 import com.battlelancer.seriesguide.settings.WidgetSettings;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 /**
  * Shows settings fragment for a specific app widget, hosted inside a

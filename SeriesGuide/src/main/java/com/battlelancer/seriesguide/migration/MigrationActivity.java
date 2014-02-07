@@ -22,7 +22,7 @@ import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.dataliberation.JsonImportTask;
 import com.battlelancer.seriesguide.dataliberation.OnTaskFinishedListener;
 import com.battlelancer.seriesguide.ui.BaseActivity;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.os.AsyncTask;
 import android.os.Bundle;

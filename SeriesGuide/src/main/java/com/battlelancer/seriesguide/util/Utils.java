@@ -16,23 +16,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.Fields;
-import com.google.analytics.tracking.android.MapBuilder;
-
-import com.battlelancer.seriesguide.billing.BillingActivity;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.service.NotificationService;
-import com.battlelancer.seriesguide.service.OnAlarmReceiver;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.settings.UpdateSettings;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.BuildConfig;
-import com.uwetrottmann.seriesguide.R;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -49,20 +32,32 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.battlelancer.seriesguide.BuildConfig;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.billing.BillingActivity;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.service.NotificationService;
+import com.battlelancer.seriesguide.service.OnAlarmReceiver;
+import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.UpdateSettings;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.MapBuilder;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import timber.log.Timber;
 
 public class Utils {
-
-    private static final String TAG = "Utils";
 
     /**
      * Returns a string in format "1x01 title" or "S1E01 title" dependent on a user preference.
@@ -221,7 +216,7 @@ public class Utils {
                 * DateUtils.MINUTE_IN_MILLIS, pi);
     }
 
-    public static String toSHA1(Context context, String message) {
+    public static String toSHA1(String message) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
             byte[] messageBytes = message.getBytes("UTF-8");
@@ -234,7 +229,7 @@ public class Utils {
 
             return result;
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-            Utils.trackExceptionAndLog(context, TAG, e);
+            Timber.e(e, "Failed creating SHA1");
         }
         return null;
     }
@@ -346,23 +341,6 @@ public class Utils {
                 SeriesGuidePreferences.THEME = R.style.SeriesGuideTheme;
                 break;
         }
-    }
-
-    /**
-     * Tracks an exception using the Google Analytics {@link EasyTracker}.
-     */
-    public static void trackException(Context context, String tag, Exception e) {
-        EasyTracker.getInstance(context).send(
-                MapBuilder.createException(tag + ": " + e.getMessage(), false).build()
-        );
-    }
-
-    /**
-     * Tracks an exception using the Google Analytics {@link EasyTracker} and the local log.
-     */
-    public static void trackExceptionAndLog(Context context, String tag, Exception e) {
-        trackException(context, tag, e);
-        Log.w(tag, e);
     }
 
     public static void trackView(Context context, String screenName) {

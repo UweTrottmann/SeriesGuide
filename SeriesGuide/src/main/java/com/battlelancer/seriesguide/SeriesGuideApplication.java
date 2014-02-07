@@ -16,18 +16,6 @@
 
 package com.battlelancer.seriesguide;
 
-import com.google.analytics.tracking.android.GoogleAnalytics;
-
-import com.battlelancer.seriesguide.settings.AppSettings;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.settings.TraktSettings;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.BuildConfig;
-import com.uwetrottmann.seriesguide.R;
-
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.ContentProvider;
@@ -36,8 +24,17 @@ import android.os.StrictMode.ThreadPolicy;
 import android.os.StrictMode.VmPolicy;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
-
+import com.battlelancer.seriesguide.settings.AppSettings;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.Utils;
+import com.crashlytics.android.Crashlytics;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import java.net.URL;
+import timber.log.Timber;
 
 /**
  * Initializes settings and services and on pre-ICS implements actions for low memory state.
@@ -45,6 +42,8 @@ import java.net.URL;
  * @author Uwe Trottmann
  */
 public class SeriesGuideApplication extends Application {
+
+    public static final String FLAVOR_INTERNAL = "internal";
 
     /**
      * The content authority used to identify the SeriesGuide {@link ContentProvider}
@@ -55,8 +54,23 @@ public class SeriesGuideApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        if (BuildConfig.DEBUG) {
+            // detailed logcat logging
+            Timber.plant(new Timber.DebugTree());
+
+            // also report crashes and errors on internal version
+            if (FLAVOR_INTERNAL.equals(BuildConfig.FLAVOR)) {
+                Timber.plant(new AnalyticsTree());
+                Crashlytics.start(this);
+            }
+        } else {
+            // crash and error reporting
+            Timber.plant(new AnalyticsTree());
+            Crashlytics.start(this);
+        }
+
         // Set provider authority
-        CONTENT_AUTHORITY = getPackageName() + ".provider";
+        CONTENT_AUTHORITY = getString(R.string.provider_authority);
 
         // Initialize settings on first run
         PreferenceManager.setDefaultValues(this, R.xml.settings_basic, false);
@@ -121,7 +135,7 @@ public class SeriesGuideApplication extends Application {
          */
         final int lastVersion = AppSettings.getLastVersionCode(this);
 
-        boolean isBeta = "beta".equals(BuildConfig.FLAVOR);
+        boolean isBeta = FLAVOR_INTERNAL.equals(BuildConfig.FLAVOR);
 
         // store trakt password in sync account
         if (!isBeta && lastVersion < 204 || isBeta && lastVersion < 216) {
@@ -133,7 +147,5 @@ public class SeriesGuideApplication extends Application {
                 }
             }
         }
-
     }
-
 }

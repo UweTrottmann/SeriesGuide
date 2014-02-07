@@ -26,7 +26,7 @@ import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListen
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.annotation.TargetApi;
 import android.content.Context;

@@ -3,6 +3,7 @@
 
     <string name="app_name">SeriesGuide</string>
     <string name="package_name">com.battlelancer.seriesguide</string>
+    <string name="provider_authority">com.battlelancer.seriesguide.provider</string>
     <string name="hexagon">SeriesGuide cloud</string>
     <string name="googleplay">Google Play</string>
     <string name="amazon">Amazon</string>

@@ -16,6 +16,8 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.content.ContentProviderOperation;
+import android.content.Context;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -24,19 +26,13 @@ import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowSeason;
 import com.jakewharton.trakt.enumerations.Extended;
 import com.jakewharton.trakt.services.UserService;
-
-import android.content.ContentProviderOperation;
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
 import retrofit.RetrofitError;
+import timber.log.Timber;
 
 public class TraktTools {
-
-    public static final String TAG = "TraktTools";
 
     static final int SUCCESS_NOWORK = 0;
 
@@ -71,7 +67,7 @@ public class TraktTools {
             // get watched episodes from trakt
             remoteShows = userService.libraryShowsWatched(username, Extended.MIN);
         } catch (RetrofitError e) {
-            Utils.trackExceptionAndLog(context, TAG, e);
+            Timber.e(e, "Downloading watched shows failed");
             return FAILED_API;
         }
         if (remoteShows == null) {
@@ -88,7 +84,7 @@ public class TraktTools {
             // get watched episodes from trakt
             remoteShows = userService.libraryShowsCollection(username, Extended.MIN);
         } catch (RetrofitError e) {
-            Utils.trackExceptionAndLog(context, TAG, e);
+            Timber.e(e, "Downloading collected shows failed");
             return FAILED_API;
         }
         if (remoteShows == null) {

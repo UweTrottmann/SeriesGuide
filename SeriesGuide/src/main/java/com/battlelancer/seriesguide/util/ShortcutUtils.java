@@ -25,7 +25,7 @@ import android.graphics.Paint;
 
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.OverviewFragment;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 public final class ShortcutUtils {
 

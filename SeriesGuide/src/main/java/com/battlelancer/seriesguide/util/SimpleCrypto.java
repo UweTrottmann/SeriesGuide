@@ -16,12 +16,10 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -29,10 +27,10 @@ import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.security.KeyStore.SecretKeyEntry;
 import java.security.SecureRandom;
-
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import timber.log.Timber;
 
 /**
  * Symmetrically encrypts and decrypts strings using a seeded key stored in a
@@ -42,8 +40,7 @@ import javax.crypto.SecretKey;
  */
 public class SimpleCrypto {
 
-    public static final String KEY_ALIAS = "coreentry";
-    public static final String TAG = "SimpleCrypto";
+    private static final String KEY_ALIAS = "coreentry";
 
     private static final String DATACORE = "datacore";
 
@@ -58,7 +55,7 @@ public class SimpleCrypto {
             byte[] result = decrypt(key, enc);
             return new String(result);
         } catch (GeneralSecurityException | IOException e) {
-            Utils.trackExceptionAndLog(context, TAG + ".decrypt()", e);
+            Timber.e(e, "Decrypting failed");
         }
         return null;
     }

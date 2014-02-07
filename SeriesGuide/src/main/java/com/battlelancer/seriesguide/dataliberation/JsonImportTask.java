@@ -16,10 +16,11 @@
 
 package com.battlelancer.seriesguide.dataliberation;
 
-import com.google.myjson.Gson;
-import com.google.myjson.JsonParseException;
-import com.google.myjson.stream.JsonReader;
-
+import android.content.ContentValues;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.widget.Toast;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Episode;
@@ -38,22 +39,18 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
+import com.google.myjson.Gson;
+import com.google.myjson.JsonParseException;
+import com.google.myjson.stream.JsonReader;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
-
-import android.content.ContentValues;
-import android.content.Context;
-import android.os.AsyncTask;
-import android.widget.Toast;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import timber.log.Timber;
 
 /**
  * Import a show database from a human-readable JSON file on external storage.
@@ -62,7 +59,6 @@ import java.util.ArrayList;
  */
 public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
-    private static final String TAG = "Json Import";
     private static final int SUCCESS = 1;
     private static final int ERROR_STORAGE_ACCESS = 0;
     private static final int ERROR = -1;
@@ -122,12 +118,9 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
             reader.endArray();
             reader.close();
 
-        } catch (JsonParseException e) {
+        } catch (JsonParseException | IOException e) {
             // the given Json might not be valid or unreadable
-            Utils.trackExceptionAndLog(mContext, TAG, e);
-            return ERROR;
-        } catch (IOException e) {
-            Utils.trackExceptionAndLog(mContext, TAG, e);
+            Timber.e(e, "JSON show import failed");
             return ERROR;
         }
 
@@ -157,12 +150,9 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
             reader.endArray();
             reader.close();
 
-        } catch (JsonParseException e) {
+        } catch (JsonParseException | IOException e) {
             // the given Json might not be valid or unreadable
-            Utils.trackExceptionAndLog(mContext, TAG, e);
-            return ERROR;
-        } catch (IOException e) {
-            Utils.trackExceptionAndLog(mContext, TAG, e);
+            Timber.e(e, "JSON lists import failed");
             return ERROR;
         }
 
