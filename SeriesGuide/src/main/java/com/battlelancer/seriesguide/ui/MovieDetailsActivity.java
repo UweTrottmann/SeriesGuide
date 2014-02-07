@@ -53,8 +53,7 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
 
         mSystemBarTintManager = new SystemBarTintManager(this);
 
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        setupActionBar();
 
         if (savedInstanceState == null) {
             MovieDetailsFragment f = MovieDetailsFragment.newInstance(tmdbId);
@@ -72,6 +71,12 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
         } else {
             setTheme(R.style.ImmersiveTheme_Stock);
         }
+    }
+
+    private void setupActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
     }
 
     @Override

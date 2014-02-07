@@ -258,10 +258,6 @@ public class MovieDetailsFragment extends SherlockFragment implements
         final Movie movie = details.movie();
 
         if (movie != null) {
-            // display movie title in action bar
-            final ActionBar actionBar = getSherlockActivity().getSupportActionBar();
-            actionBar.setTitle(movie.title);
-
             // set non-content views visible
             mDivider.setVisibility(View.VISIBLE);
 
