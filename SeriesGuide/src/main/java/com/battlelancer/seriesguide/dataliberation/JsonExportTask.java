@@ -23,7 +23,7 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
-
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.model.Episode;
 import com.battlelancer.seriesguide.dataliberation.model.List;
 import com.battlelancer.seriesguide.dataliberation.model.ListItem;
@@ -37,20 +37,18 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
 import com.google.myjson.Gson;
 import com.google.myjson.JsonIOException;
 import com.google.myjson.stream.JsonWriter;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.Lists;
-import com.battlelancer.seriesguide.R;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import timber.log.Timber;
 
 /**
  * Export the show database to a human-readable JSON file on external storage.
@@ -64,7 +62,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     public static final String EXPORT_JSON_FILE_SHOWS = "sg-shows-export.json";
     public static final String EXPORT_JSON_FILE_LISTS = "sg-lists-export.json";
 
-    private static final String TAG = "Json Export";
     private static final int SUCCESS = 1;
     private static final int ERROR_STORAGE_ACCESS = 0;
     private static final int ERROR = -1;
@@ -148,14 +145,10 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             OutputStream out = new FileOutputStream(backup);
 
             writeJsonStreamShows(out, shows);
-        } catch (JsonIOException e) {
-            // Only catch IO exception as we want to know if exporting fails due
+        } catch (JsonIOException | IOException e) {
+            // Also catch IO exception as we want to know if exporting fails due
             // to a JsonSyntaxException
-            Utils.trackExceptionAndLog(mContext, TAG, e);
-            return ERROR;
-        } catch (IOException e) {
-            // Backup failed
-            Utils.trackExceptionAndLog(mContext, TAG, e);
+            Timber.e(e, "JSON shows export failed");
             return ERROR;
         } finally {
             shows.close();
@@ -186,13 +179,10 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             OutputStream out = new FileOutputStream(backupLists);
 
             writeJsonStreamLists(out, lists);
-        } catch (JsonIOException e) {
+        } catch (JsonIOException | IOException e) {
             // Only catch IO exception as we want to know if exporting fails due
             // to a JsonSyntaxException
-            Utils.trackExceptionAndLog(mContext, TAG, e);
-            return ERROR;
-        } catch (IOException e) {
-            Utils.trackExceptionAndLog(mContext, TAG, e);
+            Timber.e(e, "JSON lists export failed");
             return ERROR;
         } finally {
             lists.close();

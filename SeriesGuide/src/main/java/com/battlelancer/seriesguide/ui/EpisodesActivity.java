@@ -16,12 +16,23 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.View;
+import android.widget.ImageView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -33,27 +44,12 @@ import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapte
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.R;
-
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.database.Cursor;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-
+import com.google.analytics.tracking.android.EasyTracker;
+import de.greenrobot.event.EventBus;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-
-import de.greenrobot.event.EventBus;
+import timber.log.Timber;
 
 /**
  * Hosts a fragment which displays episodes of a season. On larger screen hosts a {@link ViewPager}
@@ -206,7 +202,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
             // change
             for (Fragment fragment : getActiveFragments()) {
                 if (fragment.getTag() == null) {
-                    Log.d("EpisodesActivity", "Removing a leftover fragment");
+                    Timber.d("Removing a leftover fragment");
                     getSupportFragmentManager().beginTransaction().remove(fragment).commit();
                 }
             }

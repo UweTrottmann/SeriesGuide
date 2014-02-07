@@ -16,29 +16,24 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.database.Cursor;
+import android.os.AsyncTask;
+import android.support.v4.app.FragmentActivity;
+import android.view.View;
+import android.widget.Toast;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.services.ShowService;
-import com.battlelancer.seriesguide.R;
-
-import android.database.Cursor;
-import android.os.AsyncTask;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
 import retrofit.RetrofitError;
+import timber.log.Timber;
 
 public class TraktSync extends AsyncTask<Void, Void, Integer> {
-
-    private static final String TAG = "TraktSync";
 
     private FragmentActivity mContext;
 
@@ -69,7 +64,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected Integer doInBackground(Void... params) {
-        Log.d(TAG, "Syncing with trakt...");
+        Timber.d("Syncing with trakt...");
 
         Trakt trakt = ServiceUtils.getTraktWithAuth(mContext);
         if (trakt == null) {
@@ -148,7 +143,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                     ));
                 }
             } catch (RetrofitError e) {
-                Utils.trackExceptionAndLog(mContext, TAG, e);
+                Timber.e(e, "Uploading episodes failed");
                 resultCode = TraktTools.FAILED_API;
                 break;
             }
@@ -169,14 +164,14 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected void onCancelled() {
-        Log.d(TAG, "Syncing with trakt...CANCELED");
+        Timber.d("Syncing with trakt...CANCELED");
         Toast.makeText(mContext, "Sync cancelled", Toast.LENGTH_LONG).show();
         restoreViewStates();
     }
 
     @Override
     protected void onPostExecute(Integer result) {
-        Log.d(TAG, "Syncing with trakt...DONE (" + result + ")");
+        Timber.d("Syncing with trakt...DONE (" + result + ")");
 
         String message = "";
         int duration = Toast.LENGTH_SHORT;

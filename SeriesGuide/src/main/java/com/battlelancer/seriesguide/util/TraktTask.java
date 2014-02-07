@@ -16,6 +16,12 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.content.Context;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.widget.Toast;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
@@ -28,20 +34,11 @@ import com.jakewharton.trakt.services.MovieService;
 import com.jakewharton.trakt.services.RateService;
 import com.jakewharton.trakt.services.ShowService;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.battlelancer.seriesguide.R;
-
-import android.content.Context;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.widget.Toast;
-
 import de.greenrobot.event.EventBus;
 import retrofit.RetrofitError;
+import timber.log.Timber;
 
 public class TraktTask extends AsyncTask<Void, Void, Response> {
-
-    private static final String TAG = "TraktTask";
 
     private Bundle mArgs;
 
@@ -415,7 +412,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 }
             }
         } catch (RetrofitError e) {
-            Utils.trackExceptionAndLog(mContext, TAG, e);
+            Timber.e(e, mAction.toString() + " failed");
             r = new Response();
             r.status = TraktStatus.FAILURE;
             r.error = mContext.getString(R.string.trakt_error_general);

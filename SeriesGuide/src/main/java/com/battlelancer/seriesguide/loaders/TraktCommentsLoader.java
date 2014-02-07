@@ -16,20 +16,17 @@
 
 package com.battlelancer.seriesguide.loaders;
 
+import android.content.Context;
+import android.os.Bundle;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
-import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Comment;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-
-import android.content.Context;
-import android.os.Bundle;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit.RetrofitError;
+import timber.log.Timber;
 
 /**
  * Loads up comments from trakt for a movie (tvdbId arg is 0), show (episode arg
@@ -52,7 +49,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<List<Comment>> {
         int episode = mArgs.getInt(ShareItems.EPISODE);
 
         Trakt manager = ServiceUtils.getTrakt(getContext());
-        List<Comment> comments = new ArrayList<Comment>();
+        List<Comment> comments;
         try {
             if (tvdbId == 0) {
                 // movie comments
@@ -68,7 +65,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<List<Comment>> {
             }
 
         } catch (RetrofitError e) {
-            Utils.trackExceptionAndLog(getContext(), TAG, e);
+            Timber.e(e, "Loading comments failed");
             return null;
         }
 

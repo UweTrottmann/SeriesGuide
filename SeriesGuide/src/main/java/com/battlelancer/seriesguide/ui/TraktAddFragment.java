@@ -16,9 +16,18 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -31,24 +40,12 @@ import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.enumerations.Extended;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.battlelancer.seriesguide.R;
-
-import android.content.Context;
-import android.content.res.Resources;
-import android.database.Cursor;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-
 import retrofit.RetrofitError;
+import timber.log.Timber;
 
 public class TraktAddFragment extends AddFragment {
 
@@ -172,8 +169,6 @@ public class TraktAddFragment extends AddFragment {
 
     public class GetTraktShowsTask extends AsyncTask<Integer, Void, List<SearchResult>> {
 
-        private static final String TAG = "GetTraktShowsTask";
-
         private Context mContext;
 
         public GetTraktShowsTask(Context context) {
@@ -182,7 +177,7 @@ public class TraktAddFragment extends AddFragment {
 
         @Override
         protected List<SearchResult> doInBackground(Integer... params) {
-            Log.d(TAG, "Getting shows from trakt...");
+            Timber.d("Getting shows...");
             int type = params[0];
             List<SearchResult> showList = new ArrayList<>();
 
@@ -192,7 +187,8 @@ public class TraktAddFragment extends AddFragment {
                 try {
                     shows = ServiceUtils.getTrakt(mContext).showService().trending();
                 } catch (RetrofitError e) {
-                    // we don't care
+                    Timber.e(e, "Loading trending shows failed");
+                    // ignored, just display empty list
                 }
             } else {
                 try {
@@ -214,7 +210,8 @@ public class TraktAddFragment extends AddFragment {
                         }
                     }
                 } catch (RetrofitError e) {
-                    // we don't care
+                    Timber.e(e, "Loading shows failed");
+                    // ignored, just display empty list
                 }
             }
 

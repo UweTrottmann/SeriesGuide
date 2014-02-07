@@ -26,25 +26,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.BuildConfig;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.BuildConfig;
-import com.battlelancer.seriesguide.R;
-
 import java.util.ArrayList;
 import java.util.List;
+import timber.log.Timber;
 
 public class BillingActivity extends BaseActivity {
 
@@ -100,10 +98,10 @@ public class BillingActivity extends BaseActivity {
         // this to false).
         mHelper.enableDebugLogging(BuildConfig.DEBUG);
 
-        Log.d(TAG, "Starting setup.");
+        Timber.i("Starting setup.");
         mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
             public void onIabSetupFinished(IabResult result) {
-                Log.d(TAG, "Setup finished.");
+                Timber.d("Setup finished.");
 
                 if (!result.isSuccess()) {
                     // Oh noes, there was a problem.
@@ -120,7 +118,7 @@ public class BillingActivity extends BaseActivity {
 
                 // Hooray, IAB is fully set up.
                 // Get an inventory of stuff we own, also get SKU details for pricing info
-                Log.d(TAG, "Setup successful. Querying inventory.");
+                Timber.d("Setup successful. Querying inventory.");
                 List<String> detailSkus = new ArrayList<>();
                 detailSkus.add(SKU_X_SUBSCRIPTION);
                 mHelper.queryInventoryAsync(true, detailSkus, mGotInventoryListener);
@@ -177,7 +175,7 @@ public class BillingActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);
+        Timber.d("onActivityResult(" + requestCode + "," + resultCode + "," + data);
         // Have we been disposed of in the meantime? If so, quit.
         if (mHelper == null) {
             return;
@@ -190,7 +188,7 @@ public class BillingActivity extends BaseActivity {
             // billing...
             super.onActivityResult(requestCode, resultCode, data);
         } else {
-            Log.d(TAG, "onActivityResult handled by IABUtil.");
+            Timber.d("onActivityResult handled by IABUtil.");
         }
     }
 
@@ -198,7 +196,7 @@ public class BillingActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        Log.d(TAG, "Disposing of IabHelper.");
+        Timber.i("Disposing of IabHelper.");
         if (mHelper != null) {
             mHelper.dispose();
         }
@@ -210,7 +208,7 @@ public class BillingActivity extends BaseActivity {
     IabHelper.QueryInventoryFinishedListener mGotInventoryListener
             = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-            Log.d(TAG, "Query inventory finished.");
+            Timber.d("Query inventory finished.");
 
             // Have we been disposed of in the meantime? If so, quit.
             if (mHelper == null) {
@@ -222,7 +220,7 @@ public class BillingActivity extends BaseActivity {
                 return;
             }
 
-            Log.d(TAG, "Query inventory was successful.");
+            Timber.d("Query inventory was successful.");
 
             // get sub state
             boolean hasUpgrade = checkForSubscription(BillingActivity.this, inventory);
@@ -234,7 +232,7 @@ public class BillingActivity extends BaseActivity {
 
             updateViewStates(hasUpgrade);
             setWaitMode(false);
-            Log.d(TAG, "Initial inventory query finished; enabling main UI.");
+            Timber.d("Initial inventory query finished; enabling main UI.");
         }
 
     };
@@ -263,10 +261,9 @@ public class BillingActivity extends BaseActivity {
         boolean isSubscribedToX = (xSubscription != null && verifyDeveloperPayload(xSubscription));
 
         if (hasXUpgrade) {
-            Log.d(TAG, "User has X SUBSCRIPTION for life.");
+            Timber.d("User has X SUBSCRIPTION for life.");
         } else {
-            Log.d(TAG, "User has "
-                    + (isSubscribedToX ? "X SUBSCRIPTION" : "NO X SUBSCRIPTION"));
+            Timber.d("User has " + (isSubscribedToX ? "X SUBSCRIPTION" : "NO X SUBSCRIPTION"));
         }
 
         // notify the user about a change in subscription state
@@ -338,7 +335,7 @@ public class BillingActivity extends BaseActivity {
 
     // User clicked the "Subscribe" button.
     private void onSubscribeToXButtonClicked() {
-        Log.d(TAG, "Subscribe button clicked; launching purchase flow for X subscription.");
+        Timber.d("Subscribe button clicked; launching purchase flow for X subscription.");
 
         String payload = SOME_STRING;
 
@@ -352,7 +349,7 @@ public class BillingActivity extends BaseActivity {
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener
             = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-            Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
+            Timber.d("Purchase finished: " + result + ", purchase: " + purchase);
 
             // Have we been disposed of in the meantime? If so, quit.
             if (mHelper == null) {
@@ -372,10 +369,10 @@ public class BillingActivity extends BaseActivity {
                 return;
             }
 
-            Log.d(TAG, "Purchase successful.");
+            Timber.d("Purchase successful.");
 
             if (purchase.getSku().equals(SKU_X_SUBSCRIPTION)) {
-                Log.d(TAG, "Purchased X subscription. Congratulating user.");
+                Timber.d("Purchased X subscription. Congratulating user.");
                 // Save current state until we query again
                 AdvancedSettings.setSubscriptionState(BillingActivity.this, true);
                 updateViewStates(true);
@@ -416,7 +413,7 @@ public class BillingActivity extends BaseActivity {
     }
 
     private void complain(String message) {
-        Log.e(TAG, message);
+        Timber.e(message);
         alert("Error: " + message);
     }
 
@@ -424,7 +421,7 @@ public class BillingActivity extends BaseActivity {
         AlertDialog.Builder bld = new AlertDialog.Builder(this);
         bld.setMessage(message);
         bld.setNeutralButton(android.R.string.ok, null);
-        Log.d(TAG, "Showing alert dialog: " + message);
+        Timber.d("Showing alert dialog: " + message);
         bld.create().show();
     }
 

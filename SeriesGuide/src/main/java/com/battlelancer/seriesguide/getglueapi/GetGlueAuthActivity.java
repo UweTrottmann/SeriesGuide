@@ -16,20 +16,6 @@
 
 package com.battlelancer.seriesguide.getglueapi;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Window;
-import com.battlelancer.seriesguide.settings.GetGlueSettings;
-import com.battlelancer.seriesguide.ui.BaseActivity;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.getglue.GetGlue;
-import com.battlelancer.seriesguide.R;
-
-import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
-import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
-import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
-import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -37,11 +23,22 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Window;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.settings.GetGlueSettings;
+import com.battlelancer.seriesguide.ui.BaseActivity;
+import com.uwetrottmann.getglue.GetGlue;
+import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
+import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
+import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
+import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
+import timber.log.Timber;
 
 /**
  * Starts an OAuth 2.0 authentication flow via an {@link android.webkit.WebView}.
@@ -106,7 +103,7 @@ public class GetGlueAuthActivity extends BaseActivity {
         // make sure we start fresh
         webview.clearCache(true);
 
-        Log.d(TAG, "Initiating authorization request...");
+        Timber.d("Initiating authorization request...");
         Resources res = getResources();
         try {
             OAuthClientRequest request = com.uwetrottmann.getglue.GetGlue
@@ -114,7 +111,7 @@ public class GetGlueAuthActivity extends BaseActivity {
                             GetGlueCheckin.OAUTH_CALLBACK_URL);
             webview.loadUrl(request.getLocationUri());
         } catch (OAuthSystemException e) {
-            Utils.trackExceptionAndLog(this, TAG, e);
+            Timber.e(e, "Auth request failed");
         }
     }
 
@@ -163,7 +160,7 @@ public class GetGlueAuthActivity extends BaseActivity {
         Resources resources = context.getResources();
         OAuthAccessTokenResponse response = null;
 
-        Log.d(TAG, "Building OAuth 2.0 token request...");
+        Timber.d("Building OAuth 2.0 token request...");
         try {
             response = GetGlue.getAccessTokenResponse(
                     resources.getString(R.string.getglue_client_id),
@@ -171,16 +168,13 @@ public class GetGlueAuthActivity extends BaseActivity {
                     GetGlueCheckin.OAUTH_CALLBACK_URL,
                     authCode
             );
-        } catch (OAuthSystemException e) {
+        } catch (OAuthSystemException | OAuthProblemException e) {
             response = null;
-            Utils.trackExceptionAndLog(context, TAG, e);
-        } catch (OAuthProblemException e) {
-            response = null;
-            Utils.trackExceptionAndLog(context, TAG, e);
+            Timber.e(e, "Getting access token failed");
         }
 
         if (response != null) {
-            Log.d(TAG, "Storing received OAuth 2.0 tokens...");
+            Timber.d("Storing received OAuth 2.0 tokens...");
             long expiresIn = response.getExpiresIn();
             long expirationDate = System.currentTimeMillis()
                     + expiresIn * DateUtils.SECOND_IN_MILLIS;
@@ -191,7 +185,7 @@ public class GetGlueAuthActivity extends BaseActivity {
                     .commit();
             return true;
         } else {
-            Log.d(TAG, "Failed, purging OAuth 2.0 tokens...");
+            Timber.d("Failed, purging OAuth 2.0 tokens...");
             GetGlueSettings.clearTokens(context);
             return false;
         }

@@ -18,16 +18,13 @@
 package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
-
-import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.getglue.GetGlue;
 import com.uwetrottmann.getglue.entities.GetGlueObject;
 import com.uwetrottmann.getglue.entities.GetGlueObjects;
-
 import java.util.List;
-
 import retrofit.RetrofitError;
+import timber.log.Timber;
 
 /**
  * Loads a list of TV shows using a search term against GetGlue's
@@ -38,7 +35,6 @@ import retrofit.RetrofitError;
  */
 public class GetGlueObjectLoader extends GenericSimpleLoader<List<GetGlueObject>> {
 
-    private static final String TAG = "GetGlueObjectLoader";
     private String mQuery;
 
     public GetGlueObjectLoader(String query, Context context) {
@@ -54,7 +50,7 @@ public class GetGlueObjectLoader extends GenericSimpleLoader<List<GetGlueObject>
             GetGlueObjects results = getglue.searchService().searchTvShows(mQuery);
             return results.objects;
         } catch (RetrofitError e) {
-            Utils.trackExceptionAndLog(getContext(), TAG, e);
+            Timber.e(e, "Search failed");
             return null;
         }
     }

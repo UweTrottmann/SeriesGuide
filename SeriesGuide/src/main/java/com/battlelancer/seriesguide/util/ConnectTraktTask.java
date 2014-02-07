@@ -77,7 +77,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         }
 
         // create SHA1 of password
-        password = Utils.toSHA1(mContext, password);
+        password = Utils.toSHA1(password);
 
         // check validity
         // use a new Trakt instance for testing

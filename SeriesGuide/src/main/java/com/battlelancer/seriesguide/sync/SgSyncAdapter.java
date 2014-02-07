@@ -60,7 +60,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -71,13 +70,12 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import retrofit.RetrofitError;
+import timber.log.Timber;
 
 /**
  * {@link AbstractThreadedSyncAdapter} which updates the show library.
  */
 public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
-
-    public static final String TAG = "SgSyncAdapter";
 
     public enum SyncType {
 
@@ -231,7 +229,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
     public SgSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
-        Log.d(TAG, "Creating sync adapter");
+        Timber.d("Creating sync adapter");
     }
 
     public enum UpdateResult {
@@ -245,13 +243,13 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         final boolean syncImmediately = extras.getBoolean(SyncInitBundle.SYNC_IMMEDIATE, false);
         final SyncType syncType = SyncType.from(
                 extras.getInt(SyncInitBundle.SYNC_TYPE, SyncType.DELTA.id));
-        Log.d(TAG, "Syncing..." + syncType + (syncImmediately ? "_IMMEDIATE" : "_REGULAR"));
+        Timber.i("Syncing..." + syncType + (syncImmediately ? "_IMMEDIATE" : "_REGULAR"));
 
         // should we sync?
         final long currentTime = System.currentTimeMillis();
         if (!syncImmediately && syncType != SyncType.SINGLE) {
             if (!isTimeForSync(getContext(), currentTime)) {
-                Log.d(TAG, "Syncing...ABORT_DID_JUST_SYNC");
+                Timber.d("Syncing...ABORT_DID_JUST_SYNC");
                 return;
             }
         }
@@ -261,7 +259,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         if (syncType == SyncType.SINGLE) {
             int showTvdbId = extras.getInt(SyncInitBundle.SYNC_SHOW_TVDB_ID, 0);
             if (showTvdbId == 0) {
-                Log.d(TAG, "Syncing...ERROR_INVALID_SHOW_TVDB_ID");
+                Timber.e("Syncing...ABORT_INVALID_SHOW_TVDB_ID");
                 return;
             }
             showsToUpdate = new int[]{
@@ -275,7 +273,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         UpdateResult resultCode = UpdateResult.SUCCESS;
 
         // loop through shows and download latest data from TVDb
-        Log.d(TAG, "Syncing...TVDb");
+        Timber.d("Syncing...TVDb");
         final AtomicInteger updateCount = new AtomicInteger();
         final ContentResolver resolver = getContext().getContentResolver();
         for (int i = updateCount.get(); i < showsToUpdate.length; i++) {
@@ -295,7 +293,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             } catch (SAXException e) {
                 // failed, continue with other shows
                 resultCode = UpdateResult.INCOMPLETE;
-                Utils.trackExceptionAndLog(getContext(), TAG, e);
+                Timber.e(e, null);
             }
 
             updateCount.incrementAndGet();
@@ -307,7 +305,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     .getDefaultSharedPreferences(getContext());
 
             // get latest TMDb configuration
-            Log.d(TAG, "Syncing...TMDb config");
+            Timber.d("Syncing...TMDb config");
             getTmdbConfiguration(getContext(), prefs);
 
             // prepare for finding shows not yet added to local database
@@ -379,7 +377,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         // There could have been new episodes added after an update
         Utils.runNotificationService(getContext());
 
-        Log.d(TAG, "Syncing..." + resultCode.toString());
+        Timber.i("Syncing..." + resultCode.toString());
     }
 
     /**
@@ -424,14 +422,14 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                         .putString(TmdbSettings.KEY_TMDB_BASE_URL, config.images.base_url).commit();
             }
         } catch (RetrofitError e) {
-            Utils.trackExceptionAndLog(context, TAG, e);
+            Timber.e(e, null);
         }
     }
 
     private static UpdateResult syncWithTrakt(Context context, HashSet<Integer> showsExisting,
             HashMap<Integer, SearchResult> showsNew, boolean syncImmediately, long currentTime) {
         // validate credentials with trakt servers
-        Log.d(TAG, "Syncing...trakt auth check");
+        Timber.d("Syncing...trakt auth check");
         TraktCredentials.get(context).validateCredentials();
 
         // are we still authenticated?
@@ -449,18 +447,18 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // sync all watched and collected flags?
         if (syncImmediately || TraktSettings.isTimeForFullSync(context, currentTime)) {
-            Log.d(TAG, "Syncing...trakt full sync...");
+            Timber.d("Syncing...trakt full sync...");
             int resultCode = TraktTools.syncToSeriesGuide(context, trakt, showsExisting, true);
 
             if (resultCode < 0) {
                 result = UpdateResult.INCOMPLETE;
-                Log.d(TAG, "Syncing...trakt shows...INCOMPLETE");
+                Timber.d("Syncing...trakt shows...INCOMPLETE");
             } else {
                 // set last full sync time
                 PreferenceManager.getDefaultSharedPreferences(context).edit()
                         .putLong(TraktSettings.KEY_LAST_FULL_SYNC, currentTime)
                         .commit();
-                Log.d(TAG, "Syncing...trakt shows...SUCCESS");
+                Timber.d("Syncing...trakt shows...SUCCESS");
             }
 
             if (!AndroidUtils.isNetworkConnected(context)) {
@@ -469,9 +467,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // get trakt activity
-        Log.d(TAG, "Syncing...trakt episode activity...");
+        Timber.d("Syncing...trakt episode activity...");
         UpdateResult activityResult = getTraktActivity(context, trakt, showsExisting, showsNew);
-        Log.d(TAG, "Syncing...trakt episode activity..." + activityResult.toString());
+        Timber.d("Syncing...trakt episode activity..." + activityResult.toString());
 
         // don't overwrite failure
         if (result == UpdateResult.SUCCESS) {
@@ -479,9 +477,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // sync movies with trakt
-        Log.d(TAG, "Syncing...trakt movies...");
+        Timber.d("Syncing...trakt movies...");
         UpdateResult resultMovies = MovieTools.Download.syncMoviesFromTrakt(context);
-        Log.d(TAG, "Syncing...trakt movies..." + resultMovies.toString());
+        Timber.d("Syncing...trakt movies..." + resultMovies.toString());
 
         // don't overwrite earlier failure
         if (result == UpdateResult.SUCCESS) {
@@ -513,7 +511,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                                     ActivityAction.Scrobble + "," + ActivityAction.Collection,
                             startTimeTrakt, 1, 0);
         } catch (RetrofitError e) {
-            Utils.trackExceptionAndLog(context, TAG, e);
+            Timber.e(e, null);
             return UpdateResult.INCOMPLETE;
         }
 
