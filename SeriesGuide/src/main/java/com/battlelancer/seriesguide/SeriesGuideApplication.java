@@ -33,9 +33,8 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.Crashlytics;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.battlelancer.seriesguide.BuildConfig;
-import com.battlelancer.seriesguide.R;
 import java.net.URL;
+import timber.log.Timber;
 
 /**
  * Initializes settings and services and on pre-ICS implements actions for low memory state.
@@ -54,6 +53,12 @@ public class SeriesGuideApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        } else {
+            Timber.plant(new Timber.HollowTree());
+        }
 
         if (!BuildConfig.DEBUG || FLAVOR_INTERNAL.equals(BuildConfig.FLAVOR)) {
             Crashlytics.start(this);
