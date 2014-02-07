@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb.entities.Movie;
@@ -130,6 +132,21 @@ public class MovieDetailsFragment extends SherlockFragment implements
         if (tmdbId == 0) {
             getSherlockActivity().getSupportFragmentManager().popBackStack();
             return;
+        }
+
+        // fix padding for translucent system bars
+        if (AndroidUtils.isKitKatOrHigher()) {
+            SystemBarTintManager.SystemBarConfig config
+                    = ((MovieDetailsActivity) getActivity()).getSystemBarTintManager().getConfig();
+            ViewGroup contentContainer = (ViewGroup) getView().findViewById(
+                    R.id.contentContainerMovie);
+            contentContainer.setClipToPadding(false);
+            contentContainer.setPadding(0, 0, config.getPixelInsetRight(),
+                    config.getPixelInsetBottom());
+            ViewGroup.MarginLayoutParams layoutParams
+                    = (ViewGroup.MarginLayoutParams) contentContainer.getLayoutParams();
+            layoutParams.setMargins(0, config.getPixelInsetTop(true), 0, 0);
+            contentContainer.setLayoutParams(layoutParams);
         }
 
         mImageDownloader = ImageDownloader.getInstance(getActivity());
@@ -306,5 +323,4 @@ public class MovieDetailsFragment extends SherlockFragment implements
     private void fireTrackerEvent(String label) {
         Utils.trackAction(getActivity(), TAG, label);
     }
-
 }
