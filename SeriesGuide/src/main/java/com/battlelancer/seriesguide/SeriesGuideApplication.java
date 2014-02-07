@@ -55,12 +55,17 @@ public class SeriesGuideApplication extends Application {
         super.onCreate();
 
         if (BuildConfig.DEBUG) {
+            // detailed logcat logging
             Timber.plant(new Timber.DebugTree());
-        } else {
-            Timber.plant(new Timber.HollowTree());
-        }
 
-        if (!BuildConfig.DEBUG || FLAVOR_INTERNAL.equals(BuildConfig.FLAVOR)) {
+            // also report crashes and errors on internal version
+            if (FLAVOR_INTERNAL.equals(BuildConfig.FLAVOR)) {
+                Timber.plant(new AnalyticsTree());
+                Crashlytics.start(this);
+            }
+        } else {
+            // crash and error reporting
+            Timber.plant(new AnalyticsTree());
             Crashlytics.start(this);
         }
 
