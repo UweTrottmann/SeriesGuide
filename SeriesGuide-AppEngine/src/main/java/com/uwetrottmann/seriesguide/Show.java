@@ -1,6 +1,20 @@
-package com.uwetrottmann.seriesguide;
+/*
+ * Copyright 2014 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-import org.datanucleus.util.StringUtils;
+package com.uwetrottmann.seriesguide;
 
 import javax.persistence.Entity;
 
@@ -37,12 +51,19 @@ public class Show extends BaseEntity {
         this.tvdbId = tvdbId;
     }
 
+    public boolean hasValidValues() {
+        if (getTvdbId() <= 0) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Returns false if any of the property values of the given show (except TVDb id) are not equal
      * to ours. However, if a new value is null (e.g. not set) it is seen as equal, regardless of
      * our value.
      */
-    public boolean hasSameValues(Show show) {
+    public boolean shouldUpdateWith(Show show) {
         if (hasDifferentValueExceptNull(show.getIsFavorite(), getIsFavorite())) {
             return false;
         }
@@ -81,7 +102,7 @@ public class Show extends BaseEntity {
     /**
      * Copies all values other than the TVDb id if they are not null into this entity.
      */
-    public void copyPropertyValues(Show show) {
+    public void updateWith(Show show) {
         if (show.getIsFavorite() != null) {
             setIsFavorite(show.getIsFavorite());
         }

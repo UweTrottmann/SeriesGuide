@@ -16,18 +16,19 @@
 
 package com.uwetrottmann.seriesguide;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import java.util.LinkedList;
+import java.util.List;
 
-public final class EMF {
+public class EpisodeList {
 
-    private static final EntityManagerFactory INSTANCE =
-            Persistence.createEntityManagerFactory("transactions-optional");
+    private List<Episode> episodes = new LinkedList<Episode>();
 
-    private EMF() {
+    public List<Episode> getEpisodes() {
+        return episodes;
     }
 
-    public static EntityManagerFactory get() {
-        return INSTANCE;
+    public void setEpisodes(List<Episode> episodes) {
+        this.episodes = episodes;
     }
+
 }

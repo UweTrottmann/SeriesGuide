@@ -38,9 +38,10 @@ import javax.annotation.Nullable;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 
 @Api(
-        name = "shows",
+        name = "episodes",
         version = "v1",
         scopes = {
                 Constants.EMAIL_SCOPE
@@ -57,7 +58,7 @@ import javax.persistence.Query;
         namespace = @ApiNamespace(ownerDomain = "uwetrottmann.com", ownerName = "uwetrottmann.com",
                 packagePath = "seriesguide")
 )
-public class ShowEndpoint {
+public class EpisodeEndpoint {
 
     /**
      * This method lists all the entities inserted in datastore. It uses HTTP GET method and paging
@@ -71,12 +72,14 @@ public class ShowEndpoint {
             name = "list",
             path = "list"
     )
-    public CollectionResponse<Show> listShow(
+    public CollectionResponse<Episode> listEpisode(
+            @Nullable @Named("show_tvdbid") Integer showTvdbId,
+            @Nullable @Named("updated_after") Date updatedAfter,
             @Nullable @Named("cursor") String cursorString,
             @Nullable @Named("limit") Integer limit,
             User user) throws UnauthorizedException {
         EntityManager mgr = null;
-        List<Show> execute = null;
+        List<Episode> execute = null;
 
         String origNamespace = NamespaceManager.get();
         try {
@@ -84,7 +87,28 @@ public class ShowEndpoint {
             NamespaceManager.set(Security.get().getUserId(user));
 
             mgr = getEntityManager();
-            Query query = mgr.createQuery("select from Show as Show");
+
+            // build query
+            StringBuilder queryString = new StringBuilder("select from Episode as Episode");
+            if (showTvdbId != null || updatedAfter != null) {
+                queryString.append(" where");
+            }
+            if (showTvdbId != null) {
+                // filter for episodes of specific show
+                queryString.append(" Episode.showTvdbId = ").append(showTvdbId);
+                if (updatedAfter != null) {
+                    queryString.append(" and");
+                }
+            }
+            if (updatedAfter != null) {
+                // filter for episodes updated after given UTC timestamp
+                queryString.append(" Episode.updatedAt > :updatedAfter");
+            }
+            Query query = mgr.createQuery(queryString.toString());
+            if (updatedAfter != null) {
+                query.setParameter("updatedAfter", updatedAfter, TemporalType.DATE);
+            }
+
             Cursor cursor;
             if (cursorString != null && cursorString.trim().length() > 0) {
                 cursor = Cursor.fromWebSafeString(cursorString);
@@ -96,7 +120,7 @@ public class ShowEndpoint {
                 query.setMaxResults(limit);
             }
 
-            execute = (List<Show>) query.getResultList();
+            execute = (List<Episode>) query.getResultList();
             cursor = JPACursorHelper.getCursor(execute);
             if (cursor != null) {
                 cursorString = cursor.toWebSafeString();
@@ -104,7 +128,7 @@ public class ShowEndpoint {
 
             // Tight loop for fetching all entities from datastore and accomodate
             // for lazy fetch.
-            for (Show obj : execute) {
+            for (Episode obj : execute) {
                 ;
             }
         } finally {
@@ -114,7 +138,7 @@ public class ShowEndpoint {
             NamespaceManager.set(origNamespace);
         }
 
-        return CollectionResponse.<Show>builder()
+        return CollectionResponse.<Episode>builder()
                 .setItems(execute)
                 .setNextPageToken(cursorString)
                 .build();
@@ -127,129 +151,133 @@ public class ShowEndpoint {
             name = "get",
             path = "get/{tvdbid}"
     )
-    public Show getShow(@Named("tvdbid") int tvdbId, User user) throws UnauthorizedException {
+    public Episode getEpisode(@Named("tvdbid") int tvdbId, User user) throws UnauthorizedException {
         Key key = Security.get()
                 .createKey(Show.class.getSimpleName(), String.valueOf(tvdbId), user);
 
         EntityManager mgr = getEntityManager();
-        Show show = null;
+        Episode episode = null;
         try {
-            show = mgr.find(Show.class, key);
+            episode = mgr.find(Episode.class, key);
         } finally {
             mgr.close();
         }
-        return show;
+        return episode;
     }
 
     /**
-     * Inserts or updates the given show in(to) the Datastore.
+     * Inserts or updates the given episode(s) in(to) the Datastore.
      */
     @ApiMethod(
             name = "save",
             path = "save"
     )
-    public ShowList saveShows(ShowList shows, User user) throws UnauthorizedException {
-        // create user-specific keys for all shows
-        for (Show show : shows.getShows()) {
-            show.setKey(Security.get().createKey(Show.class.getSimpleName(),
-                    String.valueOf(show.getTvdbId()), user));
+    public EpisodeList saveEpisodes(EpisodeList episodes, User user) throws UnauthorizedException {
+        // create user-specific keys for all entities
+        for (Episode episode : episodes.getEpisodes()) {
+            episode.setKey(Security.get().createKey(Episode.class.getSimpleName(),
+                    String.valueOf(episode.getTvdbId()), user));
         }
 
-        // update existing shows
-        Map<Integer, Show> existingShows = findAndUpdateExistingShows(shows.getShows(), user);
+        // update existing episodes
+        Map<Integer, Episode> existingEpisodes = findAndUpdateExistingEpisodes(
+                episodes.getEpisodes(), user);
 
-        // insert new shows
-        List<Show> newShows = insertNewShows(shows.getShows(), existingShows.keySet(), user);
+        // insert new episodes
+        List<Episode> newEpisodes = insertNewEpisodes(episodes.getEpisodes(),
+                existingEpisodes.keySet(), user);
 
-        // return all shows
-        newShows.addAll(existingShows.values());
-        shows.setShows(newShows);
+        // return all episodes added or modified in(to) Datastore
+        newEpisodes.addAll(existingEpisodes.values());
+        episodes.setEpisodes(newEpisodes);
 
-        return shows;
+        return episodes;
     }
 
-    private Map<Integer, Show> findAndUpdateExistingShows(List<Show> shows, User user)
+    private Map<Integer, Episode> findAndUpdateExistingEpisodes(List<Episode> episodes, User user)
             throws UnauthorizedException {
-        Map<Integer, Show> existingShows = new HashMap<Integer, Show>();
+        Map<Integer, Episode> existingEpisodes = new HashMap<Integer, Episode>();
 
-        for (Show show : shows) {
+        for (Episode episode : episodes) {
             EntityManager mgr = getEntityManager();
             try {
-                // show with this key already exists?
-                Show existingShow = mgr.find(Show.class, show.getKey());
+                // episode with this key already exists?
+                Episode existingEpisode = mgr.find(Episode.class, episode.getKey());
 
-                if (existingShow != null) {
+                if (existingEpisode != null) {
                     // only update if there are changes
-                    if (!existingShow.shouldUpdateWith(show)) {
+                    if (!existingEpisode.shouldUpdateWith(episode)) {
                         // set updated values
-                        existingShow.updateWith(show);
-                        existingShow.setUpdatedAt(new Date());
+                        existingEpisode.updateWith(episode);
+                        existingEpisode.setUpdatedAt(new Date());
 
                         // save back to Datastore
-                        mgr.merge(existingShow);
+                        mgr.merge(existingEpisode);
                     }
 
                     // flag as existing
-                    existingShows.put(existingShow.getTvdbId(), existingShow);
+                    existingEpisodes.put(existingEpisode.getTvdbId(), existingEpisode);
                 }
             } finally {
                 mgr.close();
             }
         }
 
-        return existingShows;
+        return existingEpisodes;
     }
 
-    private List<Show> insertNewShows(List<Show> shows, Set<Integer> existingShows, User user) {
-        List<Show> newShows = new LinkedList<Show>();
+    private List<Episode> insertNewEpisodes(List<Episode> episodes, Set<Integer> existingEpisodes,
+            User user) {
+        List<Episode> newEpisodes = new LinkedList<Episode>();
 
-        for (Show show : shows) {
-            if (existingShows.contains(show.getTvdbId())) {
+        for (Episode episode : episodes) {
+            if (existingEpisodes.contains(episode.getTvdbId())) {
                 // already was updated
                 continue;
             }
 
-            if (!show.hasValidValues()) {
+            if (!episode.hasValidValues()) {
                 // invalid values, do not insert
                 continue;
             }
 
             // create metadata
-            show.setCreatedAt(new Date());
-            show.setUpdatedAt(show.getCreatedAt());
-            show.setOwner(user.getEmail());
+            episode.setCreatedAt(new Date());
+            episode.setUpdatedAt(episode.getCreatedAt());
+            episode.setOwner(user.getEmail());
 
             // insert into Datastore
             EntityManager mgr = getEntityManager();
             try {
-                mgr.persist(show);
+                mgr.persist(episode);
             } finally {
                 mgr.close();
             }
 
-            newShows.add(show);
+            newEpisodes.add(episode);
         }
 
-        return newShows;
+        return newEpisodes;
     }
 
     @ApiMethod(
             name = "remove",
             path = "remove/{tvdbid}"
     )
-    public Show removeShow(@Named("tvdbid") int tvdbId, User user) throws UnauthorizedException {
+    public Episode removeEpisode(@Named("tvdbid") int tvdbId, User user)
+            throws UnauthorizedException {
         Key key = Security.get()
-                .createKey(Show.class.getSimpleName(), String.valueOf(tvdbId), user);
+                .createKey(Episode.class.getSimpleName(), String.valueOf(tvdbId), user);
 
         EntityManager mgr = getEntityManager();
-        Show show = null;
+        Episode episode = null;
         try {
-            show = mgr.find(Show.class, key);
-            mgr.remove(show);
+            episode = mgr.find(Episode.class, key);
+            mgr.remove(episode);
         } finally {
             mgr.close();
         }
-        return show;
+        return episode;
     }
 
     private static EntityManager getEntityManager() {
