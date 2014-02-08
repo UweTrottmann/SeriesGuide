@@ -1,11 +1,8 @@
 Release procedure
 -----------------
 
-1. Get latest translations from crowdin and check for errors.
-2. Update change log.
-3. Bump version code and number.
+1. (Optional) Get latest translations, check them for errors (Lint).
+2. Bump version number.
+3. (Beta or Stable) Bump version name.
+4. (Beta or Stable) Update change log.
 5. Build APK.
-6. Create Google Play change log, prepare screenshots (for stable only).
-7. Create new release on GitHub.
-8. Upload to Google Play.
-9. Post on social networks.
