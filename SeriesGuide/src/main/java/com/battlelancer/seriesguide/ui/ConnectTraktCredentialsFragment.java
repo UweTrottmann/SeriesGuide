@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.ui;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.view.LayoutInflater;
@@ -35,11 +34,8 @@ import butterknife.InjectView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.NetworkResult;
-import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.ConnectTraktTask;
-import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -241,24 +237,9 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment implements
 
         // if we got here, looks like credentials were stored successfully
         if (mIsForwardingGivenTask) {
-            // continue with original task
-            final Bundle args = getArguments();
-
-            // if it was a check-in show a progress dialog first
-            if (TraktAction.values()[args.getInt(ShareItems.TRAKTACTION)]
-                    == TraktAction.CHECKIN_EPISODE) {
-                Fragment prev = getFragmentManager().findFragmentByTag("progress-dialog");
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                if (prev != null) {
-                    ft.remove(prev);
-                }
-                ProgressDialog newFragment = ProgressDialog.newInstance();
-                newFragment.show(ft, "progress-dialog");
-            }
-
             // relaunch the trakt task which called us
+            final Bundle args = getArguments();
             AndroidUtils.executeAsyncTask(new TraktTask(getActivity(), args));
-
             getActivity().finish();
         } else {
             // show download/upload options after successful connection
