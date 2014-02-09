@@ -41,21 +41,11 @@ public final class ServiceUtils {
 
     private static final String GOOGLE_PLAY = "https://play.google.com/store/search?q=%s&c=movies";
 
-    private static final String TRAKT_SEARCH_BASE_URL = "http://trakt.tv/search/";
-
     private static final String IMDB_APP_TITLE_URI_POSTFIX = "/";
 
     private static final String IMDB_APP_TITLE_URI = "imdb:///title/";
 
     public static final String IMDB_TITLE_URL = "http://imdb.com/title/";
-
-    private static final String TRAKT_SEARCH_MOVIE_URL = TRAKT_SEARCH_BASE_URL + "tmdb?q=";
-
-    private static final String TRAKT_SEARCH_SHOW_URL = TRAKT_SEARCH_BASE_URL + "tvdb?q=";
-
-    private static final String TRAKT_SEARCH_SEASON_ARG = "&s=";
-
-    private static final String TRAKT_SEARCH_EPISODE_ARG = "&e=";
 
     private static final String TVDB_SHOW_URL = "http://thetvdb.com/?tab=series&id=";
 
@@ -254,17 +244,8 @@ public final class ServiceUtils {
 
                 @Override
                 public void onClick(View v) {
-                    String uri;
-                    if (seasonNumber < 0 || episodeNumber < 0) {
-                        // look just for the show page
-                        uri = TRAKT_SEARCH_SHOW_URL + showTvdbId;
-                    } else {
-                        // look for the episode page
-                        uri = TRAKT_SEARCH_SHOW_URL + showTvdbId
-                                + TRAKT_SEARCH_SEASON_ARG + seasonNumber
-                                + TRAKT_SEARCH_EPISODE_ARG + episodeNumber;
-                    }
-
+                    String uri = TraktTools.buildEpisodeOrShowUrl(showTvdbId, seasonNumber,
+                            episodeNumber);
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(uri));
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
@@ -288,7 +269,7 @@ public final class ServiceUtils {
      */
     public static void openTraktMovie(Context context, int tmdbId, String logTag) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(TRAKT_SEARCH_MOVIE_URL + tmdbId));
+        intent.setData(Uri.parse(TraktTools.buildMovieUrl(tmdbId)));
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
 

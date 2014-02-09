@@ -18,9 +18,11 @@ package com.battlelancer.seriesguide.util;
 
 import android.content.ContentProviderOperation;
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowSeason;
@@ -34,15 +36,19 @@ import timber.log.Timber;
 
 public class TraktTools {
 
+    // Sync status codes
     static final int SUCCESS_NOWORK = 0;
-
     static final int FAILED_API = -1;
-
     static final int FAILED = -2;
-
     static final int FAILED_CREDENTIALS = -3;
-
     static final int SUCCESS = -4;
+
+    // Url parts
+    private static final String TRAKT_SEARCH_BASE_URL = "https://trakt.tv/search/";
+    private static final String TRAKT_SEARCH_SHOW_URL = TRAKT_SEARCH_BASE_URL + "tvdb?q=";
+    private static final String TRAKT_SEARCH_MOVIE_URL = TRAKT_SEARCH_BASE_URL + "tmdb?q=";
+    private static final String TRAKT_SEARCH_SEASON_ARG = "&s=";
+    private static final String TRAKT_SEARCH_EPISODE_ARG = "&e=";
 
     /**
      * Downloads and sets watched and collected flags from trakt on local episodes.
@@ -149,11 +155,13 @@ public class TraktTools {
     }
 
     /**
-     * Applies database ops in small increments for the given episodes, setting the appropriate flag
+     * Applies database ops in small increments for the given episodes, setting the appropriate
+     * flag
      * in the given column.
      *
      * @param episodeFlagColumn  Which flag column the given data should change. Supports {@link
-     *                           com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes#WATCHED} and {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes#COLLECTED}.
+     *                           com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes#WATCHED}
+     *                           and {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes#COLLECTED}.
      * @param clearExistingFlags If set, existing flags for all of this shows episodes will be set
      *                           to the default flag prior applying other changes.
      */
@@ -209,8 +217,9 @@ public class TraktTools {
                 batch.add(ContentProviderOperation
                         .newUpdate(
                                 SeriesGuideContract.Episodes.buildEpisodesOfShowUri(tvShow.tvdb_id))
-                        .withSelection(SeriesGuideContract.Episodes.SEASON + "=" + season.season + " AND "
-                                + SeriesGuideContract.Episodes.NUMBER + "=" + episode, null)
+                        .withSelection(
+                                SeriesGuideContract.Episodes.SEASON + "=" + season.season + " AND "
+                                        + SeriesGuideContract.Episodes.NUMBER + "=" + episode, null)
                         .withValue(episodeFlagColumn, episodeFlag)
                         .build());
             }
@@ -219,5 +228,34 @@ public class TraktTools {
             DBUtils.applyInSmallBatches(context, batch);
             batch.clear();
         }
+    }
+
+    public static String buildEpisodeOrShowUrl(int showTvdbId, int seasonNumber,
+            int episodeNumber) {
+        String uri;
+        if (seasonNumber < 0 || episodeNumber < 0) {
+            // look just for the show page
+            uri = TRAKT_SEARCH_SHOW_URL + showTvdbId;
+        } else {
+            // look for the episode page
+            uri = TRAKT_SEARCH_SHOW_URL + showTvdbId
+                    + TRAKT_SEARCH_SEASON_ARG + seasonNumber
+                    + TRAKT_SEARCH_EPISODE_ARG + episodeNumber;
+        }
+        return uri;
+    }
+
+    public static String buildMovieUrl(int movieTmdbId) {
+        return TRAKT_SEARCH_MOVIE_URL + movieTmdbId;
+    }
+
+    public static void rateEpisode(Context context, FragmentManager fragmentManager, int showTvdbId,
+            int seasonNumber, int episodeNumber) {
+        if (!TraktCredentials.ensureCredentials(context)) {
+            return;
+        }
+        TraktRateDialogFragment newFragment = TraktRateDialogFragment.newInstance(
+                showTvdbId, seasonNumber, episodeNumber);
+        newFragment.show(fragmentManager, "traktratedialog");
     }
 }
