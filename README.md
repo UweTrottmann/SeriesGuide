@@ -13,7 +13,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 License
 -------
 
-    Copyright 2012 Uwe Trottmann
+    Copyright 2014 Uwe Trottmann
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

@@ -27,7 +27,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -41,6 +40,7 @@ import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
+import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
@@ -246,8 +246,7 @@ public class OverviewFragment extends SherlockFragment implements
         int itemId = item.getItemId();
         if (itemId == R.id.menu_overview_share) {
             // share episode
-            fireTrackerEvent("Share");
-            onShareEpisode(ShareMethod.OTHER_SERVICES);
+            shareEpisode();
             return true;
         } else if (itemId == R.id.menu_overview_manage_lists) {
             fireTrackerEvent("Manage lists");
@@ -315,45 +314,30 @@ public class OverviewFragment extends SherlockFragment implements
         }
     }
 
-    private void onRateOnTrakt() {
-        // rate episode on trakt.tv
-        if (TraktCredentials.ensureCredentials(getActivity())) {
-            onShareEpisode(ShareMethod.RATE_TRAKT);
+    private void rateOnTrakt() {
+        if (mEpisodeCursor == null || !mEpisodeCursor.moveToFirst()) {
+            return;
         }
+        int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
+        int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+        TraktTools.rateEpisode(getActivity(), getFragmentManager(), getShowId(), seasonNumber,
+                episodeNumber);
+
         fireTrackerEvent("Rate (trakt)");
     }
 
-    private void onShareEpisode(ShareMethod shareMethod) {
-        if (mShowCursor != null && mShowCursor.moveToFirst() && mEpisodeCursor != null
-                && mEpisodeCursor.moveToFirst()) {
-            final int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
-            final int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-
-            // build share data
-            Bundle shareData = new Bundle();
-            shareData.putInt(ShareItems.SEASON, seasonNumber);
-            shareData.putInt(ShareItems.EPISODE, episodeNumber);
-            shareData.putInt(ShareItems.TVDBID, getShowId());
-
-            String episodestring = Utils.getNextEpisodeString(getActivity(), seasonNumber,
-                    episodeNumber, mEpisodeCursor.getString(EpisodeQuery.TITLE));
-            shareData.putString(ShareItems.EPISODESTRING, episodestring);
-
-            final StringBuilder shareString = new
-                    StringBuilder(getString(R.string.share_checkout));
-            shareString.append(" \"").append(mShowCursor.getString(ShowQuery.SHOW_TITLE));
-            shareString.append(" - ").append(episodestring).append("\"");
-            shareData.putString(ShareItems.SHARESTRING, shareString.toString());
-
-            String imdbId = mEpisodeCursor.getString(EpisodeQuery.IMDBID);
-            if (TextUtils.isEmpty(imdbId)) {
-                // fall back to show IMDb id
-                imdbId = mShowCursor.getString(ShowQuery.SHOW_IMDBID);
-            }
-            shareData.putString(ShareItems.IMDBID, imdbId);
-
-            ShareUtils.onShareEpisode(getActivity(), shareData, shareMethod);
+    private void shareEpisode() {
+        if (mEpisodeCursor == null || !mEpisodeCursor.moveToFirst()) {
+            return;
         }
+        int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
+        int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+        String episodeTitle = mEpisodeCursor.getString(EpisodeQuery.TITLE);
+
+        ShareUtils.shareEpisode(getActivity(), getShowId(), seasonNumber, episodeNumber, mShowTitle,
+                episodeTitle);
+
+        fireTrackerEvent("Share");
     }
 
     private void onToggleCollected() {
@@ -638,7 +622,7 @@ public class OverviewFragment extends SherlockFragment implements
             ratings.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onRateOnTrakt();
+                    rateOnTrakt();
                 }
             });
             ratings.setFocusable(true);

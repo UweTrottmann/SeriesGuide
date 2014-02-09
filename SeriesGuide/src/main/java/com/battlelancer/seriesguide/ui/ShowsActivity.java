@@ -542,7 +542,10 @@ public class ShowsActivity extends BaseTopShowsActivity implements
                 // flag all episodes as outdated
                 ContentValues values = new ContentValues();
                 values.put(SeriesGuideContract.Episodes.LAST_EDITED, 0);
-                getContentResolver().update(SeriesGuideContract.Episodes.CONTENT_URI, values, null, null);
+                getContentResolver().update(SeriesGuideContract.Episodes.CONTENT_URI, values, null,
+                        null);
+                // flag all shows outdated as well (in case the full sync is aborted, delta sync will pick up)
+                scheduleAllShowsUpdate();
                 // trigger full sync
                 SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, false);
             }

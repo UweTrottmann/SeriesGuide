@@ -48,7 +48,8 @@
     <!-- Sharing -->
     <string name="share_show">Share show</string>
     <string name="share_episode">Share episode</string>
-    <string name="share_checkout">Check out</string>
+    <string name="share_movie">Share movie</string>
+    <string name="share_checkout">Check out %s</string>
 
     <!-- Shouts -->
     <string name="comments">Comments</string>
