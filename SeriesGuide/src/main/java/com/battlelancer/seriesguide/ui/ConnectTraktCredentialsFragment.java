@@ -46,8 +46,6 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 public class ConnectTraktCredentialsFragment extends SherlockFragment implements
         ConnectTraktTask.OnTaskFinishedListener {
 
-    private boolean mIsForwardingGivenTask;
-
     private ConnectTraktTask mTask;
 
     @InjectView(R.id.connectbutton) Button mButtonConnect;
@@ -70,16 +68,8 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment implements
 
     @InjectView(R.id.progress) View mStatusView;
 
-    public static ConnectTraktCredentialsFragment newInstance(Bundle traktData) {
-        ConnectTraktCredentialsFragment f = new ConnectTraktCredentialsFragment();
-        f.setArguments(traktData);
-        f.mIsForwardingGivenTask = true;
-        return f;
-    }
-
     public static ConnectTraktCredentialsFragment newInstance() {
         ConnectTraktCredentialsFragment f = new ConnectTraktCredentialsFragment();
-        f.mIsForwardingGivenTask = false;
         return f;
     }
 
@@ -236,18 +226,12 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment implements
         }
 
         // if we got here, looks like credentials were stored successfully
-        if (mIsForwardingGivenTask) {
-            // relaunch the trakt task which called us
-            final Bundle args = getArguments();
-            AndroidUtils.executeAsyncTask(new TraktTask(getActivity(), args));
-            getActivity().finish();
-        } else {
-            // show download/upload options after successful connection
-            ConnectTraktFinishedFragment f = new ConnectTraktFinishedFragment();
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(android.R.id.content, f);
-            ft.commit();
-        }
+        
+        // show download/upload options after successful connection
+        ConnectTraktFinishedFragment f = new ConnectTraktFinishedFragment();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(android.R.id.content, f);
+        ft.commit();
     }
 
 }
