@@ -40,10 +40,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
  */
 public class ShareUtils {
 
-    public static final String KEY_GETGLUE_COMMENT = "com.battlelancer.seriesguide.getglue.comment";
-
-    public static final String KEY_GETGLUE_IMDBID = "com.battlelancer.seriesguide.getglue.imdbid";
-
     protected static final String TAG = "ShareUtils";
 
     public enum ShareMethod {
