@@ -47,6 +47,7 @@ import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -186,11 +187,16 @@ public class MovieDetailsFragment extends SherlockFragment implements
             // content view
             boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
 
+            boolean isEnableShare = mMovieDetails.movie() != null;
+            MenuItem shareItem = menu.findItem(R.id.menu_movie_share);
+            shareItem.setEnabled(isEnableShare);
+            shareItem.setVisible(isEnableShare && !isDrawerOpen);
+
             boolean isEnableImdb = mMovieDetails.movie() != null
                     && !TextUtils.isEmpty(mMovieDetails.movie().imdb_id);
             MenuItem imdbItem = menu.findItem(R.id.menu_open_imdb);
             imdbItem.setEnabled(isEnableImdb);
-            imdbItem.setVisible(isEnableImdb && !isDrawerOpen);
+            imdbItem.setVisible(isEnableImdb);
 
             boolean isEnableYoutube = mMovieDetails.trailers() != null &&
                     mMovieDetails.trailers().youtube.size() > 0;
@@ -205,6 +211,12 @@ public class MovieDetailsFragment extends SherlockFragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
+        if (itemId == R.id.menu_movie_share) {
+            ShareUtils.shareMovie(getActivity(), mMovieDetails.movie().id,
+                    mMovieDetails.movie().title);
+            fireTrackerEvent("Share");
+            return true;
+        }
         if (itemId == R.id.menu_open_imdb) {
             ServiceUtils.openImdb(mMovieDetails.movie().imdb_id, TAG, getActivity());
             return true;
