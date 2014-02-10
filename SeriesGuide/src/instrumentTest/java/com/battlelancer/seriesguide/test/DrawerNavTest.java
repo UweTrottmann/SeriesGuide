@@ -19,11 +19,8 @@ package com.battlelancer.seriesguide.test;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.LargeTest;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.google.android.apps.common.testing.ui.espresso.action.ViewActions;
 
-import static com.google.android.apps.common.testing.ui.espresso.Espresso.onData;
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.pressBack;
 import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.click;
@@ -32,12 +29,8 @@ import static com.google.android.apps.common.testing.ui.espresso.contrib.DrawerA
 import static com.google.android.apps.common.testing.ui.espresso.contrib.DrawerActions.openDrawer;
 import static com.google.android.apps.common.testing.ui.espresso.contrib.DrawerMatchers.isClosed;
 import static com.google.android.apps.common.testing.ui.espresso.contrib.DrawerMatchers.isOpen;
-import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.isDisplayed;
 import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withId;
 import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
 
 @LargeTest
 public class DrawerNavTest extends ActivityInstrumentationTestCase2<ShowsActivity> {
