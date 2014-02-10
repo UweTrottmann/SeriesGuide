@@ -9,6 +9,7 @@ android {
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 19
+        testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
     }
 
     compileOptions {
@@ -21,6 +22,7 @@ android {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
+        exclude 'LICENSE.txt'
     }
 
     productFlavors {
@@ -78,9 +80,21 @@ dependencies {
     // libs folder
     compile fileTree(dir: 'libs', include: '*.jar')
 
+    // unit tests
     testCompile 'junit:junit:4.10'
     testCompile 'com.squareup:fest-android:1.0.+'
     testCompile 'org.robolectric:robolectric:2.3-SNAPSHOT'
+
+    // android instrumentation tests
+    instrumentTestCompile ('com.jakewharton.espresso:espresso:1.1-r1') {
+        // TODO workaround for http://b.android.com/65445
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+    }
+    instrumentTestCompile ('com.jakewharton.espresso:espresso-support-v4:1.1-r1') {
+        // TODO workaround for http://b.android.com/65445
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
 
     // Crashlytics
     compile 'com.crashlytics.android:crashlytics:1.+'
