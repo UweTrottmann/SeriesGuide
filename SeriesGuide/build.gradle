@@ -86,8 +86,15 @@ dependencies {
     testCompile 'org.robolectric:robolectric:2.3-SNAPSHOT'
 
     // android instrumentation tests
-    instrumentTestCompile 'com.jakewharton.espresso:espresso:1.1-r1'
-    instrumentTestCompile 'com.jakewharton.espresso:espresso-support-v4:1.1-r1'
+    instrumentTestCompile ('com.jakewharton.espresso:espresso:1.1-r1') {
+        // TODO workaround for http://b.android.com/65445
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+    }
+    instrumentTestCompile ('com.jakewharton.espresso:espresso-support-v4:1.1-r1') {
+        // TODO workaround for http://b.android.com/65445
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
 
     // Crashlytics
     compile 'com.crashlytics.android:crashlytics:1.+'
