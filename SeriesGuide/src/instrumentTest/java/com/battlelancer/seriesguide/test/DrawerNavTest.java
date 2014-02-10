@@ -84,6 +84,17 @@ public class DrawerNavTest extends ActivityInstrumentationTestCase2<ShowsActivit
         onView(withId(R.id.drawer_layout)).check(matches(isClosed()));
     }
 
+    public void testNavigateToSameScreen() throws InterruptedException {
+        onView(withId(R.id.drawer_layout)).check(matches(isClosed()));
+
+        openDrawer(R.id.drawer_layout);
+
+        onView(withText(R.string.shows)).perform(click());
+
+        // should only close drawer and still display the same screen
+        onView(withId(R.id.drawer_layout)).check(matches(isClosed()));
+    }
+
     public void testOpenAndCloseDrawer() {
         // drawer should be closed
         onView(withId(R.id.drawer_layout)).check(matches(isClosed()));
