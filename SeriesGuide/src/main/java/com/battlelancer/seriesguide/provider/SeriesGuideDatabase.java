@@ -37,6 +37,9 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
 import com.battlelancer.seriesguide.util.TimeTools;
 import timber.log.Timber;
 
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
+
 public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "seriesdatabase";
@@ -141,25 +144,54 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                         + Shows.NETWORK + ","
                         + Shows.STATUS + ","
                         + Shows.AIRSDAYOFWEEK + ","
-                        + Shows.FAVORITE;
-        String COMMON_LIST_ITEMS_COLUMNS
-                = "listitem_id AS _id,list_item_id,list_id,item_type,item_ref_id";
+                        + Shows.FAVORITE + ","
+                        + Shows.RELEASE_COUNTRY;
 
-        String LIST_ITEMS_COLUMNS_INTERNAL
-                = "_id AS listitem_id,list_item_id,list_id,item_type,item_ref_id";
-        String SHOWS_COLUMNS_INTERNAL = Shows._ID + " AS " + COMMON_SHOW_COLUMNS + ","
-                + "overview,airstime,nexttext,series_nextairdatetext";
+        String COMMON_LIST_ITEMS_COLUMNS =
+                "listitem_id as " + ListItems._ID + ","
+                        + ListItems.LIST_ITEM_ID + ","
+                        + Lists.LIST_ID + ","
+                        + ListItems.TYPE + ","
+                        + ListItems.ITEM_REF_ID;
 
-        String SHOWS_COLUMNS = COMMON_LIST_ITEMS_COLUMNS + "," + COMMON_SHOW_COLUMNS + ","
-                + "overview,airstime,nexttext,series_nextairdatetext";
-        String SEASONS_COLUMNS = COMMON_LIST_ITEMS_COLUMNS + "," + COMMON_SHOW_COLUMNS + ","
-                + "combinednr AS overview,airstime,nexttext,series_nextairdatetext";
-        String EPISODES_COLUMNS = COMMON_LIST_ITEMS_COLUMNS
-                + ","
-                + COMMON_SHOW_COLUMNS
-                + ","
-                + "episodetitle AS overview,episode_firstairedms AS airstime,"
-                + "season AS nexttext,episodenumber AS series_nextairdatetext";
+        String LIST_ITEMS_COLUMNS_INTERNAL =
+                ListItems._ID + " as listitem_id,"
+                        + ListItems.LIST_ITEM_ID + ","
+                        + Lists.LIST_ID + ","
+                        + ListItems.TYPE + ","
+                        + ListItems.ITEM_REF_ID;
+
+        String SHOWS_COLUMNS_INTERNAL =
+                Shows._ID + " as " + COMMON_SHOW_COLUMNS + ","
+                        + Shows.OVERVIEW + ","
+                        + Shows.AIRSTIME + ","
+                        + Shows.NEXTTEXT + ","
+                        + Shows.NEXTAIRDATETEXT;
+
+        String SHOWS_COLUMNS =
+                COMMON_LIST_ITEMS_COLUMNS + ","
+                        + COMMON_SHOW_COLUMNS + ","
+                        + Shows.OVERVIEW + ","
+                        + Shows.AIRSTIME + ","
+                        + Shows.NEXTTEXT + ","
+                        + Shows.NEXTAIRDATETEXT;
+
+        String SEASONS_COLUMNS =
+                COMMON_LIST_ITEMS_COLUMNS + ","
+                        + COMMON_SHOW_COLUMNS + ","
+                        + Seasons.COMBINED + " as " + Shows.OVERVIEW + ","
+                        + Shows.AIRSTIME + ","
+                        + Shows.NEXTTEXT + ","
+                        + Shows.NEXTAIRDATETEXT;
+
+        String EPISODES_COLUMNS =
+                COMMON_LIST_ITEMS_COLUMNS + ","
+                + COMMON_SHOW_COLUMNS + ","
+                        + Episodes.TITLE + " as " + Shows.OVERVIEW + ","
+                        + Episodes.FIRSTAIREDMS + " as " + Shows.AIRSTIME + ","
+                        + Episodes.SEASON + " as " + Shows.NEXTTEXT + ","
+                        + Episodes.NUMBER + " as " + Shows.NEXTAIRDATETEXT;
+
     }
 
     interface References {
