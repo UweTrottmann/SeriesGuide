@@ -65,7 +65,7 @@ public class DrawerNavTest extends ActivityInstrumentationTestCase2<ShowsActivit
         navigateToAndBack(R.string.statistics);
     }
 
-    public void testNavigateToSearcAndBack() throws InterruptedException {
+    public void testNavigateToSearchAndBack() throws InterruptedException {
         navigateToAndBack(R.string.search_hint);
     }
 
