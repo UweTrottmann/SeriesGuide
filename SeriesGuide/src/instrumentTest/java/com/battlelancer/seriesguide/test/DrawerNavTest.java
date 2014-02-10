@@ -19,16 +19,20 @@ package com.battlelancer.seriesguide.test;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.LargeTest;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.google.android.apps.common.testing.ui.espresso.action.ViewActions;
 
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.onData;
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
+import static com.google.android.apps.common.testing.ui.espresso.Espresso.pressBack;
 import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.click;
 import static com.google.android.apps.common.testing.ui.espresso.assertion.ViewAssertions.matches;
 import static com.google.android.apps.common.testing.ui.espresso.contrib.DrawerActions.closeDrawer;
 import static com.google.android.apps.common.testing.ui.espresso.contrib.DrawerActions.openDrawer;
 import static com.google.android.apps.common.testing.ui.espresso.contrib.DrawerMatchers.isClosed;
 import static com.google.android.apps.common.testing.ui.espresso.contrib.DrawerMatchers.isOpen;
+import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.isDisplayed;
 import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withId;
 import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
@@ -47,6 +51,37 @@ public class DrawerNavTest extends ActivityInstrumentationTestCase2<ShowsActivit
         super.setUp();
         // Espresso will not launch our activity for us, we must launch it via getActivity().
         getActivity();
+    }
+
+    public void testNavigateToListsAndBack() throws InterruptedException {
+        navigateToAndBack(R.string.lists);
+    }
+
+    public void testNavigateToMoviesAndBack() throws InterruptedException {
+        navigateToAndBack(R.string.movies);
+    }
+
+    public void testNavigateToStatsAndBack() throws InterruptedException {
+        navigateToAndBack(R.string.statistics);
+    }
+
+    public void testNavigateToSearcAndBack() throws InterruptedException {
+        navigateToAndBack(R.string.search_hint);
+    }
+
+    private void navigateToAndBack(int drawerItemTitleResId) throws InterruptedException {
+        onView(withId(R.id.drawer_layout)).check(matches(isClosed()));
+
+        openDrawer(R.id.drawer_layout);
+
+        onView(withText(drawerItemTitleResId)).perform(click());
+
+        // let the UI do some loading before going back
+        Thread.sleep(1500);
+
+        pressBack();
+
+        onView(withId(R.id.drawer_layout)).check(matches(isClosed()));
     }
 
     public void testOpenAndCloseDrawer() {
