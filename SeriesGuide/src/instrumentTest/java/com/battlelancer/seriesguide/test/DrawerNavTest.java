@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.test;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.LargeTest;
