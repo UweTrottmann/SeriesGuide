@@ -167,6 +167,7 @@ public class MovieTools {
     private static ContentValues buildBasicMovieContentValues(Movie movie) {
         ContentValues values = new ContentValues();
 
+        values.put(Movies.IMDB_ID, movie.imdb_id);
         values.put(Movies.TMDB_ID, movie.tmdbId);
         values.put(Movies.TITLE, movie.title);
         values.put(Movies.OVERVIEW, movie.overview);

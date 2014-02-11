@@ -211,8 +211,8 @@ public class MovieDetailsFragment extends SherlockFragment {
             playStoreItem.setEnabled(isEnableShare);
             playStoreItem.setVisible(isEnableShare);
 
-            boolean isEnableImdb = mMovieDetails.tmdbMovie() != null
-                    && !TextUtils.isEmpty(mMovieDetails.tmdbMovie().imdb_id);
+            boolean isEnableImdb = mMovieDetails.traktMovie() != null
+                    && !TextUtils.isEmpty(mMovieDetails.traktMovie().imdb_id);
             MenuItem imdbItem = menu.findItem(R.id.menu_open_imdb);
             imdbItem.setEnabled(isEnableImdb);
             imdbItem.setVisible(isEnableImdb);
@@ -231,13 +231,12 @@ public class MovieDetailsFragment extends SherlockFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_movie_share) {
-            ShareUtils.shareMovie(getActivity(), mMovieDetails.tmdbMovie().id,
-                    mMovieDetails.tmdbMovie().title);
+            ShareUtils.shareMovie(getActivity(), mTmdbId, mMovieDetails.tmdbMovie().title);
             fireTrackerEvent("Share");
             return true;
         }
         if (itemId == R.id.menu_open_imdb) {
-            ServiceUtils.openImdb(mMovieDetails.tmdbMovie().imdb_id, TAG, getActivity());
+            ServiceUtils.openImdb(mMovieDetails.traktMovie().imdb_id, TAG, getActivity());
             return true;
         }
         if (itemId == R.id.menu_open_youtube) {
