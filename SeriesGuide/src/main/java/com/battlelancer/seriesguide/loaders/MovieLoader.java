@@ -72,6 +72,9 @@ public class MovieLoader extends GenericSimpleLoader<Movie> {
         movie.inWatchlist = DBUtils.restoreBooleanFromInt(
                 movieQuery.getInt(MovieQuery.IN_WATCHLIST));
 
+        // clean up
+        movieQuery.close();
+
         return movie;
     }
 
