@@ -71,6 +71,16 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // close a previously opened drawer
+        if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
+            mDrawerLayout.closeDrawer(mDrawerList);
+        }
+    }
+
     /**
      * Initializes the navigation drawer. Overriding activities should call this in their {@link
      * #onCreate(android.os.Bundle)} after {@link #setContentView(int)}.
@@ -129,48 +139,66 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // close menu any way
-        Handler h = new Handler();
-        h.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mDrawerLayout.closeDrawer(mDrawerList);
-            }
-        }, 200);
+        Intent launchIntent = null;
 
         switch (position) {
             case MENU_ITEM_SHOWS_POSITION:
-                startActivity(new Intent(this, ShowsActivity.class)
+                if (this instanceof ShowsActivity) {
+                    break;
+                }
+                launchIntent = new Intent(this, ShowsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
-                                | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Shows");
                 break;
             case MENU_ITEM_LISTS_POSITION:
-                startActivity(new Intent(this, ListsActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                if (this instanceof ListsActivity) {
+                    break;
+                }
+                launchIntent = new Intent(this, ListsActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Lists");
                 break;
             case MENU_ITEM_MOVIES_POSITION:
-                startActivity(new Intent(this, MoviesActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                if (this instanceof MoviesActivity) {
+                    break;
+                }
+                launchIntent = new Intent(this, MoviesActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Movies");
                 break;
             case MENU_ITEM_STATS_POSITION:
-                startActivity(new Intent(this, StatsActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                if (this instanceof StatsActivity) {
+                    break;
+                }
+                launchIntent = new Intent(this, StatsActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Statistics");
                 break;
             case MENU_ITEM_SEARCH_POSITION:
-                startActivity(new Intent(this, SearchActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                if (this instanceof SearchActivity) {
+                    break;
+                }
+                launchIntent = new Intent(this, SearchActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Search");
                 break;
             case MENU_ITEM_CLOUD_POSITION:
-                startActivity(new Intent(this, CloudSetupActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                if (this instanceof CloudSetupActivity) {
+                    break;
+                }
+                launchIntent = new Intent(this, CloudSetupActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 break;
         }
 
+        // already displaying correct screen
+        if (launchIntent == null) {
+            mDrawerLayout.closeDrawer(mDrawerList);
+            return;
+        }
+
+        startActivity(launchIntent);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
@@ -186,7 +214,8 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
     }
 
     /**
-     * Highlights the given position in the drawer menu. Activities listed in the drawer should call
+     * Highlights the given position in the drawer menu. Activities listed in the drawer should
+     * call
      * this in {@link #onStart()}.
      */
     public void setDrawerSelectedItem(int menuItemPosition) {
@@ -206,7 +235,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         return false;
     }
 
-    private class DrawerItem {
+    public class DrawerItem {
 
         String mTitle;
 
@@ -290,5 +319,4 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
             title = (TextView) v.findViewById(R.id.menu_title);
         }
     }
-
 }
