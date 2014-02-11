@@ -155,8 +155,8 @@ public class MovieTools {
     private static ContentValues buildMovieContentValues(Movie movie) {
         ContentValues values = buildBasicMovieContentValues(movie);
 
-        values.put(Movies.IN_COLLECTION, convertBooleanToInt(movie.inCollection));
-        values.put(Movies.IN_WATCHLIST, convertBooleanToInt(movie.inWatchlist));
+        values.put(Movies.IN_COLLECTION, DBUtils.convertBooleanToInt(movie.inCollection));
+        values.put(Movies.IN_WATCHLIST, DBUtils.convertBooleanToInt(movie.inWatchlist));
 
         return values;
     }
@@ -171,17 +171,10 @@ public class MovieTools {
         values.put(Movies.TITLE, movie.title);
         values.put(Movies.OVERVIEW, movie.overview);
         values.put(Movies.RELEASED_UTC_MS, movie.released.getTime());
-        values.put(Movies.WATCHED, convertBooleanToInt(movie.watched));
+        values.put(Movies.WATCHED, DBUtils.convertBooleanToInt(movie.watched));
         values.put(Movies.POSTER, movie.images == null ? "" : movie.images.poster);
 
         return values;
-    }
-
-    private static int convertBooleanToInt(Boolean value) {
-        if (value == null) {
-            return 0;
-        }
-        return value ? 1 : 0;
     }
 
     private static void deleteMovie(Context context, int movieTmdbId) {
@@ -278,7 +271,7 @@ public class MovieTools {
                 // fall back
                 trakt = ServiceUtils.getTrakt(mContext);
             }
-            Tmdb tmdb = ServiceUtils.getTmdbServiceManager(mContext);
+            Tmdb tmdb = ServiceUtils.getTmdb(mContext);
 
             // get movie info
             Movie movie = Download.getMovie(trakt.movieService(), tmdb.moviesService(),
@@ -290,9 +283,9 @@ public class MovieTools {
             // store in database, overwrite in_collection and in_watchlist
             ContentValues values = buildBasicMovieContentValues(movie);
             values.put(Movies.IN_COLLECTION, mAddTo == AddTo.COLLECTION ?
-                    1 : convertBooleanToInt(movie.inCollection));
+                    1 : DBUtils.convertBooleanToInt(movie.inCollection));
             values.put(Movies.IN_WATCHLIST, mAddTo == AddTo.WATCHLIST ?
-                    1 : convertBooleanToInt(movie.inWatchlist));
+                    1 : DBUtils.convertBooleanToInt(movie.inWatchlist));
 
             mContext.getContentResolver().insert(Movies.CONTENT_URI, values);
 
@@ -398,7 +391,7 @@ public class MovieTools {
         private static UpdateResult addMovies(Context context, Trakt trakt,
                 Integer... movieTmdbIds) {
             MovieService movieServiceTrakt = trakt.movieService();
-            MoviesService moviesServiceTmdb = ServiceUtils.getTmdbServiceManager(context)
+            MoviesService moviesServiceTmdb = ServiceUtils.getTmdb(context)
                     .moviesService();
             String languageCode = DisplaySettings.getContentLanguage(context);
             List<Movie> movies = new LinkedList<>();
@@ -430,7 +423,7 @@ public class MovieTools {
          * Download movie data from trakt and TMDb. Always returns with a TMDb poster path, if
          * available, a local movie title and overview.
          */
-        private static Movie getMovie(MovieService movieServiceTrakt,
+        public static Movie getMovie(MovieService movieServiceTrakt,
                 MoviesService moviesServiceTmdb, String languageCode, int movieTmdbId) {
             try {
                 // get summary from trakt, includes watched, in_watchlist and in_collection

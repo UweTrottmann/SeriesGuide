@@ -31,6 +31,9 @@ import de.greenrobot.event.EventBus;
  */
 public class MovieDetailsActivity extends BaseNavDrawerActivity {
 
+    // loader ids for this activity (mostly used by fragments)
+    public static int LOADER_ID_MOVIE = 100;
+
     private SystemBarTintManager mSystemBarTintManager;
 
     @Override

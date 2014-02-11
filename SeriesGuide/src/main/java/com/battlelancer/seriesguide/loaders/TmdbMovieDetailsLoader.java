@@ -46,15 +46,15 @@ public class TmdbMovieDetailsLoader extends GenericSimpleLoader<MovieDetails> {
         String languageCode = DisplaySettings.getContentLanguage(getContext());
 
         try {
-            MoviesService movieService = ServiceUtils.getTmdbServiceManager(getContext())
+            MoviesService movieService = ServiceUtils.getTmdb(getContext())
                     .moviesService();
 
             MovieDetails details = new MovieDetails();
-            details.movie(movieService.summary(mTmdbId, languageCode));
+            details.tmdbMovie(movieService.summary(mTmdbId, languageCode));
 
-            if (TextUtils.isEmpty(details.movie().overview)) {
+            if (TextUtils.isEmpty(details.tmdbMovie().overview)) {
                 // fall back to English content
-                details.movie(movieService.summary(mTmdbId));
+                details.tmdbMovie(movieService.summary(mTmdbId));
             }
 
             details.trailers(movieService.trailers(mTmdbId));
@@ -70,18 +70,29 @@ public class TmdbMovieDetailsLoader extends GenericSimpleLoader<MovieDetails> {
 
     public static class MovieDetails {
 
-        private Movie mMovie;
+        private com.jakewharton.trakt.entities.Movie mTraktMovie;
+
+        private Movie mTmdbMovie;
 
         private Trailers mTrailers;
 
         private Credits mCredits;
 
-        public Movie movie() {
-            return mMovie;
+        public com.jakewharton.trakt.entities.Movie traktMovie() {
+            return mTraktMovie;
         }
 
-        public MovieDetails movie(Movie movie) {
-            mMovie = movie;
+        public MovieDetails traktMovie(com.jakewharton.trakt.entities.Movie traktMovie) {
+            mTraktMovie = traktMovie;
+            return this;
+        }
+
+        public Movie tmdbMovie() {
+            return mTmdbMovie;
+        }
+
+        public MovieDetails tmdbMovie(Movie movie) {
+            mTmdbMovie = movie;
             return this;
         }
 
@@ -102,6 +113,7 @@ public class TmdbMovieDetailsLoader extends GenericSimpleLoader<MovieDetails> {
             mCredits = credits;
             return this;
         }
+
     }
 
 }

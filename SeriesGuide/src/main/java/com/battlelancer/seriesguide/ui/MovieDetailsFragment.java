@@ -29,36 +29,35 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader;
+import com.battlelancer.seriesguide.loaders.MovieLoader;
 import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader.MovieDetails;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
+import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.Utils;
+import com.jakewharton.trakt.entities.Movie;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
-import com.uwetrottmann.tmdb.entities.Movie;
 
 /**
  * Displays details about one movie including plot, ratings, trailers and a poster.
  */
-public class MovieDetailsFragment extends SherlockFragment implements
-        LoaderManager.LoaderCallbacks<MovieDetails> {
+public class MovieDetailsFragment extends SherlockFragment {
 
     public static MovieDetailsFragment newInstance(int tmdbId) {
         MovieDetailsFragment f = new MovieDetailsFragment();
@@ -79,9 +78,13 @@ public class MovieDetailsFragment extends SherlockFragment implements
 
     private static final int LOADER_ID = R.layout.movie_details_fragment;
 
+    private int mTmdbId;
+
+    private MovieDetails mMovieDetails;
+
     private ImageDownloader mImageDownloader;
 
-    private String mBaseUrl;
+    private String mImageBaseUrl;
 
     @InjectView(R.id.textViewMovieTitle) TextView mMovieTitle;
 
@@ -105,8 +108,7 @@ public class MovieDetailsFragment extends SherlockFragment implements
 
     @InjectView(R.id.dividerHorizontalMovieDetails) View mDivider;
 
-    private MovieDetails mMovieDetails;
-
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -122,6 +124,13 @@ public class MovieDetailsFragment extends SherlockFragment implements
         mDivider.setVisibility(View.GONE);
         mCommentsButton.setVisibility(View.GONE);
 
+        // poster background transparency
+        if (AndroidUtils.isJellyBeanOrHigher()) {
+            mMoviePosterBackground.setImageAlpha(30);
+        } else {
+            mMoviePosterBackground.setAlpha(30);
+        }
+
         return v;
     }
 
@@ -129,12 +138,27 @@ public class MovieDetailsFragment extends SherlockFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        int tmdbId = getArguments().getInt(InitBundle.TMDB_ID);
-        if (tmdbId == 0) {
+        mTmdbId = getArguments().getInt(InitBundle.TMDB_ID);
+        if (mTmdbId == 0) {
             getSherlockActivity().getSupportFragmentManager().popBackStack();
             return;
         }
 
+        setupViews();
+
+        mImageDownloader = ImageDownloader.getInstance(getActivity());
+        mImageBaseUrl = TmdbSettings.getImageBaseUrl(getActivity())
+                + TmdbSettings.POSTER_SIZE_SPEC_W342;
+
+        Bundle args = new Bundle();
+        args.putInt(InitBundle.TMDB_ID, mTmdbId);
+        getLoaderManager().initLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args,
+                mMovieLoaderCallbacks);
+
+        setHasOptionsMenu(true);
+    }
+
+    private void setupViews() {
         // fix padding for translucent system bars
         if (AndroidUtils.isKitKatOrHigher()) {
             SystemBarTintManager.SystemBarConfig config
@@ -149,19 +173,10 @@ public class MovieDetailsFragment extends SherlockFragment implements
             layoutParams.setMargins(0, config.getPixelInsetTop(true), 0, 0);
             contentContainer.setLayoutParams(layoutParams);
         }
-
-        mImageDownloader = ImageDownloader.getInstance(getActivity());
-
-        mBaseUrl = TmdbSettings.getImageBaseUrl(getActivity()) + TmdbSettings.POSTER_SIZE_SPEC_W342;
-
-        Bundle args = new Bundle();
-        args.putInt(InitBundle.TMDB_ID, tmdbId);
-        getLoaderManager().initLoader(LOADER_ID, args, this);
-
-        setHasOptionsMenu(true);
     }
 
-    @Override public void onDestroyView() {
+    @Override
+    public void onDestroyView() {
         super.onDestroyView();
 
         ButterKnife.reset(this);
@@ -187,13 +202,13 @@ public class MovieDetailsFragment extends SherlockFragment implements
             // content view
             boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
 
-            boolean isEnableShare = mMovieDetails.movie() != null;
+            boolean isEnableShare = mMovieDetails.tmdbMovie() != null;
             MenuItem shareItem = menu.findItem(R.id.menu_movie_share);
             shareItem.setEnabled(isEnableShare);
             shareItem.setVisible(isEnableShare && !isDrawerOpen);
 
-            boolean isEnableImdb = mMovieDetails.movie() != null
-                    && !TextUtils.isEmpty(mMovieDetails.movie().imdb_id);
+            boolean isEnableImdb = mMovieDetails.tmdbMovie() != null
+                    && !TextUtils.isEmpty(mMovieDetails.tmdbMovie().imdb_id);
             MenuItem imdbItem = menu.findItem(R.id.menu_open_imdb);
             imdbItem.setEnabled(isEnableImdb);
             imdbItem.setVisible(isEnableImdb);
@@ -212,13 +227,13 @@ public class MovieDetailsFragment extends SherlockFragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_movie_share) {
-            ShareUtils.shareMovie(getActivity(), mMovieDetails.movie().id,
-                    mMovieDetails.movie().title);
+            ShareUtils.shareMovie(getActivity(), mMovieDetails.tmdbMovie().id,
+                    mMovieDetails.tmdbMovie().title);
             fireTrackerEvent("Share");
             return true;
         }
         if (itemId == R.id.menu_open_imdb) {
-            ServiceUtils.openImdb(mMovieDetails.movie().imdb_id, TAG, getActivity());
+            ServiceUtils.openImdb(mMovieDetails.tmdbMovie().imdb_id, TAG, getActivity());
             return true;
         }
         if (itemId == R.id.menu_open_youtube) {
@@ -227,108 +242,144 @@ public class MovieDetailsFragment extends SherlockFragment implements
             return true;
         }
         if (itemId == R.id.menu_open_google_play) {
-            ServiceUtils.searchGooglePlay(mMovieDetails.movie().title, TAG, getActivity());
+            ServiceUtils.searchGooglePlay(mMovieDetails.tmdbMovie().title, TAG, getActivity());
             return true;
         }
         if (itemId == R.id.menu_open_trakt) {
-            ServiceUtils.openTraktMovie(getActivity(), mMovieDetails.movie().id, TAG);
+            ServiceUtils.openTraktMovie(getActivity(), mMovieDetails.tmdbMovie().id, TAG);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public Loader<MovieDetails> onCreateLoader(int loaderId, Bundle args) {
-        if (args != null) {
-            int tmdbId = args.getInt(InitBundle.TMDB_ID);
-            if (tmdbId != 0) {
-                return new TmdbMovieDetailsLoader(getActivity(), tmdbId);
-            }
+    private void populateMovieViews() {
+        Movie movie = mMovieDetails.traktMovie();
+        mMovieTitle.setText(movie.title);
+        mMovieDescription.setText(movie.overview);
+
+        // release date
+        if (movie.released != null && movie.released.getTime() != 0) {
+            mMovieReleaseDate.setText(
+                    DateUtils.formatDateTime(getActivity(), movie.released.getTime(),
+                            DateUtils.FORMAT_SHOW_DATE));
+        } else {
+            mMovieReleaseDate.setText("");
         }
-        return null;
-    }
 
-    @Override
-    public void onLoadFinished(Loader<MovieDetails> loader, MovieDetails details) {
-        if (details != null) {
-            mMovieDetails = details;
-            onPopulateMovieDetails(details);
-            // add menu items only available once the movie is
-            getSherlockActivity().supportInvalidateOptionsMenu();
+        // check-in button
+        CheatSheet.setup(mCheckinButton);
+        // TODO migrate to TMDb, use original title
+        final String imdbId = movie.imdb_id;
+        final String title = movie.title;
+        if (!TextUtils.isEmpty(movie.imdb_id)) {
+            mCheckinButton.setOnClickListener(
+                    new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // display a check-in dialog
+                            MovieCheckInDialogFragment f = MovieCheckInDialogFragment
+                                    .newInstance(imdbId, title);
+                            f.show(getFragmentManager(), "checkin-dialog");
+                            fireTrackerEvent("Check-In");
+                        }
+                    });
+        } else {
+            mCheckinButton.setOnClickListener(null);
+            mCheckinButton.setEnabled(false);
         }
-    }
 
-    @Override
-    public void onLoaderReset(Loader<MovieDetails> loader) {
-    }
+        // watched button
+        if (TraktCredentials.get(getActivity()).hasCredentials()) {
+            mWatchedButton.setImageResource((movie.watched != null && movie.watched)
+                    ? R.drawable.ic_ticked
+                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                            R.attr.drawableWatch));
+            // TODO toggle watched action, cheat sheet
+        } else {
+            mWatchedButton.setVisibility(View.GONE);
+        }
 
-    @SuppressWarnings("deprecation")
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void onPopulateMovieDetails(MovieDetails details) {
-        mProgressBar.setVisibility(View.GONE);
-
-        final Movie movie = details.movie();
-
-        if (movie != null) {
-            // set non-content views visible
-            mDivider.setVisibility(View.VISIBLE);
-
-            mMovieTitle.setText(movie.title);
-
-            if (movie.release_date != null) {
-                mMovieReleaseDate.setText(DateUtils.formatDateTime(getActivity(),
-                        movie.release_date.getTime(),
-                        DateUtils.FORMAT_SHOW_DATE));
-            } else {
-                mMovieReleaseDate.setText("");
-            }
-
-            mMovieDescription.setText(movie.overview);
-
-            if (!TextUtils.isEmpty(movie.poster_path)) {
-                if (AndroidUtils.isJellyBeanOrHigher()) {
-                    mMoviePosterBackground.setImageAlpha(30);
+        // collected button
+        final boolean isInCollection = movie.inCollection != null && movie.inCollection;
+        mCollectedButton.setImageResource(isInCollection
+                ? R.drawable.ic_collected
+                : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                        R.attr.drawableCollect));
+        CheatSheet.setup(mCollectedButton, isInCollection ? R.string.action_collection_remove
+                : R.string.action_collection_add);
+        mCollectedButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO update UI state/restart loader?
+                if (isInCollection) {
+                    MovieTools.removeFromCollection(getActivity(), mTmdbId);
                 } else {
-                    mMoviePosterBackground.setAlpha(30);
+                    MovieTools.addToCollection(getActivity(), mTmdbId);
                 }
-
-                String posterPath = mBaseUrl + movie.poster_path;
-                mImageDownloader.download(posterPath, mMoviePosterBackground, false);
             }
+        });
 
-            mButtonContainer.setVisibility(View.VISIBLE);
-            CheatSheet.setup(mCheckinButton);
-            if (!TextUtils.isEmpty(movie.imdb_id)) {
-                mCheckinButton.setOnClickListener(
-                        new OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                // display a check-in dialog
-                                MovieCheckInDialogFragment f = MovieCheckInDialogFragment
-                                        .newInstance(movie.imdb_id, movie.title);
-                                f.show(getFragmentManager(), "checkin-dialog");
-                                fireTrackerEvent("Check-In");
-                            }
-                        });
-            } else {
-                mCheckinButton.setEnabled(false);
+        // show button bar
+        mButtonContainer.setVisibility(View.VISIBLE);
+
+        // trakt comments link
+        mDivider.setVisibility(View.VISIBLE);
+        mCommentsButton.setVisibility(View.VISIBLE);
+        mCommentsButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
+                i.putExtras(TraktShoutsActivity.createInitBundleMovie(title, mTmdbId));
+                startActivity(i);
+                fireTrackerEvent("Comments");
             }
+        });
 
-            mCommentsButton.setVisibility(View.VISIBLE);
-            mCommentsButton.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
-                    i.putExtras(TraktShoutsActivity.createInitBundleMovie(movie.title, movie.id));
-                    startActivity(i);
-                    fireTrackerEvent("Comments");
-                }
-            });
+        // poster
+        if (movie.images != null && !TextUtils.isEmpty(movie.images.poster)) {
+            mImageDownloader.download(mImageBaseUrl + movie.images.poster, mMoviePosterBackground,
+                    false);
         }
     }
 
     private void fireTrackerEvent(String label) {
         Utils.trackAction(getActivity(), TAG, label);
     }
+
+    private LoaderManager.LoaderCallbacks<Movie> mMovieLoaderCallbacks
+            = new LoaderManager.LoaderCallbacks<Movie>() {
+        @Override
+        public Loader<com.jakewharton.trakt.entities.Movie> onCreateLoader(int loaderId,
+                Bundle args) {
+            if (args == null) {
+                return null;
+            }
+
+            int tmdbId = args.getInt(InitBundle.TMDB_ID);
+            if (tmdbId <= 0) {
+                return null;
+            }
+
+            return new MovieLoader(getActivity(), tmdbId);
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Movie> movieLoader, Movie movie) {
+            mMovieDetails = new MovieDetails().traktMovie(movie);
+            mProgressBar.setVisibility(View.GONE);
+
+            if (movie != null) {
+                populateMovieViews();
+                getSherlockActivity().supportInvalidateOptionsMenu();
+            } else {
+                // TODO display error message
+            }
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Movie> movieLoader) {
+            // nothing to do
+        }
+    };
 }

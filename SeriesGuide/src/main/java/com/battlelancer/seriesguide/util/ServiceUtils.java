@@ -65,24 +65,23 @@ public final class ServiceUtils {
 
     private static Trakt sTraktWithAuth;
 
-    private static Tmdb sTmdbServiceManagerInstance;
+    private static Tmdb sTmdb;
 
     /* This class is never initialized */
     private ServiceUtils() {
     }
 
     /**
-     * Get a tmdb-java ServiceManager with our API key set.
+     * Get a tmdb-java instance with our API key set.
      */
-    public static synchronized Tmdb getTmdbServiceManager(
-            Context context) {
-        if (sTmdbServiceManagerInstance == null) {
-            sTmdbServiceManagerInstance = new Tmdb();
-            sTmdbServiceManagerInstance.setApiKey(context.getResources().getString(
+    public static synchronized Tmdb getTmdb(Context context) {
+        if (sTmdb == null) {
+            sTmdb = new Tmdb();
+            sTmdb.setApiKey(context.getResources().getString(
                     R.string.tmdb_apikey));
         }
 
-        return sTmdbServiceManagerInstance;
+        return sTmdb;
     }
 
     /**

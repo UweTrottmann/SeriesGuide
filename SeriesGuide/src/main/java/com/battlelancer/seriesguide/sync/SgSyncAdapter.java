@@ -414,7 +414,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      */
     private static void getTmdbConfiguration(Context context, SharedPreferences prefs) {
         try {
-            Configuration config = ServiceUtils.getTmdbServiceManager(context)
+            Configuration config = ServiceUtils.getTmdb(context)
                     .configurationService().configuration();
             if (config != null && config.images != null
                     && !TextUtils.isEmpty(config.images.base_url)) {
