@@ -78,7 +78,7 @@ public class TmdbMovieDetailsLoader extends GenericSimpleLoader<MovieDetails> {
 
         private Credits mCredits;
 
-        public com.jakewharton.trakt.entities.Movie traktMovie() {
+        public com.jakewharton.trakt.entities.Movie traktOrLocalMovie() {
             return mTraktMovie;
         }
 
