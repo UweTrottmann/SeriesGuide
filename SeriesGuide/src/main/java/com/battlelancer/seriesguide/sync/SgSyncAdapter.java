@@ -293,7 +293,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             } catch (SAXException e) {
                 // failed, continue with other shows
                 resultCode = UpdateResult.INCOMPLETE;
-                Timber.e(e, null);
+                Timber.e(e, "Updating show failed");
             }
 
             updateCount.incrementAndGet();
@@ -422,7 +422,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                         .putString(TmdbSettings.KEY_TMDB_BASE_URL, config.images.base_url).commit();
             }
         } catch (RetrofitError e) {
-            Timber.e(e, null);
+            Timber.e(e, "Downloading TMDb config failed");
         }
     }
 
@@ -511,7 +511,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                                     ActivityAction.Scrobble + "," + ActivityAction.Collection,
                             startTimeTrakt, 1, 0);
         } catch (RetrofitError e) {
-            Timber.e(e, null);
+            Timber.e(e, "Downloading activity failed");
             return UpdateResult.INCOMPLETE;
         }
 
