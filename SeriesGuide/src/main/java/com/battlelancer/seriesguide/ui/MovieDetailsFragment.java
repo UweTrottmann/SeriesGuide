@@ -40,7 +40,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.loaders.MovieLoader;
-import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader.MovieDetails;
+import com.battlelancer.seriesguide.loaders.MovieTrailersLoader;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
@@ -53,6 +53,8 @@ import com.jakewharton.trakt.entities.Movie;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
+import com.uwetrottmann.tmdb.entities.Credits;
+import com.uwetrottmann.tmdb.entities.Trailers;
 
 /**
  * Displays details about one movie including plot, ratings, trailers and a poster.
@@ -139,7 +141,7 @@ public class MovieDetailsFragment extends SherlockFragment {
         super.onActivityCreated(savedInstanceState);
 
         mTmdbId = getArguments().getInt(InitBundle.TMDB_ID);
-        if (mTmdbId == 0) {
+        if (mTmdbId <= 0) {
             getSherlockActivity().getSupportFragmentManager().popBackStack();
             return;
         }
@@ -154,6 +156,8 @@ public class MovieDetailsFragment extends SherlockFragment {
         args.putInt(InitBundle.TMDB_ID, mTmdbId);
         getLoaderManager().initLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args,
                 mMovieLoaderCallbacks);
+        getLoaderManager().initLoader(MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args,
+                mMovieTrailerLoaderCallbacks);
 
         setHasOptionsMenu(true);
     }
@@ -349,16 +353,7 @@ public class MovieDetailsFragment extends SherlockFragment {
         @Override
         public Loader<com.jakewharton.trakt.entities.Movie> onCreateLoader(int loaderId,
                 Bundle args) {
-            if (args == null) {
-                return null;
-            }
-
-            int tmdbId = args.getInt(InitBundle.TMDB_ID);
-            if (tmdbId <= 0) {
-                return null;
-            }
-
-            return new MovieLoader(getActivity(), tmdbId);
+            return new MovieLoader(getActivity(), args.getInt(InitBundle.TMDB_ID));
         }
 
         @Override
@@ -379,4 +374,72 @@ public class MovieDetailsFragment extends SherlockFragment {
             // nothing to do
         }
     };
+
+    private LoaderManager.LoaderCallbacks<Trailers> mMovieTrailerLoaderCallbacks
+            = new LoaderManager.LoaderCallbacks<Trailers>() {
+        @Override
+        public Loader<Trailers> onCreateLoader(int loaderId, Bundle args) {
+            return new MovieTrailersLoader(getActivity(), args.getInt(InitBundle.TMDB_ID));
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Trailers> trailersLoader, Trailers trailers) {
+            if (trailers != null) {
+                mMovieDetails.trailers(trailers);
+                getSherlockActivity().supportInvalidateOptionsMenu();
+            }
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Trailers> trailersLoader) {
+            // do nothing
+        }
+    };
+
+    public static class MovieDetails {
+
+        private Movie mTraktMovie;
+
+        private com.uwetrottmann.tmdb.entities.Movie mTmdbMovie;
+
+        private Trailers mTrailers;
+
+        private Credits mCredits;
+
+        public Movie traktOrLocalMovie() {
+            return mTraktMovie;
+        }
+
+        public MovieDetails traktMovie(Movie traktMovie) {
+            mTraktMovie = traktMovie;
+            return this;
+        }
+
+        public com.uwetrottmann.tmdb.entities.Movie tmdbMovie() {
+            return mTmdbMovie;
+        }
+
+        public MovieDetails tmdbMovie(com.uwetrottmann.tmdb.entities.Movie movie) {
+            mTmdbMovie = movie;
+            return this;
+        }
+
+        public Trailers trailers() {
+            return mTrailers;
+        }
+
+        public MovieDetails trailers(Trailers trailers) {
+            mTrailers = trailers;
+            return this;
+        }
+
+        public Credits credits() {
+            return mCredits;
+        }
+
+        public MovieDetails credits(Credits credits) {
+            mCredits = credits;
+            return this;
+        }
+    }
 }
