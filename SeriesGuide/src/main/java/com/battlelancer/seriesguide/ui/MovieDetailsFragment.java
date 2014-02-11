@@ -78,11 +78,9 @@ public class MovieDetailsFragment extends SherlockFragment {
 
     private static final String TAG = "Movie Details";
 
-    private static final int LOADER_ID = R.layout.movie_details_fragment;
-
     private int mTmdbId;
 
-    private MovieDetails mMovieDetails;
+    private MovieDetails mMovieDetails = new MovieDetails();
 
     private ImageDownloader mImageDownloader;
 
@@ -358,7 +356,7 @@ public class MovieDetailsFragment extends SherlockFragment {
 
         @Override
         public void onLoadFinished(Loader<Movie> movieLoader, Movie movie) {
-            mMovieDetails = new MovieDetails().traktMovie(movie);
+            mMovieDetails.traktMovie(movie);
             mProgressBar.setVisibility(View.GONE);
 
             if (movie != null) {
