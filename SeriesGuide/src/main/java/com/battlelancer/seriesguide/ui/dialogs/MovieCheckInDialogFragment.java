@@ -32,13 +32,14 @@ import android.view.View;
  */
 public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
 
-    public static MovieCheckInDialogFragment newInstance(String imdbId, String movieTitle) {
+    public static MovieCheckInDialogFragment newInstance(int movieTmdbId, String movieTitle,
+            String originalMovieTitle) {
         MovieCheckInDialogFragment f = new MovieCheckInDialogFragment();
 
         Bundle args = new Bundle();
-        args.putString(InitBundle.TITLE, movieTitle);
+        args.putString(InitBundle.TVTAG_ID_OR_TITLE, originalMovieTitle);
         args.putString(InitBundle.ITEM_TITLE, movieTitle);
-        args.putString(InitBundle.MOVIE_IMDB_ID, imdbId);
+        args.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
         f.setArguments(args);
 
         return f;
@@ -62,9 +63,9 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
      * Start the trakt check in task.
      */
     protected void checkInTrakt(String message) {
-        final String imdbId = getArguments().getString(InitBundle.MOVIE_IMDB_ID);
+        int movieTmdbId = getArguments().getInt(InitBundle.MOVIE_TMDB_ID);
         AndroidUtils.executeAsyncTask(
-                new TraktTask(getActivity()).checkInMovie(imdbId, message));
+                new TraktTask(getActivity()).checkInMovie(movieTmdbId, message));
     }
 
     protected void handleGetGlueToggle(boolean isChecked) {

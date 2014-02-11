@@ -271,25 +271,18 @@ public class MovieDetailsFragment extends SherlockFragment {
 
         // check-in button
         CheatSheet.setup(mCheckinButton);
-        // TODO migrate to TMDb, use original title
-        final String imdbId = movie.imdb_id;
+        // TODO use original title for tvtag
         final String title = movie.title;
-        if (!TextUtils.isEmpty(movie.imdb_id)) {
-            mCheckinButton.setOnClickListener(
-                    new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // display a check-in dialog
-                            MovieCheckInDialogFragment f = MovieCheckInDialogFragment
-                                    .newInstance(imdbId, title);
-                            f.show(getFragmentManager(), "checkin-dialog");
-                            fireTrackerEvent("Check-In");
-                        }
-                    });
-        } else {
-            mCheckinButton.setOnClickListener(null);
-            mCheckinButton.setEnabled(false);
-        }
+        mCheckinButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // display a check-in dialog
+                MovieCheckInDialogFragment f = MovieCheckInDialogFragment
+                        .newInstance(mTmdbId, title, title);
+                f.show(getFragmentManager(), "checkin-dialog");
+                fireTrackerEvent("Check-In");
+            }
+        });
 
         // watched button
         if (TraktCredentials.get(getActivity()).hasCredentials()) {
