@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.service;
 
+import android.support.v4.app.TaskStackBuilder;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
@@ -331,6 +332,10 @@ public class NotificationService extends IntentService {
         final String ringtoneUri = NotificationSettings.getNotificationsRingtone(context);
         // vibration
         final boolean isVibrating = NotificationSettings.isNotificationVibrating(context);
+        // base intent for task stack
+        final Intent showsIntent = new Intent(context, ShowsActivity.class);
+        showsIntent.putExtra(ShowsActivity.InitBundle.SELECTED_TAB,
+                ShowsActivity.InitBundle.INDEX_TAB_UPCOMING);
 
         if (count == 1) {
             // notify in detail about one episode
@@ -352,24 +357,24 @@ public class NotificationService extends IntentService {
             final String network = upcomingEpisodes.getString(NotificationQuery.NETWORK);
             contentText = getString(R.string.upcoming_show_detailed, releaseTime, network);
 
-            Intent notificationIntent = new Intent(context, EpisodesActivity.class);
-            notificationIntent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
+            Intent episodeDetailsIntent = new Intent(context, EpisodesActivity.class);
+            episodeDetailsIntent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
                     upcomingEpisodes.getInt(NotificationQuery._ID));
-            notificationIntent.putExtra(KEY_EPISODE_CLEARED_TIME, latestAirtime);
-            contentIntent = PendingIntent.getActivity(context, REQUEST_CODE_SINGLE_EPISODE,
-                    notificationIntent, 0);
+            episodeDetailsIntent.putExtra(KEY_EPISODE_CLEARED_TIME, latestAirtime);
+
+            contentIntent = TaskStackBuilder.create(context)
+                    .addNextIntent(showsIntent)
+                    .addNextIntent(episodeDetailsIntent)
+                    .getPendingIntent(REQUEST_CODE_SINGLE_EPISODE, 0);
         } else if (count > 1) {
             // notify about multiple episodes
             tickerText = getString(R.string.upcoming_episodes);
             contentTitle = getString(R.string.upcoming_episodes_number, count);
             contentText = getString(R.string.upcoming_display);
 
-            Intent notificationIntent = new Intent(context, ShowsActivity.class);
-            notificationIntent.putExtra(KEY_EPISODE_CLEARED_TIME, latestAirtime);
-            notificationIntent.putExtra(ShowsActivity.InitBundle.SELECTED_TAB,
-                    ShowsActivity.InitBundle.INDEX_TAB_UPCOMING);
-            contentIntent = PendingIntent.getActivity(context, REQUEST_CODE_MULTIPLE_EPISODES,
-                    notificationIntent, 0);
+            contentIntent = TaskStackBuilder.create(context)
+                    .addNextIntent(showsIntent.putExtra(KEY_EPISODE_CLEARED_TIME, latestAirtime))
+                    .getPendingIntent(REQUEST_CODE_MULTIPLE_EPISODES, 0);
         }
 
         final NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
@@ -404,6 +409,8 @@ public class NotificationService extends IntentService {
                 Intent checkInActionIntent = new Intent(context, QuickCheckInActivity.class);
                 checkInActionIntent.putExtra(QuickCheckInActivity.InitBundle.EPISODE_TVDBID,
                         upcomingEpisodes.getInt(NotificationQuery._ID));
+                checkInActionIntent.addFlags(
+                        Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
                 PendingIntent checkInIntent = PendingIntent.getActivity(context,
                         REQUEST_CODE_ACTION_CHECKIN,
                         checkInActionIntent, 0);
