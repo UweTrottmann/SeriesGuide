@@ -299,15 +299,16 @@ public class MovieDetailsFragment extends SherlockFragment {
         });
 
         // watched button
-        if (TraktCredentials.get(getActivity()).hasCredentials()) {
-            mWatchedButton.setImageResource((movie.watched != null && movie.watched)
-                    ? R.drawable.ic_ticked
-                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                            R.attr.drawableWatch));
-            // TODO toggle watched action, cheat sheet
-        } else {
-            mWatchedButton.setVisibility(View.GONE);
-        }
+        // TODO toggle watched action, cheat sheet
+        mWatchedButton.setVisibility(View.GONE);
+        //if (TraktCredentials.get(getActivity()).hasCredentials()) {
+        //    mWatchedButton.setImageResource((movie.watched != null && movie.watched)
+        //            ? R.drawable.ic_ticked
+        //            : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+        //                    R.attr.drawableWatch));
+        //} else {
+        //    mWatchedButton.setVisibility(View.GONE);
+        //}
 
         // collected button
         final boolean isInCollection = movie.inCollection != null && movie.inCollection;
