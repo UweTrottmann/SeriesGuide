@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import android.content.DialogInterface;
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
@@ -92,6 +93,9 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
          * Episode number. <b>Required for episodes.</b>
          */
         String EPISODE = "episode";
+    }
+
+    public class CheckInDialogDismissedEvent {
     }
 
     protected boolean mGetGlueChecked;
@@ -245,6 +249,13 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         super.onStop();
 
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+
+        EventBus.getDefault().post(new CheckInDialogDismissedEvent());
     }
 
     public void onEvent(GetGlueCheckin.GetGlueCheckInTask.GetGlueCheckInCompleteEvent event) {

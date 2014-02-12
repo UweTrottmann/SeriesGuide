@@ -20,6 +20,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.GenericCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
@@ -77,13 +78,14 @@ public class QuickCheckInActivity extends SherlockFragmentActivity {
         EventBus.getDefault().unregister(this);
     }
 
+    public void onEvent(GenericCheckInDialogFragment.CheckInDialogDismissedEvent event) {
+        // if check-in dialog is dismissed, finish ourselves as well
+        finish();
+    }
+
     public void onEvent(GetGlueCheckin.GetGlueCheckInTask.GetGlueCheckInCompleteEvent event) {
         // display status toast about GetGlue check-in
         event.handle(this);
-        if (mCheckInDialogFragment == null || !mCheckInDialogFragment.isInLayout()) {
-            // if check-in dialog is done, so should we be
-            finish();
-        }
     }
 
     public void onEvent(TraktTask.TraktActionCompleteEvent event) {
@@ -92,10 +94,6 @@ public class QuickCheckInActivity extends SherlockFragmentActivity {
         }
         // display status toast about trakt action
         event.handle(this);
-        if (mCheckInDialogFragment == null || !mCheckInDialogFragment.isInLayout()) {
-            // if check-in dialog is done, so should we be
-            finish();
-        }
     }
 
 }
