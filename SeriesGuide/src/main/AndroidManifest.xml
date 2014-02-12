@@ -218,7 +218,7 @@
         <!-- List widget configuration -->
         <activity
             android:name="com.battlelancer.seriesguide.appwidget.ListWidgetConfigure"
-            android:launchMode="singleTop">
+            android:taskAffinity="com.battlelancer.seriesguide.task.configuration">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
