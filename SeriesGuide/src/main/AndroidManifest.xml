@@ -52,7 +52,9 @@
         </provider>
 
         <!-- Launch activity -->
-        <activity android:name="com.battlelancer.seriesguide.ui.ShowsActivity" >
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.ShowsActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -216,7 +218,7 @@
         <!-- List widget configuration -->
         <activity
             android:name="com.battlelancer.seriesguide.appwidget.ListWidgetConfigure"
-            android:launchMode="singleTop">
+            android:taskAffinity="com.battlelancer.seriesguide.task.configuration">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>

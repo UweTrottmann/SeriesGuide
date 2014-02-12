@@ -101,6 +101,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
     private ShowsTabPageAdapter mTabsAdapter;
 
+    private ViewPager mViewPager;
+
     public interface InitBundle {
 
         String SELECTED_TAB = "selectedtab";
@@ -127,7 +129,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         NotificationService.handleDeleteIntent(this, getIntent());
 
         setUpActionBar();
-        setupViews(savedInstanceState);
+        setupViews();
+        setInitialTab(savedInstanceState, getIntent().getExtras());
 
         // query in-app purchases (only if not already qualified)
         if (Utils.requiresPurchaseCheck(this)) {
@@ -164,12 +167,12 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         actionBar.setDisplayShowTitleEnabled(false);
     }
 
-    private void setupViews(Bundle savedInstanceState) {
-        ViewPager pager = (ViewPager) findViewById(R.id.pagerShows);
+    private void setupViews() {
+        mViewPager = (ViewPager) findViewById(R.id.pagerShows);
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsShows);
 
         mTabsAdapter = new ShowsTabPageAdapter(getSupportFragmentManager(),
-                this, pager, tabs);
+                this, mViewPager, tabs);
 
         // shows tab (or first run fragment)
         if (!FirstRunFragment.hasSeenFirstRunFragment(this)) {
@@ -204,26 +207,32 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         // display new tabs
         mTabsAdapter.notifyTabsChanged();
 
-        // set starting tab
-        int selection = 0;
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            // notification intent has priority
-            selection = extras.getInt(InitBundle.SELECTED_TAB, 0);
-        } else if (savedInstanceState != null) {
+        // progress bar
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBarShows);
+    }
+
+    /**
+     * Tries to restore the current tab from the given state, if that fails from the given
+     * intent extras. If that fails as well, uses the last known selected tab.
+     */
+    private void setInitialTab(Bundle savedInstanceState, Bundle intentExtras) {
+        int selection;
+        if (savedInstanceState != null) {
             selection = savedInstanceState.getInt("index");
+        } else if (intentExtras != null) {
+            selection = intentExtras.getInt(InitBundle.SELECTED_TAB,
+                    ActivitySettings.getDefaultActivityTabPosition(this));
         } else {
             // use last saved selection
             selection = ActivitySettings.getDefaultActivityTabPosition(this);
         }
+
         // never select a non-existent tab
         if (selection > mTabsAdapter.getCount() - 1) {
             selection = 0;
         }
-        pager.setCurrentItem(selection);
 
-        // progress bar
-        mProgressBar = (ProgressBar) findViewById(R.id.progressBarShows);
+        mViewPager.setCurrentItem(selection);
     }
 
     @Override
@@ -233,6 +242,13 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_SHOWS_POSITION);
         EasyTracker.getInstance(this).activityStart(this);
         EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        setInitialTab(null, intent.getExtras());
     }
 
     @Override
