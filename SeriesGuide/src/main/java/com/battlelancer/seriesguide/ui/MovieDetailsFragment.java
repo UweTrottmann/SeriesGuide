@@ -102,6 +102,8 @@ public class MovieDetailsFragment extends SherlockFragment {
 
     @InjectView(R.id.buttonMovieCollected) ImageButton mCollectedButton;
 
+    @InjectView(R.id.buttonMovieWatchlisted) ImageButton mWatchlistedButton;
+
     @InjectView(R.id.buttonMovieComments) Button mCommentsButton;
 
     @InjectView(R.id.progressBar) View mProgressBar;
@@ -314,6 +316,26 @@ public class MovieDetailsFragment extends SherlockFragment {
                     MovieTools.removeFromCollection(getActivity(), mTmdbId);
                 } else {
                     MovieTools.addToCollection(getActivity(), mTmdbId);
+                }
+            }
+        });
+
+        // watchlist button
+        final boolean isInWatchlist = movie.inWatchlist != null && movie.inWatchlist;
+        mWatchlistedButton.setImageResource(isInWatchlist
+                ? R.drawable.ic_action_list_highlight
+                : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                        R.attr.drawableList));
+        CheatSheet.setup(mWatchlistedButton,
+                isInWatchlist ? R.string.watchlist_remove : R.string.watchlist_add);
+        mWatchlistedButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO update UI state/restart loader?
+                if (isInWatchlist) {
+                    MovieTools.removeFromWatchlist(getActivity(), mTmdbId);
+                } else {
+                    MovieTools.addToWatchlist(getActivity(), mTmdbId);
                 }
             }
         });

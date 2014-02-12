@@ -87,6 +87,16 @@
                     android:src="?attr/drawableWatch" />
 
                 <ImageButton
+                    android:id="@+id/buttonMovieWatchlisted"
+                    style="@style/Widget.SeriesGuide.Button.Borderless"
+                    android:layout_width="@dimen/buttonbar_button_width"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/watchlist_add"
+                    android:paddingLeft="@dimen/default_padding"
+                    android:paddingRight="@dimen/default_padding"
+                    android:src="?attr/drawableList" />
+
+                <ImageButton
                     android:id="@+id/buttonMovieCollected"
                     style="@style/Widget.SeriesGuide.Button.Borderless"
                     android:layout_width="@dimen/buttonbar_button_width"
