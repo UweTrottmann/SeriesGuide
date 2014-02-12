@@ -119,6 +119,48 @@
                 android:textIsSelectable="true"
                 tools:text="Description for a super awesome movie..." />
 
+            <TextView
+                android:id="@+id/labelCast"
+                style="@style/DefaultPadding.Blocks.WithTopMargin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewMovieDescription"
+                android:text="@string/movie_cast"
+                android:textAppearance="@style/TextAppearance.Small.Label" />
+
+            <TextView
+                android:id="@+id/textViewMovieCast"
+                style="@style/DefaultPadding.Blocks.WithBottomMargin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/labelCast"
+                android:maxWidth="400dp"
+                android:textAppearance="@style/TextAppearance.Light"
+                android:textIsSelectable="true"
+                tools:text="Edward Norton (The Narrator)\nBrad Pitt (Tyler Durden)" />
+
+            <TextView
+                android:id="@+id/labelCrew"
+                style="@style/DefaultPadding.Blocks.WithTopMargin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewMovieCast"
+                android:text="@string/movie_crew"
+                android:textAppearance="@style/TextAppearance.Small.Label" />
+
+            <TextView
+                android:id="@+id/textViewMovieCrew"
+                style="@style/DefaultPadding.Blocks.WithBottomMargin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/labelCrew"
+                android:maxWidth="400dp"
+                android:textAppearance="@style/TextAppearance.Light"
+                android:textIsSelectable="true"
+                tools:text="Jim Uhls (Author)\nRoss Grayson Bell (Producer)" />
+
             <include
                 android:id="@+id/dividerHorizontalMovieDetails"
                 layout="@layout/divider_horizontal"
@@ -126,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/textViewMovieDescription"
                 android:layout_alignRight="@+id/textViewMovieDescription"
-                android:layout_below="@+id/textViewMovieDescription" />
+                android:layout_below="@+id/textViewMovieCrew" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

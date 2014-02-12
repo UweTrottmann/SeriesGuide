@@ -34,6 +34,7 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
     // loader ids for this activity (mostly used by fragments)
     public static int LOADER_ID_MOVIE = 100;
     public static int LOADER_ID_MOVIE_TRAILERS = 101;
+    public static int LOADER_ID_MOVIE_CREDITS = 102;
 
     private SystemBarTintManager mSystemBarTintManager;
 

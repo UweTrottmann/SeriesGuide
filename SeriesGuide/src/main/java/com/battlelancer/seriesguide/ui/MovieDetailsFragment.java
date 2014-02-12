@@ -39,6 +39,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.MovieLoader;
 import com.battlelancer.seriesguide.loaders.MovieTrailersLoader;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
@@ -82,6 +83,8 @@ public class MovieDetailsFragment extends SherlockFragment {
 
     private MovieDetails mMovieDetails = new MovieDetails();
 
+    private Credits mCredits;
+
     private ImageDownloader mImageDownloader;
 
     private String mImageBaseUrl;
@@ -103,6 +106,10 @@ public class MovieDetailsFragment extends SherlockFragment {
     @InjectView(R.id.buttonMovieCollected) ImageButton mCollectedButton;
 
     @InjectView(R.id.buttonMovieWatchlisted) ImageButton mWatchlistedButton;
+
+    @InjectView(R.id.textViewMovieCast) TextView mMovieCast;
+
+    @InjectView(R.id.textViewMovieCrew) TextView mMovieCrew;
 
     @InjectView(R.id.buttonMovieComments) Button mCommentsButton;
 
@@ -158,6 +165,8 @@ public class MovieDetailsFragment extends SherlockFragment {
                 mMovieLoaderCallbacks);
         getLoaderManager().initLoader(MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args,
                 mMovieTrailerLoaderCallbacks);
+        getLoaderManager().initLoader(MovieDetailsActivity.LOADER_ID_MOVIE_CREDITS, args,
+                mMovieCreditsLoaderCallbacks);
 
         setHasOptionsMenu(true);
     }
@@ -364,6 +373,33 @@ public class MovieDetailsFragment extends SherlockFragment {
         }
     }
 
+    private void populateMovieCreditsViews() {
+        if (mCredits.cast != null) {
+            StringBuilder castString = new StringBuilder();
+            for (int i = 0; i < mCredits.cast.size(); i++) {
+                Credits.CastMember castMember = mCredits.cast.get(i);
+                castString.append(getString(R.string.movie_person_in_role, castMember.name,
+                        castMember.character));
+                if (i < mCredits.cast.size() - 1) {
+                    castString.append("\n");
+                }
+            }
+            mMovieCast.setText(castString.toString());
+        }
+        if (mCredits.crew != null) {
+            StringBuilder crewString = new StringBuilder();
+            for (int i = 0; i < mCredits.crew.size(); i++) {
+                Credits.CrewMember crewMember = mCredits.crew.get(i);
+                crewString.append(getString(R.string.movie_person_in_role, crewMember.name,
+                        crewMember.job));
+                if (i < mCredits.crew.size() - 1) {
+                    crewString.append("\n");
+                }
+            }
+            mMovieCrew.setText(crewString.toString());
+        }
+    }
+
     private void fireTrackerEvent(String label) {
         Utils.trackAction(getActivity(), TAG, label);
     }
@@ -412,6 +448,27 @@ public class MovieDetailsFragment extends SherlockFragment {
 
         @Override
         public void onLoaderReset(Loader<Trailers> trailersLoader) {
+            // do nothing
+        }
+    };
+
+    private LoaderManager.LoaderCallbacks<Credits> mMovieCreditsLoaderCallbacks
+            = new LoaderManager.LoaderCallbacks<Credits>() {
+        @Override
+        public Loader<Credits> onCreateLoader(int loaderId, Bundle args) {
+            return new MovieCreditsLoader(getActivity(), args.getInt(InitBundle.TMDB_ID));
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Credits> creditsLoader, Credits credits) {
+            if (credits != null) {
+                mCredits = credits;
+                populateMovieCreditsViews();
+            }
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Credits> creditsLoader) {
             // do nothing
         }
     };
