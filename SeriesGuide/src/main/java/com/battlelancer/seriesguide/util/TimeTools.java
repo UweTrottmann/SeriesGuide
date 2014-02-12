@@ -270,12 +270,12 @@ public class TimeTools {
     }
 
     /**
-     * Returns the current system time with user-set offsets applied.
+     * Returns the current system time with inverted user-set offsets applied.
      */
     public static long getCurrentTime(Context context) {
         Calendar calendar = Calendar.getInstance();
 
-        setUserOffset(context, calendar);
+        setUserOffsetInverted(context, calendar);
 
         return calendar.getTimeInMillis();
     }
@@ -492,12 +492,30 @@ public class TimeTools {
     }
 
     private static void setUserOffset(Context context, Calendar calendar) {
-        String offsetString = PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(SeriesGuidePreferences.KEY_OFFSET, "0");
-        int offset = Integer.valueOf(offsetString);
+        int offset = getUserOffset(context);
 
         if (offset != 0) {
             calendar.add(Calendar.HOUR_OF_DAY, offset);
+        }
+    }
+
+    private static void setUserOffsetInverted(Context context, Calendar calendar) {
+        int offset = getUserOffset(context);
+
+        // invert
+        offset = -offset;
+
+        if (offset != 0) {
+            calendar.add(Calendar.HOUR_OF_DAY, offset);
+        }
+    }
+
+    private static int getUserOffset(Context context) {
+        try {
+            return Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(context)
+                    .getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
+        } catch (NumberFormatException e) {
+            return 0;
         }
     }
 
