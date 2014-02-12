@@ -52,7 +52,9 @@
         </provider>
 
         <!-- Launch activity -->
-        <activity android:name="com.battlelancer.seriesguide.ui.ShowsActivity" >
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.ShowsActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
