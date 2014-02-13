@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.support.v4.app.TaskStackBuilder;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 
@@ -218,10 +219,11 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 if (DisplaySettings.KEY_THEME.equals(preference.getKey())) {
                     Utils.updateTheme((String) newValue);
 
-                    // restart to apply new theme
-                    NavUtils.navigateUpTo(activity,
-                            new Intent(Intent.ACTION_MAIN).setClass(activity, ShowsActivity.class));
-                    activity.startActivity(startIntent);
+                    // restart to apply new theme (actually build an entirely new task stack)
+                    TaskStackBuilder.create(activity)
+                            .addNextIntent(new Intent(activity, ShowsActivity.class))
+                            .addNextIntent(startIntent)
+                            .startActivities();
                 }
                 return true;
             }
