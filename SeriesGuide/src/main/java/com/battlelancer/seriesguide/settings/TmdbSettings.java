@@ -11,7 +11,7 @@ public class TmdbSettings {
 
     public static final String POSTER_SIZE_SPEC_W342 = "w342";
 
-    private static final String DEFAULT_BASE_URL = "http://image.tmdb.org/t/p/";
+    private static final String DEFAULT_BASE_URL = "https://image.tmdb.org/t/p/";
 
     public static String getImageBaseUrl(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)

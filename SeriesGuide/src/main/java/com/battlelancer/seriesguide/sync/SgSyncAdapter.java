@@ -417,9 +417,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             Configuration config = ServiceUtils.getTmdb(context)
                     .configurationService().configuration();
             if (config != null && config.images != null
-                    && !TextUtils.isEmpty(config.images.base_url)) {
+                    && !TextUtils.isEmpty(config.images.secure_base_url)) {
                 prefs.edit()
-                        .putString(TmdbSettings.KEY_TMDB_BASE_URL, config.images.base_url).commit();
+                        .putString(TmdbSettings.KEY_TMDB_BASE_URL, config.images.secure_base_url)
+                        .commit();
             }
         } catch (RetrofitError e) {
             Timber.e(e, "Downloading TMDb config failed");
