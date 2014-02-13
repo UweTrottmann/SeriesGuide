@@ -370,7 +370,7 @@ public class MovieDetailsFragment extends SherlockFragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
-                i.putExtras(TraktShoutsActivity.createInitBundleMovie(originalTitle, mTmdbId));
+                i.putExtras(TraktShoutsActivity.createInitBundleMovie(title, mTmdbId));
                 startActivity(i);
                 fireTrackerEvent("Comments");
             }
