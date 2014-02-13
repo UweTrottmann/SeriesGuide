@@ -16,65 +16,64 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
+import android.os.Bundle;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.R;
-
-import android.os.Bundle;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class TraktShoutsActivity extends BaseActivity {
 
     public static Bundle createInitBundleEpisode(int showTvdbid, int seasonNumber,
             int episodeNumber, String title) {
         Bundle extras = new Bundle();
-        extras.putInt(ShareItems.TVDBID, showTvdbid);
-        extras.putInt(ShareItems.SEASON, seasonNumber);
-        extras.putInt(ShareItems.EPISODE, episodeNumber);
-        extras.putString(ShareItems.SHARESTRING, title);
+        extras.putInt(TraktShoutsFragment.InitBundle.SHOW_TVDB_ID, showTvdbid);
+        extras.putInt(TraktShoutsFragment.InitBundle.SEASON_NUMBER, seasonNumber);
+        extras.putInt(TraktShoutsFragment.InitBundle.EPISODE_NUMBER, episodeNumber);
+        extras.putString(InitBundle.TITLE, title);
         return extras;
     }
 
     public static Bundle createInitBundleShow(String title, int tvdbId) {
         Bundle extras = new Bundle();
-        extras.putInt(ShareItems.TVDBID, tvdbId);
-        extras.putString(ShareItems.SHARESTRING, title);
+        extras.putInt(TraktShoutsFragment.InitBundle.SHOW_TVDB_ID, tvdbId);
+        extras.putString(InitBundle.TITLE, title);
         return extras;
     }
 
     public static Bundle createInitBundleMovie(String title, int tmdbId) {
         Bundle extras = new Bundle();
-        extras.putInt(ShareItems.TMDBID, tmdbId);
-        extras.putString(ShareItems.SHARESTRING, title);
+        extras.putInt(TraktShoutsFragment.InitBundle.MOVIE_TMDB_ID, tmdbId);
+        extras.putString(InitBundle.TITLE, title);
         return extras;
+    }
+
+    private interface InitBundle {
+        String TITLE = "title";
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle args = getIntent().getExtras();
-        String title = args.getString(ShareItems.SHARESTRING);
-
         setupActionBar();
 
         if (savedInstanceState == null) {
             // embed the shouts fragment dialog
             SherlockFragment f;
-            int tvdbId = args.getInt(ShareItems.TVDBID);
-            int episode = args.getInt(ShareItems.EPISODE);
-            if (tvdbId == 0) {
-                int tmdbId = args.getInt(ShareItems.TMDBID);
-                f = TraktShoutsFragment.newInstanceMovie(title, tmdbId);
+            Bundle args = getIntent().getExtras();
+            int showTvdbId = args.getInt(TraktShoutsFragment.InitBundle.SHOW_TVDB_ID);
+            int episode = args.getInt(TraktShoutsFragment.InitBundle.EPISODE_NUMBER);
+            if (showTvdbId == 0) {
+                int tmdbId = args.getInt(TraktShoutsFragment.InitBundle.MOVIE_TMDB_ID);
+                f = TraktShoutsFragment.newInstanceMovie(tmdbId);
             } else if (episode == 0) {
-                f = TraktShoutsFragment.newInstanceShow(title, tvdbId);
+                f = TraktShoutsFragment.newInstanceShow(showTvdbId);
             } else {
-                int season = args.getInt(ShareItems.SEASON);
+                int season = args.getInt(TraktShoutsFragment.InitBundle.SEASON_NUMBER);
                 f = TraktShoutsFragment
-                        .newInstanceEpisode(title, tvdbId, season, episode);
+                        .newInstanceEpisode(showTvdbId, season, episode);
             }
             getSupportFragmentManager().beginTransaction().add(android.R.id.content, f)
                     .commit();
@@ -86,7 +85,7 @@ public class TraktShoutsActivity extends BaseActivity {
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(R.string.comments);
-        actionBar.setSubtitle(getIntent().getExtras().getString(ShareItems.SHARESTRING));
+        actionBar.setSubtitle(getIntent().getExtras().getString(InitBundle.TITLE));
     }
 
     @Override

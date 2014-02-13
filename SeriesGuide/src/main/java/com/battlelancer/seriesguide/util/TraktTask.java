@@ -50,7 +50,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
         String TRAKTACTION = "traktaction";
 
-        String IMDB_ID = "imdbid";
+        String MOVIE_TMDB_ID = "tmdbid";
 
         String SHOW_TVDBID = "tvdbid";
 
@@ -160,9 +160,9 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     /**
      * Check into an episode. Optionally provide a checkin message.
      */
-    public TraktTask checkInMovie(String imdbId, String message) {
+    public TraktTask checkInMovie(int tmdbId, String message) {
         mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.CHECKIN_MOVIE.index);
-        mArgs.putString(InitBundle.IMDB_ID, imdbId);
+        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, tmdbId);
         mArgs.putString(InitBundle.MESSAGE, message);
         return this;
     }
@@ -312,16 +312,16 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     break;
                 }
                 case CHECKIN_MOVIE: {
-                    final String imdbId = mArgs.getString(InitBundle.IMDB_ID);
+                    final int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
                     final String message = mArgs.getString(InitBundle.MESSAGE);
 
                     if (TextUtils.isEmpty(message)) {
                         r = manager.movieService().checkin(new MovieService.MovieCheckin(
-                                imdbId, Utils.getVersion(mContext), ""
+                                tmdbId, Utils.getVersion(mContext), ""
                         ));
                     } else {
                         r = manager.movieService().checkin(new MovieService.MovieCheckin(
-                                imdbId, message, Utils.getVersion(mContext), ""
+                                tmdbId, message, Utils.getVersion(mContext), ""
                         ));
                     }
 

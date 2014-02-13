@@ -57,7 +57,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         /**
          * Title of show or movie. <b>Required.</b>
          */
-        String TITLE = "title";
+        String TVTAG_ID_OR_TITLE = "title";
 
         /**
          * Title of episode or movie. <b>Required.</b>
@@ -70,9 +70,9 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         String DEFAULT_MESSAGE = "message";
 
         /**
-         * Movie IMDb id. <b>Required for movies.</b>
+         * Movie TMDb id. <b>Required for movies.</b>
          */
-        String MOVIE_IMDB_ID = "movieimdbid";
+        String MOVIE_TMDB_ID = "movietmdbid";
 
         /**
          * Show TVDb id. <b>Required for episodes.</b>
@@ -330,7 +330,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
             return;
         }
 
-        final String itemTitle = getArguments().getString(InitBundle.TITLE);
+        final String itemTitle = getArguments().getString(InitBundle.TVTAG_ID_OR_TITLE);
         final String message = mEditTextMessage.getText().toString();
 
         // try check-ins (at least one is true)
