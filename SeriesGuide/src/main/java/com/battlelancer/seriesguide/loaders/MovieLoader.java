@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.MovieDetailsFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.services.MovieService;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -61,39 +62,46 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetailsFragment.MovieD
         // update local database
         updateLocalMovie(getContext(), details, mTmdbId);
 
-        if (details.traktMovie() != null && details.tmdbMovie() != null) {
-            return details;
-        }
-
-        // try falling back on movie info in local database
+        // fill in details from local database
         Cursor movieQuery = getContext().getContentResolver()
                 .query(Movies.buildMovieUri(mTmdbId), MovieQuery.PROJECTION, null, null, null);
         if (movieQuery == null || !movieQuery.moveToFirst() || movieQuery.getCount() < 1) {
             if (movieQuery != null) {
                 movieQuery.close();
             }
+            // ensure flags are all false on failure
+            // (assumption: movie is not in db, it has the truth, so can't be in any lists)
+            if (details.traktMovie() == null) {
+                details.traktMovie(new Movie());
+            }
+            details.traktMovie().watched = false;
+            details.traktMovie().inCollection = false;
+            details.traktMovie().inWatchlist = false;
             return details;
         }
 
         // map to objects
         if (details.traktMovie() == null) {
             details.traktMovie(new Movie());
+            details.traktMovie().released = new Date(
+                    movieQuery.getLong(MovieQuery.RELEASED_UTC_MS));
+            details.traktMovie().imdb_id = movieQuery.getString(MovieQuery.IMDB_ID);
         }
-        details.traktMovie().released = new Date(movieQuery.getLong(MovieQuery.RELEASED_UTC_MS));
+        // prefer local state for watched, collected and watchlist status
+        // assumption: local db has the truth
         details.traktMovie().watched = DBUtils.restoreBooleanFromInt(
                 movieQuery.getInt(MovieQuery.WATCHED));
         details.traktMovie().inCollection = DBUtils.restoreBooleanFromInt(
                 movieQuery.getInt(MovieQuery.IN_COLLECTION));
         details.traktMovie().inWatchlist = DBUtils.restoreBooleanFromInt(
                 movieQuery.getInt(MovieQuery.IN_WATCHLIST));
-        details.traktMovie().imdb_id = movieQuery.getString(MovieQuery.IMDB_ID);
 
         if (details.tmdbMovie() == null) {
             details.tmdbMovie(new com.uwetrottmann.tmdb.entities.Movie());
+            details.tmdbMovie().title = movieQuery.getString(MovieQuery.TITLE);
+            details.tmdbMovie().overview = movieQuery.getString(MovieQuery.OVERVIEW);
+            details.tmdbMovie().poster_path = movieQuery.getString(MovieQuery.POSTER);
         }
-        details.tmdbMovie().title = movieQuery.getString(MovieQuery.TITLE);
-        details.tmdbMovie().overview = movieQuery.getString(MovieQuery.OVERVIEW);
-        details.tmdbMovie().poster_path = movieQuery.getString(MovieQuery.POSTER);
 
         // clean up
         movieQuery.close();
@@ -102,7 +110,11 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetailsFragment.MovieD
     }
 
     private static Movie loadFromTrakt(Context context, int movieTmdbId) {
-        MovieService movieService = ServiceUtils.getTrakt(context).movieService();
+        Trakt trakt = ServiceUtils.getTraktWithAuth(context);
+        if (trakt == null) {
+            trakt = ServiceUtils.getTrakt(context);
+        }
+        MovieService movieService = trakt.movieService();
         try {
             return movieService.summary(movieTmdbId);
         } catch (RetrofitError e) {
