@@ -16,11 +16,6 @@
 
 package com.battlelancer.seriesguide.adapters;
 
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.settings.TmdbSettings;
-import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.battlelancer.seriesguide.R;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
@@ -30,7 +25,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TmdbSettings;
+import com.squareup.picasso.Picasso;
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -42,8 +40,6 @@ public class MoviesCursorAdapter extends CursorAdapter {
 
     private LayoutInflater mLayoutInflater;
 
-    private final ImageDownloader mImageDownloader;
-
     private final View.OnClickListener mContextMenuListener;
 
     private final String mImageBaseUrl;
@@ -54,7 +50,6 @@ public class MoviesCursorAdapter extends CursorAdapter {
         super(context, null, 0);
         mLayoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mImageDownloader = ImageDownloader.getInstance(context);
         mContextMenuListener = contextMenuListener;
 
         // figure out which size of posters to load based on screen density
@@ -100,7 +95,7 @@ public class MoviesCursorAdapter extends CursorAdapter {
         // poster
         String posterPath = cursor.getString(MoviesQuery.POSTER);
         if (!TextUtils.isEmpty(posterPath)) {
-            mImageDownloader.download(mImageBaseUrl + posterPath, holder.poster, false);
+            Picasso.with(context).load(mImageBaseUrl + posterPath).into(holder.poster);
         } else {
             // no image
             holder.poster.setImageDrawable(null);

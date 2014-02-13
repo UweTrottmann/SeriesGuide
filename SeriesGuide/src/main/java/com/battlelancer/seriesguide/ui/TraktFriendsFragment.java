@@ -37,7 +37,6 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
-import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
@@ -48,6 +47,7 @@ import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.entities.UserProfile;
 import com.jakewharton.trakt.enumerations.ActivityType;
 import com.jakewharton.trakt.services.UserService;
+import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import java.util.ArrayList;
@@ -230,13 +230,10 @@ public class TraktFriendsFragment extends SherlockFragment implements
 
     private static class TraktFriendsAdapter extends ArrayAdapter<UserProfile> {
 
-        private final ImageDownloader mImageDownloader;
-
         private final LayoutInflater mInflater;
 
         public TraktFriendsAdapter(Context context) {
             super(context, R.layout.friend);
-            mImageDownloader = ImageDownloader.getInstance(context);
             mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
@@ -274,7 +271,7 @@ public class TraktFriendsFragment extends SherlockFragment implements
             UserProfile friend = getItem(position);
 
             holder.name.setText(friend.username);
-            mImageDownloader.downloadAndStore(friend.avatar, holder.avatar);
+            Picasso.with(getContext()).load(friend.avatar).into(holder.avatar);
 
             holder.timestamp.setTextAppearance(getContext(), R.style.TextAppearance_Small_Dim);
 

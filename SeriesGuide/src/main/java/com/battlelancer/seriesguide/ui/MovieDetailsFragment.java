@@ -44,13 +44,13 @@ import com.battlelancer.seriesguide.loaders.MovieLoader;
 import com.battlelancer.seriesguide.loaders.MovieTrailersLoader;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
-import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.Movie;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb.entities.Credits;
@@ -86,8 +86,6 @@ public class MovieDetailsFragment extends SherlockFragment {
     private Credits mCredits;
 
     private Trailers mTrailers;
-
-    private ImageDownloader mImageDownloader;
 
     private String mImageBaseUrl;
 
@@ -157,7 +155,6 @@ public class MovieDetailsFragment extends SherlockFragment {
 
         setupViews();
 
-        mImageDownloader = ImageDownloader.getInstance(getActivity());
         mImageBaseUrl = TmdbSettings.getImageBaseUrl(getActivity())
                 + TmdbSettings.POSTER_SIZE_SPEC_W342;
 
@@ -391,8 +388,8 @@ public class MovieDetailsFragment extends SherlockFragment {
 
         // poster
         if (!TextUtils.isEmpty(tmdbMovie.poster_path)) {
-            mImageDownloader.download(mImageBaseUrl + tmdbMovie.poster_path, mMoviePosterBackground,
-                    false);
+            Picasso.with(getActivity()).load(mImageBaseUrl + tmdbMovie.poster_path)
+                    .into(mMoviePosterBackground);
         }
     }
 

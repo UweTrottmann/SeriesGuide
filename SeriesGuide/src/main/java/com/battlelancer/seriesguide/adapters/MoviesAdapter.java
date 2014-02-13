@@ -16,16 +16,7 @@
 
 package com.battlelancer.seriesguide.adapters;
 
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.settings.TmdbSettings;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.battlelancer.seriesguide.R;
-import com.uwetrottmann.tmdb.entities.Movie;
-
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +25,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TmdbSettings;
+import com.squareup.picasso.Picasso;
+import com.uwetrottmann.tmdb.entities.Movie;
 import java.text.DateFormat;
 import java.util.List;
 
@@ -47,8 +42,6 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
     private LayoutInflater mInflater;
 
-    private ImageDownloader mImageDownloader;
-
     private OnClickListener mOnClickListener;
 
     private String mImageBaseUrl;
@@ -58,7 +51,6 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
     public MoviesAdapter(Context context, OnClickListener listener) {
         super(context, LAYOUT);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mImageDownloader = ImageDownloader.getInstance(context);
         mOnClickListener = listener;
 
         // figure out which size of posters to load based on screen density
@@ -102,7 +94,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
             holder.date.setText("");
         }
         if (!TextUtils.isEmpty(movie.poster_path)) {
-            mImageDownloader.download(mImageBaseUrl + movie.poster_path, holder.poster, false);
+            Picasso.with(getContext()).load(mImageBaseUrl + movie.poster_path).into(holder.poster);
         } else {
             // clear image
             holder.poster.setImageDrawable(null);
