@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import android.text.TextUtils;
 import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.util.TraktTask;
@@ -81,5 +82,11 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
         View divider = layout.findViewById(R.id.dividerHorizontalCheckIn);
         divider.setVisibility(View.GONE);
         mButtonFixGetGlue.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected boolean setupCheckInGetGlue() {
+        // make sure there is a title we can use to check in
+        return !TextUtils.isEmpty(getArguments().getString(InitBundle.TVTAG_ID_OR_TITLE));
     }
 }
