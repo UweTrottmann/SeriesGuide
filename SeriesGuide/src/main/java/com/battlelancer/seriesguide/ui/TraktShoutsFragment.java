@@ -16,17 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.adapters.TraktCommentsAdapter;
-import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.loaders.TraktCommentsLoader;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
-import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.entities.Comment;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.battlelancer.seriesguide.R;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,6 +23,7 @@ import android.os.Handler;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,13 +33,23 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.List;
-
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.adapters.TraktCommentsAdapter;
+import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.loaders.TraktCommentsLoader;
+import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.Utils;
+import com.jakewharton.trakt.entities.Comment;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
+import java.util.List;
 
 /**
  * A custom {@link ListFragment} to display show or episode shouts and for posting own shouts.
@@ -60,14 +60,13 @@ public class TraktShoutsFragment extends SherlockFragment implements
     /**
      * Build a {@link TraktShoutsFragment} for shouts of an episode.
      */
-    public static TraktShoutsFragment newInstanceEpisode(String title, int tvdbId, int season,
-            int episode) {
+    public static TraktShoutsFragment newInstanceEpisode(int showTvdbId, int seasonNumber,
+            int episodeNumber) {
         TraktShoutsFragment f = new TraktShoutsFragment();
         Bundle args = new Bundle();
-        args.putString(ShareItems.SHARESTRING, title);
-        args.putInt(ShareItems.TVDBID, tvdbId);
-        args.putInt(ShareItems.SEASON, season);
-        args.putInt(ShareItems.EPISODE, episode);
+        args.putInt(InitBundle.SHOW_TVDB_ID, showTvdbId);
+        args.putInt(InitBundle.SEASON_NUMBER, seasonNumber);
+        args.putInt(InitBundle.EPISODE_NUMBER, episodeNumber);
         f.setArguments(args);
         return f;
     }
@@ -75,12 +74,10 @@ public class TraktShoutsFragment extends SherlockFragment implements
     /**
      * Build a {@link TraktShoutsFragment} for shouts of a show.
      */
-    public static TraktShoutsFragment newInstanceShow(String title, int tvdbId) {
+    public static TraktShoutsFragment newInstanceShow(int tvdbId) {
         TraktShoutsFragment f = new TraktShoutsFragment();
         Bundle args = new Bundle();
-        args.putString(ShareItems.SHARESTRING, title);
-        args.putInt(ShareItems.TVDBID, tvdbId);
-        args.putInt(ShareItems.EPISODE, 0);
+        args.putInt(InitBundle.SHOW_TVDB_ID, tvdbId);
         f.setArguments(args);
         return f;
     }
@@ -88,26 +85,31 @@ public class TraktShoutsFragment extends SherlockFragment implements
     /**
      * Build a {@link TraktShoutsFragment} for shouts of a movie.
      */
-    public static TraktShoutsFragment newInstanceMovie(String title, int tmdbId) {
+    public static TraktShoutsFragment newInstanceMovie(int tmdbId) {
         TraktShoutsFragment f = new TraktShoutsFragment();
         Bundle args = new Bundle();
-        args.putString(ShareItems.SHARESTRING, title);
-        args.putInt(ShareItems.TMDBID, tmdbId);
-        args.putInt(ShareItems.TVDBID, 0);
-        args.putInt(ShareItems.EPISODE, 0);
+        args.putInt(InitBundle.MOVIE_TMDB_ID, tmdbId);
         f.setArguments(args);
         return f;
+    }
+
+    public interface InitBundle {
+        String MOVIE_TMDB_ID = "tmdbid";
+        String SHOW_TVDB_ID = "tvdbid";
+        String EPISODE_NUMBER = "episode_number";
+        String SEASON_NUMBER = "season_number";
     }
 
     static final int INTERNAL_EMPTY_ID = 0x00ff0001;
 
     static final int INTERNAL_LIST_CONTAINER_ID = 0x00ff0003;
 
-    private static final String TRAKT_MOVIE_COMMENT_PAGE_URL = "http://trakt.tv/comment/movie/";
+    private static final String TRAKT_MOVIE_COMMENT_PAGE_URL = "https://trakt.tv/comment/movie/";
 
-    private static final String TRAKT_EPISODE_COMMENT_PAGE_URL = "http://trakt.tv/comment/episode/";
+    private static final String TRAKT_EPISODE_COMMENT_PAGE_URL
+            = "https://trakt.tv/comment/episode/";
 
-    private static final String TRAKT_SHOW_COMMENT_PAGE_URL = "http://trakt.tv/comment/show/";
+    private static final String TRAKT_SHOW_COMMENT_PAGE_URL = "https://trakt.tv/comment/show/";
 
     final private Handler mHandler = new Handler();
 
@@ -138,59 +140,68 @@ public class TraktShoutsFragment extends SherlockFragment implements
 
     CharSequence mEmptyText;
 
+    @InjectView(R.id.shoutbutton) ImageButton mButtonShout;
+
+    @InjectView(R.id.shouttext) EditText mEditTextShout;
+
+    @InjectView(R.id.checkIsSpoiler) CheckBox mCheckBoxIsSpoiler;
+
     boolean mListShown;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.shouts_fragment, container, false);
-        final EditText shouttext = (EditText) v.findViewById(R.id.shouttext);
-        final CheckBox checkIsSpoiler = (CheckBox) v.findViewById(R.id.checkIsSpoiler);
+        ButterKnife.inject(this, v);
 
-        v.findViewById(R.id.shoutbutton).setOnClickListener(new OnClickListener() {
+        mButtonShout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // prevent empty shouts
-                final String shout = shouttext.getText().toString();
-                if (shout.length() == 0) {
-                    return;
-                }
-
-                // disable the shout button
-                v.setEnabled(false);
-
-                final Bundle args = getArguments();
-                final boolean isSpoiler = checkIsSpoiler.isChecked();
-
-                // shout for a movie?
-                int tmdbId = args.getInt(ShareItems.TMDBID);
-                if (tmdbId != 0) {
-                    AndroidUtils.executeAsyncTask(
-                            new TraktTask(getActivity()).shoutMovie(tmdbId, shout, isSpoiler)
-                    );
-                    return;
-                }
-
-                // shout for an episode?
-                int tvdbid = args.getInt(ShareItems.TVDBID);
-                int episode = args.getInt(ShareItems.EPISODE);
-                if (episode != 0) {
-                    int season = args.getInt(ShareItems.SEASON);
-                    AndroidUtils.executeAsyncTask(
-                            new TraktTask(getActivity())
-                                    .shoutEpisode(tvdbid, season, episode, shout, isSpoiler)
-                    );
-                    return;
-                }
-
-                // shout for a show!
-                AndroidUtils.executeAsyncTask(
-                        new TraktTask(getActivity()).shoutShow(tvdbid, shout, isSpoiler)
-                );
+                shout();
             }
         });
 
         return v;
+    }
+
+    private void shout() {
+        // prevent empty shouts
+        String shout = mEditTextShout.getText().toString();
+        if (TextUtils.isEmpty(shout)) {
+            return;
+        }
+
+        // disable the shout button
+        mButtonShout.setEnabled(false);
+
+        Bundle args = getArguments();
+        boolean isSpoiler = mCheckBoxIsSpoiler.isChecked();
+
+        // shout for a movie?
+        int movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID);
+        if (movieTmdbId != 0) {
+            AndroidUtils.executeAsyncTask(
+                    new TraktTask(getActivity()).shoutMovie(movieTmdbId, shout, isSpoiler)
+            );
+            return;
+        }
+
+        // shout for an episode?
+        int showTvdbId = args.getInt(InitBundle.SHOW_TVDB_ID);
+        int episodeNumber = args.getInt(InitBundle.EPISODE_NUMBER);
+        if (episodeNumber != 0) {
+            int seasonNumber = args.getInt(InitBundle.SEASON_NUMBER);
+            AndroidUtils.executeAsyncTask(
+                    new TraktTask(getActivity())
+                            .shoutEpisode(showTvdbId, seasonNumber, episodeNumber, shout, isSpoiler)
+            );
+            return;
+        }
+
+        // shout for a show!
+        AndroidUtils.executeAsyncTask(
+                new TraktTask(getActivity()).shoutShow(showTvdbId, shout, isSpoiler)
+        );
     }
 
     /**
@@ -254,6 +265,7 @@ public class TraktShoutsFragment extends SherlockFragment implements
         mEmptyView = mProgressContainer = mListContainer = null;
         mStandardEmptyView = null;
         super.onDestroyView();
+        ButterKnife.reset(this);
     }
 
     /**
@@ -284,12 +296,12 @@ public class TraktShoutsFragment extends SherlockFragment implements
             }
         } else {
             // open shout or review page
-            int tvdbId = getArguments().getInt(ShareItems.TVDBID);
-            int episode = getArguments().getInt(ShareItems.EPISODE);
+            int showTvdbId = getArguments().getInt(InitBundle.SHOW_TVDB_ID);
+            int episodeNumber = getArguments().getInt(InitBundle.EPISODE_NUMBER);
             String typeUrl;
-            if (tvdbId == 0) {
+            if (showTvdbId == 0) {
                 typeUrl = TRAKT_MOVIE_COMMENT_PAGE_URL;
-            } else if (episode == 0) {
+            } else if (episodeNumber == 0) {
                 typeUrl = TRAKT_SHOW_COMMENT_PAGE_URL;
             } else {
                 typeUrl = TRAKT_EPISODE_COMMENT_PAGE_URL;
@@ -322,11 +334,14 @@ public class TraktShoutsFragment extends SherlockFragment implements
     }
 
     /**
-     * Control whether the list is being displayed. You can make it not displayed if you are waiting
-     * for the initial data to show in it. During this time an indeterminant progress indicator will
+     * Control whether the list is being displayed. You can make it not displayed if you are
+     * waiting
+     * for the initial data to show in it. During this time an indeterminant progress indicator
+     * will
      * be shown instead. <p> Applications do not normally need to use this themselves. The default
      * behavior of ListFragment is to start with the list not being shown, only showing it once an
-     * adapter is given with {@link #setListAdapter(ListAdapter)}. If the list at that point had not
+     * adapter is given with {@link #setListAdapter(ListAdapter)}. If the list at that point had
+     * not
      * been shown, when it does get shown it will be do without the user ever seeing the hidden
      * state.
      *
@@ -346,11 +361,14 @@ public class TraktShoutsFragment extends SherlockFragment implements
     }
 
     /**
-     * Control whether the list is being displayed. You can make it not displayed if you are waiting
-     * for the initial data to show in it. During this time an indeterminant progress indicator will
+     * Control whether the list is being displayed. You can make it not displayed if you are
+     * waiting
+     * for the initial data to show in it. During this time an indeterminant progress indicator
+     * will
      * be shown instead.
      *
-     * @param shown   If true, the list view is shown; if false, the progress indicator. The initial
+     * @param shown   If true, the list view is shown; if false, the progress indicator. The
+     *                initial
      *                value is true.
      * @param animate If true, an animation will be used to transition to the new state.
      */
@@ -449,19 +467,13 @@ public class TraktShoutsFragment extends SherlockFragment implements
             return;
         }
 
-        EditText shoutText = (EditText) getView().findViewById(R.id.shouttext);
-        View button = getView().findViewById(R.id.shoutbutton);
+        // reenable the shout button
+        mButtonShout.setEnabled(true);
 
-        if (shoutText != null && button != null) {
-            // reenable the shout button
-            button.setEnabled(true);
-
-            if (event.mWasSuccessful) {
-                // clear the text field and show recent shout
-                shoutText.setText("");
-                getLoaderManager().restartLoader(0, getArguments(), this);
-            }
+        if (event.mWasSuccessful) {
+            // clear the text field and show recent shout
+            mEditTextShout.setText("");
+            getLoaderManager().restartLoader(0, getArguments(), this);
         }
     }
-
 }

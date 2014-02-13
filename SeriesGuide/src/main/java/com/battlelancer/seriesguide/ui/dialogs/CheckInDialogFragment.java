@@ -52,7 +52,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
             if (episode.moveToFirst()) {
                 f = new CheckInDialogFragment();
                 Bundle args = new Bundle();
-                args.putString(InitBundle.TITLE, episode.getString(CheckInQuery.SHOW_TITLE));
+                args.putString(InitBundle.TVTAG_ID_OR_TITLE, episode.getString(CheckInQuery.SHOW_TITLE));
                 args.putInt(InitBundle.SHOW_TVDB_ID, episode.getInt(CheckInQuery.SHOW_TVDB_ID));
                 args.putInt(InitBundle.SEASON, episode.getInt(CheckInQuery.SEASON));
                 args.putInt(InitBundle.EPISODE, episode.getInt(CheckInQuery.NUMBER));

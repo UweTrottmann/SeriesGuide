@@ -59,6 +59,23 @@ public class DBUtils {
 
     public static final int SMALL_BATCH_SIZE = 50;
 
+    /**
+     * Maps a {@link java.lang.Boolean} object to an int value to store in the database.
+     */
+    public static int convertBooleanToInt(Boolean value) {
+        if (value == null) {
+            return 0;
+        }
+        return value ? 1 : 0;
+    }
+
+    /**
+     * Maps an integer value stored in the database to a boolean.
+     */
+    public static boolean restoreBooleanFromInt(int value) {
+        return value == 1;
+    }
+
     interface UnwatchedQuery {
 
         static final String[] PROJECTION = new String[]{

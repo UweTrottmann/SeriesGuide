@@ -19,8 +19,10 @@
         android:layout_gravity="center" />
 
     <ScrollView
+        android:id="@+id/contentContainerMovie"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingTop="?actionBarSize">
 
         <RelativeLayout
             style="@style/DefaultPadding.Page"
@@ -54,15 +56,56 @@
                 android:textIsSelectable="true"
                 tools:text="20 Oct 2013" />
 
-            <Button
-                android:id="@+id/buttonMovieCheckIn"
+            <LinearLayout
+                android:id="@+id/containerMovieButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="?attr/drawableCardBackground"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/textViewMovieDate"
                 android:layout_marginBottom="@dimen/large_padding"
-                android:text="@string/checkin"
-                android:visibility="gone" />
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/buttonMovieCheckIn"
+                    style="@style/Widget.SeriesGuide.Button.Borderless.Small"
+                    android:layout_width="@dimen/buttonbar_button_width"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/checkin"
+                    android:paddingLeft="@dimen/default_padding"
+                    android:paddingRight="@dimen/default_padding"
+                    android:src="?attr/drawableCheckin" />
+
+                <ImageButton
+                    android:id="@+id/buttonMovieWatched"
+                    style="@style/Widget.SeriesGuide.Button.Borderless"
+                    android:layout_width="@dimen/buttonbar_button_width"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/togglewatched"
+                    android:paddingLeft="@dimen/default_padding"
+                    android:paddingRight="@dimen/default_padding"
+                    android:src="?attr/drawableWatch" />
+
+                <ImageButton
+                    android:id="@+id/buttonMovieWatchlisted"
+                    style="@style/Widget.SeriesGuide.Button.Borderless"
+                    android:layout_width="@dimen/buttonbar_button_width"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/watchlist_add"
+                    android:paddingLeft="@dimen/default_padding"
+                    android:paddingRight="@dimen/default_padding"
+                    android:src="?attr/drawableList" />
+
+                <ImageButton
+                    android:id="@+id/buttonMovieCollected"
+                    style="@style/Widget.SeriesGuide.Button.Borderless"
+                    android:layout_width="@dimen/buttonbar_button_width"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/action_collection_add"
+                    android:paddingLeft="@dimen/default_padding"
+                    android:paddingRight="@dimen/default_padding"
+                    android:src="?attr/drawableCollect" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textViewMovieDescription"
@@ -70,11 +113,53 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/buttonMovieCheckIn"
+                android:layout_below="@+id/containerMovieButtons"
                 android:maxWidth="400dp"
                 android:textAppearance="@style/TextAppearance.Light"
                 android:textIsSelectable="true"
                 tools:text="Description for a super awesome movie..." />
+
+            <TextView
+                android:id="@+id/labelCast"
+                style="@style/DefaultPadding.Blocks.WithTopMargin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewMovieDescription"
+                android:text="@string/movie_cast"
+                android:textAppearance="@style/TextAppearance.Small.Label" />
+
+            <TextView
+                android:id="@+id/textViewMovieCast"
+                style="@style/DefaultPadding.Blocks.WithBottomMargin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/labelCast"
+                android:maxWidth="400dp"
+                android:textAppearance="@style/TextAppearance.Light"
+                android:textIsSelectable="true"
+                tools:text="Edward Norton (The Narrator)\nBrad Pitt (Tyler Durden)" />
+
+            <TextView
+                android:id="@+id/labelCrew"
+                style="@style/DefaultPadding.Blocks.WithTopMargin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewMovieCast"
+                android:text="@string/movie_crew"
+                android:textAppearance="@style/TextAppearance.Small.Label" />
+
+            <TextView
+                android:id="@+id/textViewMovieCrew"
+                style="@style/DefaultPadding.Blocks.WithBottomMargin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/labelCrew"
+                android:maxWidth="400dp"
+                android:textAppearance="@style/TextAppearance.Light"
+                android:textIsSelectable="true"
+                tools:text="Jim Uhls (Author)\nRoss Grayson Bell (Producer)" />
 
             <include
                 android:id="@+id/dividerHorizontalMovieDetails"
@@ -83,11 +168,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/textViewMovieDescription"
                 android:layout_alignRight="@+id/textViewMovieDescription"
-                android:layout_below="@+id/textViewMovieDescription"
-                android:visibility="gone" />
+                android:layout_below="@+id/textViewMovieCrew" />
 
             <LinearLayout
-                android:id="@+id/buttonbar"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_alignParentLeft="true"
@@ -104,8 +187,7 @@
                     android:paddingLeft="@dimen/default_padding"
                     android:paddingRight="@dimen/default_padding"
                     android:text="@string/comments"
-                    android:textAllCaps="true"
-                    android:visibility="gone" />
+                    android:textAllCaps="true" />
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

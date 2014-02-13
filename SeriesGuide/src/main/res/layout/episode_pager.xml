@@ -37,16 +37,6 @@
 
     </FrameLayout>
 
-    <ListView
-        android:id="@+id/left_drawer"
-        android:layout_width="@dimen/slidingmenu_width"
-        android:layout_height="match_parent"
-        android:layout_gravity="left"
-        android:background="?attr/colorNavDrawerBackground"
-        android:choiceMode="singleChoice"
-        android:clipToPadding="@bool/gridClipToPadding"
-        android:fitsSystemWindows="@bool/sgFitSystemWindows"
-        android:listSelector="?attr/custom_list_selector"
-        android:paddingTop="?actionBarSize" />
+    <include layout="@layout/drawer_left_fullscreen" />
 
 </android.support.v4.widget.DrawerLayout>

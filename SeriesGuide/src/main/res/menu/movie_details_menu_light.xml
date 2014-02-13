@@ -18,9 +18,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/menu_open_imdb"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/imdb"/>
+        android:id="@+id/menu_movie_share"
+        android:icon="@drawable/ic_action_share_inverse"
+        android:showAsAction="ifRoom"
+        android:title="@string/share_movie" />
     <item
         android:id="@+id/menu_open_youtube"
         android:icon="@drawable/ic_action_youtube_inverse"
@@ -30,6 +31,10 @@
         android:id="@+id/menu_open_google_play"
         android:showAsAction="never"
         android:title="@string/googleplay"/>
+    <item
+        android:id="@+id/menu_open_imdb"
+        android:showAsAction="never"
+        android:title="@string/imdb"/>
     <item
         android:id="@+id/menu_open_trakt"
         android:showAsAction="never"

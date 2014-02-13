@@ -71,6 +71,9 @@
     <string name="movies_collection_empty">You have not added movies to your collection.</string>
     <string name="movies_watchlist_empty">You have not added movies to your watchlist.</string>
     <string name="trailer">Trailer</string>
+    <string name="movie_cast">Cast</string>
+    <string name="movie_crew">Crew</string>
+    <string name="movie_person_in_role">%1$s (%2$s)</string>
 
     <!-- Statistics -->
     <string name="shows_with_next">%s with next episodes</string>

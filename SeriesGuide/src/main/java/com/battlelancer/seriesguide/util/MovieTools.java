@@ -36,6 +36,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
+import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -47,6 +48,14 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import static com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult;
 
 public class MovieTools {
+
+    public static class MovieChangedEvent {
+        public int movieTmdbId;
+
+        public MovieChangedEvent(int movieTmdbId) {
+            this.movieTmdbId = movieTmdbId;
+        }
+    }
 
     public static void addToCollection(Context context, int movieTmdbId) {
         if (TraktCredentials.get(context).hasCredentials()) {
@@ -155,8 +164,8 @@ public class MovieTools {
     private static ContentValues buildMovieContentValues(Movie movie) {
         ContentValues values = buildBasicMovieContentValues(movie);
 
-        values.put(Movies.IN_COLLECTION, convertBooleanToInt(movie.inCollection));
-        values.put(Movies.IN_WATCHLIST, convertBooleanToInt(movie.inWatchlist));
+        values.put(Movies.IN_COLLECTION, DBUtils.convertBooleanToInt(movie.inCollection));
+        values.put(Movies.IN_WATCHLIST, DBUtils.convertBooleanToInt(movie.inWatchlist));
 
         return values;
     }
@@ -167,25 +176,21 @@ public class MovieTools {
     private static ContentValues buildBasicMovieContentValues(Movie movie) {
         ContentValues values = new ContentValues();
 
+        values.put(Movies.IMDB_ID, movie.imdb_id);
         values.put(Movies.TMDB_ID, movie.tmdbId);
         values.put(Movies.TITLE, movie.title);
         values.put(Movies.OVERVIEW, movie.overview);
         values.put(Movies.RELEASED_UTC_MS, movie.released.getTime());
-        values.put(Movies.WATCHED, convertBooleanToInt(movie.watched));
+        values.put(Movies.WATCHED, DBUtils.convertBooleanToInt(movie.watched));
         values.put(Movies.POSTER, movie.images == null ? "" : movie.images.poster);
 
         return values;
     }
 
-    private static int convertBooleanToInt(Boolean value) {
-        if (value == null) {
-            return 0;
-        }
-        return value ? 1 : 0;
-    }
-
     private static void deleteMovie(Context context, int movieTmdbId) {
         context.getContentResolver().delete(Movies.buildMovieUri(movieTmdbId), null, null);
+
+        EventBus.getDefault().post(new MovieChangedEvent(movieTmdbId));
     }
 
     /**
@@ -197,7 +202,7 @@ public class MovieTools {
         HashSet<Integer> localMoviesIds = new HashSet<>();
 
         Cursor movies = context.getContentResolver().query(Movies.CONTENT_URI,
-                new String[]{Movies._ID, Movies.TMDB_ID}, null, null, null);
+                new String[] { Movies._ID, Movies.TMDB_ID }, null, null, null);
         if (movies == null) {
             return null;
         }
@@ -219,7 +224,7 @@ public class MovieTools {
      */
     private static Boolean isMovieInList(Context context, int movieTmdbId, String listColumn) {
         Cursor movie = context.getContentResolver().query(Movies.buildMovieUri(movieTmdbId),
-                new String[]{listColumn}, null, null, null);
+                new String[] { listColumn }, null, null, null);
         if (movie == null || !movie.moveToFirst()) {
             return null;
         }
@@ -232,8 +237,8 @@ public class MovieTools {
     }
 
     private static Boolean isMovieExists(Context context, int movieTmdbId) {
-        Cursor movie = context.getContentResolver().query(Movies.CONTENT_URI, new String[]{
-                Movies._ID}, Movies.TMDB_ID + "=" + movieTmdbId, null, null);
+        Cursor movie = context.getContentResolver().query(Movies.CONTENT_URI, new String[] {
+                Movies._ID }, Movies.TMDB_ID + "=" + movieTmdbId, null, null);
         if (movie == null) {
             return null;
         }
@@ -250,9 +255,11 @@ public class MovieTools {
         ContentValues values = new ContentValues();
         values.put(column, value);
         context.getContentResolver().update(Movies.buildMovieUri(movieTmdbId), values, null, null);
+
+        EventBus.getDefault().post(new MovieChangedEvent(movieTmdbId));
     }
 
-    private static class AddMovieTask extends AsyncTask<Integer, Void, Void> {
+    private static class AddMovieTask extends AsyncTask<Integer, Void, Integer> {
 
         private final Context mContext;
 
@@ -269,7 +276,7 @@ public class MovieTools {
         }
 
         @Override
-        protected Void doInBackground(Integer... params) {
+        protected Integer doInBackground(Integer... params) {
             int movieTmdbId = params[0];
 
             // prepare services
@@ -278,7 +285,7 @@ public class MovieTools {
                 // fall back
                 trakt = ServiceUtils.getTrakt(mContext);
             }
-            Tmdb tmdb = ServiceUtils.getTmdbServiceManager(mContext);
+            Tmdb tmdb = ServiceUtils.getTmdb(mContext);
 
             // get movie info
             Movie movie = Download.getMovie(trakt.movieService(), tmdb.moviesService(),
@@ -290,15 +297,19 @@ public class MovieTools {
             // store in database, overwrite in_collection and in_watchlist
             ContentValues values = buildBasicMovieContentValues(movie);
             values.put(Movies.IN_COLLECTION, mAddTo == AddTo.COLLECTION ?
-                    1 : convertBooleanToInt(movie.inCollection));
+                    1 : DBUtils.convertBooleanToInt(movie.inCollection));
             values.put(Movies.IN_WATCHLIST, mAddTo == AddTo.WATCHLIST ?
-                    1 : convertBooleanToInt(movie.inWatchlist));
+                    1 : DBUtils.convertBooleanToInt(movie.inWatchlist));
 
             mContext.getContentResolver().insert(Movies.CONTENT_URI, values);
 
-            return null;
+            return movieTmdbId;
         }
 
+        @Override
+        protected void onPostExecute(Integer movieTmdbId) {
+            EventBus.getDefault().post(new MovieChangedEvent(movieTmdbId));
+        }
     }
 
     public static class Download {
@@ -398,7 +409,7 @@ public class MovieTools {
         private static UpdateResult addMovies(Context context, Trakt trakt,
                 Integer... movieTmdbIds) {
             MovieService movieServiceTrakt = trakt.movieService();
-            MoviesService moviesServiceTmdb = ServiceUtils.getTmdbServiceManager(context)
+            MoviesService moviesServiceTmdb = ServiceUtils.getTmdb(context)
                     .moviesService();
             String languageCode = DisplaySettings.getContentLanguage(context);
             List<Movie> movies = new LinkedList<>();
@@ -430,7 +441,7 @@ public class MovieTools {
          * Download movie data from trakt and TMDb. Always returns with a TMDb poster path, if
          * available, a local movie title and overview.
          */
-        private static Movie getMovie(MovieService movieServiceTrakt,
+        public static Movie getMovie(MovieService movieServiceTrakt,
                 MoviesService moviesServiceTmdb, String languageCode, int movieTmdbId) {
             try {
                 // get summary from trakt, includes watched, in_watchlist and in_collection
@@ -482,7 +493,6 @@ public class MovieTools {
                 batch.add(op);
             }
         }
-
     }
 
     private static class Upload {
@@ -503,8 +513,8 @@ public class MovieTools {
             }
 
             Cursor localMovies = context.getContentResolver().query(Movies.CONTENT_URI,
-                    new String[]{Movies._ID, Movies.TMDB_ID, Movies.IN_COLLECTION,
-                            Movies.IN_WATCHLIST}, null, null, null);
+                    new String[] { Movies._ID, Movies.TMDB_ID, Movies.IN_COLLECTION,
+                            Movies.IN_WATCHLIST }, null, null, null);
             if (localMovies == null) {
                 return UpdateResult.INCOMPLETE;
             }
@@ -552,7 +562,5 @@ public class MovieTools {
 
             return UpdateResult.SUCCESS;
         }
-
     }
-
 }
