@@ -43,7 +43,6 @@ import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.MovieLoader;
 import com.battlelancer.seriesguide.loaders.MovieTrailersLoader;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.MovieTools;
@@ -84,6 +83,8 @@ public class MovieDetailsFragment extends SherlockFragment {
     private MovieDetails mMovieDetails = new MovieDetails();
 
     private Credits mCredits;
+
+    private Trailers mTrailers;
 
     private ImageDownloader mImageDownloader;
 
@@ -215,7 +216,8 @@ public class MovieDetailsFragment extends SherlockFragment {
             // content view
             boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
 
-            boolean isEnableShare = mMovieDetails.traktOrLocalMovie() != null;
+            boolean isEnableShare = mMovieDetails.tmdbMovie() != null && !TextUtils.isEmpty(
+                    mMovieDetails.tmdbMovie().title);
             MenuItem shareItem = menu.findItem(R.id.menu_movie_share);
             shareItem.setEnabled(isEnableShare);
             shareItem.setVisible(isEnableShare && !isDrawerOpen);
@@ -224,14 +226,13 @@ public class MovieDetailsFragment extends SherlockFragment {
             playStoreItem.setEnabled(isEnableShare);
             playStoreItem.setVisible(isEnableShare);
 
-            boolean isEnableImdb = mMovieDetails.traktOrLocalMovie() != null
-                    && !TextUtils.isEmpty(mMovieDetails.traktOrLocalMovie().imdb_id);
+            boolean isEnableImdb = mMovieDetails.traktMovie() != null
+                    && !TextUtils.isEmpty(mMovieDetails.traktMovie().imdb_id);
             MenuItem imdbItem = menu.findItem(R.id.menu_open_imdb);
             imdbItem.setEnabled(isEnableImdb);
             imdbItem.setVisible(isEnableImdb);
 
-            boolean isEnableYoutube = mMovieDetails.trailers() != null &&
-                    mMovieDetails.trailers().youtube.size() > 0;
+            boolean isEnableYoutube = mTrailers != null && mTrailers.youtube.size() > 0;
             MenuItem youtubeItem = menu.findItem(R.id.menu_open_youtube);
             youtubeItem.setEnabled(isEnableYoutube);
             youtubeItem.setVisible(isEnableYoutube && !isDrawerOpen);
@@ -244,21 +245,21 @@ public class MovieDetailsFragment extends SherlockFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_movie_share) {
-            ShareUtils.shareMovie(getActivity(), mTmdbId, mMovieDetails.traktOrLocalMovie().title);
+            ShareUtils.shareMovie(getActivity(), mTmdbId, mMovieDetails.tmdbMovie().title);
             fireTrackerEvent("Share");
             return true;
         }
         if (itemId == R.id.menu_open_imdb) {
-            ServiceUtils.openImdb(mMovieDetails.traktOrLocalMovie().imdb_id, TAG, getActivity());
+            ServiceUtils.openImdb(mMovieDetails.traktMovie().imdb_id, TAG, getActivity());
             return true;
         }
         if (itemId == R.id.menu_open_youtube) {
-            ServiceUtils.openYoutube(mMovieDetails.trailers().youtube.get(0).source, TAG,
+            ServiceUtils.openYoutube(mTrailers.youtube.get(0).source, TAG,
                     getActivity());
             return true;
         }
         if (itemId == R.id.menu_open_google_play) {
-            ServiceUtils.searchGooglePlay(mMovieDetails.traktOrLocalMovie().title, TAG,
+            ServiceUtils.searchGooglePlay(mMovieDetails.tmdbMovie().title, TAG,
                     getActivity());
             return true;
         }
@@ -270,14 +271,20 @@ public class MovieDetailsFragment extends SherlockFragment {
     }
 
     private void populateMovieViews() {
-        Movie movie = mMovieDetails.traktOrLocalMovie();
-        mMovieTitle.setText(movie.title);
-        mMovieDescription.setText(movie.overview);
+        /**
+         * Take title, overview and poster from TMDb as they are localized.
+         * Everything else from trakt.
+         */
+        Movie traktMovie = mMovieDetails.traktMovie();
+        com.uwetrottmann.tmdb.entities.Movie tmdbMovie = mMovieDetails.tmdbMovie();
+
+        mMovieTitle.setText(tmdbMovie.title);
+        mMovieDescription.setText(tmdbMovie.overview);
 
         // release date
-        if (movie.released != null && movie.released.getTime() != 0) {
+        if (traktMovie.released != null && traktMovie.released.getTime() != 0) {
             mMovieReleaseDate.setText(
-                    DateUtils.formatDateTime(getActivity(), movie.released.getTime(),
+                    DateUtils.formatDateTime(getActivity(), traktMovie.released.getTime(),
                             DateUtils.FORMAT_SHOW_DATE));
         } else {
             mMovieReleaseDate.setText("");
@@ -285,14 +292,14 @@ public class MovieDetailsFragment extends SherlockFragment {
 
         // check-in button
         CheatSheet.setup(mCheckinButton);
-        // TODO use original title for tvtag
-        final String title = movie.title;
+        final String title = tmdbMovie.title;
+        final String originalTitle = tmdbMovie.original_title;
         mCheckinButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // display a check-in dialog
                 MovieCheckInDialogFragment f = MovieCheckInDialogFragment
-                        .newInstance(mTmdbId, title, title);
+                        .newInstance(mTmdbId, title, originalTitle);
                 f.show(getFragmentManager(), "checkin-dialog");
                 fireTrackerEvent("Check-In");
             }
@@ -311,7 +318,7 @@ public class MovieDetailsFragment extends SherlockFragment {
         //}
 
         // collected button
-        final boolean isInCollection = movie.inCollection != null && movie.inCollection;
+        final boolean isInCollection = traktMovie.inCollection != null && traktMovie.inCollection;
         mCollectedButton.setImageResource(isInCollection
                 ? R.drawable.ic_collected
                 : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
@@ -331,7 +338,7 @@ public class MovieDetailsFragment extends SherlockFragment {
         });
 
         // watchlist button
-        final boolean isInWatchlist = movie.inWatchlist != null && movie.inWatchlist;
+        final boolean isInWatchlist = traktMovie.inWatchlist != null && traktMovie.inWatchlist;
         mWatchlistedButton.setImageResource(isInWatchlist
                 ? R.drawable.ic_action_list_highlight
                 : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
@@ -361,15 +368,15 @@ public class MovieDetailsFragment extends SherlockFragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
-                i.putExtras(TraktShoutsActivity.createInitBundleMovie(title, mTmdbId));
+                i.putExtras(TraktShoutsActivity.createInitBundleMovie(originalTitle, mTmdbId));
                 startActivity(i);
                 fireTrackerEvent("Comments");
             }
         });
 
         // poster
-        if (movie.images != null && !TextUtils.isEmpty(movie.images.poster)) {
-            mImageDownloader.download(mImageBaseUrl + movie.images.poster, mMoviePosterBackground,
+        if (!TextUtils.isEmpty(tmdbMovie.poster_path)) {
+            mImageDownloader.download(mImageBaseUrl + tmdbMovie.poster_path, mMoviePosterBackground,
                     false);
         }
     }
@@ -405,20 +412,19 @@ public class MovieDetailsFragment extends SherlockFragment {
         Utils.trackAction(getActivity(), TAG, label);
     }
 
-    private LoaderManager.LoaderCallbacks<Movie> mMovieLoaderCallbacks
-            = new LoaderManager.LoaderCallbacks<Movie>() {
+    private LoaderManager.LoaderCallbacks<MovieDetails> mMovieLoaderCallbacks
+            = new LoaderManager.LoaderCallbacks<MovieDetails>() {
         @Override
-        public Loader<com.jakewharton.trakt.entities.Movie> onCreateLoader(int loaderId,
-                Bundle args) {
+        public Loader<MovieDetails> onCreateLoader(int loaderId, Bundle args) {
             return new MovieLoader(getActivity(), args.getInt(InitBundle.TMDB_ID));
         }
 
         @Override
-        public void onLoadFinished(Loader<Movie> movieLoader, Movie movie) {
-            mMovieDetails.traktMovie(movie);
+        public void onLoadFinished(Loader<MovieDetails> movieLoader, MovieDetails movieDetails) {
+            mMovieDetails = movieDetails;
             mProgressBar.setVisibility(View.GONE);
 
-            if (movie != null) {
+            if (movieDetails.traktMovie() != null && movieDetails.tmdbMovie() != null) {
                 populateMovieViews();
                 getSherlockActivity().supportInvalidateOptionsMenu();
             } else {
@@ -427,7 +433,7 @@ public class MovieDetailsFragment extends SherlockFragment {
         }
 
         @Override
-        public void onLoaderReset(Loader<Movie> movieLoader) {
+        public void onLoaderReset(Loader<MovieDetails> movieLoader) {
             // nothing to do
         }
     };
@@ -442,7 +448,7 @@ public class MovieDetailsFragment extends SherlockFragment {
         @Override
         public void onLoadFinished(Loader<Trailers> trailersLoader, Trailers trailers) {
             if (trailers != null) {
-                mMovieDetails.trailers(trailers);
+                mTrailers = trailers;
                 getSherlockActivity().supportInvalidateOptionsMenu();
             }
         }
@@ -480,11 +486,7 @@ public class MovieDetailsFragment extends SherlockFragment {
 
         private com.uwetrottmann.tmdb.entities.Movie mTmdbMovie;
 
-        private Trailers mTrailers;
-
-        private Credits mCredits;
-
-        public Movie traktOrLocalMovie() {
+        public Movie traktMovie() {
             return mTraktMovie;
         }
 
@@ -499,24 +501,6 @@ public class MovieDetailsFragment extends SherlockFragment {
 
         public MovieDetails tmdbMovie(com.uwetrottmann.tmdb.entities.Movie movie) {
             mTmdbMovie = movie;
-            return this;
-        }
-
-        public Trailers trailers() {
-            return mTrailers;
-        }
-
-        public MovieDetails trailers(Trailers trailers) {
-            mTrailers = trailers;
-            return this;
-        }
-
-        public Credits credits() {
-            return mCredits;
-        }
-
-        public MovieDetails credits(Credits credits) {
-            mCredits = credits;
             return this;
         }
     }

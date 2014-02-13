@@ -16,27 +16,30 @@
 
 package com.battlelancer.seriesguide.loaders;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.text.TextUtils;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.ui.MovieDetailsFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.jakewharton.trakt.Trakt;
-import com.jakewharton.trakt.entities.Images;
 import com.jakewharton.trakt.entities.Movie;
+import com.jakewharton.trakt.services.MovieService;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.tmdb.Tmdb;
+import com.uwetrottmann.tmdb.services.MoviesService;
 import java.util.Date;
+import retrofit.RetrofitError;
+import timber.log.Timber;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 /**
- * Tries to load movie details from the local database, when failing connects to trakt and TMDb to
- * get them.
+ * Tries to load current movie details from trakt and TMDb, if failing tries to fall back to local
+ * database copy.
  */
-public class MovieLoader extends GenericSimpleLoader<Movie> {
+public class MovieLoader extends GenericSimpleLoader<MovieDetailsFragment.MovieDetails> {
 
     private int mTmdbId;
 
@@ -46,53 +49,103 @@ public class MovieLoader extends GenericSimpleLoader<Movie> {
     }
 
     @Override
-    public Movie loadInBackground() {
-        // movie in local database?
+    public MovieDetailsFragment.MovieDetails loadInBackground() {
+        MovieDetailsFragment.MovieDetails details = new MovieDetailsFragment.MovieDetails();
+
+        // try loading from trakt and tmdb
+        if (AndroidUtils.isNetworkConnected(getContext())) {
+            details.traktMovie(loadFromTrakt(getContext(), mTmdbId));
+            details.tmdbMovie(loadFromTmdb(getContext(), mTmdbId));
+        }
+
+        // update local database
+        updateLocalMovie(getContext(), details, mTmdbId);
+
+        if (details.traktMovie() != null && details.tmdbMovie() != null) {
+            return details;
+        }
+
+        // try falling back on movie info in local database
         Cursor movieQuery = getContext().getContentResolver()
                 .query(Movies.buildMovieUri(mTmdbId), MovieQuery.PROJECTION, null, null, null);
         if (movieQuery == null || !movieQuery.moveToFirst() || movieQuery.getCount() < 1) {
             if (movieQuery != null) {
                 movieQuery.close();
             }
-            // load from network instead
-            return loadFromNetwork();
+            return details;
         }
 
-        // map to movie object
-        Movie movie = new Movie();
-        movie.tmdbId = mTmdbId;
-        movie.title = movieQuery.getString(MovieQuery.TITLE);
-        movie.overview = movieQuery.getString(MovieQuery.OVERVIEW);
-        movie.released = new Date(movieQuery.getLong(MovieQuery.RELEASED_UTC_MS));
-        movie.images = new Images();
-        movie.images.poster = movieQuery.getString(MovieQuery.POSTER);
-        movie.watched = DBUtils.restoreBooleanFromInt(movieQuery.getInt(MovieQuery.WATCHED));
-        movie.inCollection = DBUtils.restoreBooleanFromInt(
+        // map to objects
+        if (details.traktMovie() == null) {
+            details.traktMovie(new Movie());
+        }
+        details.traktMovie().released = new Date(movieQuery.getLong(MovieQuery.RELEASED_UTC_MS));
+        details.traktMovie().watched = DBUtils.restoreBooleanFromInt(
+                movieQuery.getInt(MovieQuery.WATCHED));
+        details.traktMovie().inCollection = DBUtils.restoreBooleanFromInt(
                 movieQuery.getInt(MovieQuery.IN_COLLECTION));
-        movie.inWatchlist = DBUtils.restoreBooleanFromInt(
+        details.traktMovie().inWatchlist = DBUtils.restoreBooleanFromInt(
                 movieQuery.getInt(MovieQuery.IN_WATCHLIST));
+        details.traktMovie().imdb_id = movieQuery.getString(MovieQuery.IMDB_ID);
+
+        if (details.tmdbMovie() == null) {
+            details.tmdbMovie(new com.uwetrottmann.tmdb.entities.Movie());
+        }
+        details.tmdbMovie().title = movieQuery.getString(MovieQuery.TITLE);
+        details.tmdbMovie().overview = movieQuery.getString(MovieQuery.OVERVIEW);
+        details.tmdbMovie().poster_path = movieQuery.getString(MovieQuery.POSTER);
 
         // clean up
         movieQuery.close();
 
-        return movie;
+        return details;
     }
 
-    private Movie loadFromNetwork() {
-        if (!AndroidUtils.isNetworkConnected(getContext())) {
+    private static Movie loadFromTrakt(Context context, int movieTmdbId) {
+        MovieService movieService = ServiceUtils.getTrakt(context).movieService();
+        try {
+            return movieService.summary(movieTmdbId);
+        } catch (RetrofitError e) {
+            Timber.e(e, "Loading trakt movie summary failed");
             return null;
         }
+    }
 
-        String languageCode = DisplaySettings.getContentLanguage(getContext());
-        Tmdb tmdb = ServiceUtils.getTmdb(getContext());
-        Trakt trakt = ServiceUtils.getTraktWithAuth(getContext());
-        if (trakt == null) {
-            // fall back to unauthenticated version
-            trakt = ServiceUtils.getTrakt(getContext());
+    private static com.uwetrottmann.tmdb.entities.Movie loadFromTmdb(Context context,
+            int movieTmdbId) {
+        MoviesService moviesService = ServiceUtils.getTmdb(context).moviesService();
+        String languageCode = DisplaySettings.getContentLanguage(context);
+
+        try {
+            com.uwetrottmann.tmdb.entities.Movie movie = moviesService.summary(movieTmdbId,
+                    languageCode);
+            // check if there actually is local content, fall back to English
+            if (TextUtils.isEmpty(movie.title) || TextUtils.isEmpty(movie.overview)) {
+                movie = moviesService.summary(movieTmdbId);
+            }
+            return movie;
+        } catch (RetrofitError e) {
+            Timber.e(e, "Loading TMDb movie summary failed");
+            return null;
+        }
+    }
+
+    private static void updateLocalMovie(Context context,
+            MovieDetailsFragment.MovieDetails details, int tmdbId) {
+        ContentValues values = new ContentValues();
+
+        if (details.traktMovie() != null) {
+            values.put(Movies.RELEASED_UTC_MS, details.traktMovie().released.getTime());
+            values.put(Movies.IMDB_ID, details.traktMovie().imdb_id);
+        }
+        if (details.tmdbMovie() != null) {
+            values.put(Movies.TITLE, details.tmdbMovie().title);
+            values.put(Movies.OVERVIEW, details.tmdbMovie().overview);
+            values.put(Movies.POSTER, details.tmdbMovie().poster_path);
         }
 
-        return MovieTools.Download.getMovie(trakt.movieService(), tmdb.moviesService(),
-                languageCode, mTmdbId);
+        // if movie does not exist in database, will do nothing
+        context.getContentResolver().update(Movies.buildMovieUri(tmdbId), values, null, null);
     }
 
     private interface MovieQuery {
@@ -104,7 +157,8 @@ public class MovieLoader extends GenericSimpleLoader<Movie> {
                 Movies.POSTER,
                 Movies.WATCHED,
                 Movies.IN_COLLECTION,
-                Movies.IN_WATCHLIST
+                Movies.IN_WATCHLIST,
+                Movies.IMDB_ID
         };
 
         int TITLE = 0;
@@ -114,5 +168,6 @@ public class MovieLoader extends GenericSimpleLoader<Movie> {
         int WATCHED = 4;
         int IN_COLLECTION = 5;
         int IN_WATCHLIST = 6;
+        int IMDB_ID = 7;
     }
 }
