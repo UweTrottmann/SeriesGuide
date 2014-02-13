@@ -293,7 +293,9 @@ public class MovieDetailsFragment extends SherlockFragment {
         // check-in button
         CheatSheet.setup(mCheckinButton);
         final String title = tmdbMovie.title;
-        final String originalTitle = tmdbMovie.original_title;
+        // fall back to local title for tvtag check-in if we currently don't have the original one
+        final String originalTitle = TextUtils.isEmpty(tmdbMovie.original_title)
+                ? title : tmdbMovie.original_title;
         mCheckinButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
