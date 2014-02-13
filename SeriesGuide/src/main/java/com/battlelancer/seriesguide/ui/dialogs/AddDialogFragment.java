@@ -16,13 +16,6 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.R;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -36,6 +29,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.Utils;
+import com.squareup.picasso.Picasso;
 
 /**
  * A DialogFragment allowing the user to decide whether to add a show to his show database.
@@ -119,7 +118,7 @@ public class AddDialogFragment extends DialogFragment {
             if (show.poster != null) {
                 ImageView posterView = (ImageView) layout.findViewById(R.id.poster);
                 posterView.setVisibility(View.VISIBLE);
-                ImageDownloader.getInstance(getActivity()).download(show.poster, posterView, false);
+                Picasso.with(getActivity()).load(show.poster).into(posterView);
             }
         }
 
