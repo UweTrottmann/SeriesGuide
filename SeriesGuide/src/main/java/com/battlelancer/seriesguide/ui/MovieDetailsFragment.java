@@ -55,6 +55,7 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb.entities.Credits;
 import com.uwetrottmann.tmdb.entities.Trailers;
+import de.greenrobot.event.EventBus;
 
 /**
  * Displays details about one movie including plot, ratings, trailers and a poster.
@@ -187,6 +188,20 @@ public class MovieDetailsFragment extends SherlockFragment {
             layoutParams.setMargins(0, config.getPixelInsetTop(true), 0, 0);
             contentContainer.setLayoutParams(layoutParams);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -330,7 +345,6 @@ public class MovieDetailsFragment extends SherlockFragment {
         mCollectedButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO update UI state/restart loader?
                 if (isInCollection) {
                     MovieTools.removeFromCollection(getActivity(), mTmdbId);
                 } else {
@@ -350,7 +364,6 @@ public class MovieDetailsFragment extends SherlockFragment {
         mWatchlistedButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO update UI state/restart loader?
                 if (isInWatchlist) {
                     MovieTools.removeFromWatchlist(getActivity(), mTmdbId);
                 } else {
@@ -408,6 +421,17 @@ public class MovieDetailsFragment extends SherlockFragment {
             }
             mMovieCrew.setText(crewString.toString());
         }
+    }
+
+    public void onEvent(MovieTools.MovieChangedEvent event) {
+        if (event.movieTmdbId != mTmdbId) {
+            return;
+        }
+        // re-query some movie details to update button states
+        Bundle args = new Bundle();
+        args.putInt(InitBundle.TMDB_ID, mTmdbId);
+        getLoaderManager().restartLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args,
+                mMovieLoaderCallbacks);
     }
 
     private void fireTrackerEvent(String label) {

@@ -36,6 +36,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
+import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -47,6 +48,14 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import static com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult;
 
 public class MovieTools {
+
+    public static class MovieChangedEvent {
+        public int movieTmdbId;
+
+        public MovieChangedEvent(int movieTmdbId) {
+            this.movieTmdbId = movieTmdbId;
+        }
+    }
 
     public static void addToCollection(Context context, int movieTmdbId) {
         if (TraktCredentials.get(context).hasCredentials()) {
@@ -180,6 +189,8 @@ public class MovieTools {
 
     private static void deleteMovie(Context context, int movieTmdbId) {
         context.getContentResolver().delete(Movies.buildMovieUri(movieTmdbId), null, null);
+
+        EventBus.getDefault().post(new MovieChangedEvent(movieTmdbId));
     }
 
     /**
@@ -191,7 +202,7 @@ public class MovieTools {
         HashSet<Integer> localMoviesIds = new HashSet<>();
 
         Cursor movies = context.getContentResolver().query(Movies.CONTENT_URI,
-                new String[]{Movies._ID, Movies.TMDB_ID}, null, null, null);
+                new String[] { Movies._ID, Movies.TMDB_ID }, null, null, null);
         if (movies == null) {
             return null;
         }
@@ -213,7 +224,7 @@ public class MovieTools {
      */
     private static Boolean isMovieInList(Context context, int movieTmdbId, String listColumn) {
         Cursor movie = context.getContentResolver().query(Movies.buildMovieUri(movieTmdbId),
-                new String[]{listColumn}, null, null, null);
+                new String[] { listColumn }, null, null, null);
         if (movie == null || !movie.moveToFirst()) {
             return null;
         }
@@ -226,8 +237,8 @@ public class MovieTools {
     }
 
     private static Boolean isMovieExists(Context context, int movieTmdbId) {
-        Cursor movie = context.getContentResolver().query(Movies.CONTENT_URI, new String[]{
-                Movies._ID}, Movies.TMDB_ID + "=" + movieTmdbId, null, null);
+        Cursor movie = context.getContentResolver().query(Movies.CONTENT_URI, new String[] {
+                Movies._ID }, Movies.TMDB_ID + "=" + movieTmdbId, null, null);
         if (movie == null) {
             return null;
         }
@@ -244,9 +255,11 @@ public class MovieTools {
         ContentValues values = new ContentValues();
         values.put(column, value);
         context.getContentResolver().update(Movies.buildMovieUri(movieTmdbId), values, null, null);
+
+        EventBus.getDefault().post(new MovieChangedEvent(movieTmdbId));
     }
 
-    private static class AddMovieTask extends AsyncTask<Integer, Void, Void> {
+    private static class AddMovieTask extends AsyncTask<Integer, Void, Integer> {
 
         private final Context mContext;
 
@@ -263,7 +276,7 @@ public class MovieTools {
         }
 
         @Override
-        protected Void doInBackground(Integer... params) {
+        protected Integer doInBackground(Integer... params) {
             int movieTmdbId = params[0];
 
             // prepare services
@@ -290,9 +303,13 @@ public class MovieTools {
 
             mContext.getContentResolver().insert(Movies.CONTENT_URI, values);
 
-            return null;
+            return movieTmdbId;
         }
 
+        @Override
+        protected void onPostExecute(Integer movieTmdbId) {
+            EventBus.getDefault().post(new MovieChangedEvent(movieTmdbId));
+        }
     }
 
     public static class Download {
@@ -476,7 +493,6 @@ public class MovieTools {
                 batch.add(op);
             }
         }
-
     }
 
     private static class Upload {
@@ -497,8 +513,8 @@ public class MovieTools {
             }
 
             Cursor localMovies = context.getContentResolver().query(Movies.CONTENT_URI,
-                    new String[]{Movies._ID, Movies.TMDB_ID, Movies.IN_COLLECTION,
-                            Movies.IN_WATCHLIST}, null, null, null);
+                    new String[] { Movies._ID, Movies.TMDB_ID, Movies.IN_COLLECTION,
+                            Movies.IN_WATCHLIST }, null, null, null);
             if (localMovies == null) {
                 return UpdateResult.INCOMPLETE;
             }
@@ -546,7 +562,5 @@ public class MovieTools {
 
             return UpdateResult.SUCCESS;
         }
-
     }
-
 }
