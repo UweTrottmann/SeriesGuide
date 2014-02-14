@@ -107,13 +107,20 @@
                     android:src="?attr/drawableCollect" />
             </LinearLayout>
 
+            <include
+                layout="@layout/ratingbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/containerMovieButtons" />
+
             <TextView
                 android:id="@+id/textViewMovieDescription"
                 style="@style/DefaultPadding.Blocks.WithBottomMargin.FlowText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/containerMovieButtons"
+                android:layout_below="@+id/ratingbar"
+                android:layout_marginTop="@dimen/large_padding"
                 android:maxWidth="400dp"
                 android:textAppearance="@style/TextAppearance.Light"
                 android:textIsSelectable="true"

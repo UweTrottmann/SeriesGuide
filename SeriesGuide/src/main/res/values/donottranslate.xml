@@ -10,6 +10,7 @@
     <string name="youtube">YouTube</string>
     <string name="imdb">IMDb</string>
     <string name="tvdb">TVDb</string>
+    <string name="tmdb">TMDb</string>
     <string name="trakt">trakt</string>
     <string name="ontrakt">on trakt</string>
     <string name="getglue">tvtag (GetGlue)</string>

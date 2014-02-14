@@ -175,50 +175,13 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
         // set the final rating values
         if (results != null && mTraktLoves != null && mTraktVotes != null
                 && mTraktUserRating != null) {
-            String rating = results.ratings.percentage + "%";
-            if (results.rating != null) {
-                int resId = 0;
-                switch (results.rating) {
-                    case WeakSauce:
-                        resId = R.string.hate;
-                        break;
-                    case Terrible:
-                        resId = R.string.rating2;
-                        break;
-                    case Bad:
-                        resId = R.string.rating3;
-                        break;
-                    case Poor:
-                        resId = R.string.rating4;
-                        break;
-                    case Meh:
-                        resId = R.string.rating5;
-                        break;
-                    case Fair:
-                        resId = R.string.rating6;
-                        break;
-                    case Good:
-                        resId = R.string.rating7;
-                        break;
-                    case Great:
-                        resId = R.string.rating8;
-                        break;
-                    case Superb:
-                        resId = R.string.rating9;
-                        break;
-                    case TotallyNinja:
-                        resId = R.string.love;
-                        break;
-                    default:
-                        break;
-                }
-                if (resId != 0) {
-                    mTraktUserRating.setText(mContext.getString(resId));
-                }
+            mTraktUserRating.setText(TraktTools.buildUserRatingString(mContext, results.rating));
+            if (results.ratings != null) {
+                mTraktLoves.setText(
+                        TraktTools.buildRatingPercentageString(results.ratings.percentage));
+                mTraktVotes.setText(
+                        TraktTools.buildRatingVotesString(mContext, results.ratings.votes));
             }
-            mTraktLoves.setText(rating);
-            mTraktVotes.setText(mContext.getResources().getQuantityString(R.plurals.votes,
-                    results.ratings.votes, results.ratings.votes));
         }
 
         releaseReferences();
