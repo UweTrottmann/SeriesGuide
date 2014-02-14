@@ -409,12 +409,16 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 return r;
             }
             case WATCHED_MOVIE: {
-                return manager.movieService()
+                Response r =  manager.movieService()
                         .seen(new MovieService.Movies(new MovieService.SeenMovie(tmdbId)));
+                r.message = mContext.getString(R.string.action_watched);
+                return r;
             }
             case UNWATCHED_MOVIE: {
-                return manager.movieService()
+                Response r = manager.movieService()
                         .unseen(new MovieService.Movies(new MovieService.SeenMovie(tmdbId)));
+                r.message = mContext.getString(R.string.action_unwatched);
+                return r;
             }
             case WATCHLIST_MOVIE: {
                 Response r = manager.movieService().watchlist(new MovieService.Movies(
