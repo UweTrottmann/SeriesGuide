@@ -16,16 +16,10 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.backend.CloudSetupActivity;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.R;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -37,6 +31,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.backend.CloudSetupActivity;
+import com.battlelancer.seriesguide.util.Utils;
+import java.util.Locale;
 
 /**
  * Adds onto {@link BaseActivity} by attaching a navigation drawer.
@@ -60,9 +59,11 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
     public static final int MENU_ITEM_STATS_POSITION = 3;
 
-    public static final int MENU_ITEM_SEARCH_POSITION = 4;
+    public static final int MENU_ITEM_CLOUD_POSITION = 4;
 
-    public static final int MENU_ITEM_CLOUD_POSITION = 5;
+    public static final int MENU_ITEM_SETTINGS_POSITION = 5;
+
+    public static final int MENU_ITEM_HELP_POSITION = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,10 +102,14 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableMovie)));
         drawerAdapter.add(new DrawerItem(getString(R.string.statistics),
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableStats)));
-        drawerAdapter.add(new DrawerItem(getString(R.string.search_hint),
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableSearch)));
         drawerAdapter.add(new DrawerItem(getString(R.string.hexagon_short),
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableLab)));
+        drawerAdapter.add(new DrawerItemSecondary(getString(R.string.preferences).toUpperCase(
+                Locale.getDefault()),
+                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableSettings)));
+        drawerAdapter.add(
+                new DrawerItemSecondary(getString(R.string.help).toUpperCase(Locale.getDefault()),
+                        Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableHelp)));
 
         mDrawerList.setAdapter(drawerAdapter);
         mDrawerList.setOnItemClickListener(this);
@@ -175,20 +180,20 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Statistics");
                 break;
-            case MENU_ITEM_SEARCH_POSITION:
-                if (this instanceof SearchActivity) {
-                    break;
-                }
-                launchIntent = new Intent(this, SearchActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                Utils.trackAction(this, TAG_NAV_DRAWER, "Search");
-                break;
             case MENU_ITEM_CLOUD_POSITION:
                 if (this instanceof CloudSetupActivity) {
                     break;
                 }
                 launchIntent = new Intent(this, CloudSetupActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                break;
+            case MENU_ITEM_SETTINGS_POSITION:
+                launchIntent = new Intent(this, SeriesGuidePreferences.class);
+                Utils.trackAction(this, TAG_NAV_DRAWER, "Settings");
+                break;
+            case MENU_ITEM_HELP_POSITION:
+                launchIntent = new Intent(this, HelpActivity.class);
+                Utils.trackAction(this, TAG_NAV_DRAWER, "Help");
                 break;
         }
 
@@ -238,7 +243,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
     public class DrawerItem {
 
         String mTitle;
-
         int mIconRes;
 
         public DrawerItem(String title, int iconRes) {
@@ -247,9 +251,10 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         }
     }
 
-    private class DrawerCategory {
+    private class DrawerItemSecondary extends DrawerItem {
 
-        public DrawerCategory() {
+        public DrawerItemSecondary(String title, int iconRes) {
+            super(title, iconRes);
         }
     }
 
@@ -261,7 +266,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
         @Override
         public int getItemViewType(int position) {
-            return getItem(position) instanceof DrawerItem ? 0 : 1;
+            return getItem(position) instanceof DrawerItemSecondary ? 1 : 0;
         }
 
         @Override
@@ -269,40 +274,28 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
             return 2;
         }
 
-        @Override
-        public boolean isEnabled(int position) {
-            return getItem(position) instanceof DrawerItem;
-        }
-
-        @Override
-        public boolean areAllItemsEnabled() {
-            return false;
-        }
-
         public View getView(int position, View convertView, ViewGroup parent) {
             Object item = getItem(position);
 
-            if (item instanceof DrawerItem) {
-                ViewHolder holder;
-                if (convertView == null) {
+            ViewHolder holder;
+            if (convertView == null) {
+                if (item instanceof DrawerItemSecondary) {
+                    convertView = LayoutInflater.from(getContext()).inflate(
+                            R.layout.drawer_item_secondary, parent, false);
+                } else {
                     convertView = LayoutInflater.from(getContext()).inflate(
                             R.layout.drawer_item, parent, false);
-                    holder = new ViewHolder();
-                    holder.attach(convertView);
-                    convertView.setTag(holder);
-                } else {
-                    holder = (ViewHolder) convertView.getTag();
                 }
-
-                DrawerItem menuItem = (DrawerItem) item;
-                holder.icon.setImageResource(menuItem.mIconRes);
-                holder.title.setText(menuItem.mTitle);
+                holder = new ViewHolder();
+                holder.attach(convertView);
+                convertView.setTag(holder);
             } else {
-                if (convertView == null) {
-                    convertView = LayoutInflater.from(getContext()).inflate(
-                            R.layout.drawer_category, parent, false);
-                }
+                holder = (ViewHolder) convertView.getTag();
             }
+
+            DrawerItem menuItem = (DrawerItem) item;
+            holder.icon.setImageResource(menuItem.mIconRes);
+            holder.title.setText(menuItem.mTitle);
 
             return convertView;
         }

@@ -362,6 +362,10 @@ public class ShowsActivity extends BaseTopShowsActivity implements
             startActivity(new Intent(this, AddActivity.class));
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             return true;
+        } else if (itemId == R.id.menu_search) {
+            startActivity(new Intent(this, SearchActivity.class));
+            fireTrackerEvent("Search");
+            return true;
         } else if (itemId == R.id.menu_update) {
             SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.DELTA, 0, true);
             fireTrackerEvent("Update (outdated)");
