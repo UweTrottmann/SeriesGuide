@@ -39,14 +39,17 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.MovieLoader;
 import com.battlelancer.seriesguide.loaders.MovieTrailersLoader;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.Movie;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -319,17 +322,28 @@ public class MovieDetailsFragment extends SherlockFragment {
             }
         });
 
-        // watched button
-        // TODO toggle watched action, cheat sheet
-        mWatchedButton.setVisibility(View.GONE);
-        //if (TraktCredentials.get(getActivity()).hasCredentials()) {
-        //    mWatchedButton.setImageResource((movie.watched != null && movie.watched)
-        //            ? R.drawable.ic_ticked
-        //            : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-        //                    R.attr.drawableWatch));
-        //} else {
-        //    mWatchedButton.setVisibility(View.GONE);
-        //}
+        // watched button (only supported when connected to trakt)
+        if (TraktCredentials.get(getActivity()).hasCredentials()) {
+            final boolean isWatched = traktMovie.watched != null && traktMovie.watched;
+            mWatchedButton.setImageResource(isWatched
+                    ? R.drawable.ic_ticked
+                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                            R.attr.drawableWatch));
+            CheatSheet.setup(mWatchedButton,
+                    isWatched ? R.string.action_unwatched : R.string.action_watched);
+            mWatchedButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isWatched) {
+                        MovieTools.unwatchedMovie(getActivity(), mTmdbId);
+                    } else {
+                        MovieTools.watchedMovie(getActivity(), mTmdbId);
+                    }
+                }
+            });
+        } else {
+            mWatchedButton.setVisibility(View.GONE);
+        }
 
         // collected button
         final boolean isInCollection = traktMovie.inCollection != null && traktMovie.inCollection;
@@ -425,6 +439,18 @@ public class MovieDetailsFragment extends SherlockFragment {
             return;
         }
         // re-query some movie details to update button states
+        restartMovieLoader();
+    }
+
+    public void onEvent(TraktTask.TraktActionCompleteEvent event) {
+        if (event.mWasSuccessful &&
+                (event.mTraktAction == TraktAction.WATCHED_MOVIE
+                        || event.mTraktAction == TraktAction.UNWATCHED_MOVIE)) {
+            restartMovieLoader();
+        }
+    }
+
+    private void restartMovieLoader() {
         Bundle args = new Bundle();
         args.putInt(InitBundle.TMDB_ID, mTmdbId);
         getLoaderManager().restartLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args,
