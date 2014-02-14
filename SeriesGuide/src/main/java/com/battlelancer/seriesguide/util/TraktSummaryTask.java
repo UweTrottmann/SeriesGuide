@@ -16,6 +16,12 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.content.Context;
+import android.os.AsyncTask;
+import android.text.format.DateUtils;
+import android.view.View;
+import android.widget.TextView;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.TraktSummaryTask.RatingsWrapper;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Ratings;
@@ -24,39 +30,26 @@ import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.enumerations.Extended;
 import com.jakewharton.trakt.enumerations.Rating;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.battlelancer.seriesguide.R;
-
-import android.content.Context;
-import android.os.AsyncTask;
-import android.view.View;
-import android.widget.TextView;
-
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-
 import retrofit.RetrofitError;
+import timber.log.Timber;
 
 public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
 
     private static final int HARD_CACHE_CAPACITY = 10;
 
+    private static final long MAXIMUM_AGE = 5 * DateUtils.MINUTE_IN_MILLIS;
+
     // Hard cache, with a fixed maximum capacity
-    @SuppressWarnings("serial")
-    private final static HashMap<String, TvEntity> sHardEntityCache
-            = new LinkedHashMap<String, TvEntity>(
-            HARD_CACHE_CAPACITY / 2, 0.75f, true) {
-        @Override
-        protected boolean removeEldestEntry(LinkedHashMap.Entry<String, TvEntity> eldest) {
-            // remove eldest if capacity is exceeded
-            return size() > HARD_CACHE_CAPACITY;
-        }
-    };
+    private final static android.support.v4.util.LruCache<Long, RatingsWrapper> sCache
+            = new android.support.v4.util.LruCache<>(HARD_CACHE_CAPACITY);
 
     private View mView;
 
     private Context mContext;
 
     private int mShowTvdbId;
+
+    private int mEpisodeTvdbId;
 
     private int mSeason;
 
@@ -67,8 +60,7 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
     private TextView mTraktVotes;
 
     private TextView mTraktUserRating;
-
-    private boolean mIsDoCacheLookup;
+    private boolean mDoCacheLookup;
 
     /**
      * Sets values for predefined views which have to be children of the given view. Make sure to
@@ -77,17 +69,18 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
     public TraktSummaryTask(Context context, View view, boolean isUseCachedValue) {
         mView = view;
         mContext = context;
-        mIsDoCacheLookup = isUseCachedValue;
+        mDoCacheLookup = isUseCachedValue;
     }
 
     public TraktSummaryTask show(int showTvdbId) {
         mShowTvdbId = showTvdbId;
-        mSeason = -1;
+        mEpisodeTvdbId = 0;
         return this;
     }
 
-    public TraktSummaryTask episode(int showTvdbId, int season, int episode) {
+    public TraktSummaryTask episode(int showTvdbId, int episodeTvdbId, int season, int episode) {
         mShowTvdbId = showTvdbId;
+        mEpisodeTvdbId = episodeTvdbId;
         mSeason = season;
         mEpisode = episode;
         return this;
@@ -102,67 +95,58 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
 
     @Override
     protected RatingsWrapper doInBackground(Void... params) {
+        RatingsWrapper ratings = null;
 
-        if (isCancelled()) {
+        long currentTime = System.currentTimeMillis();
+        long key = createUniqueId(mShowTvdbId, mEpisodeTvdbId);
+
+        // cache lookup
+        if (mDoCacheLookup) {
+            synchronized (sCache) {
+                ratings = sCache.get(key);
+            }
+            if (ratings != null && ratings.downloadedAt > currentTime - MAXIMUM_AGE) {
+                return ratings;
+            }
+        }
+
+        if (isCancelled() || !AndroidUtils.isNetworkConnected(mContext)) {
             return null;
         }
 
         try {
             // decide whether we have a show or an episode
-            if (mSeason == -1) {
-                if (AndroidUtils.isNetworkConnected(mContext)) {
-                    // get the shows summary from trakt
-                    TvShow entity = getTrakt().showService().summary(mShowTvdbId, Extended.DEFAULT);
-                    if (entity != null) {
-                        RatingsWrapper results = new RatingsWrapper();
-                        results.rating = entity.rating_advanced;
-                        results.ratings = entity.ratings;
-                        return results;
-                    }
+            if (mEpisodeTvdbId == 0) {
+                // get the shows summary from trakt
+                TvShow show = getTrakt().showService().summary(mShowTvdbId, Extended.DEFAULT);
+                if (show != null) {
+                    ratings = new RatingsWrapper();
+                    ratings.rating = show.rating_advanced;
+                    ratings.ratings = show.ratings;
                 }
             } else {
-                TvEntity entity = null;
-                String key = String.valueOf(mShowTvdbId) + String.valueOf(mSeason)
-                        + String.valueOf(mEpisode);
-
-                if (mIsDoCacheLookup) {
-                    // look if the episode summary is cached
-
-                    synchronized (sHardEntityCache) {
-                        entity = sHardEntityCache.remove(key);
-                    }
-                }
-
                 // on cache miss load the summary from trakt
-                if (entity == null && AndroidUtils.isNetworkConnected(mContext)) {
-                    entity = getTrakt().showService()
-                            .episodeSummary(mShowTvdbId, mSeason, mEpisode);
-                }
-
-                if (entity != null) {
-                    synchronized (sHardEntityCache) {
-                        sHardEntityCache.put(key, entity);
-                    }
-                    RatingsWrapper results = new RatingsWrapper();
-                    results.rating = entity.episode.rating_advanced;
-                    results.ratings = entity.episode.ratings;
-                    return results;
+                TvEntity tvEntity = getTrakt().showService()
+                        .episodeSummary(mShowTvdbId, mSeason, mEpisode);
+                if (tvEntity != null && tvEntity.episode != null) {
+                    ratings = new RatingsWrapper();
+                    ratings.rating = tvEntity.episode.rating_advanced;
+                    ratings.ratings = tvEntity.episode.ratings;
                 }
             }
         } catch (RetrofitError e) {
+            Timber.e(e, "Loading ratings failed");
             return null;
         }
 
-        return null;
-    }
-
-    private Trakt getTrakt() {
-        Trakt trakt = ServiceUtils.getTraktWithAuth(mContext);
-        if (trakt == null) {
-            // don't have auth data
-            trakt = ServiceUtils.getTrakt(mContext);
+        if (ratings != null) {
+            ratings.downloadedAt = currentTime;
+            synchronized (sCache) {
+                sCache.put(key, ratings);
+            }
         }
-        return trakt;
+
+        return ratings;
     }
 
     @Override
@@ -173,8 +157,8 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
     @Override
     protected void onPostExecute(RatingsWrapper results) {
         // set the final rating values
-        if (results != null && mTraktLoves != null && mTraktVotes != null
-                && mTraktUserRating != null) {
+        if (results != null
+                && mTraktLoves != null && mTraktVotes != null && mTraktUserRating != null) {
             mTraktUserRating.setText(TraktTools.buildUserRatingString(mContext, results.rating));
             if (results.ratings != null) {
                 mTraktLoves.setText(
@@ -194,11 +178,30 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
         mView = null;
     }
 
+    /**
+     * Creates a unique id using the <a href="https://en.wikipedia.org/wiki/Cantor_pairing_function">Cantor
+     * pairing</a> function.
+     */
+    private long createUniqueId(int showTvdbId, int episodeTvdbId) {
+        return ((showTvdbId + episodeTvdbId) * (showTvdbId + episodeTvdbId + 1) / 2)
+                + episodeTvdbId;
+    }
+
+    private Trakt getTrakt() {
+        Trakt trakt = ServiceUtils.getTraktWithAuth(mContext);
+        if (trakt == null) {
+            // don't have auth data
+            trakt = ServiceUtils.getTrakt(mContext);
+        }
+        return trakt;
+    }
+
     static class RatingsWrapper {
+
+        long downloadedAt;
 
         Ratings ratings;
 
         Rating rating;
     }
-
 }

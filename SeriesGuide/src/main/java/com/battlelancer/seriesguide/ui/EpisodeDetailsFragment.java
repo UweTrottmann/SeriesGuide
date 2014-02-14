@@ -724,7 +724,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 && (mTraktTask == null || mTraktTask.getStatus() != AsyncTask.Status.RUNNING)) {
             mTraktTask = new TraktSummaryTask(getSherlockActivity(), ratingBar, isUseCachedValues)
                     .episode(
-                            mShowTvdbId, mSeasonNumber, mEpisodeNumber);
+                            mShowTvdbId, getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber);
             AndroidUtils.executeAsyncTask(mTraktTask);
         }
     }
