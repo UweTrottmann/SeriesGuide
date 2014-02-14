@@ -23,7 +23,6 @@ import com.battlelancer.seriesguide.util.TraktTask;
  * The trakt action to be performed by {@link TraktTask}.
  */
 public enum TraktAction {
-    SEEN_EPISODE,
     RATE_SHOW,
     RATE_EPISODE,
     RATE_MOVIE,
@@ -33,5 +32,7 @@ public enum TraktAction {
     WATCHLIST_MOVIE,
     UNWATCHLIST_MOVIE,
     COLLECTION_ADD_MOVIE,
-    COLLECTION_REMOVE_MOVIE
+    COLLECTION_REMOVE_MOVIE,
+    WATCHED_MOVIE,
+    UNWATCHED_MOVIE
 }
