@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2014 Uwe Trottmann
  *
@@ -15,24 +14,15 @@
  * limitations under the License.
  */
 
-package com.battlelancer.seriesguide.enums;
+package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.util.TraktTask;
+import java.text.DecimalFormat;
 
-/**
- * The trakt action to be performed by {@link TraktTask}.
- */
-public enum TraktAction {
-    RATE_SHOW,
-    RATE_EPISODE,
-    RATE_MOVIE,
-    CHECKIN_EPISODE,
-    CHECKIN_MOVIE,
-    SHOUT,
-    WATCHLIST_MOVIE,
-    UNWATCHLIST_MOVIE,
-    COLLECTION_ADD_MOVIE,
-    COLLECTION_REMOVE_MOVIE,
-    WATCHED_MOVIE,
-    UNWATCHED_MOVIE
+public class TmdbTools {
+
+    private static DecimalFormat RATING_FORMAT = new DecimalFormat("0.0");
+
+    public static String buildRatingValue(Double value) {
+        return value == null ? "-.-" : RATING_FORMAT.format(value);
+    }
 }

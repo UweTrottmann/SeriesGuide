@@ -332,7 +332,8 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
 
     private void onRateOnTrakt() {
         if (TraktCredentials.ensureCredentials(getActivity())) {
-            TraktRateDialogFragment rateShow = TraktRateDialogFragment.newInstance(getShowTvdbId());
+            TraktRateDialogFragment rateShow = TraktRateDialogFragment.newInstanceShow(
+                    getShowTvdbId());
             rateShow.show(getFragmentManager(), "traktratedialog");
         }
         fireTrackerEvent("Rate (trakt)");

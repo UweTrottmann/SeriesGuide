@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.util;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -27,10 +28,13 @@ import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowSeason;
 import com.jakewharton.trakt.enumerations.Extended;
+import com.jakewharton.trakt.enumerations.Rating;
 import com.jakewharton.trakt.services.UserService;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
@@ -249,13 +253,78 @@ public class TraktTools {
         return TRAKT_SEARCH_MOVIE_URL + movieTmdbId;
     }
 
+    public static String buildRatingPercentageString(Integer percentage) {
+        return percentage == null ? "--%" : String.valueOf(percentage) + "%";
+    }
+
+    public static String buildRatingVotesString(Context context, Integer votes) {
+        if (votes == null) {
+            votes = 0;
+        }
+        return context.getResources().getQuantityString(R.plurals.votes, votes, votes);
+    }
+
+    public static String buildUserRatingString(Context context, Rating rating) {
+        if (rating == null) {
+            return context.getString(R.string.norating);
+        }
+
+        int resId;
+        switch (rating) {
+            case WeakSauce:
+                resId = R.string.hate;
+                break;
+            case Terrible:
+                resId = R.string.rating2;
+                break;
+            case Bad:
+                resId = R.string.rating3;
+                break;
+            case Poor:
+                resId = R.string.rating4;
+                break;
+            case Meh:
+                resId = R.string.rating5;
+                break;
+            case Fair:
+                resId = R.string.rating6;
+                break;
+            case Good:
+                resId = R.string.rating7;
+                break;
+            case Great:
+                resId = R.string.rating8;
+                break;
+            case Superb:
+                resId = R.string.rating9;
+                break;
+            case TotallyNinja:
+                resId = R.string.love;
+                break;
+            default:
+                resId = R.string.norating;
+                break;
+        }
+
+        return context.getString(resId);
+    }
+
     public static void rateEpisode(Context context, FragmentManager fragmentManager, int showTvdbId,
             int seasonNumber, int episodeNumber) {
         if (!TraktCredentials.ensureCredentials(context)) {
             return;
         }
-        TraktRateDialogFragment newFragment = TraktRateDialogFragment.newInstance(
+        TraktRateDialogFragment newFragment = TraktRateDialogFragment.newInstanceEpisode(
                 showTvdbId, seasonNumber, episodeNumber);
+        newFragment.show(fragmentManager, "traktratedialog");
+    }
+
+    public static void rateMovie(Context context, FragmentManager fragmentManager,
+            int movieTmdbId) {
+        if (!TraktCredentials.ensureCredentials(context)) {
+            return;
+        }
+        TraktRateDialogFragment newFragment = TraktRateDialogFragment.newInstanceMovie(movieTmdbId);
         newFragment.show(fragmentManager, "traktratedialog");
     }
 }

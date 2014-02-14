@@ -179,6 +179,8 @@
     <string name="action_collection_remove">Remove from collection</string>
     <string name="action_collection_added">Added to collection</string>
     <string name="action_collection_removed">Removed from collection</string>
+    <string name="action_watched">Watched</string>
+    <string name="action_unwatched">Not yet watched</string>
 
     <!-- Shows -->
     <string name="confirm_delete">Do you really want to remove %s?</string>

@@ -54,8 +54,6 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
         String SHOW_TVDBID = "tvdbid";
 
-        String TMDB_ID = "tmdbid";
-
         String SEASON = "season";
 
         String EPISODE = "episode";
@@ -124,7 +122,8 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     }
 
     /**
-     * Initial constructor. Call <b>one</b> of the setup-methods like {@link #shoutEpisode(int, int,
+     * Initial constructor. Call <b>one</b> of the setup-methods like {@link #shoutEpisode(int,
+     * int,
      * int, String, boolean)} afterwards.<br> <br> Make sure the user has valid trakt credentials
      * (check with {@link com.battlelancer.seriesguide.settings.TraktCredentials#hasCredentials()}
      * and then possibly launch {@link ConnectTraktActivity}) or execution will fail.
@@ -149,7 +148,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
      * Check into an episode. Optionally provide a checkin message.
      */
     public TraktTask checkInEpisode(int showTvdbid, int season, int episode, String message) {
-        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.CHECKIN_EPISODE.index);
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.CHECKIN_EPISODE.name());
         mArgs.putInt(InitBundle.SHOW_TVDBID, showTvdbid);
         mArgs.putInt(InitBundle.SEASON, season);
         mArgs.putInt(InitBundle.EPISODE, episode);
@@ -161,43 +160,21 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
      * Check into an episode. Optionally provide a checkin message.
      */
     public TraktTask checkInMovie(int tmdbId, String message) {
-        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.CHECKIN_MOVIE.index);
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.CHECKIN_MOVIE.name());
         mArgs.putInt(InitBundle.MOVIE_TMDB_ID, tmdbId);
         mArgs.putString(InitBundle.MESSAGE, message);
         return this;
     }
 
     public TraktTask collectionAddMovie(int movieTmdbId) {
-        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.COLLECTION_ADD_MOVIE.index);
-        mArgs.putInt(InitBundle.TMDB_ID, movieTmdbId);
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.COLLECTION_ADD_MOVIE.name());
+        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
         return this;
     }
 
     public TraktTask collectionRemoveMovie(int movieTmdbId) {
-        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.COLLECTION_REMOVE_MOVIE.index);
-        mArgs.putInt(InitBundle.TMDB_ID, movieTmdbId);
-        return this;
-    }
-
-    /**
-     * Rate an episode.
-     */
-    public TraktTask rateEpisode(int showTvdbid, int season, int episode, Rating rating) {
-        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.RATE_EPISODE.index);
-        mArgs.putInt(InitBundle.SHOW_TVDBID, showTvdbid);
-        mArgs.putInt(InitBundle.SEASON, season);
-        mArgs.putInt(InitBundle.EPISODE, episode);
-        mArgs.putString(InitBundle.RATING, rating.toString());
-        return this;
-    }
-
-    /**
-     * Rate a show.
-     */
-    public TraktTask rateShow(int showTvdbid, Rating rating) {
-        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.RATE_SHOW.index);
-        mArgs.putInt(InitBundle.SHOW_TVDBID, showTvdbid);
-        mArgs.putString(InitBundle.RATING, rating.toString());
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.COLLECTION_REMOVE_MOVIE.name());
+        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
         return this;
     }
 
@@ -205,7 +182,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
      * Post a shout for a show.
      */
     public TraktTask shoutShow(int showTvdbid, String shout, boolean isSpoiler) {
-        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.SHOUT.index);
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.SHOUT.name());
         mArgs.putInt(InitBundle.SHOW_TVDBID, showTvdbid);
         mArgs.putString(InitBundle.MESSAGE, shout);
         mArgs.putBoolean(InitBundle.ISSPOILER, isSpoiler);
@@ -224,38 +201,50 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     }
 
     /**
-     * Post a shout for a show.
+     * Post a shout for a movie.
      */
     public TraktTask shoutMovie(int movieTmdbId, String shout, boolean isSpoiler) {
-        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.SHOUT.index);
-        mArgs.putInt(InitBundle.TMDB_ID, movieTmdbId);
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.SHOUT.name());
+        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
         mArgs.putString(InitBundle.MESSAGE, shout);
         mArgs.putBoolean(InitBundle.ISSPOILER, isSpoiler);
+        return this;
+    }
+
+    public TraktTask watchedMovie(int movieTmdbId) {
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.WATCHED_MOVIE.name());
+        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
+        return this;
+    }
+
+    public TraktTask unwatchedMovie(int movieTmdbId) {
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.UNWATCHED_MOVIE.name());
+        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
         return this;
     }
 
     /**
      * Add a movie to a users watchlist.
      */
-    public TraktTask watchlistMovie(int tmdbId) {
-        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.WATCHLIST_MOVIE.index);
-        mArgs.putInt(InitBundle.TMDB_ID, tmdbId);
+    public TraktTask watchlistMovie(int movieTmdbId) {
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.WATCHLIST_MOVIE.name());
+        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
         return this;
     }
 
     /**
      * Remove a movie from a users watchlist.
      */
-    public TraktTask unwatchlistMovie(int tmdbId) {
-        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.UNWATCHLIST_MOVIE.index);
-        mArgs.putInt(InitBundle.TMDB_ID, tmdbId);
+    public TraktTask unwatchlistMovie(int movieTmdbId) {
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.UNWATCHLIST_MOVIE.name());
+        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
         return this;
     }
 
     @Override
     protected Response doInBackground(Void... params) {
         // we need this value in onPostExecute, so preserve it here
-        mAction = TraktAction.values()[mArgs.getInt(InitBundle.TRAKTACTION)];
+        mAction = TraktAction.valueOf(mArgs.getString(InitBundle.TRAKTACTION));
 
         // check for network connection
         if (!AndroidUtils.isNetworkConnected(mContext)) {
@@ -275,11 +264,6 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
             return r;
         }
 
-        // get values used by all actions
-        final int showTvdbId = mArgs.getInt(InitBundle.SHOW_TVDBID);
-        final int season = mArgs.getInt(InitBundle.SEASON);
-        final int episode = mArgs.getInt(InitBundle.EPISODE);
-
         // last chance to abort
         if (isCancelled()) {
             return null;
@@ -288,127 +272,25 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         Response r = null;
         try {
             switch (mAction) {
-                case CHECKIN_EPISODE: {
-                    final String message = mArgs.getString(InitBundle.MESSAGE);
-
-                    if (TextUtils.isEmpty(message)) {
-                        // no message
-                        r = manager.showService().checkin(new ShowService.ShowCheckin(
-                                showTvdbId, season, episode, Utils.getVersion(mContext), ""
-                        ));
-                    } else {
-                        // with social media message
-                        r = manager.showService().checkin(new ShowService.ShowCheckin(
-                                showTvdbId, season, episode, message, Utils.getVersion(mContext), ""
-                        ));
-                    }
-
-                    if (com.jakewharton.trakt.enumerations.Status.SUCCESS.equals(r.status)) {
-                        r.message = mContext.getString(R.string.checkin_success_trakt,
-                                (r.show != null ? r.show.title + " " : "")
-                                        + Utils.getEpisodeNumber(mContext, season, episode));
-                    }
-
-                    break;
-                }
+                case CHECKIN_EPISODE:
                 case CHECKIN_MOVIE: {
-                    final int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
-                    final String message = mArgs.getString(InitBundle.MESSAGE);
-
-                    if (TextUtils.isEmpty(message)) {
-                        r = manager.movieService().checkin(new MovieService.MovieCheckin(
-                                tmdbId, Utils.getVersion(mContext), ""
-                        ));
-                    } else {
-                        r = manager.movieService().checkin(new MovieService.MovieCheckin(
-                                tmdbId, message, Utils.getVersion(mContext), ""
-                        ));
-                    }
-
-                    if (com.jakewharton.trakt.enumerations.Status.SUCCESS.equals(r.status)) {
-                        r.message = mContext.getString(R.string.checkin_success_trakt,
-                                (r.movie != null ?
-                                        r.movie.title : mContext.getString(R.string.unknown)));
-                    }
-
-                    break;
+                    return doCheckInAction(manager);
                 }
-                case RATE_EPISODE: {
-                    final Rating rating = Rating.fromValue(mArgs.getString(InitBundle.RATING));
-                    r = manager.rateService().episode(new RateService.EpisodeRating(
-                            showTvdbId, season, episode, rating
-                    ));
-                    break;
+                case RATE_EPISODE:
+                case RATE_SHOW:
+                case RATE_MOVIE: {
+                    return doRatingAction(manager);
                 }
-                case RATE_SHOW: {
-                    final Rating rating = Rating.fromValue(mArgs.getString(InitBundle.RATING));
-                    r = manager.rateService().show(new RateService.ShowRating(
-                            showTvdbId, rating
-                    ));
-                    break;
+                case COLLECTION_ADD_MOVIE:
+                case COLLECTION_REMOVE_MOVIE:
+                case WATCHLIST_MOVIE:
+                case UNWATCHLIST_MOVIE:
+                case WATCHED_MOVIE:
+                case UNWATCHED_MOVIE: {
+                    return doMovieAction(manager);
                 }
                 case SHOUT: {
-                    final String shout = mArgs.getString(InitBundle.MESSAGE);
-                    final boolean isSpoiler = mArgs.getBoolean(InitBundle.ISSPOILER);
-
-                    // episode?
-                    if (episode != 0) {
-                        r = manager.commentService().episode(new CommentService.EpisodeComment(
-                                showTvdbId, season, episode, shout
-                        ).spoiler(isSpoiler));
-                        break;
-                    }
-
-                    // movie?
-                    int tmdbId = mArgs.getInt(InitBundle.TMDB_ID);
-                    if (tmdbId != 0) {
-                        r = manager.commentService().movie(new CommentService.MovieComment(
-                                tmdbId, shout
-                        ).spoiler(isSpoiler));
-                        break;
-                    }
-
-                    // show!
-                    r = manager.commentService().show(new CommentService.ShowComment(
-                            showTvdbId, shout
-                    ).spoiler(isSpoiler));
-                    break;
-                }
-                case COLLECTION_ADD_MOVIE: {
-                    int tmdbId = mArgs.getInt(InitBundle.TMDB_ID);
-                    r = manager.movieService().library(new MovieService.Movies(
-                            new MovieService.SeenMovie(tmdbId)
-                    ));
-                    // always returns success, even if movie is already in collection
-                    r.message = mContext.getString(R.string.action_collection_added);
-                    break;
-                }
-                case COLLECTION_REMOVE_MOVIE: {
-                    int tmdbId = mArgs.getInt(InitBundle.TMDB_ID);
-                    r = manager.movieService().unlibrary(new MovieService.Movies(
-                            new MovieService.SeenMovie(tmdbId)
-                    ));
-                    // always returns success, even if movie was never in collection
-                    r.message = mContext.getString(R.string.action_collection_removed);
-                    break;
-                }
-                case WATCHLIST_MOVIE: {
-                    final int tmdbId = mArgs.getInt(InitBundle.TMDB_ID);
-                    r = manager.movieService().watchlist(new MovieService.Movies(
-                            new MovieService.SeenMovie(tmdbId)
-                    ));
-                    // always returns success, even if movie is already on watchlist
-                    r.message = mContext.getString(R.string.watchlist_added);
-                    break;
-                }
-                case UNWATCHLIST_MOVIE: {
-                    final int tmdbId = mArgs.getInt(InitBundle.TMDB_ID);
-                    r = manager.movieService().unwatchlist(new MovieService.Movies(
-                            new MovieService.SeenMovie(tmdbId)
-                    ));
-                    // always returns success, even if movie is not on watchlist anymore
-                    r.message = mContext.getString(R.string.watchlist_removed);
-                    break;
+                    return doShoutAction(manager);
                 }
             }
         } catch (RetrofitError e) {
@@ -418,6 +300,176 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
             r.error = mContext.getString(R.string.trakt_error_general);
         }
 
+        return r;
+    }
+
+    private Response doCheckInAction(Trakt manager) {
+        final String message = mArgs.getString(InitBundle.MESSAGE);
+
+        switch (mAction) {
+            case CHECKIN_EPISODE: {
+                Response r;
+                final int showTvdbId = mArgs.getInt(InitBundle.SHOW_TVDBID);
+                final int season = mArgs.getInt(InitBundle.SEASON);
+                final int episode = mArgs.getInt(InitBundle.EPISODE);
+                if (TextUtils.isEmpty(message)) {
+                    // no message
+                    r = manager.showService().checkin(new ShowService.ShowCheckin(
+                            showTvdbId, season, episode, Utils.getVersion(mContext), ""
+                    ));
+                } else {
+                    // with social media message
+                    r = manager.showService().checkin(new ShowService.ShowCheckin(
+                            showTvdbId, season, episode, message, Utils.getVersion(mContext), ""
+                    ));
+                }
+
+                if (com.jakewharton.trakt.enumerations.Status.SUCCESS.equals(r.status)) {
+                    r.message = mContext.getString(R.string.checkin_success_trakt,
+                            (r.show != null ? r.show.title + " " : "")
+                                    + Utils.getEpisodeNumber(mContext, season, episode));
+                }
+
+                return r;
+            }
+            case CHECKIN_MOVIE: {
+                Response r;
+                final int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
+
+                if (TextUtils.isEmpty(message)) {
+                    r = manager.movieService().checkin(new MovieService.MovieCheckin(
+                            tmdbId, Utils.getVersion(mContext), ""
+                    ));
+                } else {
+                    r = manager.movieService().checkin(new MovieService.MovieCheckin(
+                            tmdbId, message, Utils.getVersion(mContext), ""
+                    ));
+                }
+
+                if (com.jakewharton.trakt.enumerations.Status.SUCCESS.equals(r.status)) {
+                    r.message = mContext.getString(R.string.checkin_success_trakt,
+                            (r.movie != null ?
+                                    r.movie.title : mContext.getString(R.string.unknown)));
+                }
+
+                return r;
+            }
+        }
+
+        return null;
+    }
+
+    private Response doRatingAction(Trakt manager) {
+        Rating rating = Rating.fromValue(mArgs.getString(InitBundle.RATING));
+
+        switch (mAction) {
+            case RATE_EPISODE: {
+                final int showTvdbId = mArgs.getInt(InitBundle.SHOW_TVDBID);
+                final int season = mArgs.getInt(InitBundle.SEASON);
+                final int episode = mArgs.getInt(InitBundle.EPISODE);
+                return manager.rateService().episode(new RateService.EpisodeRating(
+                        showTvdbId, season, episode, rating
+                ));
+            }
+            case RATE_SHOW: {
+                final int showTvdbId = mArgs.getInt(InitBundle.SHOW_TVDBID);
+                return manager.rateService().show(new RateService.ShowRating(
+                        showTvdbId, rating
+                ));
+            }
+            case RATE_MOVIE: {
+                final int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
+                return manager.rateService().movie(new RateService.MovieRating(
+                        tmdbId, rating
+                ));
+            }
+        }
+
+        return null;
+    }
+
+    private Response doMovieAction(Trakt manager) {
+        final int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
+
+        switch (mAction) {
+            case COLLECTION_ADD_MOVIE: {
+                Response r = manager.movieService().library(new MovieService.Movies(
+                        new MovieService.SeenMovie(tmdbId)
+                ));
+                // always returns success, even if movie is already in collection
+                r.message = mContext.getString(R.string.action_collection_added);
+                return r;
+            }
+            case COLLECTION_REMOVE_MOVIE: {
+                Response r = manager.movieService().unlibrary(new MovieService.Movies(
+                        new MovieService.SeenMovie(tmdbId)
+                ));
+                // always returns success, even if movie was never in collection
+                r.message = mContext.getString(R.string.action_collection_removed);
+                return r;
+            }
+            case WATCHED_MOVIE: {
+                Response r =  manager.movieService()
+                        .seen(new MovieService.Movies(new MovieService.SeenMovie(tmdbId)));
+                r.message = mContext.getString(R.string.action_watched);
+                return r;
+            }
+            case UNWATCHED_MOVIE: {
+                Response r = manager.movieService()
+                        .unseen(new MovieService.Movies(new MovieService.SeenMovie(tmdbId)));
+                r.message = mContext.getString(R.string.action_unwatched);
+                return r;
+            }
+            case WATCHLIST_MOVIE: {
+                Response r = manager.movieService().watchlist(new MovieService.Movies(
+                        new MovieService.SeenMovie(tmdbId)
+                ));
+                // always returns success, even if movie is already on watchlist
+                r.message = mContext.getString(R.string.watchlist_added);
+                return r;
+            }
+            case UNWATCHLIST_MOVIE: {
+                Response r = manager.movieService().unwatchlist(new MovieService.Movies(
+                        new MovieService.SeenMovie(tmdbId)
+                ));
+                // always returns success, even if movie is not on watchlist anymore
+                r.message = mContext.getString(R.string.watchlist_removed);
+                return r;
+            }
+        }
+
+        return null;
+    }
+
+    private Response doShoutAction(Trakt manager) {
+        Response r;
+        final String shout = mArgs.getString(InitBundle.MESSAGE);
+        final boolean isSpoiler = mArgs.getBoolean(InitBundle.ISSPOILER);
+        final int showTvdbId = mArgs.getInt(InitBundle.SHOW_TVDBID);
+        final int season = mArgs.getInt(InitBundle.SEASON);
+        final int episode = mArgs.getInt(InitBundle.EPISODE);
+
+        // episode?
+        if (episode != 0) {
+            r = manager.commentService().episode(new CommentService.EpisodeComment(
+                    showTvdbId, season, episode, shout
+            ).spoiler(isSpoiler));
+            return r;
+        }
+
+        // movie?
+        int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
+        if (tmdbId != 0) {
+            r = manager.commentService().movie(new CommentService.MovieComment(
+                    tmdbId, shout
+            ).spoiler(isSpoiler));
+            return r;
+        }
+
+        // show!
+        r = manager.commentService().show(new CommentService.ShowComment(
+                showTvdbId, shout
+        ).spoiler(isSpoiler));
         return r;
     }
 

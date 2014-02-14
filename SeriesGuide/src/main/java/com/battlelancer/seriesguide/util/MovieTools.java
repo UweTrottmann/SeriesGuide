@@ -147,6 +147,36 @@ public class MovieTools {
         }
     }
 
+    public static void watchedMovie(Context context, int movieTmdbId) {
+        if (TraktCredentials.get(context).hasCredentials()) {
+            if (!Utils.isConnected(context, true)) {
+                return;
+            }
+            // remove from trakt watchlist
+            AndroidUtils.executeAsyncTask(
+                    new TraktTask(context).watchedMovie(movieTmdbId)
+            );
+        }
+
+        // try updating local movie (if any)
+        updateMovie(context, movieTmdbId, Movies.WATCHED, true);
+    }
+
+    public static void unwatchedMovie(Context context, int movieTmdbId) {
+        if (TraktCredentials.get(context).hasCredentials()) {
+            if (!Utils.isConnected(context, true)) {
+                return;
+            }
+            // remove from trakt watchlist
+            AndroidUtils.executeAsyncTask(
+                    new TraktTask(context).unwatchedMovie(movieTmdbId)
+            );
+        }
+
+        // try updating local movie (if any)
+        updateMovie(context, movieTmdbId, Movies.WATCHED, false);
+    }
+
     private static void addMovieAsync(Context context, int movieTmdbId, AddMovieTask.AddTo addTo) {
         new AddMovieTask(context, addTo).execute(movieTmdbId);
     }

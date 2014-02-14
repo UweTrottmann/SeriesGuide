@@ -39,14 +39,19 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.MovieLoader;
 import com.battlelancer.seriesguide.loaders.MovieTrailersLoader;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.TmdbTools;
+import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.Movie;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -56,6 +61,7 @@ import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb.entities.Credits;
 import com.uwetrottmann.tmdb.entities.Trailers;
 import de.greenrobot.event.EventBus;
+import java.text.DecimalFormat;
 
 /**
  * Displays details about one movie including plot, ratings, trailers and a poster.
@@ -107,6 +113,18 @@ public class MovieDetailsFragment extends SherlockFragment {
 
     @InjectView(R.id.buttonMovieWatchlisted) ImageButton mWatchlistedButton;
 
+    @InjectView(R.id.ratingbar) View mRatingsContainer;
+
+    @InjectView(R.id.textViewRatingsTvdbLabel) TextView mRatingsTmdbLabel;
+
+    @InjectView(R.id.textViewRatingsTvdbValue) TextView mRatingsTmdbValue;
+
+    @InjectView(R.id.textViewRatingsTraktValue) TextView mRatingsTraktValue;
+
+    @InjectView(R.id.textViewRatingsTraktVotes) TextView mRatingsTraktVotes;
+
+    @InjectView(R.id.textViewRatingsTraktUser) TextView mRatingsTraktUserValue;
+
     @InjectView(R.id.textViewMovieCast) TextView mMovieCast;
 
     @InjectView(R.id.textViewMovieCrew) TextView mMovieCrew;
@@ -128,6 +146,14 @@ public class MovieDetailsFragment extends SherlockFragment {
 
         // important action buttons
         mButtonContainer.setVisibility(View.GONE);
+        mRatingsContainer.setVisibility(View.GONE);
+        mRatingsContainer.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rateOnTrakt();
+            }
+        });
+        mRatingsTmdbLabel.setText(R.string.tmdb);
 
         // comments button
         mDivider.setVisibility(View.GONE);
@@ -319,17 +345,28 @@ public class MovieDetailsFragment extends SherlockFragment {
             }
         });
 
-        // watched button
-        // TODO toggle watched action, cheat sheet
-        mWatchedButton.setVisibility(View.GONE);
-        //if (TraktCredentials.get(getActivity()).hasCredentials()) {
-        //    mWatchedButton.setImageResource((movie.watched != null && movie.watched)
-        //            ? R.drawable.ic_ticked
-        //            : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-        //                    R.attr.drawableWatch));
-        //} else {
-        //    mWatchedButton.setVisibility(View.GONE);
-        //}
+        // watched button (only supported when connected to trakt)
+        if (TraktCredentials.get(getActivity()).hasCredentials()) {
+            final boolean isWatched = traktMovie.watched != null && traktMovie.watched;
+            mWatchedButton.setImageResource(isWatched
+                    ? R.drawable.ic_ticked
+                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                            R.attr.drawableWatch));
+            CheatSheet.setup(mWatchedButton,
+                    isWatched ? R.string.action_unwatched : R.string.action_watched);
+            mWatchedButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isWatched) {
+                        MovieTools.unwatchedMovie(getActivity(), mTmdbId);
+                    } else {
+                        MovieTools.watchedMovie(getActivity(), mTmdbId);
+                    }
+                }
+            });
+        } else {
+            mWatchedButton.setVisibility(View.GONE);
+        }
 
         // collected button
         final boolean isInCollection = traktMovie.inCollection != null && traktMovie.inCollection;
@@ -371,6 +408,18 @@ public class MovieDetailsFragment extends SherlockFragment {
 
         // show button bar
         mButtonContainer.setVisibility(View.VISIBLE);
+
+        // ratings
+        mRatingsTmdbValue.setText(TmdbTools.buildRatingValue(tmdbMovie.vote_average));
+        mRatingsTraktUserValue.setText(
+                TraktTools.buildUserRatingString(getActivity(), traktMovie.rating_advanced));
+        if (traktMovie.ratings != null) {
+            mRatingsTraktVotes.setText(
+                    TraktTools.buildRatingVotesString(getActivity(), traktMovie.ratings.votes));
+            mRatingsTraktValue.setText(
+                    TraktTools.buildRatingPercentageString(traktMovie.ratings.percentage));
+        }
+        mRatingsContainer.setVisibility(View.VISIBLE);
 
         // trakt comments link
         mDivider.setVisibility(View.VISIBLE);
@@ -425,6 +474,24 @@ public class MovieDetailsFragment extends SherlockFragment {
             return;
         }
         // re-query some movie details to update button states
+        restartMovieLoader();
+    }
+
+    public void onEvent(TraktTask.TraktActionCompleteEvent event) {
+        if (event.mWasSuccessful &&
+                (event.mTraktAction == TraktAction.WATCHED_MOVIE
+                        || event.mTraktAction == TraktAction.UNWATCHED_MOVIE
+                        || event.mTraktAction == TraktAction.RATE_MOVIE)) {
+            restartMovieLoader();
+        }
+    }
+
+    private void rateOnTrakt() {
+        TraktTools.rateMovie(getActivity(), getFragmentManager(), mTmdbId);
+        fireTrackerEvent("Rate (trakt)");
+    }
+
+    private void restartMovieLoader() {
         Bundle args = new Bundle();
         args.putInt(InitBundle.TMDB_ID, mTmdbId);
         getLoaderManager().restartLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args,
