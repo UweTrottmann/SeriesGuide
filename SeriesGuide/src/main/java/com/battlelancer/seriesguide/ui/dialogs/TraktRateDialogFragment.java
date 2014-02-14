@@ -16,14 +16,6 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
-import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.enumerations.Rating;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.battlelancer.seriesguide.R;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -31,9 +23,16 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.Utils;
+import com.jakewharton.trakt.enumerations.Rating;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
- * Displays the trakt advanced rating scale, submits the chosen rating to the given item on trakt.
+ * Displays the trakt advanced rating scale. If a rating is chosen, launches an appropriate {@link
+ * com.battlelancer.seriesguide.util.TraktTask} to submit the rating to trakt.
  */
 public class TraktRateDialogFragment extends DialogFragment {
 
@@ -42,11 +41,11 @@ public class TraktRateDialogFragment extends DialogFragment {
      *
      * @return TraktRateDialogFragment
      */
-    public static TraktRateDialogFragment newInstance(int tvdbid) {
+    public static TraktRateDialogFragment newInstanceShow(int showTvdbId) {
         TraktRateDialogFragment f = new TraktRateDialogFragment();
         Bundle args = new Bundle();
-        args.putInt(ShareItems.TRAKTACTION, TraktAction.RATE_SHOW.index);
-        args.putInt(ShareItems.TVDBID, tvdbid);
+        args.putString(TraktTask.InitBundle.TRAKTACTION, TraktAction.RATE_SHOW.name());
+        args.putInt(TraktTask.InitBundle.SHOW_TVDBID, showTvdbId);
         f.setArguments(args);
         return f;
     }
@@ -56,13 +55,28 @@ public class TraktRateDialogFragment extends DialogFragment {
      *
      * @return TraktRateDialogFragment
      */
-    public static TraktRateDialogFragment newInstance(int showTvdbid, int season, int episode) {
+    public static TraktRateDialogFragment newInstanceEpisode(int showTvdbid, int seasonNumber,
+            int episodeNumber) {
         TraktRateDialogFragment f = new TraktRateDialogFragment();
         Bundle args = new Bundle();
-        args.putInt(ShareItems.TRAKTACTION, TraktAction.RATE_EPISODE.index);
-        args.putInt(ShareItems.TVDBID, showTvdbid);
-        args.putInt(ShareItems.SEASON, season);
-        args.putInt(ShareItems.EPISODE, episode);
+        args.putString(TraktTask.InitBundle.TRAKTACTION, TraktAction.RATE_EPISODE.name());
+        args.putInt(TraktTask.InitBundle.SHOW_TVDBID, showTvdbid);
+        args.putInt(TraktTask.InitBundle.SEASON, seasonNumber);
+        args.putInt(TraktTask.InitBundle.EPISODE, episodeNumber);
+        f.setArguments(args);
+        return f;
+    }
+
+    /**
+     * Create {@link TraktRateDialogFragment} to rate a show.
+     *
+     * @return TraktRateDialogFragment
+     */
+    public static TraktRateDialogFragment newInstanceMovie(int movieTmdbId) {
+        TraktRateDialogFragment f = new TraktRateDialogFragment();
+        Bundle args = new Bundle();
+        args.putString(TraktTask.InitBundle.TRAKTACTION, TraktAction.RATE_MOVIE.name());
+        args.putInt(TraktTask.InitBundle.MOVIE_TMDB_ID, movieTmdbId);
         f.setArguments(args);
         return f;
     }
@@ -75,77 +89,75 @@ public class TraktRateDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final Context context = getActivity();
-
         AlertDialog.Builder builder;
 
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(
+                Context.LAYOUT_INFLATER_SERVICE);
         final View layout = inflater.inflate(R.layout.trakt_rate_dialog, null);
 
         layout.findViewById(R.id.totallyninja).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onRate(Rating.TotallyNinja, context);
+                onRate(Rating.TotallyNinja);
             }
         });
         layout.findViewById(R.id.weaksauce).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onRate(Rating.WeakSauce, context);
+                onRate(Rating.WeakSauce);
             }
         });
 
         // advanced rating steps
         layout.findViewById(R.id.rating2).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onRate(Rating.Terrible, context);
+                onRate(Rating.Terrible);
             }
         });
         layout.findViewById(R.id.rating3).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onRate(Rating.Bad, context);
+                onRate(Rating.Bad);
             }
         });
         layout.findViewById(R.id.rating4).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onRate(Rating.Poor, context);
+                onRate(Rating.Poor);
             }
         });
         layout.findViewById(R.id.rating5).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onRate(Rating.Meh, context);
+                onRate(Rating.Meh);
             }
         });
         layout.findViewById(R.id.rating6).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onRate(Rating.Fair, context);
+                onRate(Rating.Fair);
             }
         });
         layout.findViewById(R.id.rating7).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onRate(Rating.Good, context);
+                onRate(Rating.Good);
             }
         });
         layout.findViewById(R.id.rating8).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onRate(Rating.Great, context);
+                onRate(Rating.Great);
             }
         });
         layout.findViewById(R.id.rating9).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onRate(Rating.Superb, context);
+                onRate(Rating.Superb);
             }
         });
 
-        builder = new AlertDialog.Builder(context);
+        builder = new AlertDialog.Builder(getActivity());
         builder.setView(layout);
         builder.setNegativeButton(android.R.string.cancel, null);
 
         return builder.create();
     }
 
-    private void onRate(Rating rating, Context context) {
-        getArguments().putString(ShareItems.RATING, rating.toString());
-        AndroidUtils.executeAsyncTask(new TraktTask(context, getArguments()));
+    private void onRate(Rating rating) {
+        getArguments().putString(TraktTask.InitBundle.RATING, rating.toString());
+        AndroidUtils.executeAsyncTask(new TraktTask(getActivity(), getArguments()));
         dismiss();
     }
 }

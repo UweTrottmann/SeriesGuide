@@ -23,24 +23,15 @@ import com.battlelancer.seriesguide.util.TraktTask;
  * The trakt action to be performed by {@link TraktTask}.
  */
 public enum TraktAction {
-    SEEN_EPISODE(0),
-    RATE_EPISODE(1),
-    CHECKIN_EPISODE(2),
-    SHOUT(3),
-    RATE_SHOW(4),
-    CHECKIN_MOVIE(5),
-    WATCHLIST_MOVIE(6),
-    UNWATCHLIST_MOVIE(7),
-    COLLECTION_ADD_MOVIE(8),
-    COLLECTION_REMOVE_MOVIE(9);
-
-    public final int index;
-
-    private TraktAction(int index) {
-        this.index = index;
-    }
-
-    public int index() {
-        return index;
-    }
+    SEEN_EPISODE,
+    RATE_SHOW,
+    RATE_EPISODE,
+    RATE_MOVIE,
+    CHECKIN_EPISODE,
+    CHECKIN_MOVIE,
+    SHOUT,
+    WATCHLIST_MOVIE,
+    UNWATCHLIST_MOVIE,
+    COLLECTION_ADD_MOVIE,
+    COLLECTION_REMOVE_MOVIE
 }

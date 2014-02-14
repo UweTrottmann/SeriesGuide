@@ -254,7 +254,7 @@ public class TraktTools {
         if (!TraktCredentials.ensureCredentials(context)) {
             return;
         }
-        TraktRateDialogFragment newFragment = TraktRateDialogFragment.newInstance(
+        TraktRateDialogFragment newFragment = TraktRateDialogFragment.newInstanceEpisode(
                 showTvdbId, seasonNumber, episodeNumber);
         newFragment.show(fragmentManager, "traktratedialog");
     }

@@ -54,8 +54,6 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
         String SHOW_TVDBID = "tvdbid";
 
-        String TMDB_ID = "tmdbid";
-
         String SEASON = "season";
 
         String EPISODE = "episode";
@@ -124,7 +122,8 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     }
 
     /**
-     * Initial constructor. Call <b>one</b> of the setup-methods like {@link #shoutEpisode(int, int,
+     * Initial constructor. Call <b>one</b> of the setup-methods like {@link #shoutEpisode(int,
+     * int,
      * int, String, boolean)} afterwards.<br> <br> Make sure the user has valid trakt credentials
      * (check with {@link com.battlelancer.seriesguide.settings.TraktCredentials#hasCredentials()}
      * and then possibly launch {@link ConnectTraktActivity}) or execution will fail.
@@ -149,7 +148,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
      * Check into an episode. Optionally provide a checkin message.
      */
     public TraktTask checkInEpisode(int showTvdbid, int season, int episode, String message) {
-        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.CHECKIN_EPISODE.index);
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.CHECKIN_EPISODE.name());
         mArgs.putInt(InitBundle.SHOW_TVDBID, showTvdbid);
         mArgs.putInt(InitBundle.SEASON, season);
         mArgs.putInt(InitBundle.EPISODE, episode);
@@ -161,43 +160,21 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
      * Check into an episode. Optionally provide a checkin message.
      */
     public TraktTask checkInMovie(int tmdbId, String message) {
-        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.CHECKIN_MOVIE.index);
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.CHECKIN_MOVIE.name());
         mArgs.putInt(InitBundle.MOVIE_TMDB_ID, tmdbId);
         mArgs.putString(InitBundle.MESSAGE, message);
         return this;
     }
 
     public TraktTask collectionAddMovie(int movieTmdbId) {
-        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.COLLECTION_ADD_MOVIE.index);
-        mArgs.putInt(InitBundle.TMDB_ID, movieTmdbId);
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.COLLECTION_ADD_MOVIE.name());
+        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
         return this;
     }
 
     public TraktTask collectionRemoveMovie(int movieTmdbId) {
-        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.COLLECTION_REMOVE_MOVIE.index);
-        mArgs.putInt(InitBundle.TMDB_ID, movieTmdbId);
-        return this;
-    }
-
-    /**
-     * Rate an episode.
-     */
-    public TraktTask rateEpisode(int showTvdbid, int season, int episode, Rating rating) {
-        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.RATE_EPISODE.index);
-        mArgs.putInt(InitBundle.SHOW_TVDBID, showTvdbid);
-        mArgs.putInt(InitBundle.SEASON, season);
-        mArgs.putInt(InitBundle.EPISODE, episode);
-        mArgs.putString(InitBundle.RATING, rating.toString());
-        return this;
-    }
-
-    /**
-     * Rate a show.
-     */
-    public TraktTask rateShow(int showTvdbid, Rating rating) {
-        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.RATE_SHOW.index);
-        mArgs.putInt(InitBundle.SHOW_TVDBID, showTvdbid);
-        mArgs.putString(InitBundle.RATING, rating.toString());
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.COLLECTION_REMOVE_MOVIE.name());
+        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
         return this;
     }
 
@@ -205,7 +182,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
      * Post a shout for a show.
      */
     public TraktTask shoutShow(int showTvdbid, String shout, boolean isSpoiler) {
-        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.SHOUT.index);
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.SHOUT.name());
         mArgs.putInt(InitBundle.SHOW_TVDBID, showTvdbid);
         mArgs.putString(InitBundle.MESSAGE, shout);
         mArgs.putBoolean(InitBundle.ISSPOILER, isSpoiler);
@@ -224,11 +201,11 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     }
 
     /**
-     * Post a shout for a show.
+     * Post a shout for a movie.
      */
     public TraktTask shoutMovie(int movieTmdbId, String shout, boolean isSpoiler) {
-        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.SHOUT.index);
-        mArgs.putInt(InitBundle.TMDB_ID, movieTmdbId);
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.SHOUT.name());
+        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
         mArgs.putString(InitBundle.MESSAGE, shout);
         mArgs.putBoolean(InitBundle.ISSPOILER, isSpoiler);
         return this;
@@ -238,8 +215,8 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
      * Add a movie to a users watchlist.
      */
     public TraktTask watchlistMovie(int tmdbId) {
-        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.WATCHLIST_MOVIE.index);
-        mArgs.putInt(InitBundle.TMDB_ID, tmdbId);
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.WATCHLIST_MOVIE.name());
+        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, tmdbId);
         return this;
     }
 
@@ -247,15 +224,15 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
      * Remove a movie from a users watchlist.
      */
     public TraktTask unwatchlistMovie(int tmdbId) {
-        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.UNWATCHLIST_MOVIE.index);
-        mArgs.putInt(InitBundle.TMDB_ID, tmdbId);
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.UNWATCHLIST_MOVIE.name());
+        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, tmdbId);
         return this;
     }
 
     @Override
     protected Response doInBackground(Void... params) {
         // we need this value in onPostExecute, so preserve it here
-        mAction = TraktAction.values()[mArgs.getInt(InitBundle.TRAKTACTION)];
+        mAction = TraktAction.valueOf(mArgs.getString(InitBundle.TRAKTACTION));
 
         // check for network connection
         if (!AndroidUtils.isNetworkConnected(mContext)) {
@@ -347,6 +324,14 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     ));
                     break;
                 }
+                case RATE_MOVIE: {
+                    Rating rating = Rating.fromValue(mArgs.getString(InitBundle.RATING));
+                    int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
+                    r = manager.rateService().movie(new RateService.MovieRating(
+                            tmdbId, rating
+                    ));
+                    break;
+                }
                 case SHOUT: {
                     final String shout = mArgs.getString(InitBundle.MESSAGE);
                     final boolean isSpoiler = mArgs.getBoolean(InitBundle.ISSPOILER);
@@ -360,7 +345,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     }
 
                     // movie?
-                    int tmdbId = mArgs.getInt(InitBundle.TMDB_ID);
+                    int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
                     if (tmdbId != 0) {
                         r = manager.commentService().movie(new CommentService.MovieComment(
                                 tmdbId, shout
@@ -375,7 +360,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     break;
                 }
                 case COLLECTION_ADD_MOVIE: {
-                    int tmdbId = mArgs.getInt(InitBundle.TMDB_ID);
+                    int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
                     r = manager.movieService().library(new MovieService.Movies(
                             new MovieService.SeenMovie(tmdbId)
                     ));
@@ -384,7 +369,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     break;
                 }
                 case COLLECTION_REMOVE_MOVIE: {
-                    int tmdbId = mArgs.getInt(InitBundle.TMDB_ID);
+                    int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
                     r = manager.movieService().unlibrary(new MovieService.Movies(
                             new MovieService.SeenMovie(tmdbId)
                     ));
@@ -393,7 +378,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     break;
                 }
                 case WATCHLIST_MOVIE: {
-                    final int tmdbId = mArgs.getInt(InitBundle.TMDB_ID);
+                    final int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
                     r = manager.movieService().watchlist(new MovieService.Movies(
                             new MovieService.SeenMovie(tmdbId)
                     ));
@@ -402,7 +387,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     break;
                 }
                 case UNWATCHLIST_MOVIE: {
-                    final int tmdbId = mArgs.getInt(InitBundle.TMDB_ID);
+                    final int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
                     r = manager.movieService().unwatchlist(new MovieService.Movies(
                             new MovieService.SeenMovie(tmdbId)
                     ));

@@ -67,10 +67,10 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Context context = getActivity().getApplicationContext();
-        final FragmentManager fm = getFragmentManager();
         final Bundle args = getArguments();
-        final boolean isEpisodeNotMovie = args.getInt(InitBundle.TRAKTACTION)
-                == TraktAction.CHECKIN_EPISODE.index;
+        final boolean isEpisodeNotMovie =
+                TraktAction.valueOf(args.getString(InitBundle.TRAKTACTION))
+                        == TraktAction.CHECKIN_EPISODE;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -141,7 +141,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
             public void onClick(DialogInterface dialog, int which) {
                 // broadcast check-in success
                 EventBus.getDefault().post(new TraktTask.TraktActionCompleteEvent(
-                        TraktAction.values()[args.getInt(InitBundle.TRAKTACTION)], true, null));
+                        TraktAction.valueOf(args.getString(InitBundle.TRAKTACTION)), true, null));
             }
         });
 
