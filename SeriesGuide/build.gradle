@@ -76,7 +76,7 @@ dependencies {
         exclude group: 'com.google.android.google-play-services'
     }
     compile 'com.google.http-client:google-http-client-gson:1.17.0-rc'
-    compile 'com.google.android.gms:play-services:4.0.30'
+    compile 'com.google.android.gms:play-services:4.1.32'
 
     // libs folder
     compile fileTree(dir: 'libs', include: '*.jar')
