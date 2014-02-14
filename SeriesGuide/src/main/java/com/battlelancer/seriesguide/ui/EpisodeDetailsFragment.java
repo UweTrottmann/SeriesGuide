@@ -237,10 +237,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_rate_trakt) {
-            rateOnTrakt();
-            return true;
-        } else if (itemId == R.id.menu_share) {
+        if (itemId == R.id.menu_share) {
             shareEpisode();
             return true;
         } else if (itemId == R.id.menu_manage_lists) {

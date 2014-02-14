@@ -27,9 +27,5 @@
         android:icon="@drawable/ic_action_share_inverse"
         android:showAsAction="ifRoom"
         android:title="@string/share_episode"/>
-    <item
-        android:id="@+id/menu_rate_trakt"
-        android:showAsAction="never"
-        android:title="@string/menu_rate_episode"/>
 
 </menu>
