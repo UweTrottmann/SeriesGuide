@@ -84,17 +84,6 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
 
             fireTrackerEvent("Subscribe");
             return true;
-        } else if (itemId == R.id.menu_preferences) {
-            startActivity(new Intent(this, SeriesGuidePreferences.class));
-
-            fireTrackerEvent("Settings");
-            return true;
-        } else if (itemId == R.id.menu_help) {
-            startActivity(new Intent(this, HelpActivity.class));
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-
-            fireTrackerEvent("Help");
-            return true;
         }
 
         return super.onOptionsItemSelected(item);

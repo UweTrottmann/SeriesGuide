@@ -67,6 +67,8 @@
         <item name="drawableStats">@drawable/ic_action_bargraph</item>
         <item name="drawableSearch">@drawable/ic_action_search</item>
         <item name="drawableTv">@drawable/ic_action_tv</item>
+        <item name="drawableSettings">@drawable/ic_action_settings</item>
+        <item name="drawableHelp">@drawable/ic_action_help</item>
 
     </style>
 
@@ -129,6 +131,8 @@
         <item name="drawableStats">@drawable/ic_action_bargraph</item>
         <item name="drawableSearch">@drawable/ic_action_search</item>
         <item name="drawableTv">@drawable/ic_action_tv</item>
+        <item name="drawableSettings">@drawable/ic_action_settings</item>
+        <item name="drawableHelp">@drawable/ic_action_help</item>
 
     </style>
 
@@ -206,6 +210,8 @@
         <item name="drawableStats">@drawable/ic_action_bargraph_inverse</item>
         <item name="drawableSearch">@drawable/ic_action_search_inverse</item>
         <item name="drawableTv">@drawable/ic_action_tv_inverse</item>
+        <item name="drawableSettings">@drawable/ic_action_settings_inverse</item>
+        <item name="drawableHelp">@drawable/ic_action_help_inverse</item>
 
         <!-- Remove default action bar shadow -->
         <item name="android:windowContentOverlay">@null</item>
