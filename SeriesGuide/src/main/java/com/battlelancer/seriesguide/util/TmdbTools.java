@@ -16,13 +16,32 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import java.text.DecimalFormat;
 
 public class TmdbTools {
+
+    private static final String BASE_URL = "https://www.themoviedb.org/";
+    private static final String PATH_MOVIES = "movie/";
 
     private static DecimalFormat RATING_FORMAT = new DecimalFormat("0.0");
 
     public static String buildRatingValue(Double value) {
         return value == null ? "-.-" : RATING_FORMAT.format(value);
+    }
+
+    public static void openTmdb(Context context, int movieTmdbId, final String logTag) {
+        Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse(buildMovieUrl(movieTmdbId)));
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        Utils.tryStartActivity(context, intent, true);
+
+        Utils.trackAction(context, logTag, "TMDb");
+    }
+
+    private static String buildMovieUrl(int movieTmdbId) {
+        return BASE_URL + PATH_MOVIES + movieTmdbId;
     }
 }

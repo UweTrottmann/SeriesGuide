@@ -301,6 +301,9 @@ public class MovieDetailsFragment extends SherlockFragment {
                     getActivity());
             return true;
         }
+        if (itemId == R.id.menu_open_tmdb) {
+            TmdbTools.openTmdb(getActivity(), mTmdbId, TAG);
+        }
         if (itemId == R.id.menu_open_trakt) {
             ServiceUtils.openTraktMovie(getActivity(), mTmdbId, TAG);
             return true;
