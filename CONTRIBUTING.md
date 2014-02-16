@@ -4,7 +4,7 @@ Contributing
 #### Would you like to contribute code?
 
 1. [Fork SeriesGuide][11].
-2. `git checkout -b dev descriptive-branch-name` and make [great commits + messages][10].
+2. `git checkout -b descriptive-branch-name dev` and make [great commits + messages][10].
 3. [Start a pull request][6] against dev. Reference [existing issues][7] when possible.
 
 #### No code!
