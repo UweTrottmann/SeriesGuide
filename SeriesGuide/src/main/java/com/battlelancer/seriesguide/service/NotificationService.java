@@ -365,7 +365,7 @@ public class NotificationService extends IntentService {
             contentIntent = TaskStackBuilder.create(context)
                     .addNextIntent(showsIntent)
                     .addNextIntent(episodeDetailsIntent)
-                    .getPendingIntent(REQUEST_CODE_SINGLE_EPISODE, 0);
+                    .getPendingIntent(REQUEST_CODE_SINGLE_EPISODE, PendingIntent.FLAG_ONE_SHOT);
         } else if (count > 1) {
             // notify about multiple episodes
             tickerText = getString(R.string.upcoming_episodes);
