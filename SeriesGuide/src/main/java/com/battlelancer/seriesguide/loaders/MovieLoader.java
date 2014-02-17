@@ -62,14 +62,12 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
             if (movieQuery != null) {
                 movieQuery.close();
             }
-            // ensure flags are all false on failure
+            // ensure list flags are false on failure
             // (assumption: movie is not in db, it has the truth, so can't be in any lists)
-            if (details.traktMovie() == null) {
-                details.traktMovie(new Movie());
+            if (details.traktMovie() != null) {
+                details.traktMovie().inCollection = false;
+                details.traktMovie().inWatchlist = false;
             }
-            details.traktMovie().watched = false;
-            details.traktMovie().inCollection = false;
-            details.traktMovie().inWatchlist = false;
             return details;
         }
 
