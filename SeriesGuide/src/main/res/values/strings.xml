@@ -400,7 +400,6 @@
 
     <!-- Check Ins -->
     <string name="checkin">Check in</string>
-    <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
     <string name="checkin_searchhint">Type a show name</string>
     <string name="checkin_empty">No matching shows</string>
     <string name="checkin_hint">Type a message (optional)</string>
