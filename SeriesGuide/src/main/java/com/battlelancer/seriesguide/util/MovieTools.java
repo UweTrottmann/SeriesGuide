@@ -515,15 +515,10 @@ public class MovieTools {
             com.uwetrottmann.tmdb.entities.Movie tmdbMovie = loadFromTmdb(moviesServiceTmdb,
                     languageCode, movieTmdbId);
 
-            if (traktMovie != null && tmdbMovie != null && TextUtils.isEmpty(tmdbMovie.overview)) {
-                // fall back to English data if TMDb has no localized text
-                tmdbMovie.title = traktMovie.title;
-                tmdbMovie.overview = traktMovie.overview;
-            }
-
             MovieDetails details = new MovieDetails();
             details.traktMovie(traktMovie);
             details.tmdbMovie(tmdbMovie);
+
             return details;
         }
 
@@ -539,7 +534,13 @@ public class MovieTools {
         private static com.uwetrottmann.tmdb.entities.Movie loadFromTmdb(
                 MoviesService moviesService, String languageCode, int movieTmdbId) {
             try {
-                return moviesService.summary(movieTmdbId, languageCode);
+                com.uwetrottmann.tmdb.entities.Movie movie = moviesService.summary(movieTmdbId,
+                        languageCode);
+                if (movie != null && TextUtils.isEmpty(movie.overview)) {
+                    // fall back to English if TMDb has no localized text
+                    movie = moviesService.summary(movieTmdbId);
+                }
+                return movie;
             } catch (RetrofitError e) {
                 Timber.e(e, "Loading TMDb movie summary failed");
                 return null;
