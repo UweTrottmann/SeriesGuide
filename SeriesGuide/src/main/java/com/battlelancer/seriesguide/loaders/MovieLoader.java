@@ -23,9 +23,11 @@ import android.text.TextUtils;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.MovieDetailsFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Movie;
+import com.jakewharton.trakt.entities.Ratings;
 import com.jakewharton.trakt.services.MovieService;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
@@ -55,8 +57,7 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetailsFragment.MovieD
 
         // try loading from trakt and tmdb
         if (AndroidUtils.isNetworkConnected(getContext())) {
-            details.traktMovie(loadFromTrakt(getContext(), mTmdbId));
-            details.tmdbMovie(loadFromTmdb(getContext(), mTmdbId));
+            details = MovieTools.Download.getMovieDetails(getContext(), mTmdbId);
         }
 
         // update local database
@@ -80,15 +81,8 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetailsFragment.MovieD
             return details;
         }
 
-        // map to objects
-        if (details.traktMovie() == null) {
-            details.traktMovie(new Movie());
-            details.traktMovie().released = new Date(
-                    movieQuery.getLong(MovieQuery.RELEASED_UTC_MS));
-            details.traktMovie().imdb_id = movieQuery.getString(MovieQuery.IMDB_ID);
-        }
         // prefer local state for watched, collected and watchlist status
-        // assumption: local db has the truth
+        // assumption: local db has the truth for these
         details.traktMovie().watched = DBUtils.restoreBooleanFromInt(
                 movieQuery.getInt(MovieQuery.WATCHED));
         details.traktMovie().inCollection = DBUtils.restoreBooleanFromInt(
@@ -96,11 +90,23 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetailsFragment.MovieD
         details.traktMovie().inWatchlist = DBUtils.restoreBooleanFromInt(
                 movieQuery.getInt(MovieQuery.IN_WATCHLIST));
 
+        // only overwrite other info if there is no remote data
+        if (details.traktMovie() == null) {
+            details.traktMovie(new Movie());
+            details.traktMovie().released = new Date(
+                    movieQuery.getLong(MovieQuery.RELEASED_UTC_MS));
+            details.traktMovie().ratings = new Ratings();
+            details.traktMovie().ratings.percentage = movieQuery.getInt(MovieQuery.RATING_TRAKT);
+            details.traktMovie().ratings.votes = movieQuery.getInt(MovieQuery.RATING_VOTES_TRAKT);
+        }
         if (details.tmdbMovie() == null) {
             details.tmdbMovie(new com.uwetrottmann.tmdb.entities.Movie());
+            details.tmdbMovie().imdb_id = movieQuery.getString(MovieQuery.IMDB_ID);
             details.tmdbMovie().title = movieQuery.getString(MovieQuery.TITLE);
             details.tmdbMovie().overview = movieQuery.getString(MovieQuery.OVERVIEW);
             details.tmdbMovie().poster_path = movieQuery.getString(MovieQuery.POSTER);
+            details.tmdbMovie().runtime = movieQuery.getInt(MovieQuery.RUNTIME_MIN);
+            details.tmdbMovie().vote_average = movieQuery.getDouble(MovieQuery.RATING_TMDB);
         }
 
         // clean up
@@ -109,52 +115,9 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetailsFragment.MovieD
         return details;
     }
 
-    private static Movie loadFromTrakt(Context context, int movieTmdbId) {
-        Trakt trakt = ServiceUtils.getTraktWithAuth(context);
-        if (trakt == null) {
-            trakt = ServiceUtils.getTrakt(context);
-        }
-        MovieService movieService = trakt.movieService();
-        try {
-            return movieService.summary(movieTmdbId);
-        } catch (RetrofitError e) {
-            Timber.e(e, "Loading trakt movie summary failed");
-            return null;
-        }
-    }
-
-    private static com.uwetrottmann.tmdb.entities.Movie loadFromTmdb(Context context,
-            int movieTmdbId) {
-        MoviesService moviesService = ServiceUtils.getTmdb(context).moviesService();
-        String languageCode = DisplaySettings.getContentLanguage(context);
-
-        try {
-            com.uwetrottmann.tmdb.entities.Movie movie = moviesService.summary(movieTmdbId,
-                    languageCode);
-            // check if there actually is local content, fall back to English
-            if (TextUtils.isEmpty(movie.title) || TextUtils.isEmpty(movie.overview)) {
-                movie = moviesService.summary(movieTmdbId);
-            }
-            return movie;
-        } catch (RetrofitError e) {
-            Timber.e(e, "Loading TMDb movie summary failed");
-            return null;
-        }
-    }
-
     private static void updateLocalMovie(Context context,
             MovieDetailsFragment.MovieDetails details, int tmdbId) {
-        ContentValues values = new ContentValues();
-
-        if (details.traktMovie() != null) {
-            values.put(Movies.RELEASED_UTC_MS, details.traktMovie().released.getTime());
-            values.put(Movies.IMDB_ID, details.traktMovie().imdb_id);
-        }
-        if (details.tmdbMovie() != null) {
-            values.put(Movies.TITLE, details.tmdbMovie().title);
-            values.put(Movies.OVERVIEW, details.tmdbMovie().overview);
-            values.put(Movies.POSTER, details.tmdbMovie().poster_path);
-        }
+        ContentValues values = MovieTools.buildBasicMovieContentValues(details);
 
         // if movie does not exist in database, will do nothing
         context.getContentResolver().update(Movies.buildMovieUri(tmdbId), values, null, null);
@@ -170,7 +133,11 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetailsFragment.MovieD
                 Movies.WATCHED,
                 Movies.IN_COLLECTION,
                 Movies.IN_WATCHLIST,
-                Movies.IMDB_ID
+                Movies.IMDB_ID,
+                Movies.RUNTIME_MIN,
+                Movies.RATING_TMDB,
+                Movies.RATING_TRAKT,
+                Movies.RATING_VOTES_TRAKT
         };
 
         int TITLE = 0;
@@ -181,5 +148,9 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetailsFragment.MovieD
         int IN_COLLECTION = 5;
         int IN_WATCHLIST = 6;
         int IMDB_ID = 7;
+        int RUNTIME_MIN = 8;
+        int RATING_TMDB = 9;
+        int RATING_TRAKT = 10;
+        int RATING_VOTES_TRAKT = 11;
     }
 }

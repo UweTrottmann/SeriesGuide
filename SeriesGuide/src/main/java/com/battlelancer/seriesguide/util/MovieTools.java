@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.util;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.battlelancer.seriesguide.ui.MovieDetailsFragment;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.enumerations.Extended;
@@ -43,6 +44,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import retrofit.RetrofitError;
+import timber.log.Timber;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import static com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult;
@@ -181,38 +183,66 @@ public class MovieTools {
         new AddMovieTask(context, addTo).execute(movieTmdbId);
     }
 
-    private static ContentValues[] buildMoviesContentValues(List<Movie> movies) {
+    private static ContentValues[] buildMoviesContentValues(
+            List<MovieDetailsFragment.MovieDetails> movies) {
         ContentValues[] valuesArray = new ContentValues[movies.size()];
         int index = 0;
-        for (Movie movie : movies) {
+        for (MovieDetailsFragment.MovieDetails movie : movies) {
             valuesArray[index] = buildMovieContentValues(movie);
             index++;
         }
         return valuesArray;
     }
 
-    private static ContentValues buildMovieContentValues(Movie movie) {
-        ContentValues values = buildBasicMovieContentValues(movie);
+    private static ContentValues buildMovieContentValues(
+            MovieDetailsFragment.MovieDetails details) {
+        ContentValues values = buildBasicMovieContentValuesWithId(details);
 
-        values.put(Movies.IN_COLLECTION, DBUtils.convertBooleanToInt(movie.inCollection));
-        values.put(Movies.IN_WATCHLIST, DBUtils.convertBooleanToInt(movie.inWatchlist));
+        values.put(Movies.IN_COLLECTION,
+                DBUtils.convertBooleanToInt(details.traktMovie().inCollection));
+        values.put(Movies.IN_WATCHLIST,
+                DBUtils.convertBooleanToInt(details.traktMovie().inWatchlist));
 
         return values;
     }
 
     /**
-     * Extracts basic properties, except in_watchlist and in_collection.
+     * Extracts basic properties, except in_watchlist and in_collection from trakt. Also includes
+     * the TMDb id as value.
      */
-    private static ContentValues buildBasicMovieContentValues(Movie movie) {
+    private static ContentValues buildBasicMovieContentValuesWithId(
+            MovieDetailsFragment.MovieDetails details) {
+        ContentValues values = buildBasicMovieContentValues(details);
+        values.put(Movies.TMDB_ID, details.tmdbMovie().id);
+        return values;
+    }
+
+    /**
+     * Extracts basic properties, except in_watchlist and in_collection from trakt.
+     */
+    public static ContentValues buildBasicMovieContentValues(
+            MovieDetailsFragment.MovieDetails details) {
         ContentValues values = new ContentValues();
 
-        values.put(Movies.IMDB_ID, movie.imdb_id);
-        values.put(Movies.TMDB_ID, movie.tmdbId);
-        values.put(Movies.TITLE, movie.title);
-        values.put(Movies.OVERVIEW, movie.overview);
-        values.put(Movies.RELEASED_UTC_MS, movie.released.getTime());
-        values.put(Movies.WATCHED, DBUtils.convertBooleanToInt(movie.watched));
-        values.put(Movies.POSTER, movie.images == null ? "" : movie.images.poster);
+        // data from trakt
+        if (details.traktMovie() != null) {
+            values.put(Movies.RELEASED_UTC_MS, details.traktMovie().released.getTime());
+            values.put(Movies.WATCHED, DBUtils.convertBooleanToInt(details.traktMovie().watched));
+            if (details.traktMovie().ratings != null) {
+                values.put(Movies.RATING_TRAKT, details.traktMovie().ratings.percentage);
+                values.put(Movies.RATING_VOTES_TRAKT, details.traktMovie().ratings.votes);
+            }
+        }
+
+        // data from TMDb
+        if (details.tmdbMovie() != null) {
+            values.put(Movies.IMDB_ID, details.tmdbMovie().imdb_id);
+            values.put(Movies.TITLE, details.tmdbMovie().title);
+            values.put(Movies.OVERVIEW, details.tmdbMovie().overview);
+            values.put(Movies.POSTER, details.tmdbMovie().poster_path);
+            values.put(Movies.RUNTIME_MIN, details.tmdbMovie().runtime);
+            values.put(Movies.RATING_TMDB, details.tmdbMovie().vote_average);
+        }
 
         return values;
     }
@@ -309,27 +339,19 @@ public class MovieTools {
         protected Integer doInBackground(Integer... params) {
             int movieTmdbId = params[0];
 
-            // prepare services
-            Trakt trakt = ServiceUtils.getTraktWithAuth(mContext);
-            if (trakt == null) {
-                // fall back
-                trakt = ServiceUtils.getTrakt(mContext);
-            }
-            Tmdb tmdb = ServiceUtils.getTmdb(mContext);
-
             // get movie info
-            Movie movie = Download.getMovie(trakt.movieService(), tmdb.moviesService(),
-                    DisplaySettings.getContentLanguage(mContext), movieTmdbId);
-            if (movie == null) {
+            MovieDetailsFragment.MovieDetails details = Download.getMovieDetails(mContext,
+                    movieTmdbId);
+            if (details.traktMovie() == null || details.tmdbMovie() == null) {
                 return null;
             }
 
             // store in database, overwrite in_collection and in_watchlist
-            ContentValues values = buildBasicMovieContentValues(movie);
+            ContentValues values = buildBasicMovieContentValuesWithId(details);
             values.put(Movies.IN_COLLECTION, mAddTo == AddTo.COLLECTION ?
-                    1 : DBUtils.convertBooleanToInt(movie.inCollection));
+                    1 : DBUtils.convertBooleanToInt(details.traktMovie().inCollection));
             values.put(Movies.IN_WATCHLIST, mAddTo == AddTo.WATCHLIST ?
-                    1 : DBUtils.convertBooleanToInt(movie.inWatchlist));
+                    1 : DBUtils.convertBooleanToInt(details.traktMovie().inWatchlist));
 
             mContext.getContentResolver().insert(Movies.CONTENT_URI, values);
 
@@ -442,16 +464,22 @@ public class MovieTools {
             MoviesService moviesServiceTmdb = ServiceUtils.getTmdb(context)
                     .moviesService();
             String languageCode = DisplaySettings.getContentLanguage(context);
-            List<Movie> movies = new LinkedList<>();
+            List<MovieDetailsFragment.MovieDetails> movies = new LinkedList<>();
 
             for (int i = 0; i < movieTmdbIds.length; i++) {
-                Movie movie = getMovie(movieServiceTrakt, moviesServiceTmdb, languageCode,
-                        movieTmdbIds[i]);
-                if (movie == null) {
+                if (!AndroidUtils.isNetworkConnected(context)) {
                     return UpdateResult.INCOMPLETE;
                 }
 
-                movies.add(movie);
+                MovieDetailsFragment.MovieDetails movieDetails = getMovieDetails(movieServiceTrakt,
+                        moviesServiceTmdb, languageCode, movieTmdbIds[i]);
+                if (movieDetails.traktMovie() == null || movieDetails.tmdbMovie() == null) {
+                    // TODO abort if server looks unreachable (check http status)
+                    // skip this one
+                    continue;
+                }
+
+                movies.add(movieDetails);
 
                 // process in batches of at most 10
                 if (i % 10 == 0 || i == movieTmdbIds.length - 1) {
@@ -468,28 +496,63 @@ public class MovieTools {
         }
 
         /**
-         * Download movie data from trakt and TMDb. Always returns with a TMDb poster path, if
-         * available, a local movie title and overview.
+         * Download movie data from trakt and TMDb. If you plan on calling this multiple times, use
+         * {@link #getMovieDetails(com.jakewharton.trakt.services.MovieService,
+         * com.uwetrottmann.tmdb.services.MoviesService, String, int)} instead.
          */
-        public static Movie getMovie(MovieService movieServiceTrakt,
-                MoviesService moviesServiceTmdb, String languageCode, int movieTmdbId) {
+        public static MovieDetailsFragment.MovieDetails getMovieDetails(Context context,
+                int movieTmdbId) {
+            // trakt
+            Trakt trakt = ServiceUtils.getTraktWithAuth(context);
+            if (trakt == null) {
+                trakt = ServiceUtils.getTrakt(context);
+            }
+            MovieService movieService = trakt.movieService();
+
+            // TMDb
+            MoviesService moviesService = ServiceUtils.getTmdb(context).moviesService();
+            String languageCode = DisplaySettings.getContentLanguage(context);
+
+            return getMovieDetails(movieService, moviesService, languageCode, movieTmdbId);
+        }
+
+        /**
+         * Download movie data from trakt and TMDb.
+         */
+        public static MovieDetailsFragment.MovieDetails getMovieDetails(
+                MovieService movieServiceTrakt, MoviesService moviesServiceTmdb,
+                String languageCode, int movieTmdbId) {
+            Movie traktMovie = loadFromTrakt(movieServiceTrakt, movieTmdbId);
+            com.uwetrottmann.tmdb.entities.Movie tmdbMovie = loadFromTmdb(moviesServiceTmdb,
+                    languageCode, movieTmdbId);
+
+            if (traktMovie != null && tmdbMovie != null && TextUtils.isEmpty(tmdbMovie.overview)) {
+                // fall back to English data if TMDb has no localized text
+                tmdbMovie.title = traktMovie.title;
+                tmdbMovie.overview = traktMovie.overview;
+            }
+
+            MovieDetailsFragment.MovieDetails details = new MovieDetailsFragment.MovieDetails();
+            details.traktMovie(traktMovie);
+            details.tmdbMovie(tmdbMovie);
+            return details;
+        }
+
+        private static Movie loadFromTrakt(MovieService movieService, int movieTmdbId) {
             try {
-                // get summary from trakt, includes watched, in_watchlist and in_collection
-                Movie movie = movieServiceTrakt.summary(movieTmdbId);
-
-                // get summary from tmdb, may have localized title and overview
-                com.uwetrottmann.tmdb.entities.Movie summaryTmdb = moviesServiceTmdb
-                        .summary(movieTmdbId, languageCode);
-                if (!TextUtils.isEmpty(summaryTmdb.overview)) {
-                    // if there is localized data, use it instead of English version
-                    movie.title = summaryTmdb.title;
-                    movie.overview = summaryTmdb.overview;
-                }
-                // always use the poster from tmdb
-                movie.images.poster = summaryTmdb.poster_path;
-
-                return movie;
+                return movieService.summary(movieTmdbId);
             } catch (RetrofitError e) {
+                Timber.e(e, "Loading trakt movie summary failed");
+                return null;
+            }
+        }
+
+        private static com.uwetrottmann.tmdb.entities.Movie loadFromTmdb(
+                MoviesService moviesService, String languageCode, int movieTmdbId) {
+            try {
+                return moviesService.summary(movieTmdbId, languageCode);
+            } catch (RetrofitError e) {
+                Timber.e(e, "Loading TMDb movie summary failed");
                 return null;
             }
         }
