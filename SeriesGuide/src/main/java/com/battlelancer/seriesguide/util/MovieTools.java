@@ -16,19 +16,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.settings.TraktSettings;
-import com.battlelancer.seriesguide.ui.MovieDetailsFragment;
-import com.jakewharton.trakt.Trakt;
-import com.jakewharton.trakt.entities.Movie;
-import com.jakewharton.trakt.enumerations.Extended;
-import com.jakewharton.trakt.services.MovieService;
-import com.jakewharton.trakt.services.UserService;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.tmdb.Tmdb;
-import com.uwetrottmann.tmdb.services.MoviesService;
-
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
@@ -36,13 +23,22 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
-
+import com.battlelancer.seriesguide.items.MovieDetails;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.jakewharton.trakt.Trakt;
+import com.jakewharton.trakt.entities.Movie;
+import com.jakewharton.trakt.enumerations.Extended;
+import com.jakewharton.trakt.services.MovieService;
+import com.jakewharton.trakt.services.UserService;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.tmdb.services.MoviesService;
 import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
@@ -183,19 +179,17 @@ public class MovieTools {
         new AddMovieTask(context, addTo).execute(movieTmdbId);
     }
 
-    private static ContentValues[] buildMoviesContentValues(
-            List<MovieDetailsFragment.MovieDetails> movies) {
+    private static ContentValues[] buildMoviesContentValues(List<MovieDetails> movies) {
         ContentValues[] valuesArray = new ContentValues[movies.size()];
         int index = 0;
-        for (MovieDetailsFragment.MovieDetails movie : movies) {
+        for (MovieDetails movie : movies) {
             valuesArray[index] = buildMovieContentValues(movie);
             index++;
         }
         return valuesArray;
     }
 
-    private static ContentValues buildMovieContentValues(
-            MovieDetailsFragment.MovieDetails details) {
+    private static ContentValues buildMovieContentValues(MovieDetails details) {
         ContentValues values = buildBasicMovieContentValuesWithId(details);
 
         values.put(Movies.IN_COLLECTION,
@@ -210,8 +204,7 @@ public class MovieTools {
      * Extracts basic properties, except in_watchlist and in_collection from trakt. Also includes
      * the TMDb id as value.
      */
-    private static ContentValues buildBasicMovieContentValuesWithId(
-            MovieDetailsFragment.MovieDetails details) {
+    private static ContentValues buildBasicMovieContentValuesWithId(MovieDetails details) {
         ContentValues values = buildBasicMovieContentValues(details);
         values.put(Movies.TMDB_ID, details.tmdbMovie().id);
         return values;
@@ -220,8 +213,7 @@ public class MovieTools {
     /**
      * Extracts basic properties, except in_watchlist and in_collection from trakt.
      */
-    public static ContentValues buildBasicMovieContentValues(
-            MovieDetailsFragment.MovieDetails details) {
+    public static ContentValues buildBasicMovieContentValues(MovieDetails details) {
         ContentValues values = new ContentValues();
 
         // data from trakt
@@ -340,8 +332,7 @@ public class MovieTools {
             int movieTmdbId = params[0];
 
             // get movie info
-            MovieDetailsFragment.MovieDetails details = Download.getMovieDetails(mContext,
-                    movieTmdbId);
+            MovieDetails details = Download.getMovieDetails(mContext, movieTmdbId);
             if (details.traktMovie() == null || details.tmdbMovie() == null) {
                 return null;
             }
@@ -464,15 +455,15 @@ public class MovieTools {
             MoviesService moviesServiceTmdb = ServiceUtils.getTmdb(context)
                     .moviesService();
             String languageCode = DisplaySettings.getContentLanguage(context);
-            List<MovieDetailsFragment.MovieDetails> movies = new LinkedList<>();
+            List<MovieDetails> movies = new LinkedList<>();
 
             for (int i = 0; i < movieTmdbIds.length; i++) {
                 if (!AndroidUtils.isNetworkConnected(context)) {
                     return UpdateResult.INCOMPLETE;
                 }
 
-                MovieDetailsFragment.MovieDetails movieDetails = getMovieDetails(movieServiceTrakt,
-                        moviesServiceTmdb, languageCode, movieTmdbIds[i]);
+                MovieDetails movieDetails = getMovieDetails(movieServiceTrakt, moviesServiceTmdb,
+                        languageCode, movieTmdbIds[i]);
                 if (movieDetails.traktMovie() == null || movieDetails.tmdbMovie() == null) {
                     // TODO abort if server looks unreachable (check http status)
                     // skip this one
@@ -500,8 +491,7 @@ public class MovieTools {
          * {@link #getMovieDetails(com.jakewharton.trakt.services.MovieService,
          * com.uwetrottmann.tmdb.services.MoviesService, String, int)} instead.
          */
-        public static MovieDetailsFragment.MovieDetails getMovieDetails(Context context,
-                int movieTmdbId) {
+        public static MovieDetails getMovieDetails(Context context, int movieTmdbId) {
             // trakt
             Trakt trakt = ServiceUtils.getTraktWithAuth(context);
             if (trakt == null) {
@@ -519,9 +509,8 @@ public class MovieTools {
         /**
          * Download movie data from trakt and TMDb.
          */
-        public static MovieDetailsFragment.MovieDetails getMovieDetails(
-                MovieService movieServiceTrakt, MoviesService moviesServiceTmdb,
-                String languageCode, int movieTmdbId) {
+        public static MovieDetails getMovieDetails(MovieService movieServiceTrakt,
+                MoviesService moviesServiceTmdb, String languageCode, int movieTmdbId) {
             Movie traktMovie = loadFromTrakt(movieServiceTrakt, movieTmdbId);
             com.uwetrottmann.tmdb.entities.Movie tmdbMovie = loadFromTmdb(moviesServiceTmdb,
                     languageCode, movieTmdbId);
@@ -532,7 +521,7 @@ public class MovieTools {
                 tmdbMovie.overview = traktMovie.overview;
             }
 
-            MovieDetailsFragment.MovieDetails details = new MovieDetailsFragment.MovieDetails();
+            MovieDetails details = new MovieDetails();
             details.traktMovie(traktMovie);
             details.tmdbMovie(tmdbMovie);
             return details;

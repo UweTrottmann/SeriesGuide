@@ -19,22 +19,14 @@ package com.battlelancer.seriesguide.loaders;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.text.TextUtils;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.MovieDetailsFragment;
+import com.battlelancer.seriesguide.items.MovieDetails;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.MovieTools;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.entities.Ratings;
-import com.jakewharton.trakt.services.MovieService;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.tmdb.services.MoviesService;
 import java.util.Date;
-import retrofit.RetrofitError;
-import timber.log.Timber;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
@@ -42,7 +34,7 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
  * Tries to load current movie details from trakt and TMDb, if failing tries to fall back to local
  * database copy.
  */
-public class MovieLoader extends GenericSimpleLoader<MovieDetailsFragment.MovieDetails> {
+public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
 
     private int mTmdbId;
 
@@ -52,8 +44,8 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetailsFragment.MovieD
     }
 
     @Override
-    public MovieDetailsFragment.MovieDetails loadInBackground() {
-        MovieDetailsFragment.MovieDetails details = new MovieDetailsFragment.MovieDetails();
+    public MovieDetails loadInBackground() {
+        MovieDetails details = new MovieDetails();
 
         // try loading from trakt and tmdb
         if (AndroidUtils.isNetworkConnected(getContext())) {
@@ -116,7 +108,7 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetailsFragment.MovieD
     }
 
     private static void updateLocalMovie(Context context,
-            MovieDetailsFragment.MovieDetails details, int tmdbId) {
+            MovieDetails details, int tmdbId) {
         ContentValues values = MovieTools.buildBasicMovieContentValues(details);
 
         // if movie does not exist in database, will do nothing
