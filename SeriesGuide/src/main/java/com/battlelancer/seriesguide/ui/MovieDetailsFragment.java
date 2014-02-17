@@ -322,14 +322,15 @@ public class MovieDetailsFragment extends SherlockFragment {
         mMovieTitle.setText(tmdbMovie.title);
         mMovieDescription.setText(tmdbMovie.overview);
 
-        // release date
+        // release date and runtime: "July 17, 2009 | 95 min"
+        StringBuilder releaseAndRuntime = new StringBuilder();
         if (traktMovie.released != null && traktMovie.released.getTime() != 0) {
-            mMovieReleaseDate.setText(
-                    DateUtils.formatDateTime(getActivity(), traktMovie.released.getTime(),
-                            DateUtils.FORMAT_SHOW_DATE));
-        } else {
-            mMovieReleaseDate.setText("");
+            releaseAndRuntime.append(DateUtils.formatDateTime(getActivity(),
+                    traktMovie.released.getTime(), DateUtils.FORMAT_SHOW_DATE));
+            releaseAndRuntime.append(" | ");
         }
+        releaseAndRuntime.append(getString(R.string.runtime_minutes, tmdbMovie.runtime));
+        mMovieReleaseDate.setText(releaseAndRuntime.toString());
 
         // check-in button
         CheatSheet.setup(mCheckinButton);
