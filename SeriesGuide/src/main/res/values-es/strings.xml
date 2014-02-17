@@ -159,7 +159,7 @@
   <string name="togglewatched">Alternar observado</string>
   <string name="pref_infinite_scrolling">Actividad infinita</string>
   <string name="action_activity_filter">Filtrar actividad</string>
-  <string name="update_scheduled">Actualizando...</string>
+  <string name="update_scheduled">Actualizando…</string>
   <string name="update_no_connection">Para actualizar conéctese a internet.</string>
   <string name="update_inprogress">Una actualización está en curso, intente de nuevo más tarde.</string>
   <string name="menu_updateart">Cargar imágenes</string>

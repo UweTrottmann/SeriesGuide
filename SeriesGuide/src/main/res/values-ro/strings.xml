@@ -164,7 +164,7 @@
   <string name="update_inprogress">O actualizare este în progres, încercaţi din nou mai târziu.</string>
   <string name="menu_updateart">Incarcă posterele</string>
   <string name="arttask_incomplete">Unele postere nu se încărcă, încercaţi din nou mai târziu.</string>
-  <string name="arttask_start">Posterele se încarcă...</string>
+  <string name="arttask_start">Posterele se încarcă…</string>
   <string name="show_on_network">pe %s</string>
   <string name="season_watchcount">episoadele nu au fost vizionate</string>
   <string name="season_allwatched">Toate episoadele au fost vizionate</string>
@@ -229,8 +229,8 @@
   <string name="pref_onlyfuturesummary">Niciodată nu afișa episoadele deja difuzate</string>
   <string name="pref_onlyseasoneps">Ascundeți episoadele speciale</string>
   <string name="pref_onlyseasonepssummary">Episoadele speciale dispar dde peste tot, cu excepţia din lista sezonului</string>
-  <string name="pref_seasonsorting">Sortare sezoane după...</string>
-  <string name="pref_episodesorting">Sortare episoade după...</string>
+  <string name="pref_seasonsorting">Sortare sezoane după…</string>
+  <string name="pref_episodesorting">Sortare episoade după…</string>
   <string name="pref_language">Content language</string>
   <string name="pref_updatewifionly">Images via Wi-Fi only</string>
   <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
@@ -269,7 +269,7 @@
   <string name="backup_inprogress">Backing up database…</string>
   <string name="backup_success">Backup successful.</string>
   <string name="backup_failed">Copierea de rezervă nu a reușit.</string>
-  <string name="import_inprogress">Restaurarea bazei de date...</string>
+  <string name="import_inprogress">Restaurarea bazei de date…</string>
   <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">There is no readable backup file.</string>
   <string name="import_failed_noread">The backup file is not readable.</string>
@@ -312,7 +312,7 @@
   <string name="username">Nume de utilizator</string>
   <string name="email">E-mail</string>
   <string name="password">Parola</string>
-  <string name="waitplease">Un moment, vă rugăm...</string>
+  <string name="waitplease">Un moment, vă rugăm…</string>
   <string name="connect">Conectaţi</string>
   <string name="disconnect">Deconectaţi</string>
   <string name="trakt_error">Interacţiunea cu trakt a eșuat</string>

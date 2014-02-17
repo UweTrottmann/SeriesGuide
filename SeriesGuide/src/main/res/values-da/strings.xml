@@ -164,7 +164,7 @@
   <string name="update_inprogress">En opdatering er allerede i gang, prøv igen senere.</string>
   <string name="menu_updateart">Hent plakater</string>
   <string name="arttask_incomplete">Ikke alle plakater blev hentet, prøv igen senere.</string>
-  <string name="arttask_start">Indlæser plakater...</string>
+  <string name="arttask_start">Indlæser plakater…</string>
   <string name="show_on_network">på %s</string>
   <string name="season_watchcount">episoder ikke set</string>
   <string name="season_allwatched">Alle episoder set</string>
@@ -229,8 +229,8 @@
   <string name="pref_onlyfuturesummary">Vis aldrig allerede sendte episoder</string>
   <string name="pref_onlyseasoneps">Gem specielle episoder</string>
   <string name="pref_onlyseasonepssummary">Specielle episoder skjules overalt bortset fra sæson listen</string>
-  <string name="pref_seasonsorting">Sortér sæsoner efter...</string>
-  <string name="pref_episodesorting">Sortér afsnit efter...</string>
+  <string name="pref_seasonsorting">Sortér sæsoner efter…</string>
+  <string name="pref_episodesorting">Sortér afsnit efter…</string>
   <string name="pref_language">Sprog (indhold)</string>
   <string name="pref_updatewifionly">Billeder kun via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">For at begrænse dataforbrug, hent ikke billeder via mobildata</string>

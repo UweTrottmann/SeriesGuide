@@ -159,12 +159,12 @@
   <string name="togglewatched">Preklopi med gledanimi</string>
   <string name="pref_infinite_scrolling">Neskončna dejavnost</string>
   <string name="action_activity_filter">Filter dejavnosti</string>
-  <string name="update_scheduled">Posodabljanje...</string>
+  <string name="update_scheduled">Posodabljanje…</string>
   <string name="update_no_connection">Za posodobitev se poveži z internetom.</string>
   <string name="update_inprogress">Posodabljanje je v teku. Poizkusite ponovno kasneje.</string>
   <string name="menu_updateart">Naloži posterje</string>
   <string name="arttask_incomplete">Nekateri posterji se niso naložili. Poizkusi ponovno kasneje.</string>
-  <string name="arttask_start">Nalagam posterje...</string>
+  <string name="arttask_start">Nalagam posterje…</string>
   <string name="show_on_network">na %s</string>
   <string name="season_watchcount">Nepogledane epizode.</string>
   <string name="season_allwatched">Vse epizode pogledane</string>
@@ -229,8 +229,8 @@
   <string name="pref_onlyfuturesummary">Nikoli ne prikaži že objavljenih epizod</string>
   <string name="pref_onlyseasoneps">Skrij posebne epizode</string>
   <string name="pref_onlyseasonepssummary">Posebne epizode izginejo od povsod, razen s spiska sezone</string>
-  <string name="pref_seasonsorting">Sezono razporedi po...</string>
-  <string name="pref_episodesorting">Epizode razporedi po...</string>
+  <string name="pref_seasonsorting">Sezono razporedi po…</string>
+  <string name="pref_episodesorting">Epizode razporedi po…</string>
   <string name="pref_language">Jezik vsebine</string>
   <string name="pref_updatewifionly">Slike samo preko Wi-Fi</string>
   <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
@@ -252,7 +252,7 @@
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Varnostno kopiranje/Obnovitev</string>
   <string name="backup_summary">Naredite varnostno kopijo ali obnovite vaše oddaje</string>
-  <string name="pref_upcominglimit">Prihajajoče oddaje v...</string>
+  <string name="pref_upcominglimit">Prihajajoče oddaje v…</string>
   <string name="pref_number">Oblika števil</string>
   <string name="pref_offset">Ročna nastavitev časovnega zamika</string>
   <string name="pref_offsetsummary">Zamakni čas predvajanja za %s ur</string>
@@ -266,10 +266,10 @@
   <string name="backup_path">Backup mapa</string>
   <string name="backup_version">Različica zbirke podatkov</string>
   <string name="backup_failed_nosd">Ne morem ustvariti varnostne kopije. Mapa za varnostno kopijo ni na voljo.</string>
-  <string name="backup_inprogress">Ustvarjam varnostno kopijo baze...</string>
+  <string name="backup_inprogress">Ustvarjam varnostno kopijo baze…</string>
   <string name="backup_success">Varnostna kopija uspela.</string>
   <string name="backup_failed">Varnostna kopija ni uspela.</string>
-  <string name="import_inprogress">Obnavljam bazo iz varnostne kopije...</string>
+  <string name="import_inprogress">Obnavljam bazo iz varnostne kopije…</string>
   <string name="import_failed_nosd">Ne morem obnoviti podatkov iz varnostne kopije. Mapa varnostne kopije ni na voljo.</string>
   <string name="import_failed_nofile">Backup datoteka ne obstaja.</string>
   <string name="import_failed_noread">Datoteka varnostne kopije ni berljiva.</string>
@@ -312,7 +312,7 @@
   <string name="username">Uporabniško ime</string>
   <string name="email">Elektronska pošta</string>
   <string name="password">Geslo</string>
-  <string name="waitplease">Trenutek, prosim...</string>
+  <string name="waitplease">Trenutek, prosim…</string>
   <string name="connect">Poveži</string>
   <string name="disconnect">Odklopi</string>
   <string name="trakt_error">Interakcija s trakt-om ni uspela</string>

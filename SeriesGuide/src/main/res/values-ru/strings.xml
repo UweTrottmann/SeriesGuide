@@ -159,7 +159,7 @@
   <string name="togglewatched">Просмотрено</string>
   <string name="pref_infinite_scrolling">Бесконечная активность</string>
   <string name="action_activity_filter">Фильтр активностей</string>
-  <string name="update_scheduled">Обновление...</string>
+  <string name="update_scheduled">Обновление…</string>
   <string name="update_no_connection">Для обновления подключите Интернет.</string>
   <string name="update_inprogress">Выполняется обновление, попробуйте еще раз позже.</string>
   <string name="menu_updateart">Загрузить постеры</string>
@@ -252,7 +252,7 @@
   <string name="pref_autobackupsummary">Еженедельное резервное копирование базы данных в папке загрузки</string>
   <string name="backup">Резервное копирование/восстановление</string>
   <string name="backup_summary">Резервное копирование или восстановление ваших сериалов</string>
-  <string name="pref_upcominglimit">Показы в ближайшие N дней...</string>
+  <string name="pref_upcominglimit">Показы в ближайшие N дней…</string>
   <string name="pref_number">Формат номеров серий</string>
   <string name="pref_offset">Смещение времени вручную</string>
   <string name="pref_offsetsummary">До прямого эфира осталось %s часов</string>

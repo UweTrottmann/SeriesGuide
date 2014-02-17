@@ -164,7 +164,7 @@
   <string name="update_inprogress">التحديث قيد التقدم, حاول مرة أخرى.</string>
   <string name="menu_updateart">تحميل الملصقات</string>
   <string name="arttask_incomplete">.بعض الأغلفة لم تُحمّل, حاول مرة اخرى لاحقاً</string>
-  <string name="arttask_start">تحميل الملصقات...</string>
+  <string name="arttask_start">تحميل الملصقات…</string>
   <string name="show_on_network">خلال %s</string>
   <string name="season_watchcount">الحلقات التي لم تشاهد</string>
   <string name="season_allwatched">تم مشاهدة جميع الحلقات</string>
@@ -229,8 +229,8 @@
   <string name="pref_onlyfuturesummary">لا تعرض الحلقات التي بثت بالفعل</string>
   <string name="pref_onlyseasoneps">إخفاء الحلقات الخاصة</string>
   <string name="pref_onlyseasonepssummary">سوف يتم إخفاء الحلقات الخاصة من كل مكان ما عدا قائمة الموسم</string>
-  <string name="pref_seasonsorting">ترتيب المواسم حسب...</string>
-  <string name="pref_episodesorting">ترتيب الحلقات حسب...</string>
+  <string name="pref_seasonsorting">ترتيب المواسم حسب…</string>
+  <string name="pref_episodesorting">ترتيب الحلقات حسب…</string>
   <string name="pref_language">لغة البرنامج</string>
   <string name="pref_updatewifionly">الصور فقط عن طريق الواي فاي</string>
   <string name="pref_updatewifionlysummary">للحد من تكاليف الرسوم، لا تحمل البيانات بواسطة شكبة الهاتف المحمول</string>
@@ -252,7 +252,7 @@
   <string name="pref_autobackupsummary">نسخ أسبوعي لقاعدة برامجك في مجلد التحميل</string>
   <string name="backup">النسخ الاحتياطي / الاستعادة</string>
   <string name="backup_summary">النسخ الاحتياطي أو استعادة مسلسلاتك</string>
-  <string name="pref_upcominglimit">العروض القادمة خلال ...</string>
+  <string name="pref_upcominglimit">العروض القادمة خلال …</string>
   <string name="pref_number">تنسيق الأرقام</string>
   <string name="pref_offset">تغيير التوقيت يدوياً</string>
   <string name="pref_offsetsummary">بدء وقت العرض قبل %s ساعات</string>
@@ -266,7 +266,7 @@
   <string name="backup_path">مجلد النسخ الإحتياطي</string>
   <string name="backup_version">إصدار قاعدة البيانات</string>
   <string name="backup_failed_nosd">.لا يمكن عمل نسخة احتياطية. مجلد النسخة الاحتياطية غير موجود</string>
-  <string name="backup_inprogress">النسخ الاحتياطي لقاعدة البيانات...</string>
+  <string name="backup_inprogress">النسخ الاحتياطي لقاعدة البيانات…</string>
   <string name="backup_success">نجاح عملية النسخ الاحتياطي.</string>
   <string name="backup_failed">فشل النسخ الاحتياطي.</string>
   <string name="import_inprogress">استعادة قاعدة البيانات…</string>
@@ -312,7 +312,7 @@
   <string name="username">اسم المستخدم</string>
   <string name="email">البريد الإلكتروني</string>
   <string name="password">كلمة المرور</string>
-  <string name="waitplease">لحظات, من فضلك...</string>
+  <string name="waitplease">لحظات, من فضلك…</string>
   <string name="connect">الاتصال</string>
   <string name="disconnect">قطع الاتصال</string>
   <string name="trakt_error">فشل الاتصال مع موقع تراكت</string>

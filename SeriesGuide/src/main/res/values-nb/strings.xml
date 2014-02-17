@@ -159,12 +159,12 @@
   <string name="togglewatched">Sett/ikke sett</string>
   <string name="pref_infinite_scrolling">Uendelig aktivitet</string>
   <string name="action_activity_filter">Filtrere aktivitet</string>
-  <string name="update_scheduled">Oppdaterer...</string>
+  <string name="update_scheduled">Oppdaterer…</string>
   <string name="update_no_connection">Koble til internett for å oppdatere.</string>
   <string name="update_inprogress">En oppdatering er i gang, prøv på nytt senere.</string>
   <string name="menu_updateart">Last plakater</string>
   <string name="arttask_incomplete">Noen plakater ble ikke lasted, prøv på nytt senere.</string>
-  <string name="arttask_start">Oppdaterer plakater...</string>
+  <string name="arttask_start">Oppdaterer plakater…</string>
   <string name="show_on_network">på %s</string>
   <string name="season_watchcount">episoder ikke sett</string>
   <string name="season_allwatched">Alle episoder sett</string>
@@ -229,8 +229,8 @@
   <string name="pref_onlyfuturesummary">Ikke vis episoder som allerde er sendt</string>
   <string name="pref_onlyseasoneps">Skjul spesialepisoder</string>
   <string name="pref_onlyseasonepssummary">Spesialepisoder forsvinner fra alle lister utenom sesonglisten</string>
-  <string name="pref_seasonsorting">Sorter sesonger etter...</string>
-  <string name="pref_episodesorting">Sorter episoder etter...</string>
+  <string name="pref_seasonsorting">Sorter sesonger etter…</string>
+  <string name="pref_episodesorting">Sorter episoder etter…</string>
   <string name="pref_language">Innholdsspråk</string>
   <string name="pref_updatewifionly">Bilder kun via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">For å redusere kostnader, ikke last ned via mobildataforbindelse</string>
@@ -252,7 +252,7 @@
   <string name="pref_autobackupsummary">Ukentlig sikkerhetskopiering av seriedatabasen til nedlastingsmappen</string>
   <string name="backup">Sikkerhetskopiering/gjenoppretting</string>
   <string name="backup_summary">Sikkerhetskopiere eller gjenopprette dine serier</string>
-  <string name="pref_upcominglimit">Kommende serier innen...</string>
+  <string name="pref_upcominglimit">Kommende serier innen…</string>
   <string name="pref_number">Nummerering</string>
   <string name="pref_offset">Manuell tidsforskyvning</string>
   <string name="pref_offsetsummary">Tidsforskjell på %s timer</string>
@@ -266,10 +266,10 @@
   <string name="backup_path">Sikkerhetskopimappe</string>
   <string name="backup_version">Databaseversjon</string>
   <string name="backup_failed_nosd">Kan ikke ta sikkerhetskopi. Sikkerhetskopimappen er ikke tilgjengelig.</string>
-  <string name="backup_inprogress">Sikkerhetskopierer databasen...</string>
+  <string name="backup_inprogress">Sikkerhetskopierer databasen…</string>
   <string name="backup_success">Sikkerhetskopiering vellykket.</string>
   <string name="backup_failed">Sikkerhetskopieringen mislyktes.</string>
-  <string name="import_inprogress">Gjenoppretter databasen...</string>
+  <string name="import_inprogress">Gjenoppretter databasen…</string>
   <string name="import_failed_nosd">Kan ikke gjenopprette sikkerhetskopien. Sikkerhetskopimappen er ikke tilgjengelig.</string>
   <string name="import_failed_nofile">Det finnes ingen lesbar sikkerhetskopifil.</string>
   <string name="import_failed_noread">Sikkerhetskopien er ikke lesbar.</string>
@@ -312,7 +312,7 @@
   <string name="username">Brukernavn</string>
   <string name="email">E-post</string>
   <string name="password">Passord</string>
-  <string name="waitplease">Vennligst vent...</string>
+  <string name="waitplease">Vennligst vent…</string>
   <string name="connect">Koble til</string>
   <string name="disconnect">Koble fra</string>
   <string name="trakt_error">Interaksjonen med trakt mislyktes</string>

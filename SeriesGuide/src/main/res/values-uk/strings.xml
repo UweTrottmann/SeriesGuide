@@ -159,12 +159,12 @@
   <string name="togglewatched">Перемикати переглянуті</string>
   <string name="pref_infinite_scrolling">Безкінечна активність</string>
   <string name="action_activity_filter">Фільтрувати активність</string>
-  <string name="update_scheduled">Оновлюється...</string>
+  <string name="update_scheduled">Оновлюється…</string>
   <string name="update_no_connection">Для оновлення, з\'єднайтесь з інтернетом.</string>
   <string name="update_inprogress">Оновлення в процесі, спробуйте ще раз пізніше.</string>
   <string name="menu_updateart">Завантажити постери</string>
   <string name="arttask_incomplete">Деякі постери не завантажились, спробуйте пізніше.</string>
-  <string name="arttask_start">Завантаження постерів...</string>
+  <string name="arttask_start">Завантаження постерів…</string>
   <string name="show_on_network">на %s</string>
   <string name="season_watchcount">серій не переглянуто</string>
   <string name="season_allwatched">Усі серії переглянуті</string>
@@ -229,8 +229,8 @@
   <string name="pref_onlyfuturesummary">Не показувати серії що вийшли</string>
   <string name="pref_onlyseasoneps">Приховати спец. епізоди</string>
   <string name="pref_onlyseasonepssummary">Спец. епізоди зчезають звідусіль крім списку сезонів</string>
-  <string name="pref_seasonsorting">Сортувати сезони за...</string>
-  <string name="pref_episodesorting">Сортувати серії за...</string>
+  <string name="pref_seasonsorting">Сортувати сезони за…</string>
+  <string name="pref_episodesorting">Сортувати серії за…</string>
   <string name="pref_language">Мова контенту</string>
   <string name="pref_updatewifionly">Зображення лише через Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Щоб знизити витрати через мобільного оператора, не завантажуйте через мобільні мережі</string>
@@ -252,7 +252,7 @@
   <string name="pref_autobackupsummary">Щотижневий бекап баз даних фільмів в теку для завантажень</string>
   <string name="backup">Бекап/Відновлення</string>
   <string name="backup_summary">Резервна копія або відновлення ваших серіалів</string>
-  <string name="pref_upcominglimit">Найближчі серіали в межах...</string>
+  <string name="pref_upcominglimit">Найближчі серіали в межах…</string>
   <string name="pref_number">Формат цифр</string>
   <string name="pref_offset">Зсув часу вручну</string>
   <string name="pref_offsetsummary">Зсув ефірного часу на %s годин</string>
@@ -266,10 +266,10 @@
   <string name="backup_path">Папка Бекапа</string>
   <string name="backup_version">Версія бази даних</string>
   <string name="backup_failed_nosd">Не можливо створити резервну копію. Папка Бекапу недоступна.</string>
-  <string name="backup_inprogress">Резервне копіювання бази даних...</string>
+  <string name="backup_inprogress">Резервне копіювання бази даних…</string>
   <string name="backup_success">Резервне копіювання пройшло успішно.</string>
   <string name="backup_failed">Не вдалося виконати резервне копіювання.</string>
-  <string name="import_inprogress">Відновлення бази даних...</string>
+  <string name="import_inprogress">Відновлення бази даних…</string>
   <string name="import_failed_nosd">Не можливо відновити резервну копію. Папка Бекапу недоступна.</string>
   <string name="import_failed_nofile">Відсутній читабельний файл Бекапу.</string>
   <string name="import_failed_noread">Файл резервної копії не можна прочитати.</string>
@@ -312,7 +312,7 @@
   <string name="username">Ім\'я користувача</string>
   <string name="email">Електронна пошта</string>
   <string name="password">Пароль</string>
-  <string name="waitplease">Зачекайте хвилинку...</string>
+  <string name="waitplease">Зачекайте хвилинку…</string>
   <string name="connect">Підключитись</string>
   <string name="disconnect">Від\'єднатись</string>
   <string name="trakt_error">Взаємодія з trakt не вдалася</string>

@@ -159,7 +159,7 @@
   <string name="togglewatched">החלף נצפו</string>
   <string name="pref_infinite_scrolling">פעילות אינסופית</string>
   <string name="action_activity_filter">סינון פעילות</string>
-  <string name="update_scheduled">מעדכן...</string>
+  <string name="update_scheduled">מעדכן…</string>
   <string name="update_no_connection">התחבר לאינטרנט כדי לעדכן.</string>
   <string name="update_inprogress">מבצע תהליך עדכון, נסה מאוחר יותר.</string>
   <string name="menu_updateart">טען פוסטרים</string>

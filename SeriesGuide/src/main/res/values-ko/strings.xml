@@ -266,10 +266,10 @@
   <string name="backup_path">백업폴더</string>
   <string name="backup_version">데이터베이스 버전</string>
   <string name="backup_failed_nosd">백업 실패. 백업폴더가 존재하지 않습니다.</string>
-  <string name="backup_inprogress">데이터베이스 백업 중...</string>
+  <string name="backup_inprogress">데이터베이스 백업 중…</string>
   <string name="backup_success">성공적으로 백업하였습니다.</string>
   <string name="backup_failed">백업에 실패하였습니다.</string>
-  <string name="import_inprogress">데이터베이스 복원 중...</string>
+  <string name="import_inprogress">데이터베이스 복원 중…</string>
   <string name="import_failed_nosd">복원 실패. 백업 폴더가 존재하지 않습니다.</string>
   <string name="import_failed_nofile">읽을 수 있는 백업 파일이 없습니다.</string>
   <string name="import_failed_noread">백업 파일을 읽을 수 없습니다.</string>

@@ -159,12 +159,12 @@
   <string name="togglewatched">Visto</string>
   <string name="pref_infinite_scrolling">Attività infinita</string>
   <string name="action_activity_filter">Filtra l\'attività</string>
-  <string name="update_scheduled">Aggiornamento...</string>
+  <string name="update_scheduled">Aggiornamento…</string>
   <string name="update_no_connection">Per aggiornare connettersi a internet.</string>
   <string name="update_inprogress">Un altro aggiornamento è in corso, riprova più tardi.</string>
   <string name="menu_updateart">Carica poster</string>
   <string name="arttask_incomplete">Alcuni poster non sono stati caricati, riprova dopo.</string>
-  <string name="arttask_start">Caricamento dei poster...</string>
+  <string name="arttask_start">Caricamento dei poster…</string>
   <string name="show_on_network">su %s</string>
   <string name="season_watchcount">episodi non visti</string>
   <string name="season_allwatched">Tutti gli episodi visti</string>
@@ -229,8 +229,8 @@
   <string name="pref_onlyfuturesummary">Non mostrare gli episodi già trasmessi</string>
   <string name="pref_onlyseasoneps">Nascondi gli episodi speciali</string>
   <string name="pref_onlyseasonepssummary">Episodi speciali non visibili eccetto nella lista della stagione</string>
-  <string name="pref_seasonsorting">Ordina stagioni per...</string>
-  <string name="pref_episodesorting">Ordina episodi per...</string>
+  <string name="pref_seasonsorting">Ordina stagioni per…</string>
+  <string name="pref_episodesorting">Ordina episodi per…</string>
   <string name="pref_language">Lingua contenuto</string>
   <string name="pref_updatewifionly">Images via Wi-Fi only</string>
   <string name="pref_updatewifionlysummary">Per ridurre i costi dell\'operatore, non scaricare usando la rete mobile</string>
@@ -252,7 +252,7 @@
   <string name="pref_autobackupsummary">Backup settimanale del database Visualizza nella cartella di Download</string>
   <string name="backup">Backup/Ripristino</string>
   <string name="backup_summary">Backup o ripristina le tue serie</string>
-  <string name="pref_upcominglimit">Prossimi programmi tra...</string>
+  <string name="pref_upcominglimit">Prossimi programmi tra…</string>
   <string name="pref_number">Formato numerico</string>
   <string name="pref_offset">Fuso orario manuale</string>
   <string name="pref_offsetsummary">Compensazione della messa onda di %s ore</string>
@@ -266,10 +266,10 @@
   <string name="backup_path">Cartella di Backup</string>
   <string name="backup_version">Versione Database</string>
   <string name="backup_failed_nosd">Impossibile effettuare il backup. La cartella non è disponibile.</string>
-  <string name="backup_inprogress">Backup del database in corso...</string>
+  <string name="backup_inprogress">Backup del database in corso…</string>
   <string name="backup_success">Backup eseguito con successo.</string>
   <string name="backup_failed">Backup fallito.</string>
-  <string name="import_inprogress">Ripristino del database...</string>
+  <string name="import_inprogress">Ripristino del database…</string>
   <string name="import_failed_nosd">Impossibile ripristinare il backup. La cartella non è disponibile.</string>
   <string name="import_failed_nofile">Nessun file di Backup esistente.</string>
   <string name="import_failed_noread">Il file di backup è illeggibile.</string>
@@ -312,7 +312,7 @@
   <string name="username">Nome utente</string>
   <string name="email">E-mail</string>
   <string name="password">Password</string>
-  <string name="waitplease">Un momento, per favore...</string>
+  <string name="waitplease">Un momento, per favore…</string>
   <string name="connect">Connetti</string>
   <string name="disconnect">Disconnetti</string>
   <string name="trakt_error">Interazione con trakt non riuscita</string>

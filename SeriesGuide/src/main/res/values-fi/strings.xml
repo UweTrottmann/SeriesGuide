@@ -159,7 +159,7 @@
   <string name="togglewatched">Vaihda katsottu</string>
   <string name="pref_infinite_scrolling">Päättymätön toiminta</string>
   <string name="action_activity_filter">Suodata toimintaa</string>
-  <string name="update_scheduled">Päivitetään...</string>
+  <string name="update_scheduled">Päivitetään…</string>
   <string name="update_no_connection">Päivittääksesi muodosta yhteys internetiin.</string>
   <string name="update_inprogress">Päivitys on käynnissä, yritä myöhemmin uudelleen.</string>
   <string name="menu_updateart">Lataa julisteet</string>
