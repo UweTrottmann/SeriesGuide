@@ -173,7 +173,6 @@
   <string name="oneotherepisode">druga epizoda</string>
   <string name="otherepisodes">druge epizode</string>
   <string name="remaining">%s ostala</string>
-  <string name="search_hint_add">Ime oddaje</string>
   <string name="no_results">Ni zadetkov. Poizkusi s celimi besedami.</string>
   <string name="search_error">Iskanje ni uspelo, poskusite znova pozneje.</string>
   <string name="add_all">Dodaj vse</string>
@@ -286,7 +285,6 @@
   <string name="last_auto_backup">Nazadnje Auto Backup: %s</string>
   <string name="restore_auto_backup">Obnovite varnostno kopijo</string>
   <string name="checkin">Prijava</string>
-  <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Vtipkaj ime oddaje</string>
   <string name="checkin_empty">Ni ustreznih oddaj</string>
   <string name="checkin_hint">Natipkaj sporočilo (opcijsko)</string>

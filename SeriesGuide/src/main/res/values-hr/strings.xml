@@ -173,7 +173,6 @@
   <string name="oneotherepisode">druga epizoda</string>
   <string name="otherepisodes">ostale epizode</string>
   <string name="remaining">%s preostalo</string>
-  <string name="search_hint_add">Naziv serije</string>
   <string name="no_results">Nema rezultata, pokušajte cijele riječi.</string>
   <string name="search_error">Pretraga nije uspjela, pokušaj kasnije.</string>
   <string name="add_all">Dodaj sve</string>
@@ -286,7 +285,6 @@
   <string name="last_auto_backup">Last Auto Backup: %s</string>
   <string name="restore_auto_backup">Restore Auto Backup</string>
   <string name="checkin">Prijavi se</string>
-  <string name="checkin_noaction">Usluga nije aktivirana, prijavi se kada budeš u SeriesGuide.</string>
   <string name="checkin_searchhint">Utipkaj naziv serije</string>
   <string name="checkin_empty">Nema odgovarajućih serija</string>
   <string name="checkin_hint">Napiši poruku (neobavezno)</string>

@@ -173,7 +173,6 @@
   <string name="oneotherepisode">annen episode</string>
   <string name="otherepisodes">andre episoder</string>
   <string name="remaining">%s gjenstår</string>
-  <string name="search_hint_add">Serienavn</string>
   <string name="no_results">Ingen treff. Prøv hele ord.</string>
   <string name="search_error">Søking mislyktes, prøv på nytt senere.</string>
   <string name="add_all">Legg til alle</string>
@@ -286,7 +285,6 @@
   <string name="last_auto_backup">Siste automatiske sikkerhetskopiering: %s</string>
   <string name="restore_auto_backup">Gjenopprett fra automatisk sikkerhetskopiering</string>
   <string name="checkin">Sjekk inn</string>
-  <string name="checkin_noaction">Ingen tjenester aktivert, gjør en innsjekking i SeriesGuide.</string>
   <string name="checkin_searchhint">Skriv inn et serienavn</string>
   <string name="checkin_empty">Ingen treff</string>
   <string name="checkin_hint">Skriv inn en melding (valgfritt)</string>

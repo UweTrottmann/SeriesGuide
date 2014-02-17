@@ -173,7 +173,6 @@
   <string name="oneotherepisode">інша серія</string>
   <string name="otherepisodes">інші серії</string>
   <string name="remaining">%s залишилось</string>
-  <string name="search_hint_add">Назва фільму</string>
   <string name="no_results">Немає результатів, спробуйте завершити слова.</string>
   <string name="search_error">Пошук не вдався, спробуйте пізніше.</string>
   <string name="add_all">Додати усі</string>
@@ -286,7 +285,6 @@
   <string name="last_auto_backup">Останній авто Бекап: %s</string>
   <string name="restore_auto_backup">Відновити з авто Бекапу</string>
   <string name="checkin">Відзначити</string>
-  <string name="checkin_noaction">Жоден сервіс не увімкнено, відзначте за допомогою SeriesGuide.</string>
   <string name="checkin_searchhint">Напишіть назву серіалу</string>
   <string name="checkin_empty">Жодного серіалу не знайдено</string>
   <string name="checkin_hint">Введіть повідомлення (необов\'язково)</string>

@@ -173,7 +173,6 @@
   <string name="oneotherepisode">jiná epizoda</string>
   <string name="otherepisodes">jiné epizody</string>
   <string name="remaining">Zbývá %s</string>
-  <string name="search_hint_add">Název seriálu</string>
   <string name="no_results">Bez výsledku, zkuste celá slova.</string>
   <string name="search_error">Vyhledání selhalo, zkuste to později.</string>
   <string name="add_all">Přidat vše</string>
@@ -286,7 +285,6 @@
   <string name="last_auto_backup">Poslední automatická záloha: %s</string>
   <string name="restore_auto_backup">Obnovení automatické zálohy</string>
   <string name="checkin">Ohlásit se</string>
-  <string name="checkin_noaction">Žádné povolené služby, ohlaste se napřed z SeriesGuide.</string>
   <string name="checkin_searchhint">Napište název seriálu</string>
   <string name="checkin_empty">Žádné odpovídající seriály</string>
   <string name="checkin_hint">Napište postřeh (nepovinné)</string>

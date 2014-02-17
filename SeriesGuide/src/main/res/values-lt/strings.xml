@@ -173,7 +173,6 @@
   <string name="oneotherepisode">Kita serija</string>
   <string name="otherepisodes">Kitos serijos</string>
   <string name="remaining">liko %s</string>
-  <string name="search_hint_add">Serialo pavadinimas</string>
   <string name="no_results">Rezultatų nėra, pabandykite įvesti pilnus žodžius.</string>
   <string name="search_error">Paieška nepavyko, bandykite dar kartą vėliau.</string>
   <string name="add_all">Pridėti visus</string>
@@ -286,7 +285,6 @@
   <string name="last_auto_backup">Last Auto Backup: %s</string>
   <string name="restore_auto_backup">Restore Auto Backup</string>
   <string name="checkin">Check in</string>
-  <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Type a show name</string>
   <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Type a message (optional)</string>

@@ -173,7 +173,6 @@
   <string name="oneotherepisode">inny odcinek</string>
   <string name="otherepisodes">innych odcinków</string>
   <string name="remaining">Pozostało: %s</string>
-  <string name="search_hint_add">Nazwa serialu</string>
   <string name="no_results">Brak wyników. Uzupełnij zapytanie.</string>
   <string name="search_error">Wyszukiwanie nie powiodło się. Spróbuj ponownie później.</string>
   <string name="add_all">Dodaj wszystkie</string>
@@ -286,7 +285,6 @@
   <string name="last_auto_backup">Ostatnia kopia zapasowa: %s</string>
   <string name="restore_auto_backup">Przywróć kopię zapasową</string>
   <string name="checkin">Podepnij się</string>
-  <string name="checkin_noaction">Nie włączono usług, podłącz się za pomocą SeriesGuide.</string>
   <string name="checkin_searchhint">Wpisz nazwę serialu</string>
   <string name="checkin_empty">Nie odnaleziono serialu</string>
   <string name="checkin_hint">Wpisz wiadomość (opcjonalnie)</string>

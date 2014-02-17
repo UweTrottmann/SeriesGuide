@@ -173,7 +173,6 @@
   <string name="oneotherepisode">cita epizode</string>
   <string name="otherepisodes">citas epizodes</string>
   <string name="remaining">palicis %s</string>
-  <string name="search_hint_add">Rādīt nosaukumu</string>
   <string name="no_results">Nav rezultātu, mēģiniet ar veseliem vārdiem.</string>
   <string name="search_error">Meklēšana neizdevās, mēģiniet vēlreiz vēlāk.</string>
   <string name="add_all">Pievienot visas</string>
@@ -287,7 +286,6 @@
   <string name="last_auto_backup">Pēdējais automātiskais dublējums: %s</string>
   <string name="restore_auto_backup">Atjaunot no automātiskā dublējuma</string>
   <string name="checkin">Iečekot</string>
-  <string name="checkin_noaction">Nav iespējotu pakalpojumu, iečekojiet reizi iekš SeriesGuide.</string>
   <string name="checkin_searchhint">Ierakstiet seriāla nosaukumu</string>
   <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Type a message (optional)</string>

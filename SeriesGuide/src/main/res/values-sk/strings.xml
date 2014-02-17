@@ -173,7 +173,6 @@
   <string name="oneotherepisode">iná epizóda</string>
   <string name="otherepisodes">iné epizódy</string>
   <string name="remaining">%s do konca</string>
-  <string name="search_hint_add">Zobraziť názov</string>
   <string name="no_results">Žiadne výsledky, skúste celé slová.</string>
   <string name="search_error">Hľadanie zlyhalo, skúste to neskôr.</string>
   <string name="add_all">Pridaj všetky</string>
@@ -286,7 +285,6 @@
   <string name="last_auto_backup">Posledná automatická záloha: %s</string>
   <string name="restore_auto_backup">Obnoviť automatickú zálohu</string>
   <string name="checkin">Check in</string>
-  <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Napíšte názov seriálu</string>
   <string name="checkin_empty">Seriál sa nenašiel</string>
   <string name="checkin_hint">Napíšte správu (nepovinné)</string>

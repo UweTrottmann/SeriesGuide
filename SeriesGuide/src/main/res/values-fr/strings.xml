@@ -159,12 +159,12 @@
   <string name="togglewatched">Vu/Non vu</string>
   <string name="pref_infinite_scrolling">Activité infinie</string>
   <string name="action_activity_filter">Filtrer l\'activité</string>
-  <string name="update_scheduled">Mise à jour…</string>
+  <string name="update_scheduled">Mise à jour...</string>
   <string name="update_no_connection">Pour mettre à jour, connectez-vous à Internet.</string>
   <string name="update_inprogress">Une mise à jour est en cours, réessayez ultérieurement.</string>
   <string name="menu_updateart">Charger les affiches</string>
   <string name="arttask_incomplete">Le chargement de quelques affiches a échoué, réessayez plus tard.</string>
-  <string name="arttask_start">Chargement des affiches…</string>
+  <string name="arttask_start">Chargement des affiches...</string>
   <string name="show_on_network">sur %s</string>
   <string name="season_watchcount">épisodes non vus</string>
   <string name="season_allwatched">Tous les épisodes vus</string>
@@ -173,7 +173,6 @@
   <string name="oneotherepisode">autre épisode</string>
   <string name="otherepisodes">autres épisodes</string>
   <string name="remaining">%s à voir</string>
-  <string name="search_hint_add">Nom de la série</string>
   <string name="no_results">Pas de résultats, reformulez votre requête.</string>
   <string name="search_error">Recherche échouée, réessayez plus tard.</string>
   <string name="add_all">Tout ajouter</string>
@@ -229,8 +228,8 @@
   <string name="pref_onlyfuturesummary">Ne pas afficher les épisodes déjà diffusés</string>
   <string name="pref_onlyseasoneps">Masquer les épisodes spéciaux</string>
   <string name="pref_onlyseasonepssummary">Les épisodes spéciaux n\'apparaissent plus excepté dans la liste des saisons</string>
-  <string name="pref_seasonsorting">Trier les saisons par…</string>
-  <string name="pref_episodesorting">Trier les épisodes par…</string>
+  <string name="pref_seasonsorting">Trier les saisons par...</string>
+  <string name="pref_episodesorting">Trier les épisodes par...</string>
   <string name="pref_language">Langue</string>
   <string name="pref_updatewifionly">Images uniquement via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Pour réduire les frais de consommation de données, ne pas les télécharger via un réseau mobile</string>
@@ -266,10 +265,10 @@
   <string name="backup_path">Dossier de sauvegarde</string>
   <string name="backup_version">Version de la base de données</string>
   <string name="backup_failed_nosd">Sauvegarde impossible. Le répertoire de sauvegarde est indisponible.</string>
-  <string name="backup_inprogress">Sauvegarde de la base de données…</string>
+  <string name="backup_inprogress">Sauvegarde de la base de données...</string>
   <string name="backup_success">Sauvegarde réussie.</string>
   <string name="backup_failed">Sauvegarde échouée.</string>
-  <string name="import_inprogress">Restauration de la base de données…</string>
+  <string name="import_inprogress">Restauration de la base de données...</string>
   <string name="import_failed_nosd">Restauration impossible. Le répertoire de sauvegarde est indisponible.</string>
   <string name="import_failed_nofile">Il n\'y a aucun fichier de sauvegarde lisible.</string>
   <string name="import_failed_noread">La sauvegarde est illisible.</string>
@@ -286,7 +285,6 @@
   <string name="last_auto_backup">Dernière sauvegarde auto : %s</string>
   <string name="restore_auto_backup">Restaurer la sauvegarde automatique</string>
   <string name="checkin">Check-in</string>
-  <string name="checkin_noaction">Aucun service actif, faites un check-in avec SeriesGuide.</string>
   <string name="checkin_searchhint">Entrez un nom de série</string>
   <string name="checkin_empty">Aucune série correspondante</string>
   <string name="checkin_hint">Écrivez un message (optionnel)</string>
@@ -312,7 +310,7 @@
   <string name="username">Nom d\'utilisateur</string>
   <string name="email">Courriel</string>
   <string name="password">Mot de passe</string>
-  <string name="waitplease">Veuillez patienter…</string>
+  <string name="waitplease">Veuillez patienter...</string>
   <string name="connect">Se connecter</string>
   <string name="disconnect">Se déconnecter</string>
   <string name="trakt_error">Échec d\'interaction avec trakt</string>

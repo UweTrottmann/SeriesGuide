@@ -173,7 +173,6 @@
   <string name="oneotherepisode">egyéb epizód</string>
   <string name="otherepisodes">egyéb epizódok</string>
   <string name="remaining">%s maradt</string>
-  <string name="search_hint_add">Sorozatcím</string>
   <string name="no_results">Nincs találat, próbálj teljes szavakat!</string>
   <string name="search_error">A keresés nem sikerült, próbálja meg később.</string>
   <string name="add_all">Add hozzá mindet</string>
@@ -286,7 +285,6 @@
   <string name="last_auto_backup">Utolsó automata mentés: %s</string>
   <string name="restore_auto_backup">Automatikus mentés visszaállítása</string>
   <string name="checkin">Bejelentkezés</string>
-  <string name="checkin_noaction">Nincs engedélyezett szolgáltatás, jelentkezz be a SeriesGuide-ban.</string>
   <string name="checkin_searchhint">Írja be a sorozat címét</string>
   <string name="checkin_empty">Nincs találat</string>
   <string name="checkin_hint">Írjon üzenetet(nem kötelező)</string>

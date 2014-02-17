@@ -173,7 +173,6 @@
   <string name="oneotherepisode">друг епизод</string>
   <string name="otherepisodes">други епизоди</string>
   <string name="remaining">%s остават</string>
-  <string name="search_hint_add">Име на предаване</string>
   <string name="no_results">Няма резултати, опитайте търсене с цели думи.</string>
   <string name="search_error">Търсенето е неуспешно, опитайте отново по-късно.</string>
   <string name="add_all">Добави всички</string>
@@ -286,7 +285,6 @@
   <string name="last_auto_backup">Последно автоматично архивиране: %s</string>
   <string name="restore_auto_backup">Възстанови автоматично архивиране</string>
   <string name="checkin">Гледано</string>
-  <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Въведете име на предаването</string>
   <string name="checkin_empty">Няма съвпадащи предавания</string>
   <string name="checkin_hint">Напиши съобщение (по избор)</string>

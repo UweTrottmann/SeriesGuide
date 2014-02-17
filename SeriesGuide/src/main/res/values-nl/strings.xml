@@ -173,7 +173,6 @@
   <string name="oneotherepisode">andere aflevering</string>
   <string name="otherepisodes">andere afleveringen</string>
   <string name="remaining">%s resterende</string>
-  <string name="search_hint_add">Serie naam</string>
   <string name="no_results">Geen resultaten, probeer complete woorden.</string>
   <string name="search_error">Zoeken mislukt, probeer het later opnieuw.</string>
   <string name="add_all">Alles toevoegen</string>
@@ -286,7 +285,6 @@
   <string name="last_auto_backup">Laatste auto back-up: %s</string>
   <string name="restore_auto_backup">Auto back-up terugzetten</string>
   <string name="checkin">Check-in</string>
-  <string name="checkin_noaction">Er is geen service ingeschakeld, check eenmaal in vanuit SeriesGuide.</string>
   <string name="checkin_searchhint">Voer de naam van een serie in</string>
   <string name="checkin_empty">Geen overeenkomende series</string>
   <string name="checkin_hint">Voer een bericht in (optioneel)</string>

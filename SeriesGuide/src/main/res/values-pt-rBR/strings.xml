@@ -159,7 +159,7 @@
   <string name="togglewatched">Alternar visto</string>
   <string name="pref_infinite_scrolling">Atividade infinita</string>
   <string name="action_activity_filter">Filtrar atividade</string>
-  <string name="update_scheduled">Atualizando…</string>
+  <string name="update_scheduled">Atualizando...</string>
   <string name="update_no_connection">Para atualizar, conecte-se à Internet.</string>
   <string name="update_inprogress">Atualização em andamento, tente novamente mais tarde.</string>
   <string name="menu_updateart">Carregar cartazes</string>
@@ -173,7 +173,6 @@
   <string name="oneotherepisode">outro episódio</string>
   <string name="otherepisodes">outros episódios</string>
   <string name="remaining">%s restantes</string>
-  <string name="search_hint_add">Nome da série</string>
   <string name="no_results">Sem resultados, tente palavras completas.</string>
   <string name="search_error">Falha na pesquisa, tente novamente mais tarde.</string>
   <string name="add_all">Adicionar tudo</string>
@@ -286,7 +285,6 @@
   <string name="last_auto_backup">Último backup automático: %s</string>
   <string name="restore_auto_backup">Restaurar backup automático</string>
   <string name="checkin">Check-in</string>
-  <string name="checkin_noaction">Nenhum serviço habilitado, faça check-in uma vez com o SeriesGuide.</string>
   <string name="checkin_searchhint">Digite o nome da série</string>
   <string name="checkin_empty">Nenhuma série encontrada</string>
   <string name="checkin_hint">Digite uma mensagem (opcional)</string>

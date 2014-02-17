@@ -173,7 +173,6 @@
   <string name="oneotherepisode">حلقة أخرى</string>
   <string name="otherepisodes">حلقات أخرى</string>
   <string name="remaining">%s المتبقية</string>
-  <string name="search_hint_add">إسم المسلسل</string>
   <string name="no_results">.لا نتائج, جرّب كلمات كاملة</string>
   <string name="search_error">.البحث فشل، حاول مرة أخرى لاحقاً</string>
   <string name="add_all">إضافة الكل </string>
@@ -286,7 +285,6 @@
   <string name="last_auto_backup">آخر عملية نسخ تلقائية: %s</string>
   <string name="restore_auto_backup">استعادة النسخ الاحتياطي التلقائي</string>
   <string name="checkin">أشاهده الآن</string>
-  <string name="checkin_noaction">لا توجد خدمات ممكنة حاليا, تحقق مرة أخرى من دليل المسلسلات.</string>
   <string name="checkin_searchhint">إبحث عن إسم المسلسل</string>
   <string name="checkin_empty">لا تظهر مطابقة</string>
   <string name="checkin_hint">اكتب رسالة (اختياري)</string>

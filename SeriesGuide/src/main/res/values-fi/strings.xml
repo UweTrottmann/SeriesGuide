@@ -159,7 +159,7 @@
   <string name="togglewatched">Vaihda katsottu</string>
   <string name="pref_infinite_scrolling">Päättymätön toiminta</string>
   <string name="action_activity_filter">Suodata toimintaa</string>
-  <string name="update_scheduled">Päivitetään…</string>
+  <string name="update_scheduled">Päivitetään...</string>
   <string name="update_no_connection">Päivittääksesi muodosta yhteys internetiin.</string>
   <string name="update_inprogress">Päivitys on käynnissä, yritä myöhemmin uudelleen.</string>
   <string name="menu_updateart">Lataa julisteet</string>
@@ -173,7 +173,6 @@
   <string name="oneotherepisode">muu jakso</string>
   <string name="otherepisodes">muuta jaksoa</string>
   <string name="remaining">%s jäljellä</string>
-  <string name="search_hint_add">Ohjelman nimi</string>
   <string name="no_results">Ei tuloksia, yritä kokonaisia sanoja.</string>
   <string name="search_error">Haku epäonnistui, yritä myöhemmin uudelleen.</string>
   <string name="add_all">Lisää kaikki</string>
@@ -286,7 +285,6 @@
   <string name="last_auto_backup">Viimeisin automaattinen varmuuskopiointi: %s</string>
   <string name="restore_auto_backup">Palauta automaattinen varmuuskopio</string>
   <string name="checkin">Kuittaa</string>
-  <string name="checkin_noaction">Palveluita ei ole käytössä. Kuittaa kerran SeriesGuidessa.</string>
   <string name="checkin_searchhint">Kirjoita ohjelman nimi</string>
   <string name="checkin_empty">Ei vastaavia ohjelmia</string>
   <string name="checkin_hint">Kirjoita viesti (valinnainen)</string>

@@ -173,7 +173,6 @@
   <string name="oneotherepisode">otro episodio</string>
   <string name="otherepisodes">otros episodios</string>
   <string name="remaining">%s restantes</string>
-  <string name="search_hint_add">Nombre de la serie</string>
   <string name="no_results">No hay resultados, pruebe con palabras completas.</string>
   <string name="search_error">La búsqueda ha fallado, inténtalo más tarde.</string>
   <string name="add_all">Añadir todo</string>
@@ -286,7 +285,6 @@
   <string name="last_auto_backup">Última copia de seguridad automática: %s</string>
   <string name="restore_auto_backup">Restaurar la copia de seguridad automática</string>
   <string name="checkin">Check-in</string>
-  <string name="checkin_noaction">Sin servicios disponibles, haga check-in una vez ingrese a SeriesGuide.</string>
   <string name="checkin_searchhint">Escriba el nombre de la serie</string>
   <string name="checkin_empty">Sin coincidencias</string>
   <string name="checkin_hint">Escriba un mensaje (opcional)</string>
