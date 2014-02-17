@@ -118,6 +118,8 @@
   <string name="action_collection_remove">Aus Sammlung entfernen</string>
   <string name="action_collection_added">Zur Sammlung hinzugefügt</string>
   <string name="action_collection_removed">Aus Sammlung entfernt</string>
+  <string name="action_watched">Gesehen</string>
+  <string name="action_unwatched">Noch nicht gesehen</string>
   <string name="confirm_delete">Wollen Sie %s wirklich entfernen?</string>
   <string name="delete_has_list_items">Ausführung nicht möglich, entfernen Sie zuerst %s von allen Listen.</string>
   <string name="delete_error">Serie konnte nicht entfernt werden. Versuchen Sie es später erneut.</string>

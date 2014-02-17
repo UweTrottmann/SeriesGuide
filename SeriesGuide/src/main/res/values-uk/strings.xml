@@ -118,6 +118,8 @@
   <string name="action_collection_remove">Remove from collection</string>
   <string name="action_collection_added">Added to collection</string>
   <string name="action_collection_removed">Removed from collection</string>
+  <string name="action_watched">Watched</string>
+  <string name="action_unwatched">Not yet watched</string>
   <string name="confirm_delete">Ви дійсно бажаєте видалити %s?</string>
   <string name="delete_has_list_items">Не можливо виконати, спершу видаліть %s зі всіх списків.</string>
   <string name="delete_error">He можливо видалити серіал. Спробуйте пізніше ще раз.</string>

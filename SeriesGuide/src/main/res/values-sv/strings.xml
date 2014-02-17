@@ -119,6 +119,8 @@
   <string name="action_collection_remove">Remove from collection</string>
   <string name="action_collection_added">Added to collection</string>
   <string name="action_collection_removed">Removed from collection</string>
+  <string name="action_watched">Watched</string>
+  <string name="action_unwatched">Not yet watched</string>
   <string name="confirm_delete">Vill du verkligen ta bort %s?</string>
   <string name="delete_has_list_items">Kan\kan inte följa, ta bort %s från alla listor först.</string>
   <string name="delete_error">Det gick inte att ta bort program. Försök igen senare.</string>

@@ -33,7 +33,7 @@
   <string name="offline_no_wifi">Connect to Wi-Fi or allow all connections, then try again.</string>
   <string name="app_not_available">No app available to handle this.</string>
   <string name="onlyx">Only available with X Subscription</string>
-  <string name="add_empty">There are no shows here.</string>
+  <string name="add_empty">Niesú tu žiadne seriály.</string>
   <string name="share_show">Zdieľať reláciu</string>
   <string name="share_episode">Zdieľať epizódu</string>
   <string name="share_movie">Share movie</string>
@@ -118,6 +118,8 @@
   <string name="action_collection_remove">Remove from collection</string>
   <string name="action_collection_added">Added to collection</string>
   <string name="action_collection_removed">Removed from collection</string>
+  <string name="action_watched">Watched</string>
+  <string name="action_unwatched">Not yet watched</string>
   <string name="confirm_delete">Naozaj chcete odstrániť %s?</string>
   <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_error">Could not remove show. Try again later.</string>
@@ -222,7 +224,7 @@
   <string name="prefs_category_basic">Základné</string>
   <string name="prefs_category_sharing">Služby</string>
   <string name="prefs_category_advanced">Pokročilé</string>
-  <string name="prefs_category_about">About</string>
+  <string name="prefs_category_about">O aplikácii</string>
   <string name="pref_onlyfuture">Nezobrazovať odvysielané epizódy</string>
   <string name="pref_onlyfuturesummary">Nikdy nebude zobrazovať odvysielané epizódy</string>
   <string name="pref_onlyseasoneps">Skryť bonusové epizódy</string>
@@ -300,7 +302,7 @@
   <string name="check_into">Check into</string>
   <string name="no_selection">pick one below</string>
   <string name="looking_for_something_else">Looking for something else?</string>
-  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_episode">Hodnotiť epizódu</string>
   <string name="menu_rate_show">Rate show</string>
   <string name="traktcheckin_cancel">Prepísať</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>

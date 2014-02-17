@@ -118,6 +118,8 @@
   <string name="action_collection_remove">Remove from collection</string>
   <string name="action_collection_added">Added to collection</string>
   <string name="action_collection_removed">Removed from collection</string>
+  <string name="action_watched">Watched</string>
+  <string name="action_unwatched">Not yet watched</string>
   <string name="confirm_delete">Do you really want to remove %s?</string>
   <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_error">Could not remove show. Try again later.</string>

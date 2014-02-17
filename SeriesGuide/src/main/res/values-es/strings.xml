@@ -118,6 +118,8 @@
   <string name="action_collection_remove">Remove from collection</string>
   <string name="action_collection_added">Added to collection</string>
   <string name="action_collection_removed">Removed from collection</string>
+  <string name="action_watched">Watched</string>
+  <string name="action_unwatched">Not yet watched</string>
   <string name="confirm_delete">¿Realmente desea eliminar %s?</string>
   <string name="delete_has_list_items">No se puede realizar, quite %s de todas las listas primero.</string>
   <string name="delete_error">No se pudo borrar la serie. Inténtalo más tarde.</string>

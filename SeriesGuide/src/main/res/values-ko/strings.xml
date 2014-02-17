@@ -118,6 +118,8 @@
   <string name="action_collection_remove">Remove from collection</string>
   <string name="action_collection_added">Added to collection</string>
   <string name="action_collection_removed">Removed from collection</string>
+  <string name="action_watched">Watched</string>
+  <string name="action_unwatched">Not yet watched</string>
   <string name="confirm_delete">%S을 제거 하시겠습니까?</string>
   <string name="delete_has_list_items">진행불가. %s을 먼저 모든 목록에서 삭제하세요.</string>
   <string name="delete_error">쇼를 제거하지 못했습니다. 나중에 다시 시도해주세요.</string>

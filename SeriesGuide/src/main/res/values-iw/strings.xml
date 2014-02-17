@@ -118,6 +118,8 @@
   <string name="action_collection_remove">Remove from collection</string>
   <string name="action_collection_added">Added to collection</string>
   <string name="action_collection_removed">Removed from collection</string>
+  <string name="action_watched">Watched</string>
+  <string name="action_unwatched">Not yet watched</string>
   <string name="confirm_delete">בטוח שאתה רוצה להסיר את %s?</string>
   <string name="delete_has_list_items">לא ניתן לבצע, הסר קודם את %s מכל הרשימות </string>
   <string name="delete_error">אין אפשרות להסיר סדרות. נסה שוב מאוחר יותר.</string>

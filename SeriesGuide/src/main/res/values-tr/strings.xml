@@ -118,6 +118,8 @@
   <string name="action_collection_remove">Remove from collection</string>
   <string name="action_collection_added">Added to collection</string>
   <string name="action_collection_removed">Removed from collection</string>
+  <string name="action_watched">Watched</string>
+  <string name="action_unwatched">Not yet watched</string>
   <string name="confirm_delete">%s öğesini silmek istediğinize emin misiniz?</string>
   <string name="delete_has_list_items">Tamamen kaldırılamıyor, önce %s bütün listelerden kaldırın.</string>
   <string name="delete_error">Could not remove show. Try again later.</string>
