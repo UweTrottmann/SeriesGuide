@@ -248,7 +248,6 @@
     <string name="remaining">%s remaining</string>
 
     <!-- Add show -->
-    <string name="search_hint_add">Show name</string>
     <string name="no_results">No results, try complete words.</string>
     <string name="search_error">Searching failed, try again later.</string>
     <string name="add_all">Add all</string>
