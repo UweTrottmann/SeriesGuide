@@ -8,6 +8,10 @@ All dates are in the European Central timezone.
 Version 12 *(in development)*
 -------------------------
 
+#### 12-beta7 *(2014-02-18)*
+
+* FIX Crash when movie details did not load due to network error, but movie was added to watchlist or collection.
+
 #### 12-beta6 *(2014-02-18)*
 
 * NOTICE This version requires at least Android 2.3 (Gingerbread).
