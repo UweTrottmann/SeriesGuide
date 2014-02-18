@@ -26,6 +26,7 @@ Version 12 *(in development)*
 * FIX When changing settings for multiple widgets the configuration dialog for the first configured widget was shown for all widgets.
 * FIX Going back from a widget configuration dialog or notification quick-action check in returns to the app instead of the home screen/previous task.
 * FIX Syncing on Android 2.3 (Gingerbread) crashes SeriesGuide.
+* FIX Flagging an episode as unwatched could lead to unexpected (= much later) next episode.
 * NOTICE Contributor branch changed from `beta` to `dev`. Please submit any new pull requests against `dev`. Also updated contributer guidelines.
 * NOTICE Switched to a new crash reporting tool. For the privacy policy see http://seriesgui.de/privacy.
 * NOTICE Latest translations from crowdin.
