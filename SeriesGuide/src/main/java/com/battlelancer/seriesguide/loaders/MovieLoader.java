@@ -108,6 +108,10 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
     private static void updateLocalMovie(Context context,
             MovieDetails details, int tmdbId) {
         ContentValues values = MovieTools.buildBasicMovieContentValues(details);
+        if (values.size() == 0) {
+            // nothing to update, downloading probably failed :(
+            return;
+        }
 
         // if movie does not exist in database, will do nothing
         context.getContentResolver().update(Movies.buildMovieUri(tmdbId), values, null, null);
