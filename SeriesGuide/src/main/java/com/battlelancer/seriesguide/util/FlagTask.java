@@ -243,8 +243,11 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         protected int getLastWatchedEpisodeTvdbId() {
             if (EpisodeTools.isUnwatched(mEpisodeFlag)) {
                 // unwatched episode
-                int lastWatchedId = -1;
 
+                int lastWatchedId = -1; // don't change last watched episode by default
+
+                // if modified episode is identical to last watched one (e.g. was just watched),
+                // find an appropriate last watched episode
                 final Cursor show = mContext.getContentResolver().query(
                         Shows.buildShowUri(String.valueOf(mShowTvdbId)),
                         new String[]{
@@ -253,6 +256,12 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                 if (show != null) {
                     // identical to last watched episode?
                     if (show.moveToFirst() && show.getInt(1) == mEpisodeTvdbId) {
+                        if (mSeason == 0) {
+                            // keep last watched (= this episode) if we got a special
+                            return -1;
+                        }
+                        lastWatchedId = 0; // re-set if we don't find one
+
                         // get latest watched before this one
                         String season = String.valueOf(mSeason);
                         final Cursor latestWatchedEpisode = mContext.getContentResolver()
