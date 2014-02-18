@@ -8,7 +8,7 @@ All dates are in the European Central timezone.
 Version 12 *(in development)*
 -------------------------
 
-#### 12-beta6 *(2014-02-17)*
+#### 12-beta6 *(2014-02-18)*
 
 * NOTICE This version requires at least Android 2.3 (Gingerbread).
 * FEATURE Movie watchlist and collection support. If connected to trakt, syncs watchlist and collection and in addition allows to flag movies watched.
