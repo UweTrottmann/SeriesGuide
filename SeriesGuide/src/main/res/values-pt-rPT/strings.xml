@@ -118,6 +118,8 @@
   <string name="action_collection_remove">Remove from collection</string>
   <string name="action_collection_added">Added to collection</string>
   <string name="action_collection_removed">Removed from collection</string>
+  <string name="action_watched">Watched</string>
+  <string name="action_unwatched">Not yet watched</string>
   <string name="confirm_delete">Deseja realmente remover %s?</string>
   <string name="delete_has_list_items">Remova primeiro o %s de todas as listas.</string>
   <string name="delete_error">Could not remove show. Try again later.</string>
@@ -171,7 +173,6 @@
   <string name="oneotherepisode">outro episódio</string>
   <string name="otherepisodes">outros episódios</string>
   <string name="remaining">%s restantes</string>
-  <string name="search_hint_add">Mostra o Nome da Série</string>
   <string name="no_results">Nenhum resultado, tente palavras completas.</string>
   <string name="search_error">Erro de pesquisa, tente novamente mais tarde.</string>
   <string name="add_all">Adicionar todas</string>
@@ -284,7 +285,6 @@
   <string name="last_auto_backup">Último Backup Automático: %s</string>
   <string name="restore_auto_backup">Restaurar Backup Automático</string>
   <string name="checkin">Inscrever-se</string>
-  <string name="checkin_noaction">Nenhum serviço activo, aceda uma vez pelo SeriesGuide.</string>
   <string name="checkin_searchhint">Introduza o nome de uma série</string>
   <string name="checkin_empty">Nenhuma série encontrada</string>
   <string name="checkin_hint">Insira uma mensagem (opcional)</string>

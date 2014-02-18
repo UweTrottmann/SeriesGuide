@@ -118,6 +118,8 @@
   <string name="action_collection_remove">Remove from collection</string>
   <string name="action_collection_added">Added to collection</string>
   <string name="action_collection_removed">Removed from collection</string>
+  <string name="action_watched">Watched</string>
+  <string name="action_unwatched">Not yet watched</string>
   <string name="confirm_delete">%s öğesini silmek istediğinize emin misiniz?</string>
   <string name="delete_has_list_items">Tamamen kaldırılamıyor, önce %s bütün listelerden kaldırın.</string>
   <string name="delete_error">Could not remove show. Try again later.</string>
@@ -157,7 +159,7 @@
   <string name="togglewatched">Seyredilme durumunu değiştir</string>
   <string name="pref_infinite_scrolling">Bütün etkinlikleri göster</string>
   <string name="action_activity_filter">Filter activity</string>
-  <string name="update_scheduled">Güncelleniyor...</string>
+  <string name="update_scheduled">Güncelleniyor…</string>
   <string name="update_no_connection">Güncelleme amacıyla internete bağlayın.</string>
   <string name="update_inprogress">Devam eden bir güncelleme var, daha sonra tekrar deneyin.</string>
   <string name="menu_updateart">Posterleri yükle</string>
@@ -171,7 +173,6 @@
   <string name="oneotherepisode">diğer bölüm</string>
   <string name="otherepisodes">diğer bölümler</string>
   <string name="remaining">Kalan: %s</string>
-  <string name="search_hint_add">Dizi adı</string>
   <string name="no_results">Sonuç bulunamadı, tam sözcüklerle deneyin.</string>
   <string name="search_error">Arama başarısız oldu, daha sonra tekrar deneyin.</string>
   <string name="add_all">Tümünü ekle</string>
@@ -284,7 +285,6 @@
   <string name="last_auto_backup">Son Otomatik Yedekleme: %s</string>
   <string name="restore_auto_backup">Otomatik Yedeklemeden Geri Yükle</string>
   <string name="checkin">Giriş yap</string>
-  <string name="checkin_noaction">Servisler uygun değil, SeriesGuide\'da kontrol edin.</string>
   <string name="checkin_searchhint">Bir dizi adı yazın</string>
   <string name="checkin_empty">Eşleşen dizi yok</string>
   <string name="checkin_hint">Bir mesaj yazın (isteğe bağlı)</string>

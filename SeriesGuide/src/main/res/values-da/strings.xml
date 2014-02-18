@@ -118,6 +118,8 @@
   <string name="action_collection_remove">Remove from collection</string>
   <string name="action_collection_added">Added to collection</string>
   <string name="action_collection_removed">Removed from collection</string>
+  <string name="action_watched">Watched</string>
+  <string name="action_unwatched">Not yet watched</string>
   <string name="confirm_delete">Vil du fjerne %s?</string>
   <string name="delete_has_list_items">Kan ikke udføres, fjern %s fra alle lister først.</string>
   <string name="delete_error">Kunne ikke fjerne serie. Prøv igen senere.</string>
@@ -162,7 +164,7 @@
   <string name="update_inprogress">En opdatering er allerede i gang, prøv igen senere.</string>
   <string name="menu_updateart">Hent plakater</string>
   <string name="arttask_incomplete">Ikke alle plakater blev hentet, prøv igen senere.</string>
-  <string name="arttask_start">Indlæser plakater...</string>
+  <string name="arttask_start">Indlæser plakater…</string>
   <string name="show_on_network">på %s</string>
   <string name="season_watchcount">episoder ikke set</string>
   <string name="season_allwatched">Alle episoder set</string>
@@ -171,7 +173,6 @@
   <string name="oneotherepisode">anden episode</string>
   <string name="otherepisodes">andre episoder</string>
   <string name="remaining">%s tilbage</string>
-  <string name="search_hint_add">Vis navn</string>
   <string name="no_results">Ingen resultater, prøv komplette ord.</string>
   <string name="search_error">Søgning mislykkedes, prøv igen senere.</string>
   <string name="add_all">Tilføj alle</string>
@@ -227,8 +228,8 @@
   <string name="pref_onlyfuturesummary">Vis aldrig allerede sendte episoder</string>
   <string name="pref_onlyseasoneps">Gem specielle episoder</string>
   <string name="pref_onlyseasonepssummary">Specielle episoder skjules overalt bortset fra sæson listen</string>
-  <string name="pref_seasonsorting">Sortér sæsoner efter...</string>
-  <string name="pref_episodesorting">Sortér afsnit efter...</string>
+  <string name="pref_seasonsorting">Sortér sæsoner efter…</string>
+  <string name="pref_episodesorting">Sortér afsnit efter…</string>
   <string name="pref_language">Sprog (indhold)</string>
   <string name="pref_updatewifionly">Billeder kun via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">For at begrænse dataforbrug, hent ikke billeder via mobildata</string>
@@ -284,7 +285,6 @@
   <string name="last_auto_backup">Sidste automatiske backup: %s</string>
   <string name="restore_auto_backup">Gendan automatisk backup</string>
   <string name="checkin">Tjek ind</string>
-  <string name="checkin_noaction">Ingen tjenester aktiveret, tjek ind en gang fra SeriesGuide.</string>
   <string name="checkin_searchhint">Skriv et serienavn</string>
   <string name="checkin_empty">Ingen matchende serier</string>
   <string name="checkin_hint">Skriv en besked (valgfrit)</string>

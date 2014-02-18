@@ -119,6 +119,8 @@
   <string name="action_collection_remove">Remove from collection</string>
   <string name="action_collection_added">Added to collection</string>
   <string name="action_collection_removed">Removed from collection</string>
+  <string name="action_watched">Watched</string>
+  <string name="action_unwatched">Not yet watched</string>
   <string name="confirm_delete">Vill du verkligen ta bort %s?</string>
   <string name="delete_has_list_items">Kan\kan inte följa, ta bort %s från alla listor först.</string>
   <string name="delete_error">Det gick inte att ta bort program. Försök igen senare.</string>
@@ -172,7 +174,6 @@
   <string name="oneotherepisode">annat avsnitt</string>
   <string name="otherepisodes">andra avsnitt</string>
   <string name="remaining">%s återstår</string>
-  <string name="search_hint_add">Serienamn</string>
   <string name="no_results">Inga resultat, försök med hela ord.</string>
   <string name="search_error">Sökningen misslyckades, försök igen senare.</string>
   <string name="add_all">Lägg till alla</string>
@@ -285,7 +286,6 @@
   <string name="last_auto_backup">Senaste automatiskt säkerhetskopia: %s</string>
   <string name="restore_auto_backup">Återställ automatisk säkerhetskopia</string>
   <string name="checkin">Checka in</string>
-  <string name="checkin_noaction">Inga tjänster aktiverade, checka in en gång i SeriesGuide.</string>
   <string name="checkin_searchhint">Skriv ett serienamn</string>
   <string name="checkin_empty">Inga matchande serier.</string>
   <string name="checkin_hint">Skriv ett meddelande (valfritt)</string>

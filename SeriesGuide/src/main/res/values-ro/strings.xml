@@ -118,6 +118,8 @@
   <string name="action_collection_remove">Remove from collection</string>
   <string name="action_collection_added">Added to collection</string>
   <string name="action_collection_removed">Removed from collection</string>
+  <string name="action_watched">Watched</string>
+  <string name="action_unwatched">Not yet watched</string>
   <string name="confirm_delete">Do you really want to remove %s?</string>
   <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_error">Could not remove show. Try again later.</string>
@@ -162,7 +164,7 @@
   <string name="update_inprogress">O actualizare este în progres, încercaţi din nou mai târziu.</string>
   <string name="menu_updateart">Incarcă posterele</string>
   <string name="arttask_incomplete">Unele postere nu se încărcă, încercaţi din nou mai târziu.</string>
-  <string name="arttask_start">Posterele se încarcă...</string>
+  <string name="arttask_start">Posterele se încarcă…</string>
   <string name="show_on_network">pe %s</string>
   <string name="season_watchcount">episoadele nu au fost vizionate</string>
   <string name="season_allwatched">Toate episoadele au fost vizionate</string>
@@ -171,7 +173,6 @@
   <string name="oneotherepisode">alt episod</string>
   <string name="otherepisodes">alte episoade</string>
   <string name="remaining">%s remaining</string>
-  <string name="search_hint_add">Numele emisiunii</string>
   <string name="no_results">Niciun rezultat, încercaţi folosind cuvinte întregi.</string>
   <string name="search_error">Căutarea nu a reuşit, încercaţi din nou mai târziu.</string>
   <string name="add_all">Adaugăle pe toate</string>
@@ -227,8 +228,8 @@
   <string name="pref_onlyfuturesummary">Niciodată nu afișa episoadele deja difuzate</string>
   <string name="pref_onlyseasoneps">Ascundeți episoadele speciale</string>
   <string name="pref_onlyseasonepssummary">Episoadele speciale dispar dde peste tot, cu excepţia din lista sezonului</string>
-  <string name="pref_seasonsorting">Sortare sezoane după...</string>
-  <string name="pref_episodesorting">Sortare episoade după...</string>
+  <string name="pref_seasonsorting">Sortare sezoane după…</string>
+  <string name="pref_episodesorting">Sortare episoade după…</string>
   <string name="pref_language">Content language</string>
   <string name="pref_updatewifionly">Images via Wi-Fi only</string>
   <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
@@ -267,7 +268,7 @@
   <string name="backup_inprogress">Backing up database…</string>
   <string name="backup_success">Backup successful.</string>
   <string name="backup_failed">Copierea de rezervă nu a reușit.</string>
-  <string name="import_inprogress">Restaurarea bazei de date...</string>
+  <string name="import_inprogress">Restaurarea bazei de date…</string>
   <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">There is no readable backup file.</string>
   <string name="import_failed_noread">The backup file is not readable.</string>
@@ -284,7 +285,6 @@
   <string name="last_auto_backup">Last Auto Backup: %s</string>
   <string name="restore_auto_backup">Restore Auto Backup</string>
   <string name="checkin">Check in</string>
-  <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Type a show name</string>
   <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Type a message (optional)</string>
@@ -310,7 +310,7 @@
   <string name="username">Nume de utilizator</string>
   <string name="email">E-mail</string>
   <string name="password">Parola</string>
-  <string name="waitplease">Un moment, vă rugăm...</string>
+  <string name="waitplease">Un moment, vă rugăm…</string>
   <string name="connect">Conectaţi</string>
   <string name="disconnect">Deconectaţi</string>
   <string name="trakt_error">Interacţiunea cu trakt a eșuat</string>

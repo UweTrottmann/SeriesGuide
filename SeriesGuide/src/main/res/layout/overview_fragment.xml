@@ -46,6 +46,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginBottom="@dimen/default_padding"
                     android:focusable="true"
                     android:nextFocusDown="@+id/checkinButton">
 
@@ -57,7 +58,7 @@
                         android:layout_marginRight="@dimen/default_padding"
                         android:ellipsize="marquee"
                         android:textAppearance="@style/TextAppearance.Large.Light"
-                        tools:text="Show title" />
+                        tools:text="How I Met Your Mother" />
 
                     <TextView
                         android:id="@+id/showStatus"
@@ -69,18 +70,17 @@
                         android:layout_marginRight="@dimen/default_padding"
                         android:textAllCaps="true"
                         android:textAppearance="@style/TextAppearance.Small"
-                        tools:text="Status" />
+                        tools:text="Continuing" />
 
                     <TextView
                         android:id="@+id/showmeta"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/seriesname"
-                        android:layout_marginBottom="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
                         android:layout_toRightOf="@+id/showStatus"
                         android:textAppearance="@style/TextAppearance.Small"
-                        tools:text="Show meta" />
+                        tools:text="Tue 5:00 AM on CBS" />
                 </RelativeLayout>
 
                 <include layout="@layout/divider_vertical" />

@@ -118,6 +118,8 @@
   <string name="action_collection_remove">Remove from collection</string>
   <string name="action_collection_added">Added to collection</string>
   <string name="action_collection_removed">Removed from collection</string>
+  <string name="action_watched">Watched</string>
+  <string name="action_unwatched">Not yet watched</string>
   <string name="confirm_delete">Вы действительно хотите удалить %s?</string>
   <string name="delete_has_list_items">Невозможно выполнить. Сначала удалите %s из всех списков.</string>
   <string name="delete_error">Нельзя удалить сериал. Повторите позже.</string>
@@ -157,7 +159,7 @@
   <string name="togglewatched">Просмотрено</string>
   <string name="pref_infinite_scrolling">Бесконечная активность</string>
   <string name="action_activity_filter">Фильтр активностей</string>
-  <string name="update_scheduled">Обновление...</string>
+  <string name="update_scheduled">Обновление…</string>
   <string name="update_no_connection">Для обновления подключите Интернет.</string>
   <string name="update_inprogress">Выполняется обновление, попробуйте еще раз позже.</string>
   <string name="menu_updateart">Загрузить постеры</string>
@@ -171,7 +173,6 @@
   <string name="oneotherepisode">другой эпизод</string>
   <string name="otherepisodes">другие эпизоды</string>
   <string name="remaining">%s осталось</string>
-  <string name="search_hint_add">Название сериала</string>
   <string name="no_results">Никаких результатов, попробуйте полные слова.</string>
   <string name="search_error">Поиск не удался, повторите попытку позже.</string>
   <string name="add_all">Добавьте все</string>
@@ -250,7 +251,7 @@
   <string name="pref_autobackupsummary">Еженедельное резервное копирование базы данных в папке загрузки</string>
   <string name="backup">Резервное копирование/восстановление</string>
   <string name="backup_summary">Резервное копирование или восстановление ваших сериалов</string>
-  <string name="pref_upcominglimit">Показы в ближайшие N дней...</string>
+  <string name="pref_upcominglimit">Показы в ближайшие N дней…</string>
   <string name="pref_number">Формат номеров серий</string>
   <string name="pref_offset">Смещение времени вручную</string>
   <string name="pref_offsetsummary">До прямого эфира осталось %s часов</string>
@@ -284,7 +285,6 @@
   <string name="last_auto_backup">Последний автоматическое резервное копирование: %s</string>
   <string name="restore_auto_backup">Восстановить Автоматическую резервную копию</string>
   <string name="checkin">Отметить</string>
-  <string name="checkin_noaction"> Сервисы не включена, проверьте позже в SeriesGuide.</string>
   <string name="checkin_searchhint">Введите название сериала</string>
   <string name="checkin_empty">Сериалы не найдены</string>
   <string name="checkin_hint">Введите сообщение (необязательно)</string>

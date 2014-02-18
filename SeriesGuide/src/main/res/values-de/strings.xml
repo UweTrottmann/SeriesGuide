@@ -118,6 +118,8 @@
   <string name="action_collection_remove">Aus Sammlung entfernen</string>
   <string name="action_collection_added">Zur Sammlung hinzugefügt</string>
   <string name="action_collection_removed">Aus Sammlung entfernt</string>
+  <string name="action_watched">Gesehen</string>
+  <string name="action_unwatched">Noch nicht gesehen</string>
   <string name="confirm_delete">Wollen Sie %s wirklich entfernen?</string>
   <string name="delete_has_list_items">Ausführung nicht möglich, entfernen Sie zuerst %s von allen Listen.</string>
   <string name="delete_error">Serie konnte nicht entfernt werden. Versuchen Sie es später erneut.</string>
@@ -171,7 +173,6 @@
   <string name="oneotherepisode">andere Folge</string>
   <string name="otherepisodes">andere Folgen</string>
   <string name="remaining">%s verbleibend</string>
-  <string name="search_hint_add">Serientitel</string>
   <string name="no_results">Keine Ergebnisse, versuchen Sie ganze Wörter.</string>
   <string name="search_error">Suche fehlgeschlagen, versuchen Sie es später erneut.</string>
   <string name="add_all">Alle hinzufügen</string>
@@ -284,7 +285,6 @@
   <string name="last_auto_backup">Letzte Auto-Sicherung: %s</string>
   <string name="restore_auto_backup">Auto-Sicherung wiederherstellen</string>
   <string name="checkin">Einchecken</string>
-  <string name="checkin_noaction">Keine Dienste aktiviert, checken Sie einmal innerhalb SeriesGuide ein.</string>
   <string name="checkin_searchhint">Serientitel eingeben</string>
   <string name="checkin_empty">Keine passenden Serien</string>
   <string name="checkin_hint">Geben Sie eine Nachricht ein (optional)</string>

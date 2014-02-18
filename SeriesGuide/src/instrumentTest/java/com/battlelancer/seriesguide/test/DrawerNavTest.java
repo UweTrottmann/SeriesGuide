@@ -58,10 +58,6 @@ public class DrawerNavTest extends ActivityInstrumentationTestCase2<ShowsActivit
         navigateToAndBack(R.string.statistics);
     }
 
-    public void testNavigateToSearchAndBack() throws InterruptedException {
-        navigateToAndBack(R.string.search_hint);
-    }
-
     private void navigateToAndBack(int drawerItemTitleResId) throws InterruptedException {
         onView(withId(R.id.drawer_layout)).check(matches(isClosed()));
 

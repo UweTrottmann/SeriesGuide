@@ -118,6 +118,8 @@
   <string name="action_collection_remove">Remove from collection</string>
   <string name="action_collection_added">Added to collection</string>
   <string name="action_collection_removed">Removed from collection</string>
+  <string name="action_watched">Watched</string>
+  <string name="action_unwatched">Not yet watched</string>
   <string name="confirm_delete">%S을 제거 하시겠습니까?</string>
   <string name="delete_has_list_items">진행불가. %s을 먼저 모든 목록에서 삭제하세요.</string>
   <string name="delete_error">쇼를 제거하지 못했습니다. 나중에 다시 시도해주세요.</string>
@@ -171,7 +173,6 @@
   <string name="oneotherepisode">다른 에피소드</string>
   <string name="otherepisodes">다른 에피소드</string>
   <string name="remaining">%s회 남음</string>
-  <string name="search_hint_add">쇼 이름</string>
   <string name="no_results">결과 없음, 완전한 단어를 입력하세요.</string>
   <string name="search_error">검색 실패, 나중에 다시 시도하세요.</string>
   <string name="add_all">모두 추가</string>
@@ -264,10 +265,10 @@
   <string name="backup_path">백업폴더</string>
   <string name="backup_version">데이터베이스 버전</string>
   <string name="backup_failed_nosd">백업 실패. 백업폴더가 존재하지 않습니다.</string>
-  <string name="backup_inprogress">데이터베이스 백업 중...</string>
+  <string name="backup_inprogress">데이터베이스 백업 중…</string>
   <string name="backup_success">성공적으로 백업하였습니다.</string>
   <string name="backup_failed">백업에 실패하였습니다.</string>
-  <string name="import_inprogress">데이터베이스 복원 중...</string>
+  <string name="import_inprogress">데이터베이스 복원 중…</string>
   <string name="import_failed_nosd">복원 실패. 백업 폴더가 존재하지 않습니다.</string>
   <string name="import_failed_nofile">읽을 수 있는 백업 파일이 없습니다.</string>
   <string name="import_failed_noread">백업 파일을 읽을 수 없습니다.</string>
@@ -284,7 +285,6 @@
   <string name="last_auto_backup">최근 자동 백업: %s</string>
   <string name="restore_auto_backup">자동 백업 복원</string>
   <string name="checkin">체크인</string>
-  <string name="checkin_noaction">활성화된 서비스가 없습니다. 시리즈가이드에서 서비스에 체크인하세요.</string>
   <string name="checkin_searchhint">쇼 이름을 입력하세요</string>
   <string name="checkin_empty">일치하는 쇼가 없습니다</string>
   <string name="checkin_hint">메세지 입력 (선택사항)</string>

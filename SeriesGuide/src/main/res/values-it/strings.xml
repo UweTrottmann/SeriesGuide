@@ -118,6 +118,8 @@
   <string name="action_collection_remove">Remove from collection</string>
   <string name="action_collection_added">Added to collection</string>
   <string name="action_collection_removed">Removed from collection</string>
+  <string name="action_watched">Watched</string>
+  <string name="action_unwatched">Not yet watched</string>
   <string name="confirm_delete">Vuoi davvero rimuovere %s?</string>
   <string name="delete_has_list_items">Impossibile procedere, elimina %s dalla lista.</string>
   <string name="delete_error">Impossibile rimuovere la serie. Riprova dopo.</string>
@@ -157,12 +159,12 @@
   <string name="togglewatched">Visto</string>
   <string name="pref_infinite_scrolling">Attività infinita</string>
   <string name="action_activity_filter">Filtra l\'attività</string>
-  <string name="update_scheduled">Aggiornamento...</string>
+  <string name="update_scheduled">Aggiornamento…</string>
   <string name="update_no_connection">Per aggiornare connettersi a internet.</string>
   <string name="update_inprogress">Un altro aggiornamento è in corso, riprova più tardi.</string>
   <string name="menu_updateart">Carica poster</string>
   <string name="arttask_incomplete">Alcuni poster non sono stati caricati, riprova dopo.</string>
-  <string name="arttask_start">Caricamento dei poster...</string>
+  <string name="arttask_start">Caricamento dei poster…</string>
   <string name="show_on_network">su %s</string>
   <string name="season_watchcount">episodi non visti</string>
   <string name="season_allwatched">Tutti gli episodi visti</string>
@@ -171,7 +173,6 @@
   <string name="oneotherepisode">altro episodio</string>
   <string name="otherepisodes">altri episodi</string>
   <string name="remaining">%s rimanenti</string>
-  <string name="search_hint_add">Nome spettacolo</string>
   <string name="no_results">Nessun risultato, prova parole complete.</string>
   <string name="search_error">Ricerca non riuscita, riprovare più tardi.</string>
   <string name="add_all">Aggiungi tutto</string>
@@ -227,8 +228,8 @@
   <string name="pref_onlyfuturesummary">Non mostrare gli episodi già trasmessi</string>
   <string name="pref_onlyseasoneps">Nascondi gli episodi speciali</string>
   <string name="pref_onlyseasonepssummary">Episodi speciali non visibili eccetto nella lista della stagione</string>
-  <string name="pref_seasonsorting">Ordina stagioni per...</string>
-  <string name="pref_episodesorting">Ordina episodi per...</string>
+  <string name="pref_seasonsorting">Ordina stagioni per…</string>
+  <string name="pref_episodesorting">Ordina episodi per…</string>
   <string name="pref_language">Lingua contenuto</string>
   <string name="pref_updatewifionly">Images via Wi-Fi only</string>
   <string name="pref_updatewifionlysummary">Per ridurre i costi dell\'operatore, non scaricare usando la rete mobile</string>
@@ -250,7 +251,7 @@
   <string name="pref_autobackupsummary">Backup settimanale del database Visualizza nella cartella di Download</string>
   <string name="backup">Backup/Ripristino</string>
   <string name="backup_summary">Backup o ripristina le tue serie</string>
-  <string name="pref_upcominglimit">Prossimi programmi tra...</string>
+  <string name="pref_upcominglimit">Prossimi programmi tra…</string>
   <string name="pref_number">Formato numerico</string>
   <string name="pref_offset">Fuso orario manuale</string>
   <string name="pref_offsetsummary">Compensazione della messa onda di %s ore</string>
@@ -264,10 +265,10 @@
   <string name="backup_path">Cartella di Backup</string>
   <string name="backup_version">Versione Database</string>
   <string name="backup_failed_nosd">Impossibile effettuare il backup. La cartella non è disponibile.</string>
-  <string name="backup_inprogress">Backup del database in corso...</string>
+  <string name="backup_inprogress">Backup del database in corso…</string>
   <string name="backup_success">Backup eseguito con successo.</string>
   <string name="backup_failed">Backup fallito.</string>
-  <string name="import_inprogress">Ripristino del database...</string>
+  <string name="import_inprogress">Ripristino del database…</string>
   <string name="import_failed_nosd">Impossibile ripristinare il backup. La cartella non è disponibile.</string>
   <string name="import_failed_nofile">Nessun file di Backup esistente.</string>
   <string name="import_failed_noread">Il file di backup è illeggibile.</string>
@@ -284,7 +285,6 @@
   <string name="last_auto_backup">Ultimo backup automatico: %s</string>
   <string name="restore_auto_backup">Ripristina il Backup automatico</string>
   <string name="checkin">Check-In</string>
-  <string name="checkin_noaction">Nessun servizio attivato, controllare una volta all\'interno di SeriesGuide.</string>
   <string name="checkin_searchhint">Digitare il nome della serie</string>
   <string name="checkin_empty">Nessuna corrispondenza serie</string>
   <string name="checkin_hint">Digita un messaggio (opzionale)</string>

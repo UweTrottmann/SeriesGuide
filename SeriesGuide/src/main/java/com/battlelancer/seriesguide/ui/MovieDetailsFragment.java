@@ -40,6 +40,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.items.MovieDetails;
 import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.MovieLoader;
 import com.battlelancer.seriesguide.loaders.MovieTrailersLoader;
@@ -61,7 +62,6 @@ import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb.entities.Credits;
 import com.uwetrottmann.tmdb.entities.Trailers;
 import de.greenrobot.event.EventBus;
-import java.text.DecimalFormat;
 
 /**
  * Displays details about one movie including plot, ratings, trailers and a poster.
@@ -322,14 +322,15 @@ public class MovieDetailsFragment extends SherlockFragment {
         mMovieTitle.setText(tmdbMovie.title);
         mMovieDescription.setText(tmdbMovie.overview);
 
-        // release date
+        // release date and runtime: "July 17, 2009 | 95 min"
+        StringBuilder releaseAndRuntime = new StringBuilder();
         if (traktMovie.released != null && traktMovie.released.getTime() != 0) {
-            mMovieReleaseDate.setText(
-                    DateUtils.formatDateTime(getActivity(), traktMovie.released.getTime(),
-                            DateUtils.FORMAT_SHOW_DATE));
-        } else {
-            mMovieReleaseDate.setText("");
+            releaseAndRuntime.append(DateUtils.formatDateTime(getActivity(),
+                    traktMovie.released.getTime(), DateUtils.FORMAT_SHOW_DATE));
+            releaseAndRuntime.append(" | ");
         }
+        releaseAndRuntime.append(getString(R.string.runtime_minutes, tmdbMovie.runtime));
+        mMovieReleaseDate.setText(releaseAndRuntime.toString());
 
         // check-in button
         CheatSheet.setup(mCheckinButton);
@@ -572,29 +573,4 @@ public class MovieDetailsFragment extends SherlockFragment {
             // do nothing
         }
     };
-
-    public static class MovieDetails {
-
-        private Movie mTraktMovie;
-
-        private com.uwetrottmann.tmdb.entities.Movie mTmdbMovie;
-
-        public Movie traktMovie() {
-            return mTraktMovie;
-        }
-
-        public MovieDetails traktMovie(Movie traktMovie) {
-            mTraktMovie = traktMovie;
-            return this;
-        }
-
-        public com.uwetrottmann.tmdb.entities.Movie tmdbMovie() {
-            return mTmdbMovie;
-        }
-
-        public MovieDetails tmdbMovie(com.uwetrottmann.tmdb.entities.Movie movie) {
-            mTmdbMovie = movie;
-            return this;
-        }
-    }
 }

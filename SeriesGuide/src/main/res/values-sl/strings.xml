@@ -118,6 +118,8 @@
   <string name="action_collection_remove">Remove from collection</string>
   <string name="action_collection_added">Added to collection</string>
   <string name="action_collection_removed">Removed from collection</string>
+  <string name="action_watched">Watched</string>
+  <string name="action_unwatched">Not yet watched</string>
   <string name="confirm_delete">Ali res želiš odstraniti %s?</string>
   <string name="delete_has_list_items">Ne morem izvesti zahteve. Prvo odstrani %s z vseh spiskov.</string>
   <string name="delete_error">Oddaje ni bilo mogoče odstraniti. Poskusite znova pozneje.</string>
@@ -157,12 +159,12 @@
   <string name="togglewatched">Preklopi med gledanimi</string>
   <string name="pref_infinite_scrolling">Neskončna dejavnost</string>
   <string name="action_activity_filter">Filter dejavnosti</string>
-  <string name="update_scheduled">Posodabljanje...</string>
+  <string name="update_scheduled">Posodabljanje…</string>
   <string name="update_no_connection">Za posodobitev se poveži z internetom.</string>
   <string name="update_inprogress">Posodabljanje je v teku. Poizkusite ponovno kasneje.</string>
   <string name="menu_updateart">Naloži posterje</string>
   <string name="arttask_incomplete">Nekateri posterji se niso naložili. Poizkusi ponovno kasneje.</string>
-  <string name="arttask_start">Nalagam posterje...</string>
+  <string name="arttask_start">Nalagam posterje…</string>
   <string name="show_on_network">na %s</string>
   <string name="season_watchcount">Nepogledane epizode.</string>
   <string name="season_allwatched">Vse epizode pogledane</string>
@@ -171,7 +173,6 @@
   <string name="oneotherepisode">druga epizoda</string>
   <string name="otherepisodes">druge epizode</string>
   <string name="remaining">%s ostala</string>
-  <string name="search_hint_add">Ime oddaje</string>
   <string name="no_results">Ni zadetkov. Poizkusi s celimi besedami.</string>
   <string name="search_error">Iskanje ni uspelo, poskusite znova pozneje.</string>
   <string name="add_all">Dodaj vse</string>
@@ -227,8 +228,8 @@
   <string name="pref_onlyfuturesummary">Nikoli ne prikaži že objavljenih epizod</string>
   <string name="pref_onlyseasoneps">Skrij posebne epizode</string>
   <string name="pref_onlyseasonepssummary">Posebne epizode izginejo od povsod, razen s spiska sezone</string>
-  <string name="pref_seasonsorting">Sezono razporedi po...</string>
-  <string name="pref_episodesorting">Epizode razporedi po...</string>
+  <string name="pref_seasonsorting">Sezono razporedi po…</string>
+  <string name="pref_episodesorting">Epizode razporedi po…</string>
   <string name="pref_language">Jezik vsebine</string>
   <string name="pref_updatewifionly">Slike samo preko Wi-Fi</string>
   <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
@@ -250,7 +251,7 @@
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Varnostno kopiranje/Obnovitev</string>
   <string name="backup_summary">Naredite varnostno kopijo ali obnovite vaše oddaje</string>
-  <string name="pref_upcominglimit">Prihajajoče oddaje v...</string>
+  <string name="pref_upcominglimit">Prihajajoče oddaje v…</string>
   <string name="pref_number">Oblika števil</string>
   <string name="pref_offset">Ročna nastavitev časovnega zamika</string>
   <string name="pref_offsetsummary">Zamakni čas predvajanja za %s ur</string>
@@ -264,10 +265,10 @@
   <string name="backup_path">Backup mapa</string>
   <string name="backup_version">Različica zbirke podatkov</string>
   <string name="backup_failed_nosd">Ne morem ustvariti varnostne kopije. Mapa za varnostno kopijo ni na voljo.</string>
-  <string name="backup_inprogress">Ustvarjam varnostno kopijo baze...</string>
+  <string name="backup_inprogress">Ustvarjam varnostno kopijo baze…</string>
   <string name="backup_success">Varnostna kopija uspela.</string>
   <string name="backup_failed">Varnostna kopija ni uspela.</string>
-  <string name="import_inprogress">Obnavljam bazo iz varnostne kopije...</string>
+  <string name="import_inprogress">Obnavljam bazo iz varnostne kopije…</string>
   <string name="import_failed_nosd">Ne morem obnoviti podatkov iz varnostne kopije. Mapa varnostne kopije ni na voljo.</string>
   <string name="import_failed_nofile">Backup datoteka ne obstaja.</string>
   <string name="import_failed_noread">Datoteka varnostne kopije ni berljiva.</string>
@@ -284,7 +285,6 @@
   <string name="last_auto_backup">Nazadnje Auto Backup: %s</string>
   <string name="restore_auto_backup">Obnovite varnostno kopijo</string>
   <string name="checkin">Prijava</string>
-  <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Vtipkaj ime oddaje</string>
   <string name="checkin_empty">Ni ustreznih oddaj</string>
   <string name="checkin_hint">Natipkaj sporočilo (opcijsko)</string>
@@ -310,7 +310,7 @@
   <string name="username">Uporabniško ime</string>
   <string name="email">Elektronska pošta</string>
   <string name="password">Geslo</string>
-  <string name="waitplease">Trenutek, prosim...</string>
+  <string name="waitplease">Trenutek, prosim…</string>
   <string name="connect">Poveži</string>
   <string name="disconnect">Odklopi</string>
   <string name="trakt_error">Interakcija s trakt-om ni uspela</string>

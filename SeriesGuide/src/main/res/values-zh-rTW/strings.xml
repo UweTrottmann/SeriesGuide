@@ -118,6 +118,8 @@
   <string name="action_collection_remove">Remove from collection</string>
   <string name="action_collection_added">Added to collection</string>
   <string name="action_collection_removed">Removed from collection</string>
+  <string name="action_watched">Watched</string>
+  <string name="action_unwatched">Not yet watched</string>
   <string name="confirm_delete">Do you really want to remove %s?</string>
   <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_error">Could not remove show. Try again later.</string>
@@ -171,7 +173,6 @@
   <string name="oneotherepisode">其餘集數</string>
   <string name="otherepisodes">其餘集數</string>
   <string name="remaining">%s remaining</string>
-  <string name="search_hint_add">顯示名稱</string>
   <string name="no_results">查無結果，請嘗試完整單字。</string>
   <string name="search_error">查詢失敗，請稍候再試。</string>
   <string name="add_all">全部加入</string>
@@ -284,7 +285,6 @@
   <string name="last_auto_backup">Last Auto Backup: %s</string>
   <string name="restore_auto_backup">Restore Auto Backup</string>
   <string name="checkin">Check in</string>
-  <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Type a show name</string>
   <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Type a message (optional)</string>

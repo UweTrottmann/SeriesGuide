@@ -8,6 +8,30 @@ All dates are in the European Central timezone.
 Version 12 *(in development)*
 -------------------------
 
+#### 12-beta6 *(2014-02-18)*
+
+* NOTICE This version requires at least Android 2.3 (Gingerbread).
+* FEATURE Movie watchlist and collection support. If connected to trakt, syncs watchlist and collection and in addition allows to flag movies watched.
+* TWEAK Display movie runtime, cast and crew as well as TMDb and trakt ratings.
+* TWEAK Support sharing movie (using secure trakt web link), added TMDb link.
+* TWEAK Sharing shows and movies uses a secure trakt web link which creates nice info cards on Google+, Facebook and Twitter.
+* TWEAK Moved Settings and Help back to nav drawer, cleaned up some duplicate overflow actions.
+* TWEAK Support translucent system bars with Android Dark app theme.
+* TWEAK Support release times for Finland (Europe/Helsinki time zone).
+* FIX Single episode notification opens wrong episode.
+* FIX Show and episode ratings did not update because they were cached for too long.
+* FIX Using the back button on the show list sometimes navigates to the show list again.
+* FIX Setting a manual time offset breaks episodes moving correctly into 'Recent', notifications.
+* FIX When dismissing the check-in dialog coming from a notification quick action a blank screen is shown.
+* FIX When changing settings for multiple widgets the configuration dialog for the first configured widget was shown for all widgets.
+* FIX Going back from a widget configuration dialog or notification quick-action check in returns to the app instead of the home screen/previous task.
+* FIX Syncing on Android 2.3 (Gingerbread) crashes SeriesGuide.
+* FIX Flagging an episode as unwatched could lead to unexpected (= much later) next episode.
+* NOTICE Contributor branch changed from `beta` to `dev`. Please submit any new pull requests against `dev`. Also updated contributer guidelines.
+* NOTICE Switched to a new crash reporting tool. For the privacy policy see http://seriesgui.de/privacy.
+* NOTICE Latest translations from crowdin.
+* NOTICE Database upgraded to version 32.
+
 #### 12-beta5 *(2014-02-04)*
 
 * NOTICE A full sync is scheduled after upgrading. Details below.
