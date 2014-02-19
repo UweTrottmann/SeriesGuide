@@ -19,6 +19,8 @@ package com.battlelancer.seriesguide;
 import com.crashlytics.android.Crashlytics;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import timber.log.Timber;
 
 /**
@@ -51,6 +53,19 @@ public class AnalyticsTree extends Timber.HollowTree implements Timber.TaggedTre
 
     @Override public void e(Throwable t, String message, Object... args) {
         logToCrashlytics("ERROR", createTag(), message, args);
+
+        // special treatment for retrofit errors
+        if (t instanceof RetrofitError) {
+            RetrofitError e = (RetrofitError) t;
+
+            // log url and status code
+            i("URL: %s", e.getUrl());
+            Response response = e.getResponse();
+            if (response != null) {
+                int statusCode = response.getStatus();
+                i("Status Code: %d", statusCode);
+            }
+        }
         Crashlytics.logException(t);
     }
 
