@@ -8,6 +8,11 @@ All dates are in the European Central timezone.
 Version 12 *(in development)*
 -------------------------
 
+#### 12-beta8 *(2014-02-19)*
+
+* TWEAK Better crash reports.
+* FIX Movie posters and trakt avatars downloaded despite on mobile connection and 'Images via Wi-Fi only' was enabled.
+
 #### 12-beta7 *(2014-02-18)*
 
 * FIX Crash when movie details did not load due to network error, but movie was added to watchlist or collection.
