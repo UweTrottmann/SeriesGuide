@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.jakewharton.trakt.entities.Comment;
 import com.squareup.picasso.Picasso;
 import java.util.List;
@@ -76,7 +77,7 @@ public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
         final Comment shout = getItem(position);
 
         holder.name.setText(shout.user.username);
-        Picasso.with(getContext()).load(shout.user.avatar).into(holder.avatar);
+        ServiceUtils.getPicasso(getContext()).load(shout.user.avatar).into(holder.avatar);
 
         if (shout.spoiler) {
             holder.shout.setText(R.string.isspoiler);

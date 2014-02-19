@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.util;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.jakewharton.trakt.Trakt;
 import com.battlelancer.seriesguide.R;
+import com.squareup.picasso.Picasso;
 import com.uwetrottmann.tmdb.Tmdb;
 
 import android.app.SearchManager;
@@ -61,6 +62,8 @@ public final class ServiceUtils {
 
     private static final String YOUTUBE_PACKAGE = "com.google.android.youtube";
 
+    private static Picasso sPicasso;
+
     private static Trakt sTrakt;
 
     private static Trakt sTraktWithAuth;
@@ -69,6 +72,14 @@ public final class ServiceUtils {
 
     /* This class is never initialized */
     private ServiceUtils() {
+    }
+
+    public static synchronized Picasso getPicasso(Context context) {
+        if (sPicasso == null) {
+            sPicasso = new Picasso.Builder(context).downloader(
+                    new LocalOnlyOkHttpDownloader(context)).build();
+        }
+        return sPicasso;
     }
 
     /**
@@ -184,7 +195,6 @@ public final class ServiceUtils {
             } else {
                 playButton.setEnabled(false);
             }
-
         }
     }
 
@@ -226,7 +236,6 @@ public final class ServiceUtils {
             } else {
                 amazonButton.setEnabled(false);
             }
-
         }
     }
 
@@ -428,5 +437,4 @@ public final class ServiceUtils {
 
         Utils.trackAction(context, logTag, "Web search");
     }
-
 }

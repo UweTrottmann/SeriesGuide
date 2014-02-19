@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.squareup.picasso.Picasso;
 import com.uwetrottmann.tmdb.entities.Movie;
 import java.text.DateFormat;
@@ -94,7 +95,9 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
             holder.date.setText("");
         }
         if (!TextUtils.isEmpty(movie.poster_path)) {
-            Picasso.with(getContext()).load(mImageBaseUrl + movie.poster_path).into(holder.poster);
+            ServiceUtils.getPicasso(getContext())
+                    .load(mImageBaseUrl + movie.poster_path)
+                    .into(holder.poster);
         } else {
             // clear image
             holder.poster.setImageDrawable(null);

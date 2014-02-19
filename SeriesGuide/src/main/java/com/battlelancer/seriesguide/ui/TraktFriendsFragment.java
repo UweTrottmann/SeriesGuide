@@ -271,7 +271,7 @@ public class TraktFriendsFragment extends SherlockFragment implements
             UserProfile friend = getItem(position);
 
             holder.name.setText(friend.username);
-            Picasso.with(getContext()).load(friend.avatar).into(holder.avatar);
+            ServiceUtils.getPicasso(getContext()).load(friend.avatar).into(holder.avatar);
 
             holder.timestamp.setTextAppearance(getContext(), R.style.TextAppearance_Small_Dim);
 

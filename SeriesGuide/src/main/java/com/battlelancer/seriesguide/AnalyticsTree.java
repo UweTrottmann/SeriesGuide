@@ -19,6 +19,8 @@ package com.battlelancer.seriesguide;
 import com.crashlytics.android.Crashlytics;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import timber.log.Timber;
 
 /**
@@ -30,27 +32,40 @@ public class AnalyticsTree extends Timber.HollowTree implements Timber.TaggedTre
     private static final ThreadLocal<String> NEXT_TAG = new ThreadLocal<String>();
 
     @Override public void i(String message, Object... args) {
-        logToCrashlytics("INFO", message, args);
+        logToCrashlytics("INFO", createTag(), message, args);
     }
 
     @Override public void i(Throwable t, String message, Object... args) {
-        i(message, args);
+        logToCrashlytics("INFO", createTag(), message, args);
     }
 
     @Override public void w(String message, Object... args) {
-        logToCrashlytics("WARN", message, args);
+        logToCrashlytics("WARN", createTag(), message, args);
     }
 
     @Override public void w(Throwable t, String message, Object... args) {
-        w(message, args);
+        logToCrashlytics("WARN", createTag(), message, args);
     }
 
     @Override public void e(String message, Object... args) {
-        logToCrashlytics("ERROR", message, args);
+        logToCrashlytics("ERROR", createTag(), message, args);
     }
 
     @Override public void e(Throwable t, String message, Object... args) {
-        e(message, args);
+        logToCrashlytics("ERROR", createTag(), message, args);
+
+        // special treatment for retrofit errors
+        if (t instanceof RetrofitError) {
+            RetrofitError e = (RetrofitError) t;
+
+            // log url and status code
+            i("URL: %s", e.getUrl());
+            Response response = e.getResponse();
+            if (response != null) {
+                int statusCode = response.getStatus();
+                i("Status Code: %d", statusCode);
+            }
+        }
         Crashlytics.logException(t);
     }
 
@@ -73,10 +88,10 @@ public class AnalyticsTree extends Timber.HollowTree implements Timber.TaggedTre
         return tag.substring(tag.lastIndexOf('.') + 1);
     }
 
-    private void logToCrashlytics(String level, String message, Object... args) {
+    private void logToCrashlytics(String level, String tag, String message, Object... args) {
         if (message == null) {
             return;
         }
-        Crashlytics.log(level + "/" + createTag() + ": " + String.format(message, args));
+        Crashlytics.log(level + "/" + tag + ": " + String.format(message, args));
     }
 }
