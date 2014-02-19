@@ -48,6 +48,12 @@ public class TraktSettings {
 
     private static final long FULL_SYNC_INTERVAL_MILLIS = 24 * DateUtils.HOUR_IN_MILLIS;
 
+    public static final String POSTER_SIZE_SPEC_DEFAULT = ".jpg";
+
+    public static final String POSTER_SIZE_SPEC_138 = "-138.jpg";
+
+    public static final String POSTER_SIZE_SPEC_300 = "-300.jpg";
+
     public static long getLastUpdateTime(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getLong(KEY_LAST_UPDATE, System.currentTimeMillis());
