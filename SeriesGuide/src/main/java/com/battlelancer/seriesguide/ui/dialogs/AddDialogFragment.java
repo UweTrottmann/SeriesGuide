@@ -33,6 +33,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.squareup.picasso.Picasso;
 
@@ -118,7 +119,7 @@ public class AddDialogFragment extends DialogFragment {
             if (show.poster != null) {
                 ImageView posterView = (ImageView) layout.findViewById(R.id.poster);
                 posterView.setVisibility(View.VISIBLE);
-                Picasso.with(getActivity()).load(show.poster).into(posterView);
+                ServiceUtils.getPicasso(getActivity()).load(show.poster).into(posterView);
             }
         }
 

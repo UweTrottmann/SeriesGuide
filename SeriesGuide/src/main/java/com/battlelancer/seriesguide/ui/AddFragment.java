@@ -31,6 +31,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -162,7 +163,7 @@ public abstract class AddFragment extends SherlockFragment {
             viewHolder.description.setText(item.overview);
             if (item.poster != null) {
                 viewHolder.poster.setVisibility(View.VISIBLE);
-                Picasso.with(getContext()).load(item.poster).into(viewHolder.poster);
+                ServiceUtils.getPicasso(getContext()).load(item.poster).into(viewHolder.poster);
             } else {
                 viewHolder.poster.setVisibility(View.GONE);
             }

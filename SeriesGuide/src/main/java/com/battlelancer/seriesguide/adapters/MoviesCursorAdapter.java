@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.squareup.picasso.Picasso;
 import java.text.DateFormat;
 import java.util.Date;
@@ -95,7 +96,7 @@ public class MoviesCursorAdapter extends CursorAdapter {
         // poster
         String posterPath = cursor.getString(MoviesQuery.POSTER);
         if (!TextUtils.isEmpty(posterPath)) {
-            Picasso.with(context).load(mImageBaseUrl + posterPath).into(holder.poster);
+            ServiceUtils.getPicasso(context).load(mImageBaseUrl + posterPath).into(holder.poster);
         } else {
             // no image
             holder.poster.setImageDrawable(null);

@@ -441,7 +441,7 @@ public class MovieDetailsFragment extends SherlockFragment {
 
         // poster
         if (!TextUtils.isEmpty(tmdbMovie.poster_path)) {
-            Picasso.with(getActivity()).load(mImageBaseUrl + tmdbMovie.poster_path)
+            ServiceUtils.getPicasso(getActivity()).load(mImageBaseUrl + tmdbMovie.poster_path)
                     .into(mMoviePosterBackground);
         }
     }
