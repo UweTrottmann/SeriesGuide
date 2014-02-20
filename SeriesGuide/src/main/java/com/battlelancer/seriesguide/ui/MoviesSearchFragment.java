@@ -172,7 +172,7 @@ public class MoviesSearchFragment extends SherlockFragment implements OnEditorAc
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH
-                || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
             onSearch();
             return true;
         }
