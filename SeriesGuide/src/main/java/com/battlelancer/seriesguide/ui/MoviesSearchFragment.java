@@ -16,15 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.adapters.MoviesAdapter;
-import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
-import com.battlelancer.seriesguide.util.MovieTools;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.battlelancer.seriesguide.R;
-import com.uwetrottmann.tmdb.entities.Movie;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -43,9 +34,19 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.adapters.MoviesAdapter;
+import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
+import com.battlelancer.seriesguide.util.MovieTools;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.tmdb.entities.Movie;
 import java.util.List;
 
 /**
@@ -66,9 +67,11 @@ public class MoviesSearchFragment extends SherlockFragment implements OnEditorAc
 
     private MoviesAdapter mAdapter;
 
-    private EditText mSearchBox;
+    @InjectView(R.id.emptyViewMovieSearch) TextView mEmptyView;
 
-    private TextView mEmptyView;
+    @InjectView(R.id.imageButtonClearSearch) ImageButton mClearButton;
+
+    @InjectView(R.id.editTextMoviesSearch) EditText mSearchBox;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,22 +84,21 @@ public class MoviesSearchFragment extends SherlockFragment implements OnEditorAc
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_movies_search, container, false);
-
-        mEmptyView = (TextView) v.findViewById(R.id.emptyViewMovieSearch);
+        ButterKnife.inject(this, v);
 
         // setup search box
-        mSearchBox = (EditText) v.findViewById(R.id.editTextMoviesSearch);
+        mSearchBox.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+        mSearchBox.setInputType(EditorInfo.TYPE_CLASS_TEXT);
         mSearchBox.setOnEditorActionListener(this);
 
         // setup clear button
-        v.findViewById(R.id.imageButtonClearSearch).setOnClickListener(
-                new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mSearchBox.setText(null);
-                        mSearchBox.requestFocus();
-                    }
-                });
+        mClearButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSearchBox.setText(null);
+                mSearchBox.requestFocus();
+            }
+        });
 
         return v;
     }
@@ -122,7 +124,15 @@ public class MoviesSearchFragment extends SherlockFragment implements OnEditorAc
     @Override
     public void onStart() {
         super.onStart();
+
         Utils.trackView(getActivity(), TAG);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        ButterKnife.reset(this);
     }
 
     @Override
@@ -173,13 +183,13 @@ public class MoviesSearchFragment extends SherlockFragment implements OnEditorAc
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH
                 || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-            onSearch();
+            search();
             return true;
         }
         return false;
     }
 
-    private void onSearch() {
+    private void search() {
         String query = mSearchBox.getText().toString();
         Bundle args = new Bundle();
         args.putString(SEARCH_QUERY_KEY, query);
@@ -226,5 +236,4 @@ public class MoviesSearchFragment extends SherlockFragment implements OnEditorAc
     private void fireTrackerEvent(String label) {
         Utils.trackAction(getActivity(), TAG, label);
     }
-
 }
