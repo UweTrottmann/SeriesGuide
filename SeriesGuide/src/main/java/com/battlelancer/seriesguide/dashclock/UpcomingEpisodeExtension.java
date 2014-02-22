@@ -17,20 +17,18 @@
 
 package com.battlelancer.seriesguide.dashclock;
 
-import com.google.android.apps.dashclock.api.DashClockExtension;
-import com.google.android.apps.dashclock.api.ExtensionData;
-
+import android.content.Intent;
+import android.database.Cursor;
+import android.text.TextUtils;
+import android.text.format.DateUtils;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DashClockSettings;
 import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.R;
-
-import android.content.Intent;
-import android.database.Cursor;
-import android.text.format.DateUtils;
-
+import com.google.android.apps.dashclock.api.DashClockExtension;
+import com.google.android.apps.dashclock.api.ExtensionData;
 import java.util.Date;
 
 public class UpcomingEpisodeExtension extends DashClockExtension {
@@ -58,36 +56,44 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
                 if (releaseTime <= latestTimeToInclude) {
                     // build our DashClock panel
 
-                    // Looks like 'Community, NBC' when expanded
-                    String expandedBody = upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_TITLE)
-                            + ", "
-                            + upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
-                    // Show all episodes airing the same time as the first one
-                    while (upcomingEpisodes.moveToNext()
-                            && releaseTime == upcomingEpisodes
-                            .getLong(ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS)) {
-                        expandedBody += "\n" + upcomingEpisodes.getString(
-                                ActivityFragment.ActivityQuery.SHOW_TITLE)
-                                + ", "
-                                + upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
-                    }
+                    // title of first show
+                    String expandedTitle = upcomingEpisodes.getString(
+                            ActivityFragment.ActivityQuery.SHOW_TITLE);
 
                     // get the actual release time
                     Date actualRelease = TimeTools.getEpisodeReleaseTime(this, releaseTime);
                     String releaseDay = TimeTools.formatToLocalReleaseDay(actualRelease);
                     String absoluteTime = TimeTools.formatToLocalReleaseTime(this, actualRelease);
-                    String relativeTime = TimeTools
-                            .formatToRelativeLocalReleaseTime(actualRelease);
+
+                    // time and network, e.g. 'Mon 10:00, Network'
+                    StringBuilder expandedBody = new StringBuilder();
+                    expandedBody.append(releaseDay).append(" ").append(absoluteTime);
+                    String network = upcomingEpisodes
+                            .getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
+                    if (!TextUtils.isEmpty(network)) {
+                        expandedBody.append(" — ").append(network);
+                    }
+
+                    // more than one episode at this time? Append e.g. '3 more'
+                    int additionalEpisodes = 0;
+                    while (upcomingEpisodes.moveToNext()
+                            //&& releaseTime == upcomingEpisodes
+                            //.getLong(ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS)
+                            ) {
+                        additionalEpisodes++;
+                    }
+                    if (additionalEpisodes > 0) {
+                        expandedBody.append("\n");
+                        expandedBody.append(getString(R.string.more, additionalEpisodes));
+                    }
 
                     publishUpdate(new ExtensionData()
                             .visible(true)
                             .icon(R.drawable.ic_notification)
                                     // 'Fri\n15:00'
                             .status(releaseDay + "\n" + absoluteTime)
-                                    // 'in 10 mins, Fri 15:00'
-                            .expandedTitle(
-                                    relativeTime + ", " + releaseDay + " " + absoluteTime)
-                            .expandedBody(expandedBody)
+                            .expandedTitle(expandedTitle)
+                            .expandedBody(expandedBody.toString())
                             .clickIntent(
                                     new Intent(getApplicationContext(),
                                             ShowsActivity.class)
