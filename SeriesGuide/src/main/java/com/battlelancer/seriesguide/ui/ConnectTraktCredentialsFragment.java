@@ -159,7 +159,6 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment implements
                 setupViews();
             }
         });
-
     }
 
     private void setupViews() {
@@ -188,7 +187,8 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment implements
         Utils.trackView(getActivity(), "Connect Trakt Credentials");
     }
 
-    @Override public void onDestroyView() {
+    @Override
+    public void onDestroyView() {
         super.onDestroyView();
 
         ButterKnife.reset(this);
@@ -226,12 +226,13 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment implements
         }
 
         // if we got here, looks like credentials were stored successfully
-        
-        // show download/upload options after successful connection
-        ConnectTraktFinishedFragment f = new ConnectTraktFinishedFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(android.R.id.content, f);
-        ft.commit();
-    }
 
+        if (getFragmentManager() != null) {
+            // show download/upload options after successful connection
+            ConnectTraktFinishedFragment f = new ConnectTraktFinishedFragment();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(android.R.id.content, f);
+            ft.commit();
+        }
+    }
 }
