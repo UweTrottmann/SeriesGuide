@@ -77,9 +77,8 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
                     // more than one episode at this time? Append e.g. '3 more'
                     int additionalEpisodes = 0;
                     while (upcomingEpisodes.moveToNext()
-                            //&& releaseTime == upcomingEpisodes
-                            //.getLong(ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS)
-                            ) {
+                            && releaseTime == upcomingEpisodes
+                            .getLong(ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS)) {
                         additionalEpisodes++;
                     }
                     if (additionalEpisodes > 0) {
