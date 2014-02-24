@@ -8,6 +8,17 @@ All dates are in the European Central timezone.
 Version 12 *(in development)*
 -------------------------
 
+#### 12-beta9 *(2014-02-24)*
+
+* TWEAK DashClock extension now prominently displays show title, is formatted similar to DashClock's calendar extension.
+* TWEAK 'Manual sync with trakt' is now simply 'Upload existing shows'. The regular (Auto) Update mechanism will take care of syncing watched and collected episodes.
+* TWEAK More reliable trakt credentials validation.
+* FIX Tab backgrounds not themed.
+* FIX No error message if movie details could not be loaded, lonely cast and crew labels.
+* FIX Displayed last 'Auto-Backup' time even if there are no actual backup files.
+* FIX Various other bug fixes.
+* NOTICE Themes are now exclusive to X subscribers/X pass holders.
+
 #### 12-beta8 *(2014-02-19)*
 
 * TWEAK Better crash reports.
