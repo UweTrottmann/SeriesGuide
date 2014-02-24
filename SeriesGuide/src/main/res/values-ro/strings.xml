@@ -405,7 +405,7 @@
     <item>12 ore</item>
     <item>24 de ore</item>
     <item>3 zile</item>
-    <item>week</item>
+    <item>o săptămână</item>
   </string-array>
   <plurals name="days_plural">
     <item quantity="one">%d zile</item>

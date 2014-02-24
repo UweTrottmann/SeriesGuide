@@ -375,17 +375,17 @@
   </string-array>
   <string-array name="upcominglimit">
     <item>目前</item>
-    <item>a day</item>
+    <item>1 day</item>
     <item>3 days</item>
-    <item>a week</item>
-    <item>two weeks</item>
-    <item>a month</item>
+    <item>1 week</item>
+    <item>2 weeks</item>
+    <item>1 month</item>
   </string-array>
   <string-array name="notificationThreshold">
     <item>on air</item>
     <item>5 min in advance</item>
     <item>10 min in advance</item>
-    <item>one hour in advance</item>
+    <item>1 hour in advance</item>
   </string-array>
   <string-array name="widgetOpacity">
     <item>Transparent</item>
@@ -400,12 +400,12 @@
     <item>我的最愛</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
-    <item>hour</item>
+    <item>1 hour</item>
     <item>6 hours</item>
     <item>12 hours</item>
     <item>24 hours</item>
     <item>3 days</item>
-    <item>week</item>
+    <item>1 week</item>
   </string-array>
   <plurals name="days_plural">
     <item quantity="one">%d day</item>

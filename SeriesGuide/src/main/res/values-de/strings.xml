@@ -375,11 +375,11 @@
   </string-array>
   <string-array name="upcominglimit">
     <item>jetzt</item>
-    <item>eines Tages</item>
-    <item>dreier Tage</item>
-    <item>einer Woche</item>
-    <item>zweier Wochen</item>
-    <item>eines Monats</item>
+    <item>1 Tag</item>
+    <item>3 Tage</item>
+    <item>1 Woche</item>
+    <item>2 Wochen</item>
+    <item>1 Monat</item>
   </string-array>
   <string-array name="notificationThreshold">
     <item>auf Sendung</item>
@@ -400,12 +400,12 @@
     <item>Favoriten</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
-    <item>einer Stunde</item>
+    <item>1 Stunde</item>
     <item>6 Stunden</item>
     <item>12 Stunden</item>
     <item>24 Stunden</item>
     <item>3 Tage</item>
-    <item>einer Woche</item>
+    <item>1 Woche</item>
   </string-array>
   <plurals name="days_plural">
     <item quantity="one">%d Tag</item>

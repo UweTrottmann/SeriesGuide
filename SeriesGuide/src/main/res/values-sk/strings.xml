@@ -400,12 +400,12 @@
     <item>Obľúbené</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
-    <item>hour</item>
+    <item>1 hour</item>
     <item>6 hours</item>
     <item>12 hours</item>
     <item>24 hours</item>
     <item>3 dní</item>
-    <item>week</item>
+    <item>týždenne</item>
   </string-array>
   <plurals name="days_plural">
     <item quantity="one">%d day</item>
