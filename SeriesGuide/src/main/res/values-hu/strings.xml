@@ -214,12 +214,11 @@
   <string name="upload_existing_shows">Létező műsorok feltöltése</string>
   <string name="about_trakt">a trakt segít nyilvántartani a nézett sorozatokat és filmeket. <a href="http://trakt.tv">Továbbiak (angolul)</a></string>
   <string name="integration_trakt_items">- adjon hozzá sorozatot a könyvtárából és a nézettek listájáról\n\n-nézze meg az ajánlott sorozatokat és a barátok tevékenységét\n\n-a megnézett és gyűjtött jelzések automatikusan szinkronizálódnak\n\n- az új sorozatok automatikusan hozzáadásra kerülnek</string>
-  <string name="trakt_sync_intro">Nem lesz sorozat hozzáadva vagy eltávolítva a SeriesGuide-ból, azt a sorozatlistáról kell megtenni.</string>
-  <string name="trakt_download_hint">Minden trakt-on nézettnek jelölt epizód megjelölése nézettnek a SeriesGuide-ban:</string>
   <string name="trakt_upload_hint">Minden SeriesGuide-on nézettnek jelölt epizód nézettnek jelölése a trakt-on:</string>
-  <string name="trakt_download">Letöltés</string>
   <string name="trakt_upload">Feltöltés</string>
-  <string name="trakt_syncunwatched">A megnézett jelölések eltávolítása a meg nem nézett epizódokról szinkronizáláskor</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Alap beállítások</string>
   <string name="prefs_category_sharing">Szolgáltatások</string>
   <string name="prefs_category_advanced">Haladó beállítások</string>
@@ -238,7 +237,6 @@
   <string name="clearGetGlueCredentials">GetGlue kapcsolat megszakítása</string>
   <string name="clearGetGlueCredentialssummary">Jelentkezzen be GetGlue-val az újrakapcsolódáshoz</string>
   <string name="pref_traktsummary">trakt.tv fiók hozzáadása vagy szerkesztése</string>
-  <string name="pref_traktsync">trakt.tv kézi szinkronizáció</string>
   <string name="feedback">Visszajelzés küldése</string>
   <string name="pref_autoaddshows">Új trakt sorozatok hozzáadása</string>
   <string name="pref_autoaddshowssummary">Trakt aktivitása és adatai alapján sorozatai bekerülnek az adatbázisba</string>
@@ -314,7 +312,6 @@
   <string name="connect">Kapcsolódás</string>
   <string name="disconnect">Megszakítás</string>
   <string name="trakt_error">trakt.tv kapcsolódási hiba</string>
-  <string name="trakt_decryptfail">jelszó dekódolása nem sikerült</string>
   <string name="trakt_error_credentials">Hiba történt. Ellenőrizd a megadott adatokat és próbáld újra.</string>
   <string name="trakt_error_general">Nincs kapcsolat a trakttal. Próbáld újra később.</string>
   <string name="trakt_createaccount">Új fiók létrehozása</string>

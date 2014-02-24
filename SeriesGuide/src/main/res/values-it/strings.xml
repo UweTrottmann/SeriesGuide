@@ -214,12 +214,11 @@
   <string name="upload_existing_shows">Carica serie esistenti</string>
   <string name="about_trakt">trakt ti aiuta a tenere traccia delle serie TV e dei film che guardi. <a href="http://trakt.tv">Learn more</a></string>
   <string name="integration_trakt_items">- aggiungi serie dalla tua raccolta e dalla tuo programma visione\n\n- guarda i suggerimenti per te e cosa guardano i tuoi amici\n\n- sincronizzazione automatica degli episodi guardati e contrassegnati\n\n- sinronizzazione automatica delle nuove serie guardate</string>
-  <string name="trakt_sync_intro">Nessuna serie sarà aggiunta o rimossa in SeriesGuide, devi farlo dall\'elenco serie.</string>
-  <string name="trakt_download_hint">Contrassegna gli episodi in SeriesGuide come guardati da trakt:</string>
   <string name="trakt_upload_hint">Contrassegna gli episodi in trakt come guardati da SeriesGuide:</string>
-  <string name="trakt_download">Scarica su SeriesGuide</string>
   <string name="trakt_upload">Carica su trakt.tv</string>
-  <string name="trakt_syncunwatched">Rimuovi contrassegno guardato dagli episodi non guardati durante la sincronizzazione</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Base</string>
   <string name="prefs_category_sharing">Servizi</string>
   <string name="prefs_category_advanced">Avanzato</string>
@@ -238,7 +237,6 @@
   <string name="clearGetGlueCredentials">Scollegare da GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Accedi con GetGlue per ricollegarti</string>
   <string name="pref_traktsummary">Aggiungi o modifica le credenziali Trakt.tv</string>
-  <string name="pref_traktsync">Sinronizzazione manuale con trakt.tv</string>
   <string name="feedback">Invia feedback</string>
   <string name="pref_autoaddshows">Aggiungi nuove serie trakt</string>
   <string name="pref_autoaddshowssummary">Aggiungi automaticamente le serie dal tuo trakt</string>
@@ -314,7 +312,6 @@
   <string name="connect">Connetti</string>
   <string name="disconnect">Disconnetti</string>
   <string name="trakt_error">Interazione con trakt non riuscita</string>
-  <string name="trakt_decryptfail">la password non può essere decriptata</string>
   <string name="trakt_error_credentials">Qualcosa è andato storto. Per favore verifica le credenziali e riprova.</string>
   <string name="trakt_error_general">Non è possibile contattare trakt. Riprova più tardi.</string>
   <string name="trakt_createaccount">Crea nuovo account</string>

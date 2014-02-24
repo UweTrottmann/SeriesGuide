@@ -214,12 +214,11 @@
   <string name="upload_existing_shows">Upload existing shows</string>
   <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
   <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
-  <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
-  <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
   <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
-  <string name="trakt_download">Download to SeriesGuide</string>
-  <string name="trakt_upload">Upload to trakt.tv</string>
-  <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
+  <string name="trakt_upload">Upload to trakt</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Basics</string>
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Advanced</string>
@@ -238,7 +237,6 @@
   <string name="clearGetGlueCredentials">中斷GetGlue的連線</string>
   <string name="clearGetGlueCredentialssummary">Check in with tvtag to reconnect</string>
   <string name="pref_traktsummary">新增或編輯您的trakt.tv憑證</string>
-  <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">傳送反饋意見</string>
   <string name="pref_autoaddshows">Add new trakt shows</string>
   <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
@@ -314,7 +312,6 @@
   <string name="connect">Connect</string>
   <string name="disconnect">Disconnect</string>
   <string name="trakt_error">與trakt的互動失敗</string>
-  <string name="trakt_decryptfail">無法解密密碼</string>
   <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_createaccount">註冊</string>

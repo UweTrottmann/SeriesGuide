@@ -214,12 +214,11 @@
   <string name="upload_existing_shows">Nahrať existujúce seriály</string>
   <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
   <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
-  <string name="trakt_sync_intro">Zo SeriesGuide nebudú pridané/odobrané žiadne seriály, to je možné jedine zo zoznamu seriálov.</string>
-  <string name="trakt_download_hint">Označiť všetky zhliadnuté epizódy na trakt.tv za zhliadnuté v SeriesGuide:</string>
   <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
-  <string name="trakt_download">Stiahnuť do SeriesGuide</string>
   <string name="trakt_upload">Nahrať na trakt.tv</string>
-  <string name="trakt_syncunwatched">Odstrániť zhliadnutie u nezhliadnutých epizód</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Základné</string>
   <string name="prefs_category_sharing">Služby</string>
   <string name="prefs_category_advanced">Pokročilé</string>
@@ -238,7 +237,6 @@
   <string name="clearGetGlueCredentials">Odpojiť tvtag</string>
   <string name="clearGetGlueCredentialssummary">Check in with tvtag to reconnect</string>
   <string name="pref_traktsummary">Pridať/Upraviť prihlasovacie údaje</string>
-  <string name="pref_traktsync">Manuálna synchronizácia s trakt.tv</string>
   <string name="feedback">Poslať reakciu</string>
   <string name="pref_autoaddshows">Pridávať nové seriály z trakt.tv</string>
   <string name="pref_autoaddshowssummary">Automaticky pridávať seriály z vašej aktivity na trakt.tv</string>
@@ -314,7 +312,6 @@
   <string name="connect">Pripojiť</string>
   <string name="disconnect">Odpojiť</string>
   <string name="trakt_error">Chyba v komunikácii s trakt.tv</string>
-  <string name="trakt_decryptfail">Heslo nebolo možné dešifrovať</string>
   <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_createaccount">Vytvoriť nový účet</string>

@@ -214,12 +214,11 @@
   <string name="upload_existing_shows">Last opp eksisterende serier</string>
   <string name="about_trakt">trakt bidrar til å holde oversikt over hvilke TV-programmer og filmer du ser på. <a href="http://trakt.tv"> Lær mer</a></string>
   <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
-  <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
-  <string name="trakt_download_hint">Marker alle sette episoder på trakt som sett i SeriesGuide:</string>
   <string name="trakt_upload_hint">Marker sette episoder i SeriesGuide som sett i trakt:</string>
-  <string name="trakt_download">Last ned til SeriesGuide</string>
   <string name="trakt_upload">Last opp til trakt.tv</string>
-  <string name="trakt_syncunwatched">Fjern sett-flagg for usette episoder ved synkronisering</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Grunnleggende</string>
   <string name="prefs_category_sharing">Tjenester</string>
   <string name="prefs_category_advanced">Avansert</string>
@@ -238,7 +237,6 @@
   <string name="clearGetGlueCredentials">Koble fra GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Sjekk inn med GetGlue for å koble til på nytt</string>
   <string name="pref_traktsummary">Legg til eller endre pålogginsinformasjonen for trakt.tv</string>
-  <string name="pref_traktsync">Manuell synkronisering med trakt.tv</string>
   <string name="feedback">Gi tilbakemelding</string>
   <string name="pref_autoaddshows">Legge til nye trakt serier</string>
   <string name="pref_autoaddshowssummary">Automatisk legge til serier fra din trakt aktivitetsstrøm</string>
@@ -314,7 +312,6 @@
   <string name="connect">Koble til</string>
   <string name="disconnect">Koble fra</string>
   <string name="trakt_error">Interaksjonen med trakt mislyktes</string>
-  <string name="trakt_decryptfail">passordet kunne ikke dekrypteres</string>
   <string name="trakt_error_credentials">Noe gikk galt. Kontroller påloggingsinformasjonen, og prøv på nytt.</string>
   <string name="trakt_error_general">Kunne ikke kontakte trakt. Prøv igjen senere.</string>
   <string name="trakt_createaccount">Opprett ny konto</string>

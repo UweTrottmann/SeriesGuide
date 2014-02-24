@@ -214,12 +214,11 @@
   <string name="upload_existing_shows">Pošalji postojeće serije</string>
   <string name="about_trakt">trakt pomaže pratiti koje serije i filmove gledaš. <a href="http://trakt.tv">Saznaj više</a></string>
   <string name="integration_trakt_items">- dodaj serije iz svoje zbirke i popisa gledanja\n\n- vidi svoje preporuke i aktivnost prijatelja\n\n- pogledane i prikupljene oznake automatski su sinkronizirane\n\n- nove serije koje si gledao automatski su dodane</string>
-  <string name="trakt_sync_intro">Nijedna serija neće biti dodana ili uklonjena u SeriesGuide, učini to u popisu serija.</string>
-  <string name="trakt_download_hint">Označi sve pogledane epizode na trakt kao pogledane na SeriesGuide:</string>
   <string name="trakt_upload_hint">Označi epizode gledane na SeriesGuide kao gledane na trakt:</string>
-  <string name="trakt_download">Skini na SeriesGuide</string>
   <string name="trakt_upload">Pošalji na trakt.tv</string>
-  <string name="trakt_syncunwatched">Ukloni oznake pogledanih za nepogledane epizode pri sinkronizaciji</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Osnove</string>
   <string name="prefs_category_sharing">Usluge</string>
   <string name="prefs_category_advanced">Napredno</string>
@@ -238,7 +237,6 @@
   <string name="clearGetGlueCredentials">Odjavi se sa GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Prijavi se sa GetGlue da se ponovno spojiš</string>
   <string name="pref_traktsummary">Dodaj ili uredi svoje trakt.tv podatke</string>
-  <string name="pref_traktsync">Ručna sinkronizacija s trakt.tv</string>
   <string name="feedback">Pošalji povratnu informaciju</string>
   <string name="pref_autoaddshows">Dodaj nove trakt serije</string>
   <string name="pref_autoaddshowssummary">Automatski dodaj serije iz svojih aktivnosti na traktu</string>
@@ -314,7 +312,6 @@
   <string name="connect">Povežite</string>
   <string name="disconnect">Isključi</string>
   <string name="trakt_error">Komunikacija sa traktom nije uspjela</string>
-  <string name="trakt_decryptfail">lozinka ne može biti dešifrirana</string>
   <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_createaccount">Stvori novi račun</string>

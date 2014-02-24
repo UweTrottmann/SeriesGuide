@@ -214,12 +214,11 @@
   <string name="upload_existing_shows">העלה תוכניות קיימות</string>
   <string name="about_trakt">trakt מסייעת לשמור רשימה של אילו תוכניות טלוויזיה וסרטים אתה צופה. <a href="http://trakt.tv"> למד עוד</a></string>
   <string name="integration_trakt_items">-הוסף סדרות מהספריה ומהרשימת מעקב שלך\n\n- ראה את ההמלצות שלך ואת פעילות החברים שלך\n\n- דגלי צפייה ואוסף הדגלים שלך מסונכרנים אוטומטית\n\n- תוכניות חדשות שצפית בהן מתווספות באופן אוטומטי</string>
-  <string name="trakt_sync_intro">שום תוכניות לא יתווספו או יוסרו ב-SeriesGuide, עשה זאת מתוך רשימת התוכניות.</string>
-  <string name="trakt_download_hint">סמן בדגל את כל הפרקים שנצפו ב-trakt כנצפו ב-SeriesGuide:</string>
   <string name="trakt_upload_hint">סמן בדגל את כל הפרקים שנצפו ב-SeriesGuide כנצפו ב-trakt:</string>
-  <string name="trakt_download">הורד ל-SeriesGuide</string>
   <string name="trakt_upload">העלה ל-trakt.tv</string>
-  <string name="trakt_syncunwatched">הסר דגלי צפייה עבור פרקים שלא נצפו בעת ביצוע סינכרון</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">בסיסי</string>
   <string name="prefs_category_sharing">שירותים</string>
   <string name="prefs_category_advanced">מתקדם</string>
@@ -238,7 +237,6 @@
   <string name="clearGetGlueCredentials">נתק את GetGlue</string>
   <string name="clearGetGlueCredentialssummary">עשה צ\'ק-אין עם GetGlue כדי להתחבר מחדש</string>
   <string name="pref_traktsummary">הוסף או ערוך את אישורי ה-trakt.tv שלך</string>
-  <string name="pref_traktsync">סינכרון ידני עם trakt.tv</string>
   <string name="feedback">שלח משוב</string>
   <string name="pref_autoaddshows">הוסף סדרות trakt חדשות</string>
   <string name="pref_autoaddshowssummary">הוסף סדרות מפעילות ה-trakt שלך באופן אוטומטי</string>
@@ -314,7 +312,6 @@
   <string name="connect">התחבר</string>
   <string name="disconnect">התנתק</string>
   <string name="trakt_error">אינטראקציה עם trakt נכשלה</string>
-  <string name="trakt_decryptfail">לא היתה אפשרות לפענח את הסיסמא</string>
   <string name="trakt_error_credentials">משהו השתבש. אנא בדוק את האישורים שלך ונסה שוב.</string>
   <string name="trakt_error_general">לא ניתן להתחבר ל-Trakt. נסה שוב מאוחר יותר.</string>
   <string name="trakt_createaccount">צור חשבון חדש</string>

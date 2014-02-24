@@ -118,8 +118,8 @@
   <string name="action_collection_remove">Usuń z kolekcji</string>
   <string name="action_collection_added">Dodano do kolekcji</string>
   <string name="action_collection_removed">Usunięto z kolekcji</string>
-  <string name="action_watched">Watched</string>
-  <string name="action_unwatched">Not yet watched</string>
+  <string name="action_watched">Obejrzane</string>
+  <string name="action_unwatched">Nieobejrzane</string>
   <string name="confirm_delete">Czy na pewno chcesz usunąć %s?</string>
   <string name="delete_has_list_items">Nie można kontynuować, usuń %s z wszystkich list.</string>
   <string name="delete_error">Nie można usunąć serialu. Spróbuj ponownie później.</string>
@@ -214,12 +214,11 @@
   <string name="upload_existing_shows">Prześlij istniejące seriale</string>
   <string name="about_trakt">trakt.tv pomaga zarządzać jakie seriale i filmy oglądasz. <a href="http://trakt.tv">Dowiedz się więcej</a></string>
   <string name="integration_trakt_items">-dodaje seriale z biblioteki i listy obejrzanych odcinków\n\n- zobacz rekomendację i aktywność przyjaciół\n\n - automatyczna synchronizacja oznaczenia jako obejrzane i kupione\n\n- automatyczne dodawanie nowo obejrzanych seriali</string>
-  <string name="trakt_sync_intro">Brak seriali dodanych do SeriesGuide. Możesz to zrobić z listy seriali.</string>
-  <string name="trakt_download_hint">Oznacz odcinki obejrzane na trakt jako obejrzane w SeriesGuide</string>
   <string name="trakt_upload_hint">Oznacz odcinki jako obejrzane w SeriesGuide jeśli są obejrzane na trakt</string>
-  <string name="trakt_download">Pobierz do SeriesGuide</string>
   <string name="trakt_upload">Wyślij do trakt.tv</string>
-  <string name="trakt_syncunwatched">Usuń znaczniki obejrzenia dla nieobejrzanych odcinków podczas synchronizacji</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Podstawowe</string>
   <string name="prefs_category_sharing">Usługi</string>
   <string name="prefs_category_advanced">Zaawansowane</string>
@@ -238,7 +237,6 @@
   <string name="clearGetGlueCredentials">Odłącz tvtag</string>
   <string name="clearGetGlueCredentialssummary">Podepnij do tvtag, aby ponownie połączyć</string>
   <string name="pref_traktsummary">Dodaj lub edytuj dane logowania trakt.tv</string>
-  <string name="pref_traktsync">Ręczna synchronizacja z trakt.tv</string>
   <string name="feedback">Wyślij opinię</string>
   <string name="pref_autoaddshows">Dodaj nowe seriale trakt</string>
   <string name="pref_autoaddshowssummary">Automatycznie dodawaj nowe seriale z listy aktywności trakt</string>
@@ -314,7 +312,6 @@
   <string name="connect">Połącz</string>
   <string name="disconnect">Rozłącz</string>
   <string name="trakt_error">Komunikacja z trakt.tv zakończona niepowodzeniem</string>
-  <string name="trakt_decryptfail">Nie można odszyfrować hasła</string>
   <string name="trakt_error_credentials">Coś poszło nie tak. Sprawdź swoje poświadczenia i spróbuj ponownie.</string>
   <string name="trakt_error_general">Nie można połączyć z  trakt. Spróbuj ponownie później.</string>
   <string name="trakt_createaccount">Utwórz nowe konto</string>

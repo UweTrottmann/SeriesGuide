@@ -214,12 +214,11 @@
   <string name="upload_existing_shows">Mevcut dizileri karşıya yükleyin</string>
   <string name="about_trakt">trakt, izlediğiniz dizi ve filmlerin kaydını tutmanıza yardımcı olur.<a href="http://trakt.tv">Daha fazla bilgi</a></string>
   <string name="integration_trakt_items">- kütüphaneden ve izleme listesinden dizileri ekleyin\n\n- yorumlarını ve arkadaşlarının aktivitelerini gör\n\n- izlediklerin otomatik bir şekilde senkronize olsun\n\n- izlediğin yeni diziler otomatik eklensin</string>
-  <string name="trakt_sync_intro">Diziler kendiliğinden eklenip kaldırmayacaktır, bu işlemleri dizi listesinde yapmalısınız.</string>
-  <string name="trakt_download_hint">trakt\'te izlenmiş her diziyi SeriesGuide\'da izlenmiş olarak işaretle:</string>
   <string name="trakt_upload_hint">SeriesGuide\'da izlenmiş her diziyi trakt\'te izlenmiş olarak işaretle:</string>
-  <string name="trakt_download">SeriesGuide\'a indir</string>
   <string name="trakt_upload">trakt\'e yükle</string>
-  <string name="trakt_syncunwatched">İzlenmemiş bölümlerden izlenmiş işaretini kaldır</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Temel Ayarlar</string>
   <string name="prefs_category_sharing">Servisler</string>
   <string name="prefs_category_advanced">Gelişmiş</string>
@@ -238,7 +237,6 @@
   <string name="clearGetGlueCredentials">GetGlue Bağlantısını Kes</string>
   <string name="clearGetGlueCredentialssummary">Tekrar bağlanmak için GetGlue girişi yapın</string>
   <string name="pref_traktsummary">trakt.tv kimlik bilgilerinizi ekleyin veya düzenleyin</string>
-  <string name="pref_traktsync">trakt.tv ile manuel senkron</string>
   <string name="feedback">Geribildirim Gönder</string>
   <string name="pref_autoaddshows">yeni trakt dizileri ekleyin</string>
   <string name="pref_autoaddshowssummary">dizileri trakt aktivite akışından otomatik olarak yükleyin</string>
@@ -314,7 +312,6 @@
   <string name="connect">Bağlan</string>
   <string name="disconnect">Bağlantıyı Kes</string>
   <string name="trakt_error">Trakt etkileşimi başarısız oldu</string>
-  <string name="trakt_decryptfail">parola çözümlenemedi</string>
   <string name="trakt_error_credentials">Bir şeyler ters gitti. Lütfen kimlik bilgilerinizi denetleyin ve yeniden deneyin.</string>
   <string name="trakt_error_general">Trakt\'a bağlanılamadı. Daha sonra tekrar deneyin.</string>
   <string name="trakt_createaccount">Yeni hesap oluştur</string>

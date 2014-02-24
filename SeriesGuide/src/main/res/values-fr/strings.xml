@@ -13,7 +13,7 @@
   <string name="show">Série</string>
   <string name="episode">Épisode</string>
   <string name="episode_number">Episode %s</string>
-  <string name="episodes">Episodes</string>
+  <string name="episodes">Épisodes</string>
   <string name="season">Saison</string>
   <string name="season_number">Saison %s</string>
   <string name="seasons">Saisons</string>
@@ -118,8 +118,8 @@
   <string name="action_collection_remove">Retirer de la collection</string>
   <string name="action_collection_added">Ajouté à la collection</string>
   <string name="action_collection_removed">Retiré de la collection</string>
-  <string name="action_watched">Watched</string>
-  <string name="action_unwatched">Not yet watched</string>
+  <string name="action_watched">Vu</string>
+  <string name="action_unwatched">Pas encore vu</string>
   <string name="confirm_delete">Voulez-vous vraiment supprimer %s?</string>
   <string name="delete_has_list_items">Impossible, supprimez d\'abord %s de toutes les listes.</string>
   <string name="delete_error">Impossible de retirer la série. Réessayez plus tard.</string>
@@ -214,12 +214,11 @@
   <string name="upload_existing_shows">Envoyer les séries</string>
   <string name="about_trakt">trakt vous permet de garder une trace des séries et films que vous regardez. <a href="http://trakt.tv">En savoir plus</a></string>
   <string name="integration_trakt_items">- vous pourrez ajouter vos séries depuis votre bibliothèque ou votre liste à voir.\n\n- vous pourrez voir vos recommandations et l\'activité de vos amis.\n\n- les épisodes vus et collectés seront synchronisés automatiquement.\n\n- les nouvelles séries que vous regardez seront ajoutées automatiquement.</string>
-  <string name="trakt_sync_intro">Aucune série ne sera ajoutée ou supprimée, vous pouvez le faire depuis la liste des séries.</string>
-  <string name="trakt_download_hint">Marquer tous les épisodes vus sur trakt comme vus sur SeriesGuide :</string>
   <string name="trakt_upload_hint">Marquer tous les épisodes vus sur SeriesGuide comme vus sur trakt :</string>
-  <string name="trakt_download">Télécharger sur SeriesGuide</string>
   <string name="trakt_upload">Envoyer vers trakt.tv</string>
-  <string name="trakt_syncunwatched">Synchroniser également les épisodes non vus</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Paramètres de base</string>
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Avancé</string>
@@ -238,7 +237,6 @@
   <string name="clearGetGlueCredentials">Déconnecter tvtag</string>
   <string name="clearGetGlueCredentialssummary">Faites un check-in avec tvtag pour vous reconnecter</string>
   <string name="pref_traktsummary">Ajouter ou modifier vos identifiants sur trakt.tv</string>
-  <string name="pref_traktsync">Synchro manuelle avec trakt.tv</string>
   <string name="feedback">Envoyez vos commentaires</string>
   <string name="pref_autoaddshows">Ajouter les nouvelles séries depuis trakt</string>
   <string name="pref_autoaddshowssummary">Ajouter automatiquement les séries se trouvant dans votre flux d\'activité trakt</string>
@@ -314,7 +312,6 @@
   <string name="connect">Se connecter</string>
   <string name="disconnect">Se déconnecter</string>
   <string name="trakt_error">Échec d\'interaction avec trakt</string>
-  <string name="trakt_decryptfail">le mot de passe n\'a pas pu être décrypté</string>
   <string name="trakt_error_credentials">Un problème est survenu. Merci de vérifier vos identifiants et d\'essayer de nouveau.</string>
   <string name="trakt_error_general">Impossible de communiquer avec trakt. Réessayez ultérieurement.</string>
   <string name="trakt_createaccount">Créer un nouveau compte</string>
