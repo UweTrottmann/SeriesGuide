@@ -495,12 +495,12 @@
     <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
 
     <string-array name="dashclockUpcomingThresholds">
-        <item>hour</item>
+        <item>1 hour</item>
         <item>6 hours</item>
         <item>12 hours</item>
         <item>24 hours</item>
         <item>3 days</item>
-        <item>week</item>
+        <item>1 week</item>
     </string-array>
 
     <!-- SeriesGuide X deprecation -->
