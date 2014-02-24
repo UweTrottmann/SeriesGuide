@@ -56,7 +56,6 @@ import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.Movie;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
-import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb.entities.Credits;
@@ -472,7 +471,7 @@ public class MovieDetailsFragment extends SherlockFragment {
             }
             mMovieCast.setText(castString.toString());
         }
-        
+
         // crew members
         if (mCredits.crew != null) {
             StringBuilder crewString = new StringBuilder();
@@ -538,7 +537,8 @@ public class MovieDetailsFragment extends SherlockFragment {
                 populateMovieViews();
                 getSherlockActivity().supportInvalidateOptionsMenu();
             } else {
-                // TODO display error message
+                // display offline message
+                mMovieDescription.setText(R.string.offline);
             }
         }
 
