@@ -9,6 +9,7 @@
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="custom_list_selector">@drawable/list_selector_sg</item>
+        <item name="tabStripBackground">@drawable/tab_strip_background_sg</item>
 
         <!-- System widgets (ABS) -->
         <item name="dropDownListViewStyle">@style/DropDownListView</item>
@@ -89,6 +90,7 @@
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
+        <item name="tabStripBackground">@drawable/background_tab</item>
 
         <!-- Action bar (ABS) -->
         <item name="actionBarStyle">@style/ActionBarDark</item>
@@ -152,6 +154,7 @@
         <item name="android:colorBackground">@color/background_inverse</item>
         <item name="android:windowBackground">@color/background_inverse</item>
         <item name="custom_list_selector">@drawable/list_selector_sg</item>
+        <item name="tabStripBackground">@drawable/tab_strip_background_sg</item>
 
         <!-- System widgets (ABS) -->
         <item name="dropDownListViewStyle">@style/DropDownListView</item>
