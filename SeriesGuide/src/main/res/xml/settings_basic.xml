@@ -17,18 +17,20 @@
         android:defaultValue="False"
         android:key="com.battlelancer.seriesguide.autoupdatewlanonly"
         android:title="@string/pref_updatewifionly"
-        android:summary="@string/pref_updatewifionlysummary"/>
+        android:summary="@string/pref_updatewifionlysummary" />
 
-    <CheckBoxPreference
-        android:defaultValue="False"
-        android:key="onlyFutureEpisodes"
-        android:summary="@string/pref_onlyfuturesummary"
-        android:title="@string/pref_onlyfuture" />
-    <CheckBoxPreference
-        android:defaultValue="False"
-        android:key="onlySeasonEpisodes"
-        android:summary="@string/pref_onlyseasonepssummary"
-        android:title="@string/pref_onlyseasoneps" />
+    <PreferenceCategory android:title="@string/shows">
+        <CheckBoxPreference
+            android:defaultValue="False"
+            android:key="onlyFutureEpisodes"
+            android:summary="@string/pref_onlyfuturesummary"
+            android:title="@string/pref_onlyfuture" />
+        <CheckBoxPreference
+            android:defaultValue="False"
+            android:key="onlySeasonEpisodes"
+            android:summary="@string/pref_onlyseasonepssummary"
+            android:title="@string/pref_onlyseasoneps" />
+    </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_appearance">
         <ListPreference
