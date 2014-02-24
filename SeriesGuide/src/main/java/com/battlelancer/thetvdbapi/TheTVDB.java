@@ -705,7 +705,7 @@ public class TheTVDB {
             long imageSize = urlConnection.getContentLength();
             // allow images up to 300K (although size is always around
             // 30K for posters and 100K for episode images)
-            if (imageSize > 300000) {
+            if (imageSize > 300000 || imageSize == -1) {
                 return null;
             } else {
                 inputStream = urlConnection.getInputStream();
