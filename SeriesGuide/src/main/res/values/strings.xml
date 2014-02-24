@@ -492,7 +492,7 @@
     <!-- DashClock extension -->
     <string name="dashclock_extension_label">Upcoming episode</string>
     <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
-    <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
+    <string name="dashclock_pref_upcoming_threshold">Display episode within…</string>
 
     <string-array name="dashclockUpcomingThresholds">
         <item>1 hour</item>
