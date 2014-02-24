@@ -113,7 +113,8 @@ public class TraktCredentials {
     }
 
     /**
-     * Stores the given credentials. Performs no sanitation, however, if any is null or empty throws
+     * Stores the given credentials. Performs no sanitation, however, if any is null or empty
+     * throws
      * an exception.
      */
     public void setCredentials(String username, String password) {
@@ -182,18 +183,19 @@ public class TraktCredentials {
             return;
         }
         try {
-            Response r = manager.accountService().test();
-            if (r != null && TraktStatus.FAILURE.equals(r.status)) {
+            manager.accountService().test();
+        } catch (RetrofitError e) {
+            retrofit.client.Response response = e.getResponse();
+            /**
+             * Check for HTTP 401 Unauthorized as retrofit errors for non-200 responses.
+             * Ignore other response codes as trakt may be offline, have server errors, etc.
+             */
+            if (response != null && response.getStatus() == 401) {
                 // credentials invalid according to trakt, remove the password
                 removePassword();
+            } else {
+                Timber.e(e, "Trakt credential validation failed");
             }
-        } catch (RetrofitError ignored) {
-            Timber.e(ignored, "trakt credentials validation failed");
         }
-        /*
-         * Ignore exceptions, trakt may be offline, etc. We expect the user to
-         * disconnect and reconnect himself.
-         */
     }
-
 }
