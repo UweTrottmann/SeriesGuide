@@ -431,7 +431,6 @@
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
     <string name="trakt_error">Interaction with trakt failed</string>
-    <string name="trakt_decryptfail">password could not be decrypted</string>
     <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
     <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
     <string name="trakt_createaccount">Create new account</string>
