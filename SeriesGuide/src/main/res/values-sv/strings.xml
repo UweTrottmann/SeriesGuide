@@ -215,12 +215,11 @@
   <string name="upload_existing_shows">Ladda upp befintliga serier</string>
   <string name="about_trakt">trakt hjälper till att hålla ett register över vilka TV-serier och filmer du ser på. <a href="http://trakt.tv">Lär dig mer</a></string>
   <string name="integration_trakt_items">- lägg till serier från ditt bibliotek och din att-se-lista - se dina rekommendationer och dina vänners aktivitet - sedda och samlade avsnitt synkas automatiskt - nya serier du ser på läggs automatiskt till.</string>
-  <string name="trakt_sync_intro">Inga serier läggs till eller tas bort i SeriesGuide, gör det från serielistan.</string>
-  <string name="trakt_download_hint">Bocka av alla sedda avsnitt på trakt som sedda i SeriesGuide:</string>
   <string name="trakt_upload_hint">Bocka av avsnitt sedda i SeriesGuide som sedda i trakt:</string>
-  <string name="trakt_download">Ladda ner till SeriesGuide</string>
   <string name="trakt_upload">Ladda upp till trakt.tv</string>
-  <string name="trakt_syncunwatched">Ta bort sedda avbockningar för osedda avsnitt när du synkar</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Grunder</string>
   <string name="prefs_category_sharing">Tjänster</string>
   <string name="prefs_category_advanced">Avancerat</string>
@@ -239,7 +238,6 @@
   <string name="clearGetGlueCredentials">Koppla bort GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Checka in med GetGlue för att återansluta</string>
   <string name="pref_traktsummary">Lägg till eller redigera dina trakt.tv-uppgifter</string>
-  <string name="pref_traktsync">Manuell synkning med trakt.tv</string>
   <string name="feedback">Skicka feedback</string>
   <string name="pref_autoaddshows">Lägg till nya trakt-serier</string>
   <string name="pref_autoaddshowssummary">Lägg automatiskt till program från din trakt activity stream</string>
@@ -315,7 +313,6 @@
   <string name="connect">Anslut</string>
   <string name="disconnect">Koppla ner</string>
   <string name="trakt_error">Interaktion med trakt misslyckades</string>
-  <string name="trakt_decryptfail">lösenordet kunde inte avkrypteras</string>
   <string name="trakt_error_credentials">Något gick fel. Vänligen kontrollera dina uppgifter och försök igen.</string>
   <string name="trakt_error_general">Kunde inte kommunicera med trakt. Försök igen senare.</string>
   <string name="trakt_createaccount">Skapa nytt konto</string>

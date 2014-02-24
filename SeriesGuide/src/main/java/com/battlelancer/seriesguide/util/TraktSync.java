@@ -16,10 +16,11 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -28,38 +29,31 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.services.ShowService;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
 public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
-    private FragmentActivity mContext;
+    private Context mContext;
 
-    private boolean mIsSyncToTrakt;
-
-    private View mContainer;
+    private final Button mUploadButton;
+    private final View mProgressIndicator;
 
     private boolean mIsSyncingUnseen;
 
-    public TraktSync(FragmentActivity activity, View container, boolean isSyncToTrakt,
+    public TraktSync(Context context, Button uploadButton, View progressIndicator,
             boolean isSyncingUnseen) {
-        mContext = activity;
-        mContainer = container;
-        mIsSyncToTrakt = isSyncToTrakt;
+        mContext = context;
+        mUploadButton = uploadButton;
+        mProgressIndicator = progressIndicator;
         mIsSyncingUnseen = isSyncingUnseen;
     }
 
     @Override
     protected void onPreExecute() {
-        if (mIsSyncToTrakt) {
-            mContainer.findViewById(R.id.progressBarToTraktSync).setVisibility(View.VISIBLE);
-        } else {
-            mContainer.findViewById(R.id.progressBarToDeviceSync).setVisibility(View.VISIBLE);
-        }
-        mContainer.findViewById(R.id.syncToDeviceButton).setEnabled(false);
-        mContainer.findViewById(R.id.syncToTraktButton).setEnabled(false);
+        mProgressIndicator.setVisibility(View.VISIBLE);
+        mUploadButton.setEnabled(false);
     }
 
     @Override
@@ -71,21 +65,12 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
             return TraktTools.FAILED_CREDENTIALS;
         }
 
-        if (mIsSyncToTrakt) {
-            return syncToTrakt(trakt);
-        } else {
-            // get show ids in local database
-            HashSet<Integer> localShows = ShowTools.getShowTvdbIdsAsSet(mContext);
-            if (localShows == null) {
-                return TraktTools.FAILED;
-            }
-            return TraktTools.syncToSeriesGuide(mContext, trakt, localShows, mIsSyncingUnseen);
-        }
+        return syncToTrakt(trakt);
     }
 
     private Integer syncToTrakt(Trakt trakt) {
         // get show ids in local database for which syncing is enabled
-        Cursor showTvdbIds = mContext.getContentResolver().query(Shows.CONTENT_URI, new String[]{
+        Cursor showTvdbIds = mContext.getContentResolver().query(Shows.CONTENT_URI, new String[] {
                 Shows._ID
         }, Shows.SYNCENABLED + "=1", null, null);
 
@@ -165,58 +150,48 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
     @Override
     protected void onCancelled() {
         Timber.d("Syncing with trakt...CANCELED");
-        Toast.makeText(mContext, "Sync cancelled", Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, R.string.trakt_error_general, Toast.LENGTH_LONG).show();
         restoreViewStates();
     }
 
     @Override
     protected void onPostExecute(Integer result) {
-        Timber.d("Syncing with trakt...DONE (" + result + ")");
+        Timber.d("Uploading to trakt...DONE (" + result + ")");
 
-        String message = "";
+        int messageResId;
         int duration = Toast.LENGTH_SHORT;
 
         switch (result) {
             case TraktTools.FAILED:
-                message = "Something went wrong. Please try again.";
-                duration = Toast.LENGTH_LONG;
-                break;
             case TraktTools.FAILED_API:
-                message = mContext.getString(R.string.trakt_error_general);
+                messageResId = R.string.trakt_error_general;
                 duration = Toast.LENGTH_LONG;
                 break;
             case TraktTools.FAILED_CREDENTIALS:
-                message = "Your credentials are incomplete. Please enter them again.";
+                messageResId = R.string.trakt_error_credentials;
                 duration = Toast.LENGTH_LONG;
                 break;
-            case TraktTools.SUCCESS:
-                message = "Finished syncing.";
-                break;
             case TraktTools.SUCCESS_NOWORK:
-                message = "There was nothing to sync.";
+                messageResId = R.string.upload_no_work;
                 break;
             default:
-                message = "Finished syncing " + result + " show(s).";
+            case TraktTools.SUCCESS:
+                messageResId = R.string.upload_done;
                 break;
         }
 
-        Toast.makeText(mContext, message, duration).show();
+        Toast.makeText(mContext, messageResId, duration).show();
         restoreViewStates();
     }
 
     private void restoreViewStates() {
-        if (mIsSyncToTrakt) {
-            mContainer.findViewById(R.id.progressBarToTraktSync).setVisibility(View.GONE);
-        } else {
-            mContainer.findViewById(R.id.progressBarToDeviceSync).setVisibility(View.GONE);
-        }
-        mContainer.findViewById(R.id.syncToDeviceButton).setEnabled(true);
-        mContainer.findViewById(R.id.syncToTraktButton).setEnabled(true);
+        mProgressIndicator.setVisibility(View.GONE);
+        mUploadButton.setEnabled(true);
     }
 
     public interface TraktSyncQuery {
 
-        public String[] PROJECTION = new String[]{
+        public String[] PROJECTION = new String[] {
                 Episodes.SEASON, Episodes.NUMBER
         };
 

@@ -214,12 +214,11 @@
   <string name="upload_existing_shows">Качване на съществуващи предавания</string>
   <string name="about_trakt">trakt записва какви ТВ предавания и филми сте гледали. <a href="http://trakt.tv">Научете повече</a></string>
   <string name="integration_trakt_items">- добавете предаване от вашата библиотека и списъка за гледане\n\n- вижте вашите препоръки и активността на приятелите\n\n- гледаните и събирани флагове се синхронизират автоматично\n\n- новите предавания, които сте гледали се добавят автоматично</string>
-  <string name="trakt_sync_intro">Никакви предавания няма да бъдат добавяни или премахвани в SeriesGuide, направете това от списъка с предавания.</string>
-  <string name="trakt_download_hint">Означете всички гледани епизоди от trakt, гледани и в SeriesGuide:</string>
   <string name="trakt_upload_hint">Означете епизодите гледани в SeriesGuide като гледани в trakt:</string>
-  <string name="trakt_download">Изтеглете в SeriesGuide</string>
   <string name="trakt_upload">Качете в trakt.tv</string>
-  <string name="trakt_syncunwatched">Премахнете означението "гледано" за неизгледаните епизоди, когато синхронизирате</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Основни</string>
   <string name="prefs_category_sharing">Услуги</string>
   <string name="prefs_category_advanced">Разширени</string>
@@ -238,7 +237,6 @@
   <string name="clearGetGlueCredentials">Прекъсни GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Отметни с GetGlue за повторно свързване</string>
   <string name="pref_traktsummary">Добавяне или редактиране на вашите идентификационни данни за trakt.tv</string>
-  <string name="pref_traktsync">Ръчно синхронизиране с trakt.tv</string>
   <string name="feedback">Обратна връзка</string>
   <string name="pref_autoaddshows">Добавяне на нови сериали</string>
   <string name="pref_autoaddshowssummary">Автоматично добавяне на предавания от дейността в trakt</string>
@@ -314,7 +312,6 @@
   <string name="connect">Свързване</string>
   <string name="disconnect">Прекъсване на връзката</string>
   <string name="trakt_error">Свързването с trakt е неуспешно</string>
-  <string name="trakt_decryptfail">паролата не може да се дешифрира</string>
   <string name="trakt_error_credentials">Нещо се обърка. Проверете идентификационните си данни и опитайте отново.</string>
   <string name="trakt_error_general">Няма връзка с trakt. Опитайте отново по-късно.</string>
   <string name="trakt_createaccount">Създаване на нов акаунт</string>

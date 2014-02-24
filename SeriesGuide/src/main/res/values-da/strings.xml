@@ -214,12 +214,11 @@
   <string name="upload_existing_shows">Upload eksisterende serier</string>
   <string name="about_trakt">trakt hjælper med at holde styr på hvilke TV-serier du ser. <a href="http://trakt.tv">Lær mere</a></string>
   <string name="integration_trakt_items">- tilføj serier fra dit bibliotek og Overvågningsliste\n\n- se dine anbefalinger og venneaktivitet\n\n- set og samling bliver synkroniseret automatisk\n\n- nye serier du ser bliver automatisk tilføjet</string>
-  <string name="trakt_sync_intro">Ingen serier vil blive tilføjet eller fjernet i SeriesGuide, gør det fra listen over serier.</string>
-  <string name="trakt_download_hint">Marker alle sete episoder på trakt som sete i SeriesGuide:</string>
   <string name="trakt_upload_hint">Marker episoder set i SeriesGuide som sete på trakt:</string>
-  <string name="trakt_download">Download til SeriesGuide</string>
   <string name="trakt_upload">Upload til trakt.tv</string>
-  <string name="trakt_syncunwatched">Fjern markering for usete episoder når der synkroniseres</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Grundlæggende</string>
   <string name="prefs_category_sharing">Tjenester</string>
   <string name="prefs_category_advanced">Avanceret</string>
@@ -238,7 +237,6 @@
   <string name="clearGetGlueCredentials">Afbryd tvtag</string>
   <string name="clearGetGlueCredentialssummary">Check in med tvtag for at tilslutte</string>
   <string name="pref_traktsummary">Tilføj eller ret trakt.tv login-info</string>
-  <string name="pref_traktsync">Manuel synkronisering med trakt.tv</string>
   <string name="feedback">Send feedback</string>
   <string name="pref_autoaddshows">Tilføj nye trakt serier</string>
   <string name="pref_autoaddshowssummary">Tilføj automatisk serier fra dine trakt aktiviteter</string>
@@ -314,7 +312,6 @@
   <string name="connect">Tilslut</string>
   <string name="disconnect">Afbryd</string>
   <string name="trakt_error">Kommunikation med trakt mislykkedes</string>
-  <string name="trakt_decryptfail">Adgangskoden kunne ikke dekrypteres</string>
   <string name="trakt_error_credentials">Noget gik galt. Kontroller venligt dine legitimationsoplysninger og prøv igen.</string>
   <string name="trakt_error_general">Kunne ikke kommunikere med trakt. Prøv igen senere.</string>
   <string name="trakt_createaccount">Opret ny konto</string>

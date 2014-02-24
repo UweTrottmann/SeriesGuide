@@ -214,12 +214,11 @@
   <string name="upload_existing_shows">Încărcaţi seriale existente</string>
   <string name="about_trakt">Trakt ajută la păstrarea unei evidenţe a emisiunilor TV şi a filmelor la care te uiţi.  <a href="http://trakt.tv">Află mai multe</a></string>
   <string name="integration_trakt_items">-Adauga seriale din biblioteca dvs. şi watchlist\n\n- vedeti recomandările dvs. şi activitatea prietenilor\n\n - steagurile privite şi colectate sunt sincronizate automat\n\n-serialele noi la care v-ati uitat sunt adăugate automat</string>
-  <string name="trakt_sync_intro">Nici un serial nu va fi adaugat sau eliminat in SeriesGuide, aceasta se face doar din lista cu seriale.</string>
-  <string name="trakt_download_hint">Pune toate episoadele vazute pe trakt si in SeriesGuide:</string>
   <string name="trakt_upload_hint">Pune toate episoadele vazute in SeriesGuide si pe trakt:</string>
-  <string name="trakt_download">Descarca in SeriesGuide</string>
   <string name="trakt_upload">Încărcaţi in trakt.tv</string>
-  <string name="trakt_syncunwatched">Eliminati marcarile pentru episoadele neurmărite cînd sincronizati</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Elemente de bază</string>
   <string name="prefs_category_sharing">Servicii</string>
   <string name="prefs_category_advanced">Avansate</string>
@@ -238,7 +237,6 @@
   <string name="clearGetGlueCredentials">Deconectaţi tvtag</string>
   <string name="clearGetGlueCredentialssummary">Check in cu tvtag pentru a vă reconecta</string>
   <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
-  <string name="pref_traktsync">Sincronizare manuala cu trakt.tv</string>
   <string name="feedback">Trimiteţi feedback</string>
   <string name="pref_autoaddshows">Add new trakt shows</string>
   <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
@@ -314,7 +312,6 @@
   <string name="connect">Conectaţi</string>
   <string name="disconnect">Deconectaţi</string>
   <string name="trakt_error">Interacţiunea cu trakt a eșuat</string>
-  <string name="trakt_decryptfail">parola nu a potut fi decriptată</string>
   <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_createaccount">Creare cont nou</string>
@@ -344,7 +341,7 @@
   <string name="pref_widget_type">Tip de widget</string>
   <string name="dashclock_extension_label">Episoade ce urmeaza</string>
   <string name="dashclock_extension_description">Afişează următorul episod din SeriesGuide.</string>
-  <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
+  <string name="dashclock_pref_upcoming_threshold">Display episode within…</string>
   <string name="action_migrate">Migrate from X</string>
   <string name="migration_description">SeriesGuide X is now an unlock key for X features in the free version (X Pass). Please migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
   <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
@@ -408,7 +405,7 @@
     <item>12 ore</item>
     <item>24 de ore</item>
     <item>3 zile</item>
-    <item>week</item>
+    <item>o săptămână</item>
   </string-array>
   <plurals name="days_plural">
     <item quantity="one">%d zile</item>

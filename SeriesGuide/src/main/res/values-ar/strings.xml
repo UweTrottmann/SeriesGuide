@@ -214,12 +214,11 @@
   <string name="upload_existing_shows">إرفع مسلسلات موجودة</string>
   <string name="about_trakt">يساعدك trait على حفظ ما تشاهده من أفلام و مسلسلات.<a href="http://trakt.tv">مزيد من المعلومات</a></string>
   <string name="integration_trakt_items">- أضف مسلسلات إلى مكتبتك و قائمتك\n\n- راجع مقترحاتك و نشاطات أصدقائك\n\n- يتم مزامنة ما شاهدته و الأعلام المجموعة تلقائياً\n\n- يتم إضافة ما شاهدت تلقائياً</string>
-  <string name="trakt_sync_intro">لن يتم إضافة أو إزالة برنامج في SeriesGuide، إفعل ذلك من قائمة البرامج.</string>
-  <string name="trakt_download_hint">قم بتعليم كل ما شاهدت في trait عندما تشاهدهم في SeriesGuide:</string>
   <string name="trakt_upload_hint">تعليم الحلقات المشاهده في SeriesGuide كما شوهدت في trakt:</string>
-  <string name="trakt_download">تنزيل على السيريس جايد</string>
   <string name="trakt_upload">رفع على موقع التراكت تي في </string>
-  <string name="trakt_syncunwatched">أزل أعلام المشاهدة للحلقات الغير مشاهدة</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">أساسي</string>
   <string name="prefs_category_sharing">خدمات</string>
   <string name="prefs_category_advanced">متقدم</string>
@@ -238,7 +237,6 @@
   <string name="clearGetGlueCredentials">GetGlue قطع إتصال</string>
   <string name="clearGetGlueCredentialssummary">تحقق مع جيت جلوي لأإعادة الاتصال</string>
   <string name="pref_traktsummary">trakt.tv أضف أو عدل بياناتك في موقع</string>
-  <string name="pref_traktsync">المزامنة يدويا مع التراكت تي في </string>
   <string name="feedback">أرسل ملاحظاتك</string>
   <string name="pref_autoaddshows">إضافة برنامج جديد في trakt</string>
   <string name="pref_autoaddshowssummary">أضف البرامج تلقائياً من أنشطة trakt</string>
@@ -314,7 +312,6 @@
   <string name="connect">الاتصال</string>
   <string name="disconnect">قطع الاتصال</string>
   <string name="trakt_error">فشل الاتصال مع موقع تراكت</string>
-  <string name="trakt_decryptfail">لا يمكن فك تشفير كلمة المرور</string>
   <string name="trakt_error_credentials">حدث خطأ ما. يرجى التحقق من بيانات اعتمادك وحاول مرة أخرى.</string>
   <string name="trakt_error_general">لايمكن التحدث إلى التراكت. حاول مرة أخرى.</string>
   <string name="trakt_createaccount">إنشاء حساب جديد</string>

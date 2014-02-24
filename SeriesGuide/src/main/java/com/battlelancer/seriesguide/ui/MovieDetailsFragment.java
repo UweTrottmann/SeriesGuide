@@ -56,7 +56,6 @@ import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.Movie;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
-import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb.entities.Credits;
@@ -125,7 +124,11 @@ public class MovieDetailsFragment extends SherlockFragment {
 
     @InjectView(R.id.textViewRatingsTraktUser) TextView mRatingsTraktUserValue;
 
+    @InjectView(R.id.labelCast) View mLabelCast;
+
     @InjectView(R.id.textViewMovieCast) TextView mMovieCast;
+
+    @InjectView(R.id.labelCrew) View mLabelCrew;
 
     @InjectView(R.id.textViewMovieCrew) TextView mMovieCrew;
 
@@ -154,6 +157,10 @@ public class MovieDetailsFragment extends SherlockFragment {
             }
         });
         mRatingsTmdbLabel.setText(R.string.tmdb);
+
+        // cast and crew labels
+        mLabelCast.setVisibility(View.GONE);
+        mLabelCrew.setVisibility(View.GONE);
 
         // comments button
         mDivider.setVisibility(View.GONE);
@@ -447,6 +454,11 @@ public class MovieDetailsFragment extends SherlockFragment {
     }
 
     private void populateMovieCreditsViews() {
+        // always show labels
+        mLabelCast.setVisibility(View.VISIBLE);
+        mLabelCrew.setVisibility(View.VISIBLE);
+
+        // cast members
         if (mCredits.cast != null) {
             StringBuilder castString = new StringBuilder();
             for (int i = 0; i < mCredits.cast.size(); i++) {
@@ -459,6 +471,8 @@ public class MovieDetailsFragment extends SherlockFragment {
             }
             mMovieCast.setText(castString.toString());
         }
+
+        // crew members
         if (mCredits.crew != null) {
             StringBuilder crewString = new StringBuilder();
             for (int i = 0; i < mCredits.crew.size(); i++) {
@@ -469,6 +483,7 @@ public class MovieDetailsFragment extends SherlockFragment {
                     crewString.append("\n");
                 }
             }
+
             mMovieCrew.setText(crewString.toString());
         }
     }
@@ -522,7 +537,8 @@ public class MovieDetailsFragment extends SherlockFragment {
                 populateMovieViews();
                 getSherlockActivity().supportInvalidateOptionsMenu();
             } else {
-                // TODO display error message
+                // display offline message
+                mMovieDescription.setText(R.string.offline);
             }
         }
 

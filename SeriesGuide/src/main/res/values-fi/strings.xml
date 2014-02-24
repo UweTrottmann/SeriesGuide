@@ -23,7 +23,7 @@
   <string name="description_image">Jaksokuva</string>
   <string name="done">Valmis</string>
   <string name="clear">Tyhjennä</string>
-  <string name="discard">Hylkää</string>
+  <string name="discard">Peruuta</string>
   <string name="save_selection">Tallenna valinta</string>
   <string name="search_hint">Hae jaksoja</string>
   <string name="updated">Päivitetty viimeisimpään versioon.</string>
@@ -51,7 +51,7 @@
   <string name="watchlist_added">Lisätty seurantalistalle</string>
   <string name="watchlist_removed">Poistettu seurantalistalta</string>
   <string name="movies_search_hint">Kirjoita elokuvan nimi</string>
-  <string name="movies_empty">Etsi elokuvaa.</string>
+  <string name="movies_empty">Etsi elokuvaa yllä.</string>
   <string name="movies_collection_empty">Et ole vielä lisännyt elokuvia kokoelmaan.</string>
   <string name="movies_watchlist_empty">Et ole vielä lisännyt elokuvia seurantalistalle.</string>
   <string name="trailer">Traileri</string>
@@ -99,7 +99,7 @@
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
   <string name="mark_episode">Jakso katsottu</string>
-  <string name="unmark_episode">Jakso vielä katsomatta</string>
+  <string name="unmark_episode">Katsomaton jakso</string>
   <string name="mark_all">Kaikki katsottu</string>
   <string name="unmark_all">Kaikki katsomattomia</string>
   <string name="mark_untilhere">Kaikki aiemmin esitetyt katsottu</string>
@@ -118,8 +118,8 @@
   <string name="action_collection_remove">Poista kokoelmasta</string>
   <string name="action_collection_added">Lisätty kokoelmaan</string>
   <string name="action_collection_removed">Poistettu kokoelmasta</string>
-  <string name="action_watched">Watched</string>
-  <string name="action_unwatched">Not yet watched</string>
+  <string name="action_watched">Katsottu</string>
+  <string name="action_unwatched">Katsomaton</string>
   <string name="confirm_delete">Haluatko todella poistaa %s?</string>
   <string name="delete_has_list_items">Ei onnistu. Poista %s kaikilta listoiltasi ensin.</string>
   <string name="delete_error">Ohjelman poistaminen ei onnistunut. Yritä myöhemmin uudelleen.</string>
@@ -159,7 +159,7 @@
   <string name="togglewatched">Vaihda katsottu</string>
   <string name="pref_infinite_scrolling">Päättymätön toiminta</string>
   <string name="action_activity_filter">Suodata toimintaa</string>
-  <string name="update_scheduled">Päivitetään...</string>
+  <string name="update_scheduled">Päivitetään…</string>
   <string name="update_no_connection">Päivittääksesi muodosta yhteys internetiin.</string>
   <string name="update_inprogress">Päivitys on käynnissä, yritä myöhemmin uudelleen.</string>
   <string name="menu_updateart">Lataa julisteet</string>
@@ -212,15 +212,14 @@
   <string name="show_library">Näytä kokoelmasi</string>
   <string name="upload_shows">Lähetä SeriesGuiden ohjelmalistasi:</string>
   <string name="upload_existing_shows">Lähetä nykyiset ohjelmat</string>
-  <string name="about_trakt">Trakt auttaa sinua pitämään kirjaa katsomistasi TV-ohjelmista ja elokuvista. <a href="http://trakt.tv">Lisätietoa</a></string>
+  <string name="about_trakt">trakt auttaa sinua pysymään kärryillä katsomistasi TV-ohjelmista ja elokuvista. <a href="http://trakt.tv">Lisätietoa</a></string>
   <string name="integration_trakt_items">- lisää ohjelmat kokoelmastasi ja seurantalistastasi\n\n- näe suosittelusi ja ystäviesi toiminta\n\n- katsonta- ja keräysmerkinnät synkronoidaan automaattisesti\n\n- katsomasi uudet ohjelmat lisätään automaattisesti</string>
-  <string name="trakt_sync_intro">Ohjelmia ei lisätä tai poisteta SeriesGuidesta. Tämä tehdään ohjelmalistassa.</string>
-  <string name="trakt_download_hint">Merkitse kaikki traktissa katsotut jaksot katsotuiksi SeriesGuidessa:</string>
   <string name="trakt_upload_hint">Merkitse SeriesGuidessa katsotut jaksot katsotuiksi traktissa:</string>
-  <string name="trakt_download">Lataa SeriesGuideen</string>
   <string name="trakt_upload">Lähetä trakt.tv:een</string>
-  <string name="trakt_syncunwatched">Poista katsontamerkinnät katsomattomilta jaksoilta synkronoitaessa</string>
-  <string name="prefs_category_basic">Perustiedot</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
+  <string name="prefs_category_basic">Yleiset</string>
   <string name="prefs_category_sharing">Palvelut</string>
   <string name="prefs_category_advanced">Edistyneet</string>
   <string name="prefs_category_about">Tietoja</string>
@@ -238,7 +237,6 @@
   <string name="clearGetGlueCredentials">Irrottaudu tvtagista</string>
   <string name="clearGetGlueCredentialssummary">Kuittaa tvtagin kanssa yhdistääksesi uudelleen</string>
   <string name="pref_traktsummary">Lisää tai muokkaa trakt.tv:n käyttäjätietojasi</string>
-  <string name="pref_traktsync">Manuaalinen synkronointi trakt.tv:n kanssa</string>
   <string name="feedback">Lähetä palautetta</string>
   <string name="pref_autoaddshows">Lisää uudet ohjelmat traktista</string>
   <string name="pref_autoaddshowssummary">Automaattisesti lisää uudet ohjelmat traktin toimintavirrastasi</string>
@@ -251,15 +249,15 @@
   <string name="pref_autobackupsummary">Varmuuskopioi viikoittain ohjelmatietokantasi Download-kansioon</string>
   <string name="backup">Varmuuskopioi/Palauta</string>
   <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
-  <string name="pref_upcominglimit">Tulevat ohjelmat ajalta…</string>
+  <string name="pref_upcominglimit">Tulevat ohjelmat…</string>
   <string name="pref_number">Lukumuoto</string>
   <string name="pref_offset">Manuaalinen ajansiirto</string>
   <string name="pref_offsetsummary">Siirrä lähetysaikoja %s tunnilla</string>
   <string name="clear_cache">Tyhjennä kuvavälimuisti</string>
-  <string name="clear_cache_summary">Poista kaikki välimuistiin tallennetut kuvat laitteesta</string>
+  <string name="clear_cache_summary">Poista kaikki välimuistiin tallennetut kuvat</string>
   <string name="pref_ganalyticssummary">Seuraa ominaisuuksien käyttöä, jonka avulla parannetaan SeriesGuidea</string>
   <string name="pref_hideimages">Piilota kuvat</string>
-  <string name="pref_hideimagessummary">Piilota kuvat kuvagalleriassasi(vaatii uudelleenkäynnistyksen)</string>
+  <string name="pref_hideimagessummary">Piilota kuvat kuvagalleriassasi (vaatii uudelleenkäynnistyksen)</string>
   <string name="backup_description"><b>Varmuuskopiointi</b> vie ohjelmasi, kautesi, jaksosi ja listasi JSON-tiedostoon alla mainittuun kansioon.\n<b>Palauttaaksesi</b> varmista, että varmuuskopioinnin luomat JSON-tiedostot ovat alla mainitussa kansiossa.</string>
   <string name="backup_full_dump">Sisällytä kaikki metatieto, kuten kuvaukset, näyttelijät ja arvosanat.</string>
   <string name="backup_path">Varmuuskopiokansio</string>
@@ -292,7 +290,7 @@
   <string name="paste_title">Liitä nimi</string>
   <string name="checkinsuccess">Kuitattu kohteeseen %s tvtagissa.</string>
   <string name="checkinfailed">tvtag-kuittaus epäonnistui. Yritä myöhemmin uudelleen.</string>
-  <string name="getglue_authentication">Yhdistä tvtag</string>
+  <string name="getglue_authentication">Yhdistä tvtagiin</string>
   <string name="getglue_authfailed">tvtagin todentaminen epäonnistui. Yritä myöhemmin uudelleen.</string>
   <string name="checkin_success_trakt">Kuitattu kohteeseen %s traktissa.</string>
   <string name="checkin_canceled_success_trakt">Kuittaus peruttu traktissa.</string>
@@ -310,11 +308,10 @@
   <string name="username">Käyttäjänimi</string>
   <string name="email">Sähköposti</string>
   <string name="password">Salasana</string>
-  <string name="waitplease">Hetkinen, olkaa hyvä…</string>
+  <string name="waitplease">Odota hetki pieni…</string>
   <string name="connect">Yhdistä</string>
   <string name="disconnect">Katkaise yhteys</string>
   <string name="trakt_error">Vuorovaikutus traktin kanssa epäonnistui</string>
-  <string name="trakt_decryptfail">Salasanaa ei voitu purkaa</string>
   <string name="trakt_error_credentials">Jokin meni pieleen. Tarkista oikeutesi ja yritä uudelleen.</string>
   <string name="trakt_error_general">Kommunikointi traktin kanssa ei onnistu. Yritä myöhemmin uudelleen.</string>
   <string name="trakt_createaccount">Luo uusi tili</string>
@@ -334,7 +331,7 @@
   <string name="pref_notifyfavonlysummary">Vastaanota ainoastaan ilmoituksia suosikkiohjelmista</string>
   <string name="pref_ringtone">Soittoääni</string>
   <string name="pref_vibrate">Värinä</string>
-  <string name="pref_vibratesummary">Myös värise näytettäessä ilmoitus</string>
+  <string name="pref_vibratesummary">Värinä, kun näytetään ilmoitus</string>
   <string name="pref_notifications_treshold">Milloin ilmoittaa</string>
   <string name="smallwidget">SeriesGuide (pieni)</string>
   <string name="bigwidget">SeriesGuide (keski)</string>
@@ -343,18 +340,18 @@
   <string name="pref_widget_opacity">Widgetin tausta</string>
   <string name="pref_widget_type">Widgetin tyyppi</string>
   <string name="dashclock_extension_label">Tuleva jakso</string>
-  <string name="dashclock_extension_description">Näyttää seuraavan tulevan jakson SeriesGuide-ohjelmistasi.</string>
+  <string name="dashclock_extension_description">Näyttää seuraavan tulevan jakson SeriesGuidesi ohjelmistasi.</string>
   <string name="dashclock_pref_upcoming_threshold">Näytä jaksot ajalta</string>
   <string name="action_migrate">Siirrä X:stä</string>
   <string name="migration_description">SeriesGuide X on nyt avausavain X-ominaisuuksiin ilmaisessa versiossa (X-passi). Siirrä ohjelmasi SeriesGuiden ilmaiseen versioon. Pidä X asennettuna avataksesi kaikki ominaisuudet ilmaisessa versiossa.</string>
-  <string name="migration_import">Kosketa alla tuodaksesi SeriesGuide X:ssä luotu varmuuskopio.</string>
+  <string name="migration_import">Kosketa painiketta tuodaksesi SeriesGuide X:ssä luotu varmuuskopio.</string>
   <string name="migration_action_import">Tuo ja korvaa nykyiset ohjelmat</string>
   <string name="action_upgrade">Hanki X-ominaisuudet</string>
   <string name="billing_action_subscribe">Tilaa</string>
   <string name="billing_action_pass">Hanki X-passi</string>
   <string name="billing_price_subscribe">%s/vuosi, 30 päivän kokeilu</string>
   <string name="billing_price_pass">kertaluontoinen osto</string>
-  <string name="upgrade_description">Hanki pääsy ilmoituksiin, useampiin valintoihin listawidgeteissä ja kaikki tulevat X-ominaisuudet. Tue tulevaa kehitystä.\n\nJos olet jo ostanut SeriesGuide X:n, asenna se avataksesi tämä päivitys.</string>
+  <string name="upgrade_description">Hanki pääsy ilmoituksiin, useampiin valintoihin listawidgeteissä ja kaikkiin tuleviin X-ominaisuuksiin. Tue tulevaa kehitystä.\n\nJos olet jo ostanut SeriesGuide X:n, asenna se avataksesi tämän päivityksen.</string>
   <string name="upgrade_success">Kiitos, sinulla on jo tilaus kaikkiin X-ominaisuuksiin!</string>
   <string name="billing_learn_more">Miksi maksaa? Opi lisää.</string>
   <string name="subscription_activated">SInulla on nyt tilaus X-ominaisuuksiin.</string>
@@ -378,17 +375,17 @@
   </string-array>
   <string-array name="upcominglimit">
     <item>nyt</item>
-    <item>päivä</item>
-    <item>3 päivää</item>
-    <item>viikko</item>
-    <item>kaksi viikkoa</item>
-    <item>kuukausi</item>
+    <item>päivän ajalta</item>
+    <item>3 päivän ajalta</item>
+    <item>viikon ajalta</item>
+    <item>2 viikon ajalta</item>
+    <item>kuukauden ajalta</item>
   </string-array>
   <string-array name="notificationThreshold">
     <item>esitettäessä</item>
     <item>5 min etukäteen</item>
     <item>10 min etukäteen</item>
-    <item>yksi tunti etukäteen</item>
+    <item>1 tunti etukäteen</item>
   </string-array>
   <string-array name="widgetOpacity">
     <item>Läpinäkyvä</item>

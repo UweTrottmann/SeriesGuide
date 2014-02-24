@@ -109,6 +109,16 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         Utils.trackClick(context, TAG, label);
     }
 
+    private static OnPreferenceChangeListener sNoOpChangeListener
+            = new OnPreferenceChangeListener() {
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            Utils.advertiseSubscription(preference.getContext());
+            // prevent value from getting saved
+            return false;
+        }
+    };
+
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -213,28 +223,33 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         });
 
         // Theme switcher
-        themePref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                if (DisplaySettings.KEY_THEME.equals(preference.getKey())) {
-                    Utils.updateTheme((String) newValue);
+        if (Utils.hasAccessToX(activity)) {
+            themePref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    if (DisplaySettings.KEY_THEME.equals(preference.getKey())) {
+                        Utils.updateTheme((String) newValue);
 
-                    // restart to apply new theme (actually build an entirely new task stack)
-                    TaskStackBuilder.create(activity)
-                            .addNextIntent(new Intent(activity, ShowsActivity.class))
-                            .addNextIntent(startIntent)
-                            .startActivities();
+                        // restart to apply new theme (actually build an entirely new task stack)
+                        TaskStackBuilder.create(activity)
+                                .addNextIntent(new Intent(activity, ShowsActivity.class))
+                                .addNextIntent(startIntent)
+                                .startActivities();
+                    }
+                    return true;
                 }
-                return true;
-            }
-        });
+            });
+            setListPreferenceSummary((ListPreference) themePref);
+        } else {
+            themePref.setOnPreferenceChangeListener(sNoOpChangeListener);
+            themePref.setSummary(R.string.onlyx);
+        }
 
         // set current value of auto-update pref
         ((CheckBoxPreference) updatePref).setChecked(SgSyncAdapter.isSyncAutomatically(activity));
 
         // show currently set values for list prefs
         setListPreferenceSummary((ListPreference) languagePref);
-        setListPreferenceSummary((ListPreference) themePref);
         setListPreferenceSummary((ListPreference) numberFormatPref);
     }
 
@@ -271,7 +286,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 }
             });
         } else {
-            notificationsPref.setEnabled(false);
+            notificationsPref.setOnPreferenceChangeListener(sNoOpChangeListener);
+            ((CheckBoxPreference) notificationsPref).setChecked(false);
             notificationsPref.setSummary(R.string.onlyx);
             notificationsThresholdPref.setEnabled(false);
             notificationsFavOnlyPref.setEnabled(false);

@@ -17,8 +17,6 @@
         android:layout_toLeftOf="@+id/imageButtonClearSearch"
         android:ems="10"
         android:hint="@string/movies_search_hint"
-        android:imeOptions="actionSearch"
-        android:inputType="text"
         android:paddingBottom="@dimen/default_padding" />
 
     <ImageButton

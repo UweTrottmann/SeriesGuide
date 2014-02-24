@@ -71,15 +71,6 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
             return details;
         }
 
-        // prefer local state for watched, collected and watchlist status
-        // assumption: local db has the truth for these
-        details.traktMovie().watched = DBUtils.restoreBooleanFromInt(
-                movieQuery.getInt(MovieQuery.WATCHED));
-        details.traktMovie().inCollection = DBUtils.restoreBooleanFromInt(
-                movieQuery.getInt(MovieQuery.IN_COLLECTION));
-        details.traktMovie().inWatchlist = DBUtils.restoreBooleanFromInt(
-                movieQuery.getInt(MovieQuery.IN_WATCHLIST));
-
         // only overwrite other info if there is no remote data
         if (details.traktMovie() == null) {
             details.traktMovie(new Movie());
@@ -89,6 +80,15 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
             details.traktMovie().ratings.percentage = movieQuery.getInt(MovieQuery.RATING_TRAKT);
             details.traktMovie().ratings.votes = movieQuery.getInt(MovieQuery.RATING_VOTES_TRAKT);
         }
+        // prefer local state for watched, collected and watchlist status
+        // assumption: local db has the truth for these
+        details.traktMovie().watched = DBUtils.restoreBooleanFromInt(
+                movieQuery.getInt(MovieQuery.WATCHED));
+        details.traktMovie().inCollection = DBUtils.restoreBooleanFromInt(
+                movieQuery.getInt(MovieQuery.IN_COLLECTION));
+        details.traktMovie().inWatchlist = DBUtils.restoreBooleanFromInt(
+                movieQuery.getInt(MovieQuery.IN_WATCHLIST));
+        
         if (details.tmdbMovie() == null) {
             details.tmdbMovie(new com.uwetrottmann.tmdb.entities.Movie());
             details.tmdbMovie().imdb_id = movieQuery.getString(MovieQuery.IMDB_ID);

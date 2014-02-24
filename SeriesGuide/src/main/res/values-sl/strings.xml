@@ -214,12 +214,11 @@
   <string name="upload_existing_shows">Naloži na strežnik obstoječe oddaje</string>
   <string name="about_trakt">trakt pomaga pri sledenju TV oddaj in filmov, ki jih gledaš.<a href="http://trakt.tv">Izvedi več</a></string>
   <string name="integration_trakt_items">- dodaj oddaje iz svoje knjižnjice in spiska\n\n- poglej svoja priporočila in aktivnost prijateljev\n\n- gledane in zbrane oznake so avtomatsko sinhronizirane\n\n- nove oddaje, ki si jih gledal so avtomatsko dodane</string>
-  <string name="trakt_sync_intro">Oddaje ne bodo dodane ali odstranjene v SeriesGuide. To stori iz spiska oddaj.</string>
-  <string name="trakt_download_hint">Označi vse pogledane oddaje na traktu, kot pogledane v SeriesGuide:</string>
   <string name="trakt_upload_hint">Označi pogledane epizode v SeriesGuide, kot pogledane na traktu:</string>
-  <string name="trakt_download">Naloži na SeriesGuide</string>
   <string name="trakt_upload">Naloži na strežnik trakt.tv</string>
-  <string name="trakt_syncunwatched">Odstrani oznake gledanih ali ne-gledanih epizod ob sinhronizaciji</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Osnove</string>
   <string name="prefs_category_sharing">Storitve</string>
   <string name="prefs_category_advanced">Napredno</string>
@@ -238,7 +237,6 @@
   <string name="clearGetGlueCredentials">Odklopi GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Prijavi se z GetGlue, da se ponovno povežeš</string>
   <string name="pref_traktsummary">Dodajanje ali urejanje prijavnih podatkov trakt.tv</string>
-  <string name="pref_traktsync">Ročna sinhronizacija s trakt.tv</string>
   <string name="feedback">Pošlji povratno informacijo</string>
   <string name="pref_autoaddshows">Dodaj nove trakt oddaje</string>
   <string name="pref_autoaddshowssummary">Avtomatsko dodaj oddaje iz svoje trakt aktivnosti</string>
@@ -314,7 +312,6 @@
   <string name="connect">Poveži</string>
   <string name="disconnect">Odklopi</string>
   <string name="trakt_error">Interakcija s trakt-om ni uspela</string>
-  <string name="trakt_decryptfail">gesla ni bilo mogoče dešifrirati</string>
   <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_createaccount">Izdelaj nov račun</string>
@@ -344,7 +341,7 @@
   <string name="pref_widget_type">Widget type</string>
   <string name="dashclock_extension_label">Upcoming episode</string>
   <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
-  <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
+  <string name="dashclock_pref_upcoming_threshold">Display episode within…</string>
   <string name="action_migrate">Migrate from X</string>
   <string name="migration_description">SeriesGuide X is now an unlock key for X features in the free version (X Pass). Please migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
   <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>

@@ -16,13 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.TheTVDB;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.battlelancer.seriesguide.R;
-
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,11 +23,19 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
-
+import android.widget.TextView;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.thetvdbapi.TheTVDB;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -46,21 +47,39 @@ public class TvdbAddFragment extends AddFragment {
         return new TvdbAddFragment();
     }
 
-    private EditText mSearchBox;
+    @InjectView(R.id.clearButton) ImageButton mClearButton;
+
+    @InjectView(R.id.searchbox) EditText mSearchBox;
 
     private SearchTask mSearchTask;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        /*
-         * never use this here (on config change the view needed before removing
-         * the fragment)
-         */
-        // if (container == null) {
-        // return null;
-        // }
-        return inflater.inflate(R.layout.tvdbaddfragment, container, false);
+        View v = inflater.inflate(R.layout.tvdbaddfragment, container, false);
+        ButterKnife.inject(this, v);
+
+        mClearButton.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                clearSearchTerm();
+            }
+        });
+
+        mSearchBox.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+        mSearchBox.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+        mSearchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH
+                        || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    search();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        return v;
     }
 
     @Override
@@ -73,51 +92,31 @@ public class TvdbAddFragment extends AddFragment {
                     new ArrayList<SearchResult>(), mDetailsButtonListener);
         }
 
-        ImageButton searchButton = (ImageButton) getView().findViewById(R.id.clearButton);
-        searchButton.setOnClickListener(new OnClickListener() {
-
-            public void onClick(View v) {
-                onClearInput();
-            }
-        });
-
-        mSearchBox = (EditText) getView().findViewById(R.id.searchbox);
-        mSearchBox.setOnKeyListener(new OnKeyListener() {
-
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                // we only want to react to down events
-                if (event.getAction() != KeyEvent.ACTION_DOWN) {
-                    return false;
-                }
-
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    search();
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        });
-
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
             setEmptyMessage(R.string.offline);
-        }
-    }
-
-    protected void onClearInput() {
-        EditText searchBox = (EditText) getView().findViewById(R.id.searchbox);
-        if (searchBox != null) {
-            searchBox.setText("");
         }
     }
 
     @Override
     public void onStart() {
         super.onStart();
+
         Utils.trackView(getActivity(), "TVDb Search");
     }
 
-    protected void search() {
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        ButterKnife.reset(this);
+    }
+
+    private void clearSearchTerm() {
+        mSearchBox.setText(null);
+        mSearchBox.requestFocus();
+    }
+
+    private void search() {
         // nag about no connectivity
         if (!AndroidUtils.isNetworkConnected(getSherlockActivity())) {
             setEmptyMessage(R.string.offline);
@@ -149,7 +148,6 @@ public class TvdbAddFragment extends AddFragment {
             if (activity != null) {
                 activity.setSupportProgressBarIndeterminateVisibility(true);
             }
-
         }
 
         @Override
@@ -183,6 +181,5 @@ public class TvdbAddFragment extends AddFragment {
                 setSearchResults(result);
             }
         }
-
     }
 }

@@ -214,12 +214,11 @@
   <string name="upload_existing_shows">Завантажити наявні серіали</string>
   <string name="about_trakt">trakt допомагає зберігати запис про те які телесеріали та фільми ви дивитеся. <a href="http://trakt.tv">Дізнатись більше</a></string>
   <string name="integration_trakt_items">- додавайте серіали із вашої бібліотеки та списку переглядів\n\n- переглядайте ваші рекомендації та активність друзів\n\n- переглянуті та вибрані пункти синхронізуються автоматично\n\n- нові серіали, які ви переглядали додаються автоматично</string>
-  <string name="trakt_sync_intro">Жоден серіал не буде додано чи видалено з SeriesGuide, зробіть це зі списку серіалів.</string>
-  <string name="trakt_download_hint">Відзначити всі переглянуті серії на trakt як переглянуті на SeriesGuide:</string>
   <string name="trakt_upload_hint">Відзначити серії переглянуті на SeriesGuide як переглянуті на trakt:</string>
-  <string name="trakt_download">Завантажити у SeriesGuide</string>
   <string name="trakt_upload">Завантажити на trakt.tv</string>
-  <string name="trakt_syncunwatched">Видалити переглянуті позначки для непереглянутих серій, під час синхронізації</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Основні</string>
   <string name="prefs_category_sharing">Послуги</string>
   <string name="prefs_category_advanced">Додатково</string>
@@ -238,7 +237,6 @@
   <string name="clearGetGlueCredentials">Відключити GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Відзначтесь в GetGlue щоб відновити підключення</string>
   <string name="pref_traktsummary">Додайте або змініть ваш обліковий запис в trakt.tv</string>
-  <string name="pref_traktsync">Ручна синхронізація з trakt.tv</string>
   <string name="feedback">Відправити відгук</string>
   <string name="pref_autoaddshows">Додати нові серіали з trakt</string>
   <string name="pref_autoaddshowssummary">Автоматично додавати серіали з вашого потоку активності на trakt</string>
@@ -314,7 +312,6 @@
   <string name="connect">Підключитись</string>
   <string name="disconnect">Від\'єднатись</string>
   <string name="trakt_error">Взаємодія з trakt не вдалася</string>
-  <string name="trakt_decryptfail">не вдалося розшифрувати пароль</string>
   <string name="trakt_error_credentials">Щось пішло не так. Перевірте ваші облікові дані та повторіть спробу.</string>
   <string name="trakt_error_general">Не можу з\'єднатись із trakt. Повторіть спробу пізніше.</string>
   <string name="trakt_createaccount">Створити новий обліковий запис</string>

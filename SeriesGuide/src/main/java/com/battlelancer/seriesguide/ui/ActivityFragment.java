@@ -253,6 +253,9 @@ public class ActivityFragment extends SherlockFragment implements
 
     private void onFlagEpisodeWatched(AdapterContextMenuInfo info, boolean isWatched) {
         Cursor item = (Cursor) mAdapter.getItem(info.position);
+        if (item == null) {
+            return;
+        }
 
         new FlagTask(getActivity(), item.getInt(ActivityQuery.REF_SHOW_ID))
                 .episodeWatched((int) info.id, item.getInt(ActivityQuery.SEASON),

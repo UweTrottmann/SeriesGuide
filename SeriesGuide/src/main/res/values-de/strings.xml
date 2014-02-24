@@ -214,12 +214,11 @@
   <string name="upload_existing_shows">Vorhandene Serien hochladen</string>
   <string name="about_trakt">trakt hilft TV-Sendungen und Filme zu speichern, die Sie angesehen haben. <a href="http://trakt.tv">Mehr erfahren</a></string>
   <string name="integration_trakt_items">- Serien aus Ihrer Bibliothek oder Watchliste hinzufügen\n\n- Empfehlungen und Aktivität von Freunden anzeigen\n\n- Gesehen- und Gesammelt-Flaggen werden automatisch synchronisiert\n\n- neue Serien die Sie angesehen haben werden automatisch hinzugefügt</string>
-  <string name="trakt_sync_intro">Es werden keine Serien zu SeriesGuide hinzugefügt oder entfernt, erledigen Sie das in der Serienliste.</string>
-  <string name="trakt_download_hint">Markiere alle auf trakt gesehenen Folgen als gesehen in SeriesGuide:</string>
   <string name="trakt_upload_hint">Markiere alle gesehenen Folgen in SeriesGuide als gesehen bei trakt:</string>
-  <string name="trakt_download">In SeriesGuide herunterladen</string>
   <string name="trakt_upload">Zu trakt.tv hochladen</string>
-  <string name="trakt_syncunwatched">Entferne beim Synchronisieren die Gesehen-Markierungen von ungesehenen Folgen</string>
+  <string name="trakt_syncunwatched">Gesehen-Markierung auf trakt für ungesehene Folgen in SeriesGuide entfernen</string>
+  <string name="upload_done">Hochladen abgeschlossen.</string>
+  <string name="upload_no_work">Es gab nichts zum hochladen.</string>
   <string name="prefs_category_basic">Grundlegendes</string>
   <string name="prefs_category_sharing">Dienste</string>
   <string name="prefs_category_advanced">Weiteres</string>
@@ -238,7 +237,6 @@
   <string name="clearGetGlueCredentials">Von tvtag abmelden</string>
   <string name="clearGetGlueCredentialssummary">Mit tvtag einchecken um erneut zu verbinden</string>
   <string name="pref_traktsummary">Hinzufügen oder Bearbeiten Ihrer trakt.tv Anmeldeinformationen</string>
-  <string name="pref_traktsync">Manueller Sync mit trakt.tv</string>
   <string name="feedback">Feedback senden</string>
   <string name="pref_autoaddshows">Neue trakt Serien hinzufügen</string>
   <string name="pref_autoaddshowssummary">Automatisch neue Serien aus Ihren trakt-Aktivitäten hinzufügen</string>
@@ -314,7 +312,6 @@
   <string name="connect">Verbinden</string>
   <string name="disconnect">Trennen</string>
   <string name="trakt_error">Interaktion mit trakt ist fehlgeschlagen</string>
-  <string name="trakt_decryptfail">Kennwort konnte nicht entschlüsselt werden</string>
   <string name="trakt_error_credentials">Es gab einen Fehler. Bitte prüfen Sie Ihre Anmeldeinformationen und versuchen Sie es erneut.</string>
   <string name="trakt_error_general">Konnte nicht mit trakt sprechen. Versuchen Sie es später noch einmal.</string>
   <string name="trakt_createaccount">Neues Konto einrichten</string>
@@ -344,7 +341,7 @@
   <string name="pref_widget_type">Widget-Typ</string>
   <string name="dashclock_extension_label">Nächste Folge</string>
   <string name="dashclock_extension_description">Zeigt die nächste kommende Folge deiner Serien aus SeriesGuide.</string>
-  <string name="dashclock_pref_upcoming_threshold">Zeige Folgen im Zeitraum</string>
+  <string name="dashclock_pref_upcoming_threshold">Zeige Folge innerhalb…</string>
   <string name="action_migrate">Migration von X</string>
   <string name="migration_description">SeriesGuide X ist jetzt ein Freischalt-Schlüssel für die X Funktionen in der kostenlosen Version (\"X Life-Time Pass\"). Bitte übertragen Sie Ihre Serien in die kostenlose Version von SeriesGuide. Lassen Sie X installiert um alle Funktionen in der kostenlosen Version freizuschalten.</string>
   <string name="migration_import">Tippen Sie unten um die in SeriesGuide X erstellte Sicherung zu importieren.</string>
@@ -378,11 +375,11 @@
   </string-array>
   <string-array name="upcominglimit">
     <item>jetzt</item>
-    <item>eines Tages</item>
-    <item>dreier Tage</item>
-    <item>einer Woche</item>
-    <item>zweier Wochen</item>
-    <item>eines Monats</item>
+    <item>1 Tag</item>
+    <item>3 Tage</item>
+    <item>1 Woche</item>
+    <item>2 Wochen</item>
+    <item>1 Monat</item>
   </string-array>
   <string-array name="notificationThreshold">
     <item>auf Sendung</item>
@@ -403,12 +400,12 @@
     <item>Favoriten</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
-    <item>einer Stunde</item>
+    <item>1 Stunde</item>
     <item>6 Stunden</item>
     <item>12 Stunden</item>
     <item>24 Stunden</item>
     <item>3 Tage</item>
-    <item>einer Woche</item>
+    <item>1 Woche</item>
   </string-array>
   <plurals name="days_plural">
     <item quantity="one">%d Tag</item>

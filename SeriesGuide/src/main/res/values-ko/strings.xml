@@ -214,12 +214,11 @@
   <string name="upload_existing_shows">기존 쇼 업로드</string>
   <string name="about_trakt">trakt는 여러분이 보고 있는 TV 쇼와 영화 정보를 기록하고 유지하는데 도움이 됩니다. <a href="http://trakt.tv">더 보기</a></string>
   <string name="integration_trakt_items">- 라이브러리와 관심목록에 있는 쇼를 추가하세요.\n\n- 당신이 추천한 에피소드와 친구의 활동내역을 살펴보세요.\n\n- 시청 정보나 수집 정보는 자동으로 동기화됩니다.\n\n- 시리즈가이드에 추가하거나 본 에피소드는 자동으로 동기화됩니다.</string>
-  <string name="trakt_sync_intro">시리즈가이드에서 추가되거나 삭제된 쇼 정보는 동기화되지 않습니다. 쇼 추가/삭제는 쇼 목록에서 동기화하세요.</string>
-  <string name="trakt_download_hint">trakt의 시청 완료 정보를 시리즈가이드에 동기화합니다:</string>
   <string name="trakt_upload_hint">시리즈가이드의 시청 완료 정보를 trakt에 동기화합니다:</string>
-  <string name="trakt_download">시리즈가이드로 다운로드</string>
   <string name="trakt_upload">trakt.tv에 업로드</string>
-  <string name="trakt_syncunwatched">동기화할 때 미시청 에피소드의 시청정보 제거</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">기본</string>
   <string name="prefs_category_sharing">서비스</string>
   <string name="prefs_category_advanced">고급</string>
@@ -238,7 +237,6 @@
   <string name="clearGetGlueCredentials">GetGlue 연결끊기</string>
   <string name="clearGetGlueCredentialssummary">재접속하려면 GetClue에 체크인하세요</string>
   <string name="pref_traktsummary">trakt.tv 에 로그인 혹은 새계정 생성</string>
-  <string name="pref_traktsync">수동으로 trakt.tv에 동기화하기</string>
   <string name="feedback">사용자 의견 보내기</string>
   <string name="pref_autoaddshows">새로운 trakt 쇼를 추가합니다</string>
   <string name="pref_autoaddshowssummary">trakt 활동 스트림으로부터 자동으로 쇼를 추가합니다</string>
@@ -314,7 +312,6 @@
   <string name="connect">연결</string>
   <string name="disconnect">연결끊기</string>
   <string name="trakt_error">trakt와 통신 실패</string>
-  <string name="trakt_decryptfail">암호 복호화 실패</string>
   <string name="trakt_error_credentials">오류가 있습니다. 계정정보를 확인하여 재시도해주세요.</string>
   <string name="trakt_error_general">Trakt 와 통신할 수 없습니다. 잠시 후 다시 시도해주세요.</string>
   <string name="trakt_createaccount">새 계정 만들기</string>

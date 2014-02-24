@@ -214,12 +214,11 @@
   <string name="upload_existing_shows">上传已存在的节目</string>
   <string name="about_trakt">trakt 会记录您已观看的电影和电视节目。<a href="http://trakt.tv">了解更多信息</a></string>
   <string name="integration_trakt_items">- 添加来自您资料库中的剧目和观看列表\n\n- 查看推荐剧目和朋友们的近期活动\n\n- 自动同步观看和收藏标记\n\n- 已观看剧目将自动更新</string>
-  <string name="trakt_sync_intro">不会在 “追剧助手” 中添加或移除任何剧目，您只能在列表页面操作。</string>
-  <string name="trakt_download_hint">标记 SeriesGuide 中所有在 trakt 上已观看的节目</string>
   <string name="trakt_upload_hint">标记 trakt 上所有在 SeriesGuide 中已观看的节目</string>
-  <string name="trakt_download">下载观看状态到本地</string>
   <string name="trakt_upload">上传观看状态至网络</string>
-  <string name="trakt_syncunwatched">同步时移除所有未观看剧集的已观看标记</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">基本</string>
   <string name="prefs_category_sharing">关联服务</string>
   <string name="prefs_category_advanced">高级</string>
@@ -238,7 +237,6 @@
   <string name="clearGetGlueCredentials">断开与 GetGlue 的连接</string>
   <string name="clearGetGlueCredentialssummary">使用GetGlue账户签到并重新连接</string>
   <string name="pref_traktsummary">添加或编辑您的 trakt.tv 账号</string>
-  <string name="pref_traktsync">手动与 trakt.tv 同步</string>
   <string name="feedback">发送反馈报告</string>
   <string name="pref_autoaddshows">添加新 trakt 剧目</string>
   <string name="pref_autoaddshowssummary">自动从 trakt 观看活动中添加剧目</string>
@@ -314,7 +312,6 @@
   <string name="connect">关联</string>
   <string name="disconnect">断开</string>
   <string name="trakt_error">与 trakt 交互失败</string>
-  <string name="trakt_decryptfail">无法解密密钥</string>
   <string name="trakt_error_credentials">出错了，请检查您的凭据后再试。</string>
   <string name="trakt_error_general">无法连接到Trakt。请稍后再试。</string>
   <string name="trakt_createaccount">创建新用户</string>

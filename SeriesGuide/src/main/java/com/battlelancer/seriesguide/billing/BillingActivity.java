@@ -51,7 +51,9 @@ public class BillingActivity extends BaseActivity {
     // The SKU product ids as set in the Developer Console
     public static final String SKU_X = "x_upgrade";
 
-    public static final String SKU_X_SUBSCRIPTION = "x_subscription";
+    public static final String SKU_X_SUB = "x_sub_2014_02";
+
+    public static final String SKU_X_SUB_LEGACY = "x_subscription";
 
     // (arbitrary) request code for the purchase flow
     private static final int RC_REQUEST = 749758;
@@ -120,7 +122,7 @@ public class BillingActivity extends BaseActivity {
                 // Get an inventory of stuff we own, also get SKU details for pricing info
                 Timber.d("Setup successful. Querying inventory.");
                 List<String> detailSkus = new ArrayList<>();
-                detailSkus.add(SKU_X_SUBSCRIPTION);
+                detailSkus.add(SKU_X_SUB);
                 mHelper.queryInventoryAsync(true, detailSkus, mGotInventoryListener);
             }
         });
@@ -225,7 +227,7 @@ public class BillingActivity extends BaseActivity {
             // get sub state
             boolean hasUpgrade = checkForSubscription(BillingActivity.this, inventory);
             // get local sub price
-            SkuDetails skuDetails = inventory.getSkuDetails(SKU_X_SUBSCRIPTION);
+            SkuDetails skuDetails = inventory.getSkuDetails(SKU_X_SUB);
             if (skuDetails != null) {
                 mSubPrice = skuDetails.getPrice();
             }
@@ -257,8 +259,10 @@ public class BillingActivity extends BaseActivity {
         boolean hasXUpgrade = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
 
         // Does the user subscribe to the X features?
-        Purchase xSubscription = inventory.getPurchase(SKU_X_SUBSCRIPTION);
-        boolean isSubscribedToX = (xSubscription != null && verifyDeveloperPayload(xSubscription));
+        Purchase xSubLegacy = inventory.getPurchase(SKU_X_SUB_LEGACY);
+        Purchase xSub = inventory.getPurchase(SKU_X_SUB);
+        boolean isSubscribedToX = (xSubLegacy != null && verifyDeveloperPayload(xSubLegacy))
+                || (xSub != null && verifyDeveloperPayload(xSub));
 
         if (hasXUpgrade) {
             Timber.d("User has X SUBSCRIPTION for life.");
@@ -341,7 +345,7 @@ public class BillingActivity extends BaseActivity {
 
         setWaitMode(true);
 
-        mHelper.launchSubscriptionPurchaseFlow(this, SKU_X_SUBSCRIPTION, RC_REQUEST,
+        mHelper.launchSubscriptionPurchaseFlow(this, SKU_X_SUB, RC_REQUEST,
                 mPurchaseFinishedListener, payload);
     }
 
@@ -371,7 +375,7 @@ public class BillingActivity extends BaseActivity {
 
             Timber.d("Purchase successful.");
 
-            if (purchase.getSku().equals(SKU_X_SUBSCRIPTION)) {
+            if (purchase.getSku().equals(SKU_X_SUB)) {
                 Timber.d("Purchased X subscription. Congratulating user.");
                 // Save current state until we query again
                 AdvancedSettings.setSubscriptionState(BillingActivity.this, true);
