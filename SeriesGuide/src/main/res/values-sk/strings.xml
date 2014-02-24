@@ -341,7 +341,7 @@
   <string name="pref_widget_type">Typ widgetu</string>
   <string name="dashclock_extension_label">Ďalší diel</string>
   <string name="dashclock_extension_description">Zobrazuje ďalší diel zo seriálov v SeriesGuide.</string>
-  <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
+  <string name="dashclock_pref_upcoming_threshold">Display episode within…</string>
   <string name="action_migrate">Presun z rozšírenej verzie X</string>
   <string name="migration_description">SeriesGuide X is now an unlock key for X features in the free version (X Pass). Please migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
   <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>

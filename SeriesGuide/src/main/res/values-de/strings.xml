@@ -341,7 +341,7 @@
   <string name="pref_widget_type">Widget-Typ</string>
   <string name="dashclock_extension_label">Nächste Folge</string>
   <string name="dashclock_extension_description">Zeigt die nächste kommende Folge deiner Serien aus SeriesGuide.</string>
-  <string name="dashclock_pref_upcoming_threshold">Zeige Folgen im Zeitraum</string>
+  <string name="dashclock_pref_upcoming_threshold">Zeige Folge innerhalb…</string>
   <string name="action_migrate">Migration von X</string>
   <string name="migration_description">SeriesGuide X ist jetzt ein Freischalt-Schlüssel für die X Funktionen in der kostenlosen Version (\"X Life-Time Pass\"). Bitte übertragen Sie Ihre Serien in die kostenlose Version von SeriesGuide. Lassen Sie X installiert um alle Funktionen in der kostenlosen Version freizuschalten.</string>
   <string name="migration_import">Tippen Sie unten um die in SeriesGuide X erstellte Sicherung zu importieren.</string>
