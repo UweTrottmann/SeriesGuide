@@ -32,7 +32,7 @@ ext {
     compileSdkVersion = 19
     buildToolsVersion = '19.0.1'
 
-    versionCode = 230
+    versionCode = 231
     versionName = '12-beta9'
 }
 
