@@ -32,6 +32,7 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import retrofit.RetrofitError;
+import timber.log.Timber;
 
 /**
  * A singleton helping to manage the user's trakt credentials.
@@ -187,6 +188,7 @@ public class TraktCredentials {
                 removePassword();
             }
         } catch (RetrofitError ignored) {
+            Timber.e(ignored, "trakt credentials validation failed");
         }
         /*
          * Ignore exceptions, trakt may be offline, etc. We expect the user to
