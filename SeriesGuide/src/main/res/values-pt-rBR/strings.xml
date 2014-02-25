@@ -159,7 +159,7 @@
   <string name="togglewatched">Alternar visto</string>
   <string name="pref_infinite_scrolling">Atividade infinita</string>
   <string name="action_activity_filter">Filtrar atividade</string>
-  <string name="update_scheduled">Atualizando...</string>
+  <string name="update_scheduled">Atualizando…</string>
   <string name="update_no_connection">Para atualizar, conecte-se à Internet.</string>
   <string name="update_inprogress">Atualização em andamento, tente novamente mais tarde.</string>
   <string name="menu_updateart">Carregar cartazes</string>

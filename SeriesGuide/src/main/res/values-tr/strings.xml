@@ -164,7 +164,7 @@
   <string name="update_inprogress">Devam eden bir güncelleme var, daha sonra tekrar deneyin.</string>
   <string name="menu_updateart">Posterleri yükle</string>
   <string name="arttask_incomplete">Bazı posterler yüklenemedi, daha sonra tekrar deneyin.</string>
-  <string name="arttask_start">Posterler yükleniyor...</string>
+  <string name="arttask_start">Posterler yükleniyor…</string>
   <string name="show_on_network">kanal %s</string>
   <string name="season_watchcount">izlenilmemiş bölüm</string>
   <string name="season_allwatched">Tüm bölümler izlendi</string>
@@ -227,8 +227,8 @@
   <string name="pref_onlyfuturesummary">Yayınlanmış bölümleri gösterme</string>
   <string name="pref_onlyseasoneps">Özel bölümleri gizle</string>
   <string name="pref_onlyseasonepssummary">Özel bölümler sezon listesi haricinde hiçbir yerde görünmez</string>
-  <string name="pref_seasonsorting">Sezonları sırala:...</string>
-  <string name="pref_episodesorting">Bölümleri sırala:...</string>
+  <string name="pref_seasonsorting">Sezonları sırala:…</string>
+  <string name="pref_episodesorting">Bölümleri sırala:…</string>
   <string name="pref_language">İçerik dili</string>
   <string name="pref_updatewifionly">Images via Wi-Fi only</string>
   <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
@@ -263,10 +263,10 @@
   <string name="backup_path">Yedekleme klasörü</string>
   <string name="backup_version">Veritabanı versiyonu</string>
   <string name="backup_failed_nosd">Yedeklenemedi. Yedekleme klasörüne erişilemiyor.</string>
-  <string name="backup_inprogress">Veritabanı yedekleniyor...</string>
+  <string name="backup_inprogress">Veritabanı yedekleniyor…</string>
   <string name="backup_success">Yedekleme başarılı.</string>
   <string name="backup_failed">Yedekleme başarısız oldu.</string>
-  <string name="import_inprogress">Veri tabanı geri yükleniyor...</string>
+  <string name="import_inprogress">Veri tabanı geri yükleniyor…</string>
   <string name="import_failed_nosd">Geri yüklenemiyor. Yedek klasörüne erişilemiyor.</string>
   <string name="import_failed_nofile">Okunabilir yedekleme dosyası bulunamadı.</string>
   <string name="import_failed_noread">Yedek dosyası okunamaz.</string>
@@ -308,7 +308,7 @@
   <string name="username">Kullanıcı Adı</string>
   <string name="email">E-posta</string>
   <string name="password">Şifre</string>
-  <string name="waitplease">Bir dakika lütfen...</string>
+  <string name="waitplease">Bir dakika lütfen…</string>
   <string name="connect">Bağlan</string>
   <string name="disconnect">Bağlantıyı Kes</string>
   <string name="trakt_error">Trakt etkileşimi başarısız oldu</string>

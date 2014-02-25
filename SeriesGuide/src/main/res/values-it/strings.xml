@@ -308,7 +308,7 @@
   <string name="username">Nome utente</string>
   <string name="email">E-mail</string>
   <string name="password">Password</string>
-  <string name="waitplease">Un momento, per favore...</string>
+  <string name="waitplease">Un momento, per favore…</string>
   <string name="connect">Connetti</string>
   <string name="disconnect">Disconnetti</string>
   <string name="trakt_error">Interazione con trakt non riuscita</string>
