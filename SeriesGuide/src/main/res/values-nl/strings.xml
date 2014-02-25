@@ -118,8 +118,8 @@
   <string name="action_collection_remove">Van je collectie verwijderen</string>
   <string name="action_collection_added">Aan je collectie toegevoegd</string>
   <string name="action_collection_removed">Van je collectie verwijderd</string>
-  <string name="action_watched">Watched</string>
-  <string name="action_unwatched">Not yet watched</string>
+  <string name="action_watched">Bekeken</string>
+  <string name="action_unwatched">Nog niet bekeken</string>
   <string name="confirm_delete">Wilt u %s echt verwijderen?</string>
   <string name="delete_has_list_items">Kan geen overeenkomst vinden; verwijder eerst %s uit alle lijsten.</string>
   <string name="delete_error">Kan show niet verwijderen. Probeer later opnieuw.</string>
@@ -216,9 +216,9 @@
   <string name="integration_trakt_items">- voeg series uit uw bibliotheek en watchlist toe\n\n- bekijk uw aanbevelingen en vriendenactiviteit\n\n- bekeken- en verzameld-markeringen worden automatisch gesynchroniseerd\n\n- nieuwe series die u bekeken hebt worden automatisch toegevoegd</string>
   <string name="trakt_upload_hint">Markeer afleveringen bekeken in SeriesGuide als bekeken op trakt:</string>
   <string name="trakt_upload">Uploaden naar trakt.tv</string>
-  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
-  <string name="upload_done">Finished uploading.</string>
-  <string name="upload_no_work">There was nothing to upload.</string>
+  <string name="trakt_syncunwatched">Verwijder bekeken-markeringen in Trakt voor onbekeken afleveringen in SeriesGuide</string>
+  <string name="upload_done">Klaar met uploaden.</string>
+  <string name="upload_no_work">Er was niets om te uploaden.</string>
   <string name="prefs_category_basic">Basis</string>
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Geavanceerd</string>
