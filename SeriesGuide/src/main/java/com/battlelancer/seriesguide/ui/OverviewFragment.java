@@ -751,7 +751,7 @@ public class OverviewFragment extends SherlockFragment implements
             int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
             mTraktTask = new TraktSummaryTask(getSherlockActivity(), getView(), isUseCachedValues)
                     .episode(getShowId(), episodeTvdbId, seasonNumber, episodeNumber);
-            AndroidUtils.executeAsyncTask(mTraktTask, new Void[]{});
+            AndroidUtils.executeAsyncTask(mTraktTask);
         }
     }
 
@@ -763,7 +763,7 @@ public class OverviewFragment extends SherlockFragment implements
             mArtTask.cancel(true);
             mArtTask = null;
         }
-        mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity());
+        mArtTask = new FetchArtTask(imagePath, container, getActivity());
         AndroidUtils.executeAsyncTask(mArtTask, new Void[]{
                 null
         });
