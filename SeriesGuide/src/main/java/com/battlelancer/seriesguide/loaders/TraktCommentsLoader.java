@@ -23,7 +23,6 @@ import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Comment;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import java.util.ArrayList;
 import java.util.List;
 import retrofit.RetrofitError;
 import timber.log.Timber;

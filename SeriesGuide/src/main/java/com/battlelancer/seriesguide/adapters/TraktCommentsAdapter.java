@@ -28,7 +28,6 @@ import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.jakewharton.trakt.entities.Comment;
-import com.squareup.picasso.Picasso;
 import java.util.List;
 
 /**
