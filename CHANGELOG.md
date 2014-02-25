@@ -8,6 +8,11 @@ All dates are in the European Central timezone.
 Version 12 *(in development)*
 -------------------------
 
+* Episode time calculation changes: a full sync will run when opening the app. You can trigger it manually by touching Menu > Update in the upper right corner or by pressing the menu button on your device.
+* Build a movie watchlist and collection.
+* Requires at least Android 2.3 (Gingerbread).
+* Bugfixes and design updates.
+
 #### 12-beta10 *(2014-02-24)*
 
 * FIX Tabs are crammed together.
