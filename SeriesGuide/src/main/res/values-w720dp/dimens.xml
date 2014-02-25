@@ -3,8 +3,6 @@
 
     <dimen name="addpager_width">600dp</dimen>
     <dimen name="imagecontainer_height">250dp</dimen>
-    <dimen name="show_poster_width">224dp</dimen>
-    <dimen name="show_poster_height">336dp</dimen>
     <dimen name="buttonbar_button_width">64dp</dimen>
     <dimen name="buttonbar_button_height">56dp</dimen>
 
