@@ -8,6 +8,10 @@ All dates are in the European Central timezone.
 Version 12 *(in development)*
 -------------------------
 
+#### 12-beta10 *(2014-02-24)*
+
+* FIX Tabs are crammed together.
+
 #### 12-beta9 *(2014-02-24)*
 
 * TWEAK DashClock extension now prominently displays show title, is formatted similar to DashClock's calendar extension.

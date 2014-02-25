@@ -2,6 +2,7 @@
 <resources>
 
     <attr name="custom_list_selector" format="reference" />
+    <attr name="tabStripBackground" format="reference" />
 
     <!-- Colors -->
     <attr name="textColorSgDefault" format="reference|color" />

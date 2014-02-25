@@ -259,7 +259,7 @@
         <item name="android:textColor">?attr/colorTabStripText</item>
         <item name="pstsDividerColor">?attr/colorDivider</item>
         <item name="pstsIndicatorColor">?attr/colorAccent</item>
-        <item name="pstsTabBackground">?attr/custom_list_selector</item>
+        <item name="pstsTabBackground">?attr/tabStripBackground</item>
         <item name="pstsUnderlineColor">?attr/colorAccent</item>
     </style>
 
