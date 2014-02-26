@@ -213,23 +213,26 @@ public class NotificationService extends IntentService {
             } else {
                 // Get episodes which are within the notification threshold
                 // (user set) and not yet cleared
-                int count = 0;
                 final List<Integer> notifyPositions = Lists.newArrayList();
                 final long latestTimeCleared = NotificationSettings.getLastCleared(this);
                 final long latestTimeToInclude = customCurrentTime
                         + DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
 
-                upcomingEpisodes.moveToPosition(-1);
+                int count = 0;
+                int position = -1;
+                upcomingEpisodes.moveToPosition(position);
                 while (upcomingEpisodes.moveToNext()) {
+                    position++;
+
                     final long releaseTime = upcomingEpisodes.getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS);
                     if (releaseTime <= latestTimeToInclude) {
-                        count++;
                         /*
                          * Only add those after the last one the user cleared.
                          * At most those of the last 24 hours (see query above).
                          */
                         if (releaseTime > latestTimeCleared) {
-                            notifyPositions.add(count);
+                            notifyPositions.add(position);
+                            count++;
                         }
                     } else {
                         // Too far into the future, stop!
