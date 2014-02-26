@@ -218,7 +218,6 @@ public class NotificationService extends IntentService {
                 final long latestTimeToInclude = customCurrentTime
                         + DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
 
-                int count = 0;
                 int position = -1;
                 upcomingEpisodes.moveToPosition(position);
                 while (upcomingEpisodes.moveToNext()) {
@@ -232,7 +231,6 @@ public class NotificationService extends IntentService {
                          */
                         if (releaseTime > latestTimeCleared) {
                             notifyPositions.add(position);
-                            count++;
                         }
                     } else {
                         // Too far into the future, stop!
@@ -257,7 +255,7 @@ public class NotificationService extends IntentService {
                     prefs.edit().putLong(NotificationSettings.KEY_LAST_NOTIFIED, latestAirtime)
                             .commit();
 
-                    onNotify(upcomingEpisodes, count, latestAirtime);
+                    onNotify(upcomingEpisodes, notifyPositions, latestAirtime);
                 }
 
                 /*
@@ -325,26 +323,23 @@ public class NotificationService extends IntentService {
         prefs.edit().putLong(NotificationSettings.KEY_LAST_NOTIFIED, 0).commit();
     }
 
-    private void onNotify(final Cursor upcomingEpisodes, int count,
+    private void onNotify(final Cursor upcomingEpisodes, List<Integer> notifyPositions,
             long latestAirtime) {
         final Context context = getApplicationContext();
-        CharSequence tickerText = "";
-        CharSequence contentTitle = "";
-        CharSequence contentText = "";
-        PendingIntent contentIntent = null;
 
-        // notification sound
-        final String ringtoneUri = NotificationSettings.getNotificationsRingtone(context);
-        // vibration
-        final boolean isVibrating = NotificationSettings.isNotificationVibrating(context);
+        CharSequence tickerText;
+        CharSequence contentTitle;
+        CharSequence contentText;
+        PendingIntent contentIntent;
         // base intent for task stack
         final Intent showsIntent = new Intent(context, ShowsActivity.class);
         showsIntent.putExtra(ShowsActivity.InitBundle.SELECTED_TAB,
                 ShowsActivity.InitBundle.INDEX_TAB_UPCOMING);
 
+        final int count = notifyPositions.size();
         if (count == 1) {
             // notify in detail about one episode
-            upcomingEpisodes.moveToFirst();
+            upcomingEpisodes.moveToPosition(notifyPositions.get(0));
 
             final String showTitle = upcomingEpisodes.getString(NotificationQuery.SHOW_TITLE);
             tickerText = getString(R.string.upcoming_show, showTitle);
@@ -371,7 +366,7 @@ public class NotificationService extends IntentService {
                     .addNextIntent(showsIntent)
                     .addNextIntent(episodeDetailsIntent)
                     .getPendingIntent(REQUEST_CODE_SINGLE_EPISODE, PendingIntent.FLAG_ONE_SHOT);
-        } else if (count > 1) {
+        } else {
             // notify about multiple episodes
             tickerText = getString(R.string.upcoming_episodes);
             contentTitle = getString(R.string.upcoming_episodes_number, count);
@@ -386,10 +381,9 @@ public class NotificationService extends IntentService {
 
         if (AndroidUtils.isJellyBeanOrHigher()) {
             // JELLY BEAN and above
-
             if (count == 1) {
                 // single episode
-                upcomingEpisodes.moveToFirst();
+                upcomingEpisodes.moveToPosition(notifyPositions.get(0));
                 final String imagePath = upcomingEpisodes
                         .getString(NotificationQuery.POSTER);
                 nb.setLargeIcon(ImageProvider.getInstance(context)
@@ -426,30 +420,30 @@ public class NotificationService extends IntentService {
                 NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
 
                 // display at most the first five
-                final int displayCount = Math.min(count, 5);
-                for (int i = 0; i < displayCount; i++) {
-                    if (upcomingEpisodes.moveToPosition(i)) {
-                        final SpannableStringBuilder lineText = new SpannableStringBuilder();
-
-                        // show title
-                        lineText.append(upcomingEpisodes
-                                .getString(NotificationQuery.SHOW_TITLE));
-                        lineText.setSpan(new ForegroundColorSpan(Color.WHITE), 0,
-                                lineText.length(), 0);
-
-                        lineText.append(" ");
-
-                        // "8:00 PM on Network"
-                        String releaseTime = TimeTools.formatToLocalReleaseTime(this, TimeTools
-                                .getEpisodeReleaseTime(this, upcomingEpisodes
-                                        .getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS)));
-                        String network = upcomingEpisodes
-                                .getString(NotificationQuery.NETWORK);
-                        lineText.append(getString(R.string.upcoming_show_detailed, releaseTime,
-                                network));
-
-                        inboxStyle.addLine(lineText);
+                for (int displayIndex = 0; displayIndex < Math.min(count, 5); displayIndex++) {
+                    if (!upcomingEpisodes.moveToPosition(notifyPositions.get(displayIndex))) {
+                        // could not go to the desired position (testing just in case)
+                        break;
                     }
+
+                    final SpannableStringBuilder lineText = new SpannableStringBuilder();
+
+                    // show title
+                    lineText.append(upcomingEpisodes.getString(NotificationQuery.SHOW_TITLE));
+                    lineText.setSpan(new ForegroundColorSpan(Color.WHITE), 0, lineText.length(), 0);
+
+                    lineText.append(" ");
+
+                    // "8:00 PM on Network"
+                    String releaseTime = TimeTools.formatToLocalReleaseTime(this, TimeTools
+                            .getEpisodeReleaseTime(this, upcomingEpisodes
+                                    .getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS)));
+                    String network = upcomingEpisodes
+                            .getString(NotificationQuery.NETWORK);
+                    lineText.append(getString(R.string.upcoming_show_detailed, releaseTime,
+                            network));
+
+                    inboxStyle.addLine(lineText);
                 }
 
                 // tell if we could not display all episodes
@@ -462,23 +456,23 @@ public class NotificationService extends IntentService {
             }
         } else {
             // ICS and below
-
             if (count == 1) {
                 // single episode
-                upcomingEpisodes.moveToFirst();
-                final String posterPath = upcomingEpisodes
-                        .getString(NotificationQuery.POSTER);
-                nb.setLargeIcon(ImageProvider.getInstance(context).getImage(posterPath,
-                        true));
+                upcomingEpisodes.moveToPosition(notifyPositions.get(0));
+                final String posterPath = upcomingEpisodes.getString(NotificationQuery.POSTER);
+                nb.setLargeIcon(ImageProvider.getInstance(context).getImage(posterPath, true));
             }
         }
 
+        // notification sound
+        final String ringtoneUri = NotificationSettings.getNotificationsRingtone(context);
         // If the string is empty, the user chose silent...
         if (ringtoneUri.length() != 0) {
             // ...otherwise set the specified ringtone
             nb.setSound(Uri.parse(ringtoneUri));
         }
-        if (isVibrating) {
+        // vibration
+        if (NotificationSettings.isNotificationVibrating(context)) {
             nb.setVibrate(VIBRATION_PATTERN);
         }
         nb.setDefaults(Notification.DEFAULT_LIGHTS);
