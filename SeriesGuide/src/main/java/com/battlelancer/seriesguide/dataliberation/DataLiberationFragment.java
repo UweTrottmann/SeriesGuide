@@ -36,7 +36,6 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import java.io.File;
 
 /**
  * One button export or import of the show database using a JSON file on
