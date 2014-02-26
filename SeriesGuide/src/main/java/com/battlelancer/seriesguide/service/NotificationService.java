@@ -59,6 +59,8 @@ public class NotificationService extends IntentService {
 
     private static final boolean DEBUG = false;
 
+    private static final int REQUEST_CODE_DELETE_INTENT = 1;
+
     private static final int REQUEST_CODE_SINGLE_EPISODE = 2;
 
     private static final int REQUEST_CODE_MULTIPLE_EPISODES = 3;
@@ -488,7 +490,8 @@ public class NotificationService extends IntentService {
 
         Intent i = new Intent(this, NotificationService.class);
         i.putExtra(KEY_EPISODE_CLEARED_TIME, latestAirtime);
-        PendingIntent deleteIntent = PendingIntent.getService(this, 1, i, 0);
+        PendingIntent deleteIntent = PendingIntent.getService(this, REQUEST_CODE_DELETE_INTENT, i,
+                PendingIntent.FLAG_UPDATE_CURRENT);
         nb.setDeleteIntent(deleteIntent);
 
         // build the notification
