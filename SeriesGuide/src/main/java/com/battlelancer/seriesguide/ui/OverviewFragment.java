@@ -34,8 +34,6 @@ import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
@@ -753,7 +751,7 @@ public class OverviewFragment extends SherlockFragment implements
             int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
             mTraktTask = new TraktSummaryTask(getSherlockActivity(), getView(), isUseCachedValues)
                     .episode(getShowId(), episodeTvdbId, seasonNumber, episodeNumber);
-            AndroidUtils.executeAsyncTask(mTraktTask, new Void[]{});
+            AndroidUtils.executeAsyncTask(mTraktTask);
         }
     }
 
@@ -765,7 +763,7 @@ public class OverviewFragment extends SherlockFragment implements
             mArtTask.cancel(true);
             mArtTask = null;
         }
-        mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity());
+        mArtTask = new FetchArtTask(imagePath, container, getActivity());
         AndroidUtils.executeAsyncTask(mArtTask, new Void[]{
                 null
         });

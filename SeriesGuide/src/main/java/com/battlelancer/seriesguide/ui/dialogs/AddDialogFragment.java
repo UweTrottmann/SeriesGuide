@@ -35,7 +35,6 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
-import com.squareup.picasso.Picasso;
 
 /**
  * A DialogFragment allowing the user to decide whether to add a show to his show database.

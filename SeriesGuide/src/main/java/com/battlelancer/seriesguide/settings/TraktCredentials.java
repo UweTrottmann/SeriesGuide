@@ -16,12 +16,10 @@
 
 package com.battlelancer.seriesguide.settings;
 
-import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.jakewharton.trakt.Trakt;
-import com.jakewharton.trakt.entities.Response;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.accounts.Account;
