@@ -16,38 +16,35 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
+import com.jakewharton.trakt.enumerations.Extended;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
-
-import android.content.Context;
-import android.content.res.Resources;
-import android.database.Cursor;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-
 import retrofit.RetrofitError;
+import timber.log.Timber;
 
 public class TraktAddFragment extends AddFragment {
 
@@ -146,7 +143,9 @@ public class TraktAddFragment extends AddFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.trakt_library_menu, menu);
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+        inflater.inflate(isLightTheme ? R.menu.trakt_library_menu_light : R.menu.trakt_library_menu,
+                menu);
     }
 
     @Override
@@ -169,8 +168,6 @@ public class TraktAddFragment extends AddFragment {
 
     public class GetTraktShowsTask extends AsyncTask<Integer, Void, List<SearchResult>> {
 
-        private static final String TAG = "GetTraktShowsTask";
-
         private Context mContext;
 
         public GetTraktShowsTask(Context context) {
@@ -179,7 +176,7 @@ public class TraktAddFragment extends AddFragment {
 
         @Override
         protected List<SearchResult> doInBackground(Integer... params) {
-            Log.d(TAG, "Getting shows from trakt...");
+            Timber.d("Getting shows...");
             int type = params[0];
             List<SearchResult> showList = new ArrayList<>();
 
@@ -189,7 +186,8 @@ public class TraktAddFragment extends AddFragment {
                 try {
                     shows = ServiceUtils.getTrakt(mContext).showService().trending();
                 } catch (RetrofitError e) {
-                    // we don't care
+                    Timber.e(e, "Loading trending shows failed");
+                    // ignored, just display empty list
                 }
             } else {
                 try {
@@ -200,8 +198,9 @@ public class TraktAddFragment extends AddFragment {
                                 shows = manager.recommendationsService().shows();
                                 break;
                             case AddPagerAdapter.LIBRARY_TAB_POSITION:
-                                shows = manager.userService().libraryShowsAllExtended(
-                                        TraktCredentials.get(mContext).getUsername());
+                                shows = manager.userService().libraryShowsAll(
+                                        TraktCredentials.get(mContext).getUsername(),
+                                        Extended.EXTENDED);
                                 break;
                             case AddPagerAdapter.WATCHLIST_TAB_POSITION:
                                 shows = manager.userService().watchlistShows(
@@ -210,7 +209,8 @@ public class TraktAddFragment extends AddFragment {
                         }
                     }
                 } catch (RetrofitError e) {
-                    // we don't care
+                    Timber.e(e, "Loading shows failed");
+                    // ignored, just display empty list
                 }
             }
 
@@ -221,7 +221,7 @@ public class TraktAddFragment extends AddFragment {
 
             // get a list of existing shows to filter against
             final Cursor existingShows = mContext.getContentResolver().query(Shows.CONTENT_URI,
-                    new String[]{
+                    new String[] {
                             Shows._ID
                     }, null, null, null);
             final HashSet<Integer> existingShowTvdbIds = new HashSet<>();
@@ -252,28 +252,20 @@ public class TraktAddFragment extends AddFragment {
      */
     private static void parseTvShowsToSearchResults(List<TvShow> inputList,
             List<SearchResult> outputList, HashSet<Integer> existingShowTvdbIds, Context context) {
-        Iterator<TvShow> shows = inputList.iterator();
-        while (shows.hasNext()) {
-            TvShow tvShow = shows.next();
-
-            // only list non-existing shows
+        // large screens show larger poster, so use a higher resolution variant
+        String posterSizeSpec = DisplaySettings.isVeryLargeScreen(context)
+                ? TraktSettings.POSTER_SIZE_SPEC_300 : TraktSettings.POSTER_SIZE_SPEC_138;
+        // build list
+        for (TvShow tvShow : inputList) {
+            // only list shows not in the database already
             if (!existingShowTvdbIds.contains(tvShow.tvdb_id)) {
                 SearchResult show = new SearchResult();
                 show.tvdbid = tvShow.tvdb_id;
                 show.title = tvShow.title;
                 show.overview = tvShow.overview;
-                String posterPath = tvShow.images.poster;
-                if (posterPath != null) {
-                    // use larger images on high-res tablets (e.g. Nexus 10)
-                    Resources res = context.getResources();
-                    String sizeSpec;
-                    if (DisplaySettings.isVeryLargeAndHighResScreen(context)) {
-                        sizeSpec = "-300";
-                    } else {
-                        sizeSpec = "-138";
-                    }
-                    show.poster = posterPath.substring(0, posterPath.length() - 4) + sizeSpec
-                            + ".jpg";
+                if (tvShow.images.poster != null) {
+                    show.poster = tvShow.images.poster.replace(
+                            TraktSettings.POSTER_SIZE_SPEC_DEFAULT, posterSizeSpec);
                 }
                 outputList.add(show);
             }

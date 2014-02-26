@@ -23,8 +23,8 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.adapters.SeasonsAdapter;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
@@ -32,10 +32,11 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
 import com.battlelancer.seriesguide.util.FlagTask.SeasonWatchedType;
+import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -244,6 +245,16 @@ public class SeasonsFragment extends SherlockListFragment implements
             }
             return;
         }
+
+        // display season in title
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+        Cursor season = (Cursor) mAdapter.getItem(info.position);
+        if (season == null) {
+            return;
+        }
+        menu.setHeaderTitle(
+                SeasonTools.getSeasonString(getActivity(), season.getInt(SeasonsQuery.COMBINED)));
+
         // display actions for season
         menu.add(0, CONTEXT_WATCHED_SEASON_ALL_ID, 0, R.string.mark_all);
         menu.add(0, CONTEXT_WATCHED_SEASON_NONE_ID, 1, R.string.unmark_all);
@@ -322,7 +333,7 @@ public class SeasonsFragment extends SherlockListFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.seasonlist_menu, menu);
+        inflater.inflate(R.menu.seasons_menu, menu);
     }
 
     @Override
@@ -456,7 +467,7 @@ public class SeasonsFragment extends SherlockListFragment implements
 
             if (mSeasonId != null) {
                 // update one season
-                DBUtils.updateUnwatchedCount(context, mSeasonId, prefs);
+                DBUtils.updateUnwatchedCount(context, mSeasonId);
             } else {
                 // update all seasons of this show, start with the most recent
                 // one
@@ -466,7 +477,7 @@ public class SeasonsFragment extends SherlockListFragment implements
                 }, null, null, Seasons.COMBINED + " DESC");
                 while (seasons.moveToNext()) {
                     String seasonId = seasons.getString(0);
-                    DBUtils.updateUnwatchedCount(context, seasonId, prefs);
+                    DBUtils.updateUnwatchedCount(context, seasonId);
 
                     notifyContentProvider(context);
                 }
@@ -505,9 +516,6 @@ public class SeasonsFragment extends SherlockListFragment implements
     }
 
     private void onLoadRemainingCounter() {
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getActivity());
-
         AsyncTask<String, Void, int[]> task = new AsyncTask<String, Void, int[]>() {
 
             @Override
@@ -518,9 +526,7 @@ public class SeasonsFragment extends SherlockListFragment implements
 
                 int[] counts = new int[2];
 
-                counts[0] = DBUtils.getUnwatchedEpisodesOfShow(getActivity(),
-                        params[0],
-                        prefs);
+                counts[0] = DBUtils.getUnwatchedEpisodesOfShow(getActivity(), params[0]);
                 counts[1] = DBUtils.getUncollectedEpisodesOfShow(getActivity(), params[0]);
 
                 return counts;

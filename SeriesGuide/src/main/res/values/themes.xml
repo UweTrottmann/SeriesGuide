@@ -9,6 +9,7 @@
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="custom_list_selector">@drawable/list_selector_sg</item>
+        <item name="tabStripBackground">@drawable/tab_strip_background_sg</item>
 
         <!-- System widgets (ABS) -->
         <item name="dropDownListViewStyle">@style/DropDownListView</item>
@@ -39,6 +40,7 @@
         <item name="colorSeparator">@color/separator</item>
         <item name="colorDivider">@color/divider</item>
         <item name="colorTabStripText">@color/text_default</item>
+        <item name="colorNavDrawerBackground">@color/background_lighter</item>
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
@@ -59,6 +61,16 @@
         <item name="drawableSkip">@drawable/ic_action_playback_next</item>
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart</item>
+        <item name="drawableAddShow">@drawable/ic_action_new_show</item>
+        <item name="drawableList">@drawable/ic_action_list</item>
+        <item name="drawableMovie">@drawable/ic_action_movie</item>
+        <item name="drawableLab">@drawable/ic_action_lab</item>
+        <item name="drawableStats">@drawable/ic_action_bargraph</item>
+        <item name="drawableSearch">@drawable/ic_action_search</item>
+        <item name="drawableTv">@drawable/ic_action_tv</item>
+        <item name="drawableSettings">@drawable/ic_action_settings</item>
+        <item name="drawableHelp">@drawable/ic_action_help</item>
+
     </style>
 
     <style name="SeriesGuideBaseTheme" parent="Theme.Sherlock">
@@ -75,7 +87,10 @@
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
+        <item name="android:colorBackground">@color/background</item>
+        <item name="android:windowBackground">@color/background</item>
         <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
+        <item name="tabStripBackground">@drawable/background_tab</item>
 
         <!-- Action bar (ABS) -->
         <item name="actionBarStyle">@style/ActionBarDark</item>
@@ -93,6 +108,7 @@
         <item name="colorSeparator">@color/separator</item>
         <item name="colorDivider">@color/divider</item>
         <item name="colorTabStripText">@color/text_default</item>
+        <item name="colorNavDrawerBackground">@color/background_lighter</item>
 
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
@@ -110,6 +126,15 @@
         <item name="drawableSkip">@drawable/ic_action_playback_next</item>
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart</item>
+        <item name="drawableAddShow">@drawable/ic_action_new_show</item>
+        <item name="drawableList">@drawable/ic_action_list</item>
+        <item name="drawableMovie">@drawable/ic_action_movie</item>
+        <item name="drawableLab">@drawable/ic_action_lab</item>
+        <item name="drawableStats">@drawable/ic_action_bargraph</item>
+        <item name="drawableSearch">@drawable/ic_action_search</item>
+        <item name="drawableTv">@drawable/ic_action_tv</item>
+        <item name="drawableSettings">@drawable/ic_action_settings</item>
+        <item name="drawableHelp">@drawable/ic_action_help</item>
 
     </style>
 
@@ -126,7 +151,10 @@
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
+        <item name="android:colorBackground">@color/background_inverse</item>
+        <item name="android:windowBackground">@color/background_inverse</item>
         <item name="custom_list_selector">@drawable/list_selector_sg</item>
+        <item name="tabStripBackground">@drawable/tab_strip_background_sg</item>
 
         <!-- System widgets (ABS) -->
         <item name="dropDownListViewStyle">@style/DropDownListView</item>
@@ -150,13 +178,14 @@
         <item name="textColorSgPrimaryInverse">@color/text_primary</item>
         <item name="textColorSgGreen">@color/green_dark</item>
         <item name="textColorSgDim">@color/text_dim_light</item>
-        <item name="textColorSgActionBar">@color/text_default</item>
+        <item name="textColorSgActionBar">@color/text_default_inverse</item>
         <item name="colorAccent">@color/accent_primary</item>
         <item name="colorOverlay">@color/overlay_inverse</item>
         <item name="colorBackgroundDim">@color/background_dim_inverse</item>
         <item name="colorSeparator">@color/separator_inverse</item>
         <item name="colorDivider">@color/divider_inverse</item>
         <item name="colorTabStripText">@color/text_default_inverse</item>
+        <item name="colorNavDrawerBackground">@color/background_white</item>
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
@@ -177,12 +206,21 @@
         <item name="drawableSkip">@drawable/ic_action_playback_next_inverse</item>
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped_inverse</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart_inverse</item>
+        <item name="drawableAddShow">@drawable/ic_action_new_show_inverse</item>
+        <item name="drawableList">@drawable/ic_action_list_inverse</item>
+        <item name="drawableMovie">@drawable/ic_action_movie_inverse</item>
+        <item name="drawableLab">@drawable/ic_action_lab_inverse</item>
+        <item name="drawableStats">@drawable/ic_action_bargraph_inverse</item>
+        <item name="drawableSearch">@drawable/ic_action_search_inverse</item>
+        <item name="drawableTv">@drawable/ic_action_tv_inverse</item>
+        <item name="drawableSettings">@drawable/ic_action_settings_inverse</item>
+        <item name="drawableHelp">@drawable/ic_action_help_inverse</item>
 
-        <!-- Necessary to inherit the primary accent color in the DarkActionBar (ABS) -->
-        <item name="actionBarWidgetTheme">@style/SeriesGuideTheme</item>
+        <!-- Remove default action bar shadow -->
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="SeriesGuideBaseThemeLight" parent="Theme.Sherlock.Light.DarkActionBar">
+    <style name="SeriesGuideBaseThemeLight" parent="Theme.Sherlock.Light">
 
         <!-- System widgets -->
         <item name="android:editTextStyle">@style/Widget.SeriesGuide.Light.EditText</item>
@@ -223,10 +261,17 @@
 
     </style>
 
+    <style name="ImmersiveTheme.Stock" parent="AndroidTheme">
+
+        <!-- Action bar (ABS) -->
+        <item name="actionBarStyle">@style/ActionBar.Invisible</item>
+
+    </style>
+
     <style name="ImmersiveTheme.Light" parent="SeriesGuideThemeLight">
 
         <!-- Action bar (ABS) -->
-        <item name="actionBarStyle">@style/ActionBar.Translucent</item>
+        <item name="actionBarStyle">@style/ActionBar.Invisible</item>
 
     </style>
 

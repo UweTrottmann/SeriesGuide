@@ -35,6 +35,7 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/large_padding"
             android:indeterminate="true"
             android:visibility="gone" />
 
@@ -43,7 +44,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/large_padding"
             android:text="@string/migration_action_import" />
     </LinearLayout>
 </ScrollView>

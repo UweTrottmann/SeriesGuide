@@ -23,34 +23,32 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
-
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.model.Episode;
 import com.battlelancer.seriesguide.dataliberation.model.List;
 import com.battlelancer.seriesguide.dataliberation.model.ListItem;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.provider.SeriesContract;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
 import com.google.myjson.Gson;
 import com.google.myjson.JsonIOException;
 import com.google.myjson.stream.JsonWriter;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.Lists;
-import com.uwetrottmann.seriesguide.R;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import timber.log.Timber;
 
 /**
  * Export the show database to a human-readable JSON file on external storage.
@@ -64,7 +62,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     public static final String EXPORT_JSON_FILE_SHOWS = "sg-shows-export.json";
     public static final String EXPORT_JSON_FILE_LISTS = "sg-lists-export.json";
 
-    private static final String TAG = "Json Export";
     private static final int SUCCESS = 1;
     private static final int ERROR_STORAGE_ACCESS = 0;
     private static final int ERROR = -1;
@@ -148,14 +145,10 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             OutputStream out = new FileOutputStream(backup);
 
             writeJsonStreamShows(out, shows);
-        } catch (JsonIOException e) {
-            // Only catch IO exception as we want to know if exporting fails due
+        } catch (JsonIOException | IOException e) {
+            // Also catch IO exception as we want to know if exporting fails due
             // to a JsonSyntaxException
-            Utils.trackExceptionAndLog(mContext, TAG, e);
-            return ERROR;
-        } catch (IOException e) {
-            // Backup failed
-            Utils.trackExceptionAndLog(mContext, TAG, e);
+            Timber.e(e, "JSON shows export failed");
             return ERROR;
         } finally {
             shows.close();
@@ -168,7 +161,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         /*
          * Export lists.
          */
-        final Cursor lists = mContext.getContentResolver().query(SeriesContract.Lists.CONTENT_URI,
+        final Cursor lists = mContext.getContentResolver().query(SeriesGuideContract.Lists.CONTENT_URI,
                 ListsQuery.PROJECTION, null, null, ListsQuery.SORT);
         if (lists == null) {
             return ERROR;
@@ -186,13 +179,10 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             OutputStream out = new FileOutputStream(backupLists);
 
             writeJsonStreamLists(out, lists);
-        } catch (JsonIOException e) {
+        } catch (JsonIOException | IOException e) {
             // Only catch IO exception as we want to know if exporting fails due
             // to a JsonSyntaxException
-            Utils.trackExceptionAndLog(mContext, TAG, e);
-            return ERROR;
-        } catch (IOException e) {
-            Utils.trackExceptionAndLog(mContext, TAG, e);
+            Timber.e(e, "JSON lists export failed");
             return ERROR;
         } finally {
             lists.close();
@@ -278,6 +268,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             show.network = shows.getString(ShowsQuery.NETWORK);
             show.imdbId = shows.getString(ShowsQuery.IMDBID);
             show.firstAired = shows.getString(ShowsQuery.FIRSTAIRED);
+            show.country = shows.getString(ShowsQuery.RELEASE_COUNTRY);
             if (mIsFullDump) {
                 show.overview = shows.getString(ShowsQuery.OVERVIEW);
                 show.rating = shows.getDouble(ShowsQuery.RATING);
@@ -432,13 +423,13 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 Shows._ID, Shows.TITLE, Shows.FAVORITE, Shows.HIDDEN, Shows.AIRSTIME,
                 Shows.AIRSDAYOFWEEK, Shows.GETGLUEID, Shows.LASTWATCHEDID,
                 Shows.POSTER, Shows.CONTENTRATING, Shows.STATUS, Shows.RUNTIME, Shows.NETWORK,
-                Shows.IMDBID, Shows.SYNCENABLED, Shows.FIRSTAIRED,
+                Shows.IMDBID, Shows.SYNCENABLED, Shows.FIRSTAIRED, Shows.RELEASE_COUNTRY
         };
         String[] PROJECTION_FULL = new String[] {
                 Shows._ID, Shows.TITLE, Shows.FAVORITE, Shows.HIDDEN, Shows.AIRSTIME,
                 Shows.AIRSDAYOFWEEK, Shows.GETGLUEID, Shows.LASTWATCHEDID,
                 Shows.POSTER, Shows.CONTENTRATING, Shows.STATUS, Shows.RUNTIME, Shows.NETWORK,
-                Shows.IMDBID, Shows.SYNCENABLED, Shows.FIRSTAIRED,
+                Shows.IMDBID, Shows.SYNCENABLED, Shows.FIRSTAIRED, Shows.RELEASE_COUNTRY,
                 Shows.OVERVIEW, Shows.RATING, Shows.GENRES, Shows.ACTORS,
                 Shows.LASTUPDATED, Shows.LASTEDIT
         };
@@ -461,13 +452,14 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         int IMDBID = 13;
         int SYNC = 14;
         int FIRSTAIRED = 15;
+        int RELEASE_COUNTRY = 16;
         // Full dump only
-        int OVERVIEW = 16;
-        int RATING = 17;
-        int GENRES = 18;
-        int ACTORS = 19;
-        int LAST_UPDATED = 20;
-        int LAST_EDITED = 21;
+        int OVERVIEW = 17;
+        int RATING = 18;
+        int GENRES = 19;
+        int ACTORS = 20;
+        int LAST_UPDATED = 21;
+        int LAST_EDITED = 22;
     }
 
     public interface EpisodesQuery {
@@ -507,10 +499,10 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
     public interface ListsQuery {
         String[] PROJECTION = new String[] {
-                SeriesContract.Lists.LIST_ID, SeriesContract.Lists.NAME
+                SeriesGuideContract.Lists.LIST_ID, SeriesGuideContract.Lists.NAME
         };
 
-        String SORT = SeriesContract.Lists.NAME + " COLLATE NOCASE ASC";
+        String SORT = SeriesGuideContract.Lists.NAME + " COLLATE NOCASE ASC";
 
         int ID = 0;
         int NAME = 1;
@@ -518,11 +510,11 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
     public interface ListItemsQuery {
         String[] PROJECTION = new String[] {
-                ListItems.LIST_ITEM_ID, SeriesContract.Lists.LIST_ID, ListItems.ITEM_REF_ID,
+                ListItems.LIST_ITEM_ID, SeriesGuideContract.Lists.LIST_ID, ListItems.ITEM_REF_ID,
                 ListItems.TYPE
         };
 
-        String SELECTION = SeriesContract.Lists.LIST_ID + "=?";
+        String SELECTION = SeriesGuideContract.Lists.LIST_ID + "=?";
 
         int ID = 0;
         int LIST_ID = 1;

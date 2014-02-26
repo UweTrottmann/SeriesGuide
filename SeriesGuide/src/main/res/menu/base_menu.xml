@@ -6,17 +6,5 @@
         android:orderInCategory="96"
         android:showAsAction="never"
         android:title="@string/action_upgrade"/>
-    <item
-        android:id="@+id/menu_preferences"
-        android:icon="@drawable/ic_action_settings"
-        android:orderInCategory="97"
-        android:showAsAction="never"
-        android:title="@string/preferences"/>
-    <item
-        android:id="@+id/menu_help"
-        android:icon="@drawable/ic_action_help"
-        android:orderInCategory="98"
-        android:showAsAction="never"
-        android:title="@string/help"/>
 
 </menu>

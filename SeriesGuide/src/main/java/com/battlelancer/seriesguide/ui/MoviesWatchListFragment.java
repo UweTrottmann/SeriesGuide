@@ -16,103 +16,51 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.adapters.MoviesWatchListAdapter;
-import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.loaders.TraktMoviesWatchlistLoader;
-import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
+import com.battlelancer.seriesguide.adapters.MoviesCursorAdapter;
+import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.entities.Movie;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
-import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
-import android.widget.TextView;
 
-import java.util.List;
-
-import de.greenrobot.event.EventBus;
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 /**
  * Loads and displays the users trakt movie watchlist.
  */
-public class MoviesWatchListFragment extends SherlockFragment implements
-        LoaderCallbacks<List<Movie>>, OnItemClickListener, OnClickListener {
+public class MoviesWatchListFragment extends MoviesBaseFragment {
+
+    protected static final int LOADER_ID = 300;
 
     private static final String TAG = "Movie Watchlist";
 
-    private static final int LOADER_ID = R.layout.movies_watchlist_fragment;
-
-    private static final int CONTEXT_REMOVE_ID = 0;
-
-    private MoviesWatchListAdapter mAdapter;
-
-    private GridView mGridView;
-
-    private TextView mEmptyView;
+    private static final int CONTEXT_WATCHLIST_REMOVE_ID = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.movies_watchlist_fragment, container, false);
+        View v = super.onCreateView(inflater, container, savedInstanceState);
 
-        mGridView = (GridView) v.findViewById(android.R.id.list);
-        mEmptyView = (TextView) v.findViewById(R.id.textViewMoviesWatchlistEmpty);
-        mGridView.setEmptyView(mEmptyView);
-        mGridView.setOnItemClickListener(this);
+        mEmptyView.setText(R.string.movies_watchlist_empty);
 
         return v;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        mAdapter = new MoviesWatchListAdapter(getActivity(), this);
-
-        mGridView.setAdapter(mAdapter);
-
-        registerForContextMenu(mGridView);
-
-        getLoaderManager().initLoader(LOADER_ID, null, this);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        /*
-         * Already register here instead of onResume() because watchlist might
-         * be modified by search fragment adjacent in view pager
-         */
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        menu.add(0, CONTEXT_REMOVE_ID, 0, R.string.watchlist_remove);
+        menu.add(0, CONTEXT_WATCHLIST_REMOVE_ID, 0, R.string.watchlist_remove);
     }
 
     @Override
@@ -127,14 +75,13 @@ public class MoviesWatchListFragment extends SherlockFragment implements
         }
 
         switch (item.getItemId()) {
-            case CONTEXT_REMOVE_ID: {
-                // Remove movie from watchlist
+            case CONTEXT_WATCHLIST_REMOVE_ID: {
                 AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-                Movie movie = mAdapter.getItem(info.position);
-                AndroidUtils.executeAsyncTask(
-                        new TraktTask(getActivity(), null)
-                                .unwatchlistMovie(Integer.valueOf(movie.tmdbId))
-                );
+                Cursor movie = (Cursor) mAdapter.getItem(info.position);
+                int tmdbId = movie.getInt(MoviesCursorAdapter.MoviesQuery.TMDB_ID);
+
+                MovieTools.removeFromWatchlist(getActivity(), tmdbId);
+
                 fireTrackerEvent("Remove from watchlist");
                 return true;
             }
@@ -144,47 +91,15 @@ public class MoviesWatchListFragment extends SherlockFragment implements
     }
 
     @Override
-    public void onClick(View v) {
-        getActivity().openContextMenu(v);
+    public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
+        return new CursorLoader(getActivity(), Movies.CONTENT_URI,
+                MoviesCursorAdapter.MoviesQuery.PROJECTION, Movies.SELECTION_WATCHLIST, null,
+                Movies.DEFAULT_SORT);
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Movie movie = mAdapter.getItem(position);
-
-        // launch details activity
-        Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
-        i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, Integer.valueOf(movie.tmdbId));
-        startActivity(i);
-    }
-
-    @Override
-    public Loader<List<Movie>> onCreateLoader(int loaderId, Bundle args) {
-        return new TraktMoviesWatchlistLoader(getActivity());
-    }
-
-    @Override
-    public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> data) {
-        if (AndroidUtils.isNetworkConnected(getActivity())) {
-            mEmptyView.setText(R.string.movies_watchlist_empty);
-        } else {
-            mEmptyView.setText(R.string.offline);
-        }
-        mAdapter.setData(data);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<List<Movie>> loader) {
-        mAdapter.setData(null);
-    }
-
-    public void onEvent(TraktActionCompleteEvent event) {
-        int traktAction = event.mTraktTaskArgs.getInt(TraktTask.InitBundle.TRAKTACTION);
-        if (traktAction == TraktAction.WATCHLIST_MOVIE.index
-                || traktAction == TraktAction.UNWATCHLIST_MOVIE.index) {
-            // reload movie watchlist after user added/removed
-            getLoaderManager().restartLoader(LOADER_ID, null, this);
-        }
+    protected int getLoaderId() {
+        return 0;
     }
 
     private void fireTrackerEvent(String label) {

@@ -3,15 +3,17 @@
 
     <string name="app_name">SeriesGuide</string>
     <string name="package_name">com.battlelancer.seriesguide</string>
+    <string name="provider_authority">com.battlelancer.seriesguide.provider</string>
     <string name="hexagon">SeriesGuide cloud</string>
     <string name="googleplay">Google Play</string>
     <string name="amazon">Amazon</string>
     <string name="youtube">YouTube</string>
     <string name="imdb">IMDb</string>
     <string name="tvdb">TVDb</string>
+    <string name="tmdb">TMDb</string>
     <string name="trakt">trakt</string>
-    <string name="ontrakt">on trakt</string>
-    <string name="getglue">GetGlue</string>
+    <string name="ontrakt">(trakt)</string>
+    <string name="getglue">tvtag (GetGlue)</string>
     <string name="analytics">Google Analytics</string>
     <string name="powered_by_thetvdb">powered by thetvdb.com</string>
     <string name="powered_by_trakt">powered by trakt.tv</string>

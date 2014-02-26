@@ -20,7 +20,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -64,7 +64,8 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.data_liberation_fragment, container, false);
 
         mProgressBar = (ProgressBar) v.findViewById(R.id.progressBarDataLiberation);
@@ -89,9 +90,10 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
         long lastAutoBackupTime = AdvancedSettings.getLastAutoBackupTime(getActivity());
         lastAutoBackup
                 .setText(getString(R.string.last_auto_backup,
-                        DateUtils.getRelativeDateTimeString(getActivity(),
-                                lastAutoBackupTime, DateUtils.SECOND_IN_MILLIS,
-                                DateUtils.DAY_IN_MILLIS, 0)));
+                        DataLiberationTools.isAutoBackupAvailable() ?
+                                DateUtils.getRelativeDateTimeString(getActivity(),
+                                        lastAutoBackupTime, DateUtils.SECOND_IN_MILLIS,
+                                        DateUtils.DAY_IN_MILLIS, 0) : "n/a"));
 
         return v;
     }
@@ -182,5 +184,4 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
         mCheckBoxFullDump.setEnabled(!isLocked);
         mCheckBoxImportWarning.setEnabled(!isLocked);
     }
-
 }

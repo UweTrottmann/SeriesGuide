@@ -39,6 +39,8 @@ public class Show {
 
     public String airday;
 
+    public String country;
+
     @SerializedName("check_in_getglue_id")
     public String checkInGetGlueId;
 

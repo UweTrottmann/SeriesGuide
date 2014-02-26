@@ -16,13 +16,14 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.support.v4.app.TaskStackBuilder;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
@@ -35,7 +36,7 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -100,8 +101,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     private static final String KEY_ABOUT = "aboutPref";
 
-    public static final String KEY_TMDB_BASE_URL = "com.battlelancer.seriesguide.tmdb.baseurl";
-
     public static final String KEY_TAPE_INTERVAL = "com.battlelancer.seriesguide.tapeinterval";
 
     public static int THEME = R.style.SeriesGuideTheme;
@@ -109,6 +108,16 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     private static void fireTrackerEvent(Context context, String label) {
         Utils.trackClick(context, TAG, label);
     }
+
+    private static OnPreferenceChangeListener sNoOpChangeListener
+            = new OnPreferenceChangeListener() {
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            Utils.advertiseSubscription(preference.getContext());
+            // prevent value from getting saved
+            return false;
+        }
+    };
 
     @SuppressWarnings("deprecation")
     @Override
@@ -214,27 +223,33 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         });
 
         // Theme switcher
-        themePref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                if (DisplaySettings.KEY_THEME.equals(preference.getKey())) {
-                    Utils.updateTheme((String) newValue);
+        if (Utils.hasAccessToX(activity)) {
+            themePref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    if (DisplaySettings.KEY_THEME.equals(preference.getKey())) {
+                        Utils.updateTheme((String) newValue);
 
-                    // restart to apply new theme
-                    NavUtils.navigateUpTo(activity,
-                            new Intent(Intent.ACTION_MAIN).setClass(activity, ShowsActivity.class));
-                    activity.startActivity(startIntent);
+                        // restart to apply new theme (actually build an entirely new task stack)
+                        TaskStackBuilder.create(activity)
+                                .addNextIntent(new Intent(activity, ShowsActivity.class))
+                                .addNextIntent(startIntent)
+                                .startActivities();
+                    }
+                    return true;
                 }
-                return true;
-            }
-        });
+            });
+            setListPreferenceSummary((ListPreference) themePref);
+        } else {
+            themePref.setOnPreferenceChangeListener(sNoOpChangeListener);
+            themePref.setSummary(R.string.onlyx);
+        }
 
         // set current value of auto-update pref
         ((CheckBoxPreference) updatePref).setChecked(SgSyncAdapter.isSyncAutomatically(activity));
 
         // show currently set values for list prefs
         setListPreferenceSummary((ListPreference) languagePref);
-        setListPreferenceSummary((ListPreference) themePref);
         setListPreferenceSummary((ListPreference) numberFormatPref);
     }
 
@@ -271,7 +286,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 }
             });
         } else {
-            notificationsPref.setEnabled(false);
+            notificationsPref.setOnPreferenceChangeListener(sNoOpChangeListener);
+            ((CheckBoxPreference) notificationsPref).setChecked(false);
             notificationsPref.setSummary(R.string.onlyx);
             notificationsThresholdPref.setEnabled(false);
             notificationsFavOnlyPref.setEnabled(false);

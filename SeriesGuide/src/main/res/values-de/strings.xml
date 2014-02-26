@@ -36,22 +36,28 @@
   <string name="add_empty">Keine Serien hier.</string>
   <string name="share_show">Serie teilen</string>
   <string name="share_episode">Folge empfehlen</string>
-  <string name="share_checkout">Empfehle</string>
+  <string name="share_movie">Film teilen</string>
+  <string name="share_checkout">Empfehle %s</string>
   <string name="comments">Kommentare</string>
   <string name="shout_hint">Shout eingeben (in Englisch)</string>
   <string name="shout">Shout!</string>
   <string name="isspoiler">Spoiler-Warnung!</string>
   <string name="no_shouts">Schreibe den ersten Shout!</string>
   <string name="autorefresh">Aktualisiert automagisch</string>
-  <string name="movies_watchlist">Watchliste (trakt)</string>
+  <string name="movies_collection">Sammlung</string>
+  <string name="movies_watchlist">Ansehen</string>
   <string name="watchlist_add">Zur Watchliste hinzufügen</string>
   <string name="watchlist_remove">Aus Watchliste entfernen</string>
   <string name="watchlist_added">Zur Watchliste hinzugefügt</string>
   <string name="watchlist_removed">Aus Watchliste entfernt</string>
   <string name="movies_search_hint">Filmtitel eingeben</string>
   <string name="movies_empty">Suchen Sie oben nach einem Film.</string>
-  <string name="movies_watchlist_empty">Sie haben Ihrer trakt-Watchlist keine Filme hinzugefügt.</string>
+  <string name="movies_collection_empty">Sie haben Ihrer Sammlung noch keine Filme hinzugefügt.</string>
+  <string name="movies_watchlist_empty">Sie haben Ihrer Ansehen-Liste noch keine Filme hinzugefügt.</string>
   <string name="trailer">Trailer</string>
+  <string name="movie_cast">Besetzung</string>
+  <string name="movie_crew">Crew</string>
+  <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="shows_with_next">%s mit nächsten Folgen</string>
   <string name="shows_continuing">%s werden fortgesetzt</string>
   <string name="episodes_watched">%s angesehen</string>
@@ -77,6 +83,7 @@
   <string name="show_genres">Genres</string>
   <string name="show_runtime">Laufzeit</string>
   <string name="show_contentrating">Inhaltsklassifikation</string>
+  <string name="show_release_times">Erscheinungszeitpunkte</string>
   <string name="episode_directors">Regisseure</string>
   <string name="episode_gueststars">Gastschauspieler</string>
   <string name="episode_writers">Autoren</string>
@@ -107,6 +114,12 @@
   <string name="trakt_notseen">%s nicht gesehen.</string>
   <string name="trakt_collected">%s gesammelt.</string>
   <string name="trakt_notcollected">%s nicht gesammelt.</string>
+  <string name="action_collection_add">Zur Sammlung hinzufügen</string>
+  <string name="action_collection_remove">Aus Sammlung entfernen</string>
+  <string name="action_collection_added">Zur Sammlung hinzugefügt</string>
+  <string name="action_collection_removed">Aus Sammlung entfernt</string>
+  <string name="action_watched">Gesehen</string>
+  <string name="action_unwatched">Noch nicht gesehen</string>
   <string name="confirm_delete">Wollen Sie %s wirklich entfernen?</string>
   <string name="delete_has_list_items">Ausführung nicht möglich, entfernen Sie zuerst %s von allen Listen.</string>
   <string name="delete_error">Serie konnte nicht entfernt werden. Versuchen Sie es später erneut.</string>
@@ -160,7 +173,6 @@
   <string name="oneotherepisode">andere Folge</string>
   <string name="otherepisodes">andere Folgen</string>
   <string name="remaining">%s verbleibend</string>
-  <string name="search_hint_add">Serientitel</string>
   <string name="no_results">Keine Ergebnisse, versuchen Sie ganze Wörter.</string>
   <string name="search_error">Suche fehlgeschlagen, versuchen Sie es später erneut.</string>
   <string name="add_all">Alle hinzufügen</string>
@@ -202,12 +214,11 @@
   <string name="upload_existing_shows">Vorhandene Serien hochladen</string>
   <string name="about_trakt">trakt hilft TV-Sendungen und Filme zu speichern, die Sie angesehen haben. <a href="http://trakt.tv">Mehr erfahren</a></string>
   <string name="integration_trakt_items">- Serien aus Ihrer Bibliothek oder Watchliste hinzufügen\n\n- Empfehlungen und Aktivität von Freunden anzeigen\n\n- Gesehen- und Gesammelt-Flaggen werden automatisch synchronisiert\n\n- neue Serien die Sie angesehen haben werden automatisch hinzugefügt</string>
-  <string name="trakt_sync_intro">Es werden keine Serien zu SeriesGuide hinzugefügt oder entfernt, erledigen Sie das in der Serienliste.</string>
-  <string name="trakt_download_hint">Markiere alle auf trakt gesehenen Folgen als gesehen in SeriesGuide:</string>
   <string name="trakt_upload_hint">Markiere alle gesehenen Folgen in SeriesGuide als gesehen bei trakt:</string>
-  <string name="trakt_download">In SeriesGuide herunterladen</string>
   <string name="trakt_upload">Zu trakt.tv hochladen</string>
-  <string name="trakt_syncunwatched">Entferne beim Synchronisieren die Gesehen-Markierungen von ungesehenen Folgen</string>
+  <string name="trakt_syncunwatched">Gesehen-Markierung auf trakt für ungesehene Folgen in SeriesGuide entfernen</string>
+  <string name="upload_done">Hochladen abgeschlossen.</string>
+  <string name="upload_no_work">Es gab nichts zum hochladen.</string>
   <string name="prefs_category_basic">Grundlegendes</string>
   <string name="prefs_category_sharing">Dienste</string>
   <string name="prefs_category_advanced">Weiteres</string>
@@ -223,10 +234,9 @@
   <string name="pref_updatewifionlysummary">Downloads über Mobilfunknetze vermeiden, um Kosten für die Datenübertragung zu senken</string>
   <string name="about">Über SeriesGuide</string>
   <string name="pref_credits">Anerkennungen</string>
-  <string name="clearGetGlueCredentials">Von GetGlue abmelden</string>
-  <string name="clearGetGlueCredentialssummary">Mit GetGlue einchecken um erneut zu verbinden</string>
+  <string name="clearGetGlueCredentials">Von tvtag abmelden</string>
+  <string name="clearGetGlueCredentialssummary">Mit tvtag einchecken um erneut zu verbinden</string>
   <string name="pref_traktsummary">Hinzufügen oder Bearbeiten Ihrer trakt.tv Anmeldeinformationen</string>
-  <string name="pref_traktsync">Manueller Sync mit trakt.tv</string>
   <string name="feedback">Feedback senden</string>
   <string name="pref_autoaddshows">Neue trakt Serien hinzufügen</string>
   <string name="pref_autoaddshowssummary">Automatisch neue Serien aus Ihren trakt-Aktivitäten hinzufügen</string>
@@ -273,16 +283,15 @@
   <string name="last_auto_backup">Letzte Auto-Sicherung: %s</string>
   <string name="restore_auto_backup">Auto-Sicherung wiederherstellen</string>
   <string name="checkin">Einchecken</string>
-  <string name="checkin_noaction">Keine Dienste aktiviert, checken Sie einmal innerhalb SeriesGuide ein.</string>
   <string name="checkin_searchhint">Serientitel eingeben</string>
   <string name="checkin_empty">Keine passenden Serien</string>
   <string name="checkin_hint">Geben Sie eine Nachricht ein (optional)</string>
-  <string name="checkin_fixgetglue">GetGlue Check-In korrigieren</string>
+  <string name="checkin_fixgetglue">tvtag-Check-In korrigieren</string>
   <string name="paste_title">Titel einfügen</string>
-  <string name="checkinsuccess">Auf GetGlue in %s eingecheckt.</string>
-  <string name="checkinfailed">GetGlue Check-in ist fehlgeschlagen. Versuchen Sie es später erneut.</string>
-  <string name="getglue_authentication">Mit GetGlue verbinden</string>
-  <string name="getglue_authfailed">GetGlue-Authentifizierung fehlgeschlagen. Versuchen Sie es später erneut.</string>
+  <string name="checkinsuccess">Auf tvtag in %s eingecheckt.</string>
+  <string name="checkinfailed">tvtag-Check-In ist fehlgeschlagen. Versuchen Sie es später erneut.</string>
+  <string name="getglue_authentication">Mit tvtag verbinden</string>
+  <string name="getglue_authfailed">tvtag-Authentifizierung fehlgeschlagen. Versuchen Sie es später erneut.</string>
   <string name="checkin_success_trakt">Auf trakt in %s eingecheckt.</string>
   <string name="checkin_canceled_success_trakt">Check-in bei trakt widerrufen.</string>
   <string name="select_show">Serie auswählen</string>
@@ -303,7 +312,6 @@
   <string name="connect">Verbinden</string>
   <string name="disconnect">Trennen</string>
   <string name="trakt_error">Interaktion mit trakt ist fehlgeschlagen</string>
-  <string name="trakt_decryptfail">Kennwort konnte nicht entschlüsselt werden</string>
   <string name="trakt_error_credentials">Es gab einen Fehler. Bitte prüfen Sie Ihre Anmeldeinformationen und versuchen Sie es erneut.</string>
   <string name="trakt_error_general">Konnte nicht mit trakt sprechen. Versuchen Sie es später noch einmal.</string>
   <string name="trakt_createaccount">Neues Konto einrichten</string>
@@ -333,7 +341,7 @@
   <string name="pref_widget_type">Widget-Typ</string>
   <string name="dashclock_extension_label">Nächste Folge</string>
   <string name="dashclock_extension_description">Zeigt die nächste kommende Folge deiner Serien aus SeriesGuide.</string>
-  <string name="dashclock_pref_upcoming_threshold">Zeige Folgen im Zeitraum</string>
+  <string name="dashclock_pref_upcoming_threshold">Zeige Folge innerhalb…</string>
   <string name="action_migrate">Migration von X</string>
   <string name="migration_description">SeriesGuide X ist jetzt ein Freischalt-Schlüssel für die X Funktionen in der kostenlosen Version (\"X Life-Time Pass\"). Bitte übertragen Sie Ihre Serien in die kostenlose Version von SeriesGuide. Lassen Sie X installiert um alle Funktionen in der kostenlosen Version freizuschalten.</string>
   <string name="migration_import">Tippen Sie unten um die in SeriesGuide X erstellte Sicherung zu importieren.</string>
@@ -367,11 +375,11 @@
   </string-array>
   <string-array name="upcominglimit">
     <item>jetzt</item>
-    <item>eines Tages</item>
-    <item>dreier Tage</item>
-    <item>einer Woche</item>
-    <item>zweier Wochen</item>
-    <item>eines Monats</item>
+    <item>1 Tag</item>
+    <item>3 Tage</item>
+    <item>1 Woche</item>
+    <item>2 Wochen</item>
+    <item>1 Monat</item>
   </string-array>
   <string-array name="notificationThreshold">
     <item>auf Sendung</item>
@@ -392,12 +400,12 @@
     <item>Favoriten</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
-    <item>einer Stunde</item>
+    <item>1 Stunde</item>
     <item>6 Stunden</item>
     <item>12 Stunden</item>
     <item>24 Stunden</item>
     <item>3 Tage</item>
-    <item>einer Woche</item>
+    <item>1 Woche</item>
   </string-array>
   <plurals name="days_plural">
     <item quantity="one">%d Tag</item>

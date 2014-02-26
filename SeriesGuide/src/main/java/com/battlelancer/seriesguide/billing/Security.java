@@ -16,7 +16,6 @@
 package com.battlelancer.seriesguide.billing;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
@@ -26,6 +25,7 @@ import java.security.Signature;
 import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
+import timber.log.Timber;
 
 /**
  * Security-related methods. For a secure implementation, all of this code
@@ -54,7 +54,7 @@ public class Security {
     public static boolean verifyPurchase(String base64PublicKey, String signedData, String signature) {
         if (TextUtils.isEmpty(signedData) || TextUtils.isEmpty(base64PublicKey) ||
                 TextUtils.isEmpty(signature)) {
-            Log.e(TAG, "Purchase verification failed: missing data.");
+            Timber.e("Purchase verification failed: missing data.");
             return false;
         }
 
@@ -77,10 +77,10 @@ public class Security {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         } catch (InvalidKeySpecException e) {
-            Log.e(TAG, "Invalid key specification.");
+            Timber.e("Invalid key specification.");
             throw new IllegalArgumentException(e);
         } catch (Base64DecoderException e) {
-            Log.e(TAG, "Base64 decoding failed.");
+            Timber.e("Base64 decoding failed.");
             throw new IllegalArgumentException(e);
         }
     }
@@ -101,18 +101,12 @@ public class Security {
             sig.initVerify(publicKey);
             sig.update(signedData.getBytes());
             if (!sig.verify(Base64.decode(signature))) {
-                Log.e(TAG, "Signature verification failed.");
+                Timber.e("Signature verification failed.");
                 return false;
             }
             return true;
-        } catch (NoSuchAlgorithmException e) {
-            Log.e(TAG, "NoSuchAlgorithmException.");
-        } catch (InvalidKeyException e) {
-            Log.e(TAG, "Invalid key specification.");
-        } catch (SignatureException e) {
-            Log.e(TAG, "Signature exception.");
-        } catch (Base64DecoderException e) {
-            Log.e(TAG, "Base64 decoding failed.");
+        } catch (NoSuchAlgorithmException | InvalidKeyException | SignatureException | Base64DecoderException e) {
+            Timber.e(e, "Signature verification aborted.");
         }
         return false;
     }

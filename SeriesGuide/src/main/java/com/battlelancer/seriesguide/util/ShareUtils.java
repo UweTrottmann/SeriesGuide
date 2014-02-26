@@ -16,28 +16,16 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
-import com.uwetrottmann.seriesguide.R;
-
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.app.ShareCompat.IntentBuilder;
 import android.text.format.DateUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
-
-import java.util.Calendar;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 
 /**
  * Contains various ways to share something about an episode (android share intent, trakt, calendar
@@ -46,10 +34,6 @@ import java.util.Calendar;
  * @author Uwe Trottmann
  */
 public class ShareUtils {
-
-    public static final String KEY_GETGLUE_COMMENT = "com.battlelancer.seriesguide.getglue.comment";
-
-    public static final String KEY_GETGLUE_IMDBID = "com.battlelancer.seriesguide.getglue.imdbid";
 
     protected static final String TAG = "ShareUtils";
 
@@ -84,42 +68,32 @@ public class ShareUtils {
         String ISSPOILER = "isspoiler";
     }
 
-    /**
-     * Share an episode via the given {@link ShareMethod}.
-     *
-     * @param args        a {@link Bundle} including all {@link ShareUtils.ShareItems}
-     * @param shareMethod the {@link ShareMethod} to use
-     */
-    public static void onShareEpisode(FragmentActivity activity, Bundle args,
-            ShareMethod shareMethod) {
-        final FragmentManager fm = activity.getSupportFragmentManager();
+    public static void shareEpisode(Activity activity, int showTvdbId, int seasonNumber,
+            int episodeNumber, String showTitle, String episodeTitle) {
+        String message = activity.getString(R.string.share_checkout,
+                showTitle + " " + Utils.getNextEpisodeString(activity, seasonNumber, episodeNumber, episodeTitle))
+                + " " + TraktTools.buildEpisodeOrShowUrl(showTvdbId, seasonNumber, episodeNumber);
+        startShareIntentChooser(activity, message, R.string.share_episode);
+    }
 
-        switch (shareMethod) {
-            case RATE_TRAKT: {
-                // trakt rate
-                TraktRateDialogFragment newFragment = TraktRateDialogFragment.newInstance(
-                        args.getInt(ShareItems.TVDBID), args.getInt(ShareItems.SEASON),
-                        args.getInt(ShareItems.EPISODE));
-                newFragment.show(fm, "traktratedialog");
-                break;
-            }
-            case OTHER_SERVICES: {
-                // Android apps
-                IntentBuilder ib = ShareCompat.IntentBuilder.from(activity);
+    public static void shareShow(Activity activity, int showTvdbId, String showTitle) {
+        String message = activity.getString(R.string.share_checkout, showTitle) + " "
+                + TraktTools.buildEpisodeOrShowUrl(showTvdbId, -1, -1);
+        startShareIntentChooser(activity, message, R.string.share_show);
+    }
 
-                String text = args.getString(ShareUtils.ShareItems.SHARESTRING);
-                final String imdbId = args.getString(ShareUtils.ShareItems.IMDBID);
-                if (imdbId.length() != 0) {
-                    text += " " + ServiceUtils.IMDB_TITLE_URL + imdbId;
-                }
+    public static void shareMovie(Activity activity, int movieTmdbId, String movieTitle) {
+        String message = activity.getString(R.string.share_checkout, movieTitle) + " "
+                + TraktTools.buildMovieUrl(movieTmdbId);
+        startShareIntentChooser(activity, message, R.string.share_movie);
+    }
 
-                ib.setText(text);
-                ib.setChooserTitle(R.string.share_episode);
-                ib.setType("text/plain");
-                ib.startChooser();
-                break;
-            }
-        }
+    private static void startShareIntentChooser(Activity activity, String message, int titleResId) {
+        IntentBuilder ib = ShareCompat.IntentBuilder.from(activity);
+        ib.setText(message);
+        ib.setChooserTitle(titleResId);
+        ib.setType("text/plain");
+        ib.startChooser();
     }
 
     public static String onCreateShareString(Context context, final Cursor episode) {
@@ -129,20 +103,15 @@ public class ShareUtils {
         return Utils.getNextEpisodeString(context, season, number, title);
     }
 
-    public static void onAddCalendarEvent(Context context, String title, String description,
-            long airtime, int runtime) {
+    public static void onAddCalendarEvent(Context context, String showTitle, String episodeTitle,
+            long episodeReleaseTime, int showRunTime) {
         Intent intent = new Intent(Intent.ACTION_EDIT);
         intent.setType("vnd.android.cursor.item/event");
-        intent.putExtra("title", title);
-        intent.putExtra("description", description);
+        intent.putExtra("title", showTitle);
+        intent.putExtra("description", episodeTitle);
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                .getApplicationContext());
-
-        Calendar cal = Utils.getAirtimeCalendar(airtime, prefs);
-
-        long startTime = cal.getTimeInMillis();
-        long endTime = startTime + runtime * DateUtils.MINUTE_IN_MILLIS;
+        long startTime = TimeTools.getEpisodeReleaseTime(context, episodeReleaseTime).getTime();
+        long endTime = startTime + showRunTime * DateUtils.MINUTE_IN_MILLIS;
         intent.putExtra("beginTime", startTime);
         intent.putExtra("endTime", endTime);
 
@@ -153,25 +122,4 @@ public class ShareUtils {
         }
     }
 
-    public static class ProgressDialog extends DialogFragment {
-
-        public static ProgressDialog newInstance() {
-            ProgressDialog f = new ProgressDialog();
-            f.setCancelable(false);
-            return f;
-        }
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            setStyle(STYLE_NO_TITLE, 0);
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.progress_dialog, container, false);
-        }
-    }
 }

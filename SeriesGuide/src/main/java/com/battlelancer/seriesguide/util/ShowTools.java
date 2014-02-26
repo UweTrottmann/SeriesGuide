@@ -16,39 +16,36 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.json.gson.GsonFactory;
-
-import com.battlelancer.seriesguide.backend.CloudEndpointUtils;
-import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.enums.NetworkResult;
-import com.battlelancer.seriesguide.enums.Result;
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.provider.SeriesContract;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.Lists;
-import com.uwetrottmann.seriesguide.R;
-import com.uwetrottmann.seriesguide.shows.Shows;
-import com.uwetrottmann.seriesguide.shows.model.CollectionResponseShow;
-import com.uwetrottmann.seriesguide.shows.model.Show;
-import com.uwetrottmann.seriesguide.shows.model.ShowList;
-
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Toast;
-
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.backend.CloudEndpointUtils;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
+import com.battlelancer.seriesguide.enums.NetworkResult;
+import com.battlelancer.seriesguide.enums.Result;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.json.gson.GsonFactory;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.Lists;
+import com.uwetrottmann.seriesguide.shows.Shows;
+import com.uwetrottmann.seriesguide.shows.model.CollectionResponseShow;
+import com.uwetrottmann.seriesguide.shows.model.Show;
+import com.uwetrottmann.seriesguide.shows.model.ShowList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import timber.log.Timber;
 
 import static com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult;
 
@@ -112,8 +109,8 @@ public class ShowTools {
 
         // remove episode images
         final Cursor episodes = mContext.getContentResolver().query(
-                SeriesContract.Episodes.buildEpisodesOfShowUri(showTvdbId), new String[]{
-                SeriesContract.Episodes._ID, SeriesContract.Episodes.IMAGE
+                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId), new String[]{
+                SeriesGuideContract.Episodes._ID, SeriesGuideContract.Episodes.IMAGE
         }, null, null, null);
         if (episodes == null) {
             // failed
@@ -131,9 +128,9 @@ public class ShowTools {
 
         // remove show poster
         final Cursor show = mContext.getContentResolver().query(
-                SeriesContract.Shows.buildShowUri(showTvdbId),
+                SeriesGuideContract.Shows.buildShowUri(showTvdbId),
                 new String[]{
-                        SeriesContract.Shows.POSTER
+                        SeriesGuideContract.Shows.POSTER
                 }, null, null, null);
         if (show == null || !show.moveToFirst()) {
             // failed
@@ -152,18 +149,18 @@ public class ShowTools {
         // remove episode search database entries
         for (String episodeTvdbId : episodeTvdbIds) {
             batch.add(ContentProviderOperation.newDelete(
-                    SeriesContract.EpisodeSearch.buildDocIdUri(episodeTvdbId)).build());
+                    SeriesGuideContract.EpisodeSearch.buildDocIdUri(episodeTvdbId)).build());
         }
         DBUtils.applyInSmallBatches(mContext, batch);
         batch.clear();
 
         // remove episodes, seasons and show
         batch.add(ContentProviderOperation.newDelete(
-                SeriesContract.Episodes.buildEpisodesOfShowUri(showTvdbId)).build());
+                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId)).build());
         batch.add(ContentProviderOperation.newDelete(
-                SeriesContract.Seasons.buildSeasonsOfShowUri(showTvdbId)).build());
+                SeriesGuideContract.Seasons.buildSeasonsOfShowUri(showTvdbId)).build());
         batch.add(ContentProviderOperation.newDelete(
-                SeriesContract.Shows.buildShowUri(showTvdbId)).build());
+                SeriesGuideContract.Shows.buildShowUri(showTvdbId)).build());
         DBUtils.applyInSmallBatches(mContext, batch);
 
         return Result.SUCCESS;
@@ -199,9 +196,9 @@ public class ShowTools {
 
         // save to local database
         ContentValues values = new ContentValues();
-        values.put(SeriesContract.Shows.FAVORITE, isFavorite);
+        values.put(SeriesGuideContract.Shows.FAVORITE, isFavorite);
         mContext.getContentResolver().update(
-                SeriesContract.Shows.buildShowUri(showTvdbId), values, null, null);
+                SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
 
         Toast.makeText(mContext, mContext.getString(isFavorite ?
                 R.string.favorited : R.string.unfavorited), Toast.LENGTH_SHORT).show();
@@ -224,9 +221,9 @@ public class ShowTools {
 
         // save to local database
         ContentValues values = new ContentValues();
-        values.put(SeriesContract.Shows.HIDDEN, isHidden);
+        values.put(SeriesGuideContract.Shows.HIDDEN, isHidden);
         mContext.getContentResolver().update(
-                SeriesContract.Shows.buildShowUri(showTvdbId), values, null, null);
+                SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
 
         Toast.makeText(mContext, mContext.getString(isHidden ?
                 R.string.hidden : R.string.unhidden), Toast.LENGTH_SHORT).show();
@@ -249,9 +246,9 @@ public class ShowTools {
 
         // save to local database
         ContentValues values = new ContentValues();
-        values.put(SeriesContract.Shows.GETGLUEID, getglueId);
+        values.put(SeriesGuideContract.Shows.GETGLUEID, getglueId);
         mContext.getContentResolver()
-                .update(SeriesContract.Shows.buildShowUri(showTvdbId), values, null, null);
+                .update(SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
     }
 
     public boolean isSignedIn() {
@@ -287,8 +284,6 @@ public class ShowTools {
 
     public static class Upload {
 
-        private static final String TAG = "ShowTools.Upload";
-
         /**
          * Tries to upload the given list of shows to Hexagon.
          *
@@ -301,17 +296,17 @@ public class ShowTools {
             ShowList showList = new ShowList();
             showList.setShows(shows);
 
-            Log.d(TAG, "Uploading show(s)...");
+            Timber.d("Uploading show(s)...");
 
             // upload shows
             try {
                 ShowTools.get(context).mShowsService.save(showList).execute();
             } catch (IOException e) {
-                Utils.trackExceptionAndLog(context, TAG, e);
+                Timber.e(e, "Uploading shows failed");
                 resultCode = Result.ERROR;
             }
 
-            Log.d(TAG, "Uploading show(s)...DONE");
+            Timber.d("Uploading show(s)...DONE");
 
             return resultCode;
         }
@@ -334,10 +329,10 @@ public class ShowTools {
             List<Show> shows = new LinkedList<>();
 
             Cursor query = context.getContentResolver()
-                    .query(SeriesContract.Shows.CONTENT_URI, new String[]{
-                            SeriesContract.Shows._ID, SeriesContract.Shows.FAVORITE,
-                            SeriesContract.Shows.HIDDEN, SeriesContract.Shows.GETGLUEID,
-                            SeriesContract.Shows.SYNCENABLED
+                    .query(SeriesGuideContract.Shows.CONTENT_URI, new String[]{
+                            SeriesGuideContract.Shows._ID, SeriesGuideContract.Shows.FAVORITE,
+                            SeriesGuideContract.Shows.HIDDEN, SeriesGuideContract.Shows.GETGLUEID,
+                            SeriesGuideContract.Shows.SYNCENABLED
                     }, null, null, null);
             if (query == null) {
                 return null;
@@ -365,8 +360,6 @@ public class ShowTools {
     }
 
     public static class Download {
-
-        private static final String TAG = "ShowTools.Download";
 
         /**
          * Downloads shows from Hexagon and updates existing shows with new property values. Any
@@ -399,14 +392,14 @@ public class ShowTools {
          */
         public static List<Show> getRemoteShows(Context context) {
             // download shows
-            Log.d(TAG, "Downloading shows from Hexagon...");
+            Timber.d("Downloading shows from Hexagon...");
             CollectionResponseShow remoteShows = null;
             try {
                 remoteShows = ShowTools.get(context).mShowsService.list().execute();
             } catch (IOException e) {
-                Utils.trackExceptionAndLog(context, TAG, e);
+                Timber.e(e, "Downloading shows failed");
             }
-            Log.d(TAG, "Downloading shows from Hexagon...DONE");
+            Timber.d("Downloading shows from Hexagon...DONE");
 
             // abort if no response
             if (remoteShows == null) {
@@ -453,7 +446,7 @@ public class ShowTools {
                 // build update op
                 if (values.size() > 0) {
                     ContentProviderOperation op = ContentProviderOperation
-                            .newUpdate(SeriesContract.Shows.buildShowUri(show.getTvdbId()))
+                            .newUpdate(SeriesGuideContract.Shows.buildShowUri(show.getTvdbId()))
                             .withValues(values).build();
                     batch.add(op);
 
@@ -466,11 +459,11 @@ public class ShowTools {
         }
 
         private static void putSyncedShowPropertyValues(Show show, ContentValues values) {
-            putPropertyValueIfNotNull(values, SeriesContract.Shows.FAVORITE, show.getIsFavorite());
-            putPropertyValueIfNotNull(values, SeriesContract.Shows.HIDDEN, show.getIsHidden());
-            putPropertyValueIfNotNull(values, SeriesContract.Shows.SYNCENABLED,
+            putPropertyValueIfNotNull(values, SeriesGuideContract.Shows.FAVORITE, show.getIsFavorite());
+            putPropertyValueIfNotNull(values, SeriesGuideContract.Shows.HIDDEN, show.getIsHidden());
+            putPropertyValueIfNotNull(values, SeriesGuideContract.Shows.SYNCENABLED,
                     show.getIsSyncEnabled());
-            putPropertyValueIfNotNull(values, SeriesContract.Shows.GETGLUEID, show.getGetGlueId());
+            putPropertyValueIfNotNull(values, SeriesGuideContract.Shows.GETGLUEID, show.getGetGlueId());
         }
 
         private static void putPropertyValueIfNotNull(ContentValues values, String key,
@@ -497,8 +490,8 @@ public class ShowTools {
     public static HashSet<Integer> getShowTvdbIdsAsSet(Context context) {
         HashSet<Integer> existingShows = new HashSet<>();
 
-        Cursor shows = context.getContentResolver().query(SeriesContract.Shows.CONTENT_URI,
-                new String[]{SeriesContract.Shows._ID}, null, null, null);
+        Cursor shows = context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,
+                new String[]{SeriesGuideContract.Shows._ID}, null, null, null);
         if (shows == null) {
             return null;
         }

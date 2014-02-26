@@ -16,42 +16,10 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
-import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.FetchArtTask;
-import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.ShareUtils;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
-import com.battlelancer.seriesguide.util.TraktSummaryTask;
-import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.CheatSheet;
-import com.uwetrottmann.seriesguide.R;
-
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -74,10 +42,36 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import java.util.Locale;
-
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
+import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.FetchArtTask;
+import com.battlelancer.seriesguide.util.FlagTask;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.TimeTools;
+import com.battlelancer.seriesguide.util.TraktSummaryTask;
+import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
+import com.battlelancer.seriesguide.util.TraktTools;
+import com.battlelancer.seriesguide.util.Utils;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.CheatSheet;
 import de.greenrobot.event.EventBus;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Displays details about a single episode like summary, ratings and episode image if available.
@@ -154,13 +148,26 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new DetailsAdapter(getActivity(), null, 0);
+        setupViews();
 
+        mAdapter = new DetailsAdapter(getActivity(), null, 0);
         setListAdapter(mAdapter);
 
         getLoaderManager().initLoader(EPISODE_LOADER, null, this);
 
         setHasOptionsMenu(true);
+    }
+
+    private void setupViews() {
+        if (AndroidUtils.isKitKatOrHigher()) {
+            if (getActivity() instanceof EpisodeDetailsActivity) {
+                SystemBarTintManager.SystemBarConfig config
+                        = ((EpisodeDetailsActivity) getActivity())
+                        .getSystemBarTintManager().getConfig();
+                getListView().setClipToPadding(false);
+                getListView().setPadding(0, 0, 0, config.getPixelInsetBottom());
+            }
+        }
     }
 
     @Override
@@ -211,7 +218,10 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.episodedetails_menu, menu);
+
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+        inflater.inflate(
+                isLightTheme ? R.menu.episodedetails_menu_light : R.menu.episodedetails_menu, menu);
     }
 
     @Override
@@ -227,12 +237,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_rate_trakt) {
-            onRateOnTrakt();
-            return true;
-        } else if (itemId == R.id.menu_share) {
-            fireTrackerEvent("Share");
-            onShareEpisode(ShareMethod.OTHER_SERVICES);
+        if (itemId == R.id.menu_share) {
+            shareEpisode();
             return true;
         } else if (itemId == R.id.menu_manage_lists) {
             fireTrackerEvent("Manage lists");
@@ -243,10 +249,9 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         return super.onOptionsItemSelected(item);
     }
 
-    private void onRateOnTrakt() {
-        if (TraktCredentials.ensureCredentials(getActivity())) {
-            onShareEpisode(ShareMethod.RATE_TRAKT);
-        }
+    private void rateOnTrakt() {
+        TraktTools.rateEpisode(getActivity(), getFragmentManager(), mShowTvdbId, mSeasonNumber,
+                mEpisodeNumber);
         fireTrackerEvent("Rate (trakt)");
     }
 
@@ -259,48 +264,26 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             String showTitle = episode.getString(DetailsQuery.SHOW_TITLE);
             String episodeTitleAndNumber = ShareUtils.onCreateShareString(
                     getSherlockActivity(), episode);
-            long showAirTime = episode.getLong(DetailsQuery.FIRSTAIREDMS);
+            long episodeReleaseTime = episode.getLong(DetailsQuery.FIRST_RELEASE_MS);
             int showRunTime = episode.getInt(DetailsQuery.SHOW_RUNTIME);
 
             ShareUtils.onAddCalendarEvent(getActivity(), showTitle,
-                    episodeTitleAndNumber, showAirTime, showRunTime);
+                    episodeTitleAndNumber, episodeReleaseTime, showRunTime);
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private void onShareEpisode(ShareMethod shareMethod) {
+    private void shareEpisode() {
         // Episode of this fragment is always the first item in the cursor
         final Cursor episode = (Cursor) mAdapter.getItem(0);
-        final SherlockFragmentActivity activity = getSherlockActivity();
-        if (episode != null && activity != null) {
-            Bundle shareData = new Bundle();
-            String episodestring = ShareUtils.onCreateShareString(activity, episode);
-            String sharestring = getString(R.string.share_checkout);
-            sharestring += " \"" + episode.getString(DetailsQuery.SHOW_TITLE);
-            sharestring += " - " + episodestring + "\"";
-            shareData.putString(ShareItems.EPISODESTRING, episodestring);
-            shareData.putString(ShareItems.SHARESTRING, sharestring);
-            shareData.putInt(ShareItems.EPISODE, episode.getInt(DetailsQuery.NUMBER));
-            shareData.putInt(ShareItems.SEASON, episode.getInt(DetailsQuery.SEASON));
-            shareData.putInt(ShareItems.TVDBID, episode.getInt(DetailsQuery.REF_SHOW_ID));
-
-            // IMDb id
-            String imdbId = episode.getString(DetailsQuery.IMDBID);
-            if (TextUtils.isEmpty(imdbId)) {
-                // fall back to show IMDb id
-                imdbId = episode.getString(DetailsQuery.SHOW_IMDBID);
-            }
-            shareData.putString(ShareItems.IMDBID, imdbId);
-
-            // don't close cursor!
-            // episode.close();
-
-            ShareUtils.onShareEpisode(activity, shareData, shareMethod);
-
-            // invalidate the options menu so a potentially new
-            // quick share action is displayed
-            activity.invalidateOptionsMenu();
+        if (episode == null) {
+            return;
         }
+        String showTitle = episode.getString(DetailsQuery.SHOW_TITLE);
+        String episodeTitle = episode.getString(DetailsQuery.TITLE);
+        ShareUtils.shareEpisode(getActivity(), mShowTvdbId, mSeasonNumber, mEpisodeNumber,
+                showTitle, episodeTitle);
+
+        fireTrackerEvent("Share");
     }
 
     public int getEpisodeTvdbId() {
@@ -310,7 +293,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     protected void onLoadImage(String imagePath, FrameLayout container) {
         if (mArtTask == null || mArtTask.getStatus() == AsyncTask.Status.FINISHED) {
             mArtTask = new FetchArtTask(imagePath, container, getActivity());
-            AndroidUtils.executeAsyncTask(mArtTask, new Void[]{
+            AndroidUtils.executeAsyncTask(mArtTask, new Void[] {
                     null
             });
         }
@@ -377,7 +360,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             mEpisodeNumber = cursor.getInt(DetailsQuery.NUMBER);
             final String showTitle = cursor.getString(DetailsQuery.SHOW_TITLE);
             final String episodeTitle = cursor.getString(DetailsQuery.TITLE);
-            final long airTime = cursor.getLong(DetailsQuery.FIRSTAIREDMS);
 
             // Title and description
             ((TextView) view.findViewById(R.id.title))
@@ -414,39 +396,47 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                         cursor.getString(DetailsQuery.SHOW_POSTER), getActivity());
             }
 
-            SpannableStringBuilder airTimeAndNumberText = new SpannableStringBuilder();
-            // Air day and time
-            TextView airdateText = (TextView) view.findViewById(R.id.airDay);
-            TextView airtimeText = (TextView) view.findViewById(R.id.airTime);
-            if (airTime != -1) {
-                airdateText.setText(Utils.formatToDate(airTime, getActivity()));
-                String[] dayAndTime = Utils.formatToTimeAndDay(airTime, getActivity());
-                airTimeAndNumberText
-                        .append(getString(R.string.release_date_and_day, dayAndTime[2],
-                                dayAndTime[1]).toUpperCase(Locale.getDefault()))
-                        .append("  ");
+            // release time and day, numbers: "in 15 mins (Fri) Season 1 Episode 14"
+            SpannableStringBuilder timeAndNumbersText = new SpannableStringBuilder();
+
+            // release time and day
+            TextView releaseDate = (TextView) view.findViewById(R.id.airDay);
+            long releaseTime = cursor.getLong(DetailsQuery.FIRST_RELEASE_MS);
+            if (releaseTime != -1) {
+                Date actualRelease = TimeTools.getEpisodeReleaseTime(getActivity(), releaseTime);
+                releaseDate.setText(TimeTools.formatToDate(getActivity(), actualRelease));
+                // "in 15 mins (Fri)"
+                timeAndNumbersText
+                        .append(getString(R.string.release_date_and_day,
+                                TimeTools.formatToRelativeLocalReleaseTime(actualRelease),
+                                TimeTools.formatToLocalReleaseDay(actualRelease))
+                                .toUpperCase(Locale.getDefault()));
+                timeAndNumbersText.append("  ");
             } else {
-                airdateText.setText(R.string.unknown);
+                releaseDate.setText(R.string.unknown);
             }
 
-            // number
-            int numberStartIndex = airTimeAndNumberText.length();
-            airTimeAndNumberText
+            // numbers: "Season 1 Episode 14"
+            // also add span to de-emphasize
+            int numberStartIndex = timeAndNumbersText.length();
+            timeAndNumbersText
                     .append(getString(R.string.season_number, mSeasonNumber).toUpperCase(
                             Locale.getDefault()));
-            airTimeAndNumberText.append(" ");
-            airTimeAndNumberText
+            timeAndNumbersText.append(" ");
+            timeAndNumbersText
                     .append(getString(R.string.episode_number, mEpisodeNumber).toUpperCase(
                             Locale.getDefault()));
             final int episodeAbsoluteNumber = cursor.getInt(DetailsQuery.ABSOLUTE_NUMBER);
             if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != mEpisodeNumber) {
-                airTimeAndNumberText.append(" (").append(String.valueOf(episodeAbsoluteNumber))
+                timeAndNumbersText.append(" (").append(String.valueOf(episodeAbsoluteNumber))
                         .append(")");
             }
-            airTimeAndNumberText.setSpan(new TextAppearanceSpan(mContext,
+            timeAndNumbersText.setSpan(new TextAppearanceSpan(mContext,
                     R.style.TextAppearance_Small_Dim), numberStartIndex,
-                    airTimeAndNumberText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            airtimeText.setText(airTimeAndNumberText);
+                    timeAndNumbersText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            TextView timeAndNumbers = (TextView) view.findViewById(R.id.airTime);
+            timeAndNumbers.setText(timeAndNumbersText);
 
             // Last edit date
             TextView lastEdit = (TextView) view.findViewById(R.id.lastEdit);
@@ -569,7 +559,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             ratings.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onRateOnTrakt();
+                    rateOnTrakt();
                 }
             });
             ratings.setFocusable(true);
@@ -638,14 +628,12 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 }
             });
             CheatSheet.setup(checkinButton);
-
         }
-
     }
 
     interface DetailsQuery {
 
-        String[] PROJECTION = new String[]{
+        String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Shows.REF_SHOW_ID, Episodes.OVERVIEW,
                 Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIREDMS,
                 Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
@@ -667,7 +655,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
         int WATCHED = 5;
 
-        int FIRSTAIREDMS = 6;
+        int FIRST_RELEASE_MS = 6;
 
         int DIRECTORS = 7;
 
@@ -719,8 +707,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     public void onEvent(TraktActionCompleteEvent event) {
-        if (event.mTraktTaskArgs.getInt(TraktTask.InitBundle.TRAKTACTION)
-                == TraktAction.RATE_EPISODE.index) {
+        if (event.mTraktAction == TraktAction.RATE_EPISODE) {
             onLoadTraktRatings(getView().findViewById(R.id.ratingbar), false);
         }
     }
@@ -734,7 +721,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 && (mTraktTask == null || mTraktTask.getStatus() != AsyncTask.Status.RUNNING)) {
             mTraktTask = new TraktSummaryTask(getSherlockActivity(), ratingBar, isUseCachedValues)
                     .episode(
-                            mShowTvdbId, mSeasonNumber, mEpisodeNumber);
+                            mShowTvdbId, getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber);
             AndroidUtils.executeAsyncTask(mTraktTask);
         }
     }

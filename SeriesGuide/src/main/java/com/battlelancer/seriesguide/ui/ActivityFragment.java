@@ -23,8 +23,8 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.adapters.ActivitySlowAdapter;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -34,7 +34,7 @@ import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -188,7 +188,8 @@ public class ActivityFragment extends SherlockFragment implements
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.activity_menu, menu);
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+        inflater.inflate(isLightTheme ? R.menu.activity_menu_light : R.menu.activity_menu, menu);
 
         // set menu items to current values
         menu.findItem(R.id.menu_onlyfavorites)
@@ -212,8 +213,12 @@ public class ActivityFragment extends SherlockFragment implements
                 DisplaySettings.isHidingSpecials(getActivity()) ||
                 DisplaySettings.isNoWatchedEpisodes(getActivity()) ||
                 ActivitySettings.isInfiniteActivity(getActivity());
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
         filter.setIcon(isFilterApplied ?
-                R.drawable.ic_action_filter_selected : R.drawable.ic_action_filter);
+                (isLightTheme ? R.drawable.ic_action_filter_selected_inverse
+                        : R.drawable.ic_action_filter_selected)
+                : (isLightTheme ? R.drawable.ic_action_filter_inverse
+                        : R.drawable.ic_action_filter));
     }
 
     @Override
@@ -248,6 +253,9 @@ public class ActivityFragment extends SherlockFragment implements
 
     private void onFlagEpisodeWatched(AdapterContextMenuInfo info, boolean isWatched) {
         Cursor item = (Cursor) mAdapter.getItem(info.position);
+        if (item == null) {
+            return;
+        }
 
         new FlagTask(getActivity(), item.getInt(ActivityQuery.REF_SHOW_ID))
                 .episodeWatched((int) info.id, item.getInt(ActivityQuery.SEASON),
@@ -351,7 +359,7 @@ public class ActivityFragment extends SherlockFragment implements
 
         int SEASON = 4;
 
-        int FIRSTAIREDMS = 5;
+        int EPISODE_FIRST_RELEASE_MS = 5;
 
         int SHOW_TITLE = 6;
 

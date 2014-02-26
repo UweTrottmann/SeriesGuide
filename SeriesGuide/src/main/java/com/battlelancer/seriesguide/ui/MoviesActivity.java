@@ -20,17 +20,17 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
 import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
+import de.greenrobot.event.EventBus;
+
 /**
- * Users can search for a movie, display detailed information and then check in
- * with trakt or GetGlue.
+ * Users can search for a movie, display detailed information and then check in with trakt or
+ * GetGlue.
  */
 public class MoviesActivity extends BaseTopActivity {
 
@@ -54,7 +54,7 @@ public class MoviesActivity extends BaseTopActivity {
     private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.movies));
-        actionBar.setIcon(R.drawable.ic_action_movie);
+        actionBar.setIcon(Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableMovie));
     }
 
     private void setupViews() {
@@ -63,12 +63,12 @@ public class MoviesActivity extends BaseTopActivity {
 
         TabStripAdapter tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this, pager,
                 tabs);
-        // only show the trakt watchlist with valid credentials
-        if (TraktCredentials.get(this).hasCredentials()) {
-            tabsAdapter.addTab(R.string.movies_watchlist, MoviesWatchListFragment.class, null);
-        }
-        // movie search
-        tabsAdapter.addTab(R.string.search, MovieSearchFragment.class, null);
+        // watchlist
+        tabsAdapter.addTab(R.string.movies_watchlist, MoviesWatchListFragment.class, null);
+        // search
+        tabsAdapter.addTab(R.string.search, MoviesSearchFragment.class, null);
+        // collection
+        tabsAdapter.addTab(R.string.movies_collection, MoviesCollectionFragment.class, null);
         tabsAdapter.notifyTabsChanged();
     }
 
@@ -77,6 +77,15 @@ public class MoviesActivity extends BaseTopActivity {
         super.onStart();
 
         setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_MOVIES_POSITION);
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

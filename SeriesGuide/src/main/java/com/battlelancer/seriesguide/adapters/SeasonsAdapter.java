@@ -19,12 +19,11 @@ package com.battlelancer.seriesguide.adapters;
 
 import com.battlelancer.seriesguide.ui.SeasonsFragment.SeasonsQuery;
 import com.battlelancer.seriesguide.util.SeasonTools;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -80,16 +79,8 @@ public class SeasonsAdapter extends CursorAdapter {
         }
 
         // title
-        final String seasonNumber = mCursor.getString(SeasonsQuery.COMBINED);
-        final String seasonName;
-        if (TextUtils.isEmpty(seasonNumber)) {
-            seasonName = mContext.getString(R.string.season_number, "?");
-        } else if ("0".equals(seasonNumber)) {
-            seasonName = mContext.getString(R.string.specialseason);
-        } else {
-            seasonName = mContext.getString(R.string.season_number, seasonNumber);
-        }
-        viewHolder.seasonTitle.setText(seasonName);
+        viewHolder.seasonTitle.setText(
+                SeasonTools.getSeasonString(mContext, mCursor.getInt(SeasonsQuery.COMBINED)));
 
         // progress
         final int count = mCursor.getInt(SeasonsQuery.WATCHCOUNT);

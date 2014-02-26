@@ -21,8 +21,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
@@ -33,8 +33,9 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -230,24 +231,33 @@ public class ShowsFragment extends SherlockFragment implements
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menuInfo.toString();
 
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         final Cursor show = getActivity().getContentResolver().query(
                 Shows.buildShowUri(String.valueOf(info.id)), new String[]{
-                Shows.FAVORITE, Shows.HIDDEN
+                Shows.FAVORITE, Shows.HIDDEN, Shows.TITLE
         }, null, null, null);
-        show.moveToFirst();
+        if (show == null || !show.moveToFirst()) {
+            // abort
+            return;
+        }
+        // context menu title
+        menu.setHeaderTitle(show.getString(2));
+
+        // favorite toggle
         if (show.getInt(0) == 0) {
             menu.add(0, CONTEXT_FAVORITE_ID, 2, R.string.context_favorite);
         } else {
             menu.add(0, CONTEXT_UNFAVORITE_ID, 2, R.string.context_unfavorite);
         }
+
+        // hidden toggle
         if (show.getInt(1) == 0) {
             menu.add(0, CONTEXT_HIDE_ID, 3, R.string.context_hide);
         } else {
             menu.add(0, CONTEXT_UNHIDE_ID, 3, R.string.context_unhide);
         }
+
         show.close();
 
         menu.add(0, CONTEXT_CHECKIN_ID, 0, R.string.checkin);
@@ -304,7 +314,8 @@ public class ShowsFragment extends SherlockFragment implements
                 fireTrackerEventContext("Delete show");
                 return true;
             case CONTEXT_UPDATE_ID:
-                SgSyncAdapter.requestSyncImmediate(getActivity(), (int) info.id, true);
+                SgSyncAdapter.requestSyncImmediate(getActivity(), SgSyncAdapter.SyncType.SINGLE,
+                        (int) info.id, true);
 
                 fireTrackerEventContext("Update show");
                 return true;
@@ -329,7 +340,8 @@ public class ShowsFragment extends SherlockFragment implements
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.shows_menu, menu);
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+        inflater.inflate(isLightTheme ? R.menu.shows_menu_light : R.menu.shows_menu, menu);
 
         // set filter check box states
         menu.findItem(R.id.menu_action_shows_filter_favorites)
@@ -352,9 +364,13 @@ public class ShowsFragment extends SherlockFragment implements
         boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
         MenuItem filter = menu.findItem(R.id.menu_action_shows_filter);
         filter.setVisible(!isDrawerOpen);
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
         filter.setIcon(mIsFilterFavorites || mIsFilterUnwatched || mIsFilterUpcoming
-                || mIsFilterHidden ? R.drawable.ic_action_filter_selected
-                : R.drawable.ic_action_filter);
+                || mIsFilterHidden ?
+                (isLightTheme ? R.drawable.ic_action_filter_selected_inverse
+                        : R.drawable.ic_action_filter_selected)
+                : (isLightTheme ? R.drawable.ic_action_filter_inverse
+                        : R.drawable.ic_action_filter));
     }
 
     @Override
@@ -623,11 +639,12 @@ public class ShowsFragment extends SherlockFragment implements
                 viewHolder.episodeTime.setText(fieldValue);
             }
 
-            // airday
-            final String[] values = Utils.parseMillisecondsToTime(
-                    cursor.getLong(ShowsQuery.AIRSTIME),
-                    cursor.getString(ShowsQuery.AIRSDAYOFWEEK), context);
-            // one line: 'Network | Tue 08:00 PM'
+            // network, day and time
+            String[] values = TimeTools.formatToShowReleaseTimeAndDay(context,
+                    cursor.getLong(ShowsQuery.RELEASE_TIME),
+                    cursor.getString(ShowsQuery.RELEASE_COUNTRY),
+                    cursor.getString(ShowsQuery.RELEASE_DAY));
+            // one line: 'Network / Tue 08:00 PM'
             viewHolder.timeAndNetwork.setText(cursor.getString(ShowsQuery.NETWORK) + " / "
                     + values[1] + " " + values[0]);
 
@@ -646,7 +663,7 @@ public class ShowsFragment extends SherlockFragment implements
         String[] PROJECTION = {
                 BaseColumns._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.AIRSTIME, Shows.NETWORK,
                 Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT,
-                Shows.FAVORITE, Shows.NEXTEPISODE
+                Shows.FAVORITE, Shows.NEXTEPISODE, Shows.RELEASE_COUNTRY
         };
 
         int _ID = 0;
@@ -655,13 +672,13 @@ public class ShowsFragment extends SherlockFragment implements
 
         int NEXTTEXT = 2;
 
-        int AIRSTIME = 3;
+        int RELEASE_TIME = 3;
 
         int NETWORK = 4;
 
         int POSTER = 5;
 
-        int AIRSDAYOFWEEK = 6;
+        int RELEASE_DAY = 6;
 
         int STATUS = 7;
 
@@ -670,6 +687,8 @@ public class ShowsFragment extends SherlockFragment implements
         int FAVORITE = 9;
 
         int NEXTEPISODE = 10;
+
+        int RELEASE_COUNTRY = 11;
     }
 
     private void onFavoriteShow(int showTvdbId, boolean isFavorite) {

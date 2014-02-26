@@ -19,7 +19,7 @@ package com.battlelancer.seriesguide.settings;
 import android.content.Context;
 import android.preference.PreferenceManager;
 
-import static com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 
 /**
  * Provides settings used to filter and sort displayed shows in

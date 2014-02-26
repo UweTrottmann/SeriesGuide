@@ -24,8 +24,8 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.adapters.EpisodesAdapter;
 import com.battlelancer.seriesguide.adapters.EpisodesAdapter.OnFlagEpisodeListener;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
@@ -33,7 +33,7 @@ import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -282,23 +282,7 @@ public class EpisodesFragment extends SherlockListFragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_watched_all) {
-            fireTrackerEvent("Flag all watched");
-            onFlagSeasonWatched(true);
-            return true;
-        } else if (itemId == R.id.menu_unwatched_all) {
-            fireTrackerEvent("Flag all unwatched");
-            onFlagSeasonWatched(false);
-            return true;
-        } else if (itemId == R.id.menu_collect_all) {
-            fireTrackerEvent("Flag all collected");
-            onFlagSeasonCollected(true);
-            return true;
-        } else if (itemId == R.id.menu_uncollect_all) {
-            fireTrackerEvent("Flag all uncollected");
-            onFlagSeasonCollected(false);
-            return true;
-        } else if (itemId == R.id.menu_epsorting) {
+        if (itemId == R.id.menu_epsorting) {
             fireTrackerEvent("Sort");
             showSortDialog();
             return true;
@@ -323,19 +307,6 @@ public class EpisodesFragment extends SherlockListFragment implements
     public void onFlagEpisodeCollected(int episodeTvdbId, int episode, boolean isCollected) {
         new FlagTask(getActivity(), getShowId())
                 .episodeCollected(episodeTvdbId, getSeasonNumber(), episode, isCollected)
-                .execute();
-    }
-
-    private void onFlagSeasonWatched(boolean isWatched) {
-        new FlagTask(getActivity(), getShowId())
-                .seasonWatched(getSeasonId(), getSeasonNumber(),
-                        isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED)
-                .execute();
-    }
-
-    private void onFlagSeasonCollected(boolean isCollected) {
-        new FlagTask(getActivity(), getShowId())
-                .seasonCollected(getSeasonId(), getSeasonNumber(), isCollected)
                 .execute();
     }
 

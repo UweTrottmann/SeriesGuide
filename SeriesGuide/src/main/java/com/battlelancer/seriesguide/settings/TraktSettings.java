@@ -16,14 +16,12 @@
 
 package com.battlelancer.seriesguide.settings;
 
-import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.util.SimpleCrypto;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 
 /**
  * Settings related to trakt.tv integration.
@@ -34,6 +32,9 @@ public class TraktSettings {
 
     public static final String KEY_LAST_UPDATE = "com.battlelancer.seriesguide.lasttraktupdate";
 
+    public static final String KEY_LAST_FULL_SYNC
+            = "com.battlelancer.seriesguide.trakt.lastfullsync";
+
     public static final String KEY_SHARE_WITH_TRAKT = "com.battlelancer.seriesguide.sharewithtrakt";
 
     public static final String KEY_AUTO_ADD_TRAKT_SHOWS
@@ -41,6 +42,22 @@ public class TraktSettings {
 
     public static final String KEY_SYNC_UNWATCHED_EPISODES
             = "com.battlelancer.seriesguide.syncunseenepisodes";
+
+    public static final String KEY_HAS_MERGED_MOVIES
+            = "com.battlelancer.seriesguide.trakt.mergedmovies";
+
+    private static final long FULL_SYNC_INTERVAL_MILLIS = 24 * DateUtils.HOUR_IN_MILLIS;
+
+    public static final String POSTER_SIZE_SPEC_DEFAULT = ".jpg";
+
+    public static final String POSTER_SIZE_SPEC_138 = "-138.jpg";
+
+    public static final String POSTER_SIZE_SPEC_300 = "-300.jpg";
+
+    public static long getLastUpdateTime(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getLong(KEY_LAST_UPDATE, System.currentTimeMillis());
+    }
 
     /**
      * Returns the SHA hash of the users trakt password.<br> <b>Never</b> store this yourself,
@@ -58,24 +75,37 @@ public class TraktSettings {
         return hash;
     }
 
-    public static boolean isSharingWithTrakt(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(KEY_SHARE_WITH_TRAKT, false);
-    }
-
-    public static long getLastUpdateTime(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getLong(KEY_LAST_UPDATE, System.currentTimeMillis());
-    }
-
     public static boolean isAutoAddingShows(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_AUTO_ADD_TRAKT_SHOWS, true);
     }
 
+    /**
+     * Whether the local movie database was merged with trakt after the last time connecting to
+     * trakt.
+     */
+    public static boolean hasMergedMovies(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_HAS_MERGED_MOVIES, false);
+    }
+
+    public static boolean isSharingWithTrakt(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_SHARE_WITH_TRAKT, false);
+    }
+
     public static boolean isSyncingUnwatchedEpisodes(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_SYNC_UNWATCHED_EPISODES, false);
+    }
+
+    /**
+     * Determines if enough time has passed since the last full trakt sync.
+     */
+    public static boolean isTimeForFullSync(Context context, long currentTime) {
+        long previousUpdateTime = PreferenceManager.getDefaultSharedPreferences(context)
+                .getLong(KEY_LAST_FULL_SYNC, currentTime);
+        return (currentTime - previousUpdateTime) > FULL_SYNC_INTERVAL_MILLIS;
     }
 
 }

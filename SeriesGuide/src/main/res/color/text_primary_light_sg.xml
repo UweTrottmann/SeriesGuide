@@ -21,7 +21,7 @@
     <item android:state_window_focused="false" android:color="@color/text_primary_inverse"/>
     <item android:state_pressed="true" android:color="@color/text_primary"/>
     <item android:state_selected="true" android:color="@color/text_primary"/>
-    <item android:state_activated="true" android:color="@color/text_primary"/>
+    <item android:state_activated="true" android:color="@color/text_primary_inverse"/>
     <item android:color="@color/text_primary_inverse"/> <!-- not selected -->
 
 </selector>

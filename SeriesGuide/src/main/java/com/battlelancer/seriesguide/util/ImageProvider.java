@@ -16,12 +16,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.AsyncTask;
-import com.uwetrottmann.seriesguide.R;
-
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.content.ComponentCallbacks2;
@@ -36,13 +30,17 @@ import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.AsyncTask;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import timber.log.Timber;
 
 /**
  * Retrieves and stores images from/to disk, uses a low-memory auto-evicting LRU cache to speed up
@@ -51,8 +49,6 @@ import java.io.IOException;
  * Built with code from http://code.google.com/p/iogallery of Google I/O 2012 by Jeff Sharkey.
  */
 public class ImageProvider {
-
-    protected static final String TAG = "ImageProvider";
 
     private static final CompressFormat IMAGE_FORMAT = CompressFormat.JPEG;
 
@@ -123,7 +119,7 @@ public class ImageProvider {
 
                 @Override
                 public void onTrimMemory(int level) {
-                    Log.v(TAG, "onTrimMemory() with level=" + level);
+                    Timber.d("onTrimMemory() with level=" + level);
 
                     // Memory we can release here will help overall system
                     // performance, and make us a smaller target as the system
@@ -132,13 +128,13 @@ public class ImageProvider {
                     if (level >= TRIM_MEMORY_MODERATE) { // 60
                         // Nearing middle of list of cached background apps;
                         // evict our entire thumbnail cache
-                        Log.v(TAG, "evicting entire thumbnail cache");
+                        Timber.d("evicting entire thumbnail cache");
                         mCache.evictAll();
 
                     } else if (level >= TRIM_MEMORY_BACKGROUND) { // 40
                         // Entering list of cached background apps; evict oldest
                         // half of our thumbnail cache
-                        Log.v(TAG, "evicting oldest half of thumbnail cache");
+                        Timber.d("evicting oldest half of thumbnail cache");
                         mCache.trimToSize(mCache.size() / 2);
                     }
                 }
@@ -275,7 +271,7 @@ public class ImageProvider {
                     ostream.close();
                 }
             } catch (IOException e) {
-                Log.e(TAG, e.getMessage());
+                Timber.e(e, "Saving image to disk failed");
             }
 
             // create a thumbnail, too, if requested
@@ -332,14 +328,14 @@ public class ImageProvider {
             try {
                 boolean created = new File(noMediaFilePath).createNewFile();
                 if (created) {
-                    Log.d(TAG, "Created .nomedia file");
+                    Timber.d("Created .nomedia file");
                 }
             } catch (IOException e) {
-                Log.w(TAG, "Could not create .nomedia file");
+                Timber.w("Could not create .nomedia file");
             }
         } else {
             new File(noMediaFilePath).delete();
-            Log.d(TAG, "Deleting .nomedia file");
+            Timber.d("Deleting .nomedia file");
         }
     }
 
@@ -347,7 +343,7 @@ public class ImageProvider {
      * Clear in memory cache.
      */
     public void clearCache() {
-        Log.v(TAG, "evicting entire thumbnail cache");
+        Timber.d("evicting entire thumbnail cache");
         mCache.evictAll();
     }
 

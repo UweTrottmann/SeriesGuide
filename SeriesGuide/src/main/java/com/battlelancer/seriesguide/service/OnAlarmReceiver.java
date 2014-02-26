@@ -19,9 +19,8 @@ package com.battlelancer.seriesguide.service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-
 import com.battlelancer.seriesguide.util.Utils;
+import timber.log.Timber;
 
 public class OnAlarmReceiver extends BroadcastReceiver {
 
@@ -30,11 +29,11 @@ public class OnAlarmReceiver extends BroadcastReceiver {
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
             // postpone notification service launch a minute,
             // we don't want to slow down booting
-            Log.d("OnAlarmReceiver", "Postponing notifications service launch");
+            Timber.d("Postponing notifications service launch");
             Utils.runNotificationServiceDelayed(context);
         } else {
             // run the notification service right away
-            Log.d("OnAlarmReceiver", "Run notifications service right away");
+            Timber.d("Run notifications service right away");
             Utils.runNotificationService(context);
         }
     }

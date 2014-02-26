@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="layout_padding">10dp</dimen>
     <dimen name="inline_padding">4dp</dimen>
     <dimen name="default_padding">8dp</dimen>
     <dimen name="large_padding">16dp</dimen>
@@ -33,8 +32,6 @@
     <dimen name="movie_item_width">100dp</dimen>
     <dimen name="movie_item_height">214dp</dimen>
     <dimen name="movie_item_poster_height">150dp</dimen>
-    <dimen name="show_poster_width">128dp</dimen>
-    <dimen name="show_poster_height">192dp</dimen>
     <dimen name="shortcut_icon_size">48dp</dimen>
     <dimen name="tab_strip_height">48dp</dimen>
     <dimen name="buttonbar_button_width">56dp</dimen>

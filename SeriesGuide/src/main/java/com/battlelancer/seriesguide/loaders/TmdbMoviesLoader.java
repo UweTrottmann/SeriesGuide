@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.loaders;
 
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb.Tmdb;
 import com.uwetrottmann.tmdb.entities.Movie;
@@ -26,18 +25,16 @@ import com.uwetrottmann.tmdb.entities.ResultsPage;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.util.List;
 
 import retrofit.RetrofitError;
+import timber.log.Timber;
 
 /**
  * Loads a list of movies from TMDb.
  */
 public class TmdbMoviesLoader extends GenericSimpleLoader<List<Movie>> {
-
-    private static final String TAG = "TmdbMoviesLoader";
 
     private String mQuery;
 
@@ -48,7 +45,7 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<List<Movie>> {
 
     @Override
     public List<Movie> loadInBackground() {
-        Tmdb tmdb = ServiceUtils.getTmdbServiceManager(getContext());
+        Tmdb tmdb = ServiceUtils.getTmdb(getContext());
         String languageCode = DisplaySettings.getContentLanguage(getContext());
 
         try {
@@ -64,8 +61,7 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<List<Movie>> {
                 return page.results;
             }
         } catch (RetrofitError e) {
-            Utils.trackException(getContext(), TAG, e);
-            Log.w(TAG, e);
+            Timber.e(e, "Downloading now playing movies failed");
         }
 
         return null;

@@ -17,20 +17,19 @@
 
 package com.battlelancer.seriesguide.dashclock;
 
-import com.google.android.apps.dashclock.api.DashClockExtension;
-import com.google.android.apps.dashclock.api.ExtensionData;
-
+import android.content.Intent;
+import android.database.Cursor;
+import android.text.TextUtils;
+import android.text.format.DateUtils;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DashClockSettings;
 import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
-
-import android.content.Intent;
-import android.database.Cursor;
-import android.preference.PreferenceManager;
-import android.text.format.DateUtils;
+import com.battlelancer.seriesguide.util.TimeTools;
+import com.google.android.apps.dashclock.api.DashClockExtension;
+import com.google.android.apps.dashclock.api.ExtensionData;
+import java.util.Date;
 
 public class UpcomingEpisodeExtension extends DashClockExtension {
 
@@ -43,46 +42,60 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
     @Override
     protected void onUpdateData(int arg0) {
         final Cursor upcomingEpisodes = DBUtils.getUpcomingEpisodes(true, getApplicationContext());
-        final long fakeNow = Utils.getFakeCurrentTime(PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext()));
+        final long customCurrentTime = TimeTools.getCurrentTime(getApplicationContext());
         int hourThreshold = DashClockSettings.getUpcomingTreshold(getApplicationContext());
-        long latestTimeToInclude = fakeNow + hourThreshold * DateUtils.HOUR_IN_MILLIS;
+        long latestTimeToInclude = customCurrentTime + hourThreshold * DateUtils.HOUR_IN_MILLIS;
 
         // Ensure there are episodes to show
         if (upcomingEpisodes != null) {
             if (upcomingEpisodes.moveToFirst()) {
 
                 // Ensure those episodes are within the user set time frame
-                long firstairedms = upcomingEpisodes.getLong(ActivityFragment.ActivityQuery.FIRSTAIREDMS);
-                if (firstairedms <= latestTimeToInclude) {
-
+                long releaseTime = upcomingEpisodes
+                        .getLong(ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS);
+                if (releaseTime <= latestTimeToInclude) {
                     // build our DashClock panel
-                    final String[] timeAndDay = Utils.formatToTimeAndDay(
-                            firstairedms, this);
 
-                    // Looks like 'Community, NBC' when expanded
-                    String expandedBody = upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_TITLE)
-                            + ", "
-                            + upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
-                    // Show all episodes airing the same time as the first one
+                    // title of first show
+                    String expandedTitle = upcomingEpisodes.getString(
+                            ActivityFragment.ActivityQuery.SHOW_TITLE);
+
+                    // get the actual release time
+                    Date actualRelease = TimeTools.getEpisodeReleaseTime(this, releaseTime);
+                    String absoluteTime = TimeTools.formatToLocalReleaseTime(this, actualRelease);
+                    String releaseDay = TimeTools.formatToLocalReleaseDay(actualRelease);
+
+                    // time and network, e.g. 'Mon 10:00, Network'
+                    StringBuilder expandedBody = new StringBuilder();
+                    if (!DateUtils.isToday(actualRelease.getTime())) {
+                        expandedBody.append(releaseDay).append(" ");
+                    }
+                    expandedBody.append(absoluteTime);
+                    String network = upcomingEpisodes
+                            .getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
+                    if (!TextUtils.isEmpty(network)) {
+                        expandedBody.append(" — ").append(network);
+                    }
+
+                    // more than one episode at this time? Append e.g. '3 more'
+                    int additionalEpisodes = 0;
                     while (upcomingEpisodes.moveToNext()
-                            && firstairedms == upcomingEpisodes
-                            .getLong(ActivityFragment.ActivityQuery.FIRSTAIREDMS)) {
-                        expandedBody += "\n" + upcomingEpisodes.getString(
-                                ActivityFragment.ActivityQuery.SHOW_TITLE)
-                                + ", "
-                                + upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
+                            && releaseTime == upcomingEpisodes
+                            .getLong(ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS)) {
+                        additionalEpisodes++;
+                    }
+                    if (additionalEpisodes > 0) {
+                        expandedBody.append("\n");
+                        expandedBody.append(getString(R.string.more, additionalEpisodes));
                     }
 
                     publishUpdate(new ExtensionData()
                             .visible(true)
                             .icon(R.drawable.ic_notification)
-                                    // 'Fri \n 15:00'
-                            .status(timeAndDay[1] + "\n" + timeAndDay[0])
-                                    // 'in 10 mins, Fri 15:00'
-                            .expandedTitle(
-                                    timeAndDay[2] + ", " + timeAndDay[1] + " " + timeAndDay[0])
-                            .expandedBody(expandedBody)
+                                    // 'Fri\n15:00'
+                            .status(releaseDay + "\n" + absoluteTime)
+                            .expandedTitle(expandedTitle)
+                            .expandedBody(expandedBody.toString())
                             .clickIntent(
                                     new Intent(getApplicationContext(),
                                             ShowsActivity.class)

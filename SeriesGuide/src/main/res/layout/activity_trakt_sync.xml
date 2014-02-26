@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout style="@style/Page.Centered">
+
+        <TextView
+            android:id="@+id/textViewSyncTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/upload_existing_shows"
+            android:textAppearance="@style/TextAppearance.Large.Light" />
+
+        <TextView
+            android:id="@+id/textViewSyncUploadHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/textViewSyncTitle"
+            android:layout_marginTop="@dimen/large_padding"
+            android:text="@string/trakt_upload_hint" />
+
+        <Button
+            android:id="@+id/buttonSyncToTrakt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/textViewSyncUploadHint"
+            android:layout_marginTop="@dimen/default_padding"
+            android:text="@string/trakt_upload" />
+
+        <CheckBox
+            android:id="@+id/checkBoxSyncUnseen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/buttonSyncToTrakt"
+            android:layout_marginTop="@dimen/large_padding"
+            android:text="@string/trakt_syncunwatched" />
+
+        <ProgressBar
+            android:id="@+id/progressBarSyncToTrakt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/buttonSyncToTrakt"
+            android:layout_alignTop="@+id/buttonSyncToTrakt"
+            android:layout_toRightOf="@+id/buttonSyncToTrakt" />
+    </RelativeLayout>
+
+</ScrollView>

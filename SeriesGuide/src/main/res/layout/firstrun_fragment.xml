@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_padding"
                 android:drawablePadding="5dp"
-                android:drawableLeft="?attr/drawableAddIcon"
+                android:drawableLeft="?attr/drawableAddShow"
                 android:paddingLeft="@dimen/default_padding"
                 android:paddingRight="@dimen/default_padding"
                 android:text="@string/action_shows_add"

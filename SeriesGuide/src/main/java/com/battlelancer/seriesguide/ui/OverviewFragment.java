@@ -23,11 +23,10 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -35,16 +34,15 @@ import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
 import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
-import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
+import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -69,6 +67,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.Date;
 
 import de.greenrobot.event.EventBus;
 
@@ -211,7 +211,10 @@ public class OverviewFragment extends SherlockFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.overview_fragment_menu, menu);
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+        inflater.inflate(
+                isLightTheme ? R.menu.overview_fragment_menu_light : R.menu.overview_fragment_menu,
+                menu);
     }
 
     @Override
@@ -241,8 +244,7 @@ public class OverviewFragment extends SherlockFragment implements
         int itemId = item.getItemId();
         if (itemId == R.id.menu_overview_share) {
             // share episode
-            fireTrackerEvent("Share");
-            onShareEpisode(ShareMethod.OTHER_SERVICES);
+            shareEpisode();
             return true;
         } else if (itemId == R.id.menu_overview_manage_lists) {
             fireTrackerEvent("Manage lists");
@@ -272,7 +274,7 @@ public class OverviewFragment extends SherlockFragment implements
                     getActivity(),
                     mShowCursor.getString(ShowQuery.SHOW_TITLE),
                     Utils.getNextEpisodeString(getActivity(), seasonNumber, episodeNumber,
-                            episodeTitle), mEpisodeCursor.getLong(EpisodeQuery.FIRSTAIREDMS),
+                            episodeTitle), mEpisodeCursor.getLong(EpisodeQuery.FIRST_RELEASE_MS),
                     mShowCursor.getInt(ShowQuery.SHOW_RUNTIME));
         }
     }
@@ -310,45 +312,30 @@ public class OverviewFragment extends SherlockFragment implements
         }
     }
 
-    private void onRateOnTrakt() {
-        // rate episode on trakt.tv
-        if (TraktCredentials.ensureCredentials(getActivity())) {
-            onShareEpisode(ShareMethod.RATE_TRAKT);
+    private void rateOnTrakt() {
+        if (mEpisodeCursor == null || !mEpisodeCursor.moveToFirst()) {
+            return;
         }
+        int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
+        int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+        TraktTools.rateEpisode(getActivity(), getFragmentManager(), getShowId(), seasonNumber,
+                episodeNumber);
+
         fireTrackerEvent("Rate (trakt)");
     }
 
-    private void onShareEpisode(ShareMethod shareMethod) {
-        if (mShowCursor != null && mShowCursor.moveToFirst() && mEpisodeCursor != null
-                && mEpisodeCursor.moveToFirst()) {
-            final int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
-            final int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-
-            // build share data
-            Bundle shareData = new Bundle();
-            shareData.putInt(ShareItems.SEASON, seasonNumber);
-            shareData.putInt(ShareItems.EPISODE, episodeNumber);
-            shareData.putInt(ShareItems.TVDBID, getShowId());
-
-            String episodestring = Utils.getNextEpisodeString(getActivity(), seasonNumber,
-                    episodeNumber, mEpisodeCursor.getString(EpisodeQuery.TITLE));
-            shareData.putString(ShareItems.EPISODESTRING, episodestring);
-
-            final StringBuilder shareString = new
-                    StringBuilder(getString(R.string.share_checkout));
-            shareString.append(" \"").append(mShowCursor.getString(ShowQuery.SHOW_TITLE));
-            shareString.append(" - ").append(episodestring).append("\"");
-            shareData.putString(ShareItems.SHARESTRING, shareString.toString());
-
-            String imdbId = mEpisodeCursor.getString(EpisodeQuery.IMDBID);
-            if (TextUtils.isEmpty(imdbId)) {
-                // fall back to show IMDb id
-                imdbId = mShowCursor.getString(ShowQuery.SHOW_IMDBID);
-            }
-            shareData.putString(ShareItems.IMDBID, imdbId);
-
-            ShareUtils.onShareEpisode(getActivity(), shareData, shareMethod);
+    private void shareEpisode() {
+        if (mEpisodeCursor == null || !mEpisodeCursor.moveToFirst()) {
+            return;
         }
+        int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
+        int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+        String episodeTitle = mEpisodeCursor.getString(EpisodeQuery.TITLE);
+
+        ShareUtils.shareEpisode(getActivity(), getShowId(), seasonNumber, episodeNumber, mShowTitle,
+                episodeTitle);
+
+        fireTrackerEvent("Share");
     }
 
     private void onToggleCollected() {
@@ -418,7 +405,7 @@ public class OverviewFragment extends SherlockFragment implements
 
         int WATCHED = 4;
 
-        int FIRSTAIREDMS = 5;
+        int FIRST_RELEASE_MS = 5;
 
         int GUESTSTARS = 6;
 
@@ -444,18 +431,20 @@ public class OverviewFragment extends SherlockFragment implements
 
         String[] PROJECTION = new String[]{
                 Shows._ID, Shows.TITLE, Shows.STATUS, Shows.AIRSTIME, Shows.AIRSDAYOFWEEK,
-                Shows.NETWORK, Shows.POSTER, Shows.IMDBID, Shows.RUNTIME, Shows.FAVORITE
+                Shows.NETWORK, Shows.POSTER, Shows.IMDBID, Shows.RUNTIME, Shows.FAVORITE,
+                Shows.RELEASE_COUNTRY
         };
 
         int SHOW_TITLE = 1;
         int SHOW_STATUS = 2;
-        int SHOW_AIRSTIME = 3;
-        int SHOW_AIRSDAYOFWEEK = 4;
+        int SHOW_RELEASE_TIME = 3;
+        int SHOW_RELEASE_DAY = 4;
         int SHOW_NETWORK = 5;
         int SHOW_POSTER = 6;
         int SHOW_IMDBID = 7;
         int SHOW_RUNTIME = 8;
         int SHOW_FAVORITE = 9;
+        int SHOW_RELEASE_COUNTRY = 10;
     }
 
     @Override
@@ -499,8 +488,7 @@ public class OverviewFragment extends SherlockFragment implements
     }
 
     public void onEvent(TraktActionCompleteEvent event) {
-        if (event.mTraktTaskArgs.getInt(TraktTask.InitBundle.TRAKTACTION)
-                == TraktAction.RATE_EPISODE.index) {
+        if (event.mTraktAction == TraktAction.RATE_EPISODE) {
             onLoadTraktRatings(false);
         }
     }
@@ -547,11 +535,13 @@ public class OverviewFragment extends SherlockFragment implements
             episodeInfo.setVisibility(View.VISIBLE);
 
             // air date
-            long airtime = episode.getLong(EpisodeQuery.FIRSTAIREDMS);
-            if (airtime != -1) {
-                final String[] dayAndTime = Utils.formatToTimeAndDay(airtime, getActivity());
-                episodeTime.setText(
-                        getString(R.string.release_date_and_day, dayAndTime[2], dayAndTime[1]));
+            long releaseTime = episode.getLong(EpisodeQuery.FIRST_RELEASE_MS);
+            if (releaseTime != -1) {
+                Date actualRelease = TimeTools.getEpisodeReleaseTime(getActivity(), releaseTime);
+                // "in 14 mins (Fri)"
+                episodeTime.setText(getString(R.string.release_date_and_day,
+                        TimeTools.formatToRelativeLocalReleaseTime(actualRelease),
+                        TimeTools.formatToLocalReleaseDay(actualRelease)));
                 episodeTime.setVisibility(View.VISIBLE);
             }
 
@@ -630,7 +620,7 @@ public class OverviewFragment extends SherlockFragment implements
             ratings.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onRateOnTrakt();
+                    rateOnTrakt();
                 }
             });
             ratings.setFocusable(true);
@@ -756,11 +746,12 @@ public class OverviewFragment extends SherlockFragment implements
     private void onLoadTraktRatings(boolean isUseCachedValues) {
         if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()
                 && (mTraktTask == null || mTraktTask.getStatus() != AsyncTask.Status.RUNNING)) {
+            int episodeTvdbId = mEpisodeCursor.getInt(EpisodeQuery._ID);
             int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
             int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
             mTraktTask = new TraktSummaryTask(getSherlockActivity(), getView(), isUseCachedValues)
-                    .episode(getShowId(), seasonNumber, episodeNumber);
-            AndroidUtils.executeAsyncTask(mTraktTask, new Void[]{});
+                    .episode(getShowId(), episodeTvdbId, seasonNumber, episodeNumber);
+            AndroidUtils.executeAsyncTask(mTraktTask);
         }
     }
 
@@ -772,7 +763,7 @@ public class OverviewFragment extends SherlockFragment implements
             mArtTask.cancel(true);
             mArtTask = null;
         }
-        mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity());
+        mArtTask = new FetchArtTask(imagePath, container, getActivity());
         AndroidUtils.executeAsyncTask(mArtTask, new Void[]{
                 null
         });
@@ -825,11 +816,12 @@ public class OverviewFragment extends SherlockFragment implements
 
         // air time and network
         final StringBuilder timeAndNetwork = new StringBuilder();
-        final String airsDay = show.getString(ShowQuery.SHOW_AIRSDAYOFWEEK);
-        final long airstime = show.getLong(ShowQuery.SHOW_AIRSTIME);
-        if (!TextUtils.isEmpty(airsDay) && airstime != -1) {
-            String[] values = Utils.parseMillisecondsToTime(airstime,
-                    airsDay, getActivity());
+        final long releaseTime = show.getLong(ShowQuery.SHOW_RELEASE_TIME);
+        final String releaseCountry = show.getString(ShowQuery.SHOW_RELEASE_COUNTRY);
+        final String releaseDay = show.getString(ShowQuery.SHOW_RELEASE_DAY);
+        if (!TextUtils.isEmpty(releaseDay) && releaseTime != -1) {
+            String[] values = TimeTools.formatToShowReleaseTimeAndDay(getActivity(),
+                    releaseTime, releaseCountry, releaseDay);
             timeAndNetwork.append(values[1])
                     .append(" ")
                     .append(values[0])

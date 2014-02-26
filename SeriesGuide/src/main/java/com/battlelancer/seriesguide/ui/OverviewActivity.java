@@ -30,7 +30,7 @@ import com.battlelancer.seriesguide.util.ShortcutUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -53,6 +53,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Hosts an {@link OverviewFragment}.
  */
@@ -61,6 +63,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     private static final String TAG = "Overview";
 
     private int mShowId;
+
     private NfcAdapter mNfcAdapter;
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -89,7 +92,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
                     public NdefMessage createNdefMessage(NfcEvent event) {
                         final Series show = DBUtils.getShow(OverviewActivity.this, mShowId);
                         // send id, also title and overview (both can be empty)
-                        NdefMessage msg = new NdefMessage(new NdefRecord[] {
+                        NdefMessage msg = new NdefMessage(new NdefRecord[]{
                                 createMimeRecord(
                                         "application/com.battlelancer.seriesguide.beam",
                                         String.valueOf(mShowId).getBytes()),
@@ -234,12 +237,14 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     protected void onStart() {
         super.onStart();
         EasyTracker.getInstance(this).activityStart(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         EasyTracker.getInstance(this).activityStop(this);
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -258,7 +263,10 @@ public class OverviewActivity extends BaseNavDrawerActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.overview_activity_menu, menu);
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+        getSupportMenuInflater().inflate(
+                isLightTheme ? R.menu.overview_activity_menu_light : R.menu.overview_activity_menu,
+                menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -286,6 +294,10 @@ public class OverviewActivity extends BaseNavDrawerActivity {
             String poster = show.getPoster();
             ShortcutUtils.createShortcut(this, title, poster, mShowId);
 
+            // drop to home screen
+            startActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).setFlags(
+                    Intent.FLAG_ACTIVITY_NEW_TASK));
+
             // Analytics
             fireTrackerEvent("Add to Homescreen");
             return true;
@@ -305,7 +317,8 @@ public class OverviewActivity extends BaseNavDrawerActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    SgSyncAdapter.requestSyncIfConnected(context, mShowId);
+                    SgSyncAdapter.requestSyncIfConnected(context, SgSyncAdapter.SyncType.SINGLE,
+                            mShowId);
                 }
             }, 1000);
         }

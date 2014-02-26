@@ -24,7 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.uwetrottmann.getglue.entities.GetGlueObject;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import java.util.List;
 

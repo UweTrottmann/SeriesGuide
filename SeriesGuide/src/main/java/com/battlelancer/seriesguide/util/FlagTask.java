@@ -17,15 +17,14 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.Lists;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -157,13 +156,13 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
          * Determines the last watched episode and returns its TVDb id or -1 if it can't be
          * determined.
          */
-        protected abstract int getLastEpisodeTvdbId();
+        protected abstract int getLastWatchedEpisodeTvdbId();
 
         /**
          * Saves the last watched episode for a show to the database.
          */
         public void storeLastEpisode() {
-            int lastWatchedId = getLastEpisodeTvdbId();
+            int lastWatchedId = getLastWatchedEpisodeTvdbId();
             if (lastWatchedId != -1) {
                 // set latest watched
                 ContentValues values = new ContentValues();
@@ -241,11 +240,14 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         @Override
-        protected int getLastEpisodeTvdbId() {
+        protected int getLastWatchedEpisodeTvdbId() {
             if (EpisodeTools.isUnwatched(mEpisodeFlag)) {
                 // unwatched episode
-                int lastWatchedId = -1;
 
+                int lastWatchedId = -1; // don't change last watched episode by default
+
+                // if modified episode is identical to last watched one (e.g. was just watched),
+                // find an appropriate last watched episode
                 final Cursor show = mContext.getContentResolver().query(
                         Shows.buildShowUri(String.valueOf(mShowTvdbId)),
                         new String[]{
@@ -254,6 +256,12 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                 if (show != null) {
                     // identical to last watched episode?
                     if (show.moveToFirst() && show.getInt(1) == mEpisodeTvdbId) {
+                        if (mSeason == 0) {
+                            // keep last watched (= this episode) if we got a special
+                            return -1;
+                        }
+                        lastWatchedId = 0; // re-set if we don't find one
+
                         // get latest watched before this one
                         String season = String.valueOf(mSeason);
                         final Cursor latestWatchedEpisode = mContext.getContentResolver()
@@ -312,7 +320,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         @Override
-        protected int getLastEpisodeTvdbId() {
+        protected int getLastWatchedEpisodeTvdbId() {
             // we don't care
             return -1;
         }
@@ -391,7 +399,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         @Override
-        protected int getLastEpisodeTvdbId() {
+        protected int getLastWatchedEpisodeTvdbId() {
             if (EpisodeTools.isUnwatched(mEpisodeFlag)) {
                 // unwatched season
                 // just reset
@@ -445,7 +453,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         @Override
-        protected int getLastEpisodeTvdbId() {
+        protected int getLastWatchedEpisodeTvdbId() {
             return -1;
         }
 
@@ -510,7 +518,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         @Override
-        protected int getLastEpisodeTvdbId() {
+        protected int getLastWatchedEpisodeTvdbId() {
             if (EpisodeTools.isUnwatched(mEpisodeFlag)) {
                 // just reset
                 return 0;
@@ -534,7 +542,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         @Override
-        protected int getLastEpisodeTvdbId() {
+        protected int getLastWatchedEpisodeTvdbId() {
             // we don't care
             return -1;
         }
@@ -580,7 +588,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         @Override
-        protected int getLastEpisodeTvdbId() {
+        protected int getLastWatchedEpisodeTvdbId() {
             // we don't care
             return -1;
         }
@@ -653,7 +661,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
      * Run the task on the thread pool.
      */
     public void execute() {
-        AndroidUtils.executeAsyncTask(this, new Void[]{});
+        AndroidUtils.executeAsyncTask(this);
     }
 
     @Override
@@ -719,14 +727,23 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     /**
-     * Lower season or if season is equal has to have a lower episode number.
+     * Lower season or if season is equal has to have a lower episode number. Must be watched or
+     * skipped, excludes special episodes (because their release times are spread over all seasons).
      */
-    private static final String SELECTION_PREVIOUS_WATCHED = Episodes.SEASON + "<? OR "
-            + "(" + Episodes.SEASON + "=? AND " + Episodes.NUMBER + "<?)";
+    private static final String SELECTION_PREVIOUS_WATCHED =
+            Episodes.SEASON + ">0"
+                    + " AND " + Episodes.WATCHED + "!=" + EpisodeFlags.UNWATCHED
+                    + " AND (" + Episodes.SEASON + "<? OR "
+                    + "(" + Episodes.SEASON + "=? AND " + Episodes.NUMBER + "<?)"
+                    + ")";
 
-    private static final String ORDER_PREVIOUS_WATCHED = Episodes.FIRSTAIREDMS + " DESC,"
-            + Episodes.SEASON + " DESC,"
-            + Episodes.NUMBER + " DESC";
+    /**
+     * Order by season, then by number, then by release time.
+     */
+    private static final String ORDER_PREVIOUS_WATCHED =
+            Episodes.SEASON + " DESC" + ","
+                    + Episodes.NUMBER + " DESC" + ","
+                    + Episodes.FIRSTAIREDMS + " DESC";
 
     private static final String[] PROJECTION_EPISODE = new String[]{
             Episodes._ID

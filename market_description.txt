@@ -1,4 +1,4 @@
-Manage the progress of (re-)watching your favorite TV shows. See what is coming up, keep track of what to watch next. Check in with trakt.tv or GetGlue. Share episodes with your friends or the world.
+Manage the progress of (re-)watching your favorite TV shows. See what is coming up, keep track of what to watch next. Check in with trakt or tvtag. Share episodes with your friends or the world.
 
 Get the X Subscription in Settings! X features include more list widget options and notifications for new episodes. You also support continued fixes and new features.
 

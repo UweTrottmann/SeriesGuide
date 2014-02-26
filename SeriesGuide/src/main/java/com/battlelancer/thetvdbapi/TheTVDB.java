@@ -16,30 +16,6 @@
 
 package com.battlelancer.thetvdbapi;
 
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
-import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.TraktSync;
-import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.Trakt;
-import com.jakewharton.trakt.entities.TvShow;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.Lists;
-import com.uwetrottmann.seriesguide.R;
-
-import org.xml.sax.ContentHandler;
-import org.xml.sax.SAXException;
-
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
@@ -54,9 +30,28 @@ import android.sax.EndTextElementListener;
 import android.sax.RootElement;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.util.Xml;
-
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
+import com.battlelancer.seriesguide.dataliberation.model.Show;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.TimeTools;
+import com.battlelancer.seriesguide.util.TraktTools;
+import com.battlelancer.seriesguide.util.Utils;
+import com.jakewharton.trakt.Trakt;
+import com.jakewharton.trakt.entities.TvShow;
+import com.jakewharton.trakt.enumerations.Extended;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.Lists;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -69,8 +64,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.zip.ZipInputStream;
-
+import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
 import retrofit.RetrofitError;
+import timber.log.Timber;
 
 /**
  * Provides access to the TheTVDb.com XML API throwing in some additional data from trakt.tv here
@@ -88,8 +85,6 @@ public class TheTVDB {
     private static final String TVDB_MIRROR_BANNERS = "http://thetvdb.com/banners";
 
     private static final String TVDB_API_URL = "http://thetvdb.com/api/";
-
-    private static final String TAG = "TheTVDB";
 
     /**
      * Returns true if the given show has not been updated in the last 12 hours.
@@ -276,14 +271,8 @@ public class TheTVDB {
                 continue;
             }
 
-            final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-
-            TraktSync.buildSeasonBatch(context, batch, tvShow,
-                    isSeenFlags ? Episodes.WATCHED : Episodes.COLLECTED,
-                    EpisodeFlags.WATCHED);
-
-            // apply ops for this show
-            DBUtils.applyInSmallBatches(context, batch);
+            TraktTools.applyEpisodeFlagChanges(context, tvShow,
+                    isSeenFlags ? Episodes.WATCHED : Episodes.COLLECTED, false);
 
             // done, found the show we were looking for
             return;
@@ -299,40 +288,28 @@ public class TheTVDB {
      */
     private static Show fetchShow(int showTvdbId, String language, Context context)
             throws SAXException {
-        // Try to get some show details from trakt
+        // get localized content from TVDb
+        String url = TVDB_API_URL + context.getResources().getString(R.string.tvdb_apikey)
+                + "/series/" + showTvdbId + "/" + (language != null ? language + ".xml" : "");
+        Show show = parseShow(url, context);
+
+        // get some more details from trakt
         TvShow traktShow = null;
         Trakt manager = ServiceUtils.getTrakt(context);
         if (manager != null) {
             try {
-                traktShow = manager.showService().summary(showTvdbId);
+                traktShow = manager.showService().summary(showTvdbId, Extended.DEFAULT);
             } catch (RetrofitError e) {
-                Utils.trackExceptionAndLog(context, TAG, e);
+                Timber.e(e, "Downloading summary failed");
             }
         }
-
-        String url = TVDB_API_URL + context.getResources().getString(R.string.tvdb_apikey)
-                + "/series/" + showTvdbId + "/" + (language != null ? language + ".xml" : "");
-
-        Show show = parseShow(url, context);
-
-        // correct air times for non-US shows
-        if (traktShow != null && traktShow.country != null) {
-            if ("United States".equals(traktShow.country)) {
-                // catch US, is already correct then
-            } else if ("United Kingdom".equals(traktShow.country)) {
-                // Correct to BST (no summer time)
-                // Sample: Doctor Who (2005)
-                show.airtime -= 8 * DateUtils.HOUR_IN_MILLIS;
-            } else if ("Germany".equals(traktShow.country)) {
-                // Correct to EST
-                // Sample: heute-show
-                show.airtime -= 9 * DateUtils.HOUR_IN_MILLIS;
-            } else if ("Australia".equals(traktShow.country)) {
-                // Correct to Australian EST
-                // Sample: Offspring
-                show.airtime -= 18 * DateUtils.HOUR_IN_MILLIS;
-            }
+        if (traktShow == null) {
+            // TODO use proper error codes
+            throw new SAXException("Could not load show from trakt: " + showTvdbId);
         }
+
+        show.airtime = TimeTools.parseShowReleaseTime(traktShow.airTime);
+        show.country = traktShow.country;
 
         return show;
     }
@@ -374,11 +351,6 @@ public class TheTVDB {
         show.getChild("Airs_DayOfWeek").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 currentShow.airday = body.trim();
-            }
-        });
-        show.getChild("Airs_Time").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.airtime = Utils.parseTimeToMilliseconds(body.trim());
             }
         });
         show.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
@@ -563,7 +535,8 @@ public class TheTVDB {
                 });
         episode.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                long episodeAirTime = Utils.buildEpisodeAirtime(body, show.airtime);
+                long episodeAirTime = TimeTools
+                        .parseEpisodeReleaseTime(body, show.airtime, show.country);
                 values.put(Episodes.FIRSTAIREDMS, episodeAirTime);
                 values.put(Episodes.FIRSTAIRED, body.trim());
             }
@@ -732,7 +705,7 @@ public class TheTVDB {
             long imageSize = urlConnection.getContentLength();
             // allow images up to 300K (although size is always around
             // 30K for posters and 100K for episode images)
-            if (imageSize > 300000) {
+            if (imageSize > 300000 || imageSize == -1) {
                 return null;
             } else {
                 inputStream = urlConnection.getInputStream();
@@ -741,22 +714,17 @@ public class TheTVDB {
                 return BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
             }
         } catch (IOException e) {
-            Log.w(TAG, "I/O error retrieving bitmap from " + url, e);
-            Utils.trackException(context, TAG + " I/O error retrieving bitmap from " + url, e);
+            Timber.e(e, "I/O error retrieving bitmap from " + url);
         } catch (IllegalStateException e) {
-            Log.w(TAG, "Incorrect URL: " + url);
-            Utils.trackException(context, TAG + " Incorrect URL " + url, e);
+            Timber.e(e, "Incorrect URL: " + url);
         } catch (Exception e) {
-            Log.w(TAG, "Error while retrieving bitmap from " + url, e);
-            Utils.trackException(context, TAG + " Error while retrieving bitmap from " + url, e);
+            Timber.e(e, "Error while retrieving bitmap from " + url);
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    Log.w(TAG, "I/O error while retrieving bitmap from " + url, e);
-                    Utils.trackException(context, TAG + " I/O error retrieving bitmap from " + url,
-                            e);
+                    Timber.e(e, "I/O error retrieving bitmap from " + url);
                 }
             } else {
                 if (urlConnection != null) {
@@ -797,7 +765,7 @@ public class TheTVDB {
     }
 
     public static void onRenewFTSTable(Context context) {
-        Log.d(TAG, "Query to renew FTS table");
+        Timber.d("Query to renew FTS table");
         context.getContentResolver().query(EpisodeSearch.CONTENT_URI_RENEWFTSTABLE, null, null,
                 null, null);
     }

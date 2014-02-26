@@ -16,38 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.astuetz.PagerSlidingTabStrip;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
-import com.battlelancer.seriesguide.adapters.TabStripAdapter;
-import com.battlelancer.seriesguide.billing.BillingActivity;
-import com.battlelancer.seriesguide.billing.IabHelper;
-import com.battlelancer.seriesguide.billing.IabResult;
-import com.battlelancer.seriesguide.billing.Inventory;
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.service.NotificationService;
-import com.battlelancer.seriesguide.settings.ActivitySettings;
-import com.battlelancer.seriesguide.settings.AppSettings;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.settings.TraktSettings;
-import com.battlelancer.seriesguide.sync.AccountUtils;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
-import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.TheTVDB;
-import com.uwetrottmann.seriesguide.BuildConfig;
-import com.uwetrottmann.seriesguide.R;
-
 import android.accounts.Account;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -56,25 +24,51 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SyncStatusObserver;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.astuetz.PagerSlidingTabStrip;
+import com.battlelancer.seriesguide.BuildConfig;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.adapters.TabStripAdapter;
+import com.battlelancer.seriesguide.billing.BillingActivity;
+import com.battlelancer.seriesguide.billing.IabHelper;
+import com.battlelancer.seriesguide.billing.IabResult;
+import com.battlelancer.seriesguide.billing.Inventory;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.service.NotificationService;
+import com.battlelancer.seriesguide.settings.ActivitySettings;
+import com.battlelancer.seriesguide.settings.AppSettings;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.sync.AccountUtils;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
+import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.thetvdbapi.TheTVDB;
+import com.google.analytics.tracking.android.EasyTracker;
+import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import timber.log.Timber;
 
 /**
  * Provides the apps main screen, displaying a list of shows and their next episodes.
@@ -107,6 +101,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
     private ShowsTabPageAdapter mTabsAdapter;
 
+    private ViewPager mViewPager;
+
     public interface InitBundle {
 
         String SELECTED_TAB = "selectedtab";
@@ -133,17 +129,18 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         NotificationService.handleDeleteIntent(this, getIntent());
 
         setUpActionBar();
-        setupViews(savedInstanceState);
+        setupViews();
+        setInitialTab(savedInstanceState, getIntent().getExtras());
 
         // query in-app purchases (only if not already qualified)
         if (Utils.requiresPurchaseCheck(this)) {
             mHelper = new IabHelper(this, BillingActivity.getPublicKey(this));
             mHelper.enableDebugLogging(BuildConfig.DEBUG);
 
-            Log.d(TAG, "Starting In-App Billing helper setup.");
+            Timber.i("Starting In-App Billing helper setup.");
             mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
                 public void onIabSetupFinished(IabResult result) {
-                    Log.d(TAG, "Setup finished.");
+                    Timber.d("Setup finished.");
 
                     if (!result.isSuccess()) {
                         // Oh noes, there was a problem. But do not go crazy.
@@ -158,7 +155,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
                     // Hooray, IAB is fully set up. Now, let's get an inventory
                     // of stuff we own.
-                    Log.d(TAG, "Setup successful. Querying inventory.");
+                    Timber.d("Setup successful. Querying inventory.");
                     mHelper.queryInventoryAsync(mGotInventoryListener);
                 }
             });
@@ -170,12 +167,12 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         actionBar.setDisplayShowTitleEnabled(false);
     }
 
-    private void setupViews(Bundle savedInstanceState) {
-        ViewPager pager = (ViewPager) findViewById(R.id.pagerShows);
+    private void setupViews() {
+        mViewPager = (ViewPager) findViewById(R.id.pagerShows);
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsShows);
 
         mTabsAdapter = new ShowsTabPageAdapter(getSupportFragmentManager(),
-                this, pager, tabs);
+                this, mViewPager, tabs);
 
         // shows tab (or first run fragment)
         if (!FirstRunFragment.hasSeenFirstRunFragment(this)) {
@@ -210,26 +207,32 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         // display new tabs
         mTabsAdapter.notifyTabsChanged();
 
-        // set starting tab
-        int selection = 0;
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            // notification intent has priority
-            selection = extras.getInt(InitBundle.SELECTED_TAB, 0);
-        } else if (savedInstanceState != null) {
+        // progress bar
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBarShows);
+    }
+
+    /**
+     * Tries to restore the current tab from the given state, if that fails from the given
+     * intent extras. If that fails as well, uses the last known selected tab.
+     */
+    private void setInitialTab(Bundle savedInstanceState, Bundle intentExtras) {
+        int selection;
+        if (savedInstanceState != null) {
             selection = savedInstanceState.getInt("index");
+        } else if (intentExtras != null) {
+            selection = intentExtras.getInt(InitBundle.SELECTED_TAB,
+                    ActivitySettings.getDefaultActivityTabPosition(this));
         } else {
             // use last saved selection
             selection = ActivitySettings.getDefaultActivityTabPosition(this);
         }
+
         // never select a non-existent tab
         if (selection > mTabsAdapter.getCount() - 1) {
             selection = 0;
         }
-        pager.setCurrentItem(selection);
 
-        // progress bar
-        mProgressBar = (ProgressBar) findViewById(R.id.progressBarShows);
+        mViewPager.setCurrentItem(selection);
     }
 
     @Override
@@ -238,6 +241,14 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
         setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_SHOWS_POSITION);
         EasyTracker.getInstance(this).activityStart(this);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        setInitialTab(null, intent.getExtras());
     }
 
     @Override
@@ -269,6 +280,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     protected void onStop() {
         super.onStop();
         EasyTracker.getInstance(this).activityStop(this);
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -323,7 +335,10 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.seriesguide_menu, menu);
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+        getSupportMenuInflater()
+                .inflate(isLightTheme ? R.menu.seriesguide_menu_light : R.menu.seriesguide_menu,
+                        menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -347,13 +362,17 @@ public class ShowsActivity extends BaseTopShowsActivity implements
             startActivity(new Intent(this, AddActivity.class));
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             return true;
+        } else if (itemId == R.id.menu_search) {
+            startActivity(new Intent(this, SearchActivity.class));
+            fireTrackerEvent("Search");
+            return true;
         } else if (itemId == R.id.menu_update) {
-            SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.UPDATE_TVDB_DELTA, true);
+            SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.DELTA, 0, true);
             fireTrackerEvent("Update (outdated)");
 
             return true;
         } else if (itemId == R.id.menu_fullupdate) {
-            SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.UPDATE_TVDB_FULL, true);
+            SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, true);
             fireTrackerEvent("Update (all)");
 
             return true;
@@ -512,7 +531,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
             int VER_TRAKT_SEC_CHANGES;
             int VER_SUMMERTIME_FIX;
             int VER_HIGHRES_THUMBS;
-            if ("beta".equals(BuildConfig.FLAVOR)) {
+            if (SeriesGuideApplication.FLAVOR_INTERNAL.equals(BuildConfig.FLAVOR)) {
                 // internal dev version
                 VER_TRAKT_SEC_CHANGES = 131;
                 VER_SUMMERTIME_FIX = 155;
@@ -537,6 +556,18 @@ public class ShowsActivity extends BaseTopShowsActivity implements
                 ImageProvider.getInstance(this).clearCache();
                 ImageProvider.getInstance(this).clearExternalStorageCache();
                 scheduleAllShowsUpdate();
+            }
+            // time calculation has changed, all episodes need re-calculation
+            if (lastVersion < 218) {
+                // flag all episodes as outdated
+                ContentValues values = new ContentValues();
+                values.put(SeriesGuideContract.Episodes.LAST_EDITED, 0);
+                getContentResolver().update(SeriesGuideContract.Episodes.CONTENT_URI, values, null,
+                        null);
+                // flag all shows outdated as well (in case the full sync is aborted, delta sync will pick up)
+                scheduleAllShowsUpdate();
+                // trigger full sync
+                SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, false);
             }
 
             // update notification
@@ -580,7 +611,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     IabHelper.QueryInventoryFinishedListener mGotInventoryListener
             = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-            Log.d(TAG, "Query inventory finished.");
+            Timber.d("Query inventory finished.");
 
             // Have we been disposed of in the meantime? If so, quit.
             if (mHelper == null) {
@@ -593,18 +624,18 @@ public class ShowsActivity extends BaseTopShowsActivity implements
                 return;
             }
 
-            Log.d(TAG, "Query inventory was successful.");
+            Timber.d("Query inventory was successful.");
 
             BillingActivity.checkForSubscription(ShowsActivity.this, inventory);
 
-            Log.d(TAG, "Inventory query finished.");
+            Timber.d("Inventory query finished.");
             disposeIabHelper();
         }
     };
 
     private void disposeIabHelper() {
         if (mHelper != null) {
-            Log.d(TAG, "Disposing of IabHelper.");
+            Timber.i("Disposing of IabHelper.");
             mHelper.dispose();
         }
         mHelper = null;

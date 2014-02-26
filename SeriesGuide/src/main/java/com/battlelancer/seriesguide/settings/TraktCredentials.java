@@ -16,12 +16,10 @@
 
 package com.battlelancer.seriesguide.settings;
 
-import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.jakewharton.trakt.Trakt;
-import com.jakewharton.trakt.entities.Response;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.accounts.Account;
@@ -32,6 +30,7 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import retrofit.RetrofitError;
+import timber.log.Timber;
 
 /**
  * A singleton helping to manage the user's trakt credentials.
@@ -112,7 +111,8 @@ public class TraktCredentials {
     }
 
     /**
-     * Stores the given credentials. Performs no sanitation, however, if any is null or empty throws
+     * Stores the given credentials. Performs no sanitation, however, if any is null or empty
+     * throws
      * an exception.
      */
     public void setCredentials(String username, String password) {
@@ -181,17 +181,19 @@ public class TraktCredentials {
             return;
         }
         try {
-            Response r = manager.accountService().test();
-            if (r != null && TraktStatus.FAILURE.equals(r.status)) {
+            manager.accountService().test();
+        } catch (RetrofitError e) {
+            retrofit.client.Response response = e.getResponse();
+            /**
+             * Check for HTTP 401 Unauthorized as retrofit errors for non-200 responses.
+             * Ignore other response codes as trakt may be offline, have server errors, etc.
+             */
+            if (response != null && response.getStatus() == 401) {
                 // credentials invalid according to trakt, remove the password
                 removePassword();
+            } else {
+                Timber.e(e, "Trakt credential validation failed");
             }
-        } catch (RetrofitError ignored) {
         }
-        /*
-         * Ignore exceptions, trakt may be offline, etc. We expect the user to
-         * disconnect and reconnect himself.
-         */
     }
-
 }

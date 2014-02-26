@@ -16,24 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
-import com.astuetz.PagerSlidingTabStrip;
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.items.Episode;
-import com.battlelancer.seriesguide.items.Series;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.service.NotificationService;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapter;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -44,13 +26,30 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
+import com.astuetz.PagerSlidingTabStrip;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.Episode;
+import com.battlelancer.seriesguide.items.Series;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.service.NotificationService;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapter;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.SeasonTools;
+import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
+import de.greenrobot.event.EventBus;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import timber.log.Timber;
 
 /**
  * Hosts a fragment which displays episodes of a season. On larger screen hosts a {@link ViewPager}
@@ -203,7 +202,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
             // change
             for (Fragment fragment : getActiveFragments()) {
                 if (fragment.getTag() == null) {
-                    Log.d("EpisodesActivity", "Removing a leftover fragment");
+                    Timber.d("Removing a leftover fragment");
                     getSupportFragmentManager().beginTransaction().remove(fragment).commit();
                 }
             }
@@ -215,11 +214,8 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-        final String seasonTitle = Utils.getSeasonString(this, mSeasonNumber);
-        setTitle(show.getTitle() + " " + seasonTitle);
         actionBar.setTitle(show.getTitle());
-        actionBar.setSubtitle(seasonTitle);
+        actionBar.setSubtitle(SeasonTools.getSeasonString(this, mSeasonNumber));
     }
 
     @Override
@@ -232,6 +228,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
         prefs.registerOnSharedPreferenceChangeListener(this);
 
         EasyTracker.getInstance(this).activityStart(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -244,6 +241,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
         prefs.unregisterOnSharedPreferenceChangeListener(this);
 
         EasyTracker.getInstance(this).activityStop(this);
+        EventBus.getDefault().unregister(this);
     }
 
     List<WeakReference<Fragment>> mFragments = new ArrayList<WeakReference<Fragment>>();

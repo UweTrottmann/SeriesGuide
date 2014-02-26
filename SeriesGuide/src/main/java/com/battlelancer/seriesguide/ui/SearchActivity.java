@@ -23,7 +23,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.SearchView;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -36,7 +36,7 @@ import android.text.TextUtils;
  * Handles search intents and displays a {@link SearchFragment} when needed or
  * redirects directly to an {@link EpisodeDetailsActivity}.
  */
-public class SearchActivity extends BaseTopActivity {
+public class SearchActivity extends BaseNavDrawerActivity {
 
     private static final String TAG = "Search";
 
@@ -47,8 +47,9 @@ public class SearchActivity extends BaseTopActivity {
         setupNavDrawer();
 
         final ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(R.string.search_hint);
-        actionBar.setDisplayShowTitleEnabled(true);
 
         handleIntent(getIntent());
     }
@@ -57,7 +58,6 @@ public class SearchActivity extends BaseTopActivity {
     protected void onStart() {
         super.onStart();
 
-        setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_SEARCH_POSITION);
         EasyTracker.getInstance(this).activityStart(this);
     }
 
@@ -133,6 +133,10 @@ public class SearchActivity extends BaseTopActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
         if (itemId == R.id.menu_search) {
             fireTrackerEvent("Search");
             onSearchRequested();

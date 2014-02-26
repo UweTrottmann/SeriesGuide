@@ -36,7 +36,7 @@
         </Preference>
         <Preference
             android:key="com.battlelancer.seriesguide.trakt"
-            android:title="@string/pref_traktsync">
+            android:title="@string/upload_existing_shows">
             <intent
                 android:targetClass="com.battlelancer.seriesguide.ui.TraktSyncActivity"
                 android:targetPackage="@string/package_name" />

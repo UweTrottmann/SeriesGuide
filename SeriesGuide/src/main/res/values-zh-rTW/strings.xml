@@ -36,22 +36,28 @@
   <string name="add_empty">There are no shows here.</string>
   <string name="share_show">分享節目</string>
   <string name="share_episode">分享此集</string>
-  <string name="share_checkout">登出</string>
+  <string name="share_movie">Share movie</string>
+  <string name="share_checkout">Check out %s</string>
   <string name="comments">評論</string>
   <string name="shout_hint">輸入留言（需用英文）</string>
   <string name="shout">留言</string>
   <string name="isspoiler">警告爆雷</string>
   <string name="no_shouts">成為第一個留言者</string>
   <string name="autorefresh">神奇自動更新中 XD</string>
-  <string name="movies_watchlist">待看清單 (trakt)</string>
+  <string name="movies_collection">Collection</string>
+  <string name="movies_watchlist">待看清單</string>
   <string name="watchlist_add">新增至待看清單</string>
   <string name="watchlist_remove">從待看清單中移除</string>
   <string name="watchlist_added">已增加至待看清單</string>
   <string name="watchlist_removed">已從待看清單中移除完成</string>
   <string name="movies_search_hint">輸入電影名稱</string>
   <string name="movies_empty">搜尋電影</string>
-  <string name="movies_watchlist_empty">You have not added movies to your trakt watchlist.</string>
+  <string name="movies_collection_empty">You have not added movies to your collection.</string>
+  <string name="movies_watchlist_empty">You have not added movies to your watchlist.</string>
   <string name="trailer">預告</string>
+  <string name="movie_cast">Cast</string>
+  <string name="movie_crew">Crew</string>
+  <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="shows_with_next">%s 影集有新的集數</string>
   <string name="shows_continuing">%s部影集仍在連載</string>
   <string name="episodes_watched">%s 集已看</string>
@@ -77,6 +83,7 @@
   <string name="show_genres">戲劇類別</string>
   <string name="show_runtime">影片長度</string>
   <string name="show_contentrating">節目分級</string>
+  <string name="show_release_times">Release times</string>
   <string name="episode_directors">導演</string>
   <string name="episode_gueststars">神秘嘉賓</string>
   <string name="episode_writers">編劇</string>
@@ -107,6 +114,12 @@
   <string name="trakt_notseen">%s未觀賞</string>
   <string name="trakt_collected">%s已收藏</string>
   <string name="trakt_notcollected">%s未收藏</string>
+  <string name="action_collection_add">Add to collection</string>
+  <string name="action_collection_remove">Remove from collection</string>
+  <string name="action_collection_added">Added to collection</string>
+  <string name="action_collection_removed">Removed from collection</string>
+  <string name="action_watched">Watched</string>
+  <string name="action_unwatched">Not yet watched</string>
   <string name="confirm_delete">Do you really want to remove %s?</string>
   <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_error">Could not remove show. Try again later.</string>
@@ -160,7 +173,6 @@
   <string name="oneotherepisode">其餘集數</string>
   <string name="otherepisodes">其餘集數</string>
   <string name="remaining">%s remaining</string>
-  <string name="search_hint_add">顯示名稱</string>
   <string name="no_results">查無結果，請嘗試完整單字。</string>
   <string name="search_error">查詢失敗，請稍候再試。</string>
   <string name="add_all">全部加入</string>
@@ -202,12 +214,11 @@
   <string name="upload_existing_shows">Upload existing shows</string>
   <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
   <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
-  <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
-  <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
   <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
-  <string name="trakt_download">Download to SeriesGuide</string>
-  <string name="trakt_upload">Upload to trakt.tv</string>
-  <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
+  <string name="trakt_upload">Upload to trakt</string>
+  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+  <string name="upload_done">Finished uploading.</string>
+  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Basics</string>
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Advanced</string>
@@ -224,9 +235,8 @@
   <string name="about">關於 SeriesGuide</string>
   <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">中斷GetGlue的連線</string>
-  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
+  <string name="clearGetGlueCredentialssummary">Check in with tvtag to reconnect</string>
   <string name="pref_traktsummary">新增或編輯您的trakt.tv憑證</string>
-  <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">傳送反饋意見</string>
   <string name="pref_autoaddshows">Add new trakt shows</string>
   <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
@@ -273,16 +283,15 @@
   <string name="last_auto_backup">Last Auto Backup: %s</string>
   <string name="restore_auto_backup">Restore Auto Backup</string>
   <string name="checkin">Check in</string>
-  <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Type a show name</string>
   <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Type a message (optional)</string>
-  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
+  <string name="checkin_fixgetglue">Fix tvtag check-in</string>
   <string name="paste_title">Paste title</string>
-  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
-  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
-  <string name="getglue_authentication">Connect GetGlue</string>
-  <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
+  <string name="checkinsuccess">Checked into %s on tvtag.</string>
+  <string name="checkinfailed">tvtag check-in failed. Try again later.</string>
+  <string name="getglue_authentication">Connect tvtag</string>
+  <string name="getglue_authfailed">tvtag authentication failed. Try again later.</string>
   <string name="checkin_success_trakt">Checked into %s on trakt.</string>
   <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="select_show">Select show</string>
@@ -303,7 +312,6 @@
   <string name="connect">Connect</string>
   <string name="disconnect">Disconnect</string>
   <string name="trakt_error">與trakt的互動失敗</string>
-  <string name="trakt_decryptfail">無法解密密碼</string>
   <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_createaccount">註冊</string>
@@ -333,7 +341,7 @@
   <string name="pref_widget_type">Widget type</string>
   <string name="dashclock_extension_label">Upcoming episode</string>
   <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
-  <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
+  <string name="dashclock_pref_upcoming_threshold">Display episode within…</string>
   <string name="action_migrate">Migrate from X</string>
   <string name="migration_description">SeriesGuide X is now an unlock key for X features in the free version (X Pass). Please migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
   <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
@@ -367,17 +375,17 @@
   </string-array>
   <string-array name="upcominglimit">
     <item>目前</item>
-    <item>a day</item>
+    <item>1 day</item>
     <item>3 days</item>
-    <item>a week</item>
-    <item>two weeks</item>
-    <item>a month</item>
+    <item>1 week</item>
+    <item>2 weeks</item>
+    <item>1 month</item>
   </string-array>
   <string-array name="notificationThreshold">
     <item>on air</item>
     <item>5 min in advance</item>
     <item>10 min in advance</item>
-    <item>one hour in advance</item>
+    <item>1 hour in advance</item>
   </string-array>
   <string-array name="widgetOpacity">
     <item>Transparent</item>
@@ -392,12 +400,12 @@
     <item>我的最愛</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
-    <item>hour</item>
+    <item>1 hour</item>
     <item>6 hours</item>
     <item>12 hours</item>
     <item>24 hours</item>
     <item>3 days</item>
-    <item>week</item>
+    <item>1 week</item>
   </string-array>
   <plurals name="days_plural">
     <item quantity="one">%d day</item>

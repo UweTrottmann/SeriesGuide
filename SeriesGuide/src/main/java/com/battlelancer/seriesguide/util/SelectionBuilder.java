@@ -22,19 +22,18 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.uwetrottmann.androidutils.Lists;
-import com.uwetrottmann.androidutils.Maps;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
-import android.util.Log;
-
+import com.battlelancer.seriesguide.provider.SeriesGuideProvider;
+import com.uwetrottmann.androidutils.Lists;
+import com.uwetrottmann.androidutils.Maps;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
+import timber.log.Timber;
 
 /**
  * Helper for building selection clauses for {@link SQLiteDatabase}. Each
@@ -42,10 +41,6 @@ import java.util.Map;
  * thread safe.
  */
 public class SelectionBuilder {
-    private static final String TAG = "SelectionBuilder";
-
-    private static final boolean LOGV = false;
-
     private String mTable = null;
 
     private Map<String, String> mProjectionMap = Maps.newHashMap();
@@ -160,8 +155,8 @@ public class SelectionBuilder {
         assertTable();
         if (columns != null)
             mapColumns(columns);
-        if (LOGV)
-            Log.v(TAG, "query(columns=" + Arrays.toString(columns) + ") " + this);
+        if (SeriesGuideProvider.LOGV)
+            Timber.v("query(columns=" + Arrays.toString(columns) + ") " + this);
         return db.query(mTable, columns, getSelection(), getSelectionArgs(), groupBy, having,
                 orderBy, limit);
     }
@@ -171,8 +166,8 @@ public class SelectionBuilder {
      */
     public int update(SQLiteDatabase db, ContentValues values) {
         assertTable();
-        if (LOGV)
-            Log.v(TAG, "update() " + this);
+        if (SeriesGuideProvider.LOGV)
+            Timber.v("update() " + this);
         return db.update(mTable, values, getSelection(), getSelectionArgs());
     }
 
@@ -181,8 +176,8 @@ public class SelectionBuilder {
      */
     public int delete(SQLiteDatabase db) {
         assertTable();
-        if (LOGV)
-            Log.v(TAG, "delete() " + this);
+        if (SeriesGuideProvider.LOGV)
+            Timber.v("delete() " + this);
         return db.delete(mTable, getSelection(), getSelectionArgs());
     }
 }

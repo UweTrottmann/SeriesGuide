@@ -48,7 +48,8 @@
     <!-- Sharing -->
     <string name="share_show">Share show</string>
     <string name="share_episode">Share episode</string>
-    <string name="share_checkout">Check out</string>
+    <string name="share_movie">Share movie</string>
+    <string name="share_checkout">Check out %s</string>
 
     <!-- Shouts -->
     <string name="comments">Comments</string>
@@ -59,15 +60,20 @@
     <string name="autorefresh">Refreshing automagically</string>
 
     <!-- Movies -->
-    <string name="movies_watchlist">Watchlist (trakt)</string>
+    <string name="movies_collection">Collection</string>
+    <string name="movies_watchlist">Watchlist</string>
     <string name="watchlist_add">Add to watchlist</string>
     <string name="watchlist_remove">Remove from watchlist</string>
     <string name="watchlist_added">Added to watchlist</string>
     <string name="watchlist_removed">Removed from watchlist</string>
     <string name="movies_search_hint">Type a movie title</string>
     <string name="movies_empty">Search for a movie above.</string>
-    <string name="movies_watchlist_empty">You have not added movies to your trakt watchlist.</string>
+    <string name="movies_collection_empty">You have not added movies to your collection.</string>
+    <string name="movies_watchlist_empty">You have not added movies to your watchlist.</string>
     <string name="trailer">Trailer</string>
+    <string name="movie_cast">Cast</string>
+    <string name="movie_crew">Crew</string>
+    <string name="movie_person_in_role">%1$s (%2$s)</string>
 
     <!-- Statistics -->
     <string name="shows_with_next">%s with next episodes</string>
@@ -132,6 +138,7 @@
     <string name="show_genres">Genres</string>
     <string name="show_runtime">Runtime</string>
     <string name="show_contentrating">Content Rating</string>
+    <string name="show_release_times">Release times</string>
     <string name="episode_directors">Directors</string>
     <string name="episode_gueststars">Guest Stars</string>
     <string name="episode_writers">Writers</string>
@@ -168,6 +175,12 @@
     <string name="trakt_notseen">%s not seen.</string>
     <string name="trakt_collected">%s collected.</string>
     <string name="trakt_notcollected">%s not collected.</string>
+    <string name="action_collection_add">Add to collection</string>
+    <string name="action_collection_remove">Remove from collection</string>
+    <string name="action_collection_added">Added to collection</string>
+    <string name="action_collection_removed">Removed from collection</string>
+    <string name="action_watched">Watched</string>
+    <string name="action_unwatched">Not yet watched</string>
 
     <!-- Shows -->
     <string name="confirm_delete">Do you really want to remove %s?</string>
@@ -235,7 +248,6 @@
     <string name="remaining">%s remaining</string>
 
     <!-- Add show -->
-    <string name="search_hint_add">Show name</string>
     <string name="no_results">No results, try complete words.</string>
     <string name="search_error">Searching failed, try again later.</string>
     <string name="add_all">Add all</string>
@@ -281,16 +293,15 @@
     <string name="show_library">Show your library</string>
     <string name="upload_shows">Upload your SeriesGuide show list:</string>
     <string name="upload_existing_shows">Upload existing shows</string>
-    <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
+    <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
     <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
 
-    <!-- Manual trakt sync -->
-    <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
-    <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
+    <!-- trakt upload -->
     <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
-    <string name="trakt_download">Download to SeriesGuide</string>
-    <string name="trakt_upload">Upload to trakt.tv</string>
-    <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
+    <string name="trakt_upload">Upload to trakt</string>
+    <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
+    <string name="upload_done">Finished uploading.</string>
+    <string name="upload_no_work">There was nothing to upload.</string>
 
     <!-- Settings -->
     <string name="prefs_category_basic">Basics</string>
@@ -308,10 +319,9 @@
     <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
     <string name="about">About SeriesGuide</string>
     <string name="pref_credits">Credits</string>
-    <string name="clearGetGlueCredentials">Disconnect GetGlue</string>
-    <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
+    <string name="clearGetGlueCredentials">Disconnect tvtag</string>
+    <string name="clearGetGlueCredentialssummary">Check in with tvtag to reconnect</string>
     <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
-    <string name="pref_traktsync">Manual sync with trakt.tv</string>
     <string name="feedback">Send feedback</string>
     <string name="pref_autoaddshows">Add new trakt shows</string>
     <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
@@ -331,11 +341,11 @@
     </string-array>
     <string-array name="upcominglimit">
         <item>now</item>
-        <item>a day</item>
+        <item>1 day</item>
         <item>3 days</item>
-        <item>a week</item>
-        <item>two weeks</item>
-        <item>a month</item>
+        <item>1 week</item>
+        <item>2 weeks</item>
+        <item>1 month</item>
     </string-array>
 
     <!-- Appearance settings -->
@@ -388,20 +398,19 @@
 
     <!-- Check Ins -->
     <string name="checkin">Check in</string>
-    <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
     <string name="checkin_searchhint">Type a show name</string>
     <string name="checkin_empty">No matching shows</string>
     <string name="checkin_hint">Type a message (optional)</string>
-    <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
+    <string name="checkin_fixgetglue">Fix tvtag check-in</string>
     <string name="paste_title">Paste title</string>
-    <string name="checkinsuccess">Checked into %s on GetGlue.</string>
-    <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
-    <string name="getglue_authentication">Connect GetGlue</string>
-    <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
+    <string name="checkinsuccess">Checked into %s on tvtag.</string>
+    <string name="checkinfailed">tvtag check-in failed. Try again later.</string>
+    <string name="getglue_authentication">Connect tvtag</string>
+    <string name="getglue_authfailed">tvtag authentication failed. Try again later.</string>
     <string name="checkin_success_trakt">Checked into %s on trakt.</string>
     <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
 
-    <!-- Fix GetGlue Check In -->
+    <!-- Fix tvtag Check In -->
     <string name="select_show">Select show</string>
     <string name="check_into">Check into</string>
     <string name="no_selection">pick one below</string>
@@ -422,7 +431,6 @@
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
     <string name="trakt_error">Interaction with trakt failed</string>
-    <string name="trakt_decryptfail">password could not be decrypted</string>
     <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
     <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
     <string name="trakt_createaccount">Create new account</string>
@@ -453,7 +461,7 @@
         <item>on air</item>
         <item>5 min in advance</item>
         <item>10 min in advance</item>
-        <item>one hour in advance</item>
+        <item>1 hour in advance</item>
     </string-array>
 
     <!-- Legacy Widgets -->
@@ -484,15 +492,15 @@
     <!-- DashClock extension -->
     <string name="dashclock_extension_label">Upcoming episode</string>
     <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
-    <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
+    <string name="dashclock_pref_upcoming_threshold">Display episode within…</string>
 
     <string-array name="dashclockUpcomingThresholds">
-        <item>hour</item>
+        <item>1 hour</item>
         <item>6 hours</item>
         <item>12 hours</item>
         <item>24 hours</item>
         <item>3 days</item>
-        <item>week</item>
+        <item>1 week</item>
     </string-array>
 
     <!-- SeriesGuide X deprecation -->

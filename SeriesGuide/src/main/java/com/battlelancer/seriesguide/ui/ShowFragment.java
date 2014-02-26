@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2014 Uwe Trottmann
  *
@@ -17,27 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.items.Series;
-import com.battlelancer.seriesguide.loaders.ShowLoader;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.TraktSummaryTask;
-import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.CheatSheet;
-import com.uwetrottmann.seriesguide.R;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -45,8 +23,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.app.ShareCompat;
-import android.support.v4.app.ShareCompat.IntentBuilder;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -56,8 +32,29 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.items.Series;
+import com.battlelancer.seriesguide.loaders.ShowLoader;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.TimeTools;
+import com.battlelancer.seriesguide.util.TraktSummaryTask;
+import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.CheatSheet;
 import de.greenrobot.event.EventBus;
+import java.util.Date;
 
 /**
  *
@@ -117,7 +114,8 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.showinfo_menu, menu);
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+        inflater.inflate(isLightTheme ? R.menu.show_menu_light : R.menu.show_menu, menu);
     }
 
     @Override
@@ -137,7 +135,7 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
                     ListItemTypes.SHOW, getFragmentManager());
             return true;
         } else if (itemId == R.id.menu_show_share) {
-            onShareShow();
+            shareShow();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -163,8 +161,7 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
     }
 
     public void onEvent(TraktActionCompleteEvent event) {
-        if (event.mTraktTaskArgs.getInt(TraktTask.InitBundle.TRAKTACTION)
-                == TraktAction.RATE_SHOW.index) {
+        if (event.mTraktAction == TraktAction.RATE_SHOW) {
             onLoadTraktRatings(false);
         }
     }
@@ -188,8 +185,9 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
         // release time
         TextView releaseTime = (TextView) getView().findViewById(R.id.textViewShowReleaseTime);
         if (!TextUtils.isEmpty(mShow.getAirsDayOfWeek()) && mShow.getAirsTime() != -1) {
-            String[] values = Utils.parseMillisecondsToTime(mShow.getAirsTime(),
-                    mShow.getAirsDayOfWeek(), getActivity());
+            String[] values = TimeTools
+                    .formatToShowReleaseTimeAndDay(getActivity(), mShow.getAirsTime(),
+                            mShow.getCountry(), mShow.getAirsDayOfWeek());
             releaseTime.setText(values[1] + " " + values[0]);
         } else {
             releaseTime.setText(null);
@@ -207,10 +205,18 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
         TextView overview = (TextView) getView().findViewById(R.id.textViewShowOverview);
         overview.setText(TextUtils.isEmpty(mShow.getOverview()) ? null : mShow.getOverview());
 
-        // first airdate
-        long airtime = Utils.buildEpisodeAirtime(mShow.getFirstAired(), mShow.getAirsTime());
+        // country for release times (or assumed one)
+        // show "United States" if country is not supported
+        TextView releaseCountry = (TextView) getView()
+                .findViewById(R.id.textViewShowReleaseCountry);
+        releaseCountry.setText(TimeTools.isUnsupportedCountryOrUs(mShow.getCountry())
+                ? TimeTools.UNITED_STATES : mShow.getCountry());
+
+        // first release: use the same parser as for episodes, because we have an exact date
+        long actualRelease = TimeTools.parseEpisodeReleaseTime(mShow.getFirstAired(),
+                mShow.getAirsTime(), mShow.getCountry());
         Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewShowFirstAirdate),
-                Utils.formatToDate(airtime, getActivity()));
+                TimeTools.formatToDate(getActivity(), new Date(actualRelease)));
 
         // Others
         Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewShowActors),
@@ -326,7 +332,8 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
 
     private void onRateOnTrakt() {
         if (TraktCredentials.ensureCredentials(getActivity())) {
-            TraktRateDialogFragment rateShow = TraktRateDialogFragment.newInstance(getShowTvdbId());
+            TraktRateDialogFragment rateShow = TraktRateDialogFragment.newInstanceShow(
+                    getShowTvdbId());
             rateShow.show(getFragmentManager(), "traktratedialog");
         }
         fireTrackerEvent("Rate (trakt)");
@@ -341,17 +348,10 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
         }
     }
 
-    private void onShareShow() {
+    private void shareShow() {
         if (mShow != null) {
-            // Share intent
-            IntentBuilder ib = ShareCompat.IntentBuilder
-                    .from(getActivity())
-                    .setChooserTitle(R.string.share_show)
-                    .setText(
-                            getString(R.string.share_checkout) + " \"" + mShow.getTitle()
-                                    + "\" " + ServiceUtils.IMDB_TITLE_URL + mShow.getImdbId())
-                    .setType("text/plain");
-            ib.startChooser();
+            ShareUtils.shareShow(getActivity(), getShowTvdbId(), mShow.getTitle());
+            fireTrackerEvent("Share");
         }
     }
 }

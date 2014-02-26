@@ -20,19 +20,18 @@ import com.google.analytics.tracking.android.EasyTracker;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -68,10 +67,7 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
         setContentView(R.layout.checkin);
         setupNavDrawer();
 
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.checkin));
-        actionBar.setIcon(R.drawable.ic_action_checkin);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        setupActionBar();
 
         // setup search box
         mSearchBox = (EditText) findViewById(R.id.editTextCheckinSearch);
@@ -127,6 +123,13 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
+    private void setupActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(getString(R.string.checkin));
+        actionBar.setIcon(Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableCheckin));
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -148,13 +151,14 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
             baseUri = Shows.CONTENT_URI;
         }
 
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String fakeInAnHour = String.valueOf(Utils.getFakeCurrentTime(prefs)
+        // query selects shows with next episodes before this point in time
+        // it does not make sense to check into episodes further in the future
+        String customTimeInOneHour = String.valueOf(TimeTools.getCurrentTime(this)
                 + DateUtils.HOUR_IN_MILLIS);
 
         return new CursorLoader(this, baseUri, CheckinQuery.PROJECTION, CheckinQuery.SELECTION,
                 new String[]{
-                        fakeInAnHour
+                        customTimeInOneHour
                 }, ShowsDistillationSettings.ShowsSortOrder.EPISODE_REVERSE);
     }
 
@@ -207,9 +211,10 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
             }
 
             // network and release day
-            final String[] values = Utils.parseMillisecondsToTime(
-                    cursor.getLong(CheckinQuery.AIRSTIME),
-                    cursor.getString(CheckinQuery.AIRSDAYOFWEEK), context);
+            String[] values = TimeTools.formatToShowReleaseTimeAndDay(context,
+                    cursor.getLong(CheckinQuery.RELEASE_TIME),
+                    cursor.getString(CheckinQuery.RELEASE_COUNTRY),
+                    cursor.getString(CheckinQuery.RELEASE_DAY));
             // one line: 'Network | Tue 08:00 PM'
             viewHolder.timeAndNetwork.setText(cursor.getString(CheckinQuery.NETWORK) + " / "
                     + values[1] + " " + values[0]);
@@ -235,7 +240,8 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
         String[] PROJECTION = {
                 Shows._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.AIRSTIME, Shows.NETWORK,
                 Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT,
-                Shows.FAVORITE, Shows.IMDBID, Shows.NEXTEPISODE, Shows.HIDDEN, Shows.NEXTAIRDATEMS
+                Shows.FAVORITE, Shows.IMDBID, Shows.NEXTEPISODE, Shows.HIDDEN, Shows.NEXTAIRDATEMS,
+                Shows.RELEASE_COUNTRY
         };
 
         String SELECTION = Shows.NEXTEPISODE + "!='' AND " + Shows.HIDDEN + "=0 AND "
@@ -247,13 +253,13 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
 
         int NEXTTEXT = 2;
 
-        int AIRSTIME = 3;
+        int RELEASE_TIME = 3;
 
         int NETWORK = 4;
 
         int POSTER = 5;
 
-        int AIRSDAYOFWEEK = 6;
+        int RELEASE_DAY = 6;
 
         int STATUS = 7;
 
@@ -264,5 +270,7 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
         int IMDBID = 10;
 
         int NEXTEPISODE = 11;
+
+        int RELEASE_COUNTRY = 12;
     }
 }

@@ -20,7 +20,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.BaseTopActivity;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.os.Bundle;
 
@@ -52,13 +52,13 @@ public class CloudSetupActivity extends BaseTopActivity {
     private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.hexagon);
-        actionBar.setIcon(R.drawable.ic_action_lab);
+        actionBar.setIcon(Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableLab));
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_CLOUD_POSITION);
+        //setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_CLOUD_POSITION);
     }
 
     @Override

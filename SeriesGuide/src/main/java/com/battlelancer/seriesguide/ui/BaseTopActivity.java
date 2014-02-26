@@ -22,7 +22,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -83,17 +83,6 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
             startActivity(new Intent(this, BillingActivity.class));
 
             fireTrackerEvent("Subscribe");
-            return true;
-        } else if (itemId == R.id.menu_preferences) {
-            startActivity(new Intent(this, SeriesGuidePreferences.class));
-
-            fireTrackerEvent("Settings");
-            return true;
-        } else if (itemId == R.id.menu_help) {
-            startActivity(new Intent(this, HelpActivity.class));
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-
-            fireTrackerEvent("Help");
             return true;
         }
 

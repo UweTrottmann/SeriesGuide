@@ -28,7 +28,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.android.vending.billing.IInAppBillingService;
 
@@ -36,7 +35,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import timber.log.Timber;
 
 /**
  * Provides convenience methods for in-app billing. You can create one instance of this
@@ -987,14 +986,14 @@ public class IabHelper {
     }
 
     void logDebug(String msg) {
-        if (mDebugLog) Log.d(mDebugTag, msg);
+        if (mDebugLog) Timber.d(msg);
     }
 
     void logError(String msg) {
-        Log.e(mDebugTag, "In-app billing error: " + msg);
+        Timber.e("In-app billing error: " + msg);
     }
 
     void logWarn(String msg) {
-        Log.w(mDebugTag, "In-app billing warning: " + msg);
+        Timber.w("In-app billing warning: " + msg);
     }
 }

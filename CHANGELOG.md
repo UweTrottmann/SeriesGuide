@@ -5,6 +5,100 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 12 *(2014-02-26)*
+-------------------------
+
+* Improved international show support: release times + notifications might be off until a full sync will run (by opening the app). You may trigger a sync manually by touching Menu in the upper right corner (or by pressing the menu button on your device), then Update.
+* Build a movie watchlist and collection.
+* Requires at least Android 2.3 (Gingerbread).
+* Bugfixes and design updates.
+
+#### 12-beta10 *(2014-02-24)*
+
+* FIX Tabs are crammed together.
+
+#### 12-beta9 *(2014-02-24)*
+
+* TWEAK DashClock extension now prominently displays show title, is formatted similar to DashClock's calendar extension.
+* TWEAK 'Manual sync with trakt' is now simply 'Upload existing shows'. The regular (Auto) Update mechanism will take care of syncing watched and collected episodes.
+* TWEAK More reliable trakt credentials validation.
+* FIX Tab backgrounds not themed.
+* FIX No error message if movie details could not be loaded, lonely cast and crew labels.
+* FIX Displayed last 'Auto-Backup' time even if there are no actual backup files.
+* FIX Various other bug fixes.
+* NOTICE Themes are now exclusive to X subscribers/X pass holders.
+
+#### 12-beta8 *(2014-02-19)*
+
+* TWEAK Better crash reports.
+* FIX Movie posters and trakt avatars downloaded despite on mobile connection and 'Images via Wi-Fi only' was enabled.
+
+#### 12-beta7 *(2014-02-18)*
+
+* FIX Crash when movie details did not load due to network error, but movie was added to watchlist or collection.
+
+#### 12-beta6 *(2014-02-18)*
+
+* NOTICE This version requires at least Android 2.3 (Gingerbread).
+* FEATURE Movie watchlist and collection support. If connected to trakt, syncs watchlist and collection and in addition allows to flag movies watched.
+* TWEAK Display movie runtime, cast and crew as well as TMDb and trakt ratings.
+* TWEAK Support sharing movie (using secure trakt web link), added TMDb link.
+* TWEAK Sharing shows and movies uses a secure trakt web link which creates nice info cards on Google+, Facebook and Twitter.
+* TWEAK Moved Settings and Help back to nav drawer, cleaned up some duplicate overflow actions.
+* TWEAK Support translucent system bars with Android Dark app theme.
+* TWEAK Support release times for Finland (Europe/Helsinki time zone).
+* FIX Single episode notification opens wrong episode.
+* FIX Show and episode ratings did not update because they were cached for too long.
+* FIX Using the back button on the show list sometimes navigates to the show list again.
+* FIX Setting a manual time offset breaks episodes moving correctly into 'Recent', notifications.
+* FIX When dismissing the check-in dialog coming from a notification quick action a blank screen is shown.
+* FIX When changing settings for multiple widgets the configuration dialog for the first configured widget was shown for all widgets.
+* FIX Going back from a widget configuration dialog or notification quick-action check in returns to the app instead of the home screen/previous task.
+* FIX Syncing on Android 2.3 (Gingerbread) crashes SeriesGuide.
+* FIX Flagging an episode as unwatched could lead to unexpected (= much later) next episode.
+* NOTICE Contributor branch changed from `beta` to `dev`. Please submit any new pull requests against `dev`. Also updated contributer guidelines.
+* NOTICE Switched to a new crash reporting tool. For the privacy policy see http://seriesgui.de/privacy.
+* NOTICE Latest translations from crowdin.
+* NOTICE Database upgraded to version 32.
+
+#### 12-beta5 *(2014-02-04)*
+
+* NOTICE A full sync is scheduled after upgrading. Details below.
+* TWEAK Release times are calculated with a show's country of origin (sourced from trakt) in mind. When upgrading a full sync is triggered. You might see incorrect release times and receive incorrect notifications until the upgrade is complete.
+* TWEAK On the info tab of a show 'Release times' will list the country that determines which time zone is used to calculate the episode release times. Currently supported are Australia, Germany, Japan, United States, United Kingdom. United States is used for all others. Please share others you want supported!
+* TWEAK Shows airing from 12:00am to 12:59am are now associated with the day before (e.g. Late Night with Jimmy Fallon).
+* TWEAK On Android 4.4 (KitKat) and up the episode details screen uses translucent system bars (phones only).
+* FIX Daily trakt sync now properly removes watched or collected flags for shows with no watched or collected episode on trakt.
+* FIX Crash when connecting to trakt and credentials could not be stored correctly.
+* FIX Sync did not update all shows it was told to update.
+* NOTICE The JSON import/export tool now exports the 'country' property for shows.
+* NOTICE Latest translations from crowdin.
+
+#### 12-beta4 *(2014-01-30)*
+
+* FIX Crash when adding/removing movie from watchlist, shouting.
+* NOTICE Latest translations from crowdin.
+
+#### 12-beta3 *(2014-01-29)*
+
+* NOTICE GetGlue is now tvtag.
+* TWEAK Check-in dialog waits for trakt and/or tvtag check-in to succeed before vanishing with your message (you can still dismiss anytime).
+* TWEAK Auto-Update gets watched and collected episodes from trakt and matches them in SeriesGuide. At most every 24 hours (always if update is triggered manually).
+* TWEAK Show show title in show list context menu, season number in seasons context menus.
+* NOTICE Latest translations from crowdin.
+
+#### 12-beta2 *(2014-01-21)*
+
+* FIX Mirrored shows and movies grid on some Android 4.1 tablets.
+
+#### 12-beta1 *(2014-01-20)*
+
+* TWEAK Light theme now features a light action bar and nav drawer. Both SeriesGuide Light and Android Dark theme have a more pleasant flat background.
+* TWEAK Drop user to home screen after creating show shortcut.
+* FIX Crash when rating while using SeriesGuide with ART.
+* FIX Incorrect movie posters displaying in movie search.
+* NOTICE Reenable access to SeriesGuide cloud.
+
 Version 11.1 *(2014-01-21)*
 -------------------------
 

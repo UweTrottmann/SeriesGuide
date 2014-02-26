@@ -42,6 +42,8 @@ public class Series {
 
     private long airsTime;
 
+    private String country;
+
     private String contentRating;
 
     private String genres;
@@ -145,6 +147,14 @@ public class Series {
 
     public void setAirsTime(long l) {
         this.airsTime = l;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public String getContentRating() {

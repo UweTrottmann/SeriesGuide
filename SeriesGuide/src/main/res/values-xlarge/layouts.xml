@@ -3,7 +3,6 @@
 
     <item name="episodes" type="layout">@layout/episodes_multipane</item>
     <item name="search" type="layout">@layout/activity_singlepane_drawer_wide</item>
-    <item name="episode_pager" type="layout">@layout/episode_pager_wide</item>
     <item name="add_searchresult" type="layout">@layout/add_searchresult_wide</item>
     <item name="shows_row" type="layout">@layout/shows_row_wide</item>
 

@@ -22,29 +22,25 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Environment;
 import android.provider.BaseColumns;
-import android.util.Log;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearchColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodesColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemsColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListsColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.MoviesColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SeasonsColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
+import com.battlelancer.seriesguide.util.TimeTools;
+import timber.log.Timber;
 
-import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
-import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearchColumns;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.EpisodesColumns;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListItemsColumns;
-import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
-import com.battlelancer.seriesguide.provider.SeriesContract.ListsColumns;
-import com.battlelancer.seriesguide.provider.SeriesContract.SeasonsColumns;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.provider.SeriesContract.ShowsColumns;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
-import java.io.File;
-import java.io.IOException;
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 
 public class SeriesGuideDatabase extends SQLiteOpenHelper {
-
-    private static final String TAG = "SeriesGuideDatabase";
 
     public static final String DATABASE_NAME = "seriesdatabase";
 
@@ -76,9 +72,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_ABSOLUTE_NUMBERS = 30;
 
-    public static final int DBVER_LASTWATCHEDID = 31;
+    public static final int DBVER_31_LAST_WATCHED_ID = 31;
 
-    public static final int DATABASE_VERSION = DBVER_LASTWATCHEDID;
+    public static final int DBVER_32_MOVIES = 32;
+
+    public static final int DATABASE_VERSION = DBVER_32_MOVIES;
 
     /**
      * Qualifies column names by prefixing their {@link Tables} name.
@@ -133,6 +131,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 + " FROM listitems WHERE item_type=3) AS listitems LEFT OUTER JOIN ("
                 + EPISODES_JOIN_SHOWS + ") AS episodes ON listitems.item_ref_id=episodes._id))";
 
+        String MOVIES = "movies";
+
     }
 
     private interface Selections {
@@ -144,25 +144,54 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                         + Shows.NETWORK + ","
                         + Shows.STATUS + ","
                         + Shows.AIRSDAYOFWEEK + ","
-                        + Shows.FAVORITE;
-        String COMMON_LIST_ITEMS_COLUMNS
-                = "listitem_id AS _id,list_item_id,list_id,item_type,item_ref_id";
+                        + Shows.FAVORITE + ","
+                        + Shows.RELEASE_COUNTRY;
 
-        String LIST_ITEMS_COLUMNS_INTERNAL
-                = "_id AS listitem_id,list_item_id,list_id,item_type,item_ref_id";
-        String SHOWS_COLUMNS_INTERNAL = Shows._ID + " AS " + COMMON_SHOW_COLUMNS + ","
-                + "overview,airstime,nexttext,series_nextairdatetext";
+        String COMMON_LIST_ITEMS_COLUMNS =
+                "listitem_id as " + ListItems._ID + ","
+                        + ListItems.LIST_ITEM_ID + ","
+                        + Lists.LIST_ID + ","
+                        + ListItems.TYPE + ","
+                        + ListItems.ITEM_REF_ID;
 
-        String SHOWS_COLUMNS = COMMON_LIST_ITEMS_COLUMNS + "," + COMMON_SHOW_COLUMNS + ","
-                + "overview,airstime,nexttext,series_nextairdatetext";
-        String SEASONS_COLUMNS = COMMON_LIST_ITEMS_COLUMNS + "," + COMMON_SHOW_COLUMNS + ","
-                + "combinednr AS overview,airstime,nexttext,series_nextairdatetext";
-        String EPISODES_COLUMNS = COMMON_LIST_ITEMS_COLUMNS
-                + ","
-                + COMMON_SHOW_COLUMNS
-                + ","
-                + "episodetitle AS overview,episode_firstairedms AS airstime,"
-                + "season AS nexttext,episodenumber AS series_nextairdatetext";
+        String LIST_ITEMS_COLUMNS_INTERNAL =
+                ListItems._ID + " as listitem_id,"
+                        + ListItems.LIST_ITEM_ID + ","
+                        + Lists.LIST_ID + ","
+                        + ListItems.TYPE + ","
+                        + ListItems.ITEM_REF_ID;
+
+        String SHOWS_COLUMNS_INTERNAL =
+                Shows._ID + " as " + COMMON_SHOW_COLUMNS + ","
+                        + Shows.OVERVIEW + ","
+                        + Shows.AIRSTIME + ","
+                        + Shows.NEXTTEXT + ","
+                        + Shows.NEXTAIRDATETEXT;
+
+        String SHOWS_COLUMNS =
+                COMMON_LIST_ITEMS_COLUMNS + ","
+                        + COMMON_SHOW_COLUMNS + ","
+                        + Shows.OVERVIEW + ","
+                        + Shows.AIRSTIME + ","
+                        + Shows.NEXTTEXT + ","
+                        + Shows.NEXTAIRDATETEXT;
+
+        String SEASONS_COLUMNS =
+                COMMON_LIST_ITEMS_COLUMNS + ","
+                        + COMMON_SHOW_COLUMNS + ","
+                        + Seasons.COMBINED + " as " + Shows.OVERVIEW + ","
+                        + Shows.AIRSTIME + ","
+                        + Shows.NEXTTEXT + ","
+                        + Shows.NEXTAIRDATETEXT;
+
+        String EPISODES_COLUMNS =
+                COMMON_LIST_ITEMS_COLUMNS + ","
+                + COMMON_SHOW_COLUMNS + ","
+                        + Episodes.TITLE + " as " + Shows.OVERVIEW + ","
+                        + Episodes.FIRSTAIREDMS + " as " + Shows.AIRSTIME + ","
+                        + Episodes.SEASON + " as " + Shows.NEXTTEXT + ","
+                        + Episodes.NUMBER + " as " + Shows.NEXTAIRDATETEXT;
+
     }
 
     interface References {
@@ -219,7 +248,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ShowsColumns.SYNCENABLED + " INTEGER DEFAULT 1,"
 
-            + ShowsColumns.AIRTIME + " TEXT DEFAULT '',"
+            + ShowsColumns.RELEASE_COUNTRY + " TEXT DEFAULT '',"
 
             + ShowsColumns.HIDDEN + " INTEGER DEFAULT 0,"
 
@@ -338,6 +367,53 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ");";
 
+    private static final String CREATE_MOVIES_TABLE = "CREATE TABLE " + Tables.MOVIES
+            + " ("
+
+            + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+
+            + MoviesColumns.TMDB_ID + " INTEGER NOT NULL,"
+
+            + MoviesColumns.IMDB_ID + " TEXT,"
+
+            + MoviesColumns.TITLE + " TEXT,"
+
+            + MoviesColumns.POSTER + " TEXT,"
+
+            + MoviesColumns.GENRES + " TEXT,"
+
+            + MoviesColumns.OVERVIEW + " TEXT,"
+
+            + MoviesColumns.RELEASED_UTC_MS + " INTEGER,"
+
+            + MoviesColumns.RUNTIME_MIN + " INTEGER DEFAULT 0,"
+
+            + MoviesColumns.TRAILER + " TEXT,"
+
+            + MoviesColumns.CERTIFICATION + " TEXT,"
+
+            + MoviesColumns.IN_COLLECTION + " INTEGER DEFAULT 0,"
+
+            + MoviesColumns.IN_WATCHLIST + " INTEGER DEFAULT 0,"
+
+            + MoviesColumns.PLAYS + " INTEGER DEFAULT 0,"
+
+            + MoviesColumns.WATCHED + " INTEGER DEFAULT 0,"
+
+            + MoviesColumns.RATING_TMDB + " REAL DEFAULT 0,"
+
+            + MoviesColumns.RATING_VOTES_TMDB + " INTEGER DEFAULT 0,"
+
+            + MoviesColumns.RATING_TRAKT + " INTEGER DEFAULT 0,"
+
+            + MoviesColumns.RATING_VOTES_TRAKT + " INTEGER DEFAULT 0,"
+
+            + MoviesColumns.LAST_UPDATED + " INTEGER,"
+
+            + "UNIQUE (" + MoviesColumns.TMDB_ID + ") ON CONFLICT REPLACE"
+
+            + ");";
+
     public SeriesGuideDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -355,87 +431,60 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL(CREATE_LISTS_TABLE);
 
         db.execSQL(CREATE_LIST_ITEMS_TABLE);
+
+        db.execSQL(CREATE_MOVIES_TABLE);
     }
 
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.d(TAG, "Can't downgrade database from version " +
-                oldVersion + " to " + newVersion);
+        Timber.d("Can't downgrade from version " + oldVersion + " to " + newVersion);
         onResetDatabase(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.d(TAG, "onUpgrade() from " + oldVersion + " to " + newVersion);
-
-        // make a backup of the database file
-        if (AndroidUtils.isExtStorageAvailable()) {
-            File dbFile = new File(db.getPath());
-            File exportDir = new File(Environment.getExternalStorageDirectory(),
-                    "seriesguidebackup");
-            exportDir.mkdirs();
-            File file = new File(exportDir, dbFile.getName() + "_b4upgr.db");
-
-            try {
-                file.createNewFile();
-                AndroidUtils.copyFile(dbFile, file);
-            } catch (IOException e) {
-                Log.e(TAG, e.getMessage(), e);
-            }
-        }
+        Timber.d("Upgrading from " + oldVersion + " to " + newVersion);
 
         // run necessary upgrades
         int version = oldVersion;
         switch (version) {
             case 16:
                 upgradeToSeventeen(db);
-                version = 17;
             case 17:
                 upgradeToEighteen(db);
-                version = 18;
             case 18:
                 upgradeToNineteen(db);
-                version = 19;
             case 19:
                 upgradeToTwenty(db);
-                version = 20;
             case 20:
                 upgradeToTwentyOne(db);
-                version = 21;
             case 21:
                 upgradeToTwentyTwo(db);
-                version = 22;
             case 22:
                 upgradeToTwentyThree(db);
-                version = 23;
             case 23:
                 upgradeToTwentyFour(db);
-                version = 24;
             case 24:
                 upgradeToTwentyFive(db);
-                version = 25;
             case 25:
                 upgradeToTwentySix(db);
-                version = 26;
             case 26:
                 upgradeToTwentySeven(db);
-                version = 27;
             case 27:
                 upgradeToTwentyEight(db);
-                version = 28;
             case 28:
                 upgradeToTwentyNine(db);
-                version = 29;
             case 29:
                 upgradeToThirty(db);
-                version = 30;
             case 30:
                 upgradeToThirtyOne(db);
-                version = 31;
+            case DBVER_31_LAST_WATCHED_ID:
+                upgradeToThirtyTwo(db);
+                version = DBVER_32_MOVIES;
         }
 
         // drop all tables if version is not right
-        Log.d(TAG, "after upgrade logic, at version " + version);
+        Timber.d("After upgrade at version " + version);
         if (version != DATABASE_VERSION) {
             onResetDatabase(db);
         }
@@ -445,12 +494,13 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * Drops all tables and creates an empty database.
      */
     private void onResetDatabase(SQLiteDatabase db) {
-        Log.w(TAG, "Database has incompatible version, starting from scratch");
+        Timber.w("Resetting database");
         db.execSQL("DROP TABLE IF EXISTS " + Tables.SHOWS);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.SEASONS);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.LISTS);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.LIST_ITEMS);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.MOVIES);
 
         db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
 
@@ -466,6 +516,13 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     private static final String LATEST_ORDER = Episodes.FIRSTAIREDMS + " DESC,"
             + Episodes.SEASON + " DESC,"
             + Episodes.NUMBER + " DESC";
+
+    /**
+     * Add movies table.
+     */
+    private static void upgradeToThirtyTwo(SQLiteDatabase db) {
+        db.execSQL(CREATE_MOVIES_TABLE);
+    }
 
     /**
      * Add {@link Shows} column to store the last watched episode id for better prediction of next
@@ -572,7 +629,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Adds a column to the {@link Tables.EPISODES} table to store the airdate and possibly time in
+     * Adds a column to the {@link Tables#EPISODES} table to store the airdate and possibly time in
      * milliseconds.
      */
     private static void upgradeToTwentyFour(SQLiteDatabase db) {
@@ -599,7 +656,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 ContentValues values = new ContentValues();
                 while (episodes.moveToNext()) {
                     String firstAired = episodes.getString(1);
-                    long episodeAirtime = Utils.buildEpisodeAirtime(firstAired, airtime);
+                    long episodeAirtime = TimeTools.parseEpisodeReleaseTime(firstAired, airtime, null);
 
                     values.put(Episodes.FIRSTAIREDMS, episodeAirtime);
                     db.update(Tables.EPISODES, values, Episodes._ID + "=?", new String[]{
@@ -619,7 +676,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Adds a column to the {@link Tables.SHOWS} table similar to the favorite boolean, but to allow
+     * Adds a column to the {@link Tables#SHOWS} table similar to the favorite boolean, but to allow
      * hiding shows.
      */
     private static void upgradeToTwentyThree(SQLiteDatabase db) {
@@ -638,7 +695,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     private static void upgradeToTwentyOne(SQLiteDatabase db) {
-        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.AIRTIME
+        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.RELEASE_COUNTRY
                 + " TEXT DEFAULT '';");
     }
 

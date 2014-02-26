@@ -16,14 +16,7 @@
 
 package com.battlelancer.seriesguide.adapters;
 
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.uwetrottmann.seriesguide.R;
-import com.uwetrottmann.tmdb.entities.Movie;
-
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +25,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TmdbSettings;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.uwetrottmann.tmdb.entities.Movie;
 import java.text.DateFormat;
 import java.util.List;
 
@@ -45,23 +42,25 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
     private LayoutInflater mInflater;
 
-    private ImageDownloader mImageDownloader;
-
     private OnClickListener mOnClickListener;
 
-    private String mBaseUrl;
+    private String mImageBaseUrl;
 
     private DateFormat dateFormatMovieReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
     public MoviesAdapter(Context context, OnClickListener listener) {
         super(context, LAYOUT);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mImageDownloader = ImageDownloader.getInstance(context);
         mOnClickListener = listener;
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        mBaseUrl = prefs.getString(SeriesGuidePreferences.KEY_TMDB_BASE_URL,
-                "http://cf2.imgobject.com/t/p/") + "w185";
+        // figure out which size of posters to load based on screen density
+        if (DisplaySettings.isVeryHighDensityScreen(context)) {
+            mImageBaseUrl = TmdbSettings.getImageBaseUrl(context)
+                    + TmdbSettings.POSTER_SIZE_SPEC_W342;
+        } else {
+            mImageBaseUrl = TmdbSettings.getImageBaseUrl(context)
+                    + TmdbSettings.POSTER_SIZE_SPEC_W154;
+        }
     }
 
     @Override
@@ -95,8 +94,12 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
             holder.date.setText("");
         }
         if (!TextUtils.isEmpty(movie.poster_path)) {
-            String posterPath = mBaseUrl + movie.poster_path;
-            mImageDownloader.download(posterPath, holder.poster, false);
+            ServiceUtils.getPicasso(getContext())
+                    .load(mImageBaseUrl + movie.poster_path)
+                    .into(holder.poster);
+        } else {
+            // clear image
+            holder.poster.setImageDrawable(null);
         }
 
         // context menu

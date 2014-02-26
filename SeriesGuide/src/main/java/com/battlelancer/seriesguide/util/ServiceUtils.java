@@ -18,7 +18,8 @@ package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.jakewharton.trakt.Trakt;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.R;
+import com.squareup.picasso.Picasso;
 import com.uwetrottmann.tmdb.Tmdb;
 
 import android.app.SearchManager;
@@ -41,21 +42,11 @@ public final class ServiceUtils {
 
     private static final String GOOGLE_PLAY = "https://play.google.com/store/search?q=%s&c=movies";
 
-    private static final String TRAKT_SEARCH_BASE_URL = "http://trakt.tv/search/";
-
     private static final String IMDB_APP_TITLE_URI_POSTFIX = "/";
 
     private static final String IMDB_APP_TITLE_URI = "imdb:///title/";
 
     public static final String IMDB_TITLE_URL = "http://imdb.com/title/";
-
-    private static final String TRAKT_SEARCH_MOVIE_URL = TRAKT_SEARCH_BASE_URL + "tmdb?q=";
-
-    private static final String TRAKT_SEARCH_SHOW_URL = TRAKT_SEARCH_BASE_URL + "tvdb?q=";
-
-    private static final String TRAKT_SEARCH_SEASON_ARG = "&s=";
-
-    private static final String TRAKT_SEARCH_EPISODE_ARG = "&e=";
 
     private static final String TVDB_SHOW_URL = "http://thetvdb.com/?tab=series&id=";
 
@@ -71,28 +62,37 @@ public final class ServiceUtils {
 
     private static final String YOUTUBE_PACKAGE = "com.google.android.youtube";
 
+    private static Picasso sPicasso;
+
     private static Trakt sTrakt;
 
     private static Trakt sTraktWithAuth;
 
-    private static Tmdb sTmdbServiceManagerInstance;
+    private static Tmdb sTmdb;
 
     /* This class is never initialized */
     private ServiceUtils() {
     }
 
+    public static synchronized Picasso getPicasso(Context context) {
+        if (sPicasso == null) {
+            sPicasso = new Picasso.Builder(context).downloader(
+                    new LocalOnlyOkHttpDownloader(context)).build();
+        }
+        return sPicasso;
+    }
+
     /**
-     * Get a tmdb-java ServiceManager with our API key set.
+     * Get a tmdb-java instance with our API key set.
      */
-    public static synchronized Tmdb getTmdbServiceManager(
-            Context context) {
-        if (sTmdbServiceManagerInstance == null) {
-            sTmdbServiceManagerInstance = new Tmdb();
-            sTmdbServiceManagerInstance.setApiKey(context.getResources().getString(
+    public static synchronized Tmdb getTmdb(Context context) {
+        if (sTmdb == null) {
+            sTmdb = new Tmdb();
+            sTmdb.setApiKey(context.getResources().getString(
                     R.string.tmdb_apikey));
         }
 
-        return sTmdbServiceManagerInstance;
+        return sTmdb;
     }
 
     /**
@@ -195,7 +195,6 @@ public final class ServiceUtils {
             } else {
                 playButton.setEnabled(false);
             }
-
         }
     }
 
@@ -237,7 +236,6 @@ public final class ServiceUtils {
             } else {
                 amazonButton.setEnabled(false);
             }
-
         }
     }
 
@@ -254,17 +252,8 @@ public final class ServiceUtils {
 
                 @Override
                 public void onClick(View v) {
-                    String uri;
-                    if (seasonNumber < 0 || episodeNumber < 0) {
-                        // look just for the show page
-                        uri = TRAKT_SEARCH_SHOW_URL + showTvdbId;
-                    } else {
-                        // look for the episode page
-                        uri = TRAKT_SEARCH_SHOW_URL + showTvdbId
-                                + TRAKT_SEARCH_SEASON_ARG + seasonNumber
-                                + TRAKT_SEARCH_EPISODE_ARG + episodeNumber;
-                    }
-
+                    String uri = TraktTools.buildEpisodeOrShowUrl(showTvdbId, seasonNumber,
+                            episodeNumber);
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(uri));
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
@@ -288,7 +277,7 @@ public final class ServiceUtils {
      */
     public static void openTraktMovie(Context context, int tmdbId, String logTag) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(TRAKT_SEARCH_MOVIE_URL + tmdbId));
+        intent.setData(Uri.parse(TraktTools.buildMovieUrl(tmdbId)));
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
 
@@ -448,5 +437,4 @@ public final class ServiceUtils {
 
         Utils.trackAction(context, logTag, "Web search");
     }
-
 }

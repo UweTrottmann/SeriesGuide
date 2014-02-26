@@ -17,12 +17,10 @@
 
 package com.battlelancer.seriesguide.settings;
 
-import com.uwetrottmann.seriesguide.BuildConfig;
+import com.battlelancer.seriesguide.BuildConfig;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.preference.PreferenceManager;
 
 public class AppSettings {

@@ -16,13 +16,27 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
+import android.text.format.DateUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
-import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
@@ -35,34 +49,13 @@ import com.jakewharton.trakt.enumerations.ActivityType;
 import com.jakewharton.trakt.services.UserService;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.seriesguide.R;
-
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.text.format.DateUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit.RetrofitError;
+import timber.log.Timber;
 
 public class TraktFriendsFragment extends SherlockFragment implements
         LoaderManager.LoaderCallbacks<List<UserProfile>>, AdapterView.OnItemClickListener {
-
-    public static final String TAG = "TraktFriendsFragment";
 
     private TraktFriendsAdapter mAdapter;
 
@@ -227,7 +220,7 @@ public class TraktFriendsFragment extends SherlockFragment implements
                     }
                 }
             } catch (RetrofitError e) {
-                Log.w(TAG, e);
+                Timber.e(e, "Loading friends activity failed");
             }
 
             return friendsActivity;
@@ -236,13 +229,10 @@ public class TraktFriendsFragment extends SherlockFragment implements
 
     private static class TraktFriendsAdapter extends ArrayAdapter<UserProfile> {
 
-        private final ImageDownloader mImageDownloader;
-
         private final LayoutInflater mInflater;
 
         public TraktFriendsAdapter(Context context) {
             super(context, R.layout.friend);
-            mImageDownloader = ImageDownloader.getInstance(context);
             mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
@@ -280,7 +270,7 @@ public class TraktFriendsFragment extends SherlockFragment implements
             UserProfile friend = getItem(position);
 
             holder.name.setText(friend.username);
-            mImageDownloader.downloadAndStore(friend.avatar, holder.avatar);
+            ServiceUtils.getPicasso(getContext()).load(friend.avatar).into(holder.avatar);
 
             holder.timestamp.setTextAppearance(getContext(), R.style.TextAppearance_Small_Dim);
 
