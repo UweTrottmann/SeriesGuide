@@ -216,9 +216,9 @@
   <string name="integration_trakt_items">-dodaje seriale z biblioteki i listy obejrzanych odcinków\n\n- zobacz rekomendację i aktywność przyjaciół\n\n - automatyczna synchronizacja oznaczenia jako obejrzane i kupione\n\n- automatyczne dodawanie nowo obejrzanych seriali</string>
   <string name="trakt_upload_hint">Oznacz odcinki jako obejrzane w SeriesGuide jeśli są obejrzane na trakt</string>
   <string name="trakt_upload">Wyślij do trakt.tv</string>
-  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
-  <string name="upload_done">Finished uploading.</string>
-  <string name="upload_no_work">There was nothing to upload.</string>
+  <string name="trakt_syncunwatched">Usuń oznaczenie jako obejrzane na trakt dla nieobejrzanych odcinków w SeriesGuide</string>
+  <string name="upload_done">Przesyłanie zakończone.</string>
+  <string name="upload_no_work">Brak danych do przesłania.</string>
   <string name="prefs_category_basic">Podstawowe</string>
   <string name="prefs_category_sharing">Usługi</string>
   <string name="prefs_category_advanced">Zaawansowane</string>
