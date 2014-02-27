@@ -193,18 +193,30 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment implements
     }
 
     private void setButtonStates(boolean connectEnabled, boolean disconnectEnabled) {
-        mButtonConnect.setEnabled(connectEnabled);
-        mButtonDisconnect.setEnabled(disconnectEnabled);
+        // guard calls, as we might get called after the views were detached
+        if (mButtonConnect != null) {
+            mButtonConnect.setEnabled(connectEnabled);
+        }
+        if (mButtonDisconnect != null) {
+            mButtonDisconnect.setEnabled(disconnectEnabled);
+        }
     }
 
     private void setStatus(boolean visible, boolean inProgress, int statusTextResourceId) {
-        if (!visible) {
-            mStatusView.setVisibility(View.GONE);
-            return;
+        // guard calls, as we might get called after the views were detached
+        if (mStatusView != null) {
+            if (!visible) {
+                mStatusView.setVisibility(View.GONE);
+                return;
+            }
+            mStatusView.setVisibility(View.VISIBLE);
         }
-        mStatusView.setVisibility(View.VISIBLE);
-        mProgressBar.setVisibility(inProgress ? View.VISIBLE : View.GONE);
-        mTextViewStatus.setText(statusTextResourceId);
+        if (mProgressBar != null) {
+            mProgressBar.setVisibility(inProgress ? View.VISIBLE : View.GONE);
+        }
+        if (mTextViewStatus != null) {
+            mTextViewStatus.setText(statusTextResourceId);
+        }
     }
 
     @Override
