@@ -351,7 +351,11 @@ public class MovieTools {
 
         @Override
         protected void onPostExecute(Integer movieTmdbId) {
-            EventBus.getDefault().post(new MovieChangedEvent(movieTmdbId));
+            // Guarding against odd NPE, https://github.com/UweTrottmann/SeriesGuide/issues/371
+            EventBus bus = EventBus.getDefault();
+            if (bus != null) {
+                bus.post(new MovieChangedEvent(movieTmdbId));
+            }
         }
     }
 
