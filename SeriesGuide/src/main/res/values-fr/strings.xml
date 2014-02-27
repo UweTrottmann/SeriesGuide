@@ -216,9 +216,9 @@
   <string name="integration_trakt_items">- vous pourrez ajouter vos séries depuis votre bibliothèque ou votre liste à voir.\n\n- vous pourrez voir vos recommandations et l\'activité de vos amis.\n\n- les épisodes vus et collectés seront synchronisés automatiquement.\n\n- les nouvelles séries que vous regardez seront ajoutées automatiquement.</string>
   <string name="trakt_upload_hint">Marquer tous les épisodes vus sur SeriesGuide comme vus sur trakt :</string>
   <string name="trakt_upload">Envoyer vers trakt.tv</string>
-  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
-  <string name="upload_done">Finished uploading.</string>
-  <string name="upload_no_work">There was nothing to upload.</string>
+  <string name="trakt_syncunwatched">Modifier les épisodes indiqués comme vus sur trakt s\'ils sont indiqués comme non vus sur SeriesGuide</string>
+  <string name="upload_done">Envoi terminé.</string>
+  <string name="upload_no_work">Il n\'y a rien à envoyer.</string>
   <string name="prefs_category_basic">Paramètres de base</string>
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Avancé</string>

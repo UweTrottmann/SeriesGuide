@@ -5,6 +5,12 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 12.1 *(2014-02-27)*
+---------------------------
+
+* Bugfixes.
+* Updated translations.
+
 Version 12 *(2014-02-26)*
 -------------------------
 

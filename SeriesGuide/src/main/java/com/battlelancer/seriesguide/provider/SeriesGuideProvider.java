@@ -434,7 +434,6 @@ public class SeriesGuideProvider extends ContentProvider {
 
             for (int i = 0; i < numValues; i++) {
                 db.insertOrThrow(table, null, values[i]);
-                db.yieldIfContendedSafely();
             }
             db.setTransactionSuccessful();
 
