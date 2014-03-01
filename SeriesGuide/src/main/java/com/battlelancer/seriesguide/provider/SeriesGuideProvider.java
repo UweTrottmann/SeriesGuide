@@ -58,7 +58,6 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final int SHOWS_WITH_EPISODE = 103;
 
-
     private static final int EPISODES = 200;
 
     private static final int EPISODES_ID = 201;
@@ -73,18 +72,15 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final int EPISODES_ID_WITHSHOW = 206;
 
-
     private static final int SEASONS = 300;
 
     private static final int SEASONS_ID = 301;
 
     private static final int SEASONS_OFSHOW = 302;
 
-
     private static final int EPISODESEARCH = 400;
 
     private static final int EPISODESEARCH_ID = 401;
-
 
     private static final int LISTS = 500;
 
@@ -92,13 +88,11 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final int LISTS_WITH_LIST_ITEM_ID = 502;
 
-
     private static final int LIST_ITEMS = 600;
 
     private static final int LIST_ITEMS_ID = 601;
 
     private static final int LIST_ITEMS_WITH_DETAILS = 602;
-
 
     private static final int MOVIES = 700;
 
@@ -307,43 +301,84 @@ public class SeriesGuideProvider extends ContentProvider {
         if (LOGV) {
             Timber.v("insert(uri=" + uri + ", values=" + values.toString() + ")");
         }
+
+        Uri newItemUri;
+
         final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            newItemUri = insertInTransaction(uri, values);
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+
+        return newItemUri;
+    }
+
+    private Uri insertInTransaction(Uri uri, ContentValues values) {
+        Uri notifyUri = null;
+
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case SHOWS: {
-                insertAndNotify(db, uri, Tables.SHOWS, values);
-                return Shows.buildShowUri(values.getAsString(Shows._ID));
+                long id = mDbHelper.insertShows(values);
+                if (id < 0) {
+                    break;
+                }
+                notifyUri = Shows.buildShowUri(values.getAsString(Shows._ID));
+                break;
             }
             case SEASONS: {
-                insertAndNotify(db, uri, Tables.SEASONS, values);
-                return Seasons.buildSeasonUri(values.getAsString(Seasons._ID));
+                long id = mDbHelper.insertSeasons(values);
+                if (id < 0) {
+                    break;
+                }
+                notifyUri = Seasons.buildSeasonUri(values.getAsString(Seasons._ID));
+                break;
             }
             case EPISODES: {
-                long id = insertAndNotify(db, uri, Tables.EPISODES, values);
-                return Lists.buildListUri(String.valueOf(id));
+                long id = mDbHelper.insertEpisodes(values);
+                if (id < 0) {
+                    break;
+                }
+                notifyUri = Episodes.buildEpisodeUri(values.getAsString(Episodes._ID));
+                break;
             }
             case LISTS: {
-                insertAndNotify(db, uri, Tables.LISTS, values);
-                return Lists.buildListUri(values.getAsString(Lists.LIST_ID));
+                long id = mDbHelper.insertLists(values);
+                if (id < 0) {
+                    break;
+                }
+                notifyUri = Lists.buildListUri(values.getAsString(Lists.LIST_ID));
+                break;
             }
             case LIST_ITEMS: {
-                insertAndNotify(db, uri, Tables.LIST_ITEMS, values);
-                return ListItems.buildListItemUri(values.getAsString(ListItems.LIST_ITEM_ID));
+                long id = mDbHelper.insertListItems(values);
+                if (id < 0) {
+                    break;
+                }
+                notifyUri = ListItems.buildListItemUri(values.getAsString(ListItems.LIST_ITEM_ID));
+                break;
             }
             case MOVIES: {
-                insertAndNotify(db, uri, Tables.MOVIES, values);
-                return Movies.buildMovieUri(values.getAsInteger(Movies.TMDB_ID));
+                long id = mDbHelper.insertMovies(values);
+                if (id < 0) {
+                    break;
+                }
+                notifyUri = Movies.buildMovieUri(values.getAsInteger(Movies.TMDB_ID));
+                break;
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
             }
         }
-    }
 
-    private long insertAndNotify(SQLiteDatabase db, Uri uri, String table, ContentValues values) {
-        long rowId = db.insertOrThrow(table, null, values);
-        getContext().getContentResolver().notifyChange(uri, null);
-        return rowId;
+        if (notifyUri != null) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return notifyUri;
     }
 
     /**

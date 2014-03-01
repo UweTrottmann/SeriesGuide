@@ -20,6 +20,7 @@ import android.app.SearchManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
@@ -78,6 +79,13 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = DBVER_32_MOVIES;
 
+    private DatabaseUtils.InsertHelper mShowsInserter;
+    private DatabaseUtils.InsertHelper mSeasonsInserter;
+    private DatabaseUtils.InsertHelper mEpisodesInserter;
+    private DatabaseUtils.InsertHelper mListsInserter;
+    private DatabaseUtils.InsertHelper mListItemsInserter;
+    private DatabaseUtils.InsertHelper mMoviesInserter;
+
     /**
      * Qualifies column names by prefixing their {@link Tables} name.
      */
@@ -132,7 +140,6 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 + EPISODES_JOIN_SHOWS + ") AS episodes ON listitems.item_ref_id=episodes._id))";
 
         String MOVIES = "movies";
-
     }
 
     private interface Selections {
@@ -186,12 +193,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
         String EPISODES_COLUMNS =
                 COMMON_LIST_ITEMS_COLUMNS + ","
-                + COMMON_SHOW_COLUMNS + ","
+                        + COMMON_SHOW_COLUMNS + ","
                         + Episodes.TITLE + " as " + Shows.OVERVIEW + ","
                         + Episodes.FIRSTAIREDMS + " as " + Shows.AIRSTIME + ","
                         + Episodes.SEASON + " as " + Shows.NEXTTEXT + ","
                         + Episodes.NUMBER + " as " + Shows.NEXTAIRDATETEXT;
-
     }
 
     interface References {
@@ -418,6 +424,30 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    public long insertShows(ContentValues values) {
+        return mShowsInserter.insert(values);
+    }
+
+    public long insertSeasons(ContentValues values) {
+        return mSeasonsInserter.insert(values);
+    }
+
+    public long insertEpisodes(ContentValues values) {
+        return mEpisodesInserter.insert(values);
+    }
+
+    public long insertLists(ContentValues values) {
+        return mListsInserter.insert(values);
+    }
+
+    public long insertListItems(ContentValues values) {
+        return mListItemsInserter.insert(values);
+    }
+
+    public long insertMovies(ContentValues values) {
+        return mMoviesInserter.insert(values);
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_SHOWS_TABLE);
@@ -433,6 +463,16 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL(CREATE_LIST_ITEMS_TABLE);
 
         db.execSQL(CREATE_MOVIES_TABLE);
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        mShowsInserter = new DatabaseUtils.InsertHelper(db, Tables.SHOWS);
+        mSeasonsInserter = new DatabaseUtils.InsertHelper(db, Tables.SEASONS);
+        mEpisodesInserter = new DatabaseUtils.InsertHelper(db, Tables.EPISODES);
+        mListsInserter = new DatabaseUtils.InsertHelper(db, Tables.LISTS);
+        mListItemsInserter = new DatabaseUtils.InsertHelper(db, Tables.LIST_ITEMS);
+        mMoviesInserter = new DatabaseUtils.InsertHelper(db, Tables.MOVIES);
     }
 
     @Override
@@ -534,7 +574,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
         // pre populate with latest watched episode ids
         ContentValues values = new ContentValues();
-        final Cursor shows = db.query(Tables.SHOWS, new String[]{
+        final Cursor shows = db.query(Tables.SHOWS, new String[] {
                 Shows._ID,
         }, null, null, null, null, null);
         if (shows != null) {
@@ -544,16 +584,16 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
                 while (shows.moveToNext()) {
                     final String showId = shows.getString(0);
-                    final Cursor highestWatchedEpisode = db.query(Tables.EPISODES, new String[]{
+                    final Cursor highestWatchedEpisode = db.query(Tables.EPISODES, new String[] {
                             Episodes._ID
-                    }, LATEST_SELECTION, new String[]{
+                    }, LATEST_SELECTION, new String[] {
                             showId
                     }, null, null, LATEST_ORDER);
 
                     if (highestWatchedEpisode != null) {
                         if (highestWatchedEpisode.moveToFirst()) {
                             values.put(Shows.LASTWATCHEDID, highestWatchedEpisode.getInt(0));
-                            db.update(Tables.SHOWS, values, Shows._ID + "=?", new String[]{
+                            db.update(Tables.SHOWS, values, Shows._ID + "=?", new String[] {
                                     showId
                             });
                             values.clear();
@@ -637,7 +677,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 + " INTEGER DEFAULT -1;");
 
         // populate the new column from existing data
-        final Cursor shows = db.query(Tables.SHOWS, new String[]{
+        final Cursor shows = db.query(Tables.SHOWS, new String[] {
                 Shows._ID, Shows.AIRSTIME
         }, null, null, null, null, null);
 
@@ -645,9 +685,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             final String showId = shows.getString(0);
             final long airtime = shows.getLong(1);
 
-            final Cursor episodes = db.query(Tables.EPISODES, new String[]{
+            final Cursor episodes = db.query(Tables.EPISODES, new String[] {
                     Episodes._ID, Episodes.FIRSTAIRED
-            }, Shows.REF_SHOW_ID + "=?", new String[]{
+            }, Shows.REF_SHOW_ID + "=?", new String[] {
                     showId
             }, null, null, null);
 
@@ -656,10 +696,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 ContentValues values = new ContentValues();
                 while (episodes.moveToNext()) {
                     String firstAired = episodes.getString(1);
-                    long episodeAirtime = TimeTools.parseEpisodeReleaseTime(firstAired, airtime, null);
+                    long episodeAirtime = TimeTools.parseEpisodeReleaseTime(firstAired, airtime,
+                            null);
 
                     values.put(Episodes.FIRSTAIREDMS, episodeAirtime);
-                    db.update(Tables.EPISODES, values, Episodes._ID + "=?", new String[]{
+                    db.update(Tables.EPISODES, values, Episodes._ID + "=?", new String[] {
                             episodes.getString(0)
                     });
                     values.clear();
@@ -676,7 +717,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Adds a column to the {@link Tables#SHOWS} table similar to the favorite boolean, but to allow
+     * Adds a column to the {@link Tables#SHOWS} table similar to the favorite boolean, but to
+     * allow
      * hiding shows.
      */
     private static void upgradeToTwentyThree(SQLiteDatabase db) {
@@ -685,7 +727,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Add a column to store the last time a show has been updated to allow for more precise control
+     * Add a column to store the last time a show has been updated to allow for more precise
+     * control
      * over which shows should get updated. This is in conjunction with a 7 day limit when a show
      * will get updated regardless if it has been marked as updated or not.
      */
@@ -720,7 +763,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 + " TEXT DEFAULT '';");
 
         // convert status text to 0/1 integer
-        final Cursor shows = db.query(Tables.SHOWS, new String[]{
+        final Cursor shows = db.query(Tables.SHOWS, new String[] {
                 Shows._ID, Shows.STATUS
         }, null, null, null, null, null);
         final ContentValues values = new ContentValues();
@@ -738,7 +781,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                     status = "";
                 }
                 values.put(Shows.STATUS, status);
-                db.update(Tables.SHOWS, values, Shows._ID + "=?", new String[]{
+                db.update(Tables.SHOWS, values, Shows._ID + "=?", new String[] {
                         shows.getString(0)
                 });
                 values.clear();
@@ -878,9 +921,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 + " from episodes)" + "on _id=docid)" + "on sid=" + Shows.REF_SHOW_ID + ")");
 
         // search for anything starting with the given search term
-        return db.rawQuery(query.toString(), new String[]{
+        return db.rawQuery(query.toString(), new String[] {
                 "\"" + searchterm + "*\""
         });
     }
-
 }
