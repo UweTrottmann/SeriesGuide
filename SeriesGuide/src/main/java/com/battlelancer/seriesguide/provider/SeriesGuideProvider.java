@@ -260,7 +260,9 @@ public class SeriesGuideProvider extends ContentProvider {
                 Cursor query = builder
                         .where(selection, selectionArgs)
                         .query(db, projection, sortOrder);
-                query.setNotificationUri(getContext().getContentResolver(), uri);
+                if (query != null) {
+                    query.setNotificationUri(getContext().getContentResolver(), uri);
+                }
                 return query;
             }
         }
