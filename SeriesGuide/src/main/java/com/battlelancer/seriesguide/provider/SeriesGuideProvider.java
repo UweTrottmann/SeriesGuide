@@ -177,7 +177,11 @@ public class SeriesGuideProvider extends ContentProvider {
         return matcher;
     }
 
+    private final ThreadLocal<Boolean> mApplyingBatch = new ThreadLocal<Boolean>();
+
     private SeriesGuideDatabase mDbHelper;
+
+    protected SQLiteDatabase mDb;
 
     @Override
     public boolean onCreate() {
@@ -300,13 +304,17 @@ public class SeriesGuideProvider extends ContentProvider {
     public Uri insert(Uri uri, ContentValues values) {
         Uri newItemUri;
 
-        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        db.beginTransaction();
-        try {
+        if (!applyingBatch()) {
+            final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            db.beginTransaction();
+            try {
+                newItemUri = insertInTransaction(uri, values);
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+        } else {
             newItemUri = insertInTransaction(uri, values);
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
         }
 
         if (newItemUri != null) {
@@ -417,15 +425,21 @@ public class SeriesGuideProvider extends ContentProvider {
         }
         int count = 0;
 
-        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        db.beginTransaction();
-        try {
+        if (!applyingBatch()) {
+            final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            db.beginTransaction();
+            try {
+                count = buildSelection(uri, sUriMatcher.match(uri))
+                        .where(selection, selectionArgs)
+                        .update(db, values);
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+        } else {
             count = buildSelection(uri, sUriMatcher.match(uri))
                     .where(selection, selectionArgs)
-                    .update(db, values);
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
+                    .update(mDb, values);
         }
 
         if (count > 0) {
@@ -445,15 +459,21 @@ public class SeriesGuideProvider extends ContentProvider {
         }
         int count = 0;
 
-        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        db.beginTransaction();
-        try {
+        if (!applyingBatch()) {
+            final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            db.beginTransaction();
+            try {
+                count = buildSelection(uri, sUriMatcher.match(uri))
+                        .where(selection, selectionArgs)
+                        .delete(db);
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+        } else {
             count = buildSelection(uri, sUriMatcher.match(uri))
                     .where(selection, selectionArgs)
-                    .delete(db);
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
+                    .delete(mDb);
         }
 
         if (count > 0) {
@@ -470,20 +490,33 @@ public class SeriesGuideProvider extends ContentProvider {
     @Override
     public ContentProviderResult[] applyBatch(ArrayList<ContentProviderOperation> operations)
             throws OperationApplicationException {
-        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        db.beginTransaction();
+        final int numOperations = operations.size();
+        if (numOperations == 0) {
+            return new ContentProviderResult[0];
+        }
+
+        mDb = mDbHelper.getWritableDatabase();
+        mDb.beginTransaction();
         try {
-            final int numOperations = operations.size();
+            mApplyingBatch.set(true);
             final ContentProviderResult[] results = new ContentProviderResult[numOperations];
             for (int i = 0; i < numOperations; i++) {
-                results[i] = operations.get(i).apply(this, results, i);
-                db.yieldIfContendedSafely();
+                final ContentProviderOperation operation = operations.get(i);
+                if (i > 0 && operation.isYieldAllowed()) {
+                    mDb.yieldIfContendedSafely();
+                }
+                results[i] = operation.apply(this, results, i);
             }
-            db.setTransactionSuccessful();
+            mDb.setTransactionSuccessful();
             return results;
         } finally {
-            db.endTransaction();
+            mApplyingBatch.set(false);
+            mDb.endTransaction();
         }
+    }
+
+    private boolean applyingBatch() {
+        return mApplyingBatch.get() != null && mApplyingBatch.get();
     }
 
     /**
