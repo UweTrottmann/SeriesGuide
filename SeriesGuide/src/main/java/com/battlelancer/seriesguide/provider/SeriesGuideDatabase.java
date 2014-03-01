@@ -910,18 +910,22 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     public static Cursor getSuggestions(String searchterm, SQLiteDatabase db) {
-        StringBuilder query = new StringBuilder("select _id," + Episodes.TITLE + " as "
+        String query = "select _id," + Episodes.TITLE + " as "
                 + SearchManager.SUGGEST_COLUMN_TEXT_1 + "," + Shows.TITLE + " as "
                 + SearchManager.SUGGEST_COLUMN_TEXT_2 + "," + "_id as "
-                + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID + " from ((select _id as sid,"
-                + Shows.TITLE + " from " + Tables.SHOWS + ")" + " join " + "(select _id,"
-                + Episodes.TITLE + "," + Shows.REF_SHOW_ID + " from " + "(select docid" + " from "
-                + Tables.EPISODES_SEARCH + " where " + Tables.EPISODES_SEARCH + " match " + "?)"
-                + " join " + "(select _id," + Episodes.TITLE + "," + Shows.REF_SHOW_ID
-                + " from episodes)" + "on _id=docid)" + "on sid=" + Shows.REF_SHOW_ID + ")");
+                + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID
+                + " from ((select _id as sid," + Shows.TITLE + " from " + Tables.SHOWS + ")"
+                + " join "
+                + "(select _id," + Episodes.TITLE + "," + Shows.REF_SHOW_ID
+                + " from " + "(select docid" + " from " + Tables.EPISODES_SEARCH
+                + " where " + Tables.EPISODES_SEARCH + " match " + "?)"
+                + " join "
+                + "(select _id," + Episodes.TITLE + "," + Shows.REF_SHOW_ID + " from episodes)"
+                + "on _id=docid)"
+                + "on sid=" + Shows.REF_SHOW_ID + ")";
 
         // search for anything starting with the given search term
-        return db.rawQuery(query.toString(), new String[] {
+        return db.rawQuery(query, new String[] {
                 "\"" + searchterm + "*\""
         });
     }
