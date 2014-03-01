@@ -184,12 +184,25 @@ public class SeriesGuideProvider extends ContentProvider {
     protected SQLiteDatabase mDb;
 
     @Override
+    public void shutdown() {
+        /**
+         * If we ever do unit-testing, nice to have this already (no bug-hunt).
+         */
+        if (mDbHelper != null) {
+            mDbHelper.close();
+            mDbHelper = null;
+            mDb = null;
+        }
+    }
+
+    @Override
     public boolean onCreate() {
         Context context = getContext();
 
         sUriMatcher = buildUriMatcher(context);
 
         mDbHelper = new SeriesGuideDatabase(context);
+        mDb = mDbHelper.getWritableDatabase(); // ensures upgrades can run
 
         PreferenceManager.getDefaultSharedPreferences(context)
                 .registerOnSharedPreferenceChangeListener(mImportListener);
