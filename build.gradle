@@ -33,7 +33,7 @@ ext {
     buildToolsVersion = '19.0.1'
 
     versionCode = 236
-    versionName = '12.1'
+    versionName = '12.2-beta'
 }
 
 ext.libraries = [
