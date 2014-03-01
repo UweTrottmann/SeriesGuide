@@ -443,11 +443,24 @@ public class SeriesGuideProvider extends ContentProvider {
         if (LOGV) {
             Timber.v("delete(uri=" + uri + ")");
         }
+        int count = 0;
+
         final SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        final SelectionBuilder builder = buildSelection(uri, sUriMatcher.match(uri));
-        int retVal = builder.where(selection, selectionArgs).delete(db);
-        getContext().getContentResolver().notifyChange(uri, null);
-        return retVal;
+        db.beginTransaction();
+        try {
+            count = buildSelection(uri, sUriMatcher.match(uri))
+                    .where(selection, selectionArgs)
+                    .delete(db);
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+
+        if (count > 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return count;
     }
 
     /**
