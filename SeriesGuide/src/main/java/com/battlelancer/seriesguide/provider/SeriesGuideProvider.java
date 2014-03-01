@@ -216,6 +216,46 @@ public class SeriesGuideProvider extends ContentProvider {
     };
 
     @Override
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
+            String sortOrder) {
+        if (LOGV) {
+            Timber.v("query(uri=" + uri + ", proj=" + Arrays.toString(projection) + ")");
+        }
+        final SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case RENEW_FTSTABLE: {
+                SeriesGuideDatabase.onRenewFTSTable(db);
+                return null;
+            }
+            case EPISODESEARCH: {
+                if (selectionArgs == null) {
+                    throw new IllegalArgumentException(
+                            "selectionArgs must be provided for the Uri: " + uri);
+                }
+                return SeriesGuideDatabase.search(selection, selectionArgs, db);
+            }
+            case SEARCH_SUGGEST: {
+                if (selectionArgs == null) {
+                    throw new IllegalArgumentException(
+                            "selectionArgs must be provided for the Uri: " + uri);
+                }
+                return SeriesGuideDatabase.getSuggestions(selectionArgs[0], db);
+            }
+            default: {
+                // Most cases are handled with simple SelectionBuilder
+                final SelectionBuilder builder = buildSelection(uri, match);
+                Cursor query = builder
+                        .where(selection, selectionArgs)
+                        .query(db, projection, sortOrder);
+                query.setNotificationUri(getContext().getContentResolver(), uri);
+                return query;
+            }
+        }
+    }
+
+    @Override
     public String getType(Uri uri) {
         final int match = sUriMatcher.match(uri);
         switch (match) {
@@ -304,46 +344,6 @@ public class SeriesGuideProvider extends ContentProvider {
         long rowId = db.insertOrThrow(table, null, values);
         getContext().getContentResolver().notifyChange(uri, null);
         return rowId;
-    }
-
-    @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
-            String sortOrder) {
-        if (LOGV) {
-            Timber.v("query(uri=" + uri + ", proj=" + Arrays.toString(projection) + ")");
-        }
-        final SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        final int match = sUriMatcher.match(uri);
-        switch (match) {
-            case RENEW_FTSTABLE: {
-                SeriesGuideDatabase.onRenewFTSTable(db);
-                return null;
-            }
-            case EPISODESEARCH: {
-                if (selectionArgs == null) {
-                    throw new IllegalArgumentException(
-                            "selectionArgs must be provided for the Uri: " + uri);
-                }
-                return SeriesGuideDatabase.search(selection, selectionArgs, db);
-            }
-            case SEARCH_SUGGEST: {
-                if (selectionArgs == null) {
-                    throw new IllegalArgumentException(
-                            "selectionArgs must be provided for the Uri: " + uri);
-                }
-                return SeriesGuideDatabase.getSuggestions(selectionArgs[0], db);
-            }
-            default: {
-                // Most cases are handled with simple SelectionBuilder
-                final SelectionBuilder builder = buildSelection(uri, match);
-                Cursor query = builder
-                        .where(selection, selectionArgs)
-                        .query(db, projection, sortOrder);
-                query.setNotificationUri(getContext().getContentResolver(), uri);
-                return query;
-            }
-        }
     }
 
     /**
