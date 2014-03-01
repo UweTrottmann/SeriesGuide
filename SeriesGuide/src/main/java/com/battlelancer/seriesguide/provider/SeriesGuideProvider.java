@@ -298,10 +298,6 @@ public class SeriesGuideProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        if (LOGV) {
-            Timber.v("insert(uri=" + uri + ", values=" + values.toString() + ")");
-        }
-
         Uri newItemUri;
 
         final SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -313,10 +309,44 @@ public class SeriesGuideProvider extends ContentProvider {
             db.endTransaction();
         }
 
+        if (newItemUri != null) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
         return newItemUri;
     }
 
+    @Override
+    public int bulkInsert(Uri uri, ContentValues[] values) {
+        int numValues = values.length;
+        boolean notifyChange = false;
+
+        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            for (int i = 0; i < numValues; i++) {
+                Uri result = insertInTransaction(uri, values[i]);
+                if (result != null) {
+                    notifyChange = true;
+                }
+                db.yieldIfContendedSafely();
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+
+        if (notifyChange) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return numValues;
+    }
+
     private Uri insertInTransaction(Uri uri, ContentValues values) {
+        if (LOGV) {
+            Timber.v("insert(uri=" + uri + ", values=" + values.toString() + ")");
+        }
         Uri notifyUri = null;
 
         final int match = sUriMatcher.match(uri);
@@ -374,10 +404,6 @@ public class SeriesGuideProvider extends ContentProvider {
             }
         }
 
-        if (notifyUri != null) {
-            getContext().getContentResolver().notifyChange(uri, null);
-        }
-
         return notifyUri;
     }
 
@@ -429,57 +455,6 @@ public class SeriesGuideProvider extends ContentProvider {
             }
             db.setTransactionSuccessful();
             return results;
-        } finally {
-            db.endTransaction();
-        }
-    }
-
-    @Override
-    public int bulkInsert(Uri uri, ContentValues[] values) {
-        /*
-         * A more efficient version of bulkInsert which matches the URI only
-         * once.
-         */
-        final int match = sUriMatcher.match(uri);
-        switch (match) {
-            case SHOWS: {
-                return bulkInsertHelper(uri, Tables.SHOWS, values);
-            }
-            case SEASONS: {
-                return bulkInsertHelper(uri, Tables.SEASONS, values);
-            }
-            case EPISODES: {
-                return bulkInsertHelper(uri, Tables.EPISODES, values);
-            }
-            case LISTS: {
-                return bulkInsertHelper(uri, Tables.LISTS, values);
-            }
-            case LIST_ITEMS: {
-                return bulkInsertHelper(uri, Tables.LIST_ITEMS, values);
-            }
-            case MOVIES: {
-                return bulkInsertHelper(uri, Tables.MOVIES, values);
-            }
-            default: {
-                throw new UnsupportedOperationException("Unknown uri: " + uri);
-            }
-        }
-    }
-
-    private int bulkInsertHelper(Uri uri, String table, ContentValues[] values) {
-        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        db.beginTransaction();
-        try {
-            int numValues = values.length;
-
-            for (int i = 0; i < numValues; i++) {
-                db.insertOrThrow(table, null, values[i]);
-            }
-            db.setTransactionSuccessful();
-
-            getContext().getContentResolver().notifyChange(uri, null);
-
-            return numValues;
         } finally {
             db.endTransaction();
         }
