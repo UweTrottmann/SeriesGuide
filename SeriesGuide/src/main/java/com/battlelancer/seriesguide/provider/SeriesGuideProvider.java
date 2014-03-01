@@ -183,15 +183,19 @@ public class SeriesGuideProvider extends ContentProvider {
         return matcher;
     }
 
-    private SeriesGuideDatabase mOpenHelper;
+    private SeriesGuideDatabase mDbHelper;
 
     @Override
     public boolean onCreate() {
-        final Context context = getContext();
+        Context context = getContext();
+
         sUriMatcher = buildUriMatcher(context);
-        mOpenHelper = new SeriesGuideDatabase(context);
+
+        mDbHelper = new SeriesGuideDatabase(context);
+
         PreferenceManager.getDefaultSharedPreferences(context)
                 .registerOnSharedPreferenceChangeListener(mImportListener);
+
         return true;
     }
 
@@ -202,7 +206,7 @@ public class SeriesGuideProvider extends ContentProvider {
             if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_DATABASEIMPORTED)) {
                 if (sharedPreferences
                         .getBoolean(SeriesGuidePreferences.KEY_DATABASEIMPORTED, false)) {
-                    mOpenHelper.close();
+                    mDbHelper.close();
                     sharedPreferences.edit()
                             .putBoolean(SeriesGuidePreferences.KEY_DATABASEIMPORTED, false)
                             .commit();
@@ -263,7 +267,7 @@ public class SeriesGuideProvider extends ContentProvider {
         if (LOGV) {
             Timber.v("insert(uri=" + uri + ", values=" + values.toString() + ")");
         }
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case SHOWS: {
@@ -308,7 +312,7 @@ public class SeriesGuideProvider extends ContentProvider {
         if (LOGV) {
             Timber.v("query(uri=" + uri + ", proj=" + Arrays.toString(projection) + ")");
         }
-        final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+        final SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         final int match = sUriMatcher.match(uri);
         switch (match) {
@@ -333,8 +337,9 @@ public class SeriesGuideProvider extends ContentProvider {
             default: {
                 // Most cases are handled with simple SelectionBuilder
                 final SelectionBuilder builder = buildSelection(uri, match);
-                Cursor query = builder.where(selection, selectionArgs).query(db, projection,
-                        sortOrder);
+                Cursor query = builder
+                        .where(selection, selectionArgs)
+                        .query(db, projection, sortOrder);
                 query.setNotificationUri(getContext().getContentResolver(), uri);
                 return query;
             }
@@ -349,7 +354,7 @@ public class SeriesGuideProvider extends ContentProvider {
         if (LOGV) {
             Timber.v("update(uri=" + uri + ", values=" + values.toString() + ")");
         }
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
         final SelectionBuilder builder = buildSelection(uri, sUriMatcher.match(uri));
         int retVal = builder.where(selection, selectionArgs).update(db, values);
         getContext().getContentResolver().notifyChange(uri, null);
@@ -364,7 +369,7 @@ public class SeriesGuideProvider extends ContentProvider {
         if (LOGV) {
             Timber.v("delete(uri=" + uri + ")");
         }
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
         final SelectionBuilder builder = buildSelection(uri, sUriMatcher.match(uri));
         int retVal = builder.where(selection, selectionArgs).delete(db);
         getContext().getContentResolver().notifyChange(uri, null);
@@ -378,7 +383,7 @@ public class SeriesGuideProvider extends ContentProvider {
     @Override
     public ContentProviderResult[] applyBatch(ArrayList<ContentProviderOperation> operations)
             throws OperationApplicationException {
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
         db.beginTransaction();
         try {
             final int numOperations = operations.size();
@@ -427,7 +432,7 @@ public class SeriesGuideProvider extends ContentProvider {
     }
 
     private int bulkInsertHelper(Uri uri, String table, ContentValues[] values) {
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
         db.beginTransaction();
         try {
             int numValues = values.length;
