@@ -31,45 +31,61 @@ public class AnalyticsTree extends Timber.HollowTree implements Timber.TaggedTre
     private static final Pattern ANONYMOUS_CLASS = Pattern.compile("\\$\\d+$");
     private static final ThreadLocal<String> NEXT_TAG = new ThreadLocal<String>();
 
-    @Override public void i(String message, Object... args) {
+    @Override
+    public void i(String message, Object... args) {
         logToCrashlytics("INFO", createTag(), message, args);
     }
 
-    @Override public void i(Throwable t, String message, Object... args) {
+    @Override
+    public void i(Throwable t, String message, Object... args) {
         logToCrashlytics("INFO", createTag(), message, args);
     }
 
-    @Override public void w(String message, Object... args) {
+    @Override
+    public void w(String message, Object... args) {
         logToCrashlytics("WARN", createTag(), message, args);
     }
 
-    @Override public void w(Throwable t, String message, Object... args) {
+    @Override
+    public void w(Throwable t, String message, Object... args) {
         logToCrashlytics("WARN", createTag(), message, args);
     }
 
-    @Override public void e(String message, Object... args) {
+    @Override
+    public void e(String message, Object... args) {
         logToCrashlytics("ERROR", createTag(), message, args);
     }
 
-    @Override public void e(Throwable t, String message, Object... args) {
+    @Override
+    public void e(Throwable t, String message, Object... args) {
         logToCrashlytics("ERROR", createTag(), message, args);
 
         // special treatment for retrofit errors
         if (t instanceof RetrofitError) {
             RetrofitError e = (RetrofitError) t;
 
-            // log url and status code
-            i("URL: %s", e.getUrl());
             Response response = e.getResponse();
-            if (response != null) {
-                int statusCode = response.getStatus();
+            if (response == null) {
+                // do NOT log anything
+                return;
+            }
+            int statusCode = response.getStatus();
+            // log url and status code
+            if (statusCode < 500) {
+                // non-server errors are more interesting
+                i("URL: %s", e.getUrl());
                 i("Status Code: %d", statusCode);
+            } else {
+                d("URL: %s", e.getUrl());
+                d("Status Code: %d", statusCode);
             }
         }
+
         Crashlytics.logException(t);
     }
 
-    @Override public void tag(String tag) {
+    @Override
+    public void tag(String tag) {
         NEXT_TAG.set(tag);
     }
 

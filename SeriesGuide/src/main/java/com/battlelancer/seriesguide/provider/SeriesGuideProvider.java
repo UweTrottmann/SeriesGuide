@@ -58,7 +58,6 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final int SHOWS_WITH_EPISODE = 103;
 
-
     private static final int EPISODES = 200;
 
     private static final int EPISODES_ID = 201;
@@ -73,18 +72,15 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final int EPISODES_ID_WITHSHOW = 206;
 
-
     private static final int SEASONS = 300;
 
     private static final int SEASONS_ID = 301;
 
     private static final int SEASONS_OFSHOW = 302;
 
-
     private static final int EPISODESEARCH = 400;
 
     private static final int EPISODESEARCH_ID = 401;
-
 
     private static final int LISTS = 500;
 
@@ -92,13 +88,11 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final int LISTS_WITH_LIST_ITEM_ID = 502;
 
-
     private static final int LIST_ITEMS = 600;
 
     private static final int LIST_ITEMS_ID = 601;
 
     private static final int LIST_ITEMS_WITH_DETAILS = 602;
-
 
     private static final int MOVIES = 700;
 
@@ -183,15 +177,36 @@ public class SeriesGuideProvider extends ContentProvider {
         return matcher;
     }
 
-    private SeriesGuideDatabase mOpenHelper;
+    private final ThreadLocal<Boolean> mApplyingBatch = new ThreadLocal<Boolean>();
+
+    private SeriesGuideDatabase mDbHelper;
+
+    protected SQLiteDatabase mDb;
+
+    @Override
+    public void shutdown() {
+        /**
+         * If we ever do unit-testing, nice to have this already (no bug-hunt).
+         */
+        if (mDbHelper != null) {
+            mDbHelper.close();
+            mDbHelper = null;
+            mDb = null;
+        }
+    }
 
     @Override
     public boolean onCreate() {
-        final Context context = getContext();
+        Context context = getContext();
+
         sUriMatcher = buildUriMatcher(context);
-        mOpenHelper = new SeriesGuideDatabase(context);
+
+        mDbHelper = new SeriesGuideDatabase(context);
+        mDb = mDbHelper.getWritableDatabase(); // ensures upgrades can run
+
         PreferenceManager.getDefaultSharedPreferences(context)
                 .registerOnSharedPreferenceChangeListener(mImportListener);
+
         return true;
     }
 
@@ -202,7 +217,7 @@ public class SeriesGuideProvider extends ContentProvider {
             if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_DATABASEIMPORTED)) {
                 if (sharedPreferences
                         .getBoolean(SeriesGuidePreferences.KEY_DATABASEIMPORTED, false)) {
-                    mOpenHelper.close();
+                    mDbHelper.close();
                     sharedPreferences.edit()
                             .putBoolean(SeriesGuidePreferences.KEY_DATABASEIMPORTED, false)
                             .commit();
@@ -210,6 +225,48 @@ public class SeriesGuideProvider extends ContentProvider {
             }
         }
     };
+
+    @Override
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
+            String sortOrder) {
+        if (LOGV) {
+            Timber.v("query(uri=" + uri + ", proj=" + Arrays.toString(projection) + ")");
+        }
+        final SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case RENEW_FTSTABLE: {
+                SeriesGuideDatabase.onRenewFTSTable(db);
+                return null;
+            }
+            case EPISODESEARCH: {
+                if (selectionArgs == null) {
+                    throw new IllegalArgumentException(
+                            "selectionArgs must be provided for the Uri: " + uri);
+                }
+                return SeriesGuideDatabase.search(selection, selectionArgs, db);
+            }
+            case SEARCH_SUGGEST: {
+                if (selectionArgs == null) {
+                    throw new IllegalArgumentException(
+                            "selectionArgs must be provided for the Uri: " + uri);
+                }
+                return SeriesGuideDatabase.getSuggestions(selectionArgs[0], db);
+            }
+            default: {
+                // Most cases are handled with simple SelectionBuilder
+                final SelectionBuilder builder = buildSelection(uri, match);
+                Cursor query = builder
+                        .where(selection, selectionArgs)
+                        .query(db, projection, sortOrder);
+                if (query != null) {
+                    query.setNotificationUri(getContext().getContentResolver(), uri);
+                }
+                return query;
+            }
+        }
+    }
 
     @Override
     public String getType(Uri uri) {
@@ -260,85 +317,117 @@ public class SeriesGuideProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
+        Uri newItemUri;
+
+        if (!applyingBatch()) {
+            final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            db.beginTransaction();
+            try {
+                newItemUri = insertInTransaction(uri, values);
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+        } else {
+            newItemUri = insertInTransaction(uri, values);
+        }
+
+        if (newItemUri != null) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return newItemUri;
+    }
+
+    @Override
+    public int bulkInsert(Uri uri, ContentValues[] values) {
+        int numValues = values.length;
+        boolean notifyChange = false;
+
+        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            for (int i = 0; i < numValues; i++) {
+                Uri result = insertInTransaction(uri, values[i]);
+                if (result != null) {
+                    notifyChange = true;
+                }
+                db.yieldIfContendedSafely();
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+
+        if (notifyChange) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return numValues;
+    }
+
+    private Uri insertInTransaction(Uri uri, ContentValues values) {
         if (LOGV) {
             Timber.v("insert(uri=" + uri + ", values=" + values.toString() + ")");
         }
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        Uri notifyUri = null;
+
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case SHOWS: {
-                insertAndNotify(db, uri, Tables.SHOWS, values);
-                return Shows.buildShowUri(values.getAsString(Shows._ID));
+                long id = mDbHelper.insertShows(values);
+                if (id < 0) {
+                    break;
+                }
+                notifyUri = Shows.buildShowUri(values.getAsString(Shows._ID));
+                break;
             }
             case SEASONS: {
-                insertAndNotify(db, uri, Tables.SEASONS, values);
-                return Seasons.buildSeasonUri(values.getAsString(Seasons._ID));
+                long id = mDbHelper.insertSeasons(values);
+                if (id < 0) {
+                    break;
+                }
+                notifyUri = Seasons.buildSeasonUri(values.getAsString(Seasons._ID));
+                break;
             }
             case EPISODES: {
-                long id = insertAndNotify(db, uri, Tables.EPISODES, values);
-                return Lists.buildListUri(String.valueOf(id));
+                long id = mDbHelper.insertEpisodes(values);
+                if (id < 0) {
+                    break;
+                }
+                notifyUri = Episodes.buildEpisodeUri(values.getAsString(Episodes._ID));
+                break;
             }
             case LISTS: {
-                insertAndNotify(db, uri, Tables.LISTS, values);
-                return Lists.buildListUri(values.getAsString(Lists.LIST_ID));
+                long id = mDbHelper.insertLists(values);
+                if (id < 0) {
+                    break;
+                }
+                notifyUri = Lists.buildListUri(values.getAsString(Lists.LIST_ID));
+                break;
             }
             case LIST_ITEMS: {
-                insertAndNotify(db, uri, Tables.LIST_ITEMS, values);
-                return ListItems.buildListItemUri(values.getAsString(ListItems.LIST_ITEM_ID));
+                long id = mDbHelper.insertListItems(values);
+                if (id < 0) {
+                    break;
+                }
+                notifyUri = ListItems.buildListItemUri(values.getAsString(ListItems.LIST_ITEM_ID));
+                break;
             }
             case MOVIES: {
-                insertAndNotify(db, uri, Tables.MOVIES, values);
-                return Movies.buildMovieUri(values.getAsInteger(Movies.TMDB_ID));
+                long id = mDbHelper.insertMovies(values);
+                if (id < 0) {
+                    break;
+                }
+                notifyUri = Movies.buildMovieUri(values.getAsInteger(Movies.TMDB_ID));
+                break;
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
             }
         }
-    }
 
-    private long insertAndNotify(SQLiteDatabase db, Uri uri, String table, ContentValues values) {
-        long rowId = db.insertOrThrow(table, null, values);
-        getContext().getContentResolver().notifyChange(uri, null);
-        return rowId;
-    }
-
-    @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
-            String sortOrder) {
-        if (LOGV) {
-            Timber.v("query(uri=" + uri + ", proj=" + Arrays.toString(projection) + ")");
-        }
-        final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
-
-        final int match = sUriMatcher.match(uri);
-        switch (match) {
-            case RENEW_FTSTABLE: {
-                SeriesGuideDatabase.onRenewFTSTable(db);
-                return null;
-            }
-            case EPISODESEARCH: {
-                if (selectionArgs == null) {
-                    throw new IllegalArgumentException(
-                            "selectionArgs must be provided for the Uri: " + uri);
-                }
-                return SeriesGuideDatabase.search(selection, selectionArgs, db);
-            }
-            case SEARCH_SUGGEST: {
-                if (selectionArgs == null) {
-                    throw new IllegalArgumentException(
-                            "selectionArgs must be provided for the Uri: " + uri);
-                }
-                return SeriesGuideDatabase.getSuggestions(selectionArgs[0], db);
-            }
-            default: {
-                // Most cases are handled with simple SelectionBuilder
-                final SelectionBuilder builder = buildSelection(uri, match);
-                Cursor query = builder.where(selection, selectionArgs).query(db, projection,
-                        sortOrder);
-                query.setNotificationUri(getContext().getContentResolver(), uri);
-                return query;
-            }
-        }
+        return notifyUri;
     }
 
     /**
@@ -349,11 +438,30 @@ public class SeriesGuideProvider extends ContentProvider {
         if (LOGV) {
             Timber.v("update(uri=" + uri + ", values=" + values.toString() + ")");
         }
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        final SelectionBuilder builder = buildSelection(uri, sUriMatcher.match(uri));
-        int retVal = builder.where(selection, selectionArgs).update(db, values);
-        getContext().getContentResolver().notifyChange(uri, null);
-        return retVal;
+        int count = 0;
+
+        if (!applyingBatch()) {
+            final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            db.beginTransaction();
+            try {
+                count = buildSelection(uri, sUriMatcher.match(uri))
+                        .where(selection, selectionArgs)
+                        .update(db, values);
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+        } else {
+            count = buildSelection(uri, sUriMatcher.match(uri))
+                    .where(selection, selectionArgs)
+                    .update(mDb, values);
+        }
+
+        if (count > 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return count;
     }
 
     /**
@@ -364,11 +472,30 @@ public class SeriesGuideProvider extends ContentProvider {
         if (LOGV) {
             Timber.v("delete(uri=" + uri + ")");
         }
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        final SelectionBuilder builder = buildSelection(uri, sUriMatcher.match(uri));
-        int retVal = builder.where(selection, selectionArgs).delete(db);
-        getContext().getContentResolver().notifyChange(uri, null);
-        return retVal;
+        int count = 0;
+
+        if (!applyingBatch()) {
+            final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            db.beginTransaction();
+            try {
+                count = buildSelection(uri, sUriMatcher.match(uri))
+                        .where(selection, selectionArgs)
+                        .delete(db);
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+        } else {
+            count = buildSelection(uri, sUriMatcher.match(uri))
+                    .where(selection, selectionArgs)
+                    .delete(mDb);
+        }
+
+        if (count > 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return count;
     }
 
     /**
@@ -378,71 +505,33 @@ public class SeriesGuideProvider extends ContentProvider {
     @Override
     public ContentProviderResult[] applyBatch(ArrayList<ContentProviderOperation> operations)
             throws OperationApplicationException {
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        db.beginTransaction();
+        final int numOperations = operations.size();
+        if (numOperations == 0) {
+            return new ContentProviderResult[0];
+        }
+
+        mDb = mDbHelper.getWritableDatabase();
+        mDb.beginTransaction();
         try {
-            final int numOperations = operations.size();
+            mApplyingBatch.set(true);
             final ContentProviderResult[] results = new ContentProviderResult[numOperations];
             for (int i = 0; i < numOperations; i++) {
-                results[i] = operations.get(i).apply(this, results, i);
-                db.yieldIfContendedSafely();
+                final ContentProviderOperation operation = operations.get(i);
+                if (i > 0 && operation.isYieldAllowed()) {
+                    mDb.yieldIfContendedSafely();
+                }
+                results[i] = operation.apply(this, results, i);
             }
-            db.setTransactionSuccessful();
+            mDb.setTransactionSuccessful();
             return results;
         } finally {
-            db.endTransaction();
+            mApplyingBatch.set(false);
+            mDb.endTransaction();
         }
     }
 
-    @Override
-    public int bulkInsert(Uri uri, ContentValues[] values) {
-        /*
-         * A more efficient version of bulkInsert which matches the URI only
-         * once.
-         */
-        final int match = sUriMatcher.match(uri);
-        switch (match) {
-            case SHOWS: {
-                return bulkInsertHelper(uri, Tables.SHOWS, values);
-            }
-            case SEASONS: {
-                return bulkInsertHelper(uri, Tables.SEASONS, values);
-            }
-            case EPISODES: {
-                return bulkInsertHelper(uri, Tables.EPISODES, values);
-            }
-            case LISTS: {
-                return bulkInsertHelper(uri, Tables.LISTS, values);
-            }
-            case LIST_ITEMS: {
-                return bulkInsertHelper(uri, Tables.LIST_ITEMS, values);
-            }
-            case MOVIES: {
-                return bulkInsertHelper(uri, Tables.MOVIES, values);
-            }
-            default: {
-                throw new UnsupportedOperationException("Unknown uri: " + uri);
-            }
-        }
-    }
-
-    private int bulkInsertHelper(Uri uri, String table, ContentValues[] values) {
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        db.beginTransaction();
-        try {
-            int numValues = values.length;
-
-            for (int i = 0; i < numValues; i++) {
-                db.insertOrThrow(table, null, values[i]);
-            }
-            db.setTransactionSuccessful();
-
-            getContext().getContentResolver().notifyChange(uri, null);
-
-            return numValues;
-        } finally {
-            db.endTransaction();
-        }
+    private boolean applyingBatch() {
+        return mApplyingBatch.get() != null && mApplyingBatch.get();
     }
 
     /**
