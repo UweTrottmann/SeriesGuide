@@ -14,6 +14,7 @@ Version 12.2 *(in development)*
 
 * FIX Comments for episodes did wrongly display show comments.
 * FIX Crashes when doing (bulk) database operations. Recover in more cases.
+* NOTICE Updates to Chinese Simplified translation.
 
 #### 12.2-beta1 *(2014-03-01)*
 
