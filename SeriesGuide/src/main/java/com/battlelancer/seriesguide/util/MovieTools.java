@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.util;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -400,7 +401,12 @@ public class MovieTools {
                     values);
 
             // apply watchlist updates
-            DBUtils.applyInSmallBatches(context, batch);
+            try {
+                DBUtils.applyInSmallBatches(context, batch);
+            } catch (OperationApplicationException e) {
+                Timber.e("Applying watchlist updates failed", e);
+                return UpdateResult.INCOMPLETE;
+            }
             batch.clear();
             values.clear();
 
@@ -424,14 +430,24 @@ public class MovieTools {
                     values);
 
             // apply collection updates
-            DBUtils.applyInSmallBatches(context, batch);
+            try {
+                DBUtils.applyInSmallBatches(context, batch);
+            } catch (OperationApplicationException e) {
+                Timber.e("Applying collection updates failed", e);
+                return UpdateResult.INCOMPLETE;
+            }
             batch.clear();
 
             // merge on first run, delete on consequent runs
             if (TraktSettings.hasMergedMovies(context)) {
                 // remove movies not on trakt
                 buildMovieDeleteOps(moviesToRemove, batch);
-                DBUtils.applyInSmallBatches(context, batch);
+                try {
+                    DBUtils.applyInSmallBatches(context, batch);
+                } catch (OperationApplicationException e) {
+                    Timber.e("Removing movies failed", e);
+                    return UpdateResult.INCOMPLETE;
+                }
             } else {
                 // upload movies not on trakt
                 UpdateResult result = Upload.uploadMovies(context, trakt, moviesToRemove);

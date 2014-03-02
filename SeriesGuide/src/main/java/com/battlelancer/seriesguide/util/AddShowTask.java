@@ -23,6 +23,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.thetvdbapi.TheTVDB;
+import com.battlelancer.thetvdbapi.TvdbException;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.enumerations.Extended;
@@ -31,7 +32,6 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import org.xml.sax.SAXException;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
@@ -45,7 +45,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
     private static final int ADD_SUCCESS = 1;
 
-    private static final int ADD_SAXERROR = 2;
+    private static final int ADD_ERROR = 2;
 
     private static final int ADD_OFFLINE = 3;
 
@@ -153,8 +153,8 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                     result = ADD_ALREADYEXISTS;
                 }
                 modifiedDB = true;
-            } catch (SAXException e) {
-                result = ADD_SAXERROR;
+            } catch (TvdbException e) {
+                result = ADD_ERROR;
                 Timber.e(e, "Adding show failed");
             }
 
@@ -194,7 +194,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                                 + mContext.getString(R.string.add_already_exists),
                         Toast.LENGTH_LONG).show();
                 break;
-            case ADD_SAXERROR:
+            case ADD_ERROR:
                 Toast.makeText(
                         mContext,
                         mContext.getString(R.string.add_error_begin) + mCurrentShowName
