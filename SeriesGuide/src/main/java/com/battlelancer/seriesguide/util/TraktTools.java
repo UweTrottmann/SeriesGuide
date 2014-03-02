@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.util;
 
 import android.content.ContentProviderOperation;
 import android.content.Context;
+import android.content.OperationApplicationException;
 import android.support.v4.app.FragmentManager;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -153,7 +154,12 @@ public class TraktTools {
                     .newUpdate(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(tvShowTvdbId))
                     .withValue(episodeFlagColumn, episodeDefaultFlag).build());
         }
-        DBUtils.applyInSmallBatches(context, batch);
+        try {
+            DBUtils.applyInSmallBatches(context, batch);
+        } catch (OperationApplicationException e) {
+            Timber.e("Clearing " + episodeFlagColumn + " flags for shows failed");
+            // continue, next sync will try again
+        }
     }
 
     /**
@@ -227,7 +233,15 @@ public class TraktTools {
             }
 
             // apply batch of this season
-            DBUtils.applyInSmallBatches(context, batch);
+            try {
+                DBUtils.applyInSmallBatches(context, batch);
+            } catch (OperationApplicationException e) {
+                Timber.e("Applying flag changes failed: " + tvShow.tvdb_id + " season: "
+                        + season.season + " column: " + episodeFlagColumn, e);
+                // do not abort, try other seasons
+                // some episodes might be in incorrect state, but next update should fix that
+                // this includes the clear flags op failing
+            }
             batch.clear();
         }
     }

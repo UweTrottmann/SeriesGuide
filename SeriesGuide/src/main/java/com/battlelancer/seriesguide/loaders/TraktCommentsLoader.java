@@ -18,8 +18,8 @@ package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
 import android.os.Bundle;
+import com.battlelancer.seriesguide.ui.TraktShoutsFragment;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Comment;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
@@ -33,8 +33,6 @@ import timber.log.Timber;
  */
 public class TraktCommentsLoader extends GenericSimpleLoader<List<Comment>> {
 
-    private static final String TAG = "TraktCommentsLoader";
-
     private Bundle mArgs;
 
     public TraktCommentsLoader(Context context, Bundle args) {
@@ -44,30 +42,29 @@ public class TraktCommentsLoader extends GenericSimpleLoader<List<Comment>> {
 
     @Override
     public List<Comment> loadInBackground() {
-        int tvdbId = mArgs.getInt(ShareItems.TVDBID);
-        int episode = mArgs.getInt(ShareItems.EPISODE);
-
         Trakt manager = ServiceUtils.getTrakt(getContext());
-        List<Comment> comments;
         try {
-            if (tvdbId == 0) {
+            int movieTmdbId = mArgs.getInt(TraktShoutsFragment.InitBundle.MOVIE_TMDB_ID);
+            if (movieTmdbId != 0) {
                 // movie comments
-                int tmdbId = mArgs.getInt(ShareItems.TMDBID);
-                comments = manager.movieService().comments(tmdbId);
-            } else if (episode == 0) {
-                // show comments
-                comments = manager.showService().comments(tvdbId);
-            } else {
-                // episode comments
-                int season = mArgs.getInt(ShareItems.SEASON);
-                comments = manager.showService().episodeComments(tvdbId, season, episode);
+                return manager.movieService().comments(movieTmdbId);
             }
 
+            int showTvdbId = mArgs.getInt(TraktShoutsFragment.InitBundle.SHOW_TVDB_ID);
+            int episodeNumber = mArgs.getInt(TraktShoutsFragment.InitBundle.EPISODE_NUMBER);
+            if (episodeNumber != 0) {
+                // episode comments
+                int seasonNumber = mArgs.getInt(TraktShoutsFragment.InitBundle.SEASON_NUMBER);
+                return manager.showService().episodeComments(showTvdbId, seasonNumber,
+                        episodeNumber);
+            }
+
+            // show comments
+            return manager.showService().comments(showTvdbId);
         } catch (RetrofitError e) {
             Timber.e(e, "Loading comments failed");
-            return null;
         }
 
-        return comments;
+        return null;
     }
 }

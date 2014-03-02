@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.util;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.text.TextUtils;
@@ -151,7 +152,12 @@ public class ShowTools {
             batch.add(ContentProviderOperation.newDelete(
                     SeriesGuideContract.EpisodeSearch.buildDocIdUri(episodeTvdbId)).build());
         }
-        DBUtils.applyInSmallBatches(mContext, batch);
+        try {
+            DBUtils.applyInSmallBatches(mContext, batch);
+        } catch (OperationApplicationException e) {
+            Timber.e("Removing episode search entries failed", e);
+            return Result.ERROR;
+        }
         batch.clear();
 
         // remove episodes, seasons and show
@@ -161,7 +167,12 @@ public class ShowTools {
                 SeriesGuideContract.Seasons.buildSeasonsOfShowUri(showTvdbId)).build());
         batch.add(ContentProviderOperation.newDelete(
                 SeriesGuideContract.Shows.buildShowUri(showTvdbId)).build());
-        DBUtils.applyInSmallBatches(mContext, batch);
+        try {
+            DBUtils.applyInSmallBatches(mContext, batch);
+        } catch (OperationApplicationException e) {
+            Timber.e("Removing episodes, seasons and show failed", e);
+            return Result.ERROR;
+        }
 
         return Result.SUCCESS;
     }
@@ -382,7 +393,12 @@ public class ShowTools {
             // update all received shows, ContentProvider will ignore those not added locally
             ArrayList<ContentProviderOperation> batch = buildShowUpdateOps(shows, showsExisting,
                     showsNew);
-            DBUtils.applyInSmallBatches(context, batch);
+            try {
+                DBUtils.applyInSmallBatches(context, batch);
+            } catch (OperationApplicationException e) {
+                Timber.e("Applying hexagon show updates failed", e);
+                return UpdateResult.INCOMPLETE;
+            }
 
             return UpdateResult.SUCCESS;
         }

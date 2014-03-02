@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import android.content.OperationApplicationException;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
@@ -58,6 +59,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import timber.log.Timber;
 
 /**
  * Displays a dialog displaying all lists, allowing to add the given show, season or episode to any
@@ -147,7 +149,11 @@ public class ListsDialogFragment extends DialogFragment implements
                 }
 
                 // apply ops
-                DBUtils.applyInSmallBatches(getActivity(), batch);
+                try {
+                    DBUtils.applyInSmallBatches(getActivity(), batch);
+                } catch (OperationApplicationException e) {
+                    Timber.e("Applying list changes failed", e);
+                }
 
                 getActivity().getContentResolver().notifyChange(ListItems.CONTENT_WITH_DETAILS_URI,
                         null);
