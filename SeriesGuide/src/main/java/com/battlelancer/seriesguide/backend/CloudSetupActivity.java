@@ -58,7 +58,7 @@ public class CloudSetupActivity extends BaseTopActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_CLOUD_POSITION);
+        //setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_CLOUD_POSITION);
     }
 
     @Override

@@ -59,11 +59,11 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
     public static final int MENU_ITEM_STATS_POSITION = 3;
 
-    public static final int MENU_ITEM_CLOUD_POSITION = 4;
+    //public static final int MENU_ITEM_CLOUD_POSITION = 4;
 
-    public static final int MENU_ITEM_SETTINGS_POSITION = 5;
+    public static final int MENU_ITEM_SETTINGS_POSITION = 4;
 
-    public static final int MENU_ITEM_HELP_POSITION = 6;
+    public static final int MENU_ITEM_HELP_POSITION = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,8 +102,8 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableMovie)));
         drawerAdapter.add(new DrawerItem(getString(R.string.statistics),
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableStats)));
-        drawerAdapter.add(new DrawerItem(getString(R.string.hexagon_short),
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableLab)));
+        //drawerAdapter.add(new DrawerItem(getString(R.string.hexagon_short),
+        //        Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableLab)));
         drawerAdapter.add(new DrawerItemSecondary(getString(R.string.preferences).toUpperCase(
                 Locale.getDefault()),
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableSettings)));
@@ -180,13 +180,13 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Statistics");
                 break;
-            case MENU_ITEM_CLOUD_POSITION:
-                if (this instanceof CloudSetupActivity) {
-                    break;
-                }
-                launchIntent = new Intent(this, CloudSetupActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                break;
+            //case MENU_ITEM_CLOUD_POSITION:
+            //    if (this instanceof CloudSetupActivity) {
+            //        break;
+            //    }
+            //    launchIntent = new Intent(this, CloudSetupActivity.class)
+            //            .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            //    break;
             case MENU_ITEM_SETTINGS_POSITION:
                 launchIntent = new Intent(this, SeriesGuidePreferences.class);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Settings");
