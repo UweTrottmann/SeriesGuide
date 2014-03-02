@@ -37,37 +37,6 @@ public class ShareUtils {
 
     protected static final String TAG = "ShareUtils";
 
-    public enum ShareMethod {
-
-        RATE_TRAKT,
-
-        OTHER_SERVICES
-
-    }
-
-    public interface ShareItems {
-
-        String SEASON = "season";
-
-        String IMDBID = "imdbId";
-
-        String SHARESTRING = "sharestring";
-
-        String EPISODESTRING = "episodestring";
-
-        String EPISODE = "episode";
-
-        String TVDBID = "tvdbid";
-
-        String TMDBID = "tmdbid";
-
-        String RATING = "rating";
-
-        String TRAKTACTION = "traktaction";
-
-        String ISSPOILER = "isspoiler";
-    }
-
     public static void shareEpisode(Activity activity, int showTvdbId, int seasonNumber,
             int episodeNumber, String showTitle, String episodeTitle) {
         String message = activity.getString(R.string.share_checkout,

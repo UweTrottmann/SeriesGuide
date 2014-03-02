@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.sync;
 
+import android.content.OperationApplicationException;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.items.SearchResult;
@@ -34,6 +35,7 @@ import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
+import com.battlelancer.thetvdbapi.TvdbException;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Activity;
 import com.jakewharton.trakt.entities.ActivityItem;
@@ -286,11 +288,11 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             try {
-                TheTVDB.updateShow(id, getContext());
+                TheTVDB.updateShow(getContext(), id);
 
                 // make sure overview and details loaders are notified
                 resolver.notifyChange(Episodes.CONTENT_URI_WITHSHOW, null);
-            } catch (SAXException e) {
+            } catch (TvdbException e) {
                 // failed, continue with other shows
                 resultCode = UpdateResult.INCOMPLETE;
                 Timber.e(e, "Updating show failed");
@@ -544,7 +546,12 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // apply all episode updates from downloaded trakt activity
-        DBUtils.applyInSmallBatches(context, batch);
+        try {
+            DBUtils.applyInSmallBatches(context, batch);
+        } catch (OperationApplicationException e) {
+            Timber.e("Applying trakt activity failed", e);
+            return UpdateResult.INCOMPLETE;
+        }
 
         // store time of this update as seen by the trakt server
         SharedPreferences.Editor editor = PreferenceManager

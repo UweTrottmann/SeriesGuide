@@ -394,9 +394,13 @@ public class DBUtils {
         return show;
     }
 
-    public static boolean isShowExists(int showTvdbId, Context context) {
+    /**
+     * Queries the show table for the given TVDb id and returns whether there are entries, e.g. the
+     * show is already in the database.
+     */
+    public static boolean isShowExists(Context context, int showTvdbId) {
         Cursor testsearch = context.getContentResolver().query(Shows.buildShowUri(showTvdbId),
-                new String[]{
+                new String[] {
                         Shows._ID
                 }, null, null, null);
         if (testsearch == null) {
@@ -659,7 +663,7 @@ public class DBUtils {
      * the transaction cache.
      */
     public static void applyInSmallBatches(Context context,
-            ArrayList<ContentProviderOperation> batch) {
+            ArrayList<ContentProviderOperation> batch) throws OperationApplicationException {
         // split into smaller batches to not overload transaction cache
         // see http://developer.android.com/reference/android/os/TransactionTooLargeException.html
 
@@ -688,14 +692,13 @@ public class DBUtils {
         }
     }
 
-    private static void applyBatch(Context context, ArrayList<ContentProviderOperation> batch) {
+    private static void applyBatch(Context context, ArrayList<ContentProviderOperation> batch)
+            throws OperationApplicationException {
         try {
             context.getContentResolver()
                     .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
-        } catch (RemoteException | OperationApplicationException e) {
-            // RemoteException: Failed binder transactions aren't recoverable
-            // OperationApplicationException: Failures like constraint violation aren't
-            // recoverable
+        } catch (RemoteException e) {
+            // not using a remote provider, so this should never happen. crash if it does.
             throw new RuntimeException("Problem applying batch operation", e);
         }
     }
