@@ -32,7 +32,7 @@
   <string name="offline">Conectați-vă la o rețea, apoi încercați din nou.</string>
   <string name="offline_no_wifi">Connect to Wi-Fi or allow all connections, then try again.</string>
   <string name="app_not_available">Nu exista aplicatii instalate pentru a utiliza aceasta actiune.</string>
-  <string name="onlyx">Only available with X Subscription</string>
+  <string name="onlyx">Disponibil numai cu abonament de X</string>
   <string name="add_empty">There are no shows here.</string>
   <string name="share_show">Share show</string>
   <string name="share_episode">Share episod</string>
@@ -44,19 +44,19 @@
   <string name="isspoiler">Spoiler alert!</string>
   <string name="no_shouts">Fi primul care-si spune părerea!</string>
   <string name="autorefresh">Reîmprospătare automagică</string>
-  <string name="movies_collection">Collection</string>
+  <string name="movies_collection">Colecție</string>
   <string name="movies_watchlist">Watchlist</string>
-  <string name="watchlist_add">Add to watchlist</string>
-  <string name="watchlist_remove">Remove from watchlist</string>
-  <string name="watchlist_added">Added to watchlist</string>
-  <string name="watchlist_removed">Removed from watchlist</string>
+  <string name="watchlist_add">Adaugă în watchlist</string>
+  <string name="watchlist_remove">Elimina din watchlist</string>
+  <string name="watchlist_added">Adăugat în watchlist</string>
+  <string name="watchlist_removed">Eliminat din watchlist</string>
   <string name="movies_search_hint">Tastaţi un titlu de film</string>
   <string name="movies_empty">Căutati un film.</string>
-  <string name="movies_collection_empty">You have not added movies to your collection.</string>
-  <string name="movies_watchlist_empty">You have not added movies to your watchlist.</string>
+  <string name="movies_collection_empty">Nu aţi adăugat filmele la colecţie.</string>
+  <string name="movies_watchlist_empty">Nu aţi adăugat filmele in watchlist.</string>
   <string name="trailer">Trailer</string>
-  <string name="movie_cast">Cast</string>
-  <string name="movie_crew">Crew</string>
+  <string name="movie_cast">Distributie</string>
+  <string name="movie_crew">Echipa</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="shows_with_next">%s cu următoarele episoade</string>
   <string name="shows_continuing">%s continuă</string>
@@ -260,15 +260,15 @@
   <string name="pref_hideimagessummary">Ascundeți imaginile din Galeria foto (restartarea e necesară)</string>
   <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
   <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
-  <string name="backup_path">Backup folder</string>
-  <string name="backup_version">Database version</string>
+  <string name="backup_path">Folderul de backup</string>
+  <string name="backup_version">Versiunea bazei de date</string>
   <string name="backup_failed_nosd">Can\'t backup. The backup folder is not available.</string>
   <string name="backup_inprogress">Backing up database…</string>
   <string name="backup_success">Backup successful.</string>
   <string name="backup_failed">Copierea de rezervă nu a reușit.</string>
   <string name="import_inprogress">Restaurarea bazei de date…</string>
   <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
-  <string name="import_failed_nofile">There is no readable backup file.</string>
+  <string name="import_failed_nofile">Nu exista un fisier de backup care sa poata fi citit.</string>
   <string name="import_failed_noread">The backup file is not readable.</string>
   <string name="dbupgradefailed">Copia de rezervă poate fi prea veche sau goala. Notă: Prima data importati o rezerva inainte de 2.0 într-o versiune 1.9.x.</string>
   <string name="import_success">Backup successfully restored.</string>
@@ -279,9 +279,9 @@
   <string name="backup_no">Nu fă o copie de rezervă</string>
   <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
   <string name="import_no">Nu restaura</string>
-  <string name="import_warning">I understand my current shows and lists will be lost!</string>
-  <string name="last_auto_backup">Last Auto Backup: %s</string>
-  <string name="restore_auto_backup">Restore Auto Backup</string>
+  <string name="import_warning">Am inteles ca serialele curente si listele vor fi pierdute!</string>
+  <string name="last_auto_backup">Ultimul backup automat: %s</string>
+  <string name="restore_auto_backup">Restaurare backup automat</string>
   <string name="checkin">Check in</string>
   <string name="checkin_searchhint">Type a show name</string>
   <string name="checkin_empty">No matching shows</string>
@@ -298,8 +298,8 @@
   <string name="check_into">Check into</string>
   <string name="no_selection">alegeți una de mai jos</string>
   <string name="looking_for_something_else">Căutați altceva?</string>
-  <string name="menu_rate_episode">Rate episode</string>
-  <string name="menu_rate_show">Rate show</string>
+  <string name="menu_rate_episode">Votati episodul</string>
+  <string name="menu_rate_show">Votati serialul</string>
   <string name="traktcheckin_cancel">Override</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">I\ voi aştepta</string>
@@ -312,8 +312,8 @@
   <string name="connect">Conectaţi</string>
   <string name="disconnect">Deconectaţi</string>
   <string name="trakt_error">Interacţiunea cu trakt a eșuat</string>
-  <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
-  <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
+  <string name="trakt_error_credentials">Ceva a mers prost. Va rugam sa va verificaţi acreditările şi sa încercaţi din nou.</string>
+  <string name="trakt_error_general">Nu s-a putut comunica cu trakt. Incercati mai tarziu.</string>
   <string name="trakt_createaccount">Creare cont nou</string>
   <string name="welcome_setuplanguage">Alegeți limba</string>
   <string name="welcome_traktmessage">Accesați biblioteca trakt.tv și activitatea prietenilor</string>
@@ -341,25 +341,25 @@
   <string name="pref_widget_type">Tip de widget</string>
   <string name="dashclock_extension_label">Episoade ce urmeaza</string>
   <string name="dashclock_extension_description">Afişează următorul episod din SeriesGuide.</string>
-  <string name="dashclock_pref_upcoming_threshold">Display episode within…</string>
-  <string name="action_migrate">Migrate from X</string>
-  <string name="migration_description">SeriesGuide X is now an unlock key for X features in the free version (X Pass). Please migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
-  <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
-  <string name="migration_action_import">Import and replace existing shows</string>
-  <string name="action_upgrade">Get X features</string>
-  <string name="billing_action_subscribe">Subscribe</string>
-  <string name="billing_action_pass">Get X Pass</string>
-  <string name="billing_price_subscribe">%s/year, 30 day trial</string>
-  <string name="billing_price_pass">one-time purchase</string>
-  <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
-  <string name="upgrade_success">Thanks, you are already subscribed to all X features!</string>
-  <string name="billing_learn_more">Why pay? Learn more.</string>
-  <string name="subscription_activated">You are now subscribed to X features.</string>
-  <string name="subscription_expired">Subscription expired</string>
-  <string name="subscription_expired_details">Your X features subscription has expired.</string>
-  <string name="add_to_homescreen">Add to Home screen</string>
-  <string name="search_within_show">Search within %s</string>
-  <string name="web_search">Web search</string>
+  <string name="dashclock_pref_upcoming_threshold">Afisare episod intre…</string>
+  <string name="action_migrate">Migrati de la veriunea X</string>
+  <string name="migration_description">SeriesGuide X este acum o cheie de deblocare a optiunilor X in varianta gratuita ("X Life-Time Pass"). Va rugam sa migrati Serialele in versiunea gratuita a SeriesGuide. Pastrati X instalat pentru a debloca toate optiunile in versiunea gratuita.</string>
+  <string name="migration_import">Atingeti mai jos pentru a importa backup-ul din SeriesGuide X.</string>
+  <string name="migration_action_import">Importa si inlocuieste serialele existente</string>
+  <string name="action_upgrade">Obţine caracteristici X</string>
+  <string name="billing_action_subscribe">Aboneaza-te</string>
+  <string name="billing_action_pass">Obtineti abonamentul X</string>
+  <string name="billing_price_subscribe">%s/an, 30 de zile de testare</string>
+  <string name="billing_price_pass">plata unica</string>
+  <string name="upgrade_description">Obţineţi acces la notificări, mai multe opţiuni de widget şi tot viitoarele optiuni X. Ajutati dezvoltarea ulterioara.\n\nDaca aţi achiziţionat deja SeriesGuide X, instalaţi-l pentru a debloca acest upgrade.</string>
+  <string name="upgrade_success">Multumesc, sunteti deja abonat la toate optiunile X!</string>
+  <string name="billing_learn_more">De ce sa platiti? Află mai multe.</string>
+  <string name="subscription_activated">Acum sunteţi înscris la caracteristicile X.</string>
+  <string name="subscription_expired">Abonament expirat</string>
+  <string name="subscription_expired_details">Abonamentul la optiunile X a expirat.</string>
+  <string name="add_to_homescreen">Adaugati pe ecranul principal</string>
+  <string name="search_within_show">Căutaţi în cadrul %s</string>
+  <string name="web_search">Căutare pe web</string>
   <string-array name="sesorting">
     <item>Întai cele mai recente</item>
     <item>Întai cele mai vechi</item>
@@ -401,7 +401,7 @@
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
     <item>oră</item>
-    <item>6 hours</item>
+    <item>6 ore</item>
     <item>12 ore</item>
     <item>24 de ore</item>
     <item>3 zile</item>

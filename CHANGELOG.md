@@ -5,6 +5,22 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 12.2 *(in development)*
+---------------------------
+
+* Comments for episodes did wrongly display show comments.
+
+#### 12.2-beta2 *(2014-03-02)*
+
+* FIX Comments for episodes did wrongly display show comments.
+* FIX Crashes when doing (bulk) database operations. Recover in more cases.
+* NOTICE Updates to Chinese Simplified translation.
+
+#### 12.2-beta1 *(2014-03-01)*
+
+* FIX Crashes when doing (bulk) database operations. This might have performance impacts regarding adding shows, sync time, etc. Please report anything out of the ordinary in that regard.
+* NOTICE Updated Romanian translation.
+
 Version 12.1 *(2014-02-27)*
 ---------------------------
 
