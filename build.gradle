@@ -30,7 +30,7 @@ allprojects {
 
 ext {
     compileSdkVersion = 19
-    buildToolsVersion = '19.0.1'
+    buildToolsVersion = '19.0.3'
 
     versionCode = 239
     versionName = '12.2'
