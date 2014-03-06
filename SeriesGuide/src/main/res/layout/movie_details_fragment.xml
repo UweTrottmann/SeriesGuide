@@ -60,7 +60,7 @@
                 android:id="@+id/containerMovieButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?attr/drawableCardBackground"
+                android:background="?attr/colorBackgroundDim"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/textViewMovieDate"
                 android:layout_marginBottom="@dimen/large_padding"
