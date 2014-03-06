@@ -17,8 +17,15 @@
 package com.battlelancer.seriesguide.api;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.text.TextUtils;
+import java.net.URISyntaxException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Action {
+    private static final String KEY_TITLE = "title";
+    private static final String KEY_VIEW_INTENT = "viewIntent";
 
     private String mTitle;
     private Intent mViewIntent;
@@ -75,5 +82,70 @@ public class Action {
         public Action build() {
             return new Action(mTitle, mViewIntent);
         }
+    }
+
+    /**
+     * Serializes this {@link Action} object to a {@link android.os.Bundle} representation.
+     */
+    public Bundle toBundle() {
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_TITLE, mTitle);
+        bundle.putString(KEY_VIEW_INTENT, (mViewIntent != null)
+                ? mViewIntent.toUri(Intent.URI_INTENT_SCHEME) : null);
+        return bundle;
+    }
+
+    /**
+     * Deserializes a {@link JSONObject} into an {@link Bundle} object.
+     */
+    public static Action fromBundle(Bundle bundle) {
+        String title = bundle.getString(KEY_TITLE);
+        if (TextUtils.isEmpty(title)) {
+            return null;
+        }
+
+        Builder builder = new Builder(title);
+
+        try {
+            String viewIntent = bundle.getString(KEY_VIEW_INTENT);
+            if (!TextUtils.isEmpty(viewIntent)) {
+                builder.viewIntent(Intent.parseUri(viewIntent, Intent.URI_INTENT_SCHEME));
+            }
+        } catch (URISyntaxException ignored) {
+        }
+
+        return builder.build();
+    }
+
+    /**
+     * Serializes this {@link Action} object to a {@link org.json.JSONObject} representation.
+     */
+    public JSONObject toJson() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put(KEY_TITLE, mTitle);
+        jsonObject.put(KEY_VIEW_INTENT, (mViewIntent != null)
+                ? mViewIntent.toUri(Intent.URI_INTENT_SCHEME) : null);
+        return jsonObject;
+    }
+
+    /**
+     * Deserializes a {@link JSONObject} into an {@link Action} object.
+     */
+    public static Action fromJson(JSONObject jsonObject) throws JSONException {
+        String title = jsonObject.optString(KEY_TITLE);
+        if (TextUtils.isEmpty(title)) {
+            return null;
+        }
+        Builder builder = new Builder(title);
+
+        try {
+            String viewIntent = jsonObject.optString(KEY_VIEW_INTENT);
+            if (!TextUtils.isEmpty(viewIntent)) {
+                builder.viewIntent(Intent.parseUri(viewIntent, Intent.URI_INTENT_SCHEME));
+            }
+        } catch (URISyntaxException ignored) {
+        }
+
+        return builder.build();
     }
 }
