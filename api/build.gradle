@@ -16,6 +16,9 @@
 
 apply plugin: 'java'
 
+jar.baseName = 'seriesguide-api'
+version = '1.0'
+
 // load properties file
 def Properties props = new Properties()
 props.load(new FileInputStream(file('../local.properties')))
@@ -24,6 +27,17 @@ def android = [
         sdk: props["sdk.dir"],
         target: 'android-19'
 ]
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    baseName = jar.baseName
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives jar
+    archives sourcesJar
+}
 
 dependencies {
     compile files("${android.sdk}/platforms/${android.target}/android.jar")
