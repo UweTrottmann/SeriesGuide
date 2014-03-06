@@ -264,8 +264,9 @@
         <item name="pstsUnderlineHeight">2dp</item>
     </style>
 
-    <style name="TabStrip.NoUnderline">
-        <item name="pstsUnderlineHeight">0dp</item>
+    <style name="TabStrip.ThinUnderline">
+        <item name="pstsUnderlineColor">?attr/colorAccent</item>
+        <item name="pstsUnderlineHeight">1dp</item>
     </style>
 
     <style name="Header">

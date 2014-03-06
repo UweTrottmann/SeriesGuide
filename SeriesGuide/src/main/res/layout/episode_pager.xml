@@ -24,7 +24,7 @@
 
             <com.astuetz.PagerSlidingTabStrip
                 android:id="@+id/tabsEpisodeDetails"
-                style="@style/TabStrip.NoUnderline"
+                style="@style/TabStrip.ThinUnderline"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tab_strip_height_no_underline" />
 
