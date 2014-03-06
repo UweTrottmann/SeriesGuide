@@ -96,7 +96,7 @@ public class Action {
     }
 
     /**
-     * Deserializes a {@link JSONObject} into an {@link Bundle} object.
+     * Deserializes a {@link Bundle} into a {@link Action} object.
      */
     public static Action fromBundle(Bundle bundle) {
         String title = bundle.getString(KEY_TITLE);
