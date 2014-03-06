@@ -21,6 +21,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -34,6 +35,8 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import static com.battlelancer.seriesguide.api.internal.IncomingConstants.ACTION_SUBSCRIBE;
+import static com.battlelancer.seriesguide.api.internal.IncomingConstants.ACTION_UPDATE;
+import static com.battlelancer.seriesguide.api.internal.IncomingConstants.EXTRA_EPISODE;
 import static com.battlelancer.seriesguide.api.internal.IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT;
 import static com.battlelancer.seriesguide.api.internal.IncomingConstants.EXTRA_TOKEN;
 import static com.battlelancer.seriesguide.api.internal.OutgoingConstants.ACTION_PUBLISH_ACTION;
@@ -159,7 +162,7 @@ public abstract class SeriesGuideExtension extends IntentService {
      * Called when a new episode is displayed and the extension should publish the action it wants
      * to display using {@link #publishAction(Action)}.
      */
-    protected abstract void onUpdate();
+    protected abstract void onUpdate(Episode episode);
 
     /**
      * Publishes the provided {@link Action}. It will be sent to all current subscribers.
@@ -179,10 +182,21 @@ public abstract class SeriesGuideExtension extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (intent != null && ACTION_SUBSCRIBE.equals(intent.getAction())) {
+        if (intent == null) {
+            return;
+        }
+
+        String action = intent.getAction();
+        if (ACTION_SUBSCRIBE.equals(action)) {
+            // just subscribing or unsubscribing
             handleSubscribe(
                     (ComponentName) intent.getParcelableExtra(EXTRA_SUBSCRIBER_COMPONENT),
                     intent.getStringExtra(EXTRA_TOKEN));
+        } else if (ACTION_UPDATE.equals(action)) {
+            // subscriber requests an updated action
+            if (intent.hasExtra(EXTRA_EPISODE)) {
+                handleUpdate(intent.getBundleExtra(EXTRA_EPISODE));
+            }
         }
     }
 
@@ -280,6 +294,14 @@ public abstract class SeriesGuideExtension extends IntentService {
         } catch (JSONException e) {
             Log.e(TAG, "Couldn't serialize current state, id=" + mName, e);
         }
+    }
+
+    private void handleUpdate(Bundle episodeBundle) {
+        if (episodeBundle == null) {
+            return;
+        }
+        Episode episode = Episode.fromBundle(episodeBundle);
+        onUpdate(episode);
     }
 
     private void publishCurrentAction() {
