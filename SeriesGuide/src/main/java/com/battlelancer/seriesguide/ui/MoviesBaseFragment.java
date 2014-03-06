@@ -17,6 +17,8 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.battlelancer.seriesguide.adapters.MoviesCursorAdapter;
 import com.battlelancer.seriesguide.R;
 
@@ -70,6 +72,13 @@ public abstract class MoviesBaseFragment extends SherlockFragment implements
         registerForContextMenu(mGridView);
 
         getLoaderManager().initLoader(getLoaderId(), null, this);
+
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.movies_menu, menu);
     }
 
     @Override
