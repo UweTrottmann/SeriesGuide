@@ -530,5 +530,6 @@
     <string name="web_search">Web search</string>
 
     <!-- Extensions -->
+    <string name="action_extensions_configure">Customize extensions</string>
     <string name="description_extension_trakt">Link to trakt page</string>
 </resources>

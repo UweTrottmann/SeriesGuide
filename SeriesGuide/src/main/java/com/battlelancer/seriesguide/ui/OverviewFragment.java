@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
@@ -23,6 +24,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
@@ -71,6 +73,7 @@ import android.widget.TextView;
 import java.util.Date;
 
 import de.greenrobot.event.EventBus;
+import java.util.List;
 
 /**
  * Displays general information about a show and its next episode.
@@ -81,10 +84,10 @@ public class OverviewFragment extends SherlockFragment implements
     private static final String TAG = "Overview";
 
     private static final int EPISODE_LOADER_ID = 100;
-
     private static final int SHOW_LOADER_ID = 101;
 
     private static final int CONTEXT_CREATE_CALENDAR_EVENT_ID = 201;
+    private static final int CONTEXT_EXTENSIONS_CONFIGURE_ID = 202;
 
     private FetchArtTask mArtTask;
 
@@ -194,6 +197,7 @@ public class OverviewFragment extends SherlockFragment implements
         super.onCreateContextMenu(menu, v, menuInfo);
 
         menu.add(0, CONTEXT_CREATE_CALENDAR_EVENT_ID, 0, R.string.addtocalendar);
+        menu.add(0, CONTEXT_EXTENSIONS_CONFIGURE_ID, 1, R.string.action_extensions_configure);
     }
 
     @Override
@@ -201,6 +205,19 @@ public class OverviewFragment extends SherlockFragment implements
         switch (item.getItemId()) {
             case CONTEXT_CREATE_CALENDAR_EVENT_ID: {
                 onAddCalendarEvent();
+                return true;
+            }
+            case CONTEXT_EXTENSIONS_CONFIGURE_ID: {
+                List<ExtensionManager.Extension> extensions = ExtensionManager.getInstance(
+                        getActivity()).queryAllAvailableExtensions();
+                StringBuilder extensionList = new StringBuilder();
+                for (ExtensionManager.Extension extension : extensions) {
+                    extensionList.append(extension.componentName);
+                    extensionList.append(":").append(extension.label);
+                    extensionList.append(":").append(extension.description);
+                    extensionList.append("\n");
+                }
+                Toast.makeText(getActivity(), extensionList.toString(), Toast.LENGTH_LONG).show();
                 return true;
             }
             default:
