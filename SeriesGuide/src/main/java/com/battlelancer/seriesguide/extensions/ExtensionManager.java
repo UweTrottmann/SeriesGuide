@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.extensions;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
@@ -30,12 +31,19 @@ import com.battlelancer.seriesguide.api.SeriesGuideExtension;
 import com.battlelancer.seriesguide.api.internal.IncomingConstants;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
+import org.json.JSONArray;
+import org.json.JSONException;
 import timber.log.Timber;
 
 public class ExtensionManager {
+
+    private static final String PREF_FILE_SUBSCRIPTIONS = "seriesguide_extensions";
+    private static final String PREF_SUBSCRIPTIONS = "subscriptions";
 
     private static ExtensionManager _instance;
 
@@ -46,17 +54,20 @@ public class ExtensionManager {
         return _instance;
     }
 
-    private final Context mContext;
-
+    private Context mContext;
+    private SharedPreferences mSharedPrefs;
     private ComponentName mSubscriberComponentName;
 
-    private Map<ComponentName, String> mEnabledExtensions;
+    private Map<ComponentName, String> mSubscriptions;
+    private Map<String, ComponentName> mTokens; // mirrored map for faster token searching
 
     private ExtensionManager(Context context) {
         mContext = context.getApplicationContext();
-        mEnabledExtensions = new HashMap<>();
+        mSharedPrefs = context.getSharedPreferences(PREF_FILE_SUBSCRIPTIONS, 0);
+        mSubscriptions = new HashMap<>();
+        mTokens = new HashMap<>();
         mSubscriberComponentName = new ComponentName(context, ExtensionSubscriberService.class);
-        // TODO restore enabled extensions
+        loadSubscriptions();
     }
 
     public List<Extension> queryAllAvailableExtensions() {
@@ -106,21 +117,31 @@ public class ExtensionManager {
         }
 
         synchronized (this) {
-            if (mEnabledExtensions.containsKey(extension)) {
+            if (mSubscriptions.containsKey(extension)) {
                 // already subscribed
                 return;
             }
 
             // subscribe
             String token = UUID.randomUUID().toString();
-            mEnabledExtensions.put(extension, token);
+            while (mTokens.containsKey(token)) {
+                // create another UUID on collision
+                /**
+                 * As the number of enabled extensions is rather low compared to the UUID number
+                 * space we shouldn't have to worry about this ever looping.
+                 */
+                token = UUID.randomUUID().toString();
+            }
+            mSubscriptions.put(extension, token);
+            mTokens.put(token, extension);
             mContext.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
                     .setComponent(extension)
                     .putExtra(IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT,
                             mSubscriberComponentName)
                     .putExtra(IncomingConstants.EXTRA_TOKEN, token));
-            // TODO persist enabled extensions
         }
+
+        saveSubscriptions();
 
         // TODO notify about enabled extension
     }
@@ -131,7 +152,7 @@ public class ExtensionManager {
         }
 
         synchronized (this) {
-            if (!mEnabledExtensions.containsKey(extension)) {
+            if (!mSubscriptions.containsKey(extension)) {
                 return;
             }
 
@@ -141,21 +162,72 @@ public class ExtensionManager {
                     .putExtra(IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT,
                             mSubscriberComponentName)
                     .putExtra(IncomingConstants.EXTRA_TOKEN, (String) null));
-            mEnabledExtensions.remove(extension);
-            // TODO persist enabled extensions
+            mTokens.remove(mSubscriptions.remove(extension));
         }
+
+        saveSubscriptions();
 
         // TODO notify about disabled extension
     }
 
     public void handlePublishedAction(String token, Action action) {
-        // TODO check if token is the one we initially subscribed with
+        if (TextUtils.isEmpty(token) || action == null) {
+            // whoops, no token or action received
+            return;
+        }
 
-        // TODO check if action episode identifier is for an episode we requested actions for
+        synchronized (this) {
+            if (!mTokens.containsKey(token)) {
+                // we are not subscribed, ignore
+                return;
+            }
 
-        // TODO store updated action for this episode
+            // TODO check if action episode identifier is for an episode we requested actions for
+
+            // TODO store updated action for this episode
+        }
 
         // TODO notify via event that actions for an episode were updated
+    }
+
+    private synchronized void loadSubscriptions() {
+        mSubscriptions = new HashMap<>();
+        mTokens = new HashMap<>();
+
+        String serializedSubscriptions = mSharedPrefs.getString(PREF_SUBSCRIPTIONS, null);
+        if (serializedSubscriptions == null) {
+            return;
+        }
+
+        JSONArray jsonArray;
+        try {
+            jsonArray = new JSONArray(serializedSubscriptions);
+        } catch (JSONException e) {
+            Timber.e(e, "Deserializing subscriptions failed");
+            return;
+        }
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            String subscription = jsonArray.optString(i, null);
+            if (subscription == null) {
+                continue;
+            }
+            String[] arr = subscription.split("\\|", 2);
+            ComponentName extension = ComponentName.unflattenFromString(arr[0]);
+            String token = arr[1];
+            mSubscriptions.put(extension, token);
+            mTokens.put(token, extension);
+        }
+    }
+
+    private synchronized void saveSubscriptions() {
+        Set<String> serializedSubscriptions = new HashSet<>();
+        for (ComponentName extension : mSubscriptions.keySet()) {
+            serializedSubscriptions.add(extension.flattenToShortString() + "|"
+                    + mSubscriptions.get(extension));
+        }
+        JSONArray json = new JSONArray(serializedSubscriptions);
+        mSharedPrefs.edit().putString(PREF_SUBSCRIPTIONS, json.toString()).commit();
     }
 
     public class Extension {
