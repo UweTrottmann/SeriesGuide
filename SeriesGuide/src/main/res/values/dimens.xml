@@ -34,6 +34,7 @@
     <dimen name="movie_item_poster_height">150dp</dimen>
     <dimen name="shortcut_icon_size">48dp</dimen>
     <dimen name="tab_strip_height">48dp</dimen>
+    <dimen name="tab_strip_height_no_underline">46dp</dimen>
     <dimen name="buttonbar_button_width">56dp</dimen>
     <dimen name="buttonbar_button_height">48dp</dimen>
     <dimen name="empty_view_width">250dp</dimen>

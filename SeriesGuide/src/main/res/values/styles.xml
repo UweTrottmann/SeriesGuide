@@ -260,7 +260,13 @@
         <item name="pstsDividerColor">?attr/colorDivider</item>
         <item name="pstsIndicatorColor">?attr/colorAccent</item>
         <item name="pstsTabBackground">?attr/tabStripBackground</item>
+        <item name="pstsUnderlineColor">?attr/colorTabStripUnderline</item>
+        <item name="pstsUnderlineHeight">2dp</item>
+    </style>
+
+    <style name="TabStrip.ThinUnderline">
         <item name="pstsUnderlineColor">?attr/colorAccent</item>
+        <item name="pstsUnderlineHeight">1dp</item>
     </style>
 
     <style name="Header">

@@ -396,10 +396,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                         cursor.getString(DetailsQuery.SHOW_POSTER), getActivity());
             }
 
-            // release time and day, numbers: "in 15 mins (Fri) Season 1 Episode 14"
-            SpannableStringBuilder timeAndNumbersText = new SpannableStringBuilder();
-
             // release time and day
+            SpannableStringBuilder timeAndNumbersText = new SpannableStringBuilder();
             TextView releaseDate = (TextView) view.findViewById(R.id.airDay);
             long releaseTime = cursor.getLong(DetailsQuery.FIRST_RELEASE_MS);
             if (releaseTime != -1) {
@@ -416,24 +414,19 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 releaseDate.setText(R.string.unknown);
             }
 
-            // numbers: "Season 1 Episode 14"
-            // also add span to de-emphasize
+            // absolute number (e.g. relevant for Anime): "ABSOLUTE 142"
             int numberStartIndex = timeAndNumbersText.length();
-            timeAndNumbersText
-                    .append(getString(R.string.season_number, mSeasonNumber).toUpperCase(
-                            Locale.getDefault()));
-            timeAndNumbersText.append(" ");
-            timeAndNumbersText
-                    .append(getString(R.string.episode_number, mEpisodeNumber).toUpperCase(
-                            Locale.getDefault()));
-            final int episodeAbsoluteNumber = cursor.getInt(DetailsQuery.ABSOLUTE_NUMBER);
-            if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != mEpisodeNumber) {
-                timeAndNumbersText.append(" (").append(String.valueOf(episodeAbsoluteNumber))
-                        .append(")");
+            int absoluteNumber = cursor.getInt(DetailsQuery.ABSOLUTE_NUMBER);
+            if (absoluteNumber > 0) {
+                timeAndNumbersText
+                        .append(mContext.getString(R.string.episode_number_absolute))
+                        .append(" ")
+                        .append(String.valueOf(absoluteNumber));
+                // de-emphasize number
+                timeAndNumbersText.setSpan(new TextAppearanceSpan(mContext,
+                        R.style.TextAppearance_Small_Dim), numberStartIndex,
+                        timeAndNumbersText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
-            timeAndNumbersText.setSpan(new TextAppearanceSpan(mContext,
-                    R.style.TextAppearance_Small_Dim), numberStartIndex,
-                    timeAndNumbersText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             TextView timeAndNumbers = (TextView) view.findViewById(R.id.airTime);
             timeAndNumbers.setText(timeAndNumbersText);

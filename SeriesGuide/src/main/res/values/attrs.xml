@@ -17,6 +17,7 @@
     <attr name="colorSeparator" format="reference|color" />
     <attr name="colorDivider" format="reference|color" />
     <attr name="colorTabStripText" format="reference|color" />
+    <attr name="colorTabStripUnderline" format="reference|color" />
     <attr name="colorNavDrawerBackground" format="reference|color" />
 
     <!-- Drawables -->
