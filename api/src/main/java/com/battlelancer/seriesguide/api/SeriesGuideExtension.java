@@ -216,7 +216,7 @@ public abstract class SeriesGuideExtension extends IntentService {
         }
     }
 
-    private void handleSubscribe(ComponentName subscriber, String token) {
+    private synchronized void handleSubscribe(ComponentName subscriber, String token) {
         if (subscriber == null) {
             Log.w(TAG, "No subscriber given.");
             return;
@@ -250,7 +250,7 @@ public abstract class SeriesGuideExtension extends IntentService {
         saveSubscriptions();
     }
 
-    private void handleSubscriberAdded(ComponentName subscriber) {
+    private synchronized void handleSubscriberAdded(ComponentName subscriber) {
         if (mSubscriptions.size() == 1) {
             onEnabled();
         }
@@ -258,7 +258,7 @@ public abstract class SeriesGuideExtension extends IntentService {
         onSubscriberAdded(subscriber);
     }
 
-    private void handleSubscriberRemoved(ComponentName subscriber) {
+    private synchronized void handleSubscriberRemoved(ComponentName subscriber) {
         onSubscriberRemoved(subscriber);
 
         if (mSubscriptions.size() == 0) {
@@ -266,7 +266,7 @@ public abstract class SeriesGuideExtension extends IntentService {
         }
     }
 
-    private void loadSubscriptions() {
+    private synchronized void loadSubscriptions() {
         mSubscriptions = new HashMap<ComponentName, String>();
         Set<String> serializedSubscriptions = mSharedPrefs.getStringSet(PREF_SUBSCRIPTIONS, null);
         if (serializedSubscriptions != null) {
@@ -279,7 +279,7 @@ public abstract class SeriesGuideExtension extends IntentService {
         }
     }
 
-    private void saveSubscriptions() {
+    private synchronized void saveSubscriptions() {
         Set<String> serializedSubscriptions = new HashSet<String>();
         for (ComponentName subscriber : mSubscriptions.keySet()) {
             serializedSubscriptions.add(subscriber.flattenToShortString() + "|"
@@ -320,13 +320,13 @@ public abstract class SeriesGuideExtension extends IntentService {
         onUpdate(episode);
     }
 
-    private void publishCurrentAction() {
+    private synchronized void publishCurrentAction() {
         for (ComponentName subscription : mSubscriptions.keySet()) {
             publishCurrentAction(subscription);
         }
     }
 
-    private void publishCurrentAction(final ComponentName subscriber) {
+    private synchronized void publishCurrentAction(final ComponentName subscriber) {
         String token = mSubscriptions.get(subscriber);
         if (TextUtils.isEmpty(token)) {
             Log.w(TAG, "Not active, canceling update, id=" + mName);
