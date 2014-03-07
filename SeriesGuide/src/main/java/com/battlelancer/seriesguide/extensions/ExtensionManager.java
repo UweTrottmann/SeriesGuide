@@ -25,9 +25,14 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.api.SeriesGuideExtension;
+import com.battlelancer.seriesguide.api.internal.IncomingConstants;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import timber.log.Timber;
 
 public class ExtensionManager {
@@ -43,21 +48,24 @@ public class ExtensionManager {
 
     private final Context mContext;
 
-    private List<Extension> mExtensions;
+    private ComponentName mSubscriberComponentName;
+
+    private Map<ComponentName, String> mEnabledExtensions;
 
     private ExtensionManager(Context context) {
         mContext = context.getApplicationContext();
-        mExtensions = new ArrayList<>();
+        mEnabledExtensions = new HashMap<>();
+        mSubscriberComponentName = new ComponentName(context, ExtensionSubscriberService.class);
+        // TODO restore enabled extensions
     }
 
     public List<Extension> queryAllAvailableExtensions() {
-        mExtensions.clear();
-
         Intent queryIntent = new Intent(SeriesGuideExtension.ACTION_SERIESGUIDE_EXTENSION);
         PackageManager pm = mContext.getPackageManager();
         List<ResolveInfo> resolveInfos = pm.queryIntentServices(queryIntent,
                 PackageManager.GET_META_DATA);
 
+        List<Extension> extensions = new ArrayList<>();
         for (ResolveInfo info : resolveInfos) {
             Extension extension = new Extension();
             // get label, icon and component name
@@ -86,10 +94,68 @@ public class ExtensionManager {
                 }
             }
 
-            mExtensions.add(extension);
+            extensions.add(extension);
         }
 
-        return mExtensions;
+        return extensions;
+    }
+
+    public void enableExtension(ComponentName extension) {
+        if (extension == null) {
+            Timber.e("enableExtension: empty extension");
+        }
+
+        synchronized (this) {
+            if (mEnabledExtensions.containsKey(extension)) {
+                // already subscribed
+                return;
+            }
+
+            // subscribe
+            String token = UUID.randomUUID().toString();
+            mEnabledExtensions.put(extension, token);
+            mContext.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
+                    .setComponent(extension)
+                    .putExtra(IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT,
+                            mSubscriberComponentName)
+                    .putExtra(IncomingConstants.EXTRA_TOKEN, token));
+            // TODO persist enabled extensions
+        }
+
+        // TODO notify about enabled extension
+    }
+
+    public void disableExtension(ComponentName extension) {
+        if (extension == null) {
+            Timber.e("disableExtension: empty extension");
+        }
+
+        synchronized (this) {
+            if (!mEnabledExtensions.containsKey(extension)) {
+                return;
+            }
+
+            // unsubscribe
+            mContext.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
+                    .setComponent(extension)
+                    .putExtra(IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT,
+                            mSubscriberComponentName)
+                    .putExtra(IncomingConstants.EXTRA_TOKEN, (String) null));
+            mEnabledExtensions.remove(extension);
+            // TODO persist enabled extensions
+        }
+
+        // TODO notify about disabled extension
+    }
+
+    public void handlePublishedAction(String token, Action action) {
+        // TODO check if token is the one we initially subscribed with
+
+        // TODO check if action episode identifier is for an episode we requested actions for
+
+        // TODO store updated action for this episode
+
+        // TODO notify via event that actions for an episode were updated
     }
 
     public class Extension {
