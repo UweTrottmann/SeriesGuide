@@ -52,6 +52,22 @@ public abstract class SeriesGuideExtension extends IntentService {
 
     private static final String TAG = "SeriesGuideExtension";
 
+    /**
+     * The {@link Intent} action that this extension should declare an
+     * <code>&lt;intent-filter&gt;</code> for to let SeriesGuide pick it up.
+     */
+    public static final String ACTION_SERIESGUIDE_EXTENSION
+            = "com.battlelancer.seriesguide.api.SeriesGuideExtension";
+
+    /**
+     * Boolean extra that will be set to true when SeriesGuide starts the extensions (optionally)
+     * declared settings activity.
+     * Check for this extra in your settings activity if you need to adjust your UI depending on
+     * whether or not the user came from SeriesGuide's settings screen.
+     */
+    public static final String EXTRA_FROM_SERIESGUIDE_SETTINGS
+            = "com.battlelancer.seriesguide.api.extra.FROM_SERIESGUIDE_SETTINGS";
+
     private static final String PREF_PREFIX = "seriesguideextension_";
     private static final String PREF_SUBSCRIPTIONS = "subscriptions";
     private static final String PREF_LAST_ACTION = "action";
