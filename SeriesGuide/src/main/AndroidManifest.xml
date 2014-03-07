@@ -326,6 +326,17 @@
             android:exported="true" >
         </activity>
 
+        <!-- Built-in SeriesGuide extensions -->
+        <service
+            android:name="com.battlelancer.seriesguide.extensions.TraktExtension"
+            android:label="@string/trakt"
+            android:description="@string/description_extension_trakt"
+            android:icon="@drawable/ic_trakt">
+            <intent-filter>
+                <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
+            </intent-filter>
+        </service>
+
         <!-- Sync service -->
         <service
             android:name="com.battlelancer.seriesguide.sync.SgAuthenticationService"
