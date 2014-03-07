@@ -52,6 +52,7 @@ android {
 }
 
 dependencies {
+    compile project(':api')
     compile project(':libraries:androidutils')
     compile project(':libraries:pagerslidingtabstrip')
     compile project(':libraries:stickygridheaders')
