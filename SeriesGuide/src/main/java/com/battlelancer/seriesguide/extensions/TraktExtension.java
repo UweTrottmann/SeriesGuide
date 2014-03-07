@@ -38,7 +38,7 @@ public class TraktExtension extends SeriesGuideExtension {
                 episode.getNumber());
 
         publishAction(new Action.Builder(getString(R.string.trakt))
-                .viewIntent(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(uri)))
+                .viewIntent(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
                 .build());
     }
 }
