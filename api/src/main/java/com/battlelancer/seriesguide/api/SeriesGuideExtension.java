@@ -43,7 +43,7 @@ import static com.battlelancer.seriesguide.api.internal.OutgoingConstants.ACTION
 import static com.battlelancer.seriesguide.api.internal.OutgoingConstants.EXTRA_ACTION;
 
 /**
- * Base class for a SeriesGuide extension.<br/>
+ * Base class for a SeriesGuide extension. Minimum supported API level is 11.<br/>
  * <br/>
  * Based on code from <a href="https://github.com/romannurik/muzei">Muzei</a>, an awesome Live
  * Wallpaper by Roman Nurik.
@@ -78,7 +78,7 @@ public abstract class SeriesGuideExtension extends IntentService {
 
     private SharedPreferences mSharedPrefs;
 
-    private Map<ComponentName, String> mSubscriptions;
+    private Map<ComponentName, String> mSubscribers;
 
     private Action mCurrentAction;
 
@@ -222,20 +222,20 @@ public abstract class SeriesGuideExtension extends IntentService {
             return;
         }
 
-        String oldToken = mSubscriptions.get(subscriber);
+        String oldToken = mSubscribers.get(subscriber);
         if (TextUtils.isEmpty(token)) {
             if (oldToken == null) {
                 return;
             }
 
             // Unsubscribing
-            mSubscriptions.remove(subscriber);
+            mSubscribers.remove(subscriber);
             handleSubscriberRemoved(subscriber);
         } else {
             // Subscribing
             if (!TextUtils.isEmpty(oldToken)) {
                 // Was previously subscribed, treat this as a unsubscribe + subscribe
-                mSubscriptions.remove(subscriber);
+                mSubscribers.remove(subscriber);
                 handleSubscriberRemoved(subscriber);
             }
 
@@ -243,7 +243,7 @@ public abstract class SeriesGuideExtension extends IntentService {
                 return;
             }
 
-            mSubscriptions.put(subscriber, token);
+            mSubscribers.put(subscriber, token);
             handleSubscriberAdded(subscriber);
         }
 
@@ -251,7 +251,7 @@ public abstract class SeriesGuideExtension extends IntentService {
     }
 
     private synchronized void handleSubscriberAdded(ComponentName subscriber) {
-        if (mSubscriptions.size() == 1) {
+        if (mSubscribers.size() == 1) {
             onEnabled();
         }
 
@@ -261,29 +261,29 @@ public abstract class SeriesGuideExtension extends IntentService {
     private synchronized void handleSubscriberRemoved(ComponentName subscriber) {
         onSubscriberRemoved(subscriber);
 
-        if (mSubscriptions.size() == 0) {
+        if (mSubscribers.size() == 0) {
             onDisabled();
         }
     }
 
     private synchronized void loadSubscriptions() {
-        mSubscriptions = new HashMap<ComponentName, String>();
+        mSubscribers = new HashMap<ComponentName, String>();
         Set<String> serializedSubscriptions = mSharedPrefs.getStringSet(PREF_SUBSCRIPTIONS, null);
         if (serializedSubscriptions != null) {
             for (String serializedSubscription : serializedSubscriptions) {
                 String[] arr = serializedSubscription.split("\\|", 2);
                 ComponentName subscriber = ComponentName.unflattenFromString(arr[0]);
                 String token = arr[1];
-                mSubscriptions.put(subscriber, token);
+                mSubscribers.put(subscriber, token);
             }
         }
     }
 
     private synchronized void saveSubscriptions() {
         Set<String> serializedSubscriptions = new HashSet<String>();
-        for (ComponentName subscriber : mSubscriptions.keySet()) {
+        for (ComponentName subscriber : mSubscribers.keySet()) {
             serializedSubscriptions.add(subscriber.flattenToShortString() + "|"
-                    + mSubscriptions.get(subscriber));
+                    + mSubscribers.get(subscriber));
         }
         mSharedPrefs.edit().putStringSet(PREF_SUBSCRIPTIONS, serializedSubscriptions).commit();
     }
@@ -321,13 +321,13 @@ public abstract class SeriesGuideExtension extends IntentService {
     }
 
     private synchronized void publishCurrentAction() {
-        for (ComponentName subscription : mSubscriptions.keySet()) {
+        for (ComponentName subscription : mSubscribers.keySet()) {
             publishCurrentAction(subscription);
         }
     }
 
     private synchronized void publishCurrentAction(final ComponentName subscriber) {
-        String token = mSubscriptions.get(subscriber);
+        String token = mSubscribers.get(subscriber);
         if (TextUtils.isEmpty(token)) {
             Log.w(TAG, "Not active, canceling update, id=" + mName);
             return;
