@@ -34,7 +34,7 @@ public class ExtensionManager {
 
     private static ExtensionManager _instance;
 
-    public synchronized ExtensionManager getInstance(Context context) {
+    public static synchronized ExtensionManager getInstance(Context context) {
         if (_instance == null) {
             _instance = new ExtensionManager(context);
         }
