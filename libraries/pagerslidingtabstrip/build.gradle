@@ -8,11 +8,6 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
-    defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 19
-    }
-
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
