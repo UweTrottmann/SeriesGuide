@@ -5,7 +5,12 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 12.2 *(in development)*
+Version 12.3 *(2014-03-08)*
+---------------------------
+
+* Trakt show upload was broken.
+
+Version 12.2 *(2014-03-03)*
 ---------------------------
 
 * Comments for episodes did wrongly display show comments.

@@ -180,8 +180,8 @@ public class TraktSyncActivity extends BaseActivity {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if (mSyncTask == null
-                                        || mSyncTask.getStatus() == AsyncTask.Status.FINISHED) {
+                                if (mSyncTask != null
+                                        && mSyncTask.getStatus() != AsyncTask.Status.FINISHED) {
                                     return;
                                 }
                                 mSyncTask = (TraktSync) new TraktSync(TraktSyncActivity.this,
