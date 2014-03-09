@@ -54,16 +54,12 @@ public class SeriesGuideApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        // logging setup
         if (BuildConfig.DEBUG) {
             // detailed logcat logging
             Timber.plant(new Timber.DebugTree());
-
-            // also report crashes and errors on internal version
-            if (FLAVOR_INTERNAL.equals(BuildConfig.FLAVOR)) {
-                Timber.plant(new AnalyticsTree());
-                Crashlytics.start(this);
-            }
-        } else {
+        }
+        if (!BuildConfig.DEBUG || FLAVOR_INTERNAL.equals(BuildConfig.FLAVOR)){
             // crash and error reporting
             Timber.plant(new AnalyticsTree());
             Crashlytics.start(this);
