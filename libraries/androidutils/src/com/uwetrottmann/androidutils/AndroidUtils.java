@@ -17,8 +17,6 @@
 
 package com.uwetrottmann.androidutils;
 
-import com.squareup.okhttp.OkHttpClient;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -28,7 +26,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.view.View;
-
+import com.squareup.okhttp.OkHttpClient;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -38,10 +36,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.channels.FileChannel;
-import java.security.GeneralSecurityException;
 import java.util.Locale;
-
-import javax.net.ssl.SSLContext;
 
 public class AndroidUtils {
 

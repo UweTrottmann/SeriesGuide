@@ -33,7 +33,6 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.Crashlytics;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import java.net.URL;
 import timber.log.Timber;
 
 /**
