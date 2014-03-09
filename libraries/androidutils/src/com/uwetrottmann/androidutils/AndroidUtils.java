@@ -191,8 +191,7 @@ public class AndroidUtils {
     }
 
     /**
-     * Returns an {@link HttpURLConnection} using sensible default settings for mobile and taking
-     * care of buggy behavior prior to Froyo.
+     * Returns an {@link HttpURLConnection} using sensible default settings for mobile.
      */
     public static HttpURLConnection buildHttpUrlConnection(String urlString) throws IOException {
         URL url = new URL(urlString);
@@ -206,23 +205,10 @@ public class AndroidUtils {
     }
 
     /**
-     * Create an OkHttpClient with its own private SSL context. Avoids libssl crash because other
-     * libraries do not expect the global SSL context to be changed. Also see
-     * https://github.com/square/okhttp/issues/184.
+     * Create an OkHttpClient instance.
      */
     public static OkHttpClient createOkHttpClient() {
-        OkHttpClient okHttpClient = new OkHttpClient();
-
-        SSLContext sslContext;
-        try {
-            sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(null, null, null);
-        } catch (GeneralSecurityException e) {
-            throw new AssertionError(); // The system has no TLS. Just give up.
-        }
-        okHttpClient.setSslSocketFactory(sslContext.getSocketFactory());
-
-        return okHttpClient;
+        return new OkHttpClient();
     }
 
 }

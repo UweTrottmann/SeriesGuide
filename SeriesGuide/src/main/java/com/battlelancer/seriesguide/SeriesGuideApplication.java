@@ -79,12 +79,6 @@ public class SeriesGuideApplication extends Application {
         // Load the current theme into a global variable
         Utils.updateTheme(DisplaySettings.getThemeIndex(this));
 
-        // OkHttp changes the global SSL context, breaks other HTTP clients like used by e.g. Google
-        // Analytics.
-        // https://github.com/square/okhttp/issues/184
-        // So set OkHttp to handle all connections
-        URL.setURLStreamHandlerFactory(AndroidUtils.createOkHttpClient());
-
         // Ensure GA opt-out
         GoogleAnalytics.getInstance(this).setAppOptOut(AppSettings.isGaAppOptOut(this));
 
