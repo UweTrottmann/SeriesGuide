@@ -87,8 +87,8 @@ public class ListWidgetService extends RemoteViewsService {
                     mDataCursor = getContentResolver().query(
                             Shows.CONTENT_URI_WITH_EPISODE,
                             ShowsQuery.PROJECTION,
-                            Shows.HIDDEN + "=0" + Shows.SELECTION_FAVORITES
-                                    + Shows.SELECTION_WITH_NEXT_EPISODE, null,
+                            Shows.SELECTION_NO_HIDDEN + " AND " + Shows.SELECTION_FAVORITES
+                                    + " AND " + Shows.SELECTION_WITH_NEXT_EPISODE, null,
                             Shows.DEFAULT_SORT);
                     break;
                 default:
