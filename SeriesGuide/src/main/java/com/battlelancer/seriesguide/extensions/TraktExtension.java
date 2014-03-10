@@ -33,11 +33,16 @@ public class TraktExtension extends SeriesGuideExtension {
     }
 
     @Override
-    protected void onUpdate(Episode episode) {
+    protected void onUpdate(int episodeIdentifier, Episode episode) {
+        if (getCurrentAction().getEntityIdentifier() == episodeIdentifier) {
+            publishAction(getCurrentAction());
+            return;
+        }
+
         String uri = TraktTools.buildEpisodeOrShowUrl(episode.getShowTvdbId(), episode.getSeason(),
                 episode.getNumber());
 
-        publishAction(new Action.Builder(getString(R.string.trakt))
+        publishAction(new Action.Builder(getString(R.string.trakt), episodeIdentifier)
                 .viewIntent(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
                 .build());
     }

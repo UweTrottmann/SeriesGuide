@@ -36,6 +36,7 @@ import org.json.JSONTokener;
 
 import static com.battlelancer.seriesguide.api.internal.IncomingConstants.ACTION_SUBSCRIBE;
 import static com.battlelancer.seriesguide.api.internal.IncomingConstants.ACTION_UPDATE;
+import static com.battlelancer.seriesguide.api.internal.IncomingConstants.EXTRA_ENTITY_IDENTIFIER;
 import static com.battlelancer.seriesguide.api.internal.IncomingConstants.EXTRA_EPISODE;
 import static com.battlelancer.seriesguide.api.internal.IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT;
 import static com.battlelancer.seriesguide.api.internal.IncomingConstants.EXTRA_TOKEN;
@@ -177,8 +178,11 @@ public abstract class SeriesGuideExtension extends IntentService {
     /**
      * Called when a new episode is displayed and the extension should publish the action it wants
      * to display using {@link #publishAction(Action)}.
+     *
+     * @param episodeIdentifier The entity identifier the extension should submit with the action it
+     *                          wants to publish.
      */
-    protected abstract void onUpdate(Episode episode);
+    protected abstract void onUpdate(int episodeIdentifier, Episode episode);
 
     /**
      * Publishes the provided {@link Action}. It will be sent to all current subscribers.
@@ -210,8 +214,9 @@ public abstract class SeriesGuideExtension extends IntentService {
                     intent.getStringExtra(EXTRA_TOKEN));
         } else if (ACTION_UPDATE.equals(action)) {
             // subscriber requests an updated action
-            if (intent.hasExtra(EXTRA_EPISODE)) {
-                handleUpdate(intent.getBundleExtra(EXTRA_EPISODE));
+            if (intent.hasExtra(EXTRA_ENTITY_IDENTIFIER) && intent.hasExtra(EXTRA_EPISODE)) {
+                handleEpisodeUpdate(intent.getIntExtra(EXTRA_ENTITY_IDENTIFIER, 0),
+                        intent.getBundleExtra(EXTRA_EPISODE));
             }
         }
     }
@@ -312,12 +317,12 @@ public abstract class SeriesGuideExtension extends IntentService {
         }
     }
 
-    private void handleUpdate(Bundle episodeBundle) {
-        if (episodeBundle == null) {
+    private void handleEpisodeUpdate(int episodeIdentifier, Bundle episodeBundle) {
+        if (episodeIdentifier <= 0 || episodeBundle == null) {
             return;
         }
         Episode episode = Episode.fromBundle(episodeBundle);
-        onUpdate(episode);
+        onUpdate(episodeIdentifier, episode);
     }
 
     private synchronized void publishCurrentAction() {

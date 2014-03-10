@@ -24,6 +24,7 @@ public interface IncomingConstants {
 
     public static final String ACTION_UPDATE = "com.battlelancer.seriesguide.api.action.UPDATE";
     public static final String EXTRA_EPISODE = "com.battlelancer.seriesguide.api.extra.EPISODE";
+    public static final String EXTRA_ENTITY_IDENTIFIER = "com.battlelancer.seriesguide.api.extra.ENTITY_IDENTIFIER";
 
     public static final String ACTION_PUBLISH_ACTION = "com.battlelancer.seriesguide.api.action.PUBLISH_ACTION";
     public static final String EXTRA_ACTION = "com.battlelancer.seriesguide.api.extra.ACTION";
