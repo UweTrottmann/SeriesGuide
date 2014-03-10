@@ -10,7 +10,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.8.+'
+        classpath 'com.android.tools.build:gradle:0.9.+'
         classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
         classpath 'com.squareup.gradle:gradle-android-test-plugin:0.9.1-SNAPSHOT'
     }
@@ -30,15 +30,15 @@ allprojects {
 
 ext {
     compileSdkVersion = 19
-    buildToolsVersion = '19.0.1'
+    buildToolsVersion = '19.0.3'
 
-    versionCode = 239
-    versionName = '12.2'
+    versionCode = 240
+    versionName = '12.3'
 }
 
 ext.libraries = [
 
         supportv4: 'com.android.support:support-v4:19.0.+',
-        okhttp: 'com.squareup.okhttp:okhttp:1.3.0'
+        okhttp: 'com.squareup.okhttp:okhttp:1.5.0'
 
 ]
