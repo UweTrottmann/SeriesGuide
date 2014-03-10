@@ -16,15 +16,10 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.battlelancer.seriesguide.adapters.MoviesCursorAdapter;
-import com.battlelancer.seriesguide.R;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
@@ -33,6 +28,17 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.adapters.MoviesCursorAdapter;
+import com.battlelancer.seriesguide.settings.MoviesDistillationSettings;
+import de.greenrobot.event.EventBus;
+
+import static com.battlelancer.seriesguide.settings.MoviesDistillationSettings.MoviesSortOrder;
+import static com.battlelancer.seriesguide.settings.MoviesDistillationSettings.MoviesSortOrderChangedEvent;
 
 /**
  * A shell for a fragment displaying a number of movies.
@@ -63,6 +69,13 @@ public abstract class MoviesBaseFragment extends SherlockFragment implements
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
@@ -77,13 +90,59 @@ public abstract class MoviesBaseFragment extends SherlockFragment implements
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.movies_menu, menu);
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_action_movies_sort_title) {
+            if (MoviesDistillationSettings.getSortOrderId(getActivity())
+                    == MoviesSortOrder.TITLE_ALPHABETICAL_ID) {
+                changeSortOrder(MoviesSortOrder.TITLE_REVERSE_ALHPABETICAL_ID);
+            } else {
+                // was sorted title reverse or by release date
+                changeSortOrder(MoviesSortOrder.TITLE_ALPHABETICAL_ID);
+            }
+            return true;
+        }
+        if (itemId == R.id.menu_action_movies_sort_release) {
+            if (MoviesDistillationSettings.getSortOrderId(getActivity())
+                    == MoviesSortOrder.RELEASE_DATE_NEWEST_FIRST_ID) {
+                changeSortOrder(MoviesSortOrder.RELEASE_DATE_OLDEST_FIRST_ID);
+            } else {
+                // was sorted by oldest first or by title
+                changeSortOrder(MoviesSortOrder.RELEASE_DATE_NEWEST_FIRST_ID);
+            }
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void changeSortOrder(int sortOrderId) {
+        PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+                .putInt(MoviesDistillationSettings.KEY_SORT_ORDER, sortOrderId)
+                .commit();
+
+        EventBus.getDefault().post(new MoviesSortOrderChangedEvent());
+    }
+
+    @Override
     public void onClick(View v) {
         getActivity().openContextMenu(v);
+    }
+
+    public void onEventMainThread(MoviesSortOrderChangedEvent event) {
+        getLoaderManager().restartLoader(getLoaderId(), null, this);
     }
 
     @Override
@@ -111,5 +170,4 @@ public abstract class MoviesBaseFragment extends SherlockFragment implements
      * Return a loader id different from any other used within {@link com.battlelancer.seriesguide.ui.MoviesActivity}.
      */
     protected abstract int getLoaderId();
-
 }

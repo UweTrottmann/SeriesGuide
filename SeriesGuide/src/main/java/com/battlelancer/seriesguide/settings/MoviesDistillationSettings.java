@@ -27,6 +27,9 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
  */
 public class MoviesDistillationSettings {
 
+    public static class MoviesSortOrderChangedEvent {
+    }
+
     public static String KEY_SORT_ORDER = "com.battlelancer.seriesguide.movies.sort.order";
 
     /**
