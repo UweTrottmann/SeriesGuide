@@ -395,12 +395,11 @@ public class SeriesGuideContract {
          */
         public static final String DEFAULT_SORT = ShowsColumns.TITLE + " ASC";
 
-        public static final String SELECTION_FAVORITES = " AND " + Shows.FAVORITE + "=1";
+        public static final String SELECTION_FAVORITES = Shows.FAVORITE + "=1";
 
-        public static final String SELECTION_WITH_NEXT_EPISODE = " AND " + Shows.NEXTEPISODE
-                + "!=''";
+        public static final String SELECTION_WITH_NEXT_EPISODE = Shows.NEXTEPISODE + "!=''";
 
-        public static final String SELECTION_NO_HIDDEN = " AND " + Shows.HIDDEN + "=0";
+        public static final String SELECTION_NO_HIDDEN = Shows.HIDDEN + "=0";
 
         public static Uri buildShowUri(String showId) {
             return CONTENT_URI.buildUpon().appendPath(showId).build();
@@ -434,9 +433,9 @@ public class SeriesGuideContract {
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.episode";
 
-        public static final String SELECTION_NOWATCHED = " AND " + Episodes.WATCHED + "=0";
+        public static final String SELECTION_UNWATCHED = Episodes.WATCHED + "=0";
 
-        public static final String SELECTION_NOSPECIALS = " AND " + Episodes.SEASON + "!=0";
+        public static final String SELECTION_NO_SPECIALS = Episodes.SEASON + "!=0";
 
         public static Uri buildEpisodeUri(String episodeId) {
             return CONTENT_URI.buildUpon().appendPath(episodeId).build();

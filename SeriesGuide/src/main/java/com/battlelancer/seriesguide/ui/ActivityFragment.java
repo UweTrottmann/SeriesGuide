@@ -338,10 +338,10 @@ public class ActivityFragment extends SherlockFragment implements
         };
 
         String QUERY_UPCOMING = Episodes.FIRSTAIREDMS + ">=? AND " + Episodes.FIRSTAIREDMS
-                + "<? AND " + Shows.HIDDEN + "=0";
+                + "<? AND " + Shows.SELECTION_NO_HIDDEN;
 
         String QUERY_RECENT = Episodes.FIRSTAIREDMS + "<? AND " + Episodes.FIRSTAIREDMS + ">? AND "
-                + Shows.HIDDEN + "=0";
+                + Shows.SELECTION_NO_HIDDEN;
 
         String SORTING_UPCOMING = Episodes.FIRSTAIREDMS + " ASC," + Shows.TITLE + " ASC,"
                 + Episodes.NUMBER + " ASC";
