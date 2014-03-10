@@ -614,7 +614,17 @@ public class SeriesGuideContract {
 
         public static final String SELECTION_WATCHLIST = Movies.IN_WATCHLIST + "=1";
 
-        public static final String DEFAULT_SORT = Movies.TITLE + " ASC";
+        /** Default sort order. */
+        public static final String SORT_TITLE_ALPHABETICAL = Movies.TITLE + " COLLATE NOCASE ASC";
+
+        public static final String SORT_TITLE_REVERSE_ALPHACETICAL = Movies.TITLE
+                + " COLLATE NOCASE DESC";
+
+        public static final String SORT_RELEASE_DATE_NEWEST_FIRST = Movies.RELEASED_UTC_MS
+                + " DESC," + SORT_TITLE_ALPHABETICAL;
+
+        public static final String SORT_RELEASE_DATE_OLDEST_FIRST = Movies.RELEASED_UTC_MS + " ASC,"
+                + SORT_TITLE_ALPHABETICAL;
 
         /**
          * Use if multiple items get returned

@@ -16,11 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.adapters.MoviesCursorAdapter;
-import com.battlelancer.seriesguide.util.MovieTools;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.R;
-
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
@@ -31,6 +26,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.adapters.MoviesCursorAdapter;
+import com.battlelancer.seriesguide.settings.MoviesDistillationSettings;
+import com.battlelancer.seriesguide.util.MovieTools;
+import com.battlelancer.seriesguide.util.Utils;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
@@ -95,7 +95,7 @@ public class MoviesCollectionFragment extends MoviesBaseFragment {
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(getActivity(), Movies.CONTENT_URI,
                 MoviesCursorAdapter.MoviesQuery.PROJECTION, Movies.SELECTION_COLLECTION, null,
-                Movies.DEFAULT_SORT);
+                MoviesDistillationSettings.getSortQuery(getActivity()));
     }
 
     @Override
