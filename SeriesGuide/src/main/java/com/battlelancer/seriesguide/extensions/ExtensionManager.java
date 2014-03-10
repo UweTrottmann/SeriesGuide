@@ -62,6 +62,7 @@ public class ExtensionManager {
     private Map<String, ComponentName> mTokens; // mirrored map for faster token searching
 
     private ExtensionManager(Context context) {
+        Timber.d("Initializing extension manager");
         mContext = context.getApplicationContext();
         mSharedPrefs = context.getSharedPreferences(PREF_FILE_SUBSCRIPTIONS, 0);
         mSubscriptions = new HashMap<>();
@@ -105,6 +106,8 @@ public class ExtensionManager {
                 }
             }
 
+            Timber.d("queryAllAvailableExtensions: found extension " + extension.label + " "
+                    + extension.componentName);
             extensions.add(extension);
         }
 
@@ -119,6 +122,7 @@ public class ExtensionManager {
         synchronized (this) {
             if (mSubscriptions.containsKey(extension)) {
                 // already subscribed
+                Timber.d("enableExtension: already subscribed to " + extension);
                 return;
             }
 
@@ -132,6 +136,7 @@ public class ExtensionManager {
                  */
                 token = UUID.randomUUID().toString();
             }
+            Timber.d("enableExtension: subscribing to " + extension);
             mSubscriptions.put(extension, token);
             mTokens.put(token, extension);
             mContext.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
@@ -148,15 +153,17 @@ public class ExtensionManager {
 
     public void disableExtension(ComponentName extension) {
         if (extension == null) {
-            Timber.e("disableExtension: empty extension");
+            Timber.e("disableExtension: extension empty");
         }
 
         synchronized (this) {
             if (!mSubscriptions.containsKey(extension)) {
+                Timber.d("disableExtension: extension not enabled " + extension);
                 return;
             }
 
             // unsubscribe
+            Timber.d("disableExtension: unsubscribing from " + extension);
             mContext.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
                     .setComponent(extension)
                     .putExtra(IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT,
@@ -173,12 +180,14 @@ public class ExtensionManager {
     public void handlePublishedAction(String token, Action action) {
         if (TextUtils.isEmpty(token) || action == null) {
             // whoops, no token or action received
+            Timber.d("handlePublishedAction: token or action empty");
             return;
         }
 
         synchronized (this) {
             if (!mTokens.containsKey(token)) {
                 // we are not subscribed, ignore
+                Timber.d("handlePublishedAction: token invalid, ignoring incoming action");
                 return;
             }
 
@@ -217,6 +226,7 @@ public class ExtensionManager {
             String token = arr[1];
             mSubscriptions.put(extension, token);
             mTokens.put(token, extension);
+            Timber.d("Restored subscription: " + extension + " token: " + token);
         }
     }
 
@@ -226,6 +236,7 @@ public class ExtensionManager {
             serializedSubscriptions.add(extension.flattenToShortString() + "|"
                     + mSubscriptions.get(extension));
         }
+        Timber.d("Saving " + serializedSubscriptions.size() + " subscriptions");
         JSONArray json = new JSONArray(serializedSubscriptions);
         mSharedPrefs.edit().putString(PREF_SUBSCRIPTIONS, json.toString()).commit();
     }
