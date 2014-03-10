@@ -400,6 +400,8 @@ public class SeriesGuideContract {
         public static final String SELECTION_WITH_NEXT_EPISODE = " AND " + Shows.NEXTEPISODE
                 + "!=''";
 
+        public static final String SELECTION_NO_HIDDEN = " AND " + Shows.HIDDEN + "=0";
+
         public static Uri buildShowUri(String showId) {
             return CONTENT_URI.buildUpon().appendPath(showId).build();
         }

@@ -159,6 +159,8 @@ public class NotificationService extends IntentService {
         if (isNoSpecials) {
             selection.append(Episodes.SELECTION_NOSPECIALS);
         }
+        // always exclude hidden shows
+        selection.append(Shows.SELECTION_NO_HIDDEN);
 
         final long customCurrentTime = TimeTools.getCurrentTime(this);
         final Cursor upcomingEpisodes = getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
