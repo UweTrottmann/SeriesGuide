@@ -27,6 +27,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.api.Action;
+import com.battlelancer.seriesguide.api.Episode;
 import com.battlelancer.seriesguide.api.SeriesGuideExtension;
 import com.battlelancer.seriesguide.api.internal.IncomingConstants;
 import java.util.ArrayList;
@@ -175,6 +176,24 @@ public class ExtensionManager {
         saveSubscriptions();
 
         // TODO notify about disabled extension
+    }
+
+    /**
+     * Asks all enabled extensions to publish an action for the given episode.
+     */
+    public synchronized void requestActions(Episode episode) {
+        for (ComponentName extension : mSubscriptions.keySet()) {
+            requestAction(extension, episode);
+        }
+    }
+
+    /**
+     * Ask a single extension to publish an action for the given episode.
+     */
+    public synchronized void requestAction(ComponentName extension, Episode episode) {
+        mContext.startService(new Intent(IncomingConstants.ACTION_UPDATE)
+                .setComponent(extension)
+                .putExtra(IncomingConstants.EXTRA_EPISODE, episode.toBundle()));
     }
 
     public void handlePublishedAction(String token, Action action) {
