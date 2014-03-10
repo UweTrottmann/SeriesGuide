@@ -193,6 +193,7 @@ public class ExtensionManager {
     public synchronized void requestAction(ComponentName extension, Episode episode) {
         mContext.startService(new Intent(IncomingConstants.ACTION_UPDATE)
                 .setComponent(extension)
+                .putExtra(IncomingConstants.EXTRA_ENTITY_IDENTIFIER, episode.getTvdbId())
                 .putExtra(IncomingConstants.EXTRA_EPISODE, episode.toBundle()));
     }
 
