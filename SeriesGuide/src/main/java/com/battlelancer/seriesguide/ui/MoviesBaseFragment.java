@@ -98,7 +98,8 @@ public abstract class MoviesBaseFragment extends SherlockFragment implements
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.movies_menu, menu);
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+        inflater.inflate(isLightTheme ? R.menu.movies_menu_light : R.menu.movies_menu, menu);
     }
 
     @Override
