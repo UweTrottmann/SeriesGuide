@@ -58,6 +58,9 @@
   <string name="movie_cast">Ηθοποιοί</string>
   <string name="movie_crew">Crew</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
+  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort_title">Τίτλος</string>
+  <string name="action_movies_sort_release">Ημερομηνία προβολής</string>
   <string name="shows_with_next">%s με τα επόμενα επεισόδια</string>
   <string name="shows_continuing">%s συνεχίζονται</string>
   <string name="episodes_watched">%s παρακολουθήθηκαν</string>

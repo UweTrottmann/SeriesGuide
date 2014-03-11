@@ -58,6 +58,9 @@
   <string name="movie_cast">Cast</string>
   <string name="movie_crew">Crew</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
+  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort_title">Cím</string>
+  <string name="action_movies_sort_release">Első adás</string>
   <string name="shows_with_next">%s új epizóddal</string>
   <string name="shows_continuing">%s folytatódik</string>
   <string name="episodes_watched">%s megnézve</string>

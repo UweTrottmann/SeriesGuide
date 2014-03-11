@@ -58,6 +58,9 @@
   <string name="movie_cast">طاقم التمثيل</string>
   <string name="movie_crew">طاقم</string>
   <string name="movie_person_in_role">(%1$s (%2$s</string>
+  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort_title">العنوان</string>
+  <string name="action_movies_sort_release">تاريخ الإصدار</string>
   <string name="shows_with_next">%s مع الحلقات القادمة</string>
   <string name="shows_continuing">%s مستمرة</string>
   <string name="episodes_watched">%s تمت مشاهدتها</string>
