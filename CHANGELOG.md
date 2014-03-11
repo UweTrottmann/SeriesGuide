@@ -5,6 +5,18 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 13 *(in development)*
+-----------------------------
+
+#### 13-beta1 *(2014-03-11)*
+
+* FEATURE Sort movies by title or release date (touch again to reverse sort).
+* TWEAK Toned down tab strip highlights, movie button bar.
+* TWEAK Auto-complete email accounts when signing up for trakt.
+* TWEAK Hidden shows will not display notifications any longer.
+* TWEAK Display absolute episode number more prominently in episode detail view, drop duplicate season and episode number.
+* FIX Exclude special episodes from determining if all episodes of a show are collected as well (already in effect for watched all marker).
+
 Version 12.3 *(2014-03-08)*
 ---------------------------
 
