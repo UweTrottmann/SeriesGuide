@@ -195,14 +195,16 @@ public class DBUtils {
         if (context == null) {
             return -1;
         }
-        final ContentResolver resolver = context.getContentResolver();
-        final Uri episodesOfShowUri = Episodes.buildEpisodesOfShowUri(showId);
 
         // unwatched, aired episodes
-        final Cursor uncollected = resolver.query(episodesOfShowUri, new String[]{
-                Episodes._ID, Episodes.COLLECTED
-        },
-                Episodes.COLLECTED + "=0", null, null);
+        final Cursor uncollected = context.getContentResolver().query(
+                Episodes.buildEpisodesOfShowUri(showId),
+                new String[] {
+                        Episodes._ID, Episodes.COLLECTED
+                },
+                Episodes.SELECTION_NOT_COLLECTED + " AND " + Episodes.SELECTION_NO_SPECIALS, null,
+                null
+        );
         if (uncollected == null) {
             return -1;
         }

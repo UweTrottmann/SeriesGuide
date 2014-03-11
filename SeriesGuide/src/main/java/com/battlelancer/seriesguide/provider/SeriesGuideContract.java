@@ -435,6 +435,8 @@ public class SeriesGuideContract {
 
         public static final String SELECTION_UNWATCHED = Episodes.WATCHED + "=0";
 
+        public static final String SELECTION_NOT_COLLECTED = Episodes.COLLECTED + "=0";
+
         public static final String SELECTION_NO_SPECIALS = Episodes.SEASON + "!=0";
 
         public static Uri buildEpisodeUri(String episodeId) {
