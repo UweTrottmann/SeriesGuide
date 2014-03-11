@@ -216,9 +216,9 @@
   <string name="integration_trakt_items">- lisää ohjelmat kokoelmastasi ja seurantalistastasi\n\n- näe suosittelusi ja ystäviesi toiminta\n\n- katsonta- ja keräysmerkinnät synkronoidaan automaattisesti\n\n- katsomasi uudet ohjelmat lisätään automaattisesti</string>
   <string name="trakt_upload_hint">Merkitse SeriesGuidessa katsotut jaksot katsotuiksi traktissa:</string>
   <string name="trakt_upload">Lähetä trakt.tv:een</string>
-  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
-  <string name="upload_done">Finished uploading.</string>
-  <string name="upload_no_work">There was nothing to upload.</string>
+  <string name="trakt_syncunwatched">Poista katsontamerkinnät traktin katsomattomilta jaksoilta SeriesGuidessa</string>
+  <string name="upload_done">Lähettäminen päättynyt.</string>
+  <string name="upload_no_work">Ei ole mitään lähetettävää.</string>
   <string name="prefs_category_basic">Yleiset</string>
   <string name="prefs_category_sharing">Palvelut</string>
   <string name="prefs_category_advanced">Edistyneet</string>
