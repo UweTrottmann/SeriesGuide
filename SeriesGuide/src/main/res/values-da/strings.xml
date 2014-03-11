@@ -58,6 +58,9 @@
   <string name="movie_cast">Medvirkende</string>
   <string name="movie_crew">Besætning</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
+  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort_title">Titel</string>
+  <string name="action_movies_sort_release">Udgivelsesdato</string>
   <string name="shows_with_next">%s med kommende episoder</string>
   <string name="shows_continuing">%s fortsætter</string>
   <string name="episodes_watched">%s sete</string>
