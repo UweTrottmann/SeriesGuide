@@ -185,6 +185,17 @@ public class ExtensionManager {
     }
 
     /**
+     * Returns the currently available {@link com.battlelancer.seriesguide.api.Action} list for the
+     * given {@link com.battlelancer.seriesguide.api.Episode}. The {@link
+     * com.battlelancer.seriesguide.api.Episode} object may only contain a valid TVDb id.
+     */
+    public synchronized List<Action> getLatestActions(Episode episode) {
+        Map<ComponentName, Action> actionMap = sEpisodeActionsCache.get(
+                episode.getTvdbId());
+        return new ArrayList<>(actionMap.values());
+    }
+
+    /**
      * Asks all enabled extensions to publish an action for the given episode.
      */
     public synchronized void requestActions(Episode episode) {
