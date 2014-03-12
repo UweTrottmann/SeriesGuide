@@ -186,11 +186,10 @@ public class ExtensionManager {
 
     /**
      * Returns the currently available {@link com.battlelancer.seriesguide.api.Action} list for the
-     * given {@link com.battlelancer.seriesguide.api.Episode}. The {@link
-     * com.battlelancer.seriesguide.api.Episode} object may only contain a valid TVDb id.
+     * given episode, identified through its TVDb id.
      */
-    public synchronized List<Action> getLatestActions(Episode episode) {
-        Map<ComponentName, Action> actionMap = sEpisodeActionsCache.get(episode.getTvdbId());
+    public synchronized List<Action> getLatestEpisodeActions(int episodeTvdbId) {
+        Map<ComponentName, Action> actionMap = sEpisodeActionsCache.get(episodeTvdbId);
         return new ArrayList<>(actionMap.values());
     }
 
