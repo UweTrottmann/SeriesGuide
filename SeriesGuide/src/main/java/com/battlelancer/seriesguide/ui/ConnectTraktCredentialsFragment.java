@@ -16,13 +16,18 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -37,6 +42,10 @@ import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.ConnectTraktTask;
 import com.battlelancer.seriesguide.util.Utils;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Provides a user interface to connect or create a trakt account.
@@ -58,7 +67,7 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment implements
 
     @InjectView(R.id.checkNewAccount) CheckBox mCheckBoxNewAccount;
 
-    @InjectView(R.id.email) EditText mEditTextEmail;
+    @InjectView(R.id.email) AutoCompleteTextView mEmailAutoCompleteView;
 
     @InjectView(R.id.status) TextView mTextViewStatus;
 
@@ -119,6 +128,19 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment implements
             setStatus(true, true, R.string.waitplease);
         }
 
+        // enable e-mail completion via device accounts
+        final Account[] accounts = AccountManager.get(getActivity()).getAccounts();
+        final Set<String> emailSet = new HashSet<>();
+        for (Account account : accounts) {
+            if (Patterns.EMAIL_ADDRESS.matcher(account.name).matches()) {
+                emailSet.add(account.name);
+            }
+        }
+        List<String> emails = new ArrayList<>(emailSet);
+        mEmailAutoCompleteView.setAdapter(
+                new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line,
+                        emails));
+
         // connect button
         mButtonConnect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,7 +160,7 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment implements
                 // get email
                 String email = null;
                 if (mCheckBoxNewAccount.isChecked()) {
-                    Editable editableEmail = mEditTextEmail.getText();
+                    Editable editableEmail = mEmailAutoCompleteView.getText();
                     email = editableEmail != null ? editableEmail.toString().trim() : null;
                 }
 

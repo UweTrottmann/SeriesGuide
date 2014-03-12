@@ -58,6 +58,9 @@
   <string name="movie_cast">Cast</string>
   <string name="movie_crew">Filmploeg</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
+  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort_title">Titel</string>
+  <string name="action_movies_sort_release">Releasedatum</string>
   <string name="shows_with_next">%s met de volgende afleveringen</string>
   <string name="shows_continuing">%s lopende</string>
   <string name="episodes_watched">%s bekeken</string>

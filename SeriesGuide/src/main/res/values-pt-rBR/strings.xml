@@ -58,6 +58,9 @@
   <string name="movie_cast">Elenco</string>
   <string name="movie_crew">Produção</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
+  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort_title">Título</string>
+  <string name="action_movies_sort_release">Data de exibição</string>
   <string name="shows_with_next">%s com próximos episódios</string>
   <string name="shows_continuing">%s em exibição</string>
   <string name="episodes_watched">%s assistidos</string>

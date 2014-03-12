@@ -58,6 +58,9 @@
   <string name="movie_cast">В ролях</string>
   <string name="movie_crew">Crew</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
+  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort_title">Название</string>
+  <string name="action_movies_sort_release">Дата выпуска</string>
   <string name="shows_with_next">%s с новым эпизодом</string>
   <string name="shows_continuing">Продолжается %s</string>
   <string name="episodes_watched">посмотрели: %s</string>
