@@ -46,6 +46,12 @@ public class ExtensionManager {
     private static final String PREF_FILE_SUBSCRIPTIONS = "seriesguide_extensions";
     private static final String PREF_SUBSCRIPTIONS = "subscriptions";
 
+    private static final int HARD_CACHE_CAPACITY = 5;
+
+    // Cashes received actions for the last few displayed episodes.
+    private final static android.support.v4.util.LruCache<Integer, Map<ComponentName, Action>>
+            sEpisodeActionsCache = new android.support.v4.util.LruCache<>(HARD_CACHE_CAPACITY);
+
     private static ExtensionManager _instance;
 
     public static synchronized ExtensionManager getInstance(Context context) {
@@ -191,6 +197,11 @@ public class ExtensionManager {
      * Ask a single extension to publish an action for the given episode.
      */
     public synchronized void requestAction(ComponentName extension, Episode episode) {
+        // prepare to receive actions for the given episode
+        if (sEpisodeActionsCache.get(episode.getTvdbId()) == null) {
+            sEpisodeActionsCache.put(episode.getTvdbId(), new HashMap<ComponentName, Action>());
+        }
+        // actually request actions
         mContext.startService(new Intent(IncomingConstants.ACTION_UPDATE)
                 .setComponent(extension)
                 .putExtra(IncomingConstants.EXTRA_ENTITY_IDENTIFIER, episode.getTvdbId())
@@ -211,9 +222,18 @@ public class ExtensionManager {
                 return;
             }
 
-            // TODO check if action episode identifier is for an episode we requested actions for
-
-            // TODO store updated action for this episode
+            // check if action episode identifier is for an episode we requested actions for
+            Map<ComponentName, Action> actionMap = sEpisodeActionsCache.get(
+                    action.getEntityIdentifier());
+            if (actionMap == null) {
+                // did not request actions for this episode, or is already out of cache (too late!)
+                Timber.d("handlePublishedAction: not interested in actions for "
+                        + action.getEntityIdentifier() + ", ignoring incoming action");
+                return;
+            }
+            // store action for this episode
+            ComponentName extension = mTokens.get(token);
+            actionMap.put(extension, action);
         }
 
         // TODO notify via event that actions for an episode were updated
