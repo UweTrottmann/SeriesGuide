@@ -25,6 +25,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -87,11 +88,15 @@ public class OverviewFragment extends SherlockFragment implements
     private static final int SHOW_LOADER_ID = 101;
     private static final int ACTIONS_LOADER_ID = 102;
 
-    private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
+    private static final int ACTION_LOADER_DELAY_MILLIS = 200;
 
+    private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
+    
     private static final int CONTEXT_CREATE_CALENDAR_EVENT_ID = 201;
     private static final int CONTEXT_EXTENSIONS_CONFIGURE_ID = 202;
     private static final int CONTEXT_EXTENSIONS_DISABLE_ID = 203;
+
+    private Handler mHandler = new Handler();
 
     private FetchArtTask mArtTask;
 
@@ -195,6 +200,9 @@ public class OverviewFragment extends SherlockFragment implements
             mTraktTask.cancel(true);
             mTraktTask = null;
         }
+        if (mHandler != null) {
+            mHandler.removeCallbacks(mEpisodeActionsRunnable);
+        }
     }
 
     @Override
@@ -232,7 +240,8 @@ public class OverviewFragment extends SherlockFragment implements
                     ExtensionManager.getInstance(getActivity())
                             .disableExtension(extension.componentName);
                 }
-                Toast.makeText(getActivity(), "Disabled all available extensions", Toast.LENGTH_LONG)
+                Toast.makeText(getActivity(), "Disabled all available extensions",
+                        Toast.LENGTH_LONG)
                         .show();
                 return true;
             }
@@ -523,7 +532,7 @@ public class OverviewFragment extends SherlockFragment implements
 
     public void onEventMainThread(ExtensionManager.EpisodeActionReceivedEvent event) {
         if (mCurrentEpisodeTvdbId == event.episodeTvdbId) {
-            loadEpisodeActions(mCurrentEpisodeTvdbId);
+            loadEpisodeActionsDelayed();
         }
     }
 
@@ -671,7 +680,7 @@ public class OverviewFragment extends SherlockFragment implements
             onLoadEpisodeDetails(episode);
 
             // request episode actions
-            loadEpisodeActions(mCurrentEpisodeTvdbId);
+            loadEpisodeActions();
 
             // episode image
             onLoadImage(episode.getString(EpisodeQuery.IMAGE));
@@ -711,10 +720,26 @@ public class OverviewFragment extends SherlockFragment implements
         }
     }
 
-    private void loadEpisodeActions(int episodeTvdbId) {
+    private void loadEpisodeActions() {
         Bundle args = new Bundle();
-        args.putInt(KEY_EPISODE_TVDB_ID, episodeTvdbId);
+        args.putInt(KEY_EPISODE_TVDB_ID, mCurrentEpisodeTvdbId);
         getLoaderManager().restartLoader(ACTIONS_LOADER_ID, args, mEpisodeActionsLoaderCallbacks);
+    }
+
+    Runnable mEpisodeActionsRunnable = new Runnable() {
+        @Override
+        public void run() {
+            loadEpisodeActions();
+        }
+    };
+
+    /**
+     * Loads latest episode actions with a delay. If this is called before the delay runs out, it
+     * will be reset.
+     */
+    private void loadEpisodeActionsDelayed() {
+        mHandler.removeCallbacks(mEpisodeActionsRunnable);
+        mHandler.postDelayed(mEpisodeActionsRunnable, ACTION_LOADER_DELAY_MILLIS);
     }
 
     private void onLoadEpisodeDetails(final Cursor episode) {
