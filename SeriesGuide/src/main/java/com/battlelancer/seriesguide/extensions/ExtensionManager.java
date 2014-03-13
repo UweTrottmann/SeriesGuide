@@ -30,6 +30,7 @@ import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.api.Episode;
 import com.battlelancer.seriesguide.api.SeriesGuideExtension;
 import com.battlelancer.seriesguide.api.internal.IncomingConstants;
+import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -59,6 +60,13 @@ public class ExtensionManager {
             _instance = new ExtensionManager(context);
         }
         return _instance;
+    }
+
+    public static class EpisodeActionReceivedEvent {
+        public int episodeTvdbId;
+        public EpisodeActionReceivedEvent(int episodeTvdbId) {
+            this.episodeTvdbId = episodeTvdbId;
+        }
     }
 
     private Context mContext;
@@ -245,7 +253,8 @@ public class ExtensionManager {
             actionMap.put(extension, action);
         }
 
-        // TODO notify via event that actions for an episode were updated
+        // notify that actions for an episode were updated
+        EventBus.getDefault().post(new EpisodeActionReceivedEvent(action.getEntityIdentifier()));
     }
 
     private synchronized void loadSubscriptions() {
