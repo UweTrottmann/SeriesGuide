@@ -326,6 +326,11 @@
             android:exported="true" >
         </activity>
 
+        <!-- SeriesGuide Extension listener -->
+        <service
+            android:name="com.battlelancer.seriesguide.extensions.ExtensionSubscriberService"
+            android:exported="true" />
+
         <!-- Built-in SeriesGuide extensions -->
         <service
             android:name="com.battlelancer.seriesguide.extensions.TraktExtension"
