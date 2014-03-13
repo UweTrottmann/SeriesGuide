@@ -198,6 +198,9 @@ public class ExtensionManager {
      */
     public synchronized List<Action> getLatestEpisodeActions(int episodeTvdbId) {
         Map<ComponentName, Action> actionMap = sEpisodeActionsCache.get(episodeTvdbId);
+        if (actionMap == null) {
+            return null;
+        }
         return new ArrayList<>(actionMap.values());
     }
 
