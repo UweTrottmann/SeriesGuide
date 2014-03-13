@@ -79,10 +79,10 @@ public class ExtensionManager {
     private ExtensionManager(Context context) {
         Timber.d("Initializing extension manager");
         mContext = context.getApplicationContext();
-        mSharedPrefs = context.getSharedPreferences(PREF_FILE_SUBSCRIPTIONS, 0);
+        mSharedPrefs = mContext.getSharedPreferences(PREF_FILE_SUBSCRIPTIONS, 0);
         mSubscriptions = new HashMap<>();
         mTokens = new HashMap<>();
-        mSubscriberComponentName = new ComponentName(context, ExtensionSubscriberService.class);
+        mSubscriberComponentName = new ComponentName(mContext, ExtensionSubscriberService.class);
         loadSubscriptions();
     }
 
@@ -217,6 +217,7 @@ public class ExtensionManager {
      * Ask a single extension to publish an action for the given episode.
      */
     public synchronized void requestAction(ComponentName extension, Episode episode) {
+        Timber.d("requestAction: requesting from " + extension + " for " + episode.getTvdbId());
         // prepare to receive actions for the given episode
         if (sEpisodeActionsCache.get(episode.getTvdbId()) == null) {
             sEpisodeActionsCache.put(episode.getTvdbId(), new HashMap<ComponentName, Action>());
