@@ -34,7 +34,8 @@ public class TraktExtension extends SeriesGuideExtension {
 
     @Override
     protected void onUpdate(int episodeIdentifier, Episode episode) {
-        if (getCurrentAction().getEntityIdentifier() == episodeIdentifier) {
+        if (getCurrentAction() != null
+                && getCurrentAction().getEntityIdentifier() == episodeIdentifier) {
             publishAction(getCurrentAction());
             return;
         }
