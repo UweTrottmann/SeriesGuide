@@ -38,6 +38,9 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TraktCommentsAdapter;
 import com.battlelancer.seriesguide.enums.TraktAction;
@@ -99,8 +102,6 @@ public class TraktShoutsFragment extends SherlockFragment implements
     }
 
     static final int INTERNAL_EMPTY_ID = 0x00ff0001;
-
-    static final int INTERNAL_LIST_CONTAINER_ID = 0x00ff0003;
 
     private static final String TRAKT_MOVIE_COMMENT_PAGE_URL = "https://trakt.tv/comment/movie/";
 
@@ -224,8 +225,11 @@ public class TraktShoutsFragment extends SherlockFragment implements
             ((TextView) mEmptyView).setText(R.string.offline);
         } else {
             setListShown(false);
-            getLoaderManager().initLoader(0, getArguments(), this);
+            getLoaderManager().initLoader(TraktShoutsActivity.LOADER_ID_COMMENTS, getArguments(),
+                    this);
         }
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -254,6 +258,23 @@ public class TraktShoutsFragment extends SherlockFragment implements
         mStandardEmptyView = null;
         super.onDestroyView();
         ButterKnife.reset(this);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+        inflater.inflate(isLightTheme ? R.menu.comments_menu_light : R.menu.comments_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_action_comments_refresh) {
+            getLoaderManager().restartLoader(TraktShoutsActivity.LOADER_ID_COMMENTS, getArguments(),
+                    this);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -445,7 +466,7 @@ public class TraktShoutsFragment extends SherlockFragment implements
         mHandler.post(mRequestFocus);
     }
 
-    public void onEvent(TraktTask.TraktActionCompleteEvent event) {
+    public void onEventMainThread(TraktTask.TraktActionCompleteEvent event) {
         if (event.mTraktAction != TraktAction.SHOUT || getView() == null) {
             return;
         }
@@ -456,7 +477,8 @@ public class TraktShoutsFragment extends SherlockFragment implements
         if (event.mWasSuccessful) {
             // clear the text field and show recent shout
             mEditTextShout.setText("");
-            getLoaderManager().restartLoader(0, getArguments(), this);
+            getLoaderManager().restartLoader(TraktShoutsActivity.LOADER_ID_COMMENTS, getArguments(),
+                    this);
         }
     }
 }

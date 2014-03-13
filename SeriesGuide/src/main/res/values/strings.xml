@@ -57,6 +57,7 @@
     <string name="shout">Shout!</string>
     <string name="isspoiler">Spoiler alert!</string>
     <string name="no_shouts">Be the first to shout!</string>
+    <string name="refresh">Refresh</string>
 
     <!-- Movies -->
     <string name="movies_collection">Collection</string>
