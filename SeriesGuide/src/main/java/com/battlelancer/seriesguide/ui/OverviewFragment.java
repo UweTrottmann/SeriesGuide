@@ -91,6 +91,7 @@ public class OverviewFragment extends SherlockFragment implements
 
     private static final int CONTEXT_CREATE_CALENDAR_EVENT_ID = 201;
     private static final int CONTEXT_EXTENSIONS_CONFIGURE_ID = 202;
+    private static final int CONTEXT_EXTENSIONS_DISABLE_ID = 203;
 
     private FetchArtTask mArtTask;
 
@@ -202,7 +203,8 @@ public class OverviewFragment extends SherlockFragment implements
         super.onCreateContextMenu(menu, v, menuInfo);
 
         menu.add(0, CONTEXT_CREATE_CALENDAR_EVENT_ID, 0, R.string.addtocalendar);
-        menu.add(0, CONTEXT_EXTENSIONS_CONFIGURE_ID, 1, R.string.action_extensions_configure);
+        menu.add(0, CONTEXT_EXTENSIONS_CONFIGURE_ID, 1, "[Debug] Enable extensions");
+        menu.add(0, CONTEXT_EXTENSIONS_DISABLE_ID, 2, "[Debug] Disable extensions");
     }
 
     @Override
@@ -220,6 +222,17 @@ public class OverviewFragment extends SherlockFragment implements
                             .enableExtension(extension.componentName);
                 }
                 Toast.makeText(getActivity(), "Enabled all available extensions", Toast.LENGTH_LONG)
+                        .show();
+                return true;
+            }
+            case CONTEXT_EXTENSIONS_DISABLE_ID: {
+                List<ExtensionManager.Extension> extensions = ExtensionManager.getInstance(
+                        getActivity()).queryAllAvailableExtensions();
+                for (ExtensionManager.Extension extension : extensions) {
+                    ExtensionManager.getInstance(getActivity())
+                            .disableExtension(extension.componentName);
+                }
+                Toast.makeText(getActivity(), "Disabled all available extensions", Toast.LENGTH_LONG)
                         .show();
                 return true;
             }
