@@ -64,6 +64,7 @@ public class ExtensionManager {
 
     public static class EpisodeActionReceivedEvent {
         public int episodeTvdbId;
+
         public EpisodeActionReceivedEvent(int episodeTvdbId) {
             this.episodeTvdbId = episodeTvdbId;
         }
@@ -127,6 +128,14 @@ public class ExtensionManager {
         }
 
         return extensions;
+    }
+
+    /**
+     * Returns whether the given extension is currently enabled and will be nudged for actions when
+     * {@link #requestActions(com.battlelancer.seriesguide.api.Episode)} is called.
+     */
+    public synchronized boolean isExtensionEnabled(ComponentName extension) {
+        return mSubscriptions.get(extension) != null;
     }
 
     public void enableExtension(ComponentName extension) {
