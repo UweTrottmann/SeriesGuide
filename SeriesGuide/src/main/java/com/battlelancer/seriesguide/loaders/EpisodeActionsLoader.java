@@ -55,6 +55,9 @@ public class EpisodeActionsLoader extends GenericSimpleLoader<List<Action>> {
             mQuery = getContext().getContentResolver().query(
                     Episodes.buildEpisodeWithShowUri(mEpisodeTvdbId),
                     Query.PROJECTION, null, null, null);
+            if (mQuery == null || !mQuery.moveToFirst()) {
+                return actions;
+            }
 
             Episode episode = new Episode.Builder()
                     .tvdbId(mEpisodeTvdbId)
