@@ -68,9 +68,8 @@
                         android:layout_below="@id/seriesname"
                         android:layout_marginLeft="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
-                        android:textAllCaps="true"
                         android:textAppearance="@style/TextAppearance.Small"
-                        tools:text="Continuing" />
+                        tools:text="@string/show_isalive" />
 
                     <TextView
                         android:id="@+id/showmeta"
