@@ -56,9 +56,8 @@ import com.uwetrottmann.androidutils.Lists;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,7 +93,8 @@ public class TheTVDB {
         final Cursor show = context.getContentResolver().query(Shows.buildShowUri(showId),
                 new String[] {
                         Shows._ID, Shows.LASTUPDATED
-                }, null, null, null);
+                }, null, null, null
+        );
         boolean isUpdate = false;
         if (show != null) {
             if (show.moveToFirst()) {
@@ -158,18 +158,8 @@ public class TheTVDB {
      *
      * @return a List with SearchResult objects, max 100
      */
-    public static List<SearchResult> searchShow(String title, Context context) throws IOException {
-        String language = DisplaySettings.getContentLanguage(context);
-
-        URL url;
-        try {
-            url = new URL(TVDB_API_URL + "GetSeries.php?seriesname="
-                    + URLEncoder.encode(title, "UTF-8")
-                    + (language != null ? "&language=" + language : ""));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
+    public static List<SearchResult> searchShow(String title, Context context)
+            throws TvdbException {
         final List<SearchResult> series = new ArrayList<SearchResult>();
         final SearchResult currentShow = new SearchResult();
 
@@ -197,16 +187,29 @@ public class TheTVDB {
             }
         });
 
-        URLConnection connection = url.openConnection();
-        connection.setConnectTimeout(25000);
-        connection.setReadTimeout(90000);
-        InputStream in = connection.getInputStream();
+        String language = DisplaySettings.getContentLanguage(context);
+        String url;
         try {
-            Xml.parse(in, Xml.Encoding.UTF_8, root.getContentHandler());
-        } catch (Exception e) {
-            throw new IOException();
+            url = TVDB_API_URL + "GetSeries.php?seriesname="
+                    + URLEncoder.encode(title, "UTF-8")
+                    + (language != null ? "&language=" + language : "");
+        } catch (UnsupportedEncodingException e) {
+            throw new TvdbException("Encoding show title failed", e);
         }
-        in.close();
+
+        try {
+            InputStream in = null;
+            try {
+                in = AndroidUtils.downloadUrl(url);
+                Xml.parse(in, Xml.Encoding.UTF_8, root.getContentHandler());
+            } finally {
+                if (in != null) {
+                    in.close();
+                }
+            }
+        } catch (IOException | SAXException e) {
+            throw new TvdbException("Downloading or parsing search results failed", e);
+        }
 
         return series;
     }
@@ -542,7 +545,8 @@ public class TheTVDB {
                     public void end(String body) {
                         values.put(Episodes.DVDNUMBER, body.trim());
                     }
-                });
+                }
+        );
         episode.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 long episodeAirTime = TimeTools
