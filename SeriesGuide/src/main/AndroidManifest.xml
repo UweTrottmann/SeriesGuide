@@ -343,7 +343,7 @@
         </service>
         <service
             android:name="com.battlelancer.seriesguide.extensions.AmazonExtension"
-            android:label="@string/amazon"
+            android:label="@string/extension_amazon"
             android:description="@string/description_extension_amazon">
             <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />

@@ -41,7 +41,7 @@ public class AmazonExtension extends SeriesGuideExtension {
         String uri = SEARCH_URI_AMAZON_COM
                 + episode.getShowTitle() + " " + episode.getTitle();
 
-        publishAction(new Action.Builder(getString(R.string.amazon), episodeIdentifier)
+        publishAction(new Action.Builder(getString(R.string.extension_amazon), episodeIdentifier)
                 .viewIntent(new Intent(Intent.ACTION_VIEW)
                         .setData(Uri.parse(uri)))
                 .build());
