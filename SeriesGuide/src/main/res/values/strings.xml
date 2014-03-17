@@ -535,5 +535,6 @@
     <!-- Extensions -->
     <string name="extensions">Extensions</string>
     <string name="action_extensions_configure">Customize extensions</string>
+    <string name="description_extension_amazon">Search your local Amazon site</string>
     <string name="description_extension_trakt">Link to trakt page</string>
 </resources>
