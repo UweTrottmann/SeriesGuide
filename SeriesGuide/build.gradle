@@ -67,6 +67,8 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.2.0'
     compile 'com.squareup.retrofit:retrofit:1.4.1'
     compile 'com.squareup:tape:1.1.1'
+    compile 'com.uwetrottmann:tmdb-java:0.4.+'
+    compile 'com.uwetrottmann:trakt-java:3.1.+'
     compile 'de.greenrobot:eventbus:2.2.0'
 
     // OAuth 2.0
