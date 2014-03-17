@@ -946,6 +946,7 @@ public class OverviewFragment extends SherlockFragment implements
 
             final Intent viewIntent = action.getViewIntent();
             if (viewIntent != null) {
+                viewIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                 actionView.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
