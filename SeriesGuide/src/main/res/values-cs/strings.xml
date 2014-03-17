@@ -58,7 +58,7 @@
   <string name="movie_cast">Obsazení</string>
   <string name="movie_crew">Kolektiv</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
-  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort">Seřadit filmy</string>
   <string name="action_movies_sort_title">Titul</string>
   <string name="action_movies_sort_release">Datum vysílání</string>
   <string name="shows_with_next">%s s nezhlédnutými epizodami</string>

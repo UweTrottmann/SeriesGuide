@@ -58,7 +58,7 @@
   <string name="movie_cast">Näyttelijät</string>
   <string name="movie_crew">Kuvausryhmä</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
-  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort">Lajittele elokuvat</string>
   <string name="action_movies_sort_title">Otsikko</string>
   <string name="action_movies_sort_release">Julkaisupäivä</string>
   <string name="shows_with_next">%s seuraavalla jaksolla</string>
