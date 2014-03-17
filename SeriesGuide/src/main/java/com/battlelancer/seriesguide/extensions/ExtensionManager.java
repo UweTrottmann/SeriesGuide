@@ -168,6 +168,9 @@ public class ExtensionManager {
                     .putExtra(IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT,
                             mSubscriberComponentName)
                     .putExtra(IncomingConstants.EXTRA_TOKEN, token));
+
+            // clear the whole cache so loaders will request new actions
+            sEpisodeActionsCache.evictAll();
         }
 
         saveSubscriptions();
@@ -194,6 +197,9 @@ public class ExtensionManager {
                             mSubscriberComponentName)
                     .putExtra(IncomingConstants.EXTRA_TOKEN, (String) null));
             mTokens.remove(mSubscriptions.remove(extension));
+
+            // instead of cleaning old actions just clear the whole cache
+            sEpisodeActionsCache.evictAll();
         }
 
         saveSubscriptions();
