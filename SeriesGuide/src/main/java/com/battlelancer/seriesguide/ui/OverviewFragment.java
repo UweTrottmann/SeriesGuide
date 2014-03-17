@@ -39,8 +39,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import butterknife.ButterKnife;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
@@ -91,7 +93,7 @@ public class OverviewFragment extends SherlockFragment implements
     private static final int ACTION_LOADER_DELAY_MILLIS = 200;
 
     private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
-    
+
     private static final int CONTEXT_CREATE_CALENDAR_EVENT_ID = 201;
     private static final int CONTEXT_EXTENSIONS_CONFIGURE_ID = 202;
     private static final int CONTEXT_EXTENSIONS_DISABLE_ID = 203;
@@ -99,22 +101,18 @@ public class OverviewFragment extends SherlockFragment implements
     private Handler mHandler = new Handler();
 
     private FetchArtTask mArtTask;
-
     private TraktSummaryTask mTraktTask;
 
     private Cursor mCurrentEpisodeCursor;
-
     private int mCurrentEpisodeTvdbId;
 
     private Cursor mShowCursor;
-
     private String mShowTitle;
 
     private View mContainerShow;
-
     private View mDividerShow;
-
     private View mSpacerShow;
+    private LinearLayout mContainerActions;
 
     /**
      * All values have to be integer.
@@ -153,6 +151,7 @@ public class OverviewFragment extends SherlockFragment implements
         mContainerShow = v.findViewById(R.id.containerOverviewShow);
         mDividerShow = v.findViewById(R.id.dividerHorizontalOverviewShow);
         mSpacerShow = v.findViewById(R.id.spacerOverviewShow);
+        mContainerActions = ButterKnife.findById(v, R.id.containerOverviewActions);
 
         return v;
     }
@@ -923,12 +922,41 @@ public class OverviewFragment extends SherlockFragment implements
                     } else {
                         Timber.d("onLoadFinished: received " + data.size() + " actions");
                     }
-                    // TODO update UI
+                    populateEpisodeActions(data);
                 }
 
                 @Override
                 public void onLoaderReset(Loader<List<Action>> loader) {
-                    // TODO update UI
+                    populateEpisodeActions(null);
                 }
             };
+
+    private void populateEpisodeActions(List<Action> data) {
+        if (data == null || data.size() == 0) {
+            mContainerActions.setVisibility(View.GONE);
+            return;
+        }
+
+        mContainerActions.removeAllViews();
+
+        for (Action action : data) {
+            TextView actionView = (TextView) getActivity().getLayoutInflater()
+                    .inflate(R.layout.item_action, mContainerActions, false);
+            actionView.setText(action.getTitle());
+
+            final Intent viewIntent = action.getViewIntent();
+            if (viewIntent != null) {
+                actionView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Utils.tryStartActivity(getActivity(), viewIntent, true);
+                    }
+                });
+            }
+
+            mContainerActions.addView(actionView);
+        }
+
+        mContainerActions.setVisibility(View.VISIBLE);
+    }
 }
