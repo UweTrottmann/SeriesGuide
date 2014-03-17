@@ -43,7 +43,7 @@
   <string name="shout">Отзыв!</string>
   <string name="isspoiler">Внимание, спойлер!</string>
   <string name="no_shouts">Оставь первый отзыв!</string>
-  <string name="autorefresh">Автоматическое обновление</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Коллекция</string>
   <string name="movies_watchlist">Список просмотра</string>
   <string name="watchlist_add">Добавить в список</string>

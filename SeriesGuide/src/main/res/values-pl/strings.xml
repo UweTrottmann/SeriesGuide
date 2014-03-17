@@ -43,7 +43,7 @@
   <string name="shout">Krzyk!</string>
   <string name="isspoiler">Ostrzeżenie o spoilerach!</string>
   <string name="no_shouts">Krzycz jako pierwszy!</string>
-  <string name="autorefresh">Odświeżanie automagicznie ;)</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Kolekcja</string>
   <string name="movies_watchlist">Lista obejrzanych</string>
   <string name="watchlist_add">Dodaj do listy oglądanych</string>

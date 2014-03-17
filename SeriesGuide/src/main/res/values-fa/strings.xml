@@ -43,7 +43,7 @@
   <string name="shout">فریاد!</string>
   <string name="isspoiler">Spoiler alert!</string>
   <string name="no_shouts">Be the first to shout!</string>
-  <string name="autorefresh">به روز شدن بصورت خودکار و جادویی</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">Watchlist</string>
   <string name="watchlist_add">Add to watchlist</string>

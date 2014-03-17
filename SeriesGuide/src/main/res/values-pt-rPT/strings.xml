@@ -43,7 +43,7 @@
   <string name="shout">Comente!</string>
   <string name="isspoiler">Alerta de "spoiler"!</string>
   <string name="no_shouts">Seja o primeiro a comentar!</string>
-  <string name="autorefresh">Actualizando automaticamente</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Coleção</string>
   <string name="movies_watchlist">Lista de Observação</string>
   <string name="watchlist_add">Adicionar à lista</string>

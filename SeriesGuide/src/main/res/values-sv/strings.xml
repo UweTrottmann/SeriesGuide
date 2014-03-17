@@ -44,7 +44,7 @@
   <string name="shout">Ropa!</string>
   <string name="isspoiler">Varning för spoiler!</string>
   <string name="no_shouts">Bli först att ropa!</string>
-  <string name="autorefresh">Uppdatera automatiskt</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">Bevakningar</string>
   <string name="watchlist_add">Lägg till i bevakningslistan</string>

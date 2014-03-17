@@ -43,7 +43,7 @@
   <string name="shout">Huudahda!</string>
   <string name="isspoiler">Juonipaljastusvaroitus!</string>
   <string name="no_shouts">Huudahda ensimmäisenä!</string>
-  <string name="autorefresh">Päivitetään automaagisesti</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Kokoelma</string>
   <string name="movies_watchlist">Seurantalista</string>
   <string name="watchlist_add">Lisää seurantalistalle</string>

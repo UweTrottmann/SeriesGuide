@@ -43,7 +43,7 @@
   <string name="shout">Kliedz!</string>
   <string name="isspoiler">Spoileru brīdinājums!</string>
   <string name="no_shouts">Esi pirmais, kas kliedz!</string>
-  <string name="autorefresh">Atsvaidzina automātiski</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">Watchlist</string>
   <string name="watchlist_add">Pievienot uzraugāmo sarakstam</string>

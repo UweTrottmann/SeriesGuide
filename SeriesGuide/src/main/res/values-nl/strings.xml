@@ -43,7 +43,7 @@
   <string name="shout">Shout!</string>
   <string name="isspoiler">Spoiler waarschuwing!</string>
   <string name="no_shouts">Wees de eerste die shout!</string>
-  <string name="autorefresh">Automatisch vernieuwen</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Collectie</string>
   <string name="movies_watchlist">Watchlist</string>
   <string name="watchlist_add">Toevoegen aan watchlist</string>
