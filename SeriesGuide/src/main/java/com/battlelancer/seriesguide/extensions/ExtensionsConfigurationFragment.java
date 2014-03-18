@@ -23,9 +23,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
@@ -62,6 +66,42 @@ public class ExtensionsConfigurationFragment extends Fragment {
 
         getLoaderManager().initLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
                 mActionsLoaderCallbacks);
+
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.extensions_configuration_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_action_extensions_enable) {
+            List<ExtensionManager.Extension> extensions = ExtensionManager.getInstance(
+                    getActivity()).queryAllAvailableExtensions();
+            for (ExtensionManager.Extension extension : extensions) {
+                ExtensionManager.getInstance(getActivity())
+                        .enableExtension(extension.componentName);
+            }
+            Toast.makeText(getActivity(), "Enabled all available extensions", Toast.LENGTH_LONG)
+                    .show();
+            return true;
+        }
+        if (itemId == R.id.menu_action_extensions_disable) {
+            List<ExtensionManager.Extension> extensions = ExtensionManager.getInstance(
+                    getActivity()).queryAllAvailableExtensions();
+            for (ExtensionManager.Extension extension : extensions) {
+                ExtensionManager.getInstance(getActivity())
+                        .disableExtension(extension.componentName);
+            }
+            Toast.makeText(getActivity(), "Disabled all available extensions", Toast.LENGTH_LONG)
+                    .show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

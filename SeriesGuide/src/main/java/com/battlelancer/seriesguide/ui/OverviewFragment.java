@@ -41,7 +41,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.ButterKnife;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
@@ -96,8 +95,6 @@ public class OverviewFragment extends SherlockFragment implements
     private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
 
     private static final int CONTEXT_CREATE_CALENDAR_EVENT_ID = 201;
-    private static final int CONTEXT_EXTENSIONS_CONFIGURE_ID = 202;
-    private static final int CONTEXT_EXTENSIONS_DISABLE_ID = 203;
 
     private Handler mHandler = new Handler();
 
@@ -211,8 +208,6 @@ public class OverviewFragment extends SherlockFragment implements
         super.onCreateContextMenu(menu, v, menuInfo);
 
         menu.add(0, CONTEXT_CREATE_CALENDAR_EVENT_ID, 0, R.string.addtocalendar);
-        menu.add(0, CONTEXT_EXTENSIONS_CONFIGURE_ID, 1, "[Debug] Enable extensions");
-        menu.add(0, CONTEXT_EXTENSIONS_DISABLE_ID, 2, "[Debug] Disable extensions");
     }
 
     @Override
@@ -220,29 +215,6 @@ public class OverviewFragment extends SherlockFragment implements
         switch (item.getItemId()) {
             case CONTEXT_CREATE_CALENDAR_EVENT_ID: {
                 onAddCalendarEvent();
-                return true;
-            }
-            case CONTEXT_EXTENSIONS_CONFIGURE_ID: {
-                List<ExtensionManager.Extension> extensions = ExtensionManager.getInstance(
-                        getActivity()).queryAllAvailableExtensions();
-                for (ExtensionManager.Extension extension : extensions) {
-                    ExtensionManager.getInstance(getActivity())
-                            .enableExtension(extension.componentName);
-                }
-                Toast.makeText(getActivity(), "Enabled all available extensions", Toast.LENGTH_LONG)
-                        .show();
-                return true;
-            }
-            case CONTEXT_EXTENSIONS_DISABLE_ID: {
-                List<ExtensionManager.Extension> extensions = ExtensionManager.getInstance(
-                        getActivity()).queryAllAvailableExtensions();
-                for (ExtensionManager.Extension extension : extensions) {
-                    ExtensionManager.getInstance(getActivity())
-                            .disableExtension(extension.componentName);
-                }
-                Toast.makeText(getActivity(), "Disabled all available extensions",
-                        Toast.LENGTH_LONG)
-                        .show();
                 return true;
             }
             default:
