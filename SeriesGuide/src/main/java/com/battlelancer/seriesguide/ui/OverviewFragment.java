@@ -905,31 +905,28 @@ public class OverviewFragment extends SherlockFragment implements
             };
 
     private void populateEpisodeActions(List<Action> data) {
-        if (data == null || data.size() == 0) {
-            mContainerActions.setVisibility(View.GONE);
-            return;
-        }
-
         mContainerActions.removeAllViews();
 
         // add a view per action
-        for (Action action : data) {
-            TextView actionView = (TextView) getActivity().getLayoutInflater()
-                    .inflate(R.layout.item_action, mContainerActions, false);
-            actionView.setText(action.getTitle());
+        if (data != null) {
+            for (Action action : data) {
+                TextView actionView = (TextView) getActivity().getLayoutInflater()
+                        .inflate(R.layout.item_action, mContainerActions, false);
+                actionView.setText(action.getTitle());
 
-            final Intent viewIntent = action.getViewIntent();
-            if (viewIntent != null) {
-                viewIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                actionView.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Utils.tryStartActivity(getActivity(), viewIntent, true);
-                    }
-                });
+                final Intent viewIntent = action.getViewIntent();
+                if (viewIntent != null) {
+                    viewIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+                    actionView.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Utils.tryStartActivity(getActivity(), viewIntent, true);
+                        }
+                    });
+                }
+
+                mContainerActions.addView(actionView);
             }
-
-            mContainerActions.addView(actionView);
         }
 
         // link to extensions configuration
@@ -947,7 +944,5 @@ public class OverviewFragment extends SherlockFragment implements
             }
         });
         mContainerActions.addView(configureView);
-
-        mContainerActions.setVisibility(View.VISIBLE);
     }
 }
