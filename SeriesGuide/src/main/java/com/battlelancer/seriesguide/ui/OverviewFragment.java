@@ -967,6 +967,10 @@ public class OverviewFragment extends SherlockFragment implements
         configureView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!Utils.hasAccessToX(getActivity())) {
+                    Utils.advertiseSubscription(getActivity());
+                    return;
+                }
                 startActivity(new Intent(getActivity(), ExtensionsConfigurationActivity.class));
             }
         });
