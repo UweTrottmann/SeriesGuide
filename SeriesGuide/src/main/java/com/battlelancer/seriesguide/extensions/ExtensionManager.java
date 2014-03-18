@@ -87,6 +87,11 @@ public class ExtensionManager {
         loadSubscriptions();
     }
 
+    /**
+     * Queries the {@link android.content.pm.PackageManager} for any installed {@link
+     * com.battlelancer.seriesguide.api.SeriesGuideExtension} extensions. Their info is extracted
+     * into {@link com.battlelancer.seriesguide.extensions.ExtensionManager.Extension} objects.
+     */
     public List<Extension> queryAllAvailableExtensions() {
         Intent queryIntent = new Intent(SeriesGuideExtension.ACTION_SERIESGUIDE_EXTENSION);
         PackageManager pm = mContext.getPackageManager();

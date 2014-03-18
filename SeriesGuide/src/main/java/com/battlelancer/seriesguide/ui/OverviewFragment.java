@@ -53,6 +53,7 @@ import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
+import com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity;
 import com.battlelancer.seriesguide.loaders.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
@@ -939,6 +940,7 @@ public class OverviewFragment extends SherlockFragment implements
 
         mContainerActions.removeAllViews();
 
+        // add a view per action
         for (Action action : data) {
             TextView actionView = (TextView) getActivity().getLayoutInflater()
                     .inflate(R.layout.item_action, mContainerActions, false);
@@ -957,6 +959,18 @@ public class OverviewFragment extends SherlockFragment implements
 
             mContainerActions.addView(actionView);
         }
+
+        // link to extensions configuration
+        TextView configureView = (TextView) getActivity().getLayoutInflater()
+                .inflate(R.layout.item_action, mContainerActions, false);
+        configureView.setText(R.string.action_extensions_configure);
+        configureView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ExtensionsConfigurationActivity.class));
+            }
+        });
+        mContainerActions.addView(configureView);
 
         mContainerActions.setVisibility(View.VISIBLE);
     }
