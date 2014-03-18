@@ -8,6 +8,11 @@ All dates are in the European Central timezone.
 Version 13 *(in development)*
 -----------------------------
 
+#### 13-beta2 *(2014-03-17)*
+
+* TWEAK trakt comments do not auto-refresh anymore, added refresh button instead.
+* FIX Some bug fixes and optimizations.
+
 #### 13-beta1 *(2014-03-11)*
 
 * FEATURE Sort movies by title or release date (touch again to reverse sort).

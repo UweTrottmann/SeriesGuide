@@ -43,7 +43,7 @@
   <string name="shout">외쳐! (이이)</string>
   <string name="isspoiler">스포일러 경고!</string>
   <string name="no_shouts">첫 감상평의 주인공이 되세요!</string>
-  <string name="autorefresh">자동으로 새로고침</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">관심목록</string>
   <string name="watchlist_add">관심목록에 추가</string>

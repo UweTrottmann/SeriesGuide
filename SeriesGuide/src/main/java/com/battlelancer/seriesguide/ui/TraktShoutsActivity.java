@@ -25,6 +25,8 @@ import com.google.analytics.tracking.android.EasyTracker;
 
 public class TraktShoutsActivity extends BaseActivity {
 
+    public static final int LOADER_ID_COMMENTS = 100;
+
     public static Bundle createInitBundleEpisode(int showTvdbid, int seasonNumber,
             int episodeNumber, String title) {
         Bundle extras = new Bundle();

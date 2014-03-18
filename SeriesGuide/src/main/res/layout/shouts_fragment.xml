@@ -40,15 +40,6 @@
         </FrameLayout>
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/labelRefresh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/inline_padding"
-        android:text="@string/autorefresh"
-        android:textSize="@dimen/text_size_xsmall" />
-
     <include
         android:id="@+id/divider"
         layout="@layout/divider_horizontal"

@@ -43,7 +43,7 @@
   <string name="shout">تعليق</string>
   <string name="isspoiler">تنبيه</string>
   <string name="no_shouts">أكتب أول تعليق</string>
-  <string name="autorefresh">تحديث تلقائي</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">تجميع</string>
   <string name="movies_watchlist">قائمة المشاهدة</string>
   <string name="watchlist_add">إضافة لقائمة المشاهدة</string>

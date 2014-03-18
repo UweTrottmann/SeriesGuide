@@ -43,7 +43,7 @@
   <string name="shout">Shout!</string>
   <string name="isspoiler">Galimas turinio atskleidimas!</string>
   <string name="no_shouts">Be the first to shout!</string>
-  <string name="autorefresh">Automatiškai atsinaujinantis</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">Watchlist</string>
   <string name="watchlist_add">Add to watchlist</string>

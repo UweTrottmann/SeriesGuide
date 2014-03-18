@@ -43,7 +43,7 @@
   <string name="shout">Rope!</string>
   <string name="isspoiler">Spoileradvarsel!</string>
   <string name="no_shouts">Vær den første til å rope!</string>
-  <string name="autorefresh">Oppdateres automagisk</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">Overvåkningsliste</string>
   <string name="watchlist_add">Legg til i overvåkningsliste</string>
