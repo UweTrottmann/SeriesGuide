@@ -43,7 +43,7 @@
   <string name="shout">Părere!</string>
   <string name="isspoiler">Spoiler alert!</string>
   <string name="no_shouts">Fi primul care-si spune părerea!</string>
-  <string name="autorefresh">Reîmprospătare automagică</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Colecție</string>
   <string name="movies_watchlist">Watchlist</string>
   <string name="watchlist_add">Adaugă în watchlist</string>

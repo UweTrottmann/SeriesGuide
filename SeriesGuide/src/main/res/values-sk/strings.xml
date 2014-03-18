@@ -43,7 +43,7 @@
   <string name="shout">Zakrič!</string>
   <string name="isspoiler">Prezradenie deja!</string>
   <string name="no_shouts">Buď prvý kto zakričí!</string>
-  <string name="autorefresh">Automatická obnova</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">Watchlist</string>
   <string name="watchlist_add">Pridať do zoznamu videných</string>

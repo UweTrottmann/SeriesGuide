@@ -43,7 +43,7 @@
   <string name="shout">留言</string>
   <string name="isspoiler">警告爆雷</string>
   <string name="no_shouts">成為第一個留言者</string>
-  <string name="autorefresh">神奇自動更新中 XD</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">待看清單</string>
   <string name="watchlist_add">新增至待看清單</string>

@@ -43,7 +43,7 @@
   <string name="shout">Shout!</string>
   <string name="isspoiler">Προειδοποίηση spoiler!</string>
   <string name="no_shouts">Be the first to shout!</string>
-  <string name="autorefresh">Αυτόματη ανανέωση</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Συλλογή</string>
   <string name="movies_watchlist">Λίστα προς παρακολούθηση</string>
   <string name="watchlist_add">Προσθήκη στη λίστα παρακολούθησης</string>

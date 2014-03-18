@@ -43,7 +43,7 @@
   <string name="shout">Zakliči!</string>
   <string name="isspoiler">Pozor! Razkrita vsebina!</string>
   <string name="no_shouts">Bodi prvi(a), ki bo zaklical(a)!</string>
-  <string name="autorefresh">Osvežujem automagično</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">Spisek za gledanje</string>
   <string name="watchlist_add">Dodaj na spisek opazovanj</string>

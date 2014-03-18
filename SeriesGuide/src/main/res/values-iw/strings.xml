@@ -43,7 +43,7 @@
   <string name="shout">המלץ!</string>
   <string name="isspoiler">אזהרת ספוילר!</string>
   <string name="no_shouts">תהיה הראשון להמליץ!</string>
-  <string name="autorefresh">מרענן אוטומטית</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">אוסף</string>
   <string name="movies_watchlist">רשימת מעקב</string>
   <string name="watchlist_add">הוסף לרשימת מעקב</string>

@@ -43,7 +43,7 @@
   <string name="shout">Szólj hozzá!</string>
   <string name="isspoiler">Spoiler veszély!</string>
   <string name="no_shouts">Szólj hozzá elsőként!</string>
-  <string name="autorefresh">Automágikus frissítés</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">Figyelőlista</string>
   <string name="watchlist_add">Figyelőlistához ad</string>

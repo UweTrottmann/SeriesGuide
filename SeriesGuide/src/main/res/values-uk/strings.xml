@@ -43,7 +43,7 @@
   <string name="shout">Відгук!</string>
   <string name="isspoiler">Увага спойлер!</string>
   <string name="no_shouts">Залиште відгук першим!</string>
-  <string name="autorefresh">Автоматичне оновлення</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">Список перегляду</string>
   <string name="watchlist_add">Додати до списку перегляду</string>

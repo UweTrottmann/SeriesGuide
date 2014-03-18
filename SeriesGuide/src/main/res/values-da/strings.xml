@@ -43,7 +43,7 @@
   <string name="shout">Kommentar!</string>
   <string name="isspoiler">Spoiler alert!</string>
   <string name="no_shouts">Vær den første til at kommentere!</string>
-  <string name="autorefresh">Opdaterer automagisk</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Samling</string>
   <string name="movies_watchlist">Overvågningsliste</string>
   <string name="watchlist_add">Tilføj overvågningsliste</string>

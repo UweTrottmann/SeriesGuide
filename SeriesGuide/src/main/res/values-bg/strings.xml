@@ -43,7 +43,7 @@
   <string name="shout">Мнение!</string>
   <string name="isspoiler">Предупреждение за издаване!</string>
   <string name="no_shouts">Напишете мнение пръв!</string>
-  <string name="autorefresh">Автоматично обновяване</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">Списък за гледане</string>
   <string name="watchlist_add">Добави към списъка</string>
