@@ -19,19 +19,19 @@ package com.battlelancer.seriesguide.extensions;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ExtensionsAdapter;
 import com.battlelancer.seriesguide.loaders.AvailableActionsLoader;
@@ -42,7 +42,7 @@ import timber.log.Timber;
 /**
  * Provides tools to display all installed extensions and enable or disable them.
  */
-public class ExtensionsConfigurationFragment extends Fragment {
+public class ExtensionsConfigurationFragment extends SherlockFragment {
 
     @InjectView(R.id.listViewExtensionsConfiguration) ListView mListView;
 
@@ -72,6 +72,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.extensions_configuration_menu, menu);
     }
 
