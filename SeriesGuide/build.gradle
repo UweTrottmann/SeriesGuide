@@ -54,6 +54,7 @@ android {
 dependencies {
     compile project(':api')
     compile project(':libraries:androidutils')
+    compile project(':libraries:drag-sort-listview')
     compile project(':libraries:pagerslidingtabstrip')
     compile project(':libraries:stickygridheaders')
     compile rootProject.ext.libraries.okhttp
