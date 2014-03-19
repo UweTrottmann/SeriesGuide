@@ -23,12 +23,23 @@
     android:layout_margin="@dimen/default_padding"
     android:background="?attr/drawableCardBackground">
 
+    <com.battlelancer.seriesguide.widgets.DragGripView
+        android:id="@+id/drag_handle"
+        android:layout_width="64dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="fill_vertical|left"
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingTop="@dimen/default_padding"
+        android:paddingBottom="@dimen/default_padding"
+        android:color="?attr/colorDivider" />
+
     <ImageView
         android:id="@+id/imageViewItemExtensionIcon"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginLeft="@dimen/default_padding"
+        android:layout_marginLeft="26dp"
         android:layout_marginRight="@dimen/default_padding"
+        android:layout_marginTop="@dimen/default_padding"
         tools:src="@drawable/ic_launcher" />
 
     <ImageView
@@ -45,6 +56,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:singleLine="true"
+        android:layout_marginTop="@dimen/default_padding"
         android:layout_toRightOf="@+id/imageViewItemExtensionIcon"
         android:layout_toLeftOf="@+id/imageViewItemExtensionSettings"
         android:textAppearance="@style/TextAppearance.Medium.Light"
@@ -57,7 +69,7 @@
         android:layout_toRightOf="@+id/imageViewItemExtensionIcon"
         android:layout_toLeftOf="@+id/imageViewItemExtensionSettings"
         android:layout_below="@+id/textViewItemExtensionTitle"
-        android:paddingBottom="@dimen/inline_padding"
+        android:paddingBottom="@dimen/default_padding"
         android:textAppearance="@style/TextAppearance.Small"
         tools:text="Displays some important information about episodes" />
 

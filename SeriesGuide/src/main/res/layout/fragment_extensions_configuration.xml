@@ -17,14 +17,18 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/Page.Centered">
 
-    <ListView
+    <com.mobeta.android.dslv.DragSortListView
         android:id="@+id/listViewExtensionsConfiguration"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:drawSelectorOnTop="true"
-        android:divider="@null"
-        android:dividerHeight="@dimen/default_padding" />
+        android:divider="@android:color/transparent"
+        app:use_default_controller="false"
+        app:sort_enabled="true"
+        app:drag_start_mode="onDown"
+        app:remove_enabled="false"
+        app:float_alpha="0.8" />
 
 </FrameLayout>

@@ -24,7 +24,6 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -35,6 +34,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ExtensionsAdapter;
 import com.battlelancer.seriesguide.loaders.AvailableActionsLoader;
+import com.mobeta.android.dslv.DragSortListView;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.List;
 import timber.log.Timber;
@@ -44,7 +44,7 @@ import timber.log.Timber;
  */
 public class ExtensionsConfigurationFragment extends SherlockFragment {
 
-    @InjectView(R.id.listViewExtensionsConfiguration) ListView mListView;
+    @InjectView(R.id.listViewExtensionsConfiguration) DragSortListView mListView;
 
     private ExtensionsAdapter mAdapter;
 
