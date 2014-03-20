@@ -36,7 +36,11 @@ import com.battlelancer.seriesguide.util.Utils;
  */
 public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> {
 
-    private static final int LAYOUT = R.layout.item_extension;
+    private static final int LAYOUT_EXTENSION = R.layout.item_extension;
+    private static final int LAYOUT_ADD = R.layout.item_extension_add;
+
+    private static final int VIEW_TYPE_EXTENSION = 0;
+    private static final int VIEW_TYPE_ADD = 1;
 
     private final LayoutInflater mLayoutInflater;
 
@@ -47,11 +51,34 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
+    public int getCount() {
+        // extra row for add button
+        return super.getCount() + 1;
+    }
 
+    @Override
+    public int getItemViewType(int position) {
+        // last row is an add button
+        return position == getCount() - 1 ? VIEW_TYPE_ADD : VIEW_TYPE_EXTENSION;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (getItemViewType(position) == VIEW_TYPE_ADD) {
+            if (convertView == null) {
+                convertView = mLayoutInflater.inflate(LAYOUT_ADD, parent, false);
+            }
+            return convertView;
+        }
+
+        ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(LAYOUT, parent, false);
+            convertView = mLayoutInflater.inflate(LAYOUT_EXTENSION, parent, false);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
