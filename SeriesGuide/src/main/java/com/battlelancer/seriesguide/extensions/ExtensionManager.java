@@ -136,11 +136,11 @@ public class ExtensionManager {
     }
 
     /**
-     * Returns whether the given extension is currently enabled and will be nudged for actions when
-     * {@link #requestActions(com.battlelancer.seriesguide.api.Episode)} is called.
+     * Returns a list of {@linkplain android.content.ComponentName}s of currently enabled
+     * extensions.
      */
-    public synchronized boolean isExtensionEnabled(ComponentName extension) {
-        return mSubscriptions.get(extension) != null;
+    public synchronized List<ComponentName> getEnabledExtensions() {
+        return new ArrayList<>(mSubscriptions.keySet());
     }
 
     public void enableExtension(ComponentName extension) {

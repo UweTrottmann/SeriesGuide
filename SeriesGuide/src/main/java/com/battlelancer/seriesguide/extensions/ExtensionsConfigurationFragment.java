@@ -16,10 +16,9 @@
 
 package com.battlelancer.seriesguide.extensions;
 
-import android.annotation.TargetApi;
+import android.content.ComponentName;
 import android.content.Context;
 import android.graphics.Point;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.LoaderManager;
@@ -43,8 +42,15 @@ import com.battlelancer.seriesguide.adapters.ExtensionsAdapter;
 import com.battlelancer.seriesguide.loaders.AvailableActionsLoader;
 import com.mobeta.android.dslv.DragSortController;
 import com.mobeta.android.dslv.DragSortListView;
-import com.uwetrottmann.androidutils.AndroidUtils;
+import de.greenrobot.event.EventBus;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import timber.log.Timber;
 
 /**
@@ -58,7 +64,8 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
     private ExtensionsAdapter mAdapter;
     private PopupMenu mAddExtensionPopupMenu;
 
-    private List<ExtensionManager.Extension> mAvailableExtensions;
+    private List<ExtensionManager.Extension> mAvailableExtensions = new ArrayList<>();
+    private List<ComponentName> mEnabledExtensions;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,6 +92,20 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
                 mActionsLoaderCallbacks);
 
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -136,26 +157,68 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
             return new AvailableActionsLoader(getActivity());
         }
 
-        @TargetApi(Build.VERSION_CODES.HONEYCOMB)
         @Override
         public void onLoadFinished(Loader<List<ExtensionManager.Extension>> loader,
-                List<ExtensionManager.Extension> data) {
-            if (data == null || data.size() == 0) {
+                List<ExtensionManager.Extension> availableExtensions) {
+            if (availableExtensions == null || availableExtensions.size() == 0) {
                 Timber.d("Did not find any extension");
             } else {
-                Timber.d("Found " + data.size() + " extensions");
+                Timber.d("Found " + availableExtensions.size() + " extensions");
             }
 
-            mAvailableExtensions = data;
+            if (mEnabledExtensions == null) {
+                mEnabledExtensions = ExtensionManager.getInstance(getActivity())
+                        .getEnabledExtensions();
+            }
+            Set<ComponentName> enabledExtensions = new HashSet<>(mEnabledExtensions);
 
-            mAdapter.clear();
-            if (AndroidUtils.isHoneycombOrHigher()) {
-                mAdapter.addAll(data);
-            } else {
-                for (ExtensionManager.Extension extension : data) {
-                    mAdapter.add(extension);
+            // find all extensions not yet enabled
+            mAvailableExtensions.clear();
+            Map<ComponentName, ExtensionManager.Extension> enabledExtensionsMap = new HashMap<>();
+            for (ExtensionManager.Extension extension : availableExtensions) {
+                if (enabledExtensions.contains(extension.componentName)) {
+                    // extension is already enabled
+                    enabledExtensionsMap.put(extension.componentName, extension);
+                    continue;
                 }
+
+                mAvailableExtensions.add(extension);
             }
+
+            // sort available extensions alphabetically
+            Collections.sort(mAvailableExtensions, new Comparator<ExtensionManager.Extension>() {
+                @Override
+                public int compare(ExtensionManager.Extension extension1,
+                        ExtensionManager.Extension extension2) {
+                    String title1 = createTitle(extension1);
+                    String title2 = createTitle(extension2);
+                    return title1.compareToIgnoreCase(title2);
+                }
+
+                private String createTitle(ExtensionManager.Extension extension) {
+                    String title = extension.label;
+                    if (TextUtils.isEmpty(title)) {
+                        title = extension.componentName.flattenToShortString();
+                    }
+                    return title;
+                }
+            });
+
+            // force re-creation of extension add menu
+            if (mAddExtensionPopupMenu != null) {
+                mAddExtensionPopupMenu.dismiss();
+                mAddExtensionPopupMenu = null;
+            }
+
+            // list enabled extensions in order dictated by extension manager
+            List<ExtensionManager.Extension> enabledExtensionsList = new ArrayList<>();
+            for (ComponentName extension : enabledExtensions) {
+                enabledExtensionsList.add(enabledExtensionsMap.get(extension));
+            }
+
+            // refresh enabled extensions list
+            mAdapter.clear();
+            mAdapter.addAll(enabledExtensionsList);
         }
 
         @Override
@@ -169,6 +232,12 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
         if (position == mAdapter.getCount() - 1) {
             showAddExtensionPopupMenu(view.findViewById(R.id.textViewItemExtensionAddLabel));
         }
+    }
+
+    public void onEventMainThread(ExtensionsAdapter.ExtensionDisableRequestEvent event) {
+        mEnabledExtensions.remove(event.position);
+        getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
+                mActionsLoaderCallbacks);
     }
 
     private void showAddExtensionPopupMenu(View anchorView) {
@@ -185,6 +254,20 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
             }
             mAddExtensionPopupMenu.getMenu().add(Menu.NONE, i, Menu.NONE, label);
         }
+        mAddExtensionPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(android.view.MenuItem item) {
+                // add to enabled extensions
+                ExtensionManager.Extension extension = mAvailableExtensions.get(item.getItemId());
+                mEnabledExtensions.add(extension.componentName);
+                // re-populate extension list
+                getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID,
+                        null, mActionsLoaderCallbacks);
+                // scroll to end of list
+                mListView.smoothScrollToPosition(mAdapter.getCount() - 1);
+                return true;
+            }
+        });
 
         mAddExtensionPopupMenu.show();
     }

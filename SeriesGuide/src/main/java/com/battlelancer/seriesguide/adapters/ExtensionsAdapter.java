@@ -33,11 +33,20 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.SeriesGuideExtension;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.util.Utils;
+import de.greenrobot.event.EventBus;
 
 /**
  * Creates views for a list of {@link com.battlelancer.seriesguide.extensions.ExtensionManager.Extension}.
  */
 public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> {
+
+    public class ExtensionDisableRequestEvent {
+        public int position;
+
+        public ExtensionDisableRequestEvent(int position) {
+            this.position = position;
+        }
+    }
 
     private static final int LAYOUT_EXTENSION = R.layout.item_extension;
     private static final int LAYOUT_ADD = R.layout.item_extension_add;
@@ -148,7 +157,8 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
                     );
                     return true;
                 case R.id.menu_action_extension_disable:
-                    // TODO
+                    EventBus.getDefault()
+                            .post(new ExtensionDisableRequestEvent(mPosition));
                     return true;
             }
             return false;
