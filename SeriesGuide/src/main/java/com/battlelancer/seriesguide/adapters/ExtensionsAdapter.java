@@ -18,11 +18,14 @@ package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -68,7 +71,7 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (getItemViewType(position) == VIEW_TYPE_ADD) {
             if (convertView == null) {
                 convertView = mLayoutInflater.inflate(LAYOUT_ADD, parent, false);
@@ -87,31 +90,69 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
 
         final ExtensionManager.Extension extension = getItem(position);
 
-        viewHolder.title.setText(extension.label);
         viewHolder.description.setText(extension.description);
+
+        // title
+        String label = extension.label;
+        if (TextUtils.isEmpty(label)) {
+            label = extension.componentName.flattenToShortString();
+        }
+        viewHolder.title.setText(label);
+
+        // icon
         if (extension.icon != null) {
             viewHolder.icon.setImageDrawable(extension.icon);
         } else {
             viewHolder.icon.setImageResource(R.drawable.ic_launcher);
         }
-        if (extension.settingsActivity != null) {
-            viewHolder.settings.setVisibility(View.VISIBLE);
-            viewHolder.settings.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // launch settings activity
-                    Utils.tryStartActivity(v.getContext(), new Intent()
-                            .setComponent(extension.settingsActivity)
-                            .putExtra(SeriesGuideExtension.EXTRA_FROM_SERIESGUIDE_SETTINGS,
-                                    true), true);
+
+        // overflow menu
+        viewHolder.settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+                popupMenu.getMenuInflater().inflate(R.menu.extension_menu, popupMenu.getMenu());
+                if (extension.settingsActivity == null) {
+                    MenuItem item = popupMenu.getMenu()
+                            .findItem(R.id.menu_action_extension_settings);
+                    item.setVisible(false);
+                    item.setEnabled(false);
                 }
-            });
-        } else {
-            viewHolder.settings.setVisibility(View.GONE);
-            viewHolder.settings.setOnClickListener(null);
-        }
+                popupMenu.setOnMenuItemClickListener(new OverflowItemClickListener(position));
+                popupMenu.show();
+            }
+        });
 
         return convertView;
+    }
+
+    private class OverflowItemClickListener implements PopupMenu.OnMenuItemClickListener {
+
+        private final int mPosition;
+
+        public OverflowItemClickListener(int position) {
+            mPosition = position;
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.menu_action_extension_settings:
+                    ExtensionManager.Extension extension = getItem(mPosition);
+                    // launch settings activity
+                    Utils.tryStartActivity(getContext(), new Intent()
+                                    .setComponent(extension.settingsActivity)
+                                    .putExtra(SeriesGuideExtension.EXTRA_FROM_SERIESGUIDE_SETTINGS,
+                                            true),
+                            true
+                    );
+                    return true;
+                case R.id.menu_action_extension_disable:
+                    // TODO
+                    return true;
+            }
+            return false;
+        }
     }
 
     static class ViewHolder {

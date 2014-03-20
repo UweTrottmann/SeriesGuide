@@ -16,20 +16,13 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/Page.Centered">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.mobeta.android.dslv.DragSortListView
-        android:id="@+id/listViewExtensionsConfiguration"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@android:color/transparent"
-        android:drawSelectorOnTop="true"
-        app:use_default_controller="false"
-        app:sort_enabled="true"
-        app:drag_start_mode="onDown"
-        app:remove_enabled="false"
-        app:float_alpha="0.8" />
+    <item
+        android:id="@+id/menu_action_extension_settings"
+        android:title="@string/action_extension_settings" />
+    <item
+        android:id="@+id/menu_action_extension_disable"
+        android:title="@string/action_extension_remove" />
 
-</FrameLayout>
+</menu>
