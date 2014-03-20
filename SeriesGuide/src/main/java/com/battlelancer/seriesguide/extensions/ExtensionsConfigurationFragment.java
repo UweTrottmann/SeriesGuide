@@ -76,6 +76,15 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
         final ExtensionsDragSortController dragSortController = new ExtensionsDragSortController();
         mListView.setFloatViewManager(dragSortController);
         mListView.setOnTouchListener(dragSortController);
+        mListView.setDropListener(new DragSortListView.DropListener() {
+            @Override
+            public void drop(int from, int to) {
+                ComponentName extension = mEnabledExtensions.remove(from);
+                mEnabledExtensions.add(to, extension);
+                getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID,
+                        null, mActionsLoaderCallbacks);
+            }
+        });
         mListView.setOnItemClickListener(this);
 
         return v;
