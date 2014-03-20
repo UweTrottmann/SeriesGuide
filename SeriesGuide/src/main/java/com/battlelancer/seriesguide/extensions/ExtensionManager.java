@@ -74,15 +74,15 @@ public class ExtensionManager {
     private SharedPreferences mSharedPrefs;
     private ComponentName mSubscriberComponentName;
 
-    private Map<ComponentName, String> mSubscriptions;
+    private Map<ComponentName, String> mSubscriptions; // extension + token = sub
     private Map<String, ComponentName> mTokens; // mirrored map for faster token searching
+
+    private List<ComponentName> mEnabledExtensions; // order-preserving list of enabled extensions
 
     private ExtensionManager(Context context) {
         Timber.d("Initializing extension manager");
         mContext = context.getApplicationContext();
         mSharedPrefs = mContext.getSharedPreferences(PREF_FILE_SUBSCRIPTIONS, 0);
-        mSubscriptions = new HashMap<>();
-        mTokens = new HashMap<>();
         mSubscriberComponentName = new ComponentName(mContext, ExtensionSubscriberService.class);
         loadSubscriptions();
     }
@@ -136,80 +136,91 @@ public class ExtensionManager {
     }
 
     /**
-     * Returns a list of {@linkplain android.content.ComponentName}s of currently enabled
-     * extensions.
+     * Compares the list of currently enabled extensions with the given list and enables added
+     * extensions and disables removed extensions.
      */
-    public synchronized List<ComponentName> getEnabledExtensions() {
-        return new ArrayList<>(mSubscriptions.keySet());
+    public synchronized void setEnabledExtensions(List<ComponentName> extensions) {
+        Set<ComponentName> extensionsToEnable = new HashSet<>(extensions);
+
+        // disable removed extensions
+        for (ComponentName extension : mEnabledExtensions) {
+            if (!extensionsToEnable.contains(extension)) {
+                // disable extension
+                disableExtension(extension);
+            }
+            // no need to enable, is already enabled
+            extensionsToEnable.remove(extension);
+        }
+
+        // enable added extensions
+        for (ComponentName extension : extensionsToEnable) {
+            enableExtension(extension);
+        }
+
+        mEnabledExtensions = new ArrayList<>(extensions);
+        saveSubscriptions();
+
+        // clear actions cache so loaders will request new actions
+        sEpisodeActionsCache.evictAll();
     }
 
-    public void enableExtension(ComponentName extension) {
+    /**
+     * Returns a copy of the list of currently enabled extensions in the order the user previously
+     * determined.
+     */
+    public synchronized List<ComponentName> getEnabledExtensions() {
+        return new ArrayList<>(mEnabledExtensions);
+    }
+
+    private void enableExtension(ComponentName extension) {
         if (extension == null) {
             Timber.e("enableExtension: empty extension");
         }
 
-        synchronized (this) {
-            if (mSubscriptions.containsKey(extension)) {
-                // already subscribed
-                Timber.d("enableExtension: already subscribed to " + extension);
-                return;
-            }
-
-            // subscribe
-            String token = UUID.randomUUID().toString();
-            while (mTokens.containsKey(token)) {
-                // create another UUID on collision
-                /**
-                 * As the number of enabled extensions is rather low compared to the UUID number
-                 * space we shouldn't have to worry about this ever looping.
-                 */
-                token = UUID.randomUUID().toString();
-            }
-            Timber.d("enableExtension: subscribing to " + extension);
-            mSubscriptions.put(extension, token);
-            mTokens.put(token, extension);
-            mContext.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
-                    .setComponent(extension)
-                    .putExtra(IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT,
-                            mSubscriberComponentName)
-                    .putExtra(IncomingConstants.EXTRA_TOKEN, token));
-
-            // clear the whole cache so loaders will request new actions
-            sEpisodeActionsCache.evictAll();
+        if (mSubscriptions.containsKey(extension)) {
+            // already subscribed
+            Timber.d("enableExtension: already subscribed to " + extension);
+            return;
         }
 
-        saveSubscriptions();
-
-        // TODO notify about enabled extension
+        // subscribe
+        String token = UUID.randomUUID().toString();
+        while (mTokens.containsKey(token)) {
+            // create another UUID on collision
+            /**
+             * As the number of enabled extensions is rather low compared to the UUID number
+             * space we shouldn't have to worry about this ever looping.
+             */
+            token = UUID.randomUUID().toString();
+        }
+        Timber.d("enableExtension: subscribing to " + extension);
+        mSubscriptions.put(extension, token);
+        mTokens.put(token, extension);
+        mContext.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
+                .setComponent(extension)
+                .putExtra(IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT,
+                        mSubscriberComponentName)
+                .putExtra(IncomingConstants.EXTRA_TOKEN, token));
     }
 
-    public void disableExtension(ComponentName extension) {
+    private void disableExtension(ComponentName extension) {
         if (extension == null) {
             Timber.e("disableExtension: extension empty");
         }
 
-        synchronized (this) {
-            if (!mSubscriptions.containsKey(extension)) {
-                Timber.d("disableExtension: extension not enabled " + extension);
-                return;
-            }
-
-            // unsubscribe
-            Timber.d("disableExtension: unsubscribing from " + extension);
-            mContext.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
-                    .setComponent(extension)
-                    .putExtra(IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT,
-                            mSubscriberComponentName)
-                    .putExtra(IncomingConstants.EXTRA_TOKEN, (String) null));
-            mTokens.remove(mSubscriptions.remove(extension));
-
-            // instead of cleaning old actions just clear the whole cache
-            sEpisodeActionsCache.evictAll();
+        if (!mSubscriptions.containsKey(extension)) {
+            Timber.d("disableExtension: extension not enabled " + extension);
+            return;
         }
 
-        saveSubscriptions();
-
-        // TODO notify about disabled extension
+        // unsubscribe
+        Timber.d("disableExtension: unsubscribing from " + extension);
+        mContext.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
+                .setComponent(extension)
+                .putExtra(IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT,
+                        mSubscriberComponentName)
+                .putExtra(IncomingConstants.EXTRA_TOKEN, (String) null));
+        mTokens.remove(mSubscriptions.remove(extension));
     }
 
     /**
@@ -282,6 +293,7 @@ public class ExtensionManager {
     }
 
     private synchronized void loadSubscriptions() {
+        mEnabledExtensions = new ArrayList<>();
         mSubscriptions = new HashMap<>();
         mTokens = new HashMap<>();
 
@@ -306,6 +318,7 @@ public class ExtensionManager {
             String[] arr = subscription.split("\\|", 2);
             ComponentName extension = ComponentName.unflattenFromString(arr[0]);
             String token = arr[1];
+            mEnabledExtensions.add(extension);
             mSubscriptions.put(extension, token);
             mTokens.put(token, extension);
             Timber.d("Restored subscription: " + extension + " token: " + token);
@@ -313,8 +326,8 @@ public class ExtensionManager {
     }
 
     private synchronized void saveSubscriptions() {
-        Set<String> serializedSubscriptions = new HashSet<>();
-        for (ComponentName extension : mSubscriptions.keySet()) {
+        List<String> serializedSubscriptions = new ArrayList<>();
+        for (ComponentName extension : mEnabledExtensions) {
             serializedSubscriptions.add(extension.flattenToShortString() + "|"
                     + mSubscriptions.get(extension));
         }

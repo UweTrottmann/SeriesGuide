@@ -37,6 +37,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ExtensionsAdapter;
 import com.battlelancer.seriesguide.loaders.AvailableActionsLoader;
@@ -115,12 +116,17 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
         super.onStop();
 
         EventBus.getDefault().unregister(this);
+        ExtensionManager.getInstance(getActivity()).setEnabledExtensions(mEnabledExtensions);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.extensions_configuration_menu, menu);
+        if (!BuildConfig.DEBUG) {
+            menu.findItem(R.id.menu_action_extensions_enable).setVisible(false);
+            menu.findItem(R.id.menu_action_extensions_disable).setVisible(false);
+        }
     }
 
     @Override
@@ -129,21 +135,18 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
         if (itemId == R.id.menu_action_extensions_enable) {
             List<ExtensionManager.Extension> extensions = ExtensionManager.getInstance(
                     getActivity()).queryAllAvailableExtensions();
+            List<ComponentName> enabledExtensions = new ArrayList<>();
             for (ExtensionManager.Extension extension : extensions) {
-                ExtensionManager.getInstance(getActivity())
-                        .enableExtension(extension.componentName);
+                enabledExtensions.add(extension.componentName);
             }
+            ExtensionManager.getInstance(getActivity()).setEnabledExtensions(enabledExtensions);
             Toast.makeText(getActivity(), "Enabled all available extensions", Toast.LENGTH_LONG)
                     .show();
             return true;
         }
         if (itemId == R.id.menu_action_extensions_disable) {
-            List<ExtensionManager.Extension> extensions = ExtensionManager.getInstance(
-                    getActivity()).queryAllAvailableExtensions();
-            for (ExtensionManager.Extension extension : extensions) {
-                ExtensionManager.getInstance(getActivity())
-                        .disableExtension(extension.componentName);
-            }
+            ExtensionManager.getInstance(getActivity())
+                    .setEnabledExtensions(new ArrayList<ComponentName>());
             Toast.makeText(getActivity(), "Disabled all available extensions", Toast.LENGTH_LONG)
                     .show();
             return true;
