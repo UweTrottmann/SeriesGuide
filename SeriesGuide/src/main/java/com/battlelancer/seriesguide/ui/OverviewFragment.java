@@ -51,6 +51,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.extensions.ActionsFragmentContract;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsHelper;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.loaders.EpisodeActionsLoader;
@@ -82,15 +83,13 @@ import timber.log.Timber;
  * Displays general information about a show and its next episode.
  */
 public class OverviewFragment extends SherlockFragment implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+        LoaderManager.LoaderCallbacks<Cursor>, ActionsFragmentContract {
 
     private static final String TAG = "Overview";
 
     private static final int EPISODE_LOADER_ID = 100;
     private static final int SHOW_LOADER_ID = 101;
     private static final int ACTIONS_LOADER_ID = 102;
-
-    private static final int ACTION_LOADER_DELAY_MILLIS = 200;
 
     private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
 
@@ -502,10 +501,12 @@ public class OverviewFragment extends SherlockFragment implements
         }
     }
 
+    @Override
     public void onEventMainThread(ExtensionManager.EnabledExtensionsChangedEvent event) {
         loadEpisodeActions();
     }
 
+    @Override
     public void onEventMainThread(ExtensionManager.EpisodeActionReceivedEvent event) {
         if (mCurrentEpisodeTvdbId == event.episodeTvdbId) {
             loadEpisodeActionsDelayed();
@@ -696,7 +697,8 @@ public class OverviewFragment extends SherlockFragment implements
         }
     }
 
-    private void loadEpisodeActions() {
+    @Override
+    public void loadEpisodeActions() {
         Bundle args = new Bundle();
         args.putInt(KEY_EPISODE_TVDB_ID, mCurrentEpisodeTvdbId);
         getLoaderManager().restartLoader(ACTIONS_LOADER_ID, args, mEpisodeActionsLoaderCallbacks);
@@ -709,13 +711,11 @@ public class OverviewFragment extends SherlockFragment implements
         }
     };
 
-    /**
-     * Loads latest episode actions with a delay. If this is called before the delay runs out, it
-     * will be reset.
-     */
-    private void loadEpisodeActionsDelayed() {
+    @Override
+    public void loadEpisodeActionsDelayed() {
         mHandler.removeCallbacks(mEpisodeActionsRunnable);
-        mHandler.postDelayed(mEpisodeActionsRunnable, ACTION_LOADER_DELAY_MILLIS);
+        mHandler.postDelayed(mEpisodeActionsRunnable,
+                ActionsFragmentContract.ACTION_LOADER_DELAY_MILLIS);
     }
 
     private void onLoadEpisodeDetails(final Cursor episode) {

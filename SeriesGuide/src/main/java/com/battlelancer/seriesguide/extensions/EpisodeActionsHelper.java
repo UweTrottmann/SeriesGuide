@@ -37,6 +37,10 @@ public class EpisodeActionsHelper {
      */
     public static void populateEpisodeActions(LayoutInflater layoutInflater,
             ViewGroup actionsContainer, List<Action> data) {
+        if (actionsContainer == null) {
+            // nothing we can do, view is already gone
+            return;
+        }
         actionsContainer.removeAllViews();
 
         // add a view per action

@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager;
@@ -36,6 +37,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -46,8 +48,13 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.extensions.ActionsFragmentContract;
+import com.battlelancer.seriesguide.extensions.EpisodeActionsHelper;
+import com.battlelancer.seriesguide.extensions.ExtensionManager;
+import com.battlelancer.seriesguide.loaders.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
@@ -70,19 +77,21 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import de.greenrobot.event.EventBus;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import timber.log.Timber;
 
 /**
  * Displays details about a single episode like summary, ratings and episode image if available.
  */
-public class EpisodeDetailsFragment extends SherlockFragment {
-
-    private static final int EPISODE_LOADER = 3;
+public class EpisodeDetailsFragment extends SherlockFragment implements ActionsFragmentContract {
 
     private static final String TAG = "Episode Details";
 
-    private FetchArtTask mArtTask;
+    private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
 
+    private Handler mHandler = new Handler();
+    private FetchArtTask mArtTask;
     private TraktSummaryTask mTraktTask;
 
     protected int mEpisodeFlag;
@@ -98,6 +107,7 @@ public class EpisodeDetailsFragment extends SherlockFragment {
     @InjectView(R.id.imageContainer) View mImageContainer;
     @InjectView(R.id.imageViewEpisodeBackground) ImageView mBackground;
     @InjectView(R.id.ratingbar) View mRatingsContainer;
+    @InjectView(R.id.containerEpisodeActions) LinearLayout mActionsContainer;
 
     @InjectView(R.id.textViewEpisodeTitle) TextView mTitle;
     @InjectView(R.id.textViewEpisodeDescription) TextView mDescription;
@@ -180,7 +190,9 @@ public class EpisodeDetailsFragment extends SherlockFragment {
 
         setupViews();
 
-        getLoaderManager().initLoader(EPISODE_LOADER, null, mEpisodeDataLoaderCallbacks);
+        getLoaderManager().initLoader(EpisodesActivity.EPISODE_LOADER_ID, null,
+                mEpisodeDataLoaderCallbacks);
+        loadEpisodeActions();
 
         setHasOptionsMenu(true);
     }
@@ -220,6 +232,9 @@ public class EpisodeDetailsFragment extends SherlockFragment {
         if (mTraktTask != null) {
             mTraktTask.cancel(true);
             mTraktTask = null;
+        }
+        if (mHandler != null) {
+            mHandler.removeCallbacks(mEpisodeActionsRunnable);
         }
     }
 
@@ -302,6 +317,18 @@ public class EpisodeDetailsFragment extends SherlockFragment {
                 .execute();
     }
 
+    @Override
+    public void onEventMainThread(ExtensionManager.EnabledExtensionsChangedEvent event) {
+        loadEpisodeActions();
+    }
+
+    @Override
+    public void onEventMainThread(ExtensionManager.EpisodeActionReceivedEvent event) {
+        if (getEpisodeTvdbId() == event.episodeTvdbId) {
+            loadEpisodeActionsDelayed();
+        }
+    }
+
     public void onEvent(TraktActionCompleteEvent event) {
         if (event.mTraktAction == TraktAction.RATE_EPISODE) {
             loadTraktRatings(false);
@@ -323,7 +350,7 @@ public class EpisodeDetailsFragment extends SherlockFragment {
 
         @Override
         public void onLoaderReset(Loader<Cursor> loader) {
-            populateEpisodeData(null);
+            // do nothing (we are never holding onto the cursor
         }
     };
 
@@ -638,6 +665,51 @@ public class EpisodeDetailsFragment extends SherlockFragment {
                     null
             });
         }
+    }
+
+    private LoaderManager.LoaderCallbacks<List<Action>> mEpisodeActionsLoaderCallbacks =
+            new LoaderManager.LoaderCallbacks<List<Action>>() {
+                @Override
+                public Loader<List<Action>> onCreateLoader(int id, Bundle args) {
+                    int episodeTvdbId = args.getInt(KEY_EPISODE_TVDB_ID);
+                    return new EpisodeActionsLoader(getActivity(), episodeTvdbId);
+                }
+
+                @Override
+                public void onLoadFinished(Loader<List<Action>> loader, List<Action> data) {
+                    if (data == null) {
+                        Timber.e("onLoadFinished: did not receive valid actions");
+                    } else {
+                        Timber.d("onLoadFinished: received " + data.size() + " actions");
+                    }
+                    EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
+                            mActionsContainer, data);
+                }
+
+                @Override
+                public void onLoaderReset(Loader<List<Action>> loader) {
+                    // do nothing, we are not holding onto the actions list
+                }
+            };
+
+    public void loadEpisodeActions() {
+        Bundle args = new Bundle();
+        args.putInt(KEY_EPISODE_TVDB_ID, getEpisodeTvdbId());
+        getLoaderManager().restartLoader(EpisodesActivity.ACTIONS_LOADER_ID, args,
+                mEpisodeActionsLoaderCallbacks);
+    }
+
+    Runnable mEpisodeActionsRunnable = new Runnable() {
+        @Override
+        public void run() {
+            loadEpisodeActions();
+        }
+    };
+
+    public void loadEpisodeActionsDelayed() {
+        mHandler.removeCallbacks(mEpisodeActionsRunnable);
+        mHandler.postDelayed(mEpisodeActionsRunnable,
+                ActionsFragmentContract.ACTION_LOADER_DELAY_MILLIS);
     }
 
     private void fireTrackerEvent(String label) {
