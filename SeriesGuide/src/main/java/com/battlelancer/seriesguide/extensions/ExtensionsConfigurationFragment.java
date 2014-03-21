@@ -41,6 +41,7 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ExtensionsAdapter;
 import com.battlelancer.seriesguide.loaders.AvailableActionsLoader;
+import com.battlelancer.seriesguide.util.Utils;
 import com.mobeta.android.dslv.DragSortController;
 import com.mobeta.android.dslv.DragSortListView;
 import de.greenrobot.event.EventBus;
@@ -242,11 +243,19 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (position == mAdapter.getCount() - 1) {
+            if (!Utils.hasAccessToX(getActivity())) {
+                Utils.advertiseSubscription(getActivity());
+                return;
+            }
             showAddExtensionPopupMenu(view.findViewById(R.id.textViewItemExtensionAddLabel));
         }
     }
 
     public void onEventMainThread(ExtensionsAdapter.ExtensionDisableRequestEvent event) {
+        if (!Utils.hasAccessToX(getActivity())) {
+            Utils.advertiseSubscription(getActivity());
+            return;
+        }
         mEnabledExtensions.remove(event.position);
         getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
                 mActionsLoaderCallbacks);
