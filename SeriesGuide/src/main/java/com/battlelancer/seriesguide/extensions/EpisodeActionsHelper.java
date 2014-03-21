@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.util.Utils;
 import java.util.List;
+import timber.log.Timber;
 
 public class EpisodeActionsHelper {
 
@@ -39,6 +40,7 @@ public class EpisodeActionsHelper {
             ViewGroup actionsContainer, List<Action> data) {
         if (actionsContainer == null) {
             // nothing we can do, view is already gone
+            Timber.d("populateEpisodeActions: action view container gone, aborting");
             return;
         }
         actionsContainer.removeAllViews();
