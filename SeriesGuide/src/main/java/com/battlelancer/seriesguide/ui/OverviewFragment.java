@@ -133,10 +133,6 @@ public class OverviewFragment extends SherlockFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        if (container == null) {
-            return null;
-        }
-
         View v = inflater.inflate(R.layout.overview_fragment, container, false);
         v.findViewById(R.id.imageViewFavorite).setOnClickListener(new OnClickListener() {
             @Override
@@ -148,7 +144,7 @@ public class OverviewFragment extends SherlockFragment implements
         mContainerShow = v.findViewById(R.id.containerOverviewShow);
         mDividerShow = v.findViewById(R.id.dividerHorizontalOverviewShow);
         mSpacerShow = v.findViewById(R.id.spacerOverviewShow);
-        mContainerActions = ButterKnife.findById(v, R.id.containerOverviewActions);
+        mContainerActions = (LinearLayout) v.findViewById(R.id.containerOverviewActions);
 
         return v;
     }
@@ -177,6 +173,7 @@ public class OverviewFragment extends SherlockFragment implements
     public void onResume() {
         super.onResume();
         EventBus.getDefault().register(this);
+        loadEpisodeActionsDelayed();
     }
 
     @Override
@@ -502,11 +499,6 @@ public class OverviewFragment extends SherlockFragment implements
     }
 
     @Override
-    public void onEventMainThread(ExtensionManager.EnabledExtensionsChangedEvent event) {
-        loadEpisodeActions();
-    }
-
-    @Override
     public void onEventMainThread(ExtensionManager.EpisodeActionReceivedEvent event) {
         if (mCurrentEpisodeTvdbId == event.episodeTvdbId) {
             loadEpisodeActionsDelayed();
@@ -655,9 +647,6 @@ public class OverviewFragment extends SherlockFragment implements
 
             // load all other info
             onLoadEpisodeDetails(episode);
-
-            // request episode actions
-            loadEpisodeActions();
 
             // episode image
             onLoadImage(episode.getString(EpisodeQuery.IMAGE));

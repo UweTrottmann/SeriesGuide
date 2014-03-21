@@ -75,13 +75,6 @@ public class ExtensionManager {
         }
     }
 
-    /**
-     * {@link com.battlelancer.seriesguide.extensions.ExtensionManager} changed the list of enabled
-     * extensions or their order. Receivers might want to requery available actions.
-     */
-    public static class EnabledExtensionsChangedEvent {
-    }
-
     private Context mContext;
     private SharedPreferences mSharedPrefs;
     private ComponentName mSubscriberComponentName;
@@ -180,9 +173,6 @@ public class ExtensionManager {
             // clear actions cache so loaders will request new actions
             sEpisodeActionsCache.evictAll();
         }
-
-        // always notify as, again, just the order might have changed
-        EventBus.getDefault().post(new EnabledExtensionsChangedEvent());
     }
 
     /**

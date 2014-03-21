@@ -30,8 +30,7 @@ public interface ActionsFragmentContract {
 
     /**
      * Implementing fragments should load the latest episode actions with {@link
-     * com.battlelancer.seriesguide.loaders.EpisodeActionsLoader}. Call this in e.g. {@link
-     * android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)}.
+     * com.battlelancer.seriesguide.loaders.EpisodeActionsLoader}.
      */
     abstract void loadEpisodeActions();
 
@@ -40,13 +39,9 @@ public interface ActionsFragmentContract {
      * posting a {@link java.lang.Runnable} with {@link android.os.Handler#postDelayed(Runnable,
      * long)}, delayed by {@link #ACTION_LOADER_DELAY_MILLIS}). If this is called again before the
      * delay expires, the delay should be reset.
+     * <p/>Call this in e.g. {@link android.support.v4.app.Fragment#onResume()}.
      */
     void loadEpisodeActionsDelayed();
-
-    /**
-     * Implementing fragments should call {@link #loadEpisodeActions()}
-     */
-    public abstract void onEventMainThread(ExtensionManager.EnabledExtensionsChangedEvent event);
 
     /**
      * Implementing fragments should call {@link #loadEpisodeActionsDelayed()} when appropriate

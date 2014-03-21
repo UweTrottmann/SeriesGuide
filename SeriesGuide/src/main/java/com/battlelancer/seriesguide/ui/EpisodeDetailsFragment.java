@@ -318,11 +318,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
     }
 
     @Override
-    public void onEventMainThread(ExtensionManager.EnabledExtensionsChangedEvent event) {
-        loadEpisodeActions();
-    }
-
-    @Override
     public void onEventMainThread(ExtensionManager.EpisodeActionReceivedEvent event) {
         if (getEpisodeTvdbId() == event.episodeTvdbId) {
             loadEpisodeActionsDelayed();
