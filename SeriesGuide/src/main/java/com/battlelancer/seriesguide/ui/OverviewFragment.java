@@ -51,8 +51,8 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.extensions.EpisodeActionsHelper;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
-import com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity;
 import com.battlelancer.seriesguide.loaders.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
@@ -899,54 +899,16 @@ public class OverviewFragment extends SherlockFragment implements
                     } else {
                         Timber.d("onLoadFinished: received " + data.size() + " actions");
                     }
-                    populateEpisodeActions(data);
+                    EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
+                            mContainerActions,
+                            data);
                 }
 
                 @Override
                 public void onLoaderReset(Loader<List<Action>> loader) {
-                    populateEpisodeActions(null);
+                    EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
+                            mContainerActions,
+                            null);
                 }
             };
-
-    private void populateEpisodeActions(List<Action> data) {
-        mContainerActions.removeAllViews();
-
-        // add a view per action
-        if (data != null) {
-            for (Action action : data) {
-                TextView actionView = (TextView) getActivity().getLayoutInflater()
-                        .inflate(R.layout.item_action, mContainerActions, false);
-                actionView.setText(action.getTitle());
-
-                final Intent viewIntent = action.getViewIntent();
-                if (viewIntent != null) {
-                    viewIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                    actionView.setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Utils.tryStartActivity(getActivity(), viewIntent, true);
-                        }
-                    });
-                }
-
-                mContainerActions.addView(actionView);
-            }
-        }
-
-        // link to extensions configuration
-        TextView configureView = (TextView) getActivity().getLayoutInflater()
-                .inflate(R.layout.item_action, mContainerActions, false);
-        configureView.setText(R.string.action_extensions_configure);
-        configureView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!Utils.hasAccessToX(getActivity())) {
-                    Utils.advertiseSubscription(getActivity());
-                    return;
-                }
-                startActivity(new Intent(getActivity(), ExtensionsConfigurationActivity.class));
-            }
-        });
-        mContainerActions.addView(configureView);
-    }
 }
