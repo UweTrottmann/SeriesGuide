@@ -73,8 +73,6 @@ public abstract class SeriesGuideExtension extends IntentService {
     private static final String PREF_SUBSCRIPTIONS = "subscriptions";
     private static final String PREF_LAST_ACTION = "action";
 
-    private static final int MSG_PUBLISH_CURRENT_ACTION = 1;
-
     private final String mName;
 
     private SharedPreferences mSharedPrefs;
@@ -83,15 +81,7 @@ public abstract class SeriesGuideExtension extends IntentService {
 
     private Action mCurrentAction;
 
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what == MSG_PUBLISH_CURRENT_ACTION) {
-                publishCurrentAction();
-                saveLastAction();
-            }
-        }
-    };
+    private Handler mHandler = new Handler();
 
     /**
      * Call from your default constructor.<br/>
@@ -189,8 +179,8 @@ public abstract class SeriesGuideExtension extends IntentService {
      */
     protected final void publishAction(Action action) {
         mCurrentAction = action;
-        mHandler.removeMessages(MSG_PUBLISH_CURRENT_ACTION);
-        mHandler.sendEmptyMessage(MSG_PUBLISH_CURRENT_ACTION);
+        publishCurrentAction();
+        saveLastAction();
     }
 
     /**
