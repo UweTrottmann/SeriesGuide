@@ -502,6 +502,10 @@ public class OverviewFragment extends SherlockFragment implements
         }
     }
 
+    public void onEventMainThread(ExtensionManager.EnabledExtensionsChangedEvent event) {
+        loadEpisodeActions();
+    }
+
     public void onEventMainThread(ExtensionManager.EpisodeActionReceivedEvent event) {
         if (mCurrentEpisodeTvdbId == event.episodeTvdbId) {
             loadEpisodeActionsDelayed();
