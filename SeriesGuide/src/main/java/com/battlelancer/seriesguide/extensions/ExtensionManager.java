@@ -354,6 +354,15 @@ public class ExtensionManager {
         mSharedPrefs.edit().putString(PREF_SUBSCRIPTIONS, json.toString()).commit();
     }
 
+    /**
+     * Removes all currently cached {@link com.battlelancer.seriesguide.api.Action} objects for all
+     * enabled {@linkplain com.battlelancer.seriesguide.extensions.ExtensionManager.Extension}s.
+     * Call this e.g. after going into an extensions settings activity.
+     */
+    public synchronized void clearEpisodeActionsCache() {
+        sEpisodeActionsCache.evictAll();
+    }
+
     public class Extension {
         public Drawable icon;
         public String label;
