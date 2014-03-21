@@ -114,18 +114,23 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         /**
          * Boolean extra.
          */
-        String IS_POSTERBACKGROUND = "showposter";
+        String DISPLAY_POSTER_BACKGROUND = "showposter";
+
+        /**
+         * Boolean extra.
+         */
+        String DISPLAY_SHOW_LINK = "showlink";
     }
 
-    public static EpisodeDetailsFragment newInstance(int episodeId, boolean isShowingPoster,
-            boolean isShowingShowLink) {
+    public static EpisodeDetailsFragment newInstance(int episodeId,
+            boolean isDisplayPosterBackground, boolean isDisplayShowLink) {
         EpisodeDetailsFragment f = new EpisodeDetailsFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
         args.putInt(InitBundle.EPISODE_TVDBID, episodeId);
-        args.putBoolean("showposter", isShowingPoster);
-        args.putBoolean("showlink", isShowingShowLink);
+        args.putBoolean(InitBundle.DISPLAY_POSTER_BACKGROUND, isDisplayPosterBackground);
+        args.putBoolean(InitBundle.DISPLAY_SHOW_LINK, isDisplayShowLink);
         f.setArguments(args);
 
         return f;
@@ -300,7 +305,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     private boolean isShowingShowLink() {
-        return getArguments().getBoolean("showlink");
+        return getArguments().getBoolean(InitBundle.DISPLAY_SHOW_LINK);
     }
 
     /**
@@ -389,7 +394,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             }
 
             // Show poster background
-            if (getArguments().getBoolean("showposter")) {
+            if (getArguments().getBoolean(InitBundle.DISPLAY_POSTER_BACKGROUND)) {
                 final ImageView background = (ImageView) getActivity().findViewById(
                         R.id.episodedetails_background);
                 Utils.setPosterBackground(background,
@@ -424,8 +429,9 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                         .append(String.valueOf(absoluteNumber));
                 // de-emphasize number
                 timeAndNumbersText.setSpan(new TextAppearanceSpan(mContext,
-                        R.style.TextAppearance_Small_Dim), numberStartIndex,
-                        timeAndNumbersText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                R.style.TextAppearance_Small_Dim), numberStartIndex,
+                        timeAndNumbersText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                );
             }
 
             TextView timeAndNumbers = (TextView) view.findViewById(R.id.airTime);
@@ -445,7 +451,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             Utils.setLabelValueOrHide(view.findViewById(R.id.labelGuestStars),
                     (TextView) view.findViewById(R.id.guestStars),
                     Utils.splitAndKitTVDBStrings(cursor
-                            .getString(DetailsQuery.GUESTSTARS)));
+                            .getString(DetailsQuery.GUESTSTARS))
+            );
             // DVD episode number
             Utils.setLabelValueOrHide(view.findViewById(R.id.labelDvd),
                     (TextView) view.findViewById(R.id.dvdNumber),
@@ -474,7 +481,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     ActivityCompat.startActivity(getActivity(), fullscreen,
                             ActivityOptionsCompat
                                     .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
-                                    .toBundle());
+                                    .toBundle()
+                    );
                 }
             });
 
