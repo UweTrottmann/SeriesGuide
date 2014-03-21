@@ -795,7 +795,7 @@ public class OverviewFragment extends SherlockFragment implements
 
     private void onLoadTraktRatings(boolean isUseCachedValues) {
         if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()
-                && (mTraktTask == null || mTraktTask.getStatus() != AsyncTask.Status.RUNNING)) {
+                && (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED)) {
             int episodeTvdbId = mCurrentEpisodeCursor.getInt(EpisodeQuery._ID);
             int seasonNumber = mCurrentEpisodeCursor.getInt(EpisodeQuery.SEASON);
             int episodeNumber = mCurrentEpisodeCursor.getInt(EpisodeQuery.NUMBER);

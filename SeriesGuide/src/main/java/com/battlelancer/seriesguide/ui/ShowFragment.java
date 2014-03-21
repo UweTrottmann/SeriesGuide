@@ -341,7 +341,7 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
 
     private void onLoadTraktRatings(boolean isUseCachedValues) {
         if (mShow != null
-                && (mTraktTask == null || mTraktTask.getStatus() != AsyncTask.Status.RUNNING)) {
+                && (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED)) {
             mTraktTask = new TraktSummaryTask(getActivity(), getView().findViewById(
                     R.id.ratingbar), isUseCachedValues).show(getShowTvdbId());
             AndroidUtils.executeAsyncTask(mTraktTask);

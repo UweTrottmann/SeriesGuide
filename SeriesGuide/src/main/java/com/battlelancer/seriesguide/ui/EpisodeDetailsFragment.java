@@ -711,7 +711,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     private void onLoadTraktRatings(View ratingBar, boolean isUseCachedValues) {
         if (mAdapter.getCursor() != null
-                && (mTraktTask == null || mTraktTask.getStatus() != AsyncTask.Status.RUNNING)) {
+                && (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED)) {
             mTraktTask = new TraktSummaryTask(getSherlockActivity(), ratingBar, isUseCachedValues)
                     .episode(
                             mShowTvdbId, getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber);
