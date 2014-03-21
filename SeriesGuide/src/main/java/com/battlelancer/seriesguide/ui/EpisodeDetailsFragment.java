@@ -192,7 +192,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
 
         getLoaderManager().initLoader(EpisodesActivity.EPISODE_LOADER_ID, null,
                 mEpisodeDataLoaderCallbacks);
-        loadEpisodeActions();
 
         setHasOptionsMenu(true);
     }
@@ -211,14 +210,18 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         EventBus.getDefault().register(this);
+        loadEpisodeActionsDelayed();
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onStop() {
+        super.onStop();
+        if (mHandler != null) {
+            mHandler.removeCallbacks(mEpisodeActionsRunnable);
+        }
         EventBus.getDefault().unregister(this);
     }
 
@@ -232,9 +235,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
         if (mTraktTask != null) {
             mTraktTask.cancel(true);
             mTraktTask = null;
-        }
-        if (mHandler != null) {
-            mHandler.removeCallbacks(mEpisodeActionsRunnable);
         }
     }
 
@@ -319,7 +319,7 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
 
     @Override
     public void onEventMainThread(ExtensionManager.EnabledExtensionsChangedEvent event) {
-        loadEpisodeActions();
+        // loading in onResume
     }
 
     @Override
@@ -678,9 +678,11 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
                 @Override
                 public void onLoadFinished(Loader<List<Action>> loader, List<Action> data) {
                     if (data == null) {
-                        Timber.e("onLoadFinished: did not receive valid actions");
+                        Timber.e("onLoadFinished: did not receive valid actions for "
+                                + getEpisodeTvdbId());
                     } else {
-                        Timber.d("onLoadFinished: received " + data.size() + " actions");
+                        Timber.d("onLoadFinished: received " + data.size() + " actions for "
+                                + getEpisodeTvdbId());
                     }
                     EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
                             mActionsContainer, data);
