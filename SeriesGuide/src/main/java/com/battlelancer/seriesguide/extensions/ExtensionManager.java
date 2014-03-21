@@ -255,7 +255,10 @@ public class ExtensionManager {
         }
         List<Action> sortedActions = new ArrayList<>();
         for (ComponentName extension : mEnabledExtensions) {
-            sortedActions.add(actionMap.get(extension));
+            Action action = actionMap.get(extension);
+            if (action != null) {
+                sortedActions.add(action);
+            }
         }
         return sortedActions;
     }
