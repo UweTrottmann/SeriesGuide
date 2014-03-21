@@ -118,9 +118,10 @@ public class ExtensionManager {
                         extension.componentName.getPackageName(), 0);
                 Resources packageRes = packageContext.getResources();
                 extension.description = packageRes.getString(info.serviceInfo.descriptionRes);
-            } catch (SecurityException | PackageManager.NameNotFoundException e) {
-                Timber.e(e, "Reading package resources for extension " + extension.componentName
+            } catch (SecurityException | PackageManager.NameNotFoundException | Resources.NotFoundException e) {
+                Timber.e(e, "Reading description for extension " + extension.componentName
                         + " failed");
+                extension.description = "";
             }
             // get (optional) settings activity
             Bundle metaData = info.serviceInfo.metaData;
