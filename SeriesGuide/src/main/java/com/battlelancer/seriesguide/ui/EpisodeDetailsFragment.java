@@ -181,6 +181,9 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
 
         mEpisodeContainer.setVisibility(View.GONE);
 
+        // disable unused service button
+        mAmazonButton.setVisibility(View.GONE);
+
         return v;
     }
 
@@ -569,7 +572,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
         // service buttons
         ServiceUtils.setUpGooglePlayButton(mShowTitle + " " + mEpisodeTitle, mGooglePlayButton,
                 TAG);
-        ServiceUtils.setUpAmazonButton(mShowTitle + " " + mEpisodeTitle, mAmazonButton, TAG);
         ServiceUtils.setUpYouTubeButton(mShowTitle + " " + mEpisodeTitle, mYouTubeButton, TAG);
         ServiceUtils.setUpTraktButton(mShowTvdbId, mSeasonNumber, mEpisodeNumber, mTraktButton,
                 TAG);
