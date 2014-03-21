@@ -62,12 +62,24 @@ public class ExtensionManager {
         return _instance;
     }
 
+    /**
+     * {@link com.battlelancer.seriesguide.extensions.ExtensionManager} has received new {@link
+     * com.battlelancer.seriesguide.api.Action} objects from enabled extensions. Receivers might
+     * want to requery available actions.
+     */
     public static class EpisodeActionReceivedEvent {
         public int episodeTvdbId;
 
         public EpisodeActionReceivedEvent(int episodeTvdbId) {
             this.episodeTvdbId = episodeTvdbId;
         }
+    }
+
+    /**
+     * {@link com.battlelancer.seriesguide.extensions.ExtensionManager} changed the list of enabled
+     * extensions or their order. Receivers might want to requery available actions.
+     */
+    public static class EnabledExtensionsChangedEvent {
     }
 
     private Context mContext;
@@ -141,12 +153,14 @@ public class ExtensionManager {
      */
     public synchronized void setEnabledExtensions(List<ComponentName> extensions) {
         Set<ComponentName> extensionsToEnable = new HashSet<>(extensions);
+        boolean isChanged = false;
 
         // disable removed extensions
         for (ComponentName extension : mEnabledExtensions) {
             if (!extensionsToEnable.contains(extension)) {
                 // disable extension
                 disableExtension(extension);
+                isChanged = true;
             }
             // no need to enable, is already enabled
             extensionsToEnable.remove(extension);
@@ -155,13 +169,20 @@ public class ExtensionManager {
         // enable added extensions
         for (ComponentName extension : extensionsToEnable) {
             enableExtension(extension);
+            isChanged = true;
         }
 
+        // always save because just the order might have changed
         mEnabledExtensions = new ArrayList<>(extensions);
         saveSubscriptions();
 
-        // clear actions cache so loaders will request new actions
-        sEpisodeActionsCache.evictAll();
+        if (isChanged) {
+            // clear actions cache so loaders will request new actions
+            sEpisodeActionsCache.evictAll();
+        }
+
+        // always notify as, again, just the order might have changed
+        EventBus.getDefault().post(new EnabledExtensionsChangedEvent());
     }
 
     /**
