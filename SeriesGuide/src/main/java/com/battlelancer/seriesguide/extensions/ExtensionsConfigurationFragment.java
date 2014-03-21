@@ -269,11 +269,7 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
         mAddExtensionPopupMenu = new PopupMenu(getActivity(), anchorView);
         for (int i = 0; i < mAvailableExtensions.size(); i++) {
             ExtensionManager.Extension extension = mAvailableExtensions.get(i);
-            String label = extension.label;
-            if (TextUtils.isEmpty(label)) {
-                label = extension.componentName.flattenToShortString();
-            }
-            mAddExtensionPopupMenu.getMenu().add(Menu.NONE, i, Menu.NONE, label);
+            mAddExtensionPopupMenu.getMenu().add(Menu.NONE, i, Menu.NONE, extension.label);
         }
         mAddExtensionPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override

@@ -102,11 +102,7 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
         viewHolder.description.setText(extension.description);
 
         // title
-        String label = extension.label;
-        if (TextUtils.isEmpty(label)) {
-            label = extension.componentName.flattenToShortString();
-        }
-        viewHolder.title.setText(label);
+        viewHolder.title.setText(extension.label);
 
         // icon
         if (extension.icon != null) {
