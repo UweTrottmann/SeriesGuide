@@ -246,14 +246,18 @@ public class ExtensionManager {
 
     /**
      * Returns the currently available {@link com.battlelancer.seriesguide.api.Action} list for the
-     * given episode, identified through its TVDb id.
+     * given episode, identified through its TVDb id. Sorted in the order determined by the user.
      */
     public synchronized List<Action> getLatestEpisodeActions(int episodeTvdbId) {
         Map<ComponentName, Action> actionMap = sEpisodeActionsCache.get(episodeTvdbId);
         if (actionMap == null) {
             return null;
         }
-        return new ArrayList<>(actionMap.values());
+        List<Action> sortedActions = new ArrayList<>();
+        for (ComponentName extension : mEnabledExtensions) {
+            sortedActions.add(actionMap.get(extension));
+        }
+        return sortedActions;
     }
 
     /**
