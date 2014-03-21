@@ -240,7 +240,7 @@ public class SeriesGuideContract {
         String IMDBID = "episode_imdbid";
 
         /**
-         * Last time episode was edited on theTVDb.com (lastupdated field). Added in db version 27.
+         * Last time episode was edited on theTVDb.com (lastupdated field) in Unix time (seconds). Added in db version 27.
          */
         String LAST_EDITED = "episode_lastedit";
 
