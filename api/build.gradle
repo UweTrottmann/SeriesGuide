@@ -44,6 +44,7 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 artifacts {
     archives jar
     archives sourcesJar
+    archives javadocJar
 }
 
 dependencies {
