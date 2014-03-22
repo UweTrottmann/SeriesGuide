@@ -23,7 +23,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import java.util.HashMap;
@@ -44,9 +43,107 @@ import static com.battlelancer.seriesguide.api.internal.OutgoingConstants.ACTION
 import static com.battlelancer.seriesguide.api.internal.OutgoingConstants.EXTRA_ACTION;
 
 /**
- * Base class for a SeriesGuide extension. Minimum supported API level is 11.<br/>
- * <br/>
- * Based on code from <a href="https://github.com/romannurik/muzei">Muzei</a>, an awesome Live
+ * Base class for a SeriesGuide extension. Extensions are a way for other apps to
+ * feed actions (represented through {@linkplain Action actions}) for media items to SeriesGuide.
+ * Actions may for example launch other apps or just display interesting information related to a
+ * media item. Extensions are specialized {@link IntentService} classes.
+ *
+ * <p> Multiple extensions may be enabled within SeriesGuide at the same time. When a SeriesGuide
+ * user chooses to enable an extension, SeriesGuide will <em>subscribe</em> to it prior of
+ * requesting actions. If the user disables the extension, SeriesGuide will <em>unsubscribe</em>
+ * from it.
+ *
+ * <p> The API is designed such that other applications besides SeriesGuide can subscribe and
+ * request actions from an extension.
+ *
+ * <h3>Subclassing {@link SeriesGuideExtension}</h3>
+ *
+ * Subclasses must at least implement {@link #onRequest(int, Episode)}, which is called when
+ * SeriesGuide requests actions to display for a media item. Do not perform long running operations
+ * here as the user will get frustrated while waiting for this extensions action to be published.
+ *
+ * <p> To publish an action, call {@link #publishAction(Action)} from {@link #onRequest(int,
+ * Episode)}. All current subscribers will then immediately receive an update with the new action
+ * information. Under the hood, this is all done with {@linkplain Context#startService(Intent)
+ * service intents}.
+ *
+ * <h3>Registering your extension</h3>
+ *
+ * An extension is simply a service that SeriesGuide and other apps interact with via
+ * {@linkplain Context#startService(Intent) service intents}. Subclasses of {@link
+ * SeriesGuideExtension} should thus be declared as <code>&lt;service&gt;</code> components in the
+ * application's <code>AndroidManifest.xml</code> file.
+ *
+ * <p> The SeriesGuide app and other potential subscribers discover available extensions using
+ * Android's {@link Intent} mechanism. Ensure that your <code>service</code> definition includes an
+ * <code>&lt;intent-filter&gt;</code> with an action of {@link #ACTION_SERIESGUIDE_EXTENSION}.
+ *
+ * <p> To make your extension easier to identify for users you should add the following attributes
+ * to your service definition:
+ *
+ * <ul>
+ * <li><code>android:label</code> (optional): the name to display when displaying your extension in
+ * the user interface.</li>
+ * <li><code>android:description</code> (optional): a few words describing what your actions
+ * display or can do (e.g. "Displays interesting stat" or "Searches Google").</li>
+ * <li><code>android:icon</code> (optional): a drawable to represent the extension in the user
+ * interface.</li>
+ * </ul>
+ *
+ * <p> Lastly, you may want to add the following <code>&lt;meta-data&gt;</code> element to your
+ * service definition:
+ *
+ * <ul>
+ * <li><code>settingsActivity</code> (optional): if present, should be the qualified
+ * component name for a configuration activity in the extension's package that SeriesGuide can
+ * offer to the user for customizing the extension. This activity must be exported.</li>
+ * </ul>
+ *
+ * <h3>Example</h3>
+ *
+ * Below is an example extension declaration in the manifest:
+ *
+ * <pre class="prettyprint">
+ * &lt;service android:name=".ExampleExtension"
+ *     android:label="@string/extension_title"
+ *     android:icon="@drawable/ic_extension_example"
+ *     android:description="@string/extension_description"&gt;
+ *     &lt;intent-filter&gt;
+ *         &lt;action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" /&gt;
+ *     &lt;/intent-filter&gt;
+ *     &lt;!-- A settings activity is optional --&gt;
+ *     &lt;meta-data android:name="settingsActivity"
+ *         android:value=".ExampleSettingsActivity" /&gt;
+ * &lt;/service&gt;
+ * </pre>
+ *
+ * If a <code>settingsActivity</code> meta-data element is present, an activity with the given
+ * component name should be defined and exported in the application's manifest as well. SeriesGuide
+ * will set the {@link #EXTRA_FROM_SERIESGUIDE_SETTINGS} extra to true in the launch intent for this
+ * activity. An example is shown below:
+ *
+ * <pre class="prettyprint">
+ * &lt;activity android:name=".ExampleSettingsActivity"
+ *     android:label="@string/title_settings"
+ *     android:exported="true" /&gt;
+ * </pre>
+ *
+ * Finally, below is a simple example {@link SeriesGuideExtension} subclass that publishes actions
+ * for episodes performing a simple Google search:
+ *
+ * <pre class="prettyprint">
+ * public class ExampleExtension extends SeriesGuideExtension {
+ *     protected void onRequest(int episodeIdentifier, Episode episode) {
+ *         publishAction(new Action.Builder("Google search", episodeIdentifier)
+ *                 .viewIntent(new Intent(Intent.ACTION_VIEW,
+ *                         Uri.parse("https://www.google.com/#q="
+ *                                 + episode.getTitle()))
+                   .build());
+ *     }
+ * }
+ * </pre>
+ *
+ * <p> Based on code from <a href="https://github.com/romannurik/muzei">Muzei</a>, an awesome Live
  * Wallpaper by Roman Nurik.
  */
 public abstract class SeriesGuideExtension extends IntentService {
@@ -169,10 +266,10 @@ public abstract class SeriesGuideExtension extends IntentService {
      * Called when a new episode is displayed and the extension should publish the action it wants
      * to display using {@link #publishAction(Action)}.
      *
-     * @param episodeIdentifier The entity identifier the extension should submit with the action it
-     *                          wants to publish.
+     * @param episodeIdentifier The entity identifier the extension should submit with the action
+     *                          it wants to publish.
      */
-    protected abstract void onUpdate(int episodeIdentifier, Episode episode);
+    protected abstract void onRequest(int episodeIdentifier, Episode episode);
 
     /**
      * Publishes the provided {@link Action}. It will be sent to all current subscribers.
@@ -205,7 +302,7 @@ public abstract class SeriesGuideExtension extends IntentService {
         } else if (ACTION_UPDATE.equals(action)) {
             // subscriber requests an updated action
             if (intent.hasExtra(EXTRA_ENTITY_IDENTIFIER) && intent.hasExtra(EXTRA_EPISODE)) {
-                handleEpisodeUpdate(intent.getIntExtra(EXTRA_ENTITY_IDENTIFIER, 0),
+                handleEpisodeRequest(intent.getIntExtra(EXTRA_ENTITY_IDENTIFIER, 0),
                         intent.getBundleExtra(EXTRA_EPISODE));
             }
         }
@@ -307,15 +404,16 @@ public abstract class SeriesGuideExtension extends IntentService {
         }
     }
 
-    private void handleEpisodeUpdate(int episodeIdentifier, Bundle episodeBundle) {
+    private void handleEpisodeRequest(int episodeIdentifier, Bundle episodeBundle) {
         if (episodeIdentifier <= 0 || episodeBundle == null) {
             return;
         }
         Episode episode = Episode.fromBundle(episodeBundle);
-        onUpdate(episodeIdentifier, episode);
+        onRequest(episodeIdentifier, episode);
     }
 
     private synchronized void publishCurrentAction() {
+        // TODO possibly only publish to requester (identify via token)
         for (ComponentName subscription : mSubscribers.keySet()) {
             publishCurrentAction(subscription);
         }

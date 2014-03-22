@@ -36,7 +36,7 @@ public class AmazonExtension extends SeriesGuideExtension {
     }
 
     @Override
-    protected void onUpdate(int episodeIdentifier, Episode episode) {
+    protected void onRequest(int episodeIdentifier, Episode episode) {
         // TODO support other Amazon country websites
         String uri = SEARCH_URI_AMAZON_COM
                 + episode.getShowTitle() + " " + episode.getTitle();
