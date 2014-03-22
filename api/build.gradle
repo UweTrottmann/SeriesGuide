@@ -33,7 +33,7 @@ def android = [
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     baseName = jar.baseName
-    source = sourceSets.main.allJava
+    from sourceSets.main.allJava
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
