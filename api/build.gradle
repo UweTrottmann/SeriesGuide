@@ -15,11 +15,12 @@
  */
 
 apply plugin: 'java'
-apply plugin: 'maven-publish'
+apply plugin: 'maven'
 apply plugin: 'signing'
 
 jar.baseName = 'seriesguide-api'
-version = '1.0'
+group = 'com.uwetrottmann.seriesguide'
+version = '1.0.0'
 
 // load properties file
 def Properties props = new Properties()
@@ -56,32 +57,46 @@ signing {
     sign configurations.archives
 }
 
-publishing {
-    publications {
-        api(MavenPublication) {
-            groupId 'com.uwetrottmann.seriesguide'
-            artifactId 'seriesguide-api'
-            // version from gradle version above
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-            pom.withXml {
-                asNode().appendNode('name', 'SeriesGuide API')
-                asNode().appendNode('description', 'Extension API for SeriesGuide to provide custom actions on media items')
-                asNode().appendNode('url', 'http://api.seriesgui.de')
-                asNode().appendNode('licenses')
-                        .appendNode('license')
-                        .appendNode('name', 'The Apache Software License, Version 2.0')
-                        .parent().appendNode('url', 'http://www.apache.org/licenses/LICENSE-2.0.txt')
-                asNode().appendNode('developers')
-                        .appendNode('developer')
-                        .appendNode('name', 'Uwe Trottmann')
-                        .parent().appendNode('email', 'uwe.trottmann@gmail.com')
-                asNode().appendNode('scm')
-                        .appendNode('connection', 'scm:git:git://github.com/UweTrottmann/SeriesGuide.git')
-                        .parent().appendNode('developerConnection', 'scm:git:git@github.com:UweTrottmann/SeriesGuide.git')
-                        .parent().appendNode('url', 'https://github.com/UweTrottmann/SeriesGuide.git')
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: props["sonatypeUsername"], password: props["sonatypePassword"])
             }
 
-            from components.java
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'SeriesGuide API'
+                packaging 'jar'
+                description 'Extension API for SeriesGuide to provide custom actions on media items'
+                url 'http://api.seriesgui.de'
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'uwetrottmann'
+                        name 'Uwe Trottmann'
+                        email 'uwe.trottmann@gmail.com'
+                    }
+                }
+
+                scm {
+                    url 'https://github.com/romannurik/muzei.git'
+                    connection 'scm:git:https://github.com/romannurik/muzei'
+                    developerConnection 'scm:git:https://github.com/romannurik/muzei'
+                }
+            }
         }
     }
 }
