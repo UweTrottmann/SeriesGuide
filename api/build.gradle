@@ -16,6 +16,7 @@
 
 apply plugin: 'java'
 apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
 jar.baseName = 'seriesguide-api'
 version = '1.0'
@@ -49,6 +50,10 @@ artifacts {
 
 dependencies {
     compile files("${android.sdk}/platforms/${android.target}/android.jar")
+}
+
+signing {
+    sign configurations.archives
 }
 
 publishing {
