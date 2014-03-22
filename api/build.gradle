@@ -15,6 +15,7 @@
  */
 
 apply plugin: 'java'
+apply plugin: 'maven-publish'
 
 jar.baseName = 'seriesguide-api'
 version = '1.0'
@@ -47,4 +48,34 @@ artifacts {
 
 dependencies {
     compile files("${android.sdk}/platforms/${android.target}/android.jar")
+}
+
+publishing {
+    publications {
+        api(MavenPublication) {
+            groupId 'com.uwetrottmann.seriesguide'
+            artifactId 'seriesguide-api'
+            // version from gradle version above
+
+            pom.withXml {
+                asNode().appendNode('name', 'SeriesGuide API')
+                asNode().appendNode('description', 'Extension API for SeriesGuide to provide custom actions on media items')
+                asNode().appendNode('url', 'http://api.seriesgui.de')
+                asNode().appendNode('licenses')
+                        .appendNode('license')
+                        .appendNode('name', 'The Apache Software License, Version 2.0')
+                        .parent().appendNode('url', 'http://www.apache.org/licenses/LICENSE-2.0.txt')
+                asNode().appendNode('developers')
+                        .appendNode('developer')
+                        .appendNode('name', 'Uwe Trottmann')
+                        .parent().appendNode('email', 'uwe.trottmann@gmail.com')
+                asNode().appendNode('scm')
+                        .appendNode('connection', 'scm:git:git://github.com/UweTrottmann/SeriesGuide.git')
+                        .parent().appendNode('developerConnection', 'scm:git:git@github.com:UweTrottmann/SeriesGuide.git')
+                        .parent().appendNode('url', 'https://github.com/UweTrottmann/SeriesGuide.git')
+            }
+
+            from components.java
+        }
+    }
 }
