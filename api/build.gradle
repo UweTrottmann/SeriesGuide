@@ -20,7 +20,7 @@ apply plugin: 'signing'
 
 jar.baseName = 'seriesguide-api'
 group = 'com.uwetrottmann.seriesguide'
-version = '1.0.0'
+version = '1.0.0-SNAPSHOT'
 
 // load properties file
 def Properties props = new Properties()
@@ -63,7 +63,7 @@ uploadArchives {
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: props["sonatypeUsername"], password: props["sonatypePassword"])
+                authentication(userName: ossrhUsername, password: ossrhPassword)
             }
 
             snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
