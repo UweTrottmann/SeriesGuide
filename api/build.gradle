@@ -28,6 +28,12 @@ def android = [
         target: 'android-19'
 ]
 
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    baseName = jar.baseName
+    source = sourceSets.main.allJava
+}
+
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
     baseName = jar.baseName
