@@ -266,7 +266,7 @@ public abstract class SeriesGuideExtension extends IntentService {
      * Called when a new episode is displayed and the extension should publish the action it wants
      * to display using {@link #publishAction(Action)}.
      *
-     * @param episodeIdentifier The entity identifier the extension should submit with the action
+     * @param episodeIdentifier The episode identifier the extension should submit with the action
      *                          it wants to publish.
      */
     protected abstract void onRequest(int episodeIdentifier, Episode episode);
