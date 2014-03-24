@@ -651,6 +651,9 @@ public class OverviewFragment extends SherlockFragment implements
             // episode image
             onLoadImage(episode.getString(EpisodeQuery.IMAGE));
 
+            // episode actions
+            loadEpisodeActionsDelayed();
+
             episodemeta.setVisibility(View.VISIBLE);
         } else {
             // no next episode: display single line info text, remove other
@@ -688,6 +691,10 @@ public class OverviewFragment extends SherlockFragment implements
 
     @Override
     public void loadEpisodeActions() {
+        if (mCurrentEpisodeTvdbId == 0) {
+            // do not load actions if there is no episode
+            return;
+        }
         Bundle args = new Bundle();
         args.putInt(KEY_EPISODE_TVDB_ID, mCurrentEpisodeTvdbId);
         getLoaderManager().restartLoader(ACTIONS_LOADER_ID, args, mEpisodeActionsLoaderCallbacks);
