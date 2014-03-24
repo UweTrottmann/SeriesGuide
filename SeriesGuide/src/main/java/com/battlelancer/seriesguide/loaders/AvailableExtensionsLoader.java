@@ -25,9 +25,9 @@ import java.util.List;
  * Queries for any installed {@link com.battlelancer.seriesguide.api.SeriesGuideExtension}
  * extensions.
  */
-public class AvailableActionsLoader extends GenericSimpleLoader<List<ExtensionManager.Extension>> {
+public class AvailableExtensionsLoader extends GenericSimpleLoader<List<ExtensionManager.Extension>> {
 
-    public AvailableActionsLoader(Context context) {
+    public AvailableExtensionsLoader(Context context) {
         super(context);
     }
 

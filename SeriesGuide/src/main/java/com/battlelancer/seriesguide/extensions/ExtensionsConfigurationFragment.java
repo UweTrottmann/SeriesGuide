@@ -40,7 +40,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ExtensionsAdapter;
-import com.battlelancer.seriesguide.loaders.AvailableActionsLoader;
+import com.battlelancer.seriesguide.loaders.AvailableExtensionsLoader;
 import com.battlelancer.seriesguide.util.Utils;
 import com.mobeta.android.dslv.DragSortController;
 import com.mobeta.android.dslv.DragSortListView;
@@ -88,7 +88,7 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
                 ComponentName extension = mEnabledExtensions.remove(from);
                 mEnabledExtensions.add(to, extension);
                 getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID,
-                        null, mActionsLoaderCallbacks);
+                        null, mExtensionsLoaderCallbacks);
             }
         });
         mListView.setOnItemClickListener(this);
@@ -104,7 +104,7 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
         mListView.setAdapter(mAdapter);
 
         getLoaderManager().initLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
-                mActionsLoaderCallbacks);
+                mExtensionsLoaderCallbacks);
 
         setHasOptionsMenu(true);
     }
@@ -172,11 +172,12 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
         ButterKnife.reset(this);
     }
 
-    private LoaderManager.LoaderCallbacks<List<ExtensionManager.Extension>> mActionsLoaderCallbacks
+    private LoaderManager.LoaderCallbacks<List<ExtensionManager.Extension>>
+            mExtensionsLoaderCallbacks
             = new LoaderManager.LoaderCallbacks<List<ExtensionManager.Extension>>() {
         @Override
         public Loader<List<ExtensionManager.Extension>> onCreateLoader(int id, Bundle args) {
-            return new AvailableActionsLoader(getActivity());
+            return new AvailableExtensionsLoader(getActivity());
         }
 
         @Override
@@ -267,7 +268,7 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
         }
         mEnabledExtensions.remove(event.position);
         getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
-                mActionsLoaderCallbacks);
+                mExtensionsLoaderCallbacks);
     }
 
     private void showAddExtensionPopupMenu(View anchorView) {
@@ -288,7 +289,7 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
                 mEnabledExtensions.add(extension.componentName);
                 // re-populate extension list
                 getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID,
-                        null, mActionsLoaderCallbacks);
+                        null, mExtensionsLoaderCallbacks);
                 // scroll to end of list
                 mListView.smoothScrollToPosition(mAdapter.getCount() - 1);
                 return true;
