@@ -14,31 +14,43 @@
  * limitations under the License.
  */
 
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'signing'
+apply plugin: "java"
+apply plugin: "maven"
+apply plugin: "signing"
 
-jar.baseName = 'seriesguide-api'
-group = 'com.uwetrottmann.seriesguide'
-version = '1.0.0-SNAPSHOT'
+jar.baseName = "seriesguide-api"
+group = "com.uwetrottmann.seriesguide"
+version = "1.0.0-SNAPSHOT"
 
 // load properties file
 def Properties props = new Properties()
-props.load(new FileInputStream(file('../local.properties')))
+props.load(new FileInputStream(file("../local.properties")))
 // extract Android SDK dir
 def android = [
         sdk: props["sdk.dir"],
-        target: 'android-19'
+        target: "android-19"
 ]
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
+task generateJavadoc(type: Javadoc) {
+    source = sourceSets.main.allJava
+    title = "SeriesGuide API"
+    options.windowTitle = "SeriesGuide API"
+    options.linksOffline("http://developer.android.com/reference", "${android.sdk}/docs/reference")
+    classpath = files("${android.sdk}/platforms/${android.target}/android.jar", "${android.sdk}/tools/support/annotations.jar")
+    options.noDeprecated = true
+    options.noHelp = true
+    options.noIndex = true
+    options.noTree = true
+}
+
+task javadocJar(type: Jar, dependsOn: generateJavadoc) {
+    classifier = "javadoc"
     baseName = jar.baseName
     from javadoc.destinationDir
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
+    classifier = "sources"
     baseName = jar.baseName
     from sourceSets.main.allSource
 }
@@ -71,30 +83,30 @@ uploadArchives {
             }
 
             pom.project {
-                name 'SeriesGuide API'
-                packaging 'jar'
-                description 'Extension API for SeriesGuide to provide custom actions on media items'
-                url 'http://api.seriesgui.de'
+                name "SeriesGuide API"
+                packaging "jar"
+                description "Extension API for SeriesGuide to provide custom actions on media items"
+                url "http://api.seriesgui.de"
 
                 licenses {
                     license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        name "The Apache Software License, Version 2.0"
+                        url "http://www.apache.org/licenses/LICENSE-2.0.txt"
                     }
                 }
 
                 developers {
                     developer {
-                        id 'uwetrottmann'
-                        name 'Uwe Trottmann'
-                        email 'uwe.trottmann@gmail.com'
+                        id "uwetrottmann"
+                        name "Uwe Trottmann"
+                        email "uwe.trottmann@gmail.com"
                     }
                 }
 
                 scm {
-                    url 'https://github.com/UweTrottmann/SeriesGuide.git'
-                    connection 'scm:git:git://github.com/UweTrottmann/SeriesGuide.git'
-                    developerConnection 'scm:git:git@github.com:UweTrottmann/SeriesGuide.git'
+                    url "https://github.com/UweTrottmann/SeriesGuide.git"
+                    connection "scm:git:git://github.com/UweTrottmann/SeriesGuide.git"
+                    developerConnection "scm:git:git@github.com:UweTrottmann/SeriesGuide.git"
                 }
             }
         }
