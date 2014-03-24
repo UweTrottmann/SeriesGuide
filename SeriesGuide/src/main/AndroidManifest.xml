@@ -334,15 +334,6 @@
 
         <!-- Built-in SeriesGuide extensions -->
         <service
-            android:name="com.battlelancer.seriesguide.extensions.TraktExtension"
-            android:label="@string/trakt"
-            android:description="@string/description_extension_trakt"
-            android:icon="@drawable/ic_trakt">
-            <intent-filter>
-                <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
-            </intent-filter>
-        </service>
-        <service
             android:name="com.battlelancer.seriesguide.extensions.AmazonExtension"
             android:label="@string/extension_amazon"
             android:description="@string/description_extension_amazon">
