@@ -92,9 +92,9 @@ uploadArchives {
                 }
 
                 scm {
-                    url 'https://github.com/romannurik/muzei.git'
-                    connection 'scm:git:https://github.com/romannurik/muzei'
-                    developerConnection 'scm:git:https://github.com/romannurik/muzei'
+                    url 'https://github.com/UweTrottmann/SeriesGuide.git'
+                    connection 'scm:git:git://github.com/UweTrottmann/SeriesGuide.git'
+                    developerConnection 'scm:git:git@github.com:UweTrottmann/SeriesGuide.git'
                 }
             }
         }
