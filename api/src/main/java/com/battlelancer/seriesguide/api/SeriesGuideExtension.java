@@ -135,9 +135,9 @@ import static com.battlelancer.seriesguide.api.internal.OutgoingConstants.EXTRA_
  * public class ExampleExtension extends SeriesGuideExtension {
  *     protected void onRequest(int episodeIdentifier, Episode episode) {
  *         publishAction(new Action.Builder("Google search", episodeIdentifier)
- *                 .viewIntent(new Intent(Intent.ACTION_VIEW,
- *                         Uri.parse("https://www.google.com/#q="
- *                                 + episode.getTitle()))
+ *                 .viewIntent(new Intent(Intent.ACTION_VIEW)
+ *                          .setData(Uri.parse("https://www.google.com/#q="
+ *                                 + episode.getTitle())))
                    .build());
  *     }
  * }
@@ -181,9 +181,9 @@ public abstract class SeriesGuideExtension extends IntentService {
     private Handler mHandler = new Handler();
 
     /**
-     * Call from your default constructor.<br/>
-     * <br/>
-     * Gives the extension a name. This is not user-visible, but will be used to store preferences
+     * Call from your default constructor.
+     *
+     * <p> Gives the extension a name. This is not user-visible, but will be used to store preferences
      * and state for the extension.
      */
     public SeriesGuideExtension(String name) {

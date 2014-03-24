@@ -56,9 +56,9 @@ public class Action {
     /**
      * Returns an identifier unique within the entity type. E.g. for episodes the TVDb id.
      * Extensions may use it to determine if there was an action already built for this
-     * entity and consequently just re-send it.<br/>
-     * <br/>
-     * SeriesGuide will use the identifier to match a published action to its request, e.g. which
+     * entity and consequently just re-send it.
+     *
+     * <p> SeriesGuide will use the identifier to match a published action to its request, e.g. which
      * episode the action belongs to.
      */
     public int getEntityIdentifier() {
@@ -94,9 +94,9 @@ public class Action {
         /**
          * Sets the (optional) activity {@link Intent} that will be {@linkplain
          * android.content.Context#startActivity(Intent)
-         * started} when the user clicks the button for the action.<br/>
-         * <br/>
-         * The activity that this intent resolves to must have <code>android:exported</code> set
+         * started} when the user clicks the button for the action.
+         *
+         * <p> The activity that this intent resolves to must have <code>android:exported</code> set
          * to <code>true</code>.
          */
         public Builder viewIntent(Intent viewIntent) {
