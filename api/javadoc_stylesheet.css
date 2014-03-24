@@ -10,31 +10,24 @@ body {
     font-size:14px;
     margin:0;
 }
-a:link, a:visited {
+
+code {
+  color: #096;
+}
+
+a, a code {
     text-decoration:none;
     color:#258aaf;
 }
+
 a:hover, a:focus, a:active {
     text-decoration:underline;
 }
-h1 {
-    font-size:1.8em;
+
+td {
+  border-bottom: 1px solid #eee;
 }
-h2 {
-    font-size:1.5em;
-}
-h3 {
-    font-size:1.4em;
-}
-h4 {
-    font-size:1.3em;
-}
-h5 {
-    font-size:1.2em;
-}
-h6 {
-    font-size:1.1em;
-}
+
 ul {
     list-style-type:disc;
 }
@@ -296,8 +289,6 @@ ul.blockList li.blockList, ul.blockListLast li.blockList {
 }
 ul.blockList ul.blockList li.blockList, ul.blockList ul.blockListLast li.blockList {
     padding:0px 20px 5px 10px;
-    border:1px solid #9eadc0;
-    background-color:#f9f9f9;
 }
 ul.blockList ul.blockList ul.blockList li.blockList, ul.blockList ul.blockList ul.blockListLast li.blockList {
     padding:0 0 5px 8px;
@@ -381,12 +372,6 @@ ul.blockList ul.blockList li.blockList table {
 }
 .tableSubHeadingColor {
     background-color: #EEEEFF;
-}
-.altColor {
-    background-color:#eeeeef;
-}
-.rowColor {
-    background-color:#ffffff;
 }
 .overviewSummary td, .packageSummary td, .contentContainer ul.blockList li.blockList td, .summary td, .classUseContainer td, .constantValuesContainer td {
     text-align:left;
