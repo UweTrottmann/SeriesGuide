@@ -191,7 +191,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
 
         getLoaderManager().initLoader(EpisodesActivity.EPISODE_LOADER_ID, null,
                 mEpisodeDataLoaderCallbacks);
-        EventBus.getDefault().register(this);
 
         setHasOptionsMenu(true);
     }
@@ -212,20 +211,23 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
     @Override
     public void onResume() {
         super.onResume();
+
+        EventBus.getDefault().register(this);
         loadEpisodeActionsDelayed();
     }
 
     @Override
     public void onPause() {
         super.onPause();
+
         if (mHandler != null) {
             mHandler.removeCallbacks(mEpisodeActionsRunnable);
         }
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
     public void onDestroy() {
-        EventBus.getDefault().unregister(this);
         if (mArtTask != null) {
             mArtTask.cancel(true);
             mArtTask = null;
