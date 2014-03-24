@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- Notification service -->
@@ -344,6 +345,16 @@
                 android:name="settingsActivity"
                 android:value="com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity" />
         </service>
+
+        <!-- Watch for extension package changes -->
+        <receiver android:name="com.battlelancer.seriesguide.extensions.ExtensionPackageChangeReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_CHANGED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
 
         <!-- Sync service -->
         <service
