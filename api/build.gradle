@@ -41,6 +41,7 @@ task generateJavadoc(type: Javadoc) {
     options.noHelp = true
     options.noIndex = true
     options.noTree = true
+    options.stylesheetFile = file('./javadoc_stylesheet.css')
 }
 
 task javadocJar(type: Jar, dependsOn: generateJavadoc) {
