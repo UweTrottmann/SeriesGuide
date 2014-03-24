@@ -61,6 +61,10 @@ import timber.log.Timber;
 public class ExtensionsConfigurationFragment extends SherlockFragment
         implements AdapterView.OnItemClickListener {
 
+    private static final String TAG = "Extension Configuration";
+    private static final String PLAY_STORE_EXTENSIONS_SEARCH
+            = "https://play.google.com/store/search?q=SeriesGuide%20Extension&c=apps";
+
     @InjectView(R.id.listViewExtensionsConfiguration) DragSortListView mListView;
 
     private ExtensionsAdapter mAdapter;
@@ -133,6 +137,11 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
+        if (itemId == R.id.menu_action_extensions_search) {
+            Utils.launchWebsite(getActivity(), PLAY_STORE_EXTENSIONS_SEARCH, TAG,
+                    "Get more extensions");
+            return true;
+        }
         if (itemId == R.id.menu_action_extensions_enable) {
             List<ExtensionManager.Extension> extensions = ExtensionManager.getInstance(
                     getActivity()).queryAllAvailableExtensions();
