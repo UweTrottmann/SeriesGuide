@@ -349,6 +349,9 @@
             <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
             </intent-filter>
+            <meta-data
+                android:name="settingsActivity"
+                android:value="com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity" />
         </service>
 
         <!-- Sync service -->

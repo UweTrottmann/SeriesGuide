@@ -22,14 +22,15 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.api.Episode;
 import com.battlelancer.seriesguide.api.SeriesGuideExtension;
+import com.battlelancer.seriesguide.settings.AmazonSettings;
 
 /**
  * Provides a search link to the users preferred Amazon website.
  */
 public class AmazonExtension extends SeriesGuideExtension {
 
-    public static final String SEARCH_URI_AMAZON_COM = "http://www.amazon.com/s/field-keywords=";
-    public static final String SEARCH_URI_AMAZON_DE = "http://www.amazon.de/s/field-keywords=";
+    public static final String SEARCH_URI_PROTOCOL = "http://";
+    public static final String SEARCH_URI_PATH = "/s/field-keywords=";
 
     public AmazonExtension() {
         super("AmazonExtension");
@@ -37,8 +38,8 @@ public class AmazonExtension extends SeriesGuideExtension {
 
     @Override
     protected void onRequest(int episodeIdentifier, Episode episode) {
-        // TODO support other Amazon country websites
-        String uri = SEARCH_URI_AMAZON_COM
+        String domain = AmazonSettings.getAmazonCountryDomain(getApplicationContext());
+        String uri = SEARCH_URI_PROTOCOL + domain + SEARCH_URI_PATH
                 + episode.getShowTitle() + " " + episode.getTitle();
 
         publishAction(new Action.Builder(getString(R.string.extension_amazon), episodeIdentifier)

@@ -540,5 +540,6 @@
     <string name="action_extension_remove">Remove</string>
     <string name="extension_amazon">Amazon search</string>
     <string name="description_extension_amazon">Search your local Amazon site</string>
+    <string name="pref_amazon_domain">Amazon site</string>
     <string name="description_extension_trakt">Link to trakt page</string>
 </resources>

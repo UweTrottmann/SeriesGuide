@@ -28,6 +28,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 
 import com.battlelancer.seriesguide.settings.WidgetSettings;
+import com.battlelancer.seriesguide.ui.BaseSettingsFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.R;
 
@@ -36,7 +37,7 @@ import com.battlelancer.seriesguide.R;
  * {@link ListWidgetConfigure} activity.
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class ListWidgetPreferenceFragment extends PreferenceFragment {
+public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
 
     public static ListWidgetPreferenceFragment newInstance(int appWidgetId) {
         ListWidgetPreferenceFragment f = new ListWidgetPreferenceFragment();
@@ -104,43 +105,6 @@ public class ListWidgetPreferenceFragment extends PreferenceFragment {
             backgroundPreference.setEnabled(false);
             backgroundPreference.setSummary(R.string.onlyx);
         }
-    }
-
-    private static OnPreferenceChangeListener sSetSummaryListener = new OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            if (preference instanceof ListPreference) {
-                // For list preferences, look up the correct display value in
-                // the preference's 'entries' list.
-                ListPreference listPreference = (ListPreference) preference;
-                String stringValue = newValue.toString();
-                int index = listPreference.findIndexOfValue(stringValue);
-
-                // Set the summary to reflect the new value.
-                preference.setSummary(
-                        index >= 0
-                                ? (listPreference.getEntries()[index])
-                                        .toString().replaceAll("%", "%%")
-                                : null);
-            }
-            return true;
-        }
-    };
-
-    /**
-     * Binds a preference's summary to its value. More specifically, when the
-     * preference's value is changed, its summary (line of text below the
-     * preference title) is updated to reflect the value. The summary is also
-     * immediately updated upon calling this method. The exact display format is
-     * dependent on the type of preference.
-     */
-    public static void bindPreferenceSummaryToValue(SharedPreferences prefs, Preference preference) {
-        // Set the listener to watch for value changes.
-        preference.setOnPreferenceChangeListener(sSetSummaryListener);
-
-        // Trigger the listener immediately with the preference's current value.
-        sSetSummaryListener
-                .onPreferenceChange(preference, prefs.getString(preference.getKey(), ""));
     }
 
 }

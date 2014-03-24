@@ -21,6 +21,7 @@ import android.support.v4.app.FragmentTransaction;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.api.SeriesGuideExtension;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 
 /**
@@ -37,11 +38,21 @@ public class ExtensionsConfigurationActivity extends BaseActivity {
 
         setupActionBar();
 
-        if (savedInstanceState == null) {
-            ExtensionsConfigurationFragment f = new ExtensionsConfigurationFragment();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(R.id.content_frame, f);
-            ft.commit();
+        if (getIntent().hasExtra(SeriesGuideExtension.EXTRA_FROM_SERIESGUIDE_SETTINGS)) {
+            // launch Amazon extension settings instead
+            if (savedInstanceState == null) {
+                AmazonConfigurationFragment f = new AmazonConfigurationFragment();
+                android.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.content_frame, f);
+                ft.commit();
+            }
+        } else {
+            if (savedInstanceState == null) {
+                ExtensionsConfigurationFragment f = new ExtensionsConfigurationFragment();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.add(R.id.content_frame, f);
+                ft.commit();
+            }
         }
     }
 
