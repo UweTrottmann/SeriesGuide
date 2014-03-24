@@ -130,7 +130,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
     @InjectView(R.id.imageButtonBarMenu) ImageButton mOverflowButton;
 
     @InjectView(R.id.buttonGooglePlay) View mGooglePlayButton;
-    @InjectView(R.id.buttonAmazon) View mAmazonButton;
     @InjectView(R.id.buttonYouTube) View mYouTubeButton;
     @InjectView(R.id.buttonShowInfoIMDB) View mImdbButton;
     @InjectView(R.id.buttonTVDB) View mTvdbButton;
@@ -180,9 +179,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
         ButterKnife.inject(this, v);
 
         mEpisodeContainer.setVisibility(View.GONE);
-
-        // disable unused service button
-        mAmazonButton.setVisibility(View.GONE);
 
         return v;
     }
