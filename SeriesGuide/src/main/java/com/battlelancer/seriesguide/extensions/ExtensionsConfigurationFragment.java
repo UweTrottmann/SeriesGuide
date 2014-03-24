@@ -235,10 +235,12 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
 
             // list enabled extensions in order dictated by extension manager
             List<ExtensionManager.Extension> enabledExtensionsList = new ArrayList<>();
-            for (ComponentName extensionName : mEnabledExtensions) {
+            List<ComponentName> enabledExtensionNames = new ArrayList<>(mEnabledExtensions);
+            for (ComponentName extensionName : enabledExtensionNames) {
                 ExtensionManager.Extension extension = enabledExtensionsMap.get(extensionName);
                 if (extension == null) {
                     // filter out any unavailable/uninstalled extensions
+                    mEnabledExtensions.remove(extensionName);
                     continue;
                 }
                 enabledExtensionsList.add(extension);
