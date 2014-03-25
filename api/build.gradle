@@ -20,7 +20,7 @@ apply plugin: "signing"
 
 jar.baseName = "seriesguide-api"
 group = "com.uwetrottmann.seriesguide"
-version = "1.0.0"
+version = "1.0.1-SNAPSHOT"
 
 // load properties file
 def Properties props = new Properties()
@@ -88,7 +88,7 @@ uploadArchives {
                 name "SeriesGuide API"
                 packaging "jar"
                 description "Extension API for SeriesGuide to provide custom actions on media items"
-                url "http://api.seriesgui.de"
+                url "http://seriesgui.de/api"
 
                 licenses {
                     license {
