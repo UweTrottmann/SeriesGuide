@@ -142,6 +142,15 @@ public class ExtensionManager {
     }
 
     /**
+     * Enables the default list of extensions that come with this app.
+     */
+    public void setDefaultEnabledExtensions() {
+        List<ComponentName> defaultExtensions = new ArrayList<>();
+        defaultExtensions.add(new ComponentName(mContext, AmazonExtension.class));
+        setEnabledExtensions(defaultExtensions);
+    }
+
+    /**
      * Compares the list of currently enabled extensions with the given list and enables added
      * extensions and disables removed extensions.
      */
@@ -318,6 +327,7 @@ public class ExtensionManager {
 
         String serializedSubscriptions = mSharedPrefs.getString(PREF_SUBSCRIPTIONS, null);
         if (serializedSubscriptions == null) {
+            setDefaultEnabledExtensions();
             return;
         }
 
