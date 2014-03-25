@@ -32,6 +32,7 @@ ext {
     compileSdkVersion = 19
     buildToolsVersion = '19.0.3'
 
+    // API level 11+ -> version 11xxx
     versionCode = 11242
     versionName = '13-beta3'
 }
