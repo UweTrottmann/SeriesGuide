@@ -32,8 +32,8 @@ ext {
     compileSdkVersion = 19
     buildToolsVersion = '19.0.3'
 
-    versionCode = 242
-    versionName = '13-beta2'
+    versionCode = 11242
+    versionName = '13-beta3'
 }
 
 ext.libraries = [
