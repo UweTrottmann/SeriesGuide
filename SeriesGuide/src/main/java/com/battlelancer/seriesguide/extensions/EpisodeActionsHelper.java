@@ -74,10 +74,6 @@ public class EpisodeActionsHelper {
         configureView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!Utils.hasAccessToX(v.getContext())) {
-                    Utils.advertiseSubscription(v.getContext());
-                    return;
-                }
                 v.getContext().startActivity(
                         new Intent(v.getContext(), ExtensionsConfigurationActivity.class));
             }
