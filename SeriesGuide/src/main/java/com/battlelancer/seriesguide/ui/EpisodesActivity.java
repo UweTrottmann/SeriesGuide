@@ -58,6 +58,10 @@ import timber.log.Timber;
 public class EpisodesActivity extends BaseNavDrawerActivity implements
         OnSharedPreferenceChangeListener, OnPageChangeListener {
 
+    public static final int EPISODES_LOADER_ID = 100;
+    public static final int EPISODE_LOADER_ID = 101;
+    public static final int ACTIONS_LOADER_ID = 102;
+
     private EpisodesFragment mEpisodesFragment;
 
     private EpisodePagerAdapter mAdapter;

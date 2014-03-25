@@ -212,34 +212,6 @@ public final class ServiceUtils {
     }
 
     /**
-     * Sets a {@link OnClickListener} on the given button linking to a Amazon web search for the
-     * given title or disabling the button if the title is empty.
-     */
-    public static void setUpAmazonButton(final String title, final View amazonButton,
-            final String logTag) {
-        if (amazonButton != null) {
-
-            if (!TextUtils.isEmpty(title)) {
-                amazonButton.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Utils.trackAction(amazonButton.getContext(), logTag, "Amazon");
-
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(Uri
-                                .parse("http://www.amazon.com/gp/search?ie=UTF8&keywords="
-                                        + title));
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                        Utils.tryStartActivity(v.getContext(), intent, true);
-                    }
-                });
-            } else {
-                amazonButton.setEnabled(false);
-            }
-        }
-    }
-
-    /**
      * Starts activity with {@link Intent#ACTION_VIEW} to display the given shows or episodes
      * trakt.tv page.<br> If any of the season or episode numbers is below 0, displays the show
      * page.

@@ -256,10 +256,6 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
         View playButton = getView().findViewById(R.id.buttonGooglePlay);
         ServiceUtils.setUpGooglePlayButton(mShow.getTitle(), playButton, TAG);
 
-        // Amazon button
-        View amazonButton = getView().findViewById(R.id.buttonAmazon);
-        ServiceUtils.setUpAmazonButton(mShow.getTitle(), amazonButton, TAG);
-
         // YouTube button
         View youtubeButton = getView().findViewById(R.id.buttonYouTube);
         ServiceUtils.setUpYouTubeButton(mShow.getTitle(), youtubeButton, TAG);
@@ -341,7 +337,7 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
 
     private void onLoadTraktRatings(boolean isUseCachedValues) {
         if (mShow != null
-                && (mTraktTask == null || mTraktTask.getStatus() != AsyncTask.Status.RUNNING)) {
+                && (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED)) {
             mTraktTask = new TraktSummaryTask(getActivity(), getView().findViewById(
                     R.id.ratingbar), isUseCachedValues).show(getShowTvdbId());
             AndroidUtils.executeAsyncTask(mTraktTask);
