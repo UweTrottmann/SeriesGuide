@@ -97,7 +97,7 @@ public class SeriesGuideApplication extends Application {
      */
     @SuppressWarnings("PointlessBooleanExpression")
     @SuppressLint("NewApi")
-    public static void enableStrictMode() {
+    private static void enableStrictMode() {
         if (!BuildConfig.DEBUG || !AndroidUtils.isGingerbreadOrHigher()) {
             return;
         }
