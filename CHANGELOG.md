@@ -10,7 +10,7 @@ Version 13 *(in development)*
 
 #### 13-beta3 *(2014-03-26)*
 
-* FEATURE SeriesGuide extensions, learn how to [get started](https://github.com/UweTrottmann/SeriesGuide/wiki/Extension-API)
+* FEATURE SeriesGuide extensions, learn how to [get started](https://github.com/UweTrottmann/SeriesGuide/wiki/Extension-API).
 * TWEAK Episode details load faster.
 * FIX Scroll bar overlaps episode list too much.
 * FIX tvtag auth token marked for refresh a week before expiry (was 24 hours), reducing the chance the user has to manually re-authenticate.
