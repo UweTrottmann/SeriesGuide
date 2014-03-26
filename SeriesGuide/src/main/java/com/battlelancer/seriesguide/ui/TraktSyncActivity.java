@@ -40,7 +40,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.TraktSync;
 import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
 
 /**
  * Displays information and offers tools to upload or download watched flags
@@ -90,12 +89,6 @@ public class TraktSyncActivity extends BaseActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         boolean isSyncUnseenEpisodes = TraktSettings.isSyncingUnwatchedEpisodes(this);
@@ -108,12 +101,6 @@ public class TraktSyncActivity extends BaseActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.edit().putBoolean(TraktSettings.KEY_SYNC_UNWATCHED_EPISODES,
                 mSyncUnwatchedEpisodes.isChecked()).commit();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override

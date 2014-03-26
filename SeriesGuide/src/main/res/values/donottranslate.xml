@@ -6,7 +6,6 @@
     <string name="provider_authority">com.battlelancer.seriesguide.provider</string>
     <string name="hexagon">SeriesGuide cloud</string>
     <string name="googleplay">Google Play</string>
-    <string name="amazon">Amazon</string>
     <string name="youtube">YouTube</string>
     <string name="imdb">IMDb</string>
     <string name="tvdb">TVDb</string>
@@ -224,6 +223,10 @@
         <item>24</item>
         <item>72</item>
         <item>168</item>
+    </string-array>
+    <string-array name="amazonDomainsData">
+        <item>amazon.com</item>
+        <item>amazon.de</item>
     </string-array>
 
 </resources>

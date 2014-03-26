@@ -225,6 +225,7 @@ public class MovieDetailsFragment extends SherlockFragment {
         super.onStart();
 
         EventBus.getDefault().register(this);
+        Utils.trackView(getActivity(), "Movie details");
     }
 
     @Override
@@ -370,8 +371,10 @@ public class MovieDetailsFragment extends SherlockFragment {
                 public void onClick(View v) {
                     if (isWatched) {
                         MovieTools.unwatchedMovie(getActivity(), mTmdbId);
+                        fireTrackerEvent("Unwatched movie");
                     } else {
                         MovieTools.watchedMovie(getActivity(), mTmdbId);
+                        fireTrackerEvent("Watched movie");
                     }
                 }
             });
@@ -392,8 +395,10 @@ public class MovieDetailsFragment extends SherlockFragment {
             public void onClick(View v) {
                 if (isInCollection) {
                     MovieTools.removeFromCollection(getActivity(), mTmdbId);
+                    fireTrackerEvent("Uncollected movie");
                 } else {
                     MovieTools.addToCollection(getActivity(), mTmdbId);
+                    fireTrackerEvent("Collected movie");
                 }
             }
         });
@@ -411,8 +416,10 @@ public class MovieDetailsFragment extends SherlockFragment {
             public void onClick(View v) {
                 if (isInWatchlist) {
                     MovieTools.removeFromWatchlist(getActivity(), mTmdbId);
+                    fireTrackerEvent("Unwatchlist movie");
                 } else {
                     MovieTools.addToWatchlist(getActivity(), mTmdbId);
+                    fireTrackerEvent("Watchlist movie");
                 }
             }
         });

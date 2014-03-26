@@ -8,6 +8,15 @@ All dates are in the European Central timezone.
 Version 13 *(in development)*
 -----------------------------
 
+#### 13-beta3 *(2014-03-26)*
+
+* FEATURE SeriesGuide extensions, learn how to [get started](https://github.com/UweTrottmann/SeriesGuide/wiki/Extension-API).
+* TWEAK Episode details load faster.
+* FIX Scroll bar overlaps episode list too much.
+* FIX tvtag auth token marked for refresh a week before expiry (was 24 hours), reducing the chance the user has to manually re-authenticate.
+* NOTICE SeriesGuide for Android 2.3 (Gingerbread) only receiving minor updates from now on, e.g. it will not get extension support.
+* NOTICE New permission: "Prevent device from sleeping". Read more at [http://seriesgui.de/privacy](http://seriesgui.de/privacy).
+
 #### 13-beta2 *(2014-03-17)*
 
 * TWEAK trakt comments do not auto-refresh anymore, added refresh button instead.

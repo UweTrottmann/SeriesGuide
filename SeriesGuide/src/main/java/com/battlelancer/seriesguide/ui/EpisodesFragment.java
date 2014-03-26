@@ -75,8 +75,6 @@ public class EpisodesFragment extends SherlockListFragment implements
 
     private static final int CONTEXT_FLAG_UNTILHERE_ID = 5;
 
-    private static final int EPISODES_LOADER = 4;
-
     private Constants.EpisodeSorting mSorting;
 
     private boolean mDualPane;
@@ -137,7 +135,7 @@ public class EpisodesFragment extends SherlockListFragment implements
         mAdapter = new EpisodesAdapter(getActivity(), null, 0, this, this);
         setListAdapter(mAdapter);
 
-        getLoaderManager().initLoader(EPISODES_LOADER, null, this);
+        getLoaderManager().initLoader(EpisodesActivity.EPISODES_LOADER_ID, null, this);
 
         registerForContextMenu(getListView());
         setHasOptionsMenu(true);
@@ -379,7 +377,8 @@ public class EpisodesFragment extends SherlockListFragment implements
     private void onSortOrderChanged() {
         getPreferences();
 
-        getLoaderManager().restartLoader(EPISODES_LOADER, null, EpisodesFragment.this);
+        getLoaderManager().restartLoader(EpisodesActivity.EPISODES_LOADER_ID, null,
+                EpisodesFragment.this);
         getSherlockActivity().invalidateOptionsMenu();
 
         Utils.trackCustomEvent(getActivity(), TAG, "Sorting", mSorting.name());

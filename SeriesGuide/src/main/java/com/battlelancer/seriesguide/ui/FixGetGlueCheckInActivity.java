@@ -17,16 +17,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.battlelancer.seriesguide.adapters.GetGlueObjectAdapter;
-import com.battlelancer.seriesguide.loaders.GetGlueObjectLoader;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.util.ShowTools;
-import com.uwetrottmann.getglue.entities.GetGlueObject;
-import com.battlelancer.seriesguide.R;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -42,7 +32,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import com.actionbarsherlock.app.ActionBar;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.adapters.GetGlueObjectAdapter;
+import com.battlelancer.seriesguide.loaders.GetGlueObjectLoader;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.util.ShowTools;
+import com.uwetrottmann.getglue.entities.GetGlueObject;
 import java.util.List;
 
 /**
@@ -115,18 +111,6 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
             show.close();
         }
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 
     private void setupViews() {

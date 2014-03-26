@@ -7,7 +7,7 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 11
         targetSdkVersion 19
         testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
     }
@@ -52,7 +52,9 @@ android {
 }
 
 dependencies {
+    compile project(':api')
     compile project(':libraries:androidutils')
+    compile project(':libraries:drag-sort-listview')
     compile project(':libraries:pagerslidingtabstrip')
     compile project(':libraries:stickygridheaders')
     compile rootProject.ext.libraries.okhttp
@@ -74,11 +76,11 @@ dependencies {
     compile 'org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:0.31'
 
     // App Engine
+    compile 'com.google.android.gms:play-services:4.3.23'
     compile ('com.google.api-client:google-api-client-android:1.17.0-rc') {
         exclude group: 'com.google.android.google-play-services'
     }
     compile 'com.google.http-client:google-http-client-gson:1.17.0-rc'
-    compile 'com.google.android.gms:play-services:4.2.42'
 
     // libs folder
     compile fileTree(dir: 'libs', include: '*.jar')

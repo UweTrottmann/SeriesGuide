@@ -37,6 +37,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.battlelancer.seriesguide.Analytics;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.billing.BillingActivity;
@@ -48,9 +49,8 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.Fields;
-import com.google.analytics.tracking.android.MapBuilder;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -166,9 +166,10 @@ public class Utils {
             } else {
                 // update all shows
                 final Cursor shows = mContext.getContentResolver().query(Shows.CONTENT_URI,
-                        new String[]{
+                        new String[] {
                                 Shows._ID
-                        }, null, null, null);
+                        }, null, null, null
+                );
                 if (shows != null) {
                     while (shows.moveToNext()) {
                         int showTvdbId = shows.getInt(0);
@@ -205,7 +206,8 @@ public class Utils {
     }
 
     /**
-     * Run the notification service delayed by a minute to display and (re)schedule upcoming episode
+     * Run the notification service delayed by a minute to display and (re)schedule upcoming
+     * episode
      * alarms.
      */
     public static void runNotificationServiceDelayed(Context context) {
@@ -254,7 +256,8 @@ public class Utils {
     }
 
     /**
-     * Returns true if the user has the legacy SeriesGuide X version installed, signed with the same
+     * Returns true if the user has the legacy SeriesGuide X version installed, signed with the
+     * same
      * key as we are.
      */
     public static boolean hasUnlockKeyInstalled(Context context) {
@@ -343,36 +346,63 @@ public class Utils {
         }
     }
 
+    /**
+     * Track a screen view. This is commonly called in {@link
+     * android.support.v4.app.Fragment#onStart()}.
+     */
     public static void trackView(Context context, String screenName) {
-        EasyTracker tracker = EasyTracker.getInstance(context);
-        tracker.set(Fields.SCREEN_NAME, screenName);
-        tracker.send(MapBuilder.createAppView().build());
-        tracker.set(Fields.SCREEN_NAME, null);
+        Tracker tracker = Analytics.getTracker(context);
+        tracker.setScreenName(screenName);
+        tracker.send(new HitBuilders.AppViewBuilder().build());
     }
 
-    public static void trackCustomEvent(Context context, String tag, String category,
+    /**
+     * Track a custom event that does not fit the {@link #trackAction(android.content.Context,
+     * String, String)}, {@link #trackContextMenu(android.content.Context, String, String)} or
+     * {@link #trackClick(android.content.Context, String, String)} trackers. Commonly important
+     * status information.
+     */
+    public static void trackCustomEvent(Context context, String tag, String action,
             String label) {
-        EasyTracker.getInstance(context).send(
-                MapBuilder.createEvent(tag, category, label, null).build()
-        );
+        Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
+                .setCategory(tag)
+                .setAction(action)
+                .setLabel(label)
+                .build());
     }
 
+    /**
+     * Track an action event, e.g. when an action item is clicked.
+     */
     public static void trackAction(Context context, String tag, String label) {
-        EasyTracker.getInstance(context).send(
-                MapBuilder.createEvent(tag, "Action Item", label, null).build()
-        );
+        Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
+                .setCategory(tag)
+                .setAction("Action Item")
+                .setLabel(label)
+                .build());
     }
 
+    /**
+     * Track a context menu event, e.g. when a context item is clicked.
+     */
     public static void trackContextMenu(Context context, String tag, String label) {
-        EasyTracker.getInstance(context).send(
-                MapBuilder.createEvent(tag, "Context Item", label, null).build()
-        );
+        Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
+                .setCategory(tag)
+                .setAction("Context Item")
+                .setLabel(label)
+                .build());
     }
 
+    /**
+     * Track a generic click that does not fit {@link #trackAction(android.content.Context, String,
+     * String)} or {@link #trackContextMenu(android.content.Context, String, String)}.
+     */
     public static void trackClick(Context context, String tag, String label) {
-        EasyTracker.getInstance(context).send(
-                MapBuilder.createEvent(tag, "Click", label, null).build()
-        );
+        Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
+                .setCategory(tag)
+                .setAction("Click")
+                .setLabel(label)
+                .build());
     }
 
     /**
@@ -429,7 +459,8 @@ public class Utils {
 
     /**
      * Calls {@link Context#startActivity(Intent)} with the given <b>implicit</b> {@link Intent}
-     * after making sure there is an {@link Activity} to handle it. Can show an error toast, if not.
+     * after making sure there is an {@link Activity} to handle it. Can show an error toast, if
+     * not.
      * <br> <br> This may happen if e.g. the web browser has been disabled through restricted
      * profiles.
      *
@@ -471,5 +502,4 @@ public class Utils {
 
         Utils.trackAction(context, logTag, logItem);
     }
-
 }

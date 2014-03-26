@@ -16,13 +16,45 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Color;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.text.TextUtils;
+import android.view.ContextMenu;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import butterknife.ButterKnife;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.extensions.ActionsFragmentContract;
+import com.battlelancer.seriesguide.extensions.EpisodeActionsHelper;
+import com.battlelancer.seriesguide.extensions.ExtensionManager;
+import com.battlelancer.seriesguide.loaders.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
@@ -42,65 +74,42 @@ import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
-import com.battlelancer.seriesguide.R;
-
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Color;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
-import android.text.TextUtils;
-import android.view.ContextMenu;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import java.util.Date;
-
 import de.greenrobot.event.EventBus;
+import java.util.Date;
+import java.util.List;
+import timber.log.Timber;
 
 /**
  * Displays general information about a show and its next episode.
  */
 public class OverviewFragment extends SherlockFragment implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+        LoaderManager.LoaderCallbacks<Cursor>, ActionsFragmentContract {
 
     private static final String TAG = "Overview";
 
     private static final int EPISODE_LOADER_ID = 100;
-
     private static final int SHOW_LOADER_ID = 101;
+    private static final int ACTIONS_LOADER_ID = 102;
+
+    private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
 
     private static final int CONTEXT_CREATE_CALENDAR_EVENT_ID = 201;
 
-    private FetchArtTask mArtTask;
+    private Handler mHandler = new Handler();
 
+    private FetchArtTask mArtTask;
     private TraktSummaryTask mTraktTask;
 
-    private Cursor mEpisodeCursor;
+    private Cursor mCurrentEpisodeCursor;
+    private int mCurrentEpisodeTvdbId;
 
     private Cursor mShowCursor;
-
     private String mShowTitle;
 
     private View mContainerShow;
-
     private View mDividerShow;
-
     private View mSpacerShow;
+    private LinearLayout mContainerActions;
 
     /**
      * All values have to be integer.
@@ -124,10 +133,6 @@ public class OverviewFragment extends SherlockFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        if (container == null) {
-            return null;
-        }
-
         View v = inflater.inflate(R.layout.overview_fragment, container, false);
         v.findViewById(R.id.imageViewFavorite).setOnClickListener(new OnClickListener() {
             @Override
@@ -139,6 +144,7 @@ public class OverviewFragment extends SherlockFragment implements
         mContainerShow = v.findViewById(R.id.containerOverviewShow);
         mDividerShow = v.findViewById(R.id.dividerHorizontalOverviewShow);
         mSpacerShow = v.findViewById(R.id.spacerOverviewShow);
+        mContainerActions = (LinearLayout) v.findViewById(R.id.containerOverviewActions);
 
         return v;
     }
@@ -167,6 +173,7 @@ public class OverviewFragment extends SherlockFragment implements
     public void onResume() {
         super.onResume();
         EventBus.getDefault().register(this);
+        loadEpisodeActionsDelayed();
     }
 
     @Override
@@ -185,6 +192,9 @@ public class OverviewFragment extends SherlockFragment implements
         if (mTraktTask != null) {
             mTraktTask.cancel(true);
             mTraktTask = null;
+        }
+        if (mHandler != null) {
+            mHandler.removeCallbacks(mEpisodeActionsRunnable);
         }
     }
 
@@ -223,7 +233,7 @@ public class OverviewFragment extends SherlockFragment implements
 
         // enable/disable menu items
         boolean isEpisodeVisible;
-        if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
+        if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()) {
             isEpisodeVisible = true;
         } else {
             isEpisodeVisible = false;
@@ -248,8 +258,9 @@ public class OverviewFragment extends SherlockFragment implements
             return true;
         } else if (itemId == R.id.menu_overview_manage_lists) {
             fireTrackerEvent("Manage lists");
-            if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
-                ListsDialogFragment.showListsDialog(mEpisodeCursor.getString(EpisodeQuery._ID),
+            if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()) {
+                ListsDialogFragment.showListsDialog(
+                        mCurrentEpisodeCursor.getString(EpisodeQuery._ID),
                         ListItemTypes.EPISODE, getFragmentManager());
             }
             return true;
@@ -264,26 +275,28 @@ public class OverviewFragment extends SherlockFragment implements
     private void onAddCalendarEvent() {
         fireTrackerEvent("Add to calendar");
 
-        if (mShowCursor != null && mShowCursor.moveToFirst() && mEpisodeCursor != null
-                && mEpisodeCursor.moveToFirst()) {
-            final int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
-            final int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-            final String episodeTitle = mEpisodeCursor.getString(EpisodeQuery.TITLE);
+        if (mShowCursor != null && mShowCursor.moveToFirst() && mCurrentEpisodeCursor != null
+                && mCurrentEpisodeCursor.moveToFirst()) {
+            final int seasonNumber = mCurrentEpisodeCursor.getInt(EpisodeQuery.SEASON);
+            final int episodeNumber = mCurrentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+            final String episodeTitle = mCurrentEpisodeCursor.getString(EpisodeQuery.TITLE);
             // add calendar event
             ShareUtils.onAddCalendarEvent(
                     getActivity(),
                     mShowCursor.getString(ShowQuery.SHOW_TITLE),
                     Utils.getNextEpisodeString(getActivity(), seasonNumber, episodeNumber,
-                            episodeTitle), mEpisodeCursor.getLong(EpisodeQuery.FIRST_RELEASE_MS),
-                    mShowCursor.getInt(ShowQuery.SHOW_RUNTIME));
+                            episodeTitle),
+                    mCurrentEpisodeCursor.getLong(EpisodeQuery.FIRST_RELEASE_MS),
+                    mShowCursor.getInt(ShowQuery.SHOW_RUNTIME)
+            );
         }
     }
 
     private void onCheckIn() {
         fireTrackerEvent("Check-In");
 
-        if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
-            int episodeTvdbId = mEpisodeCursor.getInt(EpisodeQuery._ID);
+        if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()) {
+            int episodeTvdbId = mCurrentEpisodeCursor.getInt(EpisodeQuery._ID);
             // check in
             CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(),
                     episodeTvdbId);
@@ -302,22 +315,22 @@ public class OverviewFragment extends SherlockFragment implements
     }
 
     private void onChangeEpisodeFlag(int episodeFlag) {
-        if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
-            final int season = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
-            final int episode = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+        if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()) {
+            final int season = mCurrentEpisodeCursor.getInt(EpisodeQuery.SEASON);
+            final int episode = mCurrentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
             new FlagTask(getActivity(), getShowId())
-                    .episodeWatched(mEpisodeCursor.getInt(EpisodeQuery._ID), season,
+                    .episodeWatched(mCurrentEpisodeCursor.getInt(EpisodeQuery._ID), season,
                             episode, episodeFlag)
                     .execute();
         }
     }
 
     private void rateOnTrakt() {
-        if (mEpisodeCursor == null || !mEpisodeCursor.moveToFirst()) {
+        if (mCurrentEpisodeCursor == null || !mCurrentEpisodeCursor.moveToFirst()) {
             return;
         }
-        int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
-        int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+        int seasonNumber = mCurrentEpisodeCursor.getInt(EpisodeQuery.SEASON);
+        int episodeNumber = mCurrentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
         TraktTools.rateEpisode(getActivity(), getFragmentManager(), getShowId(), seasonNumber,
                 episodeNumber);
 
@@ -325,12 +338,12 @@ public class OverviewFragment extends SherlockFragment implements
     }
 
     private void shareEpisode() {
-        if (mEpisodeCursor == null || !mEpisodeCursor.moveToFirst()) {
+        if (mCurrentEpisodeCursor == null || !mCurrentEpisodeCursor.moveToFirst()) {
             return;
         }
-        int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
-        int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-        String episodeTitle = mEpisodeCursor.getString(EpisodeQuery.TITLE);
+        int seasonNumber = mCurrentEpisodeCursor.getInt(EpisodeQuery.SEASON);
+        int episodeNumber = mCurrentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+        String episodeTitle = mCurrentEpisodeCursor.getString(EpisodeQuery.TITLE);
 
         ShareUtils.shareEpisode(getActivity(), getShowId(), seasonNumber, episodeNumber, mShowTitle,
                 episodeTitle);
@@ -340,12 +353,13 @@ public class OverviewFragment extends SherlockFragment implements
 
     private void onToggleCollected() {
         fireTrackerEvent("Toggle Collected");
-        if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
-            final int season = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
-            final int episode = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-            final boolean isCollected = mEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1;
+        if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()) {
+            final int season = mCurrentEpisodeCursor.getInt(EpisodeQuery.SEASON);
+            final int episode = mCurrentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+            final boolean isCollected = mCurrentEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1;
             new FlagTask(getActivity(), getShowId())
-                    .episodeCollected(mEpisodeCursor.getInt(EpisodeQuery._ID), season, episode,
+                    .episodeCollected(mCurrentEpisodeCursor.getInt(EpisodeQuery._ID), season,
+                            episode,
                             !isCollected)
                     .execute();
         }
@@ -382,17 +396,15 @@ public class OverviewFragment extends SherlockFragment implements
 
             return super.loadInBackground();
         }
-
     }
 
     interface EpisodeQuery {
 
-        String[] PROJECTION = new String[]{
+        String[] PROJECTION = new String[] {
                 Episodes._ID, Episodes.OVERVIEW, Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED,
                 Episodes.FIRSTAIREDMS, Episodes.GUESTSTARS, Episodes.RATING, Episodes.IMAGE,
                 Episodes.DVDNUMBER, Episodes.TITLE, Seasons.REF_SEASON_ID, Episodes.COLLECTED,
                 Episodes.IMDBID, Episodes.ABSOLUTE_NUMBER
-
         };
 
         int _ID = 0;
@@ -424,12 +436,11 @@ public class OverviewFragment extends SherlockFragment implements
         int IMDBID = 13;
 
         int ABSOLUTE_NUMBER = 14;
-
     }
 
     interface ShowQuery {
 
-        String[] PROJECTION = new String[]{
+        String[] PROJECTION = new String[] {
                 Shows._ID, Shows.TITLE, Shows.STATUS, Shows.AIRSTIME, Shows.AIRSDAYOFWEEK,
                 Shows.NETWORK, Shows.POSTER, Shows.IMDBID, Shows.RUNTIME, Shows.FAVORITE,
                 Shows.RELEASE_COUNTRY
@@ -479,7 +490,7 @@ public class OverviewFragment extends SherlockFragment implements
     public void onLoaderReset(Loader<Cursor> loader) {
         switch (loader.getId()) {
             case EPISODE_LOADER_ID:
-                mEpisodeCursor = null;
+                mCurrentEpisodeCursor = null;
                 break;
             case SHOW_LOADER_ID:
                 mShowCursor = null;
@@ -487,7 +498,14 @@ public class OverviewFragment extends SherlockFragment implements
         }
     }
 
-    public void onEvent(TraktActionCompleteEvent event) {
+    @Override
+    public void onEventMainThread(ExtensionManager.EpisodeActionReceivedEvent event) {
+        if (mCurrentEpisodeTvdbId == event.episodeTvdbId) {
+            loadEpisodeActionsDelayed();
+        }
+    }
+
+    public void onEventMainThread(TraktActionCompleteEvent event) {
         if (event.mTraktAction == TraktAction.RATE_EPISODE) {
             onLoadTraktRatings(false);
         }
@@ -499,7 +517,7 @@ public class OverviewFragment extends SherlockFragment implements
 
     @SuppressLint("NewApi")
     private void onPopulateEpisodeData(Cursor episode) {
-        mEpisodeCursor = episode;
+        mCurrentEpisodeCursor = episode;
 
         final TextView episodeTitle = (TextView) getView().findViewById(R.id.episodeTitle);
         final TextView episodeTime = (TextView) getView().findViewById(R.id.episodeTime);
@@ -513,7 +531,7 @@ public class OverviewFragment extends SherlockFragment implements
             episodePrimaryContainer.setBackgroundResource(0);
 
             // some episode properties
-            final int episodeId = episode.getInt(EpisodeQuery._ID);
+            mCurrentEpisodeTvdbId = episode.getInt(EpisodeQuery._ID);
             final int seasonNumber = episode.getInt(EpisodeQuery.SEASON);
             final int episodeNumber = episode.getInt(EpisodeQuery.NUMBER);
             final int episodeAbsoluteNumber = episode.getInt(EpisodeQuery.ABSOLUTE_NUMBER);
@@ -552,7 +570,8 @@ public class OverviewFragment extends SherlockFragment implements
                 public void onClick(View view) {
                     // display episode details
                     Intent intent = new Intent(getActivity(), EpisodesActivity.class);
-                    intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
+                    intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
+                            mCurrentEpisodeTvdbId);
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.blow_up_enter,
                             R.anim.blow_up_exit);
@@ -632,8 +651,10 @@ public class OverviewFragment extends SherlockFragment implements
             // episode image
             onLoadImage(episode.getString(EpisodeQuery.IMAGE));
 
-            episodemeta.setVisibility(View.VISIBLE);
+            // episode actions
+            loadEpisodeActionsDelayed();
 
+            episodemeta.setVisibility(View.VISIBLE);
         } else {
             // no next episode: display single line info text, remove other
             // views
@@ -666,7 +687,31 @@ public class OverviewFragment extends SherlockFragment implements
                     .loadAnimation(episodemeta.getContext(), android.R.anim.fade_in));
             contentContainer.setVisibility(View.VISIBLE);
         }
+    }
 
+    @Override
+    public void loadEpisodeActions() {
+        if (mCurrentEpisodeTvdbId == 0) {
+            // do not load actions if there is no episode
+            return;
+        }
+        Bundle args = new Bundle();
+        args.putInt(KEY_EPISODE_TVDB_ID, mCurrentEpisodeTvdbId);
+        getLoaderManager().restartLoader(ACTIONS_LOADER_ID, args, mEpisodeActionsLoaderCallbacks);
+    }
+
+    Runnable mEpisodeActionsRunnable = new Runnable() {
+        @Override
+        public void run() {
+            loadEpisodeActions();
+        }
+    };
+
+    @Override
+    public void loadEpisodeActionsDelayed() {
+        mHandler.removeCallbacks(mEpisodeActionsRunnable);
+        mHandler.postDelayed(mEpisodeActionsRunnable,
+                ActionsFragmentContract.ACTION_LOADER_DELAY_MILLIS);
     }
 
     private void onLoadEpisodeDetails(final Cursor episode) {
@@ -682,7 +727,8 @@ public class OverviewFragment extends SherlockFragment implements
                 .getDouble(EpisodeQuery.DVDNUMBER));
         Utils.setLabelValueOrHide(getView().findViewById(R.id.labelGuestStars),
                 (TextView) getView().findViewById(R.id.TextViewEpisodeGuestStars), Utils
-                .splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS)));
+                        .splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS))
+        );
 
         // TVDb rating
         final String ratingText = episode.getString(EpisodeQuery.RATING);
@@ -693,10 +739,6 @@ public class OverviewFragment extends SherlockFragment implements
         // Google Play button
         View playButton = getView().findViewById(R.id.buttonGooglePlay);
         ServiceUtils.setUpGooglePlayButton(mShowTitle + " " + episodeTitle, playButton, TAG);
-
-        // Amazon button
-        View amazonButton = getView().findViewById(R.id.buttonAmazon);
-        ServiceUtils.setUpAmazonButton(mShowTitle + " " + episodeTitle, amazonButton, TAG);
 
         // YouTube button
         View youtubeButton = getView().findViewById(R.id.buttonYouTube);
@@ -729,7 +771,7 @@ public class OverviewFragment extends SherlockFragment implements
         getView().findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
+                if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()) {
                     Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
                     i.putExtras(TraktShoutsActivity.createInitBundleEpisode(getShowId(),
                             seasonNumber, episodeNumber, episodeTitle));
@@ -744,11 +786,11 @@ public class OverviewFragment extends SherlockFragment implements
     }
 
     private void onLoadTraktRatings(boolean isUseCachedValues) {
-        if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()
-                && (mTraktTask == null || mTraktTask.getStatus() != AsyncTask.Status.RUNNING)) {
-            int episodeTvdbId = mEpisodeCursor.getInt(EpisodeQuery._ID);
-            int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
-            int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+        if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()
+                && (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED)) {
+            int episodeTvdbId = mCurrentEpisodeCursor.getInt(EpisodeQuery._ID);
+            int seasonNumber = mCurrentEpisodeCursor.getInt(EpisodeQuery.SEASON);
+            int episodeNumber = mCurrentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
             mTraktTask = new TraktSummaryTask(getSherlockActivity(), getView(), isUseCachedValues)
                     .episode(getShowId(), episodeTvdbId, seasonNumber, episodeNumber);
             AndroidUtils.executeAsyncTask(mTraktTask);
@@ -764,7 +806,7 @@ public class OverviewFragment extends SherlockFragment implements
             mArtTask = null;
         }
         mArtTask = new FetchArtTask(imagePath, container, getActivity());
-        AndroidUtils.executeAsyncTask(mArtTask, new Void[]{
+        AndroidUtils.executeAsyncTask(mArtTask, new Void[] {
                 null
         });
     }
@@ -833,4 +875,32 @@ public class OverviewFragment extends SherlockFragment implements
         }
         ((TextView) getActivity().findViewById(R.id.showmeta)).setText(timeAndNetwork.toString());
     }
+
+    private LoaderManager.LoaderCallbacks<List<Action>> mEpisodeActionsLoaderCallbacks =
+            new LoaderManager.LoaderCallbacks<List<Action>>() {
+                @Override
+                public Loader<List<Action>> onCreateLoader(int id, Bundle args) {
+                    int episodeTvdbId = args.getInt(KEY_EPISODE_TVDB_ID);
+                    return new EpisodeActionsLoader(getActivity(), episodeTvdbId);
+                }
+
+                @Override
+                public void onLoadFinished(Loader<List<Action>> loader, List<Action> data) {
+                    if (data == null) {
+                        Timber.e("onLoadFinished: did not receive valid actions");
+                    } else {
+                        Timber.d("onLoadFinished: received " + data.size() + " actions");
+                    }
+                    EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
+                            mContainerActions,
+                            data);
+                }
+
+                @Override
+                public void onLoaderReset(Loader<List<Action>> loader) {
+                    EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
+                            mContainerActions,
+                            null);
+                }
+            };
 }

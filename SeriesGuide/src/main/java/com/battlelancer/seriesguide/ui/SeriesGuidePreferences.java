@@ -16,28 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.support.v4.app.TaskStackBuilder;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.GoogleAnalytics;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.service.NotificationService;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.settings.AppSettings;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.settings.GetGlueSettings;
-import com.battlelancer.seriesguide.settings.NotificationSettings;
-import com.battlelancer.seriesguide.settings.UpdateSettings;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.battlelancer.seriesguide.R;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentValues;
@@ -55,9 +33,27 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.view.KeyEvent;
 import android.widget.Toast;
-
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.service.NotificationService;
+import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.settings.AppSettings;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.GetGlueSettings;
+import com.battlelancer.seriesguide.settings.NotificationSettings;
+import com.battlelancer.seriesguide.settings.UpdateSettings;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.Utils;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.List;
 
 /**
@@ -361,7 +357,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
         prefs.registerOnSharedPreferenceChangeListener(this);
-        EasyTracker.getInstance(this).activityStart(this);
     }
 
     @Override
@@ -370,7 +365,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
         prefs.unregisterOnSharedPreferenceChangeListener(this);
-        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override

@@ -31,7 +31,7 @@ import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.Crashlytics;
-import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.android.gms.analytics.GoogleAnalytics;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import timber.log.Timber;
 
@@ -76,6 +76,8 @@ public class SeriesGuideApplication extends Application {
 
         // Ensure GA opt-out
         GoogleAnalytics.getInstance(this).setAppOptOut(AppSettings.isGaAppOptOut(this));
+        // Initialize tracker
+        Analytics.getTracker(this);
 
         // Enable StrictMode
         enableStrictMode();
@@ -97,7 +99,7 @@ public class SeriesGuideApplication extends Application {
      */
     @SuppressWarnings("PointlessBooleanExpression")
     @SuppressLint("NewApi")
-    public static void enableStrictMode() {
+    private static void enableStrictMode() {
         if (!BuildConfig.DEBUG || !AndroidUtils.isGingerbreadOrHigher()) {
             return;
         }
