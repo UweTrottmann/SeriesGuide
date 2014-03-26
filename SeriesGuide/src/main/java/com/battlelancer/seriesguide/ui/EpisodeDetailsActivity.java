@@ -16,23 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
-import com.astuetz.PagerSlidingTabStrip;
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.items.Episode;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.util.Utils;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.battlelancer.seriesguide.R;
-
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -45,10 +28,22 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
-import java.util.ArrayList;
-
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
+import com.astuetz.PagerSlidingTabStrip;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.Episode;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.util.Utils;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
+import java.util.ArrayList;
 
 /**
  * Hosts a {@link ViewPager} displaying an episode per fragment of a complete season. Used on
@@ -196,14 +191,12 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
         EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
         EventBus.getDefault().unregister(this);
     }
 

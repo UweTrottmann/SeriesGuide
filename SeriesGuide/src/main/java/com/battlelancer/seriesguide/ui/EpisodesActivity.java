@@ -44,7 +44,6 @@ import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapte
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
 import de.greenrobot.event.EventBus;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -231,7 +230,6 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
                 .getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
 
-        EasyTracker.getInstance(this).activityStart(this);
         EventBus.getDefault().register(this);
     }
 
@@ -244,7 +242,6 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
                 .getDefaultSharedPreferences(this);
         prefs.unregisterOnSharedPreferenceChangeListener(this);
 
-        EasyTracker.getInstance(this).activityStop(this);
         EventBus.getDefault().unregister(this);
     }
 

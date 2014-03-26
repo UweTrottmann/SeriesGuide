@@ -63,7 +63,6 @@ import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
-import com.google.analytics.tracking.android.EasyTracker;
 import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.List;
@@ -240,7 +239,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         super.onStart();
 
         setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_SHOWS_POSITION);
-        EasyTracker.getInstance(this).activityStart(this);
         EventBus.getDefault().register(this);
     }
 
@@ -279,7 +277,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     @Override
     protected void onStop() {
         super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
         EventBus.getDefault().unregister(this);
     }
 

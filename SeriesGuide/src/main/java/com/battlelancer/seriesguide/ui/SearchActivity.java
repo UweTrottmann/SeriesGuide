@@ -16,21 +16,18 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.widget.SearchView;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.R;
-
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.widget.SearchView;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Handles search intents and displays a {@link SearchFragment} when needed or
@@ -52,19 +49,6 @@ public class SearchActivity extends BaseNavDrawerActivity {
         actionBar.setTitle(R.string.search_hint);
 
         handleIntent(getIntent());
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        EasyTracker.getInstance(this).activityStart(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override
