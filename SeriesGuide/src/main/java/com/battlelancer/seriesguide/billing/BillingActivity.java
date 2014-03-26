@@ -149,6 +149,7 @@ public class BillingActivity extends BaseActivity {
             public void onClick(View v) {
                 Utils.launchWebsite(BillingActivity.this, getString(R.string.url_x_pass), TAG,
                         "X Pass");
+                Utils.trackAction(BillingActivity.this, "X Features", "Get X Pass");
             }
         });
 
@@ -347,6 +348,8 @@ public class BillingActivity extends BaseActivity {
 
         mHelper.launchSubscriptionPurchaseFlow(this, SKU_X_SUB, RC_REQUEST,
                 mPurchaseFinishedListener, payload);
+
+        Utils.trackAction(this, "X Features", "Subscribe");
     }
 
     // Callback for when a purchase is finished
