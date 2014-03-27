@@ -357,6 +357,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
         prefs.registerOnSharedPreferenceChangeListener(this);
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
     }
 
     @Override
@@ -365,6 +366,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
         prefs.unregisterOnSharedPreferenceChangeListener(this);
+        GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
 
     @Override
