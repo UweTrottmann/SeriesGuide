@@ -187,15 +187,13 @@ public class TraktTools {
                 episodeFlag = EpisodeFlags.WATCHED;
                 episodeDefaultFlag = EpisodeFlags.UNWATCHED;
                 // do not remove flag of skipped episodes, only for watched ones
-                clearSelection = SeriesGuideContract.Episodes.SEASON + "=? AND "
-                        + SeriesGuideContract.Episodes.WATCHED + "=" + EpisodeFlags.WATCHED;
+                clearSelection = SeriesGuideContract.Episodes.WATCHED + "=" + EpisodeFlags.WATCHED;
                 break;
             case SeriesGuideContract.Episodes.COLLECTED:
                 episodeFlag = 1;
                 episodeDefaultFlag = 0;
                 // only remove flags for already collected episodes
-                clearSelection = SeriesGuideContract.Episodes.SEASON + "=? AND "
-                        + SeriesGuideContract.Episodes.COLLECTED + "=1";
+                clearSelection = SeriesGuideContract.Episodes.COLLECTED + "=1";
                 break;
             default:
                 return;

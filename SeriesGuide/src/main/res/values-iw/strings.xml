@@ -43,7 +43,7 @@
   <string name="shout">המלץ!</string>
   <string name="isspoiler">אזהרת ספוילר!</string>
   <string name="no_shouts">תהיה הראשון להמליץ!</string>
-  <string name="refresh">Refresh</string>
+  <string name="refresh">רענון</string>
   <string name="movies_collection">אוסף</string>
   <string name="movies_watchlist">רשימת מעקב</string>
   <string name="watchlist_add">הוסף לרשימת מעקב</string>
@@ -58,7 +58,7 @@
   <string name="movie_cast">משתתפים</string>
   <string name="movie_crew">צוות</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
-  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort">מיון סרטים</string>
   <string name="action_movies_sort_title">שם</string>
   <string name="action_movies_sort_release">תאריך שחרור</string>
   <string name="shows_with_next">%s עם הפרקים הבאים</string>
@@ -363,6 +363,15 @@
   <string name="add_to_homescreen">הוסף למסך הבית</string>
   <string name="search_within_show">חיפוש בתוך %s</string>
   <string name="web_search">חיפוש באינטרנט</string>
+  <string name="extensions">Extensions</string>
+  <string name="action_extensions_configure">Customize extensions</string>
+  <string name="action_extensions_add">Add extension</string>
+  <string name="action_extensions_search">Get more extensions</string>
+  <string name="action_extension_settings">הגדרות</string>
+  <string name="action_extension_remove">הסר</string>
+  <string name="extension_amazon">Amazon search</string>
+  <string name="description_extension_amazon">Search your local Amazon site</string>
+  <string name="pref_amazon_domain">Amazon site</string>
   <string-array name="sesorting">
     <item>אחרון קודם</item>
     <item>ראשון קודם</item>

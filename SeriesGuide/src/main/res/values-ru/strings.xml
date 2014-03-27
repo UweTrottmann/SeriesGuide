@@ -363,6 +363,15 @@
   <string name="add_to_homescreen">Добавить на главный экран</string>
   <string name="search_within_show">Поиск в %s</string>
   <string name="web_search">Веб-поиск</string>
+  <string name="extensions">Extensions</string>
+  <string name="action_extensions_configure">Customize extensions</string>
+  <string name="action_extensions_add">Add extension</string>
+  <string name="action_extensions_search">Get more extensions</string>
+  <string name="action_extension_settings">Настройки</string>
+  <string name="action_extension_remove">Удалить</string>
+  <string name="extension_amazon">Amazon search</string>
+  <string name="description_extension_amazon">Search your local Amazon site</string>
+  <string name="pref_amazon_domain">Amazon site</string>
   <string-array name="sesorting">
     <item>Сначала последний</item>
     <item>Старшие с начала</item>

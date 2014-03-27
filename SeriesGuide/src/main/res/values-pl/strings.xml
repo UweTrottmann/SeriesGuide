@@ -43,7 +43,7 @@
   <string name="shout">Krzyk!</string>
   <string name="isspoiler">Ostrzeżenie o spoilerach!</string>
   <string name="no_shouts">Krzycz jako pierwszy!</string>
-  <string name="refresh">Refresh</string>
+  <string name="refresh">Odśwież</string>
   <string name="movies_collection">Kolekcja</string>
   <string name="movies_watchlist">Lista obejrzanych</string>
   <string name="watchlist_add">Dodaj do listy oglądanych</string>
@@ -58,7 +58,7 @@
   <string name="movie_cast">Obsada</string>
   <string name="movie_crew">Załoga</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
-  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort">Sortuj filmy</string>
   <string name="action_movies_sort_title">Tytuł</string>
   <string name="action_movies_sort_release">Data premiery</string>
   <string name="shows_with_next">%s z kolejnych odcinków</string>
@@ -363,6 +363,15 @@
   <string name="add_to_homescreen">Dodaj do pulpitu</string>
   <string name="search_within_show">Szukaj w %s</string>
   <string name="web_search">Wyszukiwarka</string>
+  <string name="extensions">Extensions</string>
+  <string name="action_extensions_configure">Customize extensions</string>
+  <string name="action_extensions_add">Add extension</string>
+  <string name="action_extensions_search">Get more extensions</string>
+  <string name="action_extension_settings">Ustawienia</string>
+  <string name="action_extension_remove">Usuń</string>
+  <string name="extension_amazon">Amazon search</string>
+  <string name="description_extension_amazon">Search your local Amazon site</string>
+  <string name="pref_amazon_domain">Amazon site</string>
   <string-array name="sesorting">
     <item>Najpierw najnowsze</item>
     <item>Najpierw najstarsze</item>

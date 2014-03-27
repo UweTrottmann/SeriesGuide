@@ -364,6 +364,15 @@
   <string name="add_to_homescreen">Lägg till på hemskärmen </string>
   <string name="search_within_show">Sök inom %s</string>
   <string name="web_search">Webbsökning</string>
+  <string name="extensions">Extensions</string>
+  <string name="action_extensions_configure">Customize extensions</string>
+  <string name="action_extensions_add">Add extension</string>
+  <string name="action_extensions_search">Get more extensions</string>
+  <string name="action_extension_settings">Inställningar</string>
+  <string name="action_extension_remove">Ta bort</string>
+  <string name="extension_amazon">Amazon search</string>
+  <string name="description_extension_amazon">Search your local Amazon site</string>
+  <string name="pref_amazon_domain">Amazon site</string>
   <string-array name="sesorting">
     <item>Senaste först</item>
     <item>Äldsta först</item>

@@ -363,6 +363,15 @@
   <string name="add_to_homescreen">Zum Startbildschirm hinzufügen</string>
   <string name="search_within_show">Durchsuche %s</string>
   <string name="web_search">Web-Suche</string>
+  <string name="extensions">Erweiterungen</string>
+  <string name="action_extensions_configure">Erweiterungen anpassen</string>
+  <string name="action_extensions_add">Erweiterung hinzufügen</string>
+  <string name="action_extensions_search">Mehr Erweiterungen</string>
+  <string name="action_extension_settings">Einstellungen</string>
+  <string name="action_extension_remove">Löschen</string>
+  <string name="extension_amazon">Amazon-Suche</string>
+  <string name="description_extension_amazon">Suchen Sie auf Ihrer lokalen Amazon-Seite</string>
+  <string name="pref_amazon_domain">Amazon-Seite</string>
   <string-array name="sesorting">
     <item>Aktuellste zuerst</item>
     <item>Älteste zuerst</item>

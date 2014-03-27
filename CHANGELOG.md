@@ -8,6 +8,13 @@ All dates are in the European Central timezone.
 Version 13 *(in development)*
 -----------------------------
 
+#### 13-beta4 *(2014-03-27)*
+
+* TWEAK Add all remaining Amazon domains.
+* FIX full trakt sync did not correctly download unwatched and uncollected episodes.
+* FIX Some GA issues.
+* NOTICE Latest translations from crowdin.
+
 #### 13-beta3 *(2014-03-26)*
 
 * FEATURE SeriesGuide extensions, learn how to [get started](https://github.com/UweTrottmann/SeriesGuide/wiki/Extension-API).
@@ -30,6 +37,12 @@ Version 13 *(in development)*
 * TWEAK Hidden shows will not display notifications any longer.
 * TWEAK Display absolute episode number more prominently in episode detail view, drop duplicate season and episode number.
 * FIX Exclude special episodes from determining if all episodes of a show are collected as well (already in effect for watched all marker).
+
+Version 12.4 *(2014-03-27)*
+---------------------------
+
+* FIX Full trakt sync not downloading unwatched and uncollected episodes correctly.
+* FIX Crash when adding movie.
 
 Version 12.3 *(2014-03-08)*
 ---------------------------

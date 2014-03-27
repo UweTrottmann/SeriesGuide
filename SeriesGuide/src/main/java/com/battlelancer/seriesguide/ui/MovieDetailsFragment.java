@@ -225,7 +225,6 @@ public class MovieDetailsFragment extends SherlockFragment {
         super.onStart();
 
         EventBus.getDefault().register(this);
-        Utils.trackView(getActivity(), "Movie details");
     }
 
     @Override

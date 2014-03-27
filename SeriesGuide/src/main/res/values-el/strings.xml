@@ -363,6 +363,15 @@
   <string name="add_to_homescreen">Προσθήκη στην αρχική οθόνη</string>
   <string name="search_within_show">Αναζήτηση μέσα σε %s</string>
   <string name="web_search">Αναζήτηση στον ιστό</string>
+  <string name="extensions">Extensions</string>
+  <string name="action_extensions_configure">Customize extensions</string>
+  <string name="action_extensions_add">Add extension</string>
+  <string name="action_extensions_search">Get more extensions</string>
+  <string name="action_extension_settings">Ρυθμίσεις</string>
+  <string name="action_extension_remove">Αφαίρεση</string>
+  <string name="extension_amazon">Amazon search</string>
+  <string name="description_extension_amazon">Search your local Amazon site</string>
+  <string name="pref_amazon_domain">Amazon site</string>
   <string-array name="sesorting">
     <item>Η πιο πρόσφατη πρώτα</item>
     <item>Η παλαιότερη πρώτα</item>

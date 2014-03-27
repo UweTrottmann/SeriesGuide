@@ -265,6 +265,7 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
                 return;
             }
             showAddExtensionPopupMenu(view.findViewById(R.id.textViewItemExtensionAddLabel));
+            Utils.trackAction(getActivity(), TAG, "Add extension");
         }
     }
 
@@ -276,6 +277,7 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
         mEnabledExtensions.remove(event.position);
         getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
                 mExtensionsLoaderCallbacks);
+        Utils.trackAction(getActivity(), TAG, "Remove extension");
     }
 
     private void showAddExtensionPopupMenu(View anchorView) {
