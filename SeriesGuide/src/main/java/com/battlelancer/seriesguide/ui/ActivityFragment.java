@@ -137,9 +137,6 @@ public class ActivityFragment extends SherlockFragment implements
          * https://github.com/UweTrottmann/SeriesGuide/issues/257.
          */
         onRequery();
-
-        final String tag = getArguments().getString("analyticstag");
-        Utils.trackView(getActivity(), tag);
     }
 
     @Override

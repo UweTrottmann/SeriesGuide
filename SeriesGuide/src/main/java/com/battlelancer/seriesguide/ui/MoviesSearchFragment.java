@@ -122,13 +122,6 @@ public class MoviesSearchFragment extends SherlockFragment implements OnEditorAc
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-
-        Utils.trackView(getActivity(), TAG);
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
 
