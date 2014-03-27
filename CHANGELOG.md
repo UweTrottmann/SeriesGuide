@@ -5,6 +5,12 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 12.4 *(2014-03-27)*
+---------------------------
+
+* FIX Full trakt sync not downloading unwatched and uncollected episodes correctly.
+* FIX Crash when adding movie.
+
 Version 12.3 *(2014-03-08)*
 ---------------------------
 
