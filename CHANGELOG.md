@@ -10,7 +10,9 @@ Version 13 *(in development)*
 
 #### 13-beta4 *(2014-03-27)*
 
+* TWEAK Add all remaining Amazon domains.
 * FIX Some GA issues.
+* NOTICE Latest translations from crowdin.
 
 #### 13-beta3 *(2014-03-26)*
 
