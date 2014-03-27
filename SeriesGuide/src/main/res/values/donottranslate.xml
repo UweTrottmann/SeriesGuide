@@ -226,9 +226,17 @@
     </string-array>
     <string-array name="amazonDomainsData">
         <item>amazon.com</item>
+        <item>amazon.com.au</item>
+        <item>amazon.com.br</item>
+        <item>amazon.com.mx</item>
+        <item>amazon.ca</item>
+        <item>amazon.co.jp</item>
         <item>amazon.co.uk</item>
         <item>amazon.de</item>
+        <item>amazon.es</item>
         <item>amazon.fr</item>
+        <item>amazon.in</item>
+        <item>amazon.it</item>
     </string-array>
 
 </resources>
