@@ -38,6 +38,12 @@ Version 13 *(in development)*
 * TWEAK Display absolute episode number more prominently in episode detail view, drop duplicate season and episode number.
 * FIX Exclude special episodes from determining if all episodes of a show are collected as well (already in effect for watched all marker).
 
+Version 12.4 *(2014-03-27)*
+---------------------------
+
+* FIX Full trakt sync not downloading unwatched and uncollected episodes correctly.
+* FIX Crash when adding movie.
+
 Version 12.3 *(2014-03-08)*
 ---------------------------
 
