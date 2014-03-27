@@ -30,6 +30,7 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
+import com.google.android.gms.analytics.GoogleAnalytics;
 
 /**
  * Provides some common functionality across all activities like setting the theme, navigation
@@ -55,6 +56,14 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
         if (!onAutoBackup()) {
             SgSyncAdapter.requestSyncIfTime(this);
         }
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
 
     @Override
