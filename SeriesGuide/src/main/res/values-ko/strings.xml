@@ -363,6 +363,15 @@
   <string name="add_to_homescreen">홈 화면에 추가</string>
   <string name="search_within_show">%s 에서 검색</string>
   <string name="web_search">웹 검색</string>
+  <string name="extensions">Extensions</string>
+  <string name="action_extensions_configure">Customize extensions</string>
+  <string name="action_extensions_add">Add extension</string>
+  <string name="action_extensions_search">Get more extensions</string>
+  <string name="action_extension_settings">설정</string>
+  <string name="action_extension_remove">삭제</string>
+  <string name="extension_amazon">Amazon search</string>
+  <string name="description_extension_amazon">Search your local Amazon site</string>
+  <string name="pref_amazon_domain">Amazon site</string>
   <string-array name="sesorting">
     <item>최근 방영 순</item>
     <item>예전 방영 순</item>

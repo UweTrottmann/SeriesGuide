@@ -363,6 +363,15 @@
   <string name="add_to_homescreen">Aggiungi alla pagina principale</string>
   <string name="search_within_show">Cerca all\'interno di %s</string>
   <string name="web_search">Ricerca Web</string>
+  <string name="extensions">Extensions</string>
+  <string name="action_extensions_configure">Customize extensions</string>
+  <string name="action_extensions_add">Add extension</string>
+  <string name="action_extensions_search">Get more extensions</string>
+  <string name="action_extension_settings">Impostazioni</string>
+  <string name="action_extension_remove">Rimuovere</string>
+  <string name="extension_amazon">Amazon search</string>
+  <string name="description_extension_amazon">Search your local Amazon site</string>
+  <string name="pref_amazon_domain">Amazon site</string>
   <string-array name="sesorting">
     <item>Prima i più recenti</item>
     <item>Prima i più vecchi</item>

@@ -43,7 +43,7 @@
   <string name="shout">Commentez !</string>
   <string name="isspoiler">Alerte au spoiler !</string>
   <string name="no_shouts">Soyez le premier à commenter !</string>
-  <string name="refresh">Refresh</string>
+  <string name="refresh">Rafraîchir</string>
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">Liste à voir</string>
   <string name="watchlist_add">Ajouter dans la liste à voir</string>
@@ -363,6 +363,15 @@
   <string name="add_to_homescreen">Ajouter à l\'écran d\'accueil</string>
   <string name="search_within_show">Chercher dans %s</string>
   <string name="web_search">Recherche Web</string>
+  <string name="extensions">Extensions</string>
+  <string name="action_extensions_configure">Customize extensions</string>
+  <string name="action_extensions_add">Add extension</string>
+  <string name="action_extensions_search">Get more extensions</string>
+  <string name="action_extension_settings">Paramètres</string>
+  <string name="action_extension_remove">Supprimer</string>
+  <string name="extension_amazon">Amazon search</string>
+  <string name="description_extension_amazon">Search your local Amazon site</string>
+  <string name="pref_amazon_domain">Amazon site</string>
   <string-array name="sesorting">
     <item>Plus récentes en premier</item>
     <item>Plus anciennes en premier</item>
