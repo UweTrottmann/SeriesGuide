@@ -226,7 +226,9 @@
     </string-array>
     <string-array name="amazonDomainsData">
         <item>amazon.com</item>
+        <item>amazon.co.uk</item>
         <item>amazon.de</item>
+        <item>amazon.fr</item>
     </string-array>
 
 </resources>
