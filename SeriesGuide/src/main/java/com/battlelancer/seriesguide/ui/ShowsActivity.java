@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.accounts.Account;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -28,6 +29,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -60,6 +62,7 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
@@ -101,6 +104,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     private ShowsTabPageAdapter mTabsAdapter;
 
     private ViewPager mViewPager;
+
+    private ProgressDialog mProgressDialog;
 
     public interface InitBundle {
 
@@ -239,6 +244,13 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         super.onStart();
 
         setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_SHOWS_POSITION);
+
+        // check for running show removal worker
+        Fragment f = getSupportFragmentManager().findFragmentByTag(RemoveShowWorkerFragment.TAG);
+        if (f != null && !((RemoveShowWorkerFragment) f).isTaskFinished()) {
+            showProgressDialog();
+        }
+        // now listen to events
         EventBus.getDefault().register(this);
     }
 
@@ -277,7 +289,11 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     @Override
     protected void onStop() {
         super.onStop();
+
+        // stop listening to events
         EventBus.getDefault().unregister(this);
+        // now prevent dialog from restoring itself (we would loose ref to it)
+        hideProgressDialog();
     }
 
     @Override
@@ -417,7 +433,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         protected Integer doInBackground(Void... params) {
             // fetch all available poster paths
             if (mPaths == null) {
-                Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[]{
+                Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[] {
                         Shows.POSTER
                 }, null, null, null);
                 if (shows == null) {
@@ -515,6 +531,35 @@ public class ShowsActivity extends BaseTopShowsActivity implements
             mArtTask.cancel(true);
             mArtTask = null;
         }
+    }
+
+    /**
+     * Called from {@link com.battlelancer.seriesguide.util.RemoveShowWorkerFragment}.
+     */
+    public void onEventMainThread(RemoveShowWorkerFragment.OnRemovingShowEvent event) {
+        showProgressDialog();
+    }
+
+    /**
+     * Called from {@link com.battlelancer.seriesguide.util.RemoveShowWorkerFragment}.
+     */
+    public void onEventMainThread(RemoveShowWorkerFragment.OnShowRemovedEvent event) {
+        hideProgressDialog();
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setCancelable(false);
+        }
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+        mProgressDialog = null;
     }
 
     /**
@@ -679,7 +724,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     };
 
     /**
-     * Special {@link TabStripAdapter} which saves the currently selected page to preferences, so we
+     * Special {@link TabStripAdapter} which saves the currently selected page to preferences, so
+     * we
      * can restore it when the user comes back later.
      */
     public static class ShowsTabPageAdapter extends TabStripAdapter
@@ -716,7 +762,5 @@ public class ShowsActivity extends BaseTopShowsActivity implements
             // save selected tab index
             mPrefs.edit().putInt(ActivitySettings.KEY_ACTIVITYTAB, position).commit();
         }
-
     }
-
 }
