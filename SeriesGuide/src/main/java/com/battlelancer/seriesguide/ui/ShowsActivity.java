@@ -502,6 +502,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         }
     }
 
+    /**
+     * Called if the user adds a show from {@link com.battlelancer.seriesguide.ui.TraktFriendsFragment}.
+     */
     @Override
     public void onAddShow(SearchResult show) {
         TaskManager.getInstance(this).performAddTask(show);
