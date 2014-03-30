@@ -20,7 +20,7 @@ apply plugin: "signing"
 
 jar.baseName = "seriesguide-api"
 group = "com.uwetrottmann.seriesguide"
-version = "1.0.1"
+version = "1.1.0-SNAPSHOT"
 
 // load properties file
 def Properties props = new Properties()
