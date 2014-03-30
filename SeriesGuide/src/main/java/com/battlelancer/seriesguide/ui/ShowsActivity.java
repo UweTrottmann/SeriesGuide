@@ -45,6 +45,7 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
+import com.battlelancer.seriesguide.api.Intents;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.IabHelper;
 import com.battlelancer.seriesguide.billing.IabResult;
@@ -132,6 +133,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         // may launch from a notification, then set last cleared time
         NotificationService.handleDeleteIntent(this, getIntent());
 
+        // handle implicit intents from other apps
+        handleViewIntents();
+
         setUpActionBar();
         setupViews();
         setInitialTab(savedInstanceState, getIntent().getExtras());
@@ -163,6 +167,35 @@ public class ShowsActivity extends BaseTopShowsActivity implements
                     mHelper.queryInventoryAsync(mGotInventoryListener);
                 }
             });
+        }
+    }
+
+    private void handleViewIntents() {
+        String action = getIntent().getAction();
+        if (TextUtils.isEmpty(action) || !getIntent().hasExtra(Intents.EXTRA_TVDBID)) {
+            return;
+        }
+        int itemTvdbId = getIntent().getIntExtra(Intents.EXTRA_TVDBID, 0);
+        if (itemTvdbId <= 0) {
+            return;
+        }
+
+        Intent intent = null;
+
+        // view an episode
+        if (Intents.ACTION_VIEW_EPISODE.equals(action)) {
+            intent = new Intent(this, EpisodesActivity.class)
+                    .putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, itemTvdbId);
+        }
+        // view a show
+        else if (Intents.ACTION_VIEW_SHOW.equals(action)) {
+            intent = new Intent(this, OverviewActivity.class)
+                    .putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, itemTvdbId);
+        }
+
+        if (intent != null) {
+            startActivity(intent);
+            overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
         }
     }
 
