@@ -38,7 +38,8 @@ public class Intents {
      */
     public static Intent buildViewEpisodeIntent(int episodeTvdbId) {
         return new Intent(ACTION_VIEW_EPISODE)
-                .putExtra(EXTRA_TVDBID, episodeTvdbId);
+                .putExtra(EXTRA_TVDBID, episodeTvdbId)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
     }
 
     /**
@@ -48,6 +49,7 @@ public class Intents {
      */
     public static Intent buildViewShowIntent(int showTvdbId) {
         return new Intent(ACTION_VIEW_SHOW)
-                .putExtra(EXTRA_TVDBID, showTvdbId);
+                .putExtra(EXTRA_TVDBID, showTvdbId)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
     }
 }
