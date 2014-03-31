@@ -181,11 +181,10 @@
   <string name="add_all">Pievienot visas</string>
   <string name="dont_add_show">Nepievienojiet</string>
   <string name="add_multiple">Visi seriāli tuvākajā laikā parādīsies jūsu seriālu sarakstā.</string>
-  <string name="add_started">drīzumā parādīsies jūsu seriālu sarakstā.</string>
-  <string name="add_success">veiksmīgi pievienots.</string>
-  <string name="add_error_begin">Neizdevās pievienot \"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">jau ir jūsu seriālu sarakstā.</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_success">%s added successfully.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">Tendences</string>
   <string name="recommended">Ieteikumi</string>
   <string name="library">Library</string>

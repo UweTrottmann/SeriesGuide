@@ -181,11 +181,10 @@
   <string name="add_all">Dodaj vse</string>
   <string name="dont_add_show">Ne dodaj</string>
   <string name="add_multiple">Vse oddaje se bodo v kratkem pojavile v tvojem spisku oddaj.</string>
-  <string name="add_started">se bo kmalu pojavilo na tvoji listi oddaj.</string>
-  <string name="add_success">Uspešno dodano.</string>
-  <string name="add_error_begin">Ne morem dodati \"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">je že na vašem spisku oddaj.</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_success">%s added successfully.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">V porastu</string>
   <string name="recommended">Priporočeno</string>
   <string name="library">Knjižnjica</string>

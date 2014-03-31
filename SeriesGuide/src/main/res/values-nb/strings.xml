@@ -181,11 +181,10 @@
   <string name="add_all">Legg til alle</string>
   <string name="dont_add_show">Ikke Legg til</string>
   <string name="add_multiple">Alle programmer vil vises i programlisten straks.</string>
-  <string name="add_started">vil vises i serielisten om kort tid.</string>
-  <string name="add_success">lagt til.</string>
-  <string name="add_error_begin">Kunne ikke legge til\"</string>
-  <string name="add_error_end">\"</string>
-  <string name="add_already_exists">er allerede i listen.</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_success">%s added successfully.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">Populære</string>
   <string name="recommended">Anbefalte</string>
   <string name="library">Bibliotek</string>

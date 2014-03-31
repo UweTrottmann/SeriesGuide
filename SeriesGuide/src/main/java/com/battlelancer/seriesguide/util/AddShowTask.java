@@ -29,6 +29,7 @@ import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.enumerations.Extended;
 import com.jakewharton.trakt.services.UserService;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,6 +41,20 @@ import timber.log.Timber;
  * if a trakt account is connected.
  */
 public class AddShowTask extends AsyncTask<Void, Integer, Void> {
+
+    public class OnShowAddedEvent {
+        private String message;
+        private int toastLength;
+
+        public OnShowAddedEvent(String message, int toastLength) {
+            this.message = message;
+            this.toastLength = toastLength;
+        }
+
+        public void handle(Context context) {
+            Toast.makeText(context, message, toastLength).show();
+        }
+    }
 
     private static final int ADD_ALREADYEXISTS = 0;
 
@@ -177,33 +192,36 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
     @Override
     protected void onProgressUpdate(Integer... values) {
         if (mIsSilentMode) {
-            Timber.d("Progress toast not shown because in SILENT MODE.");
+            Timber.d("SILENT MODE: do not show progress toast");
             return;
         }
 
+        OnShowAddedEvent event = null;
         switch (values[0]) {
             case ADD_SUCCESS:
-                Toast.makeText(mContext,
-                        "\"" + mCurrentShowName + "\" " + mContext.getString(R.string.add_success),
-                        Toast.LENGTH_SHORT).show();
+                event = new OnShowAddedEvent(
+                        mContext.getString(R.string.add_success, mCurrentShowName),
+                        Toast.LENGTH_SHORT);
                 break;
             case ADD_ALREADYEXISTS:
-                Toast.makeText(
-                        mContext,
-                        "\"" + mCurrentShowName + "\" "
-                                + mContext.getString(R.string.add_already_exists),
-                        Toast.LENGTH_LONG).show();
+                event = new OnShowAddedEvent(
+                        mContext.getString(R.string.add_already_exists, mCurrentShowName),
+                        Toast.LENGTH_LONG
+                );
                 break;
             case ADD_ERROR:
-                Toast.makeText(
-                        mContext,
-                        mContext.getString(R.string.add_error_begin) + mCurrentShowName
-                                + mContext.getString(R.string.add_error_end), Toast.LENGTH_LONG)
-                        .show();
+                event = new OnShowAddedEvent(
+                        mContext.getString(R.string.add_error, mCurrentShowName),
+                        Toast.LENGTH_LONG);
                 break;
             case ADD_OFFLINE:
-                Toast.makeText(mContext, R.string.offline, Toast.LENGTH_LONG).show();
+                event = new OnShowAddedEvent(mContext.getString(R.string.offline),
+                        Toast.LENGTH_LONG);
                 break;
+        }
+
+        if (event != null) {
+            EventBus.getDefault().post(event);
         }
     }
 }

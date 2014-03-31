@@ -181,11 +181,10 @@
   <string name="add_all">הוסף הכל</string>
   <string name="dont_add_show">אל תוסיף</string>
   <string name="add_multiple">כל הסדרות יופיעו ברשימת הסדרות שלך בעוד זמן קצר.</string>
-  <string name="add_started">יופיע ברשימת הסדרות שלך בעוד זמן קצר.</string>
-  <string name="add_success">נוסף בהצלחה.</string>
-  <string name="add_error_begin">ההוספה נכשלה</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">כבר נמצא ברשימת הסדרות שלך</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_success">%s added successfully.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">פופולרי</string>
   <string name="recommended">מומלץ</string>
   <string name="library">ספרייה</string>

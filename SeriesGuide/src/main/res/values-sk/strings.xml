@@ -181,11 +181,10 @@
   <string name="add_all">Pridaj všetky</string>
   <string name="dont_add_show">Nepridať</string>
   <string name="add_multiple">All shows will appear in your show list shortly.</string>
-  <string name="add_started">sa čoskoro zobrazí v zozname seriálov.</string>
-  <string name="add_success">úspešne pridané.</string>
-  <string name="add_error_begin">Nepodarilo sa pridať \"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">už je vo vašom zozname.</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_success">%s added successfully.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">V kurze</string>
   <string name="recommended">Odporúčané</string>
   <string name="library">Knižnica</string>

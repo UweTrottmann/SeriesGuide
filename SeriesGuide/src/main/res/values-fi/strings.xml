@@ -181,11 +181,10 @@
   <string name="add_all">Lisää kaikki</string>
   <string name="dont_add_show">Älä lisää</string>
   <string name="add_multiple">Kaikki ohjelmat ilmaantuvat pian ohjelmalistaasi.</string>
-  <string name="add_started">ilmestyy pian ohjelmaluetteloosi.</string>
-  <string name="add_success">lisätty onnistuneesti.</string>
-  <string name="add_error_begin">Ei voi lisätä ohjelmaa \"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">on jo ohjelmalistassasi.</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_success">%s added successfully.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">Trendit</string>
   <string name="recommended">Suositellut</string>
   <string name="library">Kokoelma</string>
@@ -363,15 +362,15 @@
   <string name="add_to_homescreen">Lisää kotiruudulle</string>
   <string name="search_within_show">Hae ohjelmasta %s</string>
   <string name="web_search">Verkkohaku</string>
-  <string name="extensions">Extensions</string>
-  <string name="action_extensions_configure">Customize extensions</string>
-  <string name="action_extensions_add">Add extension</string>
-  <string name="action_extensions_search">Get more extensions</string>
+  <string name="extensions">Laajennukset</string>
+  <string name="action_extensions_configure">Muokkaa laajennuksia</string>
+  <string name="action_extensions_add">Lisää laajennus</string>
+  <string name="action_extensions_search">Hanki lisää laajennuksia</string>
   <string name="action_extension_settings">Asetukset</string>
   <string name="action_extension_remove">Poista</string>
-  <string name="extension_amazon">Amazon search</string>
-  <string name="description_extension_amazon">Search your local Amazon site</string>
-  <string name="pref_amazon_domain">Amazon site</string>
+  <string name="extension_amazon">Amazon-haku</string>
+  <string name="description_extension_amazon">Etsi paikalliselta Amazon-sivustoltasi</string>
+  <string name="pref_amazon_domain">Amazon-sivusto</string>
   <string-array name="sesorting">
     <item>Uusin ensin</item>
     <item>Vanhin ensin</item>

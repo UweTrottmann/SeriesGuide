@@ -181,11 +181,10 @@
   <string name="add_all">全部加入</string>
   <string name="dont_add_show">請勿新增</string>
   <string name="add_multiple">All shows will appear in your show list shortly.</string>
-  <string name="add_started">將於短期內顯示在您的影集清單中。</string>
-  <string name="add_success">新增成功</string>
-  <string name="add_error_begin">不能新增\"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">已在您的美劇清單中。</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_success">%s added successfully.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">趨勢</string>
   <string name="recommended">推薦</string>
   <string name="library">我的資料庫</string>
