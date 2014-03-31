@@ -182,7 +182,6 @@
   <string name="dont_add_show">Nicht hinzufügen</string>
   <string name="add_multiple">Alle Serien werden in Kürze der Serienliste hinzugefügt.</string>
   <string name="add_started">%s erscheint in Kürze in Ihrer Serien-Liste.</string>
-  <string name="add_success">%s erfolgreich hinzugefügt.</string>
   <string name="add_error">%s konnte nicht hinzugefügt werden.</string>
   <string name="add_already_exists">%s ist bereits in Ihrer Serien-Liste.</string>
   <string name="trending">Beliebt</string>

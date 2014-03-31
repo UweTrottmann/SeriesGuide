@@ -199,10 +199,8 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         OnShowAddedEvent event = null;
         switch (values[0]) {
             case ADD_SUCCESS:
-                event = new OnShowAddedEvent(
-                        mContext.getString(R.string.add_success, mCurrentShowName),
-                        Toast.LENGTH_SHORT);
-                break;
+                // do nothing, user will see show added to show list
+                return;
             case ADD_ALREADYEXISTS:
                 event = new OnShowAddedEvent(
                         mContext.getString(R.string.add_already_exists, mCurrentShowName),

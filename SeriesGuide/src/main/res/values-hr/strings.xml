@@ -182,7 +182,6 @@
   <string name="dont_add_show">Nemoj dodati</string>
   <string name="add_multiple">Sve serije uskoro će se pojaviti na tvom popisu serija.</string>
   <string name="add_started">%s will appear in your show list shortly.</string>
-  <string name="add_success">%s added successfully.</string>
   <string name="add_error">Could not add %s.</string>
   <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">Popularno</string>

@@ -182,7 +182,6 @@
   <string name="dont_add_show">No agregar</string>
   <string name="add_multiple">Todos los programas aparecerán en su lista de programas en breve.</string>
   <string name="add_started">%s will appear in your show list shortly.</string>
-  <string name="add_success">%s added successfully.</string>
   <string name="add_error">Could not add %s.</string>
   <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">Tendencias</string>
