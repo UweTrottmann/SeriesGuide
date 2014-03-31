@@ -45,6 +45,7 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
+import com.battlelancer.seriesguide.api.Intents;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.IabHelper;
 import com.battlelancer.seriesguide.billing.IabResult;
@@ -61,6 +62,8 @@ import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -79,6 +82,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         AddDialogFragment.OnAddShowListener, OnFirstRunDismissedListener {
 
     protected static final String TAG = "Shows";
+
+    public static final int ADD_SHOW_LOADER_ID = 1;
 
     private static final int UPDATE_SUCCESS = 100;
 
@@ -132,6 +137,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         // may launch from a notification, then set last cleared time
         NotificationService.handleDeleteIntent(this, getIntent());
 
+        // handle implicit intents from other apps
+        handleViewIntents();
+
         setUpActionBar();
         setupViews();
         setInitialTab(savedInstanceState, getIntent().getExtras());
@@ -163,6 +171,59 @@ public class ShowsActivity extends BaseTopShowsActivity implements
                     mHelper.queryInventoryAsync(mGotInventoryListener);
                 }
             });
+        }
+    }
+
+    /**
+     * Handles further behavior, if this activity was launched through one of the {@link
+     * Intents} action filters defined in the manifest.
+     */
+    private void handleViewIntents() {
+        String action = getIntent().getAction();
+        if (TextUtils.isEmpty(action)) {
+            return;
+        }
+
+        Intent intent = null;
+
+        // view an episode
+        if (Intents.ACTION_VIEW_EPISODE.equals(action)) {
+            int episodeTvdbId = getIntent().getIntExtra(Intents.EXTRA_EPISODE_TVDBID, 0);
+            if (episodeTvdbId > 0 && EpisodeTools.isEpisodeExists(this, episodeTvdbId)) {
+                // episode exists, display it
+                intent = new Intent(this, EpisodesActivity.class)
+                        .putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeTvdbId);
+            } else {
+                // no such episode, offer to add show
+                int showTvdbId = getIntent().getIntExtra(Intents.EXTRA_SHOW_TVDBID, 0);
+                if (showTvdbId > 0) {
+                    SearchResult show = new SearchResult();
+                    show.tvdbid = showTvdbId;
+                    AddDialogFragment.showAddDialog(show, getSupportFragmentManager());
+                }
+            }
+        }
+        // view a show
+        else if (Intents.ACTION_VIEW_SHOW.equals(action)) {
+            int showTvdbId = getIntent().getIntExtra(Intents.EXTRA_SHOW_TVDBID, 0);
+            if (showTvdbId <= 0) {
+                return;
+            }
+            if (DBUtils.isShowExists(this, showTvdbId)) {
+                // show exists, display it
+                intent = new Intent(this, OverviewActivity.class)
+                        .putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, showTvdbId);
+            } else {
+                // no such show, offer to add it
+                SearchResult show = new SearchResult();
+                show.tvdbid = showTvdbId;
+                AddDialogFragment.showAddDialog(show, getSupportFragmentManager());
+            }
+        }
+
+        if (intent != null) {
+            startActivity(intent);
+            overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
         }
     }
 

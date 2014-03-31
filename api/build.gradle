@@ -20,7 +20,7 @@ apply plugin: "signing"
 
 jar.baseName = "seriesguide-api"
 group = "com.uwetrottmann.seriesguide"
-version = "1.0.1"
+version = "1.1.0-SNAPSHOT"
 
 // load properties file
 def Properties props = new Properties()
@@ -30,6 +30,11 @@ def android = [
         sdk: props["sdk.dir"],
         target: "android-19"
 ]
+
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+}
 
 task generateJavadoc(type: Javadoc) {
     source = sourceSets.main.allJava
