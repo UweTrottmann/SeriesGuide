@@ -206,11 +206,9 @@ public class AddDialogFragment extends DialogFragment {
         public void onLoadFinished(Loader<Show> loader, Show data) {
             showProgressBar(false);
             if (data != null) {
-                SearchResult show = new SearchResult();
-                show.tvdbid = data.tvdbId;
-                show.title = data.title;
-                show.overview = data.overview;
-                populateShowViews(show);
+                mShow.title = data.title;
+                mShow.overview = data.overview;
+                populateShowViews(mShow);
             } else {
                 populateShowViews(null);
             }
