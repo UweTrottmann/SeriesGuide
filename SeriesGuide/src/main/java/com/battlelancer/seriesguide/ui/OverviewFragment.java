@@ -234,8 +234,9 @@ public class OverviewFragment extends SherlockFragment implements
         // If the nav drawer is open, hide action items related to the content
         // view
         boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
-        menu.findItem(R.id.menu_overview_manage_lists).setVisible(!isDrawerOpen);
-        menu.findItem(R.id.menu_overview_share).setVisible(!isDrawerOpen);
+        menu.findItem(R.id.menu_overview_manage_lists)
+                .setVisible(!isDrawerOpen && isEpisodeVisible);
+        menu.findItem(R.id.menu_overview_share).setVisible(!isDrawerOpen && isEpisodeVisible);
         menu.findItem(R.id.menu_overview_search).setVisible(!isDrawerOpen);
     }
 
