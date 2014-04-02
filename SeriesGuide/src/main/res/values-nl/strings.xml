@@ -43,7 +43,7 @@
   <string name="shout">Shout!</string>
   <string name="isspoiler">Spoiler waarschuwing!</string>
   <string name="no_shouts">Wees de eerste die shout!</string>
-  <string name="refresh">Refresh</string>
+  <string name="refresh">Ververs</string>
   <string name="movies_collection">Collectie</string>
   <string name="movies_watchlist">Watchlist</string>
   <string name="watchlist_add">Toevoegen aan watchlist</string>
@@ -58,7 +58,7 @@
   <string name="movie_cast">Cast</string>
   <string name="movie_crew">Filmploeg</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
-  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort">Sorteer films</string>
   <string name="action_movies_sort_title">Titel</string>
   <string name="action_movies_sort_release">Releasedatum</string>
   <string name="shows_with_next">%s met de volgende afleveringen</string>
@@ -181,11 +181,9 @@
   <string name="add_all">Alles toevoegen</string>
   <string name="dont_add_show">Niet toevoegen</string>
   <string name="add_multiple">Alle series worden binnenkort in de serielijst weergegeven.</string>
-  <string name="add_started">zal binnenkort in het series overzicht worden weergegeven.</string>
-  <string name="add_success">succesvol toegevoegd.</string>
-  <string name="add_error_begin">Niet toe te voegen \"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">komt reeds in het serie overzicht voor.</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">Trending</string>
   <string name="recommended">Aanbevolen</string>
   <string name="library">Bibliotheek</string>
@@ -363,14 +361,14 @@
   <string name="add_to_homescreen">Toevoegen aan startscherm</string>
   <string name="search_within_show">Zoek binnen %s</string>
   <string name="web_search">Zoeken op het web</string>
-  <string name="extensions">Extensions</string>
-  <string name="action_extensions_configure">Customize extensions</string>
-  <string name="action_extensions_add">Add extension</string>
-  <string name="action_extensions_search">Get more extensions</string>
+  <string name="extensions">Extensies</string>
+  <string name="action_extensions_configure">Extensies aanpassen</string>
+  <string name="action_extensions_add">Extensie toevoegen</string>
+  <string name="action_extensions_search">Vind meer extensies</string>
   <string name="action_extension_settings">Instellingen</string>
   <string name="action_extension_remove">Verwijderen</string>
-  <string name="extension_amazon">Amazon search</string>
-  <string name="description_extension_amazon">Search your local Amazon site</string>
+  <string name="extension_amazon">Zoeken op Amazon</string>
+  <string name="description_extension_amazon">Zoek uw lokale Amazon site</string>
   <string name="pref_amazon_domain">Amazon site</string>
   <string-array name="sesorting">
     <item>Nieuwste eerst</item>

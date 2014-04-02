@@ -181,11 +181,9 @@
   <string name="add_all">Προσθήκη όλων</string>
   <string name="dont_add_show">Να μην γίνει προσθήκη</string>
   <string name="add_multiple">Όλες οι σειρές θα εμφανιστούν στη λίστα σύντομα.</string>
-  <string name="add_started">Θα εμφανιστεί στην λίστα σας σύντομα.</string>
-  <string name="add_success">Προστέθηκε με επιτυχία.</string>
-  <string name="add_error_begin">Δεν είναι δυνατή η προσθήκη \"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">Βρίσκεται ήδη στη λίστα σας.</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">Τάσεις</string>
   <string name="recommended">Προτεινόμενα</string>
   <string name="library">Βιβλιοθήκη</string>

@@ -181,11 +181,9 @@
   <string name="add_all">Tilføj alle</string>
   <string name="dont_add_show">Tilføj ikke</string>
   <string name="add_multiple">Alle serier vil blive vist i din liste om lidt.</string>
-  <string name="add_started">vil blive vist i din tv-serie oversigt om et øjeblik</string>
-  <string name="add_success">tilføjet korrekt.</string>
-  <string name="add_error_begin">Kunne ikke tilføje \"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">TV-serien eksisterer allerede i din oversigt.</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">Trending</string>
   <string name="recommended">Anbefalet</string>
   <string name="library">Bibliotek</string>

@@ -181,11 +181,9 @@
   <string name="add_all">Добавьте все</string>
   <string name="dont_add_show">Не добавлять</string>
   <string name="add_multiple">Все сериалы скоро появятся в вашем списке.</string>
-  <string name="add_started">скоро появится в списке ваших сериалов</string>
-  <string name="add_success">успешно добавлено.</string>
-  <string name="add_error_begin">Не удалось добавить \"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">уже находится в вашем списке сериалов.</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">Популярные</string>
   <string name="recommended">Рекомендуемые</string>
   <string name="library">Библиотека</string>

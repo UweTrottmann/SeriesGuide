@@ -16,31 +16,28 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import com.battlelancer.seriesguide.enums.NetworkResult;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.util.ShowTools;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.R;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.widget.Toast;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
+import com.battlelancer.seriesguide.util.Utils;
 
 /**
- * Handles removing a show from the show list, ensures it can be removed (its seasons or episodes or
+ * Handles removing a show from the show list, ensures it can be removed (its seasons or episodes
+ * or
  * itself are not in lists).
  */
 public class ConfirmDeleteDialogFragment extends DialogFragment {
+
+    private static final String KEY_SHOW_TVDB_ID = "show_tvdb_id";
 
     /**
      * Dialog to confirm the removal of a show from the database.
@@ -51,7 +48,7 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
         ConfirmDeleteDialogFragment f = new ConfirmDeleteDialogFragment();
 
         Bundle args = new Bundle();
-        args.putInt("showid", showTvdbId);
+        args.putInt(KEY_SHOW_TVDB_ID, showTvdbId);
         f.setArguments(args);
 
         return f;
@@ -60,12 +57,13 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
+
         Utils.trackView(getActivity(), "Delete Dialog");
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final int showTvdbId = getArguments().getInt("showid");
+        final int showTvdbId = getArguments().getInt(KEY_SHOW_TVDB_ID);
 
         // make sure this show isn't added to any lists
         boolean hasListItems = true;
@@ -76,7 +74,7 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
          */
         final Cursor itemsInLists = getActivity().getContentResolver().query(
                 ListItems.CONTENT_WITH_DETAILS_URI,
-                new String[]{
+                new String[] {
                         ListItems.LIST_ITEM_ID
                 },
                 Shows.REF_SHOW_ID + "=" + showTvdbId
@@ -84,7 +82,8 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
                         + ListItems.TYPE + "=" + ListItemTypes.SHOW + " AND "
                         + ListItems.ITEM_REF_ID + "=" + showTvdbId
                         + ")",
-                null, null);
+                null, null
+        );
         if (itemsInLists != null) {
             hasListItems = itemsInLists.getCount() > 0;
             itemsInLists.close();
@@ -92,9 +91,10 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
 
         // determine show title
         final Cursor show = getActivity().getContentResolver().query(Shows.buildShowUri(showTvdbId),
-                new String[]{
+                new String[] {
                         Shows.TITLE
-                }, null, null, null);
+                }, null, null, null
+        );
         String showTitle = getString(R.string.unknown);
         if (show != null) {
             if (show.moveToFirst()) {
@@ -111,49 +111,18 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
         } else {
             builder.setMessage(getString(R.string.confirm_delete, showTitle)).setPositiveButton(
                     getString(R.string.delete_show), new OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    new DeleteShowTask(getActivity()).execute(showTvdbId);
-                }
-            });
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            RemoveShowWorkerFragment f = RemoveShowWorkerFragment.newInstance(
+                                    showTvdbId);
+                            getFragmentManager().beginTransaction()
+                                    .add(f, RemoveShowWorkerFragment.TAG)
+                                    .commit();
+                        }
+                    }
+            );
         }
 
         return builder.create();
-    }
-
-    private static class DeleteShowTask extends AsyncTask<Integer, Void, Integer> {
-
-        private final Context mContext;
-
-        private ProgressDialog mProgressDialog;
-
-        public DeleteShowTask(Context context) {
-            mContext = context;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            mProgressDialog = new ProgressDialog(mContext);
-            mProgressDialog.setCancelable(false);
-            mProgressDialog.show();
-        }
-
-        @Override
-        protected Integer doInBackground(Integer... params) {
-            return ShowTools.get(mContext).removeShow(params[0]);
-        }
-
-        @Override
-        protected void onPostExecute(Integer result) {
-            if (result == NetworkResult.OFFLINE) {
-                Toast.makeText(mContext, R.string.offline, Toast.LENGTH_LONG).show();
-            } else if (result == NetworkResult.ERROR) {
-                Toast.makeText(mContext, R.string.delete_error, Toast.LENGTH_LONG).show();
-            }
-            // hide progress dialog
-            if (mProgressDialog.isShowing()) {
-                mProgressDialog.dismiss();
-            }
-        }
     }
 }

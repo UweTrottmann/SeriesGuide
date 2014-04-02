@@ -181,11 +181,9 @@
   <string name="add_all">Adaugăle pe toate</string>
   <string name="dont_add_show">Don\'t Add</string>
   <string name="add_multiple">Toate emisiunile vor apărea în lista de emisiuni în scurt timp.</string>
-  <string name="add_started">va apărea în lista de emisiuni în scurt timp.</string>
-  <string name="add_success">adăugat cu succes.</string>
-  <string name="add_error_begin">Could not add \"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">este deja în lista de emisiuni.</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">Trending</string>
   <string name="recommended">Recomandat</string>
   <string name="library">Bibliotecă</string>

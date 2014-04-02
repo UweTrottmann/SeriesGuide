@@ -181,11 +181,9 @@
   <string name="add_all">Pridėti visus</string>
   <string name="dont_add_show">Nepridėti</string>
   <string name="add_multiple">Visi serialai netrukus atsiras jūsų serialų sąraše.</string>
-  <string name="add_started">netrukus atsiras jūsų serialų sąraše.</string>
-  <string name="add_success">pridėta sėkmingai.</string>
-  <string name="add_error_begin">Nepavyko pridėti \"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">jau yra jūsų serialų sąraše.</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">Populiarūs</string>
   <string name="recommended">Rekomenduojami</string>
   <string name="library">Biblioteka</string>

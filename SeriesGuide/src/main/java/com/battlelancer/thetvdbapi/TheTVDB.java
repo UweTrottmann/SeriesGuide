@@ -295,18 +295,24 @@ public class TheTVDB {
     }
 
     /**
-     * Get details for one show, identified by the given series TVDb id. Tries to fetch additional
-     * information from trakt.
+     * Get show details from TVDb in the user preferred language ({@link
+     * DisplaySettings#getContentLanguage(android.content.Context)}).
+     */
+    public static Show getShow(Context context, int showTvdbId) throws TvdbException {
+        String language = DisplaySettings.getContentLanguage(context);
+        return downloadAndParseShow(context, showTvdbId, language);
+    }
+
+    /**
+     * Get show details from TVDb. Tries to fetch additional information from trakt.
      *
      * @param language A TVDb language code (see <a href="http://www.thetvdb.com/wiki/index.php/API:languages.xml"
      *                 >TVDb wiki</a>).
      */
     private static Show fetchShow(int showTvdbId, String language, Context context)
             throws TvdbException {
-        // get localized content from TVDb
-        String url = TVDB_API_URL + context.getResources().getString(R.string.tvdb_apikey)
-                + "/series/" + showTvdbId + "/" + (language != null ? language + ".xml" : "");
-        Show show = parseShow(url, context);
+        // get show details from TVDb
+        Show show = downloadAndParseShow(context, showTvdbId, language);
 
         // get some more details from trakt
         TvShow traktShow = null;
@@ -325,16 +331,19 @@ public class TheTVDB {
         show.airtime = TimeTools.parseShowReleaseTime(traktShow.airTime);
         show.country = traktShow.country;
 
+        // try to download the show poster
+        if (Utils.isAllowedLargeDataConnection(context, false)) {
+            fetchArt(show.poster, true, context);
+        }
+
         return show;
     }
 
     /**
-     * Get a show from TVDb. Already tries to download the show poster if there is one.
-     *
-     * @param url API call to get the show.
-     * @return The show wrapped in a {@link Show} object
+     * Get a show from TVDb.
      */
-    private static Show parseShow(String url, final Context context) throws TvdbException {
+    private static Show downloadAndParseShow(final Context context, int showTvdbId, String language)
+            throws TvdbException {
         final Show currentShow = new Show();
         RootElement root = new RootElement("Data");
         Element show = root.getChild("Series");
@@ -419,9 +428,6 @@ public class TheTVDB {
         show.getChild("poster").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 currentShow.poster = body != null ? body.trim() : "";
-                if (Utils.isAllowedLargeDataConnection(context, false)) {
-                    fetchArt(currentShow.poster, true, context);
-                }
             }
         });
         show.getChild("IMDB_ID").setEndTextElementListener(new EndTextElementListener() {
@@ -439,6 +445,9 @@ public class TheTVDB {
             }
         });
 
+        // build TVDb url, get localized content when possible
+        String url = TVDB_API_URL + context.getResources().getString(R.string.tvdb_apikey)
+                + "/series/" + showTvdbId + "/" + (language != null ? language + ".xml" : "");
         downloadAndParse(url, root.getContentHandler(), false);
 
         return currentShow;

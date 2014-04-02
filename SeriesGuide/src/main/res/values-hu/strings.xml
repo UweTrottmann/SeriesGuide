@@ -181,11 +181,9 @@
   <string name="add_all">Add hozzá mindet</string>
   <string name="dont_add_show">Mégse</string>
   <string name="add_multiple">Nemsokára megjelenik az összes sorozat a listában.</string>
-  <string name="add_started">hamarosan megjelenik a sorozatlistában.</string>
-  <string name="add_success">sikeresen hozzáadva.</string>
-  <string name="add_error_begin">Sikertelen hozzáadás: \"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">már a sorozatlistában van.</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">Legnépszerűbb</string>
   <string name="recommended">Ajánlott</string>
   <string name="library">Saját</string>

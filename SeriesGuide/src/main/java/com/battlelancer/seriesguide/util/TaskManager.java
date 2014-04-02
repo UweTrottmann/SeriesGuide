@@ -72,7 +72,7 @@ public class TaskManager {
                 // say title of show
                 SearchResult show = shows.get(0);
                 Toast.makeText(mContext,
-                        "\"" + show.title + "\" " + mContext.getString(R.string.add_started),
+                        mContext.getString(R.string.add_started, show.title),
                         Toast.LENGTH_SHORT).show();
             } else {
                 // generic adding multiple message
@@ -84,14 +84,7 @@ public class TaskManager {
         }
 
         // add the show(s) to a running add task or create a new one
-        boolean isRequiringNewTask;
-        if (!isAddTaskRunning()) {
-            isRequiringNewTask = true;
-        } else {
-            // addTask is still running, try to add to its queue
-            isRequiringNewTask = !mAddTask.addShows(shows);
-        }
-        if (isRequiringNewTask) {
+        if (!isAddTaskRunning() || !mAddTask.addShows(shows)) {
             // ensure this is called on our main thread (AsyncTask needs access to it)
             mHandler.post(new Runnable() {
                 @Override

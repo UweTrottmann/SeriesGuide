@@ -181,11 +181,9 @@
   <string name="add_all">모두 추가</string>
   <string name="dont_add_show">취소</string>
   <string name="add_multiple">모든 쇼가 곧 목록에 표시됩니다.</string>
-  <string name="add_started">가 곧 쇼 목록에 나타납니다.</string>
-  <string name="add_success">성공적으로 추가 되었습니다.</string>
-  <string name="add_error_begin">\"</string>
-  <string name="add_error_end">\"을 추가할 수 없습니다.</string>
-  <string name="add_already_exists">이미 쇼 목록에 있습니다.</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">트렌드</string>
   <string name="recommended">추천</string>
   <string name="library">라이브러리</string>
