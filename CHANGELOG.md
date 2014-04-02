@@ -8,6 +8,13 @@ All dates are in the European Central timezone.
 Version 13 *(in development)*
 -----------------------------
 
+#### 13-beta5 *(2014-04-02)*
+
+* TWEAK Always show fast scroll bar when appropriate to allow easy jumping inside of lists.
+* TWEAK Do not show '<show> was successfully added' toasts anymore. If there was an error adding a show it will still display, but only if the app is in the foreground.
+* FIX 'Manage Lists' and 'Share' action were shown in overview if there was no episode.
+* NOTICE New [Extensions API](https://github.com/UweTrottmann/SeriesGuide/wiki/Extension-API) release.
+
 #### 13-beta4 *(2014-03-27)*
 
 * TWEAK Add all remaining Amazon domains.
