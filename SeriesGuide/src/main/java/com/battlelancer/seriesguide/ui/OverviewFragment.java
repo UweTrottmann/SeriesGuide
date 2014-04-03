@@ -107,7 +107,6 @@ public class OverviewFragment extends SherlockFragment implements
     private String mShowTitle;
 
     private View mContainerShow;
-    private View mDividerShow;
     private View mSpacerShow;
     private LinearLayout mContainerActions;
 
@@ -142,7 +141,6 @@ public class OverviewFragment extends SherlockFragment implements
             }
         });
         mContainerShow = v.findViewById(R.id.containerOverviewShow);
-        mDividerShow = v.findViewById(R.id.dividerHorizontalOverviewShow);
         mSpacerShow = v.findViewById(R.id.spacerOverviewShow);
         mContainerActions = (LinearLayout) v.findViewById(R.id.containerOverviewActions);
 
@@ -160,7 +158,6 @@ public class OverviewFragment extends SherlockFragment implements
 
         // do not display show info header in multi pane layout
         mContainerShow.setVisibility(multiPane ? View.GONE : View.VISIBLE);
-        mDividerShow.setVisibility(multiPane ? View.GONE : View.VISIBLE);
         mSpacerShow.setVisibility(multiPane ? View.VISIBLE : View.GONE);
 
         getLoaderManager().initLoader(SHOW_LOADER_ID, null, this);
@@ -818,11 +815,8 @@ public class OverviewFragment extends SherlockFragment implements
         }
         mShowCursor = show;
 
-        // title
-        mShowTitle = show.getString(ShowQuery.SHOW_TITLE);
-        ((TextView) getView().findViewById(R.id.seriesname)).setText(mShowTitle);
-
         // set show title in action bar
+        mShowTitle = show.getString(ShowQuery.SHOW_TITLE);
         final ActionBar actionBar = getSherlockActivity().getSupportActionBar();
         actionBar.setTitle(mShowTitle);
 

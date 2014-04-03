@@ -51,34 +51,23 @@
                     android:nextFocusDown="@+id/checkinButton">
 
                     <TextView
-                        android:id="@+id/seriesname"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/default_padding"
-                        android:layout_marginRight="@dimen/default_padding"
-                        android:ellipsize="marquee"
-                        android:textAppearance="@style/TextAppearance.Large.Light"
-                        tools:text="How I Met Your Mother" />
-
-                    <TextView
                         android:id="@+id/showStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:layout_below="@id/seriesname"
                         android:layout_marginLeft="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
-                        android:textAppearance="@style/TextAppearance.Small"
+                        android:textAppearance="@style/TextAppearance"
                         tools:text="@string/show_isalive" />
 
                     <TextView
                         android:id="@+id/showmeta"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/seriesname"
+                        android:layout_below="@id/showStatus"
+                        android:layout_marginLeft="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
-                        android:layout_toRightOf="@+id/showStatus"
-                        android:textAppearance="@style/TextAppearance.Small"
+                        android:textAppearance="@style/TextAppearance"
                         tools:text="Tue 5:00 AM on CBS" />
                 </RelativeLayout>
 
@@ -99,10 +88,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="8dp"
                 android:visibility="gone" />
-
-            <include
-                android:id="@+id/dividerHorizontalOverviewShow"
-                layout="@layout/divider_horizontal" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -206,7 +191,6 @@
                         android:id="@+id/episode_meta_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_padding"
                         android:orientation="vertical">
 
                         <include layout="@layout/ratingbar" />
