@@ -27,8 +27,18 @@
         <item name="android:textColor">?attr/textColorSgDefault</item>
     </style>
 
+    <style name="TextAppearance.XSmall.Condensed">
+        <item name="android:textAllCaps" tools:targetApi="ice_cream_sandwich">true</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
+    </style>
+
     <style name="TextAppearance.XSmall.Dim">
         <item name="android:textColor">?attr/textColorSgDim</item>
+    </style>
+
+    <style name="TextAppearance.XSmall.Dim.Condensed">
+        <item name="android:textAllCaps" tools:targetApi="ice_cream_sandwich">true</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
     </style>
 
     <style name="TextAppearance.Small">
