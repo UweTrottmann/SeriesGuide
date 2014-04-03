@@ -35,7 +35,6 @@
         <item name="textColorSgDim">@color/text_dim</item>
         <item name="textColorSgActionBar">@color/text_default</item>
         <item name="colorAccent">@color/accent_primary</item>
-        <item name="colorOverlay">@color/overlay</item>
         <item name="colorBackgroundDim">@color/background_dim</item>
         <item name="colorSeparator">@color/separator</item>
         <item name="colorDivider">@color/divider</item>
@@ -72,6 +71,7 @@
         <item name="drawableSettings">@drawable/ic_action_settings</item>
         <item name="drawableHelp">@drawable/ic_action_help</item>
         <item name="drawableBackgroundDrawerItem">@drawable/background_drawer_item</item>
+        <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
 
     </style>
 
@@ -105,7 +105,6 @@
         <item name="textColorSgDim">@color/text_dim</item>
         <item name="textColorSgActionBar">@color/text_default</item>
         <item name="colorAccent">@color/accent_primary_android</item>
-        <item name="colorOverlay">@color/overlay</item>
         <item name="colorBackgroundDim">@color/background_dim</item>
         <item name="colorSeparator">@color/separator</item>
         <item name="colorDivider">@color/divider</item>
@@ -139,6 +138,7 @@
         <item name="drawableSettings">@drawable/ic_action_settings</item>
         <item name="drawableHelp">@drawable/ic_action_help</item>
         <item name="drawableBackgroundDrawerItem">@drawable/background_drawer_item_holo</item>
+        <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
 
     </style>
 
@@ -184,7 +184,6 @@
         <item name="textColorSgDim">@color/text_dim_light</item>
         <item name="textColorSgActionBar">@color/text_default_inverse</item>
         <item name="colorAccent">@color/accent_primary</item>
-        <item name="colorOverlay">@color/overlay_inverse</item>
         <item name="colorBackgroundDim">@color/background_dim_inverse</item>
         <item name="colorSeparator">@color/separator_inverse</item>
         <item name="colorDivider">@color/divider_inverse</item>
@@ -221,6 +220,7 @@
         <item name="drawableSettings">@drawable/ic_action_settings_inverse</item>
         <item name="drawableHelp">@drawable/ic_action_help_inverse</item>
         <item name="drawableBackgroundDrawerItem">@drawable/background_drawer_item_light</item>
+        <item name="drawableBackgroundGradient">@drawable/background_gradient_light</item>
 
         <!-- Remove default action bar shadow -->
         <item name="android:windowContentOverlay">@null</item>
