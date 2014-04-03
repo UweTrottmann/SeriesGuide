@@ -39,6 +39,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -75,8 +76,6 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         setContentView(R.layout.episode_pager);
         setupNavDrawer();
 
-        setupActionBar();
-
         setupViews();
     }
 
@@ -92,10 +91,10 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         }
     }
 
-    private void setupActionBar() {
+    private void setupActionBar(String showTitle) {
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(showTitle);
     }
 
     private void setupViews() {
@@ -110,7 +109,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         // get show and season id, poster path
         final Cursor episode = getContentResolver().query(
                 Episodes.buildEpisodeWithShowUri(String.valueOf(episodeId)), new String[]{
-                Seasons.REF_SEASON_ID, Shows.POSTER, Shows.REF_SHOW_ID
+                Seasons.REF_SEASON_ID, Shows.POSTER, Shows.REF_SHOW_ID, Shows.TITLE
         }, null, null, null);
         if (episode == null || !episode.moveToFirst()) {
             // nothing to display
@@ -120,6 +119,8 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
             finish();
             return;
         }
+
+        setupActionBar(episode.getString(3));
 
         // set show poster as background
         ImageView background = (ImageView) findViewById(R.id.background);
@@ -158,7 +159,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         // setup adapter
         EpisodePagerAdapter adapter = new EpisodePagerAdapter(this, getSupportFragmentManager(),
-                episodes, true);
+                episodes);
 
         // setup view pager
         ViewPager pager = (ViewPager) findViewById(R.id.pagerEpisodeDetails);
@@ -246,20 +247,16 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         private Context mContext;
 
-        private boolean mIsShowingShowLink;
-
-        public EpisodePagerAdapter(Context context, FragmentManager fm, ArrayList<Episode> episodes,
-                boolean isShowingShowLink) {
+        public EpisodePagerAdapter(Context context, FragmentManager fm,
+                ArrayList<Episode> episodes) {
             super(fm);
             mEpisodes = episodes;
             mContext = context;
-            mIsShowingShowLink = isShowingShowLink;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return EpisodeDetailsFragment.newInstance(mEpisodes.get(position).episodeId, false,
-                    mIsShowingShowLink);
+            return EpisodeDetailsFragment.newInstance(mEpisodes.get(position).episodeId, false);
         }
 
         @Override
