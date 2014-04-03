@@ -16,19 +16,14 @@
   ~ limitations under the License.
   -->
 
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- The navigation drawer -->
-    <ListView
-        android:id="@+id/left_drawer"
-        android:layout_width="@dimen/slidingmenu_width"
-        android:layout_height="match_parent"
-        android:layout_gravity="left"
-        android:background="?attr/colorBackgroundDrawer"
-        android:choiceMode="singleChoice"
-        android:clipToPadding="@bool/gridClipToPadding"
-        android:fitsSystemWindows="@bool/sgFitSystemWindows"
-        android:listSelector="@color/transparent"
-        android:paddingTop="?actionBarSize" />
+    <item android:state_focused="true"  android:state_pressed="true"  android:drawable="@drawable/list_selector_background_transition_sg" />
+    <item android:state_focused="false" android:state_pressed="true"  android:drawable="@drawable/list_selector_background_transition_sg" />
+    <item android:state_focused="true"                                android:drawable="@drawable/list_focused_sg" />
 
-</merge>
+    <item android:state_activated="true" android:drawable="@drawable/list_pressed_holo_dark" />
+
+    <item android:drawable="@color/background_navbar_lighter_inverse" />
+
+</selector>
