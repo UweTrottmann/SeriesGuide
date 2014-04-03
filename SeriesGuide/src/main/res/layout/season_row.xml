@@ -66,8 +66,6 @@
         android:layout_toLeftOf="@id/imageViewContextMenu"
         android:layout_toRightOf="@id/imageViewSeasonSkipped"
         android:paddingBottom="@dimen/default_padding"
-
-        android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.XSmall"
         tools:text="10 episodes not watched yet" />
 

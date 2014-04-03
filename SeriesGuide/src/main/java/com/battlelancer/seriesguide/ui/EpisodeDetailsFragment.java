@@ -111,7 +111,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
 
     @InjectView(R.id.textViewEpisodeTitle) TextView mTitle;
     @InjectView(R.id.textViewEpisodeDescription) TextView mDescription;
-    @InjectView(R.id.textViewEpisodeShowTitle) TextView mShowTitleView;
     @InjectView(R.id.textViewEpisodeReleaseTime) TextView mReleaseTime;
     @InjectView(R.id.textViewEpisodeReleaseDay) TextView mReleaseDay;
     @InjectView(R.id.textViewEpisodeLastEdit) TextView mLastEdit;
@@ -151,22 +150,16 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
          * Boolean extra.
          */
         String DISPLAY_POSTER_BACKGROUND = "showposter";
-
-        /**
-         * Boolean extra.
-         */
-        String DISPLAY_SHOW_LINK = "showlink";
     }
 
     public static EpisodeDetailsFragment newInstance(int episodeId,
-            boolean isDisplayPosterBackground, boolean isDisplayShowLink) {
+            boolean isDisplayPosterBackground) {
         EpisodeDetailsFragment f = new EpisodeDetailsFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
         args.putInt(InitBundle.EPISODE_TVDBID, episodeId);
         args.putBoolean(InitBundle.DISPLAY_POSTER_BACKGROUND, isDisplayPosterBackground);
-        args.putBoolean(InitBundle.DISPLAY_SHOW_LINK, isDisplayShowLink);
         f.setArguments(args);
 
         return f;
@@ -284,10 +277,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
         return getArguments().getInt(InitBundle.EPISODE_TVDBID);
     }
 
-    private boolean isShowingShowLink() {
-        return getArguments().getBoolean(InitBundle.DISPLAY_SHOW_LINK);
-    }
-
     /**
      * If episode was watched, flags as unwatched. Otherwise, flags as watched.
      */
@@ -368,26 +357,8 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
         mTitle.setText(mEpisodeTitle);
         mDescription.setText(cursor.getString(DetailsQuery.OVERVIEW));
 
-        // show title button
+        // show title
         mShowTitle = cursor.getString(DetailsQuery.SHOW_TITLE);
-        if (!isShowingShowLink()) {
-            mShowTitleView.setVisibility(View.GONE);
-        } else {
-            mShowTitleView.setVisibility(View.VISIBLE);
-            mShowTitleView.setText(mShowTitle);
-            mShowTitleView.setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
-                    Intent upIntent = new Intent(getActivity(), OverviewActivity.class);
-                    upIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, mShowTvdbId);
-                    upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                            | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(upIntent);
-                    getActivity().overridePendingTransition(R.anim.fragment_slide_right_enter,
-                            R.anim.fragment_slide_right_exit);
-                    getActivity().finish();
-                }
-            });
-        }
 
         // start loading show poster background
         if (getArguments().getBoolean(InitBundle.DISPLAY_POSTER_BACKGROUND)) {
