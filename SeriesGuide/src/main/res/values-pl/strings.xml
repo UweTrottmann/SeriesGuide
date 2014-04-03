@@ -181,9 +181,9 @@
   <string name="add_all">Dodaj wszystkie</string>
   <string name="dont_add_show">Nie dodawaj</string>
   <string name="add_multiple">Seriale za chwilę zostaną dodane do listy.</string>
-  <string name="add_started">%s will appear in your show list shortly.</string>
-  <string name="add_error">Could not add %s.</string>
-  <string name="add_already_exists">%s is already in your show list.</string>
+  <string name="add_started">%s za chwilę zostanie dodany do listy.</string>
+  <string name="add_error">Nie można dodać %s.</string>
+  <string name="add_already_exists">%s jest już na liście seriali.</string>
   <string name="trending">Trendy</string>
   <string name="recommended">Zalecane</string>
   <string name="library">Biblioteka</string>
@@ -361,15 +361,15 @@
   <string name="add_to_homescreen">Dodaj do pulpitu</string>
   <string name="search_within_show">Szukaj w %s</string>
   <string name="web_search">Wyszukiwarka</string>
-  <string name="extensions">Extensions</string>
-  <string name="action_extensions_configure">Customize extensions</string>
-  <string name="action_extensions_add">Add extension</string>
-  <string name="action_extensions_search">Get more extensions</string>
+  <string name="extensions">Rozszerzenia</string>
+  <string name="action_extensions_configure">Dostosuj rozszerzenia</string>
+  <string name="action_extensions_add">Dodaj rozszerzenia</string>
+  <string name="action_extensions_search">Pobierz więcej rozszerzeń</string>
   <string name="action_extension_settings">Ustawienia</string>
   <string name="action_extension_remove">Usuń</string>
-  <string name="extension_amazon">Amazon search</string>
-  <string name="description_extension_amazon">Search your local Amazon site</string>
-  <string name="pref_amazon_domain">Amazon site</string>
+  <string name="extension_amazon">Wyszukiwanie na Amazon</string>
+  <string name="description_extension_amazon">Szukaj na lokalnej witrynie Amazon</string>
+  <string name="pref_amazon_domain">Witryna Amazon</string>
   <string-array name="sesorting">
     <item>Najpierw najnowsze</item>
     <item>Najpierw najstarsze</item>

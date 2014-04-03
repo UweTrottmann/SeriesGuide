@@ -43,7 +43,7 @@
   <string name="shout">Zakřičet!</string>
   <string name="isspoiler">Vyzrazení děje!</string>
   <string name="no_shouts">Buďte první, kdo zakřičí!</string>
-  <string name="refresh">Refresh</string>
+  <string name="refresh">Obnovit</string>
   <string name="movies_collection">Sbírka</string>
   <string name="movies_watchlist">Chci vidět</string>
   <string name="watchlist_add">Přidat do seznamu Chci vidět</string>
@@ -181,9 +181,9 @@
   <string name="add_all">Přidat vše</string>
   <string name="dont_add_show">Nepřidávat</string>
   <string name="add_multiple">Všechny seriály se brzy objeví ve Vašem seznamu pořadů.</string>
-  <string name="add_started">%s will appear in your show list shortly.</string>
-  <string name="add_error">Could not add %s.</string>
-  <string name="add_already_exists">%s is already in your show list.</string>
+  <string name="add_started">%s se brzy objeví ve Vašem seznamu pořadů.</string>
+  <string name="add_error">Nelze přidat %s.</string>
+  <string name="add_already_exists">%s už je ve Vašem seznamu pořadů.</string>
   <string name="trending">V kurzu</string>
   <string name="recommended">Doporučené</string>
   <string name="library">Knihovna</string>
@@ -205,7 +205,7 @@
   <string name="hexagon_setup_complete">Nastavení kompletní</string>
   <string name="hexagon_priority_choice_required">Některé ze seriálů už jsou v cloudu. Kterou verzi preferujete?</string>
   <string name="hexagon_priority_local">Na tomto zařízení</string>
-  <string name="hexagon_priority_cloud">Do cloudu</string>
+  <string name="hexagon_priority_cloud">V cloudu</string>
   <string name="hexagon_priority_select">Vybrat verzi</string>
   <string name="connect_trakt">Připojit trakt.tv</string>
   <string name="connect_trakt_done">Připojeno k trakt.tv!</string>
@@ -361,15 +361,15 @@
   <string name="add_to_homescreen">Přidat na domovskou obrazovku</string>
   <string name="search_within_show">Hledat v %s</string>
   <string name="web_search">Webové vyhledávání</string>
-  <string name="extensions">Extensions</string>
-  <string name="action_extensions_configure">Customize extensions</string>
-  <string name="action_extensions_add">Add extension</string>
-  <string name="action_extensions_search">Get more extensions</string>
+  <string name="extensions">Rozšíření</string>
+  <string name="action_extensions_configure">Přispůsobení rozšířeních</string>
+  <string name="action_extensions_add">Přidat rozšíření</string>
+  <string name="action_extensions_search">Získat další rozšíření</string>
   <string name="action_extension_settings">Nastavení</string>
   <string name="action_extension_remove">Odstranit</string>
-  <string name="extension_amazon">Amazon search</string>
-  <string name="description_extension_amazon">Search your local Amazon site</string>
-  <string name="pref_amazon_domain">Amazon site</string>
+  <string name="extension_amazon">Vyhledávání na Amazonu</string>
+  <string name="description_extension_amazon">Vyhledávání na místní síti Amazonu</string>
+  <string name="pref_amazon_domain">Síť Amazon</string>
   <string-array name="sesorting">
     <item>Od nejnovější</item>
     <item>Od nejstarší</item>
