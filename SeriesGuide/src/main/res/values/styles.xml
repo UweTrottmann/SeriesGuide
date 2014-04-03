@@ -51,13 +51,15 @@
     </style>
 
     <style name="TextAppearance.Small.Highlight">
-        <item name="android:textColor">@color/text_blue</item>
         <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="TextAppearance.Small.Highlight.Blue">
+        <item name="android:textColor">@color/text_blue</item>
     </style>
 
     <style name="TextAppearance.Small.Highlight.Red">
         <item name="android:textColor">@color/text_red</item>
-        <item name="android:textStyle">italic</item>
     </style>
 
     <style name="TextAppearance.Small.Dim">

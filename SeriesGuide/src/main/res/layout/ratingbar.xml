@@ -121,7 +121,7 @@
             android:layout_below="@+id/textViewRatingsTraktUserLabel"
             android:layout_toRightOf="@+id/dividerRatingsVertical"
             android:text="@string/norating"
-            android:textAppearance="@style/TextAppearance.Small" />
+            android:textAppearance="@style/TextAppearance.Small.Highlight" />
     </RelativeLayout>
 
 </RelativeLayout>

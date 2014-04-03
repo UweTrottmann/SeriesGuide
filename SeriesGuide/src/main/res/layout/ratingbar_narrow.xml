@@ -115,6 +115,6 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance.Small" />
+        android:textAppearance="@style/TextAppearance.Small.Highlight" />
 
 </RelativeLayout>
