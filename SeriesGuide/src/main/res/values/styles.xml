@@ -87,7 +87,6 @@
 
     <style name="TextAppearance.ActionBar" parent="TextAppearance.Sherlock.Widget.ActionBar.Title">
         <item name="android:textColor">?attr/textColorSgActionBar</item>
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
     </style>
 
     <style name="TextAppearance.Large.Light">
