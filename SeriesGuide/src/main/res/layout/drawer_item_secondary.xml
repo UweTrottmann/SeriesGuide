@@ -7,10 +7,10 @@
 
     <ImageView
         android:id="@+id/menu_icon"
-        android:layout_width="40dp"
+        android:layout_width="48dp"
         android:layout_height="48dp"
-        android:padding="@dimen/default_padding"
-        android:src="@drawable/ic_launcher" />
+        android:padding="12dp"
+        tools:src="@drawable/ic_action_settings" />
 
     <TextView
         android:id="@+id/menu_title"
