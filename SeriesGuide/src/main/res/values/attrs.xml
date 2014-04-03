@@ -18,12 +18,13 @@
     <attr name="colorDivider" format="reference|color" />
     <attr name="colorTabStripText" format="reference|color" />
     <attr name="colorTabStripUnderline" format="reference|color" />
-    <attr name="colorNavDrawerBackground" format="reference|color" />
+    <attr name="colorBackgroundDrawer" format="reference|color" />
 
     <!-- Drawables -->
     <attr name="drawableAddIcon" format="reference" />
     <attr name="drawableAddShow" format="reference" />
     <attr name="drawableArrowUp" format="reference" />
+    <attr name="drawableBackgroundDrawerItem" format="reference" />
     <attr name="drawableCardBackground" format="reference" />
     <attr name="drawableCancel" format="reference" />
     <attr name="drawableCheckin" format="reference" />
