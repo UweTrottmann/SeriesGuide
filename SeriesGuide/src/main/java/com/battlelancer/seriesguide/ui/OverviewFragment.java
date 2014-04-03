@@ -30,7 +30,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -40,8 +39,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
-import butterknife.ButterKnife;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
@@ -92,8 +91,6 @@ public class OverviewFragment extends SherlockFragment implements
     private static final int ACTIONS_LOADER_ID = 102;
 
     private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
-
-    private static final int CONTEXT_CREATE_CALENDAR_EVENT_ID = 201;
 
     private Handler mHandler = new Handler();
 
@@ -192,26 +189,6 @@ public class OverviewFragment extends SherlockFragment implements
         }
         if (mHandler != null) {
             mHandler.removeCallbacks(mEpisodeActionsRunnable);
-        }
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-            ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-        menu.add(0, CONTEXT_CREATE_CALENDAR_EVENT_ID, 0, R.string.addtocalendar);
-    }
-
-    @Override
-    public boolean onContextItemSelected(android.view.MenuItem item) {
-        switch (item.getItemId()) {
-            case CONTEXT_CREATE_CALENDAR_EVENT_ID: {
-                onAddCalendarEvent();
-                return true;
-            }
-            default:
-                return super.onContextItemSelected(item);
         }
     }
 
@@ -626,11 +603,24 @@ public class OverviewFragment extends SherlockFragment implements
 
             // button bar menu
             View menuButton = buttons.findViewById(R.id.imageButtonBarMenu);
-            registerForContextMenu(menuButton);
             menuButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getActivity().openContextMenu(v);
+                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+                    popupMenu.getMenuInflater().inflate(R.menu.episode_overflow_menu,
+                            popupMenu.getMenu());
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(android.view.MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.menu_action_episode_calendar:
+                                    onAddCalendarEvent();
+                                    return true;
+                            }
+                            return false;
+                        }
+                    });
+                    popupMenu.show();
                 }
             });
 
