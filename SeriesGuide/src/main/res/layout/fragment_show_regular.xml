@@ -14,7 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="208dp"
             android:layout_marginTop="@dimen/default_padding"
-            android:layout_marginBottom="@dimen/default_padding"
             android:background="?attr/drawableCardBackground">
 
             <FrameLayout
@@ -37,8 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="205dp"
                 android:layout_toRightOf="@+id/containerShowPoster"
-                android:scaleType="centerCrop"
-                tools:src="@color/overlay" />
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/textViewShowStatus"
