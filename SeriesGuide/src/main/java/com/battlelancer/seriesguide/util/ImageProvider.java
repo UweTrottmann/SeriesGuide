@@ -116,7 +116,6 @@ public class ImageProvider {
                         // evict our entire thumbnail cache
                         Timber.d("evicting entire thumbnail cache");
                         mCache.evictAll();
-
                     } else if (level >= TRIM_MEMORY_BACKGROUND) { // 40
                         // Entering list of cached background apps; evict oldest
                         // half of our thumbnail cache
@@ -158,11 +157,16 @@ public class ImageProvider {
     /**
      * Sets the image bitmap, either directly from cache or loads it asynchronously from external
      * storage.
+     *
+     * <p> If the image path is empty will clear the image view. If the image could not be
+     * retrieved, will show a placeholder.
+     *
+     * @param loadThumbnail Will load a down-sized version of the image requested.
      */
     public void loadImage(ImageView imageView, String imagePath, boolean loadThumbnail) {
         if (TextUtils.isEmpty(imagePath)) {
             // there is no image available
-            setPlaceholderToImageView(imageView);
+            setNothingToImageView(imageView);
             return;
         }
 
@@ -358,6 +362,10 @@ public class ImageProvider {
         imageView.setImageBitmap(bitmap);
     }
 
+    private void setNothingToImageView(ImageView imageView) {
+        imageView.setImageBitmap(null);
+    }
+
     public class ImageLoaderTask extends AsyncTask<String, Void, Bitmap> {
 
         private ImageView mImageView;
@@ -388,7 +396,6 @@ public class ImageProvider {
                 mImageView.setTag(null);
             }
         }
-
     }
 
     public static class ImageCache extends LruCache<String, Bitmap> {
@@ -406,6 +413,5 @@ public class ImageProvider {
                 return value.getRowBytes() * value.getHeight();
             }
         }
-
     }
 }
