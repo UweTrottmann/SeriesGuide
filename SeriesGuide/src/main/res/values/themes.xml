@@ -22,18 +22,16 @@
 
         <!-- Action bar (ABS) -->
         <item name="actionBarStyle">@style/ActionBar</item>
-        <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
         <item name="actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
         <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
-        <item name="actionDropDownStyle">@style/DropDownNav</item>
 
         <!-- Colors -->
         <item name="textColorSgDefault">@color/text_default</item>
         <item name="textColorSgPrimary">@color/text_primary_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
-        <item name="textColorSgGreen">@color/green_bright</item>
+        <item name="textColorSgGreen">@color/green_dark</item>
         <item name="textColorSgDim">@color/text_dim</item>
-        <item name="textColorSgActionBar">@color/text_default</item>
+        <item name="textColorSgActionBar">@color/text_primary_sg</item>
         <item name="colorAccent">@color/accent_primary</item>
         <item name="colorBackgroundDim">@color/background_dim</item>
         <item name="colorSeparator">@color/separator</item>
@@ -101,7 +99,7 @@
         <item name="textColorSgDefault">@color/text_default</item>
         <item name="textColorSgPrimary">@color/text_primary_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
-        <item name="textColorSgGreen">@color/green_bright</item>
+        <item name="textColorSgGreen">@color/green_dark</item>
         <item name="textColorSgDim">@color/text_dim</item>
         <item name="textColorSgActionBar">@color/text_default</item>
         <item name="colorAccent">@color/accent_primary_android</item>
@@ -144,9 +142,7 @@
 
     <style name="AndroidBaseTheme" parent="Theme.Sherlock">
 
-        <!-- System widgets (native) -->
-        <item name="android:buttonStyle">@style/Widget.Android.Button</item>
-        <item name="android:imageButtonStyle">@style/Widget.Android.ImageButton</item>
+        <!-- Scheduled for removal (when dropping all pre-v11 styles) -->
 
     </style>
 
@@ -171,10 +167,8 @@
 
         <!-- Action bar (ABS) -->
         <item name="actionBarStyle">@style/ActionBar.Light</item>
-        <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
         <item name="actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
         <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
-        <item name="actionDropDownStyle">@style/DropDownNav.Light</item>
 
         <!-- Colors -->
         <item name="textColorSgDefault">@color/text_default_inverse</item>

@@ -225,8 +225,8 @@
 
     <!-- ABS -->
     <style name="ActionBar" parent="Widget.Sherlock.ActionBar">
-        <item name="background">@drawable/sg_actionbar_background</item>
-        <item name="android:background">@drawable/sg_actionbar_background</item>
+        <item name="background">@drawable/actionbar_background_sg</item>
+        <item name="android:background">@drawable/actionbar_background_sg</item>
         <item name="titleTextStyle">@style/TextAppearance.ActionBar</item>
         <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/TextAppearance.ActionBar</item>
     </style>
@@ -236,24 +236,12 @@
         <item name="android:background">@null</item>
     </style>
 
-    <style name="ActionBarTabStyle" parent="Widget.Sherlock.ActionBar.TabBar">
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:background">@drawable/tab_indicator</item>
-        <item name="android:paddingLeft">16dip</item>
-        <item name="android:paddingRight">16dip</item>
-    </style>
-
     <style name="ActionBarTabTextStyle" parent="Widget.Sherlock.ActionBar.TabText">
         <item name="android:textColor">?attr/textColorSgActionBar</item>
     </style>
 
     <style name="DropDownListView" parent="Widget.Sherlock.ListView.DropDown">
         <item name="android:listSelector">?custom_list_selector</item>
-    </style>
-
-    <style name="DropDownNav" parent="@style/Widget.Sherlock.Spinner.DropDown.ActionBar">
-        <item name="android:background">@drawable/spinner_background_ab_sg</item>
-        <item name="android:dropDownSelector">?custom_list_selector</item>
     </style>
 
     <!-- ActionBar Spinner -->
@@ -408,21 +396,8 @@
 
     <!-- ABS -->
     <style name="ActionBarDark" parent="Widget.Sherlock.ActionBar">
-        <item name="background">@drawable/sg_actionbar_background</item>
-        <item name="android:background">@drawable/sg_actionbar_background</item>
-    </style>
-
-    <!-- Buttons -->
-    <style name="Widget.Android.Button" parent="android:Widget.Button">
-        <item name="android:background">@drawable/btn_default_holo_dark</item>
-        <item name="android:textAppearance">@style/TextAppearance.Medium</item>
-        <item name="android:textColor">@color/text_primary_sg</item>
-        <item name="android:minHeight">48dip</item>
-        <item name="android:minWidth">64dip</item>
-    </style>
-
-    <style name="Widget.Android.ImageButton" parent="android:Widget.ImageButton">
-        <item name="android:background">@drawable/btn_default_holo_dark</item>
+        <item name="background">@drawable/actionbar_background_dark</item>
+        <item name="android:background">@drawable/actionbar_background_dark</item>
     </style>
 
     <!-- ////////////////////////////////////////////// -->
@@ -434,7 +409,7 @@
     <!-- Buttons -->
     <!-- pre v11 -->
     <style name="Widget.SeriesGuide.Light.CheckBox" parent="Widget.SeriesGuide.CheckBox">
-        <item name="android:button">@drawable/btn_check_holo_light</item>
+        <item name="android:button">@drawable/btn_check_sg_light</item>
     </style>
 
     <!-- pre v11 -->
@@ -453,12 +428,6 @@
     <style name="ActionBar.Light" parent="Widget.Sherlock.Light.ActionBar.Solid">
         <item name="titleTextStyle">@style/TextAppearance.ActionBar</item>
         <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/TextAppearance.ActionBar</item>
-    </style>
-
-    <!-- ActionBar Spinner -->
-    <style name="DropDownNav.Light" parent="@style/Widget.Sherlock.Light.Spinner.DropDown.ActionBar">
-        <item name="android:background">@drawable/spinner_background_ab_sg</item>
-        <item name="android:dropDownSelector">?custom_list_selector</item>
     </style>
 
 </resources>

@@ -20,15 +20,6 @@
     <!-- ////////////////////////////////////////////// -->
 
 
-    <!-- Dark styles -->
-    <style name="Widget.Android.ImageButton" parent="android:Widget.Holo.ImageButton"/>
-
-    <!-- Buttons -->
-    <style name="Widget.Android.Button" parent="android:Widget.Holo.Button"/>
-
-    <!-- ////////////////////////////////////////////// -->
-
-
     <!-- Light styles -->
     <style name="ProgressBar.Light" parent="android:Widget.Holo.Light.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_sg_light</item>

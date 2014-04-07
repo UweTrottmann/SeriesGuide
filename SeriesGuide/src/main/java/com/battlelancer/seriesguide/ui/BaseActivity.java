@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
@@ -43,11 +44,21 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
     protected void onCreate(Bundle arg0) {
         setCustomTheme();
         super.onCreate(arg0);
+
+        setupActionBar();
     }
 
     protected void setCustomTheme() {
         // set a theme based on user preference
         setTheme(SeriesGuidePreferences.THEME);
+    }
+
+    private void setupActionBar() {
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+        if (!isLightTheme) {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setIcon(R.drawable.ic_actionbar);
+        }
     }
 
     @Override
