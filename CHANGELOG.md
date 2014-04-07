@@ -8,10 +8,10 @@ All dates are in the European Central timezone.
 Version 13 *(in development)*
 -----------------------------
 
-#### 13-beta6 *(2014-04-03)*
+#### 13-beta6 *(TBD)*
 
 * TWEAK Do not show fast scroll bar in 'Lists'.
-* TWEAK Various design tweaks.
+* TWEAK Fresh coat of paint for SeriesGuide (default) and SeriesGuide Light theme. Various other design tweaks.
 * TWEAK 'Hide special episodes' setting respected by 'Statistics', added toggle for the setting to 'Statistics' menu.
 
 #### 13-beta5 *(2014-04-02)*
