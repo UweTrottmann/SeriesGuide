@@ -441,7 +441,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     private int exportMovies(File exportPath) {
         final Cursor movies = mContext.getContentResolver()
                 .query(Movies.CONTENT_URI,
-                        ListsQuery.PROJECTION, null, null, ListsQuery.SORT);
+                        MoviesQuery.PROJECTION, null, null, MoviesQuery.SORT_ORDER);
         if (movies == null) {
             return ERROR;
         }
