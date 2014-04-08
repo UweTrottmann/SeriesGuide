@@ -166,7 +166,7 @@
         <item name="android:progressBarStyleHorizontal">@style/ProgressBar.Light</item>
 
         <!-- Action bar (ABS) -->
-        <item name="actionBarStyle">@style/ActionBar.Light</item>
+        <item name="actionBarStyle">@style/ActionBar</item>
         <item name="actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
         <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
 
@@ -176,7 +176,7 @@
         <item name="textColorSgPrimaryInverse">@color/text_primary</item>
         <item name="textColorSgGreen">@color/green_dark</item>
         <item name="textColorSgDim">@color/text_dim_light</item>
-        <item name="textColorSgActionBar">@color/text_default_inverse</item>
+        <item name="textColorSgActionBar">@color/text_primary</item>
         <item name="colorAccent">@color/accent_primary</item>
         <item name="colorBackgroundDim">@color/background_dim_inverse</item>
         <item name="colorSeparator">@color/separator_inverse</item>
