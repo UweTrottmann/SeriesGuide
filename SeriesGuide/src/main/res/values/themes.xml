@@ -22,26 +22,23 @@
 
         <!-- Action bar (ABS) -->
         <item name="actionBarStyle">@style/ActionBar</item>
-        <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
         <item name="actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
         <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
-        <item name="actionDropDownStyle">@style/DropDownNav</item>
 
         <!-- Colors -->
         <item name="textColorSgDefault">@color/text_default</item>
         <item name="textColorSgPrimary">@color/text_primary_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
-        <item name="textColorSgGreen">@color/green_bright</item>
+        <item name="textColorSgGreen">@color/green_dark</item>
         <item name="textColorSgDim">@color/text_dim</item>
-        <item name="textColorSgActionBar">@color/text_default</item>
+        <item name="textColorSgActionBar">@color/text_primary_sg</item>
         <item name="colorAccent">@color/accent_primary</item>
-        <item name="colorOverlay">@color/overlay</item>
         <item name="colorBackgroundDim">@color/background_dim</item>
         <item name="colorSeparator">@color/separator</item>
         <item name="colorDivider">@color/divider</item>
         <item name="colorTabStripText">@color/text_default</item>
         <item name="colorTabStripUnderline">@color/background_dim</item>
-        <item name="colorNavDrawerBackground">@color/background_lighter</item>
+        <item name="colorBackgroundDrawer">@color/background_navbar</item>
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
@@ -71,6 +68,8 @@
         <item name="drawableTv">@drawable/ic_action_tv</item>
         <item name="drawableSettings">@drawable/ic_action_settings</item>
         <item name="drawableHelp">@drawable/ic_action_help</item>
+        <item name="drawableBackgroundDrawerItem">@drawable/background_drawer_item</item>
+        <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
 
     </style>
 
@@ -100,17 +99,16 @@
         <item name="textColorSgDefault">@color/text_default</item>
         <item name="textColorSgPrimary">@color/text_primary_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
-        <item name="textColorSgGreen">@color/green_bright</item>
+        <item name="textColorSgGreen">@color/green_dark</item>
         <item name="textColorSgDim">@color/text_dim</item>
         <item name="textColorSgActionBar">@color/text_default</item>
         <item name="colorAccent">@color/accent_primary_android</item>
-        <item name="colorOverlay">@color/overlay</item>
         <item name="colorBackgroundDim">@color/background_dim</item>
         <item name="colorSeparator">@color/separator</item>
         <item name="colorDivider">@color/divider</item>
         <item name="colorTabStripText">@color/text_default</item>
         <item name="colorTabStripUnderline">@color/background_dim</item>
-        <item name="colorNavDrawerBackground">@color/background_lighter</item>
+        <item name="colorBackgroundDrawer">@color/background_navbar</item>
 
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
@@ -137,14 +135,14 @@
         <item name="drawableTv">@drawable/ic_action_tv</item>
         <item name="drawableSettings">@drawable/ic_action_settings</item>
         <item name="drawableHelp">@drawable/ic_action_help</item>
+        <item name="drawableBackgroundDrawerItem">@drawable/background_drawer_item_holo</item>
+        <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
 
     </style>
 
     <style name="AndroidBaseTheme" parent="Theme.Sherlock">
 
-        <!-- System widgets (native) -->
-        <item name="android:buttonStyle">@style/Widget.Android.Button</item>
-        <item name="android:imageButtonStyle">@style/Widget.Android.ImageButton</item>
+        <!-- Scheduled for removal (when dropping all pre-v11 styles) -->
 
     </style>
 
@@ -169,10 +167,8 @@
 
         <!-- Action bar (ABS) -->
         <item name="actionBarStyle">@style/ActionBar.Light</item>
-        <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
         <item name="actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
         <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
-        <item name="actionDropDownStyle">@style/DropDownNav.Light</item>
 
         <!-- Colors -->
         <item name="textColorSgDefault">@color/text_default_inverse</item>
@@ -182,13 +178,12 @@
         <item name="textColorSgDim">@color/text_dim_light</item>
         <item name="textColorSgActionBar">@color/text_default_inverse</item>
         <item name="colorAccent">@color/accent_primary</item>
-        <item name="colorOverlay">@color/overlay_inverse</item>
         <item name="colorBackgroundDim">@color/background_dim_inverse</item>
         <item name="colorSeparator">@color/separator_inverse</item>
         <item name="colorDivider">@color/divider_inverse</item>
         <item name="colorTabStripText">@color/text_default_inverse</item>
         <item name="colorTabStripUnderline">@color/divider_inverse</item>
-        <item name="colorNavDrawerBackground">@color/background_white</item>
+        <item name="colorBackgroundDrawer">@color/background_navbar_inverse</item>
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
@@ -218,6 +213,8 @@
         <item name="drawableTv">@drawable/ic_action_tv_inverse</item>
         <item name="drawableSettings">@drawable/ic_action_settings_inverse</item>
         <item name="drawableHelp">@drawable/ic_action_help_inverse</item>
+        <item name="drawableBackgroundDrawerItem">@drawable/background_drawer_item_light</item>
+        <item name="drawableBackgroundGradient">@drawable/background_gradient_light</item>
 
         <!-- Remove default action bar shadow -->
         <item name="android:windowContentOverlay">@null</item>

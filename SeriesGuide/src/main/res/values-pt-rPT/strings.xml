@@ -181,9 +181,9 @@
   <string name="add_all">Adicionar todas</string>
   <string name="dont_add_show">Não adicionar</string>
   <string name="add_multiple">Todas as séries irão aparecer na sua lista não tarda.</string>
-  <string name="add_started">%s will appear in your show list shortly.</string>
-  <string name="add_error">Could not add %s.</string>
-  <string name="add_already_exists">%s is already in your show list.</string>
+  <string name="add_started">%s aparecerá na sua lista de séries brevemente.</string>
+  <string name="add_error">Não foi possível adicionar %s.</string>
+  <string name="add_already_exists">%s já está na sua lista de séries.</string>
   <string name="trending">Tendências</string>
   <string name="recommended">Recomendado</string>
   <string name="library">Biblioteca</string>
@@ -361,15 +361,15 @@
   <string name="add_to_homescreen">Adicionar ao ecrã inicial</string>
   <string name="search_within_show">Procurar dentro da %s</string>
   <string name="web_search">Pesquisa Web</string>
-  <string name="extensions">Extensions</string>
-  <string name="action_extensions_configure">Customize extensions</string>
-  <string name="action_extensions_add">Add extension</string>
-  <string name="action_extensions_search">Get more extensions</string>
+  <string name="extensions">Extensões</string>
+  <string name="action_extensions_configure">Personalizar extensões</string>
+  <string name="action_extensions_add">Adicionar extensão</string>
+  <string name="action_extensions_search">Obter mais extensões</string>
   <string name="action_extension_settings">Definições</string>
   <string name="action_extension_remove">Remover</string>
-  <string name="extension_amazon">Amazon search</string>
-  <string name="description_extension_amazon">Search your local Amazon site</string>
-  <string name="pref_amazon_domain">Amazon site</string>
+  <string name="extension_amazon">Pesquisar na Amazon</string>
+  <string name="description_extension_amazon">Pesquisar na Amazon local</string>
+  <string name="pref_amazon_domain">Site da Amazon</string>
   <string-array name="sesorting">
     <item>Mais recente primeiro</item>
     <item>Mais Antigo primeiro</item>

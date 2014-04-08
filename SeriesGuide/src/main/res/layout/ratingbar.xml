@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ratingbar"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/default_padding"
-    android:layout_marginLeft="@dimen/default_padding"
-    android:layout_marginRight="@dimen/default_padding"
+    android:layout_margin="@dimen/default_padding"
+    android:paddingRight="@dimen/inline_padding"
     android:background="?attr/custom_list_selector">
 
     <ImageView
@@ -28,7 +27,8 @@
         android:text="@string/norating"
         android:textAppearance="@style/TextAppearance.Large.Light"
         android:textColor="?attr/textColorSgDefault"
-        android:textSize="26sp" />
+        android:textSize="26sp"
+        tools:text="9.6" />
 
     <TextView
         android:id="@+id/textViewRatingsTvdbLabel"
@@ -75,7 +75,8 @@
             android:text="@string/notraktrating"
             android:textAppearance="@style/TextAppearance.Large.Light"
             android:textColor="?attr/textColorSgDefault"
-            android:textSize="26sp" />
+            android:textSize="26sp"
+            tools:text="84%" />
 
         <TextView
             android:id="@+id/textViewRatingsTraktLabel"
@@ -120,7 +121,7 @@
             android:layout_below="@+id/textViewRatingsTraktUserLabel"
             android:layout_toRightOf="@+id/dividerRatingsVertical"
             android:text="@string/norating"
-            android:textAppearance="@style/TextAppearance.Small" />
+            android:textAppearance="@style/TextAppearance.Small.Highlight" />
     </RelativeLayout>
 
 </RelativeLayout>

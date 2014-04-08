@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.provider;
 
 import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.util.ParserUtils;
 
 import android.net.Uri;
@@ -434,6 +435,8 @@ public class SeriesGuideContract {
                 = "vnd.android.cursor.item/vnd.seriesguide.episode";
 
         public static final String SELECTION_UNWATCHED = Episodes.WATCHED + "=0";
+
+        public static final String SELECTION_WATCHED = Episodes.WATCHED + "=" + EpisodeFlags.WATCHED;
 
         public static final String SELECTION_NOT_COLLECTED = Episodes.COLLECTED + "=0";
 

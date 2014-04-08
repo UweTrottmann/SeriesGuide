@@ -187,7 +187,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
 
             // set adapters for pager and indicator
             int startPosition = updateEpisodeList(episodeId);
-            mAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(), mEpisodes, false);
+            mAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(), mEpisodes);
             mPager = (ViewPager) pager;
             mPager.setAdapter(mAdapter);
 
