@@ -26,6 +26,7 @@ import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExpo
 import com.battlelancer.seriesguide.dataliberation.model.Episode;
 import com.battlelancer.seriesguide.dataliberation.model.List;
 import com.battlelancer.seriesguide.dataliberation.model.ListItem;
+import com.battlelancer.seriesguide.dataliberation.model.Movie;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -52,6 +53,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import timber.log.Timber;
 
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
+
 /**
  * Import a show database from a human-readable JSON file on external storage.
  * By default meta-data like descriptions, ratings, actors, etc. will not be
@@ -68,7 +71,8 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     private OnTaskFinishedListener mListener;
     private boolean mIsAutoBackupMode;
 
-    public JsonImportTask(Context context, OnTaskFinishedListener listener, boolean isAutoBackupMode) {
+    public JsonImportTask(Context context, OnTaskFinishedListener listener,
+            boolean isAutoBackupMode) {
         mContext = context.getApplicationContext();
         mListener = listener;
         mIsAutoBackupMode = isAutoBackupMode;
@@ -88,71 +92,22 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         // Ensure JSON file is available
-        File path = JsonExportTask.getExportPath(mIsAutoBackupMode);
-        File backup = new File(path, JsonExportTask.EXPORT_JSON_FILE_SHOWS);
-        if (!backup.exists() || !backup.canRead()) {
-            return ERROR_FILE_ACCESS;
-        }
+        File importPath = JsonExportTask.getExportPath(mIsAutoBackupMode);
 
-        // Clean out all existing tables
-        mContext.getContentResolver().delete(Shows.CONTENT_URI, null, null);
-        mContext.getContentResolver().delete(Seasons.CONTENT_URI, null, null);
-        mContext.getContentResolver().delete(Episodes.CONTENT_URI, null, null);
-        mContext.getContentResolver().delete(SeriesGuideContract.Lists.CONTENT_URI, null, null);
-        mContext.getContentResolver().delete(ListItems.CONTENT_URI, null, null);
-
-        // Access JSON from backup folder to create new database
-        try {
-            InputStream in = new FileInputStream(backup);
-
-            Gson gson = new Gson();
-
-            JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
-            reader.beginArray();
-
-            while (reader.hasNext()) {
-                Show show = gson.fromJson(reader, Show.class);
-                addShowToDatabase(show);
-            }
-
-            reader.endArray();
-            reader.close();
-
-        } catch (JsonParseException | IOException e) {
-            // the given Json might not be valid or unreadable
-            Timber.e(e, "JSON show import failed");
+        int result = importShows(importPath);
+        if (result == ERROR || isCancelled()) {
             return ERROR;
         }
 
-        /*
-         * Lists
-         */
-        File backupLists = new File(path, JsonExportTask.EXPORT_JSON_FILE_LISTS);
-        if (!backupLists.exists() || !backupLists.canRead()) {
-            // Skip lists if the file is not accessible
-            return SUCCESS;
+        if (result == SUCCESS) { // only import lists, if show import was successful
+            result = importLists(importPath);
+            if (result == ERROR || isCancelled()) {
+                return ERROR;
+            }
         }
 
-        // Access JSON from backup folder to create new database
-        try {
-            InputStream in = new FileInputStream(backupLists);
-
-            Gson gson = new Gson();
-
-            JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
-            reader.beginArray();
-
-            while (reader.hasNext()) {
-                List list = gson.fromJson(reader, List.class);
-                addListToDatabase(list);
-            }
-
-            reader.endArray();
-            reader.close();
-
-        } catch (JsonParseException | IOException e) {
-            // the given Json might not be valid or unreadable
-            Timber.e(e, "JSON lists import failed");
+        result = importMovies(importPath);
+        if (result == ERROR) {
             return ERROR;
         }
 
@@ -188,6 +143,44 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         if (mListener != null) {
             mListener.onTaskFinished();
         }
+    }
+
+    private int importShows(File importPath) {
+        File backupShows = new File(importPath, JsonExportTask.EXPORT_JSON_FILE_SHOWS);
+        if (!backupShows.exists() || !backupShows.canRead()) {
+            return ERROR_FILE_ACCESS;
+        }
+
+        // Clean out all existing tables
+        mContext.getContentResolver().delete(Shows.CONTENT_URI, null, null);
+        mContext.getContentResolver().delete(Seasons.CONTENT_URI, null, null);
+        mContext.getContentResolver().delete(Episodes.CONTENT_URI, null, null);
+        mContext.getContentResolver().delete(SeriesGuideContract.Lists.CONTENT_URI, null, null);
+        mContext.getContentResolver().delete(ListItems.CONTENT_URI, null, null);
+
+        // Access JSON from backup folder to create new database
+        try {
+            InputStream in = new FileInputStream(backupShows);
+
+            Gson gson = new Gson();
+
+            JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+            reader.beginArray();
+
+            while (reader.hasNext()) {
+                Show show = gson.fromJson(reader, Show.class);
+                addShowToDatabase(show);
+            }
+
+            reader.endArray();
+            reader.close();
+        } catch (JsonParseException | IOException e) {
+            // the given Json might not be valid or unreadable
+            Timber.e(e, "JSON show import failed");
+            return ERROR;
+        }
+
+        return SUCCESS;
     }
 
     private void addShowToDatabase(Show show) {
@@ -313,6 +306,38 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         };
     }
 
+    private int importLists(File importPath) {
+        File backupLists = new File(importPath, JsonExportTask.EXPORT_JSON_FILE_LISTS);
+        if (!backupLists.exists() || !backupLists.canRead()) {
+            // Skip lists if the file is not accessible
+            return SUCCESS;
+        }
+
+        // Access JSON from backup folder to create new database
+        try {
+            InputStream in = new FileInputStream(backupLists);
+
+            Gson gson = new Gson();
+
+            JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+            reader.beginArray();
+
+            while (reader.hasNext()) {
+                List list = gson.fromJson(reader, List.class);
+                addListToDatabase(list);
+            }
+
+            reader.endArray();
+            reader.close();
+        } catch (JsonParseException | IOException e) {
+            // the given Json might not be valid or unreadable
+            Timber.e(e, "JSON lists import failed");
+            return ERROR;
+        }
+
+        return SUCCESS;
+    }
+
     private void addListToDatabase(List list) {
         // Insert the list
         ContentValues values = new ContentValues();
@@ -350,4 +375,55 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         ContentValues[] itemsArray = new ContentValues[items.size()];
         mContext.getContentResolver().bulkInsert(ListItems.CONTENT_URI, items.toArray(itemsArray));
     }
+
+    private int importMovies(File importPath) {
+        mContext.getContentResolver().delete(Movies.CONTENT_URI, null, null);
+        File backupMovies = new File(importPath, JsonExportTask.EXPORT_JSON_FILE_MOVIES);
+        if (!backupMovies.exists() || !backupMovies.canRead()) {
+            // Skip movies if the file is not available
+            return SUCCESS;
+        }
+
+        // Access JSON from backup folder to create new database
+        try {
+            InputStream in = new FileInputStream(backupMovies);
+
+            Gson gson = new Gson();
+
+            JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+            reader.beginArray();
+
+            while (reader.hasNext()) {
+                Movie movie = gson.fromJson(reader, Movie.class);
+                addMovieToDatabase(movie);
+            }
+
+            reader.endArray();
+            reader.close();
+        } catch (JsonParseException | IOException e) {
+            // the given Json might not be valid or unreadable
+            Timber.e(e, "JSON movies import failed");
+            return ERROR;
+        }
+
+        return SUCCESS;
+    }
+
+    private void addMovieToDatabase(Movie movie) {
+        ContentValues values = new ContentValues();
+        values.put(Movies.TMDB_ID, movie.tmdbId);
+        values.put(Movies.IMDB_ID, movie.imdbId);
+        values.put(Movies.TITLE, movie.title);
+        values.put(Movies.RELEASED_UTC_MS, movie.releasedUtcMs);
+        values.put(Movies.RUNTIME_MIN, movie.runtimeMin);
+        values.put(Movies.POSTER, movie.poster);
+        values.put(Movies.IN_COLLECTION, movie.inCollection);
+        values.put(Movies.IN_WATCHLIST, movie.inWatchlist);
+        values.put(Movies.WATCHED, movie.watched);
+        // full dump values
+        values.put(Movies.OVERVIEW, movie.overview);
+
+        mContext.getContentResolver().insert(Movies.CONTENT_URI, values);
+    }
+
 }
