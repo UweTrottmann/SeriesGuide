@@ -262,8 +262,7 @@ public class TraktShoutsFragment extends SherlockFragment implements
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
-        inflater.inflate(isLightTheme ? R.menu.comments_menu_light : R.menu.comments_menu, menu);
+        inflater.inflate(R.menu.comments_menu, menu);
     }
 
     @Override
