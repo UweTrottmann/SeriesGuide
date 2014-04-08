@@ -57,7 +57,7 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
 
     private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setIcon(Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableList));
+        actionBar.setIcon(R.drawable.ic_action_list);
         actionBar.setTitle(R.string.lists);
     }
 
