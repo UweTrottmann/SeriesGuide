@@ -27,6 +27,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.model.Episode;
 import com.battlelancer.seriesguide.dataliberation.model.List;
 import com.battlelancer.seriesguide.dataliberation.model.ListItem;
+import com.battlelancer.seriesguide.dataliberation.model.Movie;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -50,6 +51,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import timber.log.Timber;
 
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
+
 /**
  * Export the show database to a human-readable JSON file on external storage.
  * By default meta-data like descriptions, ratings, actors, etc. will not be
@@ -61,6 +64,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     public static final String EXPORT_FOLDER_AUTO = "SeriesGuide" + File.separator + "AutoBackup";
     public static final String EXPORT_JSON_FILE_SHOWS = "sg-shows-export.json";
     public static final String EXPORT_JSON_FILE_LISTS = "sg-lists-export.json";
+    public static final String EXPORT_JSON_FILE_MOVIES = "sg-movies-export.json";
 
     private static final int SUCCESS = 1;
     private static final int ERROR_STORAGE_ACCESS = 0;
@@ -96,9 +100,9 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
     /**
      * Same as {@link JsonExportTask} but allows to set parameters.
-     * 
-     * @param isFullDump Whether to also export meta-data like descriptions,
-     *            ratings, actors, etc. Increases file size about 2-4 times.
+     *
+     * @param isFullDump   Whether to also export meta-data like descriptions,
+     *                     ratings, actors, etc. Increases file size about 2-4 times.
      * @param isSilentMode Whether to show result toasts.
      */
     public JsonExportTask(Context context, OnTaskProgressListener progressListener,
@@ -119,73 +123,22 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         // Ensure the export directory exists
-        File path = getExportPath(mIsAutoBackupMode);
-        path.mkdirs();
+        File exportPath = getExportPath(mIsAutoBackupMode);
+        exportPath.mkdirs();
 
-        /*
-         * Export shows.
-         */
-        final Cursor shows = mContext.getContentResolver().query(
-                Shows.CONTENT_URI,
-                mIsFullDump ? ShowsQuery.PROJECTION_FULL : ShowsQuery.PROJECTION,
-                null, null, ShowsQuery.SORT);
-        if (shows == null) {
-            return ERROR;
-        }
-        if (shows.getCount() == 0) {
-            // There are no shows? Done.
-            shows.close();
-            return SUCCESS;
-        }
-
-        publishProgress(shows.getCount(), 0);
-
-        File backup = new File(path, EXPORT_JSON_FILE_SHOWS);
-        try {
-            OutputStream out = new FileOutputStream(backup);
-
-            writeJsonStreamShows(out, shows);
-        } catch (JsonIOException | IOException e) {
-            // Also catch IO exception as we want to know if exporting fails due
-            // to a JsonSyntaxException
-            Timber.e(e, "JSON shows export failed");
-            return ERROR;
-        } finally {
-            shows.close();
-        }
-
-        if (isCancelled()) {
+        int result = exportShows(exportPath);
+        if (result == ERROR || isCancelled()) {
             return ERROR;
         }
 
-        /*
-         * Export lists.
-         */
-        final Cursor lists = mContext.getContentResolver().query(SeriesGuideContract.Lists.CONTENT_URI,
-                ListsQuery.PROJECTION, null, null, ListsQuery.SORT);
-        if (lists == null) {
+        result = exportLists(exportPath);
+        if (result == ERROR || isCancelled()) {
             return ERROR;
         }
-        if (lists.getCount() == 0) {
-            // There are no lists? Done.
-            lists.close();
-            return SUCCESS;
-        }
 
-        publishProgress(lists.getCount(), 0);
-
-        File backupLists = new File(path, EXPORT_JSON_FILE_LISTS);
-        try {
-            OutputStream out = new FileOutputStream(backupLists);
-
-            writeJsonStreamLists(out, lists);
-        } catch (JsonIOException | IOException e) {
-            // Only catch IO exception as we want to know if exporting fails due
-            // to a JsonSyntaxException
-            Timber.e(e, "JSON lists export failed");
+        result = exportMovies(exportPath);
+        if (result == ERROR || isCancelled()) {
             return ERROR;
-        } finally {
-            lists.close();
         }
 
         if (mIsAutoBackupMode) {
@@ -226,6 +179,39 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         if (mListener != null) {
             mListener.onTaskFinished();
         }
+    }
+
+    private int exportShows(File exportPath) {
+        final Cursor shows = mContext.getContentResolver().query(
+                Shows.CONTENT_URI,
+                mIsFullDump ? ShowsQuery.PROJECTION_FULL : ShowsQuery.PROJECTION,
+                null, null, ShowsQuery.SORT);
+        if (shows == null) {
+            return ERROR;
+        }
+        if (shows.getCount() == 0) {
+            // There are no shows? Done.
+            shows.close();
+            return SUCCESS;
+        }
+
+        publishProgress(shows.getCount(), 0);
+
+        File backup = new File(exportPath, EXPORT_JSON_FILE_SHOWS);
+        try {
+            OutputStream out = new FileOutputStream(backup);
+
+            writeJsonStreamShows(out, shows);
+        } catch (JsonIOException | IOException e) {
+            // Also catch IO exception as we want to know if exporting fails due
+            // to a JsonSyntaxException
+            Timber.e(e, "JSON shows export failed");
+            return ERROR;
+        } finally {
+            shows.close();
+        }
+
+        return SUCCESS;
     }
 
     private void writeJsonStreamShows(OutputStream out, Cursor shows) throws IOException {
@@ -296,7 +282,8 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 new String[] {
                         Seasons._ID,
                         Seasons.COMBINED
-                }, null, null, null);
+                }, null, null, null
+        );
 
         if (seasonsCursor == null) {
             return;
@@ -355,6 +342,38 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         episodesCursor.close();
     }
 
+    private int exportLists(File exportPath) {
+        final Cursor lists = mContext.getContentResolver()
+                .query(SeriesGuideContract.Lists.CONTENT_URI,
+                        ListsQuery.PROJECTION, null, null, ListsQuery.SORT);
+        if (lists == null) {
+            return ERROR;
+        }
+        if (lists.getCount() == 0) {
+            // There are no lists? Done.
+            lists.close();
+            return SUCCESS;
+        }
+
+        publishProgress(lists.getCount(), 0);
+
+        File backupLists = new File(exportPath, EXPORT_JSON_FILE_LISTS);
+        try {
+            OutputStream out = new FileOutputStream(backupLists);
+
+            writeJsonStreamLists(out, lists);
+        } catch (JsonIOException | IOException e) {
+            // Only catch IO exception as we want to know if exporting fails due
+            // to a JsonSyntaxException
+            Timber.e(e, "JSON lists export failed");
+            return ERROR;
+        } finally {
+            lists.close();
+        }
+
+        return SUCCESS;
+    }
+
     private void writeJsonStreamLists(OutputStream out, Cursor lists) throws IOException {
         int numTotal = lists.getCount();
         int numExported = 0;
@@ -389,8 +408,9 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 ListItems.CONTENT_URI, ListItemsQuery.PROJECTION,
                 ListItemsQuery.SELECTION,
                 new String[] {
-                    list.listId
-                }, null);
+                        list.listId
+                }, null
+        );
         if (listItems == null) {
             return;
         }
@@ -416,6 +436,75 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         listItems.close();
+    }
+
+    private int exportMovies(File exportPath) {
+        final Cursor movies = mContext.getContentResolver()
+                .query(Movies.CONTENT_URI,
+                        ListsQuery.PROJECTION, null, null, ListsQuery.SORT);
+        if (movies == null) {
+            return ERROR;
+        }
+        if (movies.getCount() == 0) {
+            // There are no movies? Done.
+            movies.close();
+            return SUCCESS;
+        }
+
+        publishProgress(movies.getCount(), 0);
+
+        File backupFile = new File(exportPath, EXPORT_JSON_FILE_MOVIES);
+        try {
+            OutputStream out = new FileOutputStream(backupFile);
+
+            writeJsonStreamMovies(out, movies);
+        } catch (JsonIOException | IOException e) {
+            // Only catch IO exception as we want to know if exporting fails due
+            // to a JsonSyntaxException
+            Timber.e(e, "JSON movies export failed");
+            return ERROR;
+        } finally {
+            movies.close();
+        }
+
+        return SUCCESS;
+    }
+
+    private void writeJsonStreamMovies(OutputStream out, Cursor movies) throws IOException {
+        int numTotal = movies.getCount();
+        int numExported = 0;
+
+        Gson gson = new Gson();
+        JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
+        writer.setIndent("  ");
+        writer.beginArray();
+
+        while (movies.moveToNext()) {
+            if (isCancelled()) {
+                break;
+            }
+
+            Movie movie = new Movie();
+            movie.tmdbId = movies.getInt(MoviesQuery.TMDB_ID);
+            movie.imdbId = movies.getString(MoviesQuery.IMDB_ID);
+            movie.title = movies.getString(MoviesQuery.TITLE);
+            movie.releasedUtcMs = movies.getLong(MoviesQuery.RELEASED_UTC_MS);
+            movie.runtimeMin = movies.getInt(MoviesQuery.RUNTIME_MIN);
+            movie.poster = movies.getString(MoviesQuery.POSTER);
+            movie.inCollection = movies.getInt(MoviesQuery.IN_COLLECTION) == 1;
+            movie.inWatchlist = movies.getInt(MoviesQuery.IN_WATCHLIST) == 1;
+            movie.watched = movies.getInt(MoviesQuery.WATCHED) == 1;
+            if (mIsFullDump) {
+                movie.overview = movies.getString(MoviesQuery.OVERVIEW);
+            }
+
+            gson.toJson(movie, Movie.class, writer);
+
+            publishProgress(numTotal, ++numExported);
+        }
+
+        writer.endArray();
+        writer.close();
     }
 
     public interface ShowsQuery {
@@ -494,7 +583,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         int DIRECTORS = 13;
         int RATING = 14;
         int LAST_EDITED = 15;
-
     }
 
     public interface ListsQuery {
@@ -522,4 +610,26 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         int TYPE = 3;
     }
 
+    public interface MoviesQuery {
+        String[] PROJECTION = new String[] {
+                Movies._ID, Movies.TMDB_ID, Movies.IMDB_ID, Movies.TITLE, Movies.RELEASED_UTC_MS,
+                Movies.RUNTIME_MIN, Movies.POSTER,
+                Movies.IN_COLLECTION, Movies.IN_WATCHLIST, Movies.WATCHED,
+                Movies.OVERVIEW
+        };
+
+        String SORT_ORDER = Movies.TITLE + " COLLATE NOCASE ASC";
+
+        int TMDB_ID = 1;
+        int IMDB_ID = 2;
+        int TITLE = 3;
+        int RELEASED_UTC_MS = 4;
+        int RUNTIME_MIN = 5;
+        int POSTER = 6;
+        int IN_COLLECTION = 7;
+        int IN_WATCHLIST = 8;
+        int WATCHED = 9;
+        // only in FULL dump
+        int OVERVIEW = 10;
+    }
 }
