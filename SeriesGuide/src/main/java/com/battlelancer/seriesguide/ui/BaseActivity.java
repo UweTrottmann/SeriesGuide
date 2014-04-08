@@ -54,11 +54,8 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
     }
 
     private void setupActionBar() {
-        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
-        if (!isLightTheme) {
-            ActionBar actionBar = getSupportActionBar();
-            actionBar.setIcon(R.drawable.ic_actionbar);
-        }
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setIcon(R.drawable.ic_actionbar);
     }
 
     @Override
