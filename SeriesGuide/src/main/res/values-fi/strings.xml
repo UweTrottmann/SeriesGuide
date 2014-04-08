@@ -181,9 +181,9 @@
   <string name="add_all">Lisää kaikki</string>
   <string name="dont_add_show">Älä lisää</string>
   <string name="add_multiple">Kaikki ohjelmat ilmaantuvat pian ohjelmalistaasi.</string>
-  <string name="add_started">%s will appear in your show list shortly.</string>
-  <string name="add_error">Could not add %s.</string>
-  <string name="add_already_exists">%s is already in your show list.</string>
+  <string name="add_started">%s ilmestyy pian ohjelmaluetteloosi.</string>
+  <string name="add_error">Ei voitu listätä %s.</string>
+  <string name="add_already_exists">%s on jo ohjelmaluettelossasi.</string>
   <string name="trending">Trendit</string>
   <string name="recommended">Suositellut</string>
   <string name="library">Kokoelma</string>

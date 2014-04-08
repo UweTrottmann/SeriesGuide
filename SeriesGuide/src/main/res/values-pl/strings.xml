@@ -10,7 +10,7 @@
   <string name="help">Pomoc</string>
   <string name="drawer_open">Otwórz szufladę nawigacji</string>
   <string name="drawer_close">Zamknij szufladę nawigacji</string>
-  <string name="show">Pokaż</string>
+  <string name="show">Serial</string>
   <string name="episode">Odcinek</string>
   <string name="episode_number">Odcinek %s</string>
   <string name="episodes">Odcinki</string>
@@ -18,7 +18,7 @@
   <string name="season_number">Sezon %s</string>
   <string name="seasons">Sezony</string>
   <string name="specialseason">Odcinki specjalne</string>
-  <string name="description_overview">Opis</string>
+  <string name="description_overview">Opis odcinka</string>
   <string name="description_poster">Pokaż plakat</string>
   <string name="description_image">Obraz odcinka</string>
   <string name="done">Wykonano</string>
