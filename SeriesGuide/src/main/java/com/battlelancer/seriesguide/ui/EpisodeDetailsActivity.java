@@ -95,6 +95,9 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(showTitle);
+        if (SeriesGuidePreferences.THEME != R.style.AndroidTheme) {
+            actionBar.setIcon(R.drawable.ic_launcher);
+        }
     }
 
     private void setupViews() {

@@ -405,6 +405,16 @@
 
     <!-- Light styles -->
 
+    <!-- ABS -->
+    <style name="ActionBar.Light" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+        <item name="background">@drawable/actionbar_background_sg</item>
+        <item name="android:background">@drawable/actionbar_background_sg</item>
+    </style>
+
+    <style name="ActionBar.Light.Invisible" parent="Widget.Sherlock.Light.ActionBar.Solid">
+        <item name="background">@null</item>
+        <item name="android:background">@null</item>
+    </style>
 
     <!-- Buttons -->
     <!-- pre v11 -->
