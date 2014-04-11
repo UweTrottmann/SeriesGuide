@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewBackupPath"
             android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginBottom="@dimen/default_padding"
             android:text="@string/backup_version"
             android:textAppearance="@style/TextAppearance.Small" />
 
@@ -39,7 +40,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewBackupDatabaseVersion"
-            android:layout_marginTop="32dp"
             android:indeterminate="true" />
 
         <TextView
