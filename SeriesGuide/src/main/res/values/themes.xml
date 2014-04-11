@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
+    <style name="Theme"/>
+    <style name="Theme.SeriesGuide"/>
+    <style name="Theme.SeriesGuide.Light"/>
+
     <!-- SeriesGuides default theme -->
     <style name="SeriesGuideTheme" parent="SeriesGuideBaseTheme">
 
@@ -231,27 +235,47 @@
     </style>
 
     <!-- Special themes -->
-    <style name="SeriesGuideTheme.Dialog" parent="SeriesGuideTheme">
+    <style name="Theme.SeriesGuide.Dialog" parent="SeriesGuideTheme">
         <item name="android:windowFrame">@null</item>
-        <item name="android:windowTitleStyle">@style/DialogWindowTitle.SeriesGuide</item>
-        <item name="android:windowBackground">@color/background</item>
+        <item name="android:windowTitleStyle">@style/Widget.SeriesGuide.DialogWindowTitle</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
         <item name="android:windowSoftInputMode">stateUnspecified|adjustResize</item>
-        <item name="android:windowActionBar" tools:targetApi="honeycomb">false</item>
-        <item name="android:windowActionModeOverlay" tools:targetApi="honeycomb">true</item>
-        <item name="android:windowCloseOnTouchOutside" tools:targetApi="honeycomb">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:backgroundDimAmount">0.6</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorPrimaryInverse">@color/abs__primary_text_holo_light</item>
-        <item name="android:windowMinWidthMajor" tools:targetApi="honeycomb">45%</item>
-        <item name="android:windowMinWidthMinor" tools:targetApi="honeycomb">75%</item>
+        <item name="android:windowMinWidthMajor">45%</item>
+        <item name="android:windowMinWidthMinor">75%</item>
     </style>
 
-    <style name="SeriesGuideTheme.Dialog.CheckIn">
+    <style name="Theme.SeriesGuide.Dialog.CheckIn">
+        <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
+    </style>
+
+    <style name="Theme.SeriesGuide.Light.Dialog" parent="SeriesGuideThemeLight">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowTitleStyle">@style/Widget.SeriesGuide.DialogWindowTitle</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustResize</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowMinWidthMajor">45%</item>
+        <item name="android:windowMinWidthMinor">75%</item>
+    </style>
+
+    <style name="Theme.SeriesGuide.Light.Dialog.CheckIn">
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
     </style>
 
@@ -276,9 +300,6 @@
 
     </style>
 
-    <style name="Theme"/>
-    <style name="Theme.SeriesGuide"/>
-    <style name="Theme.SeriesGuide.Light"/>
     <style name="Theme.SeriesGuide.Light.Widget">
         <item name="android:popupMenuStyle">@style/Widget.Sherlock.Light.PopupMenu</item>
     </style>

@@ -205,18 +205,13 @@
     </style>
 
     <!-- Dialogs -->
-    <style name="DialogWindowTitle.SeriesGuide" parent="Widget">
+    <style name="Widget.SeriesGuide.DialogWindowTitle">
         <item name="android:maxLines">1</item>
         <item name="android:scrollHorizontally">true</item>
-        <item name="android:textAppearance">@style/TextAppearance.SeriesGuide.DialogWindowTitle</item>
+        <item name="android:textAppearance">@style/TextAppearance.Large.Light</item>
         <item name="android:minHeight">64dip</item>
         <item name="android:paddingLeft">16dip</item>
         <item name="android:paddingRight">16dip</item>
-    </style>
-
-    <style name="TextAppearance.SeriesGuide.DialogWindowTitle" parent="Widget">
-        <item name="android:textSize">22sp</item>
-        <item name="android:textColor">@color/text_primary</item>
     </style>
 
     <style name="Animation.CheckinDialog" parent="android:Animation.Dialog">
