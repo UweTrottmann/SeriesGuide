@@ -256,10 +256,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
-        getSupportMenuInflater().inflate(
-                isLightTheme ? R.menu.overview_activity_menu_light : R.menu.overview_activity_menu,
-                menu);
+        getSupportMenuInflater().inflate(R.menu.overview_activity_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

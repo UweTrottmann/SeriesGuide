@@ -8,27 +8,9 @@
         android:animateLayoutChanges="true">
 
         <TextView
-            android:id="@+id/textViewTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="@string/backup"
-            android:textAppearance="@style/TextAppearance.Large.Light" />
-
-        <ProgressBar
-            android:id="@+id/progressBarDataLiberation"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewTitle"
-            android:indeterminate="true"
-            android:visibility="gone" />
-
-        <TextView
             android:id="@+id/textViewBackupOverview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/progressBarDataLiberation"
             android:layout_marginTop="@dimen/default_padding"
             android:text="@string/backup_description"
             android:textAppearance="@style/TextAppearance" />
@@ -48,15 +30,32 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewBackupPath"
             android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginBottom="@dimen/default_padding"
             android:text="@string/backup_version"
             android:textAppearance="@style/TextAppearance.Small" />
+
+        <ProgressBar
+            android:id="@+id/progressBarDataLiberation"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewBackupDatabaseVersion"
+            android:indeterminate="true" />
+
+        <TextView
+            android:id="@+id/textViewDataLabelBackup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/progressBarDataLiberation"
+            android:layout_marginBottom="@dimen/default_padding"
+            android:text="@string/backup_button"
+            android:textAppearance="@style/TextAppearance.Large.Light" />
 
         <CheckBox
             android:id="@+id/checkBoxFullDump"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewBackupDatabaseVersion"
-            android:layout_marginTop="@dimen/large_padding"
+            android:layout_below="@+id/textViewDataLabelBackup"
             android:text="@string/backup_full_dump" />
 
         <Button
@@ -68,12 +67,21 @@
             android:layout_marginTop="@dimen/default_padding"
             android:text="@string/backup_button" />
 
+        <TextView
+            android:id="@+id/textViewDataLabelRestore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/buttonExport"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="@dimen/default_padding"
+            android:text="@string/import_button"
+            android:textAppearance="@style/TextAppearance.Large.Light" />
+
         <CheckBox
             android:id="@+id/checkBoxImportWarning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/buttonExport"
-            android:layout_marginTop="@dimen/large_padding"
+            android:layout_below="@+id/textViewDataLabelRestore"
             android:text="@string/import_warning" />
 
         <Button

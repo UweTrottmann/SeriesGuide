@@ -409,10 +409,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
-        getSupportMenuInflater()
-                .inflate(isLightTheme ? R.menu.seriesguide_menu_light : R.menu.seriesguide_menu,
-                        menu);
+        getSupportMenuInflater().inflate(R.menu.seriesguide_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

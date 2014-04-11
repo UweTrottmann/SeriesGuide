@@ -143,9 +143,7 @@ public class TraktAddFragment extends AddFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
-        inflater.inflate(isLightTheme ? R.menu.trakt_library_menu_light : R.menu.trakt_library_menu,
-                menu);
+        inflater.inflate(R.menu.trakt_library_menu, menu);
     }
 
     @Override

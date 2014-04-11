@@ -28,7 +28,7 @@
     </style>
 
     <!-- SeriesGuide Light theme v11+ customizations -->
-    <style name="SeriesGuideBaseThemeLight" parent="Theme.Sherlock.Light">
+    <style name="SeriesGuideBaseThemeLight" parent="Theme.Sherlock.Light.DarkActionBar">
 
         <!-- System widgets (native) -->
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
@@ -40,6 +40,7 @@
         <item name="android:actionBarStyle">@style/ActionBar.Light</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
         <item name="android:actionBarItemBackground" tools:targetApi="ice_cream_sandwich">@drawable/list_selector_sg</item>
+        <item name="android:actionBarWidgetTheme" tools:targetApi="ice_cream_sandwich">@style/Theme.SeriesGuide.Light.Widget</item>
 
         <!-- Fast scroll thumb -->
         <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
@@ -51,6 +52,9 @@
         <!-- Action bar (native, v11+) -->
         <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
 
+        <!-- ABS (still used on 3.x) -->
+        <item name="actionBarStyle">@style/ActionBar.Invisible</item>
+
     </style>
 
     <style name="ImmersiveTheme.Stock" parent="AndroidTheme">
@@ -58,12 +62,22 @@
         <!-- Action bar (native, v11+) -->
         <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
 
+        <!-- ABS (still used on 3.x) -->
+        <item name="actionBarStyle">@style/ActionBar.Invisible</item>
+
     </style>
 
     <style name="ImmersiveTheme.Light" parent="SeriesGuideThemeLight">
 
         <!-- Action bar (native, v11+) -->
-        <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
+        <item name="android:actionBarStyle">@style/ActionBar.Light.Invisible</item>
+        <item name="android:actionOverflowButtonStyle">@style/Widget.Sherlock.Light.ActionButton.Overflow</item>
+        <item name="android:homeAsUpIndicator">@drawable/abs__ic_ab_back_holo_light</item>
+
+        <!-- ABS (still used on 3.x) -->
+        <item name="actionBarStyle">@style/ActionBar.Light.Invisible</item>
+        <item name="actionOverflowButtonStyle">@style/Widget.Sherlock.Light.ActionButton.Overflow</item>
+        <item name="homeAsUpIndicator">@drawable/abs__ic_ab_back_holo_light</item>
 
     </style>
 

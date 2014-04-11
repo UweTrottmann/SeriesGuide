@@ -123,7 +123,7 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
     private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.checkin));
-        actionBar.setIcon(Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableCheckin));
+        actionBar.setIcon(R.drawable.ic_action_checkin);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 

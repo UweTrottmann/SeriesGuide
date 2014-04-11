@@ -22,10 +22,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.SearchView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.widget.SearchView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Utils;
 
@@ -107,6 +109,29 @@ public class SearchActivity extends BaseNavDrawerActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false);
+
+        if (SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight) {
+            // override search view style for light theme (because we use dark actionbar theme)
+            // search text
+            int searchSrcTextId = getResources().getIdentifier("android:id/search_src_text", null, null);
+            if (searchSrcTextId != 0) {
+                EditText searchEditText = (EditText) searchView.findViewById(searchSrcTextId);
+                searchEditText.setTextAppearance(this, R.style.TextAppearance_Inverse);
+                searchEditText.setHintTextColor(getResources().getColor(R.color.text_dim));
+            }
+            // close button
+            int closeButtonId = getResources().getIdentifier("android:id/search_close_btn", null, null);
+            if (closeButtonId != 0) {
+                ImageView closeButtonImage = (ImageView) searchView.findViewById(closeButtonId);
+                closeButtonImage.setImageResource(R.drawable.ic_action_cancel);
+            }
+            // search button
+            int searchIconId = getResources().getIdentifier("android:id/search_mag_icon", null, null);
+            if (searchIconId != 0) {
+                ImageView searchIcon = (ImageView) searchView.findViewById(searchIconId);
+                searchIcon.setImageResource(R.drawable.ic_action_search);
+            }
+        }
 
         // set incoming query
         String query = getIntent().getStringExtra(SearchManager.QUERY);

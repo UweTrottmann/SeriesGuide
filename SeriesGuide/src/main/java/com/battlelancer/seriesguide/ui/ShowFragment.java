@@ -114,8 +114,7 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
-        inflater.inflate(isLightTheme ? R.menu.show_menu_light : R.menu.show_menu, menu);
+        inflater.inflate(R.menu.show_menu, menu);
     }
 
     @Override

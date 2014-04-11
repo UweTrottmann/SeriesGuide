@@ -340,8 +340,7 @@ public class ShowsFragment extends SherlockFragment implements
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
-        inflater.inflate(isLightTheme ? R.menu.shows_menu_light : R.menu.shows_menu, menu);
+        inflater.inflate(R.menu.shows_menu, menu);
 
         // set filter check box states
         menu.findItem(R.id.menu_action_shows_filter_favorites)
@@ -364,13 +363,9 @@ public class ShowsFragment extends SherlockFragment implements
         boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
         MenuItem filter = menu.findItem(R.id.menu_action_shows_filter);
         filter.setVisible(!isDrawerOpen);
-        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
         filter.setIcon(mIsFilterFavorites || mIsFilterUnwatched || mIsFilterUpcoming
                 || mIsFilterHidden ?
-                (isLightTheme ? R.drawable.ic_action_filter_selected_inverse
-                        : R.drawable.ic_action_filter_selected)
-                : (isLightTheme ? R.drawable.ic_action_filter_inverse
-                        : R.drawable.ic_action_filter));
+                R.drawable.ic_action_filter_selected : R.drawable.ic_action_filter);
     }
 
     @Override

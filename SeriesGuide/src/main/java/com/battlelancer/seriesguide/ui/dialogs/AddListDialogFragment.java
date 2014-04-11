@@ -59,8 +59,10 @@ public class AddListDialogFragment extends DialogFragment {
         // hide title, use custom theme
         if (SeriesGuidePreferences.THEME == R.style.AndroidTheme) {
             setStyle(STYLE_NO_TITLE, 0);
+        } else if (SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight) {
+            setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Light_Dialog);
         } else {
-            setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog);
+            setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Dialog);
         }
     }
 

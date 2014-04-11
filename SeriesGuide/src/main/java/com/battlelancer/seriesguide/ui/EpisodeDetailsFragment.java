@@ -105,7 +105,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
     @InjectView(R.id.scrollViewEpisode) ScrollView mEpisodeScrollView;
     @InjectView(R.id.containerEpisode) View mEpisodeContainer;
     @InjectView(R.id.imageContainer) View mImageContainer;
-    @InjectView(R.id.imageViewEpisodeBackground) ImageView mBackground;
     @InjectView(R.id.ratingbar) View mRatingsContainer;
     @InjectView(R.id.containerEpisodeActions) LinearLayout mActionsContainer;
 
@@ -149,17 +148,16 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
         /**
          * Boolean extra.
          */
-        String DISPLAY_POSTER_BACKGROUND = "showposter";
+        String IS_IN_MULTIPANE_LAYOUT = "multipane";
     }
 
-    public static EpisodeDetailsFragment newInstance(int episodeId,
-            boolean isDisplayPosterBackground) {
+    public static EpisodeDetailsFragment newInstance(int episodeId, boolean isInMultiPaneLayout) {
         EpisodeDetailsFragment f = new EpisodeDetailsFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
         args.putInt(InitBundle.EPISODE_TVDBID, episodeId);
-        args.putBoolean(InitBundle.DISPLAY_POSTER_BACKGROUND, isDisplayPosterBackground);
+        args.putBoolean(InitBundle.IS_IN_MULTIPANE_LAYOUT, isInMultiPaneLayout);
         f.setArguments(args);
 
         return f;
@@ -244,8 +242,10 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
         super.onCreateOptionsMenu(menu, inflater);
 
         boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
-        inflater.inflate(
-                isLightTheme ? R.menu.episodedetails_menu_light : R.menu.episodedetails_menu, menu);
+        // multi-pane layout has non-transparent action bar, adjust icon color
+        boolean isInMultipane = getArguments().getBoolean(InitBundle.IS_IN_MULTIPANE_LAYOUT);
+        inflater.inflate(isLightTheme && !isInMultipane
+                ? R.menu.episodedetails_menu_light : R.menu.episodedetails_menu, menu);
     }
 
     @Override
@@ -359,12 +359,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
 
         // show title
         mShowTitle = cursor.getString(DetailsQuery.SHOW_TITLE);
-
-        // start loading show poster background
-        if (getArguments().getBoolean(InitBundle.DISPLAY_POSTER_BACKGROUND)) {
-            Utils.setPosterBackground(mBackground, cursor.getString(DetailsQuery.SHOW_POSTER),
-                    getActivity());
-        }
 
         // release time and day
         SpannableStringBuilder timeAndNumbersText = new SpannableStringBuilder();

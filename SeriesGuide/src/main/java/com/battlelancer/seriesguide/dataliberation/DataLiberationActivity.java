@@ -20,6 +20,7 @@ import android.os.Bundle;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 
 public class DataLiberationActivity extends BaseActivity {
@@ -39,6 +40,7 @@ public class DataLiberationActivity extends BaseActivity {
     private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(R.string.backup);
     }
 
     @Override

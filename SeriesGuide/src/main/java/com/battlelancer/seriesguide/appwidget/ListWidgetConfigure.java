@@ -72,10 +72,7 @@ public class ListWidgetConfigure extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
-        getMenuInflater()
-                .inflate(isLightTheme ? R.menu.widget_config_menu_light : R.menu.widget_config_menu,
-                        menu);
+        getMenuInflater().inflate(R.menu.widget_config_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
