@@ -111,9 +111,10 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         // get show and season id, poster path
         final Cursor episode = getContentResolver().query(
-                Episodes.buildEpisodeWithShowUri(String.valueOf(episodeId)), new String[]{
-                Seasons.REF_SEASON_ID, Shows.POSTER, Shows.REF_SHOW_ID, Shows.TITLE
-        }, null, null, null);
+                Episodes.buildEpisodeWithShowUri(String.valueOf(episodeId)), new String[] {
+                        Seasons.REF_SEASON_ID, Shows.POSTER, Shows.REF_SHOW_ID, Shows.TITLE
+                }, null, null, null
+        );
         if (episode == null || !episode.moveToFirst()) {
             // nothing to display
             if (episode != null) {
@@ -136,9 +137,10 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         // get episodes of season
         Constants.EpisodeSorting sortOrder = DisplaySettings.getEpisodeSortOrder(this);
         Cursor episodesOfSeason = getContentResolver().query(
-                Episodes.buildEpisodesOfSeasonUri(String.valueOf(mSeasonId)), new String[]{
-                Episodes._ID, Episodes.NUMBER, Episodes.SEASON
-        }, null, null, sortOrder.query());
+                Episodes.buildEpisodesOfSeasonUri(String.valueOf(mSeasonId)), new String[] {
+                        Episodes._ID, Episodes.NUMBER, Episodes.SEASON
+                }, null, null, sortOrder.query()
+        );
 
         ArrayList<Episode> episodes = new ArrayList<>();
         int startPosition = 0;
@@ -162,7 +164,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         // setup adapter
         EpisodePagerAdapter adapter = new EpisodePagerAdapter(this, getSupportFragmentManager(),
-                episodes);
+                episodes, false);
 
         // setup view pager
         ViewPager pager = (ViewPager) findViewById(R.id.pagerEpisodeDetails);
@@ -224,7 +226,8 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
                         .addNextIntent(new Intent(this, ShowsActivity.class))
                         .addNextIntent(
                                 new Intent(this, OverviewActivity.class).putExtra(
-                                        OverviewFragment.InitBundle.SHOW_TVDBID, mShowId))
+                                        OverviewFragment.InitBundle.SHOW_TVDBID, mShowId)
+                        )
                         .addNextIntent(upIntent)
                         .startActivities();
                 finish();
@@ -250,16 +253,20 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         private Context mContext;
 
+        private final boolean mIsMultiPane;
+
         public EpisodePagerAdapter(Context context, FragmentManager fm,
-                ArrayList<Episode> episodes) {
+                ArrayList<Episode> episodes, boolean isMultiPane) {
             super(fm);
             mEpisodes = episodes;
             mContext = context;
+            mIsMultiPane = isMultiPane;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return EpisodeDetailsFragment.newInstance(mEpisodes.get(position).episodeId, false);
+            return EpisodeDetailsFragment.newInstance(mEpisodes.get(position).episodeId,
+                    mIsMultiPane);
         }
 
         @Override
@@ -301,6 +308,5 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
                 notifyDataSetChanged();
             }
         }
-
     }
 }
