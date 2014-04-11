@@ -168,7 +168,7 @@
         <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
         <item name="android:progressBarStyleHorizontal">@style/ProgressBar.Light</item>
-
+        
         <!-- Action bar (ABS) -->
         <item name="actionBarStyle">@style/ActionBar.Light</item>
         <item name="actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
@@ -301,7 +301,13 @@
     </style>
 
     <style name="Theme.SeriesGuide.Light.Widget">
+
+        <!-- native (14+) -->
         <item name="android:popupMenuStyle">@style/Widget.Sherlock.Light.PopupMenu</item>
+
+        <!-- ABS (still used on 3.x) -->
+        <item name="popupMenuStyle">@style/Widget.Sherlock.Light.PopupMenu</item>
+
     </style>
 
 </resources>
