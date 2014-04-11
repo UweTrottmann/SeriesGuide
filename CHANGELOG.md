@@ -8,6 +8,11 @@ All dates are in the European Central timezone.
 Version 13 *(in development)*
 -----------------------------
 
+#### 13-beta7 *(2014-04-11)*
+
+* TWEAK Purple action bar for SeriesGuide Light theme.
+* FEATURE Backup tool now also exports/imports movies. They are stored in a separate file called 'sg-movies-export.json'.
+
 #### 13-beta6 *(2014-04-08)*
 
 * TWEAK Do not show fast scroll bar in 'Lists'.
