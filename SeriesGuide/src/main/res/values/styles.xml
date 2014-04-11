@@ -9,6 +9,10 @@
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif</item>
     </style>
 
+    <style name="TextAppearance.Inverse">
+        <item name="android:textColor">?attr/textColorSgPrimaryInverse</item>
+    </style>
+
     <style name="TextAppearance.Dim">
         <item name="android:textColor">?attr/textColorSgDim</item>
     </style>
@@ -205,18 +209,13 @@
     </style>
 
     <!-- Dialogs -->
-    <style name="DialogWindowTitle.SeriesGuide" parent="Widget">
+    <style name="Widget.SeriesGuide.DialogWindowTitle">
         <item name="android:maxLines">1</item>
         <item name="android:scrollHorizontally">true</item>
-        <item name="android:textAppearance">@style/TextAppearance.SeriesGuide.DialogWindowTitle</item>
+        <item name="android:textAppearance">@style/TextAppearance.Large.Light</item>
         <item name="android:minHeight">64dip</item>
         <item name="android:paddingLeft">16dip</item>
         <item name="android:paddingRight">16dip</item>
-    </style>
-
-    <style name="TextAppearance.SeriesGuide.DialogWindowTitle" parent="Widget">
-        <item name="android:textSize">22sp</item>
-        <item name="android:textColor">@color/text_primary</item>
     </style>
 
     <style name="Animation.CheckinDialog" parent="android:Animation.Dialog">
@@ -405,6 +404,16 @@
 
     <!-- Light styles -->
 
+    <!-- ABS -->
+    <style name="ActionBar.Light" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+        <item name="background">@drawable/actionbar_background_sg</item>
+        <item name="android:background">@drawable/actionbar_background_sg</item>
+    </style>
+
+    <style name="ActionBar.Light.Invisible" parent="Widget.Sherlock.Light.ActionBar.Solid">
+        <item name="background">@null</item>
+        <item name="android:background">@null</item>
+    </style>
 
     <!-- Buttons -->
     <!-- pre v11 -->
@@ -422,12 +431,6 @@
     <!-- pre v11 -->
     <style name="ProgressBar.Light">
         <item name="android:progressDrawable">@drawable/progress_horizontal_sg_light</item>
-    </style>
-
-    <!-- ActionBar -->
-    <style name="ActionBar.Light" parent="Widget.Sherlock.Light.ActionBar.Solid">
-        <item name="titleTextStyle">@style/TextAppearance.ActionBar</item>
-        <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/TextAppearance.ActionBar</item>
     </style>
 
 </resources>

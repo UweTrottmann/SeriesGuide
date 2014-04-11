@@ -57,7 +57,7 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
 
     private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setIcon(Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableList));
+        actionBar.setIcon(R.drawable.ic_action_list);
         actionBar.setTitle(R.string.lists);
     }
 
@@ -96,9 +96,7 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
-        getSupportMenuInflater()
-                .inflate(isLightTheme ? R.menu.lists_menu_light : R.menu.lists_menu, menu);
+        getSupportMenuInflater().inflate(R.menu.lists_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

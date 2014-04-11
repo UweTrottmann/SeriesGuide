@@ -176,11 +176,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
-        if (!isLightTheme) {
-            actionBar.setIcon(R.drawable.ic_actionbar);
-        }
+        actionBar.setIcon(R.drawable.ic_actionbar);
     }
 
     protected static void setupSharingSettings(final Context context, Preference getGluePref) {

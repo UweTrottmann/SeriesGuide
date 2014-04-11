@@ -133,8 +133,10 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         // hide title
         if (SeriesGuidePreferences.THEME == R.style.AndroidTheme) {
             setStyle(STYLE_NO_TITLE, 0);
+        } else if (SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight) {
+            setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Light_Dialog_CheckIn);
         } else {
-            setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog_CheckIn);
+            setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Dialog_CheckIn);
         }
     }
 

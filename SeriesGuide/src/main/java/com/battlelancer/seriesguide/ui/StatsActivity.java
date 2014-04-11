@@ -48,7 +48,7 @@ public class StatsActivity extends BaseTopActivity {
     private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.statistics);
-        actionBar.setIcon(Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableStats));
+        actionBar.setIcon(R.drawable.ic_action_bargraph);
     }
 
     @Override
