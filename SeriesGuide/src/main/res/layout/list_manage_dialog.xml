@@ -16,7 +16,7 @@
             android:padding="@dimen/large_padding">
 
             <TextView
-                android:id="@+id/dialogTitle"
+                android:id="@+id/textViewListManageDialogTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_padding"
@@ -24,10 +24,10 @@
                 android:textAppearance="@style/TextAppearance.Large.Light" />
 
             <EditText
-                android:id="@+id/title"
+                android:id="@+id/editTextListManageListTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/dialogTitle"
+                android:layout_below="@+id/textViewListManageDialogTitle"
                 android:hint="@string/list_title_hint"
                 android:inputType="text" />
         </RelativeLayout>

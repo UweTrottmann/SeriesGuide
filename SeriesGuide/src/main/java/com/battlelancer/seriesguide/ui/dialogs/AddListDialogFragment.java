@@ -71,10 +71,10 @@ public class AddListDialogFragment extends DialogFragment {
         final View layout = inflater.inflate(R.layout.list_manage_dialog, null);
 
         // set alternate dialog title
-        ((TextView) layout.findViewById(R.id.dialogTitle)).setText(R.string.list_add);
+        ((TextView) layout.findViewById(R.id.textViewListManageDialogTitle)).setText(R.string.list_add);
 
         // title
-        mTitle = (EditText) layout.findViewById(R.id.title);
+        mTitle = (EditText) layout.findViewById(R.id.editTextListManageListTitle);
         mTitle.setFilters(new InputFilter[] {
                 new CharAndDigitInputFilter()
         });
