@@ -8,6 +8,10 @@ All dates are in the European Central timezone.
 Version 13 *(in development)*
 -----------------------------
 
+* SeriesGuide extensions, learn how to [build one](https://github.com/UweTrottmann/SeriesGuide/wiki/Extension-API).
+* Refreshed design.
+* Many fixes and improvements.
+
 #### 13-beta7 *(2014-04-11)*
 
 * TWEAK Purple action bar for SeriesGuide Light theme.
