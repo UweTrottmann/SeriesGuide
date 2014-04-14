@@ -88,9 +88,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_SECURE = "com.battlelancer.seriesguide.secure";
 
-    public static final String KEY_UPDATEATLEASTEVERY
-            = "com.battlelancer.seriesguide.updateatleastevery";
-
     public static final String KEY_HIDEIMAGES = "hideimages";
 
     public static final String SUPPORT_MAIL = "support@seriesgui.de";
