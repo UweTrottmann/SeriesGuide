@@ -181,9 +181,9 @@
   <string name="add_all">Alles toevoegen</string>
   <string name="dont_add_show">Niet toevoegen</string>
   <string name="add_multiple">Alle series worden binnenkort in de serielijst weergegeven.</string>
-  <string name="add_started">%s will appear in your show list shortly.</string>
-  <string name="add_error">Could not add %s.</string>
-  <string name="add_already_exists">%s is already in your show list.</string>
+  <string name="add_started">%s zal binnenkort in het serie overzicht worden weergegeven.</string>
+  <string name="add_error">Kan %s niet toevoegen.</string>
+  <string name="add_already_exists">%s is al in uw lijst weergeven.</string>
   <string name="trending">Trending</string>
   <string name="recommended">Aanbevolen</string>
   <string name="library">Bibliotheek</string>

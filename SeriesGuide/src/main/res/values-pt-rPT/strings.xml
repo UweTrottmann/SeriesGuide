@@ -45,7 +45,7 @@
   <string name="no_shouts">Seja o primeiro a comentar!</string>
   <string name="refresh">Atualizar</string>
   <string name="movies_collection">Coleção</string>
-  <string name="movies_watchlist">Lista de Observação</string>
+  <string name="movies_watchlist">A Minha Lista</string>
   <string name="watchlist_add">Adicionar à lista</string>
   <string name="watchlist_remove">Apagar da lista</string>
   <string name="watchlist_added">Adicionar à lista</string>
@@ -187,7 +187,7 @@
   <string name="trending">Tendências</string>
   <string name="recommended">Recomendado</string>
   <string name="library">Biblioteca</string>
-  <string name="watchlist">Lista de Observação</string>
+  <string name="watchlist">A Minha Lista</string>
   <string name="first_list">Primeira lista</string>
   <string name="list_add">Adicionar lista</string>
   <string name="list_title_hint">Renomeia a tua lista</string>
