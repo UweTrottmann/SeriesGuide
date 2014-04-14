@@ -37,7 +37,6 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.battlelancer.thetvdbapi.TvdbException;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;

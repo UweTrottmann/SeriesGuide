@@ -28,7 +28,6 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import com.battlelancer.seriesguide.R;
-import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
  * From https://code.google.com/p/dashclock. Modified for compatibility with API levels below 17.
