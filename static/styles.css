@@ -13,7 +13,7 @@ text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
 
 h1, h2 {
 font-weight: 300;
-color:#2B00AA;
+color:#6545a0;
 }
 
 h3, h4, h5, h6 {
@@ -26,11 +26,11 @@ line-height: 24px;
 }
 
 dt {
-line-height: 24px;    
+line-height: 24px;
 }
 
 a {
-color:#2B00AA;
+color:#6545a0;
 text-decoration:none;
 line-height:inherit;
 font-weight:bold;
@@ -133,7 +133,7 @@ color:#666666;
 }
 
 #credits a {
-color:#666666;	
+color:#666666;
 }
 
 p.right {
