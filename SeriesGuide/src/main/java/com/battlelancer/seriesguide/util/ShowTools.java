@@ -263,7 +263,8 @@ public class ShowTools {
     }
 
     public boolean isSignedIn() {
-        return mCredential.getSelectedAccountName() != null;
+        // prevents Android 2.3 devices from syncing, support is deprecated
+        return false;
     }
 
     private void uploadShowAsync(Show show) {
