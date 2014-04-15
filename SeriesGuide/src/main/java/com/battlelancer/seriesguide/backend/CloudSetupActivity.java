@@ -16,18 +16,16 @@
 
 package com.battlelancer.seriesguide.backend;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
-import com.battlelancer.seriesguide.ui.BaseTopActivity;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.R;
-
 import android.os.Bundle;
+import com.actionbarsherlock.app.ActionBar;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.BaseActivity;
+import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Prepares for Hexagon setup by checking Google Play services availability.
  */
-public class CloudSetupActivity extends BaseTopActivity {
+public class CloudSetupActivity extends BaseActivity {
 
     public static final String TAG = "Hexagon";
 
@@ -39,7 +37,6 @@ public class CloudSetupActivity extends BaseTopActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singlepane_drawer);
-        setupNavDrawer();
 
         setupActionBar();
 
@@ -53,17 +50,6 @@ public class CloudSetupActivity extends BaseTopActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.hexagon);
         actionBar.setIcon(Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableLab));
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_CLOUD_POSITION);
-    }
-
-    @Override
-    protected void fireTrackerEvent(String label) {
-        Utils.trackAction(this, TAG, label);
     }
 
 }
