@@ -33,7 +33,7 @@ ext {
     buildToolsVersion = '19.0.3'
 
     // API level 11+ -> version 11xxx
-    versionCode = 11253
+    versionCode = 11254
     versionName = '13'
 }
 
