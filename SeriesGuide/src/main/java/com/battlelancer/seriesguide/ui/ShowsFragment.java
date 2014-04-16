@@ -32,6 +32,7 @@ import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.LatestEpisodeUpdateService;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -721,7 +722,9 @@ public class ShowsFragment extends SherlockFragment implements
 
     public void onEvent(FlagTaskCompletedEvent event) {
         if (isAdded()) {
-            Utils.updateLatestEpisode(getActivity(), event.mType.getShowTvdbId());
+            getActivity().startService(new Intent(getActivity(), LatestEpisodeUpdateService.class)
+                    .putExtra(LatestEpisodeUpdateService.InitBundle.SHOW_TVDB_ID,
+                            event.mType.getShowTvdbId()));
         }
     }
 

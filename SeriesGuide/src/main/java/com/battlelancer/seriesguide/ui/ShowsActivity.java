@@ -60,6 +60,7 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.LatestEpisodeUpdateService;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
@@ -252,7 +253,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        Utils.updateLatestEpisodes(this);
+
+        startService(new Intent(this, LatestEpisodeUpdateService.class));
+
         if (mSavedState != null) {
             restoreLocalState(mSavedState);
         }
