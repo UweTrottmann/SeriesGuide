@@ -392,6 +392,9 @@ public class MovieTools {
             } catch (RetrofitError e) {
                 return UpdateResult.INCOMPLETE;
             }
+            if (watchlistMovies == null) {
+                return UpdateResult.INCOMPLETE;
+            }
 
             // build watchlist updates
             ContentValues values = new ContentValues();
@@ -420,6 +423,9 @@ public class MovieTools {
                 collectionMovies = userService.libraryMoviesCollection(
                         TraktCredentials.get(context).getUsername(), Extended.MIN);
             } catch (RetrofitError e) {
+                return UpdateResult.INCOMPLETE;
+            }
+            if (collectionMovies == null) {
                 return UpdateResult.INCOMPLETE;
             }
 
