@@ -20,21 +20,24 @@ import android.os.SystemClock;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.LargeTest;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.MoviesActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.pressBack;
 import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.click;
+import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.pressImeActionButton;
 import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.swipeLeft;
 import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.swipeRight;
+import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.typeText;
 import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withId;
 import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withText;
 
 @LargeTest
-public class ShowsActivityTest extends ActivityInstrumentationTestCase2<ShowsActivity> {
+public class MoviesActivityTest extends ActivityInstrumentationTestCase2<MoviesActivity> {
 
-    public ShowsActivityTest() {
-        super(ShowsActivity.class);
+    public MoviesActivityTest() {
+        super(MoviesActivity.class);
     }
 
     @Override
@@ -43,29 +46,25 @@ public class ShowsActivityTest extends ActivityInstrumentationTestCase2<ShowsAct
         getActivity();
     }
 
-    public void testNavigateToAddShowAndBack() throws InterruptedException {
-        onView(withId(R.id.menu_add_show)).perform(click());
-
-        // let the UI do some loading before going back
-        SystemClock.sleep(3000);
-
-        pressBack();
-    }
-
-    public void testNavigateToCheckinAndBack() throws InterruptedException {
-        onView(withId(R.id.menu_checkin)).perform(click());
-
-        pressBack();
-    }
-
     public void testTabSwitching() {
         // go through tabs by tapping tab
-        onView(withText("UPCOMING")).perform(click());
-        onView(withText("RECENT")).perform(click());
+        onView(withText("SEARCH")).perform(click());
+        onView(withText("COLLECTION")).perform(click());
 
         // go back via swiping view
-        onView(withId(R.id.pagerShows)).perform(swipeRight());
-        onView(withId(R.id.pagerShows)).perform(swipeRight());
-        onView(withId(R.id.pagerShows)).perform(swipeLeft());
+        onView(withId(R.id.pagerMovies)).perform(swipeRight());
+        onView(withId(R.id.pagerMovies)).perform(swipeLeft());
+        onView(withId(R.id.pagerMovies)).perform(swipeRight());
+        onView(withId(R.id.pagerMovies)).perform(swipeRight());
+    }
+
+    public void testSearch() {
+        onView(withId(R.id.pagerMovies)).perform(swipeLeft());
+        onView(withId(R.id.editTextMoviesSearch)).perform(typeText("James Bond"));
+        onView(withId(R.id.editTextMoviesSearch)).perform(pressImeActionButton());
+
+        SystemClock.sleep(3000);
+
+        onView(withId(R.id.pagerMovies)).perform(swipeRight());
     }
 }
