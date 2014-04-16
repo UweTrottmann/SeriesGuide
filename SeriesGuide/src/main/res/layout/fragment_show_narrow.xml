@@ -14,7 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="153dp"
             android:layout_marginTop="@dimen/default_padding"
-            android:layout_marginBottom="@dimen/default_padding"
             android:background="?attr/drawableCardBackground">
 
             <FrameLayout

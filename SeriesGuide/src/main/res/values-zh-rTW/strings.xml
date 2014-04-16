@@ -43,7 +43,7 @@
   <string name="shout">留言</string>
   <string name="isspoiler">警告爆雷</string>
   <string name="no_shouts">成為第一個留言者</string>
-  <string name="autorefresh">神奇自動更新中 XD</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">待看清單</string>
   <string name="watchlist_add">新增至待看清單</string>
@@ -58,6 +58,9 @@
   <string name="movie_cast">Cast</string>
   <string name="movie_crew">Crew</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
+  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort_title">依影集名稱</string>
+  <string name="action_movies_sort_release">播出日期</string>
   <string name="shows_with_next">%s 影集有新的集數</string>
   <string name="shows_continuing">%s部影集仍在連載</string>
   <string name="episodes_watched">%s 集已看</string>
@@ -178,11 +181,9 @@
   <string name="add_all">全部加入</string>
   <string name="dont_add_show">請勿新增</string>
   <string name="add_multiple">All shows will appear in your show list shortly.</string>
-  <string name="add_started">將於短期內顯示在您的影集清單中。</string>
-  <string name="add_success">新增成功</string>
-  <string name="add_error_begin">不能新增\"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">已在您的美劇清單中。</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">趨勢</string>
   <string name="recommended">推薦</string>
   <string name="library">我的資料庫</string>
@@ -212,7 +213,7 @@
   <string name="show_library">Show your library</string>
   <string name="upload_shows">Upload your SeriesGuide show list:</string>
   <string name="upload_existing_shows">Upload existing shows</string>
-  <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
+  <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
   <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
   <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
   <string name="trakt_upload">Upload to trakt</string>
@@ -360,6 +361,15 @@
   <string name="add_to_homescreen">Add to Home screen</string>
   <string name="search_within_show">Search within %s</string>
   <string name="web_search">Web search</string>
+  <string name="extensions">Extensions</string>
+  <string name="action_extensions_configure">Customize extensions</string>
+  <string name="action_extensions_add">Add extension</string>
+  <string name="action_extensions_search">Get more extensions</string>
+  <string name="action_extension_settings">設定</string>
+  <string name="action_extension_remove">刪除</string>
+  <string name="extension_amazon">Amazon search</string>
+  <string name="description_extension_amazon">Search your local Amazon site</string>
+  <string name="pref_amazon_domain">Amazon site</string>
   <string-array name="sesorting">
     <item>按最新的項目排序</item>
     <item>按最舊的項目排序</item>

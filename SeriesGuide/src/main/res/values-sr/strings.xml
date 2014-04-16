@@ -43,7 +43,7 @@
   <string name="shout">Коментариши!</string>
   <string name="isspoiler">Пажња, Спојлер!</string>
   <string name="no_shouts">Буди први који ће коментарисати!</string>
-  <string name="autorefresh">Аутоматски освежи</string>
+  <string name="refresh">Освежи</string>
   <string name="movies_collection">Колекција</string>
   <string name="movies_watchlist">Листа за гледање</string>
   <string name="watchlist_add">Add to watchlist</string>
@@ -58,6 +58,9 @@
   <string name="movie_cast">Улоге</string>
   <string name="movie_crew">Екипа</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
+  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort_title">Наслов</string>
+  <string name="action_movies_sort_release">Release date</string>
   <string name="shows_with_next">%s са следећим епизодама</string>
   <string name="shows_continuing">%s се наставља</string>
   <string name="episodes_watched">%s погледано</string>
@@ -178,11 +181,9 @@
   <string name="add_all">Додај све</string>
   <string name="dont_add_show">Немој да додаш</string>
   <string name="add_multiple">Све серије ће се ускоро појавити на вашој листи серија.</string>
-  <string name="add_started">ће се ускоро појавити на вашој листи серија.</string>
-  <string name="add_success">успешно додато.</string>
-  <string name="add_error_begin">Не могу да додам \"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">већ је на вашој листи.</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">Популарне</string>
   <string name="recommended">Препоручене</string>
   <string name="library">Библиотека</string>
@@ -361,6 +362,15 @@
   <string name="add_to_homescreen">Add to Home screen</string>
   <string name="search_within_show">Тражи унутар %s</string>
   <string name="web_search">Веб претрага</string>
+  <string name="extensions">Extensions</string>
+  <string name="action_extensions_configure">Customize extensions</string>
+  <string name="action_extensions_add">Add extension</string>
+  <string name="action_extensions_search">Get more extensions</string>
+  <string name="action_extension_settings">Подешавања</string>
+  <string name="action_extension_remove">Уклони</string>
+  <string name="extension_amazon">Amazon search</string>
+  <string name="description_extension_amazon">Search your local Amazon site</string>
+  <string name="pref_amazon_domain">Amazon site</string>
   <string-array name="sesorting">
     <item>Прво најновије</item>
     <item>Прво најстарије</item>

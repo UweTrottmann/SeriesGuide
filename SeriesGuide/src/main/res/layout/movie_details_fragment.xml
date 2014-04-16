@@ -60,7 +60,7 @@
                 android:id="@+id/containerMovieButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?attr/drawableCardBackground"
+                android:background="?attr/colorBackgroundDim"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/textViewMovieDate"
                 android:layout_marginBottom="@dimen/large_padding"
@@ -111,6 +111,9 @@
                 layout="@layout/ratingbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginRight="@dimen/default_padding"
+                android:layout_marginBottom="@dimen/large_padding"
                 android:layout_below="@+id/containerMovieButtons" />
 
             <TextView
@@ -120,7 +123,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/ratingbar"
-                android:layout_marginTop="@dimen/large_padding"
                 android:maxWidth="400dp"
                 android:textAppearance="@style/TextAppearance.Light"
                 android:textIsSelectable="true"

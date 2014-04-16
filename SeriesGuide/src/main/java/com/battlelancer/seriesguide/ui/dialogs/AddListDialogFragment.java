@@ -59,8 +59,10 @@ public class AddListDialogFragment extends DialogFragment {
         // hide title, use custom theme
         if (SeriesGuidePreferences.THEME == R.style.AndroidTheme) {
             setStyle(STYLE_NO_TITLE, 0);
+        } else if (SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight) {
+            setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Light_Dialog);
         } else {
-            setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog);
+            setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Dialog);
         }
     }
 
@@ -69,10 +71,10 @@ public class AddListDialogFragment extends DialogFragment {
         final View layout = inflater.inflate(R.layout.list_manage_dialog, null);
 
         // set alternate dialog title
-        ((TextView) layout.findViewById(R.id.dialogTitle)).setText(R.string.list_add);
+        ((TextView) layout.findViewById(R.id.textViewListManageDialogTitle)).setText(R.string.list_add);
 
         // title
-        mTitle = (EditText) layout.findViewById(R.id.title);
+        mTitle = (EditText) layout.findViewById(R.id.editTextListManageListTitle);
         mTitle.setFilters(new InputFilter[] {
                 new CharAndDigitInputFilter()
         });

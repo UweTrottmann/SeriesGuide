@@ -43,7 +43,7 @@
   <string name="shout">Viči!</string>
   <string name="isspoiler">Pažnja! Spojler!</string>
   <string name="no_shouts">Budi prvi koji će povikati!</string>
-  <string name="autorefresh">Automagično osvježavanje</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">Popis gledanja</string>
   <string name="watchlist_add">Dodaj na popis gledanja</string>
@@ -58,6 +58,9 @@
   <string name="movie_cast">Cast</string>
   <string name="movie_crew">Crew</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
+  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort_title">Title</string>
+  <string name="action_movies_sort_release">Datum emitiranja</string>
   <string name="shows_with_next">%s sa sljedećim epizodama</string>
   <string name="shows_continuing">%s se nastavlja</string>
   <string name="episodes_watched">%s pogledano</string>
@@ -178,11 +181,9 @@
   <string name="add_all">Dodaj sve</string>
   <string name="dont_add_show">Nemoj dodati</string>
   <string name="add_multiple">Sve serije uskoro će se pojaviti na tvom popisu serija.</string>
-  <string name="add_started">će se uskoro pojaviti na tvom popisu serija.</string>
-  <string name="add_success">- uspješno dodano.</string>
-  <string name="add_error_begin">Ne mogu dodati\"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">je već na tvom popisu serija.</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">Popularno</string>
   <string name="recommended">Preporučeno</string>
   <string name="library">Zbirka</string>
@@ -360,6 +361,15 @@
   <string name="add_to_homescreen">Dodaj na Početni zaslon</string>
   <string name="search_within_show">Search within %s</string>
   <string name="web_search">Web search</string>
+  <string name="extensions">Extensions</string>
+  <string name="action_extensions_configure">Customize extensions</string>
+  <string name="action_extensions_add">Add extension</string>
+  <string name="action_extensions_search">Get more extensions</string>
+  <string name="action_extension_settings">Postavke</string>
+  <string name="action_extension_remove">Izbriši</string>
+  <string name="extension_amazon">Amazon search</string>
+  <string name="description_extension_amazon">Search your local Amazon site</string>
+  <string name="pref_amazon_domain">Amazon site</string>
   <string-array name="sesorting">
     <item>Prvo zadnje</item>
     <item>Prvo najstarije</item>

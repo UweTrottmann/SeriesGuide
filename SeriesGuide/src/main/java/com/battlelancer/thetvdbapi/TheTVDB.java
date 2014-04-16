@@ -20,11 +20,9 @@ import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.preference.PreferenceManager;
 import android.sax.Element;
 import android.sax.EndElementListener;
 import android.sax.EndTextElementListener;
@@ -41,7 +39,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -56,9 +53,8 @@ import com.uwetrottmann.androidutils.Lists;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,7 +90,8 @@ public class TheTVDB {
         final Cursor show = context.getContentResolver().query(Shows.buildShowUri(showId),
                 new String[] {
                         Shows._ID, Shows.LASTUPDATED
-                }, null, null, null);
+                }, null, null, null
+        );
         boolean isUpdate = false;
         if (show != null) {
             if (show.moveToFirst()) {
@@ -158,18 +155,8 @@ public class TheTVDB {
      *
      * @return a List with SearchResult objects, max 100
      */
-    public static List<SearchResult> searchShow(String title, Context context) throws IOException {
-        String language = DisplaySettings.getContentLanguage(context);
-
-        URL url;
-        try {
-            url = new URL(TVDB_API_URL + "GetSeries.php?seriesname="
-                    + URLEncoder.encode(title, "UTF-8")
-                    + (language != null ? "&language=" + language : ""));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
+    public static List<SearchResult> searchShow(String title, Context context)
+            throws TvdbException {
         final List<SearchResult> series = new ArrayList<SearchResult>();
         final SearchResult currentShow = new SearchResult();
 
@@ -197,39 +184,58 @@ public class TheTVDB {
             }
         });
 
-        URLConnection connection = url.openConnection();
-        connection.setConnectTimeout(25000);
-        connection.setReadTimeout(90000);
-        InputStream in = connection.getInputStream();
+        String language = DisplaySettings.getContentLanguage(context);
+        String url;
         try {
-            Xml.parse(in, Xml.Encoding.UTF_8, root.getContentHandler());
-        } catch (Exception e) {
-            throw new IOException();
+            url = TVDB_API_URL + "GetSeries.php?seriesname="
+                    + URLEncoder.encode(title, "UTF-8")
+                    + (language != null ? "&language=" + language : "");
+        } catch (UnsupportedEncodingException e) {
+            throw new TvdbException("Encoding show title failed", e);
         }
-        in.close();
+
+        try {
+            InputStream in = null;
+            try {
+                in = AndroidUtils.downloadUrl(url);
+                Xml.parse(in, Xml.Encoding.UTF_8, root.getContentHandler());
+            } finally {
+                if (in != null) {
+                    in.close();
+                }
+            }
+        } catch (IOException | SAXException e) {
+            throw new TvdbException("Downloading or parsing search results failed", e);
+        }
 
         return series;
     }
+
+    // Values based on the assumption that sync runs about every 24 hours
+    private static final long UPDATE_THRESHOLD_WEEKLYS_MS = 6 * DateUtils.DAY_IN_MILLIS +
+            12 * DateUtils.HOUR_IN_MILLIS;
+    private static final long UPDATE_THRESHOLD_DAILYS_MS = 1 * DateUtils.DAY_IN_MILLIS
+            + 12 * DateUtils.HOUR_IN_MILLIS;
 
     /**
      * Return list of show TVDb ids hitting a x-day limit.
      */
     public static int[] deltaUpdateShows(long currentTime, Context context) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        final int updateAtLeastEvery = prefs.getInt(SeriesGuidePreferences.KEY_UPDATEATLEASTEVERY,
-                7);
-
         final List<Integer> updatableShowIds = Lists.newArrayList();
 
         // get existing show ids
         final Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI, new String[] {
-                Shows._ID, Shows.LASTUPDATED
+                Shows._ID, Shows.LASTUPDATED, Shows.AIRSDAYOFWEEK
         }, null, null, null);
 
         if (shows != null) {
             while (shows.moveToNext()) {
+                boolean isDailyShow = TimeTools.getDayOfWeek(shows.getString(2))
+                        == TimeTools.RELEASE_DAY_DAILY;
                 long lastUpdatedTime = shows.getLong(1);
-                if (currentTime - lastUpdatedTime > DateUtils.DAY_IN_MILLIS * updateAtLeastEvery) {
+                // update daily shows more frequently than weekly shows
+                if (currentTime - lastUpdatedTime >
+                        (isDailyShow ? UPDATE_THRESHOLD_DAILYS_MS : UPDATE_THRESHOLD_WEEKLYS_MS)) {
                     // add shows that are due for updating
                     updatableShowIds.add(shows.getInt(0));
                 }
@@ -292,18 +298,24 @@ public class TheTVDB {
     }
 
     /**
-     * Get details for one show, identified by the given series TVDb id. Tries to fetch additional
-     * information from trakt.
+     * Get show details from TVDb in the user preferred language ({@link
+     * DisplaySettings#getContentLanguage(android.content.Context)}).
+     */
+    public static Show getShow(Context context, int showTvdbId) throws TvdbException {
+        String language = DisplaySettings.getContentLanguage(context);
+        return downloadAndParseShow(context, showTvdbId, language);
+    }
+
+    /**
+     * Get show details from TVDb. Tries to fetch additional information from trakt.
      *
      * @param language A TVDb language code (see <a href="http://www.thetvdb.com/wiki/index.php/API:languages.xml"
      *                 >TVDb wiki</a>).
      */
     private static Show fetchShow(int showTvdbId, String language, Context context)
             throws TvdbException {
-        // get localized content from TVDb
-        String url = TVDB_API_URL + context.getResources().getString(R.string.tvdb_apikey)
-                + "/series/" + showTvdbId + "/" + (language != null ? language + ".xml" : "");
-        Show show = parseShow(url, context);
+        // get show details from TVDb
+        Show show = downloadAndParseShow(context, showTvdbId, language);
 
         // get some more details from trakt
         TvShow traktShow = null;
@@ -322,16 +334,19 @@ public class TheTVDB {
         show.airtime = TimeTools.parseShowReleaseTime(traktShow.airTime);
         show.country = traktShow.country;
 
+        // try to download the show poster
+        if (Utils.isAllowedLargeDataConnection(context, false)) {
+            fetchArt(show.poster, true, context);
+        }
+
         return show;
     }
 
     /**
-     * Get a show from TVDb. Already tries to download the show poster if there is one.
-     *
-     * @param url API call to get the show.
-     * @return The show wrapped in a {@link Show} object
+     * Get a show from TVDb.
      */
-    private static Show parseShow(String url, final Context context) throws TvdbException {
+    private static Show downloadAndParseShow(final Context context, int showTvdbId, String language)
+            throws TvdbException {
         final Show currentShow = new Show();
         RootElement root = new RootElement("Data");
         Element show = root.getChild("Series");
@@ -416,9 +431,6 @@ public class TheTVDB {
         show.getChild("poster").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 currentShow.poster = body != null ? body.trim() : "";
-                if (Utils.isAllowedLargeDataConnection(context, false)) {
-                    fetchArt(currentShow.poster, true, context);
-                }
             }
         });
         show.getChild("IMDB_ID").setEndTextElementListener(new EndTextElementListener() {
@@ -436,6 +448,9 @@ public class TheTVDB {
             }
         });
 
+        // build TVDb url, get localized content when possible
+        String url = TVDB_API_URL + context.getResources().getString(R.string.tvdb_apikey)
+                + "/series/" + showTvdbId + "/" + (language != null ? language + ".xml" : "");
         downloadAndParse(url, root.getContentHandler(), false);
 
         return currentShow;
@@ -542,7 +557,8 @@ public class TheTVDB {
                     public void end(String body) {
                         values.put(Episodes.DVDNUMBER, body.trim());
                     }
-                });
+                }
+        );
         episode.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 long episodeAirTime = TimeTools

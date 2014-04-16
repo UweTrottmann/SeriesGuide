@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.test;
 
+import android.os.SystemClock;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.LargeTest;
 import com.battlelancer.seriesguide.R;
@@ -24,6 +25,8 @@ import com.battlelancer.seriesguide.ui.ShowsActivity;
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.pressBack;
 import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.click;
+import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.swipeLeft;
+import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.swipeRight;
 import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withId;
 import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withText;
 
@@ -43,6 +46,9 @@ public class ShowsActivityTest extends ActivityInstrumentationTestCase2<ShowsAct
     public void testNavigateToAddShowAndBack() throws InterruptedException {
         onView(withId(R.id.menu_add_show)).perform(click());
 
+        // let the UI do some loading before going back
+        SystemClock.sleep(3000);
+
         pressBack();
     }
 
@@ -53,8 +59,13 @@ public class ShowsActivityTest extends ActivityInstrumentationTestCase2<ShowsAct
     }
 
     public void testTabSwitching() {
+        // go through tabs by tapping tab
         onView(withText("UPCOMING")).perform(click());
-
         onView(withText("RECENT")).perform(click());
+
+        // go back via swiping view
+        onView(withId(R.id.pagerShows)).perform(swipeRight());
+        onView(withId(R.id.pagerShows)).perform(swipeRight());
+        onView(withId(R.id.pagerShows)).perform(swipeLeft());
     }
 }

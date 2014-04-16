@@ -43,7 +43,7 @@
   <string name="shout">Shout!</string>
   <string name="isspoiler">Spoiler-Warnung!</string>
   <string name="no_shouts">Schreibe den ersten Shout!</string>
-  <string name="autorefresh">Aktualisiert automagisch</string>
+  <string name="refresh">Aktualisieren</string>
   <string name="movies_collection">Sammlung</string>
   <string name="movies_watchlist">Ansehen</string>
   <string name="watchlist_add">Zur Watchliste hinzufügen</string>
@@ -58,6 +58,9 @@
   <string name="movie_cast">Besetzung</string>
   <string name="movie_crew">Crew</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
+  <string name="action_movies_sort">Filme sortieren</string>
+  <string name="action_movies_sort_title">Titel</string>
+  <string name="action_movies_sort_release">Erscheinungsdatum</string>
   <string name="shows_with_next">%s mit nächsten Folgen</string>
   <string name="shows_continuing">%s werden fortgesetzt</string>
   <string name="episodes_watched">%s angesehen</string>
@@ -178,11 +181,9 @@
   <string name="add_all">Alle hinzufügen</string>
   <string name="dont_add_show">Nicht hinzufügen</string>
   <string name="add_multiple">Alle Serien werden in Kürze der Serienliste hinzugefügt.</string>
-  <string name="add_started">wird in Kürze in der Serienliste erscheinen.</string>
-  <string name="add_success">erfolgreich hinzugefügt.</string>
-  <string name="add_error_begin">Konnte \"</string>
-  <string name="add_error_end">\" nicht hinzufügen.</string>
-  <string name="add_already_exists">ist bereits in Ihrer Serienliste.</string>
+  <string name="add_started">%s erscheint in Kürze in Ihrer Serien-Liste.</string>
+  <string name="add_error">%s konnte nicht hinzugefügt werden.</string>
+  <string name="add_already_exists">%s ist bereits in Ihrer Serien-Liste.</string>
   <string name="trending">Beliebt</string>
   <string name="recommended">Empfehlungen</string>
   <string name="library">Bibliothek</string>
@@ -360,6 +361,15 @@
   <string name="add_to_homescreen">Zum Startbildschirm hinzufügen</string>
   <string name="search_within_show">Durchsuche %s</string>
   <string name="web_search">Web-Suche</string>
+  <string name="extensions">Erweiterungen</string>
+  <string name="action_extensions_configure">Erweiterungen anpassen</string>
+  <string name="action_extensions_add">Erweiterung hinzufügen</string>
+  <string name="action_extensions_search">Mehr Erweiterungen</string>
+  <string name="action_extension_settings">Einstellungen</string>
+  <string name="action_extension_remove">Löschen</string>
+  <string name="extension_amazon">Amazon-Suche</string>
+  <string name="description_extension_amazon">Suchen Sie auf Ihrer lokalen Amazon-Seite</string>
+  <string name="pref_amazon_domain">Amazon-Seite</string>
   <string-array name="sesorting">
     <item>Aktuellste zuerst</item>
     <item>Älteste zuerst</item>

@@ -43,7 +43,7 @@
   <string name="shout">Huudahda!</string>
   <string name="isspoiler">Juonipaljastusvaroitus!</string>
   <string name="no_shouts">Huudahda ensimmäisenä!</string>
-  <string name="autorefresh">Päivitetään automaagisesti</string>
+  <string name="refresh">Päivitä</string>
   <string name="movies_collection">Kokoelma</string>
   <string name="movies_watchlist">Seurantalista</string>
   <string name="watchlist_add">Lisää seurantalistalle</string>
@@ -58,6 +58,9 @@
   <string name="movie_cast">Näyttelijät</string>
   <string name="movie_crew">Kuvausryhmä</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
+  <string name="action_movies_sort">Lajittele elokuvat</string>
+  <string name="action_movies_sort_title">Otsikko</string>
+  <string name="action_movies_sort_release">Julkaisupäivä</string>
   <string name="shows_with_next">%s seuraavalla jaksolla</string>
   <string name="shows_continuing">%s jatkuu</string>
   <string name="episodes_watched">%s katsottua</string>
@@ -145,8 +148,8 @@
   <string name="action_shows_sort_title">Otsikko</string>
   <string name="action_shows_sort_episode">Seuraava jakso</string>
   <string name="action_shows_sort_favorites">Suosikit ensin</string>
-  <string name="updateall_yes">Päivitä (kaikki)</string>
-  <string name="menu_update_delta">Päivitä (vain vanhentuneet)</string>
+  <string name="updateall_yes">Päivitä kaikki</string>
+  <string name="menu_update_delta">Päivitä vanhentuneet</string>
   <string name="context_updateshow">Päivitä</string>
   <string name="context_marknext">Seuraava jakso katsottu</string>
   <string name="upcoming">Tulevat</string>
@@ -178,11 +181,9 @@
   <string name="add_all">Lisää kaikki</string>
   <string name="dont_add_show">Älä lisää</string>
   <string name="add_multiple">Kaikki ohjelmat ilmaantuvat pian ohjelmalistaasi.</string>
-  <string name="add_started">ilmestyy pian ohjelmaluetteloosi.</string>
-  <string name="add_success">lisätty onnistuneesti.</string>
-  <string name="add_error_begin">Ei voi lisätä ohjelmaa \"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">on jo ohjelmalistassasi.</string>
+  <string name="add_started">%s ilmestyy pian ohjelmaluetteloosi.</string>
+  <string name="add_error">Ei voitu lisätä ohjelmaa %s.</string>
+  <string name="add_already_exists">%s on jo ohjelmaluettelossasi.</string>
   <string name="trending">Trendit</string>
   <string name="recommended">Suositellut</string>
   <string name="library">Kokoelma</string>
@@ -216,9 +217,9 @@
   <string name="integration_trakt_items">- lisää ohjelmat kokoelmastasi ja seurantalistastasi\n\n- näe suosittelusi ja ystäviesi toiminta\n\n- katsonta- ja keräysmerkinnät synkronoidaan automaattisesti\n\n- katsomasi uudet ohjelmat lisätään automaattisesti</string>
   <string name="trakt_upload_hint">Merkitse SeriesGuidessa katsotut jaksot katsotuiksi traktissa:</string>
   <string name="trakt_upload">Lähetä trakt.tv:een</string>
-  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
-  <string name="upload_done">Finished uploading.</string>
-  <string name="upload_no_work">There was nothing to upload.</string>
+  <string name="trakt_syncunwatched">Poista katsontamerkinnät traktin katsomattomilta jaksoilta SeriesGuidessa</string>
+  <string name="upload_done">Lähettäminen päättynyt.</string>
+  <string name="upload_no_work">Ei ole mitään lähetettävää.</string>
   <string name="prefs_category_basic">Yleiset</string>
   <string name="prefs_category_sharing">Palvelut</string>
   <string name="prefs_category_advanced">Edistyneet</string>
@@ -360,6 +361,15 @@
   <string name="add_to_homescreen">Lisää kotiruudulle</string>
   <string name="search_within_show">Hae ohjelmasta %s</string>
   <string name="web_search">Verkkohaku</string>
+  <string name="extensions">Laajennukset</string>
+  <string name="action_extensions_configure">Muokkaa laajennuksia</string>
+  <string name="action_extensions_add">Lisää laajennus</string>
+  <string name="action_extensions_search">Hanki lisää laajennuksia</string>
+  <string name="action_extension_settings">Asetukset</string>
+  <string name="action_extension_remove">Poista</string>
+  <string name="extension_amazon">Amazon-haku</string>
+  <string name="description_extension_amazon">Etsi paikalliselta Amazon-sivustoltasi</string>
+  <string name="pref_amazon_domain">Amazon-sivusto</string>
   <string-array name="sesorting">
     <item>Uusin ensin</item>
     <item>Vanhin ensin</item>

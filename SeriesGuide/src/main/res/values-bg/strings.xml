@@ -43,7 +43,7 @@
   <string name="shout">Мнение!</string>
   <string name="isspoiler">Предупреждение за издаване!</string>
   <string name="no_shouts">Напишете мнение пръв!</string>
-  <string name="autorefresh">Автоматично обновяване</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">Списък за гледане</string>
   <string name="watchlist_add">Добави към списъка</string>
@@ -58,6 +58,9 @@
   <string name="movie_cast">Cast</string>
   <string name="movie_crew">Crew</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
+  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort_title">Заглавие</string>
+  <string name="action_movies_sort_release">Дата на излъчване</string>
   <string name="shows_with_next">%s със следващите епизоди</string>
   <string name="shows_continuing">%s продължаващи</string>
   <string name="episodes_watched">%s гледани</string>
@@ -178,11 +181,9 @@
   <string name="add_all">Добави всички</string>
   <string name="dont_add_show">Не добавяй</string>
   <string name="add_multiple">Всички сериали ще се появят в списъка ви скоро.</string>
-  <string name="add_started">скоро ще се появи във вашият списък със сериали.</string>
-  <string name="add_success">добавен успешно.</string>
-  <string name="add_error_begin">Не може да бъде добавен \"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">вече е във вашия списък с предавания.</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">Тренд</string>
   <string name="recommended">Препоръчва се</string>
   <string name="library">Библиотека</string>
@@ -360,6 +361,15 @@
   <string name="add_to_homescreen">Add to Home screen</string>
   <string name="search_within_show">Search within %s</string>
   <string name="web_search">Web search</string>
+  <string name="extensions">Extensions</string>
+  <string name="action_extensions_configure">Customize extensions</string>
+  <string name="action_extensions_add">Add extension</string>
+  <string name="action_extensions_search">Get more extensions</string>
+  <string name="action_extension_settings">Настройки</string>
+  <string name="action_extension_remove">Премахване</string>
+  <string name="extension_amazon">Amazon search</string>
+  <string name="description_extension_amazon">Search your local Amazon site</string>
+  <string name="pref_amazon_domain">Amazon site</string>
   <string-array name="sesorting">
     <item>Най-новите отгоре</item>
     <item>Най-старите отгоре</item>

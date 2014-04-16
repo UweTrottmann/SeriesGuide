@@ -10,7 +10,7 @@
   <string name="help">Pomoc</string>
   <string name="drawer_open">Otwórz szufladę nawigacji</string>
   <string name="drawer_close">Zamknij szufladę nawigacji</string>
-  <string name="show">Pokaż</string>
+  <string name="show">Serial</string>
   <string name="episode">Odcinek</string>
   <string name="episode_number">Odcinek %s</string>
   <string name="episodes">Odcinki</string>
@@ -18,7 +18,7 @@
   <string name="season_number">Sezon %s</string>
   <string name="seasons">Sezony</string>
   <string name="specialseason">Odcinki specjalne</string>
-  <string name="description_overview">Opis</string>
+  <string name="description_overview">Opis odcinka</string>
   <string name="description_poster">Pokaż plakat</string>
   <string name="description_image">Obraz odcinka</string>
   <string name="done">Wykonano</string>
@@ -43,7 +43,7 @@
   <string name="shout">Krzyk!</string>
   <string name="isspoiler">Ostrzeżenie o spoilerach!</string>
   <string name="no_shouts">Krzycz jako pierwszy!</string>
-  <string name="autorefresh">Odświeżanie automagicznie ;)</string>
+  <string name="refresh">Odśwież</string>
   <string name="movies_collection">Kolekcja</string>
   <string name="movies_watchlist">Lista obejrzanych</string>
   <string name="watchlist_add">Dodaj do listy oglądanych</string>
@@ -58,6 +58,9 @@
   <string name="movie_cast">Obsada</string>
   <string name="movie_crew">Załoga</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
+  <string name="action_movies_sort">Sortuj filmy</string>
+  <string name="action_movies_sort_title">Tytuł</string>
+  <string name="action_movies_sort_release">Data premiery</string>
   <string name="shows_with_next">%s z kolejnych odcinków</string>
   <string name="shows_continuing">%s w toku</string>
   <string name="episodes_watched">%s obejrzanych</string>
@@ -178,11 +181,9 @@
   <string name="add_all">Dodaj wszystkie</string>
   <string name="dont_add_show">Nie dodawaj</string>
   <string name="add_multiple">Seriale za chwilę zostaną dodane do listy.</string>
-  <string name="add_started">za chwilę zostanie dodany do listy.</string>
-  <string name="add_success">dodany.</string>
-  <string name="add_error_begin">Nie można dodać \"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">już jest na liście seriali.</string>
+  <string name="add_started">%s za chwilę zostanie dodany do listy.</string>
+  <string name="add_error">Nie można dodać %s.</string>
+  <string name="add_already_exists">%s jest już na liście seriali.</string>
   <string name="trending">Trendy</string>
   <string name="recommended">Zalecane</string>
   <string name="library">Biblioteka</string>
@@ -360,6 +361,15 @@
   <string name="add_to_homescreen">Dodaj do pulpitu</string>
   <string name="search_within_show">Szukaj w %s</string>
   <string name="web_search">Wyszukiwarka</string>
+  <string name="extensions">Rozszerzenia</string>
+  <string name="action_extensions_configure">Dostosuj rozszerzenia</string>
+  <string name="action_extensions_add">Dodaj rozszerzenia</string>
+  <string name="action_extensions_search">Pobierz więcej rozszerzeń</string>
+  <string name="action_extension_settings">Ustawienia</string>
+  <string name="action_extension_remove">Usuń</string>
+  <string name="extension_amazon">Wyszukiwanie na Amazon</string>
+  <string name="description_extension_amazon">Szukaj na lokalnej witrynie Amazon</string>
+  <string name="pref_amazon_domain">Witryna Amazon</string>
   <string-array name="sesorting">
     <item>Najpierw najnowsze</item>
     <item>Najpierw najstarsze</item>

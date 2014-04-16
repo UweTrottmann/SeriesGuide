@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.accounts.Account;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -28,6 +29,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -43,6 +45,7 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
+import com.battlelancer.seriesguide.api.Intents;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.IabHelper;
 import com.battlelancer.seriesguide.billing.IabResult;
@@ -59,11 +62,13 @@ import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
-import com.google.analytics.tracking.android.EasyTracker;
 import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +82,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         AddDialogFragment.OnAddShowListener, OnFirstRunDismissedListener {
 
     protected static final String TAG = "Shows";
+
+    public static final int ADD_SHOW_LOADER_ID = 1;
 
     private static final int UPDATE_SUCCESS = 100;
 
@@ -103,6 +110,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
     private ViewPager mViewPager;
 
+    private ProgressDialog mProgressDialog;
+
     public interface InitBundle {
 
         String SELECTED_TAB = "selectedtab";
@@ -127,6 +136,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
         // may launch from a notification, then set last cleared time
         NotificationService.handleDeleteIntent(this, getIntent());
+
+        // handle implicit intents from other apps
+        handleViewIntents();
 
         setUpActionBar();
         setupViews();
@@ -159,6 +171,59 @@ public class ShowsActivity extends BaseTopShowsActivity implements
                     mHelper.queryInventoryAsync(mGotInventoryListener);
                 }
             });
+        }
+    }
+
+    /**
+     * Handles further behavior, if this activity was launched through one of the {@link
+     * Intents} action filters defined in the manifest.
+     */
+    private void handleViewIntents() {
+        String action = getIntent().getAction();
+        if (TextUtils.isEmpty(action)) {
+            return;
+        }
+
+        Intent intent = null;
+
+        // view an episode
+        if (Intents.ACTION_VIEW_EPISODE.equals(action)) {
+            int episodeTvdbId = getIntent().getIntExtra(Intents.EXTRA_EPISODE_TVDBID, 0);
+            if (episodeTvdbId > 0 && EpisodeTools.isEpisodeExists(this, episodeTvdbId)) {
+                // episode exists, display it
+                intent = new Intent(this, EpisodesActivity.class)
+                        .putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeTvdbId);
+            } else {
+                // no such episode, offer to add show
+                int showTvdbId = getIntent().getIntExtra(Intents.EXTRA_SHOW_TVDBID, 0);
+                if (showTvdbId > 0) {
+                    SearchResult show = new SearchResult();
+                    show.tvdbid = showTvdbId;
+                    AddDialogFragment.showAddDialog(show, getSupportFragmentManager());
+                }
+            }
+        }
+        // view a show
+        else if (Intents.ACTION_VIEW_SHOW.equals(action)) {
+            int showTvdbId = getIntent().getIntExtra(Intents.EXTRA_SHOW_TVDBID, 0);
+            if (showTvdbId <= 0) {
+                return;
+            }
+            if (DBUtils.isShowExists(this, showTvdbId)) {
+                // show exists, display it
+                intent = new Intent(this, OverviewActivity.class)
+                        .putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, showTvdbId);
+            } else {
+                // no such show, offer to add it
+                SearchResult show = new SearchResult();
+                show.tvdbid = showTvdbId;
+                AddDialogFragment.showAddDialog(show, getSupportFragmentManager());
+            }
+        }
+
+        if (intent != null) {
+            startActivity(intent);
+            overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
         }
     }
 
@@ -240,7 +305,13 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         super.onStart();
 
         setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_SHOWS_POSITION);
-        EasyTracker.getInstance(this).activityStart(this);
+
+        // check for running show removal worker
+        Fragment f = getSupportFragmentManager().findFragmentByTag(RemoveShowWorkerFragment.TAG);
+        if (f != null && !((RemoveShowWorkerFragment) f).isTaskFinished()) {
+            showProgressDialog();
+        }
+        // now listen to events
         EventBus.getDefault().register(this);
     }
 
@@ -279,8 +350,11 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     @Override
     protected void onStop() {
         super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
+
+        // stop listening to events
         EventBus.getDefault().unregister(this);
+        // now prevent dialog from restoring itself (we would loose ref to it)
+        hideProgressDialog();
     }
 
     @Override
@@ -335,10 +409,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
-        getSupportMenuInflater()
-                .inflate(isLightTheme ? R.menu.seriesguide_menu_light : R.menu.seriesguide_menu,
-                        menu);
+        getSupportMenuInflater().inflate(R.menu.seriesguide_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -420,7 +491,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         protected Integer doInBackground(Void... params) {
             // fetch all available poster paths
             if (mPaths == null) {
-                Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[]{
+                Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[] {
                         Shows.POSTER
                 }, null, null, null);
                 if (shows == null) {
@@ -505,6 +576,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         }
     }
 
+    /**
+     * Called if the user adds a show from {@link com.battlelancer.seriesguide.ui.TraktFriendsFragment}.
+     */
     @Override
     public void onAddShow(SearchResult show) {
         TaskManager.getInstance(this).performAddTask(show);
@@ -515,6 +589,35 @@ public class ShowsActivity extends BaseTopShowsActivity implements
             mArtTask.cancel(true);
             mArtTask = null;
         }
+    }
+
+    /**
+     * Called from {@link com.battlelancer.seriesguide.util.RemoveShowWorkerFragment}.
+     */
+    public void onEventMainThread(RemoveShowWorkerFragment.OnRemovingShowEvent event) {
+        showProgressDialog();
+    }
+
+    /**
+     * Called from {@link com.battlelancer.seriesguide.util.RemoveShowWorkerFragment}.
+     */
+    public void onEventMainThread(RemoveShowWorkerFragment.OnShowRemovedEvent event) {
+        hideProgressDialog();
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setCancelable(false);
+        }
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+        mProgressDialog = null;
     }
 
     /**
@@ -679,7 +782,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     };
 
     /**
-     * Special {@link TabStripAdapter} which saves the currently selected page to preferences, so we
+     * Special {@link TabStripAdapter} which saves the currently selected page to preferences, so
+     * we
      * can restore it when the user comes back later.
      */
     public static class ShowsTabPageAdapter extends TabStripAdapter
@@ -716,7 +820,5 @@ public class ShowsActivity extends BaseTopShowsActivity implements
             // save selected tab index
             mPrefs.edit().putInt(ActivitySettings.KEY_ACTIVITYTAB, position).commit();
         }
-
     }
-
 }

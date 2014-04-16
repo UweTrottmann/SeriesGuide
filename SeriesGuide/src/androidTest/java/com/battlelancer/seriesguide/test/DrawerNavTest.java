@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.test;
 
+import android.os.SystemClock;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.LargeTest;
 import com.battlelancer.seriesguide.R;
@@ -66,7 +67,7 @@ public class DrawerNavTest extends ActivityInstrumentationTestCase2<ShowsActivit
         onView(withText(drawerItemTitleResId)).perform(click());
 
         // let the UI do some loading before going back
-        Thread.sleep(1500);
+        SystemClock.sleep(3000);
 
         pressBack();
 

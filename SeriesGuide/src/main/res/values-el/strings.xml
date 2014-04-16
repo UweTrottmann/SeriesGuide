@@ -43,7 +43,7 @@
   <string name="shout">Shout!</string>
   <string name="isspoiler">Προειδοποίηση spoiler!</string>
   <string name="no_shouts">Be the first to shout!</string>
-  <string name="autorefresh">Αυτόματη ανανέωση</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Συλλογή</string>
   <string name="movies_watchlist">Λίστα προς παρακολούθηση</string>
   <string name="watchlist_add">Προσθήκη στη λίστα παρακολούθησης</string>
@@ -58,6 +58,9 @@
   <string name="movie_cast">Ηθοποιοί</string>
   <string name="movie_crew">Crew</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
+  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort_title">Τίτλος</string>
+  <string name="action_movies_sort_release">Ημερομηνία προβολής</string>
   <string name="shows_with_next">%s με τα επόμενα επεισόδια</string>
   <string name="shows_continuing">%s συνεχίζονται</string>
   <string name="episodes_watched">%s παρακολουθήθηκαν</string>
@@ -178,11 +181,9 @@
   <string name="add_all">Προσθήκη όλων</string>
   <string name="dont_add_show">Να μην γίνει προσθήκη</string>
   <string name="add_multiple">Όλες οι σειρές θα εμφανιστούν στη λίστα σύντομα.</string>
-  <string name="add_started">Θα εμφανιστεί στην λίστα σας σύντομα.</string>
-  <string name="add_success">Προστέθηκε με επιτυχία.</string>
-  <string name="add_error_begin">Δεν είναι δυνατή η προσθήκη \"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">Βρίσκεται ήδη στη λίστα σας.</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">Τάσεις</string>
   <string name="recommended">Προτεινόμενα</string>
   <string name="library">Βιβλιοθήκη</string>
@@ -360,6 +361,15 @@
   <string name="add_to_homescreen">Προσθήκη στην αρχική οθόνη</string>
   <string name="search_within_show">Αναζήτηση μέσα σε %s</string>
   <string name="web_search">Αναζήτηση στον ιστό</string>
+  <string name="extensions">Extensions</string>
+  <string name="action_extensions_configure">Customize extensions</string>
+  <string name="action_extensions_add">Add extension</string>
+  <string name="action_extensions_search">Get more extensions</string>
+  <string name="action_extension_settings">Ρυθμίσεις</string>
+  <string name="action_extension_remove">Αφαίρεση</string>
+  <string name="extension_amazon">Amazon search</string>
+  <string name="description_extension_amazon">Search your local Amazon site</string>
+  <string name="pref_amazon_domain">Amazon site</string>
   <string-array name="sesorting">
     <item>Η πιο πρόσφατη πρώτα</item>
     <item>Η παλαιότερη πρώτα</item>

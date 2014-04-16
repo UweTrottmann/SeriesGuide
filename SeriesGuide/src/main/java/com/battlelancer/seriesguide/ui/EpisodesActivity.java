@@ -44,7 +44,6 @@ import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapte
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
 import de.greenrobot.event.EventBus;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -57,6 +56,10 @@ import timber.log.Timber;
  */
 public class EpisodesActivity extends BaseNavDrawerActivity implements
         OnSharedPreferenceChangeListener, OnPageChangeListener {
+
+    public static final int EPISODES_LOADER_ID = 100;
+    public static final int EPISODE_LOADER_ID = 101;
+    public static final int ACTIONS_LOADER_ID = 102;
 
     private EpisodesFragment mEpisodesFragment;
 
@@ -184,7 +187,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
 
             // set adapters for pager and indicator
             int startPosition = updateEpisodeList(episodeId);
-            mAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(), mEpisodes, false);
+            mAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(), mEpisodes, true);
             mPager = (ViewPager) pager;
             mPager.setAdapter(mAdapter);
 
@@ -227,7 +230,6 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
                 .getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
 
-        EasyTracker.getInstance(this).activityStart(this);
         EventBus.getDefault().register(this);
     }
 
@@ -240,7 +242,6 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
                 .getDefaultSharedPreferences(this);
         prefs.unregisterOnSharedPreferenceChangeListener(this);
 
-        EasyTracker.getInstance(this).activityStop(this);
         EventBus.getDefault().unregister(this);
     }
 

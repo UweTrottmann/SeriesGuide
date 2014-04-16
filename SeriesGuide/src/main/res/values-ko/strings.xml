@@ -43,7 +43,7 @@
   <string name="shout">외쳐! (이이)</string>
   <string name="isspoiler">스포일러 경고!</string>
   <string name="no_shouts">첫 감상평의 주인공이 되세요!</string>
-  <string name="autorefresh">자동으로 새로고침</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">관심목록</string>
   <string name="watchlist_add">관심목록에 추가</string>
@@ -58,6 +58,9 @@
   <string name="movie_cast">Cast</string>
   <string name="movie_crew">Crew</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
+  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort_title">제목</string>
+  <string name="action_movies_sort_release">첫 방영 날짜</string>
   <string name="shows_with_next">%s 개의 다음 에피소드</string>
   <string name="shows_continuing">%s 방영 중</string>
   <string name="episodes_watched">%s 시청함</string>
@@ -178,11 +181,9 @@
   <string name="add_all">모두 추가</string>
   <string name="dont_add_show">취소</string>
   <string name="add_multiple">모든 쇼가 곧 목록에 표시됩니다.</string>
-  <string name="add_started">가 곧 쇼 목록에 나타납니다.</string>
-  <string name="add_success">성공적으로 추가 되었습니다.</string>
-  <string name="add_error_begin">\"</string>
-  <string name="add_error_end">\"을 추가할 수 없습니다.</string>
-  <string name="add_already_exists">이미 쇼 목록에 있습니다.</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">트렌드</string>
   <string name="recommended">추천</string>
   <string name="library">라이브러리</string>
@@ -360,6 +361,15 @@
   <string name="add_to_homescreen">홈 화면에 추가</string>
   <string name="search_within_show">%s 에서 검색</string>
   <string name="web_search">웹 검색</string>
+  <string name="extensions">Extensions</string>
+  <string name="action_extensions_configure">Customize extensions</string>
+  <string name="action_extensions_add">Add extension</string>
+  <string name="action_extensions_search">Get more extensions</string>
+  <string name="action_extension_settings">설정</string>
+  <string name="action_extension_remove">삭제</string>
+  <string name="extension_amazon">Amazon search</string>
+  <string name="description_extension_amazon">Search your local Amazon site</string>
+  <string name="pref_amazon_domain">Amazon site</string>
   <string-array name="sesorting">
     <item>최근 방영 순</item>
     <item>예전 방영 순</item>

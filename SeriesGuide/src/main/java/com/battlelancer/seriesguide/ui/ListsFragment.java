@@ -55,7 +55,7 @@ import java.util.Date;
 public class ListsFragment extends SherlockFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener, View.OnClickListener {
 
-    private static final int LOADER_ID = R.layout.lists_fragment;
+    private static final int LOADER_ID = R.layout.fragment_list;
 
     private static final int CONTEXT_REMOVE_ID = 300;
 
@@ -83,7 +83,7 @@ public class ListsFragment extends SherlockFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.lists_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_list, container, false);
     }
 
     @Override
@@ -97,6 +97,8 @@ public class ListsFragment extends SherlockFragment implements
         list.setAdapter(mAdapter);
         list.setOnItemClickListener(this);
         list.setEmptyView(getView().findViewById(android.R.id.empty));
+        list.setFastScrollAlwaysVisible(false);
+        list.setFastScrollEnabled(true);
 
         registerForContextMenu(list);
 

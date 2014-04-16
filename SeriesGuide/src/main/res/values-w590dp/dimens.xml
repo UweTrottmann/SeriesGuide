@@ -7,6 +7,4 @@
     <dimen name="widget_text_middle">14sp</dimen>
     <dimen name="widget_text_large">16sp</dimen>
 
-    <integer name="grid_columns">2</integer>
-
 </resources>

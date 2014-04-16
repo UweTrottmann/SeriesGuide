@@ -13,7 +13,7 @@
         android:layout_alignBottom="@+id/textViewWidgetEpisode"
         android:layout_alignTop="@+id/widgetAirtime"
         android:layout_marginRight="5dp"
-        android:src="@drawable/show_generic"/>
+        android:src="@drawable/ic_image_missing"/>
 
     <TextView
         android:id="@+id/textViewWidgetShow"

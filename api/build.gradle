@@ -1,0 +1,121 @@
+/*
+ * Copyright 2014 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+apply plugin: "java"
+apply plugin: "maven"
+apply plugin: "signing"
+
+jar.baseName = "seriesguide-api"
+group = "com.uwetrottmann.seriesguide"
+version = "1.1.0"
+
+// load properties file
+def Properties props = new Properties()
+props.load(new FileInputStream(file("../local.properties")))
+// extract Android SDK dir
+def android = [
+        sdk: props["sdk.dir"],
+        target: "android-19"
+]
+
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+}
+
+task generateJavadoc(type: Javadoc) {
+    source = sourceSets.main.allJava
+    exclude "**/internal/**"
+    title = "SeriesGuide API"
+    options.windowTitle = "SeriesGuide API"
+    options.linksOffline("http://developer.android.com/reference", "${android.sdk}/docs/reference")
+    classpath = files("${android.sdk}/platforms/${android.target}/android.jar", "${android.sdk}/tools/support/annotations.jar")
+    options.noDeprecated = true
+    options.noHelp = true
+    options.noIndex = true
+    options.noTree = true
+    options.stylesheetFile = file('./javadoc_stylesheet.css')
+}
+
+task javadocJar(type: Jar, dependsOn: generateJavadoc) {
+    classifier = "javadoc"
+    baseName = jar.baseName
+    from javadoc.destinationDir
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = "sources"
+    baseName = jar.baseName
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives jar
+    archives sourcesJar
+    archives javadocJar
+}
+
+dependencies {
+    compile files("${android.sdk}/platforms/${android.target}/android.jar")
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name "SeriesGuide API"
+                packaging "jar"
+                description "Extension API for SeriesGuide to provide custom actions on media items"
+                url "http://seriesgui.de/api"
+
+                licenses {
+                    license {
+                        name "The Apache Software License, Version 2.0"
+                        url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                    }
+                }
+
+                developers {
+                    developer {
+                        id "uwetrottmann"
+                        name "Uwe Trottmann"
+                        email "uwe.trottmann@gmail.com"
+                    }
+                }
+
+                scm {
+                    url "https://github.com/UweTrottmann/SeriesGuide.git"
+                    connection "scm:git:git://github.com/UweTrottmann/SeriesGuide.git"
+                    developerConnection "scm:git:git@github.com:UweTrottmann/SeriesGuide.git"
+                }
+            }
+        }
+    }
+}

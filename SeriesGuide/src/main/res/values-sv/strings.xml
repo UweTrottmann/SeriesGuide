@@ -44,7 +44,7 @@
   <string name="shout">Ropa!</string>
   <string name="isspoiler">Varning för spoiler!</string>
   <string name="no_shouts">Bli först att ropa!</string>
-  <string name="autorefresh">Uppdatera automatiskt</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">Bevakningar</string>
   <string name="watchlist_add">Lägg till i bevakningslistan</string>
@@ -59,6 +59,9 @@
   <string name="movie_cast">Cast</string>
   <string name="movie_crew">Crew</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
+  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort_title">Titel</string>
+  <string name="action_movies_sort_release">Releasedatum</string>
   <string name="shows_with_next">%s med kommande avsnitt</string>
   <string name="shows_continuing">%s fortsätter</string>
   <string name="episodes_watched">%s sedda</string>
@@ -179,11 +182,9 @@
   <string name="add_all">Lägg till alla</string>
   <string name="dont_add_show">Lägg inte till</string>
   <string name="add_multiple">Alla serier kommer att visas i din serielista snart.</string>
-  <string name="add_started">kommer snart att visas i din serielista.</string>
-  <string name="add_success">lades till.</string>
-  <string name="add_error_begin">Kunde inte lägga till \"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">finns redan i din serielista.</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">Trendiga</string>
   <string name="recommended">Rekommenderade</string>
   <string name="library">Bibliotek</string>
@@ -361,6 +362,15 @@
   <string name="add_to_homescreen">Lägg till på hemskärmen </string>
   <string name="search_within_show">Sök inom %s</string>
   <string name="web_search">Webbsökning</string>
+  <string name="extensions">Extensions</string>
+  <string name="action_extensions_configure">Customize extensions</string>
+  <string name="action_extensions_add">Add extension</string>
+  <string name="action_extensions_search">Get more extensions</string>
+  <string name="action_extension_settings">Inställningar</string>
+  <string name="action_extension_remove">Ta bort</string>
+  <string name="extension_amazon">Amazon search</string>
+  <string name="description_extension_amazon">Search your local Amazon site</string>
+  <string name="pref_amazon_domain">Amazon site</string>
   <string-array name="sesorting">
     <item>Senaste först</item>
     <item>Äldsta först</item>

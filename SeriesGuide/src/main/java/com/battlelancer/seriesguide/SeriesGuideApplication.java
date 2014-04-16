@@ -31,9 +31,9 @@ import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.Crashlytics;
-import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Logger;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import java.net.URL;
 import timber.log.Timber;
 
 /**
@@ -54,16 +54,12 @@ public class SeriesGuideApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        // logging setup
         if (BuildConfig.DEBUG) {
             // detailed logcat logging
             Timber.plant(new Timber.DebugTree());
-
-            // also report crashes and errors on internal version
-            if (FLAVOR_INTERNAL.equals(BuildConfig.FLAVOR)) {
-                Timber.plant(new AnalyticsTree());
-                Crashlytics.start(this);
-            }
-        } else {
+        }
+        if (!BuildConfig.DEBUG || FLAVOR_INTERNAL.equals(BuildConfig.FLAVOR)){
             // crash and error reporting
             Timber.plant(new AnalyticsTree());
             Crashlytics.start(this);
@@ -79,14 +75,14 @@ public class SeriesGuideApplication extends Application {
         // Load the current theme into a global variable
         Utils.updateTheme(DisplaySettings.getThemeIndex(this));
 
-        // OkHttp changes the global SSL context, breaks other HTTP clients like used by e.g. Google
-        // Analytics.
-        // https://github.com/square/okhttp/issues/184
-        // So set OkHttp to handle all connections
-        URL.setURLStreamHandlerFactory(AndroidUtils.createOkHttpClient());
-
         // Ensure GA opt-out
         GoogleAnalytics.getInstance(this).setAppOptOut(AppSettings.isGaAppOptOut(this));
+        if (BuildConfig.DEBUG) {
+            GoogleAnalytics.getInstance(this).setDryRun(true);
+            GoogleAnalytics.getInstance(this).getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
+        }
+        // Initialize tracker
+        Analytics.getTracker(this);
 
         // Enable StrictMode
         enableStrictMode();
@@ -108,7 +104,7 @@ public class SeriesGuideApplication extends Application {
      */
     @SuppressWarnings("PointlessBooleanExpression")
     @SuppressLint("NewApi")
-    public static void enableStrictMode() {
+    private static void enableStrictMode() {
         if (!BuildConfig.DEBUG || !AndroidUtils.isGingerbreadOrHigher()) {
             return;
         }

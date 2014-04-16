@@ -23,6 +23,6 @@
         android:background="@drawable/appwidget_button_center"
         android:padding="5dp"
         android:scaleType="fitXY"
-        android:src="@drawable/ic_action_refresh" />
+        android:src="@drawable/ic_action_reload" />
 
 </LinearLayout>

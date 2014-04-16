@@ -5,6 +5,62 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 13 *(2014-04-16)*
+-----------------------------
+
+* Extensions API: provide custom quick actions below episodes. Learn how to [build one](https://github.com/UweTrottmann/SeriesGuide/wiki/Extension-API).
+* Design refresh.
+* Sort movies.
+
+#### 13-beta7 *(2014-04-11)*
+
+* TWEAK Purple action bar for SeriesGuide Light theme.
+* FEATURE Backup tool now also exports/imports movies. They are stored in a separate file called 'sg-movies-export.json'.
+
+#### 13-beta6 *(2014-04-08)*
+
+* TWEAK Do not show fast scroll bar in 'Lists'.
+* TWEAK Fresh coat of paint for SeriesGuide (default) and SeriesGuide Light theme. Various other design tweaks.
+* TWEAK 'Hide special episodes' setting respected by 'Statistics', added toggle for the setting to 'Statistics' menu.
+* NOTICE Latest translations from crowdin.
+
+#### 13-beta5 *(2014-04-02)*
+
+* TWEAK Always show fast scroll bar when appropriate to allow easy jumping inside of lists.
+* TWEAK Do not show '<show> was successfully added' toasts anymore. If there was an error adding a show it will still display, but only if the app is in the foreground.
+* FIX 'Manage Lists' and 'Share' action were shown in overview if there was no episode.
+* NOTICE New [Extensions API](https://github.com/UweTrottmann/SeriesGuide/wiki/Extension-API) release.
+
+#### 13-beta4 *(2014-03-27)*
+
+* TWEAK Add all remaining Amazon domains.
+* FIX full trakt sync did not correctly download unwatched and uncollected episodes.
+* FIX Some GA issues.
+* NOTICE Latest translations from crowdin.
+
+#### 13-beta3 *(2014-03-26)*
+
+* FEATURE SeriesGuide extensions, learn how to [get started](https://github.com/UweTrottmann/SeriesGuide/wiki/Extension-API).
+* TWEAK Episode details load faster.
+* FIX Scroll bar overlaps episode list too much.
+* FIX tvtag auth token marked for refresh a week before expiry (was 24 hours), reducing the chance the user has to manually re-authenticate.
+* NOTICE SeriesGuide for Android 2.3 (Gingerbread) only receiving minor updates from now on, e.g. it will not get extension support.
+* NOTICE New permission: "Prevent device from sleeping". Read more at [http://seriesgui.de/privacy](http://seriesgui.de/privacy).
+
+#### 13-beta2 *(2014-03-17)*
+
+* TWEAK trakt comments do not auto-refresh anymore, added refresh button instead.
+* FIX Some bug fixes and optimizations.
+
+#### 13-beta1 *(2014-03-11)*
+
+* FEATURE Sort movies by title or release date (touch again to reverse sort).
+* TWEAK Toned down tab strip highlights, movie button bar.
+* TWEAK Auto-complete email accounts when signing up for trakt.
+* TWEAK Hidden shows will not display notifications any longer.
+* TWEAK Display absolute episode number more prominently in episode detail view, drop duplicate season and episode number.
+* FIX Exclude special episodes from determining if all episodes of a show are collected as well (already in effect for watched all marker).
+
 Version 12.4 *(2014-03-27)*
 ---------------------------
 

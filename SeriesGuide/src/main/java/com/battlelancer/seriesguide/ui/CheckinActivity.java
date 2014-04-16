@@ -16,18 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
-import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.R;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -46,6 +34,14 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.GridView;
+import com.actionbarsherlock.app.ActionBar;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
+import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.TimeTools;
 
 /**
  * Displays a searchable list of shows to allow quickly checking into a shows next episode.
@@ -126,20 +122,8 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
     private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.checkin));
-        actionBar.setIcon(Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableCheckin));
+        actionBar.setIcon(R.drawable.ic_action_checkin);
         actionBar.setDisplayHomeAsUpEnabled(true);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override

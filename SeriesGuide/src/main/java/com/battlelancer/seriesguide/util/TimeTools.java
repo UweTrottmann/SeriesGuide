@@ -79,6 +79,8 @@ public class TimeTools {
 
     public static final String UNITED_STATES = "United States";
 
+    public static final int RELEASE_DAY_DAILY = 0;
+
     /**
      * Converts a release time from trakt (e.g. "12:00pm") into a millisecond value. The given time
      * is assumed to be in a custom UTC-08:00 time zone.
@@ -187,18 +189,18 @@ public class TimeTools {
 
     /**
      * Returns the Calendar constant (e.g. <code>Calendar.SUNDAY</code>) for a given US English day
-     * string (Monday through Sunday) and Daily.
+     * string (Monday through Sunday) or "Daily".
      *
-     * @param day Either e.g. <code>Calendar.SUNDAY</code> or 0 if Daily or -1 if no match.
+     * @return Either e.g. <code>Calendar.SUNDAY</code> or 0 if Daily or -1 if no match.
      */
-    private static int getDayOfWeek(String day) {
+    public static int getDayOfWeek(String day) {
         if (TextUtils.isEmpty(day)) {
             return -1;
         }
 
         // catch Daily
         if ("Daily".equals(day)) {
-            return 0;
+            return RELEASE_DAY_DAILY;
         }
 
         // catch Monday through Sunday

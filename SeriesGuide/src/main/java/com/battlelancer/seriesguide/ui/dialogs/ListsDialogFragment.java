@@ -86,10 +86,10 @@ public class ListsDialogFragment extends DialogFragment implements
         super.onCreate(savedInstanceState);
 
         // hide title, use custom theme
-        if (SeriesGuidePreferences.THEME == R.style.AndroidTheme) {
+        if (SeriesGuidePreferences.THEME != R.style.SeriesGuideTheme) {
             setStyle(STYLE_NO_TITLE, 0);
         } else {
-            setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog);
+            setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Dialog);
         }
     }
 
@@ -295,6 +295,7 @@ public class ListsDialogFragment extends DialogFragment implements
 
             CheckedTextView checkedView = (CheckedTextView) v.findViewById(android.R.id.text1);
             checkedView.setText(mCursor.getString(ListsQuery.NAME));
+            checkedView.setTextAppearance(mContext, R.style.TextAppearance);
 
             // check list entry if this item is already added to it
             String itemId = mCursor.getString(ListsQuery.LIST_ITEM_ID);

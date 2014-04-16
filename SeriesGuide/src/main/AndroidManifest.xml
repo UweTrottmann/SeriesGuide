@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- Notification service -->
@@ -57,8 +58,11 @@
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="com.battlelancer.seriesguide.api.action.VIEW_EPISODE"/>
+                <action android:name="com.battlelancer.seriesguide.api.action.VIEW_SHOW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
 
             <meta-data
@@ -144,6 +148,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name="com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity" />
 
         <!-- Import and Export -->
         <activity
@@ -325,6 +330,34 @@
             android:name="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity"
             android:exported="true" >
         </activity>
+
+        <!-- SeriesGuide Extension listener -->
+        <service
+            android:name="com.battlelancer.seriesguide.extensions.ExtensionSubscriberService"
+            android:exported="true" />
+
+        <!-- Built-in SeriesGuide extensions -->
+        <service
+            android:name="com.battlelancer.seriesguide.extensions.AmazonExtension"
+            android:label="@string/extension_amazon"
+            android:description="@string/description_extension_amazon">
+            <intent-filter>
+                <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
+            </intent-filter>
+            <meta-data
+                android:name="settingsActivity"
+                android:value="com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity" />
+        </service>
+
+        <!-- Watch for extension package changes -->
+        <receiver android:name="com.battlelancer.seriesguide.extensions.ExtensionPackageChangeReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_CHANGED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
 
         <!-- Sync service -->
         <service

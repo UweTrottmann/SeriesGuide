@@ -16,11 +16,13 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.util.AddShowTask;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.R;
@@ -30,6 +32,7 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
+import com.google.android.gms.analytics.GoogleAnalytics;
 
 /**
  * Provides some common functionality across all activities like setting the theme, navigation
@@ -41,11 +44,18 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
     protected void onCreate(Bundle arg0) {
         setCustomTheme();
         super.onCreate(arg0);
+
+        setupActionBar();
     }
 
     protected void setCustomTheme() {
         // set a theme based on user preference
         setTheme(SeriesGuidePreferences.THEME);
+    }
+
+    private void setupActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setIcon(R.drawable.ic_actionbar);
     }
 
     @Override
@@ -55,6 +65,14 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
         if (!onAutoBackup()) {
             SgSyncAdapter.requestSyncIfTime(this);
         }
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
 
     @Override
@@ -84,6 +102,11 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onEvent(AddShowTask.OnShowAddedEvent event) {
+        // display status toast about adding shows
+        event.handle(this);
     }
 
     public void onEvent(GetGlueCheckin.GetGlueCheckInTask.GetGlueCheckInCompleteEvent event) {

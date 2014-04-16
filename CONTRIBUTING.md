@@ -42,7 +42,7 @@ Before your first build create the following files:
 </resources>
 ```
 
-* `SeriesGuide/src/free`, add the following content:
+* `SeriesGuide/src/free/AndroidManifest.xml`, add the following content:
 ```
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.battlelancer.seriesguide">
@@ -59,11 +59,11 @@ Now build any variant of the free flavor (flavor + debug build type, see [instru
  [1]: https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide
  [2]: https://github.com/UweTrottmann/SeriesGuide/wiki/Beta
  [3]: http://tools.android.com/tech-docs/new-build-system/user-guide
- [4]: http://crowdin.net/project/seriesguide-translations
+ [4]: https://crowdin.net/project/seriesguide-translations
  [5]: http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Product-flavors
  [6]: https://github.com/UweTrottmann/SeriesGuide/compare
  [7]: https://github.com/UweTrottmann/SeriesGuide/issues
  [8]: https://github.com/UweTrottmann/SeriesGuide/issues/new
- [9]: https://seriesguide.uservoice.com/forums/189742-general
+ [9]: https://seriesguide.uservoice.com
  [10]: http://robots.thoughtbot.com/post/48933156625/5-useful-tips-for-a-better-commit-message
  [11]: https://github.com/UweTrottmann/SeriesGuide/fork

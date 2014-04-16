@@ -7,7 +7,7 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 11
         targetSdkVersion 19
         testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
     }
@@ -52,7 +52,9 @@ android {
 }
 
 dependencies {
+    compile project(':api')
     compile project(':libraries:androidutils')
+    compile project(':libraries:drag-sort-listview')
     compile project(':libraries:pagerslidingtabstrip')
     compile project(':libraries:stickygridheaders')
     compile rootProject.ext.libraries.okhttp
@@ -66,17 +68,19 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.2.0'
     compile 'com.squareup.retrofit:retrofit:1.4.1'
     compile 'com.squareup:tape:1.1.1'
+    compile 'com.uwetrottmann:tmdb-java:0.4.+'
+    compile 'com.uwetrottmann:trakt-java:3.1.+'
     compile 'de.greenrobot:eventbus:2.2.0'
 
     // OAuth 2.0
     compile 'org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:0.31'
 
     // App Engine
+    compile 'com.google.android.gms:play-services:4.3.23'
     compile ('com.google.api-client:google-api-client-android:1.17.0-rc') {
         exclude group: 'com.google.android.google-play-services'
     }
     compile 'com.google.http-client:google-http-client-gson:1.17.0-rc'
-    compile 'com.google.android.gms:play-services:4.2.42'
 
     // libs folder
     compile fileTree(dir: 'libs', include: '*.jar')
@@ -87,11 +91,11 @@ dependencies {
     testCompile 'org.robolectric:robolectric:2.3-SNAPSHOT'
 
     // android instrumentation tests
-    androidTestCompile ('com.jakewharton.espresso:espresso:1.1-r1') {
+    androidTestCompile ('com.jakewharton.espresso:espresso:1.1-r2') {
         // TODO workaround for http://b.android.com/65445
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
     }
-    androidTestCompile ('com.jakewharton.espresso:espresso-support-v4:1.1-r1') {
+    androidTestCompile ('com.jakewharton.espresso:espresso-support-v4:1.1-r2') {
         // TODO workaround for http://b.android.com/65445
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
         exclude group: 'com.android.support', module: 'support-v4'

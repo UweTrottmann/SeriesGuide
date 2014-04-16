@@ -80,8 +80,10 @@ public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
 
         if (shout.spoiler) {
             holder.shout.setText(R.string.isspoiler);
+            holder.shout.setTextAppearance(getContext(), R.style.TextAppearance_Small_Highlight_Red);
         } else {
             holder.shout.setText(shout.text);
+            holder.shout.setTextAppearance(getContext(), R.style.TextAppearance_Small);
         }
 
         String timestamp = (String) DateUtils.getRelativeTimeSpanString(

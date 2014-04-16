@@ -24,7 +24,6 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,12 +33,14 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TraktCommentsAdapter;
 import com.battlelancer.seriesguide.enums.TraktAction;
@@ -101,8 +102,6 @@ public class TraktShoutsFragment extends SherlockFragment implements
     }
 
     static final int INTERNAL_EMPTY_ID = 0x00ff0001;
-
-    static final int INTERNAL_LIST_CONTAINER_ID = 0x00ff0003;
 
     private static final String TRAKT_MOVIE_COMMENT_PAGE_URL = "https://trakt.tv/comment/movie/";
 
@@ -226,18 +225,12 @@ public class TraktShoutsFragment extends SherlockFragment implements
             ((TextView) mEmptyView).setText(R.string.offline);
         } else {
             setListShown(false);
-            getLoaderManager().initLoader(0, getArguments(), this);
-            mHandler.postDelayed(mUpdateShoutsRunnable, DateUtils.MINUTE_IN_MILLIS);
+            getLoaderManager().initLoader(TraktShoutsActivity.LOADER_ID_COMMENTS, getArguments(),
+                    this);
         }
-    }
 
-    private Runnable mUpdateShoutsRunnable = new Runnable() {
-        @Override
-        public void run() {
-            getLoaderManager().restartLoader(0, getArguments(), TraktShoutsFragment.this);
-            mHandler.postDelayed(mUpdateShoutsRunnable, DateUtils.MINUTE_IN_MILLIS);
-        }
-    };
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public void onResume() {
@@ -259,13 +252,28 @@ public class TraktShoutsFragment extends SherlockFragment implements
     @Override
     public void onDestroyView() {
         mHandler.removeCallbacks(mRequestFocus);
-        mHandler.removeCallbacks(mUpdateShoutsRunnable);
         mList = null;
         mListShown = false;
         mEmptyView = mProgressContainer = mListContainer = null;
         mStandardEmptyView = null;
         super.onDestroyView();
         ButterKnife.reset(this);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.comments_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_action_comments_refresh) {
+            getLoaderManager().restartLoader(TraktShoutsActivity.LOADER_ID_COMMENTS, getArguments(),
+                    this);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -335,15 +343,8 @@ public class TraktShoutsFragment extends SherlockFragment implements
 
     /**
      * Control whether the list is being displayed. You can make it not displayed if you are
-     * waiting
-     * for the initial data to show in it. During this time an indeterminant progress indicator
-     * will
-     * be shown instead. <p> Applications do not normally need to use this themselves. The default
-     * behavior of ListFragment is to start with the list not being shown, only showing it once an
-     * adapter is given with {@link #setListAdapter(ListAdapter)}. If the list at that point had
-     * not
-     * been shown, when it does get shown it will be do without the user ever seeing the hidden
-     * state.
+     * waiting for the initial data to show in it. During this time an indeterminant progress
+     * indicator will be shown instead.
      *
      * @param shown If true, the list view is shown; if false, the progress indicator. The initial
      *              value is true.
@@ -432,11 +433,13 @@ public class TraktShoutsFragment extends SherlockFragment implements
                 if (rawListView == null) {
                     throw new RuntimeException(
                             "Your content must have a ListView whose id attribute is "
-                                    + "'android.R.id.list'");
+                                    + "'android.R.id.list'"
+                    );
                 }
                 throw new RuntimeException(
                         "Content has view with id attribute 'android.R.id.list' "
-                                + "that is not a ListView class");
+                                + "that is not a ListView class"
+                );
             }
             mList = (ListView) rawListView;
             if (mEmptyView != null) {
@@ -462,7 +465,7 @@ public class TraktShoutsFragment extends SherlockFragment implements
         mHandler.post(mRequestFocus);
     }
 
-    public void onEvent(TraktTask.TraktActionCompleteEvent event) {
+    public void onEventMainThread(TraktTask.TraktActionCompleteEvent event) {
         if (event.mTraktAction != TraktAction.SHOUT || getView() == null) {
             return;
         }
@@ -473,7 +476,8 @@ public class TraktShoutsFragment extends SherlockFragment implements
         if (event.mWasSuccessful) {
             // clear the text field and show recent shout
             mEditTextShout.setText("");
-            getLoaderManager().restartLoader(0, getArguments(), this);
+            getLoaderManager().restartLoader(TraktShoutsActivity.LOADER_ID_COMMENTS, getArguments(),
+                    this);
         }
     }
 }

@@ -57,7 +57,7 @@
     <string name="shout">Shout!</string>
     <string name="isspoiler">Spoiler alert!</string>
     <string name="no_shouts">Be the first to shout!</string>
-    <string name="autorefresh">Refreshing automagically</string>
+    <string name="refresh">Refresh</string>
 
     <!-- Movies -->
     <string name="movies_collection">Collection</string>
@@ -74,6 +74,9 @@
     <string name="movie_cast">Cast</string>
     <string name="movie_crew">Crew</string>
     <string name="movie_person_in_role">%1$s (%2$s)</string>
+    <string name="action_movies_sort">Sort movies</string>
+    <string name="action_movies_sort_title">Title</string>
+    <string name="action_movies_sort_release">Release date</string>
 
     <!-- Statistics -->
     <string name="shows_with_next">%s with next episodes</string>
@@ -253,11 +256,9 @@
     <string name="add_all">Add all</string>
     <string name="dont_add_show">Don\'t Add</string>
     <string name="add_multiple">All shows will appear in your show list shortly.</string>
-    <string name="add_started">will appear in your show list shortly.</string>
-    <string name="add_success">added successfully.</string>
-    <string name="add_error_begin">Could not add \"</string>
-    <string name="add_error_end">\".</string>
-    <string name="add_already_exists">already is in your show list.</string>
+    <string name="add_started">%s will appear in your show list shortly.</string>
+    <string name="add_error">Could not add %s.</string>
+    <string name="add_already_exists">%s is already in your show list.</string>
     <string name="trending">Trending</string>
     <string name="recommended">Recommended</string>
     <string name="library">Library</string>
@@ -528,4 +529,15 @@
     <!-- Search -->
     <string name="search_within_show">Search within %s</string>
     <string name="web_search">Web search</string>
+
+    <!-- Extensions -->
+    <string name="extensions">Extensions</string>
+    <string name="action_extensions_configure">Customize extensions</string>
+    <string name="action_extensions_add">Add extension</string>
+    <string name="action_extensions_search">Get more extensions</string>
+    <string name="action_extension_settings">Settings</string>
+    <string name="action_extension_remove">Remove</string>
+    <string name="extension_amazon">Amazon search</string>
+    <string name="description_extension_amazon">Search your local Amazon site</string>
+    <string name="pref_amazon_domain">Amazon site</string>
 </resources>

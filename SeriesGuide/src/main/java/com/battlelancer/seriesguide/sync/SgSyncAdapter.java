@@ -47,8 +47,6 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.battlelancer.seriesguide.R;
 import com.uwetrottmann.tmdb.entities.Configuration;
 
-import org.xml.sax.SAXException;
-
 import android.accounts.Account;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;

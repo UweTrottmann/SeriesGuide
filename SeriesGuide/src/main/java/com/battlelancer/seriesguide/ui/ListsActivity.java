@@ -17,22 +17,19 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
+import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.astuetz.PagerSlidingTabStrip;
 import com.astuetz.PagerSlidingTabStrip.OnTabClickListener;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
 import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.R;
-
-import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 
 /**
  * Hosts a view pager to display and manage lists of shows, seasons and episodes.
@@ -60,7 +57,7 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
 
     private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setIcon(Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableList));
+        actionBar.setIcon(R.drawable.ic_action_list);
         actionBar.setTitle(R.string.lists);
     }
 
@@ -89,13 +86,6 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
         super.onStart();
 
         setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_LISTS_POSITION);
-        EasyTracker.getInstance(this).activityStart(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override
@@ -106,9 +96,7 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
-        getSupportMenuInflater()
-                .inflate(isLightTheme ? R.menu.lists_menu_light : R.menu.lists_menu, menu);
+        getSupportMenuInflater().inflate(R.menu.lists_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

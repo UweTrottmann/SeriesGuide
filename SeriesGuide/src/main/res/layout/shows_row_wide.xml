@@ -16,8 +16,8 @@
             android:layout_height="150dp"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="@dimen/default_padding"
-            android:contentDescription="@string/description_poster"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/favoritedLabel"

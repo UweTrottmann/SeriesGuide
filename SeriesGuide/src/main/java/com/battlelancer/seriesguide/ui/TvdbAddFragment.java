@@ -35,11 +35,12 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
+import com.battlelancer.thetvdbapi.TvdbException;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import timber.log.Timber;
 
 public class TvdbAddFragment extends AddFragment {
 
@@ -158,7 +159,8 @@ public class TvdbAddFragment extends AddFragment {
 
             try {
                 results = TheTVDB.searchShow(query, mContext);
-            } catch (IOException e) {
+            } catch (TvdbException e) {
+                Timber.e("Searching show failed", e);
                 return null;
             }
 

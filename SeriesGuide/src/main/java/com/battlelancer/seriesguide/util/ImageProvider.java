@@ -27,7 +27,6 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.os.Build;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.widget.ImageView;
@@ -68,7 +67,7 @@ public class ImageProvider {
 
     private ImageCache mCache;
 
-    private String mCacheDir;
+    private File mCacheDir;
 
     private Context mContext;
 
@@ -84,25 +83,12 @@ public class ImageProvider {
         // Pick cache size based on memory class of device
         final ActivityManager am = (ActivityManager) context
                 .getSystemService(Context.ACTIVITY_SERVICE);
-        final int memoryClassBytes = am.getMemoryClass() * 1024 * 1024;
-        mCache = new ImageCache(memoryClassBytes / 8);
+        final int maxCacheSizeBytes = (am.getMemoryClass() * 1024 * 1024) / 8;
+        mCache = new ImageCache(maxCacheSizeBytes);
 
-        // determine cache path on external storage
-        // TODO enable once implemented storing with ImageProvider
-        // if (Utils.isFroyoOrHigher()) {
-        // mCacheDir = null;
-        // File cacheDir = context.getExternalCacheDir();
-        // if (cacheDir != null) {
-        // mCacheDir = cacheDir.getAbsolutePath();
-        // }
-        // } else {
-        // mCacheDir =
-        // Environment.getExternalStorageDirectory().getAbsolutePath()
-        // + "/Android/data/" + context.getPackageName() + "/cache";
-        // }
-
-        mCacheDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/"
-                + context.getPackageName() + "/files";
+        mCacheDir = mContext.getExternalFilesDir(null);
+        Timber.d("Init cache with size: " + maxCacheSizeBytes + " bytes, cache directory: "
+                + mCacheDir);
 
         // listen to trim or low memory callbacks so we can shrink our memory
         // footprint
@@ -130,7 +116,6 @@ public class ImageProvider {
                         // evict our entire thumbnail cache
                         Timber.d("evicting entire thumbnail cache");
                         mCache.evictAll();
-
                     } else if (level >= TRIM_MEMORY_BACKGROUND) { // 40
                         // Entering list of cached background apps; evict oldest
                         // half of our thumbnail cache
@@ -172,11 +157,16 @@ public class ImageProvider {
     /**
      * Sets the image bitmap, either directly from cache or loads it asynchronously from external
      * storage.
+     *
+     * <p> If the image path is empty will clear the image view. If the image could not be
+     * retrieved, will show a placeholder.
+     *
+     * @param loadThumbnail Will load a down-sized version of the image requested.
      */
     public void loadImage(ImageView imageView, String imagePath, boolean loadThumbnail) {
         if (TextUtils.isEmpty(imagePath)) {
             // there is no image available
-            setPlaceholderToImageView(imageView);
+            setNothingToImageView(imageView);
             return;
         }
 
@@ -244,6 +234,7 @@ public class ImageProvider {
             final Bitmap result = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
             if (result == null) {
                 // treat decoding errors as a cache miss
+                Timber.d("getImageFromExternalStorage: decoding bitmap failed " + imageFile);
                 return null;
             }
 
@@ -252,43 +243,46 @@ public class ImageProvider {
             return result;
         }
 
+        Timber.d("getImageFromExternalStorage: image not on disk " + imageFile);
         return null;
     }
 
     public void storeImage(String imagePath, Bitmap bitmap, boolean createThumbnail) {
-        if (AndroidUtils.isExtStorageAvailable()) {
-            // make sure directories exist
-            createDirectories();
+        if (!AndroidUtils.isExtStorageAvailable()) {
+            Timber.e("storeImage: external storage not available, storing failed");
+            return;
+        }
+        // make sure directories exist
+        createDirectories();
 
-            final File imageFile = getImageFile(imagePath);
+        final File imageFile = getImageFile(imagePath);
 
+        try {
+            imageFile.createNewFile();
+            FileOutputStream ostream = new FileOutputStream(imageFile);
             try {
-                imageFile.createNewFile();
-                FileOutputStream ostream = new FileOutputStream(imageFile);
-                try {
-                    bitmap.compress(IMAGE_FORMAT, IMAGE_QUALITY, ostream);
-                } finally {
-                    ostream.close();
-                }
-            } catch (IOException e) {
-                Timber.e(e, "Saving image to disk failed");
+                bitmap.compress(IMAGE_FORMAT, IMAGE_QUALITY, ostream);
+            } finally {
+                ostream.close();
             }
+        } catch (IOException e) {
+            Timber.e(e, "Saving image to disk failed");
+        }
 
-            // create a thumbnail, too, if requested
-            if (createThumbnail) {
-                int scaledWidth;
-                int scaledHeight;
-                // create bigger thumbnails on large screen devices
-                if (DisplaySettings.isVeryLargeScreen(mContext)) {
-                    scaledWidth = (int) (THUMBNAIL_WIDTH_LARGE * mScale + 0.5f);
-                    scaledHeight = (int) (THUMBNAIL_HEIGHT_LARGE * mScale + 0.5f);
-                } else {
-                    scaledWidth = (int) (THUMBNAIL_WIDTH_DIP * mScale + 0.5f);
-                    scaledHeight = (int) (THUMBNAIL_HEIGHT_DIP * mScale + 0.5f);
-                }
-                storeImage(imagePath + THUMB_SUFFIX,
-                        Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, true), false);
+        // create a thumbnail, too, if requested
+        if (createThumbnail) {
+            int scaledWidth;
+            int scaledHeight;
+            // create bigger thumbnails on large screen devices
+            if (DisplaySettings.isVeryLargeScreen(mContext)) {
+                scaledWidth = (int) (THUMBNAIL_WIDTH_LARGE * mScale + 0.5f);
+                scaledHeight = (int) (THUMBNAIL_HEIGHT_LARGE * mScale + 0.5f);
+            } else {
+                scaledWidth = (int) (THUMBNAIL_WIDTH_DIP * mScale + 0.5f);
+                scaledHeight = (int) (THUMBNAIL_HEIGHT_DIP * mScale + 0.5f);
             }
+            storeImage(imagePath + THUMB_SUFFIX,
+                    Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, true), false);
         }
     }
 
@@ -299,8 +293,8 @@ public class ImageProvider {
         try {
             getImageFile(imagePath).delete();
             getImageFile(imagePath + THUMB_SUFFIX).delete();
-        } catch (SecurityException se) {
-            // we don't care
+        } catch (SecurityException e) {
+            Timber.e(e, "removeImage: failed");
         }
     }
 
@@ -309,24 +303,23 @@ public class ImageProvider {
     }
 
     public File getImageFile(String imagePath) {
-        final String fileName = mCacheDir + "/" + Integer.toHexString(imagePath.hashCode()) + "."
-                + IMAGE_FORMAT.name();
-        return new File(fileName);
+        return new File(mCacheDir,
+                Integer.toHexString(imagePath.hashCode()) + "." + IMAGE_FORMAT.name());
     }
 
     private void createDirectories() {
-        new File(mCacheDir).mkdirs();
+        mCacheDir.mkdirs();
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         updateNoMediaFile(prefs);
     }
 
     private void updateNoMediaFile(SharedPreferences prefs) {
-        final String noMediaFilePath = mCacheDir + "/.nomedia";
+        final File noMediaFile = new File(mCacheDir, ".nomedia");
 
         if (prefs.getBoolean(SeriesGuidePreferences.KEY_HIDEIMAGES, true)) {
             try {
-                boolean created = new File(noMediaFilePath).createNewFile();
+                boolean created = noMediaFile.createNewFile();
                 if (created) {
                     Timber.d("Created .nomedia file");
                 }
@@ -334,7 +327,7 @@ public class ImageProvider {
                 Timber.w("Could not create .nomedia file");
             }
         } else {
-            new File(noMediaFilePath).delete();
+            noMediaFile.delete();
             Timber.d("Deleting .nomedia file");
         }
     }
@@ -351,8 +344,7 @@ public class ImageProvider {
      * Clear all files in cache directory.
      */
     public void clearExternalStorageCache() {
-        final File directory = new File(mCacheDir);
-        final File[] files = directory.listFiles();
+        final File[] files = mCacheDir.listFiles();
         if (files != null) {
             for (File file : files) {
                 file.delete();
@@ -368,6 +360,10 @@ public class ImageProvider {
     private void setImageToImageView(ImageView imageView, Bitmap bitmap) {
         imageView.setScaleType(ScaleType.CENTER_CROP);
         imageView.setImageBitmap(bitmap);
+    }
+
+    private void setNothingToImageView(ImageView imageView) {
+        imageView.setImageBitmap(null);
     }
 
     public class ImageLoaderTask extends AsyncTask<String, Void, Bitmap> {
@@ -400,7 +396,6 @@ public class ImageProvider {
                 mImageView.setTag(null);
             }
         }
-
     }
 
     public static class ImageCache extends LruCache<String, Bitmap> {
@@ -418,6 +413,5 @@ public class ImageProvider {
                 return value.getRowBytes() * value.getHeight();
             }
         }
-
     }
 }

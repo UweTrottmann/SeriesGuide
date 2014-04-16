@@ -69,6 +69,7 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
         View v = inflater.inflate(R.layout.data_liberation_fragment, container, false);
 
         mProgressBar = (ProgressBar) v.findViewById(R.id.progressBarDataLiberation);
+        mProgressBar.setVisibility(View.GONE);
         mButtonExport = (Button) v.findViewById(R.id.buttonExport);
         mButtonImport = (Button) v.findViewById(R.id.buttonImport);
         mButtonImportAutoBackup = (Button) v.findViewById(R.id.buttonBackupRestoreAutoBackup);

@@ -24,7 +24,6 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.battlelancer.seriesguide.R;
 
@@ -72,7 +71,7 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
 
     private void setupActionBar() {
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setIcon(Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableAddShow));
+        actionBar.setIcon(R.drawable.ic_action_new_show);
         actionBar.setDisplayHomeAsUpEnabled(true);
         setProgressBarIndeterminateVisibility(Boolean.FALSE);
         setSupportProgressBarIndeterminateVisibility(false);

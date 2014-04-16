@@ -137,9 +137,6 @@ public class ActivityFragment extends SherlockFragment implements
          * https://github.com/UweTrottmann/SeriesGuide/issues/257.
          */
         onRequery();
-
-        final String tag = getArguments().getString("analyticstag");
-        Utils.trackView(getActivity(), tag);
     }
 
     @Override
@@ -188,8 +185,7 @@ public class ActivityFragment extends SherlockFragment implements
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
-        inflater.inflate(isLightTheme ? R.menu.activity_menu_light : R.menu.activity_menu, menu);
+        inflater.inflate(R.menu.activity_menu, menu);
 
         // set menu items to current values
         menu.findItem(R.id.menu_onlyfavorites)
@@ -213,12 +209,8 @@ public class ActivityFragment extends SherlockFragment implements
                 DisplaySettings.isHidingSpecials(getActivity()) ||
                 DisplaySettings.isNoWatchedEpisodes(getActivity()) ||
                 ActivitySettings.isInfiniteActivity(getActivity());
-        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
         filter.setIcon(isFilterApplied ?
-                (isLightTheme ? R.drawable.ic_action_filter_selected_inverse
-                        : R.drawable.ic_action_filter_selected)
-                : (isLightTheme ? R.drawable.ic_action_filter_inverse
-                        : R.drawable.ic_action_filter));
+                R.drawable.ic_action_filter_selected : R.drawable.ic_action_filter);
     }
 
     @Override
@@ -338,10 +330,10 @@ public class ActivityFragment extends SherlockFragment implements
         };
 
         String QUERY_UPCOMING = Episodes.FIRSTAIREDMS + ">=? AND " + Episodes.FIRSTAIREDMS
-                + "<? AND " + Shows.HIDDEN + "=0";
+                + "<? AND " + Shows.SELECTION_NO_HIDDEN;
 
         String QUERY_RECENT = Episodes.FIRSTAIREDMS + "<? AND " + Episodes.FIRSTAIREDMS + ">? AND "
-                + Shows.HIDDEN + "=0";
+                + Shows.SELECTION_NO_HIDDEN;
 
         String SORTING_UPCOMING = Episodes.FIRSTAIREDMS + " ASC," + Shows.TITLE + " ASC,"
                 + Episodes.NUMBER + " ASC";

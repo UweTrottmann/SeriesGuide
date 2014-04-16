@@ -16,23 +16,25 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.uwetrottmann.androidutils.AsyncTask;
-import com.battlelancer.seriesguide.R;
-
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.uwetrottmann.androidutils.AsyncTask;
 import java.util.Locale;
 
 /**
@@ -44,43 +46,80 @@ public class StatsFragment extends SherlockFragment {
     private AsyncTask<Void, Stats, Stats> mStatsTask;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         return inflater.inflate(R.layout.stats_fragment, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        setHasOptionsMenu(true);
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
-        mStatsTask = new StatsTask(getActivity().getContentResolver()).execute();
+        loadStats();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        cleanupStatsTask();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.stats_menu, menu);
+
+        menu.findItem(R.id.menu_action_stats_filter_specials)
+                .setChecked(DisplaySettings.isHidingSpecials(getActivity()));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_action_stats_filter_specials) {
+            PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+                    .putBoolean(DisplaySettings.KEY_HIDE_SPECIALS, !item.isChecked())
+                    .commit();
+            getActivity().supportInvalidateOptionsMenu();
+            loadStats();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void loadStats() {
+        cleanupStatsTask();
+        mStatsTask = new StatsTask().execute();
+    }
+
+    private void cleanupStatsTask() {
         if (mStatsTask != null && mStatsTask.getStatus() != AsyncTask.Status.FINISHED) {
             mStatsTask.cancel(true);
-            mStatsTask = null;
         }
+        mStatsTask = null;
     }
 
     private class StatsTask extends AsyncTask<Void, Stats, Stats> {
 
-        private ContentResolver mResolver;
-
-        public StatsTask(ContentResolver contentResolver) {
-            mResolver = contentResolver;
-        }
-
         @Override
         protected Stats doInBackground(Void... params) {
             Stats stats = new Stats();
+            ContentResolver resolver = getActivity().getContentResolver();
 
             // number of...
             // ...all shows
-            final Cursor shows = mResolver.query(Shows.CONTENT_URI, new String[] {
-                    Shows._ID, Shows.STATUS, Shows.NEXTEPISODE, Shows.RUNTIME
-            }, null, null, null);
+            final Cursor shows = resolver.query(Shows.CONTENT_URI,
+                    new String[] {
+                            Shows._ID, Shows.STATUS, Shows.NEXTEPISODE, Shows.RUNTIME
+                    }, null, null, null
+            );
             if (shows != null) {
                 int continuing = 0;
                 int withnext = 0;
@@ -92,25 +131,30 @@ public class StatsFragment extends SherlockFragment {
                     // ...shows with next episodes
                     if (shows.getInt(2) != 0) {
                         withnext++;
-
                     }
                 }
                 stats.shows(shows.getCount()).showsContinuing(continuing)
                         .showsWithNextEpisodes(withnext);
 
+                boolean includeSpecials = !DisplaySettings.isHidingSpecials(getActivity());
+
                 // ...all episodes
-                final Cursor episodes = mResolver.query(Episodes.CONTENT_URI, new String[] {
-                        Episodes._ID
-                }, null, null, null);
+                final Cursor episodes = resolver.query(Episodes.CONTENT_URI,
+                        new String[] { Episodes._ID },
+                        includeSpecials ? null : Episodes.SELECTION_NO_SPECIALS,
+                        null, null);
                 if (episodes != null) {
                     stats.episodes(episodes.getCount());
                     episodes.close();
                 }
 
                 // ...watched episodes
-                final Cursor episodesWatched = mResolver.query(Episodes.CONTENT_URI, new String[] {
-                        Episodes._ID
-                }, Episodes.WATCHED + "=" + EpisodeFlags.WATCHED, null, null);
+                final Cursor episodesWatched = resolver.query(Episodes.CONTENT_URI,
+                        new String[] { Episodes._ID },
+                        Episodes.SELECTION_WATCHED
+                                + (includeSpecials ? "" : " AND " + Episodes.SELECTION_NO_SPECIALS),
+                        null, null
+                );
                 if (episodesWatched != null) {
                     stats.episodesWatched(episodesWatched.getCount());
                     episodesWatched.close();
@@ -123,10 +167,14 @@ public class StatsFragment extends SherlockFragment {
                 shows.moveToPosition(-1);
                 long totalRuntime = 0;
                 while (shows.moveToNext()) {
-                    final Cursor episodesWatchedOfShow = mResolver.query(
-                            Episodes.buildEpisodesOfShowUri(shows.getString(0)), new String[] {
-                                Episodes._ID
-                            }, Episodes.WATCHED + "=1", null, null);
+                    final Cursor episodesWatchedOfShow = resolver.query(
+                            Episodes.buildEpisodesOfShowUri(shows.getString(0)),
+                            new String[] { Episodes._ID },
+                            Episodes.SELECTION_WATCHED
+                                    + (includeSpecials
+                                    ? "" : " AND " + Episodes.SELECTION_NO_SPECIALS),
+                            null, null
+                    );
                     if (episodesWatchedOfShow != null) {
                         long runtimeOfShow = shows.getInt(3) * DateUtils.MINUTE_IN_MILLIS;
                         long runtimeOfEpisodes = episodesWatchedOfShow.getCount() * runtimeOfShow;
@@ -153,7 +201,8 @@ public class StatsFragment extends SherlockFragment {
                         String.valueOf(stats.shows()));
 
                 // shows with next episodes
-                ProgressBar progressShowsWithNext = (ProgressBar) findAndShowView(R.id.progressBarShowsWithNext);
+                ProgressBar progressShowsWithNext = (ProgressBar) findAndShowView(
+                        R.id.progressBarShowsWithNext);
                 progressShowsWithNext.setMax(stats.shows());
                 progressShowsWithNext.setProgress(stats.showsWithNextEpisodes());
 
@@ -162,7 +211,8 @@ public class StatsFragment extends SherlockFragment {
                         stats.showsWithNextEpisodes()).toUpperCase(Locale.getDefault()));
 
                 // continuing shows
-                ProgressBar progressShowsContinuing = (ProgressBar) findAndShowView(R.id.progressBarShowsContinuing);
+                ProgressBar progressShowsContinuing = (ProgressBar) findAndShowView(
+                        R.id.progressBarShowsContinuing);
                 progressShowsContinuing.setMax(stats.shows());
                 progressShowsContinuing.setProgress(stats.showsContinuing());
 
@@ -175,7 +225,8 @@ public class StatsFragment extends SherlockFragment {
                         String.valueOf(stats.episodes()));
 
                 // watched episodes
-                ProgressBar progressEpisodesWatched = (ProgressBar) findAndShowView(R.id.progressBarEpisodesWatched);
+                ProgressBar progressEpisodesWatched = (ProgressBar) findAndShowView(
+                        R.id.progressBarEpisodesWatched);
                 progressEpisodesWatched.setMax(stats.episodes());
                 progressEpisodesWatched.setProgress(stats.episodesWatched());
 
@@ -301,7 +352,5 @@ public class StatsFragment extends SherlockFragment {
             mEpisodesWatched = number;
             return this;
         }
-
     }
-
 }

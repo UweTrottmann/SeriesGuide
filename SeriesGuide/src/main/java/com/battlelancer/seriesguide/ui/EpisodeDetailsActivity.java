@@ -16,23 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
-import com.astuetz.PagerSlidingTabStrip;
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.items.Episode;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.util.Utils;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.battlelancer.seriesguide.R;
-
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -45,10 +28,22 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
-import java.util.ArrayList;
-
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
+import com.astuetz.PagerSlidingTabStrip;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.Episode;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.util.Utils;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
+import java.util.ArrayList;
 
 /**
  * Hosts a {@link ViewPager} displaying an episode per fragment of a complete season. Used on
@@ -80,8 +75,6 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         setContentView(R.layout.episode_pager);
         setupNavDrawer();
 
-        setupActionBar();
-
         setupViews();
     }
 
@@ -97,10 +90,13 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         }
     }
 
-    private void setupActionBar() {
+    private void setupActionBar(String showTitle) {
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(showTitle);
+        if (SeriesGuidePreferences.THEME != R.style.AndroidTheme) {
+            actionBar.setIcon(R.drawable.ic_launcher);
+        }
     }
 
     private void setupViews() {
@@ -114,9 +110,10 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         // get show and season id, poster path
         final Cursor episode = getContentResolver().query(
-                Episodes.buildEpisodeWithShowUri(String.valueOf(episodeId)), new String[]{
-                Seasons.REF_SEASON_ID, Shows.POSTER, Shows.REF_SHOW_ID
-        }, null, null, null);
+                Episodes.buildEpisodeWithShowUri(String.valueOf(episodeId)), new String[] {
+                        Seasons.REF_SEASON_ID, Shows.POSTER, Shows.REF_SHOW_ID, Shows.TITLE
+                }, null, null, null
+        );
         if (episode == null || !episode.moveToFirst()) {
             // nothing to display
             if (episode != null) {
@@ -125,6 +122,8 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
             finish();
             return;
         }
+
+        setupActionBar(episode.getString(3));
 
         // set show poster as background
         ImageView background = (ImageView) findViewById(R.id.background);
@@ -137,9 +136,10 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         // get episodes of season
         Constants.EpisodeSorting sortOrder = DisplaySettings.getEpisodeSortOrder(this);
         Cursor episodesOfSeason = getContentResolver().query(
-                Episodes.buildEpisodesOfSeasonUri(String.valueOf(mSeasonId)), new String[]{
-                Episodes._ID, Episodes.NUMBER, Episodes.SEASON
-        }, null, null, sortOrder.query());
+                Episodes.buildEpisodesOfSeasonUri(String.valueOf(mSeasonId)), new String[] {
+                        Episodes._ID, Episodes.NUMBER, Episodes.SEASON
+                }, null, null, sortOrder.query()
+        );
 
         ArrayList<Episode> episodes = new ArrayList<>();
         int startPosition = 0;
@@ -163,7 +163,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         // setup adapter
         EpisodePagerAdapter adapter = new EpisodePagerAdapter(this, getSupportFragmentManager(),
-                episodes, true);
+                episodes, false);
 
         // setup view pager
         ViewPager pager = (ViewPager) findViewById(R.id.pagerEpisodeDetails);
@@ -196,14 +196,12 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
         EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
         EventBus.getDefault().unregister(this);
     }
 
@@ -227,7 +225,8 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
                         .addNextIntent(new Intent(this, ShowsActivity.class))
                         .addNextIntent(
                                 new Intent(this, OverviewActivity.class).putExtra(
-                                        OverviewFragment.InitBundle.SHOW_TVDBID, mShowId))
+                                        OverviewFragment.InitBundle.SHOW_TVDBID, mShowId)
+                        )
                         .addNextIntent(upIntent)
                         .startActivities();
                 finish();
@@ -253,20 +252,20 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         private Context mContext;
 
-        private boolean mIsShowingShowLink;
+        private final boolean mIsMultiPane;
 
-        public EpisodePagerAdapter(Context context, FragmentManager fm, ArrayList<Episode> episodes,
-                boolean isShowingShowLink) {
+        public EpisodePagerAdapter(Context context, FragmentManager fm,
+                ArrayList<Episode> episodes, boolean isMultiPane) {
             super(fm);
             mEpisodes = episodes;
             mContext = context;
-            mIsShowingShowLink = isShowingShowLink;
+            mIsMultiPane = isMultiPane;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return EpisodeDetailsFragment.newInstance(mEpisodes.get(position).episodeId, false,
-                    mIsShowingShowLink);
+            return EpisodeDetailsFragment.newInstance(mEpisodes.get(position).episodeId,
+                    mIsMultiPane);
         }
 
         @Override
@@ -308,6 +307,5 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
                 notifyDataSetChanged();
             }
         }
-
     }
 }

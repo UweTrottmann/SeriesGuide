@@ -174,7 +174,7 @@ public class DBUtils {
         // unwatched, aired episodes
         final Cursor unwatched = context.getContentResolver()
                 .query(Episodes.buildEpisodesOfShowUri(showId), UnwatchedQuery.PROJECTION,
-                        UnwatchedQuery.AIRED_SELECTION + Episodes.SELECTION_NOSPECIALS,
+                        UnwatchedQuery.AIRED_SELECTION + " AND " + Episodes.SELECTION_NO_SPECIALS,
                         new String[]{
                                 String.valueOf(TimeTools.getCurrentTime(context))
                         }, null);
@@ -195,14 +195,16 @@ public class DBUtils {
         if (context == null) {
             return -1;
         }
-        final ContentResolver resolver = context.getContentResolver();
-        final Uri episodesOfShowUri = Episodes.buildEpisodesOfShowUri(showId);
 
         // unwatched, aired episodes
-        final Cursor uncollected = resolver.query(episodesOfShowUri, new String[]{
-                Episodes._ID, Episodes.COLLECTED
-        },
-                Episodes.COLLECTED + "=0", null, null);
+        final Cursor uncollected = context.getContentResolver().query(
+                Episodes.buildEpisodesOfShowUri(showId),
+                new String[] {
+                        Episodes._ID, Episodes.COLLECTED
+                },
+                Episodes.SELECTION_NOT_COLLECTED + " AND " + Episodes.SELECTION_NO_SPECIALS, null,
+                null
+        );
         if (uncollected == null) {
             return -1;
         }
@@ -265,13 +267,13 @@ public class DBUtils {
         // go an hour back in time, so episodes move to recent one hour late
         long recentThreshold = TimeTools.getCurrentTime(context) - DateUtils.HOUR_IN_MILLIS;
 
-        String query;
+        StringBuilder query;
         String[] selectionArgs;
         String sortOrder;
         long timeThreshold;
 
         if (ActivityType.RECENT.equals(type)) {
-            query = ActivityFragment.ActivityQuery.QUERY_RECENT;
+            query = new StringBuilder(ActivityFragment.ActivityQuery.QUERY_RECENT);
             sortOrder = ActivityFragment.ActivityQuery.SORTING_RECENT;
             if (numberOfDaysToInclude < 1) {
                 // at least has an air date
@@ -282,7 +284,7 @@ public class DBUtils {
                         * numberOfDaysToInclude;
             }
         } else {
-            query = ActivityFragment.ActivityQuery.QUERY_UPCOMING;
+            query = new StringBuilder(ActivityFragment.ActivityQuery.QUERY_UPCOMING);
             sortOrder = ActivityFragment.ActivityQuery.SORTING_UPCOMING;
             if (numberOfDaysToInclude < 1) {
                 // to infinity!
@@ -300,24 +302,24 @@ public class DBUtils {
         // append only favorites selection if necessary
         boolean isOnlyFavorites = ActivitySettings.isOnlyFavorites(context);
         if (isOnlyFavorites) {
-            query += Shows.SELECTION_FAVORITES;
+            query.append(" AND ").append(Shows.SELECTION_FAVORITES);
         }
 
         // append no specials selection if necessary
         boolean isNoSpecials = DisplaySettings.isHidingSpecials(context);
         if (isNoSpecials) {
-            query += Episodes.SELECTION_NOSPECIALS;
+            query.append(" AND ").append(Episodes.SELECTION_NO_SPECIALS);
         }
 
         // append unwatched selection if necessary
         if (isOnlyUnwatched) {
-            query += Episodes.SELECTION_NOWATCHED;
+            query.append(" AND ").append(Episodes.SELECTION_UNWATCHED);
         }
 
         // build result array
         String[][] results = new String[3][];
         results[0] = new String[]{
-                query
+                query.toString()
         };
         results[1] = selectionArgs;
         results[2] = new String[]{
@@ -599,7 +601,7 @@ public class DBUtils {
         selectQuery.append(NextEpisodeQuery.SELECT_NEXT);
         if (isNoSpecials) {
             // do not take specials into account
-            selectQuery.append(Episodes.SELECTION_NOSPECIALS);
+            selectQuery.append(" AND ").append(Episodes.SELECTION_NO_SPECIALS);
         }
         if (isNoReleasedEpisodes) {
             // restrict to episodes with future release date

@@ -50,12 +50,12 @@ public class GetGlueSettings {
     }
 
     /**
-     * Returns true if the expired date of the current access token is within a day or later.
+     * Returns true if the expired date of the current access token is within a week or less.
      */
     public static boolean isAuthTokenExpired(Context context) {
         long now = System.currentTimeMillis();
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getLong(KEY_AUTH_EXPIRATION, now) <= now - DateUtils.DAY_IN_MILLIS;
+                .getLong(KEY_AUTH_EXPIRATION, now) <= now - DateUtils.WEEK_IN_MILLIS;
     }
 
     public static void clearTokens(Context context) {

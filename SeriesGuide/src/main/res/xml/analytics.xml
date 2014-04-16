@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- Replace placeholder ID with your tracking ID -->
+    <string name="ga_trackingId">UA-27760852-3</string>
+
+    <!-- Enable Activity tracking -->
+    <bool name="ga_autoActivityTracking">true</bool>
+
+    <!-- Enable automatic exception tracking -->
+    <bool name="ga_reportUncaughtExceptions">false</bool>
+
+    <!-- Remove the last octet of the IP address -->
+    <bool name="ga_anonymizeIp">true</bool>
+
+    <!-- Screen names for activities -->
+    <screenName name="com.battlelancer.seriesguide.ui.ShowsActivity">Shows</screenName>
+    <screenName name="com.battlelancer.seriesguide.ui.OverviewActivity">Overview</screenName>
+    <screenName name="com.battlelancer.seriesguide.ui.EpisodesActivity">Episodes</screenName>
+    <screenName name="com.battlelancer.seriesguide.ui.EpisodeDetailsActivity">Episode Details</screenName>
+    <screenName name="com.battlelancer.seriesguide.ui.CheckinActivity">Check-In</screenName>
+    <screenName name="com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity">Fix GetGlue Check-In</screenName>
+
+    <screenName name="com.battlelancer.seriesguide.ui.ListsActivity">Lists</screenName>
+
+    <screenName name="com.battlelancer.seriesguide.ui.MoviesActivity">Movies</screenName>
+    <screenName name="com.battlelancer.seriesguide.ui.MovieDetailsActivity">Movie Details</screenName>
+
+    <screenName name="com.battlelancer.seriesguide.ui.StatsActivity">Stats</screenName>
+
+    <screenName name="com.battlelancer.seriesguide.ui.SearchActivity">Search</screenName>
+
+    <screenName name="com.battlelancer.seriesguide.ui.TraktShoutsActivity">Comments</screenName>
+
+    <screenName name="com.battlelancer.seriesguide.ui.SeriesGuidePreferences">Settings</screenName>
+    <screenName name="com.battlelancer.seriesguide.ui.BackupDeleteActivity">Backup</screenName>
+    <screenName name="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity">Data Liberation</screenName>
+    <screenName name="com.battlelancer.seriesguide.ui.TraktSyncActivity">Trakt Sync</screenName>
+    <screenName name="com.battlelancer.seriesguide.billing.BillingActivity">X Features</screenName>
+    <screenName name="com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity">Extension Configuration</screenName>
+
+</resources>

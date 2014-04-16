@@ -16,14 +16,11 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.R;
-
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import com.actionbarsherlock.app.ActionBar;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Hosts fragments displaying statistics.
@@ -51,7 +48,7 @@ public class StatsActivity extends BaseTopActivity {
     private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.statistics);
-        actionBar.setIcon(Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableStats));
+        actionBar.setIcon(R.drawable.ic_action_bargraph);
     }
 
     @Override
@@ -59,13 +56,6 @@ public class StatsActivity extends BaseTopActivity {
         super.onStart();
 
         setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_STATS_POSITION);
-        EasyTracker.getInstance(this).activityStart(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override

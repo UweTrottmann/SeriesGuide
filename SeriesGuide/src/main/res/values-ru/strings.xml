@@ -43,7 +43,7 @@
   <string name="shout">Отзыв!</string>
   <string name="isspoiler">Внимание, спойлер!</string>
   <string name="no_shouts">Оставь первый отзыв!</string>
-  <string name="autorefresh">Автоматическое обновление</string>
+  <string name="refresh">Refresh</string>
   <string name="movies_collection">Коллекция</string>
   <string name="movies_watchlist">Список просмотра</string>
   <string name="watchlist_add">Добавить в список</string>
@@ -58,6 +58,9 @@
   <string name="movie_cast">В ролях</string>
   <string name="movie_crew">Crew</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
+  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort_title">Название</string>
+  <string name="action_movies_sort_release">Дата выпуска</string>
   <string name="shows_with_next">%s с новым эпизодом</string>
   <string name="shows_continuing">Продолжается %s</string>
   <string name="episodes_watched">посмотрели: %s</string>
@@ -178,11 +181,9 @@
   <string name="add_all">Добавьте все</string>
   <string name="dont_add_show">Не добавлять</string>
   <string name="add_multiple">Все сериалы скоро появятся в вашем списке.</string>
-  <string name="add_started">скоро появится в списке ваших сериалов</string>
-  <string name="add_success">успешно добавлено.</string>
-  <string name="add_error_begin">Не удалось добавить \"</string>
-  <string name="add_error_end">\".</string>
-  <string name="add_already_exists">уже находится в вашем списке сериалов.</string>
+  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_error">Could not add %s.</string>
+  <string name="add_already_exists">%s is already in your show list.</string>
   <string name="trending">Популярные</string>
   <string name="recommended">Рекомендуемые</string>
   <string name="library">Библиотека</string>
@@ -360,6 +361,15 @@
   <string name="add_to_homescreen">Добавить на главный экран</string>
   <string name="search_within_show">Поиск в %s</string>
   <string name="web_search">Веб-поиск</string>
+  <string name="extensions">Extensions</string>
+  <string name="action_extensions_configure">Customize extensions</string>
+  <string name="action_extensions_add">Add extension</string>
+  <string name="action_extensions_search">Get more extensions</string>
+  <string name="action_extension_settings">Настройки</string>
+  <string name="action_extension_remove">Удалить</string>
+  <string name="extension_amazon">Amazon search</string>
+  <string name="description_extension_amazon">Search your local Amazon site</string>
+  <string name="pref_amazon_domain">Amazon site</string>
   <string-array name="sesorting">
     <item>Сначала последний</item>
     <item>Старшие с начала</item>

@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.provider;
 
 import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.util.ParserUtils;
 
 import android.net.Uri;
@@ -240,7 +241,7 @@ public class SeriesGuideContract {
         String IMDBID = "episode_imdbid";
 
         /**
-         * Last time episode was edited on theTVDb.com (lastupdated field). Added in db version 27.
+         * Last time episode was edited on theTVDb.com (lastupdated field) in Unix time (seconds). Added in db version 27.
          */
         String LAST_EDITED = "episode_lastedit";
 
@@ -395,10 +396,11 @@ public class SeriesGuideContract {
          */
         public static final String DEFAULT_SORT = ShowsColumns.TITLE + " ASC";
 
-        public static final String SELECTION_FAVORITES = " AND " + Shows.FAVORITE + "=1";
+        public static final String SELECTION_FAVORITES = Shows.FAVORITE + "=1";
 
-        public static final String SELECTION_WITH_NEXT_EPISODE = " AND " + Shows.NEXTEPISODE
-                + "!=''";
+        public static final String SELECTION_WITH_NEXT_EPISODE = Shows.NEXTEPISODE + "!=''";
+
+        public static final String SELECTION_NO_HIDDEN = Shows.HIDDEN + "=0";
 
         public static Uri buildShowUri(String showId) {
             return CONTENT_URI.buildUpon().appendPath(showId).build();
@@ -432,9 +434,13 @@ public class SeriesGuideContract {
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.episode";
 
-        public static final String SELECTION_NOWATCHED = " AND " + Episodes.WATCHED + "=0";
+        public static final String SELECTION_UNWATCHED = Episodes.WATCHED + "=0";
 
-        public static final String SELECTION_NOSPECIALS = " AND " + Episodes.SEASON + "!=0";
+        public static final String SELECTION_WATCHED = Episodes.WATCHED + "=" + EpisodeFlags.WATCHED;
+
+        public static final String SELECTION_NOT_COLLECTED = Episodes.COLLECTED + "=0";
+
+        public static final String SELECTION_NO_SPECIALS = Episodes.SEASON + "!=0";
 
         public static Uri buildEpisodeUri(String episodeId) {
             return CONTENT_URI.buildUpon().appendPath(episodeId).build();
@@ -613,7 +619,17 @@ public class SeriesGuideContract {
 
         public static final String SELECTION_WATCHLIST = Movies.IN_WATCHLIST + "=1";
 
-        public static final String DEFAULT_SORT = Movies.TITLE + " ASC";
+        /** Default sort order. */
+        public static final String SORT_TITLE_ALPHABETICAL = Movies.TITLE + " COLLATE NOCASE ASC";
+
+        public static final String SORT_TITLE_REVERSE_ALPHACETICAL = Movies.TITLE
+                + " COLLATE NOCASE DESC";
+
+        public static final String SORT_RELEASE_DATE_NEWEST_FIRST = Movies.RELEASED_UTC_MS
+                + " DESC," + SORT_TITLE_ALPHABETICAL;
+
+        public static final String SORT_RELEASE_DATE_OLDEST_FIRST = Movies.RELEASED_UTC_MS + " ASC,"
+                + SORT_TITLE_ALPHABETICAL;
 
         /**
          * Use if multiple items get returned
