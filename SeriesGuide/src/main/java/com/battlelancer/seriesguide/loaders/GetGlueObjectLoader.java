@@ -50,7 +50,7 @@ public class GetGlueObjectLoader extends GenericSimpleLoader<List<GetGlueObject>
             GetGlueObjects results = getglue.searchService().searchTvShows(mQuery);
             return results.objects;
         } catch (RetrofitError e) {
-            Timber.e(e, "Search failed");
+            Timber.e(e, "GetGlue search failed");
             return null;
         }
     }
