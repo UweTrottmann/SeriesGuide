@@ -250,7 +250,7 @@ public class ActivityFragment extends SherlockFragment implements
 
     private void onFlagEpisodeWatched(AdapterContextMenuInfo info, boolean isWatched) {
         Cursor item = (Cursor) mAdapter.getItem(info.position);
-        if (item == null) {
+        if (item == null || !item.moveToPosition(info.position)) {
             return;
         }
 
