@@ -325,7 +325,7 @@
   <string name="upcoming_show">%s geliyor</string>
   <string name="upcoming_episodes">Yeni bölümler geliyor</string>
   <string name="upcoming_episodes_number">%s yeni bölüm</string>
-  <string name="upcoming_show_detailed">Yakında yayınlanacak Favori diziler için uyar</string>
+  <string name="upcoming_show_detailed">%2$s üzerinde %1$s</string>
   <string name="more">%s daha fazla</string>
   <string name="upcoming_display">Gelecek bölümleri görüntülemek için seçin</string>
   <string name="pref_notifications">Bildirimler</string>
