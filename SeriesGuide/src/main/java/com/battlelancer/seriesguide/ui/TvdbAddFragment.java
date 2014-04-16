@@ -160,7 +160,7 @@ public class TvdbAddFragment extends AddFragment {
             try {
                 results = TheTVDB.searchShow(query, mContext);
             } catch (TvdbException e) {
-                Timber.e("Searching show failed", e);
+                Timber.e(e, "Searching show failed");
                 return null;
             }
 

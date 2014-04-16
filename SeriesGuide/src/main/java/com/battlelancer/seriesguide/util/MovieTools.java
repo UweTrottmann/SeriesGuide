@@ -403,7 +403,7 @@ public class MovieTools {
             try {
                 DBUtils.applyInSmallBatches(context, batch);
             } catch (OperationApplicationException e) {
-                Timber.e("Applying watchlist updates failed", e);
+                Timber.e(e, "Applying watchlist updates failed");
                 return UpdateResult.INCOMPLETE;
             }
             batch.clear();
@@ -432,7 +432,7 @@ public class MovieTools {
             try {
                 DBUtils.applyInSmallBatches(context, batch);
             } catch (OperationApplicationException e) {
-                Timber.e("Applying collection updates failed", e);
+                Timber.e(e, "Applying collection updates failed");
                 return UpdateResult.INCOMPLETE;
             }
             batch.clear();
@@ -444,7 +444,7 @@ public class MovieTools {
                 try {
                     DBUtils.applyInSmallBatches(context, batch);
                 } catch (OperationApplicationException e) {
-                    Timber.e("Removing movies failed", e);
+                    Timber.e(e, "Removing movies failed");
                     return UpdateResult.INCOMPLETE;
                 }
             } else {
