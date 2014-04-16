@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.test;
 
+import android.os.SystemClock;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.LargeTest;
 import com.battlelancer.seriesguide.R;
@@ -42,6 +43,9 @@ public class ShowsActivityTest extends ActivityInstrumentationTestCase2<ShowsAct
 
     public void testNavigateToAddShowAndBack() throws InterruptedException {
         onView(withId(R.id.menu_add_show)).perform(click());
+
+        // let the UI do some loading before going back
+        SystemClock.sleep(3000);
 
         pressBack();
     }
