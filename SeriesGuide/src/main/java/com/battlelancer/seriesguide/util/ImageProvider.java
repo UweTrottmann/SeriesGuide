@@ -67,8 +67,6 @@ public class ImageProvider {
 
     private ImageCache mCache;
 
-    private File mCacheDir;
-
     private Context mContext;
 
     private OnSharedPreferenceChangeListener mListener;
@@ -86,9 +84,8 @@ public class ImageProvider {
         final int maxCacheSizeBytes = (am.getMemoryClass() * 1024 * 1024) / 8;
         mCache = new ImageCache(maxCacheSizeBytes);
 
-        mCacheDir = mContext.getExternalFilesDir(null);
         Timber.d("Init cache with size: " + maxCacheSizeBytes + " bytes, cache directory: "
-                + mCacheDir);
+                + mContext.getExternalFilesDir(null));
 
         // listen to trim or low memory callbacks so we can shrink our memory
         // footprint
@@ -225,7 +222,7 @@ public class ImageProvider {
     private Bitmap getImageFromExternalStorage(final String imagePath) {
         // try to get image from disk
         final File imageFile = getImageFile(imagePath);
-        if (imageFile.exists() && AndroidUtils.isExtStorageAvailable()) {
+        if (imageFile != null && imageFile.exists()) {
             // disk cache hit
             final Bitmap result = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
             if (result == null) {
@@ -252,7 +249,9 @@ public class ImageProvider {
         createDirectories();
 
         final File imageFile = getImageFile(imagePath);
-
+        if (imageFile == null) {
+            return;
+        }
         try {
             imageFile.createNewFile();
             FileOutputStream ostream = new FileOutputStream(imageFile);
@@ -262,7 +261,7 @@ public class ImageProvider {
                 ostream.close();
             }
         } catch (IOException e) {
-            Timber.e(e, "Saving image to disk failed");
+            Timber.e(e, "Saving image to disk failed " + imageFile);
         }
 
         // create a thumbnail, too, if requested
@@ -286,45 +285,67 @@ public class ImageProvider {
      * Remove the given image and a potentially existing thumbnail from the external storage cache.
      */
     public void removeImage(String imagePath) {
+        File image = getImageFile(imagePath);
+        File thumbnail = getImageFile(imagePath + THUMB_SUFFIX);
         try {
-            getImageFile(imagePath).delete();
-            getImageFile(imagePath + THUMB_SUFFIX).delete();
+            if (image != null) {
+                image.delete();
+            }
+            if (thumbnail != null) {
+                thumbnail.delete();
+            }
         } catch (SecurityException e) {
-            Timber.e(e, "removeImage: failed");
+            Timber.e(e, "removeImage: failed " + image + " " + thumbnail);
         }
     }
 
     public boolean exists(String imagePath) {
-        return getImageFile(imagePath).exists();
+        File file = getImageFile(imagePath);
+        return file != null && file.exists();
     }
 
-    public File getImageFile(String imagePath) {
-        return new File(mCacheDir,
-                Integer.toHexString(imagePath.hashCode()) + "." + IMAGE_FORMAT.name());
+    /**
+     * Returns a path for the given image on external storage or null if {@link
+     * Context#getExternalFilesDir(String)} returns null (e.g. external storage is currently not
+     * available).
+     */
+    private File getImageFile(String imagePath) {
+        File path = mContext.getExternalFilesDir(null);
+        if (path != null) {
+            return new File(path,
+                    Integer.toHexString(imagePath.hashCode()) + "." + IMAGE_FORMAT.name());
+        }
+        return null;
     }
 
     private void createDirectories() {
-        mCacheDir.mkdirs();
+        File path = mContext.getExternalFilesDir(null);
+        if (path != null) {
+            path.mkdirs();
+        }
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         updateNoMediaFile(prefs);
     }
 
     private void updateNoMediaFile(SharedPreferences prefs) {
-        final File noMediaFile = new File(mCacheDir, ".nomedia");
+        File path = mContext.getExternalFilesDir(null);
+        if (path == null) {
+            Timber.w("Could not create .nomedia file, external storage not available");
+            return;
+        }
 
+        final File noMediaFile = new File(path, ".nomedia");
         if (prefs.getBoolean(SeriesGuidePreferences.KEY_HIDEIMAGES, true)) {
             try {
                 boolean created = noMediaFile.createNewFile();
-                if (created) {
-                    Timber.d("Created .nomedia file");
-                }
+                Timber.d("Created .nomedia file: " + created);
             } catch (IOException e) {
-                Timber.w("Could not create .nomedia file");
+                Timber.w(e, "Could not create .nomedia file");
             }
         } else {
             noMediaFile.delete();
-            Timber.d("Deleting .nomedia file");
+            Timber.d("Deleted .nomedia file");
         }
     }
 
@@ -340,7 +361,13 @@ public class ImageProvider {
      * Clear all files in cache directory.
      */
     public void clearExternalStorageCache() {
-        final File[] files = mCacheDir.listFiles();
+        File path = mContext.getExternalFilesDir(null);
+        if (path == null) {
+            Timber.w("Could not clear cache, external storage not available");
+            return;
+        }
+
+        final File[] files = path.listFiles();
         if (files != null) {
             for (File file : files) {
                 file.delete();
