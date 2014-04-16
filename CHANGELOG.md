@@ -5,6 +5,11 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 13.1 *(2014-04-16)*
+-----------------------------
+
+* Bugfixes based on past crash reports.
+
 Version 13 *(2014-04-16)*
 -----------------------------
 
