@@ -65,6 +65,7 @@ import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.LatestEpisodeUpdateService;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
@@ -325,7 +326,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        Utils.updateLatestEpisodes(this);
+
+        startService(new Intent(this, LatestEpisodeUpdateService.class));
+
         if (mSavedState != null) {
             restoreLocalState(mSavedState);
         }

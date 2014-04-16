@@ -210,6 +210,8 @@
         <!-- Services -->
         <service android:name="com.battlelancer.seriesguide.service.TraktFlagService" >
         </service>
+        <service android:name="com.battlelancer.seriesguide.util.LatestEpisodeUpdateService">
+        </service>
 
         <!-- Notification service -->
         <service android:name="com.battlelancer.seriesguide.service.NotificationService" >
