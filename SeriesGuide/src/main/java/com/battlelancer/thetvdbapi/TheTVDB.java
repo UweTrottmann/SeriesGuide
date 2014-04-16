@@ -20,11 +20,9 @@ import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.preference.PreferenceManager;
 import android.sax.Element;
 import android.sax.EndElementListener;
 import android.sax.EndTextElementListener;
@@ -41,7 +39,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -214,25 +211,31 @@ public class TheTVDB {
         return series;
     }
 
+    // Values based on the assumption that sync runs about every 24 hours
+    private static final long UPDATE_THRESHOLD_WEEKLYS_MS = 6 * DateUtils.DAY_IN_MILLIS +
+            12 * DateUtils.HOUR_IN_MILLIS;
+    private static final long UPDATE_THRESHOLD_DAILYS_MS = 1 * DateUtils.DAY_IN_MILLIS
+            + 12 * DateUtils.HOUR_IN_MILLIS;
+
     /**
      * Return list of show TVDb ids hitting a x-day limit.
      */
     public static int[] deltaUpdateShows(long currentTime, Context context) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        final int updateAtLeastEvery = prefs.getInt(SeriesGuidePreferences.KEY_UPDATEATLEASTEVERY,
-                7);
-
         final List<Integer> updatableShowIds = Lists.newArrayList();
 
         // get existing show ids
         final Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI, new String[] {
-                Shows._ID, Shows.LASTUPDATED
+                Shows._ID, Shows.LASTUPDATED, Shows.AIRSDAYOFWEEK
         }, null, null, null);
 
         if (shows != null) {
             while (shows.moveToNext()) {
+                boolean isDailyShow = TimeTools.getDayOfWeek(shows.getString(2))
+                        == TimeTools.RELEASE_DAY_DAILY;
                 long lastUpdatedTime = shows.getLong(1);
-                if (currentTime - lastUpdatedTime > DateUtils.DAY_IN_MILLIS * updateAtLeastEvery) {
+                // update daily shows more frequently than weekly shows
+                if (currentTime - lastUpdatedTime >
+                        (isDailyShow ? UPDATE_THRESHOLD_DAILYS_MS : UPDATE_THRESHOLD_WEEKLYS_MS)) {
                     // add shows that are due for updating
                     updatableShowIds.add(shows.getInt(0));
                 }

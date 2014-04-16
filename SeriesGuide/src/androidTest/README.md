@@ -1,0 +1,1 @@
+Ensure a running test (no animations, no installs) emulator. Run tests here with `gradlew connectedAndroidTestFreeDebug`. Test results appear in `/SeriesGuide/build/reports/`.

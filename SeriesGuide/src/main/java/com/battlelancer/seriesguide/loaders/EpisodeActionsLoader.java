@@ -21,7 +21,6 @@ import android.database.Cursor;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.api.Episode;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import java.util.ArrayList;
 import java.util.List;

@@ -28,7 +28,7 @@
     <dimen name="widget_text_middle">12sp</dimen>
     <dimen name="widget_text_large">13sp</dimen>
 
-    <dimen name="showgrid_columnWidth">285dp</dimen>
+    <dimen name="showgrid_columnWidth">275dp</dimen>
     <dimen name="grid_vertical_spacing">5dp</dimen>
     <dimen name="grid_horizontal_spacing">8dp</dimen>
 
@@ -53,7 +53,6 @@
     <dimen name="drag_grip_ridge_size">4dp</dimen>
     <dimen name="drag_grip_ridge_gap">2dp</dimen>
 
-    <integer name="grid_columns">1</integer>
     <integer name="animation_duration">200</integer>
 
 </resources>

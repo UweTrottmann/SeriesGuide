@@ -5,8 +5,12 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 13 *(in development)*
+Version 13 *(2014-04-16)*
 -----------------------------
+
+* Extensions API: provide custom quick actions below episodes. Learn how to [build one](https://github.com/UweTrottmann/SeriesGuide/wiki/Extension-API).
+* Design refresh.
+* Sort movies.
 
 #### 13-beta7 *(2014-04-11)*
 

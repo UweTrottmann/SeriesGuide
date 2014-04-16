@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;

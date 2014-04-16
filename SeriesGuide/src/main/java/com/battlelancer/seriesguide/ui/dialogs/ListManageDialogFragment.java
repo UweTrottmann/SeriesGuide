@@ -79,7 +79,7 @@ public class ListManageDialogFragment extends DialogFragment {
         final View layout = inflater.inflate(R.layout.list_manage_dialog, null);
 
         // title
-        mTitle = (EditText) layout.findViewById(R.id.title);
+        mTitle = (EditText) layout.findViewById(R.id.editTextListManageListTitle);
         mTitle.setFilters(new InputFilter[] {
                 new CharAndDigitInputFilter()
         });
