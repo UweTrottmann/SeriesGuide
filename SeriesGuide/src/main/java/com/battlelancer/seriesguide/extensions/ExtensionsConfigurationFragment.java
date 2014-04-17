@@ -61,6 +61,8 @@ import timber.log.Timber;
 public class ExtensionsConfigurationFragment extends SherlockFragment
         implements AdapterView.OnItemClickListener {
 
+    public static final int EXTENSION_LIMIT_FREE = 2;
+
     private static final String TAG = "Extension Configuration";
     private static final String PLAY_STORE_EXTENSIONS_SEARCH
             = "https://play.google.com/store/search?q=SeriesGuide%20Extension&c=apps";
@@ -260,7 +262,9 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (position == mAdapter.getCount() - 1) {
-            if (!Utils.hasAccessToX(getActivity())) {
+            // non-supporters only can add a few extensions
+            if (mAdapter.getCount() - 1 == EXTENSION_LIMIT_FREE
+                    && !Utils.hasAccessToX(getActivity())) {
                 Utils.advertiseSubscription(getActivity());
                 return;
             }
@@ -270,10 +274,6 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
     }
 
     public void onEventMainThread(ExtensionsAdapter.ExtensionDisableRequestEvent event) {
-        if (!Utils.hasAccessToX(getActivity())) {
-            Utils.advertiseSubscription(getActivity());
-            return;
-        }
         mEnabledExtensions.remove(event.position);
         getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
                 mExtensionsLoaderCallbacks);
