@@ -31,6 +31,7 @@ import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.SeriesGuideExtension;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
+import com.battlelancer.seriesguide.extensions.ExtensionsConfigurationFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import de.greenrobot.event.EventBus;
 
@@ -84,6 +85,14 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
             if (convertView == null) {
                 convertView = mLayoutInflater.inflate(LAYOUT_ADD, parent, false);
             }
+            // warn non-supporters that they only can add a few extensions
+            boolean isAtLimit =
+                    getCount() - 1 == ExtensionsConfigurationFragment.EXTENSION_LIMIT_FREE
+                            && !Utils.hasAccessToX(getContext());
+            convertView.findViewById(R.id.textViewItemExtensionAddLabel)
+                    .setVisibility(isAtLimit ? View.GONE : View.VISIBLE);
+            convertView.findViewById(R.id.textViewItemExtensionAddLimit)
+                    .setVisibility(isAtLimit ? View.VISIBLE : View.GONE);
             return convertView;
         }
 
