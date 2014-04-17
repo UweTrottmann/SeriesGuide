@@ -547,7 +547,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         try {
             DBUtils.applyInSmallBatches(context, batch);
         } catch (OperationApplicationException e) {
-            Timber.e("Applying trakt activity failed", e);
+            Timber.e(e, "Applying trakt activity failed");
             return UpdateResult.INCOMPLETE;
         }
 

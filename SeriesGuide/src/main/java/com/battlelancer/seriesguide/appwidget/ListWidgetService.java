@@ -119,11 +119,9 @@ public class ListWidgetService extends RemoteViewsService {
             // file, and set the text based on the position.
             RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.appwidget_row);
 
-            if (mDataCursor.isClosed()) {
+            if (mDataCursor.isClosed() || !mDataCursor.moveToPosition(position)) {
                 return rv;
             }
-            // position will always range from 0 to getCount() - 1.
-            mDataCursor.moveToPosition(position);
 
             // episode description
             int seasonNumber = mDataCursor.getInt(isShowQuery ?
