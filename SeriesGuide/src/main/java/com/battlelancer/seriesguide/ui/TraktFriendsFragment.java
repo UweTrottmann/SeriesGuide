@@ -182,7 +182,10 @@ public class TraktFriendsFragment extends SherlockFragment implements
                 final UserService userService = manager.userService();
                 List<UserProfile> friends = userService
                         .friends(TraktCredentials.get(getContext()).getUsername());
-
+                if (friends == null) {
+                    Timber.e("Loading friends activity failed, was null");
+                    return friendsActivity;
+                }
                 for (UserProfile friend : friends) {
                     // get the detailed profile
                     UserProfile profile = userService.profile(friend.username);

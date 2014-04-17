@@ -40,7 +40,7 @@ public class TvdbShowLoader extends GenericSimpleLoader<Show> {
         try {
             return TheTVDB.getShow(getContext(), mShowTvdbId);
         } catch (TvdbException e) {
-            Timber.e("Downloading TVDb show failed", e);
+            Timber.e(e, "Downloading TVDb show failed");
         }
         return null;
     }
