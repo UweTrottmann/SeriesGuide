@@ -5,8 +5,17 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 13 *(in development)*
------------------------------
+Version 13.0.1-gb *(2014-04-17)*
+--------------------------------
+
+* Bugfixes based on past crash reports.
+
+Version 13-gb *(2014-04-16)*
+----------------------------
+
+* SG for Android 2.3 (Gingerbread) is now in maintenance mode and will only receive important fixes.
+* Sort movies.
+* Backup tool exports and imports movies.
 
 #### 13-beta2 *(2014-03-17)*
 
