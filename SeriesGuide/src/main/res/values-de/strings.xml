@@ -364,6 +364,7 @@
   <string name="extensions">Erweiterungen</string>
   <string name="action_extensions_configure">Erweiterungen anpassen</string>
   <string name="action_extensions_add">Erweiterung hinzufügen</string>
+  <string name="action_extensions_limit">Erwerben Sie X um mehr Erweiterungen hinzuzufügen</string>
   <string name="action_extensions_search">Mehr Erweiterungen</string>
   <string name="action_extension_settings">Einstellungen</string>
   <string name="action_extension_remove">Löschen</string>

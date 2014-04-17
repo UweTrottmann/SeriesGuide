@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.service;
 
 import android.support.v4.app.TaskStackBuilder;
+import android.text.TextUtils;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
@@ -422,11 +423,11 @@ public class NotificationService extends IntentService {
                         .getString(NotificationQuery.OVERVIEW);
 
                 final SpannableStringBuilder bigText = new SpannableStringBuilder();
-                bigText.append(episodeTitle);
+                bigText.append(TextUtils.isEmpty(episodeTitle) ? "" : episodeTitle);
                 bigText.setSpan(new ForegroundColorSpan(Color.WHITE), 0, bigText.length(),
                         0);
                 bigText.append("\n");
-                bigText.append(episodeSummary);
+                bigText.append(TextUtils.isEmpty(episodeSummary) ? "" : episodeSummary);
 
                 nb.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText)
                         .setSummaryText(contentText));
@@ -456,7 +457,8 @@ public class NotificationService extends IntentService {
                     final SpannableStringBuilder lineText = new SpannableStringBuilder();
 
                     // show title
-                    lineText.append(upcomingEpisodes.getString(NotificationQuery.SHOW_TITLE));
+                    String showTitle = upcomingEpisodes.getString(NotificationQuery.SHOW_TITLE);
+                    lineText.append(TextUtils.isEmpty(showTitle) ? "" : showTitle);
                     lineText.setSpan(new ForegroundColorSpan(Color.WHITE), 0, lineText.length(), 0);
 
                     lineText.append(" ");

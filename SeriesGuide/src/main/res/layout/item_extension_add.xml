@@ -30,4 +30,13 @@
         android:text="@string/action_extensions_add"
         android:textAppearance="@style/TextAppearance.Medium" />
 
+    <TextView
+        android:id="@+id/textViewItemExtensionAddLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/action_extensions_limit"
+        android:textAppearance="@style/TextAppearance.Small.Highlight.Blue"
+        android:visibility="gone" />
+
 </FrameLayout>

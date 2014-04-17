@@ -364,6 +364,7 @@
   <string name="extensions">Laajennukset</string>
   <string name="action_extensions_configure">Muokkaa laajennuksia</string>
   <string name="action_extensions_add">Lisää laajennus</string>
+  <string name="action_extensions_limit">Get X to add more extensions</string>
   <string name="action_extensions_search">Hanki lisää laajennuksia</string>
   <string name="action_extension_settings">Asetukset</string>
   <string name="action_extension_remove">Poista</string>
