@@ -152,7 +152,7 @@ public class ListsDialogFragment extends DialogFragment implements
                 try {
                     DBUtils.applyInSmallBatches(getActivity(), batch);
                 } catch (OperationApplicationException e) {
-                    Timber.e("Applying list changes failed", e);
+                    Timber.e(e, "Applying list changes failed");
                 }
 
                 getActivity().getContentResolver().notifyChange(ListItems.CONTENT_WITH_DETAILS_URI,

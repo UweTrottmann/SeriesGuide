@@ -91,7 +91,9 @@ public class TraktFlagService extends Service implements Callback {
     @Override
     public void onSuccess() {
         running = false;
-        mQueue.remove();
+        if (mQueue.size() > 0) {
+            mQueue.remove();
+        }
         executeNext();
     }
 

@@ -155,7 +155,7 @@ public class ShowTools {
         try {
             DBUtils.applyInSmallBatches(mContext, batch);
         } catch (OperationApplicationException e) {
-            Timber.e("Removing episode search entries failed", e);
+            Timber.e(e, "Removing episode search entries failed");
             return Result.ERROR;
         }
         batch.clear();
@@ -170,7 +170,7 @@ public class ShowTools {
         try {
             DBUtils.applyInSmallBatches(mContext, batch);
         } catch (OperationApplicationException e) {
-            Timber.e("Removing episodes, seasons and show failed", e);
+            Timber.e(e, "Removing episodes, seasons and show failed");
             return Result.ERROR;
         }
 
@@ -396,7 +396,7 @@ public class ShowTools {
             try {
                 DBUtils.applyInSmallBatches(context, batch);
             } catch (OperationApplicationException e) {
-                Timber.e("Applying hexagon show updates failed", e);
+                Timber.e(e, "Applying hexagon show updates failed");
                 return UpdateResult.INCOMPLETE;
             }
 

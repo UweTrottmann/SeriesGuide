@@ -392,6 +392,9 @@ public class MovieTools {
             } catch (RetrofitError e) {
                 return UpdateResult.INCOMPLETE;
             }
+            if (watchlistMovies == null) {
+                return UpdateResult.INCOMPLETE;
+            }
 
             // build watchlist updates
             ContentValues values = new ContentValues();
@@ -403,7 +406,7 @@ public class MovieTools {
             try {
                 DBUtils.applyInSmallBatches(context, batch);
             } catch (OperationApplicationException e) {
-                Timber.e("Applying watchlist updates failed", e);
+                Timber.e(e, "Applying watchlist updates failed");
                 return UpdateResult.INCOMPLETE;
             }
             batch.clear();
@@ -422,6 +425,9 @@ public class MovieTools {
             } catch (RetrofitError e) {
                 return UpdateResult.INCOMPLETE;
             }
+            if (collectionMovies == null) {
+                return UpdateResult.INCOMPLETE;
+            }
 
             // build collection updates
             values.put(Movies.IN_COLLECTION, true);
@@ -432,7 +438,7 @@ public class MovieTools {
             try {
                 DBUtils.applyInSmallBatches(context, batch);
             } catch (OperationApplicationException e) {
-                Timber.e("Applying collection updates failed", e);
+                Timber.e(e, "Applying collection updates failed");
                 return UpdateResult.INCOMPLETE;
             }
             batch.clear();
@@ -444,7 +450,7 @@ public class MovieTools {
                 try {
                     DBUtils.applyInSmallBatches(context, batch);
                 } catch (OperationApplicationException e) {
-                    Timber.e("Removing movies failed", e);
+                    Timber.e(e, "Removing movies failed");
                     return UpdateResult.INCOMPLETE;
                 }
             } else {
