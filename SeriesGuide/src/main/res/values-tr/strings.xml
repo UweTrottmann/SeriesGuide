@@ -169,7 +169,7 @@
   <string name="arttask_incomplete">Bazı posterler yüklenemedi, daha sonra tekrar deneyin.</string>
   <string name="arttask_start">Posterler yükleniyor…</string>
   <string name="show_on_network">kanal %s</string>
-  <string name="season_watchcount">izlenilmemiş bölüm</string>
+  <string name="season_watchcount">izlenmeyen bölümler</string>
   <string name="season_allwatched">Tüm bölümler izlendi</string>
   <string name="season_onenotwatched">bölüm izlenmedi</string>
   <string name="season_unaired">yayınlanmadı</string>
@@ -364,6 +364,7 @@
   <string name="extensions">Eklentiler</string>
   <string name="action_extensions_configure">Eklentileri özelleştir</string>
   <string name="action_extensions_add">Eklenti ekle</string>
+  <string name="action_extensions_limit">Get X to add more extensions</string>
   <string name="action_extensions_search">Daha fazla eklenti edin</string>
   <string name="action_extension_settings">Ayarlar</string>
   <string name="action_extension_remove">Kaldır</string>

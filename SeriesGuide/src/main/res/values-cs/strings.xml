@@ -364,6 +364,7 @@
   <string name="extensions">Rozšíření</string>
   <string name="action_extensions_configure">Přispůsobení rozšířeních</string>
   <string name="action_extensions_add">Přidat rozšíření</string>
+  <string name="action_extensions_limit">Get X to add more extensions</string>
   <string name="action_extensions_search">Získat další rozšíření</string>
   <string name="action_extension_settings">Nastavení</string>
   <string name="action_extension_remove">Odstranit</string>
