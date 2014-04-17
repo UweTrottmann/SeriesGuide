@@ -5,6 +5,11 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 13.1 *(2014-04-17)*
+-----------------------------
+
+* Extensions API: now all users can add up to two extensions. To add more subscribe or buy the X Pass!
+
 Version 13.0.1 *(2014-04-17)*
 -----------------------------
 

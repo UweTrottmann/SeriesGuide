@@ -364,6 +364,7 @@
   <string name="extensions">الإضافات</string>
   <string name="action_extensions_configure">تخصيص الإضافات</string>
   <string name="action_extensions_add">إضافة ملحق</string>
+  <string name="action_extensions_limit">Get X to add more extensions</string>
   <string name="action_extensions_search">المزيد من الإضافات</string>
   <string name="action_extension_settings">الإعدادات</string>
   <string name="action_extension_remove">إزالة</string>

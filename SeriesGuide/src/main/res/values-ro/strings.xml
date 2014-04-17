@@ -364,6 +364,7 @@
   <string name="extensions">Extensions</string>
   <string name="action_extensions_configure">Customize extensions</string>
   <string name="action_extensions_add">Add extension</string>
+  <string name="action_extensions_limit">Get X to add more extensions</string>
   <string name="action_extensions_search">Get more extensions</string>
   <string name="action_extension_settings">Setări</string>
   <string name="action_extension_remove">Eliminați</string>
