@@ -22,6 +22,7 @@ import android.accounts.AccountManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
+import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import timber.log.Timber;
@@ -32,6 +33,10 @@ public class AccountUtils {
 
     private static final String ACCOUNT_NAME = "SeriesGuide Sync";
 
+    private static final String ACCOUNT_TYPE =
+            SeriesGuideApplication.FLAVOR_INTERNAL.equals(BuildConfig.FLAVOR)
+                    ? "com.battlelancer.seriesguide.beta" : "com.battlelancer.seriesguide";
+
     public static void createAccount(Context context) {
         Timber.d("Setting up account...");
 
@@ -40,7 +45,7 @@ public class AccountUtils {
 
         // create a new account
         AccountManager manager = AccountManager.get(context);
-        Account account = new Account(ACCOUNT_NAME, context.getString(R.string.package_name));
+        Account account = new Account(ACCOUNT_NAME, ACCOUNT_TYPE);
         if (manager.addAccountExplicitly(account, null, null)) {
             // Inform the system that this account supports sync
             ContentResolver.setIsSyncable(account, SeriesGuideApplication.CONTENT_AUTHORITY, 1);
@@ -62,7 +67,7 @@ public class AccountUtils {
         Timber.d("Removing existing accounts...");
 
         AccountManager manager = AccountManager.get(context);
-        Account[] accounts = manager.getAccountsByType(context.getString(R.string.package_name));
+        Account[] accounts = manager.getAccountsByType(ACCOUNT_TYPE);
         for (Account account : accounts) {
             manager.removeAccount(account, null, null);
         }
@@ -72,13 +77,13 @@ public class AccountUtils {
 
     public static boolean isAccountExists(Context context) {
         AccountManager manager = AccountManager.get(context);
-        Account[] accounts = manager.getAccountsByType(context.getString(R.string.package_name));
+        Account[] accounts = manager.getAccountsByType(ACCOUNT_TYPE);
         return accounts.length > 0;
     }
 
     public static Account getAccount(Context context) {
         AccountManager manager = AccountManager.get(context);
-        Account[] accounts = manager.getAccountsByType(context.getString(R.string.package_name));
+        Account[] accounts = manager.getAccountsByType(ACCOUNT_TYPE);
 
         // return first available account
         if (accounts.length > 0) {
@@ -87,5 +92,4 @@ public class AccountUtils {
 
         return null;
     }
-
 }
