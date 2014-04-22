@@ -111,7 +111,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
         // watched box
         // save rowid to hand over to OnClick event listener
-        final int showTvdbId = cursor.getInt(ActivityFragment.ActivityQuery.REF_SHOW_ID);
+        final int showTvdbId = cursor.getInt(ActivityFragment.ActivityQuery.SHOW_ID);
         final int season = cursor.getInt(ActivityFragment.ActivityQuery.SEASON);
         final int episodeTvdbId = cursor.getInt(ActivityFragment.ActivityQuery._ID);
         final int episode = cursor.getInt(ActivityFragment.ActivityQuery.NUMBER);
@@ -141,7 +141,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         // meta data: time, day and network
         StringBuilder metaText = new StringBuilder();
         long releaseTime = cursor.getLong(
-                ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS);
+                ActivityFragment.ActivityQuery.RELEASE_TIME_MS);
         if (releaseTime != -1) {
             Date actualRelease = TimeTools.getEpisodeReleaseTime(context, releaseTime);
             // 10:00 | Fri in 3 days, 10:00 PM | Mon 23 Jul
@@ -193,7 +193,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
     }
 
     private long getHeaderTime(Cursor item) {
-        long releaseTime = item.getLong(ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS);
+        long releaseTime = item.getLong(ActivityFragment.ActivityQuery.RELEASE_TIME_MS);
         Date actualRelease = TimeTools.getEpisodeReleaseTime(mContext, releaseTime);
 
         mCalendar.setTime(actualRelease);
