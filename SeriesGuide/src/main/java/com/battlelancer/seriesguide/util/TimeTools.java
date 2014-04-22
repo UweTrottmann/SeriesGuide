@@ -50,6 +50,8 @@ public class TimeTools {
 
     private static final String TIMEZONE_ID_JAPAN = "Asia/Tokyo";
 
+    private static final String TIMEZONE_ID_NETHERLANDS = "Europe/Amsterdam";
+
     private static final String TIMEZONE_ID_US_EASTERN = "America/New_York";
 
     private static final Object TIMEZONE_ID_US_EASTERN_DETROIT = "America/Detroit";
@@ -466,23 +468,27 @@ public class TimeTools {
                     timeZoneId = TIMEZONE_ID_US_PACIFIC;
                     break;
                 case "United Kingdom":
-                    // example: Top Gear
+                    // example: https://trakt.tv/show/top-gear
                     timeZoneId = TIMEZONE_ID_UK;
                     break;
                 case "Japan":
-                    // example: Naruto Shippuuden
+                    // example: https://trakt.tv/show/naruto-shippuuden
                     timeZoneId = TIMEZONE_ID_JAPAN;
                     break;
                 case "Finland":
-                    // example: Madventures
+                    // example: https://trakt.tv/show/madventures
                     timeZoneId = TIMEZONE_ID_FINLAND;
                     break;
                 case "Germany":
-                    // example: heute show
+                    // example: https://trakt.tv/show/heuteshow
                     timeZoneId = TIMEZONE_ID_GERMANY;
                     break;
+                case "Netherlands":
+                    // example: https://trakt.tv/show/divorce
+                    timeZoneId = TIMEZONE_ID_NETHERLANDS;
+                    break;
                 case "Australia":
-                    // example:
+                    // example: https://trakt.tv/show/masterchef-australia
                     timeZoneId = TIMEZONE_ID_AUSTRALIA;
                     break;
                 default:

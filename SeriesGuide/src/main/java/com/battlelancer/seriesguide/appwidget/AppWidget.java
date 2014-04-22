@@ -120,7 +120,7 @@ public class AppWidget extends AppWidgetProvider {
 
                     Date actualRelease = TimeTools.getEpisodeReleaseTime(context,
                             upcomingEpisodes.getLong(
-                                    ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS));
+                                    ActivityFragment.ActivityQuery.RELEASE_TIME_MS));
 
                     // "in 13 mins (Fri)"
                     item.setTextViewText(R.id.widgetAirtime,

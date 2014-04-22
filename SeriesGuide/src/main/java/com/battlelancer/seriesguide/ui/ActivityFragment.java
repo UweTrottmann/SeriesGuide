@@ -16,26 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.WatchedBox;
-import com.battlelancer.seriesguide.adapters.ActivitySlowAdapter;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.settings.ActivitySettings;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.Utils;
-import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
-import com.battlelancer.seriesguide.R;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -54,6 +34,26 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.WatchedBox;
+import com.battlelancer.seriesguide.adapters.ActivitySlowAdapter;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.settings.ActivitySettings;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.FlagTask;
+import com.battlelancer.seriesguide.util.Utils;
+import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapterWrapper;
+import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 
 public class ActivityFragment extends SherlockFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener,
@@ -67,9 +67,14 @@ public class ActivityFragment extends SherlockFragment implements
 
     private static final int CONTEXT_CHECKIN_ID = 2;
 
-    private ActivitySlowAdapter mAdapter;
+    private static final int CONTEXT_COLLECTION_ADD_ID = 3;
+
+    private static final int CONTEXT_COLLECTION_REMOVE_ID = 4;
 
     private StickyGridHeadersGridView mGridView;
+
+    private ActivitySlowAdapter mAdapter;
+    private StickyGridHeadersBaseAdapterWrapper mAdapterWrapper;
 
     /**
      * Data which has to be passed when creating {@link ActivityFragment}. All Bundle extras are
@@ -117,6 +122,7 @@ public class ActivityFragment extends SherlockFragment implements
 
         // setup grid view
         mGridView.setAdapter(mAdapter);
+        mAdapterWrapper = (StickyGridHeadersBaseAdapterWrapper) mGridView.getAdapter();
         mGridView.setOnItemClickListener(this);
 
         PreferenceManager.getDefaultSharedPreferences(getActivity())
@@ -153,12 +159,21 @@ public class ActivityFragment extends SherlockFragment implements
 
         // only display the action appropriate for the items current state
         menu.add(0, CONTEXT_CHECKIN_ID, 0, R.string.checkin);
+
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-        WatchedBox watchedBox = (WatchedBox) info.targetView.findViewById(R.id.watchedBoxUpcoming);
-        if (EpisodeTools.isWatched(watchedBox.getEpisodeFlag())) {
-            menu.add(0, CONTEXT_FLAG_UNWATCHED_ID, 2, R.string.unmark_episode);
+        Cursor episode = (Cursor) mAdapterWrapper.getItem(info.position);
+        if (episode == null) {
+            return;
+        }
+        if (EpisodeTools.isWatched(episode.getInt(ActivityQuery.WATCHED))) {
+            menu.add(0, CONTEXT_FLAG_UNWATCHED_ID, 1, R.string.unmark_episode);
         } else {
             menu.add(0, CONTEXT_FLAG_WATCHED_ID, 1, R.string.mark_episode);
+        }
+        if (EpisodeTools.isCollected(episode.getInt(ActivityQuery.COLLECTED))) {
+            menu.add(0, CONTEXT_COLLECTION_REMOVE_ID, 2, R.string.action_collection_remove);
+        } else {
+            menu.add(0, CONTEXT_COLLECTION_ADD_ID, 2, R.string.action_collection_add);
         }
     }
 
@@ -167,12 +182,20 @@ public class ActivityFragment extends SherlockFragment implements
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
+            case CONTEXT_COLLECTION_ADD_ID: {
+                updateEpisodeCollectionState(info.position, true);
+                return true;
+            }
+            case CONTEXT_COLLECTION_REMOVE_ID: {
+                updateEpisodeCollectionState(info.position, false);
+                return true;
+            }
             case CONTEXT_FLAG_WATCHED_ID: {
-                onFlagEpisodeWatched(info, true);
+                updateEpisodeWatchedState(info.position, true);
                 return true;
             }
             case CONTEXT_FLAG_UNWATCHED_ID: {
-                onFlagEpisodeWatched(info, false);
+                updateEpisodeWatchedState(info.position, false);
                 return true;
             }
             case CONTEXT_CHECKIN_ID: {
@@ -243,15 +266,30 @@ public class ActivityFragment extends SherlockFragment implements
         f.show(getFragmentManager(), "checkin-dialog");
     }
 
-    private void onFlagEpisodeWatched(AdapterContextMenuInfo info, boolean isWatched) {
-        Cursor item = (Cursor) mAdapter.getItem(info.position);
-        if (item == null || !item.moveToPosition(info.position)) {
+    private void updateEpisodeCollectionState(int position, boolean addToCollection) {
+        Cursor episode = (Cursor) mAdapterWrapper.getItem(position);
+        if (episode == null) {
             return;
         }
 
-        new FlagTask(getActivity(), item.getInt(ActivityQuery.REF_SHOW_ID))
-                .episodeWatched((int) info.id, item.getInt(ActivityQuery.SEASON),
-                        item.getInt(ActivityQuery.NUMBER),
+        new FlagTask(getActivity(), episode.getInt(ActivityQuery.SHOW_ID))
+                .episodeCollected(episode.getInt(ActivityQuery._ID),
+                        episode.getInt(ActivityQuery.SEASON),
+                        episode.getInt(ActivityQuery.NUMBER),
+                        addToCollection)
+                .execute();
+    }
+
+    private void updateEpisodeWatchedState(int position, boolean isWatched) {
+        Cursor episode = (Cursor) mAdapterWrapper.getItem(position);
+        if (episode == null) {
+            return;
+        }
+
+        new FlagTask(getActivity(), episode.getInt(ActivityQuery.SHOW_ID))
+                .episodeWatched(episode.getInt(ActivityQuery._ID),
+                        episode.getInt(ActivityQuery.SEASON),
+                        episode.getInt(ActivityQuery.NUMBER),
                         isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED)
                 .execute();
     }
@@ -323,10 +361,18 @@ public class ActivityFragment extends SherlockFragment implements
 
     public interface ActivityQuery {
 
-        String[] PROJECTION = new String[]{
-                Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
-                Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIREDMS, Shows.TITLE,
-                Shows.AIRSTIME, Shows.NETWORK, Shows.POSTER, Shows.REF_SHOW_ID, Shows.IMDBID
+        String[] PROJECTION = new String[] {
+                Tables.EPISODES + "." + Episodes._ID,
+                Episodes.TITLE,
+                Episodes.NUMBER,
+                Episodes.SEASON,
+                Episodes.FIRSTAIREDMS,
+                Episodes.WATCHED,
+                Episodes.COLLECTED,
+                Shows.REF_SHOW_ID,
+                Shows.TITLE,
+                Shows.NETWORK,
+                Shows.POSTER
         };
 
         String QUERY_UPCOMING = Episodes.FIRSTAIREDMS + ">=? AND " + Episodes.FIRSTAIREDMS
@@ -342,29 +388,15 @@ public class ActivityFragment extends SherlockFragment implements
                 + Episodes.NUMBER + " DESC";
 
         int _ID = 0;
-
         int TITLE = 1;
-
-        int WATCHED = 2;
-
-        int NUMBER = 3;
-
-        int SEASON = 4;
-
-        int EPISODE_FIRST_RELEASE_MS = 5;
-
-        int SHOW_TITLE = 6;
-
-        int SHOW_AIRSTIME = 7;
-
-        int SHOW_NETWORK = 8;
-
-        int SHOW_POSTER = 9;
-
-        int REF_SHOW_ID = 10;
-
-        int IMDBID = 11;
-
+        int NUMBER = 2;
+        int SEASON = 3;
+        int RELEASE_TIME_MS = 4;
+        int WATCHED = 5;
+        int COLLECTED = 6;
+        int SHOW_ID = 7;
+        int SHOW_TITLE = 8;
+        int SHOW_NETWORK = 9;
+        int SHOW_POSTER = 10;
     }
-
 }

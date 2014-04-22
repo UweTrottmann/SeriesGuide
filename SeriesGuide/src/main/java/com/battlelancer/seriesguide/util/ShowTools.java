@@ -174,6 +174,10 @@ public class ShowTools {
             return Result.ERROR;
         }
 
+        // make sure other loaders (activity, overview, details) are notified
+        mContext.getContentResolver().notifyChange(
+                SeriesGuideContract.Episodes.CONTENT_URI_WITHSHOW, null);
+
         return Result.SUCCESS;
     }
 

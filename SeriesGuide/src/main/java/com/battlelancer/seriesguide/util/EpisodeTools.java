@@ -41,6 +41,10 @@ public class EpisodeTools {
         return isExists;
     }
 
+    public static boolean isCollected(int collectedFlag) {
+        return collectedFlag == 1;
+    }
+
     public static boolean isSkipped(int episodeFlags) {
         return episodeFlags == EpisodeFlags.SKIPPED;
     }

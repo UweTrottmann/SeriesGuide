@@ -59,7 +59,7 @@
   <string name="movie_crew">צוות</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">מיון סרטים</string>
-  <string name="action_movies_sort_title">שם</string>
+  <string name="action_movies_sort_title">תיאור</string>
   <string name="action_movies_sort_release">תאריך שחרור</string>
   <string name="shows_with_next">%s עם הפרקים הבאים</string>
   <string name="shows_continuing">%s ממשיכים</string>
@@ -364,7 +364,7 @@
   <string name="extensions">תוספים</string>
   <string name="action_extensions_configure">התאמת תוספים</string>
   <string name="action_extensions_add">הוספת תוסף</string>
-  <string name="action_extensions_limit">Get X to add more extensions</string>
+  <string name="action_extensions_limit">השג X והרחבות נוספות</string>
   <string name="action_extensions_search">חפש תוספים נוספים</string>
   <string name="action_extension_settings">הגדרות</string>
   <string name="action_extension_remove">הסר</string>

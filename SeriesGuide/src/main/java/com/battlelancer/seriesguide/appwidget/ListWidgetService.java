@@ -137,7 +137,7 @@ public class ListWidgetService extends RemoteViewsService {
             Date actualRelease = TimeTools.getEpisodeReleaseTime(mContext,
                     mDataCursor.getLong(isShowQuery ?
                             ShowsQuery.EPISODE_FIRSTAIRED_MS
-                            : ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS));
+                            : ActivityFragment.ActivityQuery.RELEASE_TIME_MS));
             // "in 13 mins (Fri)"
             String relativeTime = getString(R.string.release_date_and_day,
                     TimeTools.formatToRelativeLocalReleaseTime(actualRelease),
