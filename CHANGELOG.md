@@ -5,6 +5,14 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 13.0.2-gb *(2014-04-22)*
+--------------------------------
+
+* TWEAK 'Add to collection' option in activity context menus.
+* TWEAK Support for shows with 'Netherlands' release times.
+* TWEAK When removing a show its episodes are removed immediately from activity stream.
+* FIX Incorrect episode flagged watched in activity stream.
+
 Version 13.0.1-gb *(2014-04-17)*
 --------------------------------
 
