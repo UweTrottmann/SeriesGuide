@@ -5,8 +5,19 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 13.1 *(2014-04-17)*
+Version 13.1.1 *(2014-04-22)*
 -----------------------------
+
+* TWEAK 'Add to collection' option in activity context menus.
+* TWEAK Neutral touch feedback on list widget.
+* TWEAK Support for shows with 'Netherlands' release times.
+* TWEAK When removing a show its episodes are removed immediately from activity stream.
+* FIX Incorrect episode flagged watched in activity stream.
+* FIX Text drawing issue on Android 4.0 (Ice Cream Sandwich) devices in episode details.
+* NOTICE Latest translations from crowdin.
+
+Version 13.1 *(2014-04-17)*
+---------------------------
 
 * Extensions API: now all users can add up to two extensions. To add more subscribe or buy the X Pass!
 
