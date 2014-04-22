@@ -52,7 +52,7 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
 
                 // Ensure those episodes are within the user set time frame
                 long releaseTime = upcomingEpisodes
-                        .getLong(ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS);
+                        .getLong(ActivityFragment.ActivityQuery.RELEASE_TIME_MS);
                 if (releaseTime <= latestTimeToInclude) {
                     // build our DashClock panel
 
@@ -81,7 +81,7 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
                     int additionalEpisodes = 0;
                     while (upcomingEpisodes.moveToNext()
                             && releaseTime == upcomingEpisodes
-                            .getLong(ActivityFragment.ActivityQuery.EPISODE_FIRST_RELEASE_MS)) {
+                            .getLong(ActivityFragment.ActivityQuery.RELEASE_TIME_MS)) {
                         additionalEpisodes++;
                     }
                     if (additionalEpisodes > 0) {
