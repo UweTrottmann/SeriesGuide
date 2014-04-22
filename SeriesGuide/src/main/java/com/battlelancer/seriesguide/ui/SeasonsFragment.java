@@ -259,8 +259,8 @@ public class SeasonsFragment extends SherlockListFragment implements
         menu.add(0, CONTEXT_WATCHED_SEASON_ALL_ID, 0, R.string.mark_all);
         menu.add(0, CONTEXT_WATCHED_SEASON_NONE_ID, 1, R.string.unmark_all);
         menu.add(0, CONTEXT_SKIPPED_SEASON_ALL_ID, 2, R.string.action_skip);
-        menu.add(0, CONTEXT_COLLECTED_SEASON_ALL_ID, 3, R.string.collect_all);
-        menu.add(0, CONTEXT_COLLECTED_SEASON_NONE_ID, 4, R.string.uncollect_all);
+        menu.add(0, CONTEXT_COLLECTED_SEASON_ALL_ID, 3, R.string.action_collection_add);
+        menu.add(0, CONTEXT_COLLECTED_SEASON_NONE_ID, 4, R.string.action_collection_remove);
         menu.add(0, CONTEXT_MANAGE_LISTS_SEASON_ID, 5, R.string.list_item_manage);
     }
 

@@ -491,7 +491,8 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
                 fireTrackerEvent("Toggle collected");
             }
         });
-        CheatSheet.setup(mCollectedButton, mCollected ? R.string.uncollect : R.string.collect);
+        CheatSheet.setup(mCollectedButton, mCollected
+                ? R.string.action_collection_remove : R.string.action_collection_add);
 
         // skip button
         boolean isSkipped = EpisodeTools.isSkipped(mEpisodeFlag);
