@@ -26,7 +26,7 @@
   <string name="discard">تجاهل</string>
   <string name="save_selection">حفظ التحديد</string>
   <string name="search_hint">البحث عن الحلقات</string>
-  <string name="updated">تحديث إلى الإصدار الأخير.</string>
+  <string name="updated">تم التحديث إلى الإصدار الأخير.</string>
   <string name="norating">لا يوجد</string>
   <string name="unknown">غير معروف</string>
   <string name="offline">إتصل بالشبكة، ثم حاول مرة أخرى.</string>
@@ -181,9 +181,9 @@
   <string name="add_all">إضافة الكل </string>
   <string name="dont_add_show">لا تقم بالإضافة</string>
   <string name="add_multiple">كافة البرامج سوف تظهر في قائمة برامجك قريبا</string>
-  <string name="add_started">%s will appear in your show list shortly.</string>
-  <string name="add_error">Could not add %s.</string>
-  <string name="add_already_exists">%s is already in your show list.</string>
+  <string name="add_started">%s سوف تظهر في قائمة العرض الخاص بك قريبا.</string>
+  <string name="add_error">تعذر إضافة %s.</string>
+  <string name="add_already_exists">%s موجود بالفعل في قائمة العرض الخاصة بك.</string>
   <string name="trending">الأكثر إقبالاً</string>
   <string name="recommended">يُنصح به</string>
   <string name="library">المكتبة</string>
@@ -207,7 +207,7 @@
   <string name="hexagon_priority_local">التي على الجهاز</string>
   <string name="hexagon_priority_cloud">التي في التخزين السحابي</string>
   <string name="hexagon_priority_select">إختيار النسخة</string>
-  <string name="connect_trakt">الإتصال بموقع التراكت</string>
+  <string name="connect_trakt">الإتصال بموقع Trakt</string>
   <string name="connect_trakt_done">متصل بالتراكت!</string>
   <string name="add_trakt_shows">أضف مسلسلات من مكتبتك</string>
   <string name="show_library">إظهار المكتبة الخاصة بك</string>
@@ -215,7 +215,7 @@
   <string name="upload_existing_shows">إرفع المسلسلات الموجودة</string>
   <string name="about_trakt">يساعدك trait على حفظ ما تشاهده من أفلام و مسلسلات.<a href="http://trakt.tv">مزيد من المعلومات</a></string>
   <string name="integration_trakt_items">- أضف مسلسلات إلى مكتبتك و قائمتك\n\n- راجع مقترحاتك و نشاطات أصدقائك\n\n- يتم مزامنة ما شاهدته و الأعلام المجموعة تلقائياً\n\n- يتم إضافة ما شاهدت تلقائياً</string>
-  <string name="trakt_upload_hint">تعليم الحلقات المشاهده في SeriesGuide كما شوهدت في trakt:</string>
+  <string name="trakt_upload_hint">تعليم الحلقات المشاهده في برنامج دليل المسلسلات كما شوهدت في موقع trakt:</string>
   <string name="trakt_upload">رفع على موقع التراكت تي في </string>
   <string name="trakt_syncunwatched">إزالة علامات المشاهدة على موقع التراكت للحلقات الغير مشاهدة داخل برنامج دليل المسلسلات</string>
   <string name="upload_done">تم الإنتهاء من التحميل.</string>
@@ -240,7 +240,7 @@
   <string name="pref_traktsummary">trakt.tv أضف أو عدل بياناتك في موقع</string>
   <string name="feedback">أرسل ملاحظاتك</string>
   <string name="pref_autoaddshows">إضافة المسلسلات الجديدة من موقع التراكت</string>
-  <string name="pref_autoaddshowssummary">إضافة المسلسلات تلقائياً من حسابك الموجود في موقع التراكت</string>
+  <string name="pref_autoaddshowssummary">إضافة المسلسلات تلقائياً من حسابك الموجود على موقع Trakt</string>
   <string name="pref_appearance">المظهر</string>
   <string name="pref_theme">مظهر التطبيق</string>
   <string name="pref_other">أخرى</string>
@@ -264,7 +264,7 @@
   <string name="backup_path">مجلد النسخ الإحتياطي</string>
   <string name="backup_version">إصدار قاعدة البيانات</string>
   <string name="backup_failed_nosd">لا يمكن عمل نسخة إحتياطية. مجلد النسخة الإحتياطية غير موجود.</string>
-  <string name="backup_inprogress">جار عمل نسخ إحتياطي لقاعدة البيانات…</string>
+  <string name="backup_inprogress">جار عمل نسخ إحتياطي لقاعدة البيانات...</string>
   <string name="backup_success">لقد نجحت عملية النسخ الإحتياطي.</string>
   <string name="backup_failed">فشل النسخ الاحتياطي.</string>
   <string name="import_inprogress">استعادة قاعدة البيانات…</string>
@@ -364,7 +364,7 @@
   <string name="extensions">الإضافات</string>
   <string name="action_extensions_configure">تخصيص الإضافات</string>
   <string name="action_extensions_add">إضافة ملحق</string>
-  <string name="action_extensions_limit">Get X to add more extensions</string>
+  <string name="action_extensions_limit">أحصل على النسخة المدفوعة لإضافة المزيد من الملحقات</string>
   <string name="action_extensions_search">المزيد من الإضافات</string>
   <string name="action_extension_settings">الإعدادات</string>
   <string name="action_extension_remove">إزالة</string>
@@ -427,12 +427,12 @@
     <item quantity="other">%d أيام</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">ساعات</item>
+    <item quantity="zero">%d ساعات</item>
     <item quantity="one">%d ساعة</item>
-    <item quantity="two">ساعات</item>
-    <item quantity="few">ساعات</item>
-    <item quantity="many">ساعات</item>
-    <item quantity="other">ساعات</item>
+    <item quantity="two">%d ساعات</item>
+    <item quantity="few">%d ساعات</item>
+    <item quantity="many">%d ساعات</item>
+    <item quantity="other">%d ساعات</item>
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="zero">%d دقائق</item>

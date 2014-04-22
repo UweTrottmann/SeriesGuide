@@ -9,7 +9,7 @@
   <string name="preferences">Налаштування</string>
   <string name="help">Допомога</string>
   <string name="drawer_open">Відкрити вікно навігації</string>
-  <string name="drawer_close">закрити вікно навігації</string>
+  <string name="drawer_close">Закрити вікно навігації</string>
   <string name="show">Про фільм</string>
   <string name="episode">Серія</string>
   <string name="episode_number">Серія %s</string>
@@ -37,7 +37,7 @@
   <string name="share_show">Поділитись фільмом</string>
   <string name="share_episode">Поділитись серією</string>
   <string name="share_movie">Поділитися фільмом</string>
-  <string name="share_checkout">Check out %s</string>
+  <string name="share_checkout">Погляньте %s</string>
   <string name="comments">Коментарі</string>
   <string name="shout_hint">Написати відгук (англійською)</string>
   <string name="shout">Відгук!</string>
@@ -56,11 +56,11 @@
   <string name="movies_watchlist_empty">Ви не додавали фільми до вашого Списку перегляду.</string>
   <string name="trailer">Трейлер</string>
   <string name="movie_cast">У ролях</string>
-  <string name="movie_crew">Crew</string>
+  <string name="movie_crew">Знімальна група</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
-  <string name="action_movies_sort">Sort movies</string>
-  <string name="action_movies_sort_title">Назвою</string>
-  <string name="action_movies_sort_release">Дата виходу</string>
+  <string name="action_movies_sort">Сортувати фільми</string>
+  <string name="action_movies_sort_title">Заголовок</string>
+  <string name="action_movies_sort_release">Дата релізу</string>
   <string name="shows_with_next">%s з новою серією</string>
   <string name="shows_continuing">%s продовжується</string>
   <string name="episodes_watched">%s переглянуто</string>
@@ -86,7 +86,7 @@
   <string name="show_genres">Жанри</string>
   <string name="show_runtime">Тривалість</string>
   <string name="show_contentrating">Рейтинг вмісту</string>
-  <string name="show_release_times">Release times</string>
+  <string name="show_release_times">Дата релізу</string>
   <string name="episode_directors">Режисери</string>
   <string name="episode_gueststars">Запрошені зірки</string>
   <string name="episode_writers">Сценаристи</string>
@@ -117,12 +117,12 @@
   <string name="trakt_notseen">%s не переглянуто.</string>
   <string name="trakt_collected">%s вибрано.</string>
   <string name="trakt_notcollected">%s не вибрані.</string>
-  <string name="action_collection_add">Add to collection</string>
-  <string name="action_collection_remove">Remove from collection</string>
-  <string name="action_collection_added">Added to collection</string>
-  <string name="action_collection_removed">Removed from collection</string>
-  <string name="action_watched">Watched</string>
-  <string name="action_unwatched">Not yet watched</string>
+  <string name="action_collection_add">Додати в колекцію</string>
+  <string name="action_collection_remove">Видалити з колекції</string>
+  <string name="action_collection_added">Додано в колекцію</string>
+  <string name="action_collection_removed">Видалено з колекції</string>
+  <string name="action_watched">Переглянуто</string>
+  <string name="action_unwatched">Ще не переглянуто</string>
   <string name="confirm_delete">Ви дійсно бажаєте видалити %s?</string>
   <string name="delete_has_list_items">Не можливо виконати, спершу видаліть %s зі всіх списків.</string>
   <string name="delete_error">He можливо видалити серіал. Спробуйте пізніше ще раз.</string>
@@ -181,9 +181,9 @@
   <string name="add_all">Додати усі</string>
   <string name="dont_add_show">Не додавати</string>
   <string name="add_multiple">Усі серіали з\'являться у вашому списку найближчим часом.</string>
-  <string name="add_started">%s will appear in your show list shortly.</string>
-  <string name="add_error">Could not add %s.</string>
-  <string name="add_already_exists">%s is already in your show list.</string>
+  <string name="add_started">%s з\'явиться у вашому списку найближчим часом.</string>
+  <string name="add_error">Не вдалося додати %s.</string>
+  <string name="add_already_exists">%s вже є у вашому списку.</string>
   <string name="trending">Популярне</string>
   <string name="recommended">Рекомендовано</string>
   <string name="library">Бібліотека</string>
@@ -215,11 +215,11 @@
   <string name="upload_existing_shows">Завантажити наявні серіали</string>
   <string name="about_trakt">trakt допомагає зберігати запис про те які телесеріали та фільми ви дивитеся. <a href="http://trakt.tv">Дізнатись більше</a></string>
   <string name="integration_trakt_items">- додавайте серіали із вашої бібліотеки та списку переглядів\n\n- переглядайте ваші рекомендації та активність друзів\n\n- переглянуті та вибрані пункти синхронізуються автоматично\n\n- нові серіали, які ви переглядали додаються автоматично</string>
-  <string name="trakt_upload_hint">Відзначити серії переглянуті на SeriesGuide як переглянуті на trakt:</string>
+  <string name="trakt_upload_hint">Відзначити переглянуті серії з SeriesGuide як переглянуті на trakt:</string>
   <string name="trakt_upload">Завантажити на trakt.tv</string>
-  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
-  <string name="upload_done">Finished uploading.</string>
-  <string name="upload_no_work">There was nothing to upload.</string>
+  <string name="trakt_syncunwatched">Прибрати статус переглянутого на trakt для не переглянутих серій в SeriesGuide</string>
+  <string name="upload_done">Завантаження завершене.</string>
+  <string name="upload_no_work">Нема чого завантажувати.</string>
   <string name="prefs_category_basic">Основні</string>
   <string name="prefs_category_sharing">Послуги</string>
   <string name="prefs_category_advanced">Додатково</string>
@@ -361,16 +361,16 @@
   <string name="add_to_homescreen">Додати до домашнього екрану</string>
   <string name="search_within_show">Пошук у %s</string>
   <string name="web_search">Веб пошук</string>
-  <string name="extensions">Extensions</string>
-  <string name="action_extensions_configure">Customize extensions</string>
-  <string name="action_extensions_add">Add extension</string>
-  <string name="action_extensions_limit">Get X to add more extensions</string>
-  <string name="action_extensions_search">Get more extensions</string>
+  <string name="extensions">Розширення</string>
+  <string name="action_extensions_configure">Змінити розширення</string>
+  <string name="action_extensions_add">Додати розширення</string>
+  <string name="action_extensions_limit">Отримати X, щоб додати більше розширеннь</string>
+  <string name="action_extensions_search">Отримати більше розширеннь</string>
   <string name="action_extension_settings">Налаштування</string>
   <string name="action_extension_remove">Видалити</string>
-  <string name="extension_amazon">Amazon search</string>
-  <string name="description_extension_amazon">Search your local Amazon site</string>
-  <string name="pref_amazon_domain">Amazon site</string>
+  <string name="extension_amazon">Пошук Amazon</string>
+  <string name="description_extension_amazon">Пошук в локальній версії сайту Amazon</string>
+  <string name="pref_amazon_domain">Сайт Amazon</string>
   <string-array name="sesorting">
     <item>Останні спочатку</item>
     <item>Давніші спочатку</item>
