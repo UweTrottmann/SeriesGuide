@@ -67,12 +67,14 @@ public class GetGlueCheckin {
                                 context.getString(R.string.checkinsuccess, objectTitle),
                                 Toast.LENGTH_SHORT).show();
                         break;
+                    case NetworkResult.OFFLINE:
+                        Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show();
+                        break;
                     case Result.ERROR:
+                    default:
                         Toast.makeText(context, context.getString(R.string.checkinfailed),
                                 Toast.LENGTH_LONG).show();
                         break;
-                    case NetworkResult.OFFLINE:
-                        Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -157,6 +159,7 @@ public class GetGlueCheckin {
                     Utils.trackCustomEvent(mContext, TAG, "Check-In", "Success");
                     break;
                 case Result.ERROR:
+                default:
                     Utils.trackCustomEvent(mContext, TAG, "Check-In", "Failure");
                     break;
             }
