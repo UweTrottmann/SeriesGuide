@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.os.Handler;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -110,6 +111,8 @@ public class ShowsFragment extends SherlockFragment implements
     private boolean mIsFilterUpcoming;
 
     private boolean mIsFilterHidden;
+
+    private Handler mHandler;
 
     public static ShowsFragment newInstance() {
         return new ShowsFragment();
@@ -213,12 +216,18 @@ public class ShowsFragment extends SherlockFragment implements
     @Override
     public void onResume() {
         super.onResume();
+
+        // keep unwatched and upcoming shows from becoming stale
+        getLoaderManager().restartLoader(LOADER_ID, null, this);
+
         EventBus.getDefault().register(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
+
+        schedulePeriodicDataRefresh(false);
         EventBus.getDefault().unregister(this);
     }
 
@@ -555,6 +564,9 @@ public class ShowsFragment extends SherlockFragment implements
         }
         selection.append(Shows.HIDDEN).append(isFilterHidden ? "=1" : "=0");
 
+        // keep unwatched and upcoming shows from becoming stale
+        schedulePeriodicDataRefresh(true);
+
         return new CursorLoader(getActivity(), Shows.CONTENT_URI, ShowsQuery.PROJECTION,
                 selection.toString(), null,
                 ShowsDistillationSettings.getSortQuery(mSortOrderId, mIsSortFavoritesFirst));
@@ -577,6 +589,23 @@ public class ShowsFragment extends SherlockFragment implements
         // longer using it.
         mAdapter.swapCursor(null);
     }
+
+    private void schedulePeriodicDataRefresh(boolean enableRefresh) {
+        if (mHandler == null) {
+            mHandler = new Handler();
+        }
+        mHandler.removeCallbacks(mDataRefreshRunnable);
+        if (enableRefresh) {
+            mHandler.postDelayed(mDataRefreshRunnable, 5 * DateUtils.MINUTE_IN_MILLIS);
+        }
+    }
+
+    private Runnable mDataRefreshRunnable = new Runnable() {
+        @Override
+        public void run() {
+            getLoaderManager().restartLoader(LOADER_ID, null, ShowsFragment.this);
+        }
+    };
 
     private class ShowsAdapter extends BaseShowsAdapter {
 
