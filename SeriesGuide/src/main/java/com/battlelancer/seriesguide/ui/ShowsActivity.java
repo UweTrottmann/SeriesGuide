@@ -141,38 +141,13 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         // handle implicit intents from other apps
         handleViewIntents();
 
+        // setup all the views!
         setUpActionBar();
         setupViews();
         setInitialTab(savedInstanceState, getIntent().getExtras());
 
-        // query in-app purchases (only if not already qualified)
-        if (Utils.requiresPurchaseCheck(this)) {
-            mHelper = new IabHelper(this, BillingActivity.getPublicKey(this));
-            mHelper.enableDebugLogging(BuildConfig.DEBUG);
-
-            Timber.i("Starting In-App Billing helper setup.");
-            mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-                public void onIabSetupFinished(IabResult result) {
-                    Timber.d("Setup finished.");
-
-                    if (!result.isSuccess()) {
-                        // Oh noes, there was a problem. But do not go crazy.
-                        disposeIabHelper();
-                        return;
-                    }
-
-                    // Have we been disposed of in the meantime? If so, quit.
-                    if (mHelper == null) {
-                        return;
-                    }
-
-                    // Hooray, IAB is fully set up. Now, let's get an inventory
-                    // of stuff we own.
-                    Timber.d("Setup successful. Querying inventory.");
-                    mHelper.queryInventoryAsync(mGotInventoryListener);
-                }
-            });
-        }
+        // query for in-app purchases
+        checkPurchase();
     }
 
     /**
@@ -301,11 +276,50 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         mViewPager.setCurrentItem(selection);
     }
 
+    private void checkPurchase() {
+        if (!Utils.requiresPurchaseCheck(this)) {
+            return;
+        }
+        mHelper = new IabHelper(this, BillingActivity.getPublicKey(this));
+        mHelper.enableDebugLogging(BuildConfig.DEBUG);
+
+        Timber.i("Starting In-App Billing helper setup.");
+        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            public void onIabSetupFinished(IabResult result) {
+                Timber.d("Setup finished.");
+
+                if (!result.isSuccess()) {
+                    // Oh noes, there was a problem. But do not go crazy.
+                    disposeIabHelper();
+                    return;
+                }
+
+                // Have we been disposed of in the meantime? If so, quit.
+                if (mHelper == null) {
+                    return;
+                }
+
+                // Hooray, IAB is fully set up. Now, let's get an inventory
+                // of stuff we own.
+                Timber.d("Setup successful. Querying inventory.");
+                mHelper.queryInventoryAsync(mGotInventoryListener);
+            }
+        });
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
 
         setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_SHOWS_POSITION);
+        if (!AppSettings.hasSeenNavDrawer(this)) {
+            // introduce the nav drawer
+            openDrawer();
+            PreferenceManager.getDefaultSharedPreferences(this)
+                    .edit()
+                    .putBoolean(AppSettings.KEY_HAS_SEEN_NAV_DRAWER, true)
+                    .apply();
+        }
 
         // check for running show removal worker
         Fragment f = getSupportFragmentManager().findFragmentByTag(RemoveShowWorkerFragment.TAG);

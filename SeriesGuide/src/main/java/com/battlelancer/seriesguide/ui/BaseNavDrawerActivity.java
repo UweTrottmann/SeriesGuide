@@ -216,6 +216,13 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         mDrawerList.setItemChecked(menuItemPosition, true);
     }
 
+    /**
+     * Opens the nav drawer.
+     */
+    public void openDrawer() {
+        mDrawerLayout.openDrawer(GravityCompat.START);
+    }
+
     public boolean toggleDrawer(MenuItem item) {
         if (item != null && item.getItemId() == android.R.id.home && mDrawerToggle
                 .isDrawerIndicatorEnabled()) {
