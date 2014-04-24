@@ -21,10 +21,12 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.text.format.DateUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -39,7 +41,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.adapters.ActivitySlowAdapter;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -75,6 +76,8 @@ public class ActivityFragment extends SherlockFragment implements
 
     private ActivitySlowAdapter mAdapter;
     private StickyGridHeadersBaseAdapterWrapper mAdapterWrapper;
+
+    private Handler mHandler;
 
     /**
      * Data which has to be passed when creating {@link ActivityFragment}. All Bundle extras are
@@ -134,15 +137,28 @@ public class ActivityFragment extends SherlockFragment implements
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
 
+        // prevent stale upcoming/recent episodes, also:
         /**
-         * Workaround for loader issues on config change. For some reason the
-         * activity holds on to an old cursor. Find out why! See
+         * Workaround for loader issues on config changes. For some reason the
+         * CursorLoader holds on to a cursor with old data. See
          * https://github.com/UweTrottmann/SeriesGuide/issues/257.
          */
-        onRequery();
+        boolean isLoaderExists = getLoaderManager().getLoader(getLoaderId()) != null;
+        getLoaderManager().initLoader(getLoaderId(), null, this);
+        if (isLoaderExists) {
+            onRequery();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        // avoid CPU activity
+        schedulePeriodicDataRefresh(false);
     }
 
     @Override
@@ -322,6 +338,9 @@ public class ActivityFragment extends SherlockFragment implements
         String[][] queryArgs = DBUtils.buildActivityQuery(getActivity(), type,
                 isInfiniteScrolling ? -1 : 30);
 
+        // prevent upcoming/recent episodes from becoming stale
+        schedulePeriodicDataRefresh(true);
+
         return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,
                 ActivityQuery.PROJECTION, queryArgs[0][0], queryArgs[1], queryArgs[2][0]);
     }
@@ -333,6 +352,23 @@ public class ActivityFragment extends SherlockFragment implements
     public void onLoaderReset(Loader<Cursor> loader) {
         mAdapter.swapCursor(null);
     }
+
+    private void schedulePeriodicDataRefresh(boolean enableRefresh) {
+        if (mHandler == null) {
+            mHandler = new Handler();
+        }
+        mHandler.removeCallbacks(mDataRefreshRunnable);
+        if (enableRefresh) {
+            mHandler.postDelayed(mDataRefreshRunnable, 5 * DateUtils.MINUTE_IN_MILLIS);
+        }
+    }
+
+    private Runnable mDataRefreshRunnable = new Runnable() {
+        @Override
+        public void run() {
+            getLoaderManager().restartLoader(getLoaderId(), null, ActivityFragment.this);
+        }
+    };
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
