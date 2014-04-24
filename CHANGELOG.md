@@ -5,6 +5,16 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 14 *(in development)*
+-----------------------------
+
+#### 14-beta1 *(2014-04-24)*
+
+* TWEAK Fullscreen show poster view loads image with highest resolution.
+* TWEAK Show list and activity refresh data when returning to app, every 5 minutes when kept open.
+* TWEAK Use 'Add to/Remove from collection' for shows and episodes instead of 'Collected/Not yet collected' where appropriate.
+* NOTICE Cloud beta setup moved to Settings > Services.
+
 Version 13.1.1 *(2014-04-22)*
 -----------------------------
 
