@@ -199,12 +199,21 @@ public final class ServiceUtils {
     }
 
     /**
-     * Tries to open Google Play to search for the given tv show, episode or movie title.
+     * Returns a view {@link android.content.Intent} for a search of Google Play's movies category
+     * (includes TV shows).
      */
-    public static void searchGooglePlay(final String title, final String logTag, Context context) {
+    public static Intent buildGooglePlayIntent(String title) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         String playStoreQuery = String.format(GOOGLE_PLAY, Uri.encode(title));
         intent.setData(Uri.parse(playStoreQuery));
+        return intent;
+    }
+
+    /**
+     * Tries to open Google Play to search for the given tv show, episode or movie title.
+     */
+    public static void searchGooglePlay(final String title, final String logTag, Context context) {
+        Intent intent = buildGooglePlayIntent(title);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
 

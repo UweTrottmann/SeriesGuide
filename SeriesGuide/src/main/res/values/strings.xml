@@ -541,4 +541,6 @@
     <string name="extension_amazon">Amazon search</string>
     <string name="description_extension_amazon">Search your local Amazon site</string>
     <string name="pref_amazon_domain">Amazon site</string>
+    <string name="extension_google_play">Google Play search</string>
+    <string name="description_extension_google_play">Search your local Google Play Store</string>
 </resources>
