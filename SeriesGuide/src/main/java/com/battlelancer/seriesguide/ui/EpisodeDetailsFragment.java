@@ -126,8 +126,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
     @InjectView(R.id.imageButtonBarSkip) ImageButton mSkipButton;
     @InjectView(R.id.imageButtonBarMenu) ImageButton mOverflowButton;
 
-    @InjectView(R.id.buttonGooglePlay) View mGooglePlayButton;
-    @InjectView(R.id.buttonYouTube) View mYouTubeButton;
     @InjectView(R.id.buttonShowInfoIMDB) View mImdbButton;
     @InjectView(R.id.buttonTVDB) View mTvdbButton;
     @InjectView(R.id.buttonTrakt) View mTraktButton;
@@ -170,9 +168,7 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
 
         mEpisodeContainer.setVisibility(View.GONE);
 
-        // unused buttons
-        mGooglePlayButton.setVisibility(View.GONE);
-        mYouTubeButton.setVisibility(View.GONE);
+        // web search button unused, is available as extension
         mWebSearchButton.setVisibility(View.GONE);
 
         return v;

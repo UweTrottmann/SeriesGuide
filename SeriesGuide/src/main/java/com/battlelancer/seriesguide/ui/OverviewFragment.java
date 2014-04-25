@@ -139,7 +139,7 @@ public class OverviewFragment extends SherlockFragment implements
         });
         mContainerShow = v.findViewById(R.id.containerOverviewShow);
         mSpacerShow = v.findViewById(R.id.spacerOverviewShow);
-        mContainerActions = (LinearLayout) v.findViewById(R.id.containerOverviewActions);
+        mContainerActions = (LinearLayout) v.findViewById(R.id.containerEpisodeActions);
 
         return v;
     }
@@ -720,12 +720,6 @@ public class OverviewFragment extends SherlockFragment implements
         if (ratingText != null && ratingText.length() != 0) {
             ((TextView) getView().findViewById(R.id.textViewRatingsTvdbValue)).setText(ratingText);
         }
-
-        // Google Play button
-        getView().findViewById(R.id.buttonGooglePlay).setVisibility(View.GONE);
-
-        // YouTube button
-        getView().findViewById(R.id.buttonYouTube).setVisibility(View.GONE);
 
         // IMDb button
         String imdbId = episode.getString(EpisodeQuery.IMDBID);
