@@ -544,4 +544,6 @@
     <string name="extension_google_play">Google Play search</string>
     <string name="description_extension_google_play">Search your local Google Play Store</string>
     <string name="extension_youtube">YouTube search</string>
+    <string name="description_extension_youtube">Search YouTube for videos</string>
+    <string name="description_extension_web_search">Search for websites and images</string>
 </resources>
