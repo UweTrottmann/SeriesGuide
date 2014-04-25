@@ -79,7 +79,7 @@ public class TheTVDB {
         int UNKNOWN = -1;
     }
 
-    private static final String TVDB_MIRROR_BANNERS = "http://thetvdb.com/banners";
+    public static final String TVDB_MIRROR_BANNERS = "http://thetvdb.com/banners/";
 
     private static final String TVDB_API_URL = "http://thetvdb.com/api/";
 
@@ -701,9 +701,9 @@ public class TheTVDB {
             if (isPoster) {
                 // the cached version is a lot smaller, but still big enough for
                 // our purposes
-                imageUrl = TVDB_MIRROR_BANNERS + "/_cache/" + fileName;
+                imageUrl = TVDB_MIRROR_BANNERS + "_cache/" + fileName;
             } else {
-                imageUrl = TVDB_MIRROR_BANNERS + "/" + fileName;
+                imageUrl = TVDB_MIRROR_BANNERS + fileName;
             }
 
             // try to download, decode and store the image

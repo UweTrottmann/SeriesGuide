@@ -585,8 +585,8 @@ public class OverviewFragment extends SherlockFragment implements
                     onToggleCollected();
                 }
             });
-            CheatSheet.setup(collectedButton, isCollected ? R.string.uncollect
-                    : R.string.collect);
+            CheatSheet.setup(collectedButton, isCollected
+                    ? R.string.action_collection_remove : R.string.action_collection_add);
 
             // skip button
             View skipButton = buttons.findViewById(R.id.imageButtonBarSkip);

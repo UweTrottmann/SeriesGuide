@@ -209,9 +209,9 @@ public class EpisodesFragment extends SherlockListFragment implements
             menu.add(0, CONTEXT_FLAG_WATCHED_ID, 0, R.string.mark_episode);
         }
         if (episode.getInt(EpisodesQuery.COLLECTED) == 1) {
-            menu.add(0, CONTEXT_FLAG_UNCOLLECTED_ID, 3, R.string.uncollect);
+            menu.add(0, CONTEXT_FLAG_UNCOLLECTED_ID, 3, R.string.action_collection_remove);
         } else {
-            menu.add(0, CONTEXT_FLAG_COLLECTED_ID, 2, R.string.collect);
+            menu.add(0, CONTEXT_FLAG_COLLECTED_ID, 2, R.string.action_collection_add);
         }
         menu.add(0, CONTEXT_FLAG_UNTILHERE_ID, 4, R.string.mark_untilhere);
         menu.add(0, CONTEXT_MANAGE_LISTS_ID, 5, R.string.list_item_manage);

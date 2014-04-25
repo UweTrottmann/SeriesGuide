@@ -16,28 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.LatestEpisodeUpdateService;
-import com.battlelancer.seriesguide.util.ShowTools;
-import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.R;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -45,6 +23,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.support.v4.app.FragmentManager;
@@ -62,7 +41,27 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.LatestEpisodeUpdateService;
+import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.TimeTools;
+import com.battlelancer.seriesguide.util.Utils;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -110,6 +109,8 @@ public class ShowsFragment extends SherlockFragment implements
     private boolean mIsFilterUpcoming;
 
     private boolean mIsFilterHidden;
+
+    private Handler mHandler;
 
     public static ShowsFragment newInstance() {
         return new ShowsFragment();
@@ -170,9 +171,6 @@ public class ShowsFragment extends SherlockFragment implements
         mGrid.setOnItemClickListener(this);
         registerForContextMenu(mGrid);
 
-        // start loading data
-        getLoaderManager().initLoader(LOADER_ID, null, this);
-
         // listen for some settings changes
         PreferenceManager
                 .getDefaultSharedPreferences(getActivity())
@@ -213,12 +211,26 @@ public class ShowsFragment extends SherlockFragment implements
     @Override
     public void onResume() {
         super.onResume();
+
+        boolean isLoaderExists = getLoaderManager().getLoader(LOADER_ID) != null;
+        // create new loader or re-attach
+        // call is necessary to keep scroll position on config change
+        getLoaderManager().initLoader(LOADER_ID, null, this);
+        if (isLoaderExists) {
+            // if re-attached to existing loader, restart it to
+            // keep unwatched and upcoming shows from becoming stale
+            getLoaderManager().restartLoader(LOADER_ID, null, this);
+        }
+
         EventBus.getDefault().register(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
+
+        // avoid CPU activity
+        schedulePeriodicDataRefresh(false);
         EventBus.getDefault().unregister(this);
     }
 
@@ -555,6 +567,9 @@ public class ShowsFragment extends SherlockFragment implements
         }
         selection.append(Shows.HIDDEN).append(isFilterHidden ? "=1" : "=0");
 
+        // keep unwatched and upcoming shows from becoming stale
+        schedulePeriodicDataRefresh(true);
+
         return new CursorLoader(getActivity(), Shows.CONTENT_URI, ShowsQuery.PROJECTION,
                 selection.toString(), null,
                 ShowsDistillationSettings.getSortQuery(mSortOrderId, mIsSortFavoritesFirst));
@@ -577,6 +592,23 @@ public class ShowsFragment extends SherlockFragment implements
         // longer using it.
         mAdapter.swapCursor(null);
     }
+
+    private void schedulePeriodicDataRefresh(boolean enableRefresh) {
+        if (mHandler == null) {
+            mHandler = new Handler();
+        }
+        mHandler.removeCallbacks(mDataRefreshRunnable);
+        if (enableRefresh) {
+            mHandler.postDelayed(mDataRefreshRunnable, 5 * DateUtils.MINUTE_IN_MILLIS);
+        }
+    }
+
+    private Runnable mDataRefreshRunnable = new Runnable() {
+        @Override
+        public void run() {
+            getLoaderManager().restartLoader(LOADER_ID, null, ShowsFragment.this);
+        }
+    };
 
     private class ShowsAdapter extends BaseShowsAdapter {
 

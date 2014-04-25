@@ -51,6 +51,7 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.thetvdbapi.TheTVDB;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import de.greenrobot.event.EventBus;
@@ -298,7 +299,8 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
             @Override
             public void onClick(View v) {
                 Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
-                fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH, imagePath);
+                fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH,
+                        TheTVDB.TVDB_MIRROR_BANNERS + imagePath);
                 fullscreen
                         .putExtra(FullscreenImageActivity.InitBundle.IMAGE_TITLE, mShow.getTitle());
                 ActivityCompat.startActivity(getActivity(), fullscreen,
