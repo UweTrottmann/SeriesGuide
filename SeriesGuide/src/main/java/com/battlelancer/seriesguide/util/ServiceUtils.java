@@ -415,15 +415,24 @@ public final class ServiceUtils {
     }
 
     /**
-     * Attempts to search the web for <code>query</code>
+     * Builds a search {@link android.content.Intent} using {@link Intent#ACTION_WEB_SEARCH} and
+     * <code>query</code> as {@link android.app.SearchManager#QUERY} extra.
+     */
+    public static Intent buildWebSearchIntent(String query) {
+        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+        intent.putExtra(SearchManager.QUERY, query);
+        return intent;
+    }
+
+    /**
+     * Attempts to search the web for <code>query</code>.
      *
      * @param context The {@link Context} to use
      * @param query   The search query
      * @param logTag  The log tag to use, for Analytics
      */
     public static void performWebSearch(Context context, String query, String logTag) {
-        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-        intent.putExtra(SearchManager.QUERY, query);
+        Intent intent = buildWebSearchIntent(query);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
 

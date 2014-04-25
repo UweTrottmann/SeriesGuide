@@ -173,6 +173,7 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
         // unused buttons
         mGooglePlayButton.setVisibility(View.GONE);
         mYouTubeButton.setVisibility(View.GONE);
+        mWebSearchButton.setVisibility(View.GONE);
 
         return v;
     }
@@ -537,12 +538,8 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
         });
 
         // service buttons
-        ServiceUtils.setUpGooglePlayButton(mShowTitle + " " + mEpisodeTitle, mGooglePlayButton,
-                TAG);
-        ServiceUtils.setUpYouTubeButton(mShowTitle + " " + mEpisodeTitle, mYouTubeButton, TAG);
         ServiceUtils.setUpTraktButton(mShowTvdbId, mSeasonNumber, mEpisodeNumber, mTraktButton,
                 TAG);
-        ServiceUtils.setUpWebSearchButton(mShowTitle + " " + mEpisodeTitle, mWebSearchButton, TAG);
         // IMDb
         String imdbId = cursor.getString(DetailsQuery.IMDBID);
         if (TextUtils.isEmpty(imdbId)) {
