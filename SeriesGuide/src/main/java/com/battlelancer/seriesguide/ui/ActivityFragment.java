@@ -366,7 +366,9 @@ public class ActivityFragment extends SherlockFragment implements
     private Runnable mDataRefreshRunnable = new Runnable() {
         @Override
         public void run() {
-            getLoaderManager().restartLoader(getLoaderId(), null, ActivityFragment.this);
+            if (isAdded()) {
+                getLoaderManager().restartLoader(getLoaderId(), null, ActivityFragment.this);
+            }
         }
     };
 

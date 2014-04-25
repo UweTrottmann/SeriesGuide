@@ -606,7 +606,9 @@ public class ShowsFragment extends SherlockFragment implements
     private Runnable mDataRefreshRunnable = new Runnable() {
         @Override
         public void run() {
-            getLoaderManager().restartLoader(LOADER_ID, null, ShowsFragment.this);
+            if (isAdded()) {
+                getLoaderManager().restartLoader(LOADER_ID, null, ShowsFragment.this);
+            }
         }
     };
 
