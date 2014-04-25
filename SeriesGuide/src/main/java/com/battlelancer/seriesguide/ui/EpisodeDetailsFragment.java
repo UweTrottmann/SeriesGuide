@@ -172,6 +172,7 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
 
         // unused buttons
         mGooglePlayButton.setVisibility(View.GONE);
+        mYouTubeButton.setVisibility(View.GONE);
 
         return v;
     }

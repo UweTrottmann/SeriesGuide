@@ -344,16 +344,14 @@ public final class ServiceUtils {
     }
 
     /**
-     * Attempts to open the YouTube application to search for <code>query</code> . If the app is
-     * unavailable, a web search if performed instead
-     *
-     * @param context The {@link Context} to use
-     * @param query   The search query
-     * @param logTag  The log tag to use, for Analytics
+     * Builds a search {@link android.content.Intent} to open the YouTube application to search for
+     * <code>query</code>.
+     * If the YouTube app is unavailable, a view {@link android.content.Intent}
+     * with the web search URL is returned instead.
      */
-    public static void searchYoutube(Context context, String query, String logTag) {
+    public static Intent buildYouTubeIntent(Context context, String query) {
         PackageManager pm = context.getPackageManager();
-        boolean hasYouTube = false;
+        boolean hasYouTube;
         try {
             pm.getPackageInfo(YOUTUBE_PACKAGE, PackageManager.GET_ACTIVITIES);
             hasYouTube = true;
@@ -372,6 +370,19 @@ public final class ServiceUtils {
             intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(String.format(YOUTUBE_SEARCH, Uri.encode(query))));
         }
+        return intent;
+    }
+
+    /**
+     * Attempts to open the YouTube application to search for <code>query</code>. If the app is
+     * unavailable, a web search if performed instead.
+     *
+     * @param context The {@link Context} to use
+     * @param query   The search query
+     * @param logTag  The log tag to use, for Analytics
+     */
+    public static void searchYoutube(Context context, String query, String logTag) {
+        Intent intent = buildYouTubeIntent(context, query);
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);

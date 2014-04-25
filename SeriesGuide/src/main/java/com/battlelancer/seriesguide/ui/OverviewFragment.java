@@ -725,8 +725,7 @@ public class OverviewFragment extends SherlockFragment implements
         getView().findViewById(R.id.buttonGooglePlay).setVisibility(View.GONE);
 
         // YouTube button
-        View youtubeButton = getView().findViewById(R.id.buttonYouTube);
-        ServiceUtils.setUpYouTubeButton(mShowTitle + " " + episodeTitle, youtubeButton, TAG);
+        getView().findViewById(R.id.buttonYouTube).setVisibility(View.GONE);
 
         // IMDb button
         String imdbId = episode.getString(EpisodeQuery.IMDBID);
