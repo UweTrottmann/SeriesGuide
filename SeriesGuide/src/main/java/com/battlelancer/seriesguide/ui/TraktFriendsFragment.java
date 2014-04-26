@@ -55,7 +55,6 @@ import com.jakewharton.trakt.enumerations.ActivityType;
 import com.jakewharton.trakt.services.ActivityService;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import java.util.ArrayList;
 import java.util.List;
 import retrofit.RetrofitError;
 import timber.log.Timber;
