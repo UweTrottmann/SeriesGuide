@@ -88,7 +88,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     public static final int UPCOMING_LOADER_ID = 101;
     public static final int RECENT_LOADER_ID = 102;
     public static final int FRIENDS_LOADER_ID = 103;
-    public static final int ADD_SHOW_LOADER_ID = 104;
+    public static final int USER_LOADER_ID = 104;
+    public static final int ADD_SHOW_LOADER_ID = 105;
 
     private static final int UPDATE_SUCCESS = 100;
 
@@ -244,9 +245,10 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         argsRecent.putInt(ActivityFragment.InitBundle.EMPTY_STRING_ID, R.string.norecent);
         mTabsAdapter.addTab(R.string.recent, ActivityFragment.class, argsRecent);
 
-        // trakt friends tab
+        // trakt tabs only visible if connected
         if (TraktCredentials.get(this).hasCredentials()) {
             mTabsAdapter.addTab(R.string.friends, TraktFriendsFragment.class, null);
+            mTabsAdapter.addTab(R.string.user_stream, UserActivityFragment.class, null);
         }
 
         // display new tabs

@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -32,10 +31,8 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
-import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
@@ -49,79 +46,53 @@ import java.util.List;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
-public class TraktFriendsFragment extends StreamFragment {
+/**
+ * Displays the latest trakt activity of the user.
+ */
+public class UserActivityFragment extends StreamFragment {
 
-    private TraktFriendsAdapter mAdapter;
+    private UserActivityAdapter mAdapter;
 
     @Override
     public void onStart() {
         super.onStart();
-        Utils.trackView(getActivity(), "Friends");
+        Utils.trackView(getActivity(), "You");
     }
 
     @Override
     protected int getEmptyMessageResId() {
-        return R.string.friends_empty;
+        return R.string.user_stream_empty;
     }
 
     @Override
     protected ListAdapter getListAdapter() {
         if (mAdapter == null) {
-            mAdapter = new TraktFriendsAdapter(getActivity());
+            mAdapter = new UserActivityAdapter(getActivity());
         }
         return mAdapter;
     }
 
     @Override
     protected void initializeStream() {
-        getLoaderManager().initLoader(ShowsActivity.FRIENDS_LOADER_ID, null,
-                mActivityLoaderCallbacks);
+        getLoaderManager().initLoader(ShowsActivity.USER_LOADER_ID, null, mActivityLoaderCallbacks);
     }
 
     @Override
     protected void refreshStream() {
-        getLoaderManager().restartLoader(ShowsActivity.FRIENDS_LOADER_ID, null,
+        getLoaderManager().restartLoader(ShowsActivity.USER_LOADER_ID, null,
                 mActivityLoaderCallbacks);
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-        ActivityItem activity = (ActivityItem) mGridView.getItemAtPosition(position);
-        if (activity == null) {
-            return;
-        }
-
-        Cursor episodeQuery = getActivity().getContentResolver().query(
-                Episodes.buildEpisodesOfShowUri(activity.show.tvdb_id), new String[] {
-                        Episodes._ID
-                }, Episodes.NUMBER + "=" + activity.episode.number + " AND "
-                        + Episodes.SEASON + "=" + activity.episode.season, null, null
-        );
-        if (episodeQuery == null) {
-            return;
-        }
-
-        if (episodeQuery.getCount() != 0) {
-            // display the episode details if we have a match
-            episodeQuery.moveToFirst();
-            showDetails(episodeQuery.getInt(0));
-        } else {
-            // offer to add the show if it's not in the show database yet
-            SearchResult showToAdd = new SearchResult();
-            showToAdd.tvdbid = activity.show.tvdb_id;
-            showToAdd.title = activity.show.title;
-            showToAdd.overview = activity.show.overview;
-            AddDialogFragment.showAddDialog(showToAdd, getFragmentManager());
-        }
-
-        episodeQuery.close();
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // TODO display episode
     }
 
     private LoaderManager.LoaderCallbacks<List<ActivityItem>> mActivityLoaderCallbacks =
             new LoaderManager.LoaderCallbacks<List<ActivityItem>>() {
                 @Override
                 public Loader<List<ActivityItem>> onCreateLoader(int id, Bundle args) {
-                    return new TraktFriendsLoader(getActivity());
+                    return new UserActivityLoader(getActivity());
                 }
 
                 @Override
@@ -137,9 +108,9 @@ public class TraktFriendsFragment extends StreamFragment {
                 }
             };
 
-    private static class TraktFriendsLoader extends GenericSimpleLoader<List<ActivityItem>> {
+    private static class UserActivityLoader extends GenericSimpleLoader<List<ActivityItem>> {
 
-        public TraktFriendsLoader(Context context) {
+        public UserActivityLoader(Context context) {
             super(context);
         }
 
@@ -152,32 +123,34 @@ public class TraktFriendsFragment extends StreamFragment {
 
             try {
                 final ActivityService activityService = manager.activityService();
-                Activity activity = activityService.friends(ActivityType.Episode.toString(),
-                        ActivityAction.Watching + ","
-                                + ActivityAction.Checkin + ","
+                Activity activity = activityService.user(
+                        TraktCredentials.get(getContext()).getUsername(),
+                        ActivityType.Episode.toString(),
+                        ActivityAction.Watching + "," + ActivityAction.Checkin + ","
                                 + ActivityAction.Scrobble,
-                        (System.currentTimeMillis() - DateUtils.WEEK_IN_MILLIS) / 1000, null, null
+                        (System.currentTimeMillis() - DateUtils.WEEK_IN_MILLIS) / 1000,
+                        null, null
                 );
 
                 if (activity == null || activity.activity == null) {
-                    Timber.e("Loading friends activity failed, was null");
+                    Timber.e("Loading user activity failed, was null");
                     return null;
                 }
 
                 return activity.activity;
             } catch (RetrofitError e) {
-                Timber.e(e, "Loading friends activity failed");
+                Timber.e(e, "Loading user activity failed");
             }
 
             return null;
         }
     }
 
-    private static class TraktFriendsAdapter extends ArrayAdapter<ActivityItem> {
+    private static class UserActivityAdapter extends ArrayAdapter<ActivityItem> {
 
         private final LayoutInflater mInflater;
 
-        public TraktFriendsAdapter(Context context) {
+        public UserActivityAdapter(Context context) {
             super(context, 0);
             mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
