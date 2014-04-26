@@ -58,11 +58,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
     private final int LAYOUT_HEADER = R.layout.grid_activity_header;
 
-    private final CheckInListener mCheckInListener;
-
     private LayoutInflater mLayoutInflater;
-
-    private SharedPreferences mPrefs;
 
     private List<HeaderData> mHeaders;
 
@@ -70,19 +66,10 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
     private Calendar mCalendar;
 
-    public interface CheckInListener {
-
-        public void onCheckinEpisode(int episodeTvdbId);
-
-    }
-
-    public ActivitySlowAdapter(Context context, Cursor c, int flags,
-            CheckInListener checkInListener) {
+    public ActivitySlowAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
         mLayoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        mCheckInListener = checkInListener;
         mCalendar = Calendar.getInstance();
     }
 
