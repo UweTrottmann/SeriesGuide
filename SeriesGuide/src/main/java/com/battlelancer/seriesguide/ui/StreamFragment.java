@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -34,7 +35,11 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
+import com.jakewharton.trakt.entities.ActivityItem;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
@@ -153,6 +158,39 @@ public abstract class StreamFragment extends SherlockFragment implements
      * Once finished you should hide the progress bar with {@link #showProgressBar(boolean)}.
      */
     protected abstract void refreshStream();
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        ActivityItem activity = (ActivityItem) mGridView.getItemAtPosition(position);
+        if (activity == null) {
+            return;
+        }
+
+        Cursor episodeQuery = getActivity().getContentResolver().query(
+                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(activity.show.tvdb_id), new String[] {
+                        SeriesGuideContract.Episodes._ID
+                }, SeriesGuideContract.Episodes.NUMBER + "=" + activity.episode.number + " AND "
+                        + SeriesGuideContract.Episodes.SEASON + "=" + activity.episode.season, null, null
+        );
+        if (episodeQuery == null) {
+            return;
+        }
+
+        if (episodeQuery.getCount() != 0) {
+            // display the episode details if we have a match
+            episodeQuery.moveToFirst();
+            showDetails(episodeQuery.getInt(0));
+        } else {
+            // offer to add the show if it's not in the show database yet
+            SearchResult showToAdd = new SearchResult();
+            showToAdd.tvdbid = activity.show.tvdb_id;
+            showToAdd.title = activity.show.title;
+            showToAdd.overview = activity.show.overview;
+            AddDialogFragment.showAddDialog(showToAdd, getFragmentManager());
+        }
+
+        episodeQuery.close();
+    }
 
     /**
      * Starts an activity to display the given episode.

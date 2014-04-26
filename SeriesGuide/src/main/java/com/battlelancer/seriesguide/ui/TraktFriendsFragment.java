@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -26,16 +25,12 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.settings.TraktSettings;
-import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
@@ -82,39 +77,6 @@ public class TraktFriendsFragment extends StreamFragment {
     protected void refreshStream() {
         getLoaderManager().restartLoader(ShowsActivity.FRIENDS_LOADER_ID, null,
                 mActivityLoaderCallbacks);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-        ActivityItem activity = (ActivityItem) mGridView.getItemAtPosition(position);
-        if (activity == null) {
-            return;
-        }
-
-        Cursor episodeQuery = getActivity().getContentResolver().query(
-                Episodes.buildEpisodesOfShowUri(activity.show.tvdb_id), new String[] {
-                        Episodes._ID
-                }, Episodes.NUMBER + "=" + activity.episode.number + " AND "
-                        + Episodes.SEASON + "=" + activity.episode.season, null, null
-        );
-        if (episodeQuery == null) {
-            return;
-        }
-
-        if (episodeQuery.getCount() != 0) {
-            // display the episode details if we have a match
-            episodeQuery.moveToFirst();
-            showDetails(episodeQuery.getInt(0));
-        } else {
-            // offer to add the show if it's not in the show database yet
-            SearchResult showToAdd = new SearchResult();
-            showToAdd.tvdbid = activity.show.tvdb_id;
-            showToAdd.title = activity.show.title;
-            showToAdd.overview = activity.show.overview;
-            AddDialogFragment.showAddDialog(showToAdd, getFragmentManager());
-        }
-
-        episodeQuery.close();
     }
 
     private LoaderManager.LoaderCallbacks<List<ActivityItem>> mActivityLoaderCallbacks =

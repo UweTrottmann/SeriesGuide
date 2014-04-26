@@ -25,7 +25,6 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -81,11 +80,6 @@ public class UserActivityFragment extends StreamFragment {
     protected void refreshStream() {
         getLoaderManager().restartLoader(ShowsActivity.USER_LOADER_ID, null,
                 mActivityLoaderCallbacks);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // TODO display episode
     }
 
     private LoaderManager.LoaderCallbacks<List<ActivityItem>> mActivityLoaderCallbacks =
