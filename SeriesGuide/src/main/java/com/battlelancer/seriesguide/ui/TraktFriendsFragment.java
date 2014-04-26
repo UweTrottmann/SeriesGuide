@@ -33,6 +33,9 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -103,12 +106,30 @@ public class TraktFriendsFragment extends SherlockFragment implements
 
         getLoaderManager().initLoader(ShowsActivity.FRIENDS_LOADER_ID, null,
                 mActivityLoaderCallbacks);
+
+        setHasOptionsMenu(true);
     }
 
     @Override
     public void onStart() {
         super.onStart();
         Utils.trackView(getActivity(), "Friends");
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.friends_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_action_friends_refresh) {
+            getLoaderManager().restartLoader(ShowsActivity.FRIENDS_LOADER_ID, null,
+                    mActivityLoaderCallbacks);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
