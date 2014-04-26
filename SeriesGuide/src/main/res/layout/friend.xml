@@ -12,54 +12,68 @@
         android:background="?attr/drawableCardBackground">
 
         <ImageView
-            android:id="@+id/avatar"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginRight="@dimen/default_padding"
-            tools:src="@color/overlay" />
+            android:id="@+id/imageViewFriendPoster"
+            android:layout_width="68dp"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:contentDescription="@string/description_poster"
+            android:scaleType="centerCrop"
+            android:src="@drawable/appwidget_bg" />
 
         <TextView
-            android:id="@+id/timestamp"
+            android:id="@+id/textViewFriendTimestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
             android:layout_marginTop="@dimen/inline_padding"
             android:layout_alignParentRight="true"
             tools:text="11 hours ago"
             android:textAppearance="@style/TextAppearance.Small.Dim" />
 
+        <ImageView
+            android:id="@+id/imageViewFriendAvatar"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_toRightOf="@+id/imageViewFriendPoster"
+            android:layout_marginRight="@dimen/inline_padding"
+            tools:ignore="ContentDescription" />
+
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/textViewFriendUsername"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/inline_padding"
-            android:layout_toRightOf="@+id/avatar"
-            android:layout_toLeftOf="@+id/timestamp"
-            android:ellipsize="marquee"
+            android:layout_toRightOf="@+id/imageViewFriendAvatar"
+            android:layout_toLeftOf="@+id/textViewFriendTimestamp"
+            android:ellipsize="end"
             android:maxLines="1"
             tools:text="sgtest"
             android:textAppearance="@style/TextAppearance.Small.Dim" />
 
         <TextView
-            android:id="@+id/show"
+            android:id="@+id/textViewFriendShow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/name"
+            android:layout_below="@+id/imageViewFriendAvatar"
+            android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
-            android:layout_toRightOf="@+id/avatar"
-            android:ellipsize="marquee"
+            android:layout_marginTop="@dimen/inline_padding"
+            android:layout_toRightOf="@+id/imageViewFriendPoster"
+            android:ellipsize="end"
             android:maxLines="1"
             tools:text="Community"
             android:textAppearance="@style/TextAppearance.Medium.Light" />
 
         <TextView
-            android:id="@+id/episode"
+            android:id="@+id/textViewFriendEpisode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/show"
+            android:layout_below="@+id/textViewFriendShow"
+            android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
-            android:layout_toRightOf="@+id/avatar"
-            android:ellipsize="marquee"
+            android:layout_toRightOf="@+id/imageViewFriendPoster"
+            android:ellipsize="end"
             android:maxLines="1"
             tools:text="5x02 Introcution to Teaching"
             android:textAppearance="@style/TextAppearance.Small.Light" />
