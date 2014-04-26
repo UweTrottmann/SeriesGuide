@@ -195,6 +195,7 @@ public class TraktFriendsFragment extends SherlockFragment implements
             Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_SHORT).show();
             return;
         }
+        showProgressBar(true);
         mEmptyView.setText(R.string.friends_empty);
         getLoaderManager().restartLoader(ShowsActivity.FRIENDS_LOADER_ID, null,
                 mActivityLoaderCallbacks);
