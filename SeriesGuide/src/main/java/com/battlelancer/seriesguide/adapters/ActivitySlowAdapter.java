@@ -131,11 +131,9 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
                 ActivityFragment.ActivityQuery.RELEASE_TIME_MS);
         if (releaseTime != -1) {
             Date actualRelease = TimeTools.getEpisodeReleaseTime(context, releaseTime);
-            // 10:00 | Fri in 3 days, 10:00 PM | Mon 23 Jul
-            metaText.append(TimeTools.formatToLocalReleaseTime(context, actualRelease))
-                    .append(" | ")
-                    .append(TimeTools.formatToLocalReleaseDay(actualRelease))
-                    .append(" ")
+            // 10:00 | in 3 days, 10:00 PM | 23 Jul
+            metaText.append(TimeTools.formatToLocalReleaseTime(context, actualRelease));
+            metaText.append(" | ")
                     .append(TimeTools.formatToRelativeLocalReleaseTime(actualRelease));
         }
         final String network = cursor.getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
