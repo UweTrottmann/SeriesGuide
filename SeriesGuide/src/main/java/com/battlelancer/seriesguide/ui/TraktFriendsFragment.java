@@ -128,9 +128,8 @@ public class TraktFriendsFragment extends SherlockFragment implements
 
         if (episodeQuery.getCount() != 0) {
             // display the episode details if we have a match
-            if (episodeQuery.moveToFirst()) {
-                showDetails(episodeQuery.getInt(0));
-            }
+            episodeQuery.moveToFirst();
+            showDetails(episodeQuery.getInt(0));
         } else {
             // offer to add the show if it's not in the show database yet
             SearchResult showToAdd = new SearchResult();
