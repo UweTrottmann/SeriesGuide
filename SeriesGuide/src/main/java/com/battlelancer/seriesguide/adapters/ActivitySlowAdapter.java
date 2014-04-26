@@ -58,11 +58,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
     private final int LAYOUT_HEADER = R.layout.grid_activity_header;
 
-    private final CheckInListener mCheckInListener;
-
     private LayoutInflater mLayoutInflater;
-
-    private SharedPreferences mPrefs;
 
     private List<HeaderData> mHeaders;
 
@@ -70,19 +66,10 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
     private Calendar mCalendar;
 
-    public interface CheckInListener {
-
-        public void onCheckinEpisode(int episodeTvdbId);
-
-    }
-
-    public ActivitySlowAdapter(Context context, Cursor c, int flags,
-            CheckInListener checkInListener) {
+    public ActivitySlowAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
         mLayoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        mCheckInListener = checkInListener;
         mCalendar = Calendar.getInstance();
     }
 
@@ -144,11 +131,9 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
                 ActivityFragment.ActivityQuery.RELEASE_TIME_MS);
         if (releaseTime != -1) {
             Date actualRelease = TimeTools.getEpisodeReleaseTime(context, releaseTime);
-            // 10:00 | Fri in 3 days, 10:00 PM | Mon 23 Jul
-            metaText.append(TimeTools.formatToLocalReleaseTime(context, actualRelease))
-                    .append(" | ")
-                    .append(TimeTools.formatToLocalReleaseDay(actualRelease))
-                    .append(" ")
+            // 10:00 | in 3 days, 10:00 PM | 23 Jul
+            metaText.append(TimeTools.formatToLocalReleaseTime(context, actualRelease));
+            metaText.append(" | ")
                     .append(TimeTools.formatToRelativeLocalReleaseTime(actualRelease));
         }
         final String network = cursor.getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
