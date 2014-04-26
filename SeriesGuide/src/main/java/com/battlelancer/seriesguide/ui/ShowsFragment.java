@@ -73,8 +73,6 @@ public class ShowsFragment extends SherlockFragment implements
 
     private static final String TAG = "Shows";
 
-    public static final int LOADER_ID = R.layout.shows_fragment;
-
     // context menu items
     private static final int CONTEXT_DELETE_ID = 200;
 
@@ -134,7 +132,8 @@ public class ShowsFragment extends SherlockFragment implements
                         = false;
 
                 // already start loading, do not need to wait on saving prefs
-                getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, null, ShowsFragment.this);
+                getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null,
+                        ShowsFragment.this);
 
                 PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
                         .putBoolean(ShowsDistillationSettings.KEY_FILTER_FAVORITES, false)
@@ -212,14 +211,15 @@ public class ShowsFragment extends SherlockFragment implements
     public void onResume() {
         super.onResume();
 
-        boolean isLoaderExists = getLoaderManager().getLoader(LOADER_ID) != null;
+        boolean isLoaderExists = getLoaderManager().getLoader(ShowsActivity.SHOWS_LOADER_ID)
+                != null;
         // create new loader or re-attach
         // call is necessary to keep scroll position on config change
-        getLoaderManager().initLoader(LOADER_ID, null, this);
+        getLoaderManager().initLoader(ShowsActivity.SHOWS_LOADER_ID, null, this);
         if (isLoaderExists) {
             // if re-attached to existing loader, restart it to
             // keep unwatched and upcoming shows from becoming stale
-            getLoaderManager().restartLoader(LOADER_ID, null, this);
+            getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null, this);
         }
 
         EventBus.getDefault().register(this);
@@ -247,9 +247,10 @@ public class ShowsFragment extends SherlockFragment implements
 
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         final Cursor show = getActivity().getContentResolver().query(
-                Shows.buildShowUri(String.valueOf(info.id)), new String[]{
-                Shows.FAVORITE, Shows.HIDDEN, Shows.TITLE
-        }, null, null, null);
+                Shows.buildShowUri(String.valueOf(info.id)), new String[] {
+                        Shows.FAVORITE, Shows.HIDDEN, Shows.TITLE
+                }, null, null, null
+        );
         if (show == null || !show.moveToFirst()) {
             // abort
             return;
@@ -426,7 +427,7 @@ public class ShowsFragment extends SherlockFragment implements
             mIsFilterHidden = false;
 
             // already start loading, do not need to wait on saving prefs
-            getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, null, this);
+            getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null, this);
 
             // update menu item state, then save at last
             PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
@@ -474,7 +475,7 @@ public class ShowsFragment extends SherlockFragment implements
 
     private void changeSortOrFilter(String key, boolean state, MenuItem item) {
         // already start loading, do not need to wait on saving prefs
-        getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, null, this);
+        getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null, this);
 
         // save new setting
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
@@ -486,7 +487,7 @@ public class ShowsFragment extends SherlockFragment implements
 
     private void changeSort() {
         // already start loading, do not need to wait on saving prefs
-        getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, null, this);
+        getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null, this);
 
         // save new sort order to preferences
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
@@ -607,7 +608,8 @@ public class ShowsFragment extends SherlockFragment implements
         @Override
         public void run() {
             if (isAdded()) {
-                getLoaderManager().restartLoader(LOADER_ID, null, ShowsFragment.this);
+                getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null,
+                        ShowsFragment.this);
             }
         }
     };
@@ -744,7 +746,8 @@ public class ShowsFragment extends SherlockFragment implements
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (key.equals(AdvancedSettings.KEY_UPCOMING_LIMIT)) {
-                getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, null, ShowsFragment.this);
+                getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null,
+                        ShowsFragment.this);
             }
         }
     };
@@ -764,5 +767,4 @@ public class ShowsFragment extends SherlockFragment implements
     private void fireTrackerEventContext(String label) {
         Utils.trackContextMenu(getActivity(), TAG, label);
     }
-
 }

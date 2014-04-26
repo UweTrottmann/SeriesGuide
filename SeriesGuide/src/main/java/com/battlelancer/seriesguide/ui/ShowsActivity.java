@@ -84,7 +84,11 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
     protected static final String TAG = "Shows";
 
-    public static final int ADD_SHOW_LOADER_ID = 1;
+    public static final int SHOWS_LOADER_ID = 100;
+    public static final int UPCOMING_LOADER_ID = 101;
+    public static final int RECENT_LOADER_ID = 102;
+    public static final int FRIENDS_LOADER_ID = 103;
+    public static final int ADD_SHOW_LOADER_ID = 104;
 
     private static final int UPDATE_SUCCESS = 100;
 
@@ -227,7 +231,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         argsUpcoming.putString(ActivityFragment.InitBundle.TYPE,
                 ActivityFragment.ActivityType.UPCOMING);
         argsUpcoming.putString(ActivityFragment.InitBundle.ANALYTICS_TAG, "Upcoming");
-        argsUpcoming.putInt(ActivityFragment.InitBundle.LOADER_ID, 10);
+        argsUpcoming.putInt(ActivityFragment.InitBundle.LOADER_ID, UPCOMING_LOADER_ID);
         argsUpcoming.putInt(ActivityFragment.InitBundle.EMPTY_STRING_ID, R.string.noupcoming);
         mTabsAdapter.addTab(R.string.upcoming, ActivityFragment.class, argsUpcoming);
 
@@ -236,7 +240,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         argsRecent
                 .putString(ActivityFragment.InitBundle.TYPE, ActivityFragment.ActivityType.RECENT);
         argsRecent.putString(ActivityFragment.InitBundle.ANALYTICS_TAG, "Recent");
-        argsRecent.putInt(ActivityFragment.InitBundle.LOADER_ID, 20);
+        argsRecent.putInt(ActivityFragment.InitBundle.LOADER_ID, RECENT_LOADER_ID);
         argsRecent.putInt(ActivityFragment.InitBundle.EMPTY_STRING_ID, R.string.norecent);
         mTabsAdapter.addTab(R.string.recent, ActivityFragment.class, argsRecent);
 
