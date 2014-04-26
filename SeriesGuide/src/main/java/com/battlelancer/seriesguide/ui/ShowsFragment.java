@@ -375,6 +375,7 @@ public class ShowsFragment extends SherlockFragment implements
     public void onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
         boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
+        menu.findItem(R.id.menu_action_shows_add).setVisible(!isDrawerOpen);
         MenuItem filter = menu.findItem(R.id.menu_action_shows_filter);
         filter.setVisible(!isDrawerOpen);
         filter.setIcon(mIsFilterFavorites || mIsFilterUnwatched || mIsFilterUpcoming
@@ -385,7 +386,11 @@ public class ShowsFragment extends SherlockFragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_action_shows_filter) {
+        if (itemId == R.id.menu_action_shows_add) {
+            startActivity(new Intent(getActivity(), AddActivity.class));
+            getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if (itemId == R.id.menu_action_shows_filter) {
             fireTrackerEventAction("Filter shows");
             // did not handle here
             return super.onOptionsItemSelected(item);

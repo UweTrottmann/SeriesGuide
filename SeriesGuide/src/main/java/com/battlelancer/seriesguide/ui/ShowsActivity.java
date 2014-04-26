@@ -435,26 +435,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-        // If the nav drawer is open, hide action items related to the content
-        // view
-        boolean isDrawerOpen = isDrawerOpen();
-        menu.findItem(R.id.menu_add_show).setVisible(!isDrawerOpen);
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_add_show) {
-            fireTrackerEvent("Add show");
-            startActivity(new Intent(this, AddActivity.class));
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-            return true;
-        } else if (itemId == R.id.menu_search) {
+        if (itemId == R.id.menu_search) {
             startActivity(new Intent(this, SearchActivity.class));
             fireTrackerEvent("Search");
             return true;
