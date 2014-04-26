@@ -22,6 +22,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -32,6 +33,9 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -57,28 +61,23 @@ import retrofit.RetrofitError;
 import timber.log.Timber;
 
 public class TraktFriendsFragment extends SherlockFragment implements
-        AdapterView.OnItemClickListener {
+        AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private TraktFriendsAdapter mAdapter;
 
-    private View mContentContainer;
+    @InjectView(R.id.swipeRefreshLayoutFriends) SwipeRefreshLayout mContentContainer;
 
-    private GridView mGridView;
-
-    private View mProgressBar;
-
-    private TextView mEmptyView;
+    @InjectView(android.R.id.list) GridView mGridView;
+    @InjectView(R.id.emptyViewFriends) TextView mEmptyView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_friends, container, false);
+        ButterKnife.inject(this, v);
 
-        mContentContainer = v.findViewById(R.id.contentContainer);
-        mProgressBar = v.findViewById(R.id.progressIndicator);
+        mContentContainer.setOnRefreshListener(this);
 
-        mEmptyView = (TextView) v.findViewById(R.id.emptyViewFriends);
-        mGridView = (GridView) v.findViewById(android.R.id.list);
         mGridView.setOnItemClickListener(this);
         mGridView.setEmptyView(mEmptyView);
 
@@ -89,15 +88,18 @@ public class TraktFriendsFragment extends SherlockFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // abort if offline
+        int accentColorResId = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                R.attr.colorAccent);
+        mContentContainer.setColorScheme(accentColorResId, R.color.text_primary, accentColorResId,
+                R.color.text_primary);
+
+        // change empty message if we are offline
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
             mEmptyView.setText(R.string.offline);
-            setProgressLock(false);
-            return;
+        } else {
+            mEmptyView.setText(R.string.friends_empty);
+            showProgressBar(true);
         }
-
-        setProgressLock(true);
-        mEmptyView.setText(R.string.friends_empty);
 
         if (mAdapter == null) {
             mAdapter = new TraktFriendsAdapter(getActivity());
@@ -117,6 +119,13 @@ public class TraktFriendsFragment extends SherlockFragment implements
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        ButterKnife.reset(this);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.friends_menu, menu);
     }
@@ -125,8 +134,7 @@ public class TraktFriendsFragment extends SherlockFragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_friends_refresh) {
-            getLoaderManager().restartLoader(ShowsActivity.FRIENDS_LOADER_ID, null,
-                    mActivityLoaderCallbacks);
+            refreshFriendsActivity();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -174,6 +182,48 @@ public class TraktFriendsFragment extends SherlockFragment implements
         getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
     }
 
+    @Override
+    public void onRefresh() {
+        refreshFriendsActivity();
+    }
+
+    private void refreshFriendsActivity() {
+        if (!AndroidUtils.isNetworkConnected(getActivity())) {
+            // keep existing data, but update empty view anyhow
+            showProgressBar(false);
+            mEmptyView.setText(R.string.offline);
+            Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mEmptyView.setText(R.string.friends_empty);
+        getLoaderManager().restartLoader(ShowsActivity.FRIENDS_LOADER_ID, null,
+                mActivityLoaderCallbacks);
+    }
+
+    public void showProgressBar(boolean isShowing) {
+        mContentContainer.setRefreshing(isShowing);
+    }
+
+    private LoaderManager.LoaderCallbacks<List<ActivityItem>> mActivityLoaderCallbacks =
+            new LoaderManager.LoaderCallbacks<List<ActivityItem>>() {
+                @Override
+                public Loader<List<ActivityItem>> onCreateLoader(int id, Bundle args) {
+                    return new TraktFriendsLoader(getActivity());
+                }
+
+                @Override
+                public void onLoadFinished(Loader<List<ActivityItem>> loader,
+                        List<ActivityItem> data) {
+                    mAdapter.setData(data);
+                    showProgressBar(false);
+                }
+
+                @Override
+                public void onLoaderReset(Loader<List<ActivityItem>> loader) {
+                    // do nothing
+                }
+            };
+
     private static class TraktFriendsLoader extends GenericSimpleLoader<List<ActivityItem>> {
 
         public TraktFriendsLoader(Context context) {
@@ -198,7 +248,7 @@ public class TraktFriendsFragment extends SherlockFragment implements
 
                 if (activity == null || activity.activity == null) {
                     Timber.e("Loading friends activity failed, was null");
-                    return new ArrayList<>();
+                    return null;
                 }
 
                 return activity.activity;
@@ -206,7 +256,7 @@ public class TraktFriendsFragment extends SherlockFragment implements
                 Timber.e(e, "Loading friends activity failed");
             }
 
-            return new ArrayList<>();
+            return null;
         }
     }
 
@@ -299,29 +349,4 @@ public class TraktFriendsFragment extends SherlockFragment implements
             ImageView avatar;
         }
     }
-
-    public void setProgressLock(boolean isLocked) {
-        mContentContainer.setVisibility(isLocked ? View.GONE : View.VISIBLE);
-        mProgressBar.setVisibility(isLocked ? View.VISIBLE : View.GONE);
-    }
-
-    private LoaderManager.LoaderCallbacks<List<ActivityItem>> mActivityLoaderCallbacks =
-            new LoaderManager.LoaderCallbacks<List<ActivityItem>>() {
-                @Override
-                public Loader<List<ActivityItem>> onCreateLoader(int id, Bundle args) {
-                    return new TraktFriendsLoader(getActivity());
-                }
-
-                @Override
-                public void onLoadFinished(Loader<List<ActivityItem>> loader,
-                        List<ActivityItem> data) {
-                    mAdapter.setData(data);
-                    setProgressLock(false);
-                }
-
-                @Override
-                public void onLoaderReset(Loader<List<ActivityItem>> loader) {
-                    // do nothing
-                }
-            };
 }
