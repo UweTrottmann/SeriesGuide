@@ -22,6 +22,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
@@ -192,7 +194,7 @@ public class TraktFriendsFragment extends SherlockFragment implements
         private final LayoutInflater mInflater;
 
         public TraktFriendsAdapter(Context context) {
-            super(context, R.layout.friend);
+            super(context, 0);
             mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
@@ -205,7 +207,7 @@ public class TraktFriendsFragment extends SherlockFragment implements
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            // A ViewHolder keeps references to children views to avoid
+            // A ViewHolder keeps references to child views to avoid
             // unnecessary calls to findViewById() on each row.
             ViewHolder holder;
 
@@ -213,11 +215,13 @@ public class TraktFriendsFragment extends SherlockFragment implements
                 convertView = mInflater.inflate(R.layout.friend, parent, false);
 
                 holder = new ViewHolder();
-                holder.name = (TextView) convertView.findViewById(R.id.name);
-                holder.show = (TextView) convertView.findViewById(R.id.show);
-                holder.episode = (TextView) convertView.findViewById(R.id.episode);
-                holder.timestamp = (TextView) convertView.findViewById(R.id.timestamp);
-                holder.avatar = (ImageView) convertView.findViewById(R.id.avatar);
+                holder.name = (TextView) convertView.findViewById(R.id.textViewFriendUsername);
+                holder.show = (TextView) convertView.findViewById(R.id.textViewFriendShow);
+                holder.episode = (TextView) convertView.findViewById(R.id.textViewFriendEpisode);
+                holder.timestamp = (TextView) convertView.findViewById(
+                        R.id.textViewFriendTimestamp);
+                holder.poster = (ImageView) convertView.findViewById(R.id.imageViewFriendPoster);
+                holder.avatar = (ImageView) convertView.findViewById(R.id.imageViewFriendAvatar);
 
                 convertView.setTag(holder);
             } else {
@@ -226,6 +230,13 @@ public class TraktFriendsFragment extends SherlockFragment implements
 
             // Bind the data efficiently with the holder.
             ActivityItem activity = getItem(position);
+
+            // show poster
+            if (activity.show.images != null && !TextUtils.isEmpty(activity.show.images.poster)) {
+                String posterPath = activity.show.images.poster.replace(
+                        TraktSettings.POSTER_SIZE_SPEC_DEFAULT, TraktSettings.POSTER_SIZE_SPEC_138);
+                ServiceUtils.getPicasso(getContext()).load(posterPath).into(holder.poster);
+            }
 
             holder.name.setText(activity.user.username);
             ServiceUtils.getPicasso(getContext()).load(activity.user.avatar).into(holder.avatar);
@@ -261,6 +272,8 @@ public class TraktFriendsFragment extends SherlockFragment implements
             TextView episode;
 
             TextView timestamp;
+
+            ImageView poster;
 
             ImageView avatar;
         }
