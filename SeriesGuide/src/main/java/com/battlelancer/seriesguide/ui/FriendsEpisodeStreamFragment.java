@@ -44,7 +44,7 @@ import java.util.List;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
-public class TraktFriendsFragment extends StreamFragment {
+public class FriendsEpisodeStreamFragment extends StreamFragment {
 
     private TraktFriendsAdapter mAdapter;
 

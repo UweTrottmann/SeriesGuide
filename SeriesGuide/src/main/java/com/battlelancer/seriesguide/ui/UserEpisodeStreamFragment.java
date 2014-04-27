@@ -48,7 +48,7 @@ import timber.log.Timber;
 /**
  * Displays the latest trakt activity of the user.
  */
-public class UserActivityFragment extends StreamFragment {
+public class UserEpisodeStreamFragment extends StreamFragment {
 
     private UserActivityAdapter mAdapter;
 

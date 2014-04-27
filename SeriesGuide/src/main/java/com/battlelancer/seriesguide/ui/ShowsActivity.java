@@ -247,8 +247,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
         // trakt tabs only visible if connected
         if (TraktCredentials.get(this).hasCredentials()) {
-            mTabsAdapter.addTab(R.string.friends, TraktFriendsFragment.class, null);
-            mTabsAdapter.addTab(R.string.user_stream, UserActivityFragment.class, null);
+            mTabsAdapter.addTab(R.string.friends, FriendsEpisodeStreamFragment.class, null);
+            mTabsAdapter.addTab(R.string.user_stream, UserEpisodeStreamFragment.class, null);
         }
 
         // display new tabs
@@ -583,7 +583,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     }
 
     /**
-     * Called if the user adds a show from {@link com.battlelancer.seriesguide.ui.TraktFriendsFragment}.
+     * Called if the user adds a show from {@link FriendsEpisodeStreamFragment}.
      */
     @Override
     public void onAddShow(SearchResult show) {
