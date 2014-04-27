@@ -141,7 +141,9 @@ public class FriendsMovieStreamFragment extends StreamFragment {
                         ActivityAction.Watching + ","
                                 + ActivityAction.Checkin + ","
                                 + ActivityAction.Scrobble,
-                        (System.currentTimeMillis() - DateUtils.WEEK_IN_MILLIS) / 1000, null, null
+                        (System.currentTimeMillis() - 4 * DateUtils.WEEK_IN_MILLIS) / 1000,
+                        null,
+                        null
                 );
 
                 if (activity == null || activity.activity == null) {
