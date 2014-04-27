@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.streams;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -37,6 +37,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.ActivityItem;

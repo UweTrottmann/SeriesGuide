@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.streams;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -32,6 +32,7 @@ import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
