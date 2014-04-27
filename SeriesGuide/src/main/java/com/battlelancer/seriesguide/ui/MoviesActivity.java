@@ -34,6 +34,10 @@ import de.greenrobot.event.EventBus;
  */
 public class MoviesActivity extends BaseTopActivity {
 
+    public static final int WATCHLIST_LOADER_ID = 100;
+    public static final int SEARCH_LOADER_ID = 101;
+    public static final int COLLECTION_LOADER_ID = 102;
+
     private static final String TAG = "Movies";
 
     @Override
