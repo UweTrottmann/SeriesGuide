@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.streams.FriendsMovieStreamFragment;
+import com.battlelancer.seriesguide.ui.streams.UserMovieStreamFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import de.greenrobot.event.EventBus;
 
@@ -38,6 +39,7 @@ public class MoviesActivity extends BaseTopActivity {
     public static final int SEARCH_LOADER_ID = 101;
     public static final int COLLECTION_LOADER_ID = 102;
     public static final int FRIENDS_LOADER_ID = 103;
+    public static final int USER_LOADER_ID = 104;
 
     private static final String TAG = "Movies";
 
@@ -78,6 +80,7 @@ public class MoviesActivity extends BaseTopActivity {
         // trakt tabs only visible if connected
         if (TraktCredentials.get(this).hasCredentials()) {
             tabsAdapter.addTab(R.string.friends, FriendsMovieStreamFragment.class, null);
+            tabsAdapter.addTab(R.string.user_stream, UserMovieStreamFragment.class, null);
         }
 
         tabsAdapter.notifyTabsChanged();

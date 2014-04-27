@@ -27,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.MoviesActivityAdapter;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.MovieDetailsActivity;
 import com.battlelancer.seriesguide.ui.MovieDetailsFragment;
 import com.battlelancer.seriesguide.ui.MoviesActivity;
@@ -44,9 +45,9 @@ import retrofit.RetrofitError;
 import timber.log.Timber;
 
 /**
- * Displays a stream of movies the user's trakt friends have recently watched.
+ * Displays a stream of movies the user has recently watched on trakt.
  */
-public class FriendsMovieStreamFragment extends StreamFragment {
+public class UserMovieStreamFragment extends StreamFragment {
 
     private MoviesActivityAdapter mAdapter;
 
@@ -54,12 +55,12 @@ public class FriendsMovieStreamFragment extends StreamFragment {
     public void onStart() {
         super.onStart();
 
-        Utils.trackView(getActivity(), "Movies Friends");
+        Utils.trackView(getActivity(), "Movies You");
     }
 
     @Override
     protected int getEmptyMessageResId() {
-        return R.string.friends_empty;
+        return R.string.user_movie_stream_empty;
     }
 
     @Override
@@ -72,13 +73,13 @@ public class FriendsMovieStreamFragment extends StreamFragment {
 
     @Override
     protected void initializeStream() {
-        getLoaderManager().initLoader(MoviesActivity.FRIENDS_LOADER_ID, null,
+        getLoaderManager().initLoader(MoviesActivity.USER_LOADER_ID, null,
                 mActivityLoaderCallbacks);
     }
 
     @Override
     protected void refreshStream() {
-        getLoaderManager().restartLoader(MoviesActivity.FRIENDS_LOADER_ID, null,
+        getLoaderManager().restartLoader(MoviesActivity.USER_LOADER_ID, null,
                 mActivityLoaderCallbacks);
     }
 
@@ -99,7 +100,7 @@ public class FriendsMovieStreamFragment extends StreamFragment {
             new LoaderManager.LoaderCallbacks<List<ActivityItem>>() {
                 @Override
                 public Loader<List<ActivityItem>> onCreateLoader(int id, Bundle args) {
-                    return new FriendsMoviesActivityLoader(getActivity());
+                    return new UserMoviesActivityLoader(getActivity());
                 }
 
                 @Override
@@ -115,10 +116,10 @@ public class FriendsMovieStreamFragment extends StreamFragment {
                 }
             };
 
-    private static class FriendsMoviesActivityLoader
+    private static class UserMoviesActivityLoader
             extends GenericSimpleLoader<List<ActivityItem>> {
 
-        public FriendsMoviesActivityLoader(Context context) {
+        public UserMoviesActivityLoader(Context context) {
             super(context);
         }
 
@@ -131,23 +132,26 @@ public class FriendsMovieStreamFragment extends StreamFragment {
 
             try {
                 final ActivityService activityService = manager.activityService();
-                Activity activity = activityService.friends(ActivityType.Movie.toString(),
+                // get movies from the last 2 months
+                Activity activity = activityService.user(
+                        TraktCredentials.get(getContext()).getUsername(),
+                        ActivityType.Movie.toString(),
                         ActivityAction.Watching + ","
                                 + ActivityAction.Checkin + ","
                                 + ActivityAction.Scrobble,
-                        (System.currentTimeMillis() - 4 * DateUtils.WEEK_IN_MILLIS) / 1000,
+                        (System.currentTimeMillis() - 8 * DateUtils.WEEK_IN_MILLIS) / 1000,
                         null,
                         null
                 );
 
                 if (activity == null || activity.activity == null) {
-                    Timber.e("Loading friends movie activity failed, was null");
+                    Timber.e("Loading user movie activity failed, was null");
                     return null;
                 }
 
                 return activity.activity;
             } catch (RetrofitError e) {
-                Timber.e(e, "Loading friends movie activity failed");
+                Timber.e(e, "Loading user movie activity failed");
             }
 
             return null;
