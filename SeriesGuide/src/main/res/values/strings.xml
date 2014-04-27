@@ -221,6 +221,9 @@
     <string name="recent">Recent</string>
     <string name="friends">Friends</string>
     <string name="friends_empty">No friend activity on trakt.</string>
+    <string name="user_stream">You</string>
+    <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
+    <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
     <string name="noupcoming">There are no upcoming episodes.</string>
     <string name="norecent">There are no recent episodes.</string>
     <string name="only_favorites">Only favorite shows</string>

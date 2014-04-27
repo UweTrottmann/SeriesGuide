@@ -40,8 +40,6 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
  */
 public class MoviesWatchListFragment extends MoviesBaseFragment {
 
-    protected static final int LOADER_ID = 300;
-
     private static final String TAG = "Movie Watchlist";
 
     private static final int CONTEXT_WATCHLIST_REMOVE_ID = 0;
@@ -99,7 +97,7 @@ public class MoviesWatchListFragment extends MoviesBaseFragment {
 
     @Override
     protected int getLoaderId() {
-        return 0;
+        return MoviesActivity.WATCHLIST_LOADER_ID;
     }
 
     private void fireTrackerEvent(String label) {

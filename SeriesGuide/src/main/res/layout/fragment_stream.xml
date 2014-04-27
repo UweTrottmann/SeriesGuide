@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayoutFriends"
+        android:id="@+id/swipeRefreshLayoutStream"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -13,12 +13,11 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <TextView
-        android:id="@+id/emptyViewFriends"
+        android:id="@+id/emptyViewStream"
         android:layout_width="@dimen/empty_view_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="@string/friends_empty"
         android:textAppearance="@style/TextAppearance.Light" />
 
     <TextView

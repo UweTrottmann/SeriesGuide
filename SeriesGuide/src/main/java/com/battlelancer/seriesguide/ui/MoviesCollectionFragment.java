@@ -39,8 +39,6 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
  */
 public class MoviesCollectionFragment extends MoviesBaseFragment {
 
-    protected static final int LOADER_ID = 301;
-
     private static final String TAG = "Movie Collection";
 
     private static final int CONTEXT_COLLECTION_REMOVE_ID = 0;
@@ -100,7 +98,7 @@ public class MoviesCollectionFragment extends MoviesBaseFragment {
 
     @Override
     protected int getLoaderId() {
-        return LOADER_ID;
+        return MoviesActivity.COLLECTION_LOADER_ID;
     }
 
     private void fireTrackerEvent(String label) {

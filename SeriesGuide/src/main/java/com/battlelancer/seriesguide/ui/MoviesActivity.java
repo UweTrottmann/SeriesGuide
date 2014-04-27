@@ -16,16 +16,17 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
 import com.astuetz.PagerSlidingTabStrip;
-import com.battlelancer.seriesguide.adapters.TabStripAdapter;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.R;
-
-import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-
+import com.battlelancer.seriesguide.adapters.TabStripAdapter;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.ui.streams.FriendsMovieStreamFragment;
+import com.battlelancer.seriesguide.ui.streams.UserMovieStreamFragment;
+import com.battlelancer.seriesguide.util.Utils;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -33,6 +34,12 @@ import de.greenrobot.event.EventBus;
  * GetGlue.
  */
 public class MoviesActivity extends BaseTopActivity {
+
+    public static final int WATCHLIST_LOADER_ID = 100;
+    public static final int SEARCH_LOADER_ID = 101;
+    public static final int COLLECTION_LOADER_ID = 102;
+    public static final int FRIENDS_LOADER_ID = 103;
+    public static final int USER_LOADER_ID = 104;
 
     private static final String TAG = "Movies";
 
@@ -69,6 +76,13 @@ public class MoviesActivity extends BaseTopActivity {
         tabsAdapter.addTab(R.string.search, MoviesSearchFragment.class, null);
         // collection
         tabsAdapter.addTab(R.string.movies_collection, MoviesCollectionFragment.class, null);
+
+        // trakt tabs only visible if connected
+        if (TraktCredentials.get(this).hasCredentials()) {
+            tabsAdapter.addTab(R.string.friends, FriendsMovieStreamFragment.class, null);
+            tabsAdapter.addTab(R.string.user_stream, UserMovieStreamFragment.class, null);
+        }
+
         tabsAdapter.notifyTabsChanged();
     }
 
