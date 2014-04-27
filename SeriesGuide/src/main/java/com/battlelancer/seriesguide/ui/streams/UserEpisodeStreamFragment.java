@@ -20,18 +20,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
-import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.adapters.EpisodesActivityAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
@@ -51,7 +44,7 @@ import timber.log.Timber;
  */
 public class UserEpisodeStreamFragment extends StreamFragment {
 
-    private UserActivityAdapter mAdapter;
+    private EpisodesActivityAdapter mAdapter;
 
     @Override
     public void onStart() {
@@ -67,7 +60,7 @@ public class UserEpisodeStreamFragment extends StreamFragment {
     @Override
     protected ListAdapter getListAdapter() {
         if (mAdapter == null) {
-            mAdapter = new UserActivityAdapter(getActivity());
+            mAdapter = new EpisodesActivityAdapter(getActivity());
         }
         return mAdapter;
     }
@@ -87,7 +80,7 @@ public class UserEpisodeStreamFragment extends StreamFragment {
             new LoaderManager.LoaderCallbacks<List<ActivityItem>>() {
                 @Override
                 public Loader<List<ActivityItem>> onCreateLoader(int id, Bundle args) {
-                    return new UserActivityLoader(getActivity());
+                    return new UserEpisodeActivityLoader(getActivity());
                 }
 
                 @Override
@@ -103,9 +96,9 @@ public class UserEpisodeStreamFragment extends StreamFragment {
                 }
             };
 
-    private static class UserActivityLoader extends GenericSimpleLoader<List<ActivityItem>> {
+    private static class UserEpisodeActivityLoader extends GenericSimpleLoader<List<ActivityItem>> {
 
-        public UserActivityLoader(Context context) {
+        public UserEpisodeActivityLoader(Context context) {
             super(context);
         }
 
@@ -128,106 +121,16 @@ public class UserEpisodeStreamFragment extends StreamFragment {
                 );
 
                 if (activity == null || activity.activity == null) {
-                    Timber.e("Loading user activity failed, was null");
+                    Timber.e("Loading user episode activity failed, was null");
                     return null;
                 }
 
                 return activity.activity;
             } catch (RetrofitError e) {
-                Timber.e(e, "Loading user activity failed");
+                Timber.e(e, "Loading user episode activity failed");
             }
 
             return null;
-        }
-    }
-
-    private static class UserActivityAdapter extends ArrayAdapter<ActivityItem> {
-
-        private final LayoutInflater mInflater;
-
-        public UserActivityAdapter(Context context) {
-            super(context, 0);
-            mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-        public void setData(List<ActivityItem> data) {
-            clear();
-            if (data != null) {
-                addAll(data);
-            }
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            // A ViewHolder keeps references to child views to avoid
-            // unnecessary calls to findViewById() on each row.
-            ViewHolder holder;
-
-            if (convertView == null) {
-                convertView = mInflater.inflate(R.layout.friend, parent, false);
-
-                holder = new ViewHolder();
-                holder.name = (TextView) convertView.findViewById(R.id.textViewFriendUsername);
-                holder.show = (TextView) convertView.findViewById(R.id.textViewFriendShow);
-                holder.episode = (TextView) convertView.findViewById(R.id.textViewFriendEpisode);
-                holder.timestamp = (TextView) convertView.findViewById(
-                        R.id.textViewFriendTimestamp);
-                holder.poster = (ImageView) convertView.findViewById(R.id.imageViewFriendPoster);
-                holder.avatar = (ImageView) convertView.findViewById(R.id.imageViewFriendAvatar);
-
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-
-            // Bind the data efficiently with the holder.
-            ActivityItem activity = getItem(position);
-
-            // show poster
-            if (activity.show.images != null && !TextUtils.isEmpty(activity.show.images.poster)) {
-                String posterPath = activity.show.images.poster.replace(
-                        TraktSettings.POSTER_SIZE_SPEC_DEFAULT, TraktSettings.POSTER_SIZE_SPEC_138);
-                ServiceUtils.getPicasso(getContext()).load(posterPath).into(holder.poster);
-            }
-
-            holder.name.setText(activity.user.username);
-            ServiceUtils.getPicasso(getContext()).load(activity.user.avatar).into(holder.avatar);
-
-            holder.timestamp.setTextAppearance(getContext(), R.style.TextAppearance_Small_Dim);
-
-            CharSequence timestamp;
-            // friend is watching something right now?
-            if (activity.action == ActivityAction.Watching) {
-                timestamp = getContext().getString(R.string.now);
-                holder.timestamp.setTextAppearance(getContext(),
-                        R.style.TextAppearance_Small_Highlight_Red);
-            } else {
-                timestamp = DateUtils.getRelativeTimeSpanString(
-                        activity.timestamp.getTime(), System.currentTimeMillis(),
-                        DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL);
-            }
-
-            holder.show.setText(activity.show.title);
-            holder.episode.setText(Utils.getNextEpisodeString(getContext(), activity.episode.season,
-                    activity.episode.number, activity.episode.title));
-            holder.timestamp.setText(timestamp);
-
-            return convertView;
-        }
-
-        static class ViewHolder {
-
-            TextView name;
-
-            TextView show;
-
-            TextView episode;
-
-            TextView timestamp;
-
-            ImageView poster;
-
-            ImageView avatar;
         }
     }
 }
