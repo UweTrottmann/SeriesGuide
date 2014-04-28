@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item name="buttonbar_services" type="layout">@layout/buttonbar_services_wide</item>
+    <item name="buttons_services" type="layout">@layout/buttons_services_wide</item>
     <item name="episodes" type="layout">@layout/episodes_multipane</item>
     <item name="search" type="layout">@layout/activity_singlepane_drawer_wide</item>
     <item name="fragment_show" type="layout">@layout/fragment_show_narrow</item>

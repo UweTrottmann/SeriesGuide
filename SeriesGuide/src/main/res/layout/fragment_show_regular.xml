@@ -80,10 +80,6 @@
 
         <include layout="@layout/fragment_show_meta" />
 
-        <include
-            android:id="@+id/buttonbar_ref"
-            layout="@layout/buttonbar_services_stacked"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <include layout="@layout/buttons_more" />
     </LinearLayout>
 </ScrollView>

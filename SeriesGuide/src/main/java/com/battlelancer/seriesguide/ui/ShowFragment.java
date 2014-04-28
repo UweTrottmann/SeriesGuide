@@ -252,14 +252,6 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
             lastEdit.setText(R.string.unknown);
         }
 
-        // Google Play button
-        View playButton = getView().findViewById(R.id.buttonGooglePlay);
-        ServiceUtils.setUpGooglePlayButton(mShow.getTitle(), playButton, TAG);
-
-        // YouTube button
-        View youtubeButton = getView().findViewById(R.id.buttonYouTube);
-        ServiceUtils.setUpYouTubeButton(mShow.getTitle(), youtubeButton, TAG);
-
         // IMDb button
         View imdbButton = getView().findViewById(R.id.buttonShowInfoIMDB);
         final String imdbId = mShow.getImdbId();

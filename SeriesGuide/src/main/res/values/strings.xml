@@ -221,6 +221,9 @@
     <string name="recent">Recent</string>
     <string name="friends">Friends</string>
     <string name="friends_empty">No friend activity on trakt.</string>
+    <string name="user_stream">You</string>
+    <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
+    <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
     <string name="noupcoming">There are no upcoming episodes.</string>
     <string name="norecent">There are no recent episodes.</string>
     <string name="only_favorites">Only favorite shows</string>
@@ -541,4 +544,9 @@
     <string name="extension_amazon">Amazon search</string>
     <string name="description_extension_amazon">Search your local Amazon site</string>
     <string name="pref_amazon_domain">Amazon site</string>
+    <string name="extension_google_play">Google Play search</string>
+    <string name="description_extension_google_play">Search the Google Play Store</string>
+    <string name="extension_youtube">YouTube search</string>
+    <string name="description_extension_youtube">Search YouTube for videos</string>
+    <string name="description_extension_web_search">Search for websites and images</string>
 </resources>

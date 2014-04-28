@@ -156,6 +156,9 @@
   <string name="recent">Nesen</string>
   <string name="friends">Draugi</string>
   <string name="friends_empty">Nekādā draugu darbība traktā.</string>
+  <string name="user_stream">You</string>
+  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
+  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
   <string name="noupcoming">Nav gaidāmu epizožu.</string>
   <string name="norecent">Nav nesenu epizožu.</string>
   <string name="only_favorites">Tikai izlases seriāli</string>
@@ -372,6 +375,11 @@
   <string name="extension_amazon">Amazon search</string>
   <string name="description_extension_amazon">Search your local Amazon site</string>
   <string name="pref_amazon_domain">Amazon site</string>
+  <string name="extension_google_play">Google Play search</string>
+  <string name="description_extension_google_play">Search the Google Play Store</string>
+  <string name="extension_youtube">YouTube search</string>
+  <string name="description_extension_youtube">Search YouTube for videos</string>
+  <string name="description_extension_web_search">Search for websites and images</string>
   <string-array name="sesorting">
     <item>Latest first</item>
     <item>Oldest first</item>

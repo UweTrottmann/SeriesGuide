@@ -146,7 +146,7 @@ public class ExtensionManager {
      */
     public void setDefaultEnabledExtensions() {
         List<ComponentName> defaultExtensions = new ArrayList<>();
-        defaultExtensions.add(new ComponentName(mContext, AmazonExtension.class));
+        defaultExtensions.add(new ComponentName(mContext, YouTubeExtension.class));
         setEnabledExtensions(defaultExtensions);
     }
 

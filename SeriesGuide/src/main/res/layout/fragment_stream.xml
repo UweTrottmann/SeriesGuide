@@ -3,28 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/contentContainer"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayoutStream"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <include layout="@layout/grid_shows" />
 
-        <TextView
-            android:id="@+id/emptyViewFriends"
-            android:layout_width="@dimen/empty_view_width"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/friends_empty"
-            android:textAppearance="@style/TextAppearance.Light" />
-    </FrameLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-    <ProgressBar
-        android:id="@+id/progressIndicator"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/emptyViewStream"
+        android:layout_width="@dimen/empty_view_width"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.Light" />
 
     <TextView
         android:id="@+id/poweredby"

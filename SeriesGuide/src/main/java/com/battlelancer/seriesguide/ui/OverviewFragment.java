@@ -139,7 +139,7 @@ public class OverviewFragment extends SherlockFragment implements
         });
         mContainerShow = v.findViewById(R.id.containerOverviewShow);
         mSpacerShow = v.findViewById(R.id.spacerOverviewShow);
-        mContainerActions = (LinearLayout) v.findViewById(R.id.containerOverviewActions);
+        mContainerActions = (LinearLayout) v.findViewById(R.id.containerEpisodeActions);
 
         return v;
     }
@@ -721,14 +721,6 @@ public class OverviewFragment extends SherlockFragment implements
             ((TextView) getView().findViewById(R.id.textViewRatingsTvdbValue)).setText(ratingText);
         }
 
-        // Google Play button
-        View playButton = getView().findViewById(R.id.buttonGooglePlay);
-        ServiceUtils.setUpGooglePlayButton(mShowTitle + " " + episodeTitle, playButton, TAG);
-
-        // YouTube button
-        View youtubeButton = getView().findViewById(R.id.buttonYouTube);
-        ServiceUtils.setUpYouTubeButton(mShowTitle + " " + episodeTitle, youtubeButton, TAG);
-
         // IMDb button
         String imdbId = episode.getString(EpisodeQuery.IMDBID);
         if (TextUtils.isEmpty(imdbId) && mShowCursor != null) {
@@ -749,8 +741,7 @@ public class OverviewFragment extends SherlockFragment implements
                 .findViewById(R.id.buttonTrakt), TAG);
 
         // Web search button
-        View webSearch = getView().findViewById(R.id.buttonWebSearch);
-        ServiceUtils.setUpWebSearchButton(mShowTitle + " " + episodeTitle, webSearch, TAG);
+        getView().findViewById(R.id.buttonWebSearch).setVisibility(View.GONE);
 
         // trakt shouts button
         getView().findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {

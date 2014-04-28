@@ -8,6 +8,12 @@ All dates are in the European Central timezone.
 Version 14 *(in development)*
 -----------------------------
 
+#### 14-beta2 *(2014-04-28)*
+
+* FEATURE trakt activity streams: recently watched shows for your friends and yourself, same for movies. Streams support pull to refresh.
+* TWEAK Added extensions for Google Play, YouTube and Web search. These replace the current watch links below episodes.
+* NOTICE Latest translations from crowdin.
+
 #### 14-beta1 *(2014-04-24)*
 
 * TWEAK Fullscreen show poster view loads image with highest resolution.

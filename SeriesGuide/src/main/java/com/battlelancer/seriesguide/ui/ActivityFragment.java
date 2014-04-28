@@ -58,7 +58,7 @@ import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 
 public class ActivityFragment extends SherlockFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener,
-        OnSharedPreferenceChangeListener, ActivitySlowAdapter.CheckInListener {
+        OnSharedPreferenceChangeListener {
 
     private static final String TAG = "Activity";
 
@@ -120,7 +120,7 @@ public class ActivityFragment extends SherlockFragment implements
         super.onActivityCreated(savedInstanceState);
 
         // setup adapter
-        mAdapter = new ActivitySlowAdapter(getActivity(), null, 0, this);
+        mAdapter = new ActivitySlowAdapter(getActivity(), null, 0);
         mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteActivity(getActivity()));
 
         // setup grid view
@@ -215,7 +215,7 @@ public class ActivityFragment extends SherlockFragment implements
                 return true;
             }
             case CONTEXT_CHECKIN_ID: {
-                onCheckinEpisode((int) info.id);
+                checkInEpisode((int) info.id);
                 return true;
             }
         }
@@ -276,8 +276,7 @@ public class ActivityFragment extends SherlockFragment implements
         }
     }
 
-    @Override
-    public void onCheckinEpisode(int episodeTvdbId) {
+    public void checkInEpisode(int episodeTvdbId) {
         CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(), episodeTvdbId);
         f.show(getFragmentManager(), "checkin-dialog");
     }
@@ -366,7 +365,9 @@ public class ActivityFragment extends SherlockFragment implements
     private Runnable mDataRefreshRunnable = new Runnable() {
         @Override
         public void run() {
-            getLoaderManager().restartLoader(getLoaderId(), null, ActivityFragment.this);
+            if (isAdded()) {
+                getLoaderManager().restartLoader(getLoaderId(), null, ActivityFragment.this);
+            }
         }
     };
 
