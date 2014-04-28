@@ -156,6 +156,9 @@
   <string name="recent">최근방영됨</string>
   <string name="friends">친구</string>
   <string name="friends_empty">trakt 친구의 활동이 없습니다.</string>
+  <string name="user_stream">You</string>
+  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
+  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
   <string name="noupcoming">방영예정인 에피소드가 없습니다.</string>
   <string name="norecent">최근 방영된 에피소드가 없습니다.</string>
   <string name="only_favorites">즐겨찾기한 쇼만 보이기</string>
@@ -371,6 +374,11 @@
   <string name="extension_amazon">Amazon search</string>
   <string name="description_extension_amazon">Search your local Amazon site</string>
   <string name="pref_amazon_domain">Amazon site</string>
+  <string name="extension_google_play">Google Play search</string>
+  <string name="description_extension_google_play">Search the Google Play Store</string>
+  <string name="extension_youtube">YouTube search</string>
+  <string name="description_extension_youtube">Search YouTube for videos</string>
+  <string name="description_extension_web_search">Search for websites and images</string>
   <string-array name="sesorting">
     <item>최근 방영 순</item>
     <item>예전 방영 순</item>

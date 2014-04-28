@@ -156,6 +156,9 @@
   <string name="recent">Recente</string>
   <string name="friends">Vrienden</string>
   <string name="friends_empty">Geen activiteit van vrienden op trakt.</string>
+  <string name="user_stream">You</string>
+  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
+  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
   <string name="noupcoming">Er zijn geen toekomstige afleveringen.</string>
   <string name="norecent">Er zijn geen recente afleveringen.</string>
   <string name="only_favorites">Alleen favoriete series</string>
@@ -371,6 +374,11 @@
   <string name="extension_amazon">Zoeken op Amazon</string>
   <string name="description_extension_amazon">Zoek uw lokale Amazon site</string>
   <string name="pref_amazon_domain">Amazon site</string>
+  <string name="extension_google_play">Google Play search</string>
+  <string name="description_extension_google_play">Search the Google Play Store</string>
+  <string name="extension_youtube">YouTube search</string>
+  <string name="description_extension_youtube">Search YouTube for videos</string>
+  <string name="description_extension_web_search">Search for websites and images</string>
   <string-array name="sesorting">
     <item>Nieuwste eerst</item>
     <item>Oudste eerst</item>

@@ -156,6 +156,9 @@
   <string name="recent">Недавно</string>
   <string name="friends">Друзі</string>
   <string name="friends_empty">Немає активності друзів на trakt.</string>
+  <string name="user_stream">You</string>
+  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
+  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
   <string name="noupcoming">Немає наступних серій.</string>
   <string name="norecent">Немає недавніх серій.</string>
   <string name="only_favorites">Лише улюблені серіали</string>
@@ -371,6 +374,11 @@
   <string name="extension_amazon">Пошук Amazon</string>
   <string name="description_extension_amazon">Пошук в локальній версії сайту Amazon</string>
   <string name="pref_amazon_domain">Сайт Amazon</string>
+  <string name="extension_google_play">Google Play search</string>
+  <string name="description_extension_google_play">Search the Google Play Store</string>
+  <string name="extension_youtube">YouTube search</string>
+  <string name="description_extension_youtube">Search YouTube for videos</string>
+  <string name="description_extension_web_search">Search for websites and images</string>
   <string-array name="sesorting">
     <item>Останні спочатку</item>
     <item>Давніші спочатку</item>
