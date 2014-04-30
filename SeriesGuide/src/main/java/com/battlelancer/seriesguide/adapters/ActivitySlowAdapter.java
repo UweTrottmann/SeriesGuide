@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.adapters;
 
 import com.battlelancer.seriesguide.WatchedBox;
+import com.battlelancer.seriesguide.adapters.model.HeaderData;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
@@ -261,30 +262,6 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         }
 
         return headers;
-    }
-
-    private class HeaderData {
-
-        private int mCount;
-
-        private int mRefPosition;
-
-        public HeaderData(int refPosition) {
-            mRefPosition = refPosition;
-            mCount = 0;
-        }
-
-        public int getCount() {
-            return mCount;
-        }
-
-        public int getRefPosition() {
-            return mRefPosition;
-        }
-
-        public void incrementCount() {
-            mCount++;
-        }
     }
 
     static class ViewHolder {
