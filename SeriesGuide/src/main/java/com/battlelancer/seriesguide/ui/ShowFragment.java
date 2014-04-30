@@ -286,7 +286,7 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
         final ImageView posterView = (ImageView) posterContainer
                 .findViewById(R.id.imageViewShowPoster);
         final String imagePath = mShow.getPoster();
-        ImageProvider.getInstance(getActivity()).loadImage(posterView, imagePath, false);
+        ImageProvider.getInstance(getActivity()).loadPoster(posterView, imagePath);
         posterContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

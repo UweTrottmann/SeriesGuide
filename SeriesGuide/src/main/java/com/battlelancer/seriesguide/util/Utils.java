@@ -261,7 +261,7 @@ public class Utils {
         } else {
             background.setAlpha(30);
         }
-        ImageProvider.getInstance(context).loadImage(background, posterPath, false);
+        ImageProvider.getInstance(context).loadPoster(background, posterPath);
     }
 
     /**
