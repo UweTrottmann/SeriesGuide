@@ -23,7 +23,7 @@ import android.support.v4.content.Loader;
 import android.text.format.DateUtils;
 import android.widget.ListAdapter;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.EpisodesActivityAdapter;
+import com.battlelancer.seriesguide.adapters.EpisodeStreamAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -44,7 +44,7 @@ import timber.log.Timber;
  */
 public class UserEpisodeStreamFragment extends StreamFragment {
 
-    private EpisodesActivityAdapter mAdapter;
+    private EpisodeStreamAdapter mAdapter;
 
     @Override
     public void onStart() {
@@ -60,7 +60,7 @@ public class UserEpisodeStreamFragment extends StreamFragment {
     @Override
     protected ListAdapter getListAdapter() {
         if (mAdapter == null) {
-            mAdapter = new EpisodesActivityAdapter(getActivity());
+            mAdapter = new EpisodeStreamAdapter(getActivity());
         }
         return mAdapter;
     }

@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.adapters;
 
 import com.battlelancer.seriesguide.WatchedBox;
+import com.battlelancer.seriesguide.adapters.model.HeaderData;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
@@ -208,7 +209,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
         HeaderViewHolder holder;
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(LAYOUT_HEADER, null);
+            convertView = mLayoutInflater.inflate(LAYOUT_HEADER, parent, false);
 
             holder = new HeaderViewHolder();
             holder.day = (TextView) convertView.findViewById(R.id.textViewUpcomingHeader);
@@ -229,12 +230,14 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
     @Override
     public void notifyDataSetChanged() {
+        // re-create headers before letting notifyDataSetChanged reach the AdapterView
         mHeaders = generateHeaderList();
         super.notifyDataSetChanged();
     }
 
     @Override
     public void notifyDataSetInvalidated() {
+        // remove headers before letting notifyDataSetChanged reach the AdapterView
         mHeaders = null;
         super.notifyDataSetInvalidated();
     }
@@ -259,30 +262,6 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         }
 
         return headers;
-    }
-
-    private class HeaderData {
-
-        private int mCount;
-
-        private int mRefPosition;
-
-        public HeaderData(int refPosition) {
-            mRefPosition = refPosition;
-            mCount = 0;
-        }
-
-        public int getCount() {
-            return mCount;
-        }
-
-        public int getRefPosition() {
-            return mRefPosition;
-        }
-
-        public void incrementCount() {
-            mCount++;
-        }
     }
 
     static class ViewHolder {
