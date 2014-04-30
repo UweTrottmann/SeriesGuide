@@ -8,6 +8,12 @@ All dates are in the European Central timezone.
 Version 14 *(in development)*
 -----------------------------
 
+#### 14-beta3 *(2014-04-30)*
+
+* TWEAK Friends and your trakt activity grouped by day, similar to Upcoming/Recent.
+* FIX Fullscreen images are cut-off.
+* FIX Crash when returning to Upcoming/Recent and data has changed.
+
 #### 14-beta2 *(2014-04-28)*
 
 * FEATURE trakt activity streams: recently watched shows for your friends and yourself, same for movies. Streams support pull to refresh.
