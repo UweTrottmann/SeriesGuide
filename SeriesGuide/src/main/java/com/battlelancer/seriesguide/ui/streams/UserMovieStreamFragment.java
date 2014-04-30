@@ -85,7 +85,12 @@ public class UserMovieStreamFragment extends StreamFragment {
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ActivityItem activity = (ActivityItem) mGridView.getItemAtPosition(position);
+        // do not respond if we get a header position by accident
+        if (position < 0) {
+            return;
+        }
+
+        ActivityItem activity = mAdapter.getItem(position);
         if (activity == null) {
             return;
         }
