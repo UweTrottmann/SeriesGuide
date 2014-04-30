@@ -61,8 +61,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
     private LayoutInflater mLayoutInflater;
 
     private List<HeaderData> mHeaders;
-
-    private DataSetObserverExtension mHeaderChangeDataObserver;
+    private boolean mIsShowingHeaders;
 
     private Calendar mCalendar;
 
@@ -75,21 +74,10 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
     /**
      * Whether to show episodes grouped by day with header. Disable headers for larger data sets as
-     * calculating them is expensive.
+     * calculating them is expensive. Make sure to reload the data afterwards.
      */
     public void setIsShowingHeaders(boolean isShowingHeaders) {
-        if (isShowingHeaders) {
-            if (mHeaderChangeDataObserver == null) {
-                mHeaderChangeDataObserver = new DataSetObserverExtension();
-                registerDataSetObserver(mHeaderChangeDataObserver);
-            }
-        } else {
-            if (mHeaderChangeDataObserver != null) {
-                unregisterDataSetObserver(mHeaderChangeDataObserver);
-            }
-            mHeaders = null;
-            mHeaderChangeDataObserver = null;
-        }
+        mIsShowingHeaders = isShowingHeaders;
     }
 
     @Override
@@ -239,7 +227,23 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         return convertView;
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        mHeaders = generateHeaderList();
+        super.notifyDataSetChanged();
+    }
+
+    @Override
+    public void notifyDataSetInvalidated() {
+        mHeaders = null;
+        super.notifyDataSetInvalidated();
+    }
+
     protected List<HeaderData> generateHeaderList() {
+        if (getCount() == 0 || !mIsShowingHeaders) {
+            return null;
+        }
+
         Map<Long, HeaderData> mapping = Maps.newHashMap();
         List<HeaderData> headers = Lists.newArrayList();
 
@@ -255,19 +259,6 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         }
 
         return headers;
-    }
-
-    private final class DataSetObserverExtension extends DataSetObserver {
-
-        @Override
-        public void onChanged() {
-            mHeaders = generateHeaderList();
-        }
-
-        @Override
-        public void onInvalidated() {
-            mHeaders = generateHeaderList();
-        }
     }
 
     private class HeaderData {
