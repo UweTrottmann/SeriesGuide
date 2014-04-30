@@ -26,16 +26,17 @@ import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.ActivityItem;
 import com.jakewharton.trakt.enumerations.ActivityAction;
 
 /**
- * Creates a list of movies from a list of {@link com.jakewharton.trakt.entities.ActivityItem},
+ * Creates a list of episodes from a list of {@link com.jakewharton.trakt.entities.ActivityItem},
  * displaying user name and avatar.
  */
-public class MoviesActivityAdapter extends SectionedStreamAdapter {
+public class EpisodeStreamAdapter extends SectionedStreamAdapter {
 
-    public MoviesActivityAdapter(Context context) {
+    public EpisodeStreamAdapter(Context context) {
         super(context);
     }
 
@@ -49,15 +50,13 @@ public class MoviesActivityAdapter extends SectionedStreamAdapter {
             convertView = mInflater.inflate(R.layout.friend, parent, false);
 
             holder = new ViewHolder();
+            holder.name = (TextView) convertView.findViewById(R.id.textViewFriendUsername);
+            holder.show = (TextView) convertView.findViewById(R.id.textViewFriendShow);
+            holder.episode = (TextView) convertView.findViewById(R.id.textViewFriendEpisode);
             holder.timestamp = (TextView) convertView.findViewById(
                     R.id.textViewFriendTimestamp);
-            holder.movie = (TextView) convertView.findViewById(R.id.textViewFriendShow);
             holder.poster = (ImageView) convertView.findViewById(R.id.imageViewFriendPoster);
-            holder.username = (TextView) convertView.findViewById(R.id.textViewFriendUsername);
             holder.avatar = (ImageView) convertView.findViewById(R.id.imageViewFriendAvatar);
-
-            // no need for secondary text
-            convertView.findViewById(R.id.textViewFriendEpisode).setVisibility(View.GONE);
 
             convertView.setTag(holder);
         } else {
@@ -67,14 +66,14 @@ public class MoviesActivityAdapter extends SectionedStreamAdapter {
         // Bind the data efficiently with the holder.
         ActivityItem activity = getItem(position);
 
-        // movie poster
-        if (activity.movie.images != null && !TextUtils.isEmpty(activity.movie.images.poster)) {
-            String posterPath = activity.movie.images.poster.replace(
+        // show poster
+        if (activity.show.images != null && !TextUtils.isEmpty(activity.show.images.poster)) {
+            String posterPath = activity.show.images.poster.replace(
                     TraktSettings.POSTER_SIZE_SPEC_DEFAULT, TraktSettings.POSTER_SIZE_SPEC_138);
             ServiceUtils.getPicasso(getContext()).load(posterPath).into(holder.poster);
         }
 
-        holder.username.setText(activity.user.username);
+        holder.name.setText(activity.user.username);
         ServiceUtils.getPicasso(getContext()).load(activity.user.avatar).into(holder.avatar);
 
         holder.timestamp.setTextAppearance(getContext(), R.style.TextAppearance_Small_Dim);
@@ -91,7 +90,9 @@ public class MoviesActivityAdapter extends SectionedStreamAdapter {
                     DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL);
         }
 
-        holder.movie.setText(activity.movie.title);
+        holder.show.setText(activity.show.title);
+        holder.episode.setText(Utils.getNextEpisodeString(getContext(), activity.episode.season,
+                activity.episode.number, activity.episode.title));
         holder.timestamp.setText(timestamp);
 
         return convertView;
@@ -99,13 +100,15 @@ public class MoviesActivityAdapter extends SectionedStreamAdapter {
 
     static class ViewHolder {
 
+        TextView name;
+
+        TextView show;
+
+        TextView episode;
+
         TextView timestamp;
 
-        TextView movie;
-
         ImageView poster;
-
-        TextView username;
 
         ImageView avatar;
     }

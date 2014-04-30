@@ -26,7 +26,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.MoviesActivityAdapter;
+import com.battlelancer.seriesguide.adapters.MovieStreamAdapter;
 import com.battlelancer.seriesguide.ui.MovieDetailsActivity;
 import com.battlelancer.seriesguide.ui.MovieDetailsFragment;
 import com.battlelancer.seriesguide.ui.MoviesActivity;
@@ -48,7 +48,7 @@ import timber.log.Timber;
  */
 public class FriendsMovieStreamFragment extends StreamFragment {
 
-    private MoviesActivityAdapter mAdapter;
+    private MovieStreamAdapter mAdapter;
 
     @Override
     public void onStart() {
@@ -65,7 +65,7 @@ public class FriendsMovieStreamFragment extends StreamFragment {
     @Override
     protected ListAdapter getListAdapter() {
         if (mAdapter == null) {
-            mAdapter = new MoviesActivityAdapter(getActivity());
+            mAdapter = new MovieStreamAdapter(getActivity());
         }
         return mAdapter;
     }
