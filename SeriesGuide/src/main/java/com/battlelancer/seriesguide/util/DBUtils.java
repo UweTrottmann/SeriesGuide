@@ -39,7 +39,7 @@ import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.ui.ActivityFragment.ActivityType;
-import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB.ShowStatus;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;

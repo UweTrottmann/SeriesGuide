@@ -40,7 +40,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB.ShowStatus;
 import com.google.myjson.Gson;
 import com.google.myjson.JsonParseException;
 import com.google.myjson.stream.JsonReader;

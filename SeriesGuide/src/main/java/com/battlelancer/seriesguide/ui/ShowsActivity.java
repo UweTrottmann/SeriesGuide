@@ -71,7 +71,7 @@ import com.battlelancer.seriesguide.util.LatestEpisodeUpdateService;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.List;

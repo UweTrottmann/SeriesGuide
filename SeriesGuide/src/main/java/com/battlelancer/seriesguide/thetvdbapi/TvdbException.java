@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.battlelancer.thetvdbapi;
+package com.battlelancer.seriesguide.thetvdbapi;
 
 /**
- * Thrown when a {@link com.battlelancer.thetvdbapi.TheTVDB} operation fails.
+ * Thrown when a {@link com.battlelancer.seriesguide.thetvdbapi.TheTVDB} operation fails.
  */
 public class TvdbException extends Exception {
 

@@ -38,7 +38,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB.ShowStatus;
 import com.google.myjson.Gson;
 import com.google.myjson.JsonIOException;
 import com.google.myjson.stream.JsonWriter;

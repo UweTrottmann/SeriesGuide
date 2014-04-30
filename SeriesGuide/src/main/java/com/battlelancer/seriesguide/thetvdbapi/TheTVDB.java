@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.battlelancer.thetvdbapi;
+package com.battlelancer.seriesguide.thetvdbapi;
 
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
