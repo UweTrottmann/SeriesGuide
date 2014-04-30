@@ -229,12 +229,14 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
     @Override
     public void notifyDataSetChanged() {
+        // re-create headers before letting notifyDataSetChanged reach the AdapterView
         mHeaders = generateHeaderList();
         super.notifyDataSetChanged();
     }
 
     @Override
     public void notifyDataSetInvalidated() {
+        // remove headers before letting notifyDataSetChanged reach the AdapterView
         mHeaders = null;
         super.notifyDataSetInvalidated();
     }

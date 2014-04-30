@@ -53,7 +53,6 @@ public class EpisodesActivityAdapter extends ArrayAdapter<ActivityItem> implemen
         StickyGridHeadersBaseAdapter {
 
     private final LayoutInflater mInflater;
-    private final DataSetObserverExtension mHeaderChangeDataObserver;
 
     private List<HeaderData> mHeaders;
     private Calendar mCalendar;
@@ -62,8 +61,6 @@ public class EpisodesActivityAdapter extends ArrayAdapter<ActivityItem> implemen
         super(context, 0);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mCalendar = Calendar.getInstance();
-        mHeaderChangeDataObserver = new DataSetObserverExtension();
-        registerDataSetObserver(mHeaderChangeDataObserver);
     }
 
     public void setData(List<ActivityItem> data) {
@@ -177,7 +174,25 @@ public class EpisodesActivityAdapter extends ArrayAdapter<ActivityItem> implemen
         return convertView;
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        // re-create headers before letting notifyDataSetChanged reach the AdapterView
+        mHeaders = generateHeaderList();
+        super.notifyDataSetChanged();
+    }
+
+    @Override
+    public void notifyDataSetInvalidated() {
+        // remove headers before letting notifyDataSetChanged reach the AdapterView
+        mHeaders = null;
+        super.notifyDataSetInvalidated();
+    }
+
     protected List<HeaderData> generateHeaderList() {
+        if (getCount() == 0) {
+            return null;
+        }
+
         Map<Long, HeaderData> mapping = Maps.newHashMap();
         List<HeaderData> headers = Lists.newArrayList();
 
@@ -220,19 +235,6 @@ public class EpisodesActivityAdapter extends ArrayAdapter<ActivityItem> implemen
         mCalendar.set(Calendar.MILLISECOND, 1);
 
         return mCalendar.getTimeInMillis();
-    }
-
-    private final class DataSetObserverExtension extends DataSetObserver {
-
-        @Override
-        public void onChanged() {
-            mHeaders = generateHeaderList();
-        }
-
-        @Override
-        public void onInvalidated() {
-            mHeaders = generateHeaderList();
-        }
     }
 
     static class ViewHolder {
