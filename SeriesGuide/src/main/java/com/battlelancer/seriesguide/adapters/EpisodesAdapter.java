@@ -27,7 +27,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.WatchedBox;
+import com.battlelancer.seriesguide.widgets.WatchedBox;
 import com.battlelancer.seriesguide.ui.EpisodesFragment.EpisodesQuery;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TimeTools;
