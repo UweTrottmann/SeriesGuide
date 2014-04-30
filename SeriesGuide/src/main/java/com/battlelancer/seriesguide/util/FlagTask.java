@@ -30,8 +30,8 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.Lists;
 import de.greenrobot.event.EventBus;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -99,7 +99,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
          * trakt.
          */
         protected List<Flag> createEpisodeFlags() {
-            List<Flag> episodes = Lists.newArrayList();
+            List<Flag> episodes = new ArrayList<>();
 
             // determine uri
             Uri uri = getUri();
@@ -216,7 +216,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
         @Override
         public List<Flag> getEpisodes() {
-            List<Flag> episodes = Lists.newArrayList();
+            List<Flag> episodes = new ArrayList<>();
             // flag a single episode
             episodes.add(new Flag(mSeason, mEpisode));
             return episodes;
@@ -372,7 +372,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         public List<Flag> getEpisodes() {
             if (mEpisodeFlag != 0) {
                 // watched, skipped or collected season
-                List<Flag> episodes = Lists.newArrayList();
+                List<Flag> episodes = new ArrayList<>();
                 episodes.add(new Flag(mSeason, -1));
                 return episodes;
             } else {

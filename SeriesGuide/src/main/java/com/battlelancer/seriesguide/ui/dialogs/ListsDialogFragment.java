@@ -115,9 +115,7 @@ public class ListsDialogFragment extends DialogFragment implements
                 int itemType = getArguments().getInt("itemtype");
                 SparseBooleanArray checkedLists = mAdapter.getCheckedPositions();
 
-                final ArrayList<ContentProviderOperation> batch = com.uwetrottmann.androidutils
-                        .Lists
-                        .newArrayList();
+                final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
                 for (int position = 0; position < mAdapter.getCount(); position++) {
                     final Cursor listEntry = (Cursor) mAdapter.getItem(position);

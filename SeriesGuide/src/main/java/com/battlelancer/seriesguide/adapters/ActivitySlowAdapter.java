@@ -37,7 +37,7 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
 import com.uwetrottmann.androidutils.CheatSheet;
-import com.uwetrottmann.androidutils.Lists;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -243,7 +243,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         }
 
         Map<Long, HeaderData> mapping = new HashMap<>();
-        List<HeaderData> headers = Lists.newArrayList();
+        List<HeaderData> headers = new ArrayList<>();
 
         for (int i = 0; i < getCount(); i++) {
             long headerId = getHeaderId(i);

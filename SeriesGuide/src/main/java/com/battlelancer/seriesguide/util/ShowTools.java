@@ -35,7 +35,6 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.json.gson.GsonFactory;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.seriesguide.shows.Shows;
 import com.uwetrottmann.seriesguide.shows.model.CollectionResponseShow;
 import com.uwetrottmann.seriesguide.shows.model.Show;
@@ -145,7 +144,7 @@ public class ShowTools {
 
         // DATABASE ENTRIES
         // apply batches early to save memory
-        final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
+        final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
         // remove episode search database entries
         for (String episodeTvdbId : episodeTvdbIds) {

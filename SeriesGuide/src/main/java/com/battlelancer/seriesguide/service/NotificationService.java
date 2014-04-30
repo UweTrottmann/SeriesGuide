@@ -48,7 +48,7 @@ import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.Lists;
+import java.util.ArrayList;
 import java.util.List;
 import timber.log.Timber;
 
@@ -223,7 +223,7 @@ public class NotificationService extends IntentService {
             } else {
                 // Get episodes which are within the notification threshold
                 // (user set) and not yet cleared
-                final List<Integer> notifyPositions = Lists.newArrayList();
+                final List<Integer> notifyPositions = new ArrayList<>();
                 final long latestTimeCleared = NotificationSettings.getLastCleared(this);
                 final long latestTimeToInclude = customCurrentTime
                         + DateUtils.MINUTE_IN_MILLIS * notificationThreshold;

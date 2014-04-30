@@ -27,7 +27,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.provider.SeriesGuideProvider;
-import com.uwetrottmann.androidutils.Lists;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -47,7 +46,7 @@ public class SelectionBuilder {
 
     private StringBuilder mSelection = new StringBuilder();
 
-    private ArrayList<String> mSelectionArgs = Lists.newArrayList();
+    private ArrayList<String> mSelectionArgs = new ArrayList<>();
 
     /**
      * Reset any internal state, allowing this builder to be recycled.

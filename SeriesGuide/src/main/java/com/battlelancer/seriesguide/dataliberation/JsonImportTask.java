@@ -350,7 +350,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         // Insert the lists items
-        ArrayList<ContentValues> items = com.uwetrottmann.androidutils.Lists.newArrayList();
+        ArrayList<ContentValues> items = new ArrayList<>();
         for (ListItem item : list.items) {
             int type;
             if (ListItemTypesExport.SHOW.equals(item.type)) {
