@@ -208,7 +208,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
         HeaderViewHolder holder;
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(LAYOUT_HEADER, null);
+            convertView = mLayoutInflater.inflate(LAYOUT_HEADER, parent, false);
 
             holder = new HeaderViewHolder();
             holder.day = (TextView) convertView.findViewById(R.id.textViewUpcomingHeader);

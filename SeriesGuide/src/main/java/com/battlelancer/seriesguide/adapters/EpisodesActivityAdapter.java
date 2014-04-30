@@ -159,7 +159,7 @@ public class EpisodesActivityAdapter extends ArrayAdapter<ActivityItem> implemen
 
         HeaderViewHolder holder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.grid_activity_header, null);
+            convertView = mInflater.inflate(R.layout.grid_activity_header, parent, false);
 
             holder = new HeaderViewHolder();
             holder.day = (TextView) convertView.findViewById(R.id.textViewUpcomingHeader);
