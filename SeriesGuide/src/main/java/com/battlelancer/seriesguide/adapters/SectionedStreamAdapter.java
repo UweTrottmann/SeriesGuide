@@ -28,9 +28,9 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.jakewharton.trakt.entities.ActivityItem;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
 import com.uwetrottmann.androidutils.Lists;
-import com.uwetrottmann.androidutils.Maps;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -124,7 +124,7 @@ public abstract class SectionedStreamAdapter extends ArrayAdapter<ActivityItem> 
             return null;
         }
 
-        Map<Long, HeaderData> mapping = Maps.newHashMap();
+        Map<Long, HeaderData> mapping = new HashMap<>();
         List<HeaderData> headers = Lists.newArrayList();
 
         for (int i = 0; i < getCount(); i++) {

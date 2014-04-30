@@ -16,6 +16,16 @@
 
 package com.battlelancer.seriesguide.adapters;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.support.v4.widget.CursorAdapter;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.adapters.model.HeaderData;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -28,24 +38,9 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.androidutils.Lists;
-import com.uwetrottmann.androidutils.Maps;
-import com.battlelancer.seriesguide.R;
-
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.DataSetObserver;
-import android.preference.PreferenceManager;
-import android.support.v4.widget.CursorAdapter;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -247,7 +242,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
             return null;
         }
 
-        Map<Long, HeaderData> mapping = Maps.newHashMap();
+        Map<Long, HeaderData> mapping = new HashMap<>();
         List<HeaderData> headers = Lists.newArrayList();
 
         for (int i = 0; i < getCount(); i++) {
