@@ -20,9 +20,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.Checkable;
 import android.widget.FrameLayout;
-
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.R;
 
 public class CheckableFrameLayout extends FrameLayout implements Checkable {
     private boolean mChecked;

@@ -16,6 +16,16 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
+import android.annotation.TargetApi;
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.widget.RemoteViews;
+import android.widget.RemoteViewsService;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Qualified;
@@ -26,18 +36,6 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.R;
-
-import android.annotation.TargetApi;
-import android.appwidget.AppWidgetManager;
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.widget.RemoteViews;
-import android.widget.RemoteViewsService;
-
 import java.util.Date;
 
 @TargetApi(11)

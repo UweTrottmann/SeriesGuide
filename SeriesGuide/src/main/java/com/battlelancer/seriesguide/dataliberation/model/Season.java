@@ -18,7 +18,6 @@
 package com.battlelancer.seriesguide.dataliberation.model;
 
 import com.google.myjson.annotations.SerializedName;
-
 import java.util.List;
 
 public class Season {

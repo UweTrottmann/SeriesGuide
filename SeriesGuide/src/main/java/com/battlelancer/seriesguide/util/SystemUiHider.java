@@ -17,11 +17,10 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-
 import android.app.Activity;
 import android.os.Build;
 import android.view.View;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 /**
  * A utility class that helps with showing and hiding system UI such as the

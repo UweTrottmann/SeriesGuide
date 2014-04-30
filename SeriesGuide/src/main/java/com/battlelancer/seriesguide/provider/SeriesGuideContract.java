@@ -16,12 +16,11 @@
 
 package com.battlelancer.seriesguide.provider;
 
+import android.net.Uri;
+import android.provider.BaseColumns;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.util.ParserUtils;
-
-import android.net.Uri;
-import android.provider.BaseColumns;
 
 public class SeriesGuideContract {
 

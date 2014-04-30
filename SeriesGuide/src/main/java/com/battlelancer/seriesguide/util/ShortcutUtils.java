@@ -22,10 +22,9 @@ import android.content.Intent.ShortcutIconResource;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.OverviewFragment;
-import com.battlelancer.seriesguide.R;
 
 public final class ShortcutUtils {
 

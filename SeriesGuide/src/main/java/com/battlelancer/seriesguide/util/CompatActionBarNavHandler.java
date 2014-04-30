@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.util;
 
 import android.support.v4.app.FragmentTransaction;
-
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;

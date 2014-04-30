@@ -16,6 +16,9 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.TargetApi;
+import android.os.Build;
+import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
@@ -23,11 +26,6 @@ import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.GenericCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
-
-import android.annotation.TargetApi;
-import android.os.Build;
-import android.os.Bundle;
-
 import de.greenrobot.event.EventBus;
 
 /**

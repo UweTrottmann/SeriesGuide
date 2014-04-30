@@ -17,10 +17,6 @@
 
 package com.battlelancer.seriesguide.adapters;
 
-import com.battlelancer.seriesguide.ui.SeasonsFragment.SeasonsQuery;
-import com.battlelancer.seriesguide.util.SeasonTools;
-import com.battlelancer.seriesguide.R;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
@@ -31,6 +27,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.SeasonsFragment.SeasonsQuery;
+import com.battlelancer.seriesguide.util.SeasonTools;
 
 public class SeasonsAdapter extends CursorAdapter {
 

@@ -18,14 +18,12 @@ package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
 import android.content.Intent;
-
 import com.battlelancer.seriesguide.service.TraktFlagService;
 import com.google.myjson.Gson;
 import com.squareup.tape.FileObjectQueue;
 import com.squareup.tape.FileObjectQueue.Converter;
 import com.squareup.tape.InMemoryObjectQueue;
 import com.squareup.tape.ObjectQueue;
-
 import java.io.File;
 import java.io.IOException;
 

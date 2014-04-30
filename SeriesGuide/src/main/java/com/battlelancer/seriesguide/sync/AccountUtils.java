@@ -23,7 +23,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
 import com.battlelancer.seriesguide.BuildConfig;
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import timber.log.Timber;
 

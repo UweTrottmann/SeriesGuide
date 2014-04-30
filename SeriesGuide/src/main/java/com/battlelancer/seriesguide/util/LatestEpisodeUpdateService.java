@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.util;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.database.Cursor;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import java.util.HashSet;

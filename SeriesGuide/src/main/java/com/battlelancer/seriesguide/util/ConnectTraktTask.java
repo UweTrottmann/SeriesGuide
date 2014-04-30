@@ -16,6 +16,11 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.content.Context;
+import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+import android.text.TextUtils;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.enums.TraktStatus;
@@ -25,13 +30,6 @@ import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.services.AccountService;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.battlelancer.seriesguide.R;
-
-import android.content.Context;
-import android.os.AsyncTask;
-import android.preference.PreferenceManager;
-import android.text.TextUtils;
-
 import retrofit.RetrofitError;
 
 /**
