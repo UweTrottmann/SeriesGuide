@@ -36,6 +36,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
@@ -108,6 +109,13 @@ public abstract class StreamFragment extends SherlockFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.stream_menu, menu);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content view
+        boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
+        menu.findItem(R.id.menu_action_stream_refresh).setVisible(!isDrawerOpen);
     }
 
     @Override
