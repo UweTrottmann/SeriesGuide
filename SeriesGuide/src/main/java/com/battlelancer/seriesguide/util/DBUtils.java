@@ -16,6 +16,16 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.content.ContentProviderOperation;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.OperationApplicationException;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.RemoteException;
+import android.text.format.DateUtils;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
@@ -29,19 +39,7 @@ import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.ui.ActivityFragment.ActivityType;
-import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
-import com.battlelancer.seriesguide.R;
-
-import android.content.ContentProviderOperation;
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.OperationApplicationException;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.RemoteException;
-import android.text.format.DateUtils;
-
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB.ShowStatus;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;

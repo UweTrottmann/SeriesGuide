@@ -16,13 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.migration.MigrationActivity;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.CheatSheet;
-import com.battlelancer.seriesguide.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -37,6 +30,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.migration.MigrationActivity;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.CheatSheet;
 
 /**
  * Helps the user to get familiar with the basic functions of SeriesGuide. Shown

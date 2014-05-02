@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.battlelancer.thetvdbapi;
+package com.battlelancer.seriesguide.thetvdbapi;
 
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
@@ -49,7 +49,6 @@ import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.enumerations.Extended;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.Lists;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -118,7 +117,7 @@ public class TheTVDB {
         }
 
         String language = DisplaySettings.getContentLanguage(context);
-        final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
+        final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
         // get show and episode info from TVDb
         Show show = fetchShow(showTvdbId, language, context);
@@ -141,7 +140,7 @@ public class TheTVDB {
      */
     public static void updateShow(Context context, int showTvdbId) throws TvdbException {
         String language = DisplaySettings.getContentLanguage(context);
-        final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
+        final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
         Show show = fetchShow(showTvdbId, language, context);
         batch.add(DBUtils.buildShowOp(show, context, false));
@@ -221,7 +220,7 @@ public class TheTVDB {
      * Return list of show TVDb ids hitting a x-day limit.
      */
     public static int[] deltaUpdateShows(long currentTime, Context context) {
-        final List<Integer> updatableShowIds = Lists.newArrayList();
+        final List<Integer> updatableShowIds = new ArrayList<>();
 
         // get existing show ids
         final Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI, new String[] {
@@ -474,7 +473,7 @@ public class TheTVDB {
     private static ArrayList<ContentValues> parseEpisodes(
             final ArrayList<ContentProviderOperation> batch, String url, final Show show,
             Context context) throws TvdbException {
-        final ArrayList<ContentValues> newEpisodesValues = Lists.newArrayList();
+        final ArrayList<ContentValues> newEpisodesValues = new ArrayList<>();
         final long dateLastMonthEpoch = (System.currentTimeMillis()
                 - (DateUtils.DAY_IN_MILLIS * 30)) / 1000;
 

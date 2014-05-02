@@ -17,13 +17,6 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.R;
-
 import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -40,6 +33,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Dialog to rename or remove a list. 

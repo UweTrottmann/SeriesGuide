@@ -24,7 +24,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +40,7 @@ import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.ActivityItem;
+import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
@@ -52,7 +52,7 @@ public abstract class StreamFragment extends SherlockFragment implements
 
     @InjectView(R.id.swipeRefreshLayoutStream) SwipeRefreshLayout mContentContainer;
 
-    @InjectView(android.R.id.list) GridView mGridView;
+    @InjectView(R.id.gridViewStream) StickyGridHeadersGridView mGridView;
     @InjectView(R.id.emptyViewStream) TextView mEmptyView;
 
     private ListAdapter mAdapter;
@@ -162,16 +162,23 @@ public abstract class StreamFragment extends SherlockFragment implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ActivityItem activity = (ActivityItem) mGridView.getItemAtPosition(position);
+        // do not respond if we get a header position (e.g. shortly after data was refreshed)
+        if (position < 0) {
+            return;
+        }
+
+        ActivityItem activity = (ActivityItem) mAdapter.getItem(position);
         if (activity == null) {
             return;
         }
 
         Cursor episodeQuery = getActivity().getContentResolver().query(
-                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(activity.show.tvdb_id), new String[] {
+                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(activity.show.tvdb_id),
+                new String[] {
                         SeriesGuideContract.Episodes._ID
                 }, SeriesGuideContract.Episodes.NUMBER + "=" + activity.episode.number + " AND "
-                        + SeriesGuideContract.Episodes.SEASON + "=" + activity.episode.season, null, null
+                        + SeriesGuideContract.Episodes.SEASON + "=" + activity.episode.season, null,
+                null
         );
         if (episodeQuery == null) {
             return;

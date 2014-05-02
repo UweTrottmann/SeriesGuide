@@ -16,12 +16,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.jakewharton.trakt.Trakt;
-import com.battlelancer.seriesguide.R;
-import com.squareup.picasso.Picasso;
-import com.uwetrottmann.tmdb.Tmdb;
-
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +25,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.jakewharton.trakt.Trakt;
+import com.squareup.picasso.Picasso;
+import com.uwetrottmann.tmdb.Tmdb;
 
 /**
  * Helper methods to interact with third-party services trakt and The Movie Database used within

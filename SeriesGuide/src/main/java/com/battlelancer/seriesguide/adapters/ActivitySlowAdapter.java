@@ -16,7 +16,18 @@
 
 package com.battlelancer.seriesguide.adapters;
 
-import com.battlelancer.seriesguide.WatchedBox;
+import android.content.Context;
+import android.database.Cursor;
+import android.support.v4.widget.CursorAdapter;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.widgets.WatchedBox;
+import com.battlelancer.seriesguide.adapters.model.HeaderData;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
@@ -26,25 +37,10 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
 import com.uwetrottmann.androidutils.CheatSheet;
-import com.uwetrottmann.androidutils.Lists;
-import com.uwetrottmann.androidutils.Maps;
-import com.battlelancer.seriesguide.R;
-
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.DataSetObserver;
-import android.preference.PreferenceManager;
-import android.support.v4.widget.CursorAdapter;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,8 +57,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
     private LayoutInflater mLayoutInflater;
 
     private List<HeaderData> mHeaders;
-
-    private DataSetObserverExtension mHeaderChangeDataObserver;
+    private boolean mIsShowingHeaders;
 
     private Calendar mCalendar;
 
@@ -75,21 +70,10 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
     /**
      * Whether to show episodes grouped by day with header. Disable headers for larger data sets as
-     * calculating them is expensive.
+     * calculating them is expensive. Make sure to reload the data afterwards.
      */
     public void setIsShowingHeaders(boolean isShowingHeaders) {
-        if (isShowingHeaders) {
-            if (mHeaderChangeDataObserver == null) {
-                mHeaderChangeDataObserver = new DataSetObserverExtension();
-                registerDataSetObserver(mHeaderChangeDataObserver);
-            }
-        } else {
-            if (mHeaderChangeDataObserver != null) {
-                unregisterDataSetObserver(mHeaderChangeDataObserver);
-            }
-            mHeaders = null;
-            mHeaderChangeDataObserver = null;
-        }
+        mIsShowingHeaders = isShowingHeaders;
     }
 
     @Override
@@ -220,7 +204,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
         HeaderViewHolder holder;
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(LAYOUT_HEADER, null);
+            convertView = mLayoutInflater.inflate(LAYOUT_HEADER, parent, false);
 
             holder = new HeaderViewHolder();
             holder.day = (TextView) convertView.findViewById(R.id.textViewUpcomingHeader);
@@ -239,9 +223,27 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         return convertView;
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        // re-create headers before letting notifyDataSetChanged reach the AdapterView
+        mHeaders = generateHeaderList();
+        super.notifyDataSetChanged();
+    }
+
+    @Override
+    public void notifyDataSetInvalidated() {
+        // remove headers before letting notifyDataSetChanged reach the AdapterView
+        mHeaders = null;
+        super.notifyDataSetInvalidated();
+    }
+
     protected List<HeaderData> generateHeaderList() {
-        Map<Long, HeaderData> mapping = Maps.newHashMap();
-        List<HeaderData> headers = Lists.newArrayList();
+        if (getCount() == 0 || !mIsShowingHeaders) {
+            return null;
+        }
+
+        Map<Long, HeaderData> mapping = new HashMap<>();
+        List<HeaderData> headers = new ArrayList<>();
 
         for (int i = 0; i < getCount(); i++) {
             long headerId = getHeaderId(i);
@@ -255,49 +257,6 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         }
 
         return headers;
-    }
-
-    @Override
-    public Cursor swapCursor(Cursor newCursor) {
-        mHeaders = null;
-        return super.swapCursor(newCursor);
-    }
-
-    private final class DataSetObserverExtension extends DataSetObserver {
-
-        @Override
-        public void onChanged() {
-            mHeaders = generateHeaderList();
-        }
-
-        @Override
-        public void onInvalidated() {
-            mHeaders = generateHeaderList();
-        }
-    }
-
-    private class HeaderData {
-
-        private int mCount;
-
-        private int mRefPosition;
-
-        public HeaderData(int refPosition) {
-            mRefPosition = refPosition;
-            mCount = 0;
-        }
-
-        public int getCount() {
-            return mCount;
-        }
-
-        public int getRefPosition() {
-            return mRefPosition;
-        }
-
-        public void incrementCount() {
-            mCount++;
-        }
     }
 
     static class ViewHolder {

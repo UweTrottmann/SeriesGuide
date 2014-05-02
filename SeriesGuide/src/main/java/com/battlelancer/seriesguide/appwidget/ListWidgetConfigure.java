@@ -16,9 +16,6 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.R;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.FragmentTransaction;
@@ -29,6 +26,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RemoteViews;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 
 /**
  * Hosts a {@link ListWidgetPreferenceFragment} to allow changing settings of the associated app

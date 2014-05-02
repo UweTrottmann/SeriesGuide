@@ -16,15 +16,13 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.R;
-
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
-
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

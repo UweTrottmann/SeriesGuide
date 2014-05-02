@@ -16,8 +16,6 @@
 
 package com.battlelancer.seriesguide.extensions;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;

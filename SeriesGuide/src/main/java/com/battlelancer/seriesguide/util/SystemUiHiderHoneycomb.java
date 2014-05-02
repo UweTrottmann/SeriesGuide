@@ -17,12 +17,11 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.View;
 import android.view.WindowManager;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 /**
  * An API 11+ implementation of {@link SystemUiHider}. Uses APIs available in

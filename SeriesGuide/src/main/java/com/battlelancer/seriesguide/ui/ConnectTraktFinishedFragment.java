@@ -17,17 +17,16 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.R;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
+import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Tells about successful connection, allows to continue adding shows from users

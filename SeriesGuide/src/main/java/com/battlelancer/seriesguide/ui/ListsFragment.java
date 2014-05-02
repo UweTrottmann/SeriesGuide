@@ -16,18 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.SeasonTools;
-import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.R;
-
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -46,7 +34,17 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-
+import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.SeasonTools;
+import com.battlelancer.seriesguide.util.TimeTools;
+import com.battlelancer.seriesguide.util.Utils;
 import java.util.Date;
 
 /**

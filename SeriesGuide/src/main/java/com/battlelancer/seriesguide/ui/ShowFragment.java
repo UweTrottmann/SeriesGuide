@@ -51,7 +51,7 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import de.greenrobot.event.EventBus;
@@ -286,7 +286,7 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
         final ImageView posterView = (ImageView) posterContainer
                 .findViewById(R.id.imageViewShowPoster);
         final String imagePath = mShow.getPoster();
-        ImageProvider.getInstance(getActivity()).loadImage(posterView, imagePath, false);
+        ImageProvider.getInstance(getActivity()).loadPoster(posterView, imagePath);
         posterContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

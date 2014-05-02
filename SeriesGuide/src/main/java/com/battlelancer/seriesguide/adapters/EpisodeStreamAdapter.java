@@ -19,39 +19,25 @@ package com.battlelancer.seriesguide.adapters;
 import android.content.Context;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktSettings;
-import com.battlelancer.seriesguide.ui.streams.FriendsEpisodeStreamFragment;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.ActivityItem;
 import com.jakewharton.trakt.enumerations.ActivityAction;
-import java.util.List;
 
 /**
  * Creates a list of episodes from a list of {@link com.jakewharton.trakt.entities.ActivityItem},
  * displaying user name and avatar.
  */
-public class EpisodesActivityAdapter extends ArrayAdapter<ActivityItem> {
+public class EpisodeStreamAdapter extends SectionedStreamAdapter {
 
-    private final LayoutInflater mInflater;
-
-    public EpisodesActivityAdapter(Context context) {
-        super(context, 0);
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-    public void setData(List<ActivityItem> data) {
-        clear();
-        if (data != null) {
-            addAll(data);
-        }
+    public EpisodeStreamAdapter(Context context) {
+        super(context);
     }
 
     @Override

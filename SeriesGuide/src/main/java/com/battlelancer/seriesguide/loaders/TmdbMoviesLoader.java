@@ -16,18 +16,15 @@
 
 package com.battlelancer.seriesguide.loaders;
 
+import android.content.Context;
+import android.text.TextUtils;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb.Tmdb;
 import com.uwetrottmann.tmdb.entities.Movie;
 import com.uwetrottmann.tmdb.entities.ResultsPage;
-
-import android.content.Context;
-import android.text.TextUtils;
-
 import java.util.List;
-
 import retrofit.RetrofitError;
 import timber.log.Timber;
 

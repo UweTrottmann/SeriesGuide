@@ -16,12 +16,6 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
-import com.battlelancer.seriesguide.settings.WidgetSettings;
-import com.battlelancer.seriesguide.ui.EpisodesActivity;
-import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.battlelancer.seriesguide.R;
-
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -37,6 +31,11 @@ import android.os.SystemClock;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.format.DateUtils;
 import android.widget.RemoteViews;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.settings.WidgetSettings;
+import com.battlelancer.seriesguide.ui.EpisodesActivity;
+import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 @TargetApi(11)
 public class ListWidgetProvider extends AppWidgetProvider {

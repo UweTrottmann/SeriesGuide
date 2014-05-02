@@ -16,28 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.adapters.SeasonsAdapter;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
-import com.battlelancer.seriesguide.util.FlagTask.SeasonWatchedType;
-import com.battlelancer.seriesguide.util.SeasonTools;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.CheatSheet;
-import com.battlelancer.seriesguide.R;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -62,7 +40,27 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.adapters.SeasonsAdapter;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.FlagTask;
+import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
+import com.battlelancer.seriesguide.util.FlagTask.SeasonWatchedType;
+import com.battlelancer.seriesguide.util.SeasonTools;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.CheatSheet;
 import de.greenrobot.event.EventBus;
 
 /**

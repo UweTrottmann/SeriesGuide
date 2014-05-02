@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -34,7 +35,8 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * Displays a full screen image of a TV show's poster, or the image provided for a specific
- * episode. If a URI instead of a file name is provided, it will be attempted to load the image from
+ * episode. If a URI instead of a file name is provided, it will be attempted to load the image
+ * from
  * the internet.
  */
 public class FullscreenImageActivity extends SherlockFragmentActivity {
@@ -97,7 +99,8 @@ public class FullscreenImageActivity extends SherlockFragmentActivity {
             ServiceUtils.getPicasso(this).load(imagePath).into(mContentView);
         } else {
             // get cached copy, typically for episode images
-            ImageProvider.getInstance(this).loadImage(mContentView, imagePath, false);
+            ImageProvider.getInstance(this)
+                    .loadImage(mContentView, imagePath, ImageView.ScaleType.FIT_CENTER, false);
         }
 
         // Set up an instance of SystemUiHider to control the system UI for

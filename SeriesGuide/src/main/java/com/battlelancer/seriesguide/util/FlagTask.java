@@ -16,6 +16,13 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.widget.Toast;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
@@ -23,19 +30,9 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.Lists;
-import com.battlelancer.seriesguide.R;
-
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.widget.Toast;
-
-import java.util.List;
-
 import de.greenrobot.event.EventBus;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Helps flag episodes in the local database and readies them for submission to trakt.tv.
@@ -102,7 +99,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
          * trakt.
          */
         protected List<Flag> createEpisodeFlags() {
-            List<Flag> episodes = Lists.newArrayList();
+            List<Flag> episodes = new ArrayList<>();
 
             // determine uri
             Uri uri = getUri();
@@ -219,7 +216,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
         @Override
         public List<Flag> getEpisodes() {
-            List<Flag> episodes = Lists.newArrayList();
+            List<Flag> episodes = new ArrayList<>();
             // flag a single episode
             episodes.add(new Flag(mSeason, mEpisode));
             return episodes;
@@ -375,7 +372,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         public List<Flag> getEpisodes() {
             if (mEpisodeFlag != 0) {
                 // watched, skipped or collected season
-                List<Flag> episodes = Lists.newArrayList();
+                List<Flag> episodes = new ArrayList<>();
                 episodes.add(new Flag(mSeason, -1));
                 return episodes;
             } else {

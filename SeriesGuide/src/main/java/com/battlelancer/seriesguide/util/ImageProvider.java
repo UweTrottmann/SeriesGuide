@@ -147,8 +147,28 @@ public class ImageProvider {
         return _instance;
     }
 
+    /**
+     * Calls {@link #loadImage(android.widget.ImageView, String, android.widget.ImageView.ScaleType,
+     * boolean)} with
+     * <ul>
+     *     <li> <code>scaleType</code> set to {@link android.widget.ImageView.ScaleType#CENTER_CROP}
+     *     <li> <code>loadThumbnail</code> set to <code>false</code>.
+     * </ul>
+     */
+    public void loadPoster(ImageView imageView, String imagePath) {
+        loadImage(imageView, imagePath, ScaleType.CENTER_CROP, false);
+    }
+
+    /**
+     * Calls {@link #loadImage(android.widget.ImageView, String, android.widget.ImageView.ScaleType,
+     * boolean)} with
+     * <ul>
+     *     <li> <code>scaleType</code> set to {@link android.widget.ImageView.ScaleType#CENTER_CROP}
+     *     <li> <code>loadThumbnail</code> set to <code>true</code>.
+     * </ul>
+     */
     public void loadPosterThumb(ImageView imageView, String imagePath) {
-        loadImage(imageView, imagePath, true);
+        loadImage(imageView, imagePath, ScaleType.CENTER_CROP, true);
     }
 
     /**
@@ -158,9 +178,13 @@ public class ImageProvider {
      * <p> If the image path is empty will clear the image view. If the image could not be
      * retrieved, will show a placeholder.
      *
+     * @param scaleType     The {@link android.widget.ImageView.ScaleType} to use for the image.
+     *                      The
+     *                      placeholder will always use {@link ScaleType#CENTER_INSIDE}.
      * @param loadThumbnail Will load a down-sized version of the image requested.
      */
-    public void loadImage(ImageView imageView, String imagePath, boolean loadThumbnail) {
+    public void loadImage(ImageView imageView, String imagePath, ScaleType scaleType,
+            boolean loadThumbnail) {
         if (TextUtils.isEmpty(imagePath)) {
             // there is no image available
             setNothingToImageView(imageView);
@@ -182,12 +206,12 @@ public class ImageProvider {
         final Bitmap cachedResult = mCache.get(imagePath);
         if (cachedResult != null) {
             // found it!
-            setImageToImageView(imageView, cachedResult);
+            setImageToImageView(imageView, cachedResult, scaleType);
             return;
         }
 
         // cache miss, so we need to load from disk
-        final ImageLoaderTask task = new ImageLoaderTask(imageView);
+        final ImageLoaderTask task = new ImageLoaderTask(imageView, scaleType);
         imageView.setTag(task);
         
         /*
@@ -384,8 +408,8 @@ public class ImageProvider {
         imageView.setImageResource(R.drawable.ic_image_missing);
     }
 
-    private void setImageToImageView(ImageView imageView, Bitmap bitmap) {
-        imageView.setScaleType(ScaleType.CENTER_CROP);
+    private void setImageToImageView(ImageView imageView, Bitmap bitmap, ScaleType scaleType) {
+        imageView.setScaleType(scaleType);
         imageView.setImageBitmap(bitmap);
     }
 
@@ -396,9 +420,11 @@ public class ImageProvider {
     public class ImageLoaderTask extends AsyncTask<String, Void, Bitmap> {
 
         private ImageView mImageView;
+        private final ScaleType mScaleType;
 
-        public ImageLoaderTask(ImageView imageView) {
+        public ImageLoaderTask(ImageView imageView, ScaleType scaleType) {
             mImageView = imageView;
+            mScaleType = scaleType;
         }
 
         @Override
@@ -416,7 +442,7 @@ public class ImageProvider {
         protected void onPostExecute(Bitmap result) {
             if (mImageView.getTag() == this) {
                 if (result != null) {
-                    setImageToImageView(mImageView, result);
+                    setImageToImageView(mImageView, result, mScaleType);
                 } else {
                     setPlaceholderToImageView(mImageView);
                 }

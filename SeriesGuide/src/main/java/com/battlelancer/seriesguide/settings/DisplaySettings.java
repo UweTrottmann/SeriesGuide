@@ -16,12 +16,11 @@
 
 package com.battlelancer.seriesguide.settings;
 
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.R;
-
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.R;
 
 /**
  * Settings related to appearance, display formats and sort orders.

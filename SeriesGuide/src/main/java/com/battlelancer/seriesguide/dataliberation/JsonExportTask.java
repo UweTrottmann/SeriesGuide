@@ -38,17 +38,17 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB.ShowStatus;
 import com.google.myjson.Gson;
 import com.google.myjson.JsonIOException;
 import com.google.myjson.stream.JsonWriter;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.Lists;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import timber.log.Timber;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
@@ -276,7 +276,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     private void addSeasons(Show show) {
-        show.seasons = Lists.newArrayList();
+        show.seasons = new ArrayList<>();
         final Cursor seasonsCursor = mContext.getContentResolver().query(
                 Seasons.buildSeasonsOfShowUri(String.valueOf(show.tvdbId)),
                 new String[] {
@@ -303,7 +303,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     private void addEpisodes(Season season) {
-        season.episodes = Lists.newArrayList();
+        season.episodes = new ArrayList<>();
         final Cursor episodesCursor = mContext.getContentResolver().query(
                 Episodes.buildEpisodesOfSeasonUri(String.valueOf(season.tvdbId)),
                 mIsFullDump ? EpisodesQuery.PROJECTION_FULL : EpisodesQuery.PROJECTION, null, null,
@@ -415,7 +415,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             return;
         }
 
-        list.items = Lists.newArrayList();
+        list.items = new ArrayList<>();
         while (listItems.moveToNext()) {
             ListItem item = new ListItem();
             item.listItemId = listItems.getString(ListItemsQuery.ID);

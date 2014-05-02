@@ -22,11 +22,10 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceScreen;
-
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.WidgetSettings;
 import com.battlelancer.seriesguide.ui.BaseSettingsFragment;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.R;
 
 /**
  * Shows settings fragment for a specific app widget, hosted inside a

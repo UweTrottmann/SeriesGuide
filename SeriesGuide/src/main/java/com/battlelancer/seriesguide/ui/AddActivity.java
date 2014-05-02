@@ -16,17 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Window;
-import com.astuetz.PagerSlidingTabStrip;
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
-import com.battlelancer.seriesguide.util.TaskManager;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.battlelancer.seriesguide.R;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -40,7 +29,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.widget.EditText;
-
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Window;
+import com.astuetz.PagerSlidingTabStrip;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
+import com.battlelancer.seriesguide.util.TaskManager;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.Locale;
 
 /**

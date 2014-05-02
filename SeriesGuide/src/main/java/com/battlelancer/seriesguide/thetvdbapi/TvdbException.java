@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2014 Uwe Trottmann
  *
@@ -15,18 +14,25 @@
  * limitations under the License.
  */
 
-package com.battlelancer.seriesguide.dataliberation.model;
+package com.battlelancer.seriesguide.thetvdbapi;
 
-import com.google.myjson.annotations.SerializedName;
-import java.util.List;
+/**
+ * Thrown when a {@link com.battlelancer.seriesguide.thetvdbapi.TheTVDB} operation fails.
+ */
+public class TvdbException extends Exception {
 
-public class Season {
+    public TvdbException() {
+    }
 
-    @SerializedName("tvdb_id")
-    public int tvdbId;
+    public TvdbException(String detailMessage) {
+        super(detailMessage);
+    }
 
-    public int season;
+    public TvdbException(String detailMessage, Throwable throwable) {
+        super(detailMessage, throwable);
+    }
 
-    public List<Episode> episodes;
-
+    public TvdbException(Throwable throwable) {
+        super(throwable);
+    }
 }

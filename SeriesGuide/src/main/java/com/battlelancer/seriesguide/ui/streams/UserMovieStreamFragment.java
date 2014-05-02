@@ -26,7 +26,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.MoviesActivityAdapter;
+import com.battlelancer.seriesguide.adapters.MovieStreamAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.MovieDetailsActivity;
 import com.battlelancer.seriesguide.ui.MovieDetailsFragment;
@@ -49,7 +49,7 @@ import timber.log.Timber;
  */
 public class UserMovieStreamFragment extends StreamFragment {
 
-    private MoviesActivityAdapter mAdapter;
+    private MovieStreamAdapter mAdapter;
 
     @Override
     public void onStart() {
@@ -66,7 +66,7 @@ public class UserMovieStreamFragment extends StreamFragment {
     @Override
     protected ListAdapter getListAdapter() {
         if (mAdapter == null) {
-            mAdapter = new MoviesActivityAdapter(getActivity());
+            mAdapter = new MovieStreamAdapter(getActivity());
         }
         return mAdapter;
     }
@@ -85,7 +85,12 @@ public class UserMovieStreamFragment extends StreamFragment {
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ActivityItem activity = (ActivityItem) mGridView.getItemAtPosition(position);
+        // do not respond if we get a header position by accident
+        if (position < 0) {
+            return;
+        }
+
+        ActivityItem activity = mAdapter.getItem(position);
         if (activity == null) {
             return;
         }

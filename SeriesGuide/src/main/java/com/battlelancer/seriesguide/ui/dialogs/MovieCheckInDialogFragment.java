@@ -16,16 +16,15 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.battlelancer.seriesguide.R;
-
-import android.os.Bundle;
-import android.view.View;
 
 /**
  * Allows to check into movies on trakt or GetGlue. Launching activities should subscribe to {@link

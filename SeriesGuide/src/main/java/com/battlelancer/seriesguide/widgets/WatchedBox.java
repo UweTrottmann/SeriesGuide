@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package com.battlelancer.seriesguide;
-
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.R;
+package com.battlelancer.seriesguide.widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.Utils;
 
 public class WatchedBox extends ImageView {
 

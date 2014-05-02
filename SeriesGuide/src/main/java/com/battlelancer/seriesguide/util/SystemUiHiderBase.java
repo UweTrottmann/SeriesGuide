@@ -17,10 +17,9 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-
 import android.view.View;
 import android.view.WindowManager;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 /**
  * A base implementation of {@link SystemUiHider}. Uses APIs available in all
