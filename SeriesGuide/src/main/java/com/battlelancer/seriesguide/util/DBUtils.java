@@ -436,6 +436,7 @@ public class DBUtils {
      */
     private static ContentValues putCommonShowValues(Show show, ContentValues values) {
         values.put(Shows.TITLE, show.title);
+        values.put(Shows.TITLE_NOARTICLE, trimLeadingArticle(show.title));
         values.put(Shows.OVERVIEW, show.overview);
         values.put(Shows.ACTORS, show.actors);
         values.put(Shows.AIRSDAYOFWEEK, show.airday);
