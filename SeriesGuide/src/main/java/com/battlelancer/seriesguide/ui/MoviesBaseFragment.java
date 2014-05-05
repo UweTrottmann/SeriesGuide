@@ -34,6 +34,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.MoviesCursorAdapter;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.MoviesDistillationSettings;
 import de.greenrobot.event.EventBus;
 
@@ -99,6 +100,9 @@ public abstract class MoviesBaseFragment extends SherlockFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.movies_menu, menu);
+
+        menu.findItem(R.id.menu_action_movies_sort_ignore_articles)
+                .setChecked(DisplaySettings.isSortOrderIgnoringArticles(getActivity()));
     }
 
     @Override
@@ -131,6 +135,10 @@ public abstract class MoviesBaseFragment extends SherlockFragment implements
             }
             return true;
         }
+        if (itemId == R.id.menu_action_movies_sort_ignore_articles) {
+            changeSortIgnoreArticles(!DisplaySettings.isSortOrderIgnoringArticles(getActivity()));
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -139,6 +147,17 @@ public abstract class MoviesBaseFragment extends SherlockFragment implements
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
                 .putInt(MoviesDistillationSettings.KEY_SORT_ORDER, sortOrderId)
                 .commit();
+
+        EventBus.getDefault().post(new MoviesSortOrderChangedEvent());
+    }
+
+    private void changeSortIgnoreArticles(boolean value) {
+        PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+                .putBoolean(DisplaySettings.KEY_SORT_IGNORE_ARTICLE, value)
+                .commit();
+
+        // refresh icon state
+        getActivity().supportInvalidateOptionsMenu();
 
         EventBus.getDefault().post(new MoviesSortOrderChangedEvent());
     }

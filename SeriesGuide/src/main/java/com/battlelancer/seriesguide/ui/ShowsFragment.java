@@ -50,6 +50,7 @@ import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
@@ -99,6 +100,8 @@ public class ShowsFragment extends SherlockFragment implements
     private int mSortOrderId;
 
     private boolean mIsSortFavoritesFirst;
+
+    private boolean mIsSortIgnoreArticles;
 
     private boolean mIsFilterFavorites;
 
@@ -186,6 +189,7 @@ public class ShowsFragment extends SherlockFragment implements
 
         mSortOrderId = ShowsDistillationSettings.getSortOrderId(getActivity());
         mIsSortFavoritesFirst = ShowsDistillationSettings.isSortFavoritesFirst(getActivity());
+        mIsSortIgnoreArticles = DisplaySettings.isSortOrderIgnoringArticles(getActivity());
     }
 
     private void updateEmptyView() {
@@ -369,6 +373,8 @@ public class ShowsFragment extends SherlockFragment implements
         // set sort check box state
         menu.findItem(R.id.menu_action_shows_sort_favorites)
                 .setChecked(mIsSortFavoritesFirst);
+        menu.findItem(R.id.menu_action_shows_sort_ignore_articles)
+                .setChecked(mIsSortIgnoreArticles);
     }
 
     @Override
@@ -472,6 +478,13 @@ public class ShowsFragment extends SherlockFragment implements
                     mIsSortFavoritesFirst, item);
 
             fireTrackerEventAction("Sort Favorites");
+            return true;
+        } else if (itemId == R.id.menu_action_shows_sort_ignore_articles) {
+            mIsSortIgnoreArticles = !mIsSortIgnoreArticles;
+            changeSortOrFilter(DisplaySettings.KEY_SORT_IGNORE_ARTICLE,
+                    mIsSortIgnoreArticles, item);
+
+            fireTrackerEventAction("Sort Ignore Articles");
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -578,7 +591,8 @@ public class ShowsFragment extends SherlockFragment implements
 
         return new CursorLoader(getActivity(), Shows.CONTENT_URI, ShowsQuery.PROJECTION,
                 selection.toString(), null,
-                ShowsDistillationSettings.getSortQuery(mSortOrderId, mIsSortFavoritesFirst));
+                ShowsDistillationSettings.getSortQuery(mSortOrderId, mIsSortFavoritesFirst,
+                        mIsSortIgnoreArticles));
     }
 
     @Override

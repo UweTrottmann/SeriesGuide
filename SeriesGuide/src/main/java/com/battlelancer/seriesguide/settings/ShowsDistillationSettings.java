@@ -28,7 +28,8 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 public class ShowsDistillationSettings {
 
     public static String KEY_SORT_ORDER = "com.battlelancer.seriesguide.sort.order";
-    public static String KEY_SORT_FAVORITES_FIRST = "com.battlelancer.seriesguide.sort.favoritesfirst";
+    public static String KEY_SORT_FAVORITES_FIRST
+            = "com.battlelancer.seriesguide.sort.favoritesfirst";
     public static String KEY_FILTER_FAVORITES = "com.battlelancer.seriesguide.filter.favorites";
     public static String KEY_FILTER_UNWATCHED = "com.battlelancer.seriesguide.filter.unwatched";
     public static String KEY_FILTER_UPCOMING = "com.battlelancer.seriesguide.filter.upcoming";
@@ -37,7 +38,8 @@ public class ShowsDistillationSettings {
     /**
      * Builds an appropriate SQL sort statement for sorting shows.
      */
-    public static String getSortQuery(int sortOrderId, boolean isSortFavoritesFirst) {
+    public static String getSortQuery(int sortOrderId, boolean isSortFavoritesFirst,
+            boolean isSortIgnoreArticles) {
         StringBuilder query = new StringBuilder();
 
         if (isSortFavoritesFirst) {
@@ -45,13 +47,15 @@ public class ShowsDistillationSettings {
         }
 
         if (sortOrderId == ShowsSortOrder.TITLE_REVERSE_ID) {
-            query.append(ShowsSortOrder.TITLE_REVERSE);
+            query.append(isSortIgnoreArticles ?
+                    ShowsSortOrder.TITLE_REVERSE_NOARTICLE : ShowsSortOrder.TITLE_REVERSE);
         } else if (sortOrderId == ShowsSortOrder.EPISODE_ID) {
             query.append(ShowsSortOrder.EPISODE);
         } else if (sortOrderId == ShowsSortOrder.EPISODE_REVERSE_ID) {
             query.append(ShowsSortOrder.EPISODE_REVERSE);
         } else {
-            query.append(ShowsSortOrder.TITLE);
+            query.append(isSortIgnoreArticles ?
+                    ShowsSortOrder.TITLE_NOARTICLE : ShowsSortOrder.TITLE);
         }
 
         return query.toString();
@@ -98,8 +102,12 @@ public class ShowsDistillationSettings {
     public interface ShowsSortOrder {
         // alphabetical by title
         String TITLE = Shows.TITLE + " COLLATE NOCASE ASC";
+        // alphabetical by title
+        String TITLE_NOARTICLE = Shows.TITLE_NOARTICLE + " COLLATE NOCASE ASC";
         // reverse alphabetical by title
         String TITLE_REVERSE = Shows.TITLE + " COLLATE NOCASE DESC";
+        // reverse alphabetical by title
+        String TITLE_REVERSE_NOARTICLE = Shows.TITLE_NOARTICLE + " COLLATE NOCASE DESC";
         // by next episode air time, oldest first
         String EPISODE = Shows.NEXTAIRDATEMS + " ASC," + Shows.AIRSTIME + " ASC,"
                 + Shows.TITLE + " COLLATE NOCASE ASC";
