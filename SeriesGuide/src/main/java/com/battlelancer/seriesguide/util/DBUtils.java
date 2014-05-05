@@ -24,6 +24,7 @@ import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
@@ -701,6 +702,26 @@ public class DBUtils {
             // not using a remote provider, so this should never happen. crash if it does.
             throw new RuntimeException("Problem applying batch operation", e);
         }
+    }
+
+    /**
+     * Removes a leading article from the given string (including the first whitespace that follows).
+     */
+    public static String trimLeadingArticle(String title) {
+        if (TextUtils.isEmpty(title)) {
+            return title;
+        }
+
+        if (title.length() > 4 &&
+                (title.startsWith("The ") || title.startsWith("the "))) {
+            return title.substring(4);
+        }
+        if (title.length() > 2 &&
+                (title.startsWith("A ") || title.startsWith("a "))) {
+            return title.substring(2);
+        }
+
+        return title;
     }
 
     private interface NextEpisodeQuery {

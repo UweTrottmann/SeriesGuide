@@ -35,10 +35,12 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.MoviesColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
 import timber.log.Timber;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 
 public class SeriesGuideDatabase extends SQLiteOpenHelper {
@@ -77,7 +79,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_32_MOVIES = 32;
 
-    public static final int DATABASE_VERSION = DBVER_32_MOVIES;
+    public static final int DBVER_33_IGNORE_ARTICLE_SORT = 33;
+
+    public static final int DATABASE_VERSION = DBVER_33_IGNORE_ARTICLE_SORT;
 
     private DatabaseUtils.InsertHelper mShowsInserter;
     private DatabaseUtils.InsertHelper mSeasonsInserter;
@@ -215,6 +219,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + BaseColumns._ID + " INTEGER PRIMARY KEY,"
 
             + ShowsColumns.TITLE + " TEXT NOT NULL,"
+
+            + ShowsColumns.TITLE_NOARTICLE + " TEXT,"
 
             + ShowsColumns.OVERVIEW + " TEXT DEFAULT '',"
 
@@ -384,6 +390,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + MoviesColumns.TITLE + " TEXT,"
 
+            + MoviesColumns.TITLE_NOARTICLE + " TEXT,"
+
             + MoviesColumns.POSTER + " TEXT,"
 
             + MoviesColumns.GENRES + " TEXT,"
@@ -520,7 +528,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 upgradeToThirtyOne(db);
             case DBVER_31_LAST_WATCHED_ID:
                 upgradeToThirtyTwo(db);
-                version = DBVER_32_MOVIES;
+            case DBVER_32_MOVIES:
+                upgradeToThirtyThree(db);
+                version = DBVER_33_IGNORE_ARTICLE_SORT;
         }
 
         // drop all tables if version is not right
@@ -547,6 +557,65 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /**
+     * Add shows and movies title column without articles.
+     */
+    private static void upgradeToThirtyThree(SQLiteDatabase db) {
+        // shows
+        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + Shows.TITLE_NOARTICLE
+                + " TEXT;");
+
+        Cursor shows = db.query(Tables.SHOWS, new String[] { Shows._ID, Shows.TITLE }, null, null,
+                null, null, null);
+        ContentValues newTitleValues = new ContentValues();
+        if (shows != null) {
+            db.beginTransaction();
+            try {
+                while (shows.moveToNext()) {
+                    // put overwrites previous value
+                    newTitleValues.put(Shows.TITLE_NOARTICLE,
+                            DBUtils.trimLeadingArticle(shows.getString(1)));
+                    db.update(Tables.SHOWS, newTitleValues, Shows._ID + "=" + shows.getInt(0),
+                            null);
+                }
+
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+        }
+
+        // movies
+        db.execSQL("ALTER TABLE " + Tables.MOVIES + " ADD COLUMN " + Movies.TITLE_NOARTICLE
+                + " TEXT;");
+
+        Cursor movies = db.query(Tables.MOVIES, new String[] { Movies._ID, Movies.TITLE }, null,
+                null, null, null, null);
+        if (movies != null) {
+            db.beginTransaction();
+            try {
+                while (movies.moveToNext()) {
+                    // put overwrites previous value
+                    newTitleValues.put(Movies.TITLE_NOARTICLE,
+                            DBUtils.trimLeadingArticle(movies.getString(1)));
+                    db.update(Tables.MOVIES, newTitleValues, Movies._ID + "=" + movies.getInt(0),
+                            null);
+                }
+
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+        }
+    }
+
+    /**
+     * Add movies table.
+     */
+    private static void upgradeToThirtyTwo(SQLiteDatabase db) {
+        db.execSQL(CREATE_MOVIES_TABLE);
+    }
+
     // Must be watched and have an airdate
     private static final String LATEST_SELECTION = Episodes.WATCHED + "=1 AND "
             + Episodes.FIRSTAIREDMS + "!=-1 AND " + Shows.REF_SHOW_ID + "=?";
@@ -556,13 +625,6 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     private static final String LATEST_ORDER = Episodes.FIRSTAIREDMS + " DESC,"
             + Episodes.SEASON + " DESC,"
             + Episodes.NUMBER + " DESC";
-
-    /**
-     * Add movies table.
-     */
-    private static void upgradeToThirtyTwo(SQLiteDatabase db) {
-        db.execSQL(CREATE_MOVIES_TABLE);
-    }
 
     /**
      * Add {@link Shows} column to store the last watched episode id for better prediction of next

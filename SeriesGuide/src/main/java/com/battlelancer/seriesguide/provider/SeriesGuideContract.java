@@ -33,6 +33,11 @@ public class SeriesGuideContract {
 
         String TITLE = "seriestitle";
 
+        /**
+         * The title without any articles (e.g. 'the' or 'an'). Added with db version 33.
+         */
+        String TITLE_NOARTICLE = "series_title_noarticle";
+
         String OVERVIEW = "overview";
 
         String POSTER = "poster";
@@ -293,6 +298,11 @@ public class SeriesGuideContract {
     interface MoviesColumns {
 
         String TITLE = "movies_title";
+
+        /**
+         * The title without any articles (e.g. 'the' or 'an'). Added with db version 33.
+         */
+        String TITLE_NOARTICLE = "movies_title_noarticle";
 
         String IMDB_ID = "movies_imdbid";
 
