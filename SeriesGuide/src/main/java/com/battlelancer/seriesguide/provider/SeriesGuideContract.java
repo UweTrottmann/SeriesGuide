@@ -33,6 +33,11 @@ public class SeriesGuideContract {
 
         String TITLE = "seriestitle";
 
+        /**
+         * The title without any articles (e.g. 'the' or 'an'). Added with db version 33.
+         */
+        String TITLE_NOARTICLE = "series_title_noarticle";
+
         String OVERVIEW = "overview";
 
         String POSTER = "poster";
@@ -293,6 +298,11 @@ public class SeriesGuideContract {
     interface MoviesColumns {
 
         String TITLE = "movies_title";
+
+        /**
+         * The title without any articles (e.g. 'the' or 'an'). Added with db version 33.
+         */
+        String TITLE_NOARTICLE = "movies_title_noarticle";
 
         String IMDB_ID = "movies_imdbid";
 
@@ -621,8 +631,14 @@ public class SeriesGuideContract {
         /** Default sort order. */
         public static final String SORT_TITLE_ALPHABETICAL = Movies.TITLE + " COLLATE NOCASE ASC";
 
+        public static final String SORT_TITLE_ALPHABETICAL_NO_ARTICLE = Movies.TITLE_NOARTICLE
+                + " COLLATE NOCASE ASC";
+
         public static final String SORT_TITLE_REVERSE_ALPHACETICAL = Movies.TITLE
                 + " COLLATE NOCASE DESC";
+
+        public static final String SORT_TITLE_REVERSE_ALPHACETICAL_NO_ARTICLE =
+                Movies.TITLE_NOARTICLE + " COLLATE NOCASE DESC";
 
         public static final String SORT_RELEASE_DATE_NEWEST_FIRST = Movies.RELEASED_UTC_MS
                 + " DESC," + SORT_TITLE_ALPHABETICAL;

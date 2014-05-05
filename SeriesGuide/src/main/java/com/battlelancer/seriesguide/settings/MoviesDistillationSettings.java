@@ -39,14 +39,22 @@ public class MoviesDistillationSettings {
         int sortOrderId = getSortOrderId(context);
 
         if (sortOrderId == MoviesSortOrder.TITLE_REVERSE_ALHPABETICAL_ID) {
-            return Movies.SORT_TITLE_REVERSE_ALPHACETICAL;
+            if (DisplaySettings.isSortOrderIgnoringArticles(context)) {
+                return Movies.SORT_TITLE_REVERSE_ALPHACETICAL_NO_ARTICLE;
+            } else {
+                return Movies.SORT_TITLE_REVERSE_ALPHACETICAL;
+            }
         } else if (sortOrderId == MoviesSortOrder.RELEASE_DATE_NEWEST_FIRST_ID) {
             return Movies.SORT_RELEASE_DATE_NEWEST_FIRST;
         } else if (sortOrderId == MoviesSortOrder.RELEASE_DATE_OLDEST_FIRST_ID) {
             return Movies.SORT_RELEASE_DATE_OLDEST_FIRST;
         }
 
-        return Movies.SORT_TITLE_ALPHABETICAL;
+        if (DisplaySettings.isSortOrderIgnoringArticles(context)) {
+            return Movies.SORT_TITLE_ALPHABETICAL_NO_ARTICLE;
+        } else {
+            return Movies.SORT_TITLE_ALPHABETICAL;
+        }
     }
 
     /**

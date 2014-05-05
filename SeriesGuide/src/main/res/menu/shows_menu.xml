@@ -54,6 +54,10 @@
                 android:id="@+id/menu_action_shows_sort_favorites"
                 android:checkable="true"
                 android:title="@string/action_shows_sort_favorites" />
+            <item
+                android:id="@+id/menu_action_shows_sort_ignore_articles"
+                android:checkable="true"
+                android:title="@string/action_sort_ignore_articles" />
         </menu>
     </item>
 

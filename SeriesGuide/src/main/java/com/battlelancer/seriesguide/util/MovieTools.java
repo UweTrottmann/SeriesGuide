@@ -231,6 +231,8 @@ public class MovieTools {
         if (details.tmdbMovie() != null) {
             values.put(Movies.IMDB_ID, details.tmdbMovie().imdb_id);
             values.put(Movies.TITLE, details.tmdbMovie().title);
+            values.put(Movies.TITLE_NOARTICLE,
+                    DBUtils.trimLeadingArticle(details.tmdbMovie().title));
             values.put(Movies.OVERVIEW, details.tmdbMovie().overview);
             values.put(Movies.POSTER, details.tmdbMovie().poster_path);
             values.put(Movies.RUNTIME_MIN, details.tmdbMovie().runtime);
