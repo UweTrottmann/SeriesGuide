@@ -585,6 +585,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             }
         }
 
+        newTitleValues.clear();
+
         // movies
         db.execSQL("ALTER TABLE " + Tables.MOVIES + " ADD COLUMN " + Movies.TITLE_NOARTICLE
                 + " TEXT;");
