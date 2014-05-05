@@ -530,7 +530,7 @@ public class OverviewFragment extends SherlockFragment implements
                 Date actualRelease = TimeTools.getEpisodeReleaseTime(getActivity(), releaseTime);
                 // "in 14 mins (Fri)"
                 episodeTime.setText(getString(R.string.release_date_and_day,
-                        TimeTools.formatToRelativeLocalReleaseTime(actualRelease),
+                        TimeTools.formatToRelativeLocalReleaseTime(getActivity(), actualRelease),
                         TimeTools.formatToLocalReleaseDay(actualRelease)));
                 episodeTime.setVisibility(View.VISIBLE);
             }

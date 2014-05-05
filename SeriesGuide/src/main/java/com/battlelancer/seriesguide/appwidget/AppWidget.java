@@ -122,7 +122,7 @@ public class AppWidget extends AppWidgetProvider {
 
                     // "in 13 mins (Fri)"
                     item.setTextViewText(R.id.widgetAirtime,
-                            TimeTools.formatToRelativeLocalReleaseTime(actualRelease)
+                            TimeTools.formatToRelativeLocalReleaseTime(this, actualRelease)
                                     + " (" + TimeTools.formatToLocalReleaseDay(actualRelease)
                                     + ")");
 

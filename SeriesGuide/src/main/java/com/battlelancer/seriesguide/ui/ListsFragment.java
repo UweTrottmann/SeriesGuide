@@ -291,7 +291,7 @@ public class ListsFragment extends SherlockFragment implements
                         // "in 15 mins (Fri)"
                         Date actualRelease = TimeTools.getEpisodeReleaseTime(context, releaseTime);
                         viewHolder.episodeTime.setText(getString(R.string.release_date_and_day,
-                                TimeTools.formatToRelativeLocalReleaseTime(actualRelease),
+                                TimeTools.formatToRelativeLocalReleaseTime(context, actualRelease),
                                 TimeTools.formatToLocalReleaseDay(actualRelease)));
                     }
                     break;

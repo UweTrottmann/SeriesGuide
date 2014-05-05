@@ -633,7 +633,7 @@ public class DBUtils {
             long releaseTime = next.getLong(NextEpisodeQuery.FIRST_RELEASE_MS);
             Date actualRelease = TimeTools.getEpisodeReleaseTime(context, releaseTime);
             final String nextReleaseDateString = context.getString(R.string.release_date_and_day,
-                    TimeTools.formatToRelativeLocalReleaseTime(actualRelease),
+                    TimeTools.formatToRelativeLocalReleaseTime(context, actualRelease),
                     TimeTools.formatToLocalReleaseDay(actualRelease));
 
             episodeId = next.getLong(NextEpisodeQuery._ID);
