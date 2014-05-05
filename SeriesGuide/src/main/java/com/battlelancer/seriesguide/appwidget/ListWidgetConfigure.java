@@ -32,6 +32,8 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 /**
  * Hosts a {@link ListWidgetPreferenceFragment} to allow changing settings of the associated app
  * widget.
+ * <p> Does specifically NOT extend {@link com.battlelancer.seriesguide.ui.BaseActivity} to avoid
+ * triggering update and backup mechanisms.
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ListWidgetConfigure extends Activity {
