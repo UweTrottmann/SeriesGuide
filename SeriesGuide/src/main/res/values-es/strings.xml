@@ -156,7 +156,7 @@
   <string name="recent">Reciente</string>
   <string name="friends">Amigos</string>
   <string name="friends_empty">No hay actividad de amigos en trakt.</string>
-  <string name="user_stream">You</string>
+  <string name="user_stream">Tú</string>
   <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
   <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
   <string name="noupcoming">No hay capítulos próximamente.</string>
@@ -374,11 +374,11 @@
   <string name="extension_amazon">Búsqueda de Amazon</string>
   <string name="description_extension_amazon">Busca en tu web local de Amazon</string>
   <string name="pref_amazon_domain">Web de Amazon</string>
-  <string name="extension_google_play">Google Play search</string>
+  <string name="extension_google_play">Búsqueda en Google Play</string>
   <string name="description_extension_google_play">Search the Google Play Store</string>
-  <string name="extension_youtube">YouTube search</string>
+  <string name="extension_youtube">Búsqueda en YouTube</string>
   <string name="description_extension_youtube">Search YouTube for videos</string>
-  <string name="description_extension_web_search">Search for websites and images</string>
+  <string name="description_extension_web_search">Buscar imágenes y sitios web</string>
   <string-array name="sesorting">
     <item>Más reciente primero</item>
     <item>Más antiguo primero</item>

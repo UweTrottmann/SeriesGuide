@@ -60,7 +60,7 @@
   <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">Trier les films</string>
   <string name="action_movies_sort_title">Titre</string>
-  <string name="action_movies_sort_release">Date de parution</string>
+  <string name="action_movies_sort_release">Date de sortie</string>
   <string name="shows_with_next">%s avec des épisodes à venir</string>
   <string name="shows_continuing">%s en cours</string>
   <string name="episodes_watched">%s vus</string>
@@ -156,9 +156,9 @@
   <string name="recent">Dernièrement</string>
   <string name="friends">Amis</string>
   <string name="friends_empty">Pas d\'activité d\'amis sur Trakt.</string>
-  <string name="user_stream">You</string>
-  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
-  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
+  <string name="user_stream">Vous</string>
+  <string name="user_stream_empty">Aucune activité récente sur trakt. Faites des check-ins !</string>
+  <string name="user_movie_stream_empty">Aucune activité récente sur trakt. Faites des check-ins !</string>
   <string name="noupcoming">Il n\'y a pas d\'épisodes à venir.</string>
   <string name="norecent">Il n\'y a pas d\'épisodes récents.</string>
   <string name="only_favorites">Juste les séries préférées</string>
@@ -374,11 +374,11 @@
   <string name="extension_amazon">Recherche Amazon</string>
   <string name="description_extension_amazon">Rechercher sur votre site Amazon local</string>
   <string name="pref_amazon_domain">Site Amazon</string>
-  <string name="extension_google_play">Google Play search</string>
-  <string name="description_extension_google_play">Search the Google Play Store</string>
-  <string name="extension_youtube">YouTube search</string>
-  <string name="description_extension_youtube">Search YouTube for videos</string>
-  <string name="description_extension_web_search">Search for websites and images</string>
+  <string name="extension_google_play">Recherche Google Play</string>
+  <string name="description_extension_google_play">Rechercher sur le Play Store</string>
+  <string name="extension_youtube">Recherche Youtube</string>
+  <string name="description_extension_youtube">Recherche des vidéos sur Youtube</string>
+  <string name="description_extension_web_search">Rechercher des sites web et des images</string>
   <string-array name="sesorting">
     <item>Plus récentes en premier</item>
     <item>Plus anciennes en premier</item>

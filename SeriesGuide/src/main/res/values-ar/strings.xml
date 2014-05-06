@@ -156,9 +156,9 @@
   <string name="recent">مؤخراً</string>
   <string name="friends">الأصدقاء</string>
   <string name="friends_empty">.لا نشاطات لأصدقائك على تراكت</string>
-  <string name="user_stream">You</string>
-  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
-  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
+  <string name="user_stream">أنت</string>
+  <string name="user_stream_empty">لا يوجد أي نشاط مؤخرا على موقع Trakt. تحقق من بعض المسلسلات!</string>
+  <string name="user_movie_stream_empty">لا يوجد أي نشاط مؤخرا على موقع Trakt. تحقق من بعض الأفلام!</string>
   <string name="noupcoming">.لا توجد حلقات قادمة</string>
   <string name="norecent">.لا توجد حلقات حالية</string>
   <string name="only_favorites">فقط المسلسلات المفضلة</string>
@@ -374,11 +374,11 @@
   <string name="extension_amazon">بحث أمازون</string>
   <string name="description_extension_amazon">البحث المحلي بواسطة موقع أمازون</string>
   <string name="pref_amazon_domain">موقع أمازون</string>
-  <string name="extension_google_play">Google Play search</string>
-  <string name="description_extension_google_play">Search the Google Play Store</string>
-  <string name="extension_youtube">YouTube search</string>
-  <string name="description_extension_youtube">Search YouTube for videos</string>
-  <string name="description_extension_web_search">Search for websites and images</string>
+  <string name="extension_google_play">بحث متجر قوقل</string>
+  <string name="description_extension_google_play">البحث في متجر قوقل</string>
+  <string name="extension_youtube">بحث اليوتيوب</string>
+  <string name="description_extension_youtube">بحث اليوتيوب لمقاطع الفيديو</string>
+  <string name="description_extension_web_search">البحث عن المواقع و الصور</string>
   <string-array name="sesorting">
     <item>الأحدث أولاً</item>
     <item>الأقدم أولاً</item>
