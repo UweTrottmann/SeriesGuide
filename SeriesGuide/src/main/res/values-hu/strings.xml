@@ -96,6 +96,7 @@
   <string name="services_watch">Figyelés</string>
   <string name="services_more">Több</string>
   <string name="sort">Rendezés</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">ma</string>
   <string name="now">most</string>
   <string name="daily">Napi</string>

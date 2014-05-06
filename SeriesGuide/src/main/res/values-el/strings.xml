@@ -96,6 +96,7 @@
   <string name="services_watch">Παρακολουθήστε</string>
   <string name="services_more">Περισσότερα</string>
   <string name="sort">Ταξινόμηση κατά</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">Σήμερα</string>
   <string name="now">τώρα</string>
   <string name="daily">Καθημερινή</string>

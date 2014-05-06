@@ -96,6 +96,7 @@
   <string name="services_watch">Se</string>
   <string name="services_more">Mer</string>
   <string name="sort">Sorter etter</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">i dag</string>
   <string name="now">nå</string>
   <string name="daily">Daglig</string>

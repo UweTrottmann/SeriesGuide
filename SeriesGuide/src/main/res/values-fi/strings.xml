@@ -96,6 +96,7 @@
   <string name="services_watch">Katso</string>
   <string name="services_more">Enemmän</string>
   <string name="sort">Lajittele</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">tänään</string>
   <string name="now">nyt</string>
   <string name="daily">Päivittäinen</string>

@@ -96,6 +96,7 @@
   <string name="services_watch">Bekijken</string>
   <string name="services_more">Meer</string>
   <string name="sort">Sorteren op</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">vandaag</string>
   <string name="now">nu</string>
   <string name="daily">Dagelijks</string>

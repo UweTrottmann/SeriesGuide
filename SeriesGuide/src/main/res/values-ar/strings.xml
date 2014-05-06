@@ -96,6 +96,7 @@
   <string name="services_watch">شاهد</string>
   <string name="services_more">المزيد</string>
   <string name="sort">ترتيب حسب</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">اليوم</string>
   <string name="now">الآن</string>
   <string name="daily">يومي</string>

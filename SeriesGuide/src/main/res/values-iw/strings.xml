@@ -96,6 +96,7 @@
   <string name="services_watch">צפה</string>
   <string name="services_more">עוד</string>
   <string name="sort">מיין לפי</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">היום</string>
   <string name="now">עכשיו</string>
   <string name="daily">יומי</string>

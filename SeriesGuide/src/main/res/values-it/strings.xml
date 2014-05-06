@@ -96,6 +96,7 @@
   <string name="services_watch">Guarda</string>
   <string name="services_more">Altro</string>
   <string name="sort">Ordina per</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">oggi</string>
   <string name="now">adesso</string>
   <string name="daily">Giornaliero</string>

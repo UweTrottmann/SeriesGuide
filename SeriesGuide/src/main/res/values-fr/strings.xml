@@ -96,6 +96,7 @@
   <string name="services_watch">Regarder</string>
   <string name="services_more">Plus</string>
   <string name="sort">Trier par</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">aujourd\'hui</string>
   <string name="now">maintenant</string>
   <string name="daily">Quotidiennement</string>
