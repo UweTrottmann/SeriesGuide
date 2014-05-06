@@ -1,5 +1,4 @@
 apply plugin: 'android'
-apply plugin: 'android-test'
 apply plugin: 'crashlytics'
 
 android {
@@ -83,10 +82,8 @@ dependencies {
     // libs folder
     compile fileTree(dir: 'libs', include: '*.jar')
 
-    // unit tests
-    testCompile 'junit:junit:4.10'
-    testCompile 'com.squareup:fest-android:1.0.+'
-    testCompile 'org.robolectric:robolectric:2.3-SNAPSHOT'
+    // android unit tests
+    androidTestCompile 'com.squareup:fest-android:1.0.+'
 
     // android instrumentation tests
     androidTestCompile ('com.jakewharton.espresso:espresso:1.1-r2') {
