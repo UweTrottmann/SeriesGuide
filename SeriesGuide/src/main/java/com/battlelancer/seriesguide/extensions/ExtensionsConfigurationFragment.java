@@ -123,7 +123,9 @@ public class ExtensionsConfigurationFragment extends SherlockFragment
         super.onPause();
 
         EventBus.getDefault().unregister(this);
-        ExtensionManager.getInstance(getActivity()).setEnabledExtensions(mEnabledExtensions);
+        if (mEnabledExtensions != null) { // might not have finished loading, yet
+            ExtensionManager.getInstance(getActivity()).setEnabledExtensions(mEnabledExtensions);
+        }
     }
 
     @Override
