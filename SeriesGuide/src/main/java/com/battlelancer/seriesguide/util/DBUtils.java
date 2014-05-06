@@ -33,6 +33,7 @@ import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.enums.SeasonTags;
 import com.battlelancer.seriesguide.items.Series;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -45,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import timber.log.Timber;
 
 public class DBUtils {
 
@@ -73,6 +75,16 @@ public class DBUtils {
      */
     public static boolean restoreBooleanFromInt(int value) {
         return value == 1;
+    }
+
+    /**
+     * Triggers the rebuilding of the episode search table.
+     */
+    public static void rebuildFtsTable(Context context) {
+        Timber.d("Query to renew FTS table");
+        context.getContentResolver()
+                .query(SeriesGuideContract.EpisodeSearch.CONTENT_URI_RENEWFTSTABLE, null, null,
+                        null, null);
     }
 
     interface UnwatchedQuery {

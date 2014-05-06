@@ -866,7 +866,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 + " INTEGER DEFAULT 0;");
     }
 
-    public static void onRenewFTSTable(SQLiteDatabase db) {
+    /**
+     * Drops the current {@link Tables#EPISODES_SEARCH} table and re-creates it with current data
+     * from {@link Tables#EPISODES}.
+     */
+    public static void rebuildFtsTableImpl(SQLiteDatabase db) {
         db.beginTransaction();
         try {
             db.execSQL("drop table if exists " + Tables.EPISODES_SEARCH);

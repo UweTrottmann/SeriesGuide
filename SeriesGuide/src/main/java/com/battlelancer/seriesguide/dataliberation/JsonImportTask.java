@@ -113,8 +113,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         // Renew search table
-        mContext.getContentResolver().query(EpisodeSearch.CONTENT_URI_RENEWFTSTABLE, null, null,
-                null, null);
+        DBUtils.rebuildFtsTable(mContext);
 
         return SUCCESS;
     }

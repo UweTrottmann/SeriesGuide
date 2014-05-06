@@ -784,10 +784,4 @@ public class TheTVDB {
             return totalBytesSkipped;
         }
     }
-
-    public static void onRenewFTSTable(Context context) {
-        Timber.d("Query to renew FTS table");
-        context.getContentResolver().query(EpisodeSearch.CONTENT_URI_RENEWFTSTABLE, null, null,
-                null, null);
-    }
 }
