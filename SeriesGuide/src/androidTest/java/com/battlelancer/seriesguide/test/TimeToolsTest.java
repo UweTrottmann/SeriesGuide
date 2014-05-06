@@ -1,21 +1,20 @@
-package com.battlelancer.seriesguide.util;
+package com.battlelancer.seriesguide.test;
 
 import com.battlelancer.seriesguide.util.TimeTools;
-
-import org.junit.Test;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-
-import java.lang.System;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
-// TODO Can't run Robolectric until it supports Android 4.4
-//@RunWith(RobolectricTestRunner.class)
-public class TimeToolsTest {
+public class TimeToolsTest extends TestCase {
+
+    public static Test suite() {
+        return new TestSuite(TimeToolsTest.class);
+    }
 
     private static final SimpleDateFormat TIME_FORMAT_CUSTOM_TIMEZONE = new SimpleDateFormat(
             "hh:mm aa");
@@ -24,7 +23,6 @@ public class TimeToolsTest {
         TIME_FORMAT_CUSTOM_TIMEZONE.setTimeZone(TimeZone.getTimeZone(TimeTools.TIMEZONE_ID_CUSTOM));
     }
 
-    @Test
     public void test_parseEpisodeReleaseTime() {
         long showReleaseTime = TimeTools.parseShowReleaseTime("8:00pm");
         long episodeReleaseTime = TimeTools
@@ -35,7 +33,6 @@ public class TimeToolsTest {
         assertThat(episodeReleaseTime).isEqualTo(1370055600000L);
     }
 
-    @Test
     public void test_parseEpisodeReleaseTime_Country() {
         long showReleaseTime = TimeTools.parseShowReleaseTime("8:00pm");
         long episodeReleaseTime = TimeTools
@@ -46,7 +43,6 @@ public class TimeToolsTest {
         assertThat(episodeReleaseTime).isEqualTo(1370023200000L);
     }
 
-    @Test
     public void test_parseEpisodeReleaseTime_HourPastMidnight() {
         long showReleaseTime = TimeTools.parseShowReleaseTime("12:35am");
         long episodeReleaseTime = TimeTools
@@ -61,7 +57,6 @@ public class TimeToolsTest {
         System.out.println("WARNING: This test WILL fail on any US time zone not US Pacific");
     }
 
-    @Test
     public void test_parseShowReleaseTime_Formats() {
         parseAndCompare("8:00pm", "08:00 PM");
         parseAndCompare("8:00am", "08:00 AM");
