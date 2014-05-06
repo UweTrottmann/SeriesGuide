@@ -83,7 +83,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
 
     // android unit tests
-    androidTestCompile 'com.squareup:fest-android:1.0.+'
+    androidTestCompile 'com.squareup:fest-android:1.0.7'
 
     // android instrumentation tests
     androidTestCompile ('com.jakewharton.espresso:espresso:1.1-r3') {
