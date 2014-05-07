@@ -8,6 +8,14 @@ All dates are in the European Central timezone.
 Version 14 *(in development)*
 -----------------------------
 
+#### 14-beta4 *(2014-05-06)*
+
+* FEATURE 'Ignore articles' option for show/movies sort order.
+* TWEAK Swipe to refresh in comments.
+* TWEAK If relative time (e.g. "in 5 min") is lower than possible resolution, display "now".
+* TWEAK Hide manual update and load poster actions in advanced menu.
+* NOTICE Latest translations from crowdin.
+
 #### 14-beta3 *(2014-04-30)*
 
 * TWEAK Friends and your trakt activity grouped by day, similar to Upcoming/Recent.

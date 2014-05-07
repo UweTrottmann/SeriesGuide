@@ -141,7 +141,7 @@ public class EpisodesAdapter extends CursorAdapter {
             Date actualRelease = TimeTools.getEpisodeReleaseTime(mContext, releaseTime);
             // "in 15 mins" or "15 July 2001"
             viewHolder.episodeAirdate
-                    .setText(TimeTools.formatToRelativeLocalReleaseTime(actualRelease));
+                    .setText(TimeTools.formatToRelativeLocalReleaseTime(mContext, actualRelease));
         } else {
             viewHolder.episodeAirdate.setText(mContext
                     .getString(R.string.episode_firstaired_unknown));

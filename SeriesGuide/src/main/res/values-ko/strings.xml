@@ -96,6 +96,7 @@
   <string name="services_watch">보기</string>
   <string name="services_more">더보기</string>
   <string name="sort">정렬 기준</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">오늘</string>
   <string name="now">지금</string>
   <string name="daily">매일</string>

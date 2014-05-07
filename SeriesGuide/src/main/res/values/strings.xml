@@ -153,6 +153,7 @@
 
     <!-- Menu options -->
     <string name="sort">Sort by</string>
+    <string name="action_sort_ignore_articles">Ignore articles</string>
 
     <!-- Date and Time -->
     <string name="today">today</string>

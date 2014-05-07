@@ -48,6 +48,9 @@ public class DisplaySettings {
 
     public static final String KEY_HIDE_SPECIALS = "onlySeasonEpisodes";
 
+    public static final String KEY_SORT_IGNORE_ARTICLE
+            = "com.battlelancer.seriesguide.sort.ignorearticle";
+
     /**
      * Returns true for xlarge, xlarge-land or sw720dp screens.
      */
@@ -117,4 +120,11 @@ public class DisplaySettings {
                 KEY_HIDE_SPECIALS, false);
     }
 
+    /**
+     * Whether shows and movies sorted by title should ignore the leading article.
+     */
+    public static boolean isSortOrderIgnoringArticles(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_SORT_IGNORE_ARTICLE, false);
+    }
 }

@@ -19,22 +19,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menu_action_movies_sort"
-        android:showAsAction="ifRoom"
-        android:title="@string/action_movies_sort"
-        android:icon="@drawable/ic_action_sort">
-        <menu>
-            <item
-                android:id="@+id/menu_action_movies_sort_title"
-                android:title="@string/action_movies_sort_title" />
-            <item
-                android:id="@+id/menu_action_movies_sort_release"
-                android:title="@string/action_movies_sort_release" />
-            <item
-                android:id="@+id/menu_action_movies_sort_ignore_articles"
-                android:checkable="true"
-                android:title="@string/action_sort_ignore_articles" />
-        </menu>
-    </item>
+        android:id="@+id/menu_action_shows_add"
+        android:icon="@drawable/ic_action_new_show"
+        android:orderInCategory="1"
+        android:showAsAction="always"
+        android:title="@string/action_shows_add" />
 
 </menu>

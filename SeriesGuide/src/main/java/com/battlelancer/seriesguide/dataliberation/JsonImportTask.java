@@ -39,6 +39,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB.ShowStatus;
 import com.google.myjson.Gson;
@@ -112,8 +113,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         // Renew search table
-        mContext.getContentResolver().query(EpisodeSearch.CONTENT_URI_RENEWFTSTABLE, null, null,
-                null, null);
+        DBUtils.rebuildFtsTable(mContext);
 
         return SUCCESS;
     }
@@ -188,6 +188,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         ContentValues showValues = new ContentValues();
         showValues.put(Shows._ID, show.tvdbId);
         showValues.put(Shows.TITLE, show.title);
+        showValues.put(Shows.TITLE_NOARTICLE, DBUtils.trimLeadingArticle(show.title));
         showValues.put(Shows.FAVORITE, show.favorite);
         showValues.put(Shows.HIDDEN, show.hidden);
         showValues.put(Shows.AIRSTIME, show.airtime);
@@ -414,6 +415,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         values.put(Movies.TMDB_ID, movie.tmdbId);
         values.put(Movies.IMDB_ID, movie.imdbId);
         values.put(Movies.TITLE, movie.title);
+        values.put(Movies.TITLE_NOARTICLE, DBUtils.trimLeadingArticle(movie.title));
         values.put(Movies.RELEASED_UTC_MS, movie.releasedUtcMs);
         values.put(Movies.RUNTIME_MIN, movie.runtimeMin);
         values.put(Movies.POSTER, movie.poster);

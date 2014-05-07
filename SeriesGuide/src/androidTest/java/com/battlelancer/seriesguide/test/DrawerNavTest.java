@@ -45,6 +45,9 @@ public class DrawerNavTest extends ActivityInstrumentationTestCase2<ShowsActivit
         super.setUp();
         // Espresso will not launch our activity for us, we must launch it via getActivity().
         getActivity();
+
+        // on first-run drawer is shown, so close it if it is still open
+        closeDrawer(R.id.drawer_layout);
     }
 
     public void testNavigateToListsAndBack() throws InterruptedException {

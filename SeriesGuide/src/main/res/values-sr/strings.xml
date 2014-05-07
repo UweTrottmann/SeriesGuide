@@ -96,6 +96,7 @@
   <string name="services_watch">Гледај</string>
   <string name="services_more">Више</string>
   <string name="sort">Поређај по</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">данас</string>
   <string name="now">сада</string>
   <string name="daily">Дневно</string>
@@ -156,9 +157,9 @@
   <string name="recent">Скорашње</string>
   <string name="friends">Пријатељи</string>
   <string name="friends_empty">Нема активност пријатеља на тракту.</string>
-  <string name="user_stream">You</string>
-  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
-  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
+  <string name="user_stream">Ви</string>
+  <string name="user_stream_empty">Нема недавних активности на trakt-у. Одаберите неке серије!</string>
+  <string name="user_movie_stream_empty">Нема недавних активности на trakt-у. Одаберите неке филмове!</string>
   <string name="noupcoming">Нема предстојећих епизода.</string>
   <string name="norecent">Нема скорашњих епизода.</string>
   <string name="only_favorites">Само омиљене серије</string>
@@ -375,11 +376,11 @@
   <string name="extension_amazon">Претрага на Amazon-у</string>
   <string name="description_extension_amazon">Претражи локални Аmazon сајт</string>
   <string name="pref_amazon_domain">Amazon</string>
-  <string name="extension_google_play">Google Play search</string>
-  <string name="description_extension_google_play">Search the Google Play Store</string>
-  <string name="extension_youtube">YouTube search</string>
-  <string name="description_extension_youtube">Search YouTube for videos</string>
-  <string name="description_extension_web_search">Search for websites and images</string>
+  <string name="extension_google_play">Претрага Гугл продавнице</string>
+  <string name="description_extension_google_play">Претражи Гугл продавницу</string>
+  <string name="extension_youtube">Претрага YouTube-а</string>
+  <string name="description_extension_youtube">Потражи видео на YouTube-у</string>
+  <string name="description_extension_web_search">Потражи сајтове и слике</string>
   <string-array name="sesorting">
     <item>Прво најновије</item>
     <item>Прво најстарије</item>

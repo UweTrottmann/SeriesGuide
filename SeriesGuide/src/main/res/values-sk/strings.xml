@@ -96,6 +96,7 @@
   <string name="services_watch">Zhliadnuť</string>
   <string name="services_more">Viac</string>
   <string name="sort">Zoradiť podľa</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">dnes</string>
   <string name="now">teraz</string>
   <string name="daily">Deňne</string>

@@ -168,7 +168,7 @@ public class TimeTools {
             String releaseCountry, String releaseDay) {
         // return empty strings if time is missing
         if (releaseTime == -1) {
-            return new String[]{
+            return new String[] {
                     "", ""
             };
         }
@@ -181,7 +181,7 @@ public class TimeTools {
 
         // convert and format to local
         Date actualRelease = calendar.getTime();
-        return new String[]{
+        return new String[] {
                 formatToLocalReleaseTime(context, actualRelease),
                 formatToLocalReleaseDay(context, releaseDayOfWeek, actualRelease)
         };
@@ -315,12 +315,21 @@ public class TimeTools {
 
     /**
      * Takes a UTC release time and returns the relative time until the current system time (e.g.
-     * "in 12 min") defined by the devices locale.
+     * "in 12 min") defined by the devices locale. If the relative time difference is lower than a
+     * minute, returns the localized equivalent of "now".
      */
-    public static String formatToRelativeLocalReleaseTime(Date actualRelease) {
+    public static String formatToRelativeLocalReleaseTime(Context context, Date actualRelease) {
+        long now = System.currentTimeMillis();
+        long releaseTime = actualRelease.getTime();
+
+        // if we are below the resolution of getRelativeTimeSpanString, return "now"
+        if (Math.abs(now - releaseTime) < DateUtils.MINUTE_IN_MILLIS) {
+            return context.getString(R.string.now);
+        }
+
         return DateUtils
-                .getRelativeTimeSpanString(actualRelease.getTime(), System.currentTimeMillis(),
-                        DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString();
+                .getRelativeTimeSpanString(releaseTime, now, DateUtils.MINUTE_IN_MILLIS,
+                        DateUtils.FORMAT_ABBREV_ALL).toString();
     }
 
     /**
@@ -380,7 +389,8 @@ public class TimeTools {
     }
 
     /**
-     * Corrects the "hour past midnight" and for US shows the release time if the device is set to a
+     * Corrects the "hour past midnight" and for US shows the release time if the device is set to
+     * a
      * US time zone.
      */
     private static void applyCustomCorrections(Calendar calendar, int releaseHourOfDay,
@@ -524,5 +534,4 @@ public class TimeTools {
             return 0;
         }
     }
-
 }

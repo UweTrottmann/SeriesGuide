@@ -96,6 +96,7 @@
   <string name="services_watch">Katso</string>
   <string name="services_more">Enemmän</string>
   <string name="sort">Lajittele</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">tänään</string>
   <string name="now">nyt</string>
   <string name="daily">Päivittäinen</string>
@@ -156,9 +157,9 @@
   <string name="recent">Viimeisimmät</string>
   <string name="friends">Ystävät</string>
   <string name="friends_empty">Ei ystävien toimintaa traktissa.</string>
-  <string name="user_stream">You</string>
-  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
-  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
+  <string name="user_stream">Sinä</string>
+  <string name="user_stream_empty">Ei viimeaikaista toimintaa traktissa. Kuittaa joihin ohjelmiin!</string>
+  <string name="user_movie_stream_empty">Ei viimeaikaista toimintaa traktissa. Kuittaa joihinkin elokuviin!</string>
   <string name="noupcoming">Ei tulevia jaksoja.</string>
   <string name="norecent">Ei viimeaikaisia jaksoja.</string>
   <string name="only_favorites">Vain suosikkiohjelmat</string>
@@ -367,18 +368,18 @@
   <string name="extensions">Laajennukset</string>
   <string name="action_extensions_configure">Muokkaa laajennuksia</string>
   <string name="action_extensions_add">Lisää laajennus</string>
-  <string name="action_extensions_limit">Hanki X:sä lisätäksesi laajennuksia</string>
+  <string name="action_extensions_limit">Hanki X lisätäksesi enemmän laajennuksia</string>
   <string name="action_extensions_search">Hanki lisää laajennuksia</string>
   <string name="action_extension_settings">Asetukset</string>
   <string name="action_extension_remove">Poista</string>
   <string name="extension_amazon">Amazon-haku</string>
   <string name="description_extension_amazon">Etsi paikalliselta Amazon-sivustoltasi</string>
   <string name="pref_amazon_domain">Amazon-sivusto</string>
-  <string name="extension_google_play">Google Play search</string>
-  <string name="description_extension_google_play">Search the Google Play Store</string>
-  <string name="extension_youtube">YouTube search</string>
-  <string name="description_extension_youtube">Search YouTube for videos</string>
-  <string name="description_extension_web_search">Search for websites and images</string>
+  <string name="extension_google_play">Google Play -haku</string>
+  <string name="description_extension_google_play">Etsi Google Play -kaupasta</string>
+  <string name="extension_youtube">YouTube-haku</string>
+  <string name="description_extension_youtube">Etsi videoita YouTubesta</string>
+  <string name="description_extension_web_search">Etsi verkkosivustoja ja kuvia</string>
   <string-array name="sesorting">
     <item>Uusin ensin</item>
     <item>Vanhin ensin</item>

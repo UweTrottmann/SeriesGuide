@@ -138,7 +138,7 @@ public class ListWidgetService extends RemoteViewsService {
                             : ActivityFragment.ActivityQuery.RELEASE_TIME_MS));
             // "in 13 mins (Fri)"
             String relativeTime = getString(R.string.release_date_and_day,
-                    TimeTools.formatToRelativeLocalReleaseTime(actualRelease),
+                    TimeTools.formatToRelativeLocalReleaseTime(mContext, actualRelease),
                     TimeTools.formatToLocalReleaseDay(actualRelease));
             rv.setTextViewText(R.id.widgetAirtime, relativeTime);
 

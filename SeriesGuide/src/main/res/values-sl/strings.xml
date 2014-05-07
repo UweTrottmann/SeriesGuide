@@ -96,6 +96,7 @@
   <string name="services_watch">Gledaj</string>
   <string name="services_more">Več</string>
   <string name="sort">Razvrsti po</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">danes</string>
   <string name="now">zdaj</string>
   <string name="daily">Dnevno</string>

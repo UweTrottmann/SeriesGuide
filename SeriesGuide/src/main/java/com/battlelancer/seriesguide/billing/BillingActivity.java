@@ -94,6 +94,8 @@ public class BillingActivity extends BaseActivity {
             return;
         }
 
+        setWaitMode(true);
+
         mHelper = new IabHelper(this, getPublicKey(this));
 
         // enable debug logging (for a production application, you should set

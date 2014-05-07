@@ -182,7 +182,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         // renew FTS3 table
         if (modifiedDB) {
             Timber.d("Renewing search table.");
-            TheTVDB.onRenewFTSTable(mContext);
+            DBUtils.rebuildFtsTable(mContext);
         }
 
         Timber.d("Finished adding shows.");

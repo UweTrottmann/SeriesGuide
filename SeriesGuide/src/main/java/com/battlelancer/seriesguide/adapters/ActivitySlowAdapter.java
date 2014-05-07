@@ -118,7 +118,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
             // 10:00 | in 3 days, 10:00 PM | 23 Jul
             metaText.append(TimeTools.formatToLocalReleaseTime(context, actualRelease));
             metaText.append(" | ")
-                    .append(TimeTools.formatToRelativeLocalReleaseTime(actualRelease));
+                    .append(TimeTools.formatToRelativeLocalReleaseTime(context, actualRelease));
         }
         final String network = cursor.getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
         if (!TextUtils.isEmpty(network)) {

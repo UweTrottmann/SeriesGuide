@@ -96,6 +96,7 @@
   <string name="services_watch">Žiūrėti</string>
   <string name="services_more">Daugiau</string>
   <string name="sort">Rūšiuoti pagal</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">šiandien</string>
   <string name="now">dabar</string>
   <string name="daily">Kasdien</string>

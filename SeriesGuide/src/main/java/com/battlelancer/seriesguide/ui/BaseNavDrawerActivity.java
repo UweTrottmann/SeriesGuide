@@ -198,7 +198,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
     /**
      * Returns true if the navigation drawer is open.
      */
-    protected boolean isDrawerOpen() {
+    public boolean isDrawerOpen() {
         return mDrawerLayout.isDrawerOpen(mDrawerList);
     }
 

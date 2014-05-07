@@ -96,6 +96,7 @@
   <string name="services_watch">觀看</string>
   <string name="services_more">更多</string>
   <string name="sort">排序方式</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">今日</string>
   <string name="now">目前</string>
   <string name="daily">每日</string>

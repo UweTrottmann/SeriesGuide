@@ -338,7 +338,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
             // renew search table if shows were updated and it will not be renewed by add task
             if (updateCount.get() > 0 && showsToUpdate.length > 0 && showsNew.size() == 0) {
-                TheTVDB.onRenewFTSTable(getContext());
+                DBUtils.rebuildFtsTable(getContext());
             }
 
             // store time of update, set retry counter on failure

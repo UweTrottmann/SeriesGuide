@@ -96,6 +96,7 @@
   <string name="services_watch">İzle</string>
   <string name="services_more">Daha</string>
   <string name="sort">Sırala</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">bugün</string>
   <string name="now">şimdi</string>
   <string name="daily">Günlük</string>

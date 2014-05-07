@@ -31,6 +31,9 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.migration.MigrationActivity;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -133,12 +136,37 @@ public class FirstRunFragment extends SherlockFragment {
                 setFirstRunDismissed();
             }
         });
+
+        setHasOptionsMenu(true);
     }
 
     @Override
     public void onStart() {
         super.onStart();
         Utils.trackView(getActivity(), TAG);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.firstrun_menu, menu);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content view
+        boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
+        menu.findItem(R.id.menu_action_shows_add).setVisible(!isDrawerOpen);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_action_shows_add) {
+            startActivity(new Intent(getActivity(), AddActivity.class));
+            getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setFirstRunDismissed() {

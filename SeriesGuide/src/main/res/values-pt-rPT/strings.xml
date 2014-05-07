@@ -96,6 +96,7 @@
   <string name="services_watch">Ver</string>
   <string name="services_more">Mais</string>
   <string name="sort">Ordenar por</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">hoje</string>
   <string name="now">agora</string>
   <string name="daily">Diário</string>

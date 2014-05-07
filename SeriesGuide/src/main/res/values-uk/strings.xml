@@ -96,6 +96,7 @@
   <string name="services_watch">Переглянути</string>
   <string name="services_more">Більше</string>
   <string name="sort">Сортувати за</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">сьогодні</string>
   <string name="now">тепер</string>
   <string name="daily">Щодня</string>
