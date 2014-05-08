@@ -25,7 +25,13 @@
                 android:textAppearance="@style/TextAppearance.Large.Light" />
 
             <TextView
-                android:id="@+id/textViewAddShows"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_padding"
+                android:text="@string/connect_trakt_done_explanation"
+                android:textAppearance="@style/TextAppearance.Small.Highlight" />
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/large_padding"
@@ -39,22 +45,6 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/large_padding"
                 android:text="@string/show_library" />
-
-            <TextView
-                android:id="@+id/textViewUploadShows"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="@string/upload_shows"
-                android:textAppearance="@style/TextAppearance.Small" />
-
-            <Button
-                android:id="@+id/buttonUploadShows"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/large_padding"
-                android:text="@string/upload_existing_shows" />
         </LinearLayout>
     </ScrollView>
 

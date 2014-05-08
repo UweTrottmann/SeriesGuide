@@ -30,7 +30,7 @@ import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Tells about successful connection, allows to continue adding shows from users
- * trakt library or upload existing shows from SeriesGuide.
+ * trakt library.
  */
 public class ConnectTraktFinishedFragment extends SherlockFragment {
 
@@ -50,15 +50,6 @@ public class ConnectTraktFinishedFragment extends SherlockFragment {
                 // open library tab
                 Intent i = new Intent(getActivity(), AddActivity.class);
                 i.putExtra(AddActivity.InitBundle.DEFAULT_TAB, AddPagerAdapter.LIBRARY_TAB_POSITION);
-                startActivity(i);
-            }
-        });
-
-        // upload button
-        getView().findViewById(R.id.buttonUploadShows).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), TraktSyncActivity.class);
                 startActivity(i);
             }
         });
