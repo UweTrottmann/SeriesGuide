@@ -376,11 +376,6 @@ public class MovieTools {
             }
             UserService userService = trakt.userService();
 
-            // return if connectivity is lost
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                return UpdateResult.INCOMPLETE;
-            }
-
             HashSet<Integer> localMovies = getMovieTmdbIdsAsSet(context);
             HashSet<Integer> moviesToRemove = new HashSet<>(localMovies);
             HashSet<Integer> moviesToAdd = new HashSet<>();

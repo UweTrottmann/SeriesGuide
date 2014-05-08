@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package com.battlelancer.seriesguide.dataliberation;
+package com.battlelancer.seriesguide.interfaces;
 
 /**
- * Used by {@link JsonExportTask} and {@link JsonImportTask} to report finishing
- * their activity.
+ * Used by tasks to report their activity, e.g. {@link com.battlelancer.seriesguide.dataliberation.JsonExportTask}.
  */
-public interface OnTaskFinishedListener {
-    public void onTaskFinished();
+public interface OnTaskProgressListener {
+    public void onProgressUpdate(Integer... values);
 }
