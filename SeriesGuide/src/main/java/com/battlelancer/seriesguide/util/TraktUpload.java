@@ -19,10 +19,9 @@ package com.battlelancer.seriesguide.util;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.jakewharton.trakt.Trakt;
@@ -38,25 +37,15 @@ import timber.log.Timber;
  */
 public class TraktUpload extends AsyncTask<Void, Void, Integer> {
 
-    private Context mContext;
+    private final Context mContext;
+    private final OnTaskFinishedListener mFinishedListener;
+    private final boolean mIsUploadingUnwatched;
 
-    private final Button mUploadButton;
-    private final View mProgressIndicator;
-
-    private boolean mIsUploadingUnwatched;
-
-    public TraktUpload(Context context, Button uploadButton, View progressIndicator,
+    public TraktUpload(Context context, OnTaskFinishedListener listener,
             boolean isUploadingUnwatched) {
         mContext = context;
-        mUploadButton = uploadButton;
-        mProgressIndicator = progressIndicator;
+        mFinishedListener = listener;
         mIsUploadingUnwatched = isUploadingUnwatched;
-    }
-
-    @Override
-    protected void onPreExecute() {
-        mProgressIndicator.setVisibility(View.VISIBLE);
-        mUploadButton.setEnabled(false);
     }
 
     @Override
@@ -176,7 +165,7 @@ public class TraktUpload extends AsyncTask<Void, Void, Integer> {
     protected void onCancelled() {
         Timber.d("Syncing with trakt...CANCELED");
         Toast.makeText(mContext, R.string.trakt_error_general, Toast.LENGTH_LONG).show();
-        restoreViewStates();
+        reportIsFinished();
     }
 
     @Override
@@ -206,12 +195,13 @@ public class TraktUpload extends AsyncTask<Void, Void, Integer> {
         }
 
         Toast.makeText(mContext, messageResId, duration).show();
-        restoreViewStates();
+        reportIsFinished();
     }
 
-    private void restoreViewStates() {
-        mProgressIndicator.setVisibility(View.GONE);
-        mUploadButton.setEnabled(true);
+    private void reportIsFinished() {
+        if (mFinishedListener != null) {
+            mFinishedListener.onTaskFinished();
+        }
     }
 
     public interface EpisodesQuery {
