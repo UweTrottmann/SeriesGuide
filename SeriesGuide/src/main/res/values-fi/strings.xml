@@ -213,13 +213,12 @@
   <string name="hexagon_priority_select">Valitse versio</string>
   <string name="connect_trakt">Yhdistä traktiin</string>
   <string name="connect_trakt_done">Yhdistetty traktiin!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Lisää ohjelmat kokoelmastasi:</string>
   <string name="show_library">Näytä kokoelmasi</string>
-  <string name="upload_shows">Lähetä SeriesGuiden ohjelmalistasi:</string>
   <string name="upload_existing_shows">Lähetä nykyiset ohjelmat</string>
   <string name="about_trakt">trakt auttaa sinua pysymään kärryillä katsomistasi TV-ohjelmista ja elokuvista. <a href="http://trakt.tv">Lisätietoa</a></string>
   <string name="integration_trakt_items">- lisää ohjelmat kokoelmastasi ja seurantalistastasi\n\n- näe suosittelusi ja ystäviesi toiminta\n\n- katsonta- ja keräysmerkinnät synkronoidaan automaattisesti\n\n- katsomasi uudet ohjelmat lisätään automaattisesti</string>
-  <string name="trakt_upload_hint">Merkitse SeriesGuidessa katsotut jaksot katsotuiksi traktissa:</string>
   <string name="trakt_upload">Lähetä trakt.tv:een</string>
   <string name="trakt_syncunwatched">Poista katsontamerkinnät traktin katsomattomilta jaksoilta SeriesGuidessa</string>
   <string name="upload_done">Lähettäminen päättynyt.</string>

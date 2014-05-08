@@ -213,13 +213,12 @@
   <string name="hexagon_priority_select">Selecionar versão</string>
   <string name="connect_trakt">Conectar trakt</string>
   <string name="connect_trakt_done">Conectado ao trakt!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Adicione séries da sua coleção:</string>
   <string name="show_library">Mostrar sua coleção</string>
-  <string name="upload_shows">Suba sua lista de séries do SeriesGuide:</string>
   <string name="upload_existing_shows">Enviar séries existentes</string>
   <string name="about_trakt">Trakt ajuda a manter um registro de quais programas de TV e filmes você está assistindo. <a href="http://trakt.tv">Saiba mais</a></string>
   <string name="integration_trakt_items">- adicione séries da sua coleção e da lista de \'séries para assistir\'\n\n- veja suas recomendações e atividade dos amigos\n\n- sinalizações de \'assistido\' e \'colecionado\' são sincronizadas automaticamente\n\n- novas séries que você assistir são adicionadas automaticamente</string>
-  <string name="trakt_upload_hint">Marca os episódios assistidos no SeriesGuide como assistidos no trakt:</string>
   <string name="trakt_upload">Enviar para o trakt.tv</string>
   <string name="trakt_syncunwatched">Remover marcações de "Assistidos" no Trakt para episódios não assistidos no SeriesGuide</string>
   <string name="upload_done">Upload finalizado.</string>

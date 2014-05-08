@@ -213,13 +213,12 @@
   <string name="hexagon_priority_select">Velg versjon</string>
   <string name="connect_trakt">Koble til trakt</string>
   <string name="connect_trakt_done">Koblet til trakt!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Legg til programmer fra biblioteket:</string>
   <string name="show_library">Vis ditt bibliotek</string>
-  <string name="upload_shows">Last opp din SeriesGuide program liste:</string>
   <string name="upload_existing_shows">Last opp eksisterende serier</string>
   <string name="about_trakt">trakt bidrar til å holde oversikt over hvilke TV-programmer og filmer du ser på. <a href="http://trakt.tv"> Lær mer</a></string>
   <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
-  <string name="trakt_upload_hint">Marker sette episoder i SeriesGuide som sett i trakt:</string>
   <string name="trakt_upload">Last opp til trakt.tv</string>
   <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
   <string name="upload_done">Finished uploading.</string>

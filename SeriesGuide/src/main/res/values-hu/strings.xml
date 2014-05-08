@@ -213,13 +213,12 @@
   <string name="hexagon_priority_select">Válaszd ki a verziót</string>
   <string name="connect_trakt">Trakt csatlakozás</string>
   <string name="connect_trakt_done">Csatlakozott a trakthoz!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Műsor hozzáadása a gyűjteményedből:</string>
   <string name="show_library">Műsortárad mutatása</string>
-  <string name="upload_shows">SeriesGuide műsorlista feltöltése:</string>
   <string name="upload_existing_shows">Létező műsorok feltöltése</string>
   <string name="about_trakt">a trakt segít nyilvántartani a nézett sorozatokat és filmeket. <a href="http://trakt.tv">Továbbiak (angolul)</a></string>
   <string name="integration_trakt_items">- adjon hozzá sorozatot a könyvtárából és a nézettek listájáról\n\n-nézze meg az ajánlott sorozatokat és a barátok tevékenységét\n\n-a megnézett és gyűjtött jelzések automatikusan szinkronizálódnak\n\n- az új sorozatok automatikusan hozzáadásra kerülnek</string>
-  <string name="trakt_upload_hint">Minden SeriesGuide-on nézettnek jelölt epizód nézettnek jelölése a trakt-on:</string>
   <string name="trakt_upload">Feltöltés</string>
   <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
   <string name="upload_done">Finished uploading.</string>

@@ -96,7 +96,7 @@
   <string name="services_watch">Bekijken</string>
   <string name="services_more">Meer</string>
   <string name="sort">Sorteren op</string>
-  <string name="action_sort_ignore_articles">Ignore articles</string>
+  <string name="action_sort_ignore_articles">Negeer artikel</string>
   <string name="today">vandaag</string>
   <string name="now">nu</string>
   <string name="daily">Dagelijks</string>
@@ -213,13 +213,12 @@
   <string name="hexagon_priority_select">Versie selecteren</string>
   <string name="connect_trakt">Verbinden met trakt</string>
   <string name="connect_trakt_done">Verbonden met trakt!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Series toevoegen vanuit uw bibliotheek:</string>
   <string name="show_library">Uw bibliotheek weergeven</string>
-  <string name="upload_shows">Upload uw SeriesGuide-serielijst:</string>
   <string name="upload_existing_shows">Upload bestaande shows</string>
   <string name="about_trakt">trakt helpt met het bijhouden van welke TV-shows en films u aan het bekijken bent. <a href="http://trakt.tv">Meer weten</a></string>
   <string name="integration_trakt_items">- voeg series uit uw bibliotheek en watchlist toe\n\n- bekijk uw aanbevelingen en vriendenactiviteit\n\n- bekeken- en verzameld-markeringen worden automatisch gesynchroniseerd\n\n- nieuwe series die u bekeken hebt worden automatisch toegevoegd</string>
-  <string name="trakt_upload_hint">Markeer afleveringen bekeken in SeriesGuide als bekeken op trakt:</string>
   <string name="trakt_upload">Uploaden naar trakt.tv</string>
   <string name="trakt_syncunwatched">Verwijder bekeken-markeringen in Trakt voor onbekeken afleveringen in SeriesGuide</string>
   <string name="upload_done">Klaar met uploaden.</string>
