@@ -68,19 +68,19 @@ public class TraktUpload extends AsyncTask<Void, Void, Integer> {
             return TraktTools.FAILED_CREDENTIALS;
         }
 
-        return syncToTrakt(trakt);
+        return uploadToTrakt(trakt);
     }
 
-    private Integer syncToTrakt(Trakt trakt) {
-        // get show ids in local database for which syncing is enabled
+    private Integer uploadToTrakt(Trakt trakt) {
+        // get a list of show ids in the local database
         Cursor showTvdbIds = mContext.getContentResolver().query(Shows.CONTENT_URI, new String[] {
                 Shows._ID
-        }, Shows.SYNCENABLED + "=1", null, null);
-
+        }, null, null, null);
         if (showTvdbIds == null) {
             return TraktTools.FAILED;
         }
         if (showTvdbIds.getCount() == 0) {
+            // nothing to upload
             return TraktTools.SUCCESS_NOWORK;
         }
 
