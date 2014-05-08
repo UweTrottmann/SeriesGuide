@@ -32,21 +32,12 @@
             android:text="@string/upload_existing_shows"
             android:textAppearance="@style/TextAppearance.Large.Light" />
 
-        <TextView
-            android:id="@+id/textViewTraktUploadHint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/textViewTraktUploadTitle"
-            android:layout_marginTop="@dimen/large_padding"
-            android:text="@string/trakt_upload_hint" />
-
         <ProgressBar
             android:id="@+id/progressBarTraktUpload"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewTraktUploadHint" />
+            android:layout_below="@+id/textViewTraktUploadTitle" />
 
         <Button
             android:id="@+id/buttonTraktUpload"
