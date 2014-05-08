@@ -16,13 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.ContentValues;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnMultiChoiceClickListener;
-import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -36,24 +29,20 @@ import butterknife.InjectView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.TraktUpload;
 import com.battlelancer.seriesguide.util.Utils;
 
 /**
- * Displays information and offers tools to upload or download watched flags
- * from trakt.
+ * Provides a tool to upload shows to trakt (e.g. after first connecting).
  */
 public class TraktSyncActivity extends BaseActivity {
 
-    private static final int DIALOG_SELECT_SHOWS = 100;
+    private static final String TAG = "Trakt Upload";
 
-    private static final String TAG = "Trakt Sync";
+    private TraktUpload mUploadTask;
 
-    private TraktUpload mSyncTask;
-
-    @InjectView(R.id.checkBoxSyncUnseen) CheckBox mSyncUnwatchedEpisodes;
+    @InjectView(R.id.checkBoxSyncUnseen) CheckBox mUploadUnwatchedEpisodes;
 
     @InjectView(R.id.buttonSyncToTrakt) Button mUploadButton;
 
@@ -79,10 +68,9 @@ public class TraktSyncActivity extends BaseActivity {
 
         // Sync to trakt button
         mUploadButton.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                showDialog(DIALOG_SELECT_SHOWS);
+                uploadShowsToTrakt();
             }
         });
         mUploadProgressIndicator.setVisibility(View.GONE);
@@ -91,24 +79,31 @@ public class TraktSyncActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        boolean isSyncUnseenEpisodes = TraktSettings.isSyncingUnwatchedEpisodes(this);
-        mSyncUnwatchedEpisodes.setChecked(isSyncUnseenEpisodes);
+
+        // restore settings
+        mUploadUnwatchedEpisodes.setChecked(TraktSettings.isSyncingUnwatchedEpisodes(this));
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.edit().putBoolean(TraktSettings.KEY_SYNC_UNWATCHED_EPISODES,
-                mSyncUnwatchedEpisodes.isChecked()).commit();
+
+        // save settings
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .edit()
+                .putBoolean(TraktSettings.KEY_SYNC_UNWATCHED_EPISODES,
+                        mUploadUnwatchedEpisodes.isChecked())
+                .apply();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mSyncTask != null && mSyncTask.getStatus() == AsyncTask.Status.RUNNING) {
-            mSyncTask.cancel(true);
-            mSyncTask = null;
+
+        // cleanup running task
+        if (mUploadTask != null && mUploadTask.getStatus() == AsyncTask.Status.RUNNING) {
+            mUploadTask.cancel(true);
+            mUploadTask = null;
         }
     }
 
@@ -121,66 +116,15 @@ public class TraktSyncActivity extends BaseActivity {
         return false;
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case DIALOG_SELECT_SHOWS:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                // title and cancel
-                builder.setTitle(R.string.trakt_upload);
-                builder.setNegativeButton(android.R.string.cancel, null);
-
-                // create checkable show list
-                final Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[] {
-                        Shows._ID, Shows.TITLE, Shows.SYNCENABLED
-                }, null, null, Shows.TITLE + " ASC");
-                if (shows == null || shows.getCount() == 0) {
-                    // no shows, only show cancel button
-                    return builder.create();
-                }
-
-                String[] showTitles = new String[shows.getCount()];
-                boolean[] syncEnabled = new boolean[shows.getCount()];
-                for (int i = 0; i < showTitles.length; i++) {
-                    shows.moveToNext();
-                    showTitles[i] = shows.getString(1);
-                    syncEnabled[i] = shows.getInt(2) == 1;
-                }
-
-                builder.setMultiChoiceItems(showTitles, syncEnabled,
-                        new OnMultiChoiceClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which,
-                                    boolean isChecked) {
-                                shows.moveToFirst();
-                                shows.move(which);
-                                final String showId = shows.getString(0);
-                                final ContentValues values = new ContentValues();
-                                values.put(Shows.SYNCENABLED, isChecked);
-                                getContentResolver().update(Shows.buildShowUri(showId), values,
-                                        null, null);
-                            }
-                        });
-                builder.setPositiveButton(R.string.trakt_upload,
-                        new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (mSyncTask != null
-                                        && mSyncTask.getStatus() != AsyncTask.Status.FINISHED) {
-                                    return;
-                                }
-                                mSyncTask = (TraktUpload) new TraktUpload(TraktSyncActivity.this,
-                                        mUploadButton, mUploadProgressIndicator,
-                                        mSyncUnwatchedEpisodes.isChecked())
-                                        .execute();
-                                Utils.trackAction(TraktSyncActivity.this, TAG, "Upload to trakt");
-                            }
-                        });
-
-                return builder.create();
+    private void uploadShowsToTrakt() {
+        // abort if task is still running
+        if (mUploadTask != null && mUploadTask.getStatus() != AsyncTask.Status.FINISHED) {
+            return;
         }
-        return null;
+
+        mUploadTask = (TraktUpload) new TraktUpload(this, mUploadButton, mUploadProgressIndicator,
+                mUploadUnwatchedEpisodes.isChecked())
+                .execute();
+        Utils.trackAction(TraktSyncActivity.this, TAG, "Upload to trakt");
     }
 }
