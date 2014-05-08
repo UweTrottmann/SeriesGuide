@@ -138,7 +138,7 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment implements
         }
         List<String> emails = new ArrayList<>(emailSet);
         mEmailAutoCompleteView.setAdapter(
-                new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line,
+                new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line,
                         emails));
 
         // connect button
