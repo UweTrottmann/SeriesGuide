@@ -33,6 +33,10 @@ import java.util.List;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
+/**
+ * Uploads watched episodes in SeriesGuide to a users trakt library. Can optionally remove watched
+ * flags on trakt if an episode is not watched in SeriesGuide.
+ */
 public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
     private Context mContext;
@@ -40,14 +44,14 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
     private final Button mUploadButton;
     private final View mProgressIndicator;
 
-    private boolean mIsSyncingUnseen;
+    private boolean mIsUploadingUnwatched;
 
     public TraktSync(Context context, Button uploadButton, View progressIndicator,
-            boolean isSyncingUnseen) {
+            boolean isUploadingUnwatched) {
         mContext = context;
         mUploadButton = uploadButton;
         mProgressIndicator = progressIndicator;
-        mIsSyncingUnseen = isSyncingUnseen;
+        mIsUploadingUnwatched = isUploadingUnwatched;
     }
 
     @Override
@@ -86,26 +90,30 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
         while (showTvdbIds.moveToNext()) {
             int showTvdbId = showTvdbIds.getInt(0);
-            List<ShowService.Episodes.Episode> watchedEpisodes = new ArrayList<>();
 
             // build a list of all watched episodes
-            Cursor seenEpisodes = mContext.getContentResolver().query(
+            /**
+             * We do not have to worry about uploading episodes that are already watched on
+             * trakt, it will keep the original timestamp of the episodes being watched.
+             */
+            List<ShowService.Episodes.Episode> watchedEpisodesToUpload = new ArrayList<>();
+            Cursor watchedEpisodes = mContext.getContentResolver().query(
                     Episodes.buildEpisodesOfShowUri(showTvdbId), TraktSyncQuery.PROJECTION,
                     TraktSyncQuery.SELECTION_WATCHED, null, null);
-            if (seenEpisodes != null) {
-                buildEpisodeList(watchedEpisodes, seenEpisodes);
-                seenEpisodes.close();
+            if (watchedEpisodes != null) {
+                buildEpisodeList(watchedEpisodesToUpload, watchedEpisodes);
+                watchedEpisodes.close();
             }
 
-            // build unseen episodes trakt post
-            List<ShowService.Episodes.Episode> unwatchedEpisodes = new ArrayList<>();
-            if (mIsSyncingUnseen) {
-                Cursor unseenEpisodes = mContext.getContentResolver().query(
+            // if requested, build a list of all unwatched episodes
+            List<ShowService.Episodes.Episode> unwatchedEpisodesToUpload = new ArrayList<>();
+            if (mIsUploadingUnwatched) {
+                Cursor unwatchedEpisodes = mContext.getContentResolver().query(
                         Episodes.buildEpisodesOfShowUri(showTvdbId), TraktSyncQuery.PROJECTION,
                         TraktSyncQuery.SELECTION_UNWATCHED, null, null);
-                if (unseenEpisodes != null) {
-                    buildEpisodeList(unwatchedEpisodes, unseenEpisodes);
-                    unseenEpisodes.close();
+                if (unwatchedEpisodes != null) {
+                    buildEpisodeList(unwatchedEpisodesToUpload, unwatchedEpisodes);
+                    unwatchedEpisodes.close();
                 }
             }
 
@@ -117,14 +125,14 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
             try {
                 // post to trakt
-                if (watchedEpisodes.size() > 0) {
+                if (watchedEpisodesToUpload.size() > 0) {
                     showService.episodeSeen(new ShowService.Episodes(
-                            showTvdbId, watchedEpisodes
+                            showTvdbId, watchedEpisodesToUpload
                     ));
                 }
-                if (mIsSyncingUnseen && unwatchedEpisodes.size() > 0) {
+                if (mIsUploadingUnwatched && unwatchedEpisodesToUpload.size() > 0) {
                     showService.episodeUnseen(new ShowService.Episodes(
-                            showTvdbId, unwatchedEpisodes
+                            showTvdbId, unwatchedEpisodesToUpload
                     ));
                 }
             } catch (RetrofitError e) {
