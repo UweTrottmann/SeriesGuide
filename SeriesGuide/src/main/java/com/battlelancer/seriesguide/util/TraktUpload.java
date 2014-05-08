@@ -23,7 +23,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.jakewharton.trakt.Trakt;
@@ -98,8 +97,8 @@ public class TraktUpload extends AsyncTask<Void, Void, Integer> {
              */
             List<ShowService.Episodes.Episode> watchedEpisodesToUpload = new ArrayList<>();
             Cursor watchedEpisodes = mContext.getContentResolver().query(
-                    Episodes.buildEpisodesOfShowUri(showTvdbId), TraktSyncQuery.PROJECTION,
-                    TraktSyncQuery.SELECTION_WATCHED, null, null);
+                    Episodes.buildEpisodesOfShowUri(showTvdbId), EpisodesQuery.PROJECTION,
+                    Episodes.SELECTION_WATCHED, null, null);
             if (watchedEpisodes != null) {
                 buildEpisodeList(watchedEpisodesToUpload, watchedEpisodes);
                 watchedEpisodes.close();
@@ -109,12 +108,22 @@ public class TraktUpload extends AsyncTask<Void, Void, Integer> {
             List<ShowService.Episodes.Episode> unwatchedEpisodesToUpload = new ArrayList<>();
             if (mIsUploadingUnwatched) {
                 Cursor unwatchedEpisodes = mContext.getContentResolver().query(
-                        Episodes.buildEpisodesOfShowUri(showTvdbId), TraktSyncQuery.PROJECTION,
-                        TraktSyncQuery.SELECTION_UNWATCHED, null, null);
+                        Episodes.buildEpisodesOfShowUri(showTvdbId), EpisodesQuery.PROJECTION,
+                        Episodes.SELECTION_UNWATCHED, null, null);
                 if (unwatchedEpisodes != null) {
                     buildEpisodeList(unwatchedEpisodesToUpload, unwatchedEpisodes);
                     unwatchedEpisodes.close();
                 }
+            }
+
+            // build a list of collected episodes
+            List<ShowService.Episodes.Episode> collectedEpisodesToUpload = new ArrayList<>();
+            Cursor collectedEpisodes = mContext.getContentResolver()
+                    .query(Episodes.buildEpisodesOfShowUri(showTvdbId),
+                            EpisodesQuery.PROJECTION, Episodes.SELECTION_COLLECTED, null, null);
+            if (collectedEpisodes != null) {
+                buildEpisodeList(collectedEpisodesToUpload, collectedEpisodes);
+                collectedEpisodes.close();
             }
 
             // last chance to abort
@@ -125,18 +134,26 @@ public class TraktUpload extends AsyncTask<Void, Void, Integer> {
 
             try {
                 // post to trakt
+                // watched episodes
                 if (watchedEpisodesToUpload.size() > 0) {
                     showService.episodeSeen(new ShowService.Episodes(
                             showTvdbId, watchedEpisodesToUpload
                     ));
                 }
+                // optionally unwatched episodes
                 if (mIsUploadingUnwatched && unwatchedEpisodesToUpload.size() > 0) {
                     showService.episodeUnseen(new ShowService.Episodes(
                             showTvdbId, unwatchedEpisodesToUpload
                     ));
                 }
+                // collected episodes
+                if (collectedEpisodesToUpload.size() > 0) {
+                    showService.episodeLibrary(new ShowService.Episodes(
+                            showTvdbId, collectedEpisodesToUpload
+                    ));
+                }
             } catch (RetrofitError e) {
-                Timber.e(e, "Uploading episodes failed");
+                Timber.e(e, "Uploading episodes to trakt failed");
                 resultCode = TraktTools.FAILED_API;
                 break;
             }
@@ -146,12 +163,12 @@ public class TraktUpload extends AsyncTask<Void, Void, Integer> {
         return resultCode;
     }
 
-    private static void buildEpisodeList(List<ShowService.Episodes.Episode> watchedEpisodes,
-            Cursor seenEpisodes) {
-        while (seenEpisodes.moveToNext()) {
-            int season = seenEpisodes.getInt(0);
-            int episode = seenEpisodes.getInt(1);
-            watchedEpisodes.add(new ShowService.Episodes.Episode(season, episode));
+    private static void buildEpisodeList(List<ShowService.Episodes.Episode> episodesToUpload,
+            Cursor episodes) {
+        while (episodes.moveToNext()) {
+            int season = episodes.getInt(EpisodesQuery.SEASON);
+            int episode = episodes.getInt(EpisodesQuery.EPISODE);
+            episodesToUpload.add(new ShowService.Episodes.Episode(season, episode));
         }
     }
 
@@ -197,14 +214,13 @@ public class TraktUpload extends AsyncTask<Void, Void, Integer> {
         mUploadButton.setEnabled(true);
     }
 
-    public interface TraktSyncQuery {
+    public interface EpisodesQuery {
 
         public String[] PROJECTION = new String[] {
                 Episodes.SEASON, Episodes.NUMBER
         };
 
-        public String SELECTION_WATCHED = Episodes.WATCHED + "=" + EpisodeFlags.WATCHED;
-
-        public String SELECTION_UNWATCHED = Episodes.WATCHED + "!=" + EpisodeFlags.WATCHED;
+        int SEASON = 0;
+        int EPISODE = 1;
     }
 }
