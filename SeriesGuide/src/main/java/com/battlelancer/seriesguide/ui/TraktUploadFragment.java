@@ -30,6 +30,7 @@ import butterknife.InjectView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
+import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.TraktUpload;
 import com.battlelancer.seriesguide.util.Utils;
@@ -38,7 +39,8 @@ import com.battlelancer.seriesguide.util.Utils;
  * Provides tool to upload shows in the local database to trakt (e.g. after first connecting to
  * trakt).
  */
-public class TraktUploadFragment extends SherlockFragment implements OnTaskFinishedListener {
+public class TraktUploadFragment extends SherlockFragment implements OnTaskFinishedListener,
+        OnTaskProgressListener {
 
     private static final String TAG = "Trakt Upload";
 
@@ -131,7 +133,8 @@ public class TraktUploadFragment extends SherlockFragment implements OnTaskFinis
     private void uploadShowsToTrakt() {
         setProgressLock(true);
 
-        mUploadTask = new TraktUpload(getActivity(), this, mUploadUnwatchedEpisodes.isChecked());
+        mUploadTask = new TraktUpload(getActivity(), this, this,
+                mUploadUnwatchedEpisodes.isChecked());
         mUploadTask.execute();
         Utils.trackAction(getActivity(), TAG, "Upload to trakt");
     }
@@ -145,5 +148,14 @@ public class TraktUploadFragment extends SherlockFragment implements OnTaskFinis
         mUploadButton.setEnabled(!isEnabled);
         mUploadUnwatchedEpisodes.setEnabled(!isEnabled);
         mProgressIndicator.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void onProgressUpdate(Integer... values) {
+        if (mProgressIndicator == null) {
+            return;
+        }
+        mProgressIndicator.setMax(values[0]);
+        mProgressIndicator.setProgress(values[1]);
     }
 }

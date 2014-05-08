@@ -20,7 +20,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout style="@style/Page.Centered">
+    <RelativeLayout
+        style="@style/Page.Centered"
+        android:animateLayoutChanges="true">
 
         <TextView
             android:id="@+id/textViewTraktUploadTitle"
@@ -39,12 +41,19 @@
             android:layout_marginTop="@dimen/large_padding"
             android:text="@string/trakt_upload_hint" />
 
+        <ProgressBar
+            android:id="@+id/progressBarTraktUpload"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewTraktUploadHint" />
+
         <Button
             android:id="@+id/buttonTraktUpload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/textViewTraktUploadHint"
+            android:layout_below="@+id/progressBarTraktUpload"
             android:layout_marginTop="@dimen/default_padding"
             android:text="@string/trakt_upload" />
 
@@ -57,13 +66,6 @@
             android:layout_marginTop="@dimen/large_padding"
             android:text="@string/trakt_syncunwatched" />
 
-        <ProgressBar
-            android:id="@+id/progressBarTraktUpload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/buttonTraktUpload"
-            android:layout_alignTop="@+id/buttonTraktUpload"
-            android:layout_toRightOf="@+id/buttonTraktUpload" />
     </RelativeLayout>
 
 </ScrollView>

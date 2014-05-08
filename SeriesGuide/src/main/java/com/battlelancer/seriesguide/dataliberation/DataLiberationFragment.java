@@ -32,7 +32,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener;
+import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
 import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;

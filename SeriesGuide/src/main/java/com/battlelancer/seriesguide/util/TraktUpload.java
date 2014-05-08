@@ -22,6 +22,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
+import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.jakewharton.trakt.Trakt;
@@ -35,16 +36,18 @@ import timber.log.Timber;
  * Uploads watched episodes in SeriesGuide to a users trakt library. Can optionally remove watched
  * flags on trakt if an episode is not watched in SeriesGuide.
  */
-public class TraktUpload extends AsyncTask<Void, Void, Integer> {
+public class TraktUpload extends AsyncTask<Void, Integer, Integer> {
 
     private final Context mContext;
     private final OnTaskFinishedListener mFinishedListener;
+    private final OnTaskProgressListener mProgressListener;
     private final boolean mIsUploadingUnwatched;
 
-    public TraktUpload(Context context, OnTaskFinishedListener listener,
-            boolean isUploadingUnwatched) {
+    public TraktUpload(Context context, OnTaskFinishedListener finishedListener,
+            OnTaskProgressListener progressListener, boolean isUploadingUnwatched) {
         mContext = context;
-        mFinishedListener = listener;
+        mFinishedListener = finishedListener;
+        mProgressListener = progressListener;
         mIsUploadingUnwatched = isUploadingUnwatched;
     }
 
@@ -68,7 +71,8 @@ public class TraktUpload extends AsyncTask<Void, Void, Integer> {
         if (showTvdbIds == null) {
             return TraktTools.FAILED;
         }
-        if (showTvdbIds.getCount() == 0) {
+        final int count = showTvdbIds.getCount();
+        if (count == 0) {
             // nothing to upload
             return TraktTools.SUCCESS_NOWORK;
         }
@@ -146,6 +150,8 @@ public class TraktUpload extends AsyncTask<Void, Void, Integer> {
                 resultCode = TraktTools.FAILED_API;
                 break;
             }
+
+            publishProgress(count, showTvdbIds.getPosition());
         }
 
         showTvdbIds.close();
@@ -196,6 +202,13 @@ public class TraktUpload extends AsyncTask<Void, Void, Integer> {
 
         Toast.makeText(mContext, messageResId, duration).show();
         reportIsFinished();
+    }
+
+    @Override
+    protected void onProgressUpdate(Integer... values) {
+        if (mProgressListener != null) {
+            mProgressListener.onProgressUpdate(values);
+        }
     }
 
     private void reportIsFinished() {

@@ -24,9 +24,9 @@ import android.widget.ProgressBar;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.dataliberation.JsonImportTask;
 import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
+import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 
 /**
@@ -35,7 +35,7 @@ import com.battlelancer.seriesguide.ui.BaseActivity;
  * using any other version an import assistant is shown.
  */
 public class MigrationActivity extends BaseActivity
-        implements JsonExportTask.OnTaskProgressListener, OnTaskFinishedListener {
+        implements OnTaskProgressListener, OnTaskFinishedListener {
 
     private static final String PACKAGE_SERIESGUIDE = "com.battlelancer.seriesguide";
 

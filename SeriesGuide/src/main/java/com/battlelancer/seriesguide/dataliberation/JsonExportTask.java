@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.dataliberation.model.Movie;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
+import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
@@ -70,10 +71,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     private static final int SUCCESS = 1;
     private static final int ERROR_STORAGE_ACCESS = 0;
     private static final int ERROR = -1;
-
-    public interface OnTaskProgressListener {
-        public void onProgressUpdate(Integer... values);
-    }
 
     public interface ShowStatusExport {
         String CONTINUING = "continuing";
