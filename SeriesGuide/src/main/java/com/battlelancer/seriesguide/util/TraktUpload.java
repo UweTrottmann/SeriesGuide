@@ -37,7 +37,7 @@ import timber.log.Timber;
  * Uploads watched episodes in SeriesGuide to a users trakt library. Can optionally remove watched
  * flags on trakt if an episode is not watched in SeriesGuide.
  */
-public class TraktSync extends AsyncTask<Void, Void, Integer> {
+public class TraktUpload extends AsyncTask<Void, Void, Integer> {
 
     private Context mContext;
 
@@ -46,7 +46,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
     private boolean mIsUploadingUnwatched;
 
-    public TraktSync(Context context, Button uploadButton, View progressIndicator,
+    public TraktUpload(Context context, Button uploadButton, View progressIndicator,
             boolean isUploadingUnwatched) {
         mContext = context;
         mUploadButton = uploadButton;

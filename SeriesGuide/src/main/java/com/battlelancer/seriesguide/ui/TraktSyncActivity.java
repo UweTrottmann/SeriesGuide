@@ -38,7 +38,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.TraktSettings;
-import com.battlelancer.seriesguide.util.TraktSync;
+import com.battlelancer.seriesguide.util.TraktUpload;
 import com.battlelancer.seriesguide.util.Utils;
 
 /**
@@ -51,7 +51,7 @@ public class TraktSyncActivity extends BaseActivity {
 
     private static final String TAG = "Trakt Sync";
 
-    private TraktSync mSyncTask;
+    private TraktUpload mSyncTask;
 
     @InjectView(R.id.checkBoxSyncUnseen) CheckBox mSyncUnwatchedEpisodes;
 
@@ -171,7 +171,7 @@ public class TraktSyncActivity extends BaseActivity {
                                         && mSyncTask.getStatus() != AsyncTask.Status.FINISHED) {
                                     return;
                                 }
-                                mSyncTask = (TraktSync) new TraktSync(TraktSyncActivity.this,
+                                mSyncTask = (TraktUpload) new TraktUpload(TraktSyncActivity.this,
                                         mUploadButton, mUploadProgressIndicator,
                                         mSyncUnwatchedEpisodes.isChecked())
                                         .execute();
