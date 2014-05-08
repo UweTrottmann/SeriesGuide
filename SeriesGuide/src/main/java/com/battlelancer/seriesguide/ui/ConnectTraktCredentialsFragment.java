@@ -40,6 +40,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.ConnectTraktTask;
 import com.battlelancer.seriesguide.util.Utils;
 import java.util.ArrayList;
@@ -259,8 +260,11 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment implements
 
         // if we got here, looks like credentials were stored successfully
 
+        // trigger a sync, notifies user via toast
+        SgSyncAdapter.requestSyncImmediate(getActivity(), SgSyncAdapter.SyncType.DELTA, 0, true);
+
+        // show further options after successful connection
         if (getFragmentManager() != null) {
-            // show download/upload options after successful connection
             ConnectTraktFinishedFragment f = new ConnectTraktFinishedFragment();
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.replace(android.R.id.content, f);

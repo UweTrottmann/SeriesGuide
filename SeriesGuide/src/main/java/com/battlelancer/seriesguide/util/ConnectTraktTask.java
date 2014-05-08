@@ -123,6 +123,9 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         // make next sync merge local movies with those on trakt
         editor.putBoolean(TraktSettings.KEY_HAS_MERGED_MOVIES, false);
 
+        // make sure the next sync will run a full episode sync
+        editor.putLong(TraktSettings.KEY_LAST_FULL_EPISODE_SYNC, 0);
+
         editor.commit();
 
         return Result.SUCCESS;
