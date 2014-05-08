@@ -114,9 +114,14 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         // set new credentials
         trakt.setAuthentication(username, password);
 
-        // reset merged movies flag
+        // set last full sync time to now
+        // this will prevent a full sync from running shortly after connecting
+        // and give the user a chance to upload his shows
         PreferenceManager.getDefaultSharedPreferences(mContext).edit()
-                .putBoolean(TraktSettings.KEY_HAS_MERGED_MOVIES, false).commit();
+                .putLong(TraktSettings.KEY_LAST_FULL_SYNC, System.currentTimeMillis())
+        // reset merged movies flag
+                .putBoolean(TraktSettings.KEY_HAS_MERGED_MOVIES, false)
+                .commit();
 
         return Result.SUCCESS;
     }
