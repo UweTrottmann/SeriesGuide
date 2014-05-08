@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -114,14 +115,15 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         // set new credentials
         trakt.setAuthentication(username, password);
 
-        // set last full sync time to now
-        // this will prevent a full sync from running shortly after connecting
-        // and give the user a chance to upload his shows
-        PreferenceManager.getDefaultSharedPreferences(mContext).edit()
-                .putLong(TraktSettings.KEY_LAST_FULL_SYNC, System.currentTimeMillis())
-        // reset merged movies flag
-                .putBoolean(TraktSettings.KEY_HAS_MERGED_MOVIES, false)
-                .commit();
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(mContext)
+                .edit();
+
+        // make next sync merge local watched and collected episodes with those on trakt
+        editor.putBoolean(TraktSettings.KEY_HAS_MERGED_EPISODES, false);
+        // make next sync merge local movies with those on trakt
+        editor.putBoolean(TraktSettings.KEY_HAS_MERGED_MOVIES, false);
+
+        editor.commit();
 
         return Result.SUCCESS;
     }

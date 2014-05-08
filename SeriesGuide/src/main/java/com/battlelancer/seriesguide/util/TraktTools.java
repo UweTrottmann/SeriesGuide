@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.util;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.OperationApplicationException;
+import android.database.Cursor;
 import android.support.v4.app.FragmentManager;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -30,6 +31,7 @@ import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowSeason;
 import com.jakewharton.trakt.enumerations.Extended;
 import com.jakewharton.trakt.enumerations.Rating;
+import com.jakewharton.trakt.services.ShowService;
 import com.jakewharton.trakt.services.UserService;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -40,11 +42,11 @@ import timber.log.Timber;
 public class TraktTools {
 
     // Sync status codes
-    static final int SUCCESS_NOWORK = 0;
-    static final int FAILED_API = -1;
-    static final int FAILED = -2;
-    static final int FAILED_CREDENTIALS = -3;
-    static final int SUCCESS = -4;
+    public static final int SUCCESS = 1;
+    public static final int SUCCESS_NOWORK = 0;
+    public static final int FAILED_API = -1;
+    public static final int FAILED = -2;
+    public static final int FAILED_CREDENTIALS = -3;
 
     // Url parts
     private static final String TRAKT_SEARCH_BASE_URL = "https://trakt.tv/search/";
@@ -59,7 +61,7 @@ public class TraktTools {
      * @param clearExistingFlags If set, all watched and collected (and only those, e.g. skipped
      *                           flag is preserved) flags will be removed prior to getting the
      *                           actual flags from trakt (season by season).
-     * @return The number of shows synced (may be 0). Or -1 if there was an error.
+     * @return Any of the {@link TraktTools} result codes.
      */
     public static int syncToSeriesGuide(Context context, Trakt trakt,
             HashSet<Integer> localShows, boolean clearExistingFlags) {
@@ -82,9 +84,8 @@ public class TraktTools {
         if (remoteShows == null) {
             return FAILED_API;
         }
-        int syncCountWatched = 0;
         if (!remoteShows.isEmpty()) {
-            syncCountWatched = applyEpisodeFlagChanges(context, remoteShows, localShows,
+            applyEpisodeFlagChanges(context, remoteShows, localShows,
                     SeriesGuideContract.Episodes.WATCHED, clearExistingFlags);
         }
 
@@ -99,18 +100,16 @@ public class TraktTools {
         if (remoteShows == null) {
             return FAILED_API;
         }
-        int syncCountCollection = 0;
         if (!remoteShows.isEmpty()) {
-            syncCountCollection = applyEpisodeFlagChanges(context, remoteShows, localShows,
+            applyEpisodeFlagChanges(context, remoteShows, localShows,
                     SeriesGuideContract.Episodes.COLLECTED, clearExistingFlags);
         }
 
-        return Math.max(syncCountCollection, syncCountWatched);
+        return SUCCESS;
     }
 
-    private static int applyEpisodeFlagChanges(Context context, List<TvShow> remoteShows,
+    private static void applyEpisodeFlagChanges(Context context, List<TvShow> remoteShows,
             HashSet<Integer> localShows, String episodeFlagColumn, boolean clearExistingFlags) {
-        int syncCount = 0;
         HashSet<Integer> skippedShows = new HashSet<>(localShows);
 
         // loop through shows on trakt, update the ones existing locally
@@ -124,15 +123,12 @@ public class TraktTools {
             applyEpisodeFlagChanges(context, tvShow, episodeFlagColumn, clearExistingFlags);
 
             skippedShows.remove(tvShow.tvdb_id);
-            syncCount++;
         }
 
         // clear flags on all shows not synced
         if (clearExistingFlags && skippedShows.size() > 0) {
             clearFlagsOfShow(context, episodeFlagColumn, skippedShows);
         }
-
-        return syncCount;
     }
 
     private static void clearFlagsOfShow(Context context, String episodeFlagColumn,
@@ -225,7 +221,8 @@ public class TraktTools {
                                 SeriesGuideContract.Episodes.buildEpisodesOfShowUri(tvShow.tvdb_id))
                         .withSelection(
                                 SeriesGuideContract.Episodes.SEASON + "=" + season.season + " AND "
-                                        + SeriesGuideContract.Episodes.NUMBER + "=" + episode, null)
+                                        + SeriesGuideContract.Episodes.NUMBER + "=" + episode, null
+                        )
                         .withValue(episodeFlagColumn, episodeFlag)
                         .build());
             }
@@ -241,6 +238,78 @@ public class TraktTools {
                 // this includes the clear flags op failing
             }
             batch.clear();
+        }
+    }
+
+    /**
+     * Uploads all watched and collected episodes to trakt.
+     *
+     * @return Any of the {@link TraktTools} result codes.
+     */
+    public static int uploadToTrakt(Context context, Trakt trakt, HashSet<Integer> localShows) {
+        if (localShows.size() == 0) {
+            return SUCCESS_NOWORK;
+        }
+
+        ShowService showService = trakt.showService();
+        for (Integer showTvdbId : localShows) {
+            // build a list of all watched episodes
+            /**
+             * We do not have to worry about uploading episodes that are already watched on
+             * trakt, it will keep the original timestamp of the episodes being watched.
+             */
+            List<ShowService.Episodes.Episode> watchedEpisodesToUpload = new ArrayList<>();
+            Cursor watchedEpisodes = context.getContentResolver().query(
+                    SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
+                    EpisodesQuery.PROJECTION,
+                    SeriesGuideContract.Episodes.SELECTION_WATCHED, null, null);
+            if (watchedEpisodes == null) {
+                return FAILED;
+            }
+            buildEpisodeList(watchedEpisodesToUpload, watchedEpisodes);
+            watchedEpisodes.close();
+
+            // build a list of collected episodes
+            List<ShowService.Episodes.Episode> collectedEpisodesToUpload = new ArrayList<>();
+            Cursor collectedEpisodes = context.getContentResolver()
+                    .query(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
+                            EpisodesQuery.PROJECTION,
+                            SeriesGuideContract.Episodes.SELECTION_COLLECTED, null, null);
+            if (collectedEpisodes == null) {
+                return FAILED;
+            }
+            buildEpisodeList(collectedEpisodesToUpload, collectedEpisodes);
+            collectedEpisodes.close();
+
+            try {
+                // post to trakt
+                // watched episodes
+                if (watchedEpisodesToUpload.size() > 0) {
+                    showService.episodeSeen(new ShowService.Episodes(
+                            showTvdbId, watchedEpisodesToUpload
+                    ));
+                }
+                // collected episodes
+                if (collectedEpisodesToUpload.size() > 0) {
+                    showService.episodeLibrary(new ShowService.Episodes(
+                            showTvdbId, collectedEpisodesToUpload
+                    ));
+                }
+            } catch (RetrofitError e) {
+                Timber.e(e, "Uploading episodes to trakt failed");
+                return FAILED_API;
+            }
+        }
+
+        return SUCCESS;
+    }
+
+    private static void buildEpisodeList(List<ShowService.Episodes.Episode> episodesToUpload,
+            Cursor episodes) {
+        while (episodes.moveToNext()) {
+            int season = episodes.getInt(EpisodesQuery.SEASON);
+            int episode = episodes.getInt(EpisodesQuery.EPISODE);
+            episodesToUpload.add(new ShowService.Episodes.Episode(season, episode));
         }
     }
 
@@ -336,5 +405,15 @@ public class TraktTools {
         }
         TraktRateDialogFragment newFragment = TraktRateDialogFragment.newInstanceMovie(movieTmdbId);
         newFragment.show(fragmentManager, "traktratedialog");
+    }
+
+    public interface EpisodesQuery {
+
+        public String[] PROJECTION = new String[] {
+                SeriesGuideContract.Episodes.SEASON, SeriesGuideContract.Episodes.NUMBER
+        };
+
+        int SEASON = 0;
+        int EPISODE = 1;
     }
 }
