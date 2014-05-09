@@ -213,13 +213,12 @@
   <string name="hexagon_priority_select">版本选择</string>
   <string name="connect_trakt">连接到 trakt</string>
   <string name="connect_trakt_done">trakt 已关联！</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">从资料库中添加节目</string>
   <string name="show_library">显示资料库</string>
-  <string name="upload_shows">上传 “追剧助手” 节目列表</string>
   <string name="upload_existing_shows">上传已存在的节目</string>
   <string name="about_trakt">trakt 会记录您已观看的电影和电视节目。<a href="http://trakt.tv">了解更多信息</a></string>
   <string name="integration_trakt_items">- 从你的资料库或待看列表中转移剧目\n\n- 查看推荐的剧目和朋友们的近期活动\n\n- 自动同步已观看和已收藏标记\n\n- 已观看的新剧目将自动加入数据库</string>
-  <string name="trakt_upload_hint">标记 trakt 上所有在 SeriesGuide 中已观看的节目</string>
   <string name="trakt_upload">上传观看状态至网络</string>
   <string name="trakt_syncunwatched">在 trakt.tv 上移除 SeriesGuide 中未观看剧集的已观看标记</string>
   <string name="upload_done">已完成上传</string>

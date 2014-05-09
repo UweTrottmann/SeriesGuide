@@ -213,13 +213,12 @@
   <string name="hexagon_priority_select">Select version</string>
   <string name="connect_trakt">Conectaţi trakt</string>
   <string name="connect_trakt_done">Conectat la trakt!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Adauga seriale din biblioteca dvs.:</string>
   <string name="show_library">Arată biblioteca dvs.</string>
-  <string name="upload_shows">Încărcaţi-vă lista SeriesGuide:</string>
   <string name="upload_existing_shows">Încărcaţi seriale existente</string>
   <string name="about_trakt">Trakt ajută la păstrarea unei evidenţe a emisiunilor TV şi a filmelor la care te uiţi.  <a href="http://trakt.tv">Află mai multe</a></string>
   <string name="integration_trakt_items">-Adauga seriale din biblioteca dvs. şi watchlist\n\n- vedeti recomandările dvs. şi activitatea prietenilor\n\n - steagurile privite şi colectate sunt sincronizate automat\n\n-serialele noi la care v-ati uitat sunt adăugate automat</string>
-  <string name="trakt_upload_hint">Pune toate episoadele vazute in SeriesGuide si pe trakt:</string>
   <string name="trakt_upload">Încărcaţi in trakt.tv</string>
   <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
   <string name="upload_done">Finished uploading.</string>

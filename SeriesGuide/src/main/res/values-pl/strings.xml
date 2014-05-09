@@ -213,13 +213,12 @@
   <string name="hexagon_priority_select">Wybierz wersję</string>
   <string name="connect_trakt">Połącz z trakt</string>
   <string name="connect_trakt_done">Podłączono do trakt!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Dodaj seriale z biblioteki:</string>
   <string name="show_library">Pokaż bibliotekę</string>
-  <string name="upload_shows">Prześlij listę seriali SeriesGuide:</string>
   <string name="upload_existing_shows">Prześlij istniejące seriale</string>
   <string name="about_trakt">trakt.tv pomaga zarządzać jakie seriale i filmy oglądasz. <a href="http://trakt.tv">Dowiedz się więcej</a></string>
   <string name="integration_trakt_items">-dodaje seriale z biblioteki i listy obejrzanych odcinków\n\n- zobacz rekomendację i aktywność przyjaciół\n\n - automatyczna synchronizacja oznaczenia jako obejrzane i kupione\n\n- automatyczne dodawanie nowo obejrzanych seriali</string>
-  <string name="trakt_upload_hint">Oznacz odcinki jako obejrzane w SeriesGuide jeśli są obejrzane na trakt</string>
   <string name="trakt_upload">Wyślij do trakt.tv</string>
   <string name="trakt_syncunwatched">Usuń oznaczenie jako obejrzane na trakt dla nieobejrzanych odcinków w SeriesGuide</string>
   <string name="upload_done">Przesyłanie zakończone.</string>

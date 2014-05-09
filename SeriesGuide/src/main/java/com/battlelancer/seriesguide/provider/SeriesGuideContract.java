@@ -447,6 +447,8 @@ public class SeriesGuideContract {
 
         public static final String SELECTION_WATCHED = Episodes.WATCHED + "=" + EpisodeFlags.WATCHED;
 
+        public static final String SELECTION_COLLECTED = Episodes.COLLECTED + "=1";
+
         public static final String SELECTION_NOT_COLLECTED = Episodes.COLLECTED + "=0";
 
         public static final String SELECTION_NO_SPECIALS = Episodes.SEASON + "!=0";

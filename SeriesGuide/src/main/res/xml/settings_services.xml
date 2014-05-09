@@ -41,13 +41,6 @@
                 android:targetClass="com.battlelancer.seriesguide.ui.ConnectTraktActivity"
                 android:targetPackage="@string/package_name" />
         </Preference>
-        <Preference
-            android:key="com.battlelancer.seriesguide.trakt"
-            android:title="@string/upload_existing_shows">
-            <intent
-                android:targetClass="com.battlelancer.seriesguide.ui.TraktSyncActivity"
-                android:targetPackage="@string/package_name" />
-        </Preference>
 
         <CheckBoxPreference
             android:defaultValue="True"

@@ -213,13 +213,12 @@
   <string name="hexagon_priority_select">Versiyon seç</string>
   <string name="connect_trakt">trakt\'e bağlan</string>
   <string name="connect_trakt_done">trakt\'e bağlanıldı!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Kütüphanenden diziler ekle:</string>
   <string name="show_library">Kütüphaneyi göster</string>
-  <string name="upload_shows">SeriesGuide dizi listenizi karşıya yükleyin:</string>
   <string name="upload_existing_shows">Mevcut dizileri karşıya yükleyin</string>
   <string name="about_trakt">trakt, izlediğiniz dizi ve filmlerin kaydını tutmanıza yardımcı olur.<a href="http://trakt.tv">Daha fazla bilgi</a></string>
   <string name="integration_trakt_items">- kütüphaneden ve izleme listesinden dizileri ekleyin\n\n- yorumlarını ve arkadaşlarının aktivitelerini gör\n\n- izlediklerin otomatik bir şekilde senkronize olsun\n\n- izlediğin yeni diziler otomatik eklensin</string>
-  <string name="trakt_upload_hint">SeriesGuide\'da izlenmiş her diziyi trakt\'te izlenmiş olarak işaretle:</string>
   <string name="trakt_upload">trakt\'e yükle</string>
   <string name="trakt_syncunwatched">SeriesGuide\'daki izlenmemiş bölümler için trakt\'taki izlenmiş bölümleri sil</string>
   <string name="upload_done">Yükleme bitti.</string>

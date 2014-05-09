@@ -213,13 +213,12 @@
   <string name="hexagon_priority_select">Select version</string>
   <string name="connect_trakt">Pripojenie na trakt.tv</string>
   <string name="connect_trakt_done">Pripojený do trakt.tv!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Pridať seriály z knižnice:</string>
   <string name="show_library">Zobraziť knižnicu</string>
-  <string name="upload_shows">Nahrajte si váš SeriesGuide show zoznam</string>
   <string name="upload_existing_shows">Nahrať existujúce seriály</string>
   <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
   <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
-  <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
   <string name="trakt_upload">Nahrať na trakt.tv</string>
   <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
   <string name="upload_done">Finished uploading.</string>

@@ -96,7 +96,7 @@
   <string name="services_watch">Regarder</string>
   <string name="services_more">Plus</string>
   <string name="sort">Trier par</string>
-  <string name="action_sort_ignore_articles">Ignore articles</string>
+  <string name="action_sort_ignore_articles">Ignorer les articles</string>
   <string name="today">aujourd\'hui</string>
   <string name="now">maintenant</string>
   <string name="daily">Quotidiennement</string>
@@ -213,13 +213,12 @@
   <string name="hexagon_priority_select">Choisir cette version</string>
   <string name="connect_trakt">Me connecter à trakt</string>
   <string name="connect_trakt_done">Connecté à trakt !</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Ajoutez les séries de votre bibliothèque :</string>
   <string name="show_library">Voir votre bibliothèque</string>
-  <string name="upload_shows">Transférez votre liste de séries de SeriesGuide vers trakt :</string>
   <string name="upload_existing_shows">Envoyer les séries</string>
   <string name="about_trakt">trakt vous permet de garder une trace des séries et films que vous regardez. <a href="http://trakt.tv">En savoir plus</a></string>
   <string name="integration_trakt_items">- vous pourrez ajouter vos séries depuis votre bibliothèque ou votre liste à voir.\n\n- vous pourrez voir vos recommandations et l\'activité de vos amis.\n\n- les épisodes vus et collectés seront synchronisés automatiquement.\n\n- les nouvelles séries que vous regardez seront ajoutées automatiquement.</string>
-  <string name="trakt_upload_hint">Marquer tous les épisodes vus sur SeriesGuide comme vus sur trakt :</string>
   <string name="trakt_upload">Envoyer vers trakt.tv</string>
   <string name="trakt_syncunwatched">Modifier les épisodes indiqués comme vus sur trakt s\'ils sont indiqués comme non vus sur SeriesGuide</string>
   <string name="upload_done">Envoi terminé.</string>

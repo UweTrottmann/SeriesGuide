@@ -213,13 +213,12 @@
   <string name="hexagon_priority_select">Выбрать версию</string>
   <string name="connect_trakt">Подключение trakt</string>
   <string name="connect_trakt_done">Подключен к trakt!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Добавьте сериалы вашей библиотеки:</string>
   <string name="show_library">Показать вашу библиотеку</string>
-  <string name="upload_shows">Загрузите список сериаловriesGuide:</string>
   <string name="upload_existing_shows">Загрузить существующие сериалы</string>
   <string name="about_trakt">Trakt сохраняет запись о сериалах и фильмы, которые вы смотрите. <a href="http://trakt.tv"> Подробнее</a></string>
   <string name="integration_trakt_items">-добавить сериалы из вашей библиотеки и расписания \n\n смотреть ваши рекомендации и активность друзей \n\n - просмотр и коллекции синхронизируются автоматически \n\n- автоматически добавлены просматриваемые сериалы</string>
-  <string name="trakt_upload_hint">Метки просмотра эпизодов в SeriesGuide как просмотра на trakt:</string>
   <string name="trakt_upload">Загрузить на trakt.tv</string>
   <string name="trakt_syncunwatched">Убрать статус просмотренного на trakt для не просмотренных серий в SeriesGuide</string>
   <string name="upload_done">Загрузка завершена.</string>

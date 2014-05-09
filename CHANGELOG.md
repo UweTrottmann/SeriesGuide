@@ -8,6 +8,12 @@ All dates are in the European Central timezone.
 Version 14 *(in development)*
 -----------------------------
 
+#### 14-beta5 *(2014-05-09)*
+
+* TWEAK Greatly improved experience after connecting to trakt: watched and collected episodes on the device are now automatically merged with your trakt profile.
+* NOTICE Deprecated trakt upload tool. To merge your watched and collected episodes, disconnect, then connect again to trakt.
+* NOTICE Latest translations from crowdin (Danish).
+
 #### 14-beta4 *(2014-05-06)*
 
 * FEATURE 'Ignore articles' option for show/movies sort order.

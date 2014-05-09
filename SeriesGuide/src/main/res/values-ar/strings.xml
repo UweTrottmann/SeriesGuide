@@ -213,13 +213,12 @@
   <string name="hexagon_priority_select">إختيار النسخة</string>
   <string name="connect_trakt">الإتصال بموقع Trakt</string>
   <string name="connect_trakt_done">متصل بالتراكت!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">أضف مسلسلات من مكتبتك</string>
   <string name="show_library">إظهار المكتبة الخاصة بك</string>
-  <string name="upload_shows">إرفع قائمة مسلسلاتك الخاصة</string>
   <string name="upload_existing_shows">إرفع المسلسلات الموجودة</string>
   <string name="about_trakt">يساعدك trait على حفظ ما تشاهده من أفلام و مسلسلات.<a href="http://trakt.tv">مزيد من المعلومات</a></string>
   <string name="integration_trakt_items">- أضف مسلسلات إلى مكتبتك و قائمتك\n\n- راجع مقترحاتك و نشاطات أصدقائك\n\n- يتم مزامنة ما شاهدته و الأعلام المجموعة تلقائياً\n\n- يتم إضافة ما شاهدت تلقائياً</string>
-  <string name="trakt_upload_hint">تعليم الحلقات المشاهده في برنامج دليل المسلسلات كما شوهدت في موقع trakt:</string>
   <string name="trakt_upload">رفع على موقع التراكت تي في </string>
   <string name="trakt_syncunwatched">إزالة علامات المشاهدة على موقع التراكت للحلقات الغير مشاهدة داخل برنامج دليل المسلسلات</string>
   <string name="upload_done">تم الإنتهاء من التحميل.</string>

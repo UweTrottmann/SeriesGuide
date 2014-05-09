@@ -37,7 +37,7 @@
   <string name="share_show">Del serie</string>
   <string name="share_episode">Del episode</string>
   <string name="share_movie">Del film</string>
-  <string name="share_checkout">Check out %s</string>
+  <string name="share_checkout">Tjek %s</string>
   <string name="comments">Kommentarer</string>
   <string name="shout_hint">Skriv en kommentar (på engelsk)</string>
   <string name="shout">Kommentar!</string>
@@ -96,7 +96,7 @@
   <string name="services_watch">Se</string>
   <string name="services_more">Mere</string>
   <string name="sort">Sorter efter</string>
-  <string name="action_sort_ignore_articles">Ignore articles</string>
+  <string name="action_sort_ignore_articles">Ignorer artikler</string>
   <string name="today">i dag</string>
   <string name="now">Nu</string>
   <string name="daily">Daglig</string>
@@ -157,9 +157,9 @@
   <string name="recent">Nylige</string>
   <string name="friends">Venner</string>
   <string name="friends_empty">Ingen venne-aktivitet på trakt.</string>
-  <string name="user_stream">You</string>
-  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
-  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
+  <string name="user_stream">Dig</string>
+  <string name="user_stream_empty">Ingen nylig aktivitet på trakt. Tjek ind på nogle shows!</string>
+  <string name="user_movie_stream_empty">Ingen nylig aktivitet på trakt. Tjek ind på nogle film!</string>
   <string name="noupcoming">Der er ingen kommende episoder.</string>
   <string name="norecent">Der er ingen nylige episoder.</string>
   <string name="only_favorites">Kun favorit serier</string>
@@ -213,13 +213,12 @@
   <string name="hexagon_priority_select">Vælg version</string>
   <string name="connect_trakt">Forbind til trakt</string>
   <string name="connect_trakt_done">Forbundet til trakt!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide vil nu synkronisere shows og film på denne enhed med trakt. Dette kan tage noget tid.</string>
   <string name="add_trakt_shows">Tilføj serier fra dit bibliotek:</string>
   <string name="show_library">Vis dit bibliotek</string>
-  <string name="upload_shows">Upload din SeriesGuide serieliste:</string>
   <string name="upload_existing_shows">Upload eksisterende serier</string>
   <string name="about_trakt">trakt hjælper med at holde styr på hvilke TV-serier du ser. <a href="http://trakt.tv">Lær mere</a></string>
   <string name="integration_trakt_items">- tilføj serier fra dit bibliotek og Overvågningsliste\n\n- se dine anbefalinger og venneaktivitet\n\n- set og samling bliver synkroniseret automatisk\n\n- nye serier du ser bliver automatisk tilføjet</string>
-  <string name="trakt_upload_hint">Marker episoder set i SeriesGuide som sete på trakt:</string>
   <string name="trakt_upload">Upload til trakt.tv</string>
   <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
   <string name="upload_done">Uploading færdiggjort.</string>
@@ -368,18 +367,18 @@
   <string name="extensions">Udvidelser</string>
   <string name="action_extensions_configure">Tilpas udvidelser</string>
   <string name="action_extensions_add">Tilføj udvidelse</string>
-  <string name="action_extensions_limit">Get X to add more extensions</string>
+  <string name="action_extensions_limit">Få X for at tilføje flere udvidelser</string>
   <string name="action_extensions_search">Hent flere udvidelser</string>
   <string name="action_extension_settings">Indstillinger</string>
   <string name="action_extension_remove">Fjern</string>
   <string name="extension_amazon">Amazon søgning</string>
   <string name="description_extension_amazon">Søg på din lokale Amazon side</string>
   <string name="pref_amazon_domain">Amazon side</string>
-  <string name="extension_google_play">Google Play search</string>
-  <string name="description_extension_google_play">Search the Google Play Store</string>
-  <string name="extension_youtube">YouTube search</string>
-  <string name="description_extension_youtube">Search YouTube for videos</string>
-  <string name="description_extension_web_search">Search for websites and images</string>
+  <string name="extension_google_play">Google Play søgning</string>
+  <string name="description_extension_google_play">Søg på Google Play Butik</string>
+  <string name="extension_youtube">YouTube søgning</string>
+  <string name="description_extension_youtube">Søg YouTube for videoer</string>
+  <string name="description_extension_web_search">Søg efter hjemmesider og billeder</string>
   <string-array name="sesorting">
     <item>Seneste først</item>
     <item>Ældste først</item>

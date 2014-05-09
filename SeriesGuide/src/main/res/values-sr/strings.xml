@@ -213,13 +213,12 @@
   <string name="hexagon_priority_select">Одабери верзију</string>
   <string name="connect_trakt">Споји тракт</string>
   <string name="connect_trakt_done">Спојено на тракт!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Додајте серије из ваше библиотеке:</string>
   <string name="show_library">Прикажите вашу библиотеку</string>
-  <string name="upload_shows">Отпреми своју SeriesGuide листу серија:</string>
   <string name="upload_existing_shows">Отпреми постојеће серије</string>
   <string name="about_trakt">тракт води евиденцију серија и филмова које гледате. <a href="http://trakt.tv">Сазнај више</a></string>
   <string name="integration_trakt_items">- додај серије из своје библиотеке и листе\n\n- види своје препоруке и активност пријатеља\n\n- погледане и ставке у колекцији се аутоматски синхронизују\n\n- нове погледане серије се додају аутоматски</string>
-  <string name="trakt_upload_hint">Означи све погледане епизоде у SeriesGuide-у као погледане на тракту:</string>
   <string name="trakt_upload">Отпреми на trakt.tv</string>
   <string name="trakt_syncunwatched">Уклоните ознаку ОДГЛЕДАНО за неодгледане епизоде у SeriesGuide-у</string>
   <string name="upload_done">Слање завршено.</string>
