@@ -339,6 +339,11 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     }
 
     @Override
+    public void registerEventBus() {
+        // do nothing, we handle that ourselves in onStart
+    }
+
+    @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
@@ -376,8 +381,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     protected void onStop() {
         super.onStop();
 
-        // stop listening to events
-        EventBus.getDefault().unregister(this);
         // now prevent dialog from restoring itself (we would loose ref to it)
         hideProgressDialog();
     }

@@ -81,11 +81,6 @@ public class MigrationActivity extends BaseActivity
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
     protected void onDestroy() {
         // clean up backup task
         if (mTask != null && mTask.getStatus() != AsyncTask.Status.FINISHED) {
