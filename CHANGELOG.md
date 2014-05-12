@@ -8,6 +8,12 @@ All dates are in the European Central timezone.
 Version 14 *(in development)*
 -----------------------------
 
+#### 14 *(2014-05-12)*
+
+* FIX Error message not displaying in some cases when failing to add a show.
+* FIX Crash when sharing, but no app available to handle a share intent.
+* NOTICE Latest translations from crowdin (Arabic, French, Polish).
+
 #### 14-beta5 *(2014-05-09)*
 
 * TWEAK Greatly improved experience after connecting to trakt: watched and collected episodes on the device are now automatically merged with your trakt profile.
