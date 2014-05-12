@@ -213,7 +213,7 @@
   <string name="hexagon_priority_select">إختيار النسخة</string>
   <string name="connect_trakt">الإتصال بموقع Trakt</string>
   <string name="connect_trakt_done">متصل بالتراكت!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
+  <string name="connect_trakt_done_explanation">برنامج دليل المسلسلات سوف يزامن المسلسلات والأفلام الموجودة على هذا الجهاز مع موقع التراكت. قد يستغرق هذا بعض الوقت.</string>
   <string name="add_trakt_shows">أضف مسلسلات من مكتبتك</string>
   <string name="show_library">إظهار المكتبة الخاصة بك</string>
   <string name="upload_existing_shows">إرفع المسلسلات الموجودة</string>
@@ -236,7 +236,7 @@
   <string name="pref_language">لغة البرنامج</string>
   <string name="pref_updatewifionly">تحميل الصور بواسطة الواي فاي فقط</string>
   <string name="pref_updatewifionlysummary">للحد من تكاليف الرسوم، لا تحمل البيانات بواسطة شكبة الهاتف المحمول</string>
-  <string name="about">SeriesGuide حول</string>
+  <string name="about">حول دليل المسلسلات</string>
   <string name="pref_credits">الاعتمادات</string>
   <string name="clearGetGlueCredentials">GetGlue قطع إتصال</string>
   <string name="clearGetGlueCredentialssummary">تحقق من الجيت جلوي لإعادة الإتصال</string>
@@ -337,12 +337,12 @@
   <string name="pref_vibrate">إهتزاز</string>
   <string name="pref_vibratesummary">إهتزاز عند عرض التنبيه</string>
   <string name="pref_notifications_treshold">موعد التنبيه</string>
-  <string name="smallwidget">سيريس جايد (صغير)</string>
-  <string name="bigwidget">سيريس جايد (وسط)</string>
-  <string name="largewidget">سيريس جايد (كبير)</string>
+  <string name="smallwidget">دليل المسلسلات (صغير)</string>
+  <string name="bigwidget">دليل المسلسلات (وسط)</string>
+  <string name="largewidget">دليل المسلسلات (كبير)</string>
   <string name="hide_watched">إخفاء الحلقات المشاهدة</string>
-  <string name="pref_widget_opacity">خلفية الودجة</string>
-  <string name="pref_widget_type">نوع القطعة</string>
+  <string name="pref_widget_opacity">خلفية القطعة العائمة</string>
+  <string name="pref_widget_type">نوع القطعة العائمة</string>
   <string name="dashclock_extension_label">الحلقة القادمة</string>
   <string name="dashclock_extension_description">عرض الحلقة القادمة  من دليل المسلسلات الخاص بك</string>
   <string name="dashclock_pref_upcoming_threshold">عرض الحلقات القادمة</string>
@@ -415,7 +415,7 @@
   </string-array>
   <string-array name="widgetType">
     <item>القادم</item>
-    <item>الأخيرة</item>
+    <item>مؤخراُ</item>
     <item>المفضلة</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
