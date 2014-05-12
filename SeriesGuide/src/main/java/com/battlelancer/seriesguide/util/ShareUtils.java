@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.util;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -62,7 +63,12 @@ public class ShareUtils {
         ib.setText(message);
         ib.setChooserTitle(titleResId);
         ib.setType("text/plain");
-        ib.startChooser();
+        try {
+            ib.startChooser();
+        } catch (ActivityNotFoundException e) {
+            // no activity available to handle the intent
+            Toast.makeText(activity, R.string.app_not_available, Toast.LENGTH_LONG).show();
+        }
     }
 
     public static String onCreateShareString(Context context, final Cursor episode) {
