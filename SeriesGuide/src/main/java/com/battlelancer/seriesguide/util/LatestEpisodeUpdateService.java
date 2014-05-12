@@ -38,6 +38,10 @@ public class LatestEpisodeUpdateService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        if (intent == null) {
+            return;
+        }
+
         int showTvdbId = intent.getIntExtra(InitBundle.SHOW_TVDB_ID, 0);
 
         boolean isNoReleasedEpisodes = DisplaySettings.isNoReleasedEpisodes(
