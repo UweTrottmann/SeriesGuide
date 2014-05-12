@@ -8,6 +8,11 @@ All dates are in the European Central timezone.
 Version 14 *(in development)*
 -----------------------------
 
+* View a stream of your and your friends trakt check-ins for shows and movies.
+* Option to sort shows and movies by title while ignoring articles (English only).
+* Easier trakt setup: after connecting your shows and movies are automatically merged with your trakt profile.
+* Extensions replace watch options for episodes. Added extension for Google Play, YouTube and Web search.
+
 #### 14 *(2014-05-12)*
 
 * FIX Error message not displaying in some cases when failing to add a show.
