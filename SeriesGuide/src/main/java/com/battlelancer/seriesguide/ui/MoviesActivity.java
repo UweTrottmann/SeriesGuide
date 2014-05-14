@@ -91,15 +91,6 @@ public class MoviesActivity extends BaseTopActivity {
         super.onStart();
 
         setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_MOVIES_POSITION);
-
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        EventBus.getDefault().unregister(this);
     }
 
     @Override

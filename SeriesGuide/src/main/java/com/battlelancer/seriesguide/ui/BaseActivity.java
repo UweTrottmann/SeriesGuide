@@ -32,10 +32,14 @@ import com.battlelancer.seriesguide.util.AddShowTask;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.google.android.gms.analytics.GoogleAnalytics;
+import de.greenrobot.event.EventBus;
 
 /**
  * Provides some common functionality across all activities like setting the theme, navigation
  * shortcuts and triggering AutoUpdates and AutoBackups.
+ * <p> Also registers with {@link de.greenrobot.event.EventBus#getDefault()} by default to handle
+ * various common events, see {@link #registerEventBus()} and {@link #unregisterEventBus()} to
+ * prevent that.
  */
 public abstract class BaseActivity extends SherlockFragmentActivity {
 
@@ -65,6 +69,17 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
             SgSyncAdapter.requestSyncIfTime(this);
         }
         GoogleAnalytics.getInstance(this).reportActivityStart(this);
+        registerEventBus();
+    }
+
+    /**
+     * Override this to avoid registering with {@link de.greenrobot.event.EventBus#getDefault()} in
+     * {@link #onStart()}.
+     *
+     * <p> See {@link #unregisterEventBus()} as well.
+     */
+    public void registerEventBus() {
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -72,6 +87,17 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
         super.onStop();
 
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
+        unregisterEventBus();
+    }
+
+    /**
+     * Override this to avoid unregistering from {@link de.greenrobot.event.EventBus#getDefault()}
+     * in {@link #onStop()}.
+     *
+     * <p> See {@link #registerEventBus()} as well.
+     */
+    public void unregisterEventBus() {
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -137,5 +163,4 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
             return false;
         }
     }
-
 }

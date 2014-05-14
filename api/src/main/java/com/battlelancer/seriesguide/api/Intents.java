@@ -51,7 +51,7 @@ public class Intents {
     }
 
     /**
-     * Builds an implicit {@link android.content.Intent} to view an episode in SeriesGuide. Make
+     * Builds an implicit {@link android.content.Intent} to view a show in SeriesGuide. Make
      * sure to check with {@link Intent#resolveActivity(android.content.pm.PackageManager)} if
      * SeriesGuide (or another app capable of handling this intent) is available.
      *
