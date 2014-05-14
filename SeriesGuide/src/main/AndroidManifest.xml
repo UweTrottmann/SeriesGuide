@@ -341,6 +341,7 @@
         <!-- Built-in SeriesGuide extensions -->
         <service
             android:name="com.battlelancer.seriesguide.extensions.AmazonExtension"
+            android:icon="@drawable/ic_launcher"
             android:label="@string/extension_amazon"
             android:description="@string/description_extension_amazon">
             <intent-filter>
@@ -349,6 +350,33 @@
             <meta-data
                 android:name="settingsActivity"
                 android:value="com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity" />
+        </service>
+        <service
+            android:name="com.battlelancer.seriesguide.extensions.GooglePlayExtension"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/extension_google_play"
+            android:description="@string/description_extension_google_play">
+            <intent-filter>
+                <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.battlelancer.seriesguide.extensions.YouTubeExtension"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/extension_youtube"
+            android:description="@string/description_extension_youtube">
+        <intent-filter>
+                <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.battlelancer.seriesguide.extensions.WebSearchExtension"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/web_search"
+            android:description="@string/description_extension_web_search">
+        <intent-filter>
+                <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
+            </intent-filter>
         </service>
 
         <!-- Watch for extension package changes -->

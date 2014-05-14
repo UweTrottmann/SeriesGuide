@@ -10,6 +10,13 @@
                 android:targetPackage="@string/package_name" />
         </Preference>
         <Preference
+            android:key="com.battlelancer.seriesguide.cloud"
+            android:title="@string/hexagon_short">
+            <intent
+                android:targetClass="com.battlelancer.seriesguide.backend.CloudSetupActivity"
+                android:targetPackage="@string/package_name" />
+        </Preference>
+        <Preference
             android:key="com.battlelancer.seriesguide.migrate"
             android:title="@string/action_migrate">
             <intent
@@ -32,13 +39,6 @@
             android:title="@string/connect_trakt">
             <intent
                 android:targetClass="com.battlelancer.seriesguide.ui.ConnectTraktActivity"
-                android:targetPackage="@string/package_name" />
-        </Preference>
-        <Preference
-            android:key="com.battlelancer.seriesguide.trakt"
-            android:title="@string/upload_existing_shows">
-            <intent
-                android:targetClass="com.battlelancer.seriesguide.ui.TraktSyncActivity"
                 android:targetPackage="@string/package_name" />
         </Preference>
 

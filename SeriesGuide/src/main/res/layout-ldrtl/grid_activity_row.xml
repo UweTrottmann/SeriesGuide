@@ -62,7 +62,7 @@
 
     <include layout="@layout/divider_vertical" />
 
-    <com.battlelancer.seriesguide.WatchedBox
+    <com.battlelancer.seriesguide.widgets.WatchedBox
         android:id="@+id/watchedBoxUpcoming"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

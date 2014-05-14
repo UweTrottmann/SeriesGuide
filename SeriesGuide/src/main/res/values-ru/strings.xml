@@ -96,6 +96,7 @@
   <string name="services_watch">Смотреть</string>
   <string name="services_more">Подробнее</string>
   <string name="sort">Сортировать по</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">сегодня</string>
   <string name="now">сейчас</string>
   <string name="daily">Ежедневно</string>
@@ -156,6 +157,9 @@
   <string name="recent">Недавние</string>
   <string name="friends">Друзья</string>
   <string name="friends_empty">Нет активности друзей на trakt.</string>
+  <string name="user_stream">You</string>
+  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
+  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
   <string name="noupcoming">Выходящих эпизодов нет.</string>
   <string name="norecent">Недавних эпизодов нет.</string>
   <string name="only_favorites">Только избранные сериалы</string>
@@ -209,13 +213,12 @@
   <string name="hexagon_priority_select">Выбрать версию</string>
   <string name="connect_trakt">Подключение trakt</string>
   <string name="connect_trakt_done">Подключен к trakt!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Добавьте сериалы вашей библиотеки:</string>
   <string name="show_library">Показать вашу библиотеку</string>
-  <string name="upload_shows">Загрузите список сериаловriesGuide:</string>
   <string name="upload_existing_shows">Загрузить существующие сериалы</string>
   <string name="about_trakt">Trakt сохраняет запись о сериалах и фильмы, которые вы смотрите. <a href="http://trakt.tv"> Подробнее</a></string>
   <string name="integration_trakt_items">-добавить сериалы из вашей библиотеки и расписания \n\n смотреть ваши рекомендации и активность друзей \n\n - просмотр и коллекции синхронизируются автоматически \n\n- автоматически добавлены просматриваемые сериалы</string>
-  <string name="trakt_upload_hint">Метки просмотра эпизодов в SeriesGuide как просмотра на trakt:</string>
   <string name="trakt_upload">Загрузить на trakt.tv</string>
   <string name="trakt_syncunwatched">Убрать статус просмотренного на trakt для не просмотренных серий в SeriesGuide</string>
   <string name="upload_done">Загрузка завершена.</string>
@@ -371,6 +374,11 @@
   <string name="extension_amazon">Поиск Amazon</string>
   <string name="description_extension_amazon">Поиск в локальной версии Amazon</string>
   <string name="pref_amazon_domain">Сайт Amazon</string>
+  <string name="extension_google_play">Google Play search</string>
+  <string name="description_extension_google_play">Search the Google Play Store</string>
+  <string name="extension_youtube">YouTube search</string>
+  <string name="description_extension_youtube">Search YouTube for videos</string>
+  <string name="description_extension_web_search">Search for websites and images</string>
   <string-array name="sesorting">
     <item>Сначала последний</item>
     <item>Старшие с начала</item>

@@ -16,12 +16,11 @@
 
 package com.battlelancer.seriesguide.settings;
 
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.R;
-
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.R;
 
 /**
  * Settings related to appearance, display formats and sort orders.
@@ -48,6 +47,9 @@ public class DisplaySettings {
     public static final String KEY_EPISODE_SORT_ORDER = "episodeSorting";
 
     public static final String KEY_HIDE_SPECIALS = "onlySeasonEpisodes";
+
+    public static final String KEY_SORT_IGNORE_ARTICLE
+            = "com.battlelancer.seriesguide.sort.ignorearticle";
 
     /**
      * Returns true for xlarge, xlarge-land or sw720dp screens.
@@ -118,4 +120,11 @@ public class DisplaySettings {
                 KEY_HIDE_SPECIALS, false);
     }
 
+    /**
+     * Whether shows and movies sorted by title should ignore the leading article.
+     */
+    public static boolean isSortOrderIgnoringArticles(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_SORT_IGNORE_ARTICLE, false);
+    }
 }

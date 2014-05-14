@@ -16,12 +16,11 @@
 
 package com.battlelancer.seriesguide.provider;
 
+import android.net.Uri;
+import android.provider.BaseColumns;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.util.ParserUtils;
-
-import android.net.Uri;
-import android.provider.BaseColumns;
 
 public class SeriesGuideContract {
 
@@ -33,6 +32,11 @@ public class SeriesGuideContract {
         String REF_SHOW_ID = "series_id";
 
         String TITLE = "seriestitle";
+
+        /**
+         * The title without any articles (e.g. 'the' or 'an'). Added with db version 33.
+         */
+        String TITLE_NOARTICLE = "series_title_noarticle";
 
         String OVERVIEW = "overview";
 
@@ -295,6 +299,11 @@ public class SeriesGuideContract {
 
         String TITLE = "movies_title";
 
+        /**
+         * The title without any articles (e.g. 'the' or 'an'). Added with db version 33.
+         */
+        String TITLE_NOARTICLE = "movies_title_noarticle";
+
         String IMDB_ID = "movies_imdbid";
 
         String TMDB_ID = "movies_tmdbid";
@@ -437,6 +446,8 @@ public class SeriesGuideContract {
         public static final String SELECTION_UNWATCHED = Episodes.WATCHED + "=0";
 
         public static final String SELECTION_WATCHED = Episodes.WATCHED + "=" + EpisodeFlags.WATCHED;
+
+        public static final String SELECTION_COLLECTED = Episodes.COLLECTED + "=1";
 
         public static final String SELECTION_NOT_COLLECTED = Episodes.COLLECTED + "=0";
 
@@ -622,8 +633,14 @@ public class SeriesGuideContract {
         /** Default sort order. */
         public static final String SORT_TITLE_ALPHABETICAL = Movies.TITLE + " COLLATE NOCASE ASC";
 
+        public static final String SORT_TITLE_ALPHABETICAL_NO_ARTICLE = Movies.TITLE_NOARTICLE
+                + " COLLATE NOCASE ASC";
+
         public static final String SORT_TITLE_REVERSE_ALPHACETICAL = Movies.TITLE
                 + " COLLATE NOCASE DESC";
+
+        public static final String SORT_TITLE_REVERSE_ALPHACETICAL_NO_ARTICLE =
+                Movies.TITLE_NOARTICLE + " COLLATE NOCASE DESC";
 
         public static final String SORT_RELEASE_DATE_NEWEST_FIRST = Movies.RELEASED_UTC_MS
                 + " DESC," + SORT_TITLE_ALPHABETICAL;

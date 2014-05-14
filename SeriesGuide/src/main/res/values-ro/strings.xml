@@ -96,6 +96,7 @@
   <string name="services_watch">Watch</string>
   <string name="services_more">Mai mult</string>
   <string name="sort">Sortați după</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">astăzi</string>
   <string name="now">acum</string>
   <string name="daily">Zilnic</string>
@@ -156,6 +157,9 @@
   <string name="recent">Recente</string>
   <string name="friends">Prieteni</string>
   <string name="friends_empty">Nici o activitate a prietenilor pe trakt.</string>
+  <string name="user_stream">You</string>
+  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
+  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
   <string name="noupcoming">Nu sînt următoarele episoade.</string>
   <string name="norecent">Nu sînt episoade recente.</string>
   <string name="only_favorites">Doar emisiunile preferate</string>
@@ -209,13 +213,12 @@
   <string name="hexagon_priority_select">Select version</string>
   <string name="connect_trakt">Conectaţi trakt</string>
   <string name="connect_trakt_done">Conectat la trakt!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Adauga seriale din biblioteca dvs.:</string>
   <string name="show_library">Arată biblioteca dvs.</string>
-  <string name="upload_shows">Încărcaţi-vă lista SeriesGuide:</string>
   <string name="upload_existing_shows">Încărcaţi seriale existente</string>
   <string name="about_trakt">Trakt ajută la păstrarea unei evidenţe a emisiunilor TV şi a filmelor la care te uiţi.  <a href="http://trakt.tv">Află mai multe</a></string>
   <string name="integration_trakt_items">-Adauga seriale din biblioteca dvs. şi watchlist\n\n- vedeti recomandările dvs. şi activitatea prietenilor\n\n - steagurile privite şi colectate sunt sincronizate automat\n\n-serialele noi la care v-ati uitat sunt adăugate automat</string>
-  <string name="trakt_upload_hint">Pune toate episoadele vazute in SeriesGuide si pe trakt:</string>
   <string name="trakt_upload">Încărcaţi in trakt.tv</string>
   <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
   <string name="upload_done">Finished uploading.</string>
@@ -371,6 +374,11 @@
   <string name="extension_amazon">Amazon search</string>
   <string name="description_extension_amazon">Search your local Amazon site</string>
   <string name="pref_amazon_domain">Amazon site</string>
+  <string name="extension_google_play">Google Play search</string>
+  <string name="description_extension_google_play">Search the Google Play Store</string>
+  <string name="extension_youtube">YouTube search</string>
+  <string name="description_extension_youtube">Search YouTube for videos</string>
+  <string name="description_extension_web_search">Search for websites and images</string>
   <string-array name="sesorting">
     <item>Întai cele mai recente</item>
     <item>Întai cele mai vechi</item>

@@ -1,5 +1,4 @@
 apply plugin: 'android'
-apply plugin: 'android-test'
 apply plugin: 'crashlytics'
 
 android {
@@ -68,12 +67,10 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.2.0'
     compile 'com.squareup.retrofit:retrofit:1.4.1'
     compile 'com.squareup:tape:1.1.1'
+    compile 'com.uwetrottmann:getglue-java:1.3.+'
     compile 'com.uwetrottmann:tmdb-java:0.4.+'
-    compile 'com.uwetrottmann:trakt-java:3.1.+'
+    compile 'com.uwetrottmann:trakt-java:3.2.+'
     compile 'de.greenrobot:eventbus:2.2.0'
-
-    // OAuth 2.0
-    compile 'org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:0.31'
 
     // App Engine
     compile 'com.google.android.gms:play-services:4.3.23'
@@ -85,17 +82,15 @@ dependencies {
     // libs folder
     compile fileTree(dir: 'libs', include: '*.jar')
 
-    // unit tests
-    testCompile 'junit:junit:4.10'
-    testCompile 'com.squareup:fest-android:1.0.+'
-    testCompile 'org.robolectric:robolectric:2.3-SNAPSHOT'
+    // android unit tests
+    androidTestCompile 'com.squareup:fest-android:1.0.7'
 
     // android instrumentation tests
-    androidTestCompile ('com.jakewharton.espresso:espresso:1.1-r2') {
+    androidTestCompile ('com.jakewharton.espresso:espresso:1.1-r3') {
         // TODO workaround for http://b.android.com/65445
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
     }
-    androidTestCompile ('com.jakewharton.espresso:espresso-support-v4:1.1-r2') {
+    androidTestCompile ('com.jakewharton.espresso:espresso-support-v4:1.1-r3') {
         // TODO workaround for http://b.android.com/65445
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
         exclude group: 'com.android.support', module: 'support-v4'

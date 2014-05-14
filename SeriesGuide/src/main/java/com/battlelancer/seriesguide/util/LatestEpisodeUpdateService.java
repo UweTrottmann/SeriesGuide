@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.util;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.database.Cursor;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import java.util.HashSet;
@@ -39,6 +38,10 @@ public class LatestEpisodeUpdateService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        if (intent == null) {
+            return;
+        }
+
         int showTvdbId = intent.getIntExtra(InitBundle.SHOW_TVDB_ID, 0);
 
         boolean isNoReleasedEpisodes = DisplaySettings.isNoReleasedEpisodes(

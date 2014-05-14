@@ -126,8 +126,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
     @InjectView(R.id.imageButtonBarSkip) ImageButton mSkipButton;
     @InjectView(R.id.imageButtonBarMenu) ImageButton mOverflowButton;
 
-    @InjectView(R.id.buttonGooglePlay) View mGooglePlayButton;
-    @InjectView(R.id.buttonYouTube) View mYouTubeButton;
     @InjectView(R.id.buttonShowInfoIMDB) View mImdbButton;
     @InjectView(R.id.buttonTVDB) View mTvdbButton;
     @InjectView(R.id.buttonTrakt) View mTraktButton;
@@ -169,6 +167,9 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
         ButterKnife.inject(this, v);
 
         mEpisodeContainer.setVisibility(View.GONE);
+
+        // web search button unused, is available as extension
+        mWebSearchButton.setVisibility(View.GONE);
 
         return v;
     }
@@ -368,7 +369,7 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
             // "in 15 mins (Fri)"
             timeAndNumbersText
                     .append(getString(R.string.release_date_and_day,
-                            TimeTools.formatToRelativeLocalReleaseTime(actualRelease),
+                            TimeTools.formatToRelativeLocalReleaseTime(getActivity(), actualRelease),
                             TimeTools.formatToLocalReleaseDay(actualRelease))
                             .toUpperCase(Locale.getDefault()));
             timeAndNumbersText.append("  ");
@@ -491,7 +492,8 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
                 fireTrackerEvent("Toggle collected");
             }
         });
-        CheatSheet.setup(mCollectedButton, mCollected ? R.string.uncollect : R.string.collect);
+        CheatSheet.setup(mCollectedButton, mCollected
+                ? R.string.action_collection_remove : R.string.action_collection_add);
 
         // skip button
         boolean isSkipped = EpisodeTools.isSkipped(mEpisodeFlag);
@@ -532,12 +534,8 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
         });
 
         // service buttons
-        ServiceUtils.setUpGooglePlayButton(mShowTitle + " " + mEpisodeTitle, mGooglePlayButton,
-                TAG);
-        ServiceUtils.setUpYouTubeButton(mShowTitle + " " + mEpisodeTitle, mYouTubeButton, TAG);
         ServiceUtils.setUpTraktButton(mShowTvdbId, mSeasonNumber, mEpisodeNumber, mTraktButton,
                 TAG);
-        ServiceUtils.setUpWebSearchButton(mShowTitle + " " + mEpisodeTitle, mWebSearchButton, TAG);
         // IMDb
         String imdbId = cursor.getString(DetailsQuery.IMDBID);
         if (TextUtils.isEmpty(imdbId)) {

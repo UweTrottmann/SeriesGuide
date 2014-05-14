@@ -16,6 +16,12 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+import android.text.TextUtils;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.enums.TraktStatus;
@@ -25,13 +31,6 @@ import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.services.AccountService;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.battlelancer.seriesguide.R;
-
-import android.content.Context;
-import android.os.AsyncTask;
-import android.preference.PreferenceManager;
-import android.text.TextUtils;
-
 import retrofit.RetrofitError;
 
 /**
@@ -116,9 +115,18 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         // set new credentials
         trakt.setAuthentication(username, password);
 
-        // reset merged movies flag
-        PreferenceManager.getDefaultSharedPreferences(mContext).edit()
-                .putBoolean(TraktSettings.KEY_HAS_MERGED_MOVIES, false).commit();
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(mContext)
+                .edit();
+
+        // make next sync merge local watched and collected episodes with those on trakt
+        editor.putBoolean(TraktSettings.KEY_HAS_MERGED_EPISODES, false);
+        // make next sync merge local movies with those on trakt
+        editor.putBoolean(TraktSettings.KEY_HAS_MERGED_MOVIES, false);
+
+        // make sure the next sync will run a full episode sync
+        editor.putLong(TraktSettings.KEY_LAST_FULL_EPISODE_SYNC, 0);
+
+        editor.commit();
 
         return Result.SUCCESS;
     }

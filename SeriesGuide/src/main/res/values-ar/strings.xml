@@ -96,6 +96,7 @@
   <string name="services_watch">شاهد</string>
   <string name="services_more">المزيد</string>
   <string name="sort">ترتيب حسب</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">اليوم</string>
   <string name="now">الآن</string>
   <string name="daily">يومي</string>
@@ -156,6 +157,9 @@
   <string name="recent">مؤخراً</string>
   <string name="friends">الأصدقاء</string>
   <string name="friends_empty">.لا نشاطات لأصدقائك على تراكت</string>
+  <string name="user_stream">أنت</string>
+  <string name="user_stream_empty">لا يوجد أي نشاط مؤخرا على موقع Trakt. تحقق من بعض المسلسلات!</string>
+  <string name="user_movie_stream_empty">لا يوجد أي نشاط مؤخرا على موقع Trakt. تحقق من بعض الأفلام!</string>
   <string name="noupcoming">.لا توجد حلقات قادمة</string>
   <string name="norecent">.لا توجد حلقات حالية</string>
   <string name="only_favorites">فقط المسلسلات المفضلة</string>
@@ -209,13 +213,12 @@
   <string name="hexagon_priority_select">إختيار النسخة</string>
   <string name="connect_trakt">الإتصال بموقع Trakt</string>
   <string name="connect_trakt_done">متصل بالتراكت!</string>
+  <string name="connect_trakt_done_explanation">برنامج دليل المسلسلات سوف يزامن المسلسلات والأفلام الموجودة على هذا الجهاز مع موقع التراكت. قد يستغرق هذا بعض الوقت.</string>
   <string name="add_trakt_shows">أضف مسلسلات من مكتبتك</string>
   <string name="show_library">إظهار المكتبة الخاصة بك</string>
-  <string name="upload_shows">إرفع قائمة مسلسلاتك الخاصة</string>
   <string name="upload_existing_shows">إرفع المسلسلات الموجودة</string>
   <string name="about_trakt">يساعدك trait على حفظ ما تشاهده من أفلام و مسلسلات.<a href="http://trakt.tv">مزيد من المعلومات</a></string>
   <string name="integration_trakt_items">- أضف مسلسلات إلى مكتبتك و قائمتك\n\n- راجع مقترحاتك و نشاطات أصدقائك\n\n- يتم مزامنة ما شاهدته و الأعلام المجموعة تلقائياً\n\n- يتم إضافة ما شاهدت تلقائياً</string>
-  <string name="trakt_upload_hint">تعليم الحلقات المشاهده في برنامج دليل المسلسلات كما شوهدت في موقع trakt:</string>
   <string name="trakt_upload">رفع على موقع التراكت تي في </string>
   <string name="trakt_syncunwatched">إزالة علامات المشاهدة على موقع التراكت للحلقات الغير مشاهدة داخل برنامج دليل المسلسلات</string>
   <string name="upload_done">تم الإنتهاء من التحميل.</string>
@@ -233,7 +236,7 @@
   <string name="pref_language">لغة البرنامج</string>
   <string name="pref_updatewifionly">تحميل الصور بواسطة الواي فاي فقط</string>
   <string name="pref_updatewifionlysummary">للحد من تكاليف الرسوم، لا تحمل البيانات بواسطة شكبة الهاتف المحمول</string>
-  <string name="about">SeriesGuide حول</string>
+  <string name="about">حول دليل المسلسلات</string>
   <string name="pref_credits">الاعتمادات</string>
   <string name="clearGetGlueCredentials">GetGlue قطع إتصال</string>
   <string name="clearGetGlueCredentialssummary">تحقق من الجيت جلوي لإعادة الإتصال</string>
@@ -334,12 +337,12 @@
   <string name="pref_vibrate">إهتزاز</string>
   <string name="pref_vibratesummary">إهتزاز عند عرض التنبيه</string>
   <string name="pref_notifications_treshold">موعد التنبيه</string>
-  <string name="smallwidget">سيريس جايد (صغير)</string>
-  <string name="bigwidget">سيريس جايد (وسط)</string>
-  <string name="largewidget">سيريس جايد (كبير)</string>
+  <string name="smallwidget">دليل المسلسلات (صغير)</string>
+  <string name="bigwidget">دليل المسلسلات (وسط)</string>
+  <string name="largewidget">دليل المسلسلات (كبير)</string>
   <string name="hide_watched">إخفاء الحلقات المشاهدة</string>
-  <string name="pref_widget_opacity">خلفية الودجة</string>
-  <string name="pref_widget_type">نوع القطعة</string>
+  <string name="pref_widget_opacity">خلفية القطعة العائمة</string>
+  <string name="pref_widget_type">نوع القطعة العائمة</string>
   <string name="dashclock_extension_label">الحلقة القادمة</string>
   <string name="dashclock_extension_description">عرض الحلقة القادمة  من دليل المسلسلات الخاص بك</string>
   <string name="dashclock_pref_upcoming_threshold">عرض الحلقات القادمة</string>
@@ -371,6 +374,11 @@
   <string name="extension_amazon">بحث أمازون</string>
   <string name="description_extension_amazon">البحث المحلي بواسطة موقع أمازون</string>
   <string name="pref_amazon_domain">موقع أمازون</string>
+  <string name="extension_google_play">بحث متجر قوقل</string>
+  <string name="description_extension_google_play">البحث في متجر قوقل</string>
+  <string name="extension_youtube">بحث اليوتيوب</string>
+  <string name="description_extension_youtube">بحث اليوتيوب لمقاطع الفيديو</string>
+  <string name="description_extension_web_search">البحث عن المواقع و الصور</string>
   <string-array name="sesorting">
     <item>الأحدث أولاً</item>
     <item>الأقدم أولاً</item>
@@ -407,7 +415,7 @@
   </string-array>
   <string-array name="widgetType">
     <item>القادم</item>
-    <item>الأخيرة</item>
+    <item>مؤخراُ</item>
     <item>المفضلة</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">

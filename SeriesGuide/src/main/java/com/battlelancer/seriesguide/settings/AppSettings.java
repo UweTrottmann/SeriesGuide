@@ -17,11 +17,10 @@
 
 package com.battlelancer.seriesguide.settings;
 
-import com.battlelancer.seriesguide.BuildConfig;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import com.battlelancer.seriesguide.BuildConfig;
 
 public class AppSettings {
 
@@ -29,8 +28,11 @@ public class AppSettings {
 
     public static final String KEY_GOOGLEANALYTICS = "enableGAnalytics";
 
+    public static final String KEY_HAS_SEEN_NAV_DRAWER = "hasSeenNavDrawer";
+
     /**
-     * Returns the version code of the previously installed version. Is the current version on fresh
+     * Returns the version code of the previously installed version. Is the current version on
+     * fresh
      * installs.
      */
     public static int getLastVersionCode(Context context) {
@@ -49,5 +51,13 @@ public class AppSettings {
     public static boolean isGaAppOptOut(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_GOOGLEANALYTICS, false);
+    }
+
+    /**
+     * Whether the user was shown the nav drawer for this app.
+     */
+    public static boolean hasSeenNavDrawer(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_HAS_SEEN_NAV_DRAWER, false);
     }
 }

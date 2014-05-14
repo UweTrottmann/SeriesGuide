@@ -16,27 +16,28 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
-
+import android.widget.ImageView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.SystemUiHider;
 import com.battlelancer.seriesguide.R;
-
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.SystemUiHider;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
- * This {@link Activity} is used to display a full screen image of a TV show's
- * poster, or the image provided for a specific episode.
+ * Displays a full screen image of a TV show's poster, or the image provided for a specific
+ * episode. If a URI instead of a file name is provided, it will be attempted to load the image
+ * from
+ * the internet.
  */
 public class FullscreenImageActivity extends SherlockFragmentActivity {
 
@@ -76,13 +77,15 @@ public class FullscreenImageActivity extends SherlockFragmentActivity {
                 .getColor(R.color.black_overlay)));
 
         // set a title and subtitle if available
-        String title = getIntent().getExtras().getString(InitBundle.IMAGE_TITLE);
+        String title = getIntent().getStringExtra(InitBundle.IMAGE_TITLE);
         if (TextUtils.isEmpty(title)) {
             actionBar.setDisplayShowTitleEnabled(false);
         } else {
             actionBar.setTitle(title);
-            String subtitle = getIntent().getExtras().getString(InitBundle.IMAGE_SUBTITLE);
-            if (subtitle != null) actionBar.setSubtitle(subtitle);
+            String subtitle = getIntent().getStringExtra(InitBundle.IMAGE_SUBTITLE);
+            if (subtitle != null) {
+                actionBar.setSubtitle(subtitle);
+            }
         }
     }
 
@@ -90,8 +93,15 @@ public class FullscreenImageActivity extends SherlockFragmentActivity {
         mContentView = (PhotoView) findViewById(R.id.fullscreen_content);
 
         // Load the requested image
-        String imagePath = getIntent().getExtras().getString(InitBundle.IMAGE_PATH);
-        mContentView.setImageBitmap(ImageProvider.getInstance(this).getImage(imagePath, false));
+        String imagePath = getIntent().getStringExtra(InitBundle.IMAGE_PATH);
+        if (!TextUtils.isEmpty(imagePath) && imagePath.startsWith("http")) {
+            // load from network, typically for show posters
+            ServiceUtils.getPicasso(this).load(imagePath).into(mContentView);
+        } else {
+            // get cached copy, typically for episode images
+            ImageProvider.getInstance(this)
+                    .loadImage(mContentView, imagePath, ImageView.ScaleType.FIT_CENTER, false);
+        }
 
         // Set up an instance of SystemUiHider to control the system UI for
         // this activity.
@@ -152,5 +162,4 @@ public class FullscreenImageActivity extends SherlockFragmentActivity {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
-
 }

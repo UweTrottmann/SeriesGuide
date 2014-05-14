@@ -229,8 +229,6 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
-
-        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -241,8 +239,6 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(this);
         prefs.unregisterOnSharedPreferenceChangeListener(this);
-
-        EventBus.getDefault().unregister(this);
     }
 
     List<WeakReference<Fragment>> mFragments = new ArrayList<WeakReference<Fragment>>();

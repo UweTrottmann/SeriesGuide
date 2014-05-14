@@ -20,7 +20,6 @@ import android.os.Bundle;
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
-import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Prepares for Hexagon setup by checking Google Play services availability.

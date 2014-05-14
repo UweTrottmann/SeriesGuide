@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.dataliberation;
 
 import android.os.Bundle;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;

@@ -17,7 +17,22 @@
 
 package com.battlelancer.seriesguide.sync;
 
+import android.accounts.Account;
+import android.content.AbstractThreadedSyncAdapter;
+import android.content.ContentProviderClient;
+import android.content.ContentProviderOperation;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.OperationApplicationException;
+import android.content.SharedPreferences;
+import android.content.SyncResult;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.text.TextUtils;
+import android.text.format.DateUtils;
+import android.widget.Toast;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.items.SearchResult;
@@ -27,6 +42,8 @@ import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -34,8 +51,6 @@ import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.TheTVDB;
-import com.battlelancer.thetvdbapi.TvdbException;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Activity;
 import com.jakewharton.trakt.entities.ActivityItem;
@@ -44,31 +59,13 @@ import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.jakewharton.trakt.enumerations.ActivityType;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.battlelancer.seriesguide.R;
 import com.uwetrottmann.tmdb.entities.Configuration;
-
-import android.accounts.Account;
-import android.content.AbstractThreadedSyncAdapter;
-import android.content.ContentProviderClient;
-import android.content.ContentProviderOperation;
-import android.content.ContentResolver;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.SyncResult;
-import android.database.Cursor;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.text.TextUtils;
-import android.text.format.DateUtils;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
@@ -110,7 +107,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
          * Whether the sync should occur despite time or backoff limits.
          */
         public String SYNC_IMMEDIATE = "com.battlelancer.seriesguide.sync_immediate";
-
     }
 
     private static final int DEFAULT_SYNC_INTERVAL_MINUTES = 20;
@@ -214,7 +210,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     /**
-     * Returns true if there is currently a sync operation for the given account or authority in the
+     * Returns true if there is currently a sync operation for the given account or authority in
+     * the
      * pending list, or actively being processed.
      */
     public static boolean isSyncActive(Context context, boolean isDisplayWarning) {
@@ -262,7 +259,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 Timber.e("Syncing...ABORT_INVALID_SHOW_TVDB_ID");
                 return;
             }
-            showsToUpdate = new int[]{
+            showsToUpdate = new int[] {
                     showTvdbId
             };
         } else {
@@ -318,16 +315,16 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 if (ShowTools.get(getContext()).isSignedIn()) {
                     UpdateResult resultHexagon = ShowTools.Download
                             .syncRemoteShows(getContext(), showsExisting, showsNew);
-                    // don't overwrite earlier failure
+                    // don't overwrite failure
                     if (resultCode == UpdateResult.SUCCESS) {
                         resultCode = resultHexagon;
                     }
                 }
 
                 // sync with trakt
-                UpdateResult resultTrakt = syncWithTrakt(getContext(), showsExisting, showsNew,
+                UpdateResult resultTrakt = performTraktSync(getContext(), showsExisting, showsNew,
                         syncImmediately, currentTime);
-                // don't overwrite earlier failure with success
+                // don't overwrite failure
                 if (resultCode == UpdateResult.SUCCESS) {
                     resultCode = resultTrakt;
                 }
@@ -341,7 +338,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
             // renew search table if shows were updated and it will not be renewed by add task
             if (updateCount.get() > 0 && showsToUpdate.length > 0 && showsNew.size() == 0) {
-                TheTVDB.onRenewFTSTable(getContext());
+                DBUtils.rebuildFtsTable(getContext());
             }
 
             // store time of update, set retry counter on failure
@@ -388,9 +385,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             case FULL:
                 // get all show IDs for a full update
                 final Cursor shows = getContext().getContentResolver().query(Shows.CONTENT_URI,
-                        new String[]{
+                        new String[] {
                                 Shows._ID
-                        }, null, null, null);
+                        }, null, null, null
+                );
 
                 int[] showIds = new int[shows.getCount()];
                 int i = 0;
@@ -427,62 +425,58 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
     }
 
-    private static UpdateResult syncWithTrakt(Context context, HashSet<Integer> showsExisting,
-            HashMap<Integer, SearchResult> showsNew, boolean syncImmediately, long currentTime) {
-        // validate credentials with trakt servers
+    private static UpdateResult performTraktSync(Context context, HashSet<Integer> existingShows,
+            HashMap<Integer, SearchResult> newShows, boolean forceSync, long currentTime) {
         Timber.d("Syncing...trakt auth check");
         TraktCredentials.get(context).validateCredentials();
-
-        // are we still authenticated?
         Trakt trakt = ServiceUtils.getTraktWithAuth(context);
         if (trakt == null) {
-            // no, we are done here
+            // not connected to trakt, we are done here
             return UpdateResult.SUCCESS;
+        }
+
+        UpdateResult result = UpdateResult.SUCCESS;
+
+        // full episode sync
+        if (forceSync || TraktSettings.isTimeForFullEpisodeSync(context, currentTime)) {
+            if (!AndroidUtils.isNetworkConnected(context)) {
+                return UpdateResult.INCOMPLETE;
+            }
+
+            Timber.d("Syncing...trakt episodes (full)...");
+            UpdateResult fullSyncResult = performTraktEpisodeSync(context, trakt, existingShows,
+                    currentTime);
+            Timber.d("Syncing...trakt episodes (full)..."
+                    + (fullSyncResult == UpdateResult.SUCCESS ? "SUCCESS" : "INCOMPLETE"));
+
+            result = fullSyncResult;
         }
 
         if (!AndroidUtils.isNetworkConnected(context)) {
             return UpdateResult.INCOMPLETE;
         }
 
-        UpdateResult result = UpdateResult.SUCCESS;
-
-        // sync all watched and collected flags?
-        if (syncImmediately || TraktSettings.isTimeForFullSync(context, currentTime)) {
-            Timber.d("Syncing...trakt full sync...");
-            int resultCode = TraktTools.syncToSeriesGuide(context, trakt, showsExisting, true);
-
-            if (resultCode < 0) {
-                result = UpdateResult.INCOMPLETE;
-                Timber.d("Syncing...trakt shows...INCOMPLETE");
-            } else {
-                // set last full sync time
-                PreferenceManager.getDefaultSharedPreferences(context).edit()
-                        .putLong(TraktSettings.KEY_LAST_FULL_SYNC, currentTime)
-                        .commit();
-                Timber.d("Syncing...trakt shows...SUCCESS");
-            }
-
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                return UpdateResult.INCOMPLETE;
-            }
-        }
-
-        // get trakt activity
-        Timber.d("Syncing...trakt episode activity...");
-        UpdateResult activityResult = getTraktActivity(context, trakt, showsExisting, showsNew);
-        Timber.d("Syncing...trakt episode activity..." + activityResult.toString());
+        // episode activity
+        Timber.d("Syncing...trakt episodes (activity)...");
+        UpdateResult activityResult = performTraktEpisodeActivityDownload(context, trakt,
+                existingShows, newShows);
+        Timber.d("Syncing...trakt episodes (activity)..." + activityResult.toString());
 
         // don't overwrite failure
         if (result == UpdateResult.SUCCESS) {
             result = activityResult;
         }
 
-        // sync movies with trakt
+        if (!AndroidUtils.isNetworkConnected(context)) {
+            return UpdateResult.INCOMPLETE;
+        }
+
+        // movies
         Timber.d("Syncing...trakt movies...");
         UpdateResult resultMovies = MovieTools.Download.syncMoviesFromTrakt(context);
         Timber.d("Syncing...trakt movies..." + resultMovies.toString());
 
-        // don't overwrite earlier failure
+        // don't overwrite failure
         if (result == UpdateResult.SUCCESS) {
             result = resultMovies;
         }
@@ -490,16 +484,54 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         return result;
     }
 
+    private static UpdateResult performTraktEpisodeSync(Context context, Trakt trakt,
+            HashSet<Integer> existingShows, long currentTime) {
+        // do we need to merge data instead of overwriting with data from trakt?
+        boolean isInitialSync = !TraktSettings.hasMergedEpisodes(context);
+
+        // download
+        Timber.d("Syncing...trakt episodes (full)...downloading");
+        int resultCode = TraktTools.syncToSeriesGuide(context, trakt, existingShows,
+                !isInitialSync);
+
+        if (resultCode < 0 || !AndroidUtils.isNetworkConnected(context)) {
+            return UpdateResult.INCOMPLETE;
+        }
+
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context)
+                .edit();
+
+        if (isInitialSync) {
+            // upload
+            Timber.d("Syncing...trakt episodes (full)...uploading");
+            resultCode = TraktTools.uploadToTrakt(context, trakt, existingShows);
+
+            if (resultCode < 0) {
+                return UpdateResult.INCOMPLETE;
+            } else {
+                // success, set initial sync as complete
+                editor.putBoolean(TraktSettings.KEY_HAS_MERGED_EPISODES, true);
+            }
+        }
+
+        // success, set last full sync time to now
+        editor.putLong(TraktSettings.KEY_LAST_FULL_EPISODE_SYNC, currentTime);
+
+        editor.commit();
+
+        return UpdateResult.SUCCESS;
+    }
+
     /**
      * Downloads new trakt episode activity (checkins, seen, scrobbles, collected) and applies
      * resulting episode flag changes (watched, collected) to the database for the given {@code
-     * showsExisting}.<br/>If {@link TraktSettings#isAutoAddingShows(android.content.Context)} is
-     * enabled, detects new shows based on {@code showsExisting} and adds them to {@code showsNew}.
+     * existingShows}.<br/>If {@link TraktSettings#isAutoAddingShows(android.content.Context)} is
+     * enabled, detects new shows based on {@code existingShows} and adds them to {@code newShows}.
      */
-    private static UpdateResult getTraktActivity(Context context, Trakt trakt,
-            HashSet<Integer> showsExisting, HashMap<Integer, SearchResult> showsNew) {
+    private static UpdateResult performTraktEpisodeActivityDownload(Context context, Trakt trakt,
+            HashSet<Integer> existingShows, HashMap<Integer, SearchResult> newShows) {
         // get cut-off for activity stream
-        final long startTimeTrakt = TraktSettings.getLastUpdateTime(context) / 1000;
+        final long startTimeTrakt = TraktSettings.getLastActivityDownloadTime(context) / 1000;
 
         // download activity stream
         Activity activities;
@@ -510,7 +542,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                             ActivityType.Episode.toString(),
                             ActivityAction.Checkin + "," + ActivityAction.Seen + "," +
                                     ActivityAction.Scrobble + "," + ActivityAction.Collection,
-                            startTimeTrakt, 1, 0);
+                            startTimeTrakt, 1, 0
+                    );
         } catch (RetrofitError e) {
             Timber.e(e, "Downloading activity failed");
             return UpdateResult.INCOMPLETE;
@@ -531,15 +564,15 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 continue;
             }
 
-            if (showsExisting.contains(activity.show.tvdb_id)) {
+            if (existingShows.contains(activity.show.tvdb_id)) {
                 // show exists locally, get episode flag changes
-                buildActionBatch(context, batch, activity);
-            } else if (isAutoAddingShows && !showsNew.containsKey(activity.show.tvdb_id)) {
+                buildActionBatch(batch, activity);
+            } else if (isAutoAddingShows && !newShows.containsKey(activity.show.tvdb_id)) {
                 // new show, remember to add to local database later
                 SearchResult show = new SearchResult();
                 show.tvdbid = activity.show.tvdb_id;
                 show.title = activity.show.title;
-                showsNew.put(activity.show.tvdb_id, show);
+                newShows.put(activity.show.tvdb_id, show);
             }
         }
 
@@ -552,10 +585,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // store time of this update as seen by the trakt server
-        SharedPreferences.Editor editor = PreferenceManager
-                .getDefaultSharedPreferences(context).edit();
-        editor.putLong(TraktSettings.KEY_LAST_UPDATE,
-                activities.timestamps.current.getTime()).commit();
+        PreferenceManager.getDefaultSharedPreferences(context).edit()
+                .putLong(TraktSettings.KEY_LAST_ACTIVITY_DOWNLOAD,
+                        activities.timestamps.current.getTime())
+                .commit();
 
         return UpdateResult.SUCCESS;
     }
@@ -563,7 +596,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     /**
      * Adds episode update ops based on the action of the given activity item.
      */
-    private static void buildActionBatch(Context context, ArrayList<ContentProviderOperation> batch,
+    private static void buildActionBatch(ArrayList<ContentProviderOperation> batch,
             ActivityItem item) {
         if (item.action == null) {
             return;
@@ -663,5 +696,4 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         return (currentTime - previousUpdateTime) >
                 DEFAULT_SYNC_INTERVAL_MINUTES * DateUtils.MINUTE_IN_MILLIS;
     }
-
 }

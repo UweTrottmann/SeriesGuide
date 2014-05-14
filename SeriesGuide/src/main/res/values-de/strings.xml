@@ -96,6 +96,7 @@
   <string name="services_watch">Anschauen</string>
   <string name="services_more">Mehr</string>
   <string name="sort">Sortieren nach</string>
+  <string name="action_sort_ignore_articles">Artikel ignorieren</string>
   <string name="today">heute</string>
   <string name="now">jetzt</string>
   <string name="daily">Täglich</string>
@@ -156,6 +157,9 @@
   <string name="recent">Vor kurzem</string>
   <string name="friends">Freunde</string>
   <string name="friends_empty">Keine Aktivität von Freuden auf trakt.</string>
+  <string name="user_stream">Sie</string>
+  <string name="user_stream_empty">In letzter Zeit keine Aktivitäten auf trakt. Checken Sie in Serien ein!</string>
+  <string name="user_movie_stream_empty">In letzter Zeit keine Aktivitäten auf trakt. Checken Sie in Filme ein!</string>
   <string name="noupcoming">Keine kommenden Folgen.</string>
   <string name="norecent">Keine bereits gesendeten Folgen.</string>
   <string name="only_favorites">Nur Serien-Favoriten</string>
@@ -209,13 +213,12 @@
   <string name="hexagon_priority_select">Version auswählen</string>
   <string name="connect_trakt">Mit Trakt verbinden</string>
   <string name="connect_trakt_done">Mit Trakt verbunden!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide wird jetzt die Serien und Filme auf diesem Gerät mit trakt synchronisieren. Dies kann eine Weile dauern.</string>
   <string name="add_trakt_shows">Serien aus Ihrer Bibliothek hinzufügen:</string>
   <string name="show_library">Ihre Bibliothek anzeigen</string>
-  <string name="upload_shows">Ihre SeriesGuide Serien-Liste hochladen:</string>
   <string name="upload_existing_shows">Vorhandene Serien hochladen</string>
   <string name="about_trakt">trakt hilft TV-Sendungen und Filme zu speichern, die Sie angesehen haben. <a href="http://trakt.tv">Mehr erfahren</a></string>
   <string name="integration_trakt_items">- Serien aus Ihrer Bibliothek oder Watchliste hinzufügen\n\n- Empfehlungen und Aktivität von Freunden anzeigen\n\n- Gesehen- und Gesammelt-Flaggen werden automatisch synchronisiert\n\n- neue Serien die Sie angesehen haben werden automatisch hinzugefügt</string>
-  <string name="trakt_upload_hint">Markiere alle gesehenen Folgen in SeriesGuide als gesehen bei trakt:</string>
   <string name="trakt_upload">Zu trakt.tv hochladen</string>
   <string name="trakt_syncunwatched">Gesehen-Markierung auf trakt für ungesehene Folgen in SeriesGuide entfernen</string>
   <string name="upload_done">Hochladen abgeschlossen.</string>
@@ -371,6 +374,11 @@
   <string name="extension_amazon">Amazon-Suche</string>
   <string name="description_extension_amazon">Suchen Sie auf Ihrer lokalen Amazon-Seite</string>
   <string name="pref_amazon_domain">Amazon-Seite</string>
+  <string name="extension_google_play">Google Play Suche</string>
+  <string name="description_extension_google_play">Google Play Store durchsuchen</string>
+  <string name="extension_youtube">YouTube Suche</string>
+  <string name="description_extension_youtube">YouTube nach Videos durchsuchen</string>
+  <string name="description_extension_web_search">Nach Webseiten und Bildern suchen</string>
   <string-array name="sesorting">
     <item>Aktuellste zuerst</item>
     <item>Älteste zuerst</item>

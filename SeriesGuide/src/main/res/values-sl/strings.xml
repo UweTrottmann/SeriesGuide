@@ -96,6 +96,7 @@
   <string name="services_watch">Gledaj</string>
   <string name="services_more">Več</string>
   <string name="sort">Razvrsti po</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">danes</string>
   <string name="now">zdaj</string>
   <string name="daily">Dnevno</string>
@@ -156,6 +157,9 @@
   <string name="recent">Nedavno</string>
   <string name="friends">Prijatelji</string>
   <string name="friends_empty">Na trakt-u ni aktivnosti prijateljev.</string>
+  <string name="user_stream">You</string>
+  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
+  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
   <string name="noupcoming">Ni prihajajočih epizod.</string>
   <string name="norecent">Ni nedavnih epizod.</string>
   <string name="only_favorites">Samo priljubljene oddaje</string>
@@ -209,13 +213,12 @@
   <string name="hexagon_priority_select">Izberi različico</string>
   <string name="connect_trakt">Poveži trakt</string>
   <string name="connect_trakt_done">Povezan na trakt!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Dodaj oddaje iz svoje knjižnjice:</string>
   <string name="show_library">Prikaži knjižnjico</string>
-  <string name="upload_shows">Naloži na strežnik svoj spisek SeriesGuide oddaj:</string>
   <string name="upload_existing_shows">Naloži na strežnik obstoječe oddaje</string>
   <string name="about_trakt">trakt pomaga pri sledenju TV oddaj in filmov, ki jih gledaš.<a href="http://trakt.tv">Izvedi več</a></string>
   <string name="integration_trakt_items">- dodaj oddaje iz svoje knjižnjice in spiska\n\n- poglej svoja priporočila in aktivnost prijateljev\n\n- gledane in zbrane oznake so avtomatsko sinhronizirane\n\n- nove oddaje, ki si jih gledal so avtomatsko dodane</string>
-  <string name="trakt_upload_hint">Označi pogledane epizode v SeriesGuide, kot pogledane na traktu:</string>
   <string name="trakt_upload">Naloži na strežnik trakt.tv</string>
   <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
   <string name="upload_done">Finished uploading.</string>
@@ -371,6 +374,11 @@
   <string name="extension_amazon">Amazon search</string>
   <string name="description_extension_amazon">Search your local Amazon site</string>
   <string name="pref_amazon_domain">Amazon site</string>
+  <string name="extension_google_play">Google Play search</string>
+  <string name="description_extension_google_play">Search the Google Play Store</string>
+  <string name="extension_youtube">YouTube search</string>
+  <string name="description_extension_youtube">Search YouTube for videos</string>
+  <string name="description_extension_web_search">Search for websites and images</string>
   <string-array name="sesorting">
     <item>Najnovejša prva</item>
     <item>Najstarejša prva</item>

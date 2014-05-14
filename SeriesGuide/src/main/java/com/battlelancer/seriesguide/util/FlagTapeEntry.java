@@ -18,7 +18,6 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
-
 import java.io.Serializable;
 import java.util.List;
 

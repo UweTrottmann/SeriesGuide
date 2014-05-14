@@ -29,9 +29,8 @@ import android.preference.PreferenceActivity;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
-
-import com.battlelancer.seriesguide.settings.DashClockSettings;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.settings.DashClockSettings;
 
 /**
  * Allow setting the threshold for upcoming episodes to appear in DashClock.

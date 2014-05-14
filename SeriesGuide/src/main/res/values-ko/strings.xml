@@ -96,6 +96,7 @@
   <string name="services_watch">보기</string>
   <string name="services_more">더보기</string>
   <string name="sort">정렬 기준</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">오늘</string>
   <string name="now">지금</string>
   <string name="daily">매일</string>
@@ -156,6 +157,9 @@
   <string name="recent">최근방영됨</string>
   <string name="friends">친구</string>
   <string name="friends_empty">trakt 친구의 활동이 없습니다.</string>
+  <string name="user_stream">You</string>
+  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
+  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
   <string name="noupcoming">방영예정인 에피소드가 없습니다.</string>
   <string name="norecent">최근 방영된 에피소드가 없습니다.</string>
   <string name="only_favorites">즐겨찾기한 쇼만 보이기</string>
@@ -209,13 +213,12 @@
   <string name="hexagon_priority_select">선택</string>
   <string name="connect_trakt">trakt에 연결하기</string>
   <string name="connect_trakt_done">trakt에 연결되었습니다!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">라이브러리에 있는 쇼 추가:</string>
   <string name="show_library">라이브러리 표시</string>
-  <string name="upload_shows">시리즈가이드에 있는 쇼 목록 업로드:</string>
   <string name="upload_existing_shows">기존 쇼 업로드</string>
   <string name="about_trakt">trakt는 여러분이 보고 있는 TV 쇼와 영화 정보를 기록하고 유지하는데 도움이 됩니다. <a href="http://trakt.tv">더 보기</a></string>
   <string name="integration_trakt_items">- 라이브러리와 관심목록에 있는 쇼를 추가하세요.\n\n- 당신이 추천한 에피소드와 친구의 활동내역을 살펴보세요.\n\n- 시청 정보나 수집 정보는 자동으로 동기화됩니다.\n\n- 시리즈가이드에 추가하거나 본 에피소드는 자동으로 동기화됩니다.</string>
-  <string name="trakt_upload_hint">시리즈가이드의 시청 완료 정보를 trakt에 동기화합니다:</string>
   <string name="trakt_upload">trakt.tv에 업로드</string>
   <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
   <string name="upload_done">Finished uploading.</string>
@@ -371,6 +374,11 @@
   <string name="extension_amazon">Amazon search</string>
   <string name="description_extension_amazon">Search your local Amazon site</string>
   <string name="pref_amazon_domain">Amazon site</string>
+  <string name="extension_google_play">Google Play search</string>
+  <string name="description_extension_google_play">Search the Google Play Store</string>
+  <string name="extension_youtube">YouTube search</string>
+  <string name="description_extension_youtube">Search YouTube for videos</string>
+  <string name="description_extension_web_search">Search for websites and images</string>
   <string-array name="sesorting">
     <item>최근 방영 순</item>
     <item>예전 방영 순</item>

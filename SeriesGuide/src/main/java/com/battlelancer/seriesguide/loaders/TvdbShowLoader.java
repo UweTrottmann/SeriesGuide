@@ -18,8 +18,8 @@ package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.thetvdbapi.TheTVDB;
-import com.battlelancer.thetvdbapi.TvdbException;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import timber.log.Timber;
 

@@ -96,6 +96,7 @@
   <string name="services_watch">Bekijken</string>
   <string name="services_more">Meer</string>
   <string name="sort">Sorteren op</string>
+  <string name="action_sort_ignore_articles">Negeer artikel</string>
   <string name="today">vandaag</string>
   <string name="now">nu</string>
   <string name="daily">Dagelijks</string>
@@ -156,6 +157,9 @@
   <string name="recent">Recente</string>
   <string name="friends">Vrienden</string>
   <string name="friends_empty">Geen activiteit van vrienden op trakt.</string>
+  <string name="user_stream">U</string>
+  <string name="user_stream_empty">Geen recente activiteit op trakt. Check in bij shows!</string>
+  <string name="user_movie_stream_empty">Geen recente activiteit op trakt. Check in bij films!</string>
   <string name="noupcoming">Er zijn geen toekomstige afleveringen.</string>
   <string name="norecent">Er zijn geen recente afleveringen.</string>
   <string name="only_favorites">Alleen favoriete series</string>
@@ -209,13 +213,12 @@
   <string name="hexagon_priority_select">Versie selecteren</string>
   <string name="connect_trakt">Verbinden met trakt</string>
   <string name="connect_trakt_done">Verbonden met trakt!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Series toevoegen vanuit uw bibliotheek:</string>
   <string name="show_library">Uw bibliotheek weergeven</string>
-  <string name="upload_shows">Upload uw SeriesGuide-serielijst:</string>
   <string name="upload_existing_shows">Upload bestaande shows</string>
   <string name="about_trakt">trakt helpt met het bijhouden van welke TV-shows en films u aan het bekijken bent. <a href="http://trakt.tv">Meer weten</a></string>
   <string name="integration_trakt_items">- voeg series uit uw bibliotheek en watchlist toe\n\n- bekijk uw aanbevelingen en vriendenactiviteit\n\n- bekeken- en verzameld-markeringen worden automatisch gesynchroniseerd\n\n- nieuwe series die u bekeken hebt worden automatisch toegevoegd</string>
-  <string name="trakt_upload_hint">Markeer afleveringen bekeken in SeriesGuide als bekeken op trakt:</string>
   <string name="trakt_upload">Uploaden naar trakt.tv</string>
   <string name="trakt_syncunwatched">Verwijder bekeken-markeringen in Trakt voor onbekeken afleveringen in SeriesGuide</string>
   <string name="upload_done">Klaar met uploaden.</string>
@@ -364,13 +367,18 @@
   <string name="extensions">Extensies</string>
   <string name="action_extensions_configure">Extensies aanpassen</string>
   <string name="action_extensions_add">Extensie toevoegen</string>
-  <string name="action_extensions_limit">Get X to add more extensions</string>
+  <string name="action_extensions_limit">Neem X om meer extensies toe te voegen</string>
   <string name="action_extensions_search">Vind meer extensies</string>
   <string name="action_extension_settings">Instellingen</string>
   <string name="action_extension_remove">Verwijderen</string>
   <string name="extension_amazon">Zoeken op Amazon</string>
   <string name="description_extension_amazon">Zoek uw lokale Amazon site</string>
   <string name="pref_amazon_domain">Amazon site</string>
+  <string name="extension_google_play">Zoek op Google Play</string>
+  <string name="description_extension_google_play">Zoek op de Google Play Store</string>
+  <string name="extension_youtube">Zoek op YouTube</string>
+  <string name="description_extension_youtube">Zoek op YouTube voor video\'s</string>
+  <string name="description_extension_web_search">Zoek naar websites en afbeeldingen</string>
   <string-array name="sesorting">
     <item>Nieuwste eerst</item>
     <item>Oudste eerst</item>

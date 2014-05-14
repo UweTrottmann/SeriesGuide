@@ -16,10 +16,9 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.enums.SeasonTags;
-import com.battlelancer.seriesguide.R;
-
 import android.content.Context;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.enums.SeasonTags;
 
 public class SeasonTools {
 

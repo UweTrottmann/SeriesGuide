@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.util;
 
 import android.content.ContentProvider;
 import android.net.Uri;
-
 import java.util.regex.Pattern;
 
 public class ParserUtils {

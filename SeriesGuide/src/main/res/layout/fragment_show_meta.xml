@@ -99,6 +99,7 @@
         style="@style/DefaultPadding.Blocks.WithBottomMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
         android:textAppearance="@style/TextAppearance.Light"
         android:textIsSelectable="true" />
 

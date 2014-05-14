@@ -16,12 +16,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.jakewharton.trakt.Trakt;
-import com.battlelancer.seriesguide.R;
-import com.squareup.picasso.Picasso;
-import com.uwetrottmann.tmdb.Tmdb;
-
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +25,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.jakewharton.trakt.Trakt;
+import com.squareup.picasso.Picasso;
+import com.uwetrottmann.tmdb.Tmdb;
 
 /**
  * Helper methods to interact with third-party services trakt and The Movie Database used within
@@ -199,12 +198,21 @@ public final class ServiceUtils {
     }
 
     /**
-     * Tries to open Google Play to search for the given tv show, episode or movie title.
+     * Returns a view {@link android.content.Intent} for a search of Google Play's movies category
+     * (includes TV shows).
      */
-    public static void searchGooglePlay(final String title, final String logTag, Context context) {
+    public static Intent buildGooglePlayIntent(String title) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         String playStoreQuery = String.format(GOOGLE_PLAY, Uri.encode(title));
         intent.setData(Uri.parse(playStoreQuery));
+        return intent;
+    }
+
+    /**
+     * Tries to open Google Play to search for the given tv show, episode or movie title.
+     */
+    public static void searchGooglePlay(final String title, final String logTag, Context context) {
+        Intent intent = buildGooglePlayIntent(title);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
 
@@ -335,16 +343,14 @@ public final class ServiceUtils {
     }
 
     /**
-     * Attempts to open the YouTube application to search for <code>query</code> . If the app is
-     * unavailable, a web search if performed instead
-     *
-     * @param context The {@link Context} to use
-     * @param query   The search query
-     * @param logTag  The log tag to use, for Analytics
+     * Builds a search {@link android.content.Intent} to open the YouTube application to search for
+     * <code>query</code>.
+     * If the YouTube app is unavailable, a view {@link android.content.Intent}
+     * with the web search URL is returned instead.
      */
-    public static void searchYoutube(Context context, String query, String logTag) {
+    public static Intent buildYouTubeIntent(Context context, String query) {
         PackageManager pm = context.getPackageManager();
-        boolean hasYouTube = false;
+        boolean hasYouTube;
         try {
             pm.getPackageInfo(YOUTUBE_PACKAGE, PackageManager.GET_ACTIVITIES);
             hasYouTube = true;
@@ -363,6 +369,19 @@ public final class ServiceUtils {
             intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(String.format(YOUTUBE_SEARCH, Uri.encode(query))));
         }
+        return intent;
+    }
+
+    /**
+     * Attempts to open the YouTube application to search for <code>query</code>. If the app is
+     * unavailable, a web search if performed instead.
+     *
+     * @param context The {@link Context} to use
+     * @param query   The search query
+     * @param logTag  The log tag to use, for Analytics
+     */
+    public static void searchYoutube(Context context, String query, String logTag) {
+        Intent intent = buildYouTubeIntent(context, query);
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
@@ -395,15 +414,24 @@ public final class ServiceUtils {
     }
 
     /**
-     * Attempts to search the web for <code>query</code>
+     * Builds a search {@link android.content.Intent} using {@link Intent#ACTION_WEB_SEARCH} and
+     * <code>query</code> as {@link android.app.SearchManager#QUERY} extra.
+     */
+    public static Intent buildWebSearchIntent(String query) {
+        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+        intent.putExtra(SearchManager.QUERY, query);
+        return intent;
+    }
+
+    /**
+     * Attempts to search the web for <code>query</code>.
      *
      * @param context The {@link Context} to use
      * @param query   The search query
      * @param logTag  The log tag to use, for Analytics
      */
     public static void performWebSearch(Context context, String query, String logTag) {
-        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-        intent.putExtra(SearchManager.QUERY, query);
+        Intent intent = buildWebSearchIntent(query);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
 

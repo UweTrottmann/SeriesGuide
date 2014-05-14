@@ -96,6 +96,7 @@
   <string name="services_watch">Guarda</string>
   <string name="services_more">Altro</string>
   <string name="sort">Ordina per</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">oggi</string>
   <string name="now">adesso</string>
   <string name="daily">Giornaliero</string>
@@ -156,6 +157,9 @@
   <string name="recent">Recenti</string>
   <string name="friends">Amici</string>
   <string name="friends_empty">Nessuna attività su trakt da i tuoi amici.</string>
+  <string name="user_stream">You</string>
+  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
+  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
   <string name="noupcoming">Non c\'è nessun episodio prossimo.</string>
   <string name="norecent">Non ci sono episodi recenti.</string>
   <string name="only_favorites">Solo le serie preferite</string>
@@ -209,13 +213,12 @@
   <string name="hexagon_priority_select">Seleziona la versione</string>
   <string name="connect_trakt">Collegati a trakt</string>
   <string name="connect_trakt_done">Connesso a trakt!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Aggiungi serie dalla tua raccolta:</string>
   <string name="show_library">Mostra la tua raccolta</string>
-  <string name="upload_shows">Carica la tua lista SeriesGuide:</string>
   <string name="upload_existing_shows">Carica serie esistenti</string>
   <string name="about_trakt">trakt ti aiuta a tenere traccia delle serie TV e dei film che guardi. <a href="http://trakt.tv">Learn more</a></string>
   <string name="integration_trakt_items">- aggiungi serie dalla tua raccolta e dalla tuo programma visione\n\n- guarda i suggerimenti per te e cosa guardano i tuoi amici\n\n- sincronizzazione automatica degli episodi guardati e contrassegnati\n\n- sinronizzazione automatica delle nuove serie guardate</string>
-  <string name="trakt_upload_hint">Contrassegna gli episodi in trakt come guardati da SeriesGuide:</string>
   <string name="trakt_upload">Carica su trakt.tv</string>
   <string name="trakt_syncunwatched">Rimuovere la spunta guardato su trakt per gli episodi non visti in SeriesGuide</string>
   <string name="upload_done">Caricamento finito.</string>
@@ -371,6 +374,11 @@
   <string name="extension_amazon">Amazon search</string>
   <string name="description_extension_amazon">Search your local Amazon site</string>
   <string name="pref_amazon_domain">Amazon site</string>
+  <string name="extension_google_play">Google Play search</string>
+  <string name="description_extension_google_play">Search the Google Play Store</string>
+  <string name="extension_youtube">YouTube search</string>
+  <string name="description_extension_youtube">Search YouTube for videos</string>
+  <string name="description_extension_web_search">Search for websites and images</string>
   <string-array name="sesorting">
     <item>Prima i più recenti</item>
     <item>Prima i più vecchi</item>

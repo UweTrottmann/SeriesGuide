@@ -62,6 +62,8 @@ import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
+import com.battlelancer.seriesguide.ui.streams.FriendsEpisodeStreamFragment;
+import com.battlelancer.seriesguide.ui.streams.UserEpisodeStreamFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.ImageProvider;
@@ -69,7 +71,7 @@ import com.battlelancer.seriesguide.util.LatestEpisodeUpdateService;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +86,12 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
     protected static final String TAG = "Shows";
 
-    public static final int ADD_SHOW_LOADER_ID = 1;
+    public static final int SHOWS_LOADER_ID = 100;
+    public static final int UPCOMING_LOADER_ID = 101;
+    public static final int RECENT_LOADER_ID = 102;
+    public static final int FRIENDS_LOADER_ID = 103;
+    public static final int USER_LOADER_ID = 104;
+    public static final int ADD_SHOW_LOADER_ID = 105;
 
     private static final int UPDATE_SUCCESS = 100;
 
@@ -141,38 +148,13 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         // handle implicit intents from other apps
         handleViewIntents();
 
+        // setup all the views!
         setUpActionBar();
         setupViews();
         setInitialTab(savedInstanceState, getIntent().getExtras());
 
-        // query in-app purchases (only if not already qualified)
-        if (Utils.requiresPurchaseCheck(this)) {
-            mHelper = new IabHelper(this, BillingActivity.getPublicKey(this));
-            mHelper.enableDebugLogging(BuildConfig.DEBUG);
-
-            Timber.i("Starting In-App Billing helper setup.");
-            mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-                public void onIabSetupFinished(IabResult result) {
-                    Timber.d("Setup finished.");
-
-                    if (!result.isSuccess()) {
-                        // Oh noes, there was a problem. But do not go crazy.
-                        disposeIabHelper();
-                        return;
-                    }
-
-                    // Have we been disposed of in the meantime? If so, quit.
-                    if (mHelper == null) {
-                        return;
-                    }
-
-                    // Hooray, IAB is fully set up. Now, let's get an inventory
-                    // of stuff we own.
-                    Timber.d("Setup successful. Querying inventory.");
-                    mHelper.queryInventoryAsync(mGotInventoryListener);
-                }
-            });
-        }
+        // query for in-app purchases
+        checkPurchase();
     }
 
     /**
@@ -252,7 +234,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         argsUpcoming.putString(ActivityFragment.InitBundle.TYPE,
                 ActivityFragment.ActivityType.UPCOMING);
         argsUpcoming.putString(ActivityFragment.InitBundle.ANALYTICS_TAG, "Upcoming");
-        argsUpcoming.putInt(ActivityFragment.InitBundle.LOADER_ID, 10);
+        argsUpcoming.putInt(ActivityFragment.InitBundle.LOADER_ID, UPCOMING_LOADER_ID);
         argsUpcoming.putInt(ActivityFragment.InitBundle.EMPTY_STRING_ID, R.string.noupcoming);
         mTabsAdapter.addTab(R.string.upcoming, ActivityFragment.class, argsUpcoming);
 
@@ -261,13 +243,14 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         argsRecent
                 .putString(ActivityFragment.InitBundle.TYPE, ActivityFragment.ActivityType.RECENT);
         argsRecent.putString(ActivityFragment.InitBundle.ANALYTICS_TAG, "Recent");
-        argsRecent.putInt(ActivityFragment.InitBundle.LOADER_ID, 20);
+        argsRecent.putInt(ActivityFragment.InitBundle.LOADER_ID, RECENT_LOADER_ID);
         argsRecent.putInt(ActivityFragment.InitBundle.EMPTY_STRING_ID, R.string.norecent);
         mTabsAdapter.addTab(R.string.recent, ActivityFragment.class, argsRecent);
 
-        // trakt friends tab
+        // trakt tabs only visible if connected
         if (TraktCredentials.get(this).hasCredentials()) {
-            mTabsAdapter.addTab(R.string.friends, TraktFriendsFragment.class, null);
+            mTabsAdapter.addTab(R.string.friends, FriendsEpisodeStreamFragment.class, null);
+            mTabsAdapter.addTab(R.string.user_stream, UserEpisodeStreamFragment.class, null);
         }
 
         // display new tabs
@@ -301,11 +284,50 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         mViewPager.setCurrentItem(selection);
     }
 
+    private void checkPurchase() {
+        if (!Utils.requiresPurchaseCheck(this)) {
+            return;
+        }
+        mHelper = new IabHelper(this, BillingActivity.getPublicKey(this));
+        mHelper.enableDebugLogging(BuildConfig.DEBUG);
+
+        Timber.i("Starting In-App Billing helper setup.");
+        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            public void onIabSetupFinished(IabResult result) {
+                Timber.d("Setup finished.");
+
+                if (!result.isSuccess()) {
+                    // Oh noes, there was a problem. But do not go crazy.
+                    disposeIabHelper();
+                    return;
+                }
+
+                // Have we been disposed of in the meantime? If so, quit.
+                if (mHelper == null) {
+                    return;
+                }
+
+                // Hooray, IAB is fully set up. Now, let's get an inventory
+                // of stuff we own.
+                Timber.d("Setup successful. Querying inventory.");
+                mHelper.queryInventoryAsync(mGotInventoryListener);
+            }
+        });
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
 
         setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_SHOWS_POSITION);
+        if (!AppSettings.hasSeenNavDrawer(this)) {
+            // introduce the nav drawer
+            openDrawer();
+            PreferenceManager.getDefaultSharedPreferences(this)
+                    .edit()
+                    .putBoolean(AppSettings.KEY_HAS_SEEN_NAV_DRAWER, true)
+                    .apply();
+        }
 
         // check for running show removal worker
         Fragment f = getSupportFragmentManager().findFragmentByTag(RemoveShowWorkerFragment.TAG);
@@ -314,6 +336,11 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         }
         // now listen to events
         EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void registerEventBus() {
+        // do nothing, we handle that ourselves in onStart
     }
 
     @Override
@@ -354,8 +381,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     protected void onStop() {
         super.onStop();
 
-        // stop listening to events
-        EventBus.getDefault().unregister(this);
         // now prevent dialog from restoring itself (we would loose ref to it)
         hideProgressDialog();
     }
@@ -417,26 +442,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-        // If the nav drawer is open, hide action items related to the content
-        // view
-        boolean isDrawerOpen = isDrawerOpen();
-        menu.findItem(R.id.menu_add_show).setVisible(!isDrawerOpen);
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_add_show) {
-            fireTrackerEvent("Add show");
-            startActivity(new Intent(this, AddActivity.class));
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-            return true;
-        } else if (itemId == R.id.menu_search) {
+        if (itemId == R.id.menu_search) {
             startActivity(new Intent(this, SearchActivity.class));
             fireTrackerEvent("Search");
             return true;
@@ -580,7 +588,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     }
 
     /**
-     * Called if the user adds a show from {@link com.battlelancer.seriesguide.ui.TraktFriendsFragment}.
+     * Called if the user adds a show from {@link FriendsEpisodeStreamFragment}.
      */
     @Override
     public void onAddShow(SearchResult show) {

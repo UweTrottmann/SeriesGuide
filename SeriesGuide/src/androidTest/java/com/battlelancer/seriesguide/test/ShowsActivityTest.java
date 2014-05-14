@@ -44,7 +44,7 @@ public class ShowsActivityTest extends ActivityInstrumentationTestCase2<ShowsAct
     }
 
     public void testNavigateToAddShowAndBack() throws InterruptedException {
-        onView(withId(R.id.menu_add_show)).perform(click());
+        onView(withId(R.id.menu_action_shows_add)).perform(click());
 
         // let the UI do some loading before going back
         SystemClock.sleep(3000);

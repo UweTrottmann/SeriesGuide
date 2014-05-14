@@ -96,6 +96,7 @@
   <string name="services_watch">Переглянути</string>
   <string name="services_more">Більше</string>
   <string name="sort">Сортувати за</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">сьогодні</string>
   <string name="now">тепер</string>
   <string name="daily">Щодня</string>
@@ -156,6 +157,9 @@
   <string name="recent">Недавно</string>
   <string name="friends">Друзі</string>
   <string name="friends_empty">Немає активності друзів на trakt.</string>
+  <string name="user_stream">You</string>
+  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
+  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
   <string name="noupcoming">Немає наступних серій.</string>
   <string name="norecent">Немає недавніх серій.</string>
   <string name="only_favorites">Лише улюблені серіали</string>
@@ -209,13 +213,12 @@
   <string name="hexagon_priority_select">Виберіть версію</string>
   <string name="connect_trakt">Підключитись до trakt</string>
   <string name="connect_trakt_done">Підключено до trakt!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Додати серіали з бібліотеки:</string>
   <string name="show_library">Показати вашу бібліотеку</string>
-  <string name="upload_shows">Завантажити ваш список серіалів SeriesGuide:</string>
   <string name="upload_existing_shows">Завантажити наявні серіали</string>
   <string name="about_trakt">trakt допомагає зберігати запис про те які телесеріали та фільми ви дивитеся. <a href="http://trakt.tv">Дізнатись більше</a></string>
   <string name="integration_trakt_items">- додавайте серіали із вашої бібліотеки та списку переглядів\n\n- переглядайте ваші рекомендації та активність друзів\n\n- переглянуті та вибрані пункти синхронізуються автоматично\n\n- нові серіали, які ви переглядали додаються автоматично</string>
-  <string name="trakt_upload_hint">Відзначити переглянуті серії з SeriesGuide як переглянуті на trakt:</string>
   <string name="trakt_upload">Завантажити на trakt.tv</string>
   <string name="trakt_syncunwatched">Прибрати статус переглянутого на trakt для не переглянутих серій в SeriesGuide</string>
   <string name="upload_done">Завантаження завершене.</string>
@@ -371,6 +374,11 @@
   <string name="extension_amazon">Пошук Amazon</string>
   <string name="description_extension_amazon">Пошук в локальній версії сайту Amazon</string>
   <string name="pref_amazon_domain">Сайт Amazon</string>
+  <string name="extension_google_play">Google Play search</string>
+  <string name="description_extension_google_play">Search the Google Play Store</string>
+  <string name="extension_youtube">YouTube search</string>
+  <string name="description_extension_youtube">Search YouTube for videos</string>
+  <string name="description_extension_web_search">Search for websites and images</string>
   <string-array name="sesorting">
     <item>Останні спочатку</item>
     <item>Давніші спочатку</item>

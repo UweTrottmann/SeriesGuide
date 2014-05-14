@@ -5,6 +5,58 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 14 *(2014-05-14)*
+-----------------------------
+
+* View a stream of your and your friends trakt check-ins for shows and movies.
+* Option to sort shows and movies by title while ignoring articles (English only).
+* Easier trakt setup: after connecting your shows and movies are automatically merged with your trakt profile.
+* Extensions replace watch options for episodes. Added extension for Google Play, YouTube and Web search.
+
+#### 14.0.1 *(2014-05-14)*
+
+* FIX Crash when access to network detection is prevented (e.g. Xposed privacy module).
+* NOTICE Latest translations from crowdin (Finish, Portuguese Brazil).
+
+#### 14 *(2014-05-12)*
+
+* FIX Error message not displaying in some cases when failing to add a show.
+* FIX Crash when sharing, but no app available to handle a share intent.
+* NOTICE Latest translations from crowdin (Arabic, French, Polish).
+
+#### 14-beta5 *(2014-05-09)*
+
+* TWEAK Greatly improved experience after connecting to trakt: watched and collected episodes on the device are now automatically merged with your trakt profile.
+* NOTICE Deprecated trakt upload tool. To merge your watched and collected episodes, disconnect, then connect again to trakt.
+* NOTICE Latest translations from crowdin (Danish).
+
+#### 14-beta4 *(2014-05-06)*
+
+* FEATURE 'Ignore articles' option for show/movies sort order.
+* TWEAK Swipe to refresh in comments.
+* TWEAK If relative time (e.g. "in 5 min") is lower than possible resolution, display "now".
+* TWEAK Hide manual update and load poster actions in advanced menu.
+* NOTICE Latest translations from crowdin.
+
+#### 14-beta3 *(2014-04-30)*
+
+* TWEAK Friends and your trakt activity grouped by day, similar to Upcoming/Recent.
+* FIX Fullscreen images are cut-off.
+* FIX Crash when returning to Upcoming/Recent and data has changed.
+
+#### 14-beta2 *(2014-04-28)*
+
+* FEATURE trakt activity streams: recently watched shows for your friends and yourself, same for movies. Streams support pull to refresh.
+* TWEAK Added extensions for Google Play, YouTube and Web search. These replace the current watch links below episodes.
+* NOTICE Latest translations from crowdin.
+
+#### 14-beta1 *(2014-04-24)*
+
+* TWEAK Fullscreen show poster view loads image with highest resolution.
+* TWEAK Show list and activity refresh data when returning to app, every 5 minutes when kept open.
+* TWEAK Use 'Add to/Remove from collection' for shows and episodes instead of 'Collected/Not yet collected' where appropriate.
+* NOTICE Cloud beta setup moved to Settings > Services.
+
 Version 13.1.1 *(2014-04-22)*
 -----------------------------
 

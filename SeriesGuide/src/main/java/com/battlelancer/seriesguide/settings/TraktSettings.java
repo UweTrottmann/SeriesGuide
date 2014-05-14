@@ -16,11 +16,8 @@
 
 package com.battlelancer.seriesguide.settings;
 
-import com.battlelancer.seriesguide.util.SimpleCrypto;
-
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 
 /**
@@ -28,11 +25,10 @@ import android.text.format.DateUtils;
  */
 public class TraktSettings {
 
-    public static final String KEY_PASSWORD_SHA1_ENCR = "com.battlelancer.seriesguide.traktpwd";
+    public static final String KEY_LAST_ACTIVITY_DOWNLOAD
+            = "com.battlelancer.seriesguide.lasttraktupdate";
 
-    public static final String KEY_LAST_UPDATE = "com.battlelancer.seriesguide.lasttraktupdate";
-
-    public static final String KEY_LAST_FULL_SYNC
+    public static final String KEY_LAST_FULL_EPISODE_SYNC
             = "com.battlelancer.seriesguide.trakt.lastfullsync";
 
     public static final String KEY_SHARE_WITH_TRAKT = "com.battlelancer.seriesguide.sharewithtrakt";
@@ -43,6 +39,9 @@ public class TraktSettings {
     public static final String KEY_SYNC_UNWATCHED_EPISODES
             = "com.battlelancer.seriesguide.syncunseenepisodes";
 
+    public static final String KEY_HAS_MERGED_EPISODES =
+            "com.battlelancer.seriesguide.trakt.mergedepisodes";
+
     public static final String KEY_HAS_MERGED_MOVIES
             = "com.battlelancer.seriesguide.trakt.mergedmovies";
 
@@ -51,28 +50,14 @@ public class TraktSettings {
     public static final String POSTER_SIZE_SPEC_DEFAULT = ".jpg";
 
     public static final String POSTER_SIZE_SPEC_138 = "-138.jpg";
-
     public static final String POSTER_SIZE_SPEC_300 = "-300.jpg";
 
-    public static long getLastUpdateTime(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getLong(KEY_LAST_UPDATE, System.currentTimeMillis());
-    }
-
     /**
-     * Returns the SHA hash of the users trakt password.<br> <b>Never</b> store this yourself,
-     * always call this method.
+     * The last time trakt episode activity was successfully downloaded.
      */
-    public static String getPasswordSha1(Context context) {
-        String hash = PreferenceManager.getDefaultSharedPreferences(context).getString(
-                KEY_PASSWORD_SHA1_ENCR, "");
-
-        // try decrypting the hash
-        if (!TextUtils.isEmpty(hash)) {
-            hash = SimpleCrypto.decrypt(hash, context);
-        }
-
-        return hash;
+    public static long getLastActivityDownloadTime(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getLong(KEY_LAST_ACTIVITY_DOWNLOAD, System.currentTimeMillis());
     }
 
     public static boolean isAutoAddingShows(Context context) {
@@ -81,7 +66,16 @@ public class TraktSettings {
     }
 
     /**
-     * Whether the local movie database was merged with trakt after the last time connecting to
+     * Whether watched and collected episodes were merged with the users trakt profile since
+     * she connected to trakt.
+     */
+    public static boolean hasMergedEpisodes(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_HAS_MERGED_EPISODES, true);
+    }
+
+    /**
+     * Whether the list of movies was merged with the users trakt profile since she connected to
      * trakt.
      */
     public static boolean hasMergedMovies(Context context) {
@@ -100,12 +94,11 @@ public class TraktSettings {
     }
 
     /**
-     * Determines if enough time has passed since the last full trakt sync.
+     * Determines if enough time has passed since the last full trakt episode sync.
      */
-    public static boolean isTimeForFullSync(Context context, long currentTime) {
+    public static boolean isTimeForFullEpisodeSync(Context context, long currentTime) {
         long previousUpdateTime = PreferenceManager.getDefaultSharedPreferences(context)
-                .getLong(KEY_LAST_FULL_SYNC, currentTime);
+                .getLong(KEY_LAST_FULL_EPISODE_SYNC, currentTime);
         return (currentTime - previousUpdateTime) > FULL_SYNC_INTERVAL_MILLIS;
     }
-
 }

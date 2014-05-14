@@ -96,6 +96,7 @@
   <string name="services_watch">İzle</string>
   <string name="services_more">Daha</string>
   <string name="sort">Sırala</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">bugün</string>
   <string name="now">şimdi</string>
   <string name="daily">Günlük</string>
@@ -156,6 +157,9 @@
   <string name="recent">En Son</string>
   <string name="friends">Arkadaşlar</string>
   <string name="friends_empty">Trakt içinde hiçbir arkadaş etkinliği yok.</string>
+  <string name="user_stream">You</string>
+  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
+  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
   <string name="noupcoming">Yaklaşan bölüm yok.</string>
   <string name="norecent">Yeni tarihli bölüm yok.</string>
   <string name="only_favorites">Sadece favori diziler</string>
@@ -209,13 +213,12 @@
   <string name="hexagon_priority_select">Versiyon seç</string>
   <string name="connect_trakt">trakt\'e bağlan</string>
   <string name="connect_trakt_done">trakt\'e bağlanıldı!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Kütüphanenden diziler ekle:</string>
   <string name="show_library">Kütüphaneyi göster</string>
-  <string name="upload_shows">SeriesGuide dizi listenizi karşıya yükleyin:</string>
   <string name="upload_existing_shows">Mevcut dizileri karşıya yükleyin</string>
   <string name="about_trakt">trakt, izlediğiniz dizi ve filmlerin kaydını tutmanıza yardımcı olur.<a href="http://trakt.tv">Daha fazla bilgi</a></string>
   <string name="integration_trakt_items">- kütüphaneden ve izleme listesinden dizileri ekleyin\n\n- yorumlarını ve arkadaşlarının aktivitelerini gör\n\n- izlediklerin otomatik bir şekilde senkronize olsun\n\n- izlediğin yeni diziler otomatik eklensin</string>
-  <string name="trakt_upload_hint">SeriesGuide\'da izlenmiş her diziyi trakt\'te izlenmiş olarak işaretle:</string>
   <string name="trakt_upload">trakt\'e yükle</string>
   <string name="trakt_syncunwatched">SeriesGuide\'daki izlenmemiş bölümler için trakt\'taki izlenmiş bölümleri sil</string>
   <string name="upload_done">Yükleme bitti.</string>
@@ -371,6 +374,11 @@
   <string name="extension_amazon">Amazon araması</string>
   <string name="description_extension_amazon">Yerel Amazon sitesinde arama yapın</string>
   <string name="pref_amazon_domain">Amazon Web Sitesi</string>
+  <string name="extension_google_play">Google Play search</string>
+  <string name="description_extension_google_play">Search the Google Play Store</string>
+  <string name="extension_youtube">YouTube search</string>
+  <string name="description_extension_youtube">Search YouTube for videos</string>
+  <string name="description_extension_web_search">Search for websites and images</string>
   <string-array name="sesorting">
     <item>Önce en yenisi</item>
     <item>Önce en eskisi</item>

@@ -30,6 +30,10 @@
             <item
                 android:id="@+id/menu_action_movies_sort_release"
                 android:title="@string/action_movies_sort_release" />
+            <item
+                android:id="@+id/menu_action_movies_sort_ignore_articles"
+                android:checkable="true"
+                android:title="@string/action_sort_ignore_articles" />
         </menu>
     </item>
 

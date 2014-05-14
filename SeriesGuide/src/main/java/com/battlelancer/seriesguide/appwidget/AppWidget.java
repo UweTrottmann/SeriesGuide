@@ -16,14 +16,6 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
-import com.battlelancer.seriesguide.ui.ActivityFragment;
-import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.R;
-
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -35,7 +27,13 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.support.v4.app.TaskStackBuilder;
 import android.widget.RemoteViews;
-
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.ActivityFragment;
+import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.TimeTools;
+import com.battlelancer.seriesguide.util.Utils;
 import java.util.Date;
 
 public class AppWidget extends AppWidgetProvider {
@@ -124,7 +122,7 @@ public class AppWidget extends AppWidgetProvider {
 
                     // "in 13 mins (Fri)"
                     item.setTextViewText(R.id.widgetAirtime,
-                            TimeTools.formatToRelativeLocalReleaseTime(actualRelease)
+                            TimeTools.formatToRelativeLocalReleaseTime(this, actualRelease)
                                     + " (" + TimeTools.formatToLocalReleaseDay(actualRelease)
                                     + ")");
 

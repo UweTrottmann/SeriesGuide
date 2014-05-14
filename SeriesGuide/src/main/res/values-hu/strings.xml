@@ -96,6 +96,7 @@
   <string name="services_watch">Figyelés</string>
   <string name="services_more">Több</string>
   <string name="sort">Rendezés</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">ma</string>
   <string name="now">most</string>
   <string name="daily">Napi</string>
@@ -156,6 +157,9 @@
   <string name="recent">Legutóbbi</string>
   <string name="friends">Barátok</string>
   <string name="friends_empty">Jelenleg nem aktív egyik barátod sem a trakton.</string>
+  <string name="user_stream">You</string>
+  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
+  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
   <string name="noupcoming">Nincsenek következő epizódok.</string>
   <string name="norecent">Nincsenek mostanában vetített epizódok.</string>
   <string name="only_favorites">Csak kedvenc műsorok</string>
@@ -209,13 +213,12 @@
   <string name="hexagon_priority_select">Válaszd ki a verziót</string>
   <string name="connect_trakt">Trakt csatlakozás</string>
   <string name="connect_trakt_done">Csatlakozott a trakthoz!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Műsor hozzáadása a gyűjteményedből:</string>
   <string name="show_library">Műsortárad mutatása</string>
-  <string name="upload_shows">SeriesGuide műsorlista feltöltése:</string>
   <string name="upload_existing_shows">Létező műsorok feltöltése</string>
   <string name="about_trakt">a trakt segít nyilvántartani a nézett sorozatokat és filmeket. <a href="http://trakt.tv">Továbbiak (angolul)</a></string>
   <string name="integration_trakt_items">- adjon hozzá sorozatot a könyvtárából és a nézettek listájáról\n\n-nézze meg az ajánlott sorozatokat és a barátok tevékenységét\n\n-a megnézett és gyűjtött jelzések automatikusan szinkronizálódnak\n\n- az új sorozatok automatikusan hozzáadásra kerülnek</string>
-  <string name="trakt_upload_hint">Minden SeriesGuide-on nézettnek jelölt epizód nézettnek jelölése a trakt-on:</string>
   <string name="trakt_upload">Feltöltés</string>
   <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
   <string name="upload_done">Finished uploading.</string>
@@ -371,6 +374,11 @@
   <string name="extension_amazon">Amazon search</string>
   <string name="description_extension_amazon">Search your local Amazon site</string>
   <string name="pref_amazon_domain">Amazon site</string>
+  <string name="extension_google_play">Google Play search</string>
+  <string name="description_extension_google_play">Search the Google Play Store</string>
+  <string name="extension_youtube">YouTube search</string>
+  <string name="description_extension_youtube">Search YouTube for videos</string>
+  <string name="description_extension_web_search">Search for websites and images</string>
   <string-array name="sesorting">
     <item>Újabbak előre</item>
     <item>Régebbiek előre</item>

@@ -16,10 +16,8 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.R;
-
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.appwidget.AppWidgetManager;
@@ -29,10 +27,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RemoteViews;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
  * Hosts a {@link ListWidgetPreferenceFragment} to allow changing settings of the associated app
  * widget.
+ * <p> Does specifically NOT extend {@link com.battlelancer.seriesguide.ui.BaseActivity} to avoid
+ * triggering update and backup mechanisms.
+ * <p> The list widget is only available on API level 11 and above.
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ListWidgetConfigure extends Activity {
@@ -64,10 +68,19 @@ public class ListWidgetConfigure extends Activity {
             return;
         }
 
+        setupActionBar();
+
         ListWidgetPreferenceFragment f = ListWidgetPreferenceFragment.newInstance(mAppWidgetId);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.content_container, f);
         ft.commit();
+    }
+
+    private void setupActionBar() {
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null && AndroidUtils.isICSOrHigher()) {
+            actionBar.setIcon(R.drawable.ic_actionbar);
+        }
     }
 
     @Override

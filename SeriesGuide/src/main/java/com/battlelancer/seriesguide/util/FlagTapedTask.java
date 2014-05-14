@@ -16,18 +16,15 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
 import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
 import com.jakewharton.trakt.services.ShowService;
 import com.uwetrottmann.androidutils.AndroidUtils;
-
-import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit.RetrofitError;
 
 public class FlagTapedTask {

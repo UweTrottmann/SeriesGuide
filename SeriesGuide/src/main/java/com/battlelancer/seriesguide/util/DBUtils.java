@@ -16,22 +16,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.SeriesGuideApplication;
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
-import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.enums.SeasonTags;
-import com.battlelancer.seriesguide.items.Series;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.settings.ActivitySettings;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.ActivityFragment;
-import com.battlelancer.seriesguide.ui.ActivityFragment.ActivityType;
-import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
-import com.battlelancer.seriesguide.R;
-
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -40,12 +24,29 @@ import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
-
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
+import com.battlelancer.seriesguide.dataliberation.model.Show;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.enums.SeasonTags;
+import com.battlelancer.seriesguide.items.Series;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.settings.ActivitySettings;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.ui.ActivityFragment;
+import com.battlelancer.seriesguide.ui.ActivityFragment.ActivityType;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB.ShowStatus;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import timber.log.Timber;
 
 public class DBUtils {
 
@@ -74,6 +75,16 @@ public class DBUtils {
      */
     public static boolean restoreBooleanFromInt(int value) {
         return value == 1;
+    }
+
+    /**
+     * Triggers the rebuilding of the episode search table.
+     */
+    public static void rebuildFtsTable(Context context) {
+        Timber.d("Query to renew FTS table");
+        context.getContentResolver()
+                .query(SeriesGuideContract.EpisodeSearch.CONTENT_URI_RENEWFTSTABLE, null, null,
+                        null, null);
     }
 
     interface UnwatchedQuery {
@@ -437,6 +448,7 @@ public class DBUtils {
      */
     private static ContentValues putCommonShowValues(Show show, ContentValues values) {
         values.put(Shows.TITLE, show.title);
+        values.put(Shows.TITLE_NOARTICLE, trimLeadingArticle(show.title));
         values.put(Shows.OVERVIEW, show.overview);
         values.put(Shows.ACTORS, show.actors);
         values.put(Shows.AIRSDAYOFWEEK, show.airday);
@@ -635,7 +647,7 @@ public class DBUtils {
             long releaseTime = next.getLong(NextEpisodeQuery.FIRST_RELEASE_MS);
             Date actualRelease = TimeTools.getEpisodeReleaseTime(context, releaseTime);
             final String nextReleaseDateString = context.getString(R.string.release_date_and_day,
-                    TimeTools.formatToRelativeLocalReleaseTime(actualRelease),
+                    TimeTools.formatToRelativeLocalReleaseTime(context, actualRelease),
                     TimeTools.formatToLocalReleaseDay(actualRelease));
 
             episodeId = next.getLong(NextEpisodeQuery._ID);
@@ -703,6 +715,32 @@ public class DBUtils {
             // not using a remote provider, so this should never happen. crash if it does.
             throw new RuntimeException("Problem applying batch operation", e);
         }
+    }
+
+    /**
+     * Removes a leading article from the given string (including the first whitespace that
+     * follows).
+     * <p> <em>Currently only supports English articles (the, a and an).</em>
+     */
+    public static String trimLeadingArticle(String title) {
+        if (TextUtils.isEmpty(title)) {
+            return title;
+        }
+
+        if (title.length() > 4 &&
+                (title.startsWith("The ") || title.startsWith("the "))) {
+            return title.substring(4);
+        }
+        if (title.length() > 2 &&
+                (title.startsWith("A ") || title.startsWith("a "))) {
+            return title.substring(2);
+        }
+        if (title.length() > 3 &&
+                (title.startsWith("An ") || title.startsWith("an "))) {
+            return title.substring(3);
+        }
+
+        return title;
     }
 
     private interface NextEpisodeQuery {

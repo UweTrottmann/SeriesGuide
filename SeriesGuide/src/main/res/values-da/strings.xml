@@ -37,13 +37,13 @@
   <string name="share_show">Del serie</string>
   <string name="share_episode">Del episode</string>
   <string name="share_movie">Del film</string>
-  <string name="share_checkout">Check out %s</string>
+  <string name="share_checkout">Tjek %s</string>
   <string name="comments">Kommentarer</string>
   <string name="shout_hint">Skriv en kommentar (på engelsk)</string>
   <string name="shout">Kommentar!</string>
   <string name="isspoiler">Spoiler alert!</string>
   <string name="no_shouts">Vær den første til at kommentere!</string>
-  <string name="refresh">Refresh</string>
+  <string name="refresh">Opdater</string>
   <string name="movies_collection">Samling</string>
   <string name="movies_watchlist">Overvågningsliste</string>
   <string name="watchlist_add">Tilføj overvågningsliste</string>
@@ -58,7 +58,7 @@
   <string name="movie_cast">Medvirkende</string>
   <string name="movie_crew">Besætning</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
-  <string name="action_movies_sort">Sort movies</string>
+  <string name="action_movies_sort">Sortér film</string>
   <string name="action_movies_sort_title">Titel</string>
   <string name="action_movies_sort_release">Udgivelsesdato</string>
   <string name="shows_with_next">%s med kommende episoder</string>
@@ -96,6 +96,7 @@
   <string name="services_watch">Se</string>
   <string name="services_more">Mere</string>
   <string name="sort">Sorter efter</string>
+  <string name="action_sort_ignore_articles">Ignorer artikler</string>
   <string name="today">i dag</string>
   <string name="now">Nu</string>
   <string name="daily">Daglig</string>
@@ -156,6 +157,9 @@
   <string name="recent">Nylige</string>
   <string name="friends">Venner</string>
   <string name="friends_empty">Ingen venne-aktivitet på trakt.</string>
+  <string name="user_stream">Dig</string>
+  <string name="user_stream_empty">Ingen nylig aktivitet på trakt. Tjek ind på nogle shows!</string>
+  <string name="user_movie_stream_empty">Ingen nylig aktivitet på trakt. Tjek ind på nogle film!</string>
   <string name="noupcoming">Der er ingen kommende episoder.</string>
   <string name="norecent">Der er ingen nylige episoder.</string>
   <string name="only_favorites">Kun favorit serier</string>
@@ -181,9 +185,9 @@
   <string name="add_all">Tilføj alle</string>
   <string name="dont_add_show">Tilføj ikke</string>
   <string name="add_multiple">Alle serier vil blive vist i din liste om lidt.</string>
-  <string name="add_started">%s will appear in your show list shortly.</string>
-  <string name="add_error">Could not add %s.</string>
-  <string name="add_already_exists">%s is already in your show list.</string>
+  <string name="add_started">%s vil blive vist i din serieliste om et kort øjeblik.</string>
+  <string name="add_error">Kunne ikke tilføje %s.</string>
+  <string name="add_already_exists">%s er allerede i din serieliste.</string>
   <string name="trending">Trending</string>
   <string name="recommended">Anbefalet</string>
   <string name="library">Bibliotek</string>
@@ -209,17 +213,16 @@
   <string name="hexagon_priority_select">Vælg version</string>
   <string name="connect_trakt">Forbind til trakt</string>
   <string name="connect_trakt_done">Forbundet til trakt!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide vil nu synkronisere shows og film på denne enhed med trakt. Dette kan tage noget tid.</string>
   <string name="add_trakt_shows">Tilføj serier fra dit bibliotek:</string>
   <string name="show_library">Vis dit bibliotek</string>
-  <string name="upload_shows">Upload din SeriesGuide serieliste:</string>
   <string name="upload_existing_shows">Upload eksisterende serier</string>
   <string name="about_trakt">trakt hjælper med at holde styr på hvilke TV-serier du ser. <a href="http://trakt.tv">Lær mere</a></string>
   <string name="integration_trakt_items">- tilføj serier fra dit bibliotek og Overvågningsliste\n\n- se dine anbefalinger og venneaktivitet\n\n- set og samling bliver synkroniseret automatisk\n\n- nye serier du ser bliver automatisk tilføjet</string>
-  <string name="trakt_upload_hint">Marker episoder set i SeriesGuide som sete på trakt:</string>
   <string name="trakt_upload">Upload til trakt.tv</string>
   <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
-  <string name="upload_done">Finished uploading.</string>
-  <string name="upload_no_work">There was nothing to upload.</string>
+  <string name="upload_done">Uploading færdiggjort.</string>
+  <string name="upload_no_work">Der var intet at uploade.</string>
   <string name="prefs_category_basic">Grundlæggende</string>
   <string name="prefs_category_sharing">Tjenester</string>
   <string name="prefs_category_advanced">Avanceret</string>
@@ -361,16 +364,21 @@
   <string name="add_to_homescreen">Tilføj til Hjemmeskærmen</string>
   <string name="search_within_show">Søg indenfor %s</string>
   <string name="web_search">Websøgning</string>
-  <string name="extensions">Extensions</string>
-  <string name="action_extensions_configure">Customize extensions</string>
-  <string name="action_extensions_add">Add extension</string>
-  <string name="action_extensions_limit">Get X to add more extensions</string>
-  <string name="action_extensions_search">Get more extensions</string>
+  <string name="extensions">Udvidelser</string>
+  <string name="action_extensions_configure">Tilpas udvidelser</string>
+  <string name="action_extensions_add">Tilføj udvidelse</string>
+  <string name="action_extensions_limit">Få X for at tilføje flere udvidelser</string>
+  <string name="action_extensions_search">Hent flere udvidelser</string>
   <string name="action_extension_settings">Indstillinger</string>
   <string name="action_extension_remove">Fjern</string>
-  <string name="extension_amazon">Amazon search</string>
-  <string name="description_extension_amazon">Search your local Amazon site</string>
-  <string name="pref_amazon_domain">Amazon site</string>
+  <string name="extension_amazon">Amazon søgning</string>
+  <string name="description_extension_amazon">Søg på din lokale Amazon side</string>
+  <string name="pref_amazon_domain">Amazon side</string>
+  <string name="extension_google_play">Google Play søgning</string>
+  <string name="description_extension_google_play">Søg på Google Play Butik</string>
+  <string name="extension_youtube">YouTube søgning</string>
+  <string name="description_extension_youtube">Søg YouTube for videoer</string>
+  <string name="description_extension_web_search">Søg efter hjemmesider og billeder</string>
   <string-array name="sesorting">
     <item>Seneste først</item>
     <item>Ældste først</item>

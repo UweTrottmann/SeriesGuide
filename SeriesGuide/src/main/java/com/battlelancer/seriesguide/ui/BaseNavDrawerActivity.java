@@ -33,7 +33,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.backend.CloudSetupActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import java.util.Locale;
 
@@ -199,7 +198,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
     /**
      * Returns true if the navigation drawer is open.
      */
-    protected boolean isDrawerOpen() {
+    public boolean isDrawerOpen() {
         return mDrawerLayout.isDrawerOpen(mDrawerList);
     }
 
@@ -214,6 +213,13 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
      */
     public void setDrawerSelectedItem(int menuItemPosition) {
         mDrawerList.setItemChecked(menuItemPosition, true);
+    }
+
+    /**
+     * Opens the nav drawer.
+     */
+    public void openDrawer() {
+        mDrawerLayout.openDrawer(GravityCompat.START);
     }
 
     public boolean toggleDrawer(MenuItem item) {

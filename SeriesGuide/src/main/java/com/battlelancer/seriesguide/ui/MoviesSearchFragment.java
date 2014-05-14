@@ -57,8 +57,6 @@ public class MoviesSearchFragment extends SherlockFragment implements OnEditorAc
 
     private static final String SEARCH_QUERY_KEY = "search_query";
 
-    private static final int LOADER_ID = R.layout.fragment_movies_search;
-
     protected static final String TAG = "Movies Search";
 
     private static final int CONTEXT_COLLECTION_ADD_ID = 0;
@@ -118,7 +116,7 @@ public class MoviesSearchFragment extends SherlockFragment implements OnEditorAc
 
         registerForContextMenu(list);
 
-        getLoaderManager().initLoader(LOADER_ID, null, this);
+        getLoaderManager().initLoader(MoviesActivity.SEARCH_LOADER_ID, null, this);
     }
 
     @Override
@@ -186,7 +184,7 @@ public class MoviesSearchFragment extends SherlockFragment implements OnEditorAc
         String query = mSearchBox.getText().toString();
         Bundle args = new Bundle();
         args.putString(SEARCH_QUERY_KEY, query);
-        getLoaderManager().restartLoader(LOADER_ID, args, this);
+        getLoaderManager().restartLoader(MoviesActivity.SEARCH_LOADER_ID, args, this);
     }
 
     @Override

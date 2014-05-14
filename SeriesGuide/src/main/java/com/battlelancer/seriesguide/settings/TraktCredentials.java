@@ -16,19 +16,17 @@
 
 package com.battlelancer.seriesguide.settings;
 
-import com.battlelancer.seriesguide.sync.AccountUtils;
-import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.jakewharton.trakt.Trakt;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
-
+import com.battlelancer.seriesguide.sync.AccountUtils;
+import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.jakewharton.trakt.Trakt;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 

@@ -17,11 +17,10 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Intent;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
-
-import android.content.Intent;
 
 /**
  * Adds action items specific to top show activities.

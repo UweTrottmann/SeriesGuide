@@ -18,7 +18,6 @@
 package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
-
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;

@@ -60,7 +60,7 @@
   <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">Trier les films</string>
   <string name="action_movies_sort_title">Titre</string>
-  <string name="action_movies_sort_release">Date de parution</string>
+  <string name="action_movies_sort_release">Date de sortie</string>
   <string name="shows_with_next">%s avec des épisodes à venir</string>
   <string name="shows_continuing">%s en cours</string>
   <string name="episodes_watched">%s vus</string>
@@ -96,6 +96,7 @@
   <string name="services_watch">Regarder</string>
   <string name="services_more">Plus</string>
   <string name="sort">Trier par</string>
+  <string name="action_sort_ignore_articles">Ignorer les articles</string>
   <string name="today">aujourd\'hui</string>
   <string name="now">maintenant</string>
   <string name="daily">Quotidiennement</string>
@@ -156,6 +157,9 @@
   <string name="recent">Dernièrement</string>
   <string name="friends">Amis</string>
   <string name="friends_empty">Pas d\'activité d\'amis sur Trakt.</string>
+  <string name="user_stream">Vous</string>
+  <string name="user_stream_empty">Aucune activité récente sur trakt. Faites des check-ins !</string>
+  <string name="user_movie_stream_empty">Aucune activité récente sur trakt. Faites des check-ins !</string>
   <string name="noupcoming">Il n\'y a pas d\'épisodes à venir.</string>
   <string name="norecent">Il n\'y a pas d\'épisodes récents.</string>
   <string name="only_favorites">Juste les séries préférées</string>
@@ -209,13 +213,12 @@
   <string name="hexagon_priority_select">Choisir cette version</string>
   <string name="connect_trakt">Me connecter à trakt</string>
   <string name="connect_trakt_done">Connecté à trakt !</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide va maintenant synchroniser les séries et les films sur cet appareil. Cela peut prendre un peu de temps.</string>
   <string name="add_trakt_shows">Ajoutez les séries de votre bibliothèque :</string>
   <string name="show_library">Voir votre bibliothèque</string>
-  <string name="upload_shows">Transférez votre liste de séries de SeriesGuide vers trakt :</string>
   <string name="upload_existing_shows">Envoyer les séries</string>
   <string name="about_trakt">trakt vous permet de garder une trace des séries et films que vous regardez. <a href="http://trakt.tv">En savoir plus</a></string>
   <string name="integration_trakt_items">- vous pourrez ajouter vos séries depuis votre bibliothèque ou votre liste à voir.\n\n- vous pourrez voir vos recommandations et l\'activité de vos amis.\n\n- les épisodes vus et collectés seront synchronisés automatiquement.\n\n- les nouvelles séries que vous regardez seront ajoutées automatiquement.</string>
-  <string name="trakt_upload_hint">Marquer tous les épisodes vus sur SeriesGuide comme vus sur trakt :</string>
   <string name="trakt_upload">Envoyer vers trakt.tv</string>
   <string name="trakt_syncunwatched">Modifier les épisodes indiqués comme vus sur trakt s\'ils sont indiqués comme non vus sur SeriesGuide</string>
   <string name="upload_done">Envoi terminé.</string>
@@ -371,6 +374,11 @@
   <string name="extension_amazon">Recherche Amazon</string>
   <string name="description_extension_amazon">Rechercher sur votre site Amazon local</string>
   <string name="pref_amazon_domain">Site Amazon</string>
+  <string name="extension_google_play">Recherche Google Play</string>
+  <string name="description_extension_google_play">Rechercher sur le Play Store</string>
+  <string name="extension_youtube">Recherche Youtube</string>
+  <string name="description_extension_youtube">Recherche des vidéos sur Youtube</string>
+  <string name="description_extension_web_search">Rechercher des sites web et des images</string>
   <string-array name="sesorting">
     <item>Plus récentes en premier</item>
     <item>Plus anciennes en premier</item>

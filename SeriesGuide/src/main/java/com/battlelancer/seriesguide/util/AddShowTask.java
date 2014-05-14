@@ -22,8 +22,8 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.thetvdbapi.TheTVDB;
-import com.battlelancer.thetvdbapi.TvdbException;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.enumerations.Extended;
@@ -182,7 +182,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         // renew FTS3 table
         if (modifiedDB) {
             Timber.d("Renewing search table.");
-            TheTVDB.onRenewFTSTable(mContext);
+            DBUtils.rebuildFtsTable(mContext);
         }
 
         Timber.d("Finished adding shows.");

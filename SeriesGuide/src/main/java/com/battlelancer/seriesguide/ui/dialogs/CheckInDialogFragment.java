@@ -16,6 +16,11 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
 import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -24,12 +29,6 @@ import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
-
-import android.content.Context;
-import android.database.Cursor;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
 
 /**
  * Allows to check into an episode on trakt, into a show on GetGlue. Launching activities should

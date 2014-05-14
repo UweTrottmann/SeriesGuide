@@ -96,6 +96,7 @@
   <string name="services_watch">Гледайте</string>
   <string name="services_more">Още</string>
   <string name="sort">Подреди по</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">днес</string>
   <string name="now">сега</string>
   <string name="daily">Ежедневно</string>
@@ -156,6 +157,9 @@
   <string name="recent">Последни</string>
   <string name="friends">Приятели</string>
   <string name="friends_empty">Няма приятелска активност в trakt.</string>
+  <string name="user_stream">You</string>
+  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
+  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
   <string name="noupcoming">Няма никакви предстоящи епизоди.</string>
   <string name="norecent">Няма скорошни епизоди.</string>
   <string name="only_favorites">Само "Предпочитани"</string>
@@ -209,13 +213,12 @@
   <string name="hexagon_priority_select">Изберете версия</string>
   <string name="connect_trakt">Свържете се с trakt</string>
   <string name="connect_trakt_done">Свързани сте с trakt!</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Добавете предавания към вашата библиотека:</string>
   <string name="show_library">Показване на вашата библиотека</string>
-  <string name="upload_shows">Качете вашият SeriesGuide списък с предавания:</string>
   <string name="upload_existing_shows">Качване на съществуващи предавания</string>
   <string name="about_trakt">trakt записва какви ТВ предавания и филми сте гледали. <a href="http://trakt.tv">Научете повече</a></string>
   <string name="integration_trakt_items">- добавете предаване от вашата библиотека и списъка за гледане\n\n- вижте вашите препоръки и активността на приятелите\n\n- гледаните и събирани флагове се синхронизират автоматично\n\n- новите предавания, които сте гледали се добавят автоматично</string>
-  <string name="trakt_upload_hint">Означете епизодите гледани в SeriesGuide като гледани в trakt:</string>
   <string name="trakt_upload">Качете в trakt.tv</string>
   <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
   <string name="upload_done">Finished uploading.</string>
@@ -371,6 +374,11 @@
   <string name="extension_amazon">Amazon search</string>
   <string name="description_extension_amazon">Search your local Amazon site</string>
   <string name="pref_amazon_domain">Amazon site</string>
+  <string name="extension_google_play">Google Play search</string>
+  <string name="description_extension_google_play">Search the Google Play Store</string>
+  <string name="extension_youtube">YouTube search</string>
+  <string name="description_extension_youtube">Search YouTube for videos</string>
+  <string name="description_extension_web_search">Search for websites and images</string>
   <string-array name="sesorting">
     <item>Най-новите отгоре</item>
     <item>Най-старите отгоре</item>

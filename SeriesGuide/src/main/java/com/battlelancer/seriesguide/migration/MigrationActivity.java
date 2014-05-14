@@ -16,19 +16,18 @@
 
 package com.battlelancer.seriesguide.migration;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
-import com.battlelancer.seriesguide.dataliberation.JsonImportTask;
-import com.battlelancer.seriesguide.dataliberation.OnTaskFinishedListener;
-import com.battlelancer.seriesguide.ui.BaseActivity;
-import com.battlelancer.seriesguide.R;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.dataliberation.JsonImportTask;
+import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
+import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
+import com.battlelancer.seriesguide.ui.BaseActivity;
 
 /**
  * Helps users migrate their show database to the free version of SeriesGuide. When using
@@ -36,7 +35,7 @@ import android.widget.ProgressBar;
  * using any other version an import assistant is shown.
  */
 public class MigrationActivity extends BaseActivity
-        implements JsonExportTask.OnTaskProgressListener, OnTaskFinishedListener {
+        implements OnTaskProgressListener, OnTaskFinishedListener {
 
     private static final String PACKAGE_SERIESGUIDE = "com.battlelancer.seriesguide";
 
@@ -79,11 +78,6 @@ public class MigrationActivity extends BaseActivity
                 preventUserInput(true);
             }
         });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
     }
 
     @Override

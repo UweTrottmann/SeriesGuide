@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.util;
 
 import com.google.myjson.Gson;
 import com.squareup.tape.FileObjectQueue;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;

@@ -17,15 +17,14 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Intent;
+import android.os.Bundle;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.R;
-
-import android.content.Intent;
-import android.os.Bundle;
 
 /**
  * Activities at the top of the navigation hierarchy, show menu on going up.
