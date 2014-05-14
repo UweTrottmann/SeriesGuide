@@ -23,9 +23,9 @@
         android:title="@string/action_extensions_search" />
     <item
         android:id="@+id/menu_action_extensions_enable"
-        android:title="[Debug] Enable extensions" />
+        android:title="@string/menu_action_extensions_enable_debug" />
     <item
         android:id="@+id/menu_action_extensions_disable"
-        android:title="[Debug] Disable extensions" />
+        android:title="@string/menu_action_extensions_disable_debug" />
 
 </menu>
