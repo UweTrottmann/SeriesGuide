@@ -26,7 +26,11 @@
 	<string name="not_available">n/a</string>
     <string name="hexagon_short">Cloud beta</string>
     <string name="hexagon_warning">Experimental! Might kill kittens!</string>
-    
+
+    <!-- Internal -->
+    <string name="menu_action_extensions_enable_debug">[Debug] Enable extensions</string>
+    <string name="menu_action_extensions_disable_debug">[Debug] Disable extensions</string>
+
     <!-- Settings -->
     <string name="pref_translate">Translate SeriesGuide</string>
     <string name="pref_translatesummary">Translate or proofread on crowdin</string>
