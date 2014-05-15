@@ -15,7 +15,7 @@
     <string name="getglue">tvtag (GetGlue)</string>
     <string name="analytics">Google Analytics</string>
     <string name="powered_by_thetvdb">powered by thetvdb.com</string>
-    <string name="powered_by_trakt">powered by trakt.tv</string>
+    <string name="powered_by_trakt">powered by trakt</string>
     <string name="powered_by_tmdb">powered by themoviedb.org</string>
     <string name="tvdb_range">/10</string>
     <string name="notraktrating">--%</string>
