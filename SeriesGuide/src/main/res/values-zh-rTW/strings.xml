@@ -201,7 +201,7 @@
   <string name="list_item_remove">Remove from list</string>
   <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
   <string name="hexagon_setup">Set up SeriesGuide cloud</string>
-  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
+  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt integration for that.</string>
   <string name="hexagon_signin">Sign In</string>
   <string name="hexagon_signed_in">You are connected to SeriesGuide cloud.</string>
   <string name="hexagon_signout">Sign Out</string>
@@ -320,7 +320,7 @@
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_createaccount">註冊</string>
   <string name="welcome_setuplanguage">Choose language</string>
-  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
+  <string name="welcome_traktmessage">Access your trakt library and friends activity</string>
   <string name="dismiss">Dismiss</string>
   <string name="welcome_add_part1">To get started tap</string>
   <string name="upcoming_show">%s is coming up</string>

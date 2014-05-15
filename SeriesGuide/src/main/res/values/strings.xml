@@ -280,7 +280,7 @@
 
     <!-- Hexagon -->
     <string name="hexagon_setup">Set up SeriesGuide cloud</string>
-    <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
+    <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt integration for that.</string>
     <string name="hexagon_signin">Sign In</string>
     <string name="hexagon_signed_in">You are connected to SeriesGuide cloud.</string>
     <string name="hexagon_signout">Sign Out</string>
@@ -325,7 +325,7 @@
     <string name="pref_credits">Credits</string>
     <string name="clearGetGlueCredentials">Disconnect tvtag</string>
     <string name="clearGetGlueCredentialssummary">Check in with tvtag to reconnect</string>
-    <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
+    <string name="pref_traktsummary">Add or edit your trakt credentials</string>
     <string name="feedback">Send feedback</string>
     <string name="pref_autoaddshows">Add new trakt shows</string>
     <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
@@ -441,7 +441,7 @@
 
     <!-- Welcome dialog -->
     <string name="welcome_setuplanguage">Choose language</string>
-    <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
+    <string name="welcome_traktmessage">Access your trakt library and friends activity</string>
     <string name="dismiss">Dismiss</string>
     <string name="welcome_add_part1">To get started tap</string>
 
