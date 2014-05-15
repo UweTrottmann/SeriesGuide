@@ -201,7 +201,7 @@
   <string name="list_item_remove">Κατάργηση από τη λίστα</string>
   <string name="list_empty">Μπορείτε να προσθέσετε σειρές, σεζόν ή επεισόδια σε αυτή τη λίστα.</string>
   <string name="hexagon_setup">Ρυθμίστε το SeriesGuide cloud</string>
-  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
+  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt integration for that.</string>
   <string name="hexagon_signin">Σύνδεση</string>
   <string name="hexagon_signed_in">Είστε συνδεδεμένος στο σύννεφο του SeriesGuide.</string>
   <string name="hexagon_signout">Αποσύνδεση</string>
@@ -320,7 +320,7 @@
   <string name="trakt_error_general">Δεν μπορέσαμε να μιλήσουμε στο trakt. Προσπαθήστε ξανά αργότερα.</string>
   <string name="trakt_createaccount">Δημιουργία νέου λογαριασμού</string>
   <string name="welcome_setuplanguage">Επιλέξτε γλώσσα</string>
-  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
+  <string name="welcome_traktmessage">Access your trakt library and friends activity</string>
   <string name="dismiss">Απόρριψη</string>
   <string name="welcome_add_part1">Για να ξεκινήσετε πατήστε</string>
   <string name="upcoming_show">%s επερχόμενα</string>

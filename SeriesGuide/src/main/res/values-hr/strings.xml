@@ -201,7 +201,7 @@
   <string name="list_item_remove">Ukloni s popisa</string>
   <string name="list_empty">Možeš dodati serije, sezone ili epizode na ovaj popis.</string>
   <string name="hexagon_setup">Set up SeriesGuide cloud</string>
-  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
+  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt integration for that.</string>
   <string name="hexagon_signin">Sign In</string>
   <string name="hexagon_signed_in">You are connected to SeriesGuide cloud.</string>
   <string name="hexagon_signout">Sign Out</string>

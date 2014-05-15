@@ -57,7 +57,7 @@
   <string name="movies_watchlist_empty">Du har inte lagt filmer till dina bevakningar.</string>
   <string name="trailer">Trailer</string>
   <string name="movie_cast">Rollista</string>
-  <string name="movie_crew">Crew</string>
+  <string name="movie_crew">Besättningen</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">Sortera filmer</string>
   <string name="action_movies_sort_title">Titel</string>
@@ -87,7 +87,7 @@
   <string name="show_genres">Genrer</string>
   <string name="show_runtime">Längd</string>
   <string name="show_contentrating">Åldersgräns</string>
-  <string name="show_release_times">Release times</string>
+  <string name="show_release_times">Visa publiceringstider</string>
   <string name="episode_directors">Regissörer</string>
   <string name="episode_gueststars">Gästskådespelare</string>
   <string name="episode_writers">Författare</string>
@@ -97,7 +97,7 @@
   <string name="services_watch">Titta på</string>
   <string name="services_more">Mer</string>
   <string name="sort">Sortera efter</string>
-  <string name="action_sort_ignore_articles">Ignore articles</string>
+  <string name="action_sort_ignore_articles">Ignorera artiklar</string>
   <string name="today">idag</string>
   <string name="now">nu</string>
   <string name="daily">Dagligen</string>
@@ -123,8 +123,8 @@
   <string name="action_collection_remove">Ta bort från samlingen</string>
   <string name="action_collection_added">Tillagd i samlingen</string>
   <string name="action_collection_removed">Borttagen från samlingen</string>
-  <string name="action_watched">Watched</string>
-  <string name="action_unwatched">Not yet watched</string>
+  <string name="action_watched">Sett</string>
+  <string name="action_unwatched">Ännu inte sett</string>
   <string name="confirm_delete">Vill du verkligen ta bort %s?</string>
   <string name="delete_has_list_items">Kan\kan inte följa, ta bort %s från alla listor först.</string>
   <string name="delete_error">Det gick inte att ta bort program. Försök igen senare.</string>
@@ -158,7 +158,7 @@
   <string name="recent">Senaste</string>
   <string name="friends">Vänner</string>
   <string name="friends_empty">Ingen vänaktivitet på trakt.</string>
-  <string name="user_stream">You</string>
+  <string name="user_stream">Du</string>
   <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
   <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
   <string name="noupcoming">Det finns inga kommande avsnitt.</string>

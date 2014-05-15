@@ -96,7 +96,7 @@
   <string name="services_watch">Watch</string>
   <string name="services_more">Mai mult</string>
   <string name="sort">Sortați după</string>
-  <string name="action_sort_ignore_articles">Ignore articles</string>
+  <string name="action_sort_ignore_articles">Ignoră articolele</string>
   <string name="today">astăzi</string>
   <string name="now">acum</string>
   <string name="daily">Zilnic</string>
@@ -118,12 +118,12 @@
   <string name="trakt_notseen">%s not seen.</string>
   <string name="trakt_collected">%s collected.</string>
   <string name="trakt_notcollected">%s not collected.</string>
-  <string name="action_collection_add">Add to collection</string>
-  <string name="action_collection_remove">Remove from collection</string>
-  <string name="action_collection_added">Added to collection</string>
-  <string name="action_collection_removed">Removed from collection</string>
-  <string name="action_watched">Watched</string>
-  <string name="action_unwatched">Not yet watched</string>
+  <string name="action_collection_add">Adaugă la colecţie</string>
+  <string name="action_collection_remove">Ștergeți din colecție</string>
+  <string name="action_collection_added">Adăugat la colecţie</string>
+  <string name="action_collection_removed">Șters din colecție</string>
+  <string name="action_watched">Vizionat</string>
+  <string name="action_unwatched">Încă nevizionat</string>
   <string name="confirm_delete">Do you really want to remove %s?</string>
   <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_error">Could not remove show. Try again later.</string>
@@ -148,7 +148,7 @@
   <string name="action_shows_sort">Sortați serialele</string>
   <string name="action_shows_sort_title">Titlu</string>
   <string name="action_shows_sort_episode">Urmatorul episod</string>
-  <string name="action_shows_sort_favorites">Favorites first</string>
+  <string name="action_shows_sort_favorites">Favoritele primele</string>
   <string name="updateall_yes">Actualizare (toate)</string>
   <string name="menu_update_delta">Actualizare (doar pe cele învechite)</string>
   <string name="context_updateshow">Actualizare</string>
@@ -157,7 +157,7 @@
   <string name="recent">Recente</string>
   <string name="friends">Prieteni</string>
   <string name="friends_empty">Nici o activitate a prietenilor pe trakt.</string>
-  <string name="user_stream">You</string>
+  <string name="user_stream">Tu</string>
   <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
   <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
   <string name="noupcoming">Nu sînt următoarele episoade.</string>
@@ -165,7 +165,7 @@
   <string name="only_favorites">Doar emisiunile preferate</string>
   <string name="togglewatched">Toggle watched</string>
   <string name="pref_infinite_scrolling">Infinite activity</string>
-  <string name="action_activity_filter">Filter activity</string>
+  <string name="action_activity_filter">Filtrează activitatea</string>
   <string name="update_scheduled">Actualizare…</string>
   <string name="update_no_connection">Pentru a actualiza conectați-vă la internet.</string>
   <string name="update_inprogress">O actualizare este în progres, încercaţi din nou mai târziu.</string>
@@ -201,7 +201,7 @@
   <string name="list_item_remove">Eliminaţi din listă</string>
   <string name="list_empty">Puteţi adăuga emisiuni, sezoane sau episoade la această listă.</string>
   <string name="hexagon_setup">Set up SeriesGuide cloud</string>
-  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
+  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt integration for that.</string>
   <string name="hexagon_signin">Conectare</string>
   <string name="hexagon_signed_in">You are connected to SeriesGuide cloud.</string>
   <string name="hexagon_signout">Sign Out</string>
@@ -364,8 +364,8 @@
   <string name="add_to_homescreen">Adaugati pe ecranul principal</string>
   <string name="search_within_show">Căutaţi în cadrul %s</string>
   <string name="web_search">Căutare pe web</string>
-  <string name="extensions">Extensions</string>
-  <string name="action_extensions_configure">Customize extensions</string>
+  <string name="extensions">Extensii</string>
+  <string name="action_extensions_configure">Personalizează extensile</string>
   <string name="action_extensions_add">Add extension</string>
   <string name="action_extensions_limit">Get X to add more extensions</string>
   <string name="action_extensions_search">Get more extensions</string>
