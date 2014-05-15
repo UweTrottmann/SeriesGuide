@@ -201,7 +201,7 @@
   <string name="list_item_remove">Odstrani s spiska</string>
   <string name="list_empty">Na ta spisek lahko dodaš oddaje, sezone ali epizode.</string>
   <string name="hexagon_setup">Nastavitev SeriesGuide oblaka</string>
-  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
+  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt integration for that.</string>
   <string name="hexagon_signin">Prijava</string>
   <string name="hexagon_signed_in">Povezani ste v SeriesGuide oblak.</string>
   <string name="hexagon_signout">Izpis</string>

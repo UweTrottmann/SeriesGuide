@@ -201,7 +201,7 @@
   <string name="list_item_remove">Odstrániť zo zoznamu</string>
   <string name="list_empty">Do tohto zoznamu môžete pridať seriály, sezóny alebo epizódy.</string>
   <string name="hexagon_setup">Set up SeriesGuide cloud</string>
-  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt.tv integration for that.</string>
+  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt integration for that.</string>
   <string name="hexagon_signin">Sign In</string>
   <string name="hexagon_signed_in">You are connected to SeriesGuide cloud.</string>
   <string name="hexagon_signout">Sign Out</string>
@@ -320,7 +320,7 @@
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_createaccount">Vytvoriť nový účet</string>
   <string name="welcome_setuplanguage">Vyberte jazyk</string>
-  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
+  <string name="welcome_traktmessage">Access your trakt library and friends activity</string>
   <string name="dismiss">Zamietnuť</string>
   <string name="welcome_add_part1">Začnite stlačením na</string>
   <string name="upcoming_show">%s práve vychádzajú</string>
