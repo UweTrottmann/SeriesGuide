@@ -213,7 +213,7 @@
   <string name="hexagon_priority_select">Versie selecteren</string>
   <string name="connect_trakt">Verbinden met trakt</string>
   <string name="connect_trakt_done">Verbonden met trakt!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide zal nu de shows en films op dit apparaat synchroniseren met Trakt. Dit kan enige tijd duren.</string>
   <string name="add_trakt_shows">Series toevoegen vanuit uw bibliotheek:</string>
   <string name="show_library">Uw bibliotheek weergeven</string>
   <string name="upload_existing_shows">Upload bestaande shows</string>
