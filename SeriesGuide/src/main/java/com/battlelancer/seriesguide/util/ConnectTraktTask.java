@@ -129,14 +129,16 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
 
         editor.commit();
 
-        // trigger a sync, notifies user via toast
-        SgSyncAdapter.requestSyncImmediate(mContext, SgSyncAdapter.SyncType.DELTA, 0, true);
-
         return Result.SUCCESS;
     }
 
     @Override
     protected void onPostExecute(Integer resultCode) {
+        if (resultCode == Result.SUCCESS) {
+            // trigger a sync, notifies user via toast
+            SgSyncAdapter.requestSyncImmediate(mContext, SgSyncAdapter.SyncType.DELTA, 0, true);
+        }
+
         if (mListener != null) {
             mListener.onTaskFinished(resultCode);
         }
