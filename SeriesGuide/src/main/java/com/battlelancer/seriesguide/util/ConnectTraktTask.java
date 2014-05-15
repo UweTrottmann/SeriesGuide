@@ -27,6 +27,7 @@ import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.services.AccountService;
@@ -127,6 +128,9 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         editor.putLong(TraktSettings.KEY_LAST_FULL_EPISODE_SYNC, 0);
 
         editor.commit();
+
+        // trigger a sync, notifies user via toast
+        SgSyncAdapter.requestSyncImmediate(mContext, SgSyncAdapter.SyncType.DELTA, 0, true);
 
         return Result.SUCCESS;
     }
