@@ -17,6 +17,7 @@ Version 14 *(2014-05-14)*
 
 * FIX Crash when leaving right after starting to connect to trakt.
 * FIX German translation.
+* NOTICE Latest translations from crowdin.
 
 #### 14.0.1 *(2014-05-14)*
 
