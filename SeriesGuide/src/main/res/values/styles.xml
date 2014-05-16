@@ -162,19 +162,6 @@
         <item name="android:background">@drawable/btn_default_sg</item>
     </style>
 
-    <!-- CheckBox -->
-    <!-- pre v11 -->
-    <style name="Widget.SeriesGuide.CheckBox" parent="android:Widget.CompoundButton.CheckBox">
-        <item name="android:button">@drawable/btn_check_sg</item>
-    </style>
-
-    <!-- EditText -->
-    <!-- pre v11 -->
-    <style name="Widget.SeriesGuide.EditText" parent="android:Widget.EditText">
-        <item name="android:background">@drawable/edit_text_sg</item>
-        <item name="android:textColor">@color/text_primary_sg</item>
-    </style>
-
     <!-- TextView -->
     <style name="Widget.SeriesGuide.TextView"/>
 
@@ -186,26 +173,6 @@
         <item name="android:textAppearance">@style/TextAppearance.Medium.Light</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">marquee</item>
-    </style>
-
-    <!-- ProgressBar -->
-    <!-- pre v11 -->
-    <style name="ProgressBar" parent="android:Widget.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/progress_horizontal_sg</item>
-        <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_sg</item>
-        <item name="android:minHeight">16dip</item>
-        <item name="android:maxHeight">16dip</item>
-    </style>
-
-    <!-- List selectors -->
-    <!-- pre v11 -->
-    <style name="Widget.SeriesGuide.ListView" parent="android:Widget.ListView">
-        <item name="android:listSelector">?custom_list_selector</item>
-    </style>
-
-    <!-- pre v11 -->
-    <style name="Widget.SeriesGuide.ListView.White" parent="android:Widget.ListView.White">
-        <item name="android:listSelector">?custom_list_selector</item>
     </style>
 
     <!-- Dialogs -->
@@ -224,14 +191,11 @@
 
     <!-- ABS -->
     <style name="ActionBar" parent="Widget.Sherlock.ActionBar">
-        <item name="background">@drawable/actionbar_background_sg</item>
         <item name="android:background">@drawable/actionbar_background_sg</item>
-        <item name="titleTextStyle">@style/TextAppearance.ActionBar</item>
         <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/TextAppearance.ActionBar</item>
     </style>
 
     <style name="ActionBar.Invisible">
-        <item name="background">@null</item>
         <item name="android:background">@null</item>
     </style>
 
@@ -395,7 +359,6 @@
 
     <!-- ABS -->
     <style name="ActionBarDark" parent="Widget.Sherlock.ActionBar">
-        <item name="background">@drawable/actionbar_background_dark</item>
         <item name="android:background">@drawable/actionbar_background_dark</item>
     </style>
 
@@ -406,31 +369,11 @@
 
     <!-- ABS -->
     <style name="ActionBar.Light" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
-        <item name="background">@drawable/actionbar_background_sg</item>
         <item name="android:background">@drawable/actionbar_background_sg</item>
     </style>
 
     <style name="ActionBar.Light.Invisible" parent="Widget.Sherlock.Light.ActionBar.Solid">
-        <item name="background">@null</item>
         <item name="android:background">@null</item>
-    </style>
-
-    <!-- Buttons -->
-    <!-- pre v11 -->
-    <style name="Widget.SeriesGuide.Light.CheckBox" parent="Widget.SeriesGuide.CheckBox">
-        <item name="android:button">@drawable/btn_check_sg_light</item>
-    </style>
-
-    <!-- pre v11 -->
-    <style name="Widget.SeriesGuide.Light.EditText" parent="Widget.SeriesGuide.EditText">
-        <item name="android:background">@drawable/edit_text_holo_light</item>
-        <item name="android:textColor">@color/text_primary_light_sg</item>
-    </style>
-
-    <!-- ProgressBar -->
-    <!-- pre v11 -->
-    <style name="ProgressBar.Light">
-        <item name="android:progressDrawable">@drawable/progress_horizontal_sg_light</item>
     </style>
 
 </resources>
