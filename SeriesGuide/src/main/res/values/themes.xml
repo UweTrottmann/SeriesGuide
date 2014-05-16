@@ -289,15 +289,11 @@
 
         <!-- Action bar -->
         <item name="android:actionBarStyle">@style/ActionBar.Light.Invisible</item>
-        <item name="android:actionOverflowButtonStyle">@style/Widget.Sherlock.Light.ActionButton.Overflow</item>
+        <item name="android:actionOverflowButtonStyle">@android:style/Widget.Holo.Light.ActionButton.Overflow</item>
         <item name="android:homeAsUpIndicator">@drawable/abs__ic_ab_back_holo_light</item>
 
     </style>
 
-    <style name="ActionBarWidgetThemeLight">
-
-        <item name="android:popupMenuStyle">@style/Widget.Sherlock.Light.PopupMenu</item>
-
-    </style>
+    <style name="ActionBarWidgetThemeLight" parent="android:Widget.Holo.Light.PopupMenu" />
 
 </resources>

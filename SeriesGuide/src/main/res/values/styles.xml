@@ -101,7 +101,7 @@
         <item name="android:textColor">?attr/textColorSgPrimary</item>
     </style>
 
-    <style name="TextAppearance.ActionBar" parent="TextAppearance.Sherlock.Widget.ActionBar.Title">
+    <style name="TextAppearance.ActionBar" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">?attr/textColorSgActionBar</item>
     </style>
 
@@ -125,12 +125,10 @@
     <style name="Widget.SeriesGuide.RtlGridViewItem" />
 
     <!-- Buttons -->
-    <style name="Widget.SeriesGuide.Button" parent="android:Widget.Button">
+    <style name="Widget.SeriesGuide.Button" parent="android:Widget.Holo.Button">
         <item name="android:background">@drawable/btn_default_sg</item>
         <item name="android:textAppearance">@style/TextAppearance.Medium</item>
         <item name="android:textColor">@color/text_primary_sg</item>
-        <item name="android:minHeight">48dip</item>
-        <item name="android:minWidth">64dip</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless">
@@ -158,8 +156,14 @@
         <item name="android:textStyle">italic</item>
     </style>
 
-    <style name="Widget.SeriesGuide.ImageButton" parent="android:Widget.ImageButton">
+    <style name="Widget.SeriesGuide.ImageButton" parent="android:Widget.Holo.ImageButton">
         <item name="android:background">@drawable/btn_default_sg</item>
+    </style>
+
+    <!-- Progress bar -->
+    <style name="ProgressBar" parent="android:Widget.Holo.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_sg</item>
+        <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_sg</item>
     </style>
 
     <!-- TextView -->
@@ -190,7 +194,7 @@
     </style>
 
     <!-- ABS -->
-    <style name="ActionBar" parent="Widget.Sherlock.ActionBar">
+    <style name="ActionBar" parent="android:Widget.Holo.ActionBar">
         <item name="android:background">@drawable/actionbar_background_sg</item>
         <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/TextAppearance.ActionBar</item>
     </style>
@@ -199,11 +203,11 @@
         <item name="android:background">@null</item>
     </style>
 
-    <style name="ActionBarTabTextStyle" parent="Widget.Sherlock.ActionBar.TabText">
+    <style name="ActionBarTabTextStyle" parent="android:Widget.Holo.ActionBar.TabText">
         <item name="android:textColor">?attr/textColorSgActionBar</item>
     </style>
 
-    <style name="DropDownListView" parent="Widget.Sherlock.ListView.DropDown">
+    <style name="DropDownListView" parent="android:Widget.Holo.ListView.DropDown">
         <item name="android:listSelector">?custom_list_selector</item>
     </style>
 
@@ -358,7 +362,7 @@
     <!-- Dark styles -->
 
     <!-- ABS -->
-    <style name="ActionBarDark" parent="Widget.Sherlock.ActionBar">
+    <style name="ActionBarDark" parent="android:Widget.Holo.ActionBar">
         <item name="android:background">@drawable/actionbar_background_dark</item>
     </style>
 
@@ -368,12 +372,18 @@
     <!-- Light styles -->
 
     <!-- ABS -->
-    <style name="ActionBar.Light" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+    <style name="ActionBar.Light" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@drawable/actionbar_background_sg</item>
     </style>
 
-    <style name="ActionBar.Light.Invisible" parent="Widget.Sherlock.Light.ActionBar.Solid">
+    <style name="ActionBar.Light.Invisible" parent="android:Widget.Holo.Light.ActionBar.Solid">
         <item name="android:background">@null</item>
+    </style>
+
+    <!-- Progress bar -->
+    <style name="ProgressBar.Light" parent="android:Widget.Holo.Light.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_sg_light</item>
+        <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_sg</item>
     </style>
 
 </resources>
