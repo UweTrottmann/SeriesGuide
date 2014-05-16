@@ -193,7 +193,7 @@
         <item name="android:windowExitAnimation">@anim/checkin_dialog_exit</item>
     </style>
 
-    <!-- ABS -->
+    <!-- Action bar -->
     <style name="ActionBar" parent="android:Widget.Holo.ActionBar">
         <item name="android:background">@drawable/actionbar_background_sg</item>
         <item name="android:titleTextStyle">@style/TextAppearance.ActionBar</item>
@@ -361,7 +361,7 @@
 
     <!-- Dark styles -->
 
-    <!-- ABS -->
+    <!-- Action bar -->
     <style name="ActionBarDark" parent="android:Widget.Holo.ActionBar">
         <item name="android:background">@drawable/actionbar_background_dark</item>
     </style>
@@ -371,7 +371,7 @@
 
     <!-- Light styles -->
 
-    <!-- ABS -->
+    <!-- Action bar -->
     <style name="ActionBar.Light" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@drawable/actionbar_background_sg</item>
     </style>
