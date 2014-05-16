@@ -83,7 +83,7 @@
     </style>
 
     <!-- Dark Android theme -->
-    <style name="AndroidTheme" parent="android:Theme.Holo">
+    <style name="Theme.SeriesGuide.DarkBlue" parent="android:Theme.Holo">
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
@@ -278,7 +278,7 @@
 
     </style>
 
-    <style name="ImmersiveTheme.Stock" parent="AndroidTheme">
+    <style name="ImmersiveTheme.Stock" parent="Theme.SeriesGuide.DarkBlue">
 
         <!-- Action bar -->
         <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
