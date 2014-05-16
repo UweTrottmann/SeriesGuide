@@ -32,7 +32,7 @@
     </style>
 
     <style name="TextAppearance.XSmall.Condensed">
-        <item name="android:textAllCaps" tools:targetApi="ice_cream_sandwich">true</item>
+        <item name="android:textAllCaps">true</item>
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
     </style>
 
@@ -41,7 +41,7 @@
     </style>
 
     <style name="TextAppearance.XSmall.Dim.Condensed">
-        <item name="android:textAllCaps" tools:targetApi="ice_cream_sandwich">true</item>
+        <item name="android:textAllCaps">true</item>
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
     </style>
 
@@ -76,7 +76,7 @@
 
     <style name="TextAppearance.Small.Label">
         <item name="android:textStyle">bold</item>
-        <item name="android:textAllCaps" tools:targetApi="ice_cream_sandwich">true</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="TextAppearance.Medium">
@@ -173,7 +173,7 @@
         <item name="android:layout_marginLeft">@dimen/default_padding</item>
         <item name="android:layout_marginRight">@dimen/default_padding</item>
         <item name="android:layout_marginTop">@dimen/default_padding</item>
-        <item name="android:textIsSelectable" tools:targetApi="Honeycomb">true</item>
+        <item name="android:textIsSelectable">true</item>
         <item name="android:textAppearance">@style/TextAppearance.Medium.Light</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">marquee</item>
@@ -196,7 +196,7 @@
     <!-- ABS -->
     <style name="ActionBar" parent="android:Widget.Holo.ActionBar">
         <item name="android:background">@drawable/actionbar_background_sg</item>
-        <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/TextAppearance.ActionBar</item>
+        <item name="android:titleTextStyle">@style/TextAppearance.ActionBar</item>
     </style>
 
     <style name="ActionBar.Invisible">
