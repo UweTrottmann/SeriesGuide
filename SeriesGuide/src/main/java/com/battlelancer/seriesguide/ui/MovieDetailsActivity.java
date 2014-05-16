@@ -16,11 +16,11 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
+import android.view.MenuItem;
+import android.view.Window;
 import com.battlelancer.seriesguide.R;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
@@ -78,7 +78,7 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
     }
 
     private void setupActionBar() {
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
         if (SeriesGuidePreferences.THEME != R.style.Theme_SeriesGuide_DarkBlue) {

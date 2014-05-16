@@ -22,26 +22,27 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.loaders.ShowLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
@@ -51,7 +52,6 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import de.greenrobot.event.EventBus;
@@ -60,7 +60,7 @@ import java.util.Date;
 /**
  *
  */
-public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Series> {
+public class ShowFragment extends Fragment implements LoaderCallbacks<Series> {
 
     public interface InitBundle {
 

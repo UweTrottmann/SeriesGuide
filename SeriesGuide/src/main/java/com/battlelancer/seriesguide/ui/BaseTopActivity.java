@@ -17,11 +17,11 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import android.view.Menu;
+import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.util.Utils;
@@ -42,7 +42,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     }
 
     private void setupActionBar() {
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
@@ -57,7 +57,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.base_menu, menu);
+        getMenuInflater().inflate(R.menu.base_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

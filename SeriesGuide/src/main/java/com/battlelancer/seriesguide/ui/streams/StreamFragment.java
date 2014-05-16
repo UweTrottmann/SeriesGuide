@@ -19,8 +19,12 @@ package com.battlelancer.seriesguide.ui.streams;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -29,10 +33,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -48,7 +48,7 @@ import com.uwetrottmann.androidutils.AndroidUtils;
  * Displays a stream of activities that can be refreshed by the user via a swipe gesture (or an
  * action item).
  */
-public abstract class StreamFragment extends SherlockFragment implements
+public abstract class StreamFragment extends Fragment implements
         AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     @InjectView(R.id.swipeRefreshLayoutStream) SwipeRefreshLayout mContentContainer;

@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -32,6 +33,9 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -42,10 +46,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -83,7 +83,7 @@ import timber.log.Timber;
 /**
  * Displays details about a single episode like summary, ratings and episode image if available.
  */
-public class EpisodeDetailsFragment extends SherlockFragment implements ActionsFragmentContract {
+public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentContract {
 
     private static final String TAG = "Episode Details";
 
@@ -592,7 +592,7 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
 
     private void loadTraktRatings(boolean isUseCachedValues) {
         if (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED) {
-            mTraktTask = new TraktSummaryTask(getSherlockActivity(), mRatingsContainer,
+            mTraktTask = new TraktSummaryTask(getActivity(), mRatingsContainer,
                     isUseCachedValues).episode(mShowTvdbId, getEpisodeTvdbId(), mSeasonNumber,
                     mEpisodeNumber);
             AndroidUtils.executeAsyncTask(mTraktTask);

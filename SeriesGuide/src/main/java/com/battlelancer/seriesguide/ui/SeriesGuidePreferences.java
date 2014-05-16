@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
@@ -30,15 +31,14 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.widget.Toast;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
@@ -59,7 +59,7 @@ import java.util.List;
 /**
  * Allows tweaking of various SeriesGuide settings.
  */
-public class SeriesGuidePreferences extends SherlockPreferenceActivity implements
+public class SeriesGuidePreferences extends PreferenceActivity implements
         OnSharedPreferenceChangeListener {
 
     private static final String TAG = "Settings";
@@ -171,7 +171,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     }
 
     private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setIcon(R.drawable.ic_actionbar);
     }

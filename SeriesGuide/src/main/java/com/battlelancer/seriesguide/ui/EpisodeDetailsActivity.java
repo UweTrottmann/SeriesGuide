@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -26,11 +27,10 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
+import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
 import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
@@ -90,7 +90,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     }
 
     private void setupActionBar(String showTitle) {
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(showTitle);
         if (SeriesGuidePreferences.THEME != R.style.Theme_SeriesGuide_DarkBlue) {

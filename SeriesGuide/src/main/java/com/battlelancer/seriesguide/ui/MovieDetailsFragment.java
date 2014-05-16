@@ -20,11 +20,15 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -34,10 +38,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.items.MovieDetails;
@@ -65,7 +65,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Displays details about one movie including plot, ratings, trailers and a poster.
  */
-public class MovieDetailsFragment extends SherlockFragment {
+public class MovieDetailsFragment extends Fragment {
 
     public static MovieDetailsFragment newInstance(int tmdbId) {
         MovieDetailsFragment f = new MovieDetailsFragment();
@@ -182,7 +182,7 @@ public class MovieDetailsFragment extends SherlockFragment {
 
         mTmdbId = getArguments().getInt(InitBundle.TMDB_ID);
         if (mTmdbId <= 0) {
-            getSherlockActivity().getSupportFragmentManager().popBackStack();
+            getFragmentManager().popBackStack();
             return;
         }
 
@@ -541,7 +541,7 @@ public class MovieDetailsFragment extends SherlockFragment {
 
             if (movieDetails.traktMovie() != null && movieDetails.tmdbMovie() != null) {
                 populateMovieViews();
-                getSherlockActivity().supportInvalidateOptionsMenu();
+                getActivity().invalidateOptionsMenu();
             } else {
                 // display offline message
                 mMovieDescription.setText(R.string.offline);
@@ -565,7 +565,7 @@ public class MovieDetailsFragment extends SherlockFragment {
         public void onLoadFinished(Loader<Trailers> trailersLoader, Trailers trailers) {
             if (trailers != null) {
                 mTrailers = trailers;
-                getSherlockActivity().supportInvalidateOptionsMenu();
+                getActivity().invalidateOptionsMenu();
             }
         }
 

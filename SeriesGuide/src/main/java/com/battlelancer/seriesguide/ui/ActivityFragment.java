@@ -23,6 +23,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -30,16 +31,15 @@ import android.text.format.DateUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ActivitySlowAdapter;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -56,7 +56,7 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapterWrapper;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 
-public class ActivityFragment extends SherlockFragment implements
+public class ActivityFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener,
         OnSharedPreferenceChangeListener {
 

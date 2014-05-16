@@ -27,12 +27,16 @@ import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -40,10 +44,6 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.SeasonsAdapter;
@@ -66,7 +66,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Displays a list of seasons of one show.
  */
-public class SeasonsFragment extends SherlockListFragment implements
+public class SeasonsFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnClickListener {
 
     private static final int CONTEXT_WATCHED_SHOW_ALL_ID = 0;
@@ -377,8 +377,7 @@ public class SeasonsFragment extends SherlockListFragment implements
 
         intent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID, (int) id);
         startActivity(intent);
-        getSherlockActivity().overridePendingTransition(R.anim.blow_up_enter,
-                R.anim.blow_up_exit);
+        getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
     }
 
     private int getShowId() {
@@ -603,7 +602,7 @@ public class SeasonsFragment extends SherlockListFragment implements
 
         // restart loader and update menu description
         getLoaderManager().restartLoader(LOADER_ID, null, SeasonsFragment.this);
-        getSherlockActivity().invalidateOptionsMenu();
+        getActivity().invalidateOptionsMenu();
     }
 
     public void onEvent(FlagTaskCompletedEvent event) {

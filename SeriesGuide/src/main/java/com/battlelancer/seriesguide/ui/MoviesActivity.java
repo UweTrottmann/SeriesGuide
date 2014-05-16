@@ -16,10 +16,10 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Window;
+import android.view.Window;
 import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
@@ -27,7 +27,6 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.streams.FriendsMovieStreamFragment;
 import com.battlelancer.seriesguide.ui.streams.UserMovieStreamFragment;
 import com.battlelancer.seriesguide.util.Utils;
-import de.greenrobot.event.EventBus;
 
 /**
  * Users can search for a movie, display detailed information and then check in with trakt or
@@ -47,7 +46,7 @@ public class MoviesActivity extends BaseTopActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // MovieSearchFragment needs a progress bar
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        setSupportProgressBarIndeterminateVisibility(false);
+        setProgressBarIndeterminateVisibility(false);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movies);
@@ -59,7 +58,7 @@ public class MoviesActivity extends BaseTopActivity {
     }
 
     private void setupActionBar() {
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setTitle(getString(R.string.movies));
         actionBar.setIcon(R.drawable.ic_action_movie);
     }

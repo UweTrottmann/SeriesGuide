@@ -16,14 +16,14 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.MenuItem;
+import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
@@ -41,7 +41,7 @@ import de.greenrobot.event.EventBus;
  * various common events, see {@link #registerEventBus()} and {@link #unregisterEventBus()} to
  * prevent that.
  */
-public abstract class BaseActivity extends SherlockFragmentActivity {
+public abstract class BaseActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -57,7 +57,7 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
     }
 
     private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getActionBar();
         actionBar.setIcon(R.drawable.ic_actionbar);
     }
 

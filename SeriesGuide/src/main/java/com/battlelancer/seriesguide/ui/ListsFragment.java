@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -34,7 +35,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
@@ -50,7 +50,7 @@ import java.util.Date;
 /**
  * Displays one user created list which includes a mixture of shows, seasons and episodes.
  */
-public class ListsFragment extends SherlockFragment implements
+public class ListsFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener, View.OnClickListener {
 
     private static final int LOADER_ID = R.layout.fragment_list;
