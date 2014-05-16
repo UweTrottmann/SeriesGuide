@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Special themes -->
-    <style name="ImmersiveTheme" parent="SeriesGuideTheme">
+    <style name="ImmersiveTheme" parent="Theme.SeriesGuide">
 
         <!-- Action bar (native, v11+) -->
         <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
@@ -24,7 +24,7 @@
         
     </style>
 
-    <style name="ImmersiveTheme.Light" parent="SeriesGuideThemeLight">
+    <style name="ImmersiveTheme.Light" parent="Theme.SeriesGuide.Light">
 
         <!-- Action bar (native, v11+) -->
         <item name="android:actionBarStyle">@style/ActionBar.Light.Invisible</item>

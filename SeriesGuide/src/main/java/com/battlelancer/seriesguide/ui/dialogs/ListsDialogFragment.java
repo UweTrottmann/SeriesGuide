@@ -84,7 +84,7 @@ public class ListsDialogFragment extends DialogFragment implements
         super.onCreate(savedInstanceState);
 
         // hide title, use custom theme
-        if (SeriesGuidePreferences.THEME != R.style.SeriesGuideTheme) {
+        if (SeriesGuidePreferences.THEME != R.style.Theme_SeriesGuide) {
             setStyle(STYLE_NO_TITLE, 0);
         } else {
             setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Dialog);

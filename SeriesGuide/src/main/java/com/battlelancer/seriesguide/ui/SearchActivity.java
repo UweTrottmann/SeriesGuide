@@ -110,7 +110,7 @@ public class SearchActivity extends BaseNavDrawerActivity {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false);
 
-        if (SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight) {
+        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
             // override search view style for light theme (because we use dark actionbar theme)
             // search text
             int searchSrcTextId = getResources().getIdentifier("android:id/search_src_text", null, null);

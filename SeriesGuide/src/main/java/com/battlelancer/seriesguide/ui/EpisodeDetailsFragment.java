@@ -241,7 +241,7 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light;
         // multi-pane layout has non-transparent action bar, adjust icon color
         boolean isInMultipane = getArguments().getBoolean(InitBundle.IS_IN_MULTIPANE_LAYOUT);
         inflater.inflate(isLightTheme && !isInMultipane

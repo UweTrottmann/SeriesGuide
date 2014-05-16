@@ -246,7 +246,7 @@ public class MovieDetailsFragment extends SherlockFragment {
         super.onCreateOptionsMenu(menu, inflater);
 
         if (mMovieDetails != null) {
-            boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+            boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light;
             inflater.inflate(
                     isLightTheme ? R.menu.movie_details_menu_light : R.menu.movie_details_menu,
                     menu);

@@ -42,7 +42,6 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 
 /**
@@ -81,9 +80,9 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     @Override
     protected void setCustomTheme() {
         // use a special immersive theme
-        if (SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight) {
+        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
             setTheme(R.style.ImmersiveTheme_Light);
-        } else if (SeriesGuidePreferences.THEME == R.style.SeriesGuideTheme) {
+        } else if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide) {
             setTheme(R.style.ImmersiveTheme);
         } else {
             setTheme(R.style.ImmersiveTheme_Stock);

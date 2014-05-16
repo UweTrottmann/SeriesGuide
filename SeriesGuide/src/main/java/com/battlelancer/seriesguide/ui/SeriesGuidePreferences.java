@@ -96,7 +96,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_TAPE_INTERVAL = "com.battlelancer.seriesguide.tapeinterval";
 
-    public static int THEME = R.style.SeriesGuideTheme;
+    public static int THEME = R.style.Theme_SeriesGuide;
 
     private static void fireTrackerEvent(Context context, String label) {
         Utils.trackClick(context, TAG, label);

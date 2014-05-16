@@ -269,10 +269,10 @@ public class Utils {
                 SeriesGuidePreferences.THEME = R.style.AndroidTheme;
                 break;
             case 2:
-                SeriesGuidePreferences.THEME = R.style.SeriesGuideThemeLight;
+                SeriesGuidePreferences.THEME = R.style.Theme_SeriesGuide_Light;
                 break;
             default:
-                SeriesGuidePreferences.THEME = R.style.SeriesGuideTheme;
+                SeriesGuidePreferences.THEME = R.style.Theme_SeriesGuide;
                 break;
         }
     }

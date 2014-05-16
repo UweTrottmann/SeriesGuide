@@ -2,11 +2,9 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme"/>
-    <style name="Theme.SeriesGuide"/>
-    <style name="Theme.SeriesGuide.Light"/>
 
     <!-- SeriesGuides default theme -->
-    <style name="SeriesGuideTheme" parent="android:Theme.Holo">
+    <style name="Theme.SeriesGuide" parent="android:Theme.Holo">
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
@@ -146,7 +144,7 @@
     </style>
 
     <!-- SeriesGuide Light theme -->
-    <style name="SeriesGuideThemeLight" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="Theme.SeriesGuide.Light" parent="android:Theme.Holo.Light.DarkActionBar">
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
@@ -171,7 +169,7 @@
         <item name="android:actionBarStyle">@style/ActionBar.Light</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
         <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
-        <item name="android:actionBarWidgetTheme">@style/Theme.SeriesGuide.Light.Widget</item>
+        <item name="android:actionBarWidgetTheme">@style/ActionBarWidgetThemeLight</item>
 
         <!-- Fast scroll thumb -->
         <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
@@ -229,7 +227,7 @@
     </style>
 
     <!-- Special themes -->
-    <style name="Theme.SeriesGuide.Dialog" parent="SeriesGuideTheme">
+    <style name="Theme.SeriesGuide.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowTitleStyle">@style/Widget.SeriesGuide.DialogWindowTitle</item>
         <item name="android:windowIsFloating">true</item>
@@ -252,7 +250,7 @@
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
     </style>
 
-    <style name="Theme.SeriesGuide.Light.Dialog" parent="SeriesGuideThemeLight">
+    <style name="Theme.SeriesGuide.Light.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowTitleStyle">@style/Widget.SeriesGuide.DialogWindowTitle</item>
         <item name="android:windowIsFloating">true</item>
@@ -273,7 +271,7 @@
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
     </style>
 
-    <style name="ImmersiveTheme" parent="SeriesGuideTheme">
+    <style name="ImmersiveTheme" parent="Theme.SeriesGuide">
 
         <!-- Action bar -->
         <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
@@ -287,7 +285,7 @@
 
     </style>
 
-    <style name="ImmersiveTheme.Light" parent="SeriesGuideThemeLight">
+    <style name="ImmersiveTheme.Light" parent="Theme.SeriesGuide.Light">
 
         <!-- Action bar -->
         <item name="android:actionBarStyle">@style/ActionBar.Light.Invisible</item>
@@ -296,13 +294,9 @@
 
     </style>
 
-    <style name="Theme.SeriesGuide.Light.Widget">
+    <style name="ActionBarWidgetThemeLight">
 
-        <!-- native (14+) -->
         <item name="android:popupMenuStyle">@style/Widget.Sherlock.Light.PopupMenu</item>
-
-        <!-- ABS (still used on 3.x) -->
-        <item name="popupMenuStyle">@style/Widget.Sherlock.Light.PopupMenu</item>
 
     </style>
 
