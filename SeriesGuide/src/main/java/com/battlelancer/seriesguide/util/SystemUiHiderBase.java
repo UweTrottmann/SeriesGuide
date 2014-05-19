@@ -17,9 +17,9 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.app.Activity;
 import android.view.View;
 import android.view.WindowManager;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 /**
  * A base implementation of {@link SystemUiHider}. Uses APIs available in all
@@ -36,7 +36,7 @@ public class SystemUiHiderBase extends SystemUiHider {
      * Constructor not intended to be called by clients. Use
      * {@link SystemUiHider#getInstance} to obtain an instance.
      */
-    protected SystemUiHiderBase(SherlockFragmentActivity activity, View anchorView, int flags) {
+    protected SystemUiHiderBase(Activity activity, View anchorView, int flags) {
         super(activity, anchorView, flags);
     }
 

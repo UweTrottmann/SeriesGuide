@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.ui;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,6 @@ import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
 import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
@@ -39,7 +39,7 @@ import com.battlelancer.seriesguide.util.Utils;
  * Provides tool to upload shows in the local database to trakt (e.g. after first connecting to
  * trakt).
  */
-public class TraktUploadFragment extends SherlockFragment implements OnTaskFinishedListener,
+public class TraktUploadFragment extends Fragment implements OnTaskFinishedListener,
         OnTaskProgressListener {
 
     private static final String TAG = "Trakt Upload";

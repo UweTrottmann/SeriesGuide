@@ -266,13 +266,13 @@ public class Utils {
         int theme = Integer.valueOf(themeIndex);
         switch (theme) {
             case 1:
-                SeriesGuidePreferences.THEME = R.style.AndroidTheme;
+                SeriesGuidePreferences.THEME = R.style.Theme_SeriesGuide_DarkBlue;
                 break;
             case 2:
-                SeriesGuidePreferences.THEME = R.style.SeriesGuideThemeLight;
+                SeriesGuidePreferences.THEME = R.style.Theme_SeriesGuide_Light;
                 break;
             default:
-                SeriesGuidePreferences.THEME = R.style.SeriesGuideTheme;
+                SeriesGuidePreferences.THEME = R.style.Theme_SeriesGuide;
                 break;
         }
     }

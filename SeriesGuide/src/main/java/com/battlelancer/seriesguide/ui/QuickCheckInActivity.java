@@ -19,7 +19,7 @@ package com.battlelancer.seriesguide.ui;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
+import android.support.v4.app.FragmentActivity;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
@@ -31,7 +31,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Blank activity, just used to quickly check into a show/episode on GetGlue/trakt.
  */
-public class QuickCheckInActivity extends SherlockFragmentActivity {
+public class QuickCheckInActivity extends FragmentActivity {
 
     private CheckInDialogFragment mCheckInDialogFragment;
 

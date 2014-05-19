@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -32,7 +33,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.GetGlueObjectAdapter;
 import com.battlelancer.seriesguide.loaders.GetGlueObjectLoader;
@@ -74,7 +74,7 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
 
         setTitle(R.string.checkin_fixgetglue);
 
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setHomeButtonEnabled(true);
 
         setupViews();

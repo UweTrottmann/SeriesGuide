@@ -24,21 +24,21 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.EpisodesAdapter;
@@ -57,7 +57,7 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 /**
  * Displays a list of episodes of a season.
  */
-public class EpisodesFragment extends SherlockListFragment implements
+public class EpisodesFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnClickListener, OnFlagEpisodeListener {
 
     private static final String TAG = "Episodes";
@@ -173,7 +173,7 @@ public class EpisodesFragment extends SherlockListFragment implements
             intent.setClass(getActivity(), EpisodesActivity.class);
             intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, (int) episodeId);
             startActivity(intent);
-            getSherlockActivity().overridePendingTransition(R.anim.blow_up_enter,
+            getActivity().overridePendingTransition(R.anim.blow_up_enter,
                     R.anim.blow_up_exit);
         }
     }
@@ -378,7 +378,7 @@ public class EpisodesFragment extends SherlockListFragment implements
 
         getLoaderManager().restartLoader(EpisodesActivity.EPISODES_LOADER_ID, null,
                 EpisodesFragment.this);
-        getSherlockActivity().invalidateOptionsMenu();
+        getActivity().invalidateOptionsMenu();
 
         Utils.trackCustomEvent(getActivity(), TAG, "Sorting", mSorting.name());
     }

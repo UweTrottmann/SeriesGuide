@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -34,7 +35,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.GridView;
-import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -120,7 +120,7 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
     }
 
     private void setupActionBar() {
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setTitle(getString(R.string.checkin));
         actionBar.setIcon(R.drawable.ic_action_checkin);
         actionBar.setDisplayHomeAsUpEnabled(true);

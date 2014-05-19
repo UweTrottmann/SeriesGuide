@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -34,6 +35,9 @@ import android.text.format.DateUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -41,10 +45,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
@@ -69,7 +69,7 @@ import de.greenrobot.event.EventBus;
  * Displays the list of shows in a users local library with sorting and filtering abilities. The
  * main view of the app.
  */
-public class ShowsFragment extends SherlockFragment implements
+public class ShowsFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener, OnClickListener {
 
     private static final String TAG = "Shows";
@@ -161,9 +161,9 @@ public class ShowsFragment extends SherlockFragment implements
         getSortAndFilterSettings();
 
         // prepare view adapter
-        int resIdStar = Utils.resolveAttributeToResourceId(getSherlockActivity().getTheme(),
+        int resIdStar = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                 R.attr.drawableStar);
-        int resIdStarZero = Utils.resolveAttributeToResourceId(getSherlockActivity().getTheme(),
+        int resIdStarZero = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                 R.attr.drawableStar0);
         mAdapter = new ShowsAdapter(getActivity(), null, 0, resIdStar, resIdStarZero, this);
 

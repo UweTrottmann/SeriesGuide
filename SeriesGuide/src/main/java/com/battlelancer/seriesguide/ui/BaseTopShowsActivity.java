@@ -18,8 +18,8 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import android.view.Menu;
+import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 
 /**
@@ -29,7 +29,7 @@ public abstract class BaseTopShowsActivity extends BaseTopActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.base_show_menu, menu);
+        getMenuInflater().inflate(R.menu.base_show_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

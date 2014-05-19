@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.view.ContextMenu;
@@ -39,7 +40,6 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.MoviesAdapter;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
@@ -52,7 +52,7 @@ import java.util.List;
 /**
  * Allows searching for movies on themoviedb.org, displays results in a nice grid.
  */
-public class MoviesSearchFragment extends SherlockFragment implements OnEditorActionListener,
+public class MoviesSearchFragment extends Fragment implements OnEditorActionListener,
         LoaderCallbacks<List<Movie>>, OnItemClickListener, OnClickListener {
 
     private static final String SEARCH_QUERY_KEY = "search_query";
@@ -104,7 +104,7 @@ public class MoviesSearchFragment extends SherlockFragment implements OnEditorAc
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
+        getActivity().setProgressBarIndeterminateVisibility(false);
 
         mAdapter = new MoviesAdapter(getActivity(), this);
 
@@ -193,7 +193,7 @@ public class MoviesSearchFragment extends SherlockFragment implements OnEditorAc
         if (args != null) {
             query = args.getString(SEARCH_QUERY_KEY);
         }
-        getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+        getActivity().setProgressBarIndeterminateVisibility(true);
         return new TmdbMoviesLoader(getActivity(), query);
     }
 
@@ -205,13 +205,13 @@ public class MoviesSearchFragment extends SherlockFragment implements OnEditorAc
             mEmptyView.setText(R.string.offline);
         }
         mAdapter.setData(data);
-        getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
+        getActivity().setProgressBarIndeterminateVisibility(false);
     }
 
     @Override
     public void onLoaderReset(Loader<List<Movie>> loader) {
         mAdapter.setData(null);
-        getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
+        getActivity().setProgressBarIndeterminateVisibility(false);
     }
 
     @Override

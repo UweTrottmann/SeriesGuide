@@ -16,8 +16,8 @@
 
 package com.battlelancer.seriesguide.backend;
 
+import android.app.ActionBar;
 import android.os.Bundle;
-import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 
@@ -46,7 +46,7 @@ public class CloudSetupActivity extends BaseActivity {
     }
 
     private void setupActionBar() {
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setTitle(R.string.hexagon);
         actionBar.setIcon(R.drawable.ic_action_lab);
     }

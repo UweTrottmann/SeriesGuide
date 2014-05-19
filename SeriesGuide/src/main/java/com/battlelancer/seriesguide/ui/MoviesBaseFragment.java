@@ -20,18 +20,18 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.MoviesCursorAdapter;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -44,7 +44,7 @@ import static com.battlelancer.seriesguide.settings.MoviesDistillationSettings.M
 /**
  * A shell for a fragment displaying a number of movies.
  */
-public abstract class MoviesBaseFragment extends SherlockFragment implements
+public abstract class MoviesBaseFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemClickListener,
         View.OnClickListener {
 

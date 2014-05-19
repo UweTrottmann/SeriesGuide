@@ -58,7 +58,6 @@ dependencies {
     compile project(':libraries:stickygridheaders')
     compile rootProject.ext.libraries.okhttp
     compile rootProject.ext.libraries.supportv4
-    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
     compile 'com.github.chrisbanes.photoview:library:1.2.2'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.+'
     compile 'com.jakewharton:butterknife:4.0.1'

@@ -32,7 +32,7 @@
     </style>
 
     <style name="TextAppearance.XSmall.Condensed">
-        <item name="android:textAllCaps" tools:targetApi="ice_cream_sandwich">true</item>
+        <item name="android:textAllCaps">true</item>
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
     </style>
 
@@ -41,7 +41,7 @@
     </style>
 
     <style name="TextAppearance.XSmall.Dim.Condensed">
-        <item name="android:textAllCaps" tools:targetApi="ice_cream_sandwich">true</item>
+        <item name="android:textAllCaps">true</item>
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
     </style>
 
@@ -76,7 +76,7 @@
 
     <style name="TextAppearance.Small.Label">
         <item name="android:textStyle">bold</item>
-        <item name="android:textAllCaps" tools:targetApi="ice_cream_sandwich">true</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="TextAppearance.Medium">
@@ -101,7 +101,7 @@
         <item name="android:textColor">?attr/textColorSgPrimary</item>
     </style>
 
-    <style name="TextAppearance.ActionBar" parent="TextAppearance.Sherlock.Widget.ActionBar.Title">
+    <style name="TextAppearance.ActionBar" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">?attr/textColorSgActionBar</item>
     </style>
 
@@ -125,12 +125,10 @@
     <style name="Widget.SeriesGuide.RtlGridViewItem" />
 
     <!-- Buttons -->
-    <style name="Widget.SeriesGuide.Button" parent="android:Widget.Button">
+    <style name="Widget.SeriesGuide.Button" parent="android:Widget.Holo.Button">
         <item name="android:background">@drawable/btn_default_sg</item>
         <item name="android:textAppearance">@style/TextAppearance.Medium</item>
         <item name="android:textColor">@color/text_primary_sg</item>
-        <item name="android:minHeight">48dip</item>
-        <item name="android:minWidth">64dip</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless">
@@ -158,21 +156,14 @@
         <item name="android:textStyle">italic</item>
     </style>
 
-    <style name="Widget.SeriesGuide.ImageButton" parent="android:Widget.ImageButton">
+    <style name="Widget.SeriesGuide.ImageButton" parent="android:Widget.Holo.ImageButton">
         <item name="android:background">@drawable/btn_default_sg</item>
     </style>
 
-    <!-- CheckBox -->
-    <!-- pre v11 -->
-    <style name="Widget.SeriesGuide.CheckBox" parent="android:Widget.CompoundButton.CheckBox">
-        <item name="android:button">@drawable/btn_check_sg</item>
-    </style>
-
-    <!-- EditText -->
-    <!-- pre v11 -->
-    <style name="Widget.SeriesGuide.EditText" parent="android:Widget.EditText">
-        <item name="android:background">@drawable/edit_text_sg</item>
-        <item name="android:textColor">@color/text_primary_sg</item>
+    <!-- Progress bar -->
+    <style name="ProgressBar" parent="android:Widget.Holo.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_sg</item>
+        <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_sg</item>
     </style>
 
     <!-- TextView -->
@@ -182,30 +173,10 @@
         <item name="android:layout_marginLeft">@dimen/default_padding</item>
         <item name="android:layout_marginRight">@dimen/default_padding</item>
         <item name="android:layout_marginTop">@dimen/default_padding</item>
-        <item name="android:textIsSelectable" tools:targetApi="Honeycomb">true</item>
+        <item name="android:textIsSelectable">true</item>
         <item name="android:textAppearance">@style/TextAppearance.Medium.Light</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">marquee</item>
-    </style>
-
-    <!-- ProgressBar -->
-    <!-- pre v11 -->
-    <style name="ProgressBar" parent="android:Widget.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/progress_horizontal_sg</item>
-        <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_sg</item>
-        <item name="android:minHeight">16dip</item>
-        <item name="android:maxHeight">16dip</item>
-    </style>
-
-    <!-- List selectors -->
-    <!-- pre v11 -->
-    <style name="Widget.SeriesGuide.ListView" parent="android:Widget.ListView">
-        <item name="android:listSelector">?custom_list_selector</item>
-    </style>
-
-    <!-- pre v11 -->
-    <style name="Widget.SeriesGuide.ListView.White" parent="android:Widget.ListView.White">
-        <item name="android:listSelector">?custom_list_selector</item>
     </style>
 
     <!-- Dialogs -->
@@ -222,24 +193,21 @@
         <item name="android:windowExitAnimation">@anim/checkin_dialog_exit</item>
     </style>
 
-    <!-- ABS -->
-    <style name="ActionBar" parent="Widget.Sherlock.ActionBar">
-        <item name="background">@drawable/actionbar_background_sg</item>
+    <!-- Action bar -->
+    <style name="ActionBar" parent="android:Widget.Holo.ActionBar">
         <item name="android:background">@drawable/actionbar_background_sg</item>
-        <item name="titleTextStyle">@style/TextAppearance.ActionBar</item>
-        <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/TextAppearance.ActionBar</item>
+        <item name="android:titleTextStyle">@style/TextAppearance.ActionBar</item>
     </style>
 
     <style name="ActionBar.Invisible">
-        <item name="background">@null</item>
         <item name="android:background">@null</item>
     </style>
 
-    <style name="ActionBarTabTextStyle" parent="Widget.Sherlock.ActionBar.TabText">
+    <style name="ActionBarTabTextStyle" parent="android:Widget.Holo.ActionBar.TabText">
         <item name="android:textColor">?attr/textColorSgActionBar</item>
     </style>
 
-    <style name="DropDownListView" parent="Widget.Sherlock.ListView.DropDown">
+    <style name="DropDownListView" parent="android:Widget.Holo.ListView.DropDown">
         <item name="android:listSelector">?custom_list_selector</item>
     </style>
 
@@ -393,9 +361,8 @@
 
     <!-- Dark styles -->
 
-    <!-- ABS -->
-    <style name="ActionBarDark" parent="Widget.Sherlock.ActionBar">
-        <item name="background">@drawable/actionbar_background_dark</item>
+    <!-- Action bar -->
+    <style name="ActionBarDark" parent="android:Widget.Holo.ActionBar">
         <item name="android:background">@drawable/actionbar_background_dark</item>
     </style>
 
@@ -404,33 +371,19 @@
 
     <!-- Light styles -->
 
-    <!-- ABS -->
-    <style name="ActionBar.Light" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
-        <item name="background">@drawable/actionbar_background_sg</item>
+    <!-- Action bar -->
+    <style name="ActionBar.Light" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@drawable/actionbar_background_sg</item>
     </style>
 
-    <style name="ActionBar.Light.Invisible" parent="Widget.Sherlock.Light.ActionBar.Solid">
-        <item name="background">@null</item>
+    <style name="ActionBar.Light.Invisible" parent="android:Widget.Holo.Light.ActionBar.Solid">
         <item name="android:background">@null</item>
     </style>
 
-    <!-- Buttons -->
-    <!-- pre v11 -->
-    <style name="Widget.SeriesGuide.Light.CheckBox" parent="Widget.SeriesGuide.CheckBox">
-        <item name="android:button">@drawable/btn_check_sg_light</item>
-    </style>
-
-    <!-- pre v11 -->
-    <style name="Widget.SeriesGuide.Light.EditText" parent="Widget.SeriesGuide.EditText">
-        <item name="android:background">@drawable/edit_text_holo_light</item>
-        <item name="android:textColor">@color/text_primary_light_sg</item>
-    </style>
-
-    <!-- ProgressBar -->
-    <!-- pre v11 -->
-    <style name="ProgressBar.Light">
+    <!-- Progress bar -->
+    <style name="ProgressBar.Light" parent="android:Widget.Holo.Light.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_sg_light</item>
+        <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_sg</item>
     </style>
 
 </resources>

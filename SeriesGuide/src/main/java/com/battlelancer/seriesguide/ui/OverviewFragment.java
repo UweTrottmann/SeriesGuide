@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.ui;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -26,11 +27,15 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -41,11 +46,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -81,7 +81,7 @@ import timber.log.Timber;
 /**
  * Displays general information about a show and its next episode.
  */
-public class OverviewFragment extends SherlockFragment implements
+public class OverviewFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, ActionsFragmentContract {
 
     private static final String TAG = "Overview";
@@ -448,7 +448,7 @@ public class OverviewFragment extends SherlockFragment implements
         if (isAdded()) {
             switch (loader.getId()) {
                 case EPISODE_LOADER_ID:
-                    getSherlockActivity().invalidateOptionsMenu();
+                    getActivity().invalidateOptionsMenu();
                     onPopulateEpisodeData(data);
                     break;
                 case SHOW_LOADER_ID:
@@ -659,7 +659,7 @@ public class OverviewFragment extends SherlockFragment implements
         }
 
         // enable/disable applicable menu items
-        getSherlockActivity().invalidateOptionsMenu();
+        getActivity().invalidateOptionsMenu();
 
         // animate view into visibility
         final View contentContainer = getView().findViewById(R.id.content_container);
@@ -767,7 +767,7 @@ public class OverviewFragment extends SherlockFragment implements
             int episodeTvdbId = mCurrentEpisodeCursor.getInt(EpisodeQuery._ID);
             int seasonNumber = mCurrentEpisodeCursor.getInt(EpisodeQuery.SEASON);
             int episodeNumber = mCurrentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-            mTraktTask = new TraktSummaryTask(getSherlockActivity(), getView(), isUseCachedValues)
+            mTraktTask = new TraktSummaryTask(getActivity(), getView(), isUseCachedValues)
                     .episode(getShowId(), episodeTvdbId, seasonNumber, episodeNumber);
             AndroidUtils.executeAsyncTask(mTraktTask);
         }
@@ -795,7 +795,7 @@ public class OverviewFragment extends SherlockFragment implements
 
         // set show title in action bar
         mShowTitle = show.getString(ShowQuery.SHOW_TITLE);
-        final ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+        final ActionBar actionBar = getActivity().getActionBar();
         actionBar.setTitle(mShowTitle);
 
         // status

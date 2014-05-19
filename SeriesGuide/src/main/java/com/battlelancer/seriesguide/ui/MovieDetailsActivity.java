@@ -16,14 +16,13 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
+import android.view.MenuItem;
+import android.view.Window;
 import com.battlelancer.seriesguide.R;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
-import de.greenrobot.event.EventBus;
 
 /**
  * Hosts a {@link MovieDetailsFragment} displaying details about the movie
@@ -69,9 +68,9 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
     @Override
     protected void setCustomTheme() {
         // use a special immersive theme
-        if (SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight) {
+        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
             setTheme(R.style.ImmersiveTheme_Light);
-        } else if (SeriesGuidePreferences.THEME == R.style.SeriesGuideTheme) {
+        } else if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide) {
             setTheme(R.style.ImmersiveTheme);
         } else {
             setTheme(R.style.ImmersiveTheme_Stock);
@@ -79,10 +78,10 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
     }
 
     private void setupActionBar() {
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
-        if (SeriesGuidePreferences.THEME != R.style.AndroidTheme) {
+        if (SeriesGuidePreferences.THEME != R.style.Theme_SeriesGuide_DarkBlue) {
             actionBar.setIcon(R.drawable.ic_launcher);
         }
     }

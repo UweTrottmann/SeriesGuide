@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -33,7 +34,6 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
@@ -48,7 +48,7 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 
-public abstract class GenericCheckInDialogFragment extends SherlockDialogFragment {
+public abstract class GenericCheckInDialogFragment extends DialogFragment {
 
     public interface InitBundle {
 
@@ -129,9 +129,9 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         super.onCreate(savedInstanceState);
 
         // hide title
-        if (SeriesGuidePreferences.THEME == R.style.AndroidTheme) {
+        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue) {
             setStyle(STYLE_NO_TITLE, 0);
-        } else if (SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight) {
+        } else if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
             setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Light_Dialog_CheckIn);
         } else {
             setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Dialog_CheckIn);
@@ -143,15 +143,15 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
             Bundle savedInstanceState) {
         final View layout = inflater.inflate(R.layout.checkin_dialog, null);
         final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getSherlockActivity());
+                .getDefaultSharedPreferences(getActivity());
 
         // some required values
         final String defaultMessage = getArguments().getString(InitBundle.DEFAULT_MESSAGE);
         final String itemTitle = getArguments().getString(InitBundle.ITEM_TITLE);
 
         // get share service enabled settings
-        mGetGlueChecked = GetGlueSettings.isSharingWithGetGlue(getSherlockActivity());
-        mTraktChecked = TraktSettings.isSharingWithTrakt(getSherlockActivity());
+        mGetGlueChecked = GetGlueSettings.isSharingWithGetGlue(getActivity());
+        mTraktChecked = TraktSettings.isSharingWithTrakt(getActivity());
 
         // Message box, set title as default comment
         mEditTextMessage = (EditText) layout.findViewById(R.id.editTextCheckInMessage);
@@ -362,7 +362,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
             mCheckBoxGetGlue.setChecked(false);
         } else {
             // authenticate already here
-            Intent i = new Intent(getSherlockActivity(),
+            Intent i = new Intent(getActivity(),
                     GetGlueAuthActivity.class);
             startActivity(i);
         }
