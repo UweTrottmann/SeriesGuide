@@ -390,7 +390,8 @@ public class NotificationService extends IntentService {
             contentIntent = TaskStackBuilder.create(context)
                     .addNextIntent(showsIntent)
                     .addNextIntent(episodeDetailsIntent)
-                    .getPendingIntent(REQUEST_CODE_SINGLE_EPISODE, PendingIntent.FLAG_ONE_SHOT);
+                    .getPendingIntent(REQUEST_CODE_SINGLE_EPISODE,
+                            PendingIntent.FLAG_CANCEL_CURRENT);
         } else {
             // notify about multiple episodes
             Timber.d("Notifying about " + count + " new episodes");
@@ -400,7 +401,8 @@ public class NotificationService extends IntentService {
 
             contentIntent = TaskStackBuilder.create(context)
                     .addNextIntent(showsIntent.putExtra(KEY_EPISODE_CLEARED_TIME, latestAirtime))
-                    .getPendingIntent(REQUEST_CODE_MULTIPLE_EPISODES, 0);
+                    .getPendingIntent(REQUEST_CODE_MULTIPLE_EPISODES,
+                            PendingIntent.FLAG_CANCEL_CURRENT);
         }
 
         final NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
@@ -439,7 +441,7 @@ public class NotificationService extends IntentService {
                         Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
                 PendingIntent checkInIntent = PendingIntent.getActivity(context,
                         REQUEST_CODE_ACTION_CHECKIN,
-                        checkInActionIntent, 0);
+                        checkInActionIntent, PendingIntent.FLAG_CANCEL_CURRENT);
                 nb.addAction(R.drawable.ic_action_checkin, getString(R.string.checkin),
                         checkInIntent);
             } else {
@@ -518,7 +520,7 @@ public class NotificationService extends IntentService {
         Intent i = new Intent(this, NotificationService.class);
         i.putExtra(KEY_EPISODE_CLEARED_TIME, latestAirtime);
         PendingIntent deleteIntent = PendingIntent.getService(this, REQUEST_CODE_DELETE_INTENT, i,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent.FLAG_CANCEL_CURRENT);
         nb.setDeleteIntent(deleteIntent);
 
         // build the notification
