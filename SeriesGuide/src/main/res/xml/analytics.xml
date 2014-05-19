@@ -35,7 +35,6 @@
     <screenName name="com.battlelancer.seriesguide.ui.SeriesGuidePreferences">Settings</screenName>
     <screenName name="com.battlelancer.seriesguide.ui.BackupDeleteActivity">Backup</screenName>
     <screenName name="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity">Data Liberation</screenName>
-    <screenName name="com.battlelancer.seriesguide.ui.TraktSyncActivity">Trakt Sync</screenName>
     <screenName name="com.battlelancer.seriesguide.billing.BillingActivity">X Features</screenName>
     <screenName name="com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity">Extension Configuration</screenName>
 

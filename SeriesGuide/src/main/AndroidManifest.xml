@@ -172,7 +172,6 @@
 
         <!-- trakt -->
         <activity android:name="com.battlelancer.seriesguide.ui.ConnectTraktActivity" />
-        <activity android:name="com.battlelancer.seriesguide.ui.TraktSyncActivity" />
         <activity android:name="com.battlelancer.seriesguide.ui.TraktShoutsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
