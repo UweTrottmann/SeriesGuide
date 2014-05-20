@@ -324,6 +324,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 // sync with trakt
                 UpdateResult resultTrakt = performTraktSync(getContext(), showsExisting, showsNew,
                         syncImmediately, currentTime);
+                // make sure other loaders (activity, overview, details) are notified of changes
+                resolver.notifyChange(Episodes.CONTENT_URI_WITHSHOW, null);
                 // don't overwrite failure
                 if (resultCode == UpdateResult.SUCCESS) {
                     resultCode = resultTrakt;
