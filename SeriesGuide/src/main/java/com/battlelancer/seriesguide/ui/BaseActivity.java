@@ -16,8 +16,10 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.NavUtils;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
@@ -42,6 +44,8 @@ import de.greenrobot.event.EventBus;
  * prevent that.
  */
 public abstract class BaseActivity extends SherlockFragmentActivity {
+
+    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -162,5 +166,28 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Schedule an update for the given show. Might not run if this show was just updated.
+     * Execution is also delayed so it won't reduce UI setup performance (= you can run this in
+     * {@link #onCreate(android.os.Bundle)}).
+     *
+     * <p> See {@link com.battlelancer.seriesguide.sync.SgSyncAdapter#requestSyncIfTime(android.content.Context,
+     * int)}.
+     */
+    protected void updateShowDelayed(final int showTvdbId) {
+        if (mHandler == null) {
+            mHandler = new Handler();
+        }
+
+        // delay sync request to avoid slowing down UI
+        final Context context = getApplicationContext();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                SgSyncAdapter.requestSyncIfTime(context, showTvdbId);
+            }
+        }, DateUtils.SECOND_IN_MILLIS);
     }
 }
