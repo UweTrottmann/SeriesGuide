@@ -46,6 +46,7 @@ import de.greenrobot.event.EventBus;
 public abstract class BaseActivity extends FragmentActivity {
 
     private Handler mHandler;
+    private Runnable mUpdateShowRunnable;
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -89,6 +90,10 @@ public abstract class BaseActivity extends FragmentActivity {
     @Override
     protected void onStop() {
         super.onStop();
+
+        if (mHandler != null && mUpdateShowRunnable != null) {
+            mHandler.removeCallbacks(mUpdateShowRunnable);
+        }
 
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
         unregisterEventBus();
@@ -183,11 +188,12 @@ public abstract class BaseActivity extends FragmentActivity {
 
         // delay sync request to avoid slowing down UI
         final Context context = getApplicationContext();
-        mHandler.postDelayed(new Runnable() {
+        mUpdateShowRunnable = new Runnable() {
             @Override
             public void run() {
                 SgSyncAdapter.requestSyncIfTime(context, showTvdbId);
             }
-        }, DateUtils.SECOND_IN_MILLIS);
+        };
+        mHandler.postDelayed(mUpdateShowRunnable, DateUtils.SECOND_IN_MILLIS);
     }
 }
