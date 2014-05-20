@@ -209,6 +209,8 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
                 }
             }
         }
+
+        updateShowDelayed(mShowId);
     }
 
     private void setupActionBar(Series show) {

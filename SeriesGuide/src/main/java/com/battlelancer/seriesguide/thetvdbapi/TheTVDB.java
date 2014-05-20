@@ -34,7 +34,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -85,8 +84,8 @@ public class TheTVDB {
     /**
      * Returns true if the given show has not been updated in the last 12 hours.
      */
-    public static boolean isUpdateShow(String showId, long currentTime, Context context) {
-        final Cursor show = context.getContentResolver().query(Shows.buildShowUri(showId),
+    public static boolean isUpdateShow(Context context, int showTvdbId) {
+        final Cursor show = context.getContentResolver().query(Shows.buildShowUri(showTvdbId),
                 new String[] {
                         Shows._ID, Shows.LASTUPDATED
                 }, null, null, null
@@ -95,7 +94,7 @@ public class TheTVDB {
         if (show != null) {
             if (show.moveToFirst()) {
                 long lastUpdateTime = show.getLong(1);
-                if (currentTime - lastUpdateTime > DateUtils.HOUR_IN_MILLIS * 12) {
+                if (System.currentTimeMillis() - lastUpdateTime > DateUtils.HOUR_IN_MILLIS * 12) {
                     isUpdate = true;
                 }
             }

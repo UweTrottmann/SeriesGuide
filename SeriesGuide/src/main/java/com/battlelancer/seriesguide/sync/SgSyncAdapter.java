@@ -131,6 +131,18 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     /**
+     * Schedules a sync for a single show if
+     * {@link com.battlelancer.seriesguide.thetvdbapi.TheTVDB#isUpdateShow(android.content.Context,
+     * int)} returns true.
+     * <p> <em>Note: Runs a content provider op, so you should do this on a background thread.</em>
+     */
+    public static void requestSyncIfTime(Context context, int showTvdbId) {
+        if (TheTVDB.isUpdateShow(context, showTvdbId)) {
+            SgSyncAdapter.requestSyncIfConnected(context, SyncType.SINGLE, showTvdbId);
+        }
+    }
+
+    /**
      * Schedules a sync. Will only queue a sync request if there is a network connection and
      * auto-sync is enabled.
      *

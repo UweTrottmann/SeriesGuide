@@ -75,6 +75,10 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         setupNavDrawer();
 
         setupViews();
+
+        if (mShowId != 0) {
+            updateShowDelayed(mShowId);
+        }
     }
 
     @Override
