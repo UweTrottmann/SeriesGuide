@@ -451,7 +451,6 @@ public class SeriesGuideProvider extends ContentProvider {
                 db.endTransaction();
             }
         } else {
-            mDb = mDbHelper.getWritableDatabase();
             count = buildSelection(uri, sUriMatcher.match(uri))
                     .where(selection, selectionArgs)
                     .update(mDb, values);
@@ -486,7 +485,6 @@ public class SeriesGuideProvider extends ContentProvider {
                 db.endTransaction();
             }
         } else {
-            mDb = mDbHelper.getWritableDatabase();
             count = buildSelection(uri, sUriMatcher.match(uri))
                     .where(selection, selectionArgs)
                     .delete(mDb);
