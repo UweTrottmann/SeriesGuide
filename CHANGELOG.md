@@ -13,6 +13,10 @@ Version 14 *(2014-05-14)*
 * Easier trakt setup: after connecting your shows and movies are automatically merged with your trakt profile.
 * Extensions replace watch options for episodes. Added extension for Google Play, YouTube and Web search.
 
+#### 14.0.4 *(2014-05-21)*
+
+* FIX Crash when database upgrade did not succeed.
+
 #### 14.0.3 *(2014-05-15)*
 
 * FIX Actually fix crash when leaving right after starting to connect to trakt.

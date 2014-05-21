@@ -202,7 +202,6 @@ public class SeriesGuideProvider extends ContentProvider {
         sUriMatcher = buildUriMatcher(context);
 
         mDbHelper = new SeriesGuideDatabase(context);
-        mDb = mDbHelper.getWritableDatabase(); // ensures upgrades can run
 
         PreferenceManager.getDefaultSharedPreferences(context)
                 .registerOnSharedPreferenceChangeListener(mImportListener);
