@@ -202,7 +202,6 @@ public class SeriesGuideProvider extends ContentProvider {
         sUriMatcher = buildUriMatcher(context);
 
         mDbHelper = new SeriesGuideDatabase(context);
-        mDb = mDbHelper.getWritableDatabase(); // ensures upgrades can run
 
         PreferenceManager.getDefaultSharedPreferences(context)
                 .registerOnSharedPreferenceChangeListener(mImportListener);
@@ -452,6 +451,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 db.endTransaction();
             }
         } else {
+            mDb = mDbHelper.getWritableDatabase();
             count = buildSelection(uri, sUriMatcher.match(uri))
                     .where(selection, selectionArgs)
                     .update(mDb, values);
@@ -486,6 +486,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 db.endTransaction();
             }
         } else {
+            mDb = mDbHelper.getWritableDatabase();
             count = buildSelection(uri, sUriMatcher.match(uri))
                     .where(selection, selectionArgs)
                     .delete(mDb);
