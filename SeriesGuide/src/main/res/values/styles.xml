@@ -210,6 +210,10 @@
     <style name="DropDownListView" parent="android:Widget.Holo.ListView.DropDown">
         <item name="android:listSelector">?custom_list_selector</item>
     </style>
+    
+    <style name="ActionOverflowButtonStyle" parent="@android:style/Widget.Holo.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_action_overflow_round</item>
+    </style>
 
     <!-- ActionBar Spinner -->
     <style name="ActionBarSpinnerItem">
@@ -378,6 +382,10 @@
 
     <style name="ActionBar.Light.Invisible" parent="android:Widget.Holo.Light.ActionBar.Solid">
         <item name="android:background">@null</item>
+    </style>
+
+    <style name="ActionOverflowButtonStyle.Light">
+        <item name="android:src">@drawable/ic_action_overflow_round_inverse</item>
     </style>
 
     <!-- Progress bar -->

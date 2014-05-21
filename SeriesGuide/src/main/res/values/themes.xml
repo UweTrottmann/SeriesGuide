@@ -26,6 +26,7 @@
         <item name="android:actionBarStyle">@style/ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
         <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
+        <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>
 
         <!-- Fast scroll thumb -->
         <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
@@ -170,6 +171,7 @@
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
         <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
         <item name="android:actionBarWidgetTheme">@style/ActionBarWidgetThemeLight</item>
+        <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>
 
         <!-- Fast scroll thumb -->
         <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
@@ -289,7 +291,7 @@
 
         <!-- Action bar -->
         <item name="android:actionBarStyle">@style/ActionBar.Light.Invisible</item>
-        <item name="android:actionOverflowButtonStyle">@android:style/Widget.Holo.Light.ActionButton.Overflow</item>
+        <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle.Light</item>
         <item name="android:homeAsUpIndicator">@drawable/sg__ic_ab_back_holo_light</item>
 
     </style>

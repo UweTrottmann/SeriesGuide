@@ -28,7 +28,7 @@
 
         <!-- Action bar (native, v11+) -->
         <item name="android:actionBarStyle">@style/ActionBar.Light.Invisible</item>
-        <item name="android:actionOverflowButtonStyle">@android:style/Widget.Holo.Light.ActionButton.Overflow</item>
+        <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle.Light</item>
         <item name="android:homeAsUpIndicator">@drawable/sg__ic_ab_back_holo_light</item>
 
         <!-- Translucent navbar (native, v19+) -->
