@@ -75,6 +75,7 @@ public class FullscreenImageActivity extends FragmentActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources()
                 .getColor(R.color.black_overlay)));
+        actionBar.setIcon(R.drawable.ic_actionbar);
 
         // set a title and subtitle if available
         String title = getIntent().getStringExtra(InitBundle.IMAGE_TITLE);
