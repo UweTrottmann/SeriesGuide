@@ -43,23 +43,7 @@
                 layout="@layout/divider_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="@dimen/large_padding" />
-
-            <Button
-                android:id="@+id/buttonFirstRunMigrate"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Small.Highlight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical|left"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
-                android:text="@string/action_migrate" />
-
-            <include
-                android:id="@+id/divider2"
-                layout="@layout/divider_horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
+                android:layout_marginTop="@dimen/default_padding" />
 
             <LinearLayout
                 android:id="@+id/layoutBottom"
