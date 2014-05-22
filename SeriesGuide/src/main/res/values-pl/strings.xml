@@ -65,6 +65,30 @@
   <string name="shows_continuing">%s w toku</string>
   <string name="episodes_watched">%s obejrzanych</string>
   <string name="runtime_all_episodes">Czas wyświetlania wszystkich obejrzanych odcinków</string>
+  <plurals name="days_plural">
+    <item quantity="one">%d dzień</item>
+    <item quantity="zero">%d dni</item>
+    <item quantity="two">%d dni</item>
+    <item quantity="few">%d dni</item>
+    <item quantity="many">%d dni</item>
+    <item quantity="other">%d dni</item>
+  </plurals>
+  <plurals name="hours_plural">
+    <item quantity="zero">%d godzin</item>
+    <item quantity="one">%d godziny</item>
+    <item quantity="two">%d godziny</item>
+    <item quantity="few">%d godziny</item>
+    <item quantity="many">%d godzin</item>
+    <item quantity="other">%d godzin</item>
+  </plurals>
+  <plurals name="minutes_plural">
+    <item quantity="zero">%d minut</item>
+    <item quantity="one">%d minuta</item>
+    <item quantity="two">%d minuty</item>
+    <item quantity="few">%d minuty</item>
+    <item quantity="many">%d minut</item>
+    <item quantity="other">%d minut</item>
+  </plurals>
   <string name="your_rating">Twoja ocena</string>
   <string name="love">Uwielbiam to!</string>
   <string name="hate">Słaby :(</string>
@@ -76,6 +100,14 @@
   <string name="rating7">Dobry</string>
   <string name="rating8">Świetny</string>
   <string name="rating9">Niesamowity</string>
+  <plurals name="votes">
+    <item quantity="zero">%d głosów</item>
+    <item quantity="one">głosy: %d</item>
+    <item quantity="two">%d głosy</item>
+    <item quantity="few">%d głosów</item>
+    <item quantity="many">%d głosów</item>
+    <item quantity="other">głosów: %d</item>
+  </plurals>
   <string name="episode_number_absolute">Nr w całym serialu</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Data premiery</string>
@@ -216,13 +248,8 @@
   <string name="connect_trakt_done_explanation">SeriesGuide zsynchronizuje teraz seriale i filmy na tym urządzeniu z trakt. Może to zająć trochę czasu.</string>
   <string name="add_trakt_shows">Dodaj seriale z biblioteki:</string>
   <string name="show_library">Pokaż bibliotekę</string>
-  <string name="upload_existing_shows">Prześlij istniejące seriale</string>
   <string name="about_trakt">trakt.tv pomaga zarządzać jakie seriale i filmy oglądasz. <a href="http://trakt.tv">Dowiedz się więcej</a></string>
   <string name="integration_trakt_items">-dodaje seriale z biblioteki i listy obejrzanych odcinków\n\n- zobacz rekomendację i aktywność przyjaciół\n\n - automatyczna synchronizacja oznaczenia jako obejrzane i kupione\n\n- automatyczne dodawanie nowo obejrzanych seriali</string>
-  <string name="trakt_upload">Wyślij do trakt.tv</string>
-  <string name="trakt_syncunwatched">Usuń oznaczenie jako obejrzane na trakt dla nieobejrzanych odcinków w SeriesGuide</string>
-  <string name="upload_done">Przesyłanie zakończone.</string>
-  <string name="upload_no_work">Brak danych do przesłania.</string>
   <string name="prefs_category_basic">Podstawowe</string>
   <string name="prefs_category_sharing">Usługi</string>
   <string name="prefs_category_advanced">Zaawansowane</string>
@@ -244,6 +271,27 @@
   <string name="feedback">Wyślij opinię</string>
   <string name="pref_autoaddshows">Dodaj nowe seriale trakt</string>
   <string name="pref_autoaddshowssummary">Automatycznie dodawaj nowe seriale z listy aktywności trakt</string>
+  <string-array name="sesorting">
+    <item>Najpierw najnowsze</item>
+    <item>Najpierw najstarsze</item>
+  </string-array>
+  <string-array name="epsorting">
+    <item>Najpierw najnowsze</item>
+    <item>Najpierw najstarsze</item>
+    <item>Najpierw nieobejrzane</item>
+    <item>Od A do Z</item>
+    <item>Najwyżej oceniane</item>
+    <item>Najpierw najnowsze (DVD)</item>
+    <item>Najpierw najstarsze (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>Teraz</item>
+    <item>Dziś</item>
+    <item>3 dni</item>
+    <item>Tygodnia</item>
+    <item>Dwóch tygodni</item>
+    <item>Miesiąca</item>
+  </string-array>
   <string name="pref_appearance">Wygląd</string>
   <string name="pref_theme">Schemat kolorów</string>
   <string name="pref_other">Inne</string>
@@ -319,10 +367,9 @@
   <string name="trakt_error_credentials">Coś poszło nie tak. Sprawdź swoje poświadczenia i spróbuj ponownie.</string>
   <string name="trakt_error_general">Nie można połączyć z  trakt. Spróbuj ponownie później.</string>
   <string name="trakt_createaccount">Utwórz nowe konto</string>
+  <string name="get_started">Get started</string>
   <string name="welcome_setuplanguage">Wybierz język</string>
-  <string name="welcome_traktmessage">Uzyskaj dostęp do biblioteki trakt.tv i aktywności przyjaciół</string>
   <string name="dismiss">Zamknij</string>
-  <string name="welcome_add_part1">Naciśnij, aby rozpocząć</string>
   <string name="upcoming_show">Nadchodzi odcinek %s</string>
   <string name="upcoming_episodes">Nadchodzą nowe odcinki</string>
   <string name="upcoming_episodes_number">%s nowych odcinków</string>
@@ -337,15 +384,41 @@
   <string name="pref_vibrate">Wibracja</string>
   <string name="pref_vibratesummary">Wibruj również przy wyświetlaniu powiadomienia</string>
   <string name="pref_notifications_treshold">Powiadamiaj</string>
+  <string-array name="notificationThreshold">
+    <item>na antenie</item>
+    <item>5 min wcześniej</item>
+    <item>10 min wcześniej</item>
+    <item>godzinę wcześniej</item>
+  </string-array>
   <string name="smallwidget">SeriesGuide (mały)</string>
   <string name="bigwidget">SeriesGuide (średni)</string>
   <string name="largewidget">SeriesGuide (duży)</string>
   <string name="hide_watched">Ukryj obejrzane odcinki</string>
   <string name="pref_widget_opacity">Tło widżetu</string>
+  <string-array name="widgetOpacity">
+    <item>Przezroczysty</item>
+    <item>25% zaciemnione</item>
+    <item>50% zaciemnione</item>
+    <item>75% zaciemnione</item>
+    <item>Czarny</item>
+  </string-array>
   <string name="pref_widget_type">Typ widżetu</string>
+  <string-array name="widgetType">
+    <item>Nadchodzące</item>
+    <item>Ostatnie</item>
+    <item>Ulubione</item>
+  </string-array>
   <string name="dashclock_extension_label">Nadchodzące odcinki</string>
   <string name="dashclock_extension_description">Wyświetla nadchodzące odcinki seriali z SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Pokaż odcinki emitowane za</string>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>godzinę</item>
+    <item>6 godzin</item>
+    <item>12 godzin</item>
+    <item>24 godziny</item>
+    <item>3 dni</item>
+    <item>tydzień</item>
+  </string-array>
   <string name="action_migrate">Migracja z X</string>
   <string name="migration_description">SeriesGuide X jest teraz kluczem odblokowującym funkcje X w wersji darmowej (\"X Life-Time Pass\"). Proszę dokonać migracji seriali do darmowej wersji SeriesGuide. Zachowaj zainstalowaną wersję X, aby odblokować wszystkie funkcje w wersji darmowej.</string>
   <string name="migration_import">Dotknij poniżej aby zaimportować kopię zapasową utworzoną w SeriesGuide X.</string>
@@ -379,83 +452,4 @@
   <string name="extension_youtube">Szukaj w YouTube</string>
   <string name="description_extension_youtube">Szukaj filmów na YouTube</string>
   <string name="description_extension_web_search">Szukaj stron internetowych i obrazów</string>
-  <string-array name="sesorting">
-    <item>Najpierw najnowsze</item>
-    <item>Najpierw najstarsze</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Najpierw najnowsze</item>
-    <item>Najpierw najstarsze</item>
-    <item>Najpierw nieobejrzane</item>
-    <item>Od A do Z</item>
-    <item>Najwyżej oceniane</item>
-    <item>Najpierw najnowsze (DVD)</item>
-    <item>Najpierw najstarsze (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>Teraz</item>
-    <item>Dziś</item>
-    <item>3 dni</item>
-    <item>Tygodnia</item>
-    <item>Dwóch tygodni</item>
-    <item>Miesiąca</item>
-  </string-array>
-  <string-array name="notificationThreshold">
-    <item>na antenie</item>
-    <item>5 min wcześniej</item>
-    <item>10 min wcześniej</item>
-    <item>godzinę wcześniej</item>
-  </string-array>
-  <string-array name="widgetOpacity">
-    <item>Przezroczysty</item>
-    <item>25% zaciemnione</item>
-    <item>50% zaciemnione</item>
-    <item>75% zaciemnione</item>
-    <item>Czarny</item>
-  </string-array>
-  <string-array name="widgetType">
-    <item>Nadchodzące</item>
-    <item>Ostatnie</item>
-    <item>Ulubione</item>
-  </string-array>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>godzinę</item>
-    <item>6 godzin</item>
-    <item>12 godzin</item>
-    <item>24 godziny</item>
-    <item>3 dni</item>
-    <item>tydzień</item>
-  </string-array>
-  <plurals name="days_plural">
-    <item quantity="one">%d dzień</item>
-    <item quantity="zero">%d dni</item>
-    <item quantity="two">%d dni</item>
-    <item quantity="few">%d dni</item>
-    <item quantity="many">%d dni</item>
-    <item quantity="other">%d dni</item>
-  </plurals>
-  <plurals name="hours_plural">
-    <item quantity="zero">%d godzin</item>
-    <item quantity="one">%d godziny</item>
-    <item quantity="two">%d godziny</item>
-    <item quantity="few">%d godziny</item>
-    <item quantity="many">%d godzin</item>
-    <item quantity="other">%d godzin</item>
-  </plurals>
-  <plurals name="minutes_plural">
-    <item quantity="zero">%d minut</item>
-    <item quantity="one">%d minuta</item>
-    <item quantity="two">%d minuty</item>
-    <item quantity="few">%d minuty</item>
-    <item quantity="many">%d minut</item>
-    <item quantity="other">%d minut</item>
-  </plurals>
-  <plurals name="votes">
-    <item quantity="zero">%d głosów</item>
-    <item quantity="one">głosy: %d</item>
-    <item quantity="two">%d głosy</item>
-    <item quantity="few">%d głosów</item>
-    <item quantity="many">%d głosów</item>
-    <item quantity="other">głosów: %d</item>
-  </plurals>
 </resources>

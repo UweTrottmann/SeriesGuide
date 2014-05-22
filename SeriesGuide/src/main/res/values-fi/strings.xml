@@ -65,6 +65,30 @@
   <string name="shows_continuing">%s jatkuu</string>
   <string name="episodes_watched">%s katsottua</string>
   <string name="runtime_all_episodes">Kaikkien katsottujen jaksojen kesto</string>
+  <plurals name="days_plural">
+    <item quantity="one">%d päivä</item>
+    <item quantity="zero">%d päivää</item>
+    <item quantity="two">%d päivää</item>
+    <item quantity="few">%d päivää</item>
+    <item quantity="many">%d päivää</item>
+    <item quantity="other">%d päivää</item>
+  </plurals>
+  <plurals name="hours_plural">
+    <item quantity="zero">%d tuntia</item>
+    <item quantity="one">%d tunti</item>
+    <item quantity="two">%d tuntia</item>
+    <item quantity="few">%d tuntia</item>
+    <item quantity="many">%d tuntia</item>
+    <item quantity="other">%d tuntia</item>
+  </plurals>
+  <plurals name="minutes_plural">
+    <item quantity="zero">%d minuuttia</item>
+    <item quantity="one">%d minuutti</item>
+    <item quantity="two">%d minuuttia</item>
+    <item quantity="few">%d minuuttia</item>
+    <item quantity="many">%d minuuttia</item>
+    <item quantity="other">%d minuuttia</item>
+  </plurals>
   <string name="your_rating">Arvosanasi</string>
   <string name="love">Maailman parasta!</string>
   <string name="hate">Ei sytyttänyt :(</string>
@@ -76,6 +100,14 @@
   <string name="rating7">Hyvä</string>
   <string name="rating8">Upea</string>
   <string name="rating9">Loistava</string>
+  <plurals name="votes">
+    <item quantity="zero">%d ääntä</item>
+    <item quantity="one">%d ääni</item>
+    <item quantity="two">%d ääntä</item>
+    <item quantity="few">%d ääntä</item>
+    <item quantity="many">%d ääntä</item>
+    <item quantity="other">%d ääntä</item>
+  </plurals>
   <string name="episode_number_absolute">TODELLINEN</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Julkaisupäivä</string>
@@ -216,13 +248,8 @@
   <string name="connect_trakt_done_explanation">SeriesGuide syknronoi nyt tämän laitteen ohjelmat ja elokuvat traktin kanssa. Tämä voi kestää hetken.</string>
   <string name="add_trakt_shows">Lisää ohjelmat kokoelmastasi:</string>
   <string name="show_library">Näytä kokoelmasi</string>
-  <string name="upload_existing_shows">Lähetä nykyiset ohjelmat</string>
   <string name="about_trakt">trakt auttaa sinua pysymään kärryillä katsomistasi TV-ohjelmista ja elokuvista. <a href="http://trakt.tv">Lisätietoa</a></string>
   <string name="integration_trakt_items">- lisää ohjelmat kokoelmastasi ja seurantalistastasi\n\n- näe suosittelusi ja ystäviesi toiminta\n\n- katsonta- ja keräysmerkinnät synkronoidaan automaattisesti\n\n- katsomasi uudet ohjelmat lisätään automaattisesti</string>
-  <string name="trakt_upload">Lähetä trakt.tv:een</string>
-  <string name="trakt_syncunwatched">Poista katsontamerkinnät traktin katsomattomilta jaksoilta SeriesGuidessa</string>
-  <string name="upload_done">Lähettäminen päättynyt.</string>
-  <string name="upload_no_work">Ei ole mitään lähetettävää.</string>
   <string name="prefs_category_basic">Yleiset</string>
   <string name="prefs_category_sharing">Palvelut</string>
   <string name="prefs_category_advanced">Edistyneet</string>
@@ -244,6 +271,27 @@
   <string name="feedback">Lähetä palautetta</string>
   <string name="pref_autoaddshows">Lisää uudet ohjelmat traktista</string>
   <string name="pref_autoaddshowssummary">Automaattisesti lisää uudet ohjelmat traktin toimintavirrastasi</string>
+  <string-array name="sesorting">
+    <item>Uusin ensin</item>
+    <item>Vanhin ensin</item>
+  </string-array>
+  <string-array name="epsorting">
+    <item>Uusin ensin</item>
+    <item>Vanhin ensin</item>
+    <item>Katsomattomat ensin</item>
+    <item>A - Ö</item>
+    <item>Suosituimmat</item>
+    <item>Uusin ensin (DVD)</item>
+    <item>Vanhin ensin (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>nyt</item>
+    <item>päivän ajalta</item>
+    <item>3 päivän ajalta</item>
+    <item>viikon ajalta</item>
+    <item>2 viikon ajalta</item>
+    <item>kuukauden ajalta</item>
+  </string-array>
   <string name="pref_appearance">Ulkonäkö</string>
   <string name="pref_theme">Sovelluksen teema</string>
   <string name="pref_other">Muu</string>
@@ -319,10 +367,9 @@
   <string name="trakt_error_credentials">Jokin meni pieleen. Tarkista oikeutesi ja yritä uudelleen.</string>
   <string name="trakt_error_general">Kommunikointi traktin kanssa ei onnistu. Yritä myöhemmin uudelleen.</string>
   <string name="trakt_createaccount">Luo uusi tili</string>
+  <string name="get_started">Get started</string>
   <string name="welcome_setuplanguage">Valitse kieli</string>
-  <string name="welcome_traktmessage">Käytä trakt.tv-kokoelmaasi ja näe ystäviesi toiminta</string>
   <string name="dismiss">Hylkää</string>
-  <string name="welcome_add_part1">Napauta aloittaaksesi</string>
   <string name="upcoming_show">%s on tulossa</string>
   <string name="upcoming_episodes">Uusia jaksoja tulossa</string>
   <string name="upcoming_episodes_number">%s uutta jaksoa</string>
@@ -337,15 +384,41 @@
   <string name="pref_vibrate">Värinä</string>
   <string name="pref_vibratesummary">Värinä, kun näytetään ilmoitus</string>
   <string name="pref_notifications_treshold">Milloin ilmoittaa</string>
+  <string-array name="notificationThreshold">
+    <item>esitettäessä</item>
+    <item>5 min etukäteen</item>
+    <item>10 min etukäteen</item>
+    <item>1 tunti etukäteen</item>
+  </string-array>
   <string name="smallwidget">SeriesGuide (pieni)</string>
   <string name="bigwidget">SeriesGuide (keski)</string>
   <string name="largewidget">SeriesGuide (suuri)</string>
   <string name="hide_watched">Piilota katsotut jaksot</string>
   <string name="pref_widget_opacity">Widgetin tausta</string>
+  <string-array name="widgetOpacity">
+    <item>Läpinäkyvä</item>
+    <item>25% musta</item>
+    <item>50% musta</item>
+    <item>75% musta</item>
+    <item>Musta</item>
+  </string-array>
   <string name="pref_widget_type">Widgetin tyyppi</string>
+  <string-array name="widgetType">
+    <item>Tulevat</item>
+    <item>Viimeisimmät</item>
+    <item>Suosikit</item>
+  </string-array>
   <string name="dashclock_extension_label">Tuleva jakso</string>
   <string name="dashclock_extension_description">Näyttää seuraavan tulevan jakson SeriesGuidesi ohjelmistasi.</string>
   <string name="dashclock_pref_upcoming_threshold">Näytä jaksot ajalta</string>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>tunti</item>
+    <item>6 tuntia</item>
+    <item>12 tuntia</item>
+    <item>24 tuntia</item>
+    <item>3 päivää</item>
+    <item>viikko</item>
+  </string-array>
   <string name="action_migrate">Siirrä X:stä</string>
   <string name="migration_description">SeriesGuide X on nyt avausavain X-ominaisuuksiin ilmaisessa versiossa (X-passi). Siirrä ohjelmasi SeriesGuiden ilmaiseen versioon. Pidä X asennettuna avataksesi kaikki ominaisuudet ilmaisessa versiossa.</string>
   <string name="migration_import">Kosketa painiketta tuodaksesi SeriesGuide X:ssä luotu varmuuskopio.</string>
@@ -379,83 +452,4 @@
   <string name="extension_youtube">YouTube-haku</string>
   <string name="description_extension_youtube">Etsi videoita YouTubesta</string>
   <string name="description_extension_web_search">Etsi verkkosivustoja ja kuvia</string>
-  <string-array name="sesorting">
-    <item>Uusin ensin</item>
-    <item>Vanhin ensin</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Uusin ensin</item>
-    <item>Vanhin ensin</item>
-    <item>Katsomattomat ensin</item>
-    <item>A - Ö</item>
-    <item>Suosituimmat</item>
-    <item>Uusin ensin (DVD)</item>
-    <item>Vanhin ensin (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>nyt</item>
-    <item>päivän ajalta</item>
-    <item>3 päivän ajalta</item>
-    <item>viikon ajalta</item>
-    <item>2 viikon ajalta</item>
-    <item>kuukauden ajalta</item>
-  </string-array>
-  <string-array name="notificationThreshold">
-    <item>esitettäessä</item>
-    <item>5 min etukäteen</item>
-    <item>10 min etukäteen</item>
-    <item>1 tunti etukäteen</item>
-  </string-array>
-  <string-array name="widgetOpacity">
-    <item>Läpinäkyvä</item>
-    <item>25% musta</item>
-    <item>50% musta</item>
-    <item>75% musta</item>
-    <item>Musta</item>
-  </string-array>
-  <string-array name="widgetType">
-    <item>Tulevat</item>
-    <item>Viimeisimmät</item>
-    <item>Suosikit</item>
-  </string-array>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>tunti</item>
-    <item>6 tuntia</item>
-    <item>12 tuntia</item>
-    <item>24 tuntia</item>
-    <item>3 päivää</item>
-    <item>viikko</item>
-  </string-array>
-  <plurals name="days_plural">
-    <item quantity="one">%d päivä</item>
-    <item quantity="zero">%d päivää</item>
-    <item quantity="two">%d päivää</item>
-    <item quantity="few">%d päivää</item>
-    <item quantity="many">%d päivää</item>
-    <item quantity="other">%d päivää</item>
-  </plurals>
-  <plurals name="hours_plural">
-    <item quantity="zero">%d tuntia</item>
-    <item quantity="one">%d tunti</item>
-    <item quantity="two">%d tuntia</item>
-    <item quantity="few">%d tuntia</item>
-    <item quantity="many">%d tuntia</item>
-    <item quantity="other">%d tuntia</item>
-  </plurals>
-  <plurals name="minutes_plural">
-    <item quantity="zero">%d minuuttia</item>
-    <item quantity="one">%d minuutti</item>
-    <item quantity="two">%d minuuttia</item>
-    <item quantity="few">%d minuuttia</item>
-    <item quantity="many">%d minuuttia</item>
-    <item quantity="other">%d minuuttia</item>
-  </plurals>
-  <plurals name="votes">
-    <item quantity="zero">%d ääntä</item>
-    <item quantity="one">%d ääni</item>
-    <item quantity="two">%d ääntä</item>
-    <item quantity="few">%d ääntä</item>
-    <item quantity="many">%d ääntä</item>
-    <item quantity="other">%d ääntä</item>
-  </plurals>
 </resources>

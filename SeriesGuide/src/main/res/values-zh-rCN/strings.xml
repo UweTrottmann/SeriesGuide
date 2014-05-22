@@ -65,6 +65,30 @@
   <string name="shows_continuing">%s 部剧目仍在连载</string>
   <string name="episodes_watched">%s 已观看剧集</string>
   <string name="runtime_all_episodes">所有已观看剧集的总播放时间</string>
+  <plurals name="days_plural">
+    <item quantity="one">%d 天</item>
+    <item quantity="zero">%d 天</item>
+    <item quantity="two">%d 天</item>
+    <item quantity="few">%d 天</item>
+    <item quantity="many">%d 天</item>
+    <item quantity="other">%d 天</item>
+  </plurals>
+  <plurals name="hours_plural">
+    <item quantity="zero">%d 小时</item>
+    <item quantity="one">%d 小时</item>
+    <item quantity="two">%d 小时</item>
+    <item quantity="few">%d 小时</item>
+    <item quantity="many">%d 小时</item>
+    <item quantity="other">%d 小时</item>
+  </plurals>
+  <plurals name="minutes_plural">
+    <item quantity="zero">%d 分钟</item>
+    <item quantity="one">%d 分钟</item>
+    <item quantity="two">%d 分钟</item>
+    <item quantity="few">%d 分钟</item>
+    <item quantity="many">%d 分钟</item>
+    <item quantity="other">%d 分钟</item>
+  </plurals>
   <string name="your_rating">你的评分</string>
   <string name="love">100 - 非常棒 :-)</string>
   <string name="hate">10 - 弱爆了 :-(</string>
@@ -76,6 +100,14 @@
   <string name="rating7">70 - 还喜欢</string>
   <string name="rating8">80 - 要表扬</string>
   <string name="rating9">90 - 没缺点</string>
+  <plurals name="votes">
+    <item quantity="zero">%d 个评价</item>
+    <item quantity="one">%d 个评价</item>
+    <item quantity="two">%d 个评价</item>
+    <item quantity="few">%d 个评价</item>
+    <item quantity="many">%d 个评价</item>
+    <item quantity="other">%d 个评价</item>
+  </plurals>
   <string name="episode_number_absolute">总集数</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">首映日期</string>
@@ -216,13 +248,8 @@
   <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">从资料库中添加节目</string>
   <string name="show_library">显示资料库</string>
-  <string name="upload_existing_shows">上传已存在的节目</string>
   <string name="about_trakt">trakt 会记录您已观看的电影和电视节目。<a href="http://trakt.tv">了解更多信息</a></string>
   <string name="integration_trakt_items">- 从你的资料库或待看列表中转移剧目\n\n- 查看推荐的剧目和朋友们的近期活动\n\n- 自动同步已观看和已收藏标记\n\n- 已观看的新剧目将自动加入数据库</string>
-  <string name="trakt_upload">上传观看状态至网络</string>
-  <string name="trakt_syncunwatched">在 trakt.tv 上移除 SeriesGuide 中未观看剧集的已观看标记</string>
-  <string name="upload_done">已完成上传</string>
-  <string name="upload_no_work">没有数据需要上传</string>
   <string name="prefs_category_basic">基本</string>
   <string name="prefs_category_sharing">关联服务</string>
   <string name="prefs_category_advanced">高级</string>
@@ -244,6 +271,27 @@
   <string name="feedback">发送反馈报告</string>
   <string name="pref_autoaddshows">添加新 trakt 剧目</string>
   <string name="pref_autoaddshowssummary">自动从 trakt 活动中添加剧目</string>
+  <string-array name="sesorting">
+    <item>最新在最上</item>
+    <item>最旧在最上</item>
+  </string-array>
+  <string-array name="epsorting">
+    <item>最新在最上</item>
+    <item>最旧在最上</item>
+    <item>未观看在最上</item>
+    <item>A 到 Z</item>
+    <item>最高评分</item>
+    <item>最新在最上 (DVD)</item>
+    <item>最旧在最上 (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>现在</item>
+    <item>1 天</item>
+    <item>3 天</item>
+    <item>1 周</item>
+    <item>2 周</item>
+    <item>1 月</item>
+  </string-array>
   <string name="pref_appearance">外观</string>
   <string name="pref_theme">应用主题</string>
   <string name="pref_other">其它</string>
@@ -319,10 +367,9 @@
   <string name="trakt_error_credentials">出错了，请检查您的凭据后再试。</string>
   <string name="trakt_error_general">无法连接到Trakt。请稍后再试。</string>
   <string name="trakt_createaccount">创建新用户</string>
+  <string name="get_started">Get started</string>
   <string name="welcome_setuplanguage">选择语言</string>
-  <string name="welcome_traktmessage">随时访问您的数据库和好友动态</string>
   <string name="dismiss">忽略</string>
-  <string name="welcome_add_part1">SeriesGuide 新手？你可以……</string>
   <string name="upcoming_show">%s 即将播出</string>
   <string name="upcoming_episodes">即将播出新的剧集</string>
   <string name="upcoming_episodes_number">%s 个剧集即将播出</string>
@@ -337,15 +384,41 @@
   <string name="pref_vibrate">振动</string>
   <string name="pref_vibratesummary">显示通知时振动</string>
   <string name="pref_notifications_treshold">何时通知</string>
+  <string-array name="notificationThreshold">
+    <item>放映</item>
+    <item>提前 5 分钟</item>
+    <item>提前 10 分钟</item>
+    <item>提前一小时</item>
+  </string-array>
   <string name="smallwidget">美剧指南（小）</string>
   <string name="bigwidget">美剧指南（中）</string>
   <string name="largewidget">美剧指南（大）</string>
   <string name="hide_watched">隐藏已观看剧集</string>
   <string name="pref_widget_opacity">小部件背景</string>
+  <string-array name="widgetOpacity">
+    <item>透明度</item>
+    <item>黑色 25%</item>
+    <item>黑色 50%</item>
+    <item>黑色 75%</item>
+    <item>纯黑</item>
+  </string-array>
   <string name="pref_widget_type">小部件类型</string>
+  <string-array name="widgetType">
+    <item>即将播出</item>
+    <item>近期节目</item>
+    <item>喜爱</item>
+  </string-array>
   <string name="dashclock_extension_label">即将播出</string>
   <string name="dashclock_extension_description">在 “追剧助手” 节目列表中显示即将播出的剧集。</string>
   <string name="dashclock_pref_upcoming_threshold">“即将播出”剧目的时间区间</string>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>小时</item>
+    <item>6 小时</item>
+    <item>12 小时</item>
+    <item>1 天</item>
+    <item>3 天</item>
+    <item>周</item>
+  </string-array>
   <string name="action_migrate">从X版本迁移</string>
   <string name="migration_description">现在追剧助手X是免费版(\"X Life-Time Pass\")的X特性解锁文件。请迁移您的剧目到追剧助手免费版。确保X已安装以解锁免费版的全部特性。</string>
   <string name="migration_import">触摸下面导入追剧助手X中创建的备份。</string>
@@ -379,83 +452,4 @@
   <string name="extension_youtube">YouTube 搜索</string>
   <string name="description_extension_youtube">搜索 YouTube 相关视频</string>
   <string name="description_extension_web_search">搜索相关网站或图片</string>
-  <string-array name="sesorting">
-    <item>最新在最上</item>
-    <item>最旧在最上</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>最新在最上</item>
-    <item>最旧在最上</item>
-    <item>未观看在最上</item>
-    <item>A 到 Z</item>
-    <item>最高评分</item>
-    <item>最新在最上 (DVD)</item>
-    <item>最旧在最上 (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>现在</item>
-    <item>1 天</item>
-    <item>3 天</item>
-    <item>1 周</item>
-    <item>2 周</item>
-    <item>1 月</item>
-  </string-array>
-  <string-array name="notificationThreshold">
-    <item>放映</item>
-    <item>提前 5 分钟</item>
-    <item>提前 10 分钟</item>
-    <item>提前一小时</item>
-  </string-array>
-  <string-array name="widgetOpacity">
-    <item>透明度</item>
-    <item>黑色 25%</item>
-    <item>黑色 50%</item>
-    <item>黑色 75%</item>
-    <item>纯黑</item>
-  </string-array>
-  <string-array name="widgetType">
-    <item>即将播出</item>
-    <item>近期节目</item>
-    <item>喜爱</item>
-  </string-array>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>小时</item>
-    <item>6 小时</item>
-    <item>12 小时</item>
-    <item>1 天</item>
-    <item>3 天</item>
-    <item>周</item>
-  </string-array>
-  <plurals name="days_plural">
-    <item quantity="one">%d 天</item>
-    <item quantity="zero">%d 天</item>
-    <item quantity="two">%d 天</item>
-    <item quantity="few">%d 天</item>
-    <item quantity="many">%d 天</item>
-    <item quantity="other">%d 天</item>
-  </plurals>
-  <plurals name="hours_plural">
-    <item quantity="zero">%d 小时</item>
-    <item quantity="one">%d 小时</item>
-    <item quantity="two">%d 小时</item>
-    <item quantity="few">%d 小时</item>
-    <item quantity="many">%d 小时</item>
-    <item quantity="other">%d 小时</item>
-  </plurals>
-  <plurals name="minutes_plural">
-    <item quantity="zero">%d 分钟</item>
-    <item quantity="one">%d 分钟</item>
-    <item quantity="two">%d 分钟</item>
-    <item quantity="few">%d 分钟</item>
-    <item quantity="many">%d 分钟</item>
-    <item quantity="other">%d 分钟</item>
-  </plurals>
-  <plurals name="votes">
-    <item quantity="zero">%d 个评价</item>
-    <item quantity="one">%d 个评价</item>
-    <item quantity="two">%d 个评价</item>
-    <item quantity="few">%d 个评价</item>
-    <item quantity="many">%d 个评价</item>
-    <item quantity="other">%d 个评价</item>
-  </plurals>
 </resources>

@@ -65,6 +65,30 @@
   <string name="shows_continuing">%s продовжується</string>
   <string name="episodes_watched">%s переглянуто</string>
   <string name="runtime_all_episodes">Тривалість всіх переглянутих серій</string>
+  <plurals name="days_plural">
+    <item quantity="one">%d день</item>
+    <item quantity="zero">%d днів</item>
+    <item quantity="two">%d дні</item>
+    <item quantity="few">%d днів</item>
+    <item quantity="many">%d днів</item>
+    <item quantity="other">%d днів</item>
+  </plurals>
+  <plurals name="hours_plural">
+    <item quantity="zero">%d годин</item>
+    <item quantity="one">%d година</item>
+    <item quantity="two">%d години</item>
+    <item quantity="few">%d годин</item>
+    <item quantity="many">%d годин</item>
+    <item quantity="other">%d годин</item>
+  </plurals>
+  <plurals name="minutes_plural">
+    <item quantity="zero">%d хвилин</item>
+    <item quantity="one">%d хвилина</item>
+    <item quantity="two">%d хвилини</item>
+    <item quantity="few">%d хвилин</item>
+    <item quantity="many">%d хвилин</item>
+    <item quantity="other">%d хвилин</item>
+  </plurals>
   <string name="your_rating">Ваш рейтинг</string>
   <string name="love">Супер!</string>
   <string name="hate">Слабо :(</string>
@@ -76,6 +100,14 @@
   <string name="rating7">Добре</string>
   <string name="rating8">Дуже добре</string>
   <string name="rating9">Прекрасно</string>
+  <plurals name="votes">
+    <item quantity="zero">%d голосів</item>
+    <item quantity="one">%d голос</item>
+    <item quantity="two">%d голоси</item>
+    <item quantity="few">%d голосів</item>
+    <item quantity="many">%d голосів</item>
+    <item quantity="other">%d голосів</item>
+  </plurals>
   <string name="episode_number_absolute">Загалом</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Дата виходу</string>
@@ -96,7 +128,7 @@
   <string name="services_watch">Переглянути</string>
   <string name="services_more">Більше</string>
   <string name="sort">Сортувати за</string>
-  <string name="action_sort_ignore_articles">Ignore articles</string>
+  <string name="action_sort_ignore_articles">Ігнорувати артиклі</string>
   <string name="today">сьогодні</string>
   <string name="now">тепер</string>
   <string name="daily">Щодня</string>
@@ -157,9 +189,9 @@
   <string name="recent">Недавно</string>
   <string name="friends">Друзі</string>
   <string name="friends_empty">Немає активності друзів на trakt.</string>
-  <string name="user_stream">You</string>
-  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
-  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
+  <string name="user_stream">Ви</string>
+  <string name="user_stream_empty">Немає недавньої активності на trakt.  Зареєструйте деякі серіали!</string>
+  <string name="user_movie_stream_empty">Немає недавньої активності на trakt.  Зареєструйте деякі серіали!</string>
   <string name="noupcoming">Немає наступних серій.</string>
   <string name="norecent">Немає недавніх серій.</string>
   <string name="only_favorites">Лише улюблені серіали</string>
@@ -213,16 +245,11 @@
   <string name="hexagon_priority_select">Виберіть версію</string>
   <string name="connect_trakt">Підключитись до trakt</string>
   <string name="connect_trakt_done">Підключено до trakt!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide зараз синхронізує серіали та фільми на цьому пристрої з trakt.  Це може зайняти деякий час.</string>
   <string name="add_trakt_shows">Додати серіали з бібліотеки:</string>
   <string name="show_library">Показати вашу бібліотеку</string>
-  <string name="upload_existing_shows">Завантажити наявні серіали</string>
   <string name="about_trakt">trakt допомагає зберігати запис про те які телесеріали та фільми ви дивитеся. <a href="http://trakt.tv">Дізнатись більше</a></string>
   <string name="integration_trakt_items">- додавайте серіали із вашої бібліотеки та списку переглядів\n\n- переглядайте ваші рекомендації та активність друзів\n\n- переглянуті та вибрані пункти синхронізуються автоматично\n\n- нові серіали, які ви переглядали додаються автоматично</string>
-  <string name="trakt_upload">Завантажити на trakt.tv</string>
-  <string name="trakt_syncunwatched">Прибрати статус переглянутого на trakt для не переглянутих серій в SeriesGuide</string>
-  <string name="upload_done">Завантаження завершене.</string>
-  <string name="upload_no_work">Нема чого завантажувати.</string>
   <string name="prefs_category_basic">Основні</string>
   <string name="prefs_category_sharing">Послуги</string>
   <string name="prefs_category_advanced">Додатково</string>
@@ -244,6 +271,27 @@
   <string name="feedback">Відправити відгук</string>
   <string name="pref_autoaddshows">Додати нові серіали з trakt</string>
   <string name="pref_autoaddshowssummary">Автоматично додавати серіали з вашого потоку активності на trakt</string>
+  <string-array name="sesorting">
+    <item>Останні спочатку</item>
+    <item>Давніші спочатку</item>
+  </string-array>
+  <string-array name="epsorting">
+    <item>Останні спочатку</item>
+    <item>Давніші спочатку</item>
+    <item>Непереглянуті спочатку</item>
+    <item>А - Я</item>
+    <item>Топ кращих</item>
+    <item>Останні спочатку (DVD)</item>
+    <item>Давніші спочатку (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>сьогодні</item>
+    <item>1 дня</item>
+    <item>3 днів</item>
+    <item>1 тижня</item>
+    <item>2 тижнів</item>
+    <item>1 місяця</item>
+  </string-array>
   <string name="pref_appearance">Оформлення</string>
   <string name="pref_theme">Тема</string>
   <string name="pref_other">Інші</string>
@@ -319,10 +367,9 @@
   <string name="trakt_error_credentials">Щось пішло не так. Перевірте ваші облікові дані та повторіть спробу.</string>
   <string name="trakt_error_general">Не можу з\'єднатись із trakt. Повторіть спробу пізніше.</string>
   <string name="trakt_createaccount">Створити новий обліковий запис</string>
+  <string name="get_started">Get started</string>
   <string name="welcome_setuplanguage">Вибрати мову</string>
-  <string name="welcome_traktmessage">Отримайте доступ до вашої бібліотеки на trakt.tv та активності друзів</string>
   <string name="dismiss">Відхилити</string>
-  <string name="welcome_add_part1">Для початку натисніть</string>
   <string name="upcoming_show">%s наближається</string>
   <string name="upcoming_episodes">Виходять нові серії</string>
   <string name="upcoming_episodes_number">%s нових серій</string>
@@ -337,15 +384,41 @@
   <string name="pref_vibrate">Вібрація</string>
   <string name="pref_vibratesummary">Також вібрувати при відображенні сповіщення</string>
   <string name="pref_notifications_treshold">Коли слід сповіщати</string>
+  <string-array name="notificationThreshold">
+    <item>в ефірі</item>
+    <item>5 хв до початку</item>
+    <item>10 хв до початку</item>
+    <item>одна година до початку</item>
+  </string-array>
   <string name="smallwidget">SeriesGuide (малий)</string>
   <string name="bigwidget">SeriesGuide (середній)</string>
   <string name="largewidget">SeriesGuide (великий)</string>
   <string name="hide_watched">Приховати переглянуті серії</string>
   <string name="pref_widget_opacity">Фон віджета</string>
+  <string-array name="widgetOpacity">
+    <item>Прозорий</item>
+    <item>25% чорного</item>
+    <item>50% чорного</item>
+    <item>75% чорного</item>
+    <item>Чорний</item>
+  </string-array>
   <string name="pref_widget_type">Тип віджета</string>
+  <string-array name="widgetType">
+    <item>Незабаром</item>
+    <item>Недавні</item>
+    <item>Улюблені</item>
+  </string-array>
   <string name="dashclock_extension_label">Наступна серія</string>
   <string name="dashclock_extension_description">Відображає наступну найближчу серію з ваших серіалів на  SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Показати серії у наступному</string>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>година</item>
+    <item>6 годин</item>
+    <item>12 годин</item>
+    <item>24 години</item>
+    <item>3 дні</item>
+    <item>тиждень</item>
+  </string-array>
   <string name="action_migrate">Мігрувати з X</string>
   <string name="migration_description">SeriesGuide X відтепер є ключем для розблокування X функцій у безкоштовній версії (X Pass). Будь ласка перенесіть ваші серіали у безкоштовну версію SeriesGuide. Залиште версію X установленою для розблокування усіх функцій у безкоштовній версії.</string>
   <string name="migration_import">Торкніться нижче, щоб імпортувати резервну копію, створену в SeriesGuide X.</string>
@@ -374,88 +447,9 @@
   <string name="extension_amazon">Пошук Amazon</string>
   <string name="description_extension_amazon">Пошук в локальній версії сайту Amazon</string>
   <string name="pref_amazon_domain">Сайт Amazon</string>
-  <string name="extension_google_play">Google Play search</string>
-  <string name="description_extension_google_play">Search the Google Play Store</string>
-  <string name="extension_youtube">YouTube search</string>
-  <string name="description_extension_youtube">Search YouTube for videos</string>
-  <string name="description_extension_web_search">Search for websites and images</string>
-  <string-array name="sesorting">
-    <item>Останні спочатку</item>
-    <item>Давніші спочатку</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Останні спочатку</item>
-    <item>Давніші спочатку</item>
-    <item>Непереглянуті спочатку</item>
-    <item>А - Я</item>
-    <item>Топ кращих</item>
-    <item>Останні спочатку (DVD)</item>
-    <item>Давніші спочатку (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>сьогодні</item>
-    <item>1 дня</item>
-    <item>3 днів</item>
-    <item>1 тижня</item>
-    <item>2 тижнів</item>
-    <item>1 місяця</item>
-  </string-array>
-  <string-array name="notificationThreshold">
-    <item>в ефірі</item>
-    <item>5 хв до початку</item>
-    <item>10 хв до початку</item>
-    <item>одна година до початку</item>
-  </string-array>
-  <string-array name="widgetOpacity">
-    <item>Прозорий</item>
-    <item>25% чорного</item>
-    <item>50% чорного</item>
-    <item>75% чорного</item>
-    <item>Чорний</item>
-  </string-array>
-  <string-array name="widgetType">
-    <item>Незабаром</item>
-    <item>Недавні</item>
-    <item>Улюблені</item>
-  </string-array>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>година</item>
-    <item>6 годин</item>
-    <item>12 годин</item>
-    <item>24 години</item>
-    <item>3 дні</item>
-    <item>тиждень</item>
-  </string-array>
-  <plurals name="days_plural">
-    <item quantity="one">%d день</item>
-    <item quantity="zero">%d днів</item>
-    <item quantity="two">%d дні</item>
-    <item quantity="few">%d днів</item>
-    <item quantity="many">%d днів</item>
-    <item quantity="other">%d днів</item>
-  </plurals>
-  <plurals name="hours_plural">
-    <item quantity="zero">%d годин</item>
-    <item quantity="one">%d година</item>
-    <item quantity="two">%d години</item>
-    <item quantity="few">%d годин</item>
-    <item quantity="many">%d годин</item>
-    <item quantity="other">%d годин</item>
-  </plurals>
-  <plurals name="minutes_plural">
-    <item quantity="zero">%d хвилин</item>
-    <item quantity="one">%d хвилина</item>
-    <item quantity="two">%d хвилини</item>
-    <item quantity="few">%d хвилин</item>
-    <item quantity="many">%d хвилин</item>
-    <item quantity="other">%d хвилин</item>
-  </plurals>
-  <plurals name="votes">
-    <item quantity="zero">%d голосів</item>
-    <item quantity="one">%d голос</item>
-    <item quantity="two">%d голоси</item>
-    <item quantity="few">%d голосів</item>
-    <item quantity="many">%d голосів</item>
-    <item quantity="other">%d голосів</item>
-  </plurals>
+  <string name="extension_google_play">Пошук у Google Play</string>
+  <string name="description_extension_google_play">Шукати у магазині Google Play</string>
+  <string name="extension_youtube">Пошук YouTube</string>
+  <string name="description_extension_youtube">Шукати у  YouTube відео</string>
+  <string name="description_extension_web_search">Шукати вебсайти та зображення</string>
 </resources>

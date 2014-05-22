@@ -65,6 +65,30 @@
   <string name="shows_continuing">Продолжается %s</string>
   <string name="episodes_watched">посмотрели: %s</string>
   <string name="runtime_all_episodes">Общее время всех просмотренных эпизодов</string>
+  <plurals name="days_plural">
+    <item quantity="one">%d день</item>
+    <item quantity="zero">%d дней</item>
+    <item quantity="two">%d дня</item>
+    <item quantity="few">%d дней</item>
+    <item quantity="many">%d дней</item>
+    <item quantity="other">%d дней</item>
+  </plurals>
+  <plurals name="hours_plural">
+    <item quantity="zero">%d часов</item>
+    <item quantity="one">%d час</item>
+    <item quantity="two">%d часа</item>
+    <item quantity="few">%d часов</item>
+    <item quantity="many">%d часов</item>
+    <item quantity="other">%d часов</item>
+  </plurals>
+  <plurals name="minutes_plural">
+    <item quantity="zero">%d минут</item>
+    <item quantity="one">%d минута</item>
+    <item quantity="two">%d минуты</item>
+    <item quantity="few">%d минут</item>
+    <item quantity="many">%d минут</item>
+    <item quantity="other">%d минут</item>
+  </plurals>
   <string name="your_rating">Ваш рейтинг</string>
   <string name="love">Супер!</string>
   <string name="hate">Слабый соус:(</string>
@@ -76,6 +100,14 @@
   <string name="rating7">Хорошо</string>
   <string name="rating8">Прекрасно</string>
   <string name="rating9">Превосходно</string>
+  <plurals name="votes">
+    <item quantity="zero">%d голосов</item>
+    <item quantity="one">%d голоса</item>
+    <item quantity="two">%d голоса</item>
+    <item quantity="few">%d голосов</item>
+    <item quantity="many">%d голосов</item>
+    <item quantity="other">%d голосов</item>
+  </plurals>
   <string name="episode_number_absolute">НОМЕР</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Дата выпуска</string>
@@ -216,13 +248,8 @@
   <string name="connect_trakt_done_explanation">SeriesGuide сейчас синхронизирует сериалы и фильмы на этом устройстве с trakt. Это может занять некоторое время.</string>
   <string name="add_trakt_shows">Добавьте сериалы вашей библиотеки:</string>
   <string name="show_library">Показать вашу библиотеку</string>
-  <string name="upload_existing_shows">Загрузить существующие сериалы</string>
   <string name="about_trakt">Trakt сохраняет запись о сериалах и фильмы, которые вы смотрите. <a href="http://trakt.tv"> Подробнее</a></string>
   <string name="integration_trakt_items">-добавить сериалы из вашей библиотеки и расписания \n\n смотреть ваши рекомендации и активность друзей \n\n - просмотр и коллекции синхронизируются автоматически \n\n- автоматически добавлены просматриваемые сериалы</string>
-  <string name="trakt_upload">Загрузить на trakt.tv</string>
-  <string name="trakt_syncunwatched">Убрать статус просмотренного на trakt для не просмотренных серий в SeriesGuide</string>
-  <string name="upload_done">Загрузка завершена.</string>
-  <string name="upload_no_work">Нет ничего для загрузки.</string>
   <string name="prefs_category_basic">Основные</string>
   <string name="prefs_category_sharing">Сервисы</string>
   <string name="prefs_category_advanced">Дополнительные</string>
@@ -244,6 +271,27 @@
   <string name="feedback">Отправить отзыв</string>
   <string name="pref_autoaddshows">Добавить новые сериалы из trakt</string>
   <string name="pref_autoaddshowssummary">Автоматически добавлять сериалы из trakt</string>
+  <string-array name="sesorting">
+    <item>Сначала последний</item>
+    <item>Старшие с начала</item>
+  </string-array>
+  <string-array name="epsorting">
+    <item>Сначала последний</item>
+    <item>Старшие с начала</item>
+    <item>Сначала непросмотренные</item>
+    <item>A - Z</item>
+    <item>Лучшие по рейтингу</item>
+    <item>Сначала последние (DVD)</item>
+    <item>Более старые первыми (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>сейчас</item>
+    <item>день</item>
+    <item>3 дня</item>
+    <item>неделя</item>
+    <item>две недели</item>
+    <item>месяц</item>
+  </string-array>
   <string name="pref_appearance">Оформление</string>
   <string name="pref_theme">Тема</string>
   <string name="pref_other">Другие</string>
@@ -319,10 +367,9 @@
   <string name="trakt_error_credentials">Что-то пошло не так. Пожалуйста проверьте учетные данные и повторите попытку.</string>
   <string name="trakt_error_general">Trakt не отвечает. Повторите попытку позже.</string>
   <string name="trakt_createaccount">Создать новую учетную запись</string>
+  <string name="get_started">Get started</string>
   <string name="welcome_setuplanguage">Выбрать язык</string>
-  <string name="welcome_traktmessage">Доступ к вашей активности и активности друзей в trakt.tv</string>
   <string name="dismiss">Отменить</string>
-  <string name="welcome_add_part1">Для начала нажмите</string>
   <string name="upcoming_show">%s выпущено</string>
   <string name="upcoming_episodes">Выходят новые эпизоды</string>
   <string name="upcoming_episodes_number">%s новый(х) эпизод(ов)</string>
@@ -337,15 +384,41 @@
   <string name="pref_vibrate">Вибросигнал</string>
   <string name="pref_vibratesummary">Вибрация при уведомлении</string>
   <string name="pref_notifications_treshold">Когда уведомлять</string>
+  <string-array name="notificationThreshold">
+    <item>в эфире</item>
+    <item>5 минут до начала</item>
+    <item>10 минут до начала</item>
+    <item>один час до начала</item>
+  </string-array>
   <string name="smallwidget">SeriesGuide (малый)</string>
   <string name="bigwidget">SeriesGuide (средний)</string>
   <string name="largewidget">SeriesGuide (большой)</string>
   <string name="hide_watched">Скрыть просмотренные эпизоды</string>
   <string name="pref_widget_opacity">Фон виджета</string>
+  <string-array name="widgetOpacity">
+    <item>Прозрачный</item>
+    <item>25% непрозрачности</item>
+    <item>50% непрозрачности</item>
+    <item>75% непрозрачности</item>
+    <item>Непрозрачный</item>
+  </string-array>
   <string name="pref_widget_type">Тип виджета</string>
+  <string-array name="widgetType">
+    <item>Следующие эпизоды</item>
+    <item>Недавние</item>
+    <item>Избранное</item>
+  </string-array>
   <string name="dashclock_extension_label">Предстоящий</string>
   <string name="dashclock_extension_description">Отображает следующий предстоящийего SeriesGuide сериала.</string>
   <string name="dashclock_pref_upcoming_threshold">Эпизоды скоро</string>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>час</item>
+    <item>6 часов</item>
+    <item>12 часов</item>
+    <item>24 часа</item>
+    <item>3 дня</item>
+    <item>Неделя</item>
+  </string-array>
   <string name="action_migrate">Миграция с X</string>
   <string name="migration_description">SeriesGuide X — теперь ключ разблокировки для X есть в бесплатной версии (X). Прошу перенести ваши сериалы на бесплатную версию SeriesGuide. Держите X установлена для разблокировки всех функций в бесплатной версии.</string>
   <string name="migration_import">Нажмите ниже для импорта резервной копии, созданной в SeriesGuide X.</string>
@@ -379,83 +452,4 @@
   <string name="extension_youtube">Поиск YouTube</string>
   <string name="description_extension_youtube">Поиск YouTube для видео</string>
   <string name="description_extension_web_search">Поиск веб-сайтов и изображений</string>
-  <string-array name="sesorting">
-    <item>Сначала последний</item>
-    <item>Старшие с начала</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Сначала последний</item>
-    <item>Старшие с начала</item>
-    <item>Сначала непросмотренные</item>
-    <item>A - Z</item>
-    <item>Лучшие по рейтингу</item>
-    <item>Сначала последние (DVD)</item>
-    <item>Более старые первыми (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>сейчас</item>
-    <item>день</item>
-    <item>3 дня</item>
-    <item>неделя</item>
-    <item>две недели</item>
-    <item>месяц</item>
-  </string-array>
-  <string-array name="notificationThreshold">
-    <item>в эфире</item>
-    <item>5 минут до начала</item>
-    <item>10 минут до начала</item>
-    <item>один час до начала</item>
-  </string-array>
-  <string-array name="widgetOpacity">
-    <item>Прозрачный</item>
-    <item>25% непрозрачности</item>
-    <item>50% непрозрачности</item>
-    <item>75% непрозрачности</item>
-    <item>Непрозрачный</item>
-  </string-array>
-  <string-array name="widgetType">
-    <item>Следующие эпизоды</item>
-    <item>Недавние</item>
-    <item>Избранное</item>
-  </string-array>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>час</item>
-    <item>6 часов</item>
-    <item>12 часов</item>
-    <item>24 часа</item>
-    <item>3 дня</item>
-    <item>Неделя</item>
-  </string-array>
-  <plurals name="days_plural">
-    <item quantity="one">%d день</item>
-    <item quantity="zero">%d дней</item>
-    <item quantity="two">%d дня</item>
-    <item quantity="few">%d дней</item>
-    <item quantity="many">%d дней</item>
-    <item quantity="other">%d дней</item>
-  </plurals>
-  <plurals name="hours_plural">
-    <item quantity="zero">%d часов</item>
-    <item quantity="one">%d час</item>
-    <item quantity="two">%d часа</item>
-    <item quantity="few">%d часов</item>
-    <item quantity="many">%d часов</item>
-    <item quantity="other">%d часов</item>
-  </plurals>
-  <plurals name="minutes_plural">
-    <item quantity="zero">%d минут</item>
-    <item quantity="one">%d минута</item>
-    <item quantity="two">%d минуты</item>
-    <item quantity="few">%d минут</item>
-    <item quantity="many">%d минут</item>
-    <item quantity="other">%d минут</item>
-  </plurals>
-  <plurals name="votes">
-    <item quantity="zero">%d голосов</item>
-    <item quantity="one">%d голоса</item>
-    <item quantity="two">%d голоса</item>
-    <item quantity="few">%d голосов</item>
-    <item quantity="many">%d голосов</item>
-    <item quantity="other">%d голосов</item>
-  </plurals>
 </resources>

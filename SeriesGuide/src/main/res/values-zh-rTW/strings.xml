@@ -65,6 +65,30 @@
   <string name="shows_continuing">%s部影集仍在連載</string>
   <string name="episodes_watched">%s 集已看</string>
   <string name="runtime_all_episodes">所有看過影集的時數總計</string>
+  <plurals name="days_plural">
+    <item quantity="one">%d day</item>
+    <item quantity="zero">%d days</item>
+    <item quantity="two">%d days</item>
+    <item quantity="few">%d days</item>
+    <item quantity="many">%d days</item>
+    <item quantity="other">%d days</item>
+  </plurals>
+  <plurals name="hours_plural">
+    <item quantity="zero">%d hours</item>
+    <item quantity="one">%d hour</item>
+    <item quantity="two">%d hours</item>
+    <item quantity="few">%d hours</item>
+    <item quantity="many">%d hours</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
+  <plurals name="minutes_plural">
+    <item quantity="zero">%d minutes</item>
+    <item quantity="one">%d minute</item>
+    <item quantity="two">%d minutes</item>
+    <item quantity="few">%d minutes</item>
+    <item quantity="many">%d minutes</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="your_rating">您的評分</string>
   <string name="love">太讚啦!</string>
   <string name="hate">太弱了:(</string>
@@ -76,6 +100,14 @@
   <string name="rating7">不錯</string>
   <string name="rating8">讚</string>
   <string name="rating9">好愛！！</string>
+  <plurals name="votes">
+    <item quantity="zero">%d votes</item>
+    <item quantity="one">%d vote</item>
+    <item quantity="two">%d votes</item>
+    <item quantity="few">%d votes</item>
+    <item quantity="many">%d votes</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="episode_number_absolute">人生必看！！！</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">播出日期</string>
@@ -216,13 +248,8 @@
   <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Add more shows from your trakt library:</string>
   <string name="show_library">Show your trakt library</string>
-  <string name="upload_existing_shows">Upload existing shows</string>
   <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
   <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
-  <string name="trakt_upload">Upload to trakt</string>
-  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
-  <string name="upload_done">Finished uploading.</string>
-  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Basics</string>
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Advanced</string>
@@ -244,6 +271,27 @@
   <string name="feedback">傳送反饋意見</string>
   <string name="pref_autoaddshows">Add new trakt shows</string>
   <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
+  <string-array name="sesorting">
+    <item>按最新的項目排序</item>
+    <item>按最舊的項目排序</item>
+  </string-array>
+  <string-array name="epsorting">
+    <item>按最新的項目排序</item>
+    <item>按最舊的項目排序</item>
+    <item>先排未觀賞</item>
+    <item>A - Z</item>
+    <item>Top rated</item>
+    <item>按最新的順序排序(DVD)</item>
+    <item>按最舊的順序排序(DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>目前</item>
+    <item>1 day</item>
+    <item>3 days</item>
+    <item>1 week</item>
+    <item>2 weeks</item>
+    <item>1 month</item>
+  </string-array>
   <string name="pref_appearance">Appearance</string>
   <string name="pref_theme">App Theme</string>
   <string name="pref_other">Other</string>
@@ -319,10 +367,9 @@
   <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_createaccount">註冊</string>
+  <string name="get_started">Get started</string>
   <string name="welcome_setuplanguage">Choose language</string>
-  <string name="welcome_traktmessage">Access your trakt library and friends activity</string>
   <string name="dismiss">Dismiss</string>
-  <string name="welcome_add_part1">To get started tap</string>
   <string name="upcoming_show">%s is coming up</string>
   <string name="upcoming_episodes">New episodes are coming up</string>
   <string name="upcoming_episodes_number">%s new episodes</string>
@@ -337,15 +384,41 @@
   <string name="pref_vibrate">Vibrate</string>
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_notifications_treshold">When to notify</string>
+  <string-array name="notificationThreshold">
+    <item>on air</item>
+    <item>5 min in advance</item>
+    <item>10 min in advance</item>
+    <item>1 hour in advance</item>
+  </string-array>
   <string name="smallwidget">SeriesGuide (small)</string>
   <string name="bigwidget">SeriesGuide (middle)</string>
   <string name="largewidget">SeriesGuide (large)</string>
   <string name="hide_watched">Hide watched episodes</string>
   <string name="pref_widget_opacity">Widget background</string>
+  <string-array name="widgetOpacity">
+    <item>Transparent</item>
+    <item>25% black</item>
+    <item>50% black</item>
+    <item>75% black</item>
+    <item>Black</item>
+  </string-array>
   <string name="pref_widget_type">Widget type</string>
+  <string-array name="widgetType">
+    <item>即將播出</item>
+    <item>最近</item>
+    <item>我的最愛</item>
+  </string-array>
   <string name="dashclock_extension_label">Upcoming episode</string>
   <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="dashclock_pref_upcoming_threshold">Display episode within…</string>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>1 hour</item>
+    <item>6 hours</item>
+    <item>12 hours</item>
+    <item>24 hours</item>
+    <item>3 days</item>
+    <item>1 week</item>
+  </string-array>
   <string name="action_migrate">Migrate from X</string>
   <string name="migration_description">SeriesGuide X is now an unlock key for X features in the free version (X Pass). Please migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
   <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
@@ -379,83 +452,4 @@
   <string name="extension_youtube">YouTube search</string>
   <string name="description_extension_youtube">Search YouTube for videos</string>
   <string name="description_extension_web_search">Search for websites and images</string>
-  <string-array name="sesorting">
-    <item>按最新的項目排序</item>
-    <item>按最舊的項目排序</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>按最新的項目排序</item>
-    <item>按最舊的項目排序</item>
-    <item>先排未觀賞</item>
-    <item>A - Z</item>
-    <item>Top rated</item>
-    <item>按最新的順序排序(DVD)</item>
-    <item>按最舊的順序排序(DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>目前</item>
-    <item>1 day</item>
-    <item>3 days</item>
-    <item>1 week</item>
-    <item>2 weeks</item>
-    <item>1 month</item>
-  </string-array>
-  <string-array name="notificationThreshold">
-    <item>on air</item>
-    <item>5 min in advance</item>
-    <item>10 min in advance</item>
-    <item>1 hour in advance</item>
-  </string-array>
-  <string-array name="widgetOpacity">
-    <item>Transparent</item>
-    <item>25% black</item>
-    <item>50% black</item>
-    <item>75% black</item>
-    <item>Black</item>
-  </string-array>
-  <string-array name="widgetType">
-    <item>即將播出</item>
-    <item>最近</item>
-    <item>我的最愛</item>
-  </string-array>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>1 hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>24 hours</item>
-    <item>3 days</item>
-    <item>1 week</item>
-  </string-array>
-  <plurals name="days_plural">
-    <item quantity="one">%d day</item>
-    <item quantity="zero">%d days</item>
-    <item quantity="two">%d days</item>
-    <item quantity="few">%d days</item>
-    <item quantity="many">%d days</item>
-    <item quantity="other">%d days</item>
-  </plurals>
-  <plurals name="hours_plural">
-    <item quantity="zero">%d hours</item>
-    <item quantity="one">%d hour</item>
-    <item quantity="two">%d hours</item>
-    <item quantity="few">%d hours</item>
-    <item quantity="many">%d hours</item>
-    <item quantity="other">%d hours</item>
-  </plurals>
-  <plurals name="minutes_plural">
-    <item quantity="zero">%d minutes</item>
-    <item quantity="one">%d minute</item>
-    <item quantity="two">%d minutes</item>
-    <item quantity="few">%d minutes</item>
-    <item quantity="many">%d minutes</item>
-    <item quantity="other">%d minutes</item>
-  </plurals>
-  <plurals name="votes">
-    <item quantity="zero">%d votes</item>
-    <item quantity="one">%d vote</item>
-    <item quantity="two">%d votes</item>
-    <item quantity="few">%d votes</item>
-    <item quantity="many">%d votes</item>
-    <item quantity="other">%d votes</item>
-  </plurals>
 </resources>

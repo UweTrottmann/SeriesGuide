@@ -65,6 +65,30 @@
   <string name="shows_continuing">%s devam ediyor</string>
   <string name="episodes_watched">%s izlendi</string>
   <string name="runtime_all_episodes">İzlenen tüm bölümlerin toplam süresi</string>
+  <plurals name="days_plural">
+    <item quantity="one">%d gün</item>
+    <item quantity="zero">%d gün</item>
+    <item quantity="two">%d gün</item>
+    <item quantity="few">%d gün</item>
+    <item quantity="many">%d gün</item>
+    <item quantity="other">%d gün</item>
+  </plurals>
+  <plurals name="hours_plural">
+    <item quantity="zero">%d saat</item>
+    <item quantity="one">%d saat</item>
+    <item quantity="two">%d saat</item>
+    <item quantity="few">%d saat</item>
+    <item quantity="many">%d saat</item>
+    <item quantity="other">%d saat</item>
+  </plurals>
+  <plurals name="minutes_plural">
+    <item quantity="zero">%d dakika</item>
+    <item quantity="one">%d dakika</item>
+    <item quantity="two">%d dakika</item>
+    <item quantity="few">%d dakika</item>
+    <item quantity="many">%d dakika</item>
+    <item quantity="other">%d dakika</item>
+  </plurals>
   <string name="your_rating">Sizin değerlendirmeniz</string>
   <string name="love">Harikulade!</string>
   <string name="hate">Eh işte :(</string>
@@ -76,6 +100,14 @@
   <string name="rating7">İyi</string>
   <string name="rating8">Harika</string>
   <string name="rating9">Süper</string>
+  <plurals name="votes">
+    <item quantity="zero">%d oy</item>
+    <item quantity="one">%d oy</item>
+    <item quantity="two">%d oy</item>
+    <item quantity="few">%d oy</item>
+    <item quantity="many">%d oy</item>
+    <item quantity="other">%d oylar</item>
+  </plurals>
   <string name="episode_number_absolute">TOPLAM BÖLÜM SAYISI</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Yayın tarihi</string>
@@ -96,7 +128,7 @@
   <string name="services_watch">İzle</string>
   <string name="services_more">Daha</string>
   <string name="sort">Sırala</string>
-  <string name="action_sort_ignore_articles">Ignore articles</string>
+  <string name="action_sort_ignore_articles">Metinleri yoksay</string>
   <string name="today">bugün</string>
   <string name="now">şimdi</string>
   <string name="daily">Günlük</string>
@@ -157,9 +189,9 @@
   <string name="recent">En Son</string>
   <string name="friends">Arkadaşlar</string>
   <string name="friends_empty">Trakt içinde hiçbir arkadaş etkinliği yok.</string>
-  <string name="user_stream">You</string>
-  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
-  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
+  <string name="user_stream">Siz</string>
+  <string name="user_stream_empty">Yakın zamanda bir trakt aktiviteniz yok. Birkaç diziye check-in yapın!</string>
+  <string name="user_movie_stream_empty">Yakın zamanda bir trakt aktiviteniz yok. Birkaç filme check-in yapın!</string>
   <string name="noupcoming">Yaklaşan bölüm yok.</string>
   <string name="norecent">Yeni tarihli bölüm yok.</string>
   <string name="only_favorites">Sadece favori diziler</string>
@@ -213,16 +245,11 @@
   <string name="hexagon_priority_select">Versiyon seç</string>
   <string name="connect_trakt">trakt\'e bağlan</string>
   <string name="connect_trakt_done">trakt\'e bağlanıldı!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
+  <string name="connect_trakt_done_explanation">Şimdi SeriesGuide bu cihazdaki dizileri ve filmleri trakt ile eşleyecek. Bu işlem biraz zaman alabilir.</string>
   <string name="add_trakt_shows">Kütüphanenden diziler ekle:</string>
   <string name="show_library">Kütüphaneyi göster</string>
-  <string name="upload_existing_shows">Mevcut dizileri karşıya yükleyin</string>
   <string name="about_trakt">trakt, izlediğiniz dizi ve filmlerin kaydını tutmanıza yardımcı olur.<a href="http://trakt.tv">Daha fazla bilgi</a></string>
   <string name="integration_trakt_items">- kütüphaneden ve izleme listesinden dizileri ekleyin\n\n- yorumlarını ve arkadaşlarının aktivitelerini gör\n\n- izlediklerin otomatik bir şekilde senkronize olsun\n\n- izlediğin yeni diziler otomatik eklensin</string>
-  <string name="trakt_upload">trakt\'e yükle</string>
-  <string name="trakt_syncunwatched">SeriesGuide\'daki izlenmemiş bölümler için trakt\'taki izlenmiş bölümleri sil</string>
-  <string name="upload_done">Yükleme bitti.</string>
-  <string name="upload_no_work">Yüklenecek birşey yoktu.</string>
   <string name="prefs_category_basic">Temel Ayarlar</string>
   <string name="prefs_category_sharing">Servisler</string>
   <string name="prefs_category_advanced">Gelişmiş</string>
@@ -244,6 +271,27 @@
   <string name="feedback">Geribildirim Gönder</string>
   <string name="pref_autoaddshows">yeni trakt dizileri ekleyin</string>
   <string name="pref_autoaddshowssummary">dizileri trakt aktivite akışından otomatik olarak yükleyin</string>
+  <string-array name="sesorting">
+    <item>Önce en yenisi</item>
+    <item>Önce en eskisi</item>
+  </string-array>
+  <string-array name="epsorting">
+    <item>Önce en yenisi</item>
+    <item>Önce en eskisi</item>
+    <item>Önce izlenmeyen</item>
+    <item>A - Z</item>
+    <item>En çok oy alanlar</item>
+    <item>Önce en yenisi (DVD)</item>
+    <item>Önce en eskisi (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>şimdi</item>
+    <item>bir gün</item>
+    <item>3 gün</item>
+    <item>bir hafta</item>
+    <item>iki hafta</item>
+    <item>bir ay</item>
+  </string-array>
   <string name="pref_appearance">Görünüm</string>
   <string name="pref_theme">Uygulama teması</string>
   <string name="pref_other">Diğer</string>
@@ -319,10 +367,9 @@
   <string name="trakt_error_credentials">Bir şeyler ters gitti. Lütfen kimlik bilgilerinizi denetleyin ve yeniden deneyin.</string>
   <string name="trakt_error_general">Trakt\'a bağlanılamadı. Daha sonra tekrar deneyin.</string>
   <string name="trakt_createaccount">Yeni hesap oluştur</string>
+  <string name="get_started">Get started</string>
   <string name="welcome_setuplanguage">Dil seçin</string>
-  <string name="welcome_traktmessage">Trakt.tv kütüphanene ve arkadaşlarının hareketlerine eriş</string>
   <string name="dismiss">Kapat</string>
-  <string name="welcome_add_part1">Başlamak için ekrana dokun</string>
   <string name="upcoming_show">%s geliyor</string>
   <string name="upcoming_episodes">Yeni bölümler geliyor</string>
   <string name="upcoming_episodes_number">%s yeni bölüm</string>
@@ -337,15 +384,41 @@
   <string name="pref_vibrate">Titreşim</string>
   <string name="pref_vibratesummary">Uyarırken aynı zamanda titret</string>
   <string name="pref_notifications_treshold">Bildirim zamanı</string>
+  <string-array name="notificationThreshold">
+    <item>yayında</item>
+    <item>5 dakika önce</item>
+    <item>10 dakika önce</item>
+    <item>bir saat önce</item>
+  </string-array>
   <string name="smallwidget">SeriesGuide (dar)</string>
   <string name="bigwidget">SeriesGuide (orta)</string>
   <string name="largewidget">SeriesGuide (geniş)</string>
   <string name="hide_watched">İzlenmiş bölümleri gizle</string>
   <string name="pref_widget_opacity">Widget arka planı</string>
+  <string-array name="widgetOpacity">
+    <item>Saydam</item>
+    <item>25% siyah</item>
+    <item>50% siyah</item>
+    <item>75% siyah</item>
+    <item>Siyah</item>
+  </string-array>
   <string name="pref_widget_type">Widget tipi</string>
+  <string-array name="widgetType">
+    <item>Yaklaşan</item>
+    <item>En son</item>
+    <item>Sık Kullanılanlar</item>
+  </string-array>
   <string name="dashclock_extension_label">Gelecek bölüm</string>
   <string name="dashclock_extension_description">SeriesGuide dizilerinizin gelecek bölümünü gösterir.</string>
   <string name="dashclock_pref_upcoming_threshold">Dizinin sonraki bölümlerinde</string>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>saat</item>
+    <item>6 saat</item>
+    <item>12 saat</item>
+    <item>24 saat</item>
+    <item>3 gün</item>
+    <item>hafta</item>
+  </string-array>
   <string name="action_migrate">X ten geçiş yap</string>
   <string name="migration_description">SeriesGuide X artık ücretsiz sürümdeki X özelliklerini açmak için bir anahtar olarak kullanılıyor (\"X Life-Time Pass\"). Lütfen dizilerinizi SeriesGuide\'ın ücretsiz sürümüne taşıyın. Ücretsiz sürümdeki tüm özellikleri kullanabilmek için de X\'i kurulu bırakın.</string>
   <string name="migration_import">SeriesGuide X ile oluşturulmuş yedeği yüklemek için aşağıya dokunun.</string>
@@ -367,95 +440,16 @@
   <string name="extensions">Eklentiler</string>
   <string name="action_extensions_configure">Eklentileri özelleştir</string>
   <string name="action_extensions_add">Eklenti ekle</string>
-  <string name="action_extensions_limit">Get X to add more extensions</string>
+  <string name="action_extensions_limit">Daha fazla eklenti için X\'i edinin</string>
   <string name="action_extensions_search">Daha fazla eklenti edin</string>
   <string name="action_extension_settings">Ayarlar</string>
   <string name="action_extension_remove">Kaldır</string>
   <string name="extension_amazon">Amazon araması</string>
   <string name="description_extension_amazon">Yerel Amazon sitesinde arama yapın</string>
   <string name="pref_amazon_domain">Amazon Web Sitesi</string>
-  <string name="extension_google_play">Google Play search</string>
-  <string name="description_extension_google_play">Search the Google Play Store</string>
-  <string name="extension_youtube">YouTube search</string>
-  <string name="description_extension_youtube">Search YouTube for videos</string>
-  <string name="description_extension_web_search">Search for websites and images</string>
-  <string-array name="sesorting">
-    <item>Önce en yenisi</item>
-    <item>Önce en eskisi</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Önce en yenisi</item>
-    <item>Önce en eskisi</item>
-    <item>Önce izlenmeyen</item>
-    <item>A - Z</item>
-    <item>En çok oy alanlar</item>
-    <item>Önce en yenisi (DVD)</item>
-    <item>Önce en eskisi (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>şimdi</item>
-    <item>bir gün</item>
-    <item>3 gün</item>
-    <item>bir hafta</item>
-    <item>iki hafta</item>
-    <item>bir ay</item>
-  </string-array>
-  <string-array name="notificationThreshold">
-    <item>yayında</item>
-    <item>5 dakika önce</item>
-    <item>10 dakika önce</item>
-    <item>bir saat önce</item>
-  </string-array>
-  <string-array name="widgetOpacity">
-    <item>Saydam</item>
-    <item>25% siyah</item>
-    <item>50% siyah</item>
-    <item>75% siyah</item>
-    <item>Siyah</item>
-  </string-array>
-  <string-array name="widgetType">
-    <item>Yaklaşan</item>
-    <item>En son</item>
-    <item>Sık Kullanılanlar</item>
-  </string-array>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>saat</item>
-    <item>6 saat</item>
-    <item>12 saat</item>
-    <item>24 saat</item>
-    <item>3 gün</item>
-    <item>hafta</item>
-  </string-array>
-  <plurals name="days_plural">
-    <item quantity="one">%d gün</item>
-    <item quantity="zero">%d gün</item>
-    <item quantity="two">%d gün</item>
-    <item quantity="few">%d gün</item>
-    <item quantity="many">%d gün</item>
-    <item quantity="other">%d gün</item>
-  </plurals>
-  <plurals name="hours_plural">
-    <item quantity="zero">%d saat</item>
-    <item quantity="one">%d saat</item>
-    <item quantity="two">%d saat</item>
-    <item quantity="few">%d saat</item>
-    <item quantity="many">%d saat</item>
-    <item quantity="other">%d saat</item>
-  </plurals>
-  <plurals name="minutes_plural">
-    <item quantity="zero">%d dakika</item>
-    <item quantity="one">%d dakika</item>
-    <item quantity="two">%d dakika</item>
-    <item quantity="few">%d dakika</item>
-    <item quantity="many">%d dakika</item>
-    <item quantity="other">%d dakika</item>
-  </plurals>
-  <plurals name="votes">
-    <item quantity="zero">%d oy</item>
-    <item quantity="one">%d oy</item>
-    <item quantity="two">%d oy</item>
-    <item quantity="few">%d oy</item>
-    <item quantity="many">%d oy</item>
-    <item quantity="other">%d oylar</item>
-  </plurals>
+  <string name="extension_google_play">Google Play\'de ara</string>
+  <string name="description_extension_google_play">Google Play Store\'da ara</string>
+  <string name="extension_youtube">YouTube\'da ara</string>
+  <string name="description_extension_youtube">YouTube videolarını ara</string>
+  <string name="description_extension_web_search">Websiteler ve resimlerde ara</string>
 </resources>

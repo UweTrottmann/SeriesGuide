@@ -36,15 +36,15 @@
   <string name="add_empty">Ovdje ne postoje serije.</string>
   <string name="share_show">Podijeli seriju</string>
   <string name="share_episode">Podijeli epizodu</string>
-  <string name="share_movie">Share movie</string>
-  <string name="share_checkout">Check out %s</string>
+  <string name="share_movie">Podijelite film</string>
+  <string name="share_checkout">Odjava %s</string>
   <string name="comments">Komentari</string>
   <string name="shout_hint">Napiši povik (na engleskom)</string>
   <string name="shout">Viči!</string>
   <string name="isspoiler">Pažnja! Spojler!</string>
   <string name="no_shouts">Budi prvi koji će povikati!</string>
-  <string name="refresh">Refresh</string>
-  <string name="movies_collection">Collection</string>
+  <string name="refresh">Osvježi</string>
+  <string name="movies_collection">Zbirka</string>
   <string name="movies_watchlist">Popis gledanja</string>
   <string name="watchlist_add">Dodaj na popis gledanja</string>
   <string name="watchlist_remove">Makni s popisa gledanja</string>
@@ -52,19 +52,43 @@
   <string name="watchlist_removed">Uklonjeno s popisa gledanja</string>
   <string name="movies_search_hint">Upiši naslov filma</string>
   <string name="movies_empty">Potraži film iznad.</string>
-  <string name="movies_collection_empty">You have not added movies to your collection.</string>
-  <string name="movies_watchlist_empty">You have not added movies to your watchlist.</string>
+  <string name="movies_collection_empty">Niste dodali filmove u svoju kolekciju.</string>
+  <string name="movies_watchlist_empty">Niste dodali filmove u svoj popis filmova.</string>
   <string name="trailer">Trailer</string>
-  <string name="movie_cast">Cast</string>
+  <string name="movie_cast">Uloge</string>
   <string name="movie_crew">Crew</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
-  <string name="action_movies_sort">Sort movies</string>
-  <string name="action_movies_sort_title">Title</string>
+  <string name="action_movies_sort">Kratki filmovi</string>
+  <string name="action_movies_sort_title">Naslov</string>
   <string name="action_movies_sort_release">Datum emitiranja</string>
   <string name="shows_with_next">%s sa sljedećim epizodama</string>
   <string name="shows_continuing">%s se nastavlja</string>
   <string name="episodes_watched">%s pogledano</string>
   <string name="runtime_all_episodes">Trajanje svih pogledanih epizoda</string>
+  <plurals name="days_plural">
+    <item quantity="one">%d dan</item>
+    <item quantity="zero">%d dana</item>
+    <item quantity="two">%d dana</item>
+    <item quantity="few">%d dana</item>
+    <item quantity="many">%d dana</item>
+    <item quantity="other">%d dana</item>
+  </plurals>
+  <plurals name="hours_plural">
+    <item quantity="zero">%d sati</item>
+    <item quantity="one">%d sat</item>
+    <item quantity="two">%d sati</item>
+    <item quantity="few">%d sati</item>
+    <item quantity="many">%d sati</item>
+    <item quantity="other">%d sati</item>
+  </plurals>
+  <plurals name="minutes_plural">
+    <item quantity="zero">%d minuta</item>
+    <item quantity="one">%d minuta</item>
+    <item quantity="two">%d minuta</item>
+    <item quantity="few">%d minuta</item>
+    <item quantity="many">%d minuta</item>
+    <item quantity="other">%d minuta</item>
+  </plurals>
   <string name="your_rating">Tvoja ocjena</string>
   <string name="love">Zakon!</string>
   <string name="hate">Jadno :(</string>
@@ -76,6 +100,14 @@
   <string name="rating7">Dobro</string>
   <string name="rating8">Odlično</string>
   <string name="rating9">Sjajno</string>
+  <plurals name="votes">
+    <item quantity="zero">%d glasova</item>
+    <item quantity="one">%d glas</item>
+    <item quantity="two">%d glasova</item>
+    <item quantity="few">%d glasova</item>
+    <item quantity="many">%d glasova</item>
+    <item quantity="other">%d glasova</item>
+  </plurals>
   <string name="episode_number_absolute">APSOLUTNO</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Datum emitiranja</string>
@@ -86,7 +118,7 @@
   <string name="show_genres">Žanrovi</string>
   <string name="show_runtime">Trajanje</string>
   <string name="show_contentrating">Ocjena sadržaja</string>
-  <string name="show_release_times">Release times</string>
+  <string name="show_release_times">Vrijeme emitiranja</string>
   <string name="episode_directors">Režiseri</string>
   <string name="episode_gueststars">Gostujući glumci</string>
   <string name="episode_writers">Scenaristi</string>
@@ -96,7 +128,7 @@
   <string name="services_watch">Gledaj</string>
   <string name="services_more">Više</string>
   <string name="sort">Sortiraj po</string>
-  <string name="action_sort_ignore_articles">Ignore articles</string>
+  <string name="action_sort_ignore_articles">Ignoriraj članke</string>
   <string name="today">danas</string>
   <string name="now">sada</string>
   <string name="daily">Dnevno</string>
@@ -111,22 +143,22 @@
   <string name="uncollect">Još neprikupljena epizoda</string>
   <string name="collect_all">Sve prikupljeno</string>
   <string name="uncollect_all">Ništa prikupljeno</string>
-  <string name="action_skip">Skip</string>
-  <string name="action_dont_skip">Don\'t skip</string>
+  <string name="action_skip">Preskoči</string>
+  <string name="action_dont_skip">Nemoj preskočiti</string>
   <string name="trakt_submitqueued">Poslano na trakt.</string>
   <string name="trakt_seen">%s pogledano.</string>
   <string name="trakt_notseen">%s nije pogledano.</string>
   <string name="trakt_collected">%s prikupljeno.</string>
   <string name="trakt_notcollected">%s neprikupljeno.</string>
-  <string name="action_collection_add">Add to collection</string>
-  <string name="action_collection_remove">Remove from collection</string>
-  <string name="action_collection_added">Added to collection</string>
-  <string name="action_collection_removed">Removed from collection</string>
-  <string name="action_watched">Watched</string>
-  <string name="action_unwatched">Not yet watched</string>
+  <string name="action_collection_add">Dodaj u kolekciju</string>
+  <string name="action_collection_remove">Ukloni iz kolekcije</string>
+  <string name="action_collection_added">Dodano u kolekciju</string>
+  <string name="action_collection_removed">Uklonjeno iz kolekcije</string>
+  <string name="action_watched">Pogledano</string>
+  <string name="action_unwatched">Još nije pogledano</string>
   <string name="confirm_delete">Zaista želite ukloniti %s?</string>
   <string name="delete_has_list_items">Ne može se izvršiti, prvo uklonite %s sa svih popisa.</string>
-  <string name="delete_error">Could not remove show. Try again later.</string>
+  <string name="delete_error">Nemoguće ukloniti seriju. Pokušajte kasnije.</string>
   <string name="delete_show">Izbriši</string>
   <string name="dontdelete_show">Nemoj odustati</string>
   <string name="no_nextepisode">nije pronađena sljedeća epizoda</string>
@@ -138,17 +170,17 @@
   <string name="context_unhide">Otkrij</string>
   <string name="hidden">Sakrivena serija</string>
   <string name="unhidden">Prikazana serija</string>
-  <string name="action_shows_add">Add show</string>
-  <string name="action_shows_filter">Filter shows</string>
-  <string name="empty_filter">Remove all filters</string>
+  <string name="action_shows_add">Dodaj seriju</string>
+  <string name="action_shows_filter">Filtriraj serije</string>
+  <string name="empty_filter">Ukloni sve filtere</string>
   <string name="action_shows_filter_favorites">Favoriti</string>
-  <string name="action_shows_filter_unwatched">Unwatched</string>
+  <string name="action_shows_filter_unwatched">Nepogledano</string>
   <string name="action_shows_filter_upcoming">Nadolazeće</string>
-  <string name="action_shows_filter_hidden">Hidden</string>
-  <string name="action_shows_sort">Sort shows</string>
-  <string name="action_shows_sort_title">Title</string>
-  <string name="action_shows_sort_episode">Next episode</string>
-  <string name="action_shows_sort_favorites">Favorites first</string>
+  <string name="action_shows_filter_hidden">Skriveno</string>
+  <string name="action_shows_sort">Sortiraj serije</string>
+  <string name="action_shows_sort_title">Naslov</string>
+  <string name="action_shows_sort_episode">Sljedeća epizoda</string>
+  <string name="action_shows_sort_favorites">Lista favorita</string>
   <string name="updateall_yes">Ažuriraj (sve)</string>
   <string name="menu_update_delta">Ažuriraj (samo zastarjele)</string>
   <string name="context_updateshow">Ažuriraj</string>
@@ -157,15 +189,15 @@
   <string name="recent">Nedavno</string>
   <string name="friends">Prijatelji</string>
   <string name="friends_empty">Nema aktivnosti prijatelja na traktu.</string>
-  <string name="user_stream">You</string>
-  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
-  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
+  <string name="user_stream">Vi</string>
+  <string name="user_stream_empty">Nema nedavne aktivnosti na trakt-u Prijavite nove serije!</string>
+  <string name="user_movie_stream_empty">Nema nedavne aktivnosti na trakt-u. Prijavite nove filmove!</string>
   <string name="noupcoming">Nema nadolazećih epizoda.</string>
   <string name="norecent">Nema nedavnih epizoda.</string>
   <string name="only_favorites">Samo favoriti</string>
   <string name="togglewatched">Uključi pogledano</string>
   <string name="pref_infinite_scrolling">Neograničena aktivnost</string>
-  <string name="action_activity_filter">Filter activity</string>
+  <string name="action_activity_filter">Aktivnost filtera</string>
   <string name="update_scheduled">Ažuriranje…</string>
   <string name="update_no_connection">Poveži se na internet za ažuriranje.</string>
   <string name="update_inprogress">Ažuriranje u tijeku, pokušajte kasnije.</string>
@@ -185,9 +217,9 @@
   <string name="add_all">Dodaj sve</string>
   <string name="dont_add_show">Nemoj dodati</string>
   <string name="add_multiple">Sve serije uskoro će se pojaviti na tvom popisu serija.</string>
-  <string name="add_started">%s will appear in your show list shortly.</string>
-  <string name="add_error">Could not add %s.</string>
-  <string name="add_already_exists">%s is already in your show list.</string>
+  <string name="add_started">%s će se ubrzo pojaviti na vašem popisu serija.</string>
+  <string name="add_error">Neuspješno dodavanje %s.</string>
+  <string name="add_already_exists">%s je već u vašoj listi serija.</string>
   <string name="trending">Popularno</string>
   <string name="recommended">Preporučeno</string>
   <string name="library">Zbirka</string>
@@ -200,12 +232,12 @@
   <string name="list_item_manage">Uredi popise</string>
   <string name="list_item_remove">Ukloni s popisa</string>
   <string name="list_empty">Možeš dodati serije, sezone ili epizode na ovaj popis.</string>
-  <string name="hexagon_setup">Set up SeriesGuide cloud</string>
-  <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt integration for that.</string>
-  <string name="hexagon_signin">Sign In</string>
-  <string name="hexagon_signed_in">You are connected to SeriesGuide cloud.</string>
-  <string name="hexagon_signout">Sign Out</string>
-  <string name="hexagon_setup_incomplete">Setting up SeriesGuide cloud was not completed.</string>
+  <string name="hexagon_setup">Napravite SeriesGuide oblak.</string>
+  <string name="hexagon_description">Povežite oblak sa sigurnosnom kopijom i sinkronizirajte svoje serije. \n Epizode i filmovi još nisu uključeni, zbog toga vas molimo vas da nastavite sa uporabom trakt-a.</string>
+  <string name="hexagon_signin">Prijava</string>
+  <string name="hexagon_signed_in">Povezani ste sa SeriesGuide-oblakom.</string>
+  <string name="hexagon_signout">Odjava</string>
+  <string name="hexagon_setup_incomplete">Postavljanje SeriesGuide oblaka nije dovršena.</string>
   <string name="hexagon_setup_complete">Complete setup</string>
   <string name="hexagon_priority_choice_required">Some of your shows are already in the cloud. Which version do you prefer?</string>
   <string name="hexagon_priority_local">On this device</string>
@@ -216,13 +248,8 @@
   <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Dodaj serije iz svoje zbirke:</string>
   <string name="show_library">Prikaži svoju zbirku</string>
-  <string name="upload_existing_shows">Pošalji postojeće serije</string>
   <string name="about_trakt">trakt pomaže pratiti koje serije i filmove gledaš. <a href="http://trakt.tv">Saznaj više</a></string>
   <string name="integration_trakt_items">- dodaj serije iz svoje zbirke i popisa gledanja\n\n- vidi svoje preporuke i aktivnost prijatelja\n\n- pogledane i prikupljene oznake automatski su sinkronizirane\n\n- nove serije koje si gledao automatski su dodane</string>
-  <string name="trakt_upload">Pošalji na trakt.tv</string>
-  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
-  <string name="upload_done">Finished uploading.</string>
-  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Osnove</string>
   <string name="prefs_category_sharing">Usluge</string>
   <string name="prefs_category_advanced">Napredno</string>
@@ -244,6 +271,27 @@
   <string name="feedback">Pošalji povratnu informaciju</string>
   <string name="pref_autoaddshows">Dodaj nove trakt serije</string>
   <string name="pref_autoaddshowssummary">Automatski dodaj serije iz svojih aktivnosti na traktu</string>
+  <string-array name="sesorting">
+    <item>Prvo zadnje</item>
+    <item>Prvo najstarije</item>
+  </string-array>
+  <string-array name="epsorting">
+    <item>Zadnji prvi</item>
+    <item>Najstariji prvi</item>
+    <item>Nepogledane prve</item>
+    <item>A-Z</item>
+    <item>Najbolje ocijenjene</item>
+    <item>Prvo zadnje (DVD)</item>
+    <item>Prvo najstarije (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>sada</item>
+    <item>1 dana</item>
+    <item>3 dana</item>
+    <item>tjedna</item>
+    <item>2 tjedna</item>
+    <item>1 mjeseca</item>
+  </string-array>
   <string name="pref_appearance">Izgled</string>
   <string name="pref_theme">Slikovna tema aplikacije</string>
   <string name="pref_other">Ostalo</string>
@@ -319,10 +367,9 @@
   <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_createaccount">Stvori novi račun</string>
+  <string name="get_started">Get started</string>
   <string name="welcome_setuplanguage">Odaberi jezik</string>
-  <string name="welcome_traktmessage">Pristupi svojoj trakt.tv zbirki i aktivnostima prijatelja</string>
   <string name="dismiss">Odbaci</string>
-  <string name="welcome_add_part1">Dotakni za početak</string>
   <string name="upcoming_show">%s će se emitirati</string>
   <string name="upcoming_episodes">Nove epizode će biti prikazane</string>
   <string name="upcoming_episodes_number">%s novih epizoda</string>
@@ -337,15 +384,41 @@
   <string name="pref_vibrate">Vibriraj</string>
   <string name="pref_vibratesummary">Također vibriraj pri prikazu obavijesti</string>
   <string name="pref_notifications_treshold">Kada obavijestiti</string>
+  <string-array name="notificationThreshold">
+    <item>emitira se</item>
+    <item>5 minuta prije</item>
+    <item>10 minuta prije</item>
+    <item>1 sat prije</item>
+  </string-array>
   <string name="smallwidget">SeriesGuide (mali)</string>
   <string name="bigwidget">SeriesGuide (srednji)</string>
   <string name="largewidget">SeriesGuide (veliki)</string>
   <string name="hide_watched">Sakrij pogledane epizode</string>
   <string name="pref_widget_opacity">Pozadina widgeta</string>
+  <string-array name="widgetOpacity">
+    <item>Prozirno</item>
+    <item>25% crno</item>
+    <item>50% crno</item>
+    <item>75% crno</item>
+    <item>Crno</item>
+  </string-array>
   <string name="pref_widget_type">Tip widgeta</string>
+  <string-array name="widgetType">
+    <item>Nadolazeće</item>
+    <item>Nedavno</item>
+    <item>Favoriti</item>
+  </string-array>
   <string name="dashclock_extension_label">Nadolazeća epizoda</string>
   <string name="dashclock_extension_description">Prikazuje sljedeću nadolazeću epizodu tvojih SeriesGuide serija.</string>
   <string name="dashclock_pref_upcoming_threshold">Prikaži epizode u sljedećem</string>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>sati</item>
+    <item>6 sati</item>
+    <item>12 sati</item>
+    <item>24 sata</item>
+    <item>3 dana</item>
+    <item>tjedan</item>
+  </string-array>
   <string name="action_migrate">Migrate from X</string>
   <string name="migration_description">SeriesGuide X is now an unlock key for X features in the free version (X Pass). Please migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
   <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
@@ -379,83 +452,4 @@
   <string name="extension_youtube">YouTube search</string>
   <string name="description_extension_youtube">Search YouTube for videos</string>
   <string name="description_extension_web_search">Search for websites and images</string>
-  <string-array name="sesorting">
-    <item>Prvo zadnje</item>
-    <item>Prvo najstarije</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Zadnji prvi</item>
-    <item>Najstariji prvi</item>
-    <item>Nepogledane prve</item>
-    <item>A-Z</item>
-    <item>Najbolje ocijenjene</item>
-    <item>Prvo zadnje (DVD)</item>
-    <item>Prvo najstarije (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>sada</item>
-    <item>1 dana</item>
-    <item>3 dana</item>
-    <item>tjedna</item>
-    <item>2 tjedna</item>
-    <item>1 mjeseca</item>
-  </string-array>
-  <string-array name="notificationThreshold">
-    <item>emitira se</item>
-    <item>5 minuta prije</item>
-    <item>10 minuta prije</item>
-    <item>1 sat prije</item>
-  </string-array>
-  <string-array name="widgetOpacity">
-    <item>Prozirno</item>
-    <item>25% crno</item>
-    <item>50% crno</item>
-    <item>75% crno</item>
-    <item>Crno</item>
-  </string-array>
-  <string-array name="widgetType">
-    <item>Nadolazeće</item>
-    <item>Nedavno</item>
-    <item>Favoriti</item>
-  </string-array>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>sati</item>
-    <item>6 sati</item>
-    <item>12 sati</item>
-    <item>24 sata</item>
-    <item>3 dana</item>
-    <item>tjedan</item>
-  </string-array>
-  <plurals name="days_plural">
-    <item quantity="one">%d dan</item>
-    <item quantity="zero">%d dana</item>
-    <item quantity="two">%d dana</item>
-    <item quantity="few">%d dana</item>
-    <item quantity="many">%d dana</item>
-    <item quantity="other">%d dana</item>
-  </plurals>
-  <plurals name="hours_plural">
-    <item quantity="zero">%d sati</item>
-    <item quantity="one">%d sat</item>
-    <item quantity="two">%d sati</item>
-    <item quantity="few">%d sati</item>
-    <item quantity="many">%d sati</item>
-    <item quantity="other">%d sati</item>
-  </plurals>
-  <plurals name="minutes_plural">
-    <item quantity="zero">%d minuta</item>
-    <item quantity="one">%d minuta</item>
-    <item quantity="two">%d minuta</item>
-    <item quantity="few">%d minuta</item>
-    <item quantity="many">%d minuta</item>
-    <item quantity="other">%d minuta</item>
-  </plurals>
-  <plurals name="votes">
-    <item quantity="zero">%d glasova</item>
-    <item quantity="one">%d glas</item>
-    <item quantity="two">%d glasova</item>
-    <item quantity="few">%d glasova</item>
-    <item quantity="many">%d glasova</item>
-    <item quantity="other">%d glasova</item>
-  </plurals>
 </resources>

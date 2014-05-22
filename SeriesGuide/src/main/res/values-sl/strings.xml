@@ -65,6 +65,30 @@
   <string name="shows_continuing">%s nadaljevanje</string>
   <string name="episodes_watched">%s pregledal</string>
   <string name="runtime_all_episodes">Čas vseh ogledanih epizod</string>
+  <plurals name="days_plural">
+    <item quantity="one">%d dan</item>
+    <item quantity="zero">%d dni</item>
+    <item quantity="two">%d dni</item>
+    <item quantity="few">%d dni</item>
+    <item quantity="many">%d dni</item>
+    <item quantity="other">%d dni</item>
+  </plurals>
+  <plurals name="hours_plural">
+    <item quantity="zero">%d ur</item>
+    <item quantity="one">%d ure</item>
+    <item quantity="two">%d ur</item>
+    <item quantity="few">%d ur</item>
+    <item quantity="many">%d ur</item>
+    <item quantity="other">%d ur</item>
+  </plurals>
+  <plurals name="minutes_plural">
+    <item quantity="zero">%d minut</item>
+    <item quantity="one">%d minute</item>
+    <item quantity="two">%d minut</item>
+    <item quantity="few">%d minut</item>
+    <item quantity="many">%d minut</item>
+    <item quantity="other">%d minut</item>
+  </plurals>
   <string name="your_rating">Vaša ocena</string>
   <string name="love">Totalno nindža!</string>
   <string name="hate">Bedno :(</string>
@@ -76,6 +100,14 @@
   <string name="rating7">Dobro</string>
   <string name="rating8">Super</string>
   <string name="rating9">Odlično</string>
+  <plurals name="votes">
+    <item quantity="zero">%d glasov</item>
+    <item quantity="one">%d glasuj</item>
+    <item quantity="two">%d glasov</item>
+    <item quantity="few">%d glasov</item>
+    <item quantity="many">%d glasov</item>
+    <item quantity="other">%d glasov</item>
+  </plurals>
   <string name="episode_number_absolute">ABSOLUTNO</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Datum izdaje</string>
@@ -216,13 +248,8 @@
   <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Dodaj oddaje iz svoje knjižnjice:</string>
   <string name="show_library">Prikaži knjižnjico</string>
-  <string name="upload_existing_shows">Naloži na strežnik obstoječe oddaje</string>
   <string name="about_trakt">trakt pomaga pri sledenju TV oddaj in filmov, ki jih gledaš.<a href="http://trakt.tv">Izvedi več</a></string>
   <string name="integration_trakt_items">- dodaj oddaje iz svoje knjižnjice in spiska\n\n- poglej svoja priporočila in aktivnost prijateljev\n\n- gledane in zbrane oznake so avtomatsko sinhronizirane\n\n- nove oddaje, ki si jih gledal so avtomatsko dodane</string>
-  <string name="trakt_upload">Naloži na strežnik trakt.tv</string>
-  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
-  <string name="upload_done">Finished uploading.</string>
-  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Osnove</string>
   <string name="prefs_category_sharing">Storitve</string>
   <string name="prefs_category_advanced">Napredno</string>
@@ -244,6 +271,27 @@
   <string name="feedback">Pošlji povratno informacijo</string>
   <string name="pref_autoaddshows">Dodaj nove trakt oddaje</string>
   <string name="pref_autoaddshowssummary">Avtomatsko dodaj oddaje iz svoje trakt aktivnosti</string>
+  <string-array name="sesorting">
+    <item>Najnovejša prva</item>
+    <item>Najstarejša prva</item>
+  </string-array>
+  <string-array name="epsorting">
+    <item>Najnovejša prva</item>
+    <item>Najstarejša prva</item>
+    <item>Najprej nepogledane</item>
+    <item>A - Ž</item>
+    <item>Najvišje ocenjene</item>
+    <item>Najstarejša prva (DVD)</item>
+    <item>Najstarejša prva (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>sedaj</item>
+    <item>istega dne</item>
+    <item>3 dni</item>
+    <item>tedna</item>
+    <item>dveh tednov</item>
+    <item>meseca</item>
+  </string-array>
   <string name="pref_appearance">Videz</string>
   <string name="pref_theme">Slikovna tema aplikacije</string>
   <string name="pref_other">Ostalo</string>
@@ -319,10 +367,9 @@
   <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_createaccount">Izdelaj nov račun</string>
+  <string name="get_started">Get started</string>
   <string name="welcome_setuplanguage">Izberi jezik</string>
-  <string name="welcome_traktmessage">Dostopaj do svoje trakt.tv knjižnjice in aktivnosti prijateljev</string>
   <string name="dismiss">Razveljavi</string>
-  <string name="welcome_add_part1">Za začetek tapni</string>
   <string name="upcoming_show">%s prihaja na spored</string>
   <string name="upcoming_episodes">Nove epizode prihajajo na spored</string>
   <string name="upcoming_episodes_number">%s novih epizod</string>
@@ -337,15 +384,41 @@
   <string name="pref_vibrate">Vibriranje</string>
   <string name="pref_vibratesummary">Vibriranje tudi ob prikazu obvestila</string>
   <string name="pref_notifications_treshold">Čas obveščanja</string>
+  <string-array name="notificationThreshold">
+    <item>se predvaja</item>
+    <item>5 min prej</item>
+    <item>10 min prej</item>
+    <item>eno uro prej</item>
+  </string-array>
   <string name="smallwidget">SeriesGuide (majhen)</string>
   <string name="bigwidget">SeriesGuide (srednji)</string>
   <string name="largewidget">SeriesGuide (velik)</string>
   <string name="hide_watched">Skrij gledane epizode</string>
   <string name="pref_widget_opacity">Widget background</string>
+  <string-array name="widgetOpacity">
+    <item>Prosojno</item>
+    <item>25 % črn</item>
+    <item>50 % črno</item>
+    <item>75 % črno</item>
+    <item>Črno</item>
+  </string-array>
   <string name="pref_widget_type">Widget type</string>
+  <string-array name="widgetType">
+    <item>Prihajajoče</item>
+    <item>Nedavno</item>
+    <item>Priljubljene</item>
+  </string-array>
   <string name="dashclock_extension_label">Upcoming episode</string>
   <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="dashclock_pref_upcoming_threshold">Display episode within…</string>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>ura</item>
+    <item>6 ur</item>
+    <item>12 ur</item>
+    <item>24 ur</item>
+    <item>3 dni</item>
+    <item>teden</item>
+  </string-array>
   <string name="action_migrate">Migrate from X</string>
   <string name="migration_description">SeriesGuide X is now an unlock key for X features in the free version (X Pass). Please migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
   <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
@@ -379,83 +452,4 @@
   <string name="extension_youtube">YouTube search</string>
   <string name="description_extension_youtube">Search YouTube for videos</string>
   <string name="description_extension_web_search">Search for websites and images</string>
-  <string-array name="sesorting">
-    <item>Najnovejša prva</item>
-    <item>Najstarejša prva</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Najnovejša prva</item>
-    <item>Najstarejša prva</item>
-    <item>Najprej nepogledane</item>
-    <item>A - Ž</item>
-    <item>Najvišje ocenjene</item>
-    <item>Najstarejša prva (DVD)</item>
-    <item>Najstarejša prva (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>sedaj</item>
-    <item>istega dne</item>
-    <item>3 dni</item>
-    <item>tedna</item>
-    <item>dveh tednov</item>
-    <item>meseca</item>
-  </string-array>
-  <string-array name="notificationThreshold">
-    <item>se predvaja</item>
-    <item>5 min prej</item>
-    <item>10 min prej</item>
-    <item>eno uro prej</item>
-  </string-array>
-  <string-array name="widgetOpacity">
-    <item>Prosojno</item>
-    <item>25 % črn</item>
-    <item>50 % črno</item>
-    <item>75 % črno</item>
-    <item>Črno</item>
-  </string-array>
-  <string-array name="widgetType">
-    <item>Prihajajoče</item>
-    <item>Nedavno</item>
-    <item>Priljubljene</item>
-  </string-array>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>ura</item>
-    <item>6 ur</item>
-    <item>12 ur</item>
-    <item>24 ur</item>
-    <item>3 dni</item>
-    <item>teden</item>
-  </string-array>
-  <plurals name="days_plural">
-    <item quantity="one">%d dan</item>
-    <item quantity="zero">%d dni</item>
-    <item quantity="two">%d dni</item>
-    <item quantity="few">%d dni</item>
-    <item quantity="many">%d dni</item>
-    <item quantity="other">%d dni</item>
-  </plurals>
-  <plurals name="hours_plural">
-    <item quantity="zero">%d ur</item>
-    <item quantity="one">%d ure</item>
-    <item quantity="two">%d ur</item>
-    <item quantity="few">%d ur</item>
-    <item quantity="many">%d ur</item>
-    <item quantity="other">%d ur</item>
-  </plurals>
-  <plurals name="minutes_plural">
-    <item quantity="zero">%d minut</item>
-    <item quantity="one">%d minute</item>
-    <item quantity="two">%d minut</item>
-    <item quantity="few">%d minut</item>
-    <item quantity="many">%d minut</item>
-    <item quantity="other">%d minut</item>
-  </plurals>
-  <plurals name="votes">
-    <item quantity="zero">%d glasov</item>
-    <item quantity="one">%d glasuj</item>
-    <item quantity="two">%d glasov</item>
-    <item quantity="few">%d glasov</item>
-    <item quantity="many">%d glasov</item>
-    <item quantity="other">%d glasov</item>
-  </plurals>
 </resources>
