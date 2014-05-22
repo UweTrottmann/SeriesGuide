@@ -43,8 +43,6 @@ public class FullscreenImageActivity extends FragmentActivity {
 
     public interface InitBundle {
         String IMAGE_PATH = "fullscreenimageactivity.intent.extra.image";
-        String IMAGE_TITLE = "fullscreenimageactivity.intent.extra.title";
-        String IMAGE_SUBTITLE = "fullscreenimageactivity.intent.extra.subtitle";
     }
 
     /**
@@ -76,18 +74,7 @@ public class FullscreenImageActivity extends FragmentActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources()
                 .getColor(R.color.black_overlay)));
         actionBar.setIcon(R.drawable.ic_actionbar);
-
-        // set a title and subtitle if available
-        String title = getIntent().getStringExtra(InitBundle.IMAGE_TITLE);
-        if (TextUtils.isEmpty(title)) {
-            actionBar.setDisplayShowTitleEnabled(false);
-        } else {
-            actionBar.setTitle(title);
-            String subtitle = getIntent().getStringExtra(InitBundle.IMAGE_SUBTITLE);
-            if (subtitle != null) {
-                actionBar.setSubtitle(subtitle);
-            }
-        }
+        actionBar.setDisplayShowTitleEnabled(false);
     }
 
     private void setupViews() {

@@ -293,8 +293,6 @@ public class ShowFragment extends Fragment implements LoaderCallbacks<Series> {
                 Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
                 fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH,
                         TheTVDB.TVDB_MIRROR_BANNERS + imagePath);
-                fullscreen
-                        .putExtra(FullscreenImageActivity.InitBundle.IMAGE_TITLE, mShow.getTitle());
                 ActivityCompat.startActivity(getActivity(), fullscreen,
                         ActivityOptionsCompat
                                 .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
