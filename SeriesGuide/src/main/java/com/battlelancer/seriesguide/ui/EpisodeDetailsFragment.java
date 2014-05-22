@@ -266,8 +266,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             return true;
         } else if (itemId == R.id.menu_manage_lists) {
             fireTrackerEvent("Manage lists");
-            ListsDialogFragment.showListsDialog(String.valueOf(getEpisodeTvdbId()),
-                    ListItemTypes.EPISODE, getFragmentManager());
+            ListsDialogFragment.showListsDialog(getEpisodeTvdbId(), ListItemTypes.EPISODE,
+                    getFragmentManager());
             return true;
         }
         return super.onOptionsItemSelected(item);

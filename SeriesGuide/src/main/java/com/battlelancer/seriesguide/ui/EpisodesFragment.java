@@ -253,7 +253,7 @@ public class EpisodesFragment extends ListFragment implements
             }
             case CONTEXT_MANAGE_LISTS_ID: {
                 fireTrackerEventContextMenu("Manage lists");
-                ListsDialogFragment.showListsDialog(String.valueOf(info.id), ListItemTypes.EPISODE,
+                ListsDialogFragment.showListsDialog((int) info.id, ListItemTypes.EPISODE,
                         getFragmentManager());
                 return true;
             }

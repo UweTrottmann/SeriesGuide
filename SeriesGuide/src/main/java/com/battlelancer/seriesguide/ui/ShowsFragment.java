@@ -630,8 +630,8 @@ public class ShowsFragment extends Fragment implements
                         return true;
                     }
                     case R.id.menu_action_shows_manage_lists: {
-                        ListsDialogFragment.showListsDialog(String.valueOf(mShowTvdbId),
-                                ListItemTypes.SHOW, getFragmentManager());
+                        ListsDialogFragment.showListsDialog(mShowTvdbId, ListItemTypes.SHOW,
+                                getFragmentManager());
                         fireTrackerEventContext("Manage lists");
                         return true;
                     }

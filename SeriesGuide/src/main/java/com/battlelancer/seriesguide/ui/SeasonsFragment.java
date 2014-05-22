@@ -319,7 +319,7 @@ public class SeasonsFragment extends ListFragment implements
             }
             case CONTEXT_MANAGE_LISTS_SEASON_ID: {
                 fireTrackerEventContextMenu("Manage lists");
-                ListsDialogFragment.showListsDialog(String.valueOf(info.id), ListItemTypes.SEASON,
+                ListsDialogFragment.showListsDialog((int) info.id, ListItemTypes.SEASON,
                         getFragmentManager());
                 return true;
             }

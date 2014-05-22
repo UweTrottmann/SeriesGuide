@@ -232,7 +232,7 @@ public class OverviewFragment extends Fragment implements
             fireTrackerEvent("Manage lists");
             if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()) {
                 ListsDialogFragment.showListsDialog(
-                        mCurrentEpisodeCursor.getString(EpisodeQuery._ID),
+                        mCurrentEpisodeCursor.getInt(EpisodeQuery._ID),
                         ListItemTypes.EPISODE, getFragmentManager());
             }
             return true;

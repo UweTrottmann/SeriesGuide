@@ -507,8 +507,12 @@ public class SeriesGuideContract {
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.season";
 
-        public static Uri buildSeasonUri(String seasonId) {
-            return CONTENT_URI.buildUpon().appendPath(seasonId).build();
+        public static Uri buildSeasonUri(String seasonTvdbId) {
+            return CONTENT_URI.buildUpon().appendPath(seasonTvdbId).build();
+        }
+
+        public static Uri buildSeasonUri(int seasonTvdbId) {
+            return buildSeasonUri(String.valueOf(seasonTvdbId));
         }
 
         public static String getSeasonId(Uri uri) {
@@ -610,13 +614,13 @@ public class SeriesGuideContract {
             return uri.getPathSegments().get(1);
         }
 
-        public static String generateListItemId(String id, int type, String listId) {
-            return ParserUtils.sanitizeId(id + "-" + type + "-" + listId);
+        public static String generateListItemId(int itemTvdbId, int type, String listId) {
+            return ParserUtils.sanitizeId(itemTvdbId + "-" + type + "-" + listId);
         }
 
-        public static String generateListItemIdWildcard(String id, int type) {
+        public static String generateListItemIdWildcard(int itemTvdbId, int type) {
             // The SQL % wildcard is added by the content provider
-            return ParserUtils.sanitizeId(id + "-" + type + "-");
+            return ParserUtils.sanitizeId(itemTvdbId + "-" + type + "-");
         }
     }
 
