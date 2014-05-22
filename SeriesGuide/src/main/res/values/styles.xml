@@ -373,6 +373,7 @@
     <!-- Action bar -->
     <style name="ActionBarDark" parent="android:Widget.Holo.ActionBar">
         <item name="android:background">@drawable/actionbar_background_dark</item>
+        <item name="android:titleTextStyle">@style/TextAppearance.ActionBar.White</item>
     </style>
 
     <!-- ////////////////////////////////////////////// -->

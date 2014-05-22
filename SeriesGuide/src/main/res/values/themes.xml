@@ -95,6 +95,7 @@
 
         <!-- Action bar -->
         <item name="android:actionBarStyle">@style/ActionBarDark</item>
+        <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>
 
         <!-- Special attributes -->
         <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
