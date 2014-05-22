@@ -81,7 +81,7 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
-        if (SeriesGuidePreferences.THEME != R.style.Theme_SeriesGuide_DarkBlue) {
+        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
             actionBar.setIcon(R.drawable.ic_launcher);
         }
     }

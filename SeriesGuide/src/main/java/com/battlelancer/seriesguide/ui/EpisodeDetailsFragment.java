@@ -438,9 +438,6 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             public void onClick(View v) {
                 Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
                 fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH, imagePath);
-                fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_TITLE, mShowTitle);
-                fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_SUBTITLE,
-                        mEpisodeTitle);
                 ActivityCompat.startActivity(getActivity(), fullscreen,
                         ActivityOptionsCompat
                                 .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())

@@ -27,6 +27,7 @@
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
         <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
         <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_ab_back_sg</item>
 
         <!-- Fast scroll thumb -->
         <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
@@ -94,6 +95,7 @@
 
         <!-- Action bar -->
         <item name="android:actionBarStyle">@style/ActionBarDark</item>
+        <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>
 
         <!-- Special attributes -->
         <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
@@ -172,6 +174,7 @@
         <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
         <item name="android:actionBarWidgetTheme">@style/ActionBarWidgetThemeLight</item>
         <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_ab_back_sg</item>
 
         <!-- Fast scroll thumb -->
         <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
@@ -189,7 +192,7 @@
         <item name="textColorSgPrimaryInverse">@color/text_primary</item>
         <item name="textColorSgGreen">@color/green_dark</item>
         <item name="textColorSgDim">@color/text_dim_light</item>
-        <item name="textColorSgActionBar">@color/text_primary</item>
+        <item name="textColorSgActionBar">@color/text_primary_sg</item>
         <item name="colorAccent">@color/accent_primary</item>
         <item name="colorBackgroundDim">@color/background_dim_inverse</item>
         <item name="colorSeparator">@color/separator_inverse</item>
