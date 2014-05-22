@@ -191,7 +191,7 @@
         <item name="textColorSgPrimaryInverse">@color/text_primary</item>
         <item name="textColorSgGreen">@color/green_dark</item>
         <item name="textColorSgDim">@color/text_dim_light</item>
-        <item name="textColorSgActionBar">@color/text_primary</item>
+        <item name="textColorSgActionBar">@color/text_primary_sg</item>
         <item name="colorAccent">@color/accent_primary</item>
         <item name="colorBackgroundDim">@color/background_dim_inverse</item>
         <item name="colorSeparator">@color/separator_inverse</item>

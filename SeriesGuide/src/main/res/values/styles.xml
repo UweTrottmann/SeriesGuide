@@ -102,6 +102,11 @@
     </style>
 
     <style name="TextAppearance.ActionBar" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textSize">@dimen/text_size_xmedium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.ActionBar.White">
         <item name="android:textColor">?attr/textColorSgActionBar</item>
     </style>
 
@@ -196,7 +201,7 @@
     <!-- Action bar -->
     <style name="ActionBar" parent="android:Widget.Holo.ActionBar">
         <item name="android:background">@drawable/actionbar_background_sg</item>
-        <item name="android:titleTextStyle">@style/TextAppearance.ActionBar</item>
+        <item name="android:titleTextStyle">@style/TextAppearance.ActionBar.White</item>
     </style>
 
     <style name="ActionBar.Invisible">
@@ -378,10 +383,12 @@
     <!-- Action bar -->
     <style name="ActionBar.Light" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@drawable/actionbar_background_sg</item>
+        <item name="android:titleTextStyle">@style/TextAppearance.ActionBar.White</item>
     </style>
 
     <style name="ActionBar.Light.Invisible" parent="android:Widget.Holo.Light.ActionBar.Solid">
         <item name="android:background">@null</item>
+        <item name="android:titleTextStyle">@style/TextAppearance.ActionBar</item>
     </style>
 
     <style name="ActionOverflowButtonStyle.Light">
