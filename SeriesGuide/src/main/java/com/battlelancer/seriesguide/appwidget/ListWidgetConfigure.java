@@ -78,9 +78,7 @@ public class ListWidgetConfigure extends Activity {
 
     private void setupActionBar() {
         ActionBar actionBar = getActionBar();
-        if (actionBar != null && AndroidUtils.isICSOrHigher()) {
-            actionBar.setIcon(R.drawable.ic_actionbar);
-        }
+        actionBar.setIcon(R.drawable.ic_actionbar);
     }
 
     @Override
