@@ -35,7 +35,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.migration.MigrationActivity;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.CheatSheet;
@@ -94,15 +93,6 @@ public class FirstRunFragment extends Fragment {
             public void onClick(View v) {
                 fireTrackerEvent("Add show");
                 startActivity(new Intent(getActivity(), AddActivity.class));
-                setFirstRunDismissed();
-            }
-        });
-
-        // migrate button
-        getView().findViewById(R.id.buttonFirstRunMigrate).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), MigrationActivity.class));
                 setFirstRunDismissed();
             }
         });

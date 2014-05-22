@@ -433,10 +433,9 @@
     <string name="trakt_createaccount">Create new account</string>
 
     <!-- Welcome dialog -->
+    <string name="get_started">Get started</string>
     <string name="welcome_setuplanguage">Choose language</string>
-    <string name="welcome_traktmessage">Access your trakt library and friends activity</string>
     <string name="dismiss">Dismiss</string>
-    <string name="welcome_add_part1">To get started tap</string>
 
     <!-- Notifications -->
     <string name="upcoming_show">%s is coming up</string>
