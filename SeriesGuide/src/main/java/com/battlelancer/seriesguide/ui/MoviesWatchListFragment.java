@@ -20,13 +20,11 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.MoviesCursorAdapter;
 import com.battlelancer.seriesguide.settings.MoviesDistillationSettings;
@@ -55,37 +53,23 @@ public class MoviesWatchListFragment extends MoviesBaseFragment {
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-        menu.add(0, CONTEXT_WATCHLIST_REMOVE_ID, 0, R.string.watchlist_remove);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        /*
-         * This fixes all fragments receiving the context menu dispatch, see
-         * http://stackoverflow.com/questions/5297842/how-to-handle-
-         * oncontextitemselected-in-a-multi-fragment-activity and others.
-         */
-        if (!getUserVisibleHint()) {
-            return super.onContextItemSelected(item);
-        }
-
-        switch (item.getItemId()) {
-            case CONTEXT_WATCHLIST_REMOVE_ID: {
-                AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-                Cursor movie = (Cursor) mAdapter.getItem(info.position);
-                int tmdbId = movie.getInt(MoviesCursorAdapter.MoviesQuery.TMDB_ID);
-
-                MovieTools.removeFromWatchlist(getActivity(), tmdbId);
-
-                fireTrackerEvent("Remove from watchlist");
-                return true;
+    public void onPopupMenuClick(View v, final int movieTmdbId) {
+        PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+        popupMenu.getMenu().add(0, CONTEXT_WATCHLIST_REMOVE_ID, 0, R.string.watchlist_remove);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case CONTEXT_WATCHLIST_REMOVE_ID: {
+                        MovieTools.removeFromWatchlist(getActivity(), movieTmdbId);
+                        fireTrackerEvent("Remove from watchlist");
+                        return true;
+                    }
+                }
+                return false;
             }
-        }
-
-        return super.onContextItemSelected(item);
+        });
+        popupMenu.show();
     }
 
     @Override
@@ -103,5 +87,4 @@ public class MoviesWatchListFragment extends MoviesBaseFragment {
     private void fireTrackerEvent(String label) {
         Utils.trackAction(getActivity(), TAG, label);
     }
-
 }

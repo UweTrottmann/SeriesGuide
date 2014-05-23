@@ -20,12 +20,11 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.MoviesCursorAdapter;
 import com.battlelancer.seriesguide.settings.MoviesDistillationSettings;
@@ -54,39 +53,24 @@ public class MoviesCollectionFragment extends MoviesBaseFragment {
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-            ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-        menu.add(0, CONTEXT_COLLECTION_REMOVE_ID, 0, R.string.action_collection_remove);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        /*
-         * This fixes all fragments receiving the context menu dispatch, see
-         * http://stackoverflow.com/questions/5297842/how-to-handle-
-         * oncontextitemselected-in-a-multi-fragment-activity and others.
-         */
-        if (!getUserVisibleHint()) {
-            return super.onContextItemSelected(item);
-        }
-
-        switch (item.getItemId()) {
-            case CONTEXT_COLLECTION_REMOVE_ID: {
-                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
-                        .getMenuInfo();
-                Cursor movie = (Cursor) mAdapter.getItem(info.position);
-                int tmdbId = movie.getInt(MoviesCursorAdapter.MoviesQuery.TMDB_ID);
-
-                MovieTools.removeFromCollection(getActivity(), tmdbId);
-
-                fireTrackerEvent("Remove from collection");
-                return true;
+    public void onPopupMenuClick(View v, final int movieTmdbId) {
+        PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+        popupMenu.getMenu()
+                .add(0, CONTEXT_COLLECTION_REMOVE_ID, 0, R.string.action_collection_remove);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case CONTEXT_COLLECTION_REMOVE_ID: {
+                        MovieTools.removeFromCollection(getActivity(), movieTmdbId);
+                        fireTrackerEvent("Remove from collection");
+                        return true;
+                    }
+                }
+                return false;
             }
-        }
-
-        return super.onContextItemSelected(item);
+        });
+        popupMenu.show();
     }
 
     @Override
