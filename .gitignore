@@ -1,5 +1,6 @@
 ﻿# Specific files to exclude
 dist
+crashlytics.properties
 com_crashlytics_export_strings.xml
 keys.xml
 *.keystore
