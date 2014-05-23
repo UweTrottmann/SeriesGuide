@@ -367,7 +367,7 @@
   <string name="trakt_error_credentials">Coś poszło nie tak. Sprawdź swoje poświadczenia i spróbuj ponownie.</string>
   <string name="trakt_error_general">Nie można połączyć z  trakt. Spróbuj ponownie później.</string>
   <string name="trakt_createaccount">Utwórz nowe konto</string>
-  <string name="get_started">Get started</string>
+  <string name="get_started">Wprowadzenie</string>
   <string name="welcome_setuplanguage">Wybierz język</string>
   <string name="dismiss">Zamknij</string>
   <string name="upcoming_show">Nadchodzi odcinek %s</string>

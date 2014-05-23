@@ -367,7 +367,7 @@
   <string name="trakt_error_credentials">Algo salió mal. Por favor comprueba tus credenciales y vuelve a intentarlo.</string>
   <string name="trakt_error_general">No es posible conectar con trakt. Inténtalo más tarde.</string>
   <string name="trakt_createaccount">Crear una cuenta nueva</string>
-  <string name="get_started">Get started</string>
+  <string name="get_started">Empezar</string>
   <string name="welcome_setuplanguage">Elija idioma</string>
   <string name="dismiss">Descartar</string>
   <string name="upcoming_show">%s está llegando</string>
