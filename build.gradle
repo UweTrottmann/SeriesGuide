@@ -27,7 +27,7 @@ ext {
 
     // API level 15+ -> version 15xxx
     versionCode = 15001
-    versionName = '15.0.0'
+    versionName = '15-beta1'
 }
 
 ext.libraries = [
