@@ -5,6 +5,20 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 15 *(in development)*
+-----------------------------
+
+#### 14-beta1 *(2014-05-23)*
+
+* TWEAK The context menu is dead! Long live the popup menu! Migrated all context menus to popup menus.
+* TWEAK Updated action bar design, updated some icons.
+* TWEAK Simplified getting started instructions, dropped migration quick link (still available in settings).
+* TWEAK Pitch black background for fullscreen poster/image viewer.
+* FIX Notification sometimes links to wrong episode.
+* FIX In movie search, the popup menu now shows add to/remove from options depending on a movie being added to the watchlist or collection.
+* NOTICE Drop ActionBarSherlock. It was nice, while it lasted. Goodbye old friend!
+* NOTICE Supports Android 4.0.3 (Ice Cream Sandwich) and up. If you are running Android 3.x you will only receive important bug fixes from now on.
+
 Version 14 *(2014-05-14)*
 -----------------------------
 
