@@ -521,7 +521,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
                 popupMenu.getMenuInflater()
-                        .inflate(R.menu.episode_overflow_menu, popupMenu.getMenu());
+                        .inflate(R.menu.episode_popup_menu, popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(new OverflowItemClickListener(mShowTitle,
                         Utils.getNextEpisodeString(v.getContext(), mSeasonNumber, mEpisodeNumber,
                                 mEpisodeTitle), releaseTime, showRunTime
