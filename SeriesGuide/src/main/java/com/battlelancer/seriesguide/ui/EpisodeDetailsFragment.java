@@ -266,8 +266,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             return true;
         } else if (itemId == R.id.menu_manage_lists) {
             fireTrackerEvent("Manage lists");
-            ListsDialogFragment.showListsDialog(String.valueOf(getEpisodeTvdbId()),
-                    ListItemTypes.EPISODE, getFragmentManager());
+            ListsDialogFragment.showListsDialog(getEpisodeTvdbId(), ListItemTypes.EPISODE,
+                    getFragmentManager());
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -521,7 +521,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
                 popupMenu.getMenuInflater()
-                        .inflate(R.menu.episode_overflow_menu, popupMenu.getMenu());
+                        .inflate(R.menu.episode_popup_menu, popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(new OverflowItemClickListener(mShowTitle,
                         Utils.getNextEpisodeString(v.getContext(), mSeasonNumber, mEpisodeNumber,
                                 mEpisodeTitle), releaseTime, showRunTime

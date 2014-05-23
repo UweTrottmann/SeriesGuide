@@ -31,9 +31,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,9 +41,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
@@ -53,7 +52,6 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -73,25 +71,6 @@ public class ShowsFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener, OnClickListener {
 
     private static final String TAG = "Shows";
-
-    // context menu items
-    private static final int CONTEXT_DELETE_ID = 200;
-
-    private static final int CONTEXT_UPDATE_ID = 201;
-
-    private static final int CONTEXT_FLAG_NEXT_ID = 202;
-
-    private static final int CONTEXT_FAVORITE_ID = 203;
-
-    private static final int CONTEXT_UNFAVORITE_ID = 204;
-
-    private static final int CONTEXT_HIDE_ID = 205;
-
-    private static final int CONTEXT_UNHIDE_ID = 206;
-
-    private static final int CONTEXT_MANAGE_LISTS_ID = 207;
-
-    private static final int CONTEXT_CHECKIN_ID = 208;
 
     private ShowsAdapter mAdapter;
 
@@ -165,13 +144,12 @@ public class ShowsFragment extends Fragment implements
                 R.attr.drawableStar);
         int resIdStarZero = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                 R.attr.drawableStar0);
-        mAdapter = new ShowsAdapter(getActivity(), null, 0, resIdStar, resIdStarZero, this);
+        mAdapter = new ShowsAdapter(getActivity(), null, 0, resIdStar, resIdStarZero);
 
         // setup grid view
         mGrid = (GridView) getView().findViewById(android.R.id.list);
         mGrid.setAdapter(mAdapter);
         mGrid.setOnItemClickListener(this);
-        registerForContextMenu(mGrid);
 
         // listen for some settings changes
         PreferenceManager
@@ -243,117 +221,6 @@ public class ShowsFragment extends Fragment implements
         super.onDestroy();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         prefs.unregisterOnSharedPreferenceChangeListener(mPrefsListener);
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-        AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-        final Cursor show = getActivity().getContentResolver().query(
-                Shows.buildShowUri(String.valueOf(info.id)), new String[] {
-                        Shows.FAVORITE, Shows.HIDDEN, Shows.TITLE
-                }, null, null, null
-        );
-        if (show == null || !show.moveToFirst()) {
-            // abort
-            return;
-        }
-        // context menu title
-        menu.setHeaderTitle(show.getString(2));
-
-        // favorite toggle
-        if (show.getInt(0) == 0) {
-            menu.add(0, CONTEXT_FAVORITE_ID, 2, R.string.context_favorite);
-        } else {
-            menu.add(0, CONTEXT_UNFAVORITE_ID, 2, R.string.context_unfavorite);
-        }
-
-        // hidden toggle
-        if (show.getInt(1) == 0) {
-            menu.add(0, CONTEXT_HIDE_ID, 3, R.string.context_hide);
-        } else {
-            menu.add(0, CONTEXT_UNHIDE_ID, 3, R.string.context_unhide);
-        }
-
-        show.close();
-
-        menu.add(0, CONTEXT_CHECKIN_ID, 0, R.string.checkin);
-        menu.add(0, CONTEXT_FLAG_NEXT_ID, 1, R.string.context_marknext);
-        menu.add(0, CONTEXT_MANAGE_LISTS_ID, 4, R.string.list_item_manage);
-        menu.add(0, CONTEXT_UPDATE_ID, 5, R.string.context_updateshow);
-        menu.add(0, CONTEXT_DELETE_ID, 6, R.string.delete_show);
-    }
-
-    @Override
-    public boolean onContextItemSelected(android.view.MenuItem item) {
-        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-
-        switch (item.getItemId()) {
-            case CONTEXT_CHECKIN_ID: {
-                fireTrackerEventContext("Check in");
-
-                Cursor show = (Cursor) mAdapter.getItem(info.position);
-                int episodeTvdbId = show.getInt(ShowsQuery.NEXTEPISODE);
-                if (episodeTvdbId <= 0) {
-                    return true;
-                }
-
-                // display a check-in dialog
-                CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(),
-                        episodeTvdbId);
-                f.show(getFragmentManager(), "checkin-dialog");
-
-                return true;
-            }
-            case CONTEXT_FAVORITE_ID: {
-                onFavoriteShow((int) info.id, true);
-                return true;
-            }
-            case CONTEXT_UNFAVORITE_ID: {
-                onFavoriteShow((int) info.id, false);
-                return true;
-            }
-            case CONTEXT_HIDE_ID: {
-                ShowTools.get(getActivity()).storeIsHidden((int) info.id, true);
-                fireTrackerEventContext("Hide show");
-                return true;
-            }
-            case CONTEXT_UNHIDE_ID: {
-                ShowTools.get(getActivity()).storeIsHidden((int) info.id, false);
-                fireTrackerEventContext("Unhide show");
-                return true;
-            }
-            case CONTEXT_DELETE_ID:
-                if (!SgSyncAdapter.isSyncActive(getActivity(), true)) {
-                    showDeleteDialog(info.id);
-                }
-
-                fireTrackerEventContext("Delete show");
-                return true;
-            case CONTEXT_UPDATE_ID:
-                SgSyncAdapter.requestSyncImmediate(getActivity(), SgSyncAdapter.SyncType.SINGLE,
-                        (int) info.id, true);
-
-                fireTrackerEventContext("Update show");
-                return true;
-            case CONTEXT_FLAG_NEXT_ID:
-                fireTrackerEventContext("Mark next episode");
-
-                Cursor show = (Cursor) mAdapter.getItem(info.position);
-                DBUtils.markNextEpisode(getActivity(), (int) info.id,
-                        show.getInt(ShowsQuery.NEXTEPISODE));
-
-                return true;
-            case CONTEXT_MANAGE_LISTS_ID: {
-                fireTrackerEventContext("Manage lists");
-
-                ListsDialogFragment.showListsDialog(String.valueOf(info.id), ListItemTypes.SHOW,
-                        getFragmentManager());
-                return true;
-            }
-        }
-        return super.onContextItemSelected(item);
     }
 
     @Override
@@ -592,7 +459,8 @@ public class ShowsFragment extends Fragment implements
         return new CursorLoader(getActivity(), Shows.CONTENT_URI, ShowsQuery.PROJECTION,
                 selection.toString(), null,
                 ShowsDistillationSettings.getSortQuery(mSortOrderId, mIsSortFavoritesFirst,
-                        mIsSortIgnoreArticles));
+                        mIsSortIgnoreArticles)
+        );
     }
 
     @Override
@@ -635,18 +503,15 @@ public class ShowsFragment extends Fragment implements
 
     private class ShowsAdapter extends BaseShowsAdapter {
 
-        private OnClickListener mOnClickListener;
-
         private int mStarDrawableId;
 
         private int mStarZeroDrawableId;
 
         public ShowsAdapter(Context context, Cursor c, int flags, int starDrawableResId,
-                int starZeroDrawableId, OnClickListener listener) {
+                int starZeroDrawableId) {
             super(context, c, flags);
             mStarDrawableId = starDrawableResId;
             mStarZeroDrawableId = starZeroDrawableId;
-            mOnClickListener = listener;
         }
 
         @Override
@@ -670,7 +535,7 @@ public class ShowsFragment extends Fragment implements
 
             // next episode info
             String fieldValue = cursor.getString(ShowsQuery.NEXTTEXT);
-            if (fieldValue.length() == 0) {
+            if (TextUtils.isEmpty(fieldValue)) {
                 // show show status if there are currently no more
                 // episodes
                 int status = cursor.getInt(ShowsQuery.STATUS);
@@ -705,7 +570,87 @@ public class ShowsFragment extends Fragment implements
 
             // context menu
             viewHolder.contextMenu.setVisibility(View.VISIBLE);
-            viewHolder.contextMenu.setOnClickListener(mOnClickListener);
+            final boolean isHidden = DBUtils.restoreBooleanFromInt(
+                    cursor.getInt(ShowsQuery.HIDDEN));
+            final int episodeTvdbId = cursor.getInt(ShowsQuery.NEXTEPISODE);
+            viewHolder.contextMenu.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+                    popupMenu.inflate(R.menu.shows_popup_menu);
+
+                    // show/hide some menu items depending on show properties
+                    Menu menu = popupMenu.getMenu();
+                    menu.findItem(R.id.menu_action_shows_favorites_add).setVisible(!isFavorited);
+                    menu.findItem(R.id.menu_action_shows_favorites_remove).setVisible(isFavorited);
+                    menu.findItem(R.id.menu_action_shows_hide).setVisible(!isHidden);
+                    menu.findItem(R.id.menu_action_shows_unhide).setVisible(isHidden);
+
+                    popupMenu.setOnMenuItemClickListener(
+                            new PopupMenuItemClickListener(showId, episodeTvdbId));
+                    popupMenu.show();
+                }
+            });
+        }
+
+        private class PopupMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
+
+            private final int mShowTvdbId;
+            private final int mEpisodeTvdbId;
+
+            public PopupMenuItemClickListener(int showTvdbId, int episodeTvdbId) {
+                mShowTvdbId = showTvdbId;
+                mEpisodeTvdbId = episodeTvdbId;
+            }
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_action_shows_watched_next: {
+                        DBUtils.markNextEpisode(getActivity(), mShowTvdbId, mEpisodeTvdbId);
+                        fireTrackerEventContext("Mark next episode");
+                        return true;
+                    }
+                    case R.id.menu_action_shows_favorites_add: {
+                        onFavoriteShow(mShowTvdbId, true);
+                        return true;
+                    }
+                    case R.id.menu_action_shows_favorites_remove: {
+                        onFavoriteShow(mShowTvdbId, false);
+                        return true;
+                    }
+                    case R.id.menu_action_shows_hide: {
+                        ShowTools.get(getActivity()).storeIsHidden(mShowTvdbId, true);
+                        fireTrackerEventContext("Hide show");
+                        return true;
+                    }
+                    case R.id.menu_action_shows_unhide: {
+                        ShowTools.get(getActivity()).storeIsHidden(mShowTvdbId, false);
+                        fireTrackerEventContext("Unhide show");
+                        return true;
+                    }
+                    case R.id.menu_action_shows_manage_lists: {
+                        ListsDialogFragment.showListsDialog(mShowTvdbId, ListItemTypes.SHOW,
+                                getFragmentManager());
+                        fireTrackerEventContext("Manage lists");
+                        return true;
+                    }
+                    case R.id.menu_action_shows_update: {
+                        SgSyncAdapter.requestSyncImmediate(getActivity(),
+                                SgSyncAdapter.SyncType.SINGLE, mShowTvdbId, true);
+                        fireTrackerEventContext("Update show");
+                        return true;
+                    }
+                    case R.id.menu_action_shows_remove: {
+                        if (!SgSyncAdapter.isSyncActive(getActivity(), true)) {
+                            showDeleteDialog(mShowTvdbId);
+                        }
+                        fireTrackerEventContext("Delete show");
+                        return true;
+                    }
+                }
+                return false;
+            }
         }
     }
 
@@ -714,7 +659,7 @@ public class ShowsFragment extends Fragment implements
         String[] PROJECTION = {
                 BaseColumns._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.AIRSTIME, Shows.NETWORK,
                 Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT,
-                Shows.FAVORITE, Shows.NEXTEPISODE, Shows.RELEASE_COUNTRY
+                Shows.FAVORITE, Shows.NEXTEPISODE, Shows.RELEASE_COUNTRY, Shows.HIDDEN
         };
 
         int _ID = 0;
@@ -740,6 +685,8 @@ public class ShowsFragment extends Fragment implements
         int NEXTEPISODE = 10;
 
         int RELEASE_COUNTRY = 11;
+
+        int HIDDEN = 12;
     }
 
     private void onFavoriteShow(int showTvdbId, boolean isFavorite) {

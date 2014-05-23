@@ -46,7 +46,7 @@ import static com.battlelancer.seriesguide.settings.MoviesDistillationSettings.M
  */
 public abstract class MoviesBaseFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemClickListener,
-        View.OnClickListener {
+        MoviesCursorAdapter.PopupMenuClickListener {
 
     private static final int LAYOUT = R.layout.fragment_movies;
 
@@ -82,8 +82,6 @@ public abstract class MoviesBaseFragment extends Fragment implements
 
         mAdapter = new MoviesCursorAdapter(getActivity(), this);
         mGridView.setAdapter(mAdapter);
-
-        registerForContextMenu(mGridView);
 
         getLoaderManager().initLoader(getLoaderId(), null, this);
 
@@ -162,11 +160,6 @@ public abstract class MoviesBaseFragment extends Fragment implements
         EventBus.getDefault().post(new MoviesSortOrderChangedEvent());
     }
 
-    @Override
-    public void onClick(View v) {
-        getActivity().openContextMenu(v);
-    }
-
     public void onEventMainThread(MoviesSortOrderChangedEvent event) {
         getLoaderManager().restartLoader(getLoaderId(), null, this);
     }
@@ -183,6 +176,9 @@ public abstract class MoviesBaseFragment extends Fragment implements
     }
 
     @Override
+    public abstract void onPopupMenuClick(View v, int movieTmdbId);
+
+    @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
     }
@@ -196,4 +192,5 @@ public abstract class MoviesBaseFragment extends Fragment implements
      * Return a loader id different from any other used within {@link com.battlelancer.seriesguide.ui.MoviesActivity}.
      */
     protected abstract int getLoaderId();
+
 }

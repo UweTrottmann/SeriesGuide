@@ -232,7 +232,7 @@ public class OverviewFragment extends Fragment implements
             fireTrackerEvent("Manage lists");
             if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()) {
                 ListsDialogFragment.showListsDialog(
-                        mCurrentEpisodeCursor.getString(EpisodeQuery._ID),
+                        mCurrentEpisodeCursor.getInt(EpisodeQuery._ID),
                         ListItemTypes.EPISODE, getFragmentManager());
             }
             return true;
@@ -604,7 +604,7 @@ public class OverviewFragment extends Fragment implements
                 @Override
                 public void onClick(View v) {
                     PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-                    popupMenu.getMenuInflater().inflate(R.menu.episode_overflow_menu,
+                    popupMenu.getMenuInflater().inflate(R.menu.episode_popup_menu,
                             popupMenu.getMenu());
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override

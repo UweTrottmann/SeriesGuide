@@ -131,8 +131,8 @@ public class ShowFragment extends Fragment implements LoaderCallbacks<Series> {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_show_manage_lists) {
-            ListsDialogFragment.showListsDialog(String.valueOf(getShowTvdbId()),
-                    ListItemTypes.SHOW, getFragmentManager());
+            ListsDialogFragment.showListsDialog(getShowTvdbId(), ListItemTypes.SHOW,
+                    getFragmentManager());
             return true;
         } else if (itemId == R.id.menu_show_share) {
             shareShow();
