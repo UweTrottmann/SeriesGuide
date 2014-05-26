@@ -37,7 +37,7 @@
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="24dp"
             android:layout_marginTop="@dimen/default_padding"
-            android:text="@string/norating"
+            tools:text="23"
             android:textAppearance="@style/TextAppearance.Medium.Light.Dim" />
 
         <TextView
@@ -68,7 +68,7 @@
             android:layout_toLeftOf="@+id/textViewEpisodeNumber"
             android:layout_toRightOf="@id/watchedBoxEpisode"
             android:paddingBottom="@dimen/default_padding"
-            android:text="@string/episode_number_absolute"
+            tools:text="ABSOLUTE 42"
             android:textAppearance="@style/TextAppearance.XSmall.Dim" />
 
         <ImageView
@@ -77,10 +77,10 @@
             android:layout_height="16dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginRight="2dp"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_collected"
-            android:visibility="gone" />
+            android:src="@drawable/ic_collected" />
 
         <ImageView
             android:id="@+id/imageViewContextMenu"
