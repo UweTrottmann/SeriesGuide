@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.10.0'
+        classpath 'com.android.tools.build:gradle:0.10.+'
         classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
     }
 }
