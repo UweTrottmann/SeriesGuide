@@ -46,23 +46,18 @@ public class MoviesActivityTest extends ActivityInstrumentationTestCase2<MoviesA
 
     public void testTabSwitching() {
         // go through tabs by tapping tab
-        onView(withText("SEARCH")).perform(click());
+        onView(withText("WATCHLIST")).perform(click());
         onView(withText("COLLECTION")).perform(click());
 
         // go back via swiping view
-        onView(withId(R.id.pagerMovies)).perform(swipeRight());
-        onView(withId(R.id.pagerMovies)).perform(swipeLeft());
         onView(withId(R.id.pagerMovies)).perform(swipeRight());
         onView(withId(R.id.pagerMovies)).perform(swipeRight());
     }
 
     public void testSearch() {
-        onView(withId(R.id.pagerMovies)).perform(swipeLeft());
         onView(withId(R.id.editTextMoviesSearch)).perform(typeText("James Bond"));
         onView(withId(R.id.editTextMoviesSearch)).perform(pressImeActionButton());
 
-        SystemClock.sleep(3000);
-
-        onView(withId(R.id.pagerMovies)).perform(swipeRight());
+        SystemClock.sleep(1000);
     }
 }

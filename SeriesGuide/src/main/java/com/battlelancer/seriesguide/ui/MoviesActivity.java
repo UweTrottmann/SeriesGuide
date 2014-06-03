@@ -34,8 +34,8 @@ import com.battlelancer.seriesguide.util.Utils;
  */
 public class MoviesActivity extends BaseTopActivity {
 
-    public static final int WATCHLIST_LOADER_ID = 100;
-    public static final int SEARCH_LOADER_ID = 101;
+    public static final int SEARCH_LOADER_ID = 100;
+    public static final int WATCHLIST_LOADER_ID = 101;
     public static final int COLLECTION_LOADER_ID = 102;
     public static final int FRIENDS_LOADER_ID = 103;
     public static final int USER_LOADER_ID = 104;
@@ -69,10 +69,10 @@ public class MoviesActivity extends BaseTopActivity {
 
         TabStripAdapter tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this, pager,
                 tabs);
-        // watchlist
-        tabsAdapter.addTab(R.string.movies_watchlist, MoviesWatchListFragment.class, null);
         // search
         tabsAdapter.addTab(R.string.search, MoviesSearchFragment.class, null);
+        // watchlist
+        tabsAdapter.addTab(R.string.movies_watchlist, MoviesWatchListFragment.class, null);
         // collection
         tabsAdapter.addTab(R.string.movies_collection, MoviesCollectionFragment.class, null);
 
