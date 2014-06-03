@@ -72,8 +72,10 @@ dependencies {
     compile 'com.uwetrottmann:trakt-java:3.2.+'
     compile 'de.greenrobot:eventbus:2.2.0'
 
+    // Google Play Services
+    compile 'com.google.android.gms:play-services:4.4.52'
+
     // App Engine
-    compile 'com.google.android.gms:play-services:4.3.23'
     compile ('com.google.api-client:google-api-client-android:1.17.0-rc') {
         exclude group: 'com.google.android.google-play-services'
     }
