@@ -19,6 +19,9 @@
     <attr name="colorTabStripUnderline" format="reference|color" />
     <attr name="colorBackgroundDrawer" format="reference|color" />
 
+    <!-- Color Arrays -->
+    <attr name="colorsProgressBar" format="reference" />
+
     <!-- Drawables -->
     <attr name="drawableAddIcon" format="reference" />
     <attr name="drawableAddShow" format="reference" />

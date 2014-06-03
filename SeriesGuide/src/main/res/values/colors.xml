@@ -50,5 +50,16 @@
     <color name="separator_dim">#40bebebe</color>
     <color name="divider">#26ffffff</color>
     <color name="divider_inverse">#1A000000</color>
+    <color name="white">#ffffffff</color>
+
+    <integer-array name="progressBarColors">
+        <item>@color/accent_primary</item>
+        <item>@color/white</item>
+    </integer-array>
+
+    <integer-array name="progressBarColorsHolo">
+        <item>@color/accent_primary_android</item>
+        <item>@color/white</item>
+    </integer-array>
 
 </resources>

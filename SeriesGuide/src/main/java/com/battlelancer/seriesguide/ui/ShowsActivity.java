@@ -38,6 +38,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.astuetz.PagerSlidingTabStrip;
@@ -73,6 +74,7 @@ import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import de.greenrobot.event.EventBus;
+import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -110,7 +112,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
     private FetchPosterTask mArtTask;
 
-    private ProgressBar mProgressBar;
+    private SmoothProgressBar mProgressBar;
 
     private Object mSyncObserverHandle;
 
@@ -257,7 +259,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         mTabsAdapter.notifyTabsChanged();
 
         // progress bar
-        mProgressBar = (ProgressBar) findViewById(R.id.progressBarShows);
+        mProgressBar = (SmoothProgressBar) findViewById(R.id.progressBarShows);
     }
 
     /**
@@ -717,6 +719,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements
      * Shows or hides a custom indeterminate progress indicator inside this activity layout.
      */
     public void setProgressVisibility(boolean isVisible) {
+        mProgressBar.startAnimation(AnimationUtils.loadAnimation(mProgressBar.getContext(),
+                isVisible ? R.anim.fade_in : R.anim.fade_out));
         mProgressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 
@@ -773,20 +777,15 @@ public class ShowsActivity extends BaseTopShowsActivity implements
                 public void run() {
                     Account account = AccountUtils.getAccount(ShowsActivity.this);
                     if (account == null) {
-                        // GetAccount() returned an invalid value. This
-                        // shouldn't happen.
+                        // no account setup
                         setProgressVisibility(false);
                         return;
                     }
 
-                    // Test the ContentResolver to see if the sync adapter is
-                    // active or pending.
-                    // Set the state of the refresh button accordingly.
+                    // Test the ContentResolver to see if the sync adapter is active.
                     boolean syncActive = ContentResolver.isSyncActive(
                             account, SeriesGuideApplication.CONTENT_AUTHORITY);
-                    boolean syncPending = ContentResolver.isSyncPending(
-                            account, SeriesGuideApplication.CONTENT_AUTHORITY);
-                    setProgressVisibility(syncActive || syncPending);
+                    setProgressVisibility(syncActive);
                 }
             });
         }

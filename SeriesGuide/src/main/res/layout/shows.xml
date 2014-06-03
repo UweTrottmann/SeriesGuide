@@ -28,14 +28,11 @@
 
         </LinearLayout>
 
-        <ProgressBar
+        <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
             android:id="@+id/progressBarShows"
-            style="?android:attr/progressBarStyleHorizontal"
+            style="@style/Widget.SeriesGuide.SmoothProgressBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_marginTop="-7dp"
-            android:indeterminateOnly="true" />
+            android:layout_height="4dp" />
 
     </FrameLayout>
 

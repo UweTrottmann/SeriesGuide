@@ -54,6 +54,9 @@
         <item name="colorTabStripUnderline">@color/background_dim</item>
         <item name="colorBackgroundDrawer">@color/background_navbar</item>
 
+        <!-- Color Arrays -->
+        <item name="colorsProgressBar">@array/progressBarColors</item>
+
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
         <item name="drawableCardBackground">@drawable/card_background</item>
@@ -115,6 +118,9 @@
         <item name="colorTabStripText">@color/text_default</item>
         <item name="colorTabStripUnderline">@color/background_dim</item>
         <item name="colorBackgroundDrawer">@color/background_navbar</item>
+
+        <!-- Color Arrays -->
+        <item name="colorsProgressBar">@array/progressBarColorsHolo</item>
 
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
@@ -200,6 +206,9 @@
         <item name="colorTabStripText">@color/text_default_inverse</item>
         <item name="colorTabStripUnderline">@color/divider_inverse</item>
         <item name="colorBackgroundDrawer">@color/background_navbar_inverse</item>
+
+        <!-- Color Arrays -->
+        <item name="colorsProgressBar">@array/progressBarColors</item>
 
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add_inverse</item>
