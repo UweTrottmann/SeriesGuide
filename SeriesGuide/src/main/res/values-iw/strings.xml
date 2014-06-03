@@ -128,7 +128,7 @@
   <string name="services_watch">צפה</string>
   <string name="services_more">עוד</string>
   <string name="sort">מיין לפי</string>
-  <string name="action_sort_ignore_articles">Ignore articles</string>
+  <string name="action_sort_ignore_articles">התעלם מהמאמרים</string>
   <string name="today">היום</string>
   <string name="now">עכשיו</string>
   <string name="daily">יומי</string>
@@ -189,9 +189,9 @@
   <string name="recent">אחרונים</string>
   <string name="friends">חברים</string>
   <string name="friends_empty">אין פעילות חברים בtrakt.</string>
-  <string name="user_stream">You</string>
-  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
-  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
+  <string name="user_stream">אתה</string>
+  <string name="user_stream_empty">אין פעולות אחרונות בTrakt. בדוק כמה תוכניות!</string>
+  <string name="user_movie_stream_empty">אין פעולות אחרונות בTrakt. בדוק כמה סרטים!</string>
   <string name="noupcoming">אין פרקים שישודרו בקרוב</string>
   <string name="norecent">אין פרקים חדשים</string>
   <string name="only_favorites">סדרות מעודפות בלבד</string>
@@ -245,7 +245,7 @@
   <string name="hexagon_priority_select">בחר גירסה</string>
   <string name="connect_trakt">התחבר trakt</string>
   <string name="connect_trakt_done">מחובר אל trakt!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide עכשיו יסנכרן את הסדרות והסרטים על מכשיר זה עם trakt. זה עלול לקחת מעט זמן.</string>
   <string name="add_trakt_shows">הוסף תוכניות מהספריה:</string>
   <string name="show_library">הצג את הספריה שלך</string>
   <string name="about_trakt">trakt מסייעת לשמור רשימה של אילו תוכניות טלוויזיה וסרטים אתה צופה. <a href="http://trakt.tv"> למד עוד</a></string>
@@ -367,7 +367,7 @@
   <string name="trakt_error_credentials">משהו השתבש. אנא בדוק את האישורים שלך ונסה שוב.</string>
   <string name="trakt_error_general">לא ניתן להתחבר ל-Trakt. נסה שוב מאוחר יותר.</string>
   <string name="trakt_createaccount">צור חשבון חדש</string>
-  <string name="get_started">Get started</string>
+  <string name="get_started">התחל</string>
   <string name="welcome_setuplanguage">בחר שפה</string>
   <string name="dismiss">סגור</string>
   <string name="upcoming_show">%s מתקרב</string>
@@ -447,9 +447,9 @@
   <string name="extension_amazon">חיפוש באמזון</string>
   <string name="description_extension_amazon">חפש באתר אמזון המקומי שלך</string>
   <string name="pref_amazon_domain">אתר אמזון</string>
-  <string name="extension_google_play">Google Play search</string>
-  <string name="description_extension_google_play">Search the Google Play Store</string>
-  <string name="extension_youtube">YouTube search</string>
-  <string name="description_extension_youtube">Search YouTube for videos</string>
-  <string name="description_extension_web_search">Search for websites and images</string>
+  <string name="extension_google_play">חיפוש בGoogle Play</string>
+  <string name="description_extension_google_play">חפש בGoogle Play</string>
+  <string name="extension_youtube">חיפוש בYouTube</string>
+  <string name="description_extension_youtube">חפש את הוידיאו בYouTube</string>
+  <string name="description_extension_web_search">חפש אתרים ותמונות</string>
 </resources>

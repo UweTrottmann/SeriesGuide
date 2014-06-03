@@ -90,7 +90,7 @@
     <item quantity="other">%d minutes</item>
   </plurals>
   <string name="your_rating">Votre note</string>
-  <string name="love">Totalement ninja!</string>
+  <string name="love">Totalement ninja !</string>
   <string name="hate">Un peu fade :(</string>
   <string name="rating2">Nul</string>
   <string name="rating3">Très mauvais</string>
@@ -367,7 +367,7 @@
   <string name="trakt_error_credentials">Un problème est survenu. Merci de vérifier vos identifiants et d\'essayer de nouveau.</string>
   <string name="trakt_error_general">Impossible de communiquer avec trakt. Réessayez ultérieurement.</string>
   <string name="trakt_createaccount">Créer un nouveau compte</string>
-  <string name="get_started">Get started</string>
+  <string name="get_started">Commencer</string>
   <string name="welcome_setuplanguage">Choisissez la langue</string>
   <string name="dismiss">Passer</string>
   <string name="upcoming_show">%s arrive bientôt</string>

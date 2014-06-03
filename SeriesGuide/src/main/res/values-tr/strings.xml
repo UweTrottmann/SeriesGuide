@@ -59,7 +59,7 @@
   <string name="movie_crew">Ekip</string>
   <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">Filmleri sırala</string>
-  <string name="action_movies_sort_title">Başlık</string>
+  <string name="action_movies_sort_title">Eser Adı</string>
   <string name="action_movies_sort_release">Yayın tarihi</string>
   <string name="shows_with_next">%s yeni bölümü olan dizi</string>
   <string name="shows_continuing">%s devam ediyor</string>
