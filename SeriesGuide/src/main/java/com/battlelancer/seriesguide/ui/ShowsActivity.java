@@ -260,6 +260,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
         // progress bar
         mProgressBar = (SmoothProgressBar) findViewById(R.id.progressBarShows);
+        mProgressBar.setVisibility(View.GONE);
     }
 
     /**
@@ -719,6 +720,10 @@ public class ShowsActivity extends BaseTopShowsActivity implements
      * Shows or hides a custom indeterminate progress indicator inside this activity layout.
      */
     public void setProgressVisibility(boolean isVisible) {
+        if (mProgressBar.getVisibility() == (isVisible ? View.VISIBLE : View.GONE)) {
+            // already in desired state, avoid replaying animation
+            return;
+        }
         mProgressBar.startAnimation(AnimationUtils.loadAnimation(mProgressBar.getContext(),
                 isVisible ? R.anim.fade_in : R.anim.fade_out));
         mProgressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
