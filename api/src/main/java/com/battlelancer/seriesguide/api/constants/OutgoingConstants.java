@@ -14,17 +14,9 @@
  * limitations under the License.
  */
 
-package com.battlelancer.seriesguide.api.internal;
+package com.battlelancer.seriesguide.api.constants;
 
-public interface IncomingConstants {
-
-    public static final String ACTION_SUBSCRIBE = "com.battlelancer.seriesguide.api.action.SUBSCRIBE";
-    public static final String EXTRA_SUBSCRIBER_COMPONENT = "com.battlelancer.seriesguide.api.extra.SUBSCRIBER_COMPONENT";
-    public static final String EXTRA_TOKEN = "com.battlelancer.seriesguide.api.extra.TOKEN";
-
-    public static final String ACTION_UPDATE = "com.battlelancer.seriesguide.api.action.UPDATE";
-    public static final String EXTRA_EPISODE = "com.battlelancer.seriesguide.api.extra.EPISODE";
-    public static final String EXTRA_ENTITY_IDENTIFIER = "com.battlelancer.seriesguide.api.extra.ENTITY_IDENTIFIER";
+public interface OutgoingConstants {
 
     public static final String ACTION_PUBLISH_ACTION = "com.battlelancer.seriesguide.api.action.PUBLISH_ACTION";
     public static final String EXTRA_ACTION = "com.battlelancer.seriesguide.api.extra.ACTION";
