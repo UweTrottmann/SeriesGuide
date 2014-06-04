@@ -29,7 +29,7 @@ import android.text.TextUtils;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.api.Episode;
 import com.battlelancer.seriesguide.api.SeriesGuideExtension;
-import com.battlelancer.seriesguide.api.internal.IncomingConstants;
+import com.battlelancer.seriesguide.api.constants.IncomingConstants;
 import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.HashMap;
