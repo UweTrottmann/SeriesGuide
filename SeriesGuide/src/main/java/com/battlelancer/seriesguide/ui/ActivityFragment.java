@@ -23,23 +23,21 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.text.format.DateUtils;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.PopupMenu;
 import android.widget.TextView;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ActivitySlowAdapter;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -53,12 +51,11 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.Utils;
-import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapterWrapper;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 
-public class ActivityFragment extends SherlockFragment implements
+public class ActivityFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener,
-        OnSharedPreferenceChangeListener {
+        OnSharedPreferenceChangeListener, AdapterView.OnItemLongClickListener {
 
     private static final String TAG = "Activity";
 
@@ -75,7 +72,6 @@ public class ActivityFragment extends SherlockFragment implements
     private StickyGridHeadersGridView mGridView;
 
     private ActivitySlowAdapter mAdapter;
-    private StickyGridHeadersBaseAdapterWrapper mAdapterWrapper;
 
     private Handler mHandler;
 
@@ -125,13 +121,11 @@ public class ActivityFragment extends SherlockFragment implements
 
         // setup grid view
         mGridView.setAdapter(mAdapter);
-        mAdapterWrapper = (StickyGridHeadersBaseAdapterWrapper) mGridView.getAdapter();
         mGridView.setOnItemClickListener(this);
+        mGridView.setOnItemLongClickListener(this);
 
         PreferenceManager.getDefaultSharedPreferences(getActivity())
                 .registerOnSharedPreferenceChangeListener(this);
-
-        registerForContextMenu(mGridView);
 
         setHasOptionsMenu(true);
     }
@@ -167,59 +161,6 @@ public class ActivityFragment extends SherlockFragment implements
         prefs.unregisterOnSharedPreferenceChangeListener(this);
 
         super.onDestroy();
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-        // only display the action appropriate for the items current state
-        menu.add(0, CONTEXT_CHECKIN_ID, 0, R.string.checkin);
-
-        AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-        Cursor episode = (Cursor) mAdapterWrapper.getItem(info.position);
-        if (episode == null) {
-            return;
-        }
-        if (EpisodeTools.isWatched(episode.getInt(ActivityQuery.WATCHED))) {
-            menu.add(0, CONTEXT_FLAG_UNWATCHED_ID, 1, R.string.unmark_episode);
-        } else {
-            menu.add(0, CONTEXT_FLAG_WATCHED_ID, 1, R.string.mark_episode);
-        }
-        if (EpisodeTools.isCollected(episode.getInt(ActivityQuery.COLLECTED))) {
-            menu.add(0, CONTEXT_COLLECTION_REMOVE_ID, 2, R.string.action_collection_remove);
-        } else {
-            menu.add(0, CONTEXT_COLLECTION_ADD_ID, 2, R.string.action_collection_add);
-        }
-    }
-
-    @Override
-    public boolean onContextItemSelected(android.view.MenuItem item) {
-        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-
-        switch (item.getItemId()) {
-            case CONTEXT_COLLECTION_ADD_ID: {
-                updateEpisodeCollectionState(info.position, true);
-                return true;
-            }
-            case CONTEXT_COLLECTION_REMOVE_ID: {
-                updateEpisodeCollectionState(info.position, false);
-                return true;
-            }
-            case CONTEXT_FLAG_WATCHED_ID: {
-                updateEpisodeWatchedState(info.position, true);
-                return true;
-            }
-            case CONTEXT_FLAG_UNWATCHED_ID: {
-                updateEpisodeWatchedState(info.position, false);
-                return true;
-            }
-            case CONTEXT_CHECKIN_ID: {
-                checkInEpisode((int) info.id);
-                return true;
-            }
-        }
-        return super.onContextItemSelected(item);
     }
 
     @Override
@@ -281,30 +222,17 @@ public class ActivityFragment extends SherlockFragment implements
         f.show(getFragmentManager(), "checkin-dialog");
     }
 
-    private void updateEpisodeCollectionState(int position, boolean addToCollection) {
-        Cursor episode = (Cursor) mAdapterWrapper.getItem(position);
-        if (episode == null) {
-            return;
-        }
-
-        new FlagTask(getActivity(), episode.getInt(ActivityQuery.SHOW_ID))
-                .episodeCollected(episode.getInt(ActivityQuery._ID),
-                        episode.getInt(ActivityQuery.SEASON),
-                        episode.getInt(ActivityQuery.NUMBER),
-                        addToCollection)
+    private void updateEpisodeCollectionState(int showTvdbId, int episodeTvdbId, int seasonNumber,
+            int episodeNumber, boolean addToCollection) {
+        new FlagTask(getActivity(), showTvdbId)
+                .episodeCollected(episodeTvdbId, seasonNumber, episodeNumber, addToCollection)
                 .execute();
     }
 
-    private void updateEpisodeWatchedState(int position, boolean isWatched) {
-        Cursor episode = (Cursor) mAdapterWrapper.getItem(position);
-        if (episode == null) {
-            return;
-        }
-
-        new FlagTask(getActivity(), episode.getInt(ActivityQuery.SHOW_ID))
-                .episodeWatched(episode.getInt(ActivityQuery._ID),
-                        episode.getInt(ActivityQuery.SEASON),
-                        episode.getInt(ActivityQuery.NUMBER),
+    private void updateEpisodeWatchedState(int showTvdbId, int episodeTvdbId, int seasonNumber,
+            int episodeNumber, boolean isWatched) {
+        new FlagTask(getActivity(), showTvdbId)
+                .episodeWatched(episodeTvdbId, seasonNumber, episodeNumber,
                         isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED)
                 .execute();
     }
@@ -319,6 +247,72 @@ public class ActivityFragment extends SherlockFragment implements
 
         startActivity(intent);
         getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position,
+            final long id) {
+        PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+        Menu menu = popupMenu.getMenu();
+
+        Cursor episode = (Cursor) mAdapter.getItem(position);
+        if (episode == null) {
+            return false;
+        }
+
+        // only display the action appropriate for the items current state
+        menu.add(0, CONTEXT_CHECKIN_ID, 0, R.string.checkin);
+        if (EpisodeTools.isWatched(episode.getInt(ActivityQuery.WATCHED))) {
+            menu.add(0, CONTEXT_FLAG_UNWATCHED_ID, 1, R.string.unmark_episode);
+        } else {
+            menu.add(0, CONTEXT_FLAG_WATCHED_ID, 1, R.string.mark_episode);
+        }
+        if (EpisodeTools.isCollected(episode.getInt(ActivityQuery.COLLECTED))) {
+            menu.add(0, CONTEXT_COLLECTION_REMOVE_ID, 2, R.string.action_collection_remove);
+        } else {
+            menu.add(0, CONTEXT_COLLECTION_ADD_ID, 2, R.string.action_collection_add);
+        }
+
+        final int showTvdbId = episode.getInt(ActivityQuery.SHOW_ID);
+        final int episodeTvdbId = episode.getInt(ActivityQuery._ID);
+        final int seasonNumber = episode.getInt(ActivityQuery.SEASON);
+        final int episodeNumber = episode.getInt(ActivityQuery.NUMBER);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case CONTEXT_CHECKIN_ID: {
+                        checkInEpisode((int) id);
+                        return true;
+                    }
+                    case CONTEXT_FLAG_WATCHED_ID: {
+                        updateEpisodeWatchedState(showTvdbId, episodeTvdbId, seasonNumber,
+                                episodeNumber, true);
+                        return true;
+                    }
+                    case CONTEXT_FLAG_UNWATCHED_ID: {
+                        updateEpisodeWatchedState(showTvdbId, episodeTvdbId, seasonNumber,
+                                episodeNumber, false);
+                        return true;
+                    }
+                    case CONTEXT_COLLECTION_ADD_ID: {
+                        updateEpisodeCollectionState(showTvdbId, episodeTvdbId, seasonNumber,
+                                episodeNumber, true);
+                        return true;
+                    }
+                    case CONTEXT_COLLECTION_REMOVE_ID: {
+                        updateEpisodeCollectionState(showTvdbId, episodeTvdbId, seasonNumber,
+                                episodeNumber, false);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
+        popupMenu.show();
+
+        return true;
     }
 
     public void onRequery() {

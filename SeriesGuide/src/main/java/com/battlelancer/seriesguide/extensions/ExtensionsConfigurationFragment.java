@@ -21,10 +21,14 @@ import android.content.Context;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +37,6 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ExtensionsAdapter;
@@ -58,7 +58,7 @@ import timber.log.Timber;
 /**
  * Provides tools to display all installed extensions and enable or disable them.
  */
-public class ExtensionsConfigurationFragment extends SherlockFragment
+public class ExtensionsConfigurationFragment extends Fragment
         implements AdapterView.OnItemClickListener {
 
     public static final int EXTENSION_LIMIT_FREE = 2;

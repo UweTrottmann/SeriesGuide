@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.10.0'
+        classpath 'com.android.tools.build:gradle:0.10.+'
         classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
     }
 }
@@ -25,9 +25,9 @@ ext {
     compileSdkVersion = 19
     buildToolsVersion = '19.0.3'
 
-    // API level 11+ -> version 11xxx
-    versionCode = 11267
-    versionName = '14.0.4'
+    // API level 15+ -> version 15xxx
+    versionCode = 15002
+    versionName = '15'
 }
 
 ext.libraries = [

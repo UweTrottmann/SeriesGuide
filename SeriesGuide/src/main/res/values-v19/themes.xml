@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Special themes -->
-    <style name="ImmersiveTheme" parent="SeriesGuideTheme">
+    <style name="ImmersiveTheme" parent="Theme.SeriesGuide">
 
         <!-- Action bar (native, v11+) -->
         <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
@@ -13,7 +13,7 @@
 
     </style>
 
-    <style name="ImmersiveTheme.Stock" parent="AndroidTheme">
+    <style name="ImmersiveTheme.Stock" parent="Theme.SeriesGuide.DarkBlue">
 
         <!-- Action bar (native, v11+) -->
         <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
@@ -24,12 +24,12 @@
         
     </style>
 
-    <style name="ImmersiveTheme.Light" parent="SeriesGuideThemeLight">
+    <style name="ImmersiveTheme.Light" parent="Theme.SeriesGuide.Light">
 
         <!-- Action bar (native, v11+) -->
         <item name="android:actionBarStyle">@style/ActionBar.Light.Invisible</item>
-        <item name="android:actionOverflowButtonStyle">@style/Widget.Sherlock.Light.ActionButton.Overflow</item>
-        <item name="android:homeAsUpIndicator">@drawable/abs__ic_ab_back_holo_light</item>
+        <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle.Light</item>
+        <item name="android:homeAsUpIndicator">@drawable/sg__ic_ab_back_holo_light</item>
 
         <!-- Translucent navbar (native, v19+) -->
         <item name="android:windowTranslucentStatus">true</item>

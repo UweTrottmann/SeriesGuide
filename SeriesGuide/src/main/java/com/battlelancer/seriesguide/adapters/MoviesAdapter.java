@@ -42,16 +42,20 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
     private LayoutInflater mInflater;
 
-    private OnClickListener mOnClickListener;
-
     private String mImageBaseUrl;
 
     private DateFormat dateFormatMovieReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
-    public MoviesAdapter(Context context, OnClickListener listener) {
+    private PopupMenuClickListener mPopupMenuClickListener;
+
+    public interface PopupMenuClickListener {
+        public void onPopupMenuClick(View v, int movieTmdbId);
+    }
+
+    public MoviesAdapter(Context context, PopupMenuClickListener listener) {
         super(context, LAYOUT);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mOnClickListener = listener;
+        mPopupMenuClickListener = listener;
 
         // figure out which size of posters to load based on screen density
         if (DisplaySettings.isVeryHighDensityScreen(context)) {
@@ -103,7 +107,15 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         }
 
         // context menu
-        holder.contextMenu.setOnClickListener(mOnClickListener);
+        final int movieTmdbId = movie.id;
+        holder.contextMenu.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mPopupMenuClickListener != null) {
+                    mPopupMenuClickListener.onPopupMenuClick(v, movieTmdbId);
+                }
+            }
+        });
 
         return convertView;
     }
@@ -129,5 +141,4 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
         ImageView contextMenu;
     }
-
 }

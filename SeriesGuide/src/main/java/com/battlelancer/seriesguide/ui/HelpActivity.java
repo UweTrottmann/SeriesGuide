@@ -18,14 +18,14 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Utils;
 
@@ -49,7 +49,7 @@ public class HelpActivity extends BaseActivity {
 
         setupActionBar();
 
-        setSupportProgressBarVisibility(true);
+        setProgressBarVisibility(true);
 
         final BaseActivity activity = this;
         webview.setWebChromeClient(new WebChromeClient() {
@@ -59,7 +59,7 @@ public class HelpActivity extends BaseActivity {
                  * scales. The progress meter will automatically disappear when
                  * we reach 100%.
                  */
-                activity.setSupportProgress(progress * 1000);
+                activity.setProgress(progress * 1000);
             }
         });
         webview.getSettings().setJavaScriptEnabled(true);
@@ -67,7 +67,7 @@ public class HelpActivity extends BaseActivity {
     }
 
     private void setupActionBar() {
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(R.string.help);
@@ -75,7 +75,7 @@ public class HelpActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.help_menu, menu);
+        getMenuInflater().inflate(R.menu.help_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

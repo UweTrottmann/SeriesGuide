@@ -20,6 +20,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.util.Patterns;
@@ -36,7 +37,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -50,7 +50,7 @@ import java.util.Set;
 /**
  * Provides a user interface to connect or create a trakt account.
  */
-public class ConnectTraktCredentialsFragment extends SherlockFragment implements
+public class ConnectTraktCredentialsFragment extends Fragment implements
         ConnectTraktTask.OnTaskFinishedListener {
 
     private ConnectTraktTask mTask;

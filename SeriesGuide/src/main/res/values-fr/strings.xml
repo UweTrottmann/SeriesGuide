@@ -65,8 +65,32 @@
   <string name="shows_continuing">%s en cours</string>
   <string name="episodes_watched">%s vus</string>
   <string name="runtime_all_episodes">Durée totale de tous les épisodes vus</string>
+  <plurals name="days_plural">
+    <item quantity="one">%d jour</item>
+    <item quantity="zero">%d jours</item>
+    <item quantity="two">%d jours</item>
+    <item quantity="few">%d jours</item>
+    <item quantity="many">%d jours</item>
+    <item quantity="other">%d jours</item>
+  </plurals>
+  <plurals name="hours_plural">
+    <item quantity="zero">%d heures</item>
+    <item quantity="one">%d heure</item>
+    <item quantity="two">%d heures</item>
+    <item quantity="few">%d heures</item>
+    <item quantity="many">%d heures</item>
+    <item quantity="other">%d heures</item>
+  </plurals>
+  <plurals name="minutes_plural">
+    <item quantity="zero">%d minute</item>
+    <item quantity="one">%d minute</item>
+    <item quantity="two">%d minutes</item>
+    <item quantity="few">%d minutes</item>
+    <item quantity="many">%d minutes</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="your_rating">Votre note</string>
-  <string name="love">Totalement ninja!</string>
+  <string name="love">Totalement ninja !</string>
   <string name="hate">Un peu fade :(</string>
   <string name="rating2">Nul</string>
   <string name="rating3">Très mauvais</string>
@@ -76,6 +100,14 @@
   <string name="rating7">Bon</string>
   <string name="rating8">Très bon</string>
   <string name="rating9">Excellent</string>
+  <plurals name="votes">
+    <item quantity="zero">%d votes</item>
+    <item quantity="one">%d vote</item>
+    <item quantity="two">%d votes</item>
+    <item quantity="few">%d votes</item>
+    <item quantity="many">%d votes</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="episode_number_absolute">ABSOLU</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Date de parution</string>
@@ -216,13 +248,8 @@
   <string name="connect_trakt_done_explanation">SeriesGuide va maintenant synchroniser les séries et les films sur cet appareil. Cela peut prendre un peu de temps.</string>
   <string name="add_trakt_shows">Ajoutez les séries de votre bibliothèque :</string>
   <string name="show_library">Voir votre bibliothèque</string>
-  <string name="upload_existing_shows">Envoyer les séries</string>
   <string name="about_trakt">trakt vous permet de garder une trace des séries et films que vous regardez. <a href="http://trakt.tv">En savoir plus</a></string>
   <string name="integration_trakt_items">- vous pourrez ajouter vos séries depuis votre bibliothèque ou votre liste à voir.\n\n- vous pourrez voir vos recommandations et l\'activité de vos amis.\n\n- les épisodes vus et collectés seront synchronisés automatiquement.\n\n- les nouvelles séries que vous regardez seront ajoutées automatiquement.</string>
-  <string name="trakt_upload">Envoyer vers trakt.tv</string>
-  <string name="trakt_syncunwatched">Modifier les épisodes indiqués comme vus sur trakt s\'ils sont indiqués comme non vus sur SeriesGuide</string>
-  <string name="upload_done">Envoi terminé.</string>
-  <string name="upload_no_work">Il n\'y a rien à envoyer.</string>
   <string name="prefs_category_basic">Paramètres de base</string>
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Avancé</string>
@@ -244,6 +271,27 @@
   <string name="feedback">Envoyez vos commentaires</string>
   <string name="pref_autoaddshows">Ajouter les nouvelles séries depuis trakt</string>
   <string name="pref_autoaddshowssummary">Ajouter automatiquement les séries se trouvant dans votre flux d\'activité trakt</string>
+  <string-array name="sesorting">
+    <item>Plus récentes en premier</item>
+    <item>Plus anciennes en premier</item>
+  </string-array>
+  <string-array name="epsorting">
+    <item>Plus récents en premier</item>
+    <item>Plus anciens en premier</item>
+    <item>Jamais vu en premier</item>
+    <item>A - Z</item>
+    <item>Les mieux notés</item>
+    <item>Plus récents en premier (DVD)</item>
+    <item>Plus ancien en premier (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>maintenant</item>
+    <item>un jour</item>
+    <item>3 jours</item>
+    <item>une semaine</item>
+    <item>deux semaines</item>
+    <item>un mois</item>
+  </string-array>
   <string name="pref_appearance">Apparence</string>
   <string name="pref_theme">Thème</string>
   <string name="pref_other">Autres</string>
@@ -319,10 +367,9 @@
   <string name="trakt_error_credentials">Un problème est survenu. Merci de vérifier vos identifiants et d\'essayer de nouveau.</string>
   <string name="trakt_error_general">Impossible de communiquer avec trakt. Réessayez ultérieurement.</string>
   <string name="trakt_createaccount">Créer un nouveau compte</string>
+  <string name="get_started">Commencer</string>
   <string name="welcome_setuplanguage">Choisissez la langue</string>
-  <string name="welcome_traktmessage">Accédez à votre bibliothèque trakt.tv et à l\'activité de vos amis</string>
   <string name="dismiss">Passer</string>
-  <string name="welcome_add_part1">Pour commencer, appuyez sur</string>
   <string name="upcoming_show">%s arrive bientôt</string>
   <string name="upcoming_episodes">De nouveaux épisodes arrivent</string>
   <string name="upcoming_episodes_number">%s nouveaux épisodes</string>
@@ -337,15 +384,41 @@
   <string name="pref_vibrate">Vibrer</string>
   <string name="pref_vibratesummary">Vibrer aussi lors d\'un notification</string>
   <string name="pref_notifications_treshold">Quand notifier</string>
+  <string-array name="notificationThreshold">
+    <item>lors de la diffusion</item>
+    <item>5 minutes avant</item>
+    <item>10 minutes avant</item>
+    <item>1 heure avant</item>
+  </string-array>
   <string name="smallwidget">SeriesGuide (petit)</string>
   <string name="bigwidget">SeriesGuide (moyen)</string>
   <string name="largewidget">SeriesGuide (grand)</string>
   <string name="hide_watched">Masquer les épisodes vus</string>
   <string name="pref_widget_opacity">Arrière-plan du widget</string>
+  <string-array name="widgetOpacity">
+    <item>Transparent</item>
+    <item>Opacité de 25 %</item>
+    <item>Opacité de 50 %</item>
+    <item>Opacité de 75 %</item>
+    <item>Opaque</item>
+  </string-array>
   <string name="pref_widget_type">Type du widget</string>
+  <string-array name="widgetType">
+    <item>À venir</item>
+    <item>Dernièrement</item>
+    <item>Favoris</item>
+  </string-array>
   <string name="dashclock_extension_label">Prochain épisode</string>
   <string name="dashclock_extension_description">Affiche le prochain épisode à venir parmi vos séries.</string>
   <string name="dashclock_pref_upcoming_threshold">Montrer les épisodes à venir dans</string>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>1 heure</item>
+    <item>6 heures</item>
+    <item>12 heures</item>
+    <item>24 heures</item>
+    <item>3 jours</item>
+    <item>une semaine</item>
+  </string-array>
   <string name="action_migrate">Migrer depuis X</string>
   <string name="migration_description">SeriesGuide X est maintenant une clé de déverrouillage pour les fonctionnalités X de la version gratuite (\"X Life-Time Pass\"). Merci de migrer vos séries vers la version gratuite de SeriesGuide. Laissez X installé pour déverrouiller toutes les fonctionnalités dans la version gratuite.</string>
   <string name="migration_import">Appuyez ci-dessous pour importer la sauvegarde créée dans SeriesGuide X.</string>
@@ -379,83 +452,4 @@
   <string name="extension_youtube">Recherche Youtube</string>
   <string name="description_extension_youtube">Recherche des vidéos sur Youtube</string>
   <string name="description_extension_web_search">Rechercher des sites web et des images</string>
-  <string-array name="sesorting">
-    <item>Plus récentes en premier</item>
-    <item>Plus anciennes en premier</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Plus récents en premier</item>
-    <item>Plus anciens en premier</item>
-    <item>Jamais vu en premier</item>
-    <item>A - Z</item>
-    <item>Les mieux notés</item>
-    <item>Plus récents en premier (DVD)</item>
-    <item>Plus ancien en premier (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>maintenant</item>
-    <item>un jour</item>
-    <item>3 jours</item>
-    <item>une semaine</item>
-    <item>deux semaines</item>
-    <item>un mois</item>
-  </string-array>
-  <string-array name="notificationThreshold">
-    <item>lors de la diffusion</item>
-    <item>5 minutes avant</item>
-    <item>10 minutes avant</item>
-    <item>1 heure avant</item>
-  </string-array>
-  <string-array name="widgetOpacity">
-    <item>Transparent</item>
-    <item>Opacité de 25 %</item>
-    <item>Opacité de 50 %</item>
-    <item>Opacité de 75 %</item>
-    <item>Opaque</item>
-  </string-array>
-  <string-array name="widgetType">
-    <item>À venir</item>
-    <item>Dernièrement</item>
-    <item>Favoris</item>
-  </string-array>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>1 heure</item>
-    <item>6 heures</item>
-    <item>12 heures</item>
-    <item>24 heures</item>
-    <item>3 jours</item>
-    <item>une semaine</item>
-  </string-array>
-  <plurals name="days_plural">
-    <item quantity="one">%d jour</item>
-    <item quantity="zero">%d jours</item>
-    <item quantity="two">%d jours</item>
-    <item quantity="few">%d jours</item>
-    <item quantity="many">%d jours</item>
-    <item quantity="other">%d jours</item>
-  </plurals>
-  <plurals name="hours_plural">
-    <item quantity="zero">%d heures</item>
-    <item quantity="one">%d heure</item>
-    <item quantity="two">%d heures</item>
-    <item quantity="few">%d heures</item>
-    <item quantity="many">%d heures</item>
-    <item quantity="other">%d heures</item>
-  </plurals>
-  <plurals name="minutes_plural">
-    <item quantity="zero">%d minute</item>
-    <item quantity="one">%d minute</item>
-    <item quantity="two">%d minutes</item>
-    <item quantity="few">%d minutes</item>
-    <item quantity="many">%d minutes</item>
-    <item quantity="other">%d minutes</item>
-  </plurals>
-  <plurals name="votes">
-    <item quantity="zero">%d votes</item>
-    <item quantity="one">%d vote</item>
-    <item quantity="two">%d votes</item>
-    <item quantity="few">%d votes</item>
-    <item quantity="many">%d votes</item>
-    <item quantity="other">%d votes</item>
-  </plurals>
 </resources>

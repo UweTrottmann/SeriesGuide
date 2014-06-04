@@ -66,13 +66,18 @@ import timber.log.Timber;
 public class ListsDialogFragment extends DialogFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener {
 
-    public static ListsDialogFragment newInstance(String itemId, int itemType) {
+    public static ListsDialogFragment newInstance(int itemTvdbId, int itemType) {
         ListsDialogFragment f = new ListsDialogFragment();
         Bundle args = new Bundle();
-        args.putString("itemid", itemId);
-        args.putInt("itemtype", itemType);
+        args.putInt(InitBundle.INT_ITEM_TVDB_ID, itemTvdbId);
+        args.putInt(InitBundle.INT_ITEM_TYPE, itemType);
         f.setArguments(args);
         return f;
+    }
+
+    public interface InitBundle {
+        String INT_ITEM_TVDB_ID = "item-tvdbid";
+        String INT_ITEM_TYPE = "item-type";
     }
 
     private ListView mListView;
@@ -84,7 +89,7 @@ public class ListsDialogFragment extends DialogFragment implements
         super.onCreate(savedInstanceState);
 
         // hide title, use custom theme
-        if (SeriesGuidePreferences.THEME != R.style.SeriesGuideTheme) {
+        if (SeriesGuidePreferences.THEME != R.style.Theme_SeriesGuide) {
             setStyle(STYLE_NO_TITLE, 0);
         } else {
             setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Dialog);
@@ -111,8 +116,8 @@ public class ListsDialogFragment extends DialogFragment implements
             @Override
             public void onClick(View v) {
                 // add item to selected lists
-                String itemId = getArguments().getString("itemid");
-                int itemType = getArguments().getInt("itemtype");
+                int itemTvdbId = getArguments().getInt(InitBundle.INT_ITEM_TVDB_ID);
+                int itemType = getArguments().getInt(InitBundle.INT_ITEM_TYPE);
                 SparseBooleanArray checkedLists = mAdapter.getCheckedPositions();
 
                 final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
@@ -125,7 +130,7 @@ public class ListsDialogFragment extends DialogFragment implements
                     boolean isListChecked = checkedLists.get(position);
 
                     String listId = listEntry.getString(ListsQuery.LIST_ID);
-                    String listItemId = ListItems.generateListItemId(itemId, itemType, listId);
+                    String listItemId = ListItems.generateListItemId(itemTvdbId, itemType, listId);
 
                     if (wasListChecked && !isListChecked) {
                         // remove from list
@@ -135,7 +140,7 @@ public class ListsDialogFragment extends DialogFragment implements
                         // add to list
                         ContentValues values = new ContentValues();
                         values.put(ListItems.LIST_ITEM_ID, listItemId);
-                        values.put(ListItems.ITEM_REF_ID, itemId);
+                        values.put(ListItems.ITEM_REF_ID, itemTvdbId);
                         values.put(ListItems.TYPE, itemType);
                         values.put(Lists.LIST_ID, listId);
                         batch.add(ContentProviderOperation.newInsert(ListItems.CONTENT_URI)
@@ -174,29 +179,29 @@ public class ListsDialogFragment extends DialogFragment implements
         super.onActivityCreated(args);
 
         // display item title
-        final String itemId = getArguments().getString("itemid");
-        final int itemType = getArguments().getInt("itemtype");
+        final int itemTvdbId = getArguments().getInt(InitBundle.INT_ITEM_TVDB_ID);
+        final int itemType = getArguments().getInt(InitBundle.INT_ITEM_TYPE);
         final TextView itemTitle = (TextView) getView().findViewById(R.id.item);
         Uri uri = null;
         String[] projection = null;
         switch (itemType) {
             case 1:
                 // show
-                uri = Shows.buildShowUri(itemId);
+                uri = Shows.buildShowUri(itemTvdbId);
                 projection = new String[]{
                         Shows._ID, Shows.TITLE
                 };
                 break;
             case 2:
                 // season
-                uri = Seasons.buildSeasonUri(itemId);
+                uri = Seasons.buildSeasonUri(itemTvdbId);
                 projection = new String[]{
                         Seasons._ID, Seasons.COMBINED
                 };
                 break;
             case 3:
                 // episode
-                uri = Episodes.buildEpisodeUri(itemId);
+                uri = Episodes.buildEpisodeUri(itemTvdbId);
                 projection = new String[]{
                         Episodes._ID, Episodes.TITLE
                 };
@@ -242,11 +247,11 @@ public class ListsDialogFragment extends DialogFragment implements
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         // filter for this item, but keep other lists
-        String itemId = args.getString("itemid");
-        int itemType = args.getInt("itemtype");
+        int itemTvdbId = args.getInt(InitBundle.INT_ITEM_TVDB_ID);
+        int itemType = args.getInt(InitBundle.INT_ITEM_TYPE);
 
         return new CursorLoader(getActivity(), Lists.buildListsWithListItemUri(ListItems
-                .generateListItemIdWildcard(itemId, itemType)),
+                .generateListItemIdWildcard(itemTvdbId, itemType)),
                 ListsQuery.PROJECTION, null, null, null);
     }
 
@@ -338,10 +343,10 @@ public class ListsDialogFragment extends DialogFragment implements
     /**
      * Display a dialog which asks if the user wants to add the given show to one or more lists.
      *
-     * @param itemId   TVDb/database id of the item to add
+     * @param itemTvdbId   TVDb id of the item to add
      * @param itemType type of the item to add (show, season or episode)
      */
-    public static void showListsDialog(String itemId, int itemType, FragmentManager fm) {
+    public static void showListsDialog(int itemTvdbId, int itemType, FragmentManager fm) {
         if (fm == null) {
             return;
         }
@@ -357,7 +362,7 @@ public class ListsDialogFragment extends DialogFragment implements
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = ListsDialogFragment.newInstance(itemId, itemType);
+        DialogFragment newFragment = ListsDialogFragment.newInstance(itemTvdbId, itemType);
         newFragment.show(ft, "listsdialog");
     }
 }

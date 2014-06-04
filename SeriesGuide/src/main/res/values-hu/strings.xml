@@ -33,11 +33,11 @@
   <string name="offline_no_wifi">Csatlakozz Wifi hálózathoz és próbáld újra.</string>
   <string name="app_not_available">Nincs kezelő alkalmazás.</string>
   <string name="onlyx">Csak az X verzióval elérhető</string>
-  <string name="add_empty">There are no shows here.</string>
+  <string name="add_empty">Nincsenek sorozatok.</string>
   <string name="share_show">Műsor megosztása</string>
   <string name="share_episode">Epizód megosztása</string>
   <string name="share_movie">Film megosztása</string>
-  <string name="share_checkout">Check out %s</string>
+  <string name="share_checkout">Nézd meg: %s</string>
   <string name="comments">Hozzászólások</string>
   <string name="shout_hint">Közlemény beírása (angolul)</string>
   <string name="shout">Szólj hozzá!</string>
@@ -52,8 +52,8 @@
   <string name="watchlist_removed">Eltávolítva a figyelőlistáról</string>
   <string name="movies_search_hint">Írj be egy filmcímet</string>
   <string name="movies_empty">Fenti film keresése.</string>
-  <string name="movies_collection_empty">You have not added movies to your collection.</string>
-  <string name="movies_watchlist_empty">You have not added movies to your watchlist.</string>
+  <string name="movies_collection_empty">Nem adtál még filmet a gyűjteményedhez.</string>
+  <string name="movies_watchlist_empty">Nem adtál még filmet a nézőlistádhoz.</string>
   <string name="trailer">Előzetes</string>
   <string name="movie_cast">Szereplők</string>
   <string name="movie_crew">Stáb</string>
@@ -65,6 +65,30 @@
   <string name="shows_continuing">%s folytatódik</string>
   <string name="episodes_watched">%s megnézve</string>
   <string name="runtime_all_episodes">Összes epizód műsorideje</string>
+  <plurals name="days_plural">
+    <item quantity="one">%d nap</item>
+    <item quantity="zero">%d nap</item>
+    <item quantity="two">%d nap</item>
+    <item quantity="few">%d nap</item>
+    <item quantity="many">%d nap</item>
+    <item quantity="other">%d nap</item>
+  </plurals>
+  <plurals name="hours_plural">
+    <item quantity="zero">%d óra</item>
+    <item quantity="one">%d óra</item>
+    <item quantity="two">%d óra</item>
+    <item quantity="few">%d óra</item>
+    <item quantity="many">%d óra</item>
+    <item quantity="other">%d óra</item>
+  </plurals>
+  <plurals name="minutes_plural">
+    <item quantity="zero">%d perc</item>
+    <item quantity="one">%d perc</item>
+    <item quantity="two">%d perc</item>
+    <item quantity="few">%d perc</item>
+    <item quantity="many">%d perc</item>
+    <item quantity="other">%d perc</item>
+  </plurals>
   <string name="your_rating">Értékelésed</string>
   <string name="love">Totally ninja!</string>
   <string name="hate">Weak Sauce :(</string>
@@ -76,6 +100,14 @@
   <string name="rating7">Jó</string>
   <string name="rating8">Nagyon jó</string>
   <string name="rating9">Nagyszerű</string>
+  <plurals name="votes">
+    <item quantity="zero">%d szavazat</item>
+    <item quantity="one">%d szavazat</item>
+    <item quantity="two">%d szavazat</item>
+    <item quantity="few">%d szavazat</item>
+    <item quantity="many">%d szavazat</item>
+    <item quantity="other">%d szavazat</item>
+  </plurals>
   <string name="episode_number_absolute">Abszolút</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Első adás</string>
@@ -86,7 +118,7 @@
   <string name="show_genres">Műfaj</string>
   <string name="show_runtime">Hossz</string>
   <string name="show_contentrating">Korhatár besorolás</string>
-  <string name="show_release_times">Release times</string>
+  <string name="show_release_times">Megjelenési idő</string>
   <string name="episode_directors">Rendezte</string>
   <string name="episode_gueststars">Sztárvendég</string>
   <string name="episode_writers">Írta</string>
@@ -96,7 +128,7 @@
   <string name="services_watch">Figyelés</string>
   <string name="services_more">Több</string>
   <string name="sort">Rendezés</string>
-  <string name="action_sort_ignore_articles">Ignore articles</string>
+  <string name="action_sort_ignore_articles">Cikk elrejtése</string>
   <string name="today">ma</string>
   <string name="now">most</string>
   <string name="daily">Napi</string>
@@ -123,10 +155,10 @@
   <string name="action_collection_added">Hozzáadva a gyűjteményhez</string>
   <string name="action_collection_removed">Eltávolítva a gyűjteményből</string>
   <string name="action_watched">Megnézve</string>
-  <string name="action_unwatched">Not yet watched</string>
+  <string name="action_unwatched">Még nem láttad</string>
   <string name="confirm_delete">Biztosan törli a következőt: %s?</string>
   <string name="delete_has_list_items">Nem folytatható, távolítsa el a %s-t minden listáról előbb.</string>
-  <string name="delete_error">Could not remove show. Try again later.</string>
+  <string name="delete_error">Nem lehet eltávolítani. Próbáld később.</string>
   <string name="delete_show">Törlés</string>
   <string name="dontdelete_show">Mégse</string>
   <string name="no_nextepisode">nem található köv. rész</string>
@@ -157,7 +189,7 @@
   <string name="recent">Legutóbbi</string>
   <string name="friends">Barátok</string>
   <string name="friends_empty">Jelenleg nem aktív egyik barátod sem a trakton.</string>
-  <string name="user_stream">You</string>
+  <string name="user_stream">Te</string>
   <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
   <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
   <string name="noupcoming">Nincsenek következő epizódok.</string>
@@ -206,7 +238,7 @@
   <string name="hexagon_signed_in">Csatlakozva a SeriesGuide cloud-hoz.</string>
   <string name="hexagon_signout">Kijelentkezés</string>
   <string name="hexagon_setup_incomplete">Setting up SeriesGuide cloud was not completed.</string>
-  <string name="hexagon_setup_complete">Complete setup</string>
+  <string name="hexagon_setup_complete">Beállítás befejezése</string>
   <string name="hexagon_priority_choice_required">Some of your shows are already in the cloud. Which version do you prefer?</string>
   <string name="hexagon_priority_local">On this device</string>
   <string name="hexagon_priority_cloud">In the cloud</string>
@@ -216,13 +248,8 @@
   <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Műsor hozzáadása a gyűjteményedből:</string>
   <string name="show_library">Műsortárad mutatása</string>
-  <string name="upload_existing_shows">Létező műsorok feltöltése</string>
   <string name="about_trakt">a trakt segít nyilvántartani a nézett sorozatokat és filmeket. <a href="http://trakt.tv">Továbbiak (angolul)</a></string>
   <string name="integration_trakt_items">- adjon hozzá sorozatot a könyvtárából és a nézettek listájáról\n\n-nézze meg az ajánlott sorozatokat és a barátok tevékenységét\n\n-a megnézett és gyűjtött jelzések automatikusan szinkronizálódnak\n\n- az új sorozatok automatikusan hozzáadásra kerülnek</string>
-  <string name="trakt_upload">Feltöltés</string>
-  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
-  <string name="upload_done">Finished uploading.</string>
-  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Alap beállítások</string>
   <string name="prefs_category_sharing">Szolgáltatások</string>
   <string name="prefs_category_advanced">Haladó beállítások</string>
@@ -244,6 +271,27 @@
   <string name="feedback">Visszajelzés küldése</string>
   <string name="pref_autoaddshows">Új trakt sorozatok hozzáadása</string>
   <string name="pref_autoaddshowssummary">Trakt aktivitása és adatai alapján sorozatai bekerülnek az adatbázisba</string>
+  <string-array name="sesorting">
+    <item>Újabbak előre</item>
+    <item>Régebbiek előre</item>
+  </string-array>
+  <string-array name="epsorting">
+    <item>Újabbak előre</item>
+    <item>Régebbiek előre</item>
+    <item>Nem látottak előre</item>
+    <item>A - Z</item>
+    <item>Magasan értékelt</item>
+    <item>Újabbak előre (DVD)</item>
+    <item>Régebbiek előre (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>most</item>
+    <item>egy nap</item>
+    <item>3 nap</item>
+    <item>egy hét</item>
+    <item>két hét</item>
+    <item>egy hónap</item>
+  </string-array>
   <string name="pref_appearance">Megjelenés</string>
   <string name="pref_theme">Alkalmazás téma</string>
   <string name="pref_other">Egyéb</string>
@@ -319,10 +367,9 @@
   <string name="trakt_error_credentials">Hiba történt. Ellenőrizd a megadott adatokat és próbáld újra.</string>
   <string name="trakt_error_general">Nincs kapcsolat a trakttal. Próbáld újra később.</string>
   <string name="trakt_createaccount">Új fiók létrehozása</string>
+  <string name="get_started">Get started</string>
   <string name="welcome_setuplanguage">Válasszon nyelvet</string>
-  <string name="welcome_traktmessage">Érd el a barátaidat és a sorozataidat a trakt.tv-n</string>
   <string name="dismiss">Mégsem</string>
-  <string name="welcome_add_part1">Kezdéshez érintsd meg</string>
   <string name="upcoming_show">%s kezdődik</string>
   <string name="upcoming_episodes">Új epizódok kezdődnek</string>
   <string name="upcoming_episodes_number">%s új epizód</string>
@@ -337,15 +384,41 @@
   <string name="pref_vibrate">Vibra</string>
   <string name="pref_vibratesummary">Vibrálás értesítések megjelenítésekor</string>
   <string name="pref_notifications_treshold">Mikor értesítsen</string>
+  <string-array name="notificationThreshold">
+    <item>vetítéskor</item>
+    <item>5 perccel előtte</item>
+    <item>10 perccel előtte</item>
+    <item>egy órával előtte</item>
+  </string-array>
   <string name="smallwidget">SeriesGuide (kicsi)</string>
   <string name="bigwidget">SeriesGuide (közepes)</string>
   <string name="largewidget">SeriesGuide (nagy)</string>
   <string name="hide_watched">Megnézett epizódok elrejtése</string>
   <string name="pref_widget_opacity">Widget háttér</string>
+  <string-array name="widgetOpacity">
+    <item>Átlátszó</item>
+    <item>25% fekete</item>
+    <item>50% fekete</item>
+    <item>75% fekete</item>
+    <item>Fekete</item>
+  </string-array>
   <string name="pref_widget_type">Widget típus</string>
+  <string-array name="widgetType">
+    <item>Következő</item>
+    <item>Legutóbbi</item>
+    <item>Kedvencek</item>
+  </string-array>
   <string name="dashclock_extension_label">Következő epizód</string>
   <string name="dashclock_extension_description">Megjeleníti a következő epizódokat a SeriesGuide-ból.</string>
   <string name="dashclock_pref_upcoming_threshold">Mutasd a következő epizódokat</string>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>óra</item>
+    <item>6 óra</item>
+    <item>12 óra</item>
+    <item>24 óra</item>
+    <item>3 nap</item>
+    <item>hét</item>
+  </string-array>
   <string name="action_migrate">Migrálás X-ből</string>
   <string name="migration_description">A SeriesGuide X egy feloldó kulcs az ingyenes alkalmazás X lehetőségeihez. ("X Örökös tagság"). Kérem, vidd át a sorozataidat a SeriesGuide igyenes verziójába. Az X-et tartsd fent telepítve, hogy az ingyenes verzióban elérhesd az összes lehetőséget.</string>
   <string name="migration_import">Érintse meg alább a SeriesGuide X-ben készült mentés importálásához.</string>
@@ -364,98 +437,19 @@
   <string name="add_to_homescreen">Kezdőképernyőhöz ad</string>
   <string name="search_within_show">Keresés itt %s</string>
   <string name="web_search">Internetes keresés</string>
-  <string name="extensions">Extensions</string>
-  <string name="action_extensions_configure">Customize extensions</string>
-  <string name="action_extensions_add">Add extension</string>
+  <string name="extensions">Kiegészítők</string>
+  <string name="action_extensions_configure">Kiegészítők testreszabása</string>
+  <string name="action_extensions_add">Kiegészítő hozzáadása</string>
   <string name="action_extensions_limit">Get X to add more extensions</string>
   <string name="action_extensions_search">Get more extensions</string>
   <string name="action_extension_settings">Beállítások</string>
   <string name="action_extension_remove">Törlés</string>
-  <string name="extension_amazon">Amazon search</string>
+  <string name="extension_amazon">Keresés az Amazonon</string>
   <string name="description_extension_amazon">Search your local Amazon site</string>
   <string name="pref_amazon_domain">Amazon site</string>
-  <string name="extension_google_play">Google Play search</string>
+  <string name="extension_google_play">Google Play keresés</string>
   <string name="description_extension_google_play">Search the Google Play Store</string>
-  <string name="extension_youtube">YouTube search</string>
+  <string name="extension_youtube">YouTube-keresés</string>
   <string name="description_extension_youtube">Search YouTube for videos</string>
   <string name="description_extension_web_search">Search for websites and images</string>
-  <string-array name="sesorting">
-    <item>Újabbak előre</item>
-    <item>Régebbiek előre</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Újabbak előre</item>
-    <item>Régebbiek előre</item>
-    <item>Nem látottak előre</item>
-    <item>A - Z</item>
-    <item>Magasan értékelt</item>
-    <item>Újabbak előre (DVD)</item>
-    <item>Régebbiek előre (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>most</item>
-    <item>egy nap</item>
-    <item>3 nap</item>
-    <item>egy hét</item>
-    <item>két hét</item>
-    <item>egy hónap</item>
-  </string-array>
-  <string-array name="notificationThreshold">
-    <item>vetítéskor</item>
-    <item>5 perccel előtte</item>
-    <item>10 perccel előtte</item>
-    <item>egy órával előtte</item>
-  </string-array>
-  <string-array name="widgetOpacity">
-    <item>Átlátszó</item>
-    <item>25% fekete</item>
-    <item>50% fekete</item>
-    <item>75% fekete</item>
-    <item>Fekete</item>
-  </string-array>
-  <string-array name="widgetType">
-    <item>Következő</item>
-    <item>Legutóbbi</item>
-    <item>Kedvencek</item>
-  </string-array>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>óra</item>
-    <item>6 óra</item>
-    <item>12 óra</item>
-    <item>24 óra</item>
-    <item>3 nap</item>
-    <item>hét</item>
-  </string-array>
-  <plurals name="days_plural">
-    <item quantity="one">%d nap</item>
-    <item quantity="zero">%d nap</item>
-    <item quantity="two">%d nap</item>
-    <item quantity="few">%d nap</item>
-    <item quantity="many">%d nap</item>
-    <item quantity="other">%d nap</item>
-  </plurals>
-  <plurals name="hours_plural">
-    <item quantity="zero">%d óra</item>
-    <item quantity="one">%d óra</item>
-    <item quantity="two">%d óra</item>
-    <item quantity="few">%d óra</item>
-    <item quantity="many">%d óra</item>
-    <item quantity="other">%d óra</item>
-  </plurals>
-  <plurals name="minutes_plural">
-    <item quantity="zero">%d perc</item>
-    <item quantity="one">%d perc</item>
-    <item quantity="two">%d perc</item>
-    <item quantity="few">%d perc</item>
-    <item quantity="many">%d perc</item>
-    <item quantity="other">%d perc</item>
-  </plurals>
-  <plurals name="votes">
-    <item quantity="zero">%d szavazat</item>
-    <item quantity="one">%d szavazat</item>
-    <item quantity="two">%d szavazat</item>
-    <item quantity="few">%d szavazat</item>
-    <item quantity="many">%d szavazat</item>
-    <item quantity="other">%d szavazat</item>
-  </plurals>
 </resources>

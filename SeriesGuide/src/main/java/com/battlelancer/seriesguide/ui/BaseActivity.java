@@ -16,14 +16,16 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.MenuItem;
+import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
@@ -41,7 +43,10 @@ import de.greenrobot.event.EventBus;
  * various common events, see {@link #registerEventBus()} and {@link #unregisterEventBus()} to
  * prevent that.
  */
-public abstract class BaseActivity extends SherlockFragmentActivity {
+public abstract class BaseActivity extends FragmentActivity {
+
+    private Handler mHandler;
+    private Runnable mUpdateShowRunnable;
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -57,7 +62,7 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
     }
 
     private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getActionBar();
         actionBar.setIcon(R.drawable.ic_actionbar);
     }
 
@@ -85,6 +90,10 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
     @Override
     protected void onStop() {
         super.onStop();
+
+        if (mHandler != null && mUpdateShowRunnable != null) {
+            mHandler.removeCallbacks(mUpdateShowRunnable);
+        }
 
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
         unregisterEventBus();
@@ -162,5 +171,29 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Schedule an update for the given show. Might not run if this show was just updated.
+     * Execution is also delayed so it won't reduce UI setup performance (= you can run this in
+     * {@link #onCreate(android.os.Bundle)}).
+     *
+     * <p> See {@link com.battlelancer.seriesguide.sync.SgSyncAdapter#requestSyncIfTime(android.content.Context,
+     * int)}.
+     */
+    protected void updateShowDelayed(final int showTvdbId) {
+        if (mHandler == null) {
+            mHandler = new Handler();
+        }
+
+        // delay sync request to avoid slowing down UI
+        final Context context = getApplicationContext();
+        mUpdateShowRunnable = new Runnable() {
+            @Override
+            public void run() {
+                SgSyncAdapter.requestSyncIfTime(context, showTvdbId);
+            }
+        };
+        mHandler.postDelayed(mUpdateShowRunnable, DateUtils.SECOND_IN_MILLIS);
     }
 }

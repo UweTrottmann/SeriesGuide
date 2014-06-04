@@ -65,6 +65,30 @@
   <string name="shows_continuing">%s continuă</string>
   <string name="episodes_watched">%s urmărit</string>
   <string name="runtime_all_episodes">Timpul de urmărire al tuturor episoadelor</string>
+  <plurals name="days_plural">
+    <item quantity="one">%d zile</item>
+    <item quantity="zero">%d zile</item>
+    <item quantity="two">%d zile</item>
+    <item quantity="few">%d zile</item>
+    <item quantity="many">%d zile</item>
+    <item quantity="other">%d zile</item>
+  </plurals>
+  <plurals name="hours_plural">
+    <item quantity="zero">%d ore</item>
+    <item quantity="one">%d ora</item>
+    <item quantity="two">%d ore</item>
+    <item quantity="few">%d ore</item>
+    <item quantity="many">%d ore</item>
+    <item quantity="other">%d ore</item>
+  </plurals>
+  <plurals name="minutes_plural">
+    <item quantity="zero">%d minute</item>
+    <item quantity="one">%d minut</item>
+    <item quantity="two">%d minute</item>
+    <item quantity="few">%d minute</item>
+    <item quantity="many">%d minute</item>
+    <item quantity="other">%d minute</item>
+  </plurals>
   <string name="your_rating">Nota ta</string>
   <string name="love">Super tare!</string>
   <string name="hate">Slab :(</string>
@@ -76,6 +100,14 @@
   <string name="rating7">Bun</string>
   <string name="rating8">Minunat</string>
   <string name="rating9">Superb</string>
+  <plurals name="votes">
+    <item quantity="zero">%d voturi</item>
+    <item quantity="one">%d vot</item>
+    <item quantity="two">%d voturi</item>
+    <item quantity="few">%d voturi</item>
+    <item quantity="many">%d voturi</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="episode_number_absolute">ABSOLUTE</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Data de lansare</string>
@@ -216,13 +248,8 @@
   <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Adauga seriale din biblioteca dvs.:</string>
   <string name="show_library">Arată biblioteca dvs.</string>
-  <string name="upload_existing_shows">Încărcaţi seriale existente</string>
   <string name="about_trakt">Trakt ajută la păstrarea unei evidenţe a emisiunilor TV şi a filmelor la care te uiţi.  <a href="http://trakt.tv">Află mai multe</a></string>
   <string name="integration_trakt_items">-Adauga seriale din biblioteca dvs. şi watchlist\n\n- vedeti recomandările dvs. şi activitatea prietenilor\n\n - steagurile privite şi colectate sunt sincronizate automat\n\n-serialele noi la care v-ati uitat sunt adăugate automat</string>
-  <string name="trakt_upload">Încărcaţi in trakt.tv</string>
-  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
-  <string name="upload_done">Finished uploading.</string>
-  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Elemente de bază</string>
   <string name="prefs_category_sharing">Servicii</string>
   <string name="prefs_category_advanced">Avansate</string>
@@ -244,6 +271,27 @@
   <string name="feedback">Trimiteţi feedback</string>
   <string name="pref_autoaddshows">Add new trakt shows</string>
   <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
+  <string-array name="sesorting">
+    <item>Întai cele mai recente</item>
+    <item>Întai cele mai vechi</item>
+  </string-array>
+  <string-array name="epsorting">
+    <item>Întai cele mai recente</item>
+    <item>Cele mai vechi primele</item>
+    <item>Cele nevizionate primele</item>
+    <item>A - Z</item>
+    <item>Cele mai votate</item>
+    <item>Cele mai noi primele (DVD)</item>
+    <item>Cele mai vechi primele (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>acum</item>
+    <item>o zi</item>
+    <item>3 zile</item>
+    <item>o săptămână</item>
+    <item>două săptămâni</item>
+    <item>o lună</item>
+  </string-array>
   <string name="pref_appearance">Aspect</string>
   <string name="pref_theme">Tema aplicației</string>
   <string name="pref_other">Alte</string>
@@ -319,10 +367,9 @@
   <string name="trakt_error_credentials">Ceva a mers prost. Va rugam sa va verificaţi acreditările şi sa încercaţi din nou.</string>
   <string name="trakt_error_general">Nu s-a putut comunica cu trakt. Incercati mai tarziu.</string>
   <string name="trakt_createaccount">Creare cont nou</string>
+  <string name="get_started">Get started</string>
   <string name="welcome_setuplanguage">Alegeți limba</string>
-  <string name="welcome_traktmessage">Accesați biblioteca trakt.tv și activitatea prietenilor</string>
   <string name="dismiss">Respingeți</string>
-  <string name="welcome_add_part1">Pentru a începe apasati</string>
   <string name="upcoming_show">%s urmeaza</string>
   <string name="upcoming_episodes">Vor apărea episoade noi</string>
   <string name="upcoming_episodes_number">%s episoade noi</string>
@@ -337,15 +384,41 @@
   <string name="pref_vibrate">Vibrează</string>
   <string name="pref_vibratesummary">Vibrează si la afişarea unei notificări</string>
   <string name="pref_notifications_treshold">Când să fiti notificat</string>
+  <string-array name="notificationThreshold">
+    <item>Difuzate</item>
+    <item>5 min în avans</item>
+    <item>10 min în avans</item>
+    <item>o oră în avans</item>
+  </string-array>
   <string name="smallwidget">SeriesGuide (mic)</string>
   <string name="bigwidget">SeriesGuide (mediu)</string>
   <string name="largewidget">SeriesGuide (mare)</string>
   <string name="hide_watched">Ascundeți episoadele vizionate</string>
   <string name="pref_widget_opacity">Widget fundal</string>
+  <string-array name="widgetOpacity">
+    <item>Transparent</item>
+    <item>25 % negru</item>
+    <item>50% negru</item>
+    <item>75% negru</item>
+    <item>Negru</item>
+  </string-array>
   <string name="pref_widget_type">Tip de widget</string>
+  <string-array name="widgetType">
+    <item>Viitoare</item>
+    <item>Recente</item>
+    <item>Favorite</item>
+  </string-array>
   <string name="dashclock_extension_label">Episoade ce urmeaza</string>
   <string name="dashclock_extension_description">Afişează următorul episod din SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Afisare episod intre…</string>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>oră</item>
+    <item>6 ore</item>
+    <item>12 ore</item>
+    <item>24 de ore</item>
+    <item>3 zile</item>
+    <item>o săptămână</item>
+  </string-array>
   <string name="action_migrate">Migrati de la veriunea X</string>
   <string name="migration_description">SeriesGuide X este acum o cheie de deblocare a optiunilor X in varianta gratuita ("X Life-Time Pass"). Va rugam sa migrati Serialele in versiunea gratuita a SeriesGuide. Pastrati X instalat pentru a debloca toate optiunile in versiunea gratuita.</string>
   <string name="migration_import">Atingeti mai jos pentru a importa backup-ul din SeriesGuide X.</string>
@@ -379,83 +452,4 @@
   <string name="extension_youtube">YouTube search</string>
   <string name="description_extension_youtube">Search YouTube for videos</string>
   <string name="description_extension_web_search">Search for websites and images</string>
-  <string-array name="sesorting">
-    <item>Întai cele mai recente</item>
-    <item>Întai cele mai vechi</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Întai cele mai recente</item>
-    <item>Cele mai vechi primele</item>
-    <item>Cele nevizionate primele</item>
-    <item>A - Z</item>
-    <item>Cele mai votate</item>
-    <item>Cele mai noi primele (DVD)</item>
-    <item>Cele mai vechi primele (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>acum</item>
-    <item>o zi</item>
-    <item>3 zile</item>
-    <item>o săptămână</item>
-    <item>două săptămâni</item>
-    <item>o lună</item>
-  </string-array>
-  <string-array name="notificationThreshold">
-    <item>Difuzate</item>
-    <item>5 min în avans</item>
-    <item>10 min în avans</item>
-    <item>o oră în avans</item>
-  </string-array>
-  <string-array name="widgetOpacity">
-    <item>Transparent</item>
-    <item>25 % negru</item>
-    <item>50% negru</item>
-    <item>75% negru</item>
-    <item>Negru</item>
-  </string-array>
-  <string-array name="widgetType">
-    <item>Viitoare</item>
-    <item>Recente</item>
-    <item>Favorite</item>
-  </string-array>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>oră</item>
-    <item>6 ore</item>
-    <item>12 ore</item>
-    <item>24 de ore</item>
-    <item>3 zile</item>
-    <item>o săptămână</item>
-  </string-array>
-  <plurals name="days_plural">
-    <item quantity="one">%d zile</item>
-    <item quantity="zero">%d zile</item>
-    <item quantity="two">%d zile</item>
-    <item quantity="few">%d zile</item>
-    <item quantity="many">%d zile</item>
-    <item quantity="other">%d zile</item>
-  </plurals>
-  <plurals name="hours_plural">
-    <item quantity="zero">%d ore</item>
-    <item quantity="one">%d ora</item>
-    <item quantity="two">%d ore</item>
-    <item quantity="few">%d ore</item>
-    <item quantity="many">%d ore</item>
-    <item quantity="other">%d ore</item>
-  </plurals>
-  <plurals name="minutes_plural">
-    <item quantity="zero">%d minute</item>
-    <item quantity="one">%d minut</item>
-    <item quantity="two">%d minute</item>
-    <item quantity="few">%d minute</item>
-    <item quantity="many">%d minute</item>
-    <item quantity="other">%d minute</item>
-  </plurals>
-  <plurals name="votes">
-    <item quantity="zero">%d voturi</item>
-    <item quantity="one">%d vot</item>
-    <item quantity="two">%d voturi</item>
-    <item quantity="few">%d voturi</item>
-    <item quantity="many">%d voturi</item>
-    <item quantity="other">%d votes</item>
-  </plurals>
 </resources>

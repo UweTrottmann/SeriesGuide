@@ -56,9 +56,9 @@ public class AddListDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
 
         // hide title, use custom theme
-        if (SeriesGuidePreferences.THEME == R.style.AndroidTheme) {
+        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue) {
             setStyle(STYLE_NO_TITLE, 0);
-        } else if (SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight) {
+        } else if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
             setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Light_Dialog);
         } else {
             setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Dialog);

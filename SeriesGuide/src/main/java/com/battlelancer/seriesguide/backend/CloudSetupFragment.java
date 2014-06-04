@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +32,6 @@ import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.Result;
@@ -49,7 +49,7 @@ import timber.log.Timber;
 /**
  * Helps connecting a device to Hexagon: sign in via Google account, initial uploading of shows.
  */
-public class CloudSetupFragment extends SherlockFragment {
+public class CloudSetupFragment extends Fragment {
 
     private Button mButtonAction;
 

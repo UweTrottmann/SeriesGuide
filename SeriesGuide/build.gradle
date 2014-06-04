@@ -6,7 +6,7 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 11
+        minSdkVersion 15
         targetSdkVersion 19
         testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
     }
@@ -58,7 +58,7 @@ dependencies {
     compile project(':libraries:stickygridheaders')
     compile rootProject.ext.libraries.okhttp
     compile rootProject.ext.libraries.supportv4
-    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
+    compile 'com.github.castorflex.smoothprogressbar:library:0.5.1'
     compile 'com.github.chrisbanes.photoview:library:1.2.2'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.+'
     compile 'com.jakewharton:butterknife:4.0.1'
@@ -72,12 +72,14 @@ dependencies {
     compile 'com.uwetrottmann:trakt-java:3.2.+'
     compile 'de.greenrobot:eventbus:2.2.0'
 
+    // Google Play Services
+    compile 'com.google.android.gms:play-services:4.4.52'
+
     // App Engine
-    compile 'com.google.android.gms:play-services:4.3.23'
-    compile ('com.google.api-client:google-api-client-android:1.17.0-rc') {
+    compile ('com.google.api-client:google-api-client-android:1.18.0-rc') {
         exclude group: 'com.google.android.google-play-services'
     }
-    compile 'com.google.http-client:google-http-client-gson:1.17.0-rc'
+    compile 'com.google.http-client:google-http-client-gson:1.18.0-rc'
 
     // libs folder
     compile fileTree(dir: 'libs', include: '*.jar')

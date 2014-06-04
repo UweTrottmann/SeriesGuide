@@ -20,21 +20,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import com.actionbarsherlock.app.SherlockFragment;
+import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
@@ -50,14 +48,10 @@ import java.util.Date;
 /**
  * Displays one user created list which includes a mixture of shows, seasons and episodes.
  */
-public class ListsFragment extends SherlockFragment implements
+public class ListsFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener, View.OnClickListener {
 
     private static final int LOADER_ID = R.layout.fragment_list;
-
-    private static final int CONTEXT_REMOVE_ID = 300;
-
-    private static final int CONTEXT_MANAGE_LISTS_ID = 301;
 
     private static final String TAG = "Lists";
 
@@ -88,7 +82,7 @@ public class ListsFragment extends SherlockFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new ListItemAdapter(getActivity(), null, 0, this);
+        mAdapter = new ListItemAdapter(getActivity(), null, 0);
 
         // setup grid view
         GridView list = (GridView) getView().findViewById(android.R.id.list);
@@ -98,58 +92,7 @@ public class ListsFragment extends SherlockFragment implements
         list.setFastScrollAlwaysVisible(false);
         list.setFastScrollEnabled(true);
 
-        registerForContextMenu(list);
-
         getLoaderManager().initLoader(LOADER_ID, getArguments(), this);
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-        menu.add(0, CONTEXT_MANAGE_LISTS_ID, 0, R.string.list_item_manage);
-        menu.add(0, CONTEXT_REMOVE_ID, 1, R.string.list_item_remove);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        /*
-         * This fixes all fragments receiving the context menu dispatch, see
-         * http://stackoverflow.com/questions/5297842/how-to-handle-
-         * oncontextitemselected-in-a-multi-fragment-activity and others.
-         */
-        if (!getUserVisibleHint()) {
-            return super.onContextItemSelected(item);
-        }
-
-        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-
-        switch (item.getItemId()) {
-            case CONTEXT_REMOVE_ID: {
-                String itemId = ((Cursor) mAdapter.getItem(info.position))
-                        .getString(ListItemsQuery.LIST_ITEM_ID);
-                getActivity().getContentResolver().delete(ListItems.buildListItemUri(itemId), null,
-                        null);
-                getActivity().getContentResolver().notifyChange(ListItems.CONTENT_WITH_DETAILS_URI,
-                        null);
-
-                fireTrackerEvent("Remove from mList");
-                return true;
-            }
-            case CONTEXT_MANAGE_LISTS_ID: {
-                final Cursor listItem = (Cursor) mAdapter.getItem(info.position);
-                String tvdbId = listItem.getString(ListItemsQuery.ITEM_REF_ID);
-                int type = listItem.getInt(ListItemsQuery.ITEM_TYPE);
-                ListsDialogFragment.showListsDialog(tvdbId, type,
-                        getFragmentManager());
-
-                fireTrackerEvent("Manage lists");
-                return true;
-            }
-            default:
-                return super.onContextItemSelected(item);
-        }
-
     }
 
     @Override
@@ -197,9 +140,10 @@ public class ListsFragment extends SherlockFragment implements
         return new CursorLoader(getActivity(), ListItems.CONTENT_WITH_DETAILS_URI,
                 ListItemsQuery.PROJECTION,
                 Lists.LIST_ID + "=?",
-                new String[]{
+                new String[] {
                         listId
-                }, ListItemsQuery.SORTING);
+                }, ListItemsQuery.SORTING
+        );
     }
 
     @Override
@@ -214,12 +158,8 @@ public class ListsFragment extends SherlockFragment implements
 
     private class ListItemAdapter extends BaseShowsAdapter {
 
-        private final View.OnClickListener mListenerContextMenu;
-
-        public ListItemAdapter(Context context, Cursor c, int flags,
-                View.OnClickListener listenerContextMenu) {
+        public ListItemAdapter(Context context, Cursor c, int flags) {
             super(context, c, flags);
-            mListenerContextMenu = listenerContextMenu;
         }
 
         @Override
@@ -234,7 +174,7 @@ public class ListsFragment extends SherlockFragment implements
             viewHolder.favorited.setVisibility(isFavorited ? View.VISIBLE : View.GONE);
 
             // item title
-            int itemType = cursor.getInt(ListItemsQuery.ITEM_TYPE);
+            final int itemType = cursor.getInt(ListItemsQuery.ITEM_TYPE);
             switch (itemType) {
                 default:
                 case 1:
@@ -303,7 +243,18 @@ public class ListsFragment extends SherlockFragment implements
 
             // context menu
             viewHolder.contextMenu.setVisibility(View.VISIBLE);
-            viewHolder.contextMenu.setOnClickListener(mListenerContextMenu);
+            final String itemId = cursor.getString(ListItemsQuery.LIST_ITEM_ID);
+            final int itemTvdbId = cursor.getInt(ListItemsQuery.ITEM_REF_ID);
+            viewHolder.contextMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+                    popupMenu.inflate(R.menu.lists_popup_menu);
+                    popupMenu.setOnMenuItemClickListener(
+                            new PopupMenuItemClickListener(itemId, itemTvdbId, itemType));
+                    popupMenu.show();
+                }
+            });
         }
 
         @Override
@@ -316,11 +267,44 @@ public class ListsFragment extends SherlockFragment implements
             return v;
         }
 
+        private class PopupMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
+
+            private final String mItemId;
+            private final int mItemTvdbId;
+            private final int mItemType;
+
+            public PopupMenuItemClickListener(String itemId, int itemTvdbId, int itemType) {
+                mItemId = itemId;
+                mItemTvdbId = itemTvdbId;
+                mItemType = itemType;
+            }
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_action_lists_manage: {
+                        ListsDialogFragment.showListsDialog(mItemTvdbId, mItemType,
+                                getFragmentManager());
+                        fireTrackerEvent("Manage lists");
+                        return true;
+                    }
+                    case R.id.menu_action_lists_remove: {
+                        getActivity().getContentResolver()
+                                .delete(ListItems.buildListItemUri(mItemId), null, null);
+                        getActivity().getContentResolver()
+                                .notifyChange(ListItems.CONTENT_WITH_DETAILS_URI, null);
+                        fireTrackerEvent("Remove from mList");
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
     }
 
     interface ListItemsQuery {
 
-        String[] PROJECTION = new String[]{
+        String[] PROJECTION = new String[] {
                 ListItems._ID, ListItems.LIST_ITEM_ID, ListItems.ITEM_REF_ID, ListItems.TYPE,
                 Shows.REF_SHOW_ID, Shows.TITLE, Shows.OVERVIEW, Shows.POSTER, Shows.NETWORK,
                 Shows.AIRSTIME, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTTEXT,
@@ -358,7 +342,6 @@ public class ListsFragment extends SherlockFragment implements
         int SHOW_FAVORITE = 14;
 
         int SHOW_RELEASE_COUNTRY = 15;
-
     }
 
     private void fireTrackerEvent(String label) {

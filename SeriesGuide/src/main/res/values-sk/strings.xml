@@ -65,6 +65,30 @@
   <string name="shows_continuing">%s continuing</string>
   <string name="episodes_watched">%s watched</string>
   <string name="runtime_all_episodes">Celkový čas všetkých videných epizód</string>
+  <plurals name="days_plural">
+    <item quantity="one">%d day</item>
+    <item quantity="zero">%d days</item>
+    <item quantity="two">%d days</item>
+    <item quantity="few">%d days</item>
+    <item quantity="many">%d days</item>
+    <item quantity="other">%d days</item>
+  </plurals>
+  <plurals name="hours_plural">
+    <item quantity="zero">%d hours</item>
+    <item quantity="one">%d hour</item>
+    <item quantity="two">%d hours</item>
+    <item quantity="few">%d hours</item>
+    <item quantity="many">%d hours</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
+  <plurals name="minutes_plural">
+    <item quantity="zero">%d minutes</item>
+    <item quantity="one">%d minute</item>
+    <item quantity="two">%d minutes</item>
+    <item quantity="few">%d minutes</item>
+    <item quantity="many">%d minutes</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="your_rating">Vaše hodnotenie</string>
   <string name="love">Totálna pecka!</string>
   <string name="hate">Odpad :(</string>
@@ -76,6 +100,14 @@
   <string name="rating7">Dobrý</string>
   <string name="rating8">Skvelý</string>
   <string name="rating9">Vynikajúci</string>
+  <plurals name="votes">
+    <item quantity="zero">%d hlasov</item>
+    <item quantity="one">%d hlas</item>
+    <item quantity="two">%d hlasov</item>
+    <item quantity="few">%d hlasov</item>
+    <item quantity="many">%d hlasov</item>
+    <item quantity="other">%d hlasov</item>
+  </plurals>
   <string name="episode_number_absolute">CELKOVO</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Prvýkrát odvysielané</string>
@@ -216,13 +248,8 @@
   <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Pridať seriály z knižnice:</string>
   <string name="show_library">Zobraziť knižnicu</string>
-  <string name="upload_existing_shows">Nahrať existujúce seriály</string>
   <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
   <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
-  <string name="trakt_upload">Nahrať na trakt.tv</string>
-  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
-  <string name="upload_done">Finished uploading.</string>
-  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Základné</string>
   <string name="prefs_category_sharing">Služby</string>
   <string name="prefs_category_advanced">Pokročilé</string>
@@ -244,6 +271,27 @@
   <string name="feedback">Poslať reakciu</string>
   <string name="pref_autoaddshows">Pridávať nové seriály z trakt.tv</string>
   <string name="pref_autoaddshowssummary">Automaticky pridávať seriály z vašej aktivity na trakt.tv</string>
+  <string-array name="sesorting">
+    <item>Od najnovších</item>
+    <item>Od najstarších</item>
+  </string-array>
+  <string-array name="epsorting">
+    <item>Od najnovších</item>
+    <item>Od najstarších</item>
+    <item>Od nezhliadnutých</item>
+    <item>A - Z</item>
+    <item>Najlepšie hodnotené</item>
+    <item>Od najnovších (DVD)</item>
+    <item>Od najstarších (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>teraz</item>
+    <item>denne</item>
+    <item>3 dní</item>
+    <item>týždenne</item>
+    <item>dva týždne</item>
+    <item>mesiaca</item>
+  </string-array>
   <string name="pref_appearance">Vzhľad</string>
   <string name="pref_theme">Téma aplikácie</string>
   <string name="pref_other">Ostatné</string>
@@ -319,10 +367,9 @@
   <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_createaccount">Vytvoriť nový účet</string>
+  <string name="get_started">Get started</string>
   <string name="welcome_setuplanguage">Vyberte jazyk</string>
-  <string name="welcome_traktmessage">Access your trakt library and friends activity</string>
   <string name="dismiss">Zamietnuť</string>
-  <string name="welcome_add_part1">Začnite stlačením na</string>
   <string name="upcoming_show">%s práve vychádzajú</string>
   <string name="upcoming_episodes">Práve vychádzajú nové epizódy</string>
   <string name="upcoming_episodes_number">%s new episodes</string>
@@ -337,15 +384,41 @@
   <string name="pref_vibrate">Vibrovať</string>
   <string name="pref_vibratesummary">Pri upozornení vibrovať</string>
   <string name="pref_notifications_treshold">Čas upozornenia</string>
+  <string-array name="notificationThreshold">
+    <item>vysiela sa</item>
+    <item>5 minut vopred</item>
+    <item>10 minut vopred</item>
+    <item>hodinu vopred</item>
+  </string-array>
   <string name="smallwidget">SeriesGuide (malý)</string>
   <string name="bigwidget">SeriesGuide (stredný)</string>
   <string name="largewidget">SeriesGuide (veľký)</string>
   <string name="hide_watched">Skryť zhliadnuté epizódy</string>
   <string name="pref_widget_opacity">Pozadie widgetu</string>
+  <string-array name="widgetOpacity">
+    <item>Transparent</item>
+    <item>25% black</item>
+    <item>50% black</item>
+    <item>75% black</item>
+    <item>Čierna</item>
+  </string-array>
   <string name="pref_widget_type">Typ widgetu</string>
+  <string-array name="widgetType">
+    <item>Nadchádzajúce</item>
+    <item>Nedávne</item>
+    <item>Obľúbené</item>
+  </string-array>
   <string name="dashclock_extension_label">Ďalší diel</string>
   <string name="dashclock_extension_description">Zobrazuje ďalší diel zo seriálov v SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Display episode within…</string>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>1 hour</item>
+    <item>6 hours</item>
+    <item>12 hours</item>
+    <item>24 hours</item>
+    <item>3 dní</item>
+    <item>týždenne</item>
+  </string-array>
   <string name="action_migrate">Presun z rozšírenej verzie X</string>
   <string name="migration_description">SeriesGuide X is now an unlock key for X features in the free version (X Pass). Please migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
   <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
@@ -379,83 +452,4 @@
   <string name="extension_youtube">YouTube search</string>
   <string name="description_extension_youtube">Search YouTube for videos</string>
   <string name="description_extension_web_search">Search for websites and images</string>
-  <string-array name="sesorting">
-    <item>Od najnovších</item>
-    <item>Od najstarších</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Od najnovších</item>
-    <item>Od najstarších</item>
-    <item>Od nezhliadnutých</item>
-    <item>A - Z</item>
-    <item>Najlepšie hodnotené</item>
-    <item>Od najnovších (DVD)</item>
-    <item>Od najstarších (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>teraz</item>
-    <item>denne</item>
-    <item>3 dní</item>
-    <item>týždenne</item>
-    <item>dva týždne</item>
-    <item>mesiaca</item>
-  </string-array>
-  <string-array name="notificationThreshold">
-    <item>vysiela sa</item>
-    <item>5 minut vopred</item>
-    <item>10 minut vopred</item>
-    <item>hodinu vopred</item>
-  </string-array>
-  <string-array name="widgetOpacity">
-    <item>Transparent</item>
-    <item>25% black</item>
-    <item>50% black</item>
-    <item>75% black</item>
-    <item>Čierna</item>
-  </string-array>
-  <string-array name="widgetType">
-    <item>Nadchádzajúce</item>
-    <item>Nedávne</item>
-    <item>Obľúbené</item>
-  </string-array>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>1 hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>24 hours</item>
-    <item>3 dní</item>
-    <item>týždenne</item>
-  </string-array>
-  <plurals name="days_plural">
-    <item quantity="one">%d day</item>
-    <item quantity="zero">%d days</item>
-    <item quantity="two">%d days</item>
-    <item quantity="few">%d days</item>
-    <item quantity="many">%d days</item>
-    <item quantity="other">%d days</item>
-  </plurals>
-  <plurals name="hours_plural">
-    <item quantity="zero">%d hours</item>
-    <item quantity="one">%d hour</item>
-    <item quantity="two">%d hours</item>
-    <item quantity="few">%d hours</item>
-    <item quantity="many">%d hours</item>
-    <item quantity="other">%d hours</item>
-  </plurals>
-  <plurals name="minutes_plural">
-    <item quantity="zero">%d minutes</item>
-    <item quantity="one">%d minute</item>
-    <item quantity="two">%d minutes</item>
-    <item quantity="few">%d minutes</item>
-    <item quantity="many">%d minutes</item>
-    <item quantity="other">%d minutes</item>
-  </plurals>
-  <plurals name="votes">
-    <item quantity="zero">%d hlasov</item>
-    <item quantity="one">%d hlas</item>
-    <item quantity="two">%d hlasov</item>
-    <item quantity="few">%d hlasov</item>
-    <item quantity="many">%d hlasov</item>
-    <item quantity="other">%d hlasov</item>
-  </plurals>
 </resources>

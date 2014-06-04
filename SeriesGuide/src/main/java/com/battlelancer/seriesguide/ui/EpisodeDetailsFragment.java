@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -32,6 +33,9 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -42,10 +46,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -83,7 +83,7 @@ import timber.log.Timber;
 /**
  * Displays details about a single episode like summary, ratings and episode image if available.
  */
-public class EpisodeDetailsFragment extends SherlockFragment implements ActionsFragmentContract {
+public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentContract {
 
     private static final String TAG = "Episode Details";
 
@@ -241,7 +241,7 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight;
+        boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light;
         // multi-pane layout has non-transparent action bar, adjust icon color
         boolean isInMultipane = getArguments().getBoolean(InitBundle.IS_IN_MULTIPANE_LAYOUT);
         inflater.inflate(isLightTheme && !isInMultipane
@@ -266,8 +266,8 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
             return true;
         } else if (itemId == R.id.menu_manage_lists) {
             fireTrackerEvent("Manage lists");
-            ListsDialogFragment.showListsDialog(String.valueOf(getEpisodeTvdbId()),
-                    ListItemTypes.EPISODE, getFragmentManager());
+            ListsDialogFragment.showListsDialog(getEpisodeTvdbId(), ListItemTypes.EPISODE,
+                    getFragmentManager());
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -438,9 +438,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
             public void onClick(View v) {
                 Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
                 fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH, imagePath);
-                fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_TITLE, mShowTitle);
-                fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_SUBTITLE,
-                        mEpisodeTitle);
                 ActivityCompat.startActivity(getActivity(), fullscreen,
                         ActivityOptionsCompat
                                 .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
@@ -524,7 +521,7 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
                 popupMenu.getMenuInflater()
-                        .inflate(R.menu.episode_overflow_menu, popupMenu.getMenu());
+                        .inflate(R.menu.episode_popup_menu, popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(new OverflowItemClickListener(mShowTitle,
                         Utils.getNextEpisodeString(v.getContext(), mSeasonNumber, mEpisodeNumber,
                                 mEpisodeTitle), releaseTime, showRunTime
@@ -592,7 +589,7 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
 
     private void loadTraktRatings(boolean isUseCachedValues) {
         if (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED) {
-            mTraktTask = new TraktSummaryTask(getSherlockActivity(), mRatingsContainer,
+            mTraktTask = new TraktSummaryTask(getActivity(), mRatingsContainer,
                     isUseCachedValues).episode(mShowTvdbId, getEpisodeTvdbId(), mSeasonNumber,
                     mEpisodeNumber);
             AndroidUtils.executeAsyncTask(mTraktTask);

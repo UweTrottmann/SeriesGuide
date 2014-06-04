@@ -19,12 +19,16 @@ package com.battlelancer.seriesguide.ui;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -37,10 +41,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TraktCommentsAdapter;
 import com.battlelancer.seriesguide.enums.TraktAction;
@@ -55,7 +55,7 @@ import java.util.List;
 /**
  * A custom {@link ListFragment} to display show or episode shouts and for posting own shouts.
  */
-public class TraktShoutsFragment extends SherlockFragment implements
+public class TraktShoutsFragment extends Fragment implements
         LoaderCallbacks<List<Comment>>, SwipeRefreshLayout.OnRefreshListener {
 
     /**
@@ -287,7 +287,7 @@ public class TraktShoutsFragment extends SherlockFragment implements
     @Override
     public Loader<List<Comment>> onCreateLoader(int id, Bundle args) {
         showProgressBar(true);
-        return new TraktCommentsLoader(getSherlockActivity(), args);
+        return new TraktCommentsLoader(getActivity(), args);
     }
 
     @Override
