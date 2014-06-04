@@ -22,7 +22,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -30,12 +34,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.migration.MigrationActivity;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.CheatSheet;
@@ -46,7 +45,7 @@ import com.uwetrottmann.androidutils.CheatSheet;
  *
  * @author Uwe Trottmann
  */
-public class FirstRunFragment extends SherlockFragment {
+public class FirstRunFragment extends Fragment {
 
     private static final String PREF_KEY_FIRSTRUN = "accepted_eula";
 
@@ -94,15 +93,6 @@ public class FirstRunFragment extends SherlockFragment {
             public void onClick(View v) {
                 fireTrackerEvent("Add show");
                 startActivity(new Intent(getActivity(), AddActivity.class));
-                setFirstRunDismissed();
-            }
-        });
-
-        // migrate button
-        getView().findViewById(R.id.buttonFirstRunMigrate).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), MigrationActivity.class));
                 setFirstRunDismissed();
             }
         });

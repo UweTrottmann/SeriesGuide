@@ -16,20 +16,20 @@
 
 package com.battlelancer.seriesguide.getglueapi;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 import android.text.format.DateUtils;
+import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.ui.BaseActivity;
@@ -57,13 +57,13 @@ public class GetGlueAuthActivity extends BaseActivity {
         WebView webview = new WebView(this);
         setContentView(webview);
 
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setTitle(getString(R.string.getglue_authentication));
         actionBar.setDisplayShowTitleEnabled(true);
 
-        setSupportProgressBarVisibility(true);
+        setProgressBarVisibility(true);
 
-        final SherlockFragmentActivity activity = this;
+        final FragmentActivity activity = this;
         webview.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 /*
@@ -71,7 +71,7 @@ public class GetGlueAuthActivity extends BaseActivity {
                  * scales. The progress meter will automatically disappear when
                  * we reach 100%.
                  */
-                activity.setSupportProgress(progress * 1000);
+                activity.setProgress(progress * 1000);
             }
         });
         webview.setWebViewClient(new WebViewClient() {

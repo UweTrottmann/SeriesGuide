@@ -24,21 +24,19 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
+import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.EpisodesAdapter;
@@ -57,22 +55,11 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 /**
  * Displays a list of episodes of a season.
  */
-public class EpisodesFragment extends SherlockListFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, OnClickListener, OnFlagEpisodeListener {
+public class EpisodesFragment extends ListFragment implements
+        LoaderManager.LoaderCallbacks<Cursor>, OnClickListener, OnFlagEpisodeListener,
+        EpisodesAdapter.PopupMenuClickListener {
 
     private static final String TAG = "Episodes";
-
-    private static final int CONTEXT_FLAG_WATCHED_ID = 0;
-
-    private static final int CONTEXT_FLAG_UNWATCHED_ID = 1;
-
-    private static final int CONTEXT_FLAG_COLLECTED_ID = 2;
-
-    private static final int CONTEXT_FLAG_UNCOLLECTED_ID = 3;
-
-    private static final int CONTEXT_MANAGE_LISTS_ID = 4;
-
-    private static final int CONTEXT_FLAG_UNTILHERE_ID = 5;
 
     private Constants.EpisodeSorting mSorting;
 
@@ -90,7 +77,6 @@ public class EpisodesFragment extends SherlockListFragment implements
         String SEASON_TVDBID = "season_tvdbid";
 
         String SEASON_NUMBER = "season_number";
-
     }
 
     public static EpisodesFragment newInstance(int showId, int seasonId, int seasonNumber) {
@@ -136,7 +122,6 @@ public class EpisodesFragment extends SherlockListFragment implements
 
         getLoaderManager().initLoader(EpisodesActivity.EPISODES_LOADER_ID, null, this);
 
-        registerForContextMenu(getListView());
         setHasOptionsMenu(true);
     }
 
@@ -173,7 +158,7 @@ public class EpisodesFragment extends SherlockListFragment implements
             intent.setClass(getActivity(), EpisodesActivity.class);
             intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, (int) episodeId);
             startActivity(intent);
-            getSherlockActivity().overridePendingTransition(R.anim.blow_up_enter,
+            getActivity().overridePendingTransition(R.anim.blow_up_enter,
                     R.anim.blow_up_exit);
         }
     }
@@ -192,73 +177,6 @@ public class EpisodesFragment extends SherlockListFragment implements
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
         prefs.unregisterOnSharedPreferenceChangeListener(mPrefsListener);
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-        // only display the action appropriate for the items current state
-        AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-        final Cursor episode = (Cursor) mAdapter.getItem(info.position);
-
-        if (episode.getInt(EpisodesQuery.WATCHED) == 1) {
-            menu.add(0, CONTEXT_FLAG_UNWATCHED_ID, 1, R.string.unmark_episode);
-        } else {
-            menu.add(0, CONTEXT_FLAG_WATCHED_ID, 0, R.string.mark_episode);
-        }
-        if (episode.getInt(EpisodesQuery.COLLECTED) == 1) {
-            menu.add(0, CONTEXT_FLAG_UNCOLLECTED_ID, 3, R.string.action_collection_remove);
-        } else {
-            menu.add(0, CONTEXT_FLAG_COLLECTED_ID, 2, R.string.action_collection_add);
-        }
-        menu.add(0, CONTEXT_FLAG_UNTILHERE_ID, 4, R.string.mark_untilhere);
-        menu.add(0, CONTEXT_MANAGE_LISTS_ID, 5, R.string.list_item_manage);
-    }
-
-    @Override
-    public boolean onContextItemSelected(android.view.MenuItem item) {
-        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-
-        switch (item.getItemId()) {
-            case CONTEXT_FLAG_WATCHED_ID: {
-                final Cursor items = (Cursor) mAdapter.getItem(info.position);
-                onFlagEpisodeWatched((int) info.id, items.getInt(EpisodesQuery.NUMBER), true);
-                fireTrackerEventContextMenu("Flag watched");
-                return true;
-            }
-            case CONTEXT_FLAG_UNWATCHED_ID: {
-                final Cursor items = (Cursor) mAdapter.getItem(info.position);
-                onFlagEpisodeWatched((int) info.id, items.getInt(EpisodesQuery.NUMBER), false);
-                fireTrackerEventContextMenu("Flag unwatched");
-                return true;
-            }
-            case CONTEXT_FLAG_COLLECTED_ID: {
-                final Cursor items = (Cursor) mAdapter.getItem(info.position);
-                onFlagEpisodeCollected((int) info.id, items.getInt(EpisodesQuery.NUMBER), true);
-                fireTrackerEventContextMenu("Flag collected");
-                return true;
-            }
-            case CONTEXT_FLAG_UNCOLLECTED_ID: {
-                final Cursor items = (Cursor) mAdapter.getItem(info.position);
-                onFlagEpisodeCollected((int) info.id, items.getInt(EpisodesQuery.NUMBER), false);
-                fireTrackerEventContextMenu("Flag uncollected");
-                return true;
-            }
-            case CONTEXT_FLAG_UNTILHERE_ID: {
-                final Cursor items = (Cursor) mAdapter.getItem(info.position);
-                onMarkUntilHere(items.getLong(EpisodesQuery.FIRSTAIREDMS));
-                fireTrackerEventContextMenu("Flag previously aired");
-                return true;
-            }
-            case CONTEXT_MANAGE_LISTS_ID: {
-                fireTrackerEventContextMenu("Manage lists");
-                ListsDialogFragment.showListsDialog(String.valueOf(info.id), ListItemTypes.EPISODE,
-                        getFragmentManager());
-                return true;
-            }
-        }
-        return super.onContextItemSelected(item);
     }
 
     @Override
@@ -291,6 +209,60 @@ public class EpisodesFragment extends SherlockListFragment implements
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         showDetails(position);
+    }
+
+    @Override
+    public void onPopupMenuClick(View v, final int episodeTvdbId, final int episodeNumber,
+            final long releaseTimeMs, final boolean isWatched, final boolean isCollected) {
+        PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+        popupMenu.inflate(R.menu.episodes_popup_menu);
+
+        Menu menu = popupMenu.getMenu();
+        menu.findItem(R.id.menu_action_episodes_watched).setVisible(!isWatched);
+        menu.findItem(R.id.menu_action_episodes_not_watched).setVisible(isWatched);
+        menu.findItem(R.id.menu_action_episodes_collection_add).setVisible(!isCollected);
+        menu.findItem(R.id.menu_action_episodes_collection_remove).setVisible(isCollected);
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_action_episodes_watched: {
+                        onFlagEpisodeWatched(episodeTvdbId, episodeNumber, true);
+                        fireTrackerEventContextMenu("Flag watched");
+                        return true;
+                    }
+                    case R.id.menu_action_episodes_not_watched: {
+                        onFlagEpisodeWatched(episodeTvdbId, episodeNumber, false);
+                        fireTrackerEventContextMenu("Flag unwatched");
+                        return true;
+                    }
+                    case R.id.menu_action_episodes_collection_add: {
+                        onFlagEpisodeCollected(episodeTvdbId, episodeNumber, true);
+                        fireTrackerEventContextMenu("Flag collected");
+                        return true;
+                    }
+                    case R.id.menu_action_episodes_collection_remove: {
+                        onFlagEpisodeCollected(episodeTvdbId, episodeNumber, false);
+                        fireTrackerEventContextMenu("Flag uncollected");
+                        return true;
+                    }
+                    case R.id.menu_action_episodes_watched_previous: {
+                        onMarkUntilHere(releaseTimeMs);
+                        fireTrackerEventContextMenu("Flag previously aired");
+                        return true;
+                    }
+                    case R.id.menu_action_episodes_manage_lists: {
+                        ListsDialogFragment.showListsDialog(episodeTvdbId, ListItemTypes.EPISODE,
+                                getFragmentManager());
+                        fireTrackerEventContextMenu("Manage lists");
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+        popupMenu.show();
     }
 
     @Override
@@ -332,7 +304,7 @@ public class EpisodesFragment extends SherlockListFragment implements
 
     public interface EpisodesQuery {
 
-        String[] PROJECTION = new String[]{
+        String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.WATCHED, Episodes.TITLE,
                 Episodes.NUMBER, Episodes.FIRSTAIREDMS, Episodes.DVDNUMBER,
                 Episodes.ABSOLUTE_NUMBER, Episodes.COLLECTED
@@ -378,7 +350,7 @@ public class EpisodesFragment extends SherlockListFragment implements
 
         getLoaderManager().restartLoader(EpisodesActivity.EPISODES_LOADER_ID, null,
                 EpisodesFragment.this);
-        getSherlockActivity().invalidateOptionsMenu();
+        getActivity().invalidateOptionsMenu();
 
         Utils.trackCustomEvent(getActivity(), TAG, "Sorting", mSorting.name());
     }

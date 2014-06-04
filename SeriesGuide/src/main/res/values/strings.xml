@@ -297,15 +297,8 @@
     <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
     <string name="add_trakt_shows">Add more shows from your trakt library:</string>
     <string name="show_library">Show your trakt library</string>
-    <string name="upload_existing_shows">Upload existing shows</string>
     <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
     <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
-
-    <!-- trakt upload -->
-    <string name="trakt_upload">Upload to trakt</string>
-    <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
-    <string name="upload_done">Finished uploading.</string>
-    <string name="upload_no_work">There was nothing to upload.</string>
 
     <!-- Settings -->
     <string name="prefs_category_basic">Basics</string>
@@ -440,10 +433,9 @@
     <string name="trakt_createaccount">Create new account</string>
 
     <!-- Welcome dialog -->
+    <string name="get_started">Get started</string>
     <string name="welcome_setuplanguage">Choose language</string>
-    <string name="welcome_traktmessage">Access your trakt library and friends activity</string>
     <string name="dismiss">Dismiss</string>
-    <string name="welcome_add_part1">To get started tap</string>
 
     <!-- Notifications -->
     <string name="upcoming_show">%s is coming up</string>

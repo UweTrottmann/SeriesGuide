@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.accounts.Account;
+import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -34,12 +35,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
@@ -60,6 +61,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.ui.streams.FriendsEpisodeStreamFragment;
@@ -71,8 +73,8 @@ import com.battlelancer.seriesguide.util.LatestEpisodeUpdateService;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import de.greenrobot.event.EventBus;
+import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -110,7 +112,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
     private FetchPosterTask mArtTask;
 
-    private ProgressBar mProgressBar;
+    private SmoothProgressBar mProgressBar;
 
     private Object mSyncObserverHandle;
 
@@ -211,7 +213,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     }
 
     private void setUpActionBar() {
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
     }
 
@@ -257,7 +259,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         mTabsAdapter.notifyTabsChanged();
 
         // progress bar
-        mProgressBar = (ProgressBar) findViewById(R.id.progressBarShows);
+        mProgressBar = (SmoothProgressBar) findViewById(R.id.progressBarShows);
+        mProgressBar.setVisibility(View.GONE);
     }
 
     /**
@@ -403,7 +406,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         saveArtTask(outState);
-        outState.putInt("index", getSupportActionBar().getSelectedNavigationIndex());
+        outState.putInt("index", getActionBar().getSelectedNavigationIndex());
         mSavedState = outState;
     }
 
@@ -437,7 +440,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.seriesguide_menu, menu);
+        getMenuInflater().inflate(R.menu.seriesguide_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -717,6 +720,12 @@ public class ShowsActivity extends BaseTopShowsActivity implements
      * Shows or hides a custom indeterminate progress indicator inside this activity layout.
      */
     public void setProgressVisibility(boolean isVisible) {
+        if (mProgressBar.getVisibility() == (isVisible ? View.VISIBLE : View.GONE)) {
+            // already in desired state, avoid replaying animation
+            return;
+        }
+        mProgressBar.startAnimation(AnimationUtils.loadAnimation(mProgressBar.getContext(),
+                isVisible ? R.anim.fade_in : R.anim.fade_out));
         mProgressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 
@@ -773,20 +782,15 @@ public class ShowsActivity extends BaseTopShowsActivity implements
                 public void run() {
                     Account account = AccountUtils.getAccount(ShowsActivity.this);
                     if (account == null) {
-                        // GetAccount() returned an invalid value. This
-                        // shouldn't happen.
+                        // no account setup
                         setProgressVisibility(false);
                         return;
                     }
 
-                    // Test the ContentResolver to see if the sync adapter is
-                    // active or pending.
-                    // Set the state of the refresh button accordingly.
+                    // Test the ContentResolver to see if the sync adapter is active.
                     boolean syncActive = ContentResolver.isSyncActive(
                             account, SeriesGuideApplication.CONTENT_AUTHORITY);
-                    boolean syncPending = ContentResolver.isSyncPending(
-                            account, SeriesGuideApplication.CONTENT_AUTHORITY);
-                    setProgressVisibility(syncActive || syncPending);
+                    setProgressVisibility(syncActive);
                 }
             });
         }

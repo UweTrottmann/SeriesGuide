@@ -561,10 +561,21 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * Add shows and movies title column without articles.
      */
     private static void upgradeToThirtyThree(SQLiteDatabase db) {
-        // shows
-        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + Shows.TITLE_NOARTICLE
-                + " TEXT;");
+        /*
+        Add new columns. Added existence checks as 14.0.3 update botched upgrade process.
+         */
+        Cursor cursor = db.query(Tables.SHOWS, null, null, null, null, null, null, "1");
+        if (cursor.getColumnIndex(Shows.TITLE_NOARTICLE) == -1) {
+            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + Shows.TITLE_NOARTICLE
+                    + " TEXT;");
+        }
+        cursor = db.query(Tables.MOVIES, null, null, null, null, null, null, "1");
+        if (cursor.getColumnIndex(Movies.TITLE_NOARTICLE) == -1) {
+            db.execSQL("ALTER TABLE " + Tables.MOVIES + " ADD COLUMN " + Movies.TITLE_NOARTICLE
+                    + " TEXT;");
+        }
 
+        // shows
         Cursor shows = db.query(Tables.SHOWS, new String[] { Shows._ID, Shows.TITLE }, null, null,
                 null, null, null);
         ContentValues newTitleValues = new ContentValues();
@@ -588,9 +599,6 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         newTitleValues.clear();
 
         // movies
-        db.execSQL("ALTER TABLE " + Tables.MOVIES + " ADD COLUMN " + Movies.TITLE_NOARTICLE
-                + " TEXT;");
-
         Cursor movies = db.query(Tables.MOVIES, new String[] { Movies._ID, Movies.TITLE }, null,
                 null, null, null, null);
         if (movies != null) {

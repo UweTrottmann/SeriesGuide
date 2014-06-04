@@ -20,6 +20,7 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -27,7 +28,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import com.actionbarsherlock.app.SherlockListFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.SearchResultsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
@@ -37,7 +37,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 /**
  * Displays a list of search results and allows searching for episodes.
  */
-public class SearchFragment extends SherlockListFragment implements LoaderCallbacks<Cursor> {
+public class SearchFragment extends ListFragment implements LoaderCallbacks<Cursor> {
 
     private static final int LOADER_ID = R.string.search_hint;
 

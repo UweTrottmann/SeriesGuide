@@ -16,18 +16,18 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.ActionBar;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Utils;
 
@@ -45,7 +45,7 @@ public class SearchActivity extends BaseNavDrawerActivity {
         setContentView(R.layout.search);
         setupNavDrawer();
 
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(R.string.search_hint);
@@ -68,7 +68,7 @@ public class SearchActivity extends BaseNavDrawerActivity {
 
             // set query as subtitle
             String query = intent.getStringExtra(SearchManager.QUERY);
-            final ActionBar actionBar = getSupportActionBar();
+            final ActionBar actionBar = getActionBar();
             actionBar.setSubtitle("\"" + query + "\"");
 
             // searching within a show?
@@ -103,14 +103,14 @@ public class SearchActivity extends BaseNavDrawerActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.search_menu, menu);
+        getMenuInflater().inflate(R.menu.search_menu, menu);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false);
 
-        if (SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight) {
+        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
             // override search view style for light theme (because we use dark actionbar theme)
             // search text
             int searchSrcTextId = getResources().getIdentifier("android:id/search_src_text", null, null);

@@ -18,6 +18,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -25,7 +26,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Utils;
 
@@ -33,7 +33,7 @@ import com.battlelancer.seriesguide.util.Utils;
  * Tells about trakt and how it integrates with SeriesGuide, allows to proceed
  * to entering credentials step.
  */
-public class ConnectTraktFragment extends SherlockFragment {
+public class ConnectTraktFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

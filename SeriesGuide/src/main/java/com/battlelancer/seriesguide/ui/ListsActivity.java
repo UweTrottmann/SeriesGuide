@@ -17,11 +17,11 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import android.view.Menu;
+import android.view.MenuItem;
 import com.astuetz.PagerSlidingTabStrip;
 import com.astuetz.PagerSlidingTabStrip.OnTabClickListener;
 import com.battlelancer.seriesguide.R;
@@ -56,7 +56,7 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
     }
 
     private void setupActionBar() {
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setIcon(R.drawable.ic_action_list);
         actionBar.setTitle(R.string.lists);
     }
@@ -96,7 +96,7 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.lists_menu, menu);
+        getMenuInflater().inflate(R.menu.lists_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

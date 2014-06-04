@@ -25,13 +25,6 @@
         </Preference>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/getglue">
-        <Preference
-            android:key="clearGetGlueCredentials"
-            android:summary="@string/clearGetGlueCredentialssummary"
-            android:title="@string/clearGetGlueCredentials" />
-    </PreferenceCategory>
-
     <PreferenceCategory android:title="@string/trakt">
         <Preference
             android:key="com.battlelancer.seriesguide.trakt.connect"
@@ -47,6 +40,13 @@
             android:key="com.battlelancer.seriesguide.autoaddtraktshows"
             android:summary="@string/pref_autoaddshowssummary"
             android:title="@string/pref_autoaddshows" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/getglue">
+        <Preference
+            android:key="clearGetGlueCredentials"
+            android:summary="@string/clearGetGlueCredentialssummary"
+            android:title="@string/clearGetGlueCredentials" />
     </PreferenceCategory>
 
 </PreferenceScreen>

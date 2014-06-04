@@ -37,13 +37,18 @@ public class SeasonsAdapter extends CursorAdapter {
 
     private LayoutInflater mLayoutInflater;
 
-    private OnClickListener mOnClickListener;
+    private PopupMenuClickListener mPopupMenuClickListener;
 
-    public SeasonsAdapter(Context context, Cursor c, int flags, OnClickListener listener) {
+    public interface PopupMenuClickListener {
+        public void onPopupMenuClick(View v, int seasonTvdbId, int seasonNumber);
+    }
+
+    public SeasonsAdapter(Context context, Cursor c, int flags,
+            PopupMenuClickListener listener) {
         super(context, c, flags);
         mLayoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mOnClickListener = listener;
+        mPopupMenuClickListener = listener;
     }
 
     @Override
@@ -78,8 +83,9 @@ public class SeasonsAdapter extends CursorAdapter {
         }
 
         // title
+        final int seasonNumber = mCursor.getInt(SeasonsQuery.COMBINED);
         viewHolder.seasonTitle.setText(
-                SeasonTools.getSeasonString(mContext, mCursor.getInt(SeasonsQuery.COMBINED)));
+                SeasonTools.getSeasonString(mContext, seasonNumber));
 
         // progress
         final int count = mCursor.getInt(SeasonsQuery.WATCHCOUNT);
@@ -133,7 +139,15 @@ public class SeasonsAdapter extends CursorAdapter {
         viewHolder.seasonWatchCount.setText(episodeCount);
 
         // context menu
-        viewHolder.contextMenu.setOnClickListener(mOnClickListener);
+        final int seasonTvdbId = mCursor.getInt(SeasonsQuery._ID);
+        viewHolder.contextMenu.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mPopupMenuClickListener != null) {
+                    mPopupMenuClickListener.onPopupMenuClick(v, seasonTvdbId, seasonNumber);
+                }
+            }
+        });
 
         return convertView;
     }

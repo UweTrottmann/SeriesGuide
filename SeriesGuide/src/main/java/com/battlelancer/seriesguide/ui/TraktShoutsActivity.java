@@ -16,10 +16,10 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.ActionBar;
 import android.os.Bundle;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.MenuItem;
+import android.support.v4.app.Fragment;
+import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 
 public class TraktShoutsActivity extends BaseActivity {
@@ -62,7 +62,7 @@ public class TraktShoutsActivity extends BaseActivity {
 
         if (savedInstanceState == null) {
             // embed the shouts fragment dialog
-            SherlockFragment f;
+            Fragment f;
             Bundle args = getIntent().getExtras();
             int showTvdbId = args.getInt(TraktShoutsFragment.InitBundle.SHOW_TVDB_ID);
             int episode = args.getInt(TraktShoutsFragment.InitBundle.EPISODE_NUMBER);
@@ -82,7 +82,7 @@ public class TraktShoutsActivity extends BaseActivity {
     }
 
     private void setupActionBar() {
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(R.string.comments);

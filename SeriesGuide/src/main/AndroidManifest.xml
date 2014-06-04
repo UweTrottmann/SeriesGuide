@@ -40,7 +40,7 @@
         android:label="@string/app_name"
         android:restrictedAccountType="@string/package_name"
         android:supportsRtl="false"
-        android:theme="@style/SeriesGuideTheme">
+        android:theme="@style/Theme.SeriesGuide">
 
         <!-- Google Play services version tag -->
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
@@ -172,7 +172,6 @@
 
         <!-- trakt -->
         <activity android:name="com.battlelancer.seriesguide.ui.ConnectTraktActivity" />
-        <activity android:name="com.battlelancer.seriesguide.ui.TraktSyncActivity" />
         <activity android:name="com.battlelancer.seriesguide.ui.TraktShoutsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

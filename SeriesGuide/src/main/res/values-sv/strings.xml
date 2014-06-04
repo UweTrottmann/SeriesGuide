@@ -66,6 +66,30 @@
   <string name="shows_continuing">%s fortsätter</string>
   <string name="episodes_watched">%s sedda</string>
   <string name="runtime_all_episodes">Speltid på alla sedda avsnitt</string>
+  <plurals name="days_plural">
+    <item quantity="one">%d dag</item>
+    <item quantity="zero">%d dagar</item>
+    <item quantity="two">%d dagar</item>
+    <item quantity="few">%d dagar</item>
+    <item quantity="many">%d dagar</item>
+    <item quantity="other">%d dagar</item>
+  </plurals>
+  <plurals name="hours_plural">
+    <item quantity="zero">%d timmar</item>
+    <item quantity="one">%d timme</item>
+    <item quantity="two">%d timmar</item>
+    <item quantity="few">%d timmar</item>
+    <item quantity="many">%d timmar</item>
+    <item quantity="other">%d timmar</item>
+  </plurals>
+  <plurals name="minutes_plural">
+    <item quantity="zero">%d minuter</item>
+    <item quantity="one">%d minut</item>
+    <item quantity="two">%d minuter</item>
+    <item quantity="few">%d minuter</item>
+    <item quantity="many">%d minuter</item>
+    <item quantity="other">%d minuter</item>
+  </plurals>
   <string name="your_rating">Ditt betyg</string>
   <string name="love">Helt ninja!</string>
   <string name="hate">Svag sås :(</string>
@@ -77,6 +101,14 @@
   <string name="rating7">Bra</string>
   <string name="rating8">Mycket bra</string>
   <string name="rating9">Fantastisk</string>
+  <plurals name="votes">
+    <item quantity="zero">%d röster</item>
+    <item quantity="one">%d röst</item>
+    <item quantity="two">%d röster</item>
+    <item quantity="few">%d röster</item>
+    <item quantity="many">%d röster</item>
+    <item quantity="other">%d röster</item>
+  </plurals>
   <string name="episode_number_absolute">Fullständig</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Releasedatum</string>
@@ -159,8 +191,8 @@
   <string name="friends">Vänner</string>
   <string name="friends_empty">Ingen vänaktivitet på trakt.</string>
   <string name="user_stream">Du</string>
-  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
-  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
+  <string name="user_stream_empty">Inga nya aktiviter på trakt. Bocka av några serier!</string>
+  <string name="user_movie_stream_empty">Inga nya aktiviter på trakt. Bocka av några filmer!</string>
   <string name="noupcoming">Det finns inga kommande avsnitt.</string>
   <string name="norecent">Det finns inga aktuella avsnitt.</string>
   <string name="only_favorites">Endast favoritserier</string>
@@ -214,16 +246,11 @@
   <string name="hexagon_priority_select">Välj Version</string>
   <string name="connect_trakt">Anslut till trakt</string>
   <string name="connect_trakt_done">Ansluten till trakt!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide synkroniserar nu serier och filmer på den här enheten med trakt. Detta kan ta lite tid.</string>
   <string name="add_trakt_shows">Lägg till program från ditt bibliotek:</string>
   <string name="show_library">Visa ditt bibliotek</string>
-  <string name="upload_existing_shows">Ladda upp befintliga serier</string>
   <string name="about_trakt">trakt hjälper till att hålla ett register över vilka TV-serier och filmer du ser på. <a href="http://trakt.tv">Lär dig mer</a></string>
   <string name="integration_trakt_items">- lägg till serier från ditt bibliotek och din att-se-lista - se dina rekommendationer och dina vänners aktivitet - sedda och samlade avsnitt synkas automatiskt - nya serier du ser på läggs automatiskt till.</string>
-  <string name="trakt_upload">Ladda upp till trakt.tv</string>
-  <string name="trakt_syncunwatched">Remove watched flags on trakt for unwatched episodes in SeriesGuide</string>
-  <string name="upload_done">Finished uploading.</string>
-  <string name="upload_no_work">There was nothing to upload.</string>
   <string name="prefs_category_basic">Grunder</string>
   <string name="prefs_category_sharing">Tjänster</string>
   <string name="prefs_category_advanced">Avancerat</string>
@@ -245,6 +272,27 @@
   <string name="feedback">Skicka feedback</string>
   <string name="pref_autoaddshows">Lägg till nya trakt-serier</string>
   <string name="pref_autoaddshowssummary">Lägg automatiskt till program från din trakt activity stream</string>
+  <string-array name="sesorting">
+    <item>Senaste först</item>
+    <item>Äldsta först</item>
+  </string-array>
+  <string-array name="epsorting">
+    <item>Senaste först</item>
+    <item>Äldsta först</item>
+    <item>Ej sedda först</item>
+    <item>A – Ö</item>
+    <item>Högst rankad</item>
+    <item>Senaste först (DVD)</item>
+    <item>Äldsta först (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>nu</item>
+    <item>en dag</item>
+    <item>3 dagar</item>
+    <item>en vecka</item>
+    <item>två veckor</item>
+    <item>en månad</item>
+  </string-array>
   <string name="pref_appearance">Utseende</string>
   <string name="pref_theme">Tema</string>
   <string name="pref_other">Övrigt</string>
@@ -320,10 +368,9 @@
   <string name="trakt_error_credentials">Något gick fel. Vänligen kontrollera dina uppgifter och försök igen.</string>
   <string name="trakt_error_general">Kunde inte kommunicera med trakt. Försök igen senare.</string>
   <string name="trakt_createaccount">Skapa nytt konto</string>
+  <string name="get_started">Get started</string>
   <string name="welcome_setuplanguage">Välj språk</string>
-  <string name="welcome_traktmessage">Kom åt ditt trakt.tv-bibliotek och vänners aktivitet</string>
   <string name="dismiss">Avfärda</string>
-  <string name="welcome_add_part1">För att starta tryck</string>
   <string name="upcoming_show">%s kommande</string>
   <string name="upcoming_episodes">Nya avsnitt är på väg</string>
   <string name="upcoming_episodes_number">%s nya avsnitt</string>
@@ -338,15 +385,41 @@
   <string name="pref_vibrate">Vibrera</string>
   <string name="pref_vibratesummary">Vibrerar även när meddelande visas</string>
   <string name="pref_notifications_treshold">När meddelandena ska visas </string>
+  <string-array name="notificationThreshold">
+    <item>sänds nu</item>
+    <item>5 min i förväg</item>
+    <item>10 min i förväg</item>
+    <item>en timme i förväg</item>
+  </string-array>
   <string name="smallwidget">SeriesGuide (liten)</string>
   <string name="bigwidget">SeriesGuide (mellan)</string>
   <string name="largewidget">SeriesGuide (stor)</string>
   <string name="hide_watched">Dölj sedda avsnitt</string>
   <string name="pref_widget_opacity">Widgetbakgrund </string>
+  <string-array name="widgetOpacity">
+    <item>Transparent</item>
+    <item>25% svart</item>
+    <item>50% svart</item>
+    <item>75% svart</item>
+    <item>Svart</item>
+  </string-array>
   <string name="pref_widget_type">Widgettyp </string>
+  <string-array name="widgetType">
+    <item>Kommande</item>
+    <item>De senaste</item>
+    <item>Favoriter</item>
+  </string-array>
   <string name="dashclock_extension_label">Kommande avsnitt</string>
   <string name="dashclock_extension_description">Visar nästa uppkommande avsnitt av dina SeriesGuide-serier..</string>
   <string name="dashclock_pref_upcoming_threshold">Visa nästa avsnitt</string>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>timme</item>
+    <item>6 timmar</item>
+    <item>12 timmar</item>
+    <item>24 timmar</item>
+    <item>3 dagar</item>
+    <item>vecka</item>
+  </string-array>
   <string name="action_migrate">Flytta från X</string>
   <string name="migration_description">SeriesGuide X är nu en upplåsningsnyckel för att nyttja X-funktionerna i gratisversionen (X Pass). Var god och flytta dina serier till gratisversionen av SeriesGuide. Behåll X installerad för att låsa upp funktioner i gratisversionen.</string>
   <string name="migration_import">Klicka nedan för att importera den säkerhetskopia som skapats i SeriesGuide X.</string>
@@ -372,91 +445,12 @@
   <string name="action_extensions_search">Skaffa fler tillägg</string>
   <string name="action_extension_settings">Inställningar</string>
   <string name="action_extension_remove">Ta bort</string>
-  <string name="extension_amazon">Amazon search</string>
-  <string name="description_extension_amazon">Search your local Amazon site</string>
-  <string name="pref_amazon_domain">Amazon site</string>
-  <string name="extension_google_play">Google Play search</string>
-  <string name="description_extension_google_play">Search the Google Play Store</string>
-  <string name="extension_youtube">YouTube search</string>
-  <string name="description_extension_youtube">Search YouTube for videos</string>
-  <string name="description_extension_web_search">Search for websites and images</string>
-  <string-array name="sesorting">
-    <item>Senaste först</item>
-    <item>Äldsta först</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Senaste först</item>
-    <item>Äldsta först</item>
-    <item>Ej sedda först</item>
-    <item>A – Ö</item>
-    <item>Högst rankad</item>
-    <item>Senaste först (DVD)</item>
-    <item>Äldsta först (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>nu</item>
-    <item>en dag</item>
-    <item>3 dagar</item>
-    <item>en vecka</item>
-    <item>två veckor</item>
-    <item>en månad</item>
-  </string-array>
-  <string-array name="notificationThreshold">
-    <item>sänds nu</item>
-    <item>5 min i förväg</item>
-    <item>10 min i förväg</item>
-    <item>en timme i förväg</item>
-  </string-array>
-  <string-array name="widgetOpacity">
-    <item>Transparent</item>
-    <item>25% svart</item>
-    <item>50% svart</item>
-    <item>75% svart</item>
-    <item>Svart</item>
-  </string-array>
-  <string-array name="widgetType">
-    <item>Kommande</item>
-    <item>De senaste</item>
-    <item>Favoriter</item>
-  </string-array>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>timme</item>
-    <item>6 timmar</item>
-    <item>12 timmar</item>
-    <item>24 timmar</item>
-    <item>3 dagar</item>
-    <item>vecka</item>
-  </string-array>
-  <plurals name="days_plural">
-    <item quantity="one">%d dag</item>
-    <item quantity="zero">%d dagar</item>
-    <item quantity="two">%d dagar</item>
-    <item quantity="few">%d dagar</item>
-    <item quantity="many">%d dagar</item>
-    <item quantity="other">%d dagar</item>
-  </plurals>
-  <plurals name="hours_plural">
-    <item quantity="zero">%d timmar</item>
-    <item quantity="one">%d timme</item>
-    <item quantity="two">%d timmar</item>
-    <item quantity="few">%d timmar</item>
-    <item quantity="many">%d timmar</item>
-    <item quantity="other">%d timmar</item>
-  </plurals>
-  <plurals name="minutes_plural">
-    <item quantity="zero">%d minuter</item>
-    <item quantity="one">%d minut</item>
-    <item quantity="two">%d minuter</item>
-    <item quantity="few">%d minuter</item>
-    <item quantity="many">%d minuter</item>
-    <item quantity="other">%d minuter</item>
-  </plurals>
-  <plurals name="votes">
-    <item quantity="zero">%d röster</item>
-    <item quantity="one">%d röst</item>
-    <item quantity="two">%d röster</item>
-    <item quantity="few">%d röster</item>
-    <item quantity="many">%d röster</item>
-    <item quantity="other">%d röster</item>
-  </plurals>
+  <string name="extension_amazon">Amazon sökning</string>
+  <string name="description_extension_amazon">Sök på din lokala Amazon\'s webbplats</string>
+  <string name="pref_amazon_domain">Amazon\'s webbplats</string>
+  <string name="extension_google_play">Google Play-sökning</string>
+  <string name="description_extension_google_play">Sök på Google Play Store</string>
+  <string name="extension_youtube">YouTube sökning</string>
+  <string name="description_extension_youtube">Sök på YouTube för videos</string>
+  <string name="description_extension_web_search">Sök efter webbplatser och bilder</string>
 </resources>

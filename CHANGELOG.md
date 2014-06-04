@@ -5,6 +5,34 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 15 *(2014-06-03)*
+-----------------------------
+
+* UI improvements and bug fixes.
+* Supports Android 4.0.3 (Ice Cream Sandwich) and up. If you are running Android 3.x you will only receive important bug fixes from now on.
+
+#### 15.0.1 *(2014-06-04)*
+
+* FIX Sync progress bar showing briefly when launching even if no actual sync is occuring.
+
+#### 15 *(2014-06-03)*
+
+* TWEAK Design tweaks.
+* TWEAK Moved movie search tab to first position.
+* FIX Notification settings not disabled when returning after disabling notifications.
+* NOTICE Latest translations from crowdin. Added (partial) Catalan.
+
+#### 15-beta1 *(2014-05-23)*
+
+* TWEAK The context menu is dead! Long live the popup menu! Migrated all context menus to popup menus.
+* TWEAK Updated action bar design, updated some icons.
+* TWEAK Simplified getting started instructions, dropped migration quick link (still available in settings).
+* TWEAK Pitch black background for fullscreen poster/image viewer.
+* FIX Notification sometimes links to wrong episode.
+* FIX In movie search, the popup menu now shows add to/remove from options depending on a movie being added to the watchlist or collection.
+* NOTICE Drop ActionBarSherlock. It was nice, while it lasted. Goodbye old friend!
+* NOTICE Supports Android 4.0.3 (Ice Cream Sandwich) and up. If you are running Android 3.x you will only receive important bug fixes from now on.
+
 Version 14 *(2014-05-14)*
 -----------------------------
 
@@ -12,6 +40,10 @@ Version 14 *(2014-05-14)*
 * Option to sort shows and movies by title while ignoring articles (English only).
 * Easier trakt setup: after connecting your shows and movies are automatically merged with your trakt profile.
 * Extensions replace watch options for episodes. Added extension for Google Play, YouTube and Web search.
+
+#### 14.0.4 *(2014-05-21)*
+
+* FIX Crash when database upgrade did not succeed.
 
 #### 14.0.3 *(2014-05-15)*
 
@@ -94,6 +126,7 @@ Version 13 *(2014-04-16)*
 * Extensions API: provide custom quick actions below episodes. Learn how to [build one](https://github.com/UweTrottmann/SeriesGuide/wiki/Extension-API).
 * Design refresh.
 * Sort movies.
+* Supports Android 3.0 (Honeycomb) and up. If you are running Android 2.3 you will only receive important bug fixes from now on.
 
 #### 13-beta7 *(2014-04-11)*
 

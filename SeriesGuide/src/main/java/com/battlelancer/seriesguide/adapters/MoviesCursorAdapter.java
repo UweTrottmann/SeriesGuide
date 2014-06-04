@@ -40,17 +40,21 @@ public class MoviesCursorAdapter extends CursorAdapter {
 
     private LayoutInflater mLayoutInflater;
 
-    private final View.OnClickListener mContextMenuListener;
-
     private final String mImageBaseUrl;
 
     private DateFormat dateFormatMovieReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
-    public MoviesCursorAdapter(Context context, View.OnClickListener contextMenuListener) {
+    private PopupMenuClickListener mPopupMenuClickListener;
+
+    public interface PopupMenuClickListener {
+        public void onPopupMenuClick(View v, int movieTmdbId);
+    }
+
+    public MoviesCursorAdapter(Context context, PopupMenuClickListener popupMenuClickListener) {
         super(context, null, 0);
         mLayoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mContextMenuListener = contextMenuListener;
+        mPopupMenuClickListener = popupMenuClickListener;
 
         // figure out which size of posters to load based on screen density
         if (DisplaySettings.isVeryHighDensityScreen(context)) {
@@ -102,7 +106,15 @@ public class MoviesCursorAdapter extends CursorAdapter {
         }
 
         // context menu
-        holder.contextMenu.setOnClickListener(mContextMenuListener);
+        final int movieTmdbId = cursor.getInt(MoviesQuery.TMDB_ID);
+        holder.contextMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mPopupMenuClickListener != null) {
+                    mPopupMenuClickListener.onPopupMenuClick(v, movieTmdbId);
+                }
+            }
+        });
     }
 
     static class ViewHolder {

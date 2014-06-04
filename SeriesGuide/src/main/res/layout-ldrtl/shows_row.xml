@@ -48,13 +48,15 @@
 
         <ImageView
             android:id="@+id/imageViewShowsContextMenu"
-            android:layout_width="28dp"
+            android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:background="?attr/custom_list_selector"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
             android:paddingEnd="0dp"
-            android:paddingStart="4dp"
+            android:paddingStart="8dp"
             android:scaleType="centerInside"
             android:src="?attr/drawableDropdown"
             android:visibility="invisible" />
@@ -67,7 +69,7 @@
             android:layout_alignParentBottom="true"
             android:layout_gravity="end"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="-4dp"
+            android:layout_marginEnd="-8dp"
             android:layout_toEndOf="@+id/showposter"
             android:layout_toStartOf="@+id/imageViewShowsContextMenu"
             android:gravity="end"

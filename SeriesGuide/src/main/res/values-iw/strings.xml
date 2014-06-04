@@ -65,6 +65,30 @@
   <string name="shows_continuing">%s ממשיכים</string>
   <string name="episodes_watched">%s נצפו</string>
   <string name="runtime_all_episodes">זמן הריצה של כל הפרקים שנצפו</string>
+  <plurals name="days_plural">
+    <item quantity="one">יום אחד</item>
+    <item quantity="zero">%d ימים</item>
+    <item quantity="two">%d ימים</item>
+    <item quantity="few">%d ימים</item>
+    <item quantity="many">%d ימים</item>
+    <item quantity="other">%d ימים</item>
+  </plurals>
+  <plurals name="hours_plural">
+    <item quantity="zero">%d שעות</item>
+    <item quantity="one">שעה אחת</item>
+    <item quantity="two">%d שעות</item>
+    <item quantity="few">%d שעות</item>
+    <item quantity="many">%d שעות</item>
+    <item quantity="other">%d שעות</item>
+  </plurals>
+  <plurals name="minutes_plural">
+    <item quantity="zero">%d דקות</item>
+    <item quantity="one">דקה אחת</item>
+    <item quantity="two">%d דקות</item>
+    <item quantity="few">%d דקות</item>
+    <item quantity="many">%d דקות</item>
+    <item quantity="other">%d דקות</item>
+  </plurals>
   <string name="your_rating">הדירוג שלך</string>
   <string name="love">לגמרי נינג\'ה!</string>
   <string name="hate">על הפנים ):</string>
@@ -76,6 +100,14 @@
   <string name="rating7">טוב</string>
   <string name="rating8">טוב מאוד</string>
   <string name="rating9">מצוין</string>
+  <plurals name="votes">
+    <item quantity="zero">הצבעות %d</item>
+    <item quantity="one">הצבעה %d</item>
+    <item quantity="two">הצבעות %d</item>
+    <item quantity="few">הצבעות %d</item>
+    <item quantity="many">הצבעות %d</item>
+    <item quantity="other">הצבעות %d</item>
+  </plurals>
   <string name="episode_number_absolute">מתחילת הסדרה</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">תאריך שחרור</string>
@@ -96,7 +128,7 @@
   <string name="services_watch">צפה</string>
   <string name="services_more">עוד</string>
   <string name="sort">מיין לפי</string>
-  <string name="action_sort_ignore_articles">Ignore articles</string>
+  <string name="action_sort_ignore_articles">התעלם מהמאמרים</string>
   <string name="today">היום</string>
   <string name="now">עכשיו</string>
   <string name="daily">יומי</string>
@@ -157,9 +189,9 @@
   <string name="recent">אחרונים</string>
   <string name="friends">חברים</string>
   <string name="friends_empty">אין פעילות חברים בtrakt.</string>
-  <string name="user_stream">You</string>
-  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
-  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
+  <string name="user_stream">אתה</string>
+  <string name="user_stream_empty">אין פעולות אחרונות בTrakt. בדוק כמה תוכניות!</string>
+  <string name="user_movie_stream_empty">אין פעולות אחרונות בTrakt. בדוק כמה סרטים!</string>
   <string name="noupcoming">אין פרקים שישודרו בקרוב</string>
   <string name="norecent">אין פרקים חדשים</string>
   <string name="only_favorites">סדרות מעודפות בלבד</string>
@@ -213,16 +245,11 @@
   <string name="hexagon_priority_select">בחר גירסה</string>
   <string name="connect_trakt">התחבר trakt</string>
   <string name="connect_trakt_done">מחובר אל trakt!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide עכשיו יסנכרן את הסדרות והסרטים על מכשיר זה עם trakt. זה עלול לקחת מעט זמן.</string>
   <string name="add_trakt_shows">הוסף תוכניות מהספריה:</string>
   <string name="show_library">הצג את הספריה שלך</string>
-  <string name="upload_existing_shows">העלה תוכניות קיימות</string>
   <string name="about_trakt">trakt מסייעת לשמור רשימה של אילו תוכניות טלוויזיה וסרטים אתה צופה. <a href="http://trakt.tv"> למד עוד</a></string>
   <string name="integration_trakt_items">-הוסף סדרות מהספריה ומהרשימת מעקב שלך\n\n- ראה את ההמלצות שלך ואת פעילות החברים שלך\n\n- דגלי צפייה ואוסף הדגלים שלך מסונכרנים אוטומטית\n\n- תוכניות חדשות שצפית בהן מתווספות באופן אוטומטי</string>
-  <string name="trakt_upload">העלה ל-trakt.tv</string>
-  <string name="trakt_syncunwatched">הסר דגלים שנצפו ב-Trakt לפרקים שלא נצפו ב-SeriesGuide</string>
-  <string name="upload_done">העלאה הסתיימה.</string>
-  <string name="upload_no_work">לא היה שום דבר להעלאה.</string>
   <string name="prefs_category_basic">בסיסי</string>
   <string name="prefs_category_sharing">שירותים</string>
   <string name="prefs_category_advanced">מתקדם</string>
@@ -244,6 +271,27 @@
   <string name="feedback">שלח משוב</string>
   <string name="pref_autoaddshows">הוסף סדרות trakt חדשות</string>
   <string name="pref_autoaddshowssummary">הוסף סדרות מפעילות ה-trakt שלך באופן אוטומטי</string>
+  <string-array name="sesorting">
+    <item>אחרון קודם</item>
+    <item>ראשון קודם</item>
+  </string-array>
+  <string-array name="epsorting">
+    <item>אחרון קודם</item>
+    <item>ראשון קודם</item>
+    <item>לא נצפו קודם</item>
+    <item>A - Z</item>
+    <item>פופולרים</item>
+    <item>אחרון קודם (DVD)</item>
+    <item>ראשון קודם (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>כעת</item>
+    <item>יום</item>
+    <item>3 ימים</item>
+    <item>שבוע אחד</item>
+    <item>שבועיים</item>
+    <item>חודש אחד</item>
+  </string-array>
   <string name="pref_appearance">תצוגה</string>
   <string name="pref_theme">נושא אפליקציה</string>
   <string name="pref_other">אחר</string>
@@ -319,10 +367,9 @@
   <string name="trakt_error_credentials">משהו השתבש. אנא בדוק את האישורים שלך ונסה שוב.</string>
   <string name="trakt_error_general">לא ניתן להתחבר ל-Trakt. נסה שוב מאוחר יותר.</string>
   <string name="trakt_createaccount">צור חשבון חדש</string>
+  <string name="get_started">התחל</string>
   <string name="welcome_setuplanguage">בחר שפה</string>
-  <string name="welcome_traktmessage">קבל גישה לספריית ה-trakt.tv שלך ופעילות חברייך</string>
   <string name="dismiss">סגור</string>
-  <string name="welcome_add_part1">כדי להתחיל, לחץ</string>
   <string name="upcoming_show">%s מתקרב</string>
   <string name="upcoming_episodes">פרקים חדשים מתקרבים</string>
   <string name="upcoming_episodes_number">פרקים חדשים %s</string>
@@ -337,15 +384,41 @@
   <string name="pref_vibrate">רטט</string>
   <string name="pref_vibratesummary">רטוט גם בזמן הצגת התראות</string>
   <string name="pref_notifications_treshold">מתי להתריע</string>
+  <string-array name="notificationThreshold">
+    <item>משודר</item>
+    <item>5 דקות מראש</item>
+    <item>10 דקות מראש</item>
+    <item>שעה מראש</item>
+  </string-array>
   <string name="smallwidget">SeriesGuide (קטן)</string>
   <string name="bigwidget">SeriesGuide (בינוני)</string>
   <string name="largewidget">SeriesGuide (גדול)</string>
   <string name="hide_watched">הסתר פרקים שנצפו</string>
   <string name="pref_widget_opacity">רקע ווידג\'ט</string>
+  <string-array name="widgetOpacity">
+    <item>שקוף</item>
+    <item>25% שחור</item>
+    <item>50% שחור</item>
+    <item>75% שחור</item>
+    <item>שחור</item>
+  </string-array>
   <string name="pref_widget_type">סוג ווידג\'ט</string>
+  <string-array name="widgetType">
+    <item>בקרוב</item>
+    <item>חדש</item>
+    <item>מועדפים</item>
+  </string-array>
   <string name="dashclock_extension_label">פרקים קרובים</string>
   <string name="dashclock_extension_description">מציג את הפרק הקרוב הבא מסדרות ה-SeriesGuide שלך.</string>
   <string name="dashclock_pref_upcoming_threshold">הצג פרקים ב-</string>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>שעה</item>
+    <item>6 שעות</item>
+    <item>12 שעות</item>
+    <item>24 שעות</item>
+    <item>שלושה ימים</item>
+    <item>שבוע</item>
+  </string-array>
   <string name="action_migrate">העבר מ-X</string>
   <string name="migration_description">SeriesGuide X מעתה הינו קוד לפתיחת יכולות מנוי ה-X מתוך הגרסה החינמית (X Pass). אנא העבר את הסדרות שלך לגרסה החינמית של SeriesGuide. תשאיר את X מותקן עבור פתיחת כל היכולות בגסה החינמית.</string>
   <string name="migration_import">לחץ מטה כדי לייבא את הגיבוי, אשר נוצר ב-SeriesGuide X.</string>
@@ -374,88 +447,9 @@
   <string name="extension_amazon">חיפוש באמזון</string>
   <string name="description_extension_amazon">חפש באתר אמזון המקומי שלך</string>
   <string name="pref_amazon_domain">אתר אמזון</string>
-  <string name="extension_google_play">Google Play search</string>
-  <string name="description_extension_google_play">Search the Google Play Store</string>
-  <string name="extension_youtube">YouTube search</string>
-  <string name="description_extension_youtube">Search YouTube for videos</string>
-  <string name="description_extension_web_search">Search for websites and images</string>
-  <string-array name="sesorting">
-    <item>אחרון קודם</item>
-    <item>ראשון קודם</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>אחרון קודם</item>
-    <item>ראשון קודם</item>
-    <item>לא נצפו קודם</item>
-    <item>A - Z</item>
-    <item>פופולרים</item>
-    <item>אחרון קודם (DVD)</item>
-    <item>ראשון קודם (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>כעת</item>
-    <item>יום</item>
-    <item>3 ימים</item>
-    <item>שבוע אחד</item>
-    <item>שבועיים</item>
-    <item>חודש אחד</item>
-  </string-array>
-  <string-array name="notificationThreshold">
-    <item>משודר</item>
-    <item>5 דקות מראש</item>
-    <item>10 דקות מראש</item>
-    <item>שעה מראש</item>
-  </string-array>
-  <string-array name="widgetOpacity">
-    <item>שקוף</item>
-    <item>25% שחור</item>
-    <item>50% שחור</item>
-    <item>75% שחור</item>
-    <item>שחור</item>
-  </string-array>
-  <string-array name="widgetType">
-    <item>בקרוב</item>
-    <item>חדש</item>
-    <item>מועדפים</item>
-  </string-array>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>שעה</item>
-    <item>6 שעות</item>
-    <item>12 שעות</item>
-    <item>24 שעות</item>
-    <item>שלושה ימים</item>
-    <item>שבוע</item>
-  </string-array>
-  <plurals name="days_plural">
-    <item quantity="one">יום אחד</item>
-    <item quantity="zero">%d ימים</item>
-    <item quantity="two">%d ימים</item>
-    <item quantity="few">%d ימים</item>
-    <item quantity="many">%d ימים</item>
-    <item quantity="other">%d ימים</item>
-  </plurals>
-  <plurals name="hours_plural">
-    <item quantity="zero">%d שעות</item>
-    <item quantity="one">שעה אחת</item>
-    <item quantity="two">%d שעות</item>
-    <item quantity="few">%d שעות</item>
-    <item quantity="many">%d שעות</item>
-    <item quantity="other">%d שעות</item>
-  </plurals>
-  <plurals name="minutes_plural">
-    <item quantity="zero">%d דקות</item>
-    <item quantity="one">דקה אחת</item>
-    <item quantity="two">%d דקות</item>
-    <item quantity="few">%d דקות</item>
-    <item quantity="many">%d דקות</item>
-    <item quantity="other">%d דקות</item>
-  </plurals>
-  <plurals name="votes">
-    <item quantity="zero">הצבעות %d</item>
-    <item quantity="one">הצבעה %d</item>
-    <item quantity="two">הצבעות %d</item>
-    <item quantity="few">הצבעות %d</item>
-    <item quantity="many">הצבעות %d</item>
-    <item quantity="other">הצבעות %d</item>
-  </plurals>
+  <string name="extension_google_play">חיפוש בGoogle Play</string>
+  <string name="description_extension_google_play">חפש בGoogle Play</string>
+  <string name="extension_youtube">חיפוש בYouTube</string>
+  <string name="description_extension_youtube">חפש את הוידיאו בYouTube</string>
+  <string name="description_extension_web_search">חפש אתרים ותמונות</string>
 </resources>

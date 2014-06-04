@@ -1,4 +1,5 @@
 /*
+/*
  * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +18,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
@@ -30,15 +32,14 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.widget.Toast;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
@@ -59,7 +60,7 @@ import java.util.List;
 /**
  * Allows tweaking of various SeriesGuide settings.
  */
-public class SeriesGuidePreferences extends SherlockPreferenceActivity implements
+public class SeriesGuidePreferences extends PreferenceActivity implements
         OnSharedPreferenceChangeListener {
 
     private static final String TAG = "Settings";
@@ -96,7 +97,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_TAPE_INTERVAL = "com.battlelancer.seriesguide.tapeinterval";
 
-    public static int THEME = R.style.SeriesGuideTheme;
+    public static int THEME = R.style.Theme_SeriesGuide;
 
     private static void fireTrackerEvent(Context context, String label) {
         Utils.trackClick(context, TAG, label);
@@ -171,7 +172,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     }
 
     private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setIcon(R.drawable.ic_actionbar);
     }
@@ -283,6 +284,12 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                     return true;
                 }
             });
+            // disable advanced notification settings if notifications are disabled
+            boolean isNotificationsEnabled = NotificationSettings.isNotificationsEnabled(context);
+            notificationsThresholdPref.setEnabled(isNotificationsEnabled);
+            notificationsFavOnlyPref.setEnabled(isNotificationsEnabled);
+            vibratePref.setEnabled(isNotificationsEnabled);
+            ringtonePref.setEnabled(isNotificationsEnabled);
         } else {
             notificationsPref.setOnPreferenceChangeListener(sNoOpChangeListener);
             ((CheckBoxPreference) notificationsPref).setChecked(false);

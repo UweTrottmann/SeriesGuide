@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.ui;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,7 +28,6 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
@@ -39,7 +39,7 @@ import java.util.List;
 /**
  * Super class for fragments displaying a list of shows and allowing to add them to the database.
  */
-public abstract class AddFragment extends SherlockFragment {
+public abstract class AddFragment extends Fragment {
 
     protected List<SearchResult> mSearchResults;
 

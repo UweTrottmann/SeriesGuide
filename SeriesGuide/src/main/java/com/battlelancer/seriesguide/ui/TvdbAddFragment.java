@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,12 +31,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -119,7 +119,7 @@ public class TvdbAddFragment extends AddFragment {
 
     private void search() {
         // nag about no connectivity
-        if (!AndroidUtils.isNetworkConnected(getSherlockActivity())) {
+        if (!AndroidUtils.isNetworkConnected(getActivity())) {
             setEmptyMessage(R.string.offline);
             setSearchResults(new LinkedList<SearchResult>());
             return;
@@ -145,9 +145,9 @@ public class TvdbAddFragment extends AddFragment {
 
         @Override
         protected void onPreExecute() {
-            final SherlockFragmentActivity activity = getSherlockActivity();
+            final Activity activity = getActivity();
             if (activity != null) {
-                activity.setSupportProgressBarIndeterminateVisibility(true);
+                activity.setProgressBarIndeterminateVisibility(true);
             }
         }
 
@@ -169,9 +169,9 @@ public class TvdbAddFragment extends AddFragment {
 
         @Override
         protected void onPostExecute(List<SearchResult> result) {
-            final SherlockFragmentActivity activity = getSherlockActivity();
+            final Activity activity = getActivity();
             if (activity != null) {
-                activity.setSupportProgressBarIndeterminateVisibility(false);
+                activity.setProgressBarIndeterminateVisibility(false);
             }
             if (result == null) {
                 // display error in empty view

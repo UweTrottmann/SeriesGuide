@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.nfc.NdefMessage;
@@ -28,9 +29,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Window;
 import android.widget.EditText;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Window;
 import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
@@ -68,11 +68,10 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
     }
 
     private void setupActionBar() {
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setIcon(R.drawable.ic_action_new_show);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        setProgressBarIndeterminateVisibility(Boolean.FALSE);
-        setSupportProgressBarIndeterminateVisibility(false);
+        setProgressBarIndeterminateVisibility(false);
     }
 
     private void setupViews() {

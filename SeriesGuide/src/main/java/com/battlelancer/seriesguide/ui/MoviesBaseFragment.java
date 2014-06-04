@@ -20,18 +20,18 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.MoviesCursorAdapter;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -44,9 +44,9 @@ import static com.battlelancer.seriesguide.settings.MoviesDistillationSettings.M
 /**
  * A shell for a fragment displaying a number of movies.
  */
-public abstract class MoviesBaseFragment extends SherlockFragment implements
+public abstract class MoviesBaseFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemClickListener,
-        View.OnClickListener {
+        MoviesCursorAdapter.PopupMenuClickListener {
 
     private static final int LAYOUT = R.layout.fragment_movies;
 
@@ -82,8 +82,6 @@ public abstract class MoviesBaseFragment extends SherlockFragment implements
 
         mAdapter = new MoviesCursorAdapter(getActivity(), this);
         mGridView.setAdapter(mAdapter);
-
-        registerForContextMenu(mGridView);
 
         getLoaderManager().initLoader(getLoaderId(), null, this);
 
@@ -162,11 +160,6 @@ public abstract class MoviesBaseFragment extends SherlockFragment implements
         EventBus.getDefault().post(new MoviesSortOrderChangedEvent());
     }
 
-    @Override
-    public void onClick(View v) {
-        getActivity().openContextMenu(v);
-    }
-
     public void onEventMainThread(MoviesSortOrderChangedEvent event) {
         getLoaderManager().restartLoader(getLoaderId(), null, this);
     }
@@ -183,6 +176,9 @@ public abstract class MoviesBaseFragment extends SherlockFragment implements
     }
 
     @Override
+    public abstract void onPopupMenuClick(View v, int movieTmdbId);
+
+    @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
     }
@@ -196,4 +192,5 @@ public abstract class MoviesBaseFragment extends SherlockFragment implements
      * Return a loader id different from any other used within {@link com.battlelancer.seriesguide.ui.MoviesActivity}.
      */
     protected abstract int getLoaderId();
+
 }

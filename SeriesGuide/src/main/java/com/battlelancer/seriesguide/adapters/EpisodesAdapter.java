@@ -27,10 +27,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.widgets.WatchedBox;
 import com.battlelancer.seriesguide.ui.EpisodesFragment.EpisodesQuery;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TimeTools;
+import com.battlelancer.seriesguide.widgets.WatchedBox;
 import com.uwetrottmann.androidutils.CheatSheet;
 import java.util.Date;
 
@@ -40,7 +40,7 @@ public class EpisodesAdapter extends CursorAdapter {
 
     private LayoutInflater mLayoutInflater;
 
-    private OnClickListener mOnClickListener;
+    private PopupMenuClickListener mPopupMenuClickListener;
 
     private OnFlagEpisodeListener mOnFlagListener;
 
@@ -48,12 +48,17 @@ public class EpisodesAdapter extends CursorAdapter {
         public void onFlagEpisodeWatched(int episodeId, int episodeNumber, boolean isWatched);
     }
 
-    public EpisodesAdapter(Context context, Cursor c, int flags, OnClickListener listener,
+    public interface PopupMenuClickListener {
+        public void onPopupMenuClick(View v, int episodeTvdbId, int episodeNumber,
+                long releaseTimeMs, boolean isWatched, boolean isCollected);
+    }
+
+    public EpisodesAdapter(Context context, Cursor c, int flags, PopupMenuClickListener listener,
             OnFlagEpisodeListener flagListener) {
         super(context, c, flags);
         mLayoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mOnClickListener = listener;
+        mPopupMenuClickListener = listener;
         mOnFlagListener = flagListener;
     }
 
@@ -109,14 +114,14 @@ public class EpisodesAdapter extends CursorAdapter {
                         !EpisodeTools.isWatched(box.getEpisodeFlag()));
             }
         });
+        final boolean isWatched = EpisodeTools.isWatched(viewHolder.watchedBox.getEpisodeFlag());
         CheatSheet.setup(viewHolder.watchedBox,
-                EpisodeTools.isWatched(viewHolder.watchedBox.getEpisodeFlag())
-                        ? R.string.unmark_episode : R.string.mark_episode);
+                isWatched ? R.string.unmark_episode : R.string.mark_episode
+        );
 
         // collected tag
-        viewHolder.collected
-                .setVisibility(mCursor.getInt(EpisodesQuery.COLLECTED) == 1 ? View.VISIBLE
-                        : View.INVISIBLE);
+        final boolean isCollected = mCursor.getInt(EpisodesQuery.COLLECTED) == 1;
+        viewHolder.collected.setVisibility(isCollected ? View.VISIBLE : View.INVISIBLE);
 
         // alternative numbers
         StringBuilder altNumbers = new StringBuilder();
@@ -136,7 +141,7 @@ public class EpisodesAdapter extends CursorAdapter {
         viewHolder.episodeAlternativeNumbers.setText(altNumbers);
 
         // release time
-        long releaseTime = mCursor.getLong(EpisodesQuery.FIRSTAIREDMS);
+        final long releaseTime = mCursor.getLong(EpisodesQuery.FIRSTAIREDMS);
         if (releaseTime != -1) {
             Date actualRelease = TimeTools.getEpisodeReleaseTime(mContext, releaseTime);
             // "in 15 mins" or "15 July 2001"
@@ -148,7 +153,15 @@ public class EpisodesAdapter extends CursorAdapter {
         }
 
         // context menu
-        viewHolder.contextMenu.setOnClickListener(mOnClickListener);
+        viewHolder.contextMenu.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mPopupMenuClickListener != null) {
+                    mPopupMenuClickListener.onPopupMenuClick(v, episodeId, episodeNumber,
+                            releaseTime, isWatched, isCollected);
+                }
+            }
+        });
 
         return convertView;
     }
@@ -171,5 +184,4 @@ public class EpisodesAdapter extends CursorAdapter {
         ImageView collected;
         ImageView contextMenu;
     }
-
 }

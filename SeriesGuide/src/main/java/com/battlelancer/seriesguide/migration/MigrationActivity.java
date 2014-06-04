@@ -16,13 +16,13 @@
 
 package com.battlelancer.seriesguide.migration;
 
+import android.app.ActionBar;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonImportTask;
 import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
@@ -56,7 +56,7 @@ public class MigrationActivity extends BaseActivity
     }
 
     private void setupActionBar() {
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }

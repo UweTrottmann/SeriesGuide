@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -26,11 +27,10 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
+import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
 import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
@@ -42,7 +42,6 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 
 /**
@@ -76,14 +75,18 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         setupNavDrawer();
 
         setupViews();
+
+        if (mShowId != 0) {
+            updateShowDelayed(mShowId);
+        }
     }
 
     @Override
     protected void setCustomTheme() {
         // use a special immersive theme
-        if (SeriesGuidePreferences.THEME == R.style.SeriesGuideThemeLight) {
+        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
             setTheme(R.style.ImmersiveTheme_Light);
-        } else if (SeriesGuidePreferences.THEME == R.style.SeriesGuideTheme) {
+        } else if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide) {
             setTheme(R.style.ImmersiveTheme);
         } else {
             setTheme(R.style.ImmersiveTheme_Stock);
@@ -91,10 +94,10 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     }
 
     private void setupActionBar(String showTitle) {
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(showTitle);
-        if (SeriesGuidePreferences.THEME != R.style.AndroidTheme) {
+        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
             actionBar.setIcon(R.drawable.ic_launcher);
         }
     }

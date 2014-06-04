@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.dataliberation;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,10 +31,9 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
 import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
+import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 
@@ -41,7 +41,7 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
  * One button export or import of the show database using a JSON file on
  * external storage.
  */
-public class DataLiberationFragment extends SherlockFragment implements OnTaskFinishedListener,
+public class DataLiberationFragment extends Fragment implements OnTaskFinishedListener,
         OnTaskProgressListener {
 
     private Button mButtonExport;

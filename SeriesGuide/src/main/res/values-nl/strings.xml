@@ -65,6 +65,30 @@
   <string name="shows_continuing">%s lopende</string>
   <string name="episodes_watched">%s bekeken</string>
   <string name="runtime_all_episodes">Speelduur van alle bekeken afleveringen</string>
+  <plurals name="days_plural">
+    <item quantity="one">%d dag</item>
+    <item quantity="zero">%d dagen</item>
+    <item quantity="two">%d dagen</item>
+    <item quantity="few">%d dagen</item>
+    <item quantity="many">%d dagen</item>
+    <item quantity="other">%d dagen</item>
+  </plurals>
+  <plurals name="hours_plural">
+    <item quantity="zero">%d uren</item>
+    <item quantity="one">%d uur</item>
+    <item quantity="two">%d uren</item>
+    <item quantity="few">%d uren</item>
+    <item quantity="many">%d uren</item>
+    <item quantity="other">%d uren</item>
+  </plurals>
+  <plurals name="minutes_plural">
+    <item quantity="zero">%d minuten</item>
+    <item quantity="one">%d minuut</item>
+    <item quantity="two">%d minuten</item>
+    <item quantity="few">%d minuten</item>
+    <item quantity="many">%d minuten</item>
+    <item quantity="other">%d minuten</item>
+  </plurals>
   <string name="your_rating">Uw beoordeling</string>
   <string name="love">Zeer goed!</string>
   <string name="hate">Zwak</string>
@@ -76,6 +100,14 @@
   <string name="rating7">Goed</string>
   <string name="rating8">Geweldig</string>
   <string name="rating9">Uitmuntend</string>
+  <plurals name="votes">
+    <item quantity="zero">%d stemmen</item>
+    <item quantity="one">%d stem</item>
+    <item quantity="two">%d stemmen</item>
+    <item quantity="few">%d stemmen</item>
+    <item quantity="many">%d stemmen</item>
+    <item quantity="other">%d stemmen</item>
+  </plurals>
   <string name="episode_number_absolute">ABSOLUUT</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Releasedatum</string>
@@ -216,13 +248,8 @@
   <string name="connect_trakt_done_explanation">SeriesGuide zal nu de shows en films op dit apparaat synchroniseren met Trakt. Dit kan enige tijd duren.</string>
   <string name="add_trakt_shows">Series toevoegen vanuit uw bibliotheek:</string>
   <string name="show_library">Uw bibliotheek weergeven</string>
-  <string name="upload_existing_shows">Upload bestaande shows</string>
   <string name="about_trakt">trakt helpt met het bijhouden van welke TV-shows en films u aan het bekijken bent. <a href="http://trakt.tv">Meer weten</a></string>
   <string name="integration_trakt_items">- voeg series uit uw bibliotheek en watchlist toe\n\n- bekijk uw aanbevelingen en vriendenactiviteit\n\n- bekeken- en verzameld-markeringen worden automatisch gesynchroniseerd\n\n- nieuwe series die u bekeken hebt worden automatisch toegevoegd</string>
-  <string name="trakt_upload">Uploaden naar trakt.tv</string>
-  <string name="trakt_syncunwatched">Verwijder bekeken-markeringen in Trakt voor onbekeken afleveringen in SeriesGuide</string>
-  <string name="upload_done">Klaar met uploaden.</string>
-  <string name="upload_no_work">Er was niets om te uploaden.</string>
   <string name="prefs_category_basic">Basis</string>
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Geavanceerd</string>
@@ -244,6 +271,27 @@
   <string name="feedback">Reactie verzenden</string>
   <string name="pref_autoaddshows">Nieuwe trakt-series toevoegen</string>
   <string name="pref_autoaddshowssummary">Series van uw actieve trakt-stream automatisch toevoegen</string>
+  <string-array name="sesorting">
+    <item>Nieuwste eerst</item>
+    <item>Oudste eerst</item>
+  </string-array>
+  <string-array name="epsorting">
+    <item>Nieuwste eerst</item>
+    <item>Oudste eerst</item>
+    <item>Onbekeken eerst</item>
+    <item>A - Z</item>
+    <item>Hoogste waardering</item>
+    <item>Nieuwste eerst (DVD)</item>
+    <item>Oudste eerst (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>nu</item>
+    <item>1 dag</item>
+    <item>3 dagen</item>
+    <item>1 week</item>
+    <item>2 weken</item>
+    <item>een maand</item>
+  </string-array>
   <string name="pref_appearance">Uiterlijk</string>
   <string name="pref_theme">Applicatie thema</string>
   <string name="pref_other">Andere</string>
@@ -319,10 +367,9 @@
   <string name="trakt_error_credentials">Er ging iets fout. Controleer uw inlog gegevens en probeer het opnieuw.</string>
   <string name="trakt_error_general">Communicatie met trakt is niet mogelijk. Probeer later opnieuw.</string>
   <string name="trakt_createaccount">Nieuw account aanmaken</string>
+  <string name="get_started">Aan de slag</string>
   <string name="welcome_setuplanguage">Selecteer een taal</string>
-  <string name="welcome_traktmessage">Toegang tot uw bibliotheek en activiteit van vrienden op trakt.tv</string>
   <string name="dismiss">Afwijzen</string>
-  <string name="welcome_add_part1">Om te beginnen druk op</string>
   <string name="upcoming_show">%s verschijnt binnenkort</string>
   <string name="upcoming_episodes">Nieuwe afleveringen verschijnen binnenkort</string>
   <string name="upcoming_episodes_number">%s nieuwe afleveringen</string>
@@ -337,15 +384,41 @@
   <string name="pref_vibrate">Trillen</string>
   <string name="pref_vibratesummary">Ook trillen als melding wordt weergegeven</string>
   <string name="pref_notifications_treshold">Wanneer te waarschuwen</string>
+  <string-array name="notificationThreshold">
+    <item>uitzending</item>
+    <item>5 min van tevoren</item>
+    <item>10 min van tevoren</item>
+    <item>één uur van tevoren</item>
+  </string-array>
   <string name="smallwidget">SeriesGuide (klein)</string>
   <string name="bigwidget">SeriesGuide (middelgroot)</string>
   <string name="largewidget">SeriesGuide (groot)</string>
   <string name="hide_watched">Bekeken afleveringen verbergen</string>
   <string name="pref_widget_opacity">Widget achtergrond</string>
+  <string-array name="widgetOpacity">
+    <item>Transparantie</item>
+    <item>25% zwart</item>
+    <item>50% zwart</item>
+    <item>75% zwart</item>
+    <item>Zwart</item>
+  </string-array>
   <string name="pref_widget_type">Widget type</string>
+  <string-array name="widgetType">
+    <item>Eerstvolgende</item>
+    <item>Recent</item>
+    <item>Favorieten</item>
+  </string-array>
   <string name="dashclock_extension_label">Volgende aflevering</string>
   <string name="dashclock_extension_description">Geeft de eerstvolgende aflevering van uw SeriesGuide shows weer.</string>
   <string name="dashclock_pref_upcoming_threshold">Toon afleveringen in de volgende</string>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>uur</item>
+    <item>6 uur</item>
+    <item>12 uur</item>
+    <item>24 uur</item>
+    <item>3 dagen</item>
+    <item>week</item>
+  </string-array>
   <string name="action_migrate">Migreer van X</string>
   <string name="migration_description">SeriesGuide X is nu een sleutel om X-functies in de gratis versie (\"X Life-Time Pass\") te ontgrendelen. Gelieve uw shows te migreren naar de gratis versie van SeriesGuide. Houd X geïnstalleerd om alle functies in de gratis versie beschikbaar te maken.</string>
   <string name="migration_import">Druk hieronder om de in SeriesGuide X gemaakte back-up te importeren.</string>
@@ -379,83 +452,4 @@
   <string name="extension_youtube">Zoek op YouTube</string>
   <string name="description_extension_youtube">Zoek op YouTube voor video\'s</string>
   <string name="description_extension_web_search">Zoek naar websites en afbeeldingen</string>
-  <string-array name="sesorting">
-    <item>Nieuwste eerst</item>
-    <item>Oudste eerst</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Nieuwste eerst</item>
-    <item>Oudste eerst</item>
-    <item>Onbekeken eerst</item>
-    <item>A - Z</item>
-    <item>Hoogste waardering</item>
-    <item>Nieuwste eerst (DVD)</item>
-    <item>Oudste eerst (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>nu</item>
-    <item>1 dag</item>
-    <item>3 dagen</item>
-    <item>1 week</item>
-    <item>2 weken</item>
-    <item>een maand</item>
-  </string-array>
-  <string-array name="notificationThreshold">
-    <item>uitzending</item>
-    <item>5 min van tevoren</item>
-    <item>10 min van tevoren</item>
-    <item>één uur van tevoren</item>
-  </string-array>
-  <string-array name="widgetOpacity">
-    <item>Transparantie</item>
-    <item>25% zwart</item>
-    <item>50% zwart</item>
-    <item>75% zwart</item>
-    <item>Zwart</item>
-  </string-array>
-  <string-array name="widgetType">
-    <item>Eerstvolgende</item>
-    <item>Recent</item>
-    <item>Favorieten</item>
-  </string-array>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>uur</item>
-    <item>6 uur</item>
-    <item>12 uur</item>
-    <item>24 uur</item>
-    <item>3 dagen</item>
-    <item>week</item>
-  </string-array>
-  <plurals name="days_plural">
-    <item quantity="one">%d dag</item>
-    <item quantity="zero">%d dagen</item>
-    <item quantity="two">%d dagen</item>
-    <item quantity="few">%d dagen</item>
-    <item quantity="many">%d dagen</item>
-    <item quantity="other">%d dagen</item>
-  </plurals>
-  <plurals name="hours_plural">
-    <item quantity="zero">%d uren</item>
-    <item quantity="one">%d uur</item>
-    <item quantity="two">%d uren</item>
-    <item quantity="few">%d uren</item>
-    <item quantity="many">%d uren</item>
-    <item quantity="other">%d uren</item>
-  </plurals>
-  <plurals name="minutes_plural">
-    <item quantity="zero">%d minuten</item>
-    <item quantity="one">%d minuut</item>
-    <item quantity="two">%d minuten</item>
-    <item quantity="few">%d minuten</item>
-    <item quantity="many">%d minuten</item>
-    <item quantity="other">%d minuten</item>
-  </plurals>
-  <plurals name="votes">
-    <item quantity="zero">%d stemmen</item>
-    <item quantity="one">%d stem</item>
-    <item quantity="two">%d stemmen</item>
-    <item quantity="few">%d stemmen</item>
-    <item quantity="many">%d stemmen</item>
-    <item quantity="other">%d stemmen</item>
-  </plurals>
 </resources>
