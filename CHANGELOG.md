@@ -5,10 +5,20 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 15 *(in development)*
+Version 15 *(2014-06-03)*
 -----------------------------
 
-#### 14-beta1 *(2014-05-23)*
+* UI improvements and bug fixes.
+* Supports Android 4.0.3 (Ice Cream Sandwich) and up. If you are running Android 3.x you will only receive important bug fixes from now on.
+
+#### 15 *(2014-06-03)*
+
+* TWEAK Design tweaks.
+* TWEAK Moved movie search tab to first position.
+* FIX Notification settings not disabled when returning after disabling notifications.
+* NOTICE Latest translations from crowdin. Added (partial) Catalan.
+
+#### 15-beta1 *(2014-05-23)*
 
 * TWEAK The context menu is dead! Long live the popup menu! Migrated all context menus to popup menus.
 * TWEAK Updated action bar design, updated some icons.
@@ -112,6 +122,7 @@ Version 13 *(2014-04-16)*
 * Extensions API: provide custom quick actions below episodes. Learn how to [build one](https://github.com/UweTrottmann/SeriesGuide/wiki/Extension-API).
 * Design refresh.
 * Sort movies.
+* Supports Android 3.0 (Honeycomb) and up. If you are running Android 2.3 you will only receive important bug fixes from now on.
 
 #### 13-beta7 *(2014-04-11)*
 

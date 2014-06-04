@@ -134,8 +134,8 @@
   <string name="daily">يومي</string>
   <string name="release_date_and_day">(%1$s (%2$s</string>
   <string name="runtime_minutes">%s دقيقة</string>
-  <string name="mark_episode">حلقة مُشاهدة</string>
-  <string name="unmark_episode">حلقة لم تُشاهد بعد</string>
+  <string name="mark_episode">تم مشاهدة الحلقة</string>
+  <string name="unmark_episode">لم يتم مشاهدة الحلقة</string>
   <string name="mark_all">مشاهدة الكل</string>
   <string name="unmark_all">لم يُشاهد شئ</string>
   <string name="mark_untilhere">تم مشاهدة جميع ما بُث سابقاً</string>
@@ -168,8 +168,8 @@
   <string name="unfavorited">إزالة من المفضلة</string>
   <string name="context_hide">إخفاء</string>
   <string name="context_unhide">إظهار</string>
-  <string name="hidden">مسلسل مخفي</string>
-  <string name="unhidden">مسلسل غير مخفي</string>
+  <string name="hidden">تم إخفاء المسلسل</string>
+  <string name="unhidden">تم إظهار المسلسل</string>
   <string name="action_shows_add">إضافة مسلسل</string>
   <string name="action_shows_filter">فلترة للعروض</string>
   <string name="empty_filter">إزالة كل عوامل التصفية</string>
@@ -367,7 +367,7 @@
   <string name="trakt_error_credentials">حدث خطأ ما. يرجى التحقق من بيانات اعتمادك وحاول مرة أخرى.</string>
   <string name="trakt_error_general">لايمكن التحدث إلى التراكت. حاول مرة أخرى.</string>
   <string name="trakt_createaccount">إنشاء حساب جديد</string>
-  <string name="get_started">Get started</string>
+  <string name="get_started">بدء</string>
   <string name="welcome_setuplanguage">اختر اللغة</string>
   <string name="dismiss">إبعاد</string>
   <string name="upcoming_show">%s قادم</string>
@@ -444,12 +444,12 @@
   <string name="action_extensions_search">المزيد من الإضافات</string>
   <string name="action_extension_settings">الإعدادات</string>
   <string name="action_extension_remove">إزالة</string>
-  <string name="extension_amazon">بحث أمازون</string>
+  <string name="extension_amazon">البحث في أمازون</string>
   <string name="description_extension_amazon">البحث المحلي بواسطة موقع أمازون</string>
   <string name="pref_amazon_domain">موقع أمازون</string>
-  <string name="extension_google_play">بحث متجر قوقل</string>
+  <string name="extension_google_play">البحث في متجر قوقل</string>
   <string name="description_extension_google_play">البحث في متجر قوقل</string>
-  <string name="extension_youtube">بحث اليوتيوب</string>
+  <string name="extension_youtube">البحث في اليوتيوب</string>
   <string name="description_extension_youtube">بحث اليوتيوب لمقاطع الفيديو</string>
   <string name="description_extension_web_search">البحث عن المواقع و الصور</string>
 </resources>

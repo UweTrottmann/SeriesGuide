@@ -1,4 +1,5 @@
 /*
+/*
  * Copyright 2014 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -283,6 +284,12 @@ public class SeriesGuidePreferences extends PreferenceActivity implements
                     return true;
                 }
             });
+            // disable advanced notification settings if notifications are disabled
+            boolean isNotificationsEnabled = NotificationSettings.isNotificationsEnabled(context);
+            notificationsThresholdPref.setEnabled(isNotificationsEnabled);
+            notificationsFavOnlyPref.setEnabled(isNotificationsEnabled);
+            vibratePref.setEnabled(isNotificationsEnabled);
+            ringtonePref.setEnabled(isNotificationsEnabled);
         } else {
             notificationsPref.setOnPreferenceChangeListener(sNoOpChangeListener);
             ((CheckBoxPreference) notificationsPref).setChecked(false);

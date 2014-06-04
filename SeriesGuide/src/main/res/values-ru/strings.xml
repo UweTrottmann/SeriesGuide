@@ -367,7 +367,7 @@
   <string name="trakt_error_credentials">Что-то пошло не так. Пожалуйста проверьте учетные данные и повторите попытку.</string>
   <string name="trakt_error_general">Trakt не отвечает. Повторите попытку позже.</string>
   <string name="trakt_createaccount">Создать новую учетную запись</string>
-  <string name="get_started">Get started</string>
+  <string name="get_started">Начать</string>
   <string name="welcome_setuplanguage">Выбрать язык</string>
   <string name="dismiss">Отменить</string>
   <string name="upcoming_show">%s выпущено</string>

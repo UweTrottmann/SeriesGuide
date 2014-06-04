@@ -367,7 +367,7 @@
   <string name="trakt_error_credentials">Er ging iets fout. Controleer uw inlog gegevens en probeer het opnieuw.</string>
   <string name="trakt_error_general">Communicatie met trakt is niet mogelijk. Probeer later opnieuw.</string>
   <string name="trakt_createaccount">Nieuw account aanmaken</string>
-  <string name="get_started">Get started</string>
+  <string name="get_started">Aan de slag</string>
   <string name="welcome_setuplanguage">Selecteer een taal</string>
   <string name="dismiss">Afwijzen</string>
   <string name="upcoming_show">%s verschijnt binnenkort</string>
