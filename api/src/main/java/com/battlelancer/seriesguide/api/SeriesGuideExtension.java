@@ -33,14 +33,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import static com.battlelancer.seriesguide.api.internal.IncomingConstants.ACTION_SUBSCRIBE;
-import static com.battlelancer.seriesguide.api.internal.IncomingConstants.ACTION_UPDATE;
-import static com.battlelancer.seriesguide.api.internal.IncomingConstants.EXTRA_ENTITY_IDENTIFIER;
-import static com.battlelancer.seriesguide.api.internal.IncomingConstants.EXTRA_EPISODE;
-import static com.battlelancer.seriesguide.api.internal.IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT;
-import static com.battlelancer.seriesguide.api.internal.IncomingConstants.EXTRA_TOKEN;
-import static com.battlelancer.seriesguide.api.internal.OutgoingConstants.ACTION_PUBLISH_ACTION;
-import static com.battlelancer.seriesguide.api.internal.OutgoingConstants.EXTRA_ACTION;
+import static com.battlelancer.seriesguide.api.constants.IncomingConstants.ACTION_SUBSCRIBE;
+import static com.battlelancer.seriesguide.api.constants.IncomingConstants.ACTION_UPDATE;
+import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_ENTITY_IDENTIFIER;
+import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_EPISODE;
+import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT;
+import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_TOKEN;
+import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_PUBLISH_ACTION;
+import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA_ACTION;
 
 /**
  * Base class for a SeriesGuide extension. Extensions are a way for other apps to

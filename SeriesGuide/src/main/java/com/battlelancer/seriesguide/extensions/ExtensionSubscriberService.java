@@ -21,9 +21,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.battlelancer.seriesguide.api.Action;
 
-import static com.battlelancer.seriesguide.api.internal.IncomingConstants.EXTRA_TOKEN;
-import static com.battlelancer.seriesguide.api.internal.OutgoingConstants.ACTION_PUBLISH_ACTION;
-import static com.battlelancer.seriesguide.api.internal.OutgoingConstants.EXTRA_ACTION;
+import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_TOKEN;
+import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_PUBLISH_ACTION;
+import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA_ACTION;
 
 /**
  * Catches actions published by enabled extensions.

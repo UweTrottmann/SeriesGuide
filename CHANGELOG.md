@@ -11,6 +11,10 @@ Version 15 *(2014-06-03)*
 * UI improvements and bug fixes.
 * Supports Android 4.0.3 (Ice Cream Sandwich) and up. If you are running Android 3.x you will only receive important bug fixes from now on.
 
+#### 15.0.1 *(2014-06-04)*
+
+* FIX Sync progress bar showing briefly when launching even if no actual sync is occuring.
+
 #### 15 *(2014-06-03)*
 
 * TWEAK Design tweaks.
