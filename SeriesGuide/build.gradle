@@ -62,7 +62,7 @@ dependencies {
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.+'
     compile 'com.jakewharton:butterknife:4.0.1'
-    compile 'com.jakewharton.timber:timber:2.2.+'
+    compile 'com.jakewharton.timber:timber:2.3.+'
     compile 'com.readystatesoftware.systembartint:systembartint:+'
     compile 'com.squareup.picasso:picasso:2.3.1'
     compile 'com.squareup.retrofit:retrofit:1.4.1'
