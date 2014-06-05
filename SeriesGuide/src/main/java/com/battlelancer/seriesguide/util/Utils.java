@@ -149,6 +149,9 @@ public class Utils {
                 * DateUtils.MINUTE_IN_MILLIS, pi);
     }
 
+    /**
+     * Creates a SHA1 hex encoded representation of the given String.
+     */
     public static String toSHA1(String message) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
