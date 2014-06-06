@@ -564,13 +564,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         /*
         Add new columns. Added existence checks as 14.0.3 update botched upgrade process.
          */
-        Cursor cursor = db.query(Tables.SHOWS, null, null, null, null, null, null, "1");
-        if (cursor.getColumnIndex(Shows.TITLE_NOARTICLE) == -1) {
+        if (!isTableColumnExisting(db, Tables.SHOWS, Shows.TITLE_NOARTICLE)) {
             db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + Shows.TITLE_NOARTICLE
                     + " TEXT;");
         }
-        cursor = db.query(Tables.MOVIES, null, null, null, null, null, null, "1");
-        if (cursor.getColumnIndex(Movies.TITLE_NOARTICLE) == -1) {
+        if (!isTableColumnExisting(db, Tables.MOVIES, Movies.TITLE_NOARTICLE)) {
             db.execSQL("ALTER TABLE " + Tables.MOVIES + " ADD COLUMN " + Movies.TITLE_NOARTICLE
                     + " TEXT;");
         }
@@ -594,6 +592,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             } finally {
                 db.endTransaction();
             }
+            shows.close();
         }
 
         newTitleValues.clear();
@@ -616,6 +615,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             } finally {
                 db.endTransaction();
             }
+            movies.close();
         }
     }
 
@@ -623,7 +623,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * Add movies table.
      */
     private static void upgradeToThirtyTwo(SQLiteDatabase db) {
-        db.execSQL(CREATE_MOVIES_TABLE);
+        if (!isTableExisting(db, Tables.MOVIES)) {
+            db.execSQL(CREATE_MOVIES_TABLE);
+        }
     }
 
     // Must be watched and have an airdate
@@ -641,8 +643,10 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * episode.
      */
     private static void upgradeToThirtyOne(SQLiteDatabase db) {
-        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.LASTWATCHEDID
-                + " INTEGER DEFAULT 0;");
+        if (!isTableColumnExisting(db, Tables.SHOWS, Shows.LASTWATCHEDID)) {
+            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + Shows.LASTWATCHEDID
+                    + " INTEGER DEFAULT 0;");
+        }
 
         // pre populate with latest watched episode ids
         ContentValues values = new ContentValues();
@@ -650,10 +654,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 Shows._ID,
         }, null, null, null, null, null);
         if (shows != null) {
-
             db.beginTransaction();
             try {
-
                 while (shows.moveToNext()) {
                     final String showId = shows.getString(0);
                     final Cursor highestWatchedEpisode = db.query(Tables.EPISODES, new String[] {
@@ -688,16 +690,20 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * Add {@link Episodes} column to store absolute episode number.
      */
     private static void upgradeToThirty(SQLiteDatabase db) {
-        db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN "
-                + EpisodesColumns.ABSOLUTE_NUMBER + " INTEGER;");
+        if (!isTableColumnExisting(db, Tables.EPISODES, Episodes.ABSOLUTE_NUMBER)) {
+            db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN "
+                    + Episodes.ABSOLUTE_NUMBER + " INTEGER;");
+        }
     }
 
     /**
      * Add {@link Shows} column to store a GetGlue object id.
      */
     private static void upgradeToTwentyNine(SQLiteDatabase db) {
-        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.GETGLUEID
-                + " TEXT DEFAULT '';");
+        if (!isTableColumnExisting(db, Tables.SHOWS, Shows.GETGLUEID)) {
+            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + Shows.GETGLUEID
+                    + " TEXT DEFAULT '';");
+        }
     }
 
     /**
@@ -1004,5 +1010,32 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         return db.rawQuery(query, new String[] {
                 "\"" + searchterm + "*\""
         });
+    }
+
+    /**
+     * Checks whether a table exists in the given database.
+     */
+    private static boolean isTableExisting(SQLiteDatabase db, String table) {
+        Cursor cursor = db.query("sqlite_master", new String[] { "name" },
+                "type='table' AND name=?", new String[] { table }, null, null, null, "1");
+        if (cursor == null) {
+            return false;
+        }
+        boolean isTableExisting = cursor.getCount() > 0;
+        cursor.close();
+        return isTableExisting;
+    }
+
+    /**
+     * Checks whether the given column exists in the given table of the given database.
+     */
+    private static boolean isTableColumnExisting(SQLiteDatabase db, String table, String column) {
+        Cursor cursor = db.query(table, null, null, null, null, null, null, "1");
+        if (cursor == null) {
+            return false;
+        }
+        boolean isColumnExisting = cursor.getColumnIndex(column) != -1;
+        cursor.close();
+        return isColumnExisting;
     }
 }
