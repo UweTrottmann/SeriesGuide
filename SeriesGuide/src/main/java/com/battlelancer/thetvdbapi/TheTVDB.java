@@ -716,15 +716,19 @@ public class TheTVDB {
             urlConnection = AndroidUtils.buildHttpUrlConnection(url);
             urlConnection.connect();
             long imageSize = urlConnection.getContentLength();
-            // allow images up to 300K (although size is always around
-            // 30K for posters and 100K for episode images)
-            if (imageSize > 300000 || imageSize == -1) {
+            // allow images up to 300 kBytes (although size is always around
+            // 30 kBytes for posters and 100 kBytes for episode images)
+            if (imageSize > 300000 || imageSize < 1) {
                 return null;
             } else {
                 inputStream = urlConnection.getInputStream();
                 // return BitmapFactory.decodeStream(inputStream);
                 // Bug on slow connections, fixed in future release.
-                return BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
+                try {
+                    return BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
+                } catch (OutOfMemoryError e) {
+                    Timber.e(e, "Out of memory while retrieving bitmap from " + url);
+                }
             }
         } catch (IOException e) {
             Timber.e(e, "I/O error retrieving bitmap from " + url);
