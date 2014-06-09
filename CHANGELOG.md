@@ -11,6 +11,10 @@ Version 15 *(2014-06-03)*
 * UI improvements and bug fixes.
 * Supports Android 4.0.3 (Ice Cream Sandwich) and up. If you are running Android 3.x you will only receive important bug fixes from now on.
 
+#### 15.0.3 *(2014-06-09)*
+
+* FIX Movies removed from watchlist or collection are added again when syncing with trakt.
+
 #### 15.0.2 *(2014-06-06)*
 
 * FIX Crash when upgrading database.
