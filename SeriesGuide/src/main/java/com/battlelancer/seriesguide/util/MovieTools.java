@@ -456,6 +456,10 @@ public class MovieTools {
                 if (result != UpdateResult.SUCCESS) {
                     // abort here if there were issues
                     return result;
+                } else {
+                    // flag that we ran a successful merge
+                    PreferenceManager.getDefaultSharedPreferences(context).edit()
+                            .putBoolean(TraktSettings.KEY_HAS_MERGED_MOVIES, true).commit();
                 }
             }
 
@@ -658,12 +662,9 @@ public class MovieTools {
                     movieService.watchlist(new MovieService.Movies(moviesToWatchlist));
                 }
             } catch (RetrofitError e) {
+                Timber.e(e, "Uploading movies to watchlist or collection failed");
                 return UpdateResult.INCOMPLETE;
             }
-
-            // flag that we ran a successful merge
-            PreferenceManager.getDefaultSharedPreferences(context).edit()
-                    .putBoolean(TraktSettings.KEY_HAS_MERGED_MOVIES, true).commit();
 
             return UpdateResult.SUCCESS;
         }
