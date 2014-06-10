@@ -96,7 +96,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     public interface Qualified {
 
         String SHOWS_ID = Tables.SHOWS + "." + Shows._ID;
-        String SHOWS_NEXTEPISODE = Tables.SHOWS + "." + Shows.NEXTEPISODE;
+        String SHOWS_LAST_EPISODE = Tables.SHOWS + "." + Shows.LASTWATCHEDID;
+        String SHOWS_NEXT_EPISODE = Tables.SHOWS + "." + Shows.NEXTEPISODE;
         String EPISODES_ID = Tables.EPISODES + "." + Episodes._ID;
         String EPISODES_SHOW_ID = Tables.EPISODES + "." + Shows.REF_SHOW_ID;
         String SEASONS_SHOW_ID = Tables.SEASONS + "." + Shows.REF_SHOW_ID;
@@ -110,8 +111,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
         String EPISODES = "episodes";
 
-        String SHOWS_JOIN_EPISODES = SHOWS + " LEFT OUTER JOIN " + EPISODES
-                + " ON " + Qualified.SHOWS_NEXTEPISODE + "=" + Qualified.EPISODES_ID;
+        String SHOWS_JOIN_EPISODES_ON_LAST_EPISODE = SHOWS + " LEFT OUTER JOIN " + EPISODES
+                + " ON " + Qualified.SHOWS_LAST_EPISODE + "=" + Qualified.EPISODES_ID;
+
+        String SHOWS_JOIN_EPISODES_ON_NEXT_EPISODE = SHOWS + " LEFT OUTER JOIN " + EPISODES
+                + " ON " + Qualified.SHOWS_NEXT_EPISODE + "=" + Qualified.EPISODES_ID;
 
         String SEASONS_JOIN_SHOWS = SEASONS + " LEFT OUTER JOIN " + SHOWS
                 + " ON " + Qualified.SEASONS_SHOW_ID + "=" + Qualified.SHOWS_ID;

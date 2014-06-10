@@ -56,7 +56,9 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final int SHOWS_FILTERED = 102;
 
-    private static final int SHOWS_WITH_EPISODE = 103;
+    private static final int SHOWS_WITH_LAST_EPISODE = 103;
+
+    private static final int SHOWS_WITH_NEXT_EPISODE = 104;
 
     private static final int EPISODES = 200;
 
@@ -116,7 +118,9 @@ public class SeriesGuideProvider extends ContentProvider {
                 SeriesGuideContract.PATH_SHOWS + "/" + SeriesGuideContract.PATH_FILTER
                         + "/*", SHOWS_FILTERED);
         matcher.addURI(authority, SeriesGuideContract.PATH_SHOWS + "/"
-                + SeriesGuideContract.PATH_WITH_EPISODE, SHOWS_WITH_EPISODE);
+                + SeriesGuideContract.PATH_WITH_LAST_EPISODE, SHOWS_WITH_LAST_EPISODE);
+        matcher.addURI(authority, SeriesGuideContract.PATH_SHOWS + "/"
+                + SeriesGuideContract.PATH_WITH_NEXT_EPISODE, SHOWS_WITH_NEXT_EPISODE);
         matcher.addURI(authority, SeriesGuideContract.PATH_SHOWS + "/*", SHOWS_ID);
 
         // Episodes
@@ -273,7 +277,8 @@ public class SeriesGuideProvider extends ContentProvider {
         switch (match) {
             case SHOWS:
             case SHOWS_FILTERED:
-            case SHOWS_WITH_EPISODE:
+            case SHOWS_WITH_LAST_EPISODE:
+            case SHOWS_WITH_NEXT_EPISODE:
                 return Shows.CONTENT_TYPE;
             case SHOWS_ID:
                 return Shows.CONTENT_ITEM_TYPE;
@@ -553,8 +558,13 @@ public class SeriesGuideProvider extends ContentProvider {
                 return builder.table(Tables.SHOWS).where(Shows.TITLE + " LIKE ?",
                         "%" + filter + "%");
             }
-            case SHOWS_WITH_EPISODE: {
-                return builder.table(Tables.SHOWS_JOIN_EPISODES)
+            case SHOWS_WITH_LAST_EPISODE: {
+                return builder.table(Tables.SHOWS_JOIN_EPISODES_ON_LAST_EPISODE)
+                        .mapToTable(Shows._ID, Tables.SHOWS)
+                        .mapToTable(Shows.RATING, Tables.SHOWS);
+            }
+            case SHOWS_WITH_NEXT_EPISODE: {
+                return builder.table(Tables.SHOWS_JOIN_EPISODES_ON_NEXT_EPISODE)
                         .mapToTable(Shows._ID, Tables.SHOWS)
                         .mapToTable(Shows.RATING, Tables.SHOWS);
             }
