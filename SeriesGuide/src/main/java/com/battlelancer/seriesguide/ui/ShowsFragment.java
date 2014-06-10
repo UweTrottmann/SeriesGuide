@@ -57,10 +57,11 @@ import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
 import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.LatestEpisodeUpdateService;
+import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -720,9 +721,8 @@ public class ShowsFragment extends Fragment implements
 
     public void onEvent(FlagTaskCompletedEvent event) {
         if (isAdded()) {
-            getActivity().startService(new Intent(getActivity(), LatestEpisodeUpdateService.class)
-                    .putExtra(LatestEpisodeUpdateService.InitBundle.SHOW_TVDB_ID,
-                            event.mType.getShowTvdbId()));
+            AndroidUtils.executeAsyncTask(new LatestEpisodeUpdateTask(getActivity()),
+                    event.mType.getShowTvdbId());
         }
     }
 
