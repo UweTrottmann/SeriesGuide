@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.ui;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -34,7 +35,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.uwetrottmann.androidutils.AsyncTask;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.Locale;
 
 /**
@@ -96,7 +97,8 @@ public class StatsFragment extends Fragment {
 
     private void loadStats() {
         cleanupStatsTask();
-        mStatsTask = new StatsTask().execute();
+        mStatsTask = new StatsTask();
+        AndroidUtils.executeAsyncTask(mStatsTask);
     }
 
     private void cleanupStatsTask() {
