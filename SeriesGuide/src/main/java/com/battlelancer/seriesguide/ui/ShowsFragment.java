@@ -419,7 +419,7 @@ public class ShowsFragment extends Fragment implements
                 selection.append(" AND ");
             }
             selection.append(Shows.NEXTAIRDATEMS).append("!=")
-                    .append(DBUtils.UNKNOWN_NEXT_AIR_DATE);
+                    .append(DBUtils.UNKNOWN_NEXT_RELEASE_DATE);
 
             // exclude shows with upcoming next episode
             if (!isFilterUpcoming) {

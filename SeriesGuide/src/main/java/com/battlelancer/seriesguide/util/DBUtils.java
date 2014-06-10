@@ -49,6 +49,8 @@ import java.util.HashSet;
 import java.util.List;
 import timber.log.Timber;
 
+import static com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Qualified;
+
 public class DBUtils {
 
     static final String TAG = "SeriesDatabase";
@@ -58,7 +60,7 @@ public class DBUtils {
      * get
      * sorted last.
      */
-    public static final String UNKNOWN_NEXT_AIR_DATE = "9223372036854775807";
+    public static final String UNKNOWN_NEXT_RELEASE_DATE = "9223372036854775807";
 
     public static final int SMALL_BATCH_SIZE = 50;
 
@@ -566,26 +568,26 @@ public class DBUtils {
 
     private interface LastWatchedEpisodeQuery {
         String[] PROJECTION = new String[] {
-                Shows._ID, Shows.LASTWATCHEDID
+                Qualified.SHOWS_ID,
+                Shows.LASTWATCHEDID,
+                Episodes.SEASON,
+                Episodes.NUMBER,
+                Episodes.FIRSTAIREDMS
         };
 
         int SHOW_TVDB_ID = 0;
-        int LAST_WATCHED_TVDB_ID = 1;
-    }
-
-    private interface WatchedEpisodesQuery {
-        String[] PROJECTION = new String[] {
-                Episodes.SEASON, Episodes.NUMBER, Episodes.FIRSTAIREDMS
-        };
-
-        int SEASON = 0;
-        int NUMBER = 1;
-        int FIRST_RELEASE_MS = 2;
+        int LAST_EPISODE_TVDB_ID = 1;
+        int LAST_EPISODE_SEASON = 2;
+        int LAST_EPISODE_NUMBER = 3;
+        int LAST_EPISODE_FIRST_RELEASE_MS = 4;
     }
 
     private interface NextEpisodesQuery {
         String[] PROJECTION = new String[] {
-                Episodes._ID, Episodes.SEASON, Episodes.NUMBER, Episodes.FIRSTAIREDMS,
+                Episodes._ID,
+                Episodes.SEASON,
+                Episodes.NUMBER,
+                Episodes.FIRSTAIREDMS,
                 Episodes.TITLE
         };
 
@@ -622,20 +624,28 @@ public class DBUtils {
      */
     public static long updateLatestEpisode(Context context, Integer showTvdbIdToUpdate) {
         // get a list of shows and their last watched episodes
-        // TODO add uri which joins last watched episode details
-        final Cursor shows = context.getContentResolver().query(showTvdbIdToUpdate == null
-                        ? Shows.CONTENT_URI : Shows.buildShowUri(showTvdbIdToUpdate),
-                LastWatchedEpisodeQuery.PROJECTION, null, null, null
+        final Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI_WITH_LAST_EPISODE,
+                LastWatchedEpisodeQuery.PROJECTION,
+                showTvdbIdToUpdate != null ?
+                        Qualified.SHOWS_ID + "=" + showTvdbIdToUpdate : null,
+                null, null
         );
         if (shows == null) {
             // abort completely on query failure
+            Timber.e("Failed to update next episode values");
             return -1;
         }
-        final List<String[]> showsNextEpisodes = new ArrayList<>();
+        final List<String[]> showsLastEpisodes = new ArrayList<>();
         while (shows.moveToNext()) {
-            showsNextEpisodes.add(
-                    new String[] { shows.getString(LastWatchedEpisodeQuery.SHOW_TVDB_ID),
-                            shows.getString(LastWatchedEpisodeQuery.LAST_WATCHED_TVDB_ID) }
+            showsLastEpisodes.add(
+                    new String[] {
+                            shows.getString(LastWatchedEpisodeQuery.SHOW_TVDB_ID), // 0
+                            shows.getString(LastWatchedEpisodeQuery.LAST_EPISODE_TVDB_ID), // 1
+                            shows.getString(LastWatchedEpisodeQuery.LAST_EPISODE_SEASON), // 2
+                            shows.getString(LastWatchedEpisodeQuery.LAST_EPISODE_NUMBER), // 3
+                            shows.getString(LastWatchedEpisodeQuery.LAST_EPISODE_FIRST_RELEASE_MS)
+                            // 4
+                    }
             );
         }
         shows.close();
@@ -650,29 +660,22 @@ public class DBUtils {
         final ContentValues newShowValues = new ContentValues();
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         final String currentTime = String.valueOf(TimeTools.getCurrentTime(context));
-        for (String[] show : showsNextEpisodes) {
+        for (String[] show : showsLastEpisodes) {
             // STEP 1: get last watched episode details
-            final String lastEpisodeId = show[1];
-
-            // by default: no watched episodes, include all starting with special 0
-            String season = "-1";
-            String number = "-1";
-            String airtime = String.valueOf(Long.MIN_VALUE);
-
-            if (!TextUtils.isEmpty(lastEpisodeId)) {
-                final Cursor lastEpisode = context.getContentResolver().query(
-                        Episodes.buildEpisodeUri(lastEpisodeId),
-                        WatchedEpisodesQuery.PROJECTION, null, null, null);
-                if (lastEpisode == null) {
-                    // abort completely on query failure
-                    return -1;
-                }
-                if (lastEpisode.moveToFirst()) {
-                    season = lastEpisode.getString(WatchedEpisodesQuery.SEASON);
-                    number = lastEpisode.getString(WatchedEpisodesQuery.NUMBER);
-                    airtime = lastEpisode.getString(WatchedEpisodesQuery.FIRST_RELEASE_MS);
-                }
-                lastEpisode.close();
+            final String showTvdbId = show[0];
+            final String lastEpisodeTvdbId = show[1];
+            final String season;
+            final String number;
+            final String releaseTime;
+            if (TextUtils.isEmpty(lastEpisodeTvdbId) || "0".equals(lastEpisodeTvdbId)) {
+                // by default: no watched episodes, include all starting with special 0
+                season = "-1";
+                number = "-1";
+                releaseTime = String.valueOf(Long.MIN_VALUE);
+            } else {
+                season = show[2];
+                number = show[3];
+                releaseTime = show[4];
             }
 
             // STEP 2: get episode released closest afterwards; or at the same time,
@@ -681,22 +684,21 @@ public class DBUtils {
             if (isNoReleasedEpisodes) {
                 // restrict to episodes with future release date
                 selectionArgs = new String[] {
-                        airtime, number, season, airtime, currentTime
+                        releaseTime, number, season, releaseTime, currentTime
                 };
             } else {
                 // restrict to episodes with any valid air date
                 selectionArgs = new String[] {
-                        airtime, number, season, airtime
+                        releaseTime, number, season, releaseTime
                 };
             }
-            final String showTvdbId = show[0];
-            // TODO provide uri with limit capability
             final Cursor next = context.getContentResolver()
                     .query(Episodes.buildEpisodesOfShowUri(showTvdbId),
                             NextEpisodesQuery.PROJECTION, nextEpisodeSelection, selectionArgs,
                             NextEpisodesQuery.SORTORDER);
             if (next == null) {
                 // abort completely on query failure
+                Timber.e("Failed to update next episode values");
                 return -1;
             }
 
@@ -709,8 +711,8 @@ public class DBUtils {
                         next.getString(NextEpisodesQuery.TITLE));
 
                 // next release date text, e.g. "in 15 mins (Fri)"
-                long releaseTime = next.getLong(NextEpisodesQuery.FIRST_RELEASE_MS);
-                Date actualRelease = TimeTools.getEpisodeReleaseTime(context, releaseTime);
+                long releaseTimeNext = next.getLong(NextEpisodesQuery.FIRST_RELEASE_MS);
+                Date actualRelease = TimeTools.getEpisodeReleaseTime(context, releaseTimeNext);
                 final String nextReleaseDateString = context.getString(
                         R.string.release_date_and_day,
                         TimeTools.formatToRelativeLocalReleaseTime(context, actualRelease),
@@ -718,14 +720,14 @@ public class DBUtils {
 
                 nextEpisodeTvdbId = next.getInt(NextEpisodesQuery.ID);
                 newShowValues.put(Shows.NEXTEPISODE, nextEpisodeTvdbId);
-                newShowValues.put(Shows.NEXTAIRDATEMS, releaseTime);
+                newShowValues.put(Shows.NEXTAIRDATEMS, releaseTimeNext);
                 newShowValues.put(Shows.NEXTTEXT, nextEpisodeString);
                 newShowValues.put(Shows.NEXTAIRDATETEXT, nextReleaseDateString);
             } else {
                 // no next episode, set empty values
                 nextEpisodeTvdbId = 0;
                 newShowValues.put(Shows.NEXTEPISODE, nextEpisodeTvdbId);
-                newShowValues.put(Shows.NEXTAIRDATEMS, UNKNOWN_NEXT_AIR_DATE);
+                newShowValues.put(Shows.NEXTAIRDATEMS, UNKNOWN_NEXT_RELEASE_DATE);
                 newShowValues.put(Shows.NEXTTEXT, "");
                 newShowValues.put(Shows.NEXTAIRDATETEXT, "");
             }
@@ -836,5 +838,4 @@ public class DBUtils {
 
         return title;
     }
-
 }
