@@ -27,6 +27,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.TypedValue;
@@ -435,5 +436,16 @@ public class Utils {
         Utils.tryStartActivity(context, intent, true);
 
         Utils.trackAction(context, logTag, logItem);
+    }
+
+    /**
+     * Executes the {@link android.os.AsyncTask} on the {@link android.os.AsyncTask#SERIAL_EXECUTOR},
+     * e.g. one after another.
+     *
+     * <p> This is useful for executing non-blocking operations (e.g. NO network activity, etc.).
+     */
+    @SafeVarargs
+    public static <T> AsyncTask executeInOrder(AsyncTask<T, ?, ?> task, T... args) {
+        return task.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, args);
     }
 }

@@ -377,10 +377,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             // "in 15 mins (Fri)"
             timeAndNumbersText
                     .append(getString(R.string.release_date_and_day,
-                            TimeTools.formatToRelativeLocalReleaseTime(getActivity(),
-                                    actualRelease),
-                            TimeTools.formatToLocalReleaseDay(actualRelease)
-                    )
+                            TimeTools.formatToRelativeLocalReleaseTime(getActivity(), actualRelease),
+                            TimeTools.formatToLocalReleaseDay(actualRelease))
                             .toUpperCase(Locale.getDefault()));
             timeAndNumbersText.append("  ");
         } else {
