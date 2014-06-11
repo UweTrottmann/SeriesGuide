@@ -246,17 +246,22 @@ public class ImageProvider {
         // try to get image from disk
         final File imageFile = getImageFile(imagePath);
         if (imageFile != null && imageFile.exists()) {
-            // disk cache hit
-            final Bitmap result = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-            if (result == null) {
-                // treat decoding errors as a cache miss
-                Timber.d("getImageFromExternalStorage: decoding bitmap failed " + imageFile);
+            try {
+                // disk cache hit
+                final Bitmap result = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+                if (result == null) {
+                    // treat decoding errors as a cache miss
+                    Timber.d("getImageFromExternalStorage: decoding bitmap failed " + imageFile);
+                    return null;
+                }
+
+                mCache.put(imagePath, result);
+
+                return result;
+            } catch (OutOfMemoryError e) {
+                Timber.e(e, "getImageFromExternalStorage: out of memory " + imageFile);
                 return null;
             }
-
-            mCache.put(imagePath, result);
-
-            return result;
         }
 
         Timber.d("getImageFromExternalStorage: image not on disk " + imageFile);
