@@ -27,9 +27,11 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.SystemUiHider;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -82,13 +84,31 @@ public class FullscreenImageActivity extends FragmentActivity {
 
         // Load the requested image
         String imagePath = getIntent().getStringExtra(InitBundle.IMAGE_PATH);
+        //noinspection ConstantConditions
         if (!TextUtils.isEmpty(imagePath) && imagePath.startsWith("http")) {
-            // load from network, typically for show posters
+            // load from network, typically for high resolution show posters
             ServiceUtils.getPicasso(this).load(imagePath).into(mContentView);
         } else {
-            // get cached copy, typically for episode images
-            ImageProvider.getInstance(this)
-                    .loadImage(mContentView, imagePath, ImageView.ScaleType.FIT_CENTER, false);
+            // load from network or external cache, typically for episode images
+            Picasso picasso = ServiceUtils.getExternalPicasso(this);
+            if (picasso == null) {
+                mContentView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                mContentView.setImageResource(R.drawable.ic_image_missing);
+            } else {
+                picasso.load(TheTVDB.TVDB_MIRROR_BANNERS + imagePath)
+                        .error(R.drawable.ic_image_missing)
+                        .into(mContentView, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                mContentView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                            }
+
+                            @Override
+                            public void onError() {
+                                mContentView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                            }
+                        });
+            }
         }
 
         // Set up an instance of SystemUiHider to control the system UI for
@@ -110,6 +130,22 @@ public class FullscreenImageActivity extends FragmentActivity {
         super.onPostCreate(savedInstanceState);
 
         delayedHide(100);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (isFinishing()) {
+            Picasso picasso = ServiceUtils.getExternalPicasso(this);
+            if (picasso != null) {
+                // Always cancel the request here, this is safe to call even if the image has been loaded.
+                // This ensures that the anonymous callback we have does not prevent the activity from
+                // being garbage collected. It also prevents our callback from getting invoked even after the
+                // activity has finished.
+                picasso.cancelRequest(mContentView);
+            }
+        }
     }
 
     /**

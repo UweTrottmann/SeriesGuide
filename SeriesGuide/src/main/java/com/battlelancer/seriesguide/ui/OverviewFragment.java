@@ -40,7 +40,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -58,10 +57,10 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
@@ -71,6 +70,8 @@ import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import de.greenrobot.event.EventBus;
@@ -94,7 +95,6 @@ public class OverviewFragment extends Fragment implements
 
     private Handler mHandler = new Handler();
 
-    private FetchArtTask mArtTask;
     private TraktSummaryTask mTraktTask;
 
     private Cursor mCurrentEpisodeCursor;
@@ -105,7 +105,9 @@ public class OverviewFragment extends Fragment implements
 
     private View mContainerShow;
     private View mSpacerShow;
+    private View mContainerEpisode;
     private LinearLayout mContainerActions;
+    private ImageView mEpisodeImage;
 
     /**
      * All values have to be integer.
@@ -139,7 +141,11 @@ public class OverviewFragment extends Fragment implements
         });
         mContainerShow = v.findViewById(R.id.containerOverviewShow);
         mSpacerShow = v.findViewById(R.id.spacerOverviewShow);
+        mContainerEpisode = v.findViewById(R.id.containerOverviewEpisode);
+        mContainerEpisode.setVisibility(View.GONE);
         mContainerActions = (LinearLayout) v.findViewById(R.id.containerEpisodeActions);
+
+        mEpisodeImage = (ImageView) v.findViewById(R.id.imageViewOverviewEpisode);
 
         return v;
     }
@@ -173,16 +179,27 @@ public class OverviewFragment extends Fragment implements
     @Override
     public void onPause() {
         super.onPause();
+
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        // Always cancel the request here, this is safe to call even if the image has been loaded.
+        // This ensures that the anonymous callback we have does not prevent the fragment from
+        // being garbage collected. It also prevents our callback from getting invoked even after the
+        // fragment is destroyed.
+        Picasso picasso = ServiceUtils.getExternalPicasso(getActivity());
+        if (picasso != null) {
+            picasso.cancelRequest(mEpisodeImage);
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mArtTask != null) {
-            mArtTask.cancel(true);
-            mArtTask = null;
-        }
         if (mTraktTask != null) {
             mTraktTask.cancel(true);
             mTraktTask = null;
@@ -662,15 +679,14 @@ public class OverviewFragment extends Fragment implements
         getActivity().invalidateOptionsMenu();
 
         // animate view into visibility
-        final View contentContainer = getView().findViewById(R.id.content_container);
-        if (contentContainer.getVisibility() == View.GONE) {
+        if (mContainerEpisode.getVisibility() == View.GONE) {
             final View progressContainer = getView().findViewById(R.id.progress_container);
             progressContainer.startAnimation(AnimationUtils
                     .loadAnimation(episodemeta.getContext(), android.R.anim.fade_out));
             progressContainer.setVisibility(View.GONE);
-            contentContainer.startAnimation(AnimationUtils
+            mContainerEpisode.startAnimation(AnimationUtils
                     .loadAnimation(episodemeta.getContext(), android.R.anim.fade_in));
-            contentContainer.setVisibility(View.VISIBLE);
+            mContainerEpisode.setVisibility(View.VISIBLE);
         }
     }
 
@@ -774,17 +790,33 @@ public class OverviewFragment extends Fragment implements
     }
 
     private void onLoadImage(String imagePath) {
-        final FrameLayout container = (FrameLayout) getView().findViewById(R.id.imageContainer);
-
-        // clean up a previous task
-        if (mArtTask != null) {
-            mArtTask.cancel(true);
-            mArtTask = null;
+        // immediately hide container if there is no image
+        if (TextUtils.isEmpty(imagePath)) {
+            mEpisodeImage.setVisibility(View.GONE);
+            return;
         }
-        mArtTask = new FetchArtTask(imagePath, container, getActivity());
-        AndroidUtils.executeAsyncTask(mArtTask, new Void[] {
-                null
-        });
+
+        // try loading image
+        mEpisodeImage.setVisibility(View.VISIBLE);
+        Picasso picasso = ServiceUtils.getExternalPicasso(getActivity());
+        if (picasso == null) {
+            return;
+        }
+        picasso.load(TheTVDB.TVDB_MIRROR_BANNERS + imagePath)
+                .error(R.drawable.ic_image_missing)
+                .into(mEpisodeImage,
+                        new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                mEpisodeImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                            }
+
+                            @Override
+                            public void onError() {
+                                mEpisodeImage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                            }
+                        }
+                );
     }
 
     private void onPopulateShowData(Cursor show) {
