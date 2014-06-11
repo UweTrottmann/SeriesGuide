@@ -102,11 +102,10 @@
                     android:visibility="visible" />
 
                 <LinearLayout
-                    android:id="@+id/content_container"
+                    android:id="@+id/containerOverviewEpisode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    android:orientation="vertical">
 
                     <FrameLayout
                         android:id="@+id/episode_primary_container"
@@ -114,32 +113,12 @@
                         android:layout_height="@dimen/imagecontainer_height"
                         android:foreground="?attr/custom_list_selector">
 
-                        <FrameLayout
-                            android:id="@+id/imageContainer"
+                        <ImageView
+                            android:id="@+id/imageViewOverviewEpisode"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <LinearLayout
-                                android:id="@+id/image_progress_container"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/imagecontainer_height"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:visibility="gone">
-
-                                <ProgressBar
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
-                            </LinearLayout>
-
-                            <ImageView
-                                android:id="@+id/ImageViewEpisodeImage"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/imagecontainer_height"
-                                android:layout_gravity="center_vertical"
-                                android:contentDescription="@string/description_image"
-                                android:scaleType="centerCrop" />
-                        </FrameLayout>
+                            android:layout_height="@dimen/imagecontainer_height"
+                            android:contentDescription="@string/description_image"
+                            android:scaleType="centerCrop" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
