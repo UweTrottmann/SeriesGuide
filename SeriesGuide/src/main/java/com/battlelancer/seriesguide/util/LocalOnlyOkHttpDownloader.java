@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.util;
 import android.content.Context;
 import android.net.Uri;
 import com.squareup.picasso.OkHttpDownloader;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -31,6 +32,11 @@ public class LocalOnlyOkHttpDownloader extends OkHttpDownloader {
 
     public LocalOnlyOkHttpDownloader(Context context) {
         super(context);
+        mContext = context.getApplicationContext();
+    }
+
+    public LocalOnlyOkHttpDownloader(Context context, File cacheDir) {
+        super(cacheDir);
         mContext = context.getApplicationContext();
     }
 
