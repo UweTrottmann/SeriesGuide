@@ -357,7 +357,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     protected void onResume() {
         super.onResume();
 
-        AndroidUtils.executeAsyncTask(new LatestEpisodeUpdateTask(this));
+        Utils.executeInOrder(new LatestEpisodeUpdateTask(this));
 
         if (mSavedState != null) {
             restoreLocalState(mSavedState);

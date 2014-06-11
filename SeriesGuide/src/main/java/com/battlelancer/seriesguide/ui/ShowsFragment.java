@@ -721,7 +721,7 @@ public class ShowsFragment extends Fragment implements
 
     public void onEvent(FlagTaskCompletedEvent event) {
         if (isAdded()) {
-            AndroidUtils.executeAsyncTask(new LatestEpisodeUpdateTask(getActivity()),
+            Utils.executeInOrder(new LatestEpisodeUpdateTask(getActivity()),
                     event.mType.getShowTvdbId());
         }
     }
