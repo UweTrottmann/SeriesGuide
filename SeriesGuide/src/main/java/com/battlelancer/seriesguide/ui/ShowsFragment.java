@@ -52,16 +52,17 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
-import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
+import com.squareup.picasso.Picasso;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -567,7 +568,13 @@ public class ShowsFragment extends Fragment implements
 
             // set poster
             final String imagePath = cursor.getString(ShowsQuery.POSTER);
-            ImageProvider.getInstance(context).loadPosterThumb(viewHolder.poster, imagePath);
+            Picasso picasso = ServiceUtils.getExternalPicasso(context);
+            if (picasso != null) {
+                picasso.load(TheTVDB.TVDB_MIRROR_BANNERS_CACHE + imagePath)
+                        .centerCrop()
+                        .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
+                        .into(viewHolder.poster);
+            }
 
             // context menu
             viewHolder.contextMenu.setVisibility(View.VISIBLE);

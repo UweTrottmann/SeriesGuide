@@ -12,8 +12,8 @@
 
         <ImageView
             android:id="@+id/showposter"
-            android:layout_width="68dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/show_poster_width"
+            android:layout_height="@dimen/show_poster_height"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="@dimen/default_padding"
             android:scaleType="centerCrop"

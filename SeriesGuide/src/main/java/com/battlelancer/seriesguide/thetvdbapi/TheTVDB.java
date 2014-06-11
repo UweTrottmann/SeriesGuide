@@ -79,6 +79,8 @@ public class TheTVDB {
 
     public static final String TVDB_MIRROR_BANNERS = "http://thetvdb.com/banners/";
 
+    public static final String TVDB_MIRROR_BANNERS_CACHE = TVDB_MIRROR_BANNERS + "_cache/";
+
     private static final String TVDB_API_URL = "http://thetvdb.com/api/";
 
     /**
