@@ -29,7 +29,8 @@ import java.util.List;
 
 /**
  * Inspired by florianmski's traktoid TraktManager. This class is used to hold running tasks, so it
- * can execute independently from a running activity (so the application can still be used while the
+ * can execute independently from a running activity (so the application can still be used while
+ * the
  * update continues). A plain AsyncTask could do this, too, but here we can also restrict it to one
  * task running at a time.
  */
@@ -87,7 +88,8 @@ public class TaskManager {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    mAddTask = (AddShowTask) new AddShowTask(mContext, shows, isSilent).execute();
+                    mAddTask = (AddShowTask) Utils.executeInOrder(
+                            new AddShowTask(mContext, shows, isSilent));
                 }
             });
         }
@@ -98,14 +100,15 @@ public class TaskManager {
     }
 
     /**
-     * If no {@link AddShowTask} is running a {@link JsonExportTask} is
-     * started in silent mode.
+     * If no {@link AddShowTask} or {@link JsonExportTask} created by this {@link
+     * com.battlelancer.seriesguide.util.TaskManager} is running a
+     * {@link JsonExportTask} is scheduled in silent mode.
      */
     public void tryBackupTask() {
-        if (!isAddTaskRunning()) {
+        if (!isAddTaskRunning()
+                && (mBackupTask == null || mBackupTask.getStatus() == AsyncTask.Status.FINISHED)) {
             mBackupTask = new JsonExportTask(mContext, null, null, false, true);
-            mBackupTask.execute();
+            Utils.executeInOrder(mBackupTask);
         }
     }
-
 }

@@ -26,6 +26,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -35,7 +36,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.AsyncTask;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -214,12 +214,7 @@ public class ImageProvider {
         final ImageLoaderTask task = new ImageLoaderTask(imageView, scaleType);
         imageView.setTag(task);
         
-        /*
-         * NOTE: This uses a custom version of AsyncTask that has been
-         * pulled from the framework and slightly modified. Refer to the
-         * docs at the top of the class for more info on what was changed.
-         */
-        task.executeOnExecutor(AsyncTask.DUAL_THREAD_EXECUTOR, imagePath);
+        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, imagePath);
     }
 
     /**
@@ -251,17 +246,22 @@ public class ImageProvider {
         // try to get image from disk
         final File imageFile = getImageFile(imagePath);
         if (imageFile != null && imageFile.exists()) {
-            // disk cache hit
-            final Bitmap result = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-            if (result == null) {
-                // treat decoding errors as a cache miss
-                Timber.d("getImageFromExternalStorage: decoding bitmap failed " + imageFile);
+            try {
+                // disk cache hit
+                final Bitmap result = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+                if (result == null) {
+                    // treat decoding errors as a cache miss
+                    Timber.d("getImageFromExternalStorage: decoding bitmap failed " + imageFile);
+                    return null;
+                }
+
+                mCache.put(imagePath, result);
+
+                return result;
+            } catch (OutOfMemoryError e) {
+                Timber.e(e, "getImageFromExternalStorage: out of memory " + imageFile);
                 return null;
             }
-
-            mCache.put(imagePath, result);
-
-            return result;
         }
 
         Timber.d("getImageFromExternalStorage: image not on disk " + imageFile);

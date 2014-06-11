@@ -615,9 +615,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     private void loadImage(String imagePath) {
         if (mArtTask == null || mArtTask.getStatus() == AsyncTask.Status.FINISHED) {
             mArtTask = new FetchArtTask(imagePath, mImageContainer, getActivity());
-            AndroidUtils.executeAsyncTask(mArtTask, new Void[] {
-                    null
-            });
+            AndroidUtils.executeAsyncTask(mArtTask);
         }
     }
 

@@ -373,7 +373,9 @@ public class SeriesGuideContract {
 
     public static final String PATH_WITH_DETAILS = "with_details";
 
-    public static final String PATH_WITH_EPISODE = "with_episode";
+    public static final String PATH_WITH_NEXT_EPISODE = "with-next-episode";
+
+    public static final String PATH_WITH_LAST_EPISODE = "with-last-episode";
 
     public static final String PATH_MOVIES = "movies";
 
@@ -382,9 +384,14 @@ public class SeriesGuideContract {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SHOWS)
                 .build();
 
-        public static final Uri CONTENT_URI_WITH_EPISODE = BASE_CONTENT_URI.buildUpon()
+        public static final Uri CONTENT_URI_WITH_NEXT_EPISODE = BASE_CONTENT_URI.buildUpon()
                 .appendPath(PATH_SHOWS)
-                .appendPath(PATH_WITH_EPISODE)
+                .appendPath(PATH_WITH_NEXT_EPISODE)
+                .build();
+
+        public static final Uri CONTENT_URI_WITH_LAST_EPISODE = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_SHOWS)
+                .appendPath(PATH_WITH_LAST_EPISODE)
                 .build();
 
         public static final Uri CONTENT_FILTER_URI = Uri.withAppendedPath(CONTENT_URI, "filter");

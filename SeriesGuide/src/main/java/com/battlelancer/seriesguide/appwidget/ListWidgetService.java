@@ -83,7 +83,7 @@ public class ListWidgetService extends RemoteViewsService {
                     // Favorite shows + next episodes, exclude those without
                     // episode
                     mDataCursor = getContentResolver().query(
-                            Shows.CONTENT_URI_WITH_EPISODE,
+                            Shows.CONTENT_URI_WITH_NEXT_EPISODE,
                             ShowsQuery.PROJECTION,
                             Shows.SELECTION_NO_HIDDEN + " AND " + Shows.SELECTION_FAVORITES
                                     + " AND " + Shows.SELECTION_WITH_NEXT_EPISODE, null,

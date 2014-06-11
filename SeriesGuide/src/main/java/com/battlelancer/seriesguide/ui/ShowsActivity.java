@@ -39,7 +39,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.BuildConfig;
@@ -69,10 +68,11 @@ import com.battlelancer.seriesguide.ui.streams.UserEpisodeStreamFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.LatestEpisodeUpdateService;
+import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import java.util.ArrayList;
@@ -357,7 +357,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     protected void onResume() {
         super.onResume();
 
-        startService(new Intent(this, LatestEpisodeUpdateService.class));
+        Utils.executeInOrder(new LatestEpisodeUpdateTask(this));
 
         if (mSavedState != null) {
             restoreLocalState(mSavedState);
