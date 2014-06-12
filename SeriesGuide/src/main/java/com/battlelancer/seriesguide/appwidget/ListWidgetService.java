@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 import com.battlelancer.seriesguide.R;
@@ -148,7 +149,7 @@ public class ListWidgetService extends RemoteViewsService {
             String absoluteTime = TimeTools.formatToLocalReleaseTime(mContext, actualRelease);
             String network = mDataCursor.getString(isShowQuery ?
                     ShowsQuery.SHOW_NETWORK : ActivityFragment.ActivityQuery.SHOW_NETWORK);
-            if (network.length() != 0) {
+            if (!TextUtils.isEmpty(network)) {
                 absoluteTime += " " + network;
             }
             rv.setTextViewText(R.id.widgetNetwork, absoluteTime);
