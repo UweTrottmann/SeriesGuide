@@ -256,6 +256,18 @@ public class Utils {
 
     /**
      * Tries to load the given TVDb show poster into the given {@link android.widget.ImageView}
+     * without any resizing or cropping.
+     */
+    public static void loadPoster(Context context, ImageView imageView,
+            String posterPath) {
+        Picasso picasso = ServiceUtils.getExternalPicasso(context);
+        if (picasso != null) {
+            picasso.load(TheTVDB.buildPosterUrl(posterPath)).noFade().into(imageView);
+        }
+    }
+
+    /**
+     * Tries to load the given TVDb show poster into the given {@link android.widget.ImageView}
      * without any resizing or cropping. In addition sets alpha on the view.
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -267,10 +279,7 @@ public class Utils {
             imageView.setAlpha(30);
         }
 
-        Picasso picasso = ServiceUtils.getExternalPicasso(context);
-        if (picasso != null) {
-            picasso.load(TheTVDB.buildPosterUrl(posterPath)).into(imageView);
-        }
+        loadPoster(context, imageView, posterPath);
     }
 
     /**

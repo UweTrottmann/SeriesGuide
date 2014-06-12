@@ -92,6 +92,9 @@ public class TheTVDB {
 
     /**
      * Builds a full url for a TVDb screenshot (episode still) using the given image path.
+     *
+     * <p> May also be used with posters, but a much larger version than {@link
+     * #buildPosterUrl(String)} will be downloaded as a result.
      */
     public static String buildScreenshotUrl(String imagePath) {
         return TVDB_MIRROR_BANNERS + imagePath;
