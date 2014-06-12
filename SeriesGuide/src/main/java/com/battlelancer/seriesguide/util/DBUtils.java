@@ -664,18 +664,15 @@ public class DBUtils {
             // STEP 1: get last watched episode details
             final String showTvdbId = show[0];
             final String lastEpisodeTvdbId = show[1];
-            final String season;
-            final String number;
-            final String releaseTime;
-            if (TextUtils.isEmpty(lastEpisodeTvdbId) || "0".equals(lastEpisodeTvdbId)) {
+            String season = show[2];
+            String number = show[3];
+            String releaseTime = show[4];
+            if (TextUtils.isEmpty(lastEpisodeTvdbId)
+                    || season == null || number == null || releaseTime == null) {
                 // by default: no watched episodes, include all starting with special 0
                 season = "-1";
                 number = "-1";
                 releaseTime = String.valueOf(Long.MIN_VALUE);
-            } else {
-                season = show[2];
-                number = show[3];
-                releaseTime = show[4];
             }
 
             // STEP 2: get episode released closest afterwards; or at the same time,
@@ -726,7 +723,7 @@ public class DBUtils {
             } else {
                 // no next episode, set empty values
                 nextEpisodeTvdbId = 0;
-                newShowValues.put(Shows.NEXTEPISODE, nextEpisodeTvdbId);
+                newShowValues.put(Shows.NEXTEPISODE, "");
                 newShowValues.put(Shows.NEXTAIRDATEMS, UNKNOWN_NEXT_RELEASE_DATE);
                 newShowValues.put(Shows.NEXTTEXT, "");
                 newShowValues.put(Shows.NEXTAIRDATETEXT, "");
