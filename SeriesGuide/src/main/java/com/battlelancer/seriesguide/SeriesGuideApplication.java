@@ -85,15 +85,6 @@ public class SeriesGuideApplication extends Application {
         enableStrictMode();
     }
 
-    @Override
-    public void onLowMemory() {
-        if (!AndroidUtils.isICSOrHigher()) {
-            // Clear the whole cache as Honeycomb and below don't support
-            // onTrimMemory (used directly in our ImageProvider)
-            ImageProvider.getInstance(this).clearCache();
-        }
-    }
-
     /**
      * Used to enable {@link StrictMode} during production
      */
