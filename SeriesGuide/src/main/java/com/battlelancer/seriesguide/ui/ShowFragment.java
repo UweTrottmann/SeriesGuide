@@ -303,7 +303,7 @@ public class ShowFragment extends Fragment implements LoaderCallbacks<Series> {
         // background poster
         ImageView background = (ImageView) getView()
                 .findViewById(R.id.imageViewShowPosterBackground);
-        Utils.setPosterBackground(background, imagePath, getActivity());
+        Utils.loadPosterBackground(getActivity(), background, imagePath);
 
         // trakt ratings
         onLoadTraktRatings(true);

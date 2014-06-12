@@ -107,6 +107,7 @@ public class OverviewFragment extends Fragment implements
     private View mSpacerShow;
     private View mContainerEpisode;
     private LinearLayout mContainerActions;
+    private ImageView mBackgroundImage;
     private ImageView mEpisodeImage;
 
     /**
@@ -144,6 +145,8 @@ public class OverviewFragment extends Fragment implements
         mContainerEpisode = v.findViewById(R.id.containerOverviewEpisode);
         mContainerEpisode.setVisibility(View.GONE);
         mContainerActions = (LinearLayout) v.findViewById(R.id.containerEpisodeActions);
+
+        mBackgroundImage = (ImageView) v.findViewById(R.id.background);
 
         mEpisodeImage = (ImageView) v.findViewById(R.id.imageViewOverviewEpisode);
 
@@ -856,10 +859,9 @@ public class OverviewFragment extends Fragment implements
                 : R.string.context_favorite);
         favorited.setTag(isFavorited);
 
-        // poster
-        final ImageView background = (ImageView) getView().findViewById(R.id.background);
-        Utils.setPosterBackground(background, show.getString(ShowQuery.SHOW_POSTER),
-                getActivity());
+        // poster background
+        Utils.loadPosterBackground(getActivity(), mBackgroundImage,
+                show.getString(ShowQuery.SHOW_POSTER));
 
         // air time and network
         final StringBuilder timeAndNetwork = new StringBuilder();

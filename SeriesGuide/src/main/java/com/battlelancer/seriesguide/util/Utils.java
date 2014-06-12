@@ -28,6 +28,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.TypedValue;
@@ -44,9 +45,11 @@ import com.battlelancer.seriesguide.service.OnAlarmReceiver;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -251,16 +254,23 @@ public class Utils {
         }
     }
 
-    @TargetApi(16)
-    @SuppressWarnings("deprecation")
-    public static void setPosterBackground(ImageView background, String posterPath,
-            Context context) {
+    /**
+     * Tries to load the given TVDb show poster into the given {@link android.widget.ImageView}
+     * without any resizing or cropping. In addition sets alpha on the view.
+     */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public static void loadPosterBackground(Context context, ImageView imageView,
+            String posterPath) {
         if (AndroidUtils.isJellyBeanOrHigher()) {
-            background.setImageAlpha(30);
+            imageView.setImageAlpha(30);
         } else {
-            background.setAlpha(30);
+            imageView.setAlpha(30);
         }
-        ImageProvider.getInstance(context).loadPoster(background, posterPath);
+
+        Picasso picasso = ServiceUtils.getExternalPicasso(context);
+        if (picasso != null) {
+            picasso.load(TheTVDB.buildPosterUrl(posterPath)).into(imageView);
+        }
     }
 
     /**

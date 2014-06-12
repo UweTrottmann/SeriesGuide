@@ -129,8 +129,8 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         setupActionBar(episode.getString(3));
 
         // set show poster as background
-        ImageView background = (ImageView) findViewById(R.id.background);
-        Utils.setPosterBackground(background, episode.getString(1), this);
+        Utils.loadPosterBackground(this, (ImageView) findViewById(R.id.background),
+                episode.getString(1));
 
         mShowId = episode.getInt(2);
         mSeasonId = episode.getInt(0);
