@@ -570,7 +570,7 @@ public class ShowsFragment extends Fragment implements
             final String imagePath = cursor.getString(ShowsQuery.POSTER);
             Picasso picasso = ServiceUtils.getExternalPicasso(context);
             if (picasso != null) {
-                picasso.load(TheTVDB.TVDB_MIRROR_BANNERS_CACHE + imagePath)
+                picasso.load(TheTVDB.buildPosterUrl(imagePath))
                         .centerCrop()
                         .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                         .into(viewHolder.poster);

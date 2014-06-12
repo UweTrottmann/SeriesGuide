@@ -77,11 +77,25 @@ public class TheTVDB {
         int UNKNOWN = -1;
     }
 
-    public static final String TVDB_MIRROR_BANNERS = "http://thetvdb.com/banners/";
+    private static final String TVDB_MIRROR_BANNERS = "http://thetvdb.com/banners/";
 
-    public static final String TVDB_MIRROR_BANNERS_CACHE = TVDB_MIRROR_BANNERS + "_cache/";
+    private static final String TVDB_MIRROR_BANNERS_CACHE = TVDB_MIRROR_BANNERS + "_cache/";
 
     private static final String TVDB_API_URL = "http://thetvdb.com/api/";
+
+    /**
+     * Builds a full url for a TVDb show poster using the given image path.
+     */
+    public static String buildPosterUrl(String imagePath) {
+        return TVDB_MIRROR_BANNERS_CACHE + imagePath;
+    }
+
+    /**
+     * Builds a full url for a TVDb screenshot (episode still) using the given image path.
+     */
+    public static String buildScreenshotUrl(String imagePath) {
+        return TVDB_MIRROR_BANNERS + imagePath;
+    }
 
     /**
      * Returns true if the given show has not been updated in the last 12 hours.

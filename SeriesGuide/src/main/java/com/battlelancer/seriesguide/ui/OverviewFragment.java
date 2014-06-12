@@ -802,7 +802,7 @@ public class OverviewFragment extends Fragment implements
         if (picasso == null) {
             return;
         }
-        picasso.load(TheTVDB.TVDB_MIRROR_BANNERS + imagePath)
+        picasso.load(TheTVDB.buildScreenshotUrl(imagePath))
                 .error(R.drawable.ic_image_missing)
                 .into(mEpisodeImage,
                         new Callback() {
