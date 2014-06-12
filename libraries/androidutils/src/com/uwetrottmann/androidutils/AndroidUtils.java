@@ -27,6 +27,7 @@ import android.os.Environment;
 import android.text.TextUtils;
 import android.view.View;
 import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.OkUrlFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -196,7 +197,7 @@ public class AndroidUtils {
 
         OkHttpClient client = createOkHttpClient();
 
-        HttpURLConnection conn = client.open(url);
+        HttpURLConnection conn = new OkUrlFactory(client).open(url);
         conn.setConnectTimeout(15 * 1000 /* milliseconds */);
         conn.setReadTimeout(20 * 1000 /* milliseconds */);
         return conn;
