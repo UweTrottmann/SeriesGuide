@@ -283,6 +283,23 @@ public class Utils {
     }
 
     /**
+     * Tries to load a down-sized, center cropped version of the given TVDb show poster into the
+     * given {@link android.widget.ImageView}.
+     *
+     * <p> The resize dimensions are those used for posters in the show list.
+     */
+    public static void loadPosterThumbnail(Context context, ImageView imageView,
+            String posterPath) {
+        Picasso picasso = ServiceUtils.getExternalPicasso(context);
+        if (picasso != null) {
+            picasso.load(TheTVDB.buildPosterUrl(posterPath))
+                    .centerCrop()
+                    .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
+                    .into(imageView);
+        }
+    }
+
+    /**
      * Sets the global app theme variable. Applied by all activities once they are created.
      */
     public static synchronized void updateTheme(String themeIndex) {

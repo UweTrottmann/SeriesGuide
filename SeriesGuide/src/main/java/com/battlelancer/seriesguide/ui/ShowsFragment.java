@@ -567,14 +567,8 @@ public class ShowsFragment extends Fragment implements
                     + values[1] + " " + values[0]);
 
             // set poster
-            final String imagePath = cursor.getString(ShowsQuery.POSTER);
-            Picasso picasso = ServiceUtils.getExternalPicasso(context);
-            if (picasso != null) {
-                picasso.load(TheTVDB.buildPosterUrl(imagePath))
-                        .centerCrop()
-                        .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
-                        .into(viewHolder.poster);
-            }
+            Utils.loadPosterThumbnail(context, viewHolder.poster,
+                    cursor.getString(ShowsQuery.POSTER));
 
             // context menu
             viewHolder.contextMenu.setVisibility(View.VISIBLE);
