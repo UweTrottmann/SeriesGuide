@@ -57,6 +57,7 @@ dependencies {
     compile project(':libraries:pagerslidingtabstrip')
     compile project(':libraries:stickygridheaders')
     compile rootProject.ext.libraries.okhttp
+    compile rootProject.ext.libraries.okhttpurlconnection
     compile rootProject.ext.libraries.supportv4
     compile 'com.github.castorflex.smoothprogressbar:library:0.5.1'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
@@ -64,7 +65,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:5.1.0'
     compile 'com.jakewharton.timber:timber:2.3.+'
     compile 'com.readystatesoftware.systembartint:systembartint:+'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:1.6.0'
     compile 'com.squareup.picasso:picasso:2.3.2'
     compile 'com.squareup.retrofit:retrofit:1.5.1'
     compile 'com.squareup:tape:1.2.2'
