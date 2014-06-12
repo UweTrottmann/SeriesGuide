@@ -237,11 +237,6 @@
     <string name="update_no_connection">To update connect to the internet.</string>
     <string name="update_inprogress">An update is in progress, try again later.</string>
 
-    <!-- Loading posters -->
-    <string name="menu_updateart">Load posters</string>
-    <string name="arttask_incomplete">Some posters did not load, try again later.</string>
-    <string name="arttask_start">Loading posters…</string>
-
     <!-- Show info -->
     <string name="show_on_network">on %s</string>
 

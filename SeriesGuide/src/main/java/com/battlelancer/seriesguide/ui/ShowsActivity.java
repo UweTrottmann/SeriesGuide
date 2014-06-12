@@ -26,8 +26,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SyncStatusObserver;
-import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -60,7 +58,6 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.ui.streams.FriendsEpisodeStreamFragment;
@@ -72,12 +69,8 @@ import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import timber.log.Timber;
 
 /**
@@ -95,22 +88,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     public static final int USER_LOADER_ID = 104;
     public static final int ADD_SHOW_LOADER_ID = 105;
 
-    private static final int UPDATE_SUCCESS = 100;
-
-    private static final int UPDATE_INCOMPLETE = 104;
-
-    // Background Task States
-    private static final String STATE_ART_IN_PROGRESS = "seriesguide.art.inprogress";
-
-    private static final String STATE_ART_PATHS = "seriesguide.art.paths";
-
-    private static final String STATE_ART_INDEX = "seriesguide.art.index";
-
     private IabHelper mHelper;
-
-    private Bundle mSavedState;
-
-    private FetchPosterTask mArtTask;
 
     private SmoothProgressBar mProgressBar;
 
@@ -269,9 +247,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
      */
     private void setInitialTab(Bundle savedInstanceState, Bundle intentExtras) {
         int selection;
-        if (savedInstanceState != null) {
-            selection = savedInstanceState.getInt("index");
-        } else if (intentExtras != null) {
+        if (intentExtras != null) {
             selection = intentExtras.getInt(InitBundle.SELECTED_TAB,
                     ActivitySettings.getDefaultActivityTabPosition(this));
         } else {
@@ -359,10 +335,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
         Utils.executeInOrder(new LatestEpisodeUpdateTask(this));
 
-        if (mSavedState != null) {
-            restoreLocalState(mSavedState);
-        }
-
         mSyncStatusObserver.onStatusChanged(0);
 
         // Watch for sync state changes
@@ -391,51 +363,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        onCancelTasks();
         disposeIabHelper();
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        restoreLocalState(savedInstanceState);
-        mSavedState = null;
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        saveArtTask(outState);
-        outState.putInt("index", getActionBar().getSelectedNavigationIndex());
-        mSavedState = outState;
-    }
-
-    private void restoreLocalState(Bundle savedInstanceState) {
-        restoreArtTask(savedInstanceState);
-    }
-
-    private void restoreArtTask(Bundle savedInstanceState) {
-        if (savedInstanceState.getBoolean(STATE_ART_IN_PROGRESS)) {
-            ArrayList<String> paths = savedInstanceState.getStringArrayList(STATE_ART_PATHS);
-            int index = savedInstanceState.getInt(STATE_ART_INDEX);
-
-            if (paths != null) {
-                mArtTask = (FetchPosterTask) new FetchPosterTask(paths, index).execute();
-            }
-        }
-    }
-
-    private void saveArtTask(Bundle outState) {
-        final FetchPosterTask task = mArtTask;
-        if (task != null && task.getStatus() != AsyncTask.Status.FINISHED) {
-            task.cancel(true);
-
-            outState.putBoolean(STATE_ART_IN_PROGRESS, true);
-            outState.putStringArrayList(STATE_ART_PATHS, task.mPaths);
-            outState.putInt(STATE_ART_INDEX, task.mFetchCount.get());
-
-            mArtTask = null;
-        }
     }
 
     @Override
@@ -461,16 +389,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements
             fireTrackerEvent("Update (all)");
 
             return true;
-        } else if (itemId == R.id.menu_updateart) {
-            fireTrackerEvent("Fetch posters");
-            if (isArtTaskRunning()) {
-                return true;
-            }
-            if (Utils.isAllowedLargeDataConnection(this, true)) {
-                Toast.makeText(this, getString(R.string.arttask_start), Toast.LENGTH_LONG).show();
-                mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
-            }
-            return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
@@ -482,127 +400,12 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         return keyCode == KeyEvent.KEYCODE_BACK;
     }
 
-    private class FetchPosterTask extends AsyncTask<Void, Void, Integer> {
-
-        final AtomicInteger mFetchCount = new AtomicInteger();
-
-        ArrayList<String> mPaths;
-
-        protected FetchPosterTask() {
-        }
-
-        protected FetchPosterTask(ArrayList<String> paths, int index) {
-            mPaths = paths;
-            mFetchCount.set(index);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            setProgressVisibility(true);
-        }
-
-        @Override
-        protected Integer doInBackground(Void... params) {
-            // fetch all available poster paths
-            if (mPaths == null) {
-                Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[] {
-                        Shows.POSTER
-                }, null, null, null);
-                if (shows == null) {
-                    return UPDATE_INCOMPLETE;
-                }
-                if (shows.getCount() == 0) {
-                    // there are no shows
-                    shows.close();
-                    return UPDATE_SUCCESS;
-                }
-
-                // build a list of poster paths
-                mPaths = new ArrayList<>();
-                while (shows.moveToNext()) {
-                    String imagePath = shows.getString(0);
-                    if (!TextUtils.isEmpty(imagePath)) {
-                        mPaths.add(imagePath);
-                    }
-                }
-
-                shows.close();
-            }
-
-            int resultCode = UPDATE_SUCCESS;
-            final List<String> list = mPaths;
-            final int count = list.size();
-            final AtomicInteger fetchCount = mFetchCount;
-
-            // try to fetch image for each path
-            for (int i = fetchCount.get(); i < count; i++) {
-                if (isCancelled() ||
-                        !Utils.isAllowedLargeDataConnection(ShowsActivity.this, false)) {
-                    // cancelled or connection not available any longer
-                    return UPDATE_INCOMPLETE;
-                }
-
-                if (!TheTVDB.fetchArt(list.get(i), true, ShowsActivity.this)) {
-                    resultCode = UPDATE_INCOMPLETE;
-                }
-
-                fetchCount.incrementAndGet();
-            }
-
-            getContentResolver().notifyChange(Shows.CONTENT_URI, null);
-
-            return resultCode;
-        }
-
-        @Override
-        protected void onPostExecute(Integer resultCode) {
-            switch (resultCode) {
-                case UPDATE_SUCCESS:
-                    Toast.makeText(getApplicationContext(), getString(R.string.done),
-                            Toast.LENGTH_SHORT).show();
-
-                    Utils.trackCustomEvent(getApplicationContext(), TAG, "Poster Task", "Success");
-                    break;
-                case UPDATE_INCOMPLETE:
-                    Toast.makeText(getApplicationContext(), getString(R.string.arttask_incomplete),
-                            Toast.LENGTH_LONG).show();
-
-                    Utils.trackCustomEvent(getApplicationContext(), TAG, "Poster Task",
-                            "Incomplete");
-                    break;
-            }
-
-            setProgressVisibility(false);
-        }
-
-        @Override
-        protected void onCancelled() {
-            setProgressVisibility(false);
-        }
-    }
-
-    private boolean isArtTaskRunning() {
-        if (mArtTask != null && mArtTask.getStatus() == AsyncTask.Status.RUNNING) {
-            Toast.makeText(this, getString(R.string.update_inprogress), Toast.LENGTH_LONG).show();
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     /**
      * Called if the user adds a show from {@link FriendsEpisodeStreamFragment}.
      */
     @Override
     public void onAddShow(SearchResult show) {
         TaskManager.getInstance(this).performAddTask(show);
-    }
-
-    public void onCancelTasks() {
-        if (mArtTask != null && mArtTask.getStatus() == AsyncTask.Status.RUNNING) {
-            mArtTask.cancel(true);
-            mArtTask = null;
-        }
     }
 
     /**
