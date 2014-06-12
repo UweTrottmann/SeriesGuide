@@ -11,6 +11,10 @@ Version 15 *(2014-06-03)*
 * UI improvements and bug fixes.
 * Supports Android 4.0.3 (Ice Cream Sandwich) and up. If you are running Android 3.x you will only receive important bug fixes from now on.
 
+#### 15.0.5 *(2014-06-12)*
+
+* FIX Crash when calculating next episode.
+
 #### 15.0.4 *(2014-06-11)*
 
 * FIX Jank when scrolling the show list.
