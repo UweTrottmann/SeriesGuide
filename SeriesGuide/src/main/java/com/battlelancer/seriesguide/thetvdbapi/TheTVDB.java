@@ -351,11 +351,6 @@ public class TheTVDB {
         show.airtime = TimeTools.parseShowReleaseTime(traktShow.airTime);
         show.country = traktShow.country;
 
-        // try to download the show poster
-        if (Utils.isAllowedLargeDataConnection(context, false)) {
-            fetchArt(show.poster, true, context);
-        }
-
         return show;
     }
 
