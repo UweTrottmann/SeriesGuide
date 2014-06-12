@@ -16,7 +16,7 @@
             android:layout_height="@dimen/show_poster_height"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="@dimen/default_padding"
-            android:scaleType="centerCrop"
+            android:scaleType="centerInside"
             tools:ignore="ContentDescription" />
 
         <ImageView
