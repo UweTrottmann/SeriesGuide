@@ -19,6 +19,7 @@ package com.uwetrottmann.androidutils;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -72,7 +73,8 @@ public class AndroidUtils {
     }
 
     public static boolean isGoogleTV(Context context) {
-        return context.getPackageManager().hasSystemFeature("com.google.android.tv");
+        PackageManager packageManager = context.getPackageManager();
+        return packageManager != null && packageManager.hasSystemFeature("com.google.android.tv");
     }
 
     /**
@@ -152,7 +154,7 @@ public class AndroidUtils {
     public static int copy(InputStream input, OutputStream output) throws IOException {
         byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
         int count = 0;
-        int n = 0;
+        int n;
         while (-1 != (n = input.read(buffer))) {
             output.write(buffer, 0, n);
             count += n;
@@ -167,6 +169,7 @@ public class AndroidUtils {
      * @param args Optional arguments to pass to {@link AsyncTask#execute(Object[])}.
      * @param <T>  Task argument type.
      */
+    @SafeVarargs
     @TargetApi(11)
     public static <T> void executeAsyncTask(AsyncTask<T, ?, ?> task, T... args) {
         // TODO figure out how to subclass abstract and generalized AsyncTask,
@@ -185,8 +188,7 @@ public class AndroidUtils {
         HttpURLConnection conn = buildHttpUrlConnection(urlString);
         conn.connect();
 
-        InputStream stream = conn.getInputStream();
-        return stream;
+        return conn.getInputStream();
     }
 
     /**
