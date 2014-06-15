@@ -102,15 +102,13 @@ public class ShowTools {
             sendIsRemoved(showTvdbId, true);
         }
 
-        // remove database entries in last stage, so if an earlier stage fails, user can at least try again
+        // remove database entries in stages, so if an earlier stage fails, user can at least try again
+        // also saves memory by applying batches early
 
-        // IMAGES
-        final ImageProvider imageProvider = ImageProvider.getInstance(mContext);
-
-        // remove episode images
+        // SEARCH DATABASE ENTRIES
         final Cursor episodes = mContext.getContentResolver().query(
                 SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId), new String[]{
-                SeriesGuideContract.Episodes._ID, SeriesGuideContract.Episodes.IMAGE
+                SeriesGuideContract.Episodes._ID
         }, null, null, null);
         if (episodes == null) {
             // failed
@@ -119,34 +117,11 @@ public class ShowTools {
         List<String> episodeTvdbIds = new LinkedList<>(); // need those for search entries
         while (episodes.moveToNext()) {
             episodeTvdbIds.add(episodes.getString(0));
-            String imageUrl = episodes.getString(1);
-            if (!TextUtils.isEmpty(imageUrl)) {
-                imageProvider.removeImage(imageUrl);
-            }
         }
         episodes.close();
 
-        // remove show poster
-        final Cursor show = mContext.getContentResolver().query(
-                SeriesGuideContract.Shows.buildShowUri(showTvdbId),
-                new String[]{
-                        SeriesGuideContract.Shows.POSTER
-                }, null, null, null);
-        if (show == null || !show.moveToFirst()) {
-            // failed
-            return Result.ERROR;
-        }
-        String posterPath = show.getString(0);
-        if (!TextUtils.isEmpty(posterPath)) {
-            imageProvider.removeImage(posterPath);
-        }
-        show.close();
-
-        // DATABASE ENTRIES
-        // apply batches early to save memory
-        final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-
         // remove episode search database entries
+        final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         for (String episodeTvdbId : episodeTvdbIds) {
             batch.add(ContentProviderOperation.newDelete(
                     SeriesGuideContract.EpisodeSearch.buildDocIdUri(episodeTvdbId)).build());
@@ -159,6 +134,7 @@ public class ShowTools {
         }
         batch.clear();
 
+        // ACTUAL ENTITY ENTRIES
         // remove episodes, seasons and show
         batch.add(ContentProviderOperation.newDelete(
                 SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId)).build());

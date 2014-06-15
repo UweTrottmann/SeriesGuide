@@ -20,88 +20,82 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.Intent.ShortcutIconResource;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
+import android.os.AsyncTask;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.OverviewFragment;
+import com.squareup.picasso.Picasso;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import java.io.IOException;
+import timber.log.Timber;
 
 public final class ShortcutUtils {
 
     /** {@link Intent} action used to create the shortcut */
-    private static final String ACTION_INSTALL_SHORTCUT = "com.android.launcher.action.INSTALL_SHORTCUT";
+    private static final String ACTION_INSTALL_SHORTCUT
+            = "com.android.launcher.action.INSTALL_SHORTCUT";
 
     /* This class is never initialized */
     private ShortcutUtils() {
     }
 
     /**
-     * Adds a shortcut to the overview page of the given show to the Home
-     * screen.
-     * 
-     * @param showTitle The name of the shortcut.
-     * @param posterPath The path to the cached (with {@link ImageProvider})
-     *            image to be used for the shortcut icon.
+     * Adds a shortcut to the overview page of the given show to the Home screen.
+     *
+     * @param showTitle  The name of the shortcut.
+     * @param posterPath A TVDb show poster path.
      * @param showTvdbId The TVDb ID of the show.
      */
-    public static void createShortcut(Context context, String showTitle, String posterPath,
-            int showTvdbId) {
-        // The shortcut icon
-        Bitmap icon = ImageProvider.getInstance(context).getImage(posterPath, false);
+    public static void createShortcut(Context localContext, final String showTitle,
+            final String posterPath, final int showTvdbId) {
+        final Context context = localContext.getApplicationContext();
 
-        // Intent used when the icon is touched
-        final Intent shortcutIntent = new Intent(context, OverviewActivity.class);
-        shortcutIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, showTvdbId);
-        shortcutIntent.setAction(Intent.ACTION_MAIN);
-        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        AsyncTask<Void, Void, Intent> shortCutTask = new AsyncTask<Void, Void, Intent>() {
 
-        // Intent that actually creates the shortcut
-        final Intent intent = new Intent();
-        intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-        intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, showTitle);
-        if (icon == null) {
-            // fall back to the app icon
-            intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                    ShortcutIconResource.fromContext(context, R.drawable.ic_launcher));
-        } else {
-            intent.putExtra(
-                    Intent.EXTRA_SHORTCUT_ICON,
-                    resizeAndCropCenter(icon,
-                            context.getResources()
-                                    .getDimensionPixelSize(R.dimen.shortcut_icon_size)));
-        }
-        intent.setAction(ACTION_INSTALL_SHORTCUT);
-        context.sendBroadcast(intent);
+            @Override
+            protected Intent doInBackground(Void... params) {
+                // try to get the show poster
+                Bitmap posterBitmap = null;
+
+                Picasso picasso = ServiceUtils.getExternalPicasso(context);
+                if (picasso != null) {
+                    try {
+                        posterBitmap = picasso.load(TheTVDB.buildPosterUrl(posterPath))
+                                .centerCrop()
+                                .resizeDimen(R.dimen.shortcut_icon_size, R.dimen.shortcut_icon_size)
+                                .get();
+                    } catch (IOException e) {
+                        Timber.e(e, "Could not load show poster for shortcut " + posterPath);
+                        posterBitmap = null;
+                    }
+                }
+
+                // Intent used when the icon is touched
+                final Intent shortcutIntent = new Intent(context, OverviewActivity.class);
+                shortcutIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, showTvdbId);
+                shortcutIntent.setAction(Intent.ACTION_MAIN);
+                shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                // Intent that actually creates the shortcut
+                final Intent intent = new Intent();
+                intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+                intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, showTitle);
+                if (posterBitmap == null) {
+                    // fall back to the app icon
+                    intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                            ShortcutIconResource.fromContext(context, R.drawable.ic_launcher));
+                } else {
+                    intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, posterBitmap);
+                }
+                intent.setAction(ACTION_INSTALL_SHORTCUT);
+                context.sendBroadcast(intent);
+
+                return null;
+            }
+        };
+        // do all the above async
+        AndroidUtils.executeAsyncTask(shortCutTask);
     }
-
-    /**
-     * Resizes and center crops the given {@link Bitmap} into a square of the
-     * given size.
-     * 
-     * @param bitmap The {@link Bitmap} to resize.
-     * @param size The size in pixels of the returned {@link Bitmap}.
-     */
-    public static Bitmap resizeAndCropCenter(Bitmap bitmap, int size) {
-        final int w = bitmap.getWidth();
-        final int h = bitmap.getHeight();
-        if (w == size && h == size) {
-            return bitmap;
-        }
-
-        // Scale the image so that the shorter side equals to the target;
-        // the longer side will be center-cropped
-        final float scale = (float) size / Math.min(w, h);
-        final float width = (size - Math.round(scale * w)) / 2f;
-        final float height = (size - Math.round(scale * h)) / 2f;
-
-        final Bitmap target = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-        final Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG | Paint.DITHER_FLAG);
-        final Canvas canvas = new Canvas(target);
-        canvas.translate(width, height);
-        canvas.scale(scale, scale);
-        canvas.drawBitmap(bitmap, 0, 0, paint);
-        return target;
-    }
-
 }

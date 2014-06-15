@@ -28,7 +28,6 @@
     <string name="description_image">Episode image</string>
 
     <!-- Actions -->
-    <string name="done">Done</string>
     <string name="clear">Clear</string>
     <string name="discard">Discard</string>
     <string name="save_selection">Save selection</string>
@@ -237,11 +236,6 @@
     <string name="update_no_connection">To update connect to the internet.</string>
     <string name="update_inprogress">An update is in progress, try again later.</string>
 
-    <!-- Loading posters -->
-    <string name="menu_updateart">Load posters</string>
-    <string name="arttask_incomplete">Some posters did not load, try again later.</string>
-    <string name="arttask_start">Loading posters…</string>
-
     <!-- Show info -->
     <string name="show_on_network">on %s</string>
 
@@ -364,8 +358,6 @@
     <string name="clear_cache">Clear image caches</string>
     <string name="clear_cache_summary">Remove all cached images from your device</string>
     <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
-    <string name="pref_hideimages">Hide images</string>
-    <string name="pref_hideimagessummary">Hide images from your photo gallery (reboot required)</string>
 
     <!-- Backup and Restore -->
     <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>

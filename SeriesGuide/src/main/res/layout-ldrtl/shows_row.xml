@@ -29,12 +29,12 @@
 
         <ImageView
             android:id="@+id/showposter"
-            android:layout_width="68dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/show_poster_width"
+            android:layout_height="@dimen/show_poster_height"
             android:layout_alignParentStart="true"
             android:layout_marginEnd="@dimen/default_padding"
             android:contentDescription="@string/description_poster"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerInside" />
 
         <ImageView
             android:id="@+id/favoritedLabel"

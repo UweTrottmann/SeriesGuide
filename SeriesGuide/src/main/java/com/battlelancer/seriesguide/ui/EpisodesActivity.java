@@ -115,9 +115,10 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
             } else {
                 // get season id
                 final Cursor episode = getContentResolver().query(
-                        Episodes.buildEpisodeUri(String.valueOf(episodeId)), new String[]{
-                        Episodes._ID, Seasons.REF_SEASON_ID
-                }, null, null, null);
+                        Episodes.buildEpisodeUri(String.valueOf(episodeId)), new String[] {
+                                Episodes._ID, Seasons.REF_SEASON_ID
+                        }, null, null, null
+                );
                 if (episode != null && episode.moveToFirst()) {
                     mSeasonId = episode.getInt(1);
                 } else {
@@ -141,9 +142,10 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
 
         // get show id and season number
         final Cursor season = getContentResolver().query(
-                Seasons.buildSeasonUri(String.valueOf(mSeasonId)), new String[]{
-                Seasons._ID, Seasons.COMBINED, Shows.REF_SHOW_ID
-        }, null, null, null);
+                Seasons.buildSeasonUri(String.valueOf(mSeasonId)), new String[] {
+                        Seasons._ID, Seasons.COMBINED, Shows.REF_SHOW_ID
+                }, null, null, null
+        );
         if (season != null && season.moveToFirst()) {
             mSeasonNumber = season.getInt(1);
             mShowId = season.getInt(2);
@@ -181,8 +183,8 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
         if (mDualPane) {
 
             // set the pager background
-            final ImageView background = (ImageView) findViewById(R.id.background);
-            Utils.setPosterBackground(background, show.getPoster(), this);
+            Utils.loadPosterBackground(this, (ImageView) findViewById(R.id.background),
+                    show.getPoster());
 
             // set adapters for pager and indicator
             int startPosition = updateEpisodeList(episodeId);
@@ -198,7 +200,6 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
             // non-existing content view
             mPager.setCurrentItem(startPosition, false);
             mTabs.setOnPageChangeListener(this);
-
         } else {
             // Make sure no fragments are left over from a config
             // change
@@ -337,9 +338,10 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
 
         Cursor episodeCursor = getContentResolver().query(
                 Episodes.buildEpisodesOfSeasonWithShowUri(String.valueOf(mSeasonId)),
-                new String[]{
+                new String[] {
                         Episodes._ID, Episodes.NUMBER
-                }, null, null, sortOrder.query());
+                }, null, null, sortOrder.query()
+        );
 
         ArrayList<Episode> episodeList = new ArrayList<Episode>();
         int startPosition = 0;
@@ -356,7 +358,6 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
             }
 
             episodeCursor.close();
-
         }
 
         mEpisodes = episodeList;

@@ -16,13 +16,13 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
-import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 import com.battlelancer.seriesguide.R;
@@ -30,15 +30,18 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Qualified;
 import com.battlelancer.seriesguide.settings.WidgetSettings;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.squareup.picasso.Picasso;
+import java.io.IOException;
 import java.util.Date;
+import timber.log.Timber;
 
-@TargetApi(11)
 public class ListWidgetService extends RemoteViewsService {
 
     @Override
@@ -146,7 +149,7 @@ public class ListWidgetService extends RemoteViewsService {
             String absoluteTime = TimeTools.formatToLocalReleaseTime(mContext, actualRelease);
             String network = mDataCursor.getString(isShowQuery ?
                     ShowsQuery.SHOW_NETWORK : ActivityFragment.ActivityQuery.SHOW_NETWORK);
-            if (network.length() != 0) {
+            if (!TextUtils.isEmpty(network)) {
                 absoluteTime += " " + network;
             }
             rv.setTextViewText(R.id.widgetNetwork, absoluteTime);
@@ -158,7 +161,19 @@ public class ListWidgetService extends RemoteViewsService {
             // show poster
             String posterPath = mDataCursor.getString(isShowQuery
                     ? ShowsQuery.SHOW_POSTER : ActivityFragment.ActivityQuery.SHOW_POSTER);
-            final Bitmap poster = ImageProvider.getInstance(mContext).getImage(posterPath, true);
+            Bitmap poster = null;
+            Picasso picasso = ServiceUtils.getExternalPicasso(mContext);
+            if (picasso != null) {
+                try {
+                    poster = picasso.load(TheTVDB.buildPosterUrl(posterPath))
+                            .centerCrop()
+                            .resizeDimen(R.dimen.widget_item_width, R.dimen.widget_item_height)
+                            .get();
+                } catch (IOException e) {
+                    Timber.e(e, "Failed to load show poster for widget item: " + posterPath);
+                    poster = null;
+                }
+            }
             if (poster != null) {
                 rv.setImageViewBitmap(R.id.widgetPoster, poster);
             } else {

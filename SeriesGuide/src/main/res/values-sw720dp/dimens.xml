@@ -9,4 +9,7 @@
     <dimen name="movie_item_poster_height">216dp</dimen>
     <dimen name="showgrid_columnWidth">350dp</dimen>
 
+    <dimen name="show_poster_width">102dp</dimen>
+    <dimen name="show_poster_height">150dp</dimen>
+
 </resources>

@@ -15,4 +15,7 @@
     <dimen name="addpager_width">600dp</dimen>
     <dimen name="slidingmenu_width">260dp</dimen>
 
+    <dimen name="show_poster_width">102dp</dimen>
+    <dimen name="show_poster_height">150dp</dimen>
+
 </resources>

@@ -40,8 +40,8 @@ import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
-import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.TimeTools;
+import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Displays a searchable list of shows to allow quickly checking into a shows next episode.
@@ -141,9 +141,10 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
                 + DateUtils.HOUR_IN_MILLIS);
 
         return new CursorLoader(this, baseUri, CheckinQuery.PROJECTION, CheckinQuery.SELECTION,
-                new String[]{
+                new String[] {
                         customTimeInOneHour
-                }, ShowsDistillationSettings.ShowsSortOrder.EPISODE_REVERSE);
+                }, ShowsDistillationSettings.ShowsSortOrder.EPISODE_REVERSE
+        );
     }
 
     @Override
@@ -204,8 +205,8 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
                     + values[1] + " " + values[0]);
 
             // poster
-            final String imagePath = cursor.getString(CheckinQuery.POSTER);
-            ImageProvider.getInstance(context).loadPosterThumb(viewHolder.poster, imagePath);
+            Utils.loadPosterThumbnail(context, viewHolder.poster,
+                    cursor.getString(CheckinQuery.POSTER));
         }
 
         @Override
