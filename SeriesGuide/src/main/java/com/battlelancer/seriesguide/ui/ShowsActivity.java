@@ -64,7 +64,6 @@ import com.battlelancer.seriesguide.ui.streams.FriendsEpisodeStreamFragment;
 import com.battlelancer.seriesguide.ui.streams.UserEpisodeStreamFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -472,9 +471,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements
             }
             if (lastVersion < VER_HIGHRES_THUMBS
                     && DisplaySettings.isVeryLargeScreen(getApplicationContext())) {
-                // clear image cache
-                ImageProvider.getInstance(this).clearCache();
-                ImageProvider.getInstance(this).clearExternalStorageCache();
                 scheduleAllShowsUpdate();
             }
             // time calculation has changed, all episodes need re-calculation
