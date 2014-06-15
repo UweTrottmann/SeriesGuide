@@ -51,6 +51,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -251,6 +252,24 @@ public class Utils {
         } else {
             label.setVisibility(View.GONE);
             text.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * Clear all files in files directory on external storage.
+     */
+    public static void clearLegacyExternalFileCache(Context context) {
+        File path = context.getApplicationContext().getExternalFilesDir(null);
+        if (path == null) {
+            Timber.w("Could not clear cache, external storage not available");
+            return;
+        }
+
+        final File[] files = path.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                file.delete();
+            }
         }
     }
 

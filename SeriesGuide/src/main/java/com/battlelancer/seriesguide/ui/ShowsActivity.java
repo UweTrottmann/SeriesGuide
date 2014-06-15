@@ -485,6 +485,10 @@ public class ShowsActivity extends BaseTopShowsActivity implements
                 // trigger full sync
                 SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, false);
             }
+            // migrated all image caching to Picasso, drop all old cached images
+            if (lastVersion < 15010) {
+                Utils.clearLegacyExternalFileCache(this);
+            }
 
             // update notification
             Toast.makeText(this, R.string.updated, Toast.LENGTH_LONG).show();
