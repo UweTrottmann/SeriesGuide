@@ -58,13 +58,9 @@ public class BackupDeleteActivity extends BaseActivity {
 
     private static final int IMPORT_PROGRESS = 4;
 
-    private ExportDatabaseTask mExportTask;
+    private AsyncTask<Void, Void, String> mTask;
 
-    private ImportDatabaseTask mImportTask;
-
-    private ProgressDialog importProgress;
-
-    private ProgressDialog exportProgress;
+    private ProgressDialog mProgressDialog;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -115,14 +111,10 @@ public class BackupDeleteActivity extends BaseActivity {
     }
 
     private void onCancelTasks() {
-        if (mImportTask != null && mImportTask.getStatus() == AsyncTask.Status.RUNNING) {
-            mImportTask.cancel(true);
-            mImportTask = null;
+        if (mTask != null && mTask.getStatus() != AsyncTask.Status.FINISHED) {
+            mTask.cancel(true);
         }
-        if (mExportTask != null && mExportTask.getStatus() == AsyncTask.Status.RUNNING) {
-            mExportTask.cancel(true);
-            mExportTask = null;
-        }
+        mTask = null;
     }
 
     private class ExportDatabaseTask extends AsyncTask<Void, Void, String> {
@@ -169,18 +161,18 @@ public class BackupDeleteActivity extends BaseActivity {
         // can use UI thread here
         @Override
         protected void onPostExecute(final String errorMsg) {
-            if (exportProgress.isShowing()) {
-                exportProgress.dismiss();
+            if (mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
             }
             if (errorMsg == null) {
                 Toast.makeText(BackupDeleteActivity.this, getString(R.string.backup_success),
                         Toast.LENGTH_SHORT).show();
-                Utils.trackCustomEvent(BackupDeleteActivity.this,TAG, "Backup", "Success");
+                Utils.trackCustomEvent(BackupDeleteActivity.this, TAG, "Backup", "Success");
             } else {
                 Toast.makeText(BackupDeleteActivity.this,
                         getString(R.string.backup_failed) + " - " + errorMsg, Toast.LENGTH_LONG)
                         .show();
-                Utils.trackCustomEvent(BackupDeleteActivity.this,TAG, "Backup", "Failure");
+                Utils.trackCustomEvent(BackupDeleteActivity.this, TAG, "Backup", "Failure");
             }
             setResult(RESULT_OK);
             finish();
@@ -240,8 +232,9 @@ public class BackupDeleteActivity extends BaseActivity {
                 try {
                     final Cursor shows = getContentResolver().query(Shows.CONTENT_URI,
                             new String[] {
-                                Shows._ID
-                            }, null, null, null);
+                                    Shows._ID
+                            }, null, null, null
+                    );
                     if (shows != null) {
                         if (shows.getCount() == 0) {
                             return getString(R.string.dbupgradefailed);
@@ -262,8 +255,8 @@ public class BackupDeleteActivity extends BaseActivity {
 
         @Override
         protected void onPostExecute(final String errMsg) {
-            if (importProgress.isShowing()) {
-                importProgress.dismiss();
+            if (mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
             }
             if (errMsg == null) {
                 Toast.makeText(BackupDeleteActivity.this, getString(R.string.import_success),
@@ -289,41 +282,50 @@ public class BackupDeleteActivity extends BaseActivity {
                         .setPositiveButton(getString(R.string.backup_button),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface arg0, int arg1) {
-                                        if (AndroidUtils.isExtStorageAvailable()) {
-                                            mExportTask = new ExportDatabaseTask();
-                                            mExportTask.execute();
-                                        } else {
-                                            Toast.makeText(BackupDeleteActivity.this,
-                                                    getString(R.string.backup_failed_nosd),
-                                                    Toast.LENGTH_SHORT).show();
+                                        if (isExternalStorageAvailable(
+                                                R.string.backup_failed_nosd)) {
+                                            mTask = new ExportDatabaseTask();
+                                            AndroidUtils.executeAsyncTask(mTask);
                                         }
                                     }
-                                }).setNegativeButton(getString(R.string.backup_no), null).create();
+                                }
+                        ).setNegativeButton(getString(R.string.backup_no), null).create();
             case IMPORT_DIALOG:
                 return new AlertDialog.Builder(BackupDeleteActivity.this)
                         .setMessage(getString(R.string.import_question))
                         .setPositiveButton(getString(R.string.import_button),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface arg0, int arg1) {
-                                        if (AndroidUtils.isExtStorageAvailable()) {
-                                            mImportTask = new ImportDatabaseTask();
-                                            mImportTask.execute();
-                                        } else {
-                                            Toast.makeText(BackupDeleteActivity.this,
-                                                    getString(R.string.import_failed_nosd),
-                                                    Toast.LENGTH_SHORT).show();
+                                        if (isExternalStorageAvailable(
+                                                R.string.import_failed_nosd)) {
+                                            mTask = new ImportDatabaseTask();
+                                            AndroidUtils.executeAsyncTask(mTask);
                                         }
                                     }
-                                }).setNegativeButton(getString(R.string.import_no), null).create();
+                                }
+                        ).setNegativeButton(getString(R.string.import_no), null).create();
             case EXPORT_PROGRESS:
-                exportProgress = new ProgressDialog(BackupDeleteActivity.this);
-                exportProgress.setMessage(getString(R.string.backup_inprogress));
-                return exportProgress;
+                return getProgressDialog(R.string.backup_inprogress);
             case IMPORT_PROGRESS:
-                importProgress = new ProgressDialog(BackupDeleteActivity.this);
-                importProgress.setMessage(getString(R.string.import_inprogress));
-                return importProgress;
+                return getProgressDialog(R.string.import_inprogress);
         }
         return null;
+    }
+
+    private ProgressDialog getProgressDialog(int messageId) {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(BackupDeleteActivity.this);
+        }
+        mProgressDialog.setMessage(getString(messageId));
+        return mProgressDialog;
+    }
+
+    private boolean isExternalStorageAvailable(int errorMessageID) {
+        boolean extStorageAvailable = AndroidUtils.isExtStorageAvailable();
+        if (!extStorageAvailable) {
+            Toast.makeText(BackupDeleteActivity.this, getString(errorMessageID), Toast.LENGTH_LONG)
+                    .show();
+        }
+        return extStorageAvailable;
     }
 }
