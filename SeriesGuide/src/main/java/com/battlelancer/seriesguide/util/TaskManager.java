@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +44,8 @@ public class TaskManager {
     private AddShowTask mAddTask;
 
     private JsonExportTask mBackupTask;
+
+    private LatestEpisodeUpdateTask mNextEpisodeUpdateTask;
 
     private Context mContext;
 
@@ -109,6 +112,18 @@ public class TaskManager {
                 && (mBackupTask == null || mBackupTask.getStatus() == AsyncTask.Status.FINISHED)) {
             mBackupTask = new JsonExportTask(mContext, null, null, false, true);
             Utils.executeInOrder(mBackupTask);
+        }
+    }
+
+    /**
+     * Schedules a {@link com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask} for all shows
+     * if no other one of this type is currently running.
+     */
+    public void tryNextEpisodeUpdateTask() {
+        if (mNextEpisodeUpdateTask == null
+                || mNextEpisodeUpdateTask.getStatus() == AsyncTask.Status.FINISHED) {
+            mNextEpisodeUpdateTask = new LatestEpisodeUpdateTask(mContext);
+            Utils.executeInOrder(mNextEpisodeUpdateTask);
         }
     }
 }
