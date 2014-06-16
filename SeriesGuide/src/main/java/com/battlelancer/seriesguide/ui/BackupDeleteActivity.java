@@ -298,7 +298,7 @@ public class BackupDeleteActivity extends BaseActivity {
                                         if (isExternalStorageAvailable(
                                                 R.string.backup_failed_nosd)) {
                                             mTask = new ExportDatabaseTask();
-                                            AndroidUtils.executeAsyncTask(mTask);
+                                            Utils.executeInOrder(mTask);
                                         }
                                     }
                                 }
@@ -312,7 +312,7 @@ public class BackupDeleteActivity extends BaseActivity {
                                         if (isExternalStorageAvailable(
                                                 R.string.import_failed_nosd)) {
                                             mTask = new ImportDatabaseTask();
-                                            AndroidUtils.executeAsyncTask(mTask);
+                                            Utils.executeInOrder(mTask);
                                         }
                                     }
                                 }
