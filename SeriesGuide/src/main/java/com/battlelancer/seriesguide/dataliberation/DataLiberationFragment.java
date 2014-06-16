@@ -36,6 +36,7 @@ import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
 import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
  * One button export or import of the show database using a JSON file on
@@ -112,7 +113,7 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
                 mTask = new JsonExportTask(context, DataLiberationFragment.this,
                         DataLiberationFragment.this,
                         mCheckBoxFullDump.isChecked(), false);
-                mTask.execute();
+                AndroidUtils.executeAsyncTask(mTask);
             }
         });
         mCheckBoxImportWarning.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -128,7 +129,7 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
                 setProgressLock(true);
 
                 mTask = new JsonImportTask(context, DataLiberationFragment.this, false);
-                mTask.execute();
+                AndroidUtils.executeAsyncTask(mTask);
             }
         });
         mButtonImportAutoBackup.setOnClickListener(new OnClickListener() {
@@ -137,7 +138,7 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
                 setProgressLock(true);
 
                 mTask = new JsonImportTask(context, DataLiberationFragment.this, true);
-                mTask.execute();
+                AndroidUtils.executeAsyncTask(mTask);
             }
         });
 
