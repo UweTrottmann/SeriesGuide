@@ -132,10 +132,6 @@ public class BackupDeleteActivity extends BaseActivity {
         return new File(Environment.getExternalStorageDirectory(), "seriesguidebackup");
     }
 
-    private File getBackupFolder() {
-        return new File(Environment.getExternalStorageDirectory(), "seriesguidebackup");
-    }
-
     private class ExportDatabaseTask extends AsyncTask<Void, Void, String> {
 
         // can use UI thread here
