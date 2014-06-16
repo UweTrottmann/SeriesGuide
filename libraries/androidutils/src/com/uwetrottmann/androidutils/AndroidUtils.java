@@ -167,7 +167,7 @@ public class AndroidUtils {
      * @param <T>  Task argument type.
      */
     @TargetApi(11)
-    public static <T> void executeAsyncTask(AsyncTask<T, ?, ?> task, T... args) {
+    public static <T> void executeOnPool(AsyncTask<T, ?, ?> task, T... args) {
         // TODO figure out how to subclass abstract and generalized AsyncTask,
         // then put this there
         if (AndroidUtils.isHoneycombOrHigher()) {

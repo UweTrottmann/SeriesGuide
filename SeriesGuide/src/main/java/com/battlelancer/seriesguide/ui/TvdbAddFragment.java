@@ -131,7 +131,7 @@ public class TvdbAddFragment extends AddFragment {
         }
         if (mSearchTask == null || mSearchTask.getStatus() == AsyncTask.Status.FINISHED) {
             mSearchTask = new SearchTask(getActivity());
-            AndroidUtils.executeAsyncTask(mSearchTask, query);
+            AndroidUtils.executeOnPool(mSearchTask, query);
         }
     }
 

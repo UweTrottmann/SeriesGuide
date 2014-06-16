@@ -157,7 +157,7 @@ public class TraktRateDialogFragment extends DialogFragment {
 
     private void onRate(Rating rating) {
         getArguments().putString(TraktTask.InitBundle.RATING, rating.toString());
-        AndroidUtils.executeAsyncTask(new TraktTask(getActivity(), getArguments()));
+        AndroidUtils.executeOnPool(new TraktTask(getActivity(), getArguments()));
         dismiss();
     }
 }

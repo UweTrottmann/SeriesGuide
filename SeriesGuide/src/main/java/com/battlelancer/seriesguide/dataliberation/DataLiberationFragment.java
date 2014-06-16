@@ -114,7 +114,7 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
                 mTask = new JsonExportTask(context, DataLiberationFragment.this,
                         DataLiberationFragment.this,
                         mCheckBoxFullDump.isChecked(), false);
-                AndroidUtils.executeAsyncTask(mTask);
+                AndroidUtils.executeOnPool(mTask);
             }
         });
         mCheckBoxImportWarning.setOnCheckedChangeListener(new OnCheckedChangeListener() {

@@ -769,7 +769,7 @@ public class OverviewFragment extends Fragment implements
             int episodeNumber = mCurrentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
             mTraktTask = new TraktSummaryTask(getActivity(), getView(), isUseCachedValues)
                     .episode(getShowId(), episodeTvdbId, seasonNumber, episodeNumber);
-            AndroidUtils.executeAsyncTask(mTraktTask);
+            AndroidUtils.executeOnPool(mTraktTask);
         }
     }
 
@@ -782,7 +782,7 @@ public class OverviewFragment extends Fragment implements
             mArtTask = null;
         }
         mArtTask = new FetchArtTask(imagePath, container, getActivity());
-        AndroidUtils.executeAsyncTask(mArtTask, new Void[] {
+        AndroidUtils.executeOnPool(mArtTask, new Void[] {
                 null
         });
     }

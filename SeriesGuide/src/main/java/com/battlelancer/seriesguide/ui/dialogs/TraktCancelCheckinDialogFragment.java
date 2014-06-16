@@ -119,7 +119,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
                             // relaunch the trakt task which called us to
                             // try the check in again
-                            AndroidUtils.executeAsyncTask(new TraktTask(context, args));
+                            AndroidUtils.executeOnPool(new TraktTask(context, args));
                         } else if (TraktStatus.FAILURE.equals(r.status)) {
                             // well, something went wrong
                             Toast.makeText(context,
@@ -129,7 +129,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
                     }
                 };
 
-                AndroidUtils.executeAsyncTask(cancelCheckinTask);
+                AndroidUtils.executeOnPool(cancelCheckinTask);
             }
         });
         builder.setNegativeButton(R.string.traktcheckin_wait, new OnClickListener() {

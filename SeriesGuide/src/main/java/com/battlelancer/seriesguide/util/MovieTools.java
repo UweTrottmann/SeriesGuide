@@ -62,7 +62,7 @@ public class MovieTools {
                 return;
             }
             // add to trakt collection
-            AndroidUtils.executeAsyncTask(
+            AndroidUtils.executeOnPool(
                     new TraktTask(context).collectionAddMovie(movieTmdbId)
             );
         }
@@ -77,7 +77,7 @@ public class MovieTools {
                 return;
             }
             // add to trakt watchlist
-            AndroidUtils.executeAsyncTask(
+            AndroidUtils.executeOnPool(
                     new TraktTask(context).watchlistMovie(movieTmdbId)
             );
         }
@@ -106,7 +106,7 @@ public class MovieTools {
                 return;
             }
             // remove from trakt collection
-            AndroidUtils.executeAsyncTask(
+            AndroidUtils.executeOnPool(
                     new TraktTask(context).collectionRemoveMovie(movieTmdbId)
             );
         }
@@ -122,7 +122,7 @@ public class MovieTools {
                 return;
             }
             // remove from trakt watchlist
-            AndroidUtils.executeAsyncTask(
+            AndroidUtils.executeOnPool(
                     new TraktTask(context).unwatchlistMovie(movieTmdbId)
             );
         }
@@ -152,7 +152,7 @@ public class MovieTools {
                 return;
             }
             // remove from trakt watchlist
-            AndroidUtils.executeAsyncTask(
+            AndroidUtils.executeOnPool(
                     new TraktTask(context).watchedMovie(movieTmdbId)
             );
         }
@@ -167,7 +167,7 @@ public class MovieTools {
                 return;
             }
             // remove from trakt watchlist
-            AndroidUtils.executeAsyncTask(
+            AndroidUtils.executeOnPool(
                     new TraktTask(context).unwatchedMovie(movieTmdbId)
             );
         }
