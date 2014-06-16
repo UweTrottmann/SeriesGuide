@@ -31,6 +31,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -97,6 +98,16 @@ public class BackupDeleteActivity extends BaseActivity {
                 showDialog(IMPORT_DIALOG);
             }
         });
+
+        // display backup path
+        TextView backuppath = (TextView) findViewById(R.id.textViewBackupPath);
+        String path = getBackupFolder().toString();
+        backuppath.setText(getString(R.string.backup_path) + ": " + path);
+
+        // display current db version
+        TextView dbVersion = (TextView) findViewById(R.id.textViewBackupDatabaseVersion);
+        dbVersion.setText(getString(R.string.backup_version) + ": "
+                + SeriesGuideDatabase.DATABASE_VERSION);
     }
 
     @Override
@@ -125,6 +136,10 @@ public class BackupDeleteActivity extends BaseActivity {
         }
     }
 
+    private File getBackupFolder() {
+        return new File(Environment.getExternalStorageDirectory(), "seriesguidebackup");
+    }
+
     private class ExportDatabaseTask extends AsyncTask<Void, Void, String> {
 
         // can use UI thread here
@@ -144,8 +159,7 @@ public class BackupDeleteActivity extends BaseActivity {
 
             File dbFile = getApplication().getDatabasePath(SeriesGuideDatabase.DATABASE_NAME);
 
-            File exportDir = new File(Environment.getExternalStorageDirectory(),
-                    "seriesguidebackup");
+            File exportDir = getBackupFolder();
             if (!exportDir.exists()) {
                 exportDir.mkdirs();
             }
@@ -204,8 +218,7 @@ public class BackupDeleteActivity extends BaseActivity {
                 return getString(R.string.update_inprogress);
             }
 
-            File dbBackupFile = new File(Environment.getExternalStorageDirectory()
-                    + "/seriesguidebackup/seriesdatabase");
+            File dbBackupFile = new File(getBackupFolder(), "seriesdatabase");
             if (!dbBackupFile.exists()) {
                 return getString(R.string.import_failed_nofile);
             } else if (!dbBackupFile.canRead()) {
