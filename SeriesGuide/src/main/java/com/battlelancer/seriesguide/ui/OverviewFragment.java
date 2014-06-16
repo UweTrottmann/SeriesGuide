@@ -788,7 +788,7 @@ public class OverviewFragment extends Fragment implements
             int episodeNumber = mCurrentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
             mTraktTask = new TraktSummaryTask(getActivity(), getView(), isUseCachedValues)
                     .episode(getShowId(), episodeTvdbId, seasonNumber, episodeNumber);
-            AndroidUtils.executeAsyncTask(mTraktTask);
+            AndroidUtils.executeOnPool(mTraktTask);
         }
     }
 

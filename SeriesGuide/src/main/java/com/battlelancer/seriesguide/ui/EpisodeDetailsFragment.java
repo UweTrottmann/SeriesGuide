@@ -600,7 +600,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             mTraktTask = new TraktSummaryTask(getActivity(), mRatingsContainer,
                     isUseCachedValues).episode(mShowTvdbId, getEpisodeTvdbId(), mSeasonNumber,
                     mEpisodeNumber);
-            AndroidUtils.executeAsyncTask(mTraktTask);
+            AndroidUtils.executeOnPool(mTraktTask);
         }
     }
 

@@ -98,7 +98,7 @@ public class StatsFragment extends Fragment {
     private void loadStats() {
         cleanupStatsTask();
         mStatsTask = new StatsTask();
-        AndroidUtils.executeAsyncTask(mStatsTask);
+        AndroidUtils.executeOnPool(mStatsTask);
     }
 
     private void cleanupStatsTask() {

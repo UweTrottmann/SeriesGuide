@@ -79,7 +79,7 @@ public class RemoveShowWorkerFragment extends Fragment {
         // do not overwrite existing task
         if (mTask == null) {
             mTask = new RemoveShowTask(getActivity().getApplicationContext());
-            mTask.execute(getArguments().getInt(KEY_SHOW_TVDBID));
+            Utils.executeInOrder(mTask, getArguments().getInt(KEY_SHOW_TVDBID));
         }
     }
 
