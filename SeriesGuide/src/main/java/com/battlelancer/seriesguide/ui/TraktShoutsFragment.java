@@ -170,7 +170,7 @@ public class TraktShoutsFragment extends Fragment implements
         // shout for a movie?
         int movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID);
         if (movieTmdbId != 0) {
-            AndroidUtils.executeAsyncTask(
+            AndroidUtils.executeOnPool(
                     new TraktTask(getActivity()).shoutMovie(movieTmdbId, shout, isSpoiler)
             );
             return;
@@ -181,7 +181,7 @@ public class TraktShoutsFragment extends Fragment implements
         int episodeNumber = args.getInt(InitBundle.EPISODE_NUMBER);
         if (episodeNumber != 0) {
             int seasonNumber = args.getInt(InitBundle.SEASON_NUMBER);
-            AndroidUtils.executeAsyncTask(
+            AndroidUtils.executeOnPool(
                     new TraktTask(getActivity())
                             .shoutEpisode(showTvdbId, seasonNumber, episodeNumber, shout, isSpoiler)
             );
@@ -189,7 +189,7 @@ public class TraktShoutsFragment extends Fragment implements
         }
 
         // shout for a show!
-        AndroidUtils.executeAsyncTask(
+        AndroidUtils.executeOnPool(
                 new TraktTask(getActivity()).shoutShow(showTvdbId, shout, isSpoiler)
         );
     }

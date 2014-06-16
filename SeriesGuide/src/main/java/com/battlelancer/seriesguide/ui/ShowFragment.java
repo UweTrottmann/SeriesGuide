@@ -331,7 +331,7 @@ public class ShowFragment extends Fragment implements LoaderCallbacks<Series> {
                 && (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED)) {
             mTraktTask = new TraktSummaryTask(getActivity(), getView().findViewById(
                     R.id.ratingbar), isUseCachedValues).show(getShowTvdbId());
-            AndroidUtils.executeAsyncTask(mTraktTask);
+            AndroidUtils.executeOnPool(mTraktTask);
         }
     }
 

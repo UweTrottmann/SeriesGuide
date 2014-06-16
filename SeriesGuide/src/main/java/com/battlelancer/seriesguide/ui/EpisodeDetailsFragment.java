@@ -592,7 +592,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             mTraktTask = new TraktSummaryTask(getActivity(), mRatingsContainer,
                     isUseCachedValues).episode(mShowTvdbId, getEpisodeTvdbId(), mSeasonNumber,
                     mEpisodeNumber);
-            AndroidUtils.executeAsyncTask(mTraktTask);
+            AndroidUtils.executeOnPool(mTraktTask);
         }
     }
 
@@ -615,7 +615,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     private void loadImage(String imagePath) {
         if (mArtTask == null || mArtTask.getStatus() == AsyncTask.Status.FINISHED) {
             mArtTask = new FetchArtTask(imagePath, mImageContainer, getActivity());
-            AndroidUtils.executeAsyncTask(mArtTask);
+            AndroidUtils.executeOnPool(mArtTask);
         }
     }
 

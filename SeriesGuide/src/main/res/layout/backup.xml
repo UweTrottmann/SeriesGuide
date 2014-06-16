@@ -14,6 +14,22 @@
             android:text="@string/backup_legacy_warning"
             android:textAppearance="@style/TextAppearance.Medium" />
 
+        <TextView
+            android:id="@+id/textViewBackupPath"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/default_padding"
+            android:text="@string/backup_path"
+            android:textAppearance="@style/TextAppearance.Small" />
+
+        <TextView
+            android:id="@+id/textViewBackupDatabaseVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/default_padding"
+            android:text="@string/backup_version"
+            android:textAppearance="@style/TextAppearance.Small" />
+
         <LinearLayout
             android:id="@+id/buttons"
             android:layout_width="wrap_content"

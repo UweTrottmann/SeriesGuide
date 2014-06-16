@@ -55,7 +55,7 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
 
     protected void checkInGetGlue(final String title, final String message) {
         // check in, use task on thread pool
-        AndroidUtils.executeAsyncTask(new GetGlueCheckin.GetGlueCheckInTask(title, message,
+        AndroidUtils.executeOnPool(new GetGlueCheckin.GetGlueCheckInTask(title, message,
                 getActivity()));
     }
 
@@ -64,7 +64,7 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
      */
     protected void checkInTrakt(String message) {
         int movieTmdbId = getArguments().getInt(InitBundle.MOVIE_TMDB_ID);
-        AndroidUtils.executeAsyncTask(
+        AndroidUtils.executeOnPool(
                 new TraktTask(getActivity()).checkInMovie(movieTmdbId, message));
     }
 
