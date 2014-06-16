@@ -96,6 +96,6 @@ public final class ShortcutUtils {
             }
         };
         // do all the above async
-        AndroidUtils.executeAsyncTask(shortCutTask);
+        AndroidUtils.executeOnPool(shortCutTask);
     }
 }
