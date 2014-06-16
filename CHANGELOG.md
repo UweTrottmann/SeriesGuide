@@ -11,6 +11,10 @@ Version 15 *(2014-06-03)*
 * UI improvements and bug fixes.
 * Supports Android 4.0.3 (Ice Cream Sandwich) and up. If you are running Android 3.x you will only receive important bug fixes from now on.
 
+#### 15.0.6 *(2014-06-16)*
+
+* FIX Creating a backup, adding or removing shows takes a long time when there are many shows added to SG.
+
 #### 15.0.5 *(2014-06-12)*
 
 * FIX Crash when calculating next episode.
