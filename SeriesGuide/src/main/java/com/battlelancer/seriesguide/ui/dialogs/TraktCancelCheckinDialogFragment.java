@@ -129,7 +129,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
                     }
                 };
 
-                cancelCheckinTask.execute();
+                AndroidUtils.executeAsyncTask(cancelCheckinTask);
             }
         });
         builder.setNegativeButton(R.string.traktcheckin_wait, new OnClickListener() {

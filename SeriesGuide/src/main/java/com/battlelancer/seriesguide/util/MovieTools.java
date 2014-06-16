@@ -177,7 +177,7 @@ public class MovieTools {
     }
 
     private static void addMovieAsync(Context context, int movieTmdbId, AddMovieTask.AddTo addTo) {
-        new AddMovieTask(context, addTo).execute(movieTmdbId);
+        Utils.executeInOrder(new AddMovieTask(context, addTo), movieTmdbId);
     }
 
     private static ContentValues[] buildMoviesContentValues(List<MovieDetails> movies) {

@@ -36,6 +36,7 @@ import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
 import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
@@ -129,7 +130,7 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
                 setProgressLock(true);
 
                 mTask = new JsonImportTask(context, DataLiberationFragment.this, false);
-                AndroidUtils.executeAsyncTask(mTask);
+                Utils.executeInOrder(mTask);
             }
         });
         mButtonImportAutoBackup.setOnClickListener(new OnClickListener() {
@@ -138,7 +139,7 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
                 setProgressLock(true);
 
                 mTask = new JsonImportTask(context, DataLiberationFragment.this, true);
-                AndroidUtils.executeAsyncTask(mTask);
+                Utils.executeInOrder(mTask);
             }
         });
 

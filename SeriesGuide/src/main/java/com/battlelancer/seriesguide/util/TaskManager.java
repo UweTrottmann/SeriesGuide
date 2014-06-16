@@ -111,7 +111,7 @@ public class TaskManager {
         if (!isAddTaskRunning()
                 && (mBackupTask == null || mBackupTask.getStatus() == AsyncTask.Status.FINISHED)) {
             mBackupTask = new JsonExportTask(mContext, null, null, false, true);
-            Utils.executeInOrder(mBackupTask);
+            AndroidUtils.executeAsyncTask(mBackupTask);
         }
     }
 
@@ -123,7 +123,7 @@ public class TaskManager {
         if (mNextEpisodeUpdateTask == null
                 || mNextEpisodeUpdateTask.getStatus() == AsyncTask.Status.FINISHED) {
             mNextEpisodeUpdateTask = new LatestEpisodeUpdateTask(mContext);
-            Utils.executeInOrder(mNextEpisodeUpdateTask);
+            AndroidUtils.executeAsyncTask(mNextEpisodeUpdateTask);
         }
     }
 }

@@ -28,6 +28,7 @@ import com.battlelancer.seriesguide.dataliberation.JsonImportTask;
 import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
 import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
 import com.battlelancer.seriesguide.ui.BaseActivity;
+import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Helps users migrate their show database to the free version of SeriesGuide. When using
@@ -69,9 +70,8 @@ public class MigrationActivity extends BaseActivity
             @Override
             public void onClick(View view) {
                 // import shows
-                mTask = new JsonImportTask(MigrationActivity.this, MigrationActivity.this,
-                        false);
-                mTask.execute();
+                mTask = new JsonImportTask(MigrationActivity.this, MigrationActivity.this, false);
+                Utils.executeInOrder(mTask);
 
                 mProgressBar.setVisibility(View.VISIBLE);
 
