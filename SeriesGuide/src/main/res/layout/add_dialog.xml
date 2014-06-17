@@ -50,8 +50,8 @@
 
             <ImageView
                 android:id="@+id/imageViewAddPoster"
-                android:layout_width="116dp"
-                android:layout_height="163dp"
+                android:layout_width="102dp"
+                android:layout_height="150dp"
                 android:layout_alignParentRight="true"
                 android:layout_margin="@dimen/default_padding"
                 android:contentDescription="@string/description_poster" />

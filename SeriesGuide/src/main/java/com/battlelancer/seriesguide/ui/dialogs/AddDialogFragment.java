@@ -235,11 +235,13 @@ public class AddDialogFragment extends DialogFragment {
         mDescription.setText(show.overview);
 
         // poster
-        if (DisplaySettings.isVeryLargeScreen(getActivity())) {
-            if (show.poster != null) {
-                mPoster.setVisibility(View.VISIBLE);
-                ServiceUtils.getPicasso(getActivity()).load(show.poster).into(mPoster);
-            }
+        if ((DisplaySettings.isLargeScreen(getActivity())
+                || DisplaySettings.isVeryLargeScreen(getActivity()))
+                && show.poster != null) {
+            mPoster.setVisibility(View.VISIBLE);
+            ServiceUtils.getPicasso(getActivity())
+                    .load(show.poster)
+                    .into(mPoster);
         }
     }
 
