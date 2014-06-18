@@ -5,6 +5,15 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 16 *(in development)*
+-----------------------------
+
+#### 16-beta1 *(2014-06-18)*
+
+* TWEAK Better way of loading show posters and episode images, also now using designated cache folders.
+* NOTICE Dropped now deprecated poster loading tool, clear image cache setting now links to app info where you can 'Clear Cache'.
+* NOTICE Latest translations from crowdin.
+
 Version 15 *(2014-06-03)*
 -----------------------------
 
