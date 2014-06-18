@@ -21,7 +21,6 @@
   <string name="description_overview">总览</string>
   <string name="description_poster">显示海报</string>
   <string name="description_image">剧集图片</string>
-  <string name="done">完成</string>
   <string name="clear">清空</string>
   <string name="discard">放弃</string>
   <string name="save_selection">保存已选项</string>
@@ -201,9 +200,6 @@
   <string name="update_scheduled">正在更新…</string>
   <string name="update_no_connection">要执行更新操作，请连接互联网。</string>
   <string name="update_inprogress">更新正在进行，请稍后重试。</string>
-  <string name="menu_updateart">下载海报</string>
-  <string name="arttask_incomplete">一些海报没有加载成功，请稍后重试。</string>
-  <string name="arttask_start">正在加载海报……</string>
   <string name="show_on_network">处于 %s 网络</string>
   <string name="season_watchcount">剧集尚未观看</string>
   <string name="season_allwatched">已观看全部剧集</string>
@@ -308,8 +304,6 @@
   <string name="clear_cache">清理图片缓存</string>
   <string name="clear_cache_summary">删除缓存图片</string>
   <string name="pref_ganalyticssummary">跟踪功能的使用情况来帮助改进 SeriesGuide</string>
-  <string name="pref_hideimages">跳过媒体扫描</string>
-  <string name="pref_hideimagessummary">缓存图片将不显示在图库中（需要重启）</string>
   <string name="backup_description"><b>备份</b>将会导出所有剧目、剧集列表到下面文件夹中的一个 JSON 文件中。\n<b>还原</b>时也需要将 JSON 文件放入下面的文件夹中。</string>
   <string name="backup_full_dump">备份时包含所有“元数据”，例如简介、演员和评价。</string>
   <string name="backup_path">备份目录</string>
@@ -340,7 +334,7 @@
   <string name="checkin_hint">输入一段文字（可选）</string>
   <string name="checkin_fixgetglue">修复 GetGlue 登录</string>
   <string name="paste_title">粘贴名称</string>
-  <string name="checkinsuccess">在 GetGlue 上标记 %s。</string>
+  <string name="checkinsuccess">已在 tvtag 上为 %s 签到</string>
   <string name="checkinfailed">GetGlue 登录失败，请稍后再试。</string>
   <string name="getglue_authentication">连接到GetGlue</string>
   <string name="getglue_authfailed">GetGlue 认证失败，请稍后重试。</string>

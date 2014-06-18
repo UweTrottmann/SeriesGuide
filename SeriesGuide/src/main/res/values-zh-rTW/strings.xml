@@ -21,7 +21,6 @@
   <string name="description_overview">簡介</string>
   <string name="description_poster">顯示海報</string>
   <string name="description_image">影集圖片</string>
-  <string name="done">完成</string>
   <string name="clear">清除</string>
   <string name="discard">放棄</string>
   <string name="save_selection">儲存所選項目</string>
@@ -201,9 +200,6 @@
   <string name="update_scheduled">更新中......</string>
   <string name="update_no_connection">如需更新，請連接網路</string>
   <string name="update_inprogress">更新正在進行中，請稍後再試</string>
-  <string name="menu_updateart">載入海報</string>
-  <string name="arttask_incomplete">部分海報並未載入，請稍後再試。</string>
-  <string name="arttask_start">下載封面中......</string>
   <string name="show_on_network">on %s</string>
   <string name="season_watchcount">尚未觀看集數</string>
   <string name="season_allwatched">已觀看所有集數</string>
@@ -308,8 +304,6 @@
   <string name="clear_cache">清除圖片暫存檔</string>
   <string name="clear_cache_summary">從您的設備中刪除所有戰存的圖片</string>
   <string name="pref_ganalyticssummary">紀錄追蹤功能以改善SeriesGuide和使用者的使用體驗</string>
-  <string name="pref_hideimages">隱藏圖片</string>
-  <string name="pref_hideimagessummary">在相簿中隱藏圖片(需重新開機)</string>
   <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
   <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
   <string name="backup_path">Backup folder</string>

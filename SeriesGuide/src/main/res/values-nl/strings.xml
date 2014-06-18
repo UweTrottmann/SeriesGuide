@@ -21,7 +21,6 @@
   <string name="description_overview">Overzicht</string>
   <string name="description_poster">Affiche weergeven</string>
   <string name="description_image">Afleveringsafbeelding</string>
-  <string name="done">Gereed</string>
   <string name="clear">Wissen</string>
   <string name="discard">Negeren</string>
   <string name="save_selection">Selectie bewaren</string>
@@ -201,9 +200,6 @@
   <string name="update_scheduled">Bijwerken…</string>
   <string name="update_no_connection">Verbindt met het internet om bij te werken.</string>
   <string name="update_inprogress">Er wordt een update uitgevoerd, probeer het later opnieuw.</string>
-  <string name="menu_updateart">Affiches laden</string>
-  <string name="arttask_incomplete">Sommige affiches zijn niet geladen, probeer het later opnieuw.</string>
-  <string name="arttask_start">Affiches laden…</string>
   <string name="show_on_network">op %s</string>
   <string name="season_watchcount">Niet bekeken afleveringen</string>
   <string name="season_allwatched">Alle afleveringen bekeken</string>
@@ -308,8 +304,6 @@
   <string name="clear_cache">Afbeeldingenbuffer wissen</string>
   <string name="clear_cache_summary">Alle gebufferde afbeeldingen van het apparaat verwijderen</string>
   <string name="pref_ganalyticssummary">Het gebruik van functies volgen om SeriesGuide te helpen te verbeteren</string>
-  <string name="pref_hideimages">Afbeeldingen verbergen</string>
-  <string name="pref_hideimagessummary">Afbeeldingen voor de fotogalerij verbergen (opnieuw opstarten vereist)</string>
   <string name="backup_description"><b>Back-up</b> zal uw series, seizoenen, afleveringen en lijsten naar een JSON-bestand exporteren in de onderstaande map. \nOm te <b>herstellen</b> zorg ervoor dat de JSON-bestanden die door back-up gecreëerd zijn zich in de map hieronder bevinden.</string>
   <string name="backup_full_dump">Inclusief alle metadata zoals beschrijvingen, acteurs en beoordelingen.</string>
   <string name="backup_path">Back-upmap</string>

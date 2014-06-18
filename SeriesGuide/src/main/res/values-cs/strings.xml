@@ -21,7 +21,6 @@
   <string name="description_overview">Přehled</string>
   <string name="description_poster">Zobrazit plakát</string>
   <string name="description_image">Obrázek z epizody</string>
-  <string name="done">Hotovo</string>
   <string name="clear">Vyčistit</string>
   <string name="discard">Zrušit</string>
   <string name="save_selection">Uložit výběr</string>
@@ -201,9 +200,6 @@
   <string name="update_scheduled">Probíhá aktualizace…</string>
   <string name="update_no_connection">Pro aktualizaci se připojte k internetu.</string>
   <string name="update_inprogress">Probíhá aktualizace, zkuste to později.</string>
-  <string name="menu_updateart">Načíst plakáty</string>
-  <string name="arttask_incomplete">Některé plakáty se nenačetly, zkuste to později.</string>
-  <string name="arttask_start">Načítám plakáty…</string>
   <string name="show_on_network">na %s</string>
   <string name="season_watchcount">epizod ke zhlédnutí</string>
   <string name="season_allwatched">Všechny epizody zhlédnuty</string>
@@ -308,8 +304,6 @@
   <string name="clear_cache">Vymazat paměť pro obrázky</string>
   <string name="clear_cache_summary">Odstranit všechny stažené obrázky ze zařízení</string>
   <string name="pref_ganalyticssummary">Sledovat užívání aplikace pro zlepšování SeriesGuide</string>
-  <string name="pref_hideimages">Skrýt obrázky</string>
-  <string name="pref_hideimagessummary">Skrývat obrázky v galerii (nutný restart)</string>
   <string name="backup_description"><b>Zálohování</b> exportuje vaše seriály, série, epizody a seznamy do souboru .JSON v níže uvedené složce.\nPro <b>obnovení</b> se ujistěte, že soubory .JSON vytvořené při zálohování jsou v níže uvedené složce.</string>
   <string name="backup_full_dump">Zahrnout také metadata jako popisy, herci nebo hodnocení.</string>
   <string name="backup_path">Složka se zálohou</string>

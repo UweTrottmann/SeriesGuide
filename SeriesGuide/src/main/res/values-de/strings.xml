@@ -21,7 +21,6 @@
   <string name="description_overview">Übersicht</string>
   <string name="description_poster">Serien-Poster</string>
   <string name="description_image">Bild der Folge</string>
-  <string name="done">Erledigt</string>
   <string name="clear">Löschen</string>
   <string name="discard">Verwerfen</string>
   <string name="save_selection">Auswahl speichern</string>
@@ -201,9 +200,6 @@
   <string name="update_scheduled">Aktualisiert…</string>
   <string name="update_no_connection">Zum Aktualisieren mit dem Internet verbinden.</string>
   <string name="update_inprogress">Eine Aktualisierung ist im Gange, versuchen Sie es später erneut.</string>
-  <string name="menu_updateart">Poster laden</string>
-  <string name="arttask_incomplete">Einige Poster wurden nicht geladen, versuchen Sie es später erneut.</string>
-  <string name="arttask_start">Lade Poster…</string>
   <string name="show_on_network">auf %s</string>
   <string name="season_watchcount">ungesehene Folgen</string>
   <string name="season_allwatched">Alle Folgen gesehen</string>
@@ -308,8 +304,6 @@
   <string name="clear_cache">Bilder-Zwischenspeicher leeren</string>
   <string name="clear_cache_summary">Alle zwischengespeicherten Bilder von Ihrem Gerät entfernen</string>
   <string name="pref_ganalyticssummary">Verfolgt die Verwendung von Funktionen zur Verbesserung von SeriesGuide</string>
-  <string name="pref_hideimages">Verstecke Bilder</string>
-  <string name="pref_hideimagessummary">Blenden Sie Bilder aus Ihrer Foto-Galerie aus (Neustart erforderlich)</string>
   <string name="backup_description"><b>Sichern</b> exportiert Ihre Serien, Staffeln, Folgen und Listen in eine JSON-Datei in den unten angegebenen Ordner.\nBeim <b>Wiederherstellen</b> ist sicherzustellen, dass die von der Sicherung erstellten JSON-Dateien in diesem Ordner liegen.</string>
   <string name="backup_full_dump">Alle Meta-Daten wie Beschreibungen, Schauspieler und Bewertungen mit einschließen.</string>
   <string name="backup_path">Sicherungsordner</string>

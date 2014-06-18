@@ -21,7 +21,6 @@
   <string name="description_overview">Aperçu</string>
   <string name="description_poster">Affiche de la série</string>
   <string name="description_image">Image de l\'épisode</string>
-  <string name="done">Fait</string>
   <string name="clear">Effacer</string>
   <string name="discard">Annuler</string>
   <string name="save_selection">Enregistrer</string>
@@ -201,9 +200,6 @@
   <string name="update_scheduled">Mise à jour…</string>
   <string name="update_no_connection">Pour mettre à jour, connectez-vous à Internet.</string>
   <string name="update_inprogress">Une mise à jour est en cours, réessayez ultérieurement.</string>
-  <string name="menu_updateart">Charger les affiches</string>
-  <string name="arttask_incomplete">Le chargement de quelques affiches a échoué, réessayez plus tard.</string>
-  <string name="arttask_start">Chargement des affiches…</string>
   <string name="show_on_network">sur %s</string>
   <string name="season_watchcount">épisodes non vus</string>
   <string name="season_allwatched">Tous les épisodes vus</string>
@@ -308,8 +304,6 @@
   <string name="clear_cache">Vider le cache d\'images</string>
   <string name="clear_cache_summary">Supprimer toutes les images en cache sur votre périphérique</string>
   <string name="pref_ganalyticssummary">Suivi de l\'utilisation des fonctionnalités pour aider à améliorer SeriesGuide</string>
-  <string name="pref_hideimages">Masquer les images</string>
-  <string name="pref_hideimagessummary">Masquer les images de votre galerie photos (redémarrage nécessaire)</string>
   <string name="backup_description"><b>Sauvegarder</b> permet d\'exporter vos séries, saisons, épisodes et listes dans un fichier JSON dans le dossier ci-dessous.\nPour <b>Restaurer</b>, soyez sûr que les fichiers JSON sauvegardés se trouvent bien dans le dossier ci-dessous.</string>
   <string name="backup_full_dump">Inclure toutes les métadonnées telles que les descriptions, les acteurs et les notes.</string>
   <string name="backup_path">Dossier de sauvegarde</string>

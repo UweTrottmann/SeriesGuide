@@ -21,7 +21,6 @@
   <string name="description_overview">תקציר</string>
   <string name="description_poster">הצג פוסטר</string>
   <string name="description_image">תמונת הפרק</string>
-  <string name="done">בוצע</string>
   <string name="clear">נקה</string>
   <string name="discard">בטל</string>
   <string name="save_selection">שמור בחירה</string>
@@ -201,9 +200,6 @@
   <string name="update_scheduled">מעדכן…</string>
   <string name="update_no_connection">התחבר לאינטרנט כדי לעדכן.</string>
   <string name="update_inprogress">מבצע תהליך עדכון, נסה מאוחר יותר.</string>
-  <string name="menu_updateart">טען פוסטרים</string>
-  <string name="arttask_incomplete">כמה פוסטרים לא נטענו, נסה שנית מאוחר יותר</string>
-  <string name="arttask_start">טוען פוסטרים</string>
   <string name="show_on_network">ב- %s</string>
   <string name="season_watchcount">הפרקים לא נצפו</string>
   <string name="season_allwatched">כל הפרקים נצפו</string>
@@ -308,8 +304,6 @@
   <string name="clear_cache">נקה מטמוני תמונות</string>
   <string name="clear_cache_summary">הסר את כל מטמוני התמונות ממכשירך</string>
   <string name="pref_ganalyticssummary">עוקב אחר השימוש בתוכנה על מנת לסייע בשיפור SeriesGuide</string>
-  <string name="pref_hideimages">הסתר תמונות</string>
-  <string name="pref_hideimagessummary">הסתר תמונות מגלריית התמונות שלך (נדרש אתחול מחדש)</string>
   <string name="backup_description"><b>גיבוי</b> תייצא את הסדרות, עונות, פרקים ורשימות לקובץ JSON לתוך התיקייה הבאה. \nכדי <b>לשחזר</b> וודא שהקבצים שנוצרו על ידי גיבוי JSON נמצאים בתיקייה להלן.</string>
   <string name="backup_full_dump">כולל את כל הנתונים כמו תיאור, שחקנים ודירוגים.</string>
   <string name="backup_path">תיקיית גיבוי</string>

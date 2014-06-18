@@ -21,7 +21,6 @@
   <string name="description_overview">Επισκόπηση</string>
   <string name="description_poster">Εμφάνιση αφίσας</string>
   <string name="description_image">Εικόνα επεισοδίου</string>
-  <string name="done">Ολοκληρώθηκε</string>
   <string name="clear">Καθαρισμός</string>
   <string name="discard">Απόρριψη</string>
   <string name="save_selection">Αποθήκευση επιλογής</string>
@@ -201,9 +200,6 @@
   <string name="update_scheduled">Ενημέρωση…</string>
   <string name="update_no_connection">Για ενημέρωση συνδεθείτε στο internet.</string>
   <string name="update_inprogress">Μια ενημέρωση βρίσκεται σε εξέλιξη, δοκιμάστε ξανά αργότερα.</string>
-  <string name="menu_updateart">Φόρτωση αφισών</string>
-  <string name="arttask_incomplete">Ορισμένες αφίσες δεν φόρτωσαν, δοκιμάστε ξανά αργότερα.</string>
-  <string name="arttask_start">Φόρτωση αφισών…</string>
   <string name="show_on_network">στο %s</string>
   <string name="season_watchcount">Επεισόδια που δεν έχουν παρακολουθηθεί</string>
   <string name="season_allwatched">Όλα τα επεισόδια έχουν παρακολουθηθεί</string>
@@ -308,8 +304,6 @@
   <string name="clear_cache">Καθαρισμός προσωρινής μνήμης εικόνων</string>
   <string name="clear_cache_summary">Αφαιρέστε όλες τις προσωρινά αποθηκευμένες εικόνες από τη συσκευή σας</string>
   <string name="pref_ganalyticssummary">Καταγραφή της χρήσης για την βελτίωση του SeriesGuide</string>
-  <string name="pref_hideimages">Απόκρυψη εικόνων</string>
-  <string name="pref_hideimagessummary">Απόκρυψη εικόνων από τη συλλογή φωτογραφιών (απαιτείται επανεκίνηση)</string>
   <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
   <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
   <string name="backup_path">Φάκελος αντιγράφων ασφαλείας</string>

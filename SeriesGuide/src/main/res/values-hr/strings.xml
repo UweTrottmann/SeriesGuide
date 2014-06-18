@@ -21,7 +21,6 @@
   <string name="description_overview">Pregled</string>
   <string name="description_poster">Pokaži poster</string>
   <string name="description_image">Slika epizode</string>
-  <string name="done">Gotovo</string>
   <string name="clear">Izbriši</string>
   <string name="discard">Odbaci</string>
   <string name="save_selection">Pohrani odabrano</string>
@@ -201,9 +200,6 @@
   <string name="update_scheduled">Ažuriranje…</string>
   <string name="update_no_connection">Poveži se na internet za ažuriranje.</string>
   <string name="update_inprogress">Ažuriranje u tijeku, pokušajte kasnije.</string>
-  <string name="menu_updateart">Učitaj postere</string>
-  <string name="arttask_incomplete">Neki posteri se nisu učitali, pokušaj kasnije.</string>
-  <string name="arttask_start">Učitavanje postera…</string>
   <string name="show_on_network">na %s</string>
   <string name="season_watchcount">Nepogledane epizode</string>
   <string name="season_allwatched">Sve epizode pogledane</string>
@@ -308,8 +304,6 @@
   <string name="clear_cache">Očisti predmemoriju slika</string>
   <string name="clear_cache_summary">Ukloni sve slike iz predmemorije tvog uređaja</string>
   <string name="pref_ganalyticssummary">Prati korištenje mogućnosti zbog poboljšanja SeriesGuide-a</string>
-  <string name="pref_hideimages">Sakrij slike</string>
-  <string name="pref_hideimagessummary">Sakrij slike iz tvoje galerije slika (potrebno ponovno pokretanje)</string>
   <string name="backup_description"><b>Sigurnosna kopija</b> će izvesti tvoje serije, sezone, epizode i popise u JSON datoteku u mapi niže.\nDa <b>Obnova</b> radi provjeri da li su JSON datoteke stvorene sigurnosnom kopijom u mapi niže.</string>
   <string name="backup_full_dump">Uključi sve meta-podatke kao što su opisi, glumci i ocjene.</string>
   <string name="backup_path">Mapa sigurnosne kopije</string>

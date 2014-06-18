@@ -21,7 +21,6 @@
   <string name="description_overview">نظرة عامة</string>
   <string name="description_poster">إظهار الملصقات</string>
   <string name="description_image">صورة الحلقة</string>
-  <string name="done">تم</string>
   <string name="clear">تنظيف</string>
   <string name="discard">تجاهل</string>
   <string name="save_selection">حفظ التحديد</string>
@@ -201,9 +200,6 @@
   <string name="update_scheduled">جاري التحديث</string>
   <string name="update_no_connection">ليتم التحديث إتصل بالإنترنت.</string>
   <string name="update_inprogress">التحديث قيد التقدم, حاول مرة أخرى.</string>
-  <string name="menu_updateart">تحميل الملصقات</string>
-  <string name="arttask_incomplete">.بعض الأغلفة لم تُحمّل, حاول مرة اخرى لاحقاً</string>
-  <string name="arttask_start">تحميل الملصقات…</string>
   <string name="show_on_network">خلال %s</string>
   <string name="season_watchcount">الحلقات التي لم تشاهد</string>
   <string name="season_allwatched">تم مشاهدة جميع الحلقات</string>
@@ -308,8 +304,6 @@
   <string name="clear_cache">تنظيف ذاكرة التخزين المؤقتة للصور</string>
   <string name="clear_cache_summary">إزالة جميع الصور المخزنة مؤقتاً من الجهاز</string>
   <string name="pref_ganalyticssummary">تقوم هذه الأداة بتتبع استخدام الميزات للمساعدة في تحسين برنامج دليل المسلسلات</string>
-  <string name="pref_hideimages">إخفاء الصور</string>
-  <string name="pref_hideimagessummary">إخفاء صور المسلسلات من معرض الصور (يُنصح بإعادة التشغيل)</string>
   <string name="backup_description"><b>النسخ الإحتياطي</b>سوف يتم تصدير البرامج, المسلسلات, الحلقات و القوائم لملف JSON داخل المجلد من خلال المسار الموجود في الأسفل. <b>للإستعادة</b> تأكد من أن الملفات التي تم عمل نسحة إحتياطية لها موجودة داخل مسار الذي في الأسفل.</string>
   <string name="backup_full_dump">تشمل جميع البيانات الفوقية مثل الوصف، والممثلين ودرجات التقييم.</string>
   <string name="backup_path">مجلد النسخ الإحتياطي</string>

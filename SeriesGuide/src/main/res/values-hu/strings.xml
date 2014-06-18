@@ -21,7 +21,6 @@
   <string name="description_overview">Tartalom</string>
   <string name="description_poster">Borító mutatása</string>
   <string name="description_image">Epizód kép</string>
-  <string name="done">Kész</string>
   <string name="clear">Törlés</string>
   <string name="discard">Elvetés</string>
   <string name="save_selection">Kijelöltek mentése</string>
@@ -201,9 +200,6 @@
   <string name="update_scheduled">Frissítés…</string>
   <string name="update_no_connection">Frissítéshez csatlakozz az internetre.</string>
   <string name="update_inprogress">Egy frissítés folyamatban, próbálja később.</string>
-  <string name="menu_updateart">Képek letöltése</string>
-  <string name="arttask_incomplete">Néhány kép letöltése nem sikerült, próbálja meg később.</string>
-  <string name="arttask_start">Képek letöltése…</string>
   <string name="show_on_network">%s csatornán</string>
   <string name="season_watchcount">nem látott epizód</string>
   <string name="season_allwatched">Minden epizód megnézve</string>
@@ -308,8 +304,6 @@
   <string name="clear_cache">Képtároló törlése</string>
   <string name="clear_cache_summary">Az összes tárolt kép törlése az eszközről</string>
   <string name="pref_ganalyticssummary">A SeriesGuide fejlesztése érdekében nyomon követi a használt funkciókat.</string>
-  <string name="pref_hideimages">Képek elrejtése</string>
-  <string name="pref_hideimagessummary">A képek ne jelenjenek meg a Képtárban (újraindítás szükséges)</string>
   <string name="backup_description">A <b>mentés</b> funkcióval a sorozatait, évadjait, epizódjait egy JSON fájlba menti a megadott mappába.\nA <b>visszaállítás</b>hoz a JSON fájloknak ebben a mappában kell lennie.</string>
   <string name="backup_full_dump">Minden metaadat mentése (pl. leírások, színészek, értékelések).</string>
   <string name="backup_path">Mentési mappa</string>

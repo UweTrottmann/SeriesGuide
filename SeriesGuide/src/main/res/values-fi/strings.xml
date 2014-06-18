@@ -21,7 +21,6 @@
   <string name="description_overview">Yleiskatsaus</string>
   <string name="description_poster">Näytä juliste</string>
   <string name="description_image">Jaksokuva</string>
-  <string name="done">Valmis</string>
   <string name="clear">Tyhjennä</string>
   <string name="discard">Peruuta</string>
   <string name="save_selection">Tallenna valinta</string>
@@ -201,9 +200,6 @@
   <string name="update_scheduled">Päivitetään…</string>
   <string name="update_no_connection">Päivittääksesi muodosta yhteys internetiin.</string>
   <string name="update_inprogress">Päivitys on käynnissä, yritä myöhemmin uudelleen.</string>
-  <string name="menu_updateart">Lataa julisteet</string>
-  <string name="arttask_incomplete">Jotkut julisteet eivät lataantuneet, yritä myöhemmin uudelleen.</string>
-  <string name="arttask_start">Ladataan julisteita…</string>
   <string name="show_on_network">kanavalla %s</string>
   <string name="season_watchcount">katsomatonta jaksoa</string>
   <string name="season_allwatched">Kaikki jaksot katsottu</string>
@@ -308,8 +304,6 @@
   <string name="clear_cache">Tyhjennä kuvavälimuisti</string>
   <string name="clear_cache_summary">Poista kaikki välimuistiin tallennetut kuvat</string>
   <string name="pref_ganalyticssummary">Seuraa ominaisuuksien käyttöä, jonka avulla parannetaan SeriesGuidea</string>
-  <string name="pref_hideimages">Piilota kuvat</string>
-  <string name="pref_hideimagessummary">Piilota kuvat kuvagalleriassasi (vaatii uudelleenkäynnistyksen)</string>
   <string name="backup_description"><b>Varmuuskopiointi</b> vie ohjelmasi, kautesi, jaksosi ja listasi JSON-tiedostoon alla mainittuun kansioon.\n<b>Palauttaaksesi</b> varmista, että varmuuskopioinnin luomat JSON-tiedostot ovat alla mainitussa kansiossa.</string>
   <string name="backup_full_dump">Sisällytä kaikki metatieto, kuten kuvaukset, näyttelijät ja arvosanat.</string>
   <string name="backup_path">Varmuuskopiokansio</string>

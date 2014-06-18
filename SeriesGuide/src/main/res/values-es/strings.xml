@@ -21,7 +21,6 @@
   <string name="description_overview">Reseña</string>
   <string name="description_poster">Mostrar el poster</string>
   <string name="description_image">Imagen del episodio</string>
-  <string name="done">Hecho</string>
   <string name="clear">Limpiar</string>
   <string name="discard">Descartar</string>
   <string name="save_selection">Guardar selección</string>
@@ -201,9 +200,6 @@
   <string name="update_scheduled">Actualizando…</string>
   <string name="update_no_connection">Para actualizar conéctese a internet.</string>
   <string name="update_inprogress">Una actualización está en curso, intente de nuevo más tarde.</string>
-  <string name="menu_updateart">Cargar imágenes</string>
-  <string name="arttask_incomplete">Algunos posters no cargan, inténtalo más tarde.</string>
-  <string name="arttask_start">Cargando imágenes…</string>
   <string name="show_on_network">en %s</string>
   <string name="season_watchcount">episodios no vistos</string>
   <string name="season_allwatched">Todos los episodios vistos</string>
@@ -308,8 +304,6 @@
   <string name="clear_cache">Limpiar el caché de imágenes</string>
   <string name="clear_cache_summary">Quitar todas las imágenes en la memoria caché del dispositivo</string>
   <string name="pref_ganalyticssummary">Hacer un seguimiento del uso para ayudar a mejorar Series Guide</string>
-  <string name="pref_hideimages">Ocultar imágenes</string>
-  <string name="pref_hideimagessummary">Ocultar imágenes a la Galería de fotografías (se requiere reiniciar)</string>
   <string name="backup_description">El <b>respaldo</b> exportará tus programas, temporadas, episodios y listas a un archivo JSON en la carpeta de abajo.\nPara <b>restaurar</b> asegúrate de que el archivo JSON creado por el respaldo está en la carpeta de abajo.</string>
   <string name="backup_full_dump">Incluir todos los metadatos como descripciones, actores y calificaciones.</string>
   <string name="backup_path">Carpeta de respaldo</string>

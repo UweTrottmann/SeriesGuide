@@ -21,7 +21,6 @@
   <string name="description_overview">Prehľad</string>
   <string name="description_poster">Zobraziť plagát</string>
   <string name="description_image">Obrázok z epizódy</string>
-  <string name="done">Hotovo</string>
   <string name="clear">Zmazať</string>
   <string name="discard">Zrušiť</string>
   <string name="save_selection">Uložiť výber</string>
@@ -201,9 +200,6 @@
   <string name="update_scheduled">Updating…</string>
   <string name="update_no_connection">To update connect to the internet.</string>
   <string name="update_inprogress">Prebieha aktualizácia, skúste to neskôr.</string>
-  <string name="menu_updateart">Načítať plagáty</string>
-  <string name="arttask_incomplete">Niektoré plagáty sa nenačítali, skúste to neskôr.</string>
-  <string name="arttask_start">Načítavam plagáty…</string>
   <string name="show_on_network">on %s</string>
   <string name="season_watchcount">nepozreté epizódy</string>
   <string name="season_allwatched">Všetky epizódy pozreté</string>
@@ -308,8 +304,6 @@
   <string name="clear_cache">Vymazať vyrovnávaciu pamäť obrázkov</string>
   <string name="clear_cache_summary">Odstrániť všetky obrázky stiahnuté do zariadenia</string>
   <string name="pref_ganalyticssummary">Sledovať používanie aplikácie pre zlepšenie SeriesGuide</string>
-  <string name="pref_hideimages">Skryť obrázky</string>
-  <string name="pref_hideimagessummary">Skryť obrázky v galérii. (potrebný reštart)</string>
   <string name="backup_description"><b>Záloha</b> bude obsahovať vaše seriály, série, epizódy a zoznamy ktorú budú uložené do súboru JSON v uvedenom priečinku nižšie.\n <b>Obnova</b> je možná jedine vtedy ak sa súbor JSON nachádza v priečinku uvedenom nižšie. Preto sa pred obnovou uistite že sa tam súbor nachádza!</string>
   <string name="backup_full_dump">Zahrnúť metadata ako popisy, herci alebo hodnotenie.</string>
   <string name="backup_path">Priečinok zálohy</string>
