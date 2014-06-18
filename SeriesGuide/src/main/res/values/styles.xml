@@ -102,6 +102,7 @@
     </style>
 
     <style name="TextAppearance.ActionBar" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/text_default_inverse</item>
         <item name="android:textSize">@dimen/text_size_xmedium</item>
         <item name="android:textStyle">bold</item>
     </style>
