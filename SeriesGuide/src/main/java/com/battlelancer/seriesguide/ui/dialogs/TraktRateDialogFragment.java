@@ -150,7 +150,6 @@ public class TraktRateDialogFragment extends DialogFragment {
 
         builder = new AlertDialog.Builder(getActivity());
         builder.setView(layout);
-        builder.setNegativeButton(android.R.string.cancel, null);
 
         return builder.create();
     }

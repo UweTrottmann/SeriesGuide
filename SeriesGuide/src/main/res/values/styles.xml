@@ -162,6 +162,13 @@
         <item name="android:textStyle">italic</item>
     </style>
 
+    <style name="Widget.SeriesGuide.Button.Borderless.Rating">
+        <item name="android:drawableLeft">@drawable/trakt_heart</item>
+        <item name="android:drawablePadding">@dimen/inline_padding</item>
+        <item name="android:padding">@dimen/default_padding</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
     <style name="Widget.SeriesGuide.ImageButton" parent="android:Widget.Holo.ImageButton">
         <item name="android:background">@drawable/btn_default_sg</item>
     </style>
@@ -352,16 +359,6 @@
     <style name="FirstRunColumn">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <!-- Rating -->
-    <style name="RatingButton">
-        <item name="android:background">?custom_list_selector</item>
-        <item name="android:drawablePadding">4dp</item>
-        <item name="android:padding">@dimen/default_padding</item>
-        <item name="android:textColor">@color/text_primary</item>
-        <item name="android:textSize">@dimen/text_size_xmedium</item>
-        <item name="android:drawableLeft">@drawable/trakt_heart</item>
     </style>
 
     <!-- Episode pager -->
