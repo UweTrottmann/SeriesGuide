@@ -166,7 +166,7 @@
   <string name="favorited">Agregado a Favoritos</string>
   <string name="unfavorited">Borrado de los favoritos</string>
   <string name="context_hide">Oculto</string>
-  <string name="context_unhide">Des-esconder</string>
+  <string name="context_unhide">Mostrar</string>
   <string name="hidden">Serie oculta</string>
   <string name="unhidden">Mostrar serie</string>
   <string name="action_shows_add">Añadir serie</string>
@@ -185,7 +185,7 @@
   <string name="context_updateshow">Actualizar</string>
   <string name="context_marknext">Siguiente episodio visto</string>
   <string name="upcoming">Próximos</string>
-  <string name="recent">Reciente</string>
+  <string name="recent">Recientes</string>
   <string name="friends">Amigos</string>
   <string name="friends_empty">No hay actividad de amigos en trakt.</string>
   <string name="user_stream">Tú</string>
@@ -382,7 +382,7 @@
     <item>en directo</item>
     <item>5 min antes</item>
     <item>10 min antes</item>
-    <item>una hora antes</item>
+    <item>1 hora antes</item>
   </string-array>
   <string name="smallwidget">SeriesGuide (pequeño)</string>
   <string name="bigwidget">SeriesGuide (mediano)</string>
