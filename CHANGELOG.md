@@ -8,6 +8,12 @@ All dates are in the European Central timezone.
 Version 16 *(in development)*
 -----------------------------
 
+#### 16-beta2 *(2014-06-20)*
+
+* TWEAK UI improvements (episode list, rate dialog, light theme immersive theme).
+* TWEAK Sort ended after continuing shows when ordering by next episode.
+* NOTICE Latest translations from crowdin (some updates for Spanish).
+
 #### 16-beta1 *(2014-06-18)*
 
 * TWEAK Better way of loading show posters and episode images, also now using designated cache folders.
