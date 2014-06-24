@@ -62,6 +62,26 @@ public class EpisodesAdapter extends CursorAdapter {
         mOnFlagListener = flagListener;
     }
 
+    /**
+     * Get the item position in the data set, or the position of the first item if it is not found.
+     */
+    public int getItemPosition(long itemId) {
+        Cursor cursor = getCursor();
+        if (cursor != null) {
+            int rowId = cursor.getColumnIndexOrThrow("_id");
+            for (int position = 0; position < cursor.getCount(); position++) {
+                if (!cursor.moveToPosition(position)) {
+                    return 0;
+                }
+                if (cursor.getLong(rowId) == itemId) {
+                    return position;
+                }
+            }
+        }
+
+        return 0;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (!mDataValid) {

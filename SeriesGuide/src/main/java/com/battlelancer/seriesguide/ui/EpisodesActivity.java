@@ -299,7 +299,6 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
      */
     public void setCurrentPage(int position) {
         mPager.setCurrentItem(position, true);
-        mEpisodesFragment.setItemChecked(position);
     }
 
     /**
