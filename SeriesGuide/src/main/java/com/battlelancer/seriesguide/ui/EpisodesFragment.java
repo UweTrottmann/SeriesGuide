@@ -67,6 +67,8 @@ public class EpisodesFragment extends ListFragment implements
 
     private EpisodesAdapter mAdapter;
 
+    private int mStartingPosition;
+
     /**
      * All values have to be integer.
      */
@@ -77,15 +79,20 @@ public class EpisodesFragment extends ListFragment implements
         String SEASON_TVDBID = "season_tvdbid";
 
         String SEASON_NUMBER = "season_number";
+
+        String STARTING_POSITION = "starting_position";
+
     }
 
-    public static EpisodesFragment newInstance(int showId, int seasonId, int seasonNumber) {
+    public static EpisodesFragment newInstance(int showId, int seasonId, int seasonNumber,
+            int startingPosition) {
         EpisodesFragment f = new EpisodesFragment();
 
         Bundle args = new Bundle();
         args.putInt(InitBundle.SHOW_TVDBID, showId);
         args.putInt(InitBundle.SEASON_TVDBID, seasonId);
         args.putInt(InitBundle.SEASON_NUMBER, seasonNumber);
+        args.putInt(InitBundle.STARTING_POSITION, startingPosition);
         f.setArguments(args);
 
         return f;
@@ -115,6 +122,9 @@ public class EpisodesFragment extends ListFragment implements
 
         if (mDualPane) {
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            mStartingPosition = getArguments().getInt(InitBundle.STARTING_POSITION);
+        } else {
+            mStartingPosition = -1;
         }
 
         mAdapter = new EpisodesAdapter(getActivity(), null, 0, this, this);
@@ -138,28 +148,22 @@ public class EpisodesFragment extends ListFragment implements
     }
 
     /**
-     * Convenience method for showDetails(episodeId) which looks up the episode id in the list view
-     * at the given position.
+     * Display the episode at the given position in a detail pane or if not available in a new
+     * activity.
      */
     private void showDetails(int position) {
-        getListView().setItemChecked(position, true);
-        showDetails(getListView().getItemIdAtPosition(position));
-    }
-
-    /**
-     * If not already shown, display a new fragment containing the given episodes information.
-     */
-    private void showDetails(long episodeId) {
         if (mDualPane) {
             EpisodesActivity activity = (EpisodesActivity) getActivity();
-            activity.onChangePage((int) episodeId);
+            activity.setCurrentPage(position);
         } else {
+            int episodeId = (int) getListView().getItemIdAtPosition(position);
+
             Intent intent = new Intent();
             intent.setClass(getActivity(), EpisodesActivity.class);
-            intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, (int) episodeId);
+            intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
+
             startActivity(intent);
-            getActivity().overridePendingTransition(R.anim.blow_up_enter,
-                    R.anim.blow_up_exit);
+            getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
         }
     }
 
@@ -296,6 +300,10 @@ public class EpisodesFragment extends ListFragment implements
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         mAdapter.swapCursor(cursor);
+        if (mStartingPosition != -1) {
+            setItemChecked(mStartingPosition);
+            mStartingPosition = -1;
+        }
     }
 
     public void onLoaderReset(Loader<Cursor> arg0) {
