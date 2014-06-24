@@ -30,7 +30,6 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.Episode;
@@ -44,6 +43,7 @@ import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapte
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +66,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
 
     private ViewPager mPager;
 
-    private PagerSlidingTabStrip mTabs;
+    private SlidingTabLayout mTabs;
 
     private boolean mDualPane;
 
@@ -186,14 +186,17 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
             Utils.loadPosterBackground(this, (ImageView) findViewById(R.id.background),
                     show.getPoster());
 
-            // set adapters for pager and indicator
+            // setup view pager
             int startPosition = updateEpisodeList(episodeId);
             mAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(), mEpisodes, true);
             mPager = (ViewPager) pager;
             mPager.setAdapter(mAdapter);
 
-            mTabs = (PagerSlidingTabStrip) findViewById(R.id.tabsEpisodes);
-            mTabs.setAllCaps(false);
+            // setup tabs
+            mTabs = (SlidingTabLayout) findViewById(R.id.tabsEpisodes);
+            mTabs.setCustomTabView(R.layout.tabstrip_item, R.id.textViewTabStripItem);
+            mTabs.setSelectedIndicatorColors(getResources().getColor(
+                    Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorAccent)));
             mTabs.setViewPager(mPager);
 
             // set page listener afterwards to avoid null pointer for
@@ -315,7 +318,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity implements
             // reorder
             updateEpisodeList();
             mAdapter.updateEpisodeList(mEpisodes);
-            mTabs.notifyDataSetChanged();
+            mTabs.setViewPager(mPager);
 
             // restore visible episode
             onChangePage(episodeId);
