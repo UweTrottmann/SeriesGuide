@@ -26,6 +26,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -341,6 +342,13 @@ public class Utils {
                 SeriesGuidePreferences.THEME = R.style.Theme_SeriesGuide;
                 break;
         }
+    }
+
+    /**
+     * Set the alpha value of the {@code color} to be the given {@code alpha} value.
+     */
+    public static int setColorAlpha(int color, int alpha) {
+        return Color.argb(alpha, Color.red(color), Color.green(color), Color.blue(color));
     }
 
     /**
