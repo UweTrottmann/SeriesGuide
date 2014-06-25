@@ -64,6 +64,8 @@
   <string name="shows_continuing">%s jatkuu</string>
   <string name="episodes_watched">%s katsottua</string>
   <string name="runtime_all_episodes">Kaikkien katsottujen jaksojen kesto</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d päivä</item>
     <item quantity="zero">%d päivää</item>

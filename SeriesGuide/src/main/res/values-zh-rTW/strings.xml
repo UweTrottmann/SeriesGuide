@@ -64,6 +64,8 @@
   <string name="shows_continuing">%s部影集仍在連載</string>
   <string name="episodes_watched">%s 集已看</string>
   <string name="runtime_all_episodes">所有看過影集的時數總計</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d day</item>
     <item quantity="zero">%d days</item>

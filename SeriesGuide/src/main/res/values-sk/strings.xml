@@ -64,6 +64,8 @@
   <string name="shows_continuing">%s continuing</string>
   <string name="episodes_watched">%s watched</string>
   <string name="runtime_all_episodes">Celkový čas všetkých videných epizód</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d day</item>
     <item quantity="zero">%d days</item>

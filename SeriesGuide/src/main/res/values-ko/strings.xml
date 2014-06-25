@@ -64,6 +64,8 @@
   <string name="shows_continuing">%s 방영 중</string>
   <string name="episodes_watched">%s 시청함</string>
   <string name="runtime_all_episodes">시청한 모든 에피소드의 런타임</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d 일</item>
     <item quantity="zero">%d 일</item>

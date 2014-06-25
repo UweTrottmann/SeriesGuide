@@ -64,6 +64,8 @@
   <string name="shows_continuing">%s w toku</string>
   <string name="episodes_watched">%s obejrzanych</string>
   <string name="runtime_all_episodes">Czas wyświetlania wszystkich obejrzanych odcinków</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d dzień</item>
     <item quantity="zero">%d dni</item>

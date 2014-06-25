@@ -64,6 +64,8 @@
   <string name="shows_continuing">%s fortsetter</string>
   <string name="episodes_watched">%s sett</string>
   <string name="runtime_all_episodes">Visningstid for alle sette episoder</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d dag</item>
     <item quantity="zero">%d dager</item>

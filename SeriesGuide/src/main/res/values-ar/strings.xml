@@ -64,6 +64,8 @@
   <string name="shows_continuing">%s مستمرة</string>
   <string name="episodes_watched">%s تمت مشاهدتها</string>
   <string name="runtime_all_episodes">مجموع مشاهدة جميع الحلقات</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d يوم/أيام</item>
     <item quantity="zero">%d أيام</item>

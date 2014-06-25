@@ -64,6 +64,8 @@
   <string name="shows_continuing">%s continuă</string>
   <string name="episodes_watched">%s urmărit</string>
   <string name="runtime_all_episodes">Timpul de urmărire al tuturor episoadelor</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d zile</item>
     <item quantity="zero">%d zile</item>

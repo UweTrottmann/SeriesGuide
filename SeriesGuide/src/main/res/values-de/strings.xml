@@ -45,10 +45,10 @@
   <string name="refresh">Aktualisieren</string>
   <string name="movies_collection">Sammlung</string>
   <string name="movies_watchlist">Ansehen</string>
-  <string name="watchlist_add">Zur Watchliste hinzufügen</string>
-  <string name="watchlist_remove">Aus Watchliste entfernen</string>
-  <string name="watchlist_added">Zur Watchliste hinzugefügt</string>
-  <string name="watchlist_removed">Aus Watchliste entfernt</string>
+  <string name="watchlist_add">Zur Ansehen-Liste hinzufügen</string>
+  <string name="watchlist_remove">Aus Ansehen-Liste entfernen</string>
+  <string name="watchlist_added">Zur Ansehen-Liste hinzugefügt</string>
+  <string name="watchlist_removed">Aus Ansehen-Liste entfernt</string>
   <string name="movies_search_hint">Filmtitel eingeben</string>
   <string name="movies_empty">Suchen Sie oben nach einem Film.</string>
   <string name="movies_collection_empty">Sie haben Ihrer Sammlung noch keine Filme hinzugefügt.</string>
@@ -64,6 +64,8 @@
   <string name="shows_continuing">%s werden fortgesetzt</string>
   <string name="episodes_watched">%s angesehen</string>
   <string name="runtime_all_episodes">Laufzeit aller angesehenen Folgen</string>
+  <string name="movies_on_watchlist">%s auf Ansehen-Liste</string>
+  <string name="runtime_movies_watchlist">Laufzeit von Filmen auf der Ansehen-Liste</string>
   <plurals name="days_plural">
     <item quantity="one">%d Tag</item>
     <item quantity="zero">%d Tage</item>
@@ -219,7 +221,7 @@
   <string name="trending">Beliebt</string>
   <string name="recommended">Empfehlungen</string>
   <string name="library">Bibliothek</string>
-  <string name="watchlist">Watchlist</string>
+  <string name="watchlist">Ansehen-Liste</string>
   <string name="first_list">Erste Liste</string>
   <string name="list_add">Liste hinzufügen</string>
   <string name="list_title_hint">Liste benennen</string>

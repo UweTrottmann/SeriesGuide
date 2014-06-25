@@ -64,6 +64,8 @@
   <string name="shows_continuing">%s lopende</string>
   <string name="episodes_watched">%s bekeken</string>
   <string name="runtime_all_episodes">Speelduur van alle bekeken afleveringen</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d dag</item>
     <item quantity="zero">%d dagen</item>

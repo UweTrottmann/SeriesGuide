@@ -64,6 +64,8 @@
   <string name="shows_continuing">Продолжается %s</string>
   <string name="episodes_watched">посмотрели: %s</string>
   <string name="runtime_all_episodes">Общее время всех просмотренных эпизодов</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d день</item>
     <item quantity="zero">%d дней</item>

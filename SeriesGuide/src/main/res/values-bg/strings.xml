@@ -64,6 +64,8 @@
   <string name="shows_continuing">%s продължаващи</string>
   <string name="episodes_watched">%s гледани</string>
   <string name="runtime_all_episodes">Продължителност на всички гледани епизоди</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d ден</item>
     <item quantity="zero">%d дни</item>

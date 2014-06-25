@@ -64,6 +64,8 @@
   <string name="shows_continuing">%s συνεχίζονται</string>
   <string name="episodes_watched">%s παρακολουθήθηκαν</string>
   <string name="runtime_all_episodes">Συνολικός χρόνος όλων των επεισοδίων που έχετε παρακολουθήσει</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d ημέρα</item>
     <item quantity="zero">%d ημέρες</item>
