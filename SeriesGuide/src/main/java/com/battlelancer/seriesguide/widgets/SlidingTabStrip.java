@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.widgets;
 
+import android.R;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -24,7 +25,6 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
-import com.battlelancer.seriesguide.R;
 
 class SlidingTabStrip extends LinearLayout {
 
@@ -65,7 +65,7 @@ class SlidingTabStrip extends LinearLayout {
         final float density = getResources().getDisplayMetrics().density;
 
         TypedValue outValue = new TypedValue();
-        context.getTheme().resolveAttribute(R.attr.colorTabStripUnderline, outValue, true);
+        context.getTheme().resolveAttribute(R.attr.colorForeground, outValue, true);
         final int themeForegroundColor = outValue.data;
 
         mDefaultBottomBorderColor = setColorAlpha(themeForegroundColor,
@@ -104,6 +104,11 @@ class SlidingTabStrip extends LinearLayout {
         // Make sure that the custom colorizer is removed
         mCustomTabColorizer = null;
         mDefaultTabColorizer.setDividerColors(colors);
+        invalidate();
+    }
+
+    void setBottomBorderColor(int color) {
+        mBottomBorderPaint.setColor(color);
         invalidate();
     }
 
