@@ -11,8 +11,9 @@ Version 16 *(in development)*
 #### 16-beta3 *(2014-06-25)*
 
 * FEATURE Add some movie statistics.
-* FIX Potentially fix crash in episode pages view if number of episode changes.
-* FIX On tablets, going into episode view shown episode is correctly selected in list. Selection is correctly kept when changing sort order.  
+* FIX Potentially fix crash in episode pages view if number of episodes changes.
+* FIX On tablets, going into episode view the shown episode is correctly selected in list. Selection is correctly kept when changing sort order.
+* NOTICE Latest translations from crowdin.
 
 #### 16-beta2 *(2014-06-20)*
 
