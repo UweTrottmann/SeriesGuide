@@ -250,37 +250,6 @@
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
     </style>
 
-    <style name="Header">
-        <item name="android:textSize">@dimen/text_size_large</item>
-        <item name="android:textColor">@color/text_primary</item>
-        <item name="android:layout_marginLeft">@dimen/default_padding</item>
-        <item name="android:layout_marginRight">@dimen/default_padding</item>
-    </style>
-
-    <style name="ListHeader">
-        <item name="android:textSize">@dimen/text_size_medium</item>
-        <item name="android:textColor">@color/text_primary</item>
-    </style>
-
-    <!-- Unified text styles and sizes -->
-    <style name="ListTextBig">
-        <item name="android:textSize">@dimen/text_size_large</item>
-        <item name="android:textColor">@color/text_primary</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="ListTextNormal">
-        <item name="android:textSize">@dimen/text_size_xmedium</item>
-    </style>
-
-    <style name="ListTextSmall">
-        <item name="android:textSize">@dimen/text_size_small</item>
-    </style>
-
-    <style name="ListTextSmall.Dim">
-        <item name="android:textColor">@color/text_dim</item>
-    </style>
-
     <!-- Easy layouting -->
     <style name="DefaultPadding"/>
 
@@ -317,11 +286,6 @@
     <style name="Page.Centered">
     </style>
 
-    <!-- Used for longer passages of text -->
-    <style name="DescriptionFont">
-        <item name="android:textSize">@dimen/text_size_xmedium</item>
-    </style>
-
     <!-- Widget items -->
     <style name="WidgetTextView">
         <item name="android:layout_width">wrap_content</item>
@@ -329,10 +293,6 @@
         <item name="android:textSize">11sp</item>
         <item name="android:ellipsize">marquee</item>
         <item name="android:singleLine">true</item>
-    </style>
-
-    <style name="WidgetTextView.Show">
-        <item name="android:textStyle">bold</item>
     </style>
 
     <!-- Notification -->
@@ -344,11 +304,6 @@
     <style name="FirstRunColumn">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <!-- Episode pager -->
-    <style name="EpisodePagerSpacer">
-        <item name="android:layout_weight">1</item>
     </style>
 
     <!-- Panes -->
