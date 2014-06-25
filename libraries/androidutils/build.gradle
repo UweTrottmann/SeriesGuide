@@ -3,6 +3,7 @@ apply plugin: 'android-library'
 dependencies {
     compile rootProject.ext.libraries.supportv4
     compile rootProject.ext.libraries.okhttp
+    compile rootProject.ext.libraries.okhttpurlconnection
 }
 
 android {

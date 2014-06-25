@@ -21,7 +21,6 @@
   <string name="description_overview">개요</string>
   <string name="description_poster">포스터 보이기</string>
   <string name="description_image">에피소드 이미지</string>
-  <string name="done">완료</string>
   <string name="clear">지우기</string>
   <string name="discard">취소</string>
   <string name="save_selection">선택한 것 저장</string>
@@ -65,6 +64,8 @@
   <string name="shows_continuing">%s 방영 중</string>
   <string name="episodes_watched">%s 시청함</string>
   <string name="runtime_all_episodes">시청한 모든 에피소드의 런타임</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d 일</item>
     <item quantity="zero">%d 일</item>
@@ -201,9 +202,6 @@
   <string name="update_scheduled">업데이트 중…</string>
   <string name="update_no_connection">업데이트를 하려면 인터넷에 연결하세요.</string>
   <string name="update_inprogress">업데이트가 진행 중 입니다. 잠시 후 다시 시도해주세요.</string>
-  <string name="menu_updateart">포스터 불러오기</string>
-  <string name="arttask_incomplete">일부 포스터 읽기에 실패하였습니다, 나중에 다시 시도하세요.</string>
-  <string name="arttask_start">포스터 로드 중</string>
   <string name="show_on_network">방송국 %s</string>
   <string name="season_watchcount">시청하지 않았음</string>
   <string name="season_allwatched">모든 에피소드 시청완료</string>
@@ -308,8 +306,6 @@
   <string name="clear_cache">이미지 캐쉬 삭제</string>
   <string name="clear_cache_summary">디바이스에 있는 모든 캐쉬된 이미지를 제거합니다</string>
   <string name="pref_ganalyticssummary">시리즈가이드를 개선시키는데 도움을 주기 위해 사용 이력을 추적합니다</string>
-  <string name="pref_hideimages">이미지 숨기기</string>
-  <string name="pref_hideimagessummary">갤러리에 있는 이미지를 숨깁니다 (재부팅 필요)</string>
   <string name="backup_description"><b>백업</b>은 쇼, 시즌, 에피소드 등의 목록을  JSON 파일로 아래의 폴더에 저장합니다. \n<b>복원</b>하려면 백업 파일이 아래 폴더에 있는지 확인하세요.</string>
   <string name="backup_full_dump">설명, 배우 및 등급과 같은 모든 메타데이터를 포함합니다.</string>
   <string name="backup_path">백업폴더</string>

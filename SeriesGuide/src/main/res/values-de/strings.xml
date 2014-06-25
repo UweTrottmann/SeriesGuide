@@ -21,7 +21,6 @@
   <string name="description_overview">Übersicht</string>
   <string name="description_poster">Serien-Poster</string>
   <string name="description_image">Bild der Folge</string>
-  <string name="done">Erledigt</string>
   <string name="clear">Löschen</string>
   <string name="discard">Verwerfen</string>
   <string name="save_selection">Auswahl speichern</string>
@@ -46,10 +45,10 @@
   <string name="refresh">Aktualisieren</string>
   <string name="movies_collection">Sammlung</string>
   <string name="movies_watchlist">Ansehen</string>
-  <string name="watchlist_add">Zur Watchliste hinzufügen</string>
-  <string name="watchlist_remove">Aus Watchliste entfernen</string>
-  <string name="watchlist_added">Zur Watchliste hinzugefügt</string>
-  <string name="watchlist_removed">Aus Watchliste entfernt</string>
+  <string name="watchlist_add">Zur Ansehen-Liste hinzufügen</string>
+  <string name="watchlist_remove">Aus Ansehen-Liste entfernen</string>
+  <string name="watchlist_added">Zur Ansehen-Liste hinzugefügt</string>
+  <string name="watchlist_removed">Aus Ansehen-Liste entfernt</string>
   <string name="movies_search_hint">Filmtitel eingeben</string>
   <string name="movies_empty">Suchen Sie oben nach einem Film.</string>
   <string name="movies_collection_empty">Sie haben Ihrer Sammlung noch keine Filme hinzugefügt.</string>
@@ -65,6 +64,8 @@
   <string name="shows_continuing">%s werden fortgesetzt</string>
   <string name="episodes_watched">%s angesehen</string>
   <string name="runtime_all_episodes">Laufzeit aller angesehenen Folgen</string>
+  <string name="movies_on_watchlist">%s auf Ansehen-Liste</string>
+  <string name="runtime_movies_watchlist">Laufzeit von Filmen auf der Ansehen-Liste</string>
   <plurals name="days_plural">
     <item quantity="one">%d Tag</item>
     <item quantity="zero">%d Tage</item>
@@ -201,9 +202,6 @@
   <string name="update_scheduled">Aktualisiert…</string>
   <string name="update_no_connection">Zum Aktualisieren mit dem Internet verbinden.</string>
   <string name="update_inprogress">Eine Aktualisierung ist im Gange, versuchen Sie es später erneut.</string>
-  <string name="menu_updateart">Poster laden</string>
-  <string name="arttask_incomplete">Einige Poster wurden nicht geladen, versuchen Sie es später erneut.</string>
-  <string name="arttask_start">Lade Poster…</string>
   <string name="show_on_network">auf %s</string>
   <string name="season_watchcount">ungesehene Folgen</string>
   <string name="season_allwatched">Alle Folgen gesehen</string>
@@ -223,7 +221,7 @@
   <string name="trending">Beliebt</string>
   <string name="recommended">Empfehlungen</string>
   <string name="library">Bibliothek</string>
-  <string name="watchlist">Watchlist</string>
+  <string name="watchlist">Ansehen-Liste</string>
   <string name="first_list">Erste Liste</string>
   <string name="list_add">Liste hinzufügen</string>
   <string name="list_title_hint">Liste benennen</string>
@@ -308,8 +306,6 @@
   <string name="clear_cache">Bilder-Zwischenspeicher leeren</string>
   <string name="clear_cache_summary">Alle zwischengespeicherten Bilder von Ihrem Gerät entfernen</string>
   <string name="pref_ganalyticssummary">Verfolgt die Verwendung von Funktionen zur Verbesserung von SeriesGuide</string>
-  <string name="pref_hideimages">Verstecke Bilder</string>
-  <string name="pref_hideimagessummary">Blenden Sie Bilder aus Ihrer Foto-Galerie aus (Neustart erforderlich)</string>
   <string name="backup_description"><b>Sichern</b> exportiert Ihre Serien, Staffeln, Folgen und Listen in eine JSON-Datei in den unten angegebenen Ordner.\nBeim <b>Wiederherstellen</b> ist sicherzustellen, dass die von der Sicherung erstellten JSON-Dateien in diesem Ordner liegen.</string>
   <string name="backup_full_dump">Alle Meta-Daten wie Beschreibungen, Schauspieler und Bewertungen mit einschließen.</string>
   <string name="backup_path">Sicherungsordner</string>

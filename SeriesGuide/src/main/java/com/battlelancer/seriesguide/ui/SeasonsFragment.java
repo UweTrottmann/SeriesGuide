@@ -520,7 +520,7 @@ public class SeasonsFragment extends ListFragment implements
                 }
             }
         };
-        AndroidUtils.executeAsyncTask(task, String.valueOf(getShowId()));
+        AndroidUtils.executeOnPool(task, String.valueOf(getShowId()));
     }
 
     public interface SeasonsQuery {

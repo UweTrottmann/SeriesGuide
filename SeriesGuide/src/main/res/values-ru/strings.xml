@@ -21,7 +21,6 @@
   <string name="description_overview">Обзор</string>
   <string name="description_poster">Показать постер</string>
   <string name="description_image">Кадр из эпизода</string>
-  <string name="done">Выполнено</string>
   <string name="clear">Удалить</string>
   <string name="discard">Отменить</string>
   <string name="save_selection">Сохранить выбор</string>
@@ -65,6 +64,8 @@
   <string name="shows_continuing">Продолжается %s</string>
   <string name="episodes_watched">посмотрели: %s</string>
   <string name="runtime_all_episodes">Общее время всех просмотренных эпизодов</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d день</item>
     <item quantity="zero">%d дней</item>
@@ -201,9 +202,6 @@
   <string name="update_scheduled">Обновление…</string>
   <string name="update_no_connection">Для обновления подключите Интернет.</string>
   <string name="update_inprogress">Выполняется обновление, попробуйте еще раз позже.</string>
-  <string name="menu_updateart">Загрузить постеры</string>
-  <string name="arttask_incomplete">Некоторые постеры не загрузились, попробуйте еще раз позже.</string>
-  <string name="arttask_start">Загрузить постеры</string>
   <string name="show_on_network">В %s</string>
   <string name="season_watchcount">не просмотрено</string>
   <string name="season_allwatched">Отметить все, как просмотренные</string>
@@ -308,8 +306,6 @@
   <string name="clear_cache">Очистить кэш изображений</string>
   <string name="clear_cache_summary">Удалить все кэшированные изображения с вашего устройства</string>
   <string name="pref_ganalyticssummary">Отслеживать использование функций приложения, чтобы улучшить SeriesGuide</string>
-  <string name="pref_hideimages">Скрыть картинки</string>
-  <string name="pref_hideimagessummary">Скрыть изображения из вашей фотогалереи (требуется перезагрузка)</string>
   <string name="backup_description"><b>Резервное копирование</b> будет экспортировать ваши сериалы, сезоны, эпизоды и списки в JSON файл в папку ниже. \n Для <b>восстановления</b> убедитесь, что JSON файлы, созданные с помощью резервного копирования находятся в папке ниже.</string>
   <string name="backup_full_dump">Включить все мета данные, как описания, актеров и рейтинги.</string>
   <string name="backup_path">Папка резервного копирования</string>

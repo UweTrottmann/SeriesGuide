@@ -21,7 +21,6 @@
   <string name="description_overview">Общ преглед</string>
   <string name="description_poster">Обложка</string>
   <string name="description_image">Снимкa нa епизодa</string>
-  <string name="done">Готово</string>
   <string name="clear">Изчисти</string>
   <string name="discard">Откажи</string>
   <string name="save_selection">Запази избраните</string>
@@ -45,7 +44,7 @@
   <string name="no_shouts">Напишете мнение пръв!</string>
   <string name="refresh">Опресни</string>
   <string name="movies_collection">Колекция</string>
-  <string name="movies_watchlist">Списък за гледане</string>
+  <string name="movies_watchlist">Watchlist</string>
   <string name="watchlist_add">Добави към списъка за гледане</string>
   <string name="watchlist_remove">Премахни от списъка за гледане</string>
   <string name="watchlist_added">Добавено към списъка за гледане</string>
@@ -65,6 +64,8 @@
   <string name="shows_continuing">%s продължаващи</string>
   <string name="episodes_watched">%s гледани</string>
   <string name="runtime_all_episodes">Продължителност на всички гледани епизоди</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d ден</item>
     <item quantity="zero">%d дни</item>
@@ -201,9 +202,6 @@
   <string name="update_scheduled">Обновяване...</string>
   <string name="update_no_connection">За актуализация се свържете към интернет.</string>
   <string name="update_inprogress">Актуализиране в процес, опитайте по-късно.</string>
-  <string name="menu_updateart">Зареждане на плакати</string>
-  <string name="arttask_incomplete">Някои плакати не се заредиха, опитайте отново по-късно.</string>
-  <string name="arttask_start">Зареждане на обложки…</string>
   <string name="show_on_network">на %s</string>
   <string name="season_watchcount">негледани епизоди</string>
   <string name="season_allwatched">Всички епизоди са гледани</string>
@@ -308,8 +306,6 @@
   <string name="clear_cache">Изчисти кеша на изображенията</string>
   <string name="clear_cache_summary">Премахни всички кеширани снимки от вашето устройство</string>
   <string name="pref_ganalyticssummary">Запивай данни за използването на отделните функции, с цел да подобрим SeriesGuide</string>
-  <string name="pref_hideimages">Скрий изображенията</string>
-  <string name="pref_hideimagessummary">Скрийте снимки от вашата фотогалерията (изисква рестарт)</string>
   <string name="backup_description"><b>Архивиране</b> ще експортира вашите сериали, сезони, епизоди и списъците в JSON файл в папка по-долу. \nЗа да <b>възстановите</b> уверете се, че JSON файловете, създадени от функцията за архивиране са в папка по-долу.</string>
   <string name="backup_full_dump">Включете всички мета-данни като описания, актьори и рейтинги.</string>
   <string name="backup_path">Папка за архивиране</string>
@@ -367,7 +363,7 @@
   <string name="trakt_error_credentials">Нещо се обърка. Проверете идентификационните си данни и опитайте отново.</string>
   <string name="trakt_error_general">Няма връзка с trakt. Опитайте отново по-късно.</string>
   <string name="trakt_createaccount">Създаване на нов акаунт</string>
-  <string name="get_started">Get started</string>
+  <string name="get_started">Начало</string>
   <string name="welcome_setuplanguage">Избери език</string>
   <string name="dismiss">Отхвърли</string>
   <string name="upcoming_show">%s предстои</string>

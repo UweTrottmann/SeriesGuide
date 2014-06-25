@@ -16,9 +16,11 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -45,7 +47,6 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
-import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -285,14 +286,14 @@ public class ShowFragment extends Fragment implements LoaderCallbacks<Series> {
         final View posterContainer = getView().findViewById(R.id.containerShowPoster);
         final ImageView posterView = (ImageView) posterContainer
                 .findViewById(R.id.imageViewShowPoster);
-        final String imagePath = mShow.getPoster();
-        ImageProvider.getInstance(getActivity()).loadPoster(posterView, imagePath);
+        final String posterPath = mShow.getPoster();
+        Utils.loadPoster(getActivity(), posterView, posterPath);
         posterContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
                 fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH,
-                        TheTVDB.TVDB_MIRROR_BANNERS + imagePath);
+                        TheTVDB.buildScreenshotUrl(posterPath));
                 ActivityCompat.startActivity(getActivity(), fullscreen,
                         ActivityOptionsCompat
                                 .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
@@ -303,7 +304,7 @@ public class ShowFragment extends Fragment implements LoaderCallbacks<Series> {
         // background poster
         ImageView background = (ImageView) getView()
                 .findViewById(R.id.imageViewShowPosterBackground);
-        Utils.setPosterBackground(background, imagePath, getActivity());
+        Utils.loadPosterBackground(getActivity(), background, posterPath);
 
         // trakt ratings
         onLoadTraktRatings(true);
@@ -331,7 +332,7 @@ public class ShowFragment extends Fragment implements LoaderCallbacks<Series> {
                 && (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED)) {
             mTraktTask = new TraktSummaryTask(getActivity(), getView().findViewById(
                     R.id.ratingbar), isUseCachedValues).show(getShowTvdbId());
-            AndroidUtils.executeAsyncTask(mTraktTask);
+            AndroidUtils.executeOnPool(mTraktTask);
         }
     }
 

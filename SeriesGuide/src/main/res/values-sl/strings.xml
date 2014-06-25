@@ -21,7 +21,6 @@
   <string name="description_overview">Pregled</string>
   <string name="description_poster">Prikaži poster</string>
   <string name="description_image">Slika epizode</string>
-  <string name="done">Končano</string>
   <string name="clear">Zbriši</string>
   <string name="discard">Zavrzi</string>
   <string name="save_selection">Shrani izbiro</string>
@@ -65,6 +64,8 @@
   <string name="shows_continuing">%s nadaljevanje</string>
   <string name="episodes_watched">%s pregledal</string>
   <string name="runtime_all_episodes">Čas vseh ogledanih epizod</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d dan</item>
     <item quantity="zero">%d dni</item>
@@ -201,9 +202,6 @@
   <string name="update_scheduled">Posodabljanje…</string>
   <string name="update_no_connection">Za posodobitev se poveži z internetom.</string>
   <string name="update_inprogress">Posodabljanje je v teku. Poizkusite ponovno kasneje.</string>
-  <string name="menu_updateart">Naloži posterje</string>
-  <string name="arttask_incomplete">Nekateri posterji se niso naložili. Poizkusi ponovno kasneje.</string>
-  <string name="arttask_start">Nalagam posterje…</string>
   <string name="show_on_network">na %s</string>
   <string name="season_watchcount">Nepogledane epizode.</string>
   <string name="season_allwatched">Vse epizode pogledane</string>
@@ -308,8 +306,6 @@
   <string name="clear_cache">Izbriši predp. slik</string>
   <string name="clear_cache_summary">Odstrani vse predpomnjene slike iz naprave</string>
   <string name="pref_ganalyticssummary">Sledenje uporabe funkcij za izboljšanje SeriesGuide</string>
-  <string name="pref_hideimages">Skrij slike</string>
-  <string name="pref_hideimagessummary">Skrij slike iz svoje foto galerije (zahteva ponovni zagon)</string>
   <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
   <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
   <string name="backup_path">Backup mapa</string>

@@ -119,11 +119,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
         RemoteViews rv = new RemoteViews(context.getPackageName(),
                 isCompactLayout ? R.layout.appwidget_v11_compact : R.layout.appwidget_v11);
 
-        if (AndroidUtils.isICSOrHigher()) {
-            rv.setRemoteAdapter(R.id.list_view, intent);
-        } else {
-            rv.setRemoteAdapter(appWidgetId, R.id.list_view, intent);
-        }
+        rv.setRemoteAdapter(R.id.list_view, intent);
 
         // The empty view is displayed when the collection has no items. It
         // should be a sibling of the collection view.

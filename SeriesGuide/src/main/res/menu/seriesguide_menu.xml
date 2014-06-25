@@ -13,9 +13,6 @@
         android:title="@string/prefs_category_advanced">
         <menu>
             <item
-                android:id="@+id/menu_updateart"
-                android:title="@string/menu_updateart" />
-            <item
                 android:id="@+id/menu_update"
                 android:title="@string/menu_update_delta" />
             <item

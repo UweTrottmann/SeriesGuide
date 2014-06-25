@@ -21,7 +21,6 @@
   <string name="description_overview">Преглед</string>
   <string name="description_poster">Прикажи постер</string>
   <string name="description_image">Слика епизоде</string>
-  <string name="done">Урађено</string>
   <string name="clear">Обриши</string>
   <string name="discard">Одбаци</string>
   <string name="save_selection">Сачувај изабрано</string>
@@ -65,6 +64,8 @@
   <string name="shows_continuing">%s се наставља</string>
   <string name="episodes_watched">%s погледано</string>
   <string name="runtime_all_episodes">Трајање свих погледаних епизода</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d дан</item>
     <item quantity="zero">%d дана</item>
@@ -201,9 +202,6 @@
   <string name="update_scheduled">Ажурирање…</string>
   <string name="update_no_connection">Да би сте освежили повежите се на интернет.</string>
   <string name="update_inprogress">Ажурирање је у току, покушајте касније.</string>
-  <string name="menu_updateart">Учитај постере</string>
-  <string name="arttask_incomplete">Неки постери нису учитани, покушајте касније.</string>
-  <string name="arttask_start">Учитавање постера…</string>
   <string name="show_on_network">на %s</string>
   <string name="season_watchcount">непогледаних епизода</string>
   <string name="season_allwatched">Све епизоде погледане</string>
@@ -308,8 +306,6 @@
   <string name="clear_cache">Обриши кеш слика</string>
   <string name="clear_cache_summary">Уклони све слике у кешу вашег уређаја</string>
   <string name="pref_ganalyticssummary">Прати коришћење функција за побољшавање SeriesGuide-а</string>
-  <string name="pref_hideimages">Сакриј слике</string>
-  <string name="pref_hideimagessummary">Сакриј слике из галерије (захтева поновно покретање уређаја)</string>
   <string name="backup_description"><b>Архивирање</b> ће извести Ваше серије, сезоне, епизоде и листе као JSON датотеку у фасциклинаведену испод.\nДа <b>поврарите</b> уверите се да су  JSON датотеке у одговарајућој фасцикли.</string>
   <string name="backup_full_dump">Обухвати све податке (попут описа, глумаца, оцене...)</string>
   <string name="backup_path">Фасцикла резервних копија</string>

@@ -31,7 +31,6 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
-import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.Episode;
@@ -40,6 +39,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.ArrayList;
@@ -129,8 +129,8 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         setupActionBar(episode.getString(3));
 
         // set show poster as background
-        ImageView background = (ImageView) findViewById(R.id.background);
-        Utils.setPosterBackground(background, episode.getString(1), this);
+        Utils.loadPosterBackground(this, (ImageView) findViewById(R.id.background),
+                episode.getString(1));
 
         mShowId = episode.getInt(2);
         mSeasonId = episode.getInt(0);
@@ -173,8 +173,22 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         pager.setAdapter(adapter);
 
         // setup tabs
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsEpisodeDetails);
-        tabs.setAllCaps(false);
+        SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.tabsEpisodeDetails);
+        tabs.setCustomTabView(R.layout.tabstrip_item, R.id.textViewTabStripItem);
+        tabs.setSelectedIndicatorColors(getResources().getColor(
+                Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorAccent)));
+        tabs.setDividerColors(Utils.setColorAlpha(getResources().getColor(
+                        Utils.resolveAttributeToResourceId(getTheme(),
+                                R.attr.colorTabStripUnderline)
+                ),
+                0x26
+        ));
+        tabs.setBottomBorderColor(Utils.setColorAlpha(getResources().getColor(
+                        Utils.resolveAttributeToResourceId(getTheme(),
+                                R.attr.colorTabStripUnderline)
+                ),
+                0x26
+        ));
         tabs.setViewPager(pager);
 
         // fix padding for translucent system bars

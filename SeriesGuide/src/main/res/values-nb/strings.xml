@@ -21,7 +21,6 @@
   <string name="description_overview">Oversikt</string>
   <string name="description_poster">Vis plakat</string>
   <string name="description_image">Episodebilde</string>
-  <string name="done">Ferdig</string>
   <string name="clear">Fjern</string>
   <string name="discard">Avbryt</string>
   <string name="save_selection">Lagre valg</string>
@@ -65,6 +64,8 @@
   <string name="shows_continuing">%s fortsetter</string>
   <string name="episodes_watched">%s sett</string>
   <string name="runtime_all_episodes">Visningstid for alle sette episoder</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d dag</item>
     <item quantity="zero">%d dager</item>
@@ -201,9 +202,6 @@
   <string name="update_scheduled">Oppdaterer…</string>
   <string name="update_no_connection">Koble til internett for å oppdatere.</string>
   <string name="update_inprogress">En oppdatering er i gang, prøv på nytt senere.</string>
-  <string name="menu_updateart">Last plakater</string>
-  <string name="arttask_incomplete">Noen plakater ble ikke lasted, prøv på nytt senere.</string>
-  <string name="arttask_start">Oppdaterer plakater…</string>
   <string name="show_on_network">på %s</string>
   <string name="season_watchcount">episoder ikke sett</string>
   <string name="season_allwatched">Alle episoder sett</string>
@@ -308,8 +306,6 @@
   <string name="clear_cache">Slett bildebufferen</string>
   <string name="clear_cache_summary">Fjern alle hurtigbufrede bilder fra enheten</string>
   <string name="pref_ganalyticssummary">Overvåker bruken av funksjoner for å forbedre SeriesGuide</string>
-  <string name="pref_hideimages">Skjul bilder</string>
-  <string name="pref_hideimagessummary">Skjul bilder fra fotogalleriet (omstart nødvendig)</string>
   <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
   <string name="backup_full_dump">Inkluder alle metadata som beskrivelser, skuespillere og vurderinger.</string>
   <string name="backup_path">Sikkerhetskopimappe</string>

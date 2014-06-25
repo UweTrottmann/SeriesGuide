@@ -62,7 +62,7 @@ public class MovieTools {
                 return;
             }
             // add to trakt collection
-            AndroidUtils.executeAsyncTask(
+            AndroidUtils.executeOnPool(
                     new TraktTask(context).collectionAddMovie(movieTmdbId)
             );
         }
@@ -77,7 +77,7 @@ public class MovieTools {
                 return;
             }
             // add to trakt watchlist
-            AndroidUtils.executeAsyncTask(
+            AndroidUtils.executeOnPool(
                     new TraktTask(context).watchlistMovie(movieTmdbId)
             );
         }
@@ -106,7 +106,7 @@ public class MovieTools {
                 return;
             }
             // remove from trakt collection
-            AndroidUtils.executeAsyncTask(
+            AndroidUtils.executeOnPool(
                     new TraktTask(context).collectionRemoveMovie(movieTmdbId)
             );
         }
@@ -122,7 +122,7 @@ public class MovieTools {
                 return;
             }
             // remove from trakt watchlist
-            AndroidUtils.executeAsyncTask(
+            AndroidUtils.executeOnPool(
                     new TraktTask(context).unwatchlistMovie(movieTmdbId)
             );
         }
@@ -152,7 +152,7 @@ public class MovieTools {
                 return;
             }
             // remove from trakt watchlist
-            AndroidUtils.executeAsyncTask(
+            AndroidUtils.executeOnPool(
                     new TraktTask(context).watchedMovie(movieTmdbId)
             );
         }
@@ -167,7 +167,7 @@ public class MovieTools {
                 return;
             }
             // remove from trakt watchlist
-            AndroidUtils.executeAsyncTask(
+            AndroidUtils.executeOnPool(
                     new TraktTask(context).unwatchedMovie(movieTmdbId)
             );
         }
@@ -177,7 +177,7 @@ public class MovieTools {
     }
 
     private static void addMovieAsync(Context context, int movieTmdbId, AddMovieTask.AddTo addTo) {
-        new AddMovieTask(context, addTo).execute(movieTmdbId);
+        Utils.executeInOrder(new AddMovieTask(context, addTo), movieTmdbId);
     }
 
     private static ContentValues[] buildMoviesContentValues(List<MovieDetails> movies) {
@@ -456,6 +456,10 @@ public class MovieTools {
                 if (result != UpdateResult.SUCCESS) {
                     // abort here if there were issues
                     return result;
+                } else {
+                    // flag that we ran a successful merge
+                    PreferenceManager.getDefaultSharedPreferences(context).edit()
+                            .putBoolean(TraktSettings.KEY_HAS_MERGED_MOVIES, true).commit();
                 }
             }
 
@@ -658,12 +662,9 @@ public class MovieTools {
                     movieService.watchlist(new MovieService.Movies(moviesToWatchlist));
                 }
             } catch (RetrofitError e) {
+                Timber.e(e, "Uploading movies to watchlist or collection failed");
                 return UpdateResult.INCOMPLETE;
             }
-
-            // flag that we ran a successful merge
-            PreferenceManager.getDefaultSharedPreferences(context).edit()
-                    .putBoolean(TraktSettings.KEY_HAS_MERGED_MOVIES, true).commit();
 
             return UpdateResult.SUCCESS;
         }

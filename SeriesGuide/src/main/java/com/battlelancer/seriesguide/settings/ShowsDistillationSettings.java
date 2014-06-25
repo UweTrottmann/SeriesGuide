@@ -108,11 +108,11 @@ public class ShowsDistillationSettings {
         String TITLE_REVERSE = Shows.TITLE + " COLLATE NOCASE DESC";
         // reverse alphabetical by title
         String TITLE_REVERSE_NOARTICLE = Shows.TITLE_NOARTICLE + " COLLATE NOCASE DESC";
-        // by next episode air time, oldest first
-        String EPISODE = Shows.NEXTAIRDATEMS + " ASC," + Shows.AIRSTIME + " ASC,"
+        // by next episode release time, oldest first
+        String EPISODE = Shows.NEXTAIRDATEMS + " ASC," + Shows.STATUS + " DESC,"
                 + Shows.TITLE + " COLLATE NOCASE ASC";
-        // by next episode air time, newest first
-        String EPISODE_REVERSE = Shows.NEXTAIRDATEMS + " DESC," + Shows.AIRSTIME + " ASC,"
+        // by next episode release time, newest first
+        String EPISODE_REVERSE = Shows.NEXTAIRDATEMS + " DESC," + Shows.STATUS + " DESC,"
                 + Shows.TITLE + " COLLATE NOCASE ASC";
         // add as prefix to sort favorites first
         String FAVORITES_FIRST_PREFIX = Shows.FAVORITE + " DESC,";

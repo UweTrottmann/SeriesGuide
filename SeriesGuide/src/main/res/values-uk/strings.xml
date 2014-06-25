@@ -21,7 +21,6 @@
   <string name="description_overview">Огляд</string>
   <string name="description_poster">Показати постер</string>
   <string name="description_image">Зображення Серії</string>
-  <string name="done">Завершено</string>
   <string name="clear">Очистити</string>
   <string name="discard">Відмінити</string>
   <string name="save_selection">Зберегти вибране</string>
@@ -65,6 +64,8 @@
   <string name="shows_continuing">%s продовжується</string>
   <string name="episodes_watched">%s переглянуто</string>
   <string name="runtime_all_episodes">Тривалість всіх переглянутих серій</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d день</item>
     <item quantity="zero">%d днів</item>
@@ -201,9 +202,6 @@
   <string name="update_scheduled">Оновлюється…</string>
   <string name="update_no_connection">Для оновлення, з\'єднайтесь з інтернетом.</string>
   <string name="update_inprogress">Оновлення в процесі, спробуйте ще раз пізніше.</string>
-  <string name="menu_updateart">Завантажити постери</string>
-  <string name="arttask_incomplete">Деякі постери не завантажились, спробуйте пізніше.</string>
-  <string name="arttask_start">Завантаження постерів…</string>
   <string name="show_on_network">на %s</string>
   <string name="season_watchcount">серій не переглянуто</string>
   <string name="season_allwatched">Усі серії переглянуті</string>
@@ -308,8 +306,6 @@
   <string name="clear_cache">Очистити кеш зображень</string>
   <string name="clear_cache_summary">Видалити всі кешовані зображення з пристрою</string>
   <string name="pref_ganalyticssummary">Відслідковувати використання функцій, щоб допомогти покращити SeriesGuide</string>
-  <string name="pref_hideimages">Приховати зображення</string>
-  <string name="pref_hideimagessummary">Приховати зображення з вашої фотогалереї (потрібне перезавантаження)</string>
   <string name="backup_description"><b>Бекап</b> експортує ваші серіали, сезони, серії та списки у файл JSON в папку зазначену нижче.\nДля <b>Відновлення</b> переконайтеся, що файл JSON, створений через Бекап, знаходиться у папці нижче.</string>
   <string name="backup_full_dump">Включити усі мета-дані такі як опис, актори та рейтинги.</string>
   <string name="backup_path">Папка Бекапа</string>

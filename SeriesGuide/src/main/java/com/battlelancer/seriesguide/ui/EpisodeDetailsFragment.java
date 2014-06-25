@@ -40,6 +40,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.ScrollView;
@@ -59,10 +60,10 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
@@ -72,6 +73,8 @@ import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import de.greenrobot.event.EventBus;
@@ -90,7 +93,6 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
 
     private Handler mHandler = new Handler();
-    private FetchArtTask mArtTask;
     private TraktSummaryTask mTraktTask;
 
     protected int mEpisodeFlag;
@@ -103,9 +105,11 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
 
     @InjectView(R.id.scrollViewEpisode) ScrollView mEpisodeScrollView;
     @InjectView(R.id.containerEpisode) View mEpisodeContainer;
-    @InjectView(R.id.imageContainer) View mImageContainer;
     @InjectView(R.id.ratingbar) View mRatingsContainer;
     @InjectView(R.id.containerEpisodeActions) LinearLayout mActionsContainer;
+
+    @InjectView(R.id.containerEpisodeImage) View mImageContainer;
+    @InjectView(R.id.imageViewEpisode) ImageView mEpisodeImage;
 
     @InjectView(R.id.textViewEpisodeTitle) TextView mTitle;
     @InjectView(R.id.textViewEpisodeDescription) TextView mDescription;
@@ -218,23 +222,27 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     }
 
     @Override
-    public void onDestroy() {
-        if (mArtTask != null) {
-            mArtTask.cancel(true);
-            mArtTask = null;
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        // Always cancel the request here, this is safe to call even if the image has been loaded.
+        // This ensures that the anonymous callback we have does not prevent the fragment from
+        // being garbage collected. It also prevents our callback from getting invoked even after the
+        // fragment is destroyed.
+        Picasso picasso = ServiceUtils.getExternalPicasso(getActivity());
+        if (picasso != null) {
+            picasso.cancelRequest(mEpisodeImage);
         }
+        ButterKnife.reset(this);
+    }
+
+    @Override
+    public void onDestroy() {
         if (mTraktTask != null) {
             mTraktTask.cancel(true);
             mTraktTask = null;
         }
         super.onDestroy();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        ButterKnife.reset(this);
     }
 
     @Override
@@ -592,7 +600,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             mTraktTask = new TraktSummaryTask(getActivity(), mRatingsContainer,
                     isUseCachedValues).episode(mShowTvdbId, getEpisodeTvdbId(), mSeasonNumber,
                     mEpisodeNumber);
-            AndroidUtils.executeAsyncTask(mTraktTask);
+            AndroidUtils.executeOnPool(mTraktTask);
         }
     }
 
@@ -613,12 +621,33 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     }
 
     private void loadImage(String imagePath) {
-        if (mArtTask == null || mArtTask.getStatus() == AsyncTask.Status.FINISHED) {
-            mArtTask = new FetchArtTask(imagePath, mImageContainer, getActivity());
-            AndroidUtils.executeAsyncTask(mArtTask, new Void[] {
-                    null
-            });
+        // immediately hide container if there is no image
+        if (TextUtils.isEmpty(imagePath)) {
+            mImageContainer.setVisibility(View.GONE);
+            return;
         }
+
+        // try loading image
+        mImageContainer.setVisibility(View.VISIBLE);
+        Picasso picasso = ServiceUtils.getExternalPicasso(getActivity());
+        if (picasso == null) {
+            return;
+        }
+        picasso.load(TheTVDB.buildScreenshotUrl(imagePath))
+                .error(R.drawable.ic_image_missing)
+                .into(mEpisodeImage,
+                        new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                mEpisodeImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                            }
+
+                            @Override
+                            public void onError() {
+                                mEpisodeImage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                            }
+                        }
+                );
     }
 
     private LoaderManager.LoaderCallbacks<List<Action>> mEpisodeActionsLoaderCallbacks =

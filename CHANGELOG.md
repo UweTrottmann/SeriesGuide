@@ -5,11 +5,55 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 16 *(in development)*
+-----------------------------
+
+#### 16-beta3 *(2014-06-25)*
+
+* FEATURE Add some movie statistics.
+* FIX Potentially fix crash in episode pages view if number of episode changes.
+* FIX On tablets, going into episode view shown episode is correctly selected in list. Selection is correctly kept when changing sort order.  
+
+#### 16-beta2 *(2014-06-20)*
+
+* TWEAK UI improvements (episode list, rate dialog, light theme immersive theme).
+* TWEAK Sort ended after continuing shows when ordering by next episode.
+* NOTICE Latest translations from crowdin (some updates for Spanish).
+
+#### 16-beta1 *(2014-06-18)*
+
+* TWEAK Better way of loading show posters and episode images, also now using designated cache folders.
+* NOTICE Dropped now deprecated poster loading tool, clear image cache setting now links to app info where you can 'Clear Cache'.
+* NOTICE Latest translations from crowdin.
+
 Version 15 *(2014-06-03)*
 -----------------------------
 
 * UI improvements and bug fixes.
 * Supports Android 4.0.3 (Ice Cream Sandwich) and up. If you are running Android 3.x you will only receive important bug fixes from now on.
+
+#### 15.0.6 *(2014-06-16)*
+
+* FIX Creating a backup, adding or removing shows takes a long time when there are many shows added to SG.
+
+#### 15.0.5 *(2014-06-12)*
+
+* FIX Crash when calculating next episode.
+
+#### 15.0.4 *(2014-06-11)*
+
+* FIX Jank when scrolling the show list.
+* FIX Crash when retrieving show poster from cache.
+
+#### 15.0.3 *(2014-06-09)*
+
+* FIX Movies removed from watchlist or collection are added again when syncing with trakt.
+
+#### 15.0.2 *(2014-06-06)*
+
+* FIX Crash when upgrading database.
+* FIX Crash when creating SeriesGuide account.
+* FIX Crash when decoding downloaded image consumes too much memory.
 
 #### 15.0.1 *(2014-06-04)*
 

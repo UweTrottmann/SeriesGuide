@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.settings;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import com.battlelancer.seriesguide.Constants;
@@ -59,19 +60,18 @@ public class DisplaySettings {
     }
 
     /**
+     * Returns true if this is a large screen.
+     */
+    public static boolean isLargeScreen(Context context) {
+        return (context.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
+    /**
      * Returns true for all screens with dpi higher than {@link DisplayMetrics#DENSITY_HIGH}.
      */
     public static boolean isVeryHighDensityScreen(Context context) {
         return context.getResources().getDisplayMetrics().densityDpi > DisplayMetrics.DENSITY_HIGH;
-    }
-
-    /**
-     * Returns true for xlarge, xlarge-land or sw720dp screens with xhdpi or higher dpi screens.
-     */
-    public static boolean isVeryLargeAndHighResScreen(Context context) {
-        return isVeryLargeScreen(context)
-                && context.getResources().getDisplayMetrics().densityDpi
-                > DisplayMetrics.DENSITY_HIGH;
     }
 
     public static String getThemeIndex(Context context) {

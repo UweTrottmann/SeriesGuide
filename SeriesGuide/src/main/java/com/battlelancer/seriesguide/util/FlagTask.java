@@ -658,7 +658,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
      * Run the task on the thread pool.
      */
     public void execute() {
-        AndroidUtils.executeAsyncTask(this);
+        AndroidUtils.executeOnPool(this);
     }
 
     @Override

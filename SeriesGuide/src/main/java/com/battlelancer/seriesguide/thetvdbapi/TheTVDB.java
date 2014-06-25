@@ -21,13 +21,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.sax.Element;
 import android.sax.EndElementListener;
 import android.sax.EndTextElementListener;
 import android.sax.RootElement;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Xml;
 import com.battlelancer.seriesguide.R;
@@ -39,7 +36,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
@@ -48,11 +44,9 @@ import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.enumerations.Extended;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,9 +71,28 @@ public class TheTVDB {
         int UNKNOWN = -1;
     }
 
-    public static final String TVDB_MIRROR_BANNERS = "http://thetvdb.com/banners/";
+    private static final String TVDB_MIRROR_BANNERS = "http://thetvdb.com/banners/";
+
+    private static final String TVDB_MIRROR_BANNERS_CACHE = TVDB_MIRROR_BANNERS + "_cache/";
 
     private static final String TVDB_API_URL = "http://thetvdb.com/api/";
+
+    /**
+     * Builds a full url for a TVDb show poster using the given image path.
+     */
+    public static String buildPosterUrl(String imagePath) {
+        return TVDB_MIRROR_BANNERS_CACHE + imagePath;
+    }
+
+    /**
+     * Builds a full url for a TVDb screenshot (episode still) using the given image path.
+     *
+     * <p> May also be used with posters, but a much larger version than {@link
+     * #buildPosterUrl(String)} will be downloaded as a result.
+     */
+    public static String buildScreenshotUrl(String imagePath) {
+        return TVDB_MIRROR_BANNERS + imagePath;
+    }
 
     /**
      * Returns true if the given show has not been updated in the last 12 hours.
@@ -331,11 +344,6 @@ public class TheTVDB {
 
         show.airtime = TimeTools.parseShowReleaseTime(traktShow.airTime);
         show.country = traktShow.country;
-
-        // try to download the show poster
-        if (Utils.isAllowedLargeDataConnection(context, false)) {
-            fetchArt(show.poster, true, context);
-        }
 
         return show;
     }
@@ -676,111 +684,6 @@ public class TheTVDB {
             throw new TvdbException("Problem parsing " + urlString);
         } catch (Exception e) {
             throw new TvdbException("Problem downloading and parsing " + urlString, e);
-        }
-    }
-
-    /**
-     * Tries to download art from the thetvdb banner TVDB_MIRROR. Ignores blank ("") or null paths
-     * and skips existing images. Returns true even if there was no art downloaded.
-     *
-     * @param fileName of image
-     * @return false if not all images could be fetched. true otherwise, even if nothing was
-     * downloaded
-     */
-    public static boolean fetchArt(String fileName, boolean isPoster, Context context) {
-        if (context == null || TextUtils.isEmpty(fileName)) {
-            return true;
-        }
-
-        final ImageProvider imageProvider = ImageProvider.getInstance(context);
-
-        if (!imageProvider.exists(fileName)) {
-            final String imageUrl;
-            if (isPoster) {
-                // the cached version is a lot smaller, but still big enough for
-                // our purposes
-                imageUrl = TVDB_MIRROR_BANNERS + "_cache/" + fileName;
-            } else {
-                imageUrl = TVDB_MIRROR_BANNERS + fileName;
-            }
-
-            // try to download, decode and store the image
-            final Bitmap bitmap = downloadBitmap(imageUrl, context);
-            if (bitmap != null) {
-                imageProvider.storeImage(fileName, bitmap, isPoster);
-            } else {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private static Bitmap downloadBitmap(String url, Context context) {
-        InputStream inputStream = null;
-        HttpURLConnection urlConnection = null;
-        try {
-            urlConnection = AndroidUtils.buildHttpUrlConnection(url);
-            urlConnection.connect();
-            long imageSize = urlConnection.getContentLength();
-            // allow images up to 300K (although size is always around
-            // 30K for posters and 100K for episode images)
-            if (imageSize > 300000 || imageSize == -1) {
-                return null;
-            } else {
-                inputStream = urlConnection.getInputStream();
-                // return BitmapFactory.decodeStream(inputStream);
-                // Bug on slow connections, fixed in future release.
-                return BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
-            }
-        } catch (IOException e) {
-            Timber.e(e, "I/O error retrieving bitmap from " + url);
-        } catch (IllegalStateException e) {
-            Timber.e(e, "Incorrect URL: " + url);
-        } catch (Exception e) {
-            Timber.e(e, "Error while retrieving bitmap from " + url);
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    Timber.e(e, "I/O error retrieving bitmap from " + url);
-                }
-            } else {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-            }
-        }
-        return null;
-    }
-
-    /*
-     * An InputStream that skips the exact number of bytes provided, unless it
-     * reaches EOF.
-     */
-    static class FlushedInputStream extends FilterInputStream {
-
-        public FlushedInputStream(InputStream inputStream) {
-            super(inputStream);
-        }
-
-        @Override
-        public long skip(long n) throws IOException {
-            long totalBytesSkipped = 0L;
-            while (totalBytesSkipped < n) {
-                long bytesSkipped = in.skip(n - totalBytesSkipped);
-                if (bytesSkipped == 0L) {
-                    int b = read();
-                    if (b < 0) {
-                        break; // we reached EOF
-                    } else {
-                        bytesSkipped = 1; // we read one byte
-                    }
-                }
-                totalBytesSkipped += bytesSkipped;
-            }
-            return totalBytesSkipped;
         }
     }
 }

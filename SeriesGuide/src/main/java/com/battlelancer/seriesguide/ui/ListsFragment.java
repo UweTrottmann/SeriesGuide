@@ -39,7 +39,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
-import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -238,8 +237,8 @@ public class ListsFragment extends Fragment implements
             }
 
             // poster
-            final String imagePath = cursor.getString(ListItemsQuery.SHOW_POSTER);
-            ImageProvider.getInstance(context).loadPosterThumb(viewHolder.poster, imagePath);
+            Utils.loadPosterThumbnail(context, viewHolder.poster,
+                    cursor.getString(ListItemsQuery.SHOW_POSTER));
 
             // context menu
             viewHolder.contextMenu.setVisibility(View.VISIBLE);

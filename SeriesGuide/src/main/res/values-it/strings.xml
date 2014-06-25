@@ -21,7 +21,6 @@
   <string name="description_overview">Panoramica</string>
   <string name="description_poster">Mostra poster</string>
   <string name="description_image">Immagine dell\'episodio</string>
-  <string name="done">Fatto</string>
   <string name="clear">Ripulire</string>
   <string name="discard">Scarta</string>
   <string name="save_selection">Salva selezione</string>
@@ -65,6 +64,8 @@
   <string name="shows_continuing">%s in proseguimento</string>
   <string name="episodes_watched">%s guardati</string>
   <string name="runtime_all_episodes">Tempo totale degli episodi guardati</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d giorno</item>
     <item quantity="zero">%d giorni</item>
@@ -159,7 +160,7 @@
   <string name="confirm_delete">Vuoi davvero rimuovere %s?</string>
   <string name="delete_has_list_items">Impossibile procedere, elimina %s dalla lista.</string>
   <string name="delete_error">Impossibile rimuovere la serie. Riprova dopo.</string>
-  <string name="delete_show">Rimuovere</string>
+  <string name="delete_show">Rimuovi</string>
   <string name="dontdelete_show">Non rimuovere</string>
   <string name="no_nextepisode">nessun prossimo episodio trovato</string>
   <string name="context_favorite">Aggiungi ai preferiti</string>
@@ -190,8 +191,8 @@
   <string name="friends">Amici</string>
   <string name="friends_empty">Nessuna attività su trakt da i tuoi amici.</string>
   <string name="user_stream">Tu</string>
-  <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
-  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
+  <string name="user_stream_empty">Non hai ancora fatto nessun check in su trakt. Guarda qualcosa!</string>
+  <string name="user_movie_stream_empty">Nessun check in su trakt. Guarda qualche film!</string>
   <string name="noupcoming">Non c\'è nessun episodio prossimo.</string>
   <string name="norecent">Non ci sono episodi recenti.</string>
   <string name="only_favorites">Solo le serie preferite</string>
@@ -201,9 +202,6 @@
   <string name="update_scheduled">Aggiornamento…</string>
   <string name="update_no_connection">Per aggiornare connettersi a internet.</string>
   <string name="update_inprogress">Un altro aggiornamento è in corso, riprova più tardi.</string>
-  <string name="menu_updateart">Carica poster</string>
-  <string name="arttask_incomplete">Alcuni poster non sono stati caricati, riprova dopo.</string>
-  <string name="arttask_start">Caricamento dei poster…</string>
   <string name="show_on_network">su %s</string>
   <string name="season_watchcount">episodi non visti</string>
   <string name="season_allwatched">Tutti gli episodi visti</string>
@@ -216,8 +214,8 @@
   <string name="search_error">Ricerca non riuscita, riprovare più tardi.</string>
   <string name="add_all">Aggiungi tutto</string>
   <string name="dont_add_show">Non aggiungere</string>
-  <string name="add_multiple">Tutte le serie appariranno presto nella lista.</string>
-  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_multiple">Tutte le serie appariranno nella tua lista tra poco.</string>
+  <string name="add_started">%s apparirà nella tua lista degli show tra poco .</string>
   <string name="add_error">Impossibile aggiungere %s.</string>
   <string name="add_already_exists">%s è già nella lista delle tue serie.</string>
   <string name="trending">Di tendenza</string>
@@ -231,7 +229,7 @@
   <string name="list_manage">Gestisci lista</string>
   <string name="list_item_manage">Gestisci liste</string>
   <string name="list_item_remove">Rimuovi da lista</string>
-  <string name="list_empty">Puoi aggiungere nella lista serie, stagioni o episodi.</string>
+  <string name="list_empty">Puoi aggiungere a questa lista serie, stagioni o episodi.</string>
   <string name="hexagon_setup">Configura la cloud di SeriesGuide</string>
   <string name="hexagon_description">Connettersi al cloud per il backup e la sincronizzazione dei vostri show. \nEpisodi e film non sono ancora inclusi, si prega di continuare a utilizzare l\'integrazione trakt.tv.</string>
   <string name="hexagon_signin">Connettiti</string>
@@ -308,8 +306,6 @@
   <string name="clear_cache">Rimuovi le immagini nella cache</string>
   <string name="clear_cache_summary">Rimuovi tutte le immagini memorizzate nella cache dal tuo dispositivo</string>
   <string name="pref_ganalyticssummary">Traccia l\'uso delle funzionalità per aiutare a migliorare SeriesGuide</string>
-  <string name="pref_hideimages">Nascondi le immagini</string>
-  <string name="pref_hideimagessummary">Nascondi le immagine presenti nella gallery (riavvio richiesto)</string>
   <string name="backup_description">Il <b>Backup</b> esporterà i vostri spettacoli, le stagioni, gli episodi e le liste in un file JSON nella cartella sottostante. \nPer <b>ripristinare</b> assicurarsi che i file JSON creati da backup siano nella cartella qui sotto.</string>
   <string name="backup_full_dump">Includere tutti i dati come descrizioni, attori e classificazioni.</string>
   <string name="backup_path">Cartella di Backup</string>
@@ -367,7 +363,7 @@
   <string name="trakt_error_credentials">Qualcosa è andato storto. Per favore verifica le credenziali e riprova.</string>
   <string name="trakt_error_general">Non è possibile contattare trakt. Riprova più tardi.</string>
   <string name="trakt_createaccount">Crea nuovo account</string>
-  <string name="get_started">Get started</string>
+  <string name="get_started">Comincia qui.</string>
   <string name="welcome_setuplanguage">Scegli la lingua</string>
   <string name="dismiss">Cancella</string>
   <string name="upcoming_show">%s sta per essere trasmesso</string>
@@ -443,13 +439,13 @@
   <string name="action_extensions_limit">Acquista X per ottenere più estensioni</string>
   <string name="action_extensions_search">Ottieni più estensioni</string>
   <string name="action_extension_settings">Impostazioni</string>
-  <string name="action_extension_remove">Rimuovere</string>
+  <string name="action_extension_remove">Rimuovi</string>
   <string name="extension_amazon">Ricerca su Amazon</string>
-  <string name="description_extension_amazon">Search your local Amazon site</string>
-  <string name="pref_amazon_domain">Amazon site</string>
+  <string name="description_extension_amazon">Cerca sul sito Amazon</string>
+  <string name="pref_amazon_domain">Sito Amazon</string>
   <string name="extension_google_play">Ricerca Google Play</string>
   <string name="description_extension_google_play">Ricerca su Google Play Store</string>
   <string name="extension_youtube">Ricerca su Youtube</string>
   <string name="description_extension_youtube">Ricerca i video su YouTube</string>
-  <string name="description_extension_web_search">Search for websites and images</string>
+  <string name="description_extension_web_search">Ricerca di siti Web e immagini</string>
 </resources>

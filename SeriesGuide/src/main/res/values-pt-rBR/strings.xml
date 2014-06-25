@@ -21,7 +21,6 @@
   <string name="description_overview">Resumo</string>
   <string name="description_poster">Exibir cartaz</string>
   <string name="description_image">Imagem do Episódio</string>
-  <string name="done">Feito</string>
   <string name="clear">Limpar</string>
   <string name="discard">Descartar</string>
   <string name="save_selection">Salvar seleção</string>
@@ -65,6 +64,8 @@
   <string name="shows_continuing">%s em exibição</string>
   <string name="episodes_watched">%s assistidos</string>
   <string name="runtime_all_episodes">Tempo de execução de todos os episódios assistidos</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d dia</item>
     <item quantity="zero">%d dia</item>
@@ -201,9 +202,6 @@
   <string name="update_scheduled">Atualizando…</string>
   <string name="update_no_connection">Para atualizar, conecte-se à Internet.</string>
   <string name="update_inprogress">Atualização em andamento, tente novamente mais tarde.</string>
-  <string name="menu_updateart">Carregar cartazes</string>
-  <string name="arttask_incomplete">Alguns cartazes não carregaram, tente novamente mais tarde.</string>
-  <string name="arttask_start">Carregando cartazes…</string>
   <string name="show_on_network">na %s</string>
   <string name="season_watchcount">episódios não assistidos</string>
   <string name="season_allwatched">Todos os episódios assistidos</string>
@@ -308,8 +306,6 @@
   <string name="clear_cache">Apagar cache de imagens</string>
   <string name="clear_cache_summary">Remover todas as imagens em cache do seu dispositivo</string>
   <string name="pref_ganalyticssummary">Coleta dados de uso para ajudar a melhorar o SeriesGuide</string>
-  <string name="pref_hideimages">Ocultar imagens</string>
-  <string name="pref_hideimagessummary">Ocultar imagens de sua galeria de fotos (será necessário reiniciar)</string>
   <string name="backup_description">O <b>Backup</b> irá exportar suas séries, temporadas, episódios e listas para um arquivo JSON na pasta abaixo. \nPara <b>restaurar</b>, certifique-se de que os arquivos JSON criados pelo backup estão na pasta abaixo.</string>
   <string name="backup_full_dump">Incluir todas os meta-dados como descrições, atores e classificações.</string>
   <string name="backup_path">Pasta de backup</string>
@@ -367,7 +363,7 @@
   <string name="trakt_error_credentials">Alguma coisa deu errado. Por favor, verifique suas credenciais e tente novamente.</string>
   <string name="trakt_error_general">Não foi possível se comunicar com o trakt. Tente novamente mais tarde.</string>
   <string name="trakt_createaccount">Criar nova conta</string>
-  <string name="get_started">Get started</string>
+  <string name="get_started">Começar</string>
   <string name="welcome_setuplanguage">Escolha o idioma</string>
   <string name="dismiss">Dispensar</string>
   <string name="upcoming_show">%s está chegando</string>

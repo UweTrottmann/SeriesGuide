@@ -52,15 +52,18 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.LatestEpisodeUpdateService;
+import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.squareup.picasso.Picasso;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -418,7 +421,7 @@ public class ShowsFragment extends Fragment implements
                 selection.append(" AND ");
             }
             selection.append(Shows.NEXTAIRDATEMS).append("!=")
-                    .append(DBUtils.UNKNOWN_NEXT_AIR_DATE);
+                    .append(DBUtils.UNKNOWN_NEXT_RELEASE_DATE);
 
             // exclude shows with upcoming next episode
             if (!isFilterUpcoming) {
@@ -565,8 +568,8 @@ public class ShowsFragment extends Fragment implements
                     + values[1] + " " + values[0]);
 
             // set poster
-            final String imagePath = cursor.getString(ShowsQuery.POSTER);
-            ImageProvider.getInstance(context).loadPosterThumb(viewHolder.poster, imagePath);
+            Utils.loadPosterThumbnail(context, viewHolder.poster,
+                    cursor.getString(ShowsQuery.POSTER));
 
             // context menu
             viewHolder.contextMenu.setVisibility(View.VISIBLE);
@@ -720,9 +723,8 @@ public class ShowsFragment extends Fragment implements
 
     public void onEvent(FlagTaskCompletedEvent event) {
         if (isAdded()) {
-            getActivity().startService(new Intent(getActivity(), LatestEpisodeUpdateService.class)
-                    .putExtra(LatestEpisodeUpdateService.InitBundle.SHOW_TVDB_ID,
-                            event.mType.getShowTvdbId()));
+            AndroidUtils.executeOnPool(new LatestEpisodeUpdateTask(getActivity()),
+                    event.mType.getShowTvdbId());
         }
     }
 

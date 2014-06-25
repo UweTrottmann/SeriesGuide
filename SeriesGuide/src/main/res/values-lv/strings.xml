@@ -21,7 +21,6 @@
   <string name="description_overview">Pārskats</string>
   <string name="description_poster">Rādīt plakātu</string>
   <string name="description_image">Epizodes attēls</string>
-  <string name="done">Gatavs</string>
   <string name="clear">Iztīrīt</string>
   <string name="discard">Atmest</string>
   <string name="save_selection">Saglabāt izvēli</string>
@@ -65,6 +64,8 @@
   <string name="shows_continuing">%s kuras turpinājas</string>
   <string name="episodes_watched">%s noskatītas</string>
   <string name="runtime_all_episodes">Visu noskatīto epizožu kopējais garums</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d diena</item>
     <item quantity="zero">%d dienas</item>
@@ -201,9 +202,6 @@
   <string name="update_scheduled">Notiek atjaunināšana…</string>
   <string name="update_no_connection">Lai atjaunināt, pieslēdzieties internetam.</string>
   <string name="update_inprogress">Notiek atjaunināšana, mēģiniet vēlreiz vēlāk.</string>
-  <string name="menu_updateart">Ielādēt plakātus</string>
-  <string name="arttask_incomplete">Dažu plakātu ielāde neizdevās, vēlāk mēģiniet vēlreiz.</string>
-  <string name="arttask_start">Notiek plakātu ielāde…</string>
   <string name="show_on_network">kanālā %s</string>
   <string name="season_watchcount">Nenoskatītās epizodes</string>
   <string name="season_allwatched">Visas epizodes noskatītas</string>
@@ -308,8 +306,6 @@
   <string name="clear_cache">Iztukšot attēlu kešatmiņu</string>
   <string name="clear_cache_summary">Noņemt visus kešatmiņā ievietotos attēlus no ierīces</string>
   <string name="pref_ganalyticssummary">Saglabā datus par funkciju lietošanu, lai palīdzētu uzlabot SeriesGuide</string>
-  <string name="pref_hideimages">Nerādīt attēlus</string>
-  <string name="pref_hideimagessummary">Nerādīt attēlus no jūsu galerijas (nepieciešams pārstartēt)</string>
   <string name="backup_description"><b>Dublēt</b> eksportēs jūsu seriālus, sezonas, epizodes un sarakstus uz JSON failu sekojošā mapē.\nTo
 <b>Atjaunot</b> pārliecinieties, ka dublēšanas laikā izveidotie JSON faili atrodas sekojošā mapē.</string>
   <string name="backup_full_dump">Ietvert visus metadatus, kā piemēram aprakstus, aktierus un vērtējumus.</string>

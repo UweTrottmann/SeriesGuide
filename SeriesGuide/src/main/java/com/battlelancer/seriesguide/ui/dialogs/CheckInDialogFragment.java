@@ -108,7 +108,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
     protected void checkInGetGlue(String title, String message) {
         // check in, use task on thread pool
         AndroidUtils
-                .executeAsyncTask(new GetGlueCheckin.GetGlueCheckInTask(mGetGlueId, message,
+                .executeOnPool(new GetGlueCheckin.GetGlueCheckInTask(mGetGlueId, message,
                         getActivity()));
     }
 
@@ -117,9 +117,10 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
         final int season = getArguments().getInt(InitBundle.SEASON);
         final int episode = getArguments().getInt(InitBundle.EPISODE);
 
-        AndroidUtils.executeAsyncTask(
+        AndroidUtils.executeOnPool(
                 new TraktTask(getActivity())
-                        .checkInEpisode(mShowTvdbId, season, episode, message));
+                        .checkInEpisode(mShowTvdbId, season, episode, message)
+        );
     }
 
     @Override

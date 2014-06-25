@@ -21,7 +21,6 @@
   <string name="description_overview">بررسی اجمالی</string>
   <string name="description_poster">نمایش پوستر</string>
   <string name="description_image">تصویر قسمت</string>
-  <string name="done">انجام شد</string>
   <string name="clear">Clear</string>
   <string name="discard">نپذیرفتن</string>
   <string name="save_selection">ذخیره انتخاب</string>
@@ -65,6 +64,8 @@
   <string name="shows_continuing">%s continuing</string>
   <string name="episodes_watched">%s watched</string>
   <string name="runtime_all_episodes">Runtime of all watched episodes</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d day</item>
     <item quantity="zero">%d days</item>
@@ -201,9 +202,6 @@
   <string name="update_scheduled">Updating…</string>
   <string name="update_no_connection">To update connect to the internet.</string>
   <string name="update_inprogress">An update is in progress, try again later.</string>
-  <string name="menu_updateart">Load posters</string>
-  <string name="arttask_incomplete">Some posters did not load, try again later.</string>
-  <string name="arttask_start">Loading posters…</string>
   <string name="show_on_network">on %s</string>
   <string name="season_watchcount">episodes not watched</string>
   <string name="season_allwatched">All episodes watched</string>
@@ -308,8 +306,6 @@
   <string name="clear_cache">Clear image caches</string>
   <string name="clear_cache_summary">Remove all cached images from your device</string>
   <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
-  <string name="pref_hideimages">Hide images</string>
-  <string name="pref_hideimagessummary">Hide images from your photo gallery (reboot required)</string>
   <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
   <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
   <string name="backup_path">Backup folder</string>

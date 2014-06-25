@@ -42,10 +42,19 @@ public class AccountUtils {
         // remove any existing accounts
         removeAccount(context);
 
-        // create a new account
+        // try to create a new account
         AccountManager manager = AccountManager.get(context);
         Account account = new Account(ACCOUNT_NAME, ACCOUNT_TYPE);
-        if (manager.addAccountExplicitly(account, null, null)) {
+
+        boolean isNewAccountAdded;
+        try {
+            isNewAccountAdded = manager != null
+                    && manager.addAccountExplicitly(account, null, null);
+        } catch (SecurityException e) {
+            Timber.e(e, "Setting up account...FAILED Account could not be added");
+            return;
+        }
+        if (isNewAccountAdded) {
             // Inform the system that this account supports sync
             ContentResolver.setIsSyncable(account, SeriesGuideApplication.CONTENT_AUTHORITY, 1);
             // Inform the system that this account is eligible for auto sync

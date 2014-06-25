@@ -21,7 +21,6 @@
   <string name="description_overview">Visão geral</string>
   <string name="description_poster">Mostrar cartaz</string>
   <string name="description_image">Imagem do Episódio</string>
-  <string name="done">Concluído</string>
   <string name="clear">Apagar</string>
   <string name="discard">Descartar</string>
   <string name="save_selection">Guardar Selecção</string>
@@ -65,6 +64,8 @@
   <string name="shows_continuing">%s em exibição</string>
   <string name="episodes_watched">%s vistos</string>
   <string name="runtime_all_episodes">Duração de todos os episódios assistidos</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d dia</item>
     <item quantity="zero">%d dias</item>
@@ -201,9 +202,6 @@
   <string name="update_scheduled">A Actualizar…</string>
   <string name="update_no_connection">Para actualizar ligue-se à Internet.</string>
   <string name="update_inprogress">Uma actualização em curso, tente novamente mais tarde.</string>
-  <string name="menu_updateart">Transferir cartazes</string>
-  <string name="arttask_incomplete">Não foi possível tranferir alguns cartazes, tente novamente mais tarde.</string>
-  <string name="arttask_start">A transferir cartazes…</string>
   <string name="show_on_network">em %s</string>
   <string name="season_watchcount">episódios por assistir</string>
   <string name="season_allwatched">Todos os episódios vistos</string>
@@ -308,8 +306,6 @@
   <string name="clear_cache">Apagar imagens da Cache</string>
   <string name="clear_cache_summary">Remova todas as imagens em cache do seu dispositivo</string>
   <string name="pref_ganalyticssummary">Controlar o uso de recursos para ajudar a melhorar o SeriesGuide</string>
-  <string name="pref_hideimages">Esconder imagens</string>
-  <string name="pref_hideimagessummary">Ocultar imagens da sua galeria de fotos (necessário reiniciar)</string>
   <string name="backup_description"><b>Backup</b> irá exportar as suas séries, temporadas, episódios e listas para um ficheiro JSON na pasta de baixo. \nPara <b>restaurar</b> certifique-se de que os ficheiros JSON criados pelo backup estão na pasta de baixo.</string>
   <string name="backup_full_dump">Inclui todos os meta-dados como descrições, actores e classificações.</string>
   <string name="backup_path">Pasta de backup</string>

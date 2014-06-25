@@ -22,7 +22,6 @@
   <string name="description_overview">Översikt</string>
   <string name="description_poster">Visa affisch</string>
   <string name="description_image">Bild från avsnittet</string>
-  <string name="done">Klar</string>
   <string name="clear">Rensa</string>
   <string name="discard">Avbryt</string>
   <string name="save_selection">Spara valda</string>
@@ -46,7 +45,7 @@
   <string name="no_shouts">Bli först att ropa!</string>
   <string name="refresh">Ladda om</string>
   <string name="movies_collection">Samling</string>
-  <string name="movies_watchlist">Bevakningar</string>
+  <string name="movies_watchlist">Bevakningslista</string>
   <string name="watchlist_add">Lägg till i bevakningslistan</string>
   <string name="watchlist_remove">Ta bort ifrån bevakningslistan</string>
   <string name="watchlist_added">Lades till i bevakningslistan</string>
@@ -66,6 +65,8 @@
   <string name="shows_continuing">%s fortsätter</string>
   <string name="episodes_watched">%s sedda</string>
   <string name="runtime_all_episodes">Speltid på alla sedda avsnitt</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d dag</item>
     <item quantity="zero">%d dagar</item>
@@ -202,9 +203,6 @@
   <string name="update_scheduled">Uppdaterar…</string>
   <string name="update_no_connection">För att uppdatera anslut till internet.</string>
   <string name="update_inprogress">En uppdatering pågår, försök igen senare.</string>
-  <string name="menu_updateart">Ladda affischer</string>
-  <string name="arttask_incomplete">Vissa affischer laddades inte, försök igen senare.</string>
-  <string name="arttask_start">Laddar affischer…</string>
   <string name="show_on_network">på %s</string>
   <string name="season_watchcount">avsnitt ej sedda</string>
   <string name="season_allwatched">Alla avsnitt sedda</string>
@@ -224,7 +222,7 @@
   <string name="trending">Trendiga</string>
   <string name="recommended">Rekommenderade</string>
   <string name="library">Bibliotek</string>
-  <string name="watchlist">Bevakningar</string>
+  <string name="watchlist">Bevakningslista</string>
   <string name="first_list">Första listan</string>
   <string name="list_add">Lägg till lista</string>
   <string name="list_title_hint">Namnge din lista</string>
@@ -309,8 +307,6 @@
   <string name="clear_cache">Töm bildcache</string>
   <string name="clear_cache_summary">Ta bort alla cachade bilder från enheten</string>
   <string name="pref_ganalyticssummary">Mäter användningen av funktioner för att förbättra SeriesGuide</string>
-  <string name="pref_hideimages">Dölj bilder</string>
-  <string name="pref_hideimagessummary">Dölj bilderna i ditt fotogalleri (kräver omstart av systemet)</string>
   <string name="backup_description"><b>Säkerhetskopia</b> exporterar dina shower, säsonger, avsnitt och listor till en JSON fil i mappen här under. \n Till <b>Återställ</b> se till att JSON filen skapad av säkerhetskopian finns i mappen här under.</string>
   <string name="backup_full_dump">Inkludera all meta-data efter beskrivningar, skådespelare och betyg. </string>
   <string name="backup_path">Mapp för säkerhetskopia</string>
@@ -368,7 +364,7 @@
   <string name="trakt_error_credentials">Något gick fel. Vänligen kontrollera dina uppgifter och försök igen.</string>
   <string name="trakt_error_general">Kunde inte kommunicera med trakt. Försök igen senare.</string>
   <string name="trakt_createaccount">Skapa nytt konto</string>
-  <string name="get_started">Get started</string>
+  <string name="get_started">Kom igång</string>
   <string name="welcome_setuplanguage">Välj språk</string>
   <string name="dismiss">Avfärda</string>
   <string name="upcoming_show">%s kommande</string>

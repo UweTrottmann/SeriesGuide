@@ -21,7 +21,6 @@
   <string name="description_overview">Apžvalga</string>
   <string name="description_poster">Rodyti plakatą</string>
   <string name="description_image">Serijos paveikslas</string>
-  <string name="done">Baigta</string>
   <string name="clear">Išvalyti</string>
   <string name="discard">Atmesti</string>
   <string name="save_selection">Išsaugoti pasirinkimą</string>
@@ -65,6 +64,8 @@
   <string name="shows_continuing">%s continuing</string>
   <string name="episodes_watched">%s watched</string>
   <string name="runtime_all_episodes">Runtime of all watched episodes</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d d.</item>
     <item quantity="zero">%d d.</item>
@@ -201,9 +202,6 @@
   <string name="update_scheduled">Atnaujinimas…</string>
   <string name="update_no_connection">To update connect to the internet.</string>
   <string name="update_inprogress">Vyksta atnaujinimas, pabandykite dar kartą vėliau.</string>
-  <string name="menu_updateart">Load posters</string>
-  <string name="arttask_incomplete">Some posters did not load, try again later.</string>
-  <string name="arttask_start">Loading posters…</string>
   <string name="show_on_network">on %s</string>
   <string name="season_watchcount">serijos nepažiūrėtos</string>
   <string name="season_allwatched">Visos serijos pažiūrėtos</string>
@@ -308,8 +306,6 @@
   <string name="clear_cache">Pašalinti išsaugotus paveikslus</string>
   <string name="clear_cache_summary">Pašalina visus išsaugotus paveikslus iš jūsų įrenginio</string>
   <string name="pref_ganalyticssummary">Seka funkcijų naudojimą, siekiant pagerint SeriesGuide</string>
-  <string name="pref_hideimages">Slėpti paveikslus</string>
-  <string name="pref_hideimagessummary">Paslepia paveikslus jūsų nuotraukų galerijoje (reikia perkrauti)</string>
   <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
   <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
   <string name="backup_path">Backup folder</string>

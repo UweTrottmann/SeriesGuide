@@ -21,7 +21,6 @@
   <string name="description_overview">Genel Bakış</string>
   <string name="description_poster">Posteri göster</string>
   <string name="description_image">Bölüm resmi</string>
-  <string name="done">Tamamlandı</string>
   <string name="clear">Temizle</string>
   <string name="discard">Yoksay</string>
   <string name="save_selection">Seçimi kaydet</string>
@@ -65,6 +64,8 @@
   <string name="shows_continuing">%s devam ediyor</string>
   <string name="episodes_watched">%s izlendi</string>
   <string name="runtime_all_episodes">İzlenen tüm bölümlerin toplam süresi</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d gün</item>
     <item quantity="zero">%d gün</item>
@@ -201,9 +202,6 @@
   <string name="update_scheduled">Güncelleniyor…</string>
   <string name="update_no_connection">Güncelleme amacıyla internete bağlayın.</string>
   <string name="update_inprogress">Devam eden bir güncelleme var, daha sonra tekrar deneyin.</string>
-  <string name="menu_updateart">Posterleri yükle</string>
-  <string name="arttask_incomplete">Bazı posterler yüklenemedi, daha sonra tekrar deneyin.</string>
-  <string name="arttask_start">Posterler yükleniyor…</string>
   <string name="show_on_network">kanal %s</string>
   <string name="season_watchcount">izlenmeyen bölümler</string>
   <string name="season_allwatched">Tüm bölümler izlendi</string>
@@ -308,8 +306,6 @@
   <string name="clear_cache">Resim önbelleğini temizle</string>
   <string name="clear_cache_summary">Tüm resim önbelleğini cihazınızdan silin</string>
   <string name="pref_ganalyticssummary">SeriesGuide geliştirmeye yardımcı olmak için kullanım özelliklerini izler</string>
-  <string name="pref_hideimages">Resimleri gizle</string>
-  <string name="pref_hideimagessummary">Resimleri galerinizden gizleyin (Yeniden başlatma gerekiyor)</string>
   <string name="backup_description"><b>Yedekleme</b> dizileri, sezonları, bölümleri ve listeleri aşağıdaki klasörde bulunan JSON dosyasına aktaracaktır.\n <b>Geri yükleme</b> yapılan JSON dosyasının aşağıdaki klasörde olduğundan ve yedekleme ile oluşturulduğundan emin olunuz.</string>
   <string name="backup_full_dump">Öneriler, aktörler ve değerlendirmeler gibi bilgiler dâhil.</string>
   <string name="backup_path">Yedekleme klasörü</string>
@@ -367,7 +363,7 @@
   <string name="trakt_error_credentials">Bir şeyler ters gitti. Lütfen kimlik bilgilerinizi denetleyin ve yeniden deneyin.</string>
   <string name="trakt_error_general">Trakt\'a bağlanılamadı. Daha sonra tekrar deneyin.</string>
   <string name="trakt_createaccount">Yeni hesap oluştur</string>
-  <string name="get_started">Get started</string>
+  <string name="get_started">Başlarken... </string>
   <string name="welcome_setuplanguage">Dil seçin</string>
   <string name="dismiss">Kapat</string>
   <string name="upcoming_show">%s geliyor</string>

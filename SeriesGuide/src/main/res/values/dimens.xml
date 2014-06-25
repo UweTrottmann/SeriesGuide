@@ -32,6 +32,9 @@
     <dimen name="grid_vertical_spacing">5dp</dimen>
     <dimen name="grid_horizontal_spacing">8dp</dimen>
 
+    <dimen name="show_poster_width">68dp</dimen>
+    <dimen name="show_poster_height">100dp</dimen>
+
     <dimen name="imagecontainer_height">180dp</dimen>
 
     <dimen name="slidingmenu_width">240dp</dimen>
@@ -41,9 +44,6 @@
     <dimen name="movie_item_poster_height">150dp</dimen>
 
     <dimen name="shortcut_icon_size">48dp</dimen>
-
-    <dimen name="tab_strip_height">48dp</dimen>
-    <dimen name="tab_strip_height_no_underline">46dp</dimen>
 
     <dimen name="buttonbar_button_width">56dp</dimen>
     <dimen name="buttonbar_button_height">48dp</dimen>
