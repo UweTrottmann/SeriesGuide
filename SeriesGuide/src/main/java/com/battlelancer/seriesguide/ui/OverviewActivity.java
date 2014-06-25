@@ -32,13 +32,13 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ShortcutUtils;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.lang.ref.WeakReference;
 import java.nio.charset.Charset;
@@ -82,7 +82,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
                     public NdefMessage createNdefMessage(NfcEvent event) {
                         final Series show = DBUtils.getShow(OverviewActivity.this, mShowId);
                         // send id, also title and overview (both can be empty)
-                        NdefMessage msg = new NdefMessage(new NdefRecord[]{
+                        NdefMessage msg = new NdefMessage(new NdefRecord[] {
                                 createMimeRecord(
                                         "application/com.battlelancer.seriesguide.beam",
                                         String.valueOf(mShowId).getBytes()),
@@ -90,7 +90,8 @@ public class OverviewActivity extends BaseNavDrawerActivity {
                                         show.getTitle().getBytes()),
                                 createMimeRecord("application/com.battlelancer.seriesguide.beam",
                                         show
-                                                .getOverview().getBytes())
+                                                .getOverview().getBytes()
+                                )
                         });
                         return msg;
                     }
@@ -167,11 +168,10 @@ public class OverviewActivity extends BaseNavDrawerActivity {
 
     private void setupViewPager(View pagerView) {
         ViewPager pager = (ViewPager) pagerView;
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsOverview);
 
         // setup tab strip
-        TabStripAdapter tabsAdapter = new TabStripAdapter(
-                getSupportFragmentManager(), this, pager, tabs);
+        TabStripAdapter tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this, pager,
+                (SlidingTabLayout) findViewById(R.id.tabsOverview));
         Bundle argsShow = new Bundle();
         argsShow.putInt(ShowFragment.InitBundle.SHOW_TVDBID, mShowId);
         tabsAdapter.addTab(R.string.show, ShowFragment.class, argsShow);
@@ -292,5 +292,4 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     private void fireTrackerEvent(String label) {
         Utils.trackAction(this, TAG, label);
     }
-
 }
