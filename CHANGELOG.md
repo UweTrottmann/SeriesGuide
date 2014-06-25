@@ -8,6 +8,12 @@ All dates are in the European Central timezone.
 Version 16 *(in development)*
 -----------------------------
 
+#### 16-beta3 *(2014-06-25)*
+
+* FEATURE Add some movie statistics.
+* FIX Potentially fix crash in episode pages view if number of episode changes.
+* FIX On tablets, going into episode view shown episode is correctly selected in list. Selection is correctly kept when changing sort order.  
+
 #### 16-beta2 *(2014-06-20)*
 
 * TWEAK UI improvements (episode list, rate dialog, light theme immersive theme).
