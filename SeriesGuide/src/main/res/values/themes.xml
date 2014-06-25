@@ -102,7 +102,7 @@
 
         <!-- Special attributes -->
         <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
-        <item name="tabStripBackground">@drawable/background_tab</item>
+        <item name="tabStripBackground">?android:attr/selectableItemBackground</item>
 
         <!-- Colors -->
         <item name="textColorSgDefault">@color/text_default</item>

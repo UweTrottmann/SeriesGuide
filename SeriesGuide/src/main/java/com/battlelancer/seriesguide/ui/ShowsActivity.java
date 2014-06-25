@@ -38,7 +38,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
-import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
@@ -64,10 +63,10 @@ import com.battlelancer.seriesguide.ui.streams.FriendsEpisodeStreamFragment;
 import com.battlelancer.seriesguide.ui.streams.UserEpisodeStreamFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import de.greenrobot.event.EventBus;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import timber.log.Timber;
@@ -196,10 +195,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
     private void setupViews() {
         mViewPager = (ViewPager) findViewById(R.id.pagerShows);
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsShows);
 
         mTabsAdapter = new ShowsTabPageAdapter(getSupportFragmentManager(),
-                this, mViewPager, tabs);
+                this, mViewPager, (SlidingTabLayout) findViewById(R.id.tabsShows));
 
         // shows tab (or first run fragment)
         if (!FirstRunFragment.hasSeenFirstRunFragment(this)) {
@@ -610,7 +608,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
         private SharedPreferences mPrefs;
 
         public ShowsTabPageAdapter(FragmentManager fm, Context context, ViewPager pager,
-                PagerSlidingTabStrip tabs) {
+                SlidingTabLayout tabs) {
             super(fm, context, pager, tabs);
             mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
             tabs.setOnPageChangeListener(this);

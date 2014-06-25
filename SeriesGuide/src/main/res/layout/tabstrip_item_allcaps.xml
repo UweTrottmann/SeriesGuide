@@ -32,6 +32,7 @@
         android:textColor="?attr/colorTabStripText"
         android:textSize="12sp"
         android:textStyle="bold"
+        android:textAllCaps="true"
         tools:text="Tab Item"/>
 
 </LinearLayout>

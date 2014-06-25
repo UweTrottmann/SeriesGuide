@@ -107,6 +107,11 @@ class SlidingTabStrip extends LinearLayout {
         invalidate();
     }
 
+    void setBottomBorderColor(int color) {
+        mBottomBorderPaint.setColor(color);
+        invalidate();
+    }
+
     void onViewPagerPageChanged(int position, float positionOffset) {
         mSelectedPosition = position;
         mSelectionOffset = positionOffset;

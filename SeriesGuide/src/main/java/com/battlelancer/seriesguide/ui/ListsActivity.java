@@ -22,14 +22,13 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.astuetz.PagerSlidingTabStrip;
-import com.astuetz.PagerSlidingTabStrip.OnTabClickListener;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
 import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 
 /**
  * Hosts a view pager to display and manage lists of shows, seasons and episodes.
@@ -42,7 +41,7 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
 
     private ViewPager mPager;
 
-    private PagerSlidingTabStrip mTabs;
+    private SlidingTabLayout mTabs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +66,15 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
         mPager = (ViewPager) findViewById(R.id.pagerLists);
         mPager.setAdapter(mListsAdapter);
 
-        mTabs = (PagerSlidingTabStrip) findViewById(R.id.tabsLists);
-        mTabs.setViewPager(mPager);
-        mTabs.setOnTabClickListener(new OnTabClickListener() {
+        mTabs = (SlidingTabLayout) findViewById(R.id.tabsLists);
+        mTabs.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
+        mTabs.setSelectedIndicatorColors(getResources().getColor(
+                Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorAccent)));
+        mTabs.setBottomBorderColor(getResources().getColor(
+                Utils.resolveAttributeToResourceId(getTheme(),
+                        R.attr.colorTabStripUnderline)
+        ));
+        mTabs.setOnTabClickListener(new SlidingTabLayout.OnTabClickListener() {
             @Override
             public void onTabClick(int position) {
                 if (mPager.getCurrentItem() == position) {
@@ -79,6 +84,7 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
                 }
             }
         });
+        mTabs.setViewPager(mPager);
     }
 
     @Override
@@ -126,8 +132,8 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
     public void onListsChanged() {
         // refresh list adapter
         mListsAdapter.onListsChanged();
-        // update indicator and view pager
-        mTabs.notifyDataSetChanged();
+        // update tabs
+        mTabs.setViewPager(mPager);
     }
 
     protected void fireTrackerEvent(String label) {

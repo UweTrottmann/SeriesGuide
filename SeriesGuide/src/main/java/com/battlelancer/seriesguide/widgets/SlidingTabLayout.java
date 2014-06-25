@@ -51,6 +51,10 @@ import android.widget.TextView;
  */
 public class SlidingTabLayout extends HorizontalScrollView {
 
+    public interface OnTabClickListener {
+        public void onTabClick(int position);
+    }
+
     /**
      * Allows complete control over the colors drawn in the tab layout. Set with
      * {@link #setCustomTabColorizer(com.battlelancer.seriesguide.widgets.SlidingTabLayout.TabColorizer)}.
@@ -79,6 +83,8 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mViewPagerPageChangeListener;
+
+    private OnTabClickListener mOnTabClickListener;
 
     private final SlidingTabStrip mTabStrip;
 
@@ -134,6 +140,13 @@ public class SlidingTabLayout extends HorizontalScrollView {
     }
 
     /**
+     * Sets the color to be used for the tab bottom border.
+     */
+    public void setBottomBorderColor(int color) {
+        mTabStrip.setBottomBorderColor(color);
+    }
+
+    /**
      * Set the {@link android.support.v4.view.ViewPager.OnPageChangeListener}. When using {@link
      * com.battlelancer.seriesguide.widgets.SlidingTabLayout} you are
      * required to set any {@link android.support.v4.view.ViewPager.OnPageChangeListener} through
@@ -144,6 +157,13 @@ public class SlidingTabLayout extends HorizontalScrollView {
      */
     public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
         mViewPagerPageChangeListener = listener;
+    }
+
+    /**
+     * Set the {@link com.battlelancer.seriesguide.widgets.SlidingTabLayout.OnTabClickListener}.
+     */
+    public void setOnTabClickListener(OnTabClickListener listener) {
+        mOnTabClickListener = listener;
     }
 
     /**
@@ -311,6 +331,9 @@ public class SlidingTabLayout extends HorizontalScrollView {
         public void onClick(View v) {
             for (int i = 0; i < mTabStrip.getChildCount(); i++) {
                 if (v == mTabStrip.getChildAt(i)) {
+                    if (mOnTabClickListener != null) {
+                        mOnTabClickListener.onTabClick(i);
+                    }
                     mViewPager.setCurrentItem(i);
                     return;
                 }

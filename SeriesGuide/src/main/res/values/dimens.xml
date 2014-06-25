@@ -45,9 +45,6 @@
 
     <dimen name="shortcut_icon_size">48dp</dimen>
 
-    <dimen name="tab_strip_height">48dp</dimen>
-    <dimen name="tab_strip_height_no_underline">46dp</dimen>
-
     <dimen name="buttonbar_button_width">56dp</dimen>
     <dimen name="buttonbar_button_height">48dp</dimen>
 

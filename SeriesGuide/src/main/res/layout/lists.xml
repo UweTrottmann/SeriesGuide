@@ -9,11 +9,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.astuetz.PagerSlidingTabStrip
+        <com.battlelancer.seriesguide.widgets.SlidingTabLayout
             android:id="@+id/tabsLists"
-            style="@style/TabStrip"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/tab_strip_height" />
+            android:layout_height="wrap_content" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pagerLists"

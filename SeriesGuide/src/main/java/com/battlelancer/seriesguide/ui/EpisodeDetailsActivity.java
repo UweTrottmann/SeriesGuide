@@ -177,6 +177,18 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         tabs.setCustomTabView(R.layout.tabstrip_item, R.id.textViewTabStripItem);
         tabs.setSelectedIndicatorColors(getResources().getColor(
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorAccent)));
+        tabs.setDividerColors(Utils.setColorAlpha(getResources().getColor(
+                        Utils.resolveAttributeToResourceId(getTheme(),
+                                R.attr.colorTabStripUnderline)
+                ),
+                0x26
+        ));
+        tabs.setBottomBorderColor(Utils.setColorAlpha(getResources().getColor(
+                        Utils.resolveAttributeToResourceId(getTheme(),
+                                R.attr.colorTabStripUnderline)
+                ),
+                0x26
+        ));
         tabs.setViewPager(pager);
 
         // fix padding for translucent system bars
