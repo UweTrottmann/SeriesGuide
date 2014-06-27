@@ -8,6 +8,11 @@ All dates are in the European Central timezone.
 Version 16 *(in development)*
 -----------------------------
 
+#### 16-beta4 *(2014-06-27)*
+
+* FIX Episode title in notifications not visible on Android Wear devices.
+* FIX Episode list sometimes incorrectly re-selects the first episode.
+
 #### 16-beta3 *(2014-06-25)*
 
 * FEATURE Add some movie statistics.
