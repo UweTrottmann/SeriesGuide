@@ -27,7 +27,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
@@ -35,7 +35,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -426,8 +426,7 @@ public class NotificationService extends IntentService {
 
                 final SpannableStringBuilder bigText = new SpannableStringBuilder();
                 bigText.append(TextUtils.isEmpty(episodeTitle) ? "" : episodeTitle);
-                bigText.setSpan(new ForegroundColorSpan(Color.WHITE), 0, bigText.length(),
-                        0);
+                bigText.setSpan(new StyleSpan(Typeface.BOLD), 0, bigText.length(), 0);
                 bigText.append("\n");
                 bigText.append(TextUtils.isEmpty(episodeSummary) ? "" : episodeSummary);
 
@@ -461,7 +460,7 @@ public class NotificationService extends IntentService {
                     // show title
                     String showTitle = upcomingEpisodes.getString(NotificationQuery.SHOW_TITLE);
                     lineText.append(TextUtils.isEmpty(showTitle) ? "" : showTitle);
-                    lineText.setSpan(new ForegroundColorSpan(Color.WHITE), 0, lineText.length(), 0);
+                    lineText.setSpan(new StyleSpan(Typeface.BOLD), 0, lineText.length(), 0);
 
                     lineText.append(" ");
 

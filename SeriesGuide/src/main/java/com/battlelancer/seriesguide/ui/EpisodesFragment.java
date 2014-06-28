@@ -123,6 +123,7 @@ public class EpisodesFragment extends ListFragment
         } else {
             mStartingPosition = -1;
         }
+        mLastCheckedItemId = -1;
 
         mAdapter = new EpisodesAdapter(getActivity(), null, 0, this, this);
         setListAdapter(mAdapter);
