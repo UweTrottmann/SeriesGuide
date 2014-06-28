@@ -27,21 +27,6 @@
         android:textAppearance="@style/TextAppearance.Light"
         android:textIsSelectable="true" />
 
-    <TextView
-        style="@style/DefaultPadding.Blocks.WithTopMargin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/show_actors"
-        android:textAppearance="@style/TextAppearance.Small.Label" />
-
-    <TextView
-        android:id="@+id/textViewShowActors"
-        style="@style/DefaultPadding.Blocks.WithBottomMargin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.Light"
-        android:textIsSelectable="true" />
-
     <include layout="@layout/people_list" />
 
     <TextView

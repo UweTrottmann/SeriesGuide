@@ -235,8 +235,6 @@ public class ShowFragment extends Fragment {
                 TimeTools.formatToDate(getActivity(), new Date(actualRelease)));
 
         // Others
-        Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewShowActors),
-                Utils.splitAndKitTVDBStrings(mShow.getActors()));
         Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewShowContentRating),
                 mShow.getContentRating());
         Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewShowGenres),
