@@ -42,30 +42,44 @@ public class PeopleListHelper {
         peopleContainer.removeAllViews();
 
         // show at most 3 cast members
-        if (cast != null) {
-            for (int i = 0; i < Math.min(3, cast.size()); i++) {
-                Credits.CastMember castMember = cast.get(i);
-                View personView = layoutInflater.inflate(R.layout.item_person,
-                        peopleContainer, false);
-
-                ServiceUtils.getPicasso(context)
-                        .load(TmdbTools.buildProfileImageUrl(context, castMember.profile_path,
-                                TmdbTools.ProfileImageSize.W185))
-                        .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
-                        .centerCrop()
-                        .into((ImageView) personView.findViewById(R.id.imageViewPerson));
-
-                TextView name = (TextView) personView.findViewById(R.id.textViewPerson);
-                name.setText(castMember.name);
-
-                TextView character = (TextView) personView.findViewById(
-                        R.id.textViewPersonDescription);
-                character.setText(castMember.character);
-
-                peopleContainer.addView(personView);
-            }
+        if (cast == null) {
+            // TODO show placeholder
+            return;
         }
 
-        // TODO show more link (if there are)
+        for (int i = 0; i < Math.min(3, cast.size()); i++) {
+            Credits.CastMember castMember = cast.get(i);
+            View personView = layoutInflater.inflate(R.layout.item_person,
+                    peopleContainer, false);
+
+            ServiceUtils.getPicasso(context)
+                    .load(TmdbTools.buildProfileImageUrl(context, castMember.profile_path,
+                            TmdbTools.ProfileImageSize.W185))
+                    .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
+                    .centerCrop()
+                    .into((ImageView) personView.findViewById(R.id.imageViewPerson));
+
+            TextView name = (TextView) personView.findViewById(R.id.textViewPerson);
+            name.setText(castMember.name);
+
+            TextView character = (TextView) personView.findViewById(
+                    R.id.textViewPersonDescription);
+            character.setText(castMember.character);
+
+            peopleContainer.addView(personView);
+        }
+
+        if (cast.size() > 3) {
+            TextView configureView = (TextView) layoutInflater.inflate(R.layout.item_action,
+                    peopleContainer, false);
+            configureView.setText(R.string.action_display_all);
+            configureView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO link to all list
+                }
+            });
+            peopleContainer.addView(configureView);
+        }
     }
 }
