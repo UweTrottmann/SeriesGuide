@@ -96,7 +96,7 @@ public class ShowFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_show, container, false);
 
         mPeopleHeader = ButterKnife.findById(v, R.id.textViewPeopleHeader);
-        mPeopleHeader.setText(R.string.show_actors);
+        mPeopleHeader.setText(R.string.movie_cast);
         mPeopleContainer = ButterKnife.findById(v, R.id.containerPeople);
 
         return v;
