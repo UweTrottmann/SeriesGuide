@@ -42,6 +42,8 @@
         android:textAppearance="@style/TextAppearance.Light"
         android:textIsSelectable="true" />
 
+    <include layout="@layout/people_list" />
+
     <TextView
         style="@style/DefaultPadding.Blocks.WithTopMargin"
         android:layout_width="wrap_content"

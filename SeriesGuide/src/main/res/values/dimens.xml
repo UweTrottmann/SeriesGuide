@@ -53,6 +53,8 @@
     <dimen name="drag_grip_ridge_size">4dp</dimen>
     <dimen name="drag_grip_ridge_gap">2dp</dimen>
 
+    <dimen name="person_headshot_size">56dp</dimen>
+
     <integer name="animation_duration">200</integer>
 
 </resources>
