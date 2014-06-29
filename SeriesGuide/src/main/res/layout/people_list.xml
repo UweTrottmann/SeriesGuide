@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/default_padding"
         android:layout_marginRight="@dimen/default_padding"
-        tools:text="Actors"
+        tools:text="Cast"
         android:textAppearance="@style/TextAppearance.Small.Label" />
 
     <View

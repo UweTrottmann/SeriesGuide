@@ -73,7 +73,6 @@
     <string name="trailer">Trailer</string>
     <string name="movie_cast">Cast</string>
     <string name="movie_crew">Crew</string>
-    <string name="movie_person_in_role">%1$s (%2$s)</string>
     <string name="action_movies_sort">Sort movies</string>
     <string name="action_movies_sort_title">Title</string>
     <string name="action_movies_sort_release">Release date</string>
