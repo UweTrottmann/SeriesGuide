@@ -43,6 +43,7 @@
             android:maxLines="1"
             android:scrollHorizontally="true"
             android:ellipsize="end"
+            android:textIsSelectable="true"
             tools:text="Bryan Cranston" />
 
         <TextView
@@ -53,6 +54,7 @@
             android:maxLines="1"
             android:scrollHorizontally="true"
             android:ellipsize="end"
+            android:textIsSelectable="true"
             tools:text="Walter White" />
 
     </LinearLayout>
