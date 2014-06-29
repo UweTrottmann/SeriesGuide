@@ -33,7 +33,7 @@ import com.battlelancer.seriesguide.util.SeasonTools;
 
 public class SeasonsAdapter extends CursorAdapter {
 
-    private static final int LAYOUT = R.layout.season_row;
+    private static final int LAYOUT = R.layout.item_season;
 
     private LayoutInflater mLayoutInflater;
 

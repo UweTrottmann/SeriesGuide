@@ -313,7 +313,7 @@ public class ManageListsDialogFragment extends DialogFragment implements
 
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            return mInflater.inflate(R.layout.list_dialog_row, parent, false);
+            return mInflater.inflate(R.layout.item_list_checked, parent, false);
         }
 
         public void setItemChecked(int position, boolean value) {

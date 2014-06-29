@@ -37,7 +37,7 @@ import com.battlelancer.seriesguide.util.Utils;
  */
 public class SearchResultsAdapter extends CursorAdapter {
 
-    private static final int LAYOUT = R.layout.search_row;
+    private static final int LAYOUT = R.layout.item_search_result;
 
     private LayoutInflater mLayoutInflater;
 
