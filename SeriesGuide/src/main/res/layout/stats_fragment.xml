@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewStatsShows"
             android:layout_centerHorizontal="true"
-            android:text="@string/shows"
+            android:text="@string/statistics_shows"
             android:textAllCaps="true" />
 
         <ProgressBar
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewStatsEpisodes"
             android:layout_centerHorizontal="true"
-            android:text="@string/episodes"
+            android:text="@string/statistics_episodes"
             android:textAllCaps="true" />
 
         <ProgressBar
@@ -153,7 +153,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewStatsMovies"
             android:layout_centerHorizontal="true"
-            android:text="@string/movies"
+            android:text="@string/statistics_movies"
             android:textAllCaps="true" />
 
         <ProgressBar

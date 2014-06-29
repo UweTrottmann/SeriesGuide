@@ -78,6 +78,9 @@
     <string name="action_movies_sort_release">Release date</string>
 
     <!-- Statistics -->
+    <string name="statistics_shows">Shows</string>
+    <string name="statistics_episodes">Episodes</string>
+    <string name="statistics_movies">Movies</string>
     <string name="shows_with_next">%s with next episodes</string>
     <string name="shows_continuing">%s continuing</string>
     <string name="episodes_watched">%s watched</string>
