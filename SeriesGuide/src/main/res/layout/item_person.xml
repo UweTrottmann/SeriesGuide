@@ -40,6 +40,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:ellipsize="end"
             tools:text="Bryan Cranston" />
 
         <TextView
@@ -47,6 +50,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.Small"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:ellipsize="end"
             tools:text="Walter White" />
 
     </LinearLayout>
