@@ -87,17 +87,25 @@ public class ShowFragment extends Fragment {
 
     private TraktSummaryTask mTraktTask;
 
-    private TextView mPeopleHeader;
-    private LinearLayout mPeopleContainer;
+    private View mCastView;
+    private LinearLayout mCastContainer;
+    private View mCrewView;
+    private LinearLayout mCrewContainer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_show, container, false);
 
-        mPeopleHeader = ButterKnife.findById(v, R.id.textViewPeopleHeader);
-        mPeopleHeader.setText(R.string.movie_cast);
-        mPeopleContainer = ButterKnife.findById(v, R.id.containerPeople);
+        mCastView = v.findViewById(R.id.containerShowCast);
+        TextView castHeader = ButterKnife.findById(mCastView, R.id.textViewPeopleHeader);
+        castHeader.setText(R.string.movie_cast);
+        mCastContainer = ButterKnife.findById(mCastView, R.id.containerPeople);
+
+        mCrewView = v.findViewById(R.id.containerShowCrew);
+        TextView crewHeader = ButterKnife.findById(mCrewView, R.id.textViewPeopleHeader);
+        crewHeader.setText(R.string.movie_crew);
+        mCrewContainer = ButterKnife.findById(mCrewView, R.id.containerPeople);
 
         return v;
     }
@@ -345,12 +353,26 @@ public class ShowFragment extends Fragment {
 
     private void populateCredits(Credits data) {
         if (data == null) {
-            // show some useful fallback data?
+            mCastView.setVisibility(View.GONE);
+            mCrewView.setVisibility(View.GONE);
             return;
         }
 
-        PeopleListHelper.populateCast(getActivity(), getActivity().getLayoutInflater(),
-                mPeopleContainer, data.cast);
+        if (data.cast == null || data.cast.size() == 0) {
+            mCastView.setVisibility(View.GONE);
+        } else {
+            mCastView.setVisibility(View.VISIBLE);
+            PeopleListHelper.populateCast(getActivity(), getActivity().getLayoutInflater(),
+                    mCastContainer, data.cast);
+        }
+
+        if (data.crew == null || data.crew.size() == 0) {
+            mCrewView.setVisibility(View.GONE);
+        } else {
+            mCrewView.setVisibility(View.VISIBLE);
+            PeopleListHelper.populateCrew(getActivity(), getActivity().getLayoutInflater(),
+                    mCrewContainer, data.crew);
+        }
     }
 
     private void fireTrackerEvent(String label) {

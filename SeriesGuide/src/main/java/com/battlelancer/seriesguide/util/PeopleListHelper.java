@@ -32,54 +32,96 @@ import timber.log.Timber;
  */
 public class PeopleListHelper {
 
-    public static void populateCast(Context context, LayoutInflater layoutInflater,
+    /**
+     * Add views for at most three cast members to the given {@link android.view.ViewGroup} and a
+     * "Show all" link if there are more.
+     */
+    public static void populateCast(Context context, LayoutInflater inflater,
             ViewGroup peopleContainer, List<Credits.CastMember> cast) {
         if (peopleContainer == null) {
             // nothing we can do, view is already gone
             Timber.d("populateCast: container reference gone, aborting");
             return;
         }
+
         peopleContainer.removeAllViews();
 
         // show at most 3 cast members
-        if (cast == null) {
-            // TODO show placeholder
-            return;
-        }
-
         for (int i = 0; i < Math.min(3, cast.size()); i++) {
             Credits.CastMember castMember = cast.get(i);
-            View personView = layoutInflater.inflate(R.layout.item_person,
-                    peopleContainer, false);
-
-            ServiceUtils.getPicasso(context)
-                    .load(TmdbTools.buildProfileImageUrl(context, castMember.profile_path,
-                            TmdbTools.ProfileImageSize.W185))
-                    .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
-                    .centerCrop()
-                    .into((ImageView) personView.findViewById(R.id.imageViewPerson));
-
-            TextView name = (TextView) personView.findViewById(R.id.textViewPerson);
-            name.setText(castMember.name);
-
-            TextView character = (TextView) personView.findViewById(
-                    R.id.textViewPersonDescription);
-            character.setText(castMember.character);
-
-            peopleContainer.addView(personView);
+            addPersonView(context, inflater, peopleContainer, castMember.name,
+                    castMember.character, castMember.profile_path);
         }
 
         if (cast.size() > 3) {
-            TextView configureView = (TextView) layoutInflater.inflate(R.layout.item_action,
-                    peopleContainer, false);
-            configureView.setText(R.string.action_display_all);
-            configureView.setOnClickListener(new View.OnClickListener() {
+            addShowAllView(inflater, peopleContainer, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // TODO link to all list
                 }
             });
-            peopleContainer.addView(configureView);
         }
+    }
+
+    /**
+     * Add views for at most three crew members to the given {@link android.view.ViewGroup} and a
+     * "Show all" link if there are more.
+     */
+    public static void populateCrew(Context context, LayoutInflater inflater,
+            ViewGroup peopleContainer, List<Credits.CrewMember> crew) {
+        if (peopleContainer == null) {
+            // nothing we can do, view is already gone
+            Timber.d("populateCrew: container reference gone, aborting");
+            return;
+        }
+
+        peopleContainer.removeAllViews();
+
+        // show at most 3 crew members
+        for (int i = 0; i < Math.min(3, crew.size()); i++) {
+            Credits.CrewMember castMember = crew.get(i);
+            addPersonView(context, inflater, peopleContainer, castMember.name, castMember.job,
+                    castMember.profile_path);
+        }
+
+        if (crew.size() > 3) {
+            addShowAllView(inflater, peopleContainer, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO link to all list
+                }
+            });
+        }
+    }
+
+    private static void addPersonView(Context context, LayoutInflater inflater,
+            ViewGroup peopleContainer,
+            String name, String description, String profilePath) {
+        View personView = inflater.inflate(R.layout.item_person, peopleContainer, false);
+
+        ServiceUtils.getPicasso(context)
+                .load(TmdbTools.buildProfileImageUrl(context, profilePath,
+                        TmdbTools.ProfileImageSize.W185))
+                .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
+                .centerCrop()
+                .into((ImageView) personView.findViewById(R.id.imageViewPerson));
+
+        TextView nameView = (TextView) personView.findViewById(R.id.textViewPerson);
+        nameView.setText(name);
+
+        TextView descriptionView = (TextView) personView.findViewById(
+                R.id.textViewPersonDescription);
+        descriptionView.setText(description);
+
+        peopleContainer.addView(personView);
+    }
+
+    private static void addShowAllView(LayoutInflater inflater, ViewGroup peopleContainer,
+            View.OnClickListener clickListener) {
+        TextView showAllView = (TextView) inflater.inflate(R.layout.item_action,
+                peopleContainer, false);
+        showAllView.setText(R.string.action_display_all);
+        showAllView.setOnClickListener(clickListener);
+        peopleContainer.addView(showAllView);
     }
 }

@@ -27,7 +27,19 @@
         android:textAppearance="@style/TextAppearance.Light"
         android:textIsSelectable="true" />
 
-    <include layout="@layout/people_list" />
+    <include
+        layout="@layout/people_list"
+        android:id="@+id/containerShowCast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_padding" />
+
+    <include
+        layout="@layout/people_list"
+        android:id="@+id/containerShowCrew"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_padding" />
 
     <TextView
         style="@style/DefaultPadding.Blocks.WithTopMargin"
