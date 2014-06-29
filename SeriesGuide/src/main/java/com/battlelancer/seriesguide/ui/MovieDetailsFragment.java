@@ -469,7 +469,7 @@ public class MovieDetailsFragment extends Fragment {
         }
     }
 
-    private void populateMovieCreditsViews(Credits credits) {
+    private void populateMovieCreditsViews(final Credits credits) {
         if (credits == null) {
             mCastView.setVisibility(View.GONE);
             mCrewView.setVisibility(View.GONE);
@@ -482,7 +482,17 @@ public class MovieDetailsFragment extends Fragment {
         } else {
             mCastView.setVisibility(View.VISIBLE);
             PeopleListHelper.populateCast(getActivity(), getActivity().getLayoutInflater(),
-                    mCastContainer, credits.cast);
+                    mCastContainer, credits.cast, new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(v.getContext(), PeopleActivity.class)
+                                    .putExtra(PeopleActivity.InitBundle.PEOPLE_TYPE,
+                                            PeopleActivity.PeopleType.CAST.toString())
+                                    .putExtra(PeopleActivity.InitBundle.MEDIA_TYPE,
+                                            PeopleActivity.MediaType.MOVIE.toString())
+                                    .putExtra(PeopleActivity.InitBundle.TMDB_ID, credits.id));
+                        }
+                    });
         }
 
         // crew members
@@ -491,7 +501,17 @@ public class MovieDetailsFragment extends Fragment {
         } else {
             mCrewView.setVisibility(View.VISIBLE);
             PeopleListHelper.populateCrew(getActivity(), getActivity().getLayoutInflater(),
-                    mCrewContainer, credits.crew);
+                    mCrewContainer, credits.crew, new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(v.getContext(), PeopleActivity.class)
+                                    .putExtra(PeopleActivity.InitBundle.PEOPLE_TYPE,
+                                            PeopleActivity.PeopleType.CREW.toString())
+                                    .putExtra(PeopleActivity.InitBundle.MEDIA_TYPE,
+                                            PeopleActivity.MediaType.MOVIE.toString())
+                                    .putExtra(PeopleActivity.InitBundle.TMDB_ID, credits.id));
+                        }
+                    });
         }
     }
 

@@ -31,11 +31,20 @@ import timber.log.Timber;
  */
 public class ShowCreditsLoader extends GenericSimpleLoader<Credits> {
 
-    private int mShowTvdbId;
+    private final boolean mFindTmdbId;
+    private int mMediaId;
 
-    public ShowCreditsLoader(Context context, int showTvdbId) {
+    /**
+     * Create a show credit {@link android.support.v4.content.Loader}. Supports show ids from TVDb
+     * or TMDb.
+     *
+     * @param findTmdbId If true, the loader assumes the passed id is from TVDb id and will try to
+     *                   look up the associated TMDb id.
+     */
+    public ShowCreditsLoader(Context context, int id, boolean findTmdbId) {
         super(context);
-        mShowTvdbId = showTvdbId;
+        mMediaId = id;
+        mFindTmdbId = findTmdbId;
     }
 
     @Override
@@ -43,16 +52,19 @@ public class ShowCreditsLoader extends GenericSimpleLoader<Credits> {
         try {
             Tmdb tmdb = ServiceUtils.getTmdb(getContext());
 
-            // find the show on TMDb
-            FindResults findResults = tmdb.findService()
-                    .find(String.valueOf(mShowTvdbId), ExternalSource.TVDB_ID, null);
-            if (findResults.tv_results.isEmpty()) {
-                Timber.d("Downloading show credits failed: show not on TMDb");
-                return null;
+            if (mFindTmdbId) {
+                // find the show on TMDb
+                FindResults findResults = tmdb.findService()
+                        .find(String.valueOf(mMediaId), ExternalSource.TVDB_ID, null);
+                if (findResults.tv_results.isEmpty()) {
+                    Timber.d("Downloading show credits failed: show not on TMDb");
+                    return null;
+                }
+                mMediaId = findResults.tv_results.get(0).id;
             }
 
             // get credits for that show
-            return tmdb.tvService().credits(findResults.tv_results.get(0).id, null);
+            return tmdb.tvService().credits(mMediaId, null);
         } catch (RetrofitError e) {
             Timber.e(e, "Downloading show credits failed");
         }

@@ -335,7 +335,7 @@ public class ShowFragment extends Fragment {
     private LoaderCallbacks<Credits> mCreditsLoaderCallbacks = new LoaderCallbacks<Credits>() {
         @Override
         public Loader<Credits> onCreateLoader(int id, Bundle args) {
-            return new ShowCreditsLoader(getActivity(), getShowTvdbId());
+            return new ShowCreditsLoader(getActivity(), getShowTvdbId(), true);
         }
 
         @Override
@@ -351,7 +351,7 @@ public class ShowFragment extends Fragment {
         }
     };
 
-    private void populateCredits(Credits data) {
+    private void populateCredits(final Credits data) {
         if (data == null) {
             mCastView.setVisibility(View.GONE);
             mCrewView.setVisibility(View.GONE);
@@ -363,7 +363,18 @@ public class ShowFragment extends Fragment {
         } else {
             mCastView.setVisibility(View.VISIBLE);
             PeopleListHelper.populateCast(getActivity(), getActivity().getLayoutInflater(),
-                    mCastContainer, data.cast);
+                    mCastContainer, data.cast, new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(v.getContext(), PeopleActivity.class)
+                                    .putExtra(PeopleActivity.InitBundle.PEOPLE_TYPE,
+                                            PeopleActivity.PeopleType.CAST.toString())
+                                    .putExtra(PeopleActivity.InitBundle.MEDIA_TYPE,
+                                            PeopleActivity.MediaType.SHOW.toString())
+                                    .putExtra(PeopleActivity.InitBundle.TMDB_ID, data.id));
+                        }
+                    }
+            );
         }
 
         if (data.crew == null || data.crew.size() == 0) {
@@ -371,7 +382,18 @@ public class ShowFragment extends Fragment {
         } else {
             mCrewView.setVisibility(View.VISIBLE);
             PeopleListHelper.populateCrew(getActivity(), getActivity().getLayoutInflater(),
-                    mCrewContainer, data.crew);
+                    mCrewContainer, data.crew, new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(v.getContext(), PeopleActivity.class)
+                                    .putExtra(PeopleActivity.InitBundle.PEOPLE_TYPE,
+                                            PeopleActivity.PeopleType.CREW.toString())
+                                    .putExtra(PeopleActivity.InitBundle.MEDIA_TYPE,
+                                            PeopleActivity.MediaType.SHOW.toString())
+                                    .putExtra(PeopleActivity.InitBundle.TMDB_ID, data.id));
+                        }
+                    }
+            );
         }
     }
 

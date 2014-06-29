@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.uwetrottmann.tmdb.entities.Credits;
+import java.util.ArrayList;
 import java.util.List;
 import timber.log.Timber;
 
@@ -37,7 +38,8 @@ public class PeopleListHelper {
      * "Show all" link if there are more.
      */
     public static void populateCast(Context context, LayoutInflater inflater,
-            ViewGroup peopleContainer, List<Credits.CastMember> cast) {
+            ViewGroup peopleContainer, List<Credits.CastMember> cast,
+            View.OnClickListener clickListener) {
         if (peopleContainer == null) {
             // nothing we can do, view is already gone
             Timber.d("populateCast: container reference gone, aborting");
@@ -54,12 +56,7 @@ public class PeopleListHelper {
         }
 
         if (cast.size() > 3) {
-            addShowAllView(inflater, peopleContainer, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // TODO link to all list
-                }
-            });
+            addShowAllView(inflater, peopleContainer, clickListener);
         }
     }
 
@@ -68,7 +65,8 @@ public class PeopleListHelper {
      * "Show all" link if there are more.
      */
     public static void populateCrew(Context context, LayoutInflater inflater,
-            ViewGroup peopleContainer, List<Credits.CrewMember> crew) {
+            ViewGroup peopleContainer, List<Credits.CrewMember> crew,
+            View.OnClickListener clickListener) {
         if (peopleContainer == null) {
             // nothing we can do, view is already gone
             Timber.d("populateCrew: container reference gone, aborting");
@@ -85,12 +83,7 @@ public class PeopleListHelper {
         }
 
         if (crew.size() > 3) {
-            addShowAllView(inflater, peopleContainer, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // TODO link to all list
-                }
-            });
+            addShowAllView(inflater, peopleContainer, clickListener);
         }
     }
 
@@ -123,5 +116,35 @@ public class PeopleListHelper {
         showAllView.setText(R.string.action_display_all);
         showAllView.setOnClickListener(clickListener);
         peopleContainer.addView(showAllView);
+    }
+
+    public static List<Person> transformCastToPersonList(List<Credits.CastMember> cast) {
+        List<Person> people = new ArrayList<>();
+        for (Credits.CastMember castMember : cast) {
+            Person person = new Person();
+            person.name = castMember.name;
+            person.description = castMember.character;
+            person.profilePath = castMember.profile_path;
+            people.add(person);
+        }
+        return people;
+    }
+
+    public static List<Person> transformCrewToPersonList(List<Credits.CrewMember> crew) {
+        List<Person> people = new ArrayList<>();
+        for (Credits.CrewMember crewMember : crew) {
+            Person person = new Person();
+            person.name = crewMember.name;
+            person.description = crewMember.job;
+            person.profilePath = crewMember.profile_path;
+            people.add(person);
+        }
+        return people;
+    }
+
+    public static class Person {
+        public String name;
+        public String description;
+        public String profilePath;
     }
 }
