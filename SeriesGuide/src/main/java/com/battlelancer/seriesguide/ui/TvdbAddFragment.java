@@ -57,7 +57,7 @@ public class TvdbAddFragment extends AddFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.tvdbaddfragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_addshow_tvdb, container, false);
         ButterKnife.inject(this, v);
 
         mClearButton.setOnClickListener(new OnClickListener() {

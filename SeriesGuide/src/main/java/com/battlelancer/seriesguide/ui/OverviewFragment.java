@@ -132,7 +132,7 @@ public class OverviewFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.overview_fragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_overview, container, false);
         v.findViewById(R.id.imageViewFavorite).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

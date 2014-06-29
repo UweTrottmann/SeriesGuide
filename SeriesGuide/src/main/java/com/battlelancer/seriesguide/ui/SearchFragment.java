@@ -54,7 +54,7 @@ public class SearchFragment extends ListFragment implements LoaderCallbacks<Curs
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.search_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
     @Override

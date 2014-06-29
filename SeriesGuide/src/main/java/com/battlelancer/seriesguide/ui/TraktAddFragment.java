@@ -73,7 +73,7 @@ public class TraktAddFragment extends AddFragment {
         // if (container == null) {
         // return null;
         // }
-        return inflater.inflate(R.layout.traktaddfragment, container, false);
+        return inflater.inflate(R.layout.fragment_addshow_trakt, container, false);
     }
 
     @Override
