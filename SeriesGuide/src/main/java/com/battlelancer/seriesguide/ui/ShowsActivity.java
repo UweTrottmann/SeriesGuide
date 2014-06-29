@@ -110,7 +110,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shows);
+        setContentView(R.layout.activity_shows);
         setupNavDrawer();
 
         // Set up a sync account if needed

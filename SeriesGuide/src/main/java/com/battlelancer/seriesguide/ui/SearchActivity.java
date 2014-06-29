@@ -42,7 +42,7 @@ public class SearchActivity extends BaseNavDrawerActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search);
+        setContentView(R.layout.activity_search);
         setupNavDrawer();
 
         final ActionBar actionBar = getActionBar();

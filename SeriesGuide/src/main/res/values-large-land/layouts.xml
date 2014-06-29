@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item name="episodes" type="layout">@layout/episodes_multipane</item>
-    <item name="search" type="layout">@layout/activity_singlepane_drawer_wide</item>
+    <item name="activity_episodes" type="layout">@layout/activity_episodes_multipane</item>
+    <item name="activity_search" type="layout">@layout/activity_singlepane_drawer_wide</item>
 
 </resources>

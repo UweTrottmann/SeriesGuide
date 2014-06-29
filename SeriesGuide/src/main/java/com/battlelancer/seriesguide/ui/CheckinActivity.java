@@ -48,7 +48,7 @@ import com.battlelancer.seriesguide.util.Utils;
  */
 public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCallbacks<Cursor> {
 
-    private static final int LOADER_ID = R.layout.checkin;
+    private static final int LOADER_ID = R.layout.activity_checkin;
 
     private EditText mSearchBox;
 
@@ -60,7 +60,7 @@ public class CheckinActivity extends BaseNavDrawerActivity implements LoaderCall
     protected void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
 
-        setContentView(R.layout.checkin);
+        setContentView(R.layout.activity_checkin);
         setupNavDrawer();
 
         setupActionBar();

@@ -60,7 +60,7 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
         // The TvdbAddFragment uses a progress bar
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.addactivity_pager);
+        setContentView(R.layout.activity_addshow);
         setupNavDrawer();
 
         setupActionBar();
