@@ -82,7 +82,7 @@
 
         <!-- Shows -->
         <activity
-            android:name="com.battlelancer.seriesguide.ui.AddActivity"
+            android:name=".ui.AddShowActivity"
             android:label="@string/action_shows_add"
             android:launchMode="singleTop" >
             <meta-data

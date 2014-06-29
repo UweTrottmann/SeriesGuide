@@ -53,7 +53,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
 import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
@@ -630,7 +630,7 @@ public class ShowsFragment extends Fragment implements
                         return true;
                     }
                     case R.id.menu_action_shows_manage_lists: {
-                        ListsDialogFragment.showListsDialog(mShowTvdbId, ListItemTypes.SHOW,
+                        ManageListsDialogFragment.showListsDialog(mShowTvdbId, ListItemTypes.SHOW,
                                 getFragmentManager());
                         fireTrackerEventContext("Manage lists");
                         return true;

@@ -93,7 +93,7 @@ public class TraktRateDialogFragment extends DialogFragment {
 
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
-        final View layout = inflater.inflate(R.layout.trakt_rate_dialog, null);
+        final View layout = inflater.inflate(R.layout.dialog_trakt_rate, null);
 
         layout.findViewById(R.id.totallyninja).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

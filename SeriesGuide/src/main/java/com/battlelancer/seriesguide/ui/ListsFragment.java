@@ -38,7 +38,7 @@ import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -282,7 +282,7 @@ public class ListsFragment extends Fragment implements
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_action_lists_manage: {
-                        ListsDialogFragment.showListsDialog(mItemTvdbId, mItemType,
+                        ManageListsDialogFragment.showListsDialog(mItemTvdbId, mItemType,
                                 getFragmentManager());
                         fireTrackerEvent("Manage lists");
                         return true;

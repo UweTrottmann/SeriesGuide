@@ -30,7 +30,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -100,7 +100,7 @@ public abstract class AddFragment extends Fragment {
             // display more details in a dialog
             int position = mGrid.getPositionForView(v);
             SearchResult show = mAdapter.getItem(position);
-            AddDialogFragment.showAddDialog(show, getFragmentManager());
+            AddShowDialogFragment.showAddDialog(show, getFragmentManager());
         }
     };
 

@@ -63,11 +63,11 @@ import timber.log.Timber;
  * Displays a dialog displaying all lists, allowing to add the given show, season or episode to any
  * number of them.
  */
-public class ListsDialogFragment extends DialogFragment implements
+public class ManageListsDialogFragment extends DialogFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener {
 
-    public static ListsDialogFragment newInstance(int itemTvdbId, int itemType) {
-        ListsDialogFragment f = new ListsDialogFragment();
+    public static ManageListsDialogFragment newInstance(int itemTvdbId, int itemType) {
+        ManageListsDialogFragment f = new ManageListsDialogFragment();
         Bundle args = new Bundle();
         args.putInt(InitBundle.INT_ITEM_TVDB_ID, itemTvdbId);
         args.putInt(InitBundle.INT_ITEM_TYPE, itemType);
@@ -99,7 +99,7 @@ public class ListsDialogFragment extends DialogFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        final View layout = inflater.inflate(R.layout.list_dialog, null);
+        final View layout = inflater.inflate(R.layout.dialog_manage_lists, null);
 
         // buttons
         Button dontAddButton = (Button) layout.findViewById(R.id.buttonNegative);
@@ -362,7 +362,7 @@ public class ListsDialogFragment extends DialogFragment implements
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = ListsDialogFragment.newInstance(itemTvdbId, itemType);
+        DialogFragment newFragment = ManageListsDialogFragment.newInstance(itemTvdbId, itemType);
         newFragment.show(ft, "listsdialog");
     }
 }

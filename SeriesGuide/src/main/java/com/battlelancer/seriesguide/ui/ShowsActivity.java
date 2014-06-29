@@ -58,7 +58,7 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
-import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.ui.streams.FriendsEpisodeStreamFragment;
 import com.battlelancer.seriesguide.ui.streams.UserEpisodeStreamFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -75,7 +75,7 @@ import timber.log.Timber;
  * Provides the apps main screen, displaying a list of shows and their next episodes.
  */
 public class ShowsActivity extends BaseTopShowsActivity implements
-        AddDialogFragment.OnAddShowListener, OnFirstRunDismissedListener {
+        AddShowDialogFragment.OnAddShowListener, OnFirstRunDismissedListener {
 
     protected static final String TAG = "Shows";
 
@@ -160,7 +160,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
                 if (showTvdbId > 0) {
                     SearchResult show = new SearchResult();
                     show.tvdbid = showTvdbId;
-                    AddDialogFragment.showAddDialog(show, getSupportFragmentManager());
+                    AddShowDialogFragment.showAddDialog(show, getSupportFragmentManager());
                 }
             }
         }
@@ -178,7 +178,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
                 // no such show, offer to add it
                 SearchResult show = new SearchResult();
                 show.tvdbid = showTvdbId;
-                AddDialogFragment.showAddDialog(show, getSupportFragmentManager());
+                AddShowDialogFragment.showAddDialog(show, getSupportFragmentManager());
             }
         }
 

@@ -48,7 +48,7 @@ import timber.log.Timber;
 /**
  * A {@link DialogFragment} allowing the user to decide whether to add a show to SeriesGuide.
  */
-public class AddDialogFragment extends DialogFragment {
+public class AddShowDialogFragment extends DialogFragment {
 
     public static final String TAG = "AddDialogFragment";
     private static final String KEY_SHOW_TVDBID = "show_tvdbid";
@@ -70,12 +70,12 @@ public class AddDialogFragment extends DialogFragment {
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = AddDialogFragment.newInstance(show);
+        DialogFragment newFragment = AddShowDialogFragment.newInstance(show);
         newFragment.show(ft, TAG);
     }
 
-    public static AddDialogFragment newInstance(SearchResult show) {
-        AddDialogFragment f = new AddDialogFragment();
+    public static AddShowDialogFragment newInstance(SearchResult show) {
+        AddShowDialogFragment f = new AddShowDialogFragment();
         Bundle args = new Bundle();
         args.putParcelable(InitBundle.SEARCH_RESULT, show);
         f.setArguments(args);
@@ -135,7 +135,7 @@ public class AddDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        final View v = inflater.inflate(R.layout.add_dialog, container, false);
+        final View v = inflater.inflate(R.layout.dialog_addshow, container, false);
         ButterKnife.inject(this, v);
 
         mPoster.setVisibility(View.GONE);
