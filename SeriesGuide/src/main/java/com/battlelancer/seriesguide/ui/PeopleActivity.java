@@ -144,6 +144,7 @@ public class PeopleActivity extends BaseActivity {
             View rootView = inflater.inflate(R.layout.fragment_people, container, false);
 
             mListView = ButterKnife.findById(rootView, R.id.listViewPeople);
+            mListView.setEmptyView(rootView.findViewById(R.id.emptyViewPeople));
 
             return rootView;
         }
@@ -172,7 +173,7 @@ public class PeopleActivity extends BaseActivity {
             @Override
             public void onLoadFinished(Loader<Credits> loader, Credits data) {
                 if (data == null) {
-                    // TODO display network error
+                    mAdapter.setData(null);
                     return;
                 }
                 if (mPeopleType == PeopleType.CAST) {

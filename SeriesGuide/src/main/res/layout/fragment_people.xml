@@ -20,9 +20,19 @@
     android:layout_height="match_parent"
     tools:context="com.battlelancer.seriesguide.ui.PeopleActivity.PeopleFragment">
 
+    <TextView
+        android:id="@+id/emptyViewPeople"
+        android:layout_width="@dimen/empty_view_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/offline"
+        android:textAppearance="@style/TextAppearance.Light" />
+
     <ListView
         android:id="@+id/listViewPeople"
         style="@style/Page.Centered"
+        android:clipToPadding="false"
         android:listSelector="@color/transparent" />
 
 </FrameLayout>
