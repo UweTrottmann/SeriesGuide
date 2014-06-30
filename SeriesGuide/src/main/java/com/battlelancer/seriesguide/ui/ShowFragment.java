@@ -35,16 +35,20 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.items.Series;
+import com.battlelancer.seriesguide.loaders.ShowCreditsLoader;
 import com.battlelancer.seriesguide.loaders.ShowLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
+import com.battlelancer.seriesguide.util.PeopleListHelper;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -53,13 +57,14 @@ import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
+import com.uwetrottmann.tmdb.entities.Credits;
 import de.greenrobot.event.EventBus;
 import java.util.Date;
 
 /**
  *
  */
-public class ShowFragment extends Fragment implements LoaderCallbacks<Series> {
+public class ShowFragment extends Fragment {
 
     public interface InitBundle {
 
@@ -67,8 +72,6 @@ public class ShowFragment extends Fragment implements LoaderCallbacks<Series> {
     }
 
     private static final String TAG = "Show Info";
-
-    private static final int LOADER_ID = R.layout.fragment_show;
 
     public static ShowFragment newInstance(int showTvdbId) {
         ShowFragment f = new ShowFragment();
@@ -84,17 +87,36 @@ public class ShowFragment extends Fragment implements LoaderCallbacks<Series> {
 
     private TraktSummaryTask mTraktTask;
 
+    private View mCastView;
+    private LinearLayout mCastContainer;
+    private View mCrewView;
+    private LinearLayout mCrewContainer;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_show, container, false);
+        View v = inflater.inflate(R.layout.fragment_show, container, false);
+
+        mCastView = v.findViewById(R.id.containerShowCast);
+        TextView castHeader = ButterKnife.findById(mCastView, R.id.textViewPeopleHeader);
+        castHeader.setText(R.string.movie_cast);
+        mCastContainer = ButterKnife.findById(mCastView, R.id.containerPeople);
+
+        mCrewView = v.findViewById(R.id.containerShowCrew);
+        TextView crewHeader = ButterKnife.findById(mCrewView, R.id.textViewPeopleHeader);
+        crewHeader.setText(R.string.movie_crew);
+        mCrewContainer = ButterKnife.findById(mCrewView, R.id.containerPeople);
+
+        return v;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getLoaderManager().initLoader(LOADER_ID, null, this);
+        getLoaderManager().initLoader(OverviewActivity.SHOW_LOADER_ID, null, mShowLoaderCallbacks);
+        getLoaderManager().initLoader(OverviewActivity.SHOW_CREDITS_LOADER_ID, null,
+                mCreditsLoaderCallbacks);
 
         setHasOptionsMenu(true);
     }
@@ -140,30 +162,33 @@ public class ShowFragment extends Fragment implements LoaderCallbacks<Series> {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public Loader<Series> onCreateLoader(int loaderId, Bundle args) {
-        return new ShowLoader(getActivity(), getShowTvdbId());
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Series> loader, Series data) {
-        if (data != null) {
-            mShow = data;
-        }
-        if (isAdded()) {
-            onPopulateShowData();
-        }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Series> loader) {
-    }
-
     public void onEvent(TraktActionCompleteEvent event) {
         if (event.mTraktAction == TraktAction.RATE_SHOW) {
             onLoadTraktRatings(false);
         }
     }
+
+    private LoaderCallbacks<Series> mShowLoaderCallbacks = new LoaderCallbacks<Series>() {
+        @Override
+        public Loader<Series> onCreateLoader(int id, Bundle args) {
+            return new ShowLoader(getActivity(), getShowTvdbId());
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Series> loader, Series data) {
+            if (data != null) {
+                mShow = data;
+            }
+            if (isAdded()) {
+                onPopulateShowData();
+            }
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Series> loader) {
+            // do nothing
+        }
+    };
 
     private void onPopulateShowData() {
         if (mShow == null) {
@@ -218,8 +243,6 @@ public class ShowFragment extends Fragment implements LoaderCallbacks<Series> {
                 TimeTools.formatToDate(getActivity(), new Date(actualRelease)));
 
         // Others
-        Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewShowActors),
-                Utils.splitAndKitTVDBStrings(mShow.getActors()));
         Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewShowContentRating),
                 mShow.getContentRating());
         Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewShowGenres),
@@ -295,7 +318,8 @@ public class ShowFragment extends Fragment implements LoaderCallbacks<Series> {
                 ActivityCompat.startActivity(getActivity(), fullscreen,
                         ActivityOptionsCompat
                                 .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
-                                .toBundle());
+                                .toBundle()
+                );
             }
         });
 
@@ -306,6 +330,71 @@ public class ShowFragment extends Fragment implements LoaderCallbacks<Series> {
 
         // trakt ratings
         onLoadTraktRatings(true);
+    }
+
+    private LoaderCallbacks<Credits> mCreditsLoaderCallbacks = new LoaderCallbacks<Credits>() {
+        @Override
+        public Loader<Credits> onCreateLoader(int id, Bundle args) {
+            return new ShowCreditsLoader(getActivity(), getShowTvdbId(), true);
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Credits> loader, Credits data) {
+            if (isAdded()) {
+                populateCredits(data);
+            }
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Credits> loader) {
+
+        }
+    };
+
+    private void populateCredits(final Credits data) {
+        if (data == null) {
+            mCastView.setVisibility(View.GONE);
+            mCrewView.setVisibility(View.GONE);
+            return;
+        }
+
+        if (data.cast == null || data.cast.size() == 0) {
+            mCastView.setVisibility(View.GONE);
+        } else {
+            mCastView.setVisibility(View.VISIBLE);
+            PeopleListHelper.populateCast(getActivity(), getActivity().getLayoutInflater(),
+                    mCastContainer, data.cast, new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(v.getContext(), PeopleActivity.class)
+                                    .putExtra(PeopleActivity.InitBundle.PEOPLE_TYPE,
+                                            PeopleActivity.PeopleType.CAST.toString())
+                                    .putExtra(PeopleActivity.InitBundle.MEDIA_TYPE,
+                                            PeopleActivity.MediaType.SHOW.toString())
+                                    .putExtra(PeopleActivity.InitBundle.TMDB_ID, data.id));
+                        }
+                    }
+            );
+        }
+
+        if (data.crew == null || data.crew.size() == 0) {
+            mCrewView.setVisibility(View.GONE);
+        } else {
+            mCrewView.setVisibility(View.VISIBLE);
+            PeopleListHelper.populateCrew(getActivity(), getActivity().getLayoutInflater(),
+                    mCrewContainer, data.crew, new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(v.getContext(), PeopleActivity.class)
+                                    .putExtra(PeopleActivity.InitBundle.PEOPLE_TYPE,
+                                            PeopleActivity.PeopleType.CREW.toString())
+                                    .putExtra(PeopleActivity.InitBundle.MEDIA_TYPE,
+                                            PeopleActivity.MediaType.SHOW.toString())
+                                    .putExtra(PeopleActivity.InitBundle.TMDB_ID, data.id));
+                        }
+                    }
+            );
+        }
     }
 
     private void fireTrackerEvent(String label) {

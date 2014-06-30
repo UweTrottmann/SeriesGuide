@@ -50,6 +50,9 @@ import java.util.List;
  */
 public class OverviewActivity extends BaseNavDrawerActivity {
 
+    public static final int SHOW_LOADER_ID = 100;
+    public static final int SHOW_CREDITS_LOADER_ID = 101;
+
     private static final String TAG = "Overview";
 
     private int mShowId;
