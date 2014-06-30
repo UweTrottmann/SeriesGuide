@@ -25,6 +25,7 @@
   <string name="discard">Renunță</string>
   <string name="save_selection">Salvează selecția</string>
   <string name="search_hint">Căutaţi episoade</string>
+  <string name="action_display_all">Show all</string>
   <string name="updated">Actualizat la ultima versiune.</string>
   <string name="norating">n/a</string>
   <string name="unknown">necunoscut</string>
@@ -56,10 +57,12 @@
   <string name="trailer">Trailer</string>
   <string name="movie_cast">Distributie</string>
   <string name="movie_crew">Echipa</string>
-  <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">Sortare filme</string>
   <string name="action_movies_sort_title">Titlu</string>
   <string name="action_movies_sort_release">Data de lansare</string>
+  <string name="statistics_shows">Emisiuni</string>
+  <string name="statistics_episodes">Episoade</string>
+  <string name="statistics_movies">Filme</string>
   <string name="shows_with_next">%s cu următoarele episoade</string>
   <string name="shows_continuing">%s continuă</string>
   <string name="episodes_watched">%s urmărit</string>

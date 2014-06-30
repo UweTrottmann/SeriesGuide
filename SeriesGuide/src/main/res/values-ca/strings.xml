@@ -25,6 +25,7 @@
   <string name="discard">Descarta</string>
   <string name="save_selection">Guarda la selecció</string>
   <string name="search_hint">Cerca episodis</string>
+  <string name="action_display_all">Show all</string>
   <string name="updated">Actualitzat a la última versió.</string>
   <string name="norating">n/a</string>
   <string name="unknown">deconegut</string>
@@ -56,10 +57,12 @@
   <string name="trailer">Trailer</string>
   <string name="movie_cast">Repartiment</string>
   <string name="movie_crew">Equip</string>
-  <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">Curts</string>
   <string name="action_movies_sort_title">Títol</string>
   <string name="action_movies_sort_release">Data de llançament</string>
+  <string name="statistics_shows">Series</string>
+  <string name="statistics_episodes">Episodis</string>
+  <string name="statistics_movies">Pel·lícules</string>
   <string name="shows_with_next">%s amb episodis següents</string>
   <string name="shows_continuing">%s continuant</string>
   <string name="episodes_watched">%s mirat</string>

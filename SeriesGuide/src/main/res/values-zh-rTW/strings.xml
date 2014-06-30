@@ -25,6 +25,7 @@
   <string name="discard">放棄</string>
   <string name="save_selection">儲存所選項目</string>
   <string name="search_hint">搜尋集數</string>
+  <string name="action_display_all">Show all</string>
   <string name="updated">已更新到最新版本。</string>
   <string name="norating">無</string>
   <string name="unknown">不明</string>
@@ -56,10 +57,12 @@
   <string name="trailer">預告</string>
   <string name="movie_cast">Cast</string>
   <string name="movie_crew">Crew</string>
-  <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">Sort movies</string>
   <string name="action_movies_sort_title">依影集名稱</string>
   <string name="action_movies_sort_release">播出日期</string>
+  <string name="statistics_shows">影集</string>
+  <string name="statistics_episodes">集數</string>
+  <string name="statistics_movies">電影</string>
   <string name="shows_with_next">%s 影集有新的集數</string>
   <string name="shows_continuing">%s部影集仍在連載</string>
   <string name="episodes_watched">%s 集已看</string>

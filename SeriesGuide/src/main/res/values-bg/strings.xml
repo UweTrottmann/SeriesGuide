@@ -25,6 +25,7 @@
   <string name="discard">Откажи</string>
   <string name="save_selection">Запази избраните</string>
   <string name="search_hint">Търсене на епизоди</string>
+  <string name="action_display_all">Show all</string>
   <string name="updated">Актуализиран до последна версия.</string>
   <string name="norating">няма</string>
   <string name="unknown">неизвестен</string>
@@ -56,10 +57,12 @@
   <string name="trailer">Трейлър</string>
   <string name="movie_cast">В ролите</string>
   <string name="movie_crew">Екип</string>
-  <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">Подреждане на филми</string>
   <string name="action_movies_sort_title">Заглавие</string>
   <string name="action_movies_sort_release">Дата на издаване</string>
+  <string name="statistics_shows">ТВ предавания</string>
+  <string name="statistics_episodes">Епизоди</string>
+  <string name="statistics_movies">Филми</string>
   <string name="shows_with_next">%s със предстоящите епизоди</string>
   <string name="shows_continuing">%s продължаващи</string>
   <string name="episodes_watched">%s гледани</string>

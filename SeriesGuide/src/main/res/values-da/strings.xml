@@ -25,6 +25,7 @@
   <string name="discard">Kassér</string>
   <string name="save_selection">Gem markering</string>
   <string name="search_hint">Søg episoder</string>
+  <string name="action_display_all">Show all</string>
   <string name="updated">Opdateret til nyeste version.</string>
   <string name="norating">ikke tilgængelig</string>
   <string name="unknown">Ukendt</string>
@@ -56,10 +57,12 @@
   <string name="trailer">Trailer</string>
   <string name="movie_cast">Medvirkende</string>
   <string name="movie_crew">Besætning</string>
-  <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">Sortér film</string>
   <string name="action_movies_sort_title">Titel</string>
   <string name="action_movies_sort_release">Udgivelsesdato</string>
+  <string name="statistics_shows">Serier</string>
+  <string name="statistics_episodes">Episoder</string>
+  <string name="statistics_movies">Film</string>
   <string name="shows_with_next">%s med kommende episoder</string>
   <string name="shows_continuing">%s fortsætter</string>
   <string name="episodes_watched">%s sete</string>

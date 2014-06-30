@@ -25,6 +25,7 @@
   <string name="discard">Scarta</string>
   <string name="save_selection">Salva selezione</string>
   <string name="search_hint">Cerca episodi</string>
+  <string name="action_display_all">Show all</string>
   <string name="updated">Aggionato all\'ultima versione.</string>
   <string name="norating">non disponibile</string>
   <string name="unknown">sconosciuto</string>
@@ -56,10 +57,12 @@
   <string name="trailer">Trailer</string>
   <string name="movie_cast">Cast</string>
   <string name="movie_crew">Squadra</string>
-  <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">Ordina film</string>
   <string name="action_movies_sort_title">Titolo</string>
   <string name="action_movies_sort_release">Data di rilascio</string>
+  <string name="statistics_shows">Serie TV</string>
+  <string name="statistics_episodes">Episodi</string>
+  <string name="statistics_movies">Film</string>
   <string name="shows_with_next">%s con episodi successivi</string>
   <string name="shows_continuing">%s in proseguimento</string>
   <string name="episodes_watched">%s guardati</string>
