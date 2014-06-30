@@ -25,14 +25,8 @@
 
     <TextView
         android:id="@+id/textViewTabStripItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="@dimen/large_padding"
-        android:textColor="?attr/colorTabStripText"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        android:textAllCaps="true"
+        style="@style/Widget.SeriesGuide.Tab"
+        android:textAppearance="@style/TextAppearance.Tab"
         tools:text="Tab Item"/>
 
 </LinearLayout>

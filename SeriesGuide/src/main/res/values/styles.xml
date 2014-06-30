@@ -120,6 +120,13 @@
         <item name="android:textSize">@dimen/text_size_hyperlarge</item>
     </style>
 
+    <style name="TextAppearance.Tab">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/colorTabStripText</item>
+    </style>
+
     <!-- Widget styles -->
     <style name="Widget"/>
 
@@ -203,6 +210,15 @@
         <item name="android:textAppearance">@style/TextAppearance.Medium.Light</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">marquee</item>
+    </style>
+
+    <!-- Tabs -->
+    <style name="Widget.SeriesGuide.Tab">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">@dimen/tab_padding_horizontal</item>
+        <item name="android:paddingRight">@dimen/tab_padding_horizontal</item>
     </style>
 
     <!-- Dialogs -->
