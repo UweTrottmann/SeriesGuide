@@ -8,6 +8,11 @@ All dates are in the European Central timezone.
 Version 16 *(in development)*
 -----------------------------
 
+#### 16-beta5 *(2014-06-30)*
+
+* FEATURE Display cast and crew with headshots, name and character respectively job.
+* TWEAK Increase tab size on large+ screens (tablets).
+
 #### 16-beta4 *(2014-06-27)*
 
 * FIX Episode title in notifications not visible on Android Wear devices.
