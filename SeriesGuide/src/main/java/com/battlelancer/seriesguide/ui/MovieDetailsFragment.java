@@ -35,6 +35,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -48,6 +49,7 @@ import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.MovieTools;
+import com.battlelancer.seriesguide.util.PeopleListHelper;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TmdbTools;
@@ -124,13 +126,15 @@ public class MovieDetailsFragment extends Fragment {
 
     @InjectView(R.id.textViewRatingsTraktUser) TextView mRatingsTraktUserValue;
 
-    @InjectView(R.id.labelCast) View mLabelCast;
+    @InjectView(R.id.containerMovieCast) View mCastView;
 
-    @InjectView(R.id.textViewMovieCast) TextView mMovieCast;
+    TextView mCastLabel;
+    LinearLayout mCastContainer;
 
-    @InjectView(R.id.labelCrew) View mLabelCrew;
+    @InjectView(R.id.containerMovieCrew) View mCrewView;
 
-    @InjectView(R.id.textViewMovieCrew) TextView mMovieCrew;
+    TextView mCrewLabel;
+    LinearLayout mCrewContainer;
 
     @InjectView(R.id.buttonMovieComments) Button mCommentsButton;
 
@@ -142,7 +146,7 @@ public class MovieDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.movie_details_fragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_movie, container, false);
         ButterKnife.inject(this, v);
 
         mProgressBar.setVisibility(View.VISIBLE);
@@ -159,8 +163,14 @@ public class MovieDetailsFragment extends Fragment {
         mRatingsTmdbLabel.setText(R.string.tmdb);
 
         // cast and crew labels
-        mLabelCast.setVisibility(View.GONE);
-        mLabelCrew.setVisibility(View.GONE);
+        mCastLabel = ButterKnife.findById(mCastView, R.id.textViewPeopleHeader);
+        mCastLabel.setText(R.string.movie_cast);
+        mCastContainer = ButterKnife.findById(mCastView, R.id.containerPeople);
+        mCastView.setVisibility(View.GONE);
+        mCrewLabel = ButterKnife.findById(mCrewView, R.id.textViewPeopleHeader);
+        mCrewLabel.setText(R.string.movie_crew);
+        mCrewContainer = ButterKnife.findById(mCrewView, R.id.containerPeople);
+        mCrewView.setVisibility(View.GONE);
 
         // comments button
         mDivider.setVisibility(View.GONE);
@@ -459,38 +469,49 @@ public class MovieDetailsFragment extends Fragment {
         }
     }
 
-    private void populateMovieCreditsViews() {
-        // always show labels
-        mLabelCast.setVisibility(View.VISIBLE);
-        mLabelCrew.setVisibility(View.VISIBLE);
+    private void populateMovieCreditsViews(final Credits credits) {
+        if (credits == null) {
+            mCastView.setVisibility(View.GONE);
+            mCrewView.setVisibility(View.GONE);
+            return;
+        }
 
         // cast members
-        if (mCredits.cast != null) {
-            StringBuilder castString = new StringBuilder();
-            for (int i = 0; i < mCredits.cast.size(); i++) {
-                Credits.CastMember castMember = mCredits.cast.get(i);
-                castString.append(getString(R.string.movie_person_in_role, castMember.name,
-                        castMember.character));
-                if (i < mCredits.cast.size() - 1) {
-                    castString.append("\n");
-                }
-            }
-            mMovieCast.setText(castString.toString());
+        if (credits.cast == null || credits.cast.size() == 0) {
+            mCastView.setVisibility(View.GONE);
+        } else {
+            mCastView.setVisibility(View.VISIBLE);
+            PeopleListHelper.populateCast(getActivity(), getActivity().getLayoutInflater(),
+                    mCastContainer, credits.cast, new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(v.getContext(), PeopleActivity.class)
+                                    .putExtra(PeopleActivity.InitBundle.PEOPLE_TYPE,
+                                            PeopleActivity.PeopleType.CAST.toString())
+                                    .putExtra(PeopleActivity.InitBundle.MEDIA_TYPE,
+                                            PeopleActivity.MediaType.MOVIE.toString())
+                                    .putExtra(PeopleActivity.InitBundle.TMDB_ID, credits.id));
+                        }
+                    });
         }
 
         // crew members
-        if (mCredits.crew != null) {
-            StringBuilder crewString = new StringBuilder();
-            for (int i = 0; i < mCredits.crew.size(); i++) {
-                Credits.CrewMember crewMember = mCredits.crew.get(i);
-                crewString.append(getString(R.string.movie_person_in_role, crewMember.name,
-                        crewMember.job));
-                if (i < mCredits.crew.size() - 1) {
-                    crewString.append("\n");
-                }
-            }
-
-            mMovieCrew.setText(crewString.toString());
+        if (credits.crew == null || credits.crew.size() == 0) {
+            mCrewView.setVisibility(View.GONE);
+        } else {
+            mCrewView.setVisibility(View.VISIBLE);
+            PeopleListHelper.populateCrew(getActivity(), getActivity().getLayoutInflater(),
+                    mCrewContainer, credits.crew, new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(v.getContext(), PeopleActivity.class)
+                                    .putExtra(PeopleActivity.InitBundle.PEOPLE_TYPE,
+                                            PeopleActivity.PeopleType.CREW.toString())
+                                    .putExtra(PeopleActivity.InitBundle.MEDIA_TYPE,
+                                            PeopleActivity.MediaType.MOVIE.toString())
+                                    .putExtra(PeopleActivity.InitBundle.TMDB_ID, credits.id));
+                        }
+                    });
         }
     }
 
@@ -584,9 +605,8 @@ public class MovieDetailsFragment extends Fragment {
 
         @Override
         public void onLoadFinished(Loader<Credits> creditsLoader, Credits credits) {
-            if (credits != null) {
-                mCredits = credits;
-                populateMovieCreditsViews();
+            if (isAdded()) {
+                populateMovieCreditsViews(credits);
             }
         }
 

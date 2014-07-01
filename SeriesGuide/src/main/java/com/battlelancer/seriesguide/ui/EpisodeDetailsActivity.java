@@ -71,7 +71,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.episode_pager);
+        setContentView(R.layout.activity_episode);
         setupNavDrawer();
 
         setupViews();

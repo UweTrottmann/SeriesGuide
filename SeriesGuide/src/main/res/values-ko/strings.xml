@@ -25,6 +25,7 @@
   <string name="discard">취소</string>
   <string name="save_selection">선택한 것 저장</string>
   <string name="search_hint">에피소드 검색</string>
+  <string name="action_display_all">Show all</string>
   <string name="updated">최신버전으로 업데이트 완료.</string>
   <string name="norating">n/a</string>
   <string name="unknown">알 수 없음</string>
@@ -56,10 +57,12 @@
   <string name="trailer">예고편</string>
   <string name="movie_cast">Cast</string>
   <string name="movie_crew">Crew</string>
-  <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">Sort movies</string>
   <string name="action_movies_sort_title">제목</string>
   <string name="action_movies_sort_release">첫 방영 날짜</string>
+  <string name="statistics_shows">쇼</string>
+  <string name="statistics_episodes">에피소드</string>
+  <string name="statistics_movies">영화</string>
   <string name="shows_with_next">%s 개의 다음 에피소드</string>
   <string name="shows_continuing">%s 방영 중</string>
   <string name="episodes_watched">%s 시청함</string>

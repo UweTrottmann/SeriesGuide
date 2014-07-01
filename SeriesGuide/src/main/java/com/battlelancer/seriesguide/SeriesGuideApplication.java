@@ -64,10 +64,6 @@ public class SeriesGuideApplication extends Application {
         // Set provider authority
         CONTENT_AUTHORITY = getString(R.string.provider_authority);
 
-        // Initialize settings on first run
-        PreferenceManager.setDefaultValues(this, R.xml.settings_basic, false);
-        PreferenceManager.setDefaultValues(this, R.xml.settings_advanced, false);
-
         // Load the current theme into a global variable
         Utils.updateTheme(DisplaySettings.getThemeIndex(this));
 

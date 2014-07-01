@@ -94,7 +94,7 @@ public class ConnectTraktCredentialsFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.trakt_credentials_dialog, container, false);
+        View v = inflater.inflate(R.layout.fragment_connect_trakt_credentials, container, false);
         ButterKnife.inject(this, v);
 
         // status strip

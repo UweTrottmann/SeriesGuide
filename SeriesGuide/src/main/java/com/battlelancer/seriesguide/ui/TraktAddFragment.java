@@ -73,7 +73,7 @@ public class TraktAddFragment extends AddFragment {
         // if (container == null) {
         // return null;
         // }
-        return inflater.inflate(R.layout.traktaddfragment, container, false);
+        return inflater.inflate(R.layout.fragment_addshow_trakt, container, false);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class TraktAddFragment extends AddFragment {
         if (mAdapter == null) {
             mContentContainer.setVisibility(View.GONE);
             mProgressIndicator.setVisibility(View.VISIBLE);
-            mAdapter = new AddAdapter(getActivity(), R.layout.add_searchresult,
+            mAdapter = new AddAdapter(getActivity(), R.layout.item_addshow,
                     new ArrayList<SearchResult>(), mDetailsButtonListener);
 
             AndroidUtils.executeOnPool(new GetTraktShowsTask(getActivity()), type);

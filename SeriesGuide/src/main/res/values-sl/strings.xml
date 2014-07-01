@@ -25,6 +25,7 @@
   <string name="discard">Zavrzi</string>
   <string name="save_selection">Shrani izbiro</string>
   <string name="search_hint">Iskanje epizode</string>
+  <string name="action_display_all">Show all</string>
   <string name="updated">Posodobljeno na najnovejšo verzijo.</string>
   <string name="norating">n/a</string>
   <string name="unknown">neznano</string>
@@ -56,10 +57,12 @@
   <string name="trailer">Predlogled</string>
   <string name="movie_cast">Cast</string>
   <string name="movie_crew">Crew</string>
-  <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">Sort movies</string>
   <string name="action_movies_sort_title">Naslov</string>
   <string name="action_movies_sort_release">Datum izdaje</string>
+  <string name="statistics_shows">Oddaje</string>
+  <string name="statistics_episodes">Epizode</string>
+  <string name="statistics_movies">Filmi</string>
   <string name="shows_with_next">%s z naslednjimi epizodami</string>
   <string name="shows_continuing">%s nadaljevanje</string>
   <string name="episodes_watched">%s pregledal</string>

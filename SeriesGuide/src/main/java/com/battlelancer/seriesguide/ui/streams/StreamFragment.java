@@ -38,7 +38,7 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
-import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.ActivityItem;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
@@ -202,7 +202,7 @@ public abstract class StreamFragment extends Fragment implements
             showToAdd.tvdbid = activity.show.tvdb_id;
             showToAdd.title = activity.show.title;
             showToAdd.overview = activity.show.overview;
-            AddDialogFragment.showAddDialog(showToAdd, getFragmentManager());
+            AddShowDialogFragment.showAddDialog(showToAdd, getFragmentManager());
         }
 
         episodeQuery.close();

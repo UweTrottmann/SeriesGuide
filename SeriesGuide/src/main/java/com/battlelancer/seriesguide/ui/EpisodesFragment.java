@@ -45,7 +45,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.Utils;
@@ -98,7 +98,7 @@ public class EpisodesFragment extends ListFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.list_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_episodes, container, false);
     }
 
     @Override
@@ -254,7 +254,8 @@ public class EpisodesFragment extends ListFragment
                         return true;
                     }
                     case R.id.menu_action_episodes_manage_lists: {
-                        ListsDialogFragment.showListsDialog(episodeTvdbId, ListItemTypes.EPISODE,
+                        ManageListsDialogFragment.showListsDialog(episodeTvdbId,
+                                ListItemTypes.EPISODE,
                                 getFragmentManager());
                         fireTrackerEventContextMenu("Manage lists");
                         return true;

@@ -27,20 +27,19 @@
         android:textAppearance="@style/TextAppearance.Light"
         android:textIsSelectable="true" />
 
-    <TextView
-        style="@style/DefaultPadding.Blocks.WithTopMargin"
-        android:layout_width="wrap_content"
+    <include
+        layout="@layout/people_list"
+        android:id="@+id/containerShowCast"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/show_actors"
-        android:textAppearance="@style/TextAppearance.Small.Label" />
+        android:layout_marginBottom="@dimen/default_padding" />
 
-    <TextView
-        android:id="@+id/textViewShowActors"
-        style="@style/DefaultPadding.Blocks.WithBottomMargin"
-        android:layout_width="wrap_content"
+    <include
+        layout="@layout/people_list"
+        android:id="@+id/containerShowCrew"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.Light"
-        android:textIsSelectable="true" />
+        android:layout_marginBottom="@dimen/default_padding" />
 
     <TextView
         style="@style/DefaultPadding.Blocks.WithTopMargin"

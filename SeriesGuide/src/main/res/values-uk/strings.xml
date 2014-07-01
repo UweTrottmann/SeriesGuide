@@ -25,6 +25,7 @@
   <string name="discard">Відмінити</string>
   <string name="save_selection">Зберегти вибране</string>
   <string name="search_hint">Пошук серій</string>
+  <string name="action_display_all">Show all</string>
   <string name="updated">Оновлено до останньої версії.</string>
   <string name="norating">Нема даних</string>
   <string name="unknown">Невідомо</string>
@@ -56,10 +57,12 @@
   <string name="trailer">Трейлер</string>
   <string name="movie_cast">У ролях</string>
   <string name="movie_crew">Знімальна група</string>
-  <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">Сортувати фільми</string>
   <string name="action_movies_sort_title">Заголовок</string>
   <string name="action_movies_sort_release">Дата релізу</string>
+  <string name="statistics_shows">Серіали</string>
+  <string name="statistics_episodes">Серії</string>
+  <string name="statistics_movies">Фільми</string>
   <string name="shows_with_next">%s з новою серією</string>
   <string name="shows_continuing">%s продовжується</string>
   <string name="episodes_watched">%s переглянуто</string>

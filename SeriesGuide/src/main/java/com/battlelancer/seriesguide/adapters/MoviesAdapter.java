@@ -38,7 +38,7 @@ import java.util.List;
  */
 public class MoviesAdapter extends ArrayAdapter<Movie> {
 
-    private static int LAYOUT = R.layout.movie_item;
+    private static int LAYOUT = R.layout.item_movie;
 
     private LayoutInflater mInflater;
 

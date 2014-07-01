@@ -33,7 +33,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
 
     protected LayoutInflater mLayoutInflater;
 
-    private final int LAYOUT = R.layout.shows_row;
+    private final int LAYOUT = R.layout.item_show;
 
     public BaseShowsAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);

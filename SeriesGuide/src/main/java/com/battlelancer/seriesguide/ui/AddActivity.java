@@ -34,8 +34,8 @@ import android.widget.EditText;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
+import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
@@ -60,7 +60,7 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
         // The TvdbAddFragment uses a progress bar
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.addactivity_pager);
+        setContentView(R.layout.activity_addshow);
         setupNavDrawer();
 
         setupActionBar();
@@ -133,7 +133,7 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
         show.overview = new String(msg.getRecords()[2].getPayload());
 
         // display add dialog
-        AddDialogFragment.showAddDialog(show, getSupportFragmentManager());
+        AddShowDialogFragment.showAddDialog(show, getSupportFragmentManager());
     }
 
     public static class AddPagerAdapter extends FragmentPagerAdapter {

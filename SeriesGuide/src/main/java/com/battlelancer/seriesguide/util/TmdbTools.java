@@ -19,9 +19,29 @@ package com.battlelancer.seriesguide.util;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import com.battlelancer.seriesguide.settings.TmdbSettings;
 import java.text.DecimalFormat;
 
 public class TmdbTools {
+
+    public enum ProfileImageSize {
+
+        W45("w45"),
+        W185("w185"),
+        H632("h632"),
+        ORIGINAL("original");
+
+        private final String value;
+
+        private ProfileImageSize(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return value;
+        }
+    }
 
     private static final String BASE_URL = "https://www.themoviedb.org/";
     private static final String PATH_MOVIES = "movie/";
@@ -43,5 +63,13 @@ public class TmdbTools {
 
     private static String buildMovieUrl(int movieTmdbId) {
         return BASE_URL + PATH_MOVIES + movieTmdbId;
+    }
+
+    /**
+     * Build url to a profile image using the given size spec and current TMDb image url (see
+     * {@link com.battlelancer.seriesguide.settings.TmdbSettings#getImageBaseUrl(android.content.Context)}.
+     */
+    public static String buildProfileImageUrl(Context context, String path, ProfileImageSize size) {
+        return TmdbSettings.getImageBaseUrl(context) + size + path;
     }
 }

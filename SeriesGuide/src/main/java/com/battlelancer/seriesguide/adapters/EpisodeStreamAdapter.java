@@ -47,7 +47,7 @@ public class EpisodeStreamAdapter extends SectionedStreamAdapter {
         ViewHolder holder;
 
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.friend, parent, false);
+            convertView = mInflater.inflate(R.layout.item_friend, parent, false);
 
             holder = new ViewHolder();
             holder.name = (TextView) convertView.findViewById(R.id.textViewFriendUsername);

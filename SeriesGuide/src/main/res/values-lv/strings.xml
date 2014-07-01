@@ -25,6 +25,7 @@
   <string name="discard">Atmest</string>
   <string name="save_selection">Saglabāt izvēli</string>
   <string name="search_hint">Meklēt epizodēs</string>
+  <string name="action_display_all">Show all</string>
   <string name="updated">Atjaunināts uz jaunāko versiju.</string>
   <string name="norating">n/a</string>
   <string name="unknown">nezināms</string>
@@ -56,10 +57,12 @@
   <string name="trailer">Treileris</string>
   <string name="movie_cast">Lomās</string>
   <string name="movie_crew">Komanda</string>
-  <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">Kārtot filmas</string>
   <string name="action_movies_sort_title">Nosaukums</string>
   <string name="action_movies_sort_release">Izlaišanas datums</string>
+  <string name="statistics_shows">Šovi</string>
+  <string name="statistics_episodes">Epizodes</string>
+  <string name="statistics_movies">Filmas</string>
   <string name="shows_with_next">%s ar nākamām epizodēm</string>
   <string name="shows_continuing">%s kuras turpinājas</string>
   <string name="episodes_watched">%s noskatītas</string>

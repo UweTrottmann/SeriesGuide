@@ -36,7 +36,7 @@ import java.util.Date;
 
 public class EpisodesAdapter extends CursorAdapter {
 
-    private static final int LAYOUT = R.layout.episode_row;
+    private static final int LAYOUT = R.layout.item_episode;
 
     private LayoutInflater mLayoutInflater;
 

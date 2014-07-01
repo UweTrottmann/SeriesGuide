@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item name="overview" type="layout">@layout/overview_multipane_wide</item>
+    <item name="activity_episodes" type="layout">@layout/activity_episodes_multipane_wide</item>
+    <item name="activity_overview" type="layout">@layout/activity_overview_multipane_wide</item>
+    <item name="activity_search" type="layout">@layout/activity_singlepane_drawer_wide</item>
     <item name="fragment_show" type="layout">@layout/fragment_show_regular</item>
-    <item name="episodes" type="layout">@layout/episodes_multipane_wide</item>
-    <item name="search" type="layout">@layout/activity_singlepane_drawer_wide</item>
-    <item name="add_searchresult" type="layout">@layout/add_searchresult_wide</item>
-    <item name="shows_row" type="layout">@layout/shows_row_wide</item>
+    <item name="item_addshow" type="layout">@layout/item_addshow_wide</item>
+    <item name="item_show" type="layout">@layout/item_show_wide</item>
 
     <bool name="isLargeTablet">true</bool>
 

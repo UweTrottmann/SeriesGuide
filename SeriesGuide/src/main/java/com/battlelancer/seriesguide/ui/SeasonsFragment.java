@@ -48,7 +48,7 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask;
@@ -114,7 +114,7 @@ public class SeasonsFragment extends ListFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.seasons_fragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_seasons, container, false);
 
         mButtonWatchedAll = (ImageView) v.findViewById(R.id.imageViewSeasonsWatchedToggle);
         mButtonCollectedAll = (ImageView) v.findViewById(R.id.imageViewSeasonsCollectedToggle);
@@ -336,7 +336,8 @@ public class SeasonsFragment extends ListFragment implements
                         return true;
                     }
                     case R.id.menu_action_seasons_manage_lists: {
-                        ListsDialogFragment.showListsDialog(seasonTvdbId, ListItemTypes.SEASON,
+                        ManageListsDialogFragment.showListsDialog(seasonTvdbId,
+                                ListItemTypes.SEASON,
                                 getFragmentManager());
                         fireTrackerEventContextMenu("Manage lists");
                         return true;

@@ -36,7 +36,7 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 public class MoviesCursorAdapter extends CursorAdapter {
 
-    private final int LAYOUT = R.layout.movie_item;
+    private final int LAYOUT = R.layout.item_movie;
 
     private LayoutInflater mLayoutInflater;
 

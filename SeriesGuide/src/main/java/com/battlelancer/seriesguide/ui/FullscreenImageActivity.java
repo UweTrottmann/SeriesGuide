@@ -64,7 +64,7 @@ public class FullscreenImageActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fullscreen_image_activity);
+        setContentView(R.layout.activity_fullscreen_image);
 
         setupActionBar();
         setupViews();

@@ -25,6 +25,7 @@
   <string name="discard">Verwerfen</string>
   <string name="save_selection">Auswahl speichern</string>
   <string name="search_hint">Suche Folgen</string>
+  <string name="action_display_all">Alle anzeigen</string>
   <string name="updated">Auf neueste Version aktualisiert.</string>
   <string name="norating">n/a</string>
   <string name="unknown">unbekannt</string>
@@ -56,10 +57,12 @@
   <string name="trailer">Trailer</string>
   <string name="movie_cast">Besetzung</string>
   <string name="movie_crew">Crew</string>
-  <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">Filme sortieren</string>
   <string name="action_movies_sort_title">Titel</string>
   <string name="action_movies_sort_release">Erscheinungsdatum</string>
+  <string name="statistics_shows">Serien</string>
+  <string name="statistics_episodes">Folgen</string>
+  <string name="statistics_movies">Filme</string>
   <string name="shows_with_next">%s mit nächsten Folgen</string>
   <string name="shows_continuing">%s werden fortgesetzt</string>
   <string name="episodes_watched">%s angesehen</string>
@@ -384,7 +387,7 @@
     <item>auf Sendung</item>
     <item>5 min zuvor</item>
     <item>10 min zuvor</item>
-    <item>eine Stunde zuvor</item>
+    <item>1 Stunde zuvor</item>
   </string-array>
   <string name="smallwidget">SeriesGuide (klein)</string>
   <string name="bigwidget">SeriesGuide (mittel)</string>

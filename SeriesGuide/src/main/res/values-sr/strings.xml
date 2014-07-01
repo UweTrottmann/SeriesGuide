@@ -25,6 +25,7 @@
   <string name="discard">Одбаци</string>
   <string name="save_selection">Сачувај изабрано</string>
   <string name="search_hint">Тражи епизоде</string>
+  <string name="action_display_all">Show all</string>
   <string name="updated">Ажурирано на последњу верзију.</string>
   <string name="norating">непознато</string>
   <string name="unknown">непознато</string>
@@ -56,10 +57,12 @@
   <string name="trailer">Трејлер</string>
   <string name="movie_cast">Улоге</string>
   <string name="movie_crew">Екипа</string>
-  <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">Сортирај филмове</string>
   <string name="action_movies_sort_title">Наслов</string>
   <string name="action_movies_sort_release">Датум емитовања</string>
+  <string name="statistics_shows">Серије</string>
+  <string name="statistics_episodes">Епизоде</string>
+  <string name="statistics_movies">Филмови</string>
   <string name="shows_with_next">%s са следећим епизодама</string>
   <string name="shows_continuing">%s се наставља</string>
   <string name="episodes_watched">%s погледано</string>

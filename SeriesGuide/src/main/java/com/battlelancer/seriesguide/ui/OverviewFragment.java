@@ -59,7 +59,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -132,7 +132,7 @@ public class OverviewFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.overview_fragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_overview, container, false);
         v.findViewById(R.id.imageViewFavorite).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -251,7 +251,7 @@ public class OverviewFragment extends Fragment implements
         } else if (itemId == R.id.menu_overview_manage_lists) {
             fireTrackerEvent("Manage lists");
             if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()) {
-                ListsDialogFragment.showListsDialog(
+                ManageListsDialogFragment.showListsDialog(
                         mCurrentEpisodeCursor.getInt(EpisodeQuery._ID),
                         ListItemTypes.EPISODE, getFragmentManager());
             }

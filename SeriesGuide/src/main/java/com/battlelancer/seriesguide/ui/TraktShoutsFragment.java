@@ -132,7 +132,7 @@ public class TraktShoutsFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.shouts_fragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_comments, container, false);
         ButterKnife.inject(this, v);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);

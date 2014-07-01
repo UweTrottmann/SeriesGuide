@@ -50,6 +50,9 @@ import java.util.List;
  */
 public class OverviewActivity extends BaseNavDrawerActivity {
 
+    public static final int SHOW_LOADER_ID = 100;
+    public static final int SHOW_CREDITS_LOADER_ID = 101;
+
     private static final String TAG = "Overview";
 
     private int mShowId;
@@ -60,7 +63,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.overview);
+        setContentView(R.layout.activity_overview);
         setupNavDrawer();
 
         mShowId = getIntent().getIntExtra(OverviewFragment.InitBundle.SHOW_TVDBID, -1);

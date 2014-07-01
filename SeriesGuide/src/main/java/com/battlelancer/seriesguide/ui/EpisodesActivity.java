@@ -90,7 +90,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.episodes);
+        setContentView(R.layout.activity_episodes);
         setupNavDrawer();
 
         // if coming from a notification, set last cleared time

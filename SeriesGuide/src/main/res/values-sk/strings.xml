@@ -25,6 +25,7 @@
   <string name="discard">Zrušiť</string>
   <string name="save_selection">Uložiť výber</string>
   <string name="search_hint">Hľadať epizódy</string>
+  <string name="action_display_all">Show all</string>
   <string name="updated">Aktualizované na najnovšiu verziu.</string>
   <string name="norating">nedostupné</string>
   <string name="unknown">neznámy</string>
@@ -56,10 +57,12 @@
   <string name="trailer">Trailer</string>
   <string name="movie_cast">Cast</string>
   <string name="movie_crew">Crew</string>
-  <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">Sort movies</string>
   <string name="action_movies_sort_title">Title</string>
   <string name="action_movies_sort_release">Prvýkrát odvysielané</string>
+  <string name="statistics_shows">Seriály</string>
+  <string name="statistics_episodes">Epizódy</string>
+  <string name="statistics_movies">Filmy</string>
   <string name="shows_with_next">%s with next episodes</string>
   <string name="shows_continuing">%s continuing</string>
   <string name="episodes_watched">%s watched</string>

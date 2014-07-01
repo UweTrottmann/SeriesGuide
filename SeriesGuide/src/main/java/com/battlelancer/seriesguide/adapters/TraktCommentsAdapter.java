@@ -39,7 +39,7 @@ public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
     private final LayoutInflater mInflater;
 
     public TraktCommentsAdapter(Context context) {
-        super(context, R.layout.shout);
+        super(context, R.layout.item_comment);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -59,7 +59,7 @@ public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
         TraktCommentsAdapter.ViewHolder holder;
 
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.shout, null);
+            convertView = mInflater.inflate(R.layout.item_comment, null);
 
             holder = new ViewHolder();
             holder.name = (TextView) convertView.findViewById(R.id.name);

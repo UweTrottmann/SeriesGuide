@@ -46,7 +46,7 @@ public class MovieStreamAdapter extends SectionedStreamAdapter {
         ViewHolder holder;
 
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.friend, parent, false);
+            convertView = mInflater.inflate(R.layout.item_friend, parent, false);
 
             holder = new ViewHolder();
             holder.timestamp = (TextView) convertView.findViewById(

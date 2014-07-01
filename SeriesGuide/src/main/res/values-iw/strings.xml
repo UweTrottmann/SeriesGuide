@@ -25,6 +25,7 @@
   <string name="discard">בטל</string>
   <string name="save_selection">שמור בחירה</string>
   <string name="search_hint">חפש פרקים</string>
+  <string name="action_display_all">Show all</string>
   <string name="updated">עדכן לגרסה האחרונה.</string>
   <string name="norating">לא ידוע</string>
   <string name="unknown">לא ידוע</string>
@@ -56,10 +57,12 @@
   <string name="trailer">טריילר</string>
   <string name="movie_cast">משתתפים</string>
   <string name="movie_crew">צוות</string>
-  <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">מיון סרטים</string>
   <string name="action_movies_sort_title">תיאור</string>
   <string name="action_movies_sort_release">תאריך הוצאה</string>
+  <string name="statistics_shows">סדרות</string>
+  <string name="statistics_episodes">פרקים</string>
+  <string name="statistics_movies">סרטים</string>
   <string name="shows_with_next">%s עם הפרקים הבאים</string>
   <string name="shows_continuing">%s ממשיכים</string>
   <string name="episodes_watched">%s נצפו</string>

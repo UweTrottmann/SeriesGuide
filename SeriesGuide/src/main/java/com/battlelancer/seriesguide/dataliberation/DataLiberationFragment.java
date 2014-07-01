@@ -68,7 +68,7 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.data_liberation_fragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_data_liberation, container, false);
 
         mProgressBar = (ProgressBar) v.findViewById(R.id.progressBarDataLiberation);
         mProgressBar.setVisibility(View.GONE);
