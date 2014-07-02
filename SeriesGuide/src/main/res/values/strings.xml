@@ -43,7 +43,7 @@
     <string name="app_not_available">No app available to handle this.</string>
     <string name="onlyx">Only available with X Subscription</string>
     <string name="add_empty">There are no shows here.</string>
-
+    <string name="people_empty">Nobody here?! Touch to try again.</string>
 
     <!-- Sharing -->
     <string name="share_show">Share show</string>

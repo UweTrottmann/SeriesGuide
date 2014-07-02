@@ -25,16 +25,18 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ListView;
+import android.widget.TextView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.PeopleAdapter;
 import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.ShowCreditsLoader;
 import com.battlelancer.seriesguide.util.PeopleListHelper;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb.entities.Credits;
-import java.util.HashMap;
-import java.util.Map;
+import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 
 public class PeopleActivity extends BaseActivity {
 
@@ -120,7 +122,9 @@ public class PeopleActivity extends BaseActivity {
     public static class PeopleFragment extends Fragment {
 
         private ListView mListView;
+        private TextView mEmptyView;
         private PeopleAdapter mAdapter;
+        private SmoothProgressBar mProgressBar;
 
         private MediaType mMediaType;
         private PeopleType mPeopleType;
@@ -144,7 +148,11 @@ public class PeopleActivity extends BaseActivity {
             View rootView = inflater.inflate(R.layout.fragment_people, container, false);
 
             mListView = ButterKnife.findById(rootView, R.id.listViewPeople);
-            mListView.setEmptyView(rootView.findViewById(R.id.emptyViewPeople));
+            mEmptyView = ButterKnife.findById(rootView, R.id.emptyViewPeople);
+            mEmptyView.setText(null);
+            mListView.setEmptyView(mEmptyView);
+
+            mProgressBar = ButterKnife.findById(rootView, R.id.progressBarPeople);
 
             return rootView;
         }
@@ -156,13 +164,48 @@ public class PeopleActivity extends BaseActivity {
             mAdapter = new PeopleAdapter(getActivity());
             mListView.setAdapter(mAdapter);
 
+            mEmptyView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    refresh();
+                }
+            });
+
             getLoaderManager().initLoader(PEOPLE_LOADER_ID, null, mCreditsLoaderCallbacks);
+        }
+
+        public void refresh() {
+            getLoaderManager().restartLoader(PEOPLE_LOADER_ID, null, mCreditsLoaderCallbacks);
+        }
+
+        /**
+         * Shows or hides a custom indeterminate progress indicator inside this activity layout.
+         */
+        public void setProgressVisibility(boolean isVisible) {
+            if (mProgressBar.getVisibility() == (isVisible ? View.VISIBLE : View.GONE)) {
+                // already in desired state, avoid replaying animation
+                return;
+            }
+            mProgressBar.startAnimation(AnimationUtils.loadAnimation(mProgressBar.getContext(),
+                    isVisible ? R.anim.fade_in : R.anim.fade_out));
+            mProgressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        }
+
+        private void setEmptyMessage() {
+            // display error message if we are offline
+            if (!AndroidUtils.isNetworkConnected(getActivity())) {
+                mEmptyView.setText(R.string.offline);
+            } else {
+                mEmptyView.setText(R.string.people_empty);
+            }
         }
 
         private LoaderManager.LoaderCallbacks<Credits> mCreditsLoaderCallbacks
                 = new LoaderManager.LoaderCallbacks<Credits>() {
             @Override
             public Loader<Credits> onCreateLoader(int id, Bundle args) {
+                setProgressVisibility(true);
+
                 if (mMediaType == MediaType.MOVIE) {
                     return new MovieCreditsLoader(getActivity(), mTmdbId);
                 } else {
@@ -172,6 +215,9 @@ public class PeopleActivity extends BaseActivity {
 
             @Override
             public void onLoadFinished(Loader<Credits> loader, Credits data) {
+                setProgressVisibility(false);
+                setEmptyMessage();
+
                 if (data == null) {
                     mAdapter.setData(null);
                     return;

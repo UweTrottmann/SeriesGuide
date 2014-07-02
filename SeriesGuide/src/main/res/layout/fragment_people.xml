@@ -23,10 +23,10 @@
     <TextView
         android:id="@+id/emptyViewPeople"
         android:layout_width="@dimen/empty_view_width"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/empty_view_width"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="@string/offline"
+        tools:text="@string/people_empty"
         android:textAppearance="@style/TextAppearance.Light" />
 
     <ListView
@@ -34,5 +34,11 @@
         style="@style/Page.Centered"
         android:clipToPadding="false"
         android:listSelector="@color/transparent" />
+
+    <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+        android:id="@+id/progressBarPeople"
+        style="@style/Widget.SeriesGuide.SmoothProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="4dp" />
 
 </FrameLayout>
