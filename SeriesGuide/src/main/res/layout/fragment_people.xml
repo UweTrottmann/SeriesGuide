@@ -32,8 +32,7 @@
     <ListView
         android:id="@+id/listViewPeople"
         style="@style/Page.Centered"
-        android:clipToPadding="false"
-        android:listSelector="@color/transparent" />
+        android:clipToPadding="false" />
 
     <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
         android:id="@+id/progressBarPeople"

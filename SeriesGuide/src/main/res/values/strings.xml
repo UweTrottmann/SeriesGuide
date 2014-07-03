@@ -538,4 +538,8 @@
     <string name="extension_youtube">YouTube search</string>
     <string name="description_extension_youtube">Search YouTube for videos</string>
     <string name="description_extension_web_search">Search for websites and images</string>
+
+    <!-- People -->
+    <string name="person_biography">Biography</string>
+
 </resources>

@@ -122,6 +122,7 @@ public class PeopleListHelper {
         List<Person> people = new ArrayList<>();
         for (Credits.CastMember castMember : cast) {
             Person person = new Person();
+            person.tmdbId = castMember.id;
             person.name = castMember.name;
             person.description = castMember.character;
             person.profilePath = castMember.profile_path;
@@ -134,6 +135,7 @@ public class PeopleListHelper {
         List<Person> people = new ArrayList<>();
         for (Credits.CrewMember crewMember : crew) {
             Person person = new Person();
+            person.tmdbId = crewMember.id;
             person.name = crewMember.name;
             person.description = crewMember.job;
             person.profilePath = crewMember.profile_path;
@@ -143,6 +145,7 @@ public class PeopleListHelper {
     }
 
     public static class Person {
+        public int tmdbId;
         public String name;
         public String description;
         public String profilePath;
