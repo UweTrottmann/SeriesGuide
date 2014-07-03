@@ -4,21 +4,13 @@
     style="@style/Page.Centered"
     android:orientation="vertical">
 
-    <FrameLayout
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayoutShouts"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/textViewShoutsEmpty"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:padding="@dimen/large_padding"
-            android:text="@string/no_shouts" />
-
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefreshLayoutShouts"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -29,9 +21,26 @@
                 android:clipToPadding="@bool/gridClipToPadding"
                 android:divider="?attr/drawableDivider"
                 android:listSelector="?attr/custom_list_selector" />
-        </android.support.v4.widget.SwipeRefreshLayout>
 
-    </FrameLayout>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewShoutsEmpty"
+                    android:layout_width="@dimen/empty_view_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="@dimen/large_padding"
+                    android:text="@string/no_shouts"
+                    android:textAppearance="@style/TextAppearance.Light" />
+
+            </ScrollView>
+
+        </FrameLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <include
         android:id="@+id/divider"
