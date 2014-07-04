@@ -8,6 +8,16 @@ All dates are in the European Central timezone.
 Version 16 *(in development)*
 -----------------------------
 
+#### 16-beta6 *(2014-07-04)*
+
+* FEATURE Person details view, currently with bio, TMDb and web search link. Try in landscape!
+* FEATURE Support shows released in Canada. See https://github.com/UweTrottmann/SeriesGuide/issues/382 for details.
+* TWEAK Ensure share button is always on the right.
+* TWEAK Clean up action bar on many screens by moving infrequent actions to the overflow menu.
+* TWEAK Drop the dedicated check in screen.
+* FIX Don't display error message while loading cast or crew members.
+* FIX Could not swipe to refresh if trakt check-in stream was empty.
+
 #### 16-beta5 *(2014-06-30)*
 
 * FEATURE Display cast and crew with headshots, name and character respectively job.
