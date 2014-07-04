@@ -34,6 +34,7 @@
   <string name="app_not_available">Няма налично подходящо приложение.</string>
   <string name="onlyx">Налично само с X абонамент</string>
   <string name="add_empty">Няма ТВ предавания.</string>
+  <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="share_show">Сподели ТВ предаване</string>
   <string name="share_episode">Сподели епизод</string>
   <string name="share_movie">Сподели филм</string>
@@ -451,4 +452,5 @@
   <string name="extension_youtube">Търсене в YouTube</string>
   <string name="description_extension_youtube">Търси видеа в Youtube</string>
   <string name="description_extension_web_search">Търси за уебсайтове и снимки</string>
+  <string name="person_biography">Biography</string>
 </resources>

@@ -34,6 +34,7 @@
   <string name="app_not_available">Za obravnavo tega ni na voljo nobene aplikacije.</string>
   <string name="onlyx">Na voljo samo z naročnino X</string>
   <string name="add_empty">Tukaj ni nobene oddaje.</string>
+  <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="share_show">Deli oddajo</string>
   <string name="share_episode">Deli epizodo</string>
   <string name="share_movie">Share movie</string>
@@ -451,4 +452,5 @@
   <string name="extension_youtube">YouTube search</string>
   <string name="description_extension_youtube">Search YouTube for videos</string>
   <string name="description_extension_web_search">Search for websites and images</string>
+  <string name="person_biography">Biography</string>
 </resources>

@@ -25,7 +25,7 @@
   <string name="discard">Anuluj</string>
   <string name="save_selection">Zapisz zaznaczone</string>
   <string name="search_hint">Szukaj odcinków</string>
-  <string name="action_display_all">Show all</string>
+  <string name="action_display_all">Pokaż wszystkie</string>
   <string name="updated">Zaktualizowano do najnowszej wersji.</string>
   <string name="norating">brak danych</string>
   <string name="unknown">nieznana</string>
@@ -34,6 +34,7 @@
   <string name="app_not_available">Brak aplikacji obsługującej to żądanie.</string>
   <string name="onlyx">Dostępne tylko z wersją X</string>
   <string name="add_empty">Brak seriali.</string>
+  <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="share_show">Współdziel serial</string>
   <string name="share_episode">Udostępnij</string>
   <string name="share_movie">Współdziel film</string>
@@ -451,4 +452,5 @@
   <string name="extension_youtube">Szukaj w YouTube</string>
   <string name="description_extension_youtube">Szukaj filmów na YouTube</string>
   <string name="description_extension_web_search">Szukaj stron internetowych i obrazów</string>
+  <string name="person_biography">Biography</string>
 </resources>

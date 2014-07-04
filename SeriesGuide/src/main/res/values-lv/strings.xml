@@ -34,6 +34,7 @@
   <string name="app_not_available">Nav aplikācijas, lai to izdarītu.</string>
   <string name="onlyx">Tikai pieejams ar X abonementu</string>
   <string name="add_empty">Šeit nepastāv nekādu veidu šovi.</string>
+  <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="share_show">Kopīgot seriālu</string>
   <string name="share_episode">Kopīgot epizodi</string>
   <string name="share_movie">Dalīties ar filmu</string>
@@ -452,4 +453,5 @@
   <string name="extension_youtube">YouTube meklēšana</string>
   <string name="description_extension_youtube">Meklēt YouTube video</string>
   <string name="description_extension_web_search">Meklēt lapas un bildes</string>
+  <string name="person_biography">Biography</string>
 </resources>

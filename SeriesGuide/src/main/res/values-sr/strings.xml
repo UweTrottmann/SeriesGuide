@@ -34,6 +34,7 @@
   <string name="app_not_available">Немате потребну апликацију за ово.</string>
   <string name="onlyx">Доступно само са претплатом за X сервис</string>
   <string name="add_empty">Овде нема серија.</string>
+  <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="share_show">Подели серију</string>
   <string name="share_episode">Подели епизоду</string>
   <string name="share_movie">Подели филм</string>
@@ -452,4 +453,5 @@
   <string name="extension_youtube">Претрага YouTube-а</string>
   <string name="description_extension_youtube">Потражи видео на YouTube-у</string>
   <string name="description_extension_web_search">Потражи сајтове и слике</string>
+  <string name="person_biography">Biography</string>
 </resources>

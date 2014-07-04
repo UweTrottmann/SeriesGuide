@@ -25,7 +25,7 @@
   <string name="discard">Elvetés</string>
   <string name="save_selection">Kijelöltek mentése</string>
   <string name="search_hint">Epizódok keresése</string>
-  <string name="action_display_all">Show all</string>
+  <string name="action_display_all">Összes megjelenítése</string>
   <string name="updated">Frissítve a legújabb verzióra.</string>
   <string name="norating">n/a</string>
   <string name="unknown">ismeretlen</string>
@@ -34,6 +34,7 @@
   <string name="app_not_available">Nincs kezelő alkalmazás.</string>
   <string name="onlyx">Csak az X verzióval elérhető</string>
   <string name="add_empty">Nincsenek sorozatok.</string>
+  <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="share_show">Műsor megosztása</string>
   <string name="share_episode">Epizód megosztása</string>
   <string name="share_movie">Film megosztása</string>
@@ -59,7 +60,7 @@
   <string name="movie_crew">Stáb</string>
   <string name="action_movies_sort">Filmek rendezése</string>
   <string name="action_movies_sort_title">Cím</string>
-  <string name="action_movies_sort_release">Első adás</string>
+  <string name="action_movies_sort_release">Megjelenesési dátum</string>
   <string name="statistics_shows">Sorozatok</string>
   <string name="statistics_episodes">Epizódok</string>
   <string name="statistics_movies">Filmek</string>
@@ -67,7 +68,7 @@
   <string name="shows_continuing">%s folytatódik</string>
   <string name="episodes_watched">%s megnézve</string>
   <string name="runtime_all_episodes">Összes epizód műsorideje</string>
-  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="movies_on_watchlist">%s a listához</string>
   <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d nap</item>
@@ -451,4 +452,5 @@
   <string name="extension_youtube">YouTube-keresés</string>
   <string name="description_extension_youtube">Search YouTube for videos</string>
   <string name="description_extension_web_search">Search for websites and images</string>
+  <string name="person_biography">Biography</string>
 </resources>

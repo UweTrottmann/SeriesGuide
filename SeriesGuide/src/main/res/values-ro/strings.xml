@@ -34,6 +34,7 @@
   <string name="app_not_available">Nu exista aplicatii instalate pentru a utiliza aceasta actiune.</string>
   <string name="onlyx">Disponibil numai cu abonament de X</string>
   <string name="add_empty">Nu există show-uri aici.</string>
+  <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="share_show">Arată Show</string>
   <string name="share_episode">Share episod</string>
   <string name="share_movie">Distribuie film</string>
@@ -451,4 +452,5 @@
   <string name="extension_youtube">YouTube search</string>
   <string name="description_extension_youtube">Search YouTube for videos</string>
   <string name="description_extension_web_search">Search for websites and images</string>
+  <string name="person_biography">Biography</string>
 </resources>

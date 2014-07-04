@@ -35,6 +35,7 @@
   <string name="app_not_available">Ingen app tillgänglig för att hantera detta.</string>
   <string name="onlyx">Endast tillgänglig med X Prenumeration</string>
   <string name="add_empty">Det finns inga program här.</string>
+  <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="share_show">Dela serie</string>
   <string name="share_episode">Dela avsnitt</string>
   <string name="share_movie">Dela film</string>
@@ -452,4 +453,5 @@
   <string name="extension_youtube">YouTube sökning</string>
   <string name="description_extension_youtube">Sök på YouTube för videos</string>
   <string name="description_extension_web_search">Sök efter webbplatser och bilder</string>
+  <string name="person_biography">Biography</string>
 </resources>

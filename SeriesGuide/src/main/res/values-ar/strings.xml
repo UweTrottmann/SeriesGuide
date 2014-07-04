@@ -34,6 +34,7 @@
   <string name="app_not_available">ليس هناك تطبيق متاح للتعامل مع هذا.</string>
   <string name="onlyx">متاح فقط على النسخة المدفوعة</string>
   <string name="add_empty">لا توجد مسلسلات هنا.</string>
+  <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="share_show">مشاركة العرض</string>
   <string name="share_episode">مشاركة الحلقة</string>
   <string name="share_movie">مشاركة فيلم</string>
@@ -451,4 +452,5 @@
   <string name="extension_youtube">البحث في اليوتيوب</string>
   <string name="description_extension_youtube">بحث اليوتيوب لمقاطع الفيديو</string>
   <string name="description_extension_web_search">البحث عن المواقع و الصور</string>
+  <string name="person_biography">Biography</string>
 </resources>

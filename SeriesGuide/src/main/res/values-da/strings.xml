@@ -34,6 +34,7 @@
   <string name="app_not_available">Ingen app tilgængelig til at håndtere dette.</string>
   <string name="onlyx">Kun tilgængelig med X abonnement</string>
   <string name="add_empty">Der er ingen serier her.</string>
+  <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="share_show">Del serie</string>
   <string name="share_episode">Del episode</string>
   <string name="share_movie">Del film</string>
@@ -451,4 +452,5 @@
   <string name="extension_youtube">YouTube søgning</string>
   <string name="description_extension_youtube">Søg YouTube for videoer</string>
   <string name="description_extension_web_search">Søg efter hjemmesider og billeder</string>
+  <string name="person_biography">Biography</string>
 </resources>

@@ -34,6 +34,7 @@
   <string name="app_not_available">Keine App verfügbar um dies zu handhaben.</string>
   <string name="onlyx">Nur mit X-Abonnement erhältlich</string>
   <string name="add_empty">Keine Serien hier.</string>
+  <string name="people_empty">Niemand hier?! Tippen Sie um es erneut zu versuchen.</string>
   <string name="share_show">Serie teilen</string>
   <string name="share_episode">Folge empfehlen</string>
   <string name="share_movie">Film teilen</string>
@@ -451,4 +452,5 @@
   <string name="extension_youtube">YouTube Suche</string>
   <string name="description_extension_youtube">YouTube nach Videos durchsuchen</string>
   <string name="description_extension_web_search">Nach Webseiten und Bildern suchen</string>
+  <string name="person_biography">Biografie</string>
 </resources>
