@@ -17,9 +17,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.app.ActionBar;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 
@@ -39,7 +37,7 @@ public class PersonActivity extends BaseActivity {
 
         if (savedInstanceState == null) {
             PersonFragment f = PersonFragment.newInstance(
-                    getIntent().getIntExtra(PersonFragment.InitBundle.TMDB_ID, 0));
+                    getIntent().getIntExtra(PersonFragment.InitBundle.PERSON_TMDB_ID, 0));
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.containerPerson, f)
                     .commit();
@@ -49,13 +47,14 @@ public class PersonActivity extends BaseActivity {
     private void setupActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == android.R.id.home) {
-            NavUtils.navigateUpTo(this, new Intent(this, PeopleActivity.class));
+            onBackPressed();
             return true;
         }
 

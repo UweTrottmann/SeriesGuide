@@ -36,6 +36,7 @@
         android:layout_height="match_parent"
         android:paddingTop="@dimen/large_padding"
         android:paddingBottom="@dimen/large_padding"
+        android:listSelector="@color/transparent"
         android:clipToPadding="false" />
 
     <fr.castorflex.android.smoothprogressbar.SmoothProgressBar

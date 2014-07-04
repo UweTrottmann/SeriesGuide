@@ -52,14 +52,14 @@ public class PersonFragment extends Fragment {
         PersonFragment f = new PersonFragment();
 
         Bundle args = new Bundle();
-        args.putInt(InitBundle.TMDB_ID, tmdbId);
+        args.putInt(InitBundle.PERSON_TMDB_ID, tmdbId);
         f.setArguments(args);
 
         return f;
     }
 
     public interface InitBundle {
-        String TMDB_ID = "tmdb_id";
+        String PERSON_TMDB_ID = "person_tmdb_id";
     }
 
     public PersonFragment() {
@@ -127,7 +127,7 @@ public class PersonFragment extends Fragment {
         public Loader<Person> onCreateLoader(int id, Bundle args) {
             setProgressVisibility(true);
 
-            int tmdbId = getArguments().getInt(InitBundle.TMDB_ID);
+            int tmdbId = getArguments().getInt(InitBundle.PERSON_TMDB_ID);
             return new PersonLoader(getActivity(), tmdbId);
         }
 

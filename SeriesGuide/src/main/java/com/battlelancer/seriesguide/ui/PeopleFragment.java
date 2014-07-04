@@ -88,7 +88,7 @@ public class PeopleFragment extends Fragment {
                 getArguments().getString(PeopleActivity.InitBundle.MEDIA_TYPE));
         mPeopleType = PeopleActivity.PeopleType.valueOf(
                 getArguments().getString(PeopleActivity.InitBundle.PEOPLE_TYPE));
-        mTmdbId = getArguments().getInt(PeopleActivity.InitBundle.TMDB_ID);
+        mTmdbId = getArguments().getInt(PeopleActivity.InitBundle.ITEM_TMDB_ID);
     }
 
     @Override

@@ -28,7 +28,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
 
     public interface InitBundle {
         String MEDIA_TYPE = "media_title";
-        String TMDB_ID = "tmdb_id";
+        String ITEM_TMDB_ID = "item_tmdb_id";
         String PEOPLE_TYPE = "people_type";
     }
 
@@ -79,6 +79,18 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
         }
 
         if (savedInstanceState == null) {
+            // check if we should directly show a person
+            int personTmdbId = getIntent().getIntExtra(PersonFragment.InitBundle.PERSON_TMDB_ID, -1);
+            if (personTmdbId != -1) {
+                showPerson(personTmdbId);
+
+                // if this is not a dual pane layout, remove ourselves from back stack
+                if (!mTwoPane) {
+                    finish();
+                    return;
+                }
+            }
+
             PeopleFragment f = new PeopleFragment();
             f.setArguments(getIntent().getExtras());
 
@@ -124,7 +136,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
         } else {
             // start new activity
             Intent i = new Intent(this, PersonActivity.class);
-            i.putExtra(PersonFragment.InitBundle.TMDB_ID, tmdbId);
+            i.putExtra(PersonFragment.InitBundle.PERSON_TMDB_ID, tmdbId);
             startActivity(i);
         }
     }
