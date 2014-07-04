@@ -319,7 +319,7 @@ public class MovieDetailsFragment extends Fragment {
             return true;
         }
         if (itemId == R.id.menu_open_tmdb) {
-            TmdbTools.openTmdb(getActivity(), mTmdbId, TAG);
+            TmdbTools.openTmdbMovie(getActivity(), mTmdbId, TAG);
         }
         if (itemId == R.id.menu_open_trakt) {
             ServiceUtils.openTraktMovie(getActivity(), mTmdbId, TAG);

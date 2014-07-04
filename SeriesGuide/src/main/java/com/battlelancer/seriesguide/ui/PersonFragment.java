@@ -23,18 +23,23 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.loaders.PersonLoader;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TmdbTools;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb.entities.Person;
 
 /**
@@ -42,11 +47,15 @@ import com.uwetrottmann.tmdb.entities.Person;
  */
 public class PersonFragment extends Fragment {
 
+    private static final String TAG = "Person Details";
+
     @InjectView(R.id.progressBarPerson) ProgressBar mProgressBar;
 
     @InjectView(R.id.imageViewPersonHeadshot) ImageView mImageHeadshot;
     @InjectView(R.id.textViewPersonName) TextView mTextName;
     @InjectView(R.id.textViewPersonBiography) TextView mTextBiography;
+
+    private Person mPerson;
 
     public static PersonFragment newInstance(int tmdbId) {
         PersonFragment f = new PersonFragment();
@@ -81,6 +90,8 @@ public class PersonFragment extends Fragment {
 
         getLoaderManager().initLoader(PeopleActivity.PERSON_LOADER_ID, null,
                 mPersonLoaderCallbacks);
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -90,22 +101,54 @@ public class PersonFragment extends Fragment {
         ButterKnife.reset(this);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if (mPerson != null) {
+            inflater.inflate(R.menu.person_menu, menu);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_action_person_tmdb) {
+            TmdbTools.openTmdbPerson(getActivity(), mPerson.id, TAG);
+            return true;
+        }
+        if (itemId == R.id.menu_action_person_web_search) {
+            ServiceUtils.performWebSearch(getActivity(), mPerson.name, TAG);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void populatePersonViews(Person person) {
         if (person == null) {
-            // TODO display error message
+            // TODO display empty message
+            if (!AndroidUtils.isNetworkConnected(getActivity())) {
+                Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_SHORT).show();
+            }
             return;
         }
 
+        mPerson = person;
+
         mTextName.setText(person.name);
-        mTextBiography.setText(person.biography);
+        mTextBiography.setText(
+                TextUtils.isEmpty(person.biography) ? getString(R.string.not_available)
+                        : person.biography);
 
         if (!TextUtils.isEmpty(person.profile_path)) {
             ServiceUtils.getPicasso(getActivity())
                     .load(TmdbTools.buildProfileImageUrl(getActivity(), person.profile_path,
                             TmdbTools.ProfileImageSize.H632))
-                    .placeholder(new ColorDrawable(getResources().getColor(R.color.protection_dark)))
+                    .placeholder(
+                            new ColorDrawable(getResources().getColor(R.color.protection_dark)))
                     .into(mImageHeadshot);
         }
+
+        // show actions
+        getActivity().invalidateOptionsMenu();
     }
 
     /**
