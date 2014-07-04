@@ -34,6 +34,8 @@
         android:id="@+id/listViewPeople"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="@dimen/large_padding"
+        android:paddingBottom="@dimen/large_padding"
         android:clipToPadding="false" />
 
     <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
