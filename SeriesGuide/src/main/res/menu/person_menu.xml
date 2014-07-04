@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright 2014 Uwe Trottmann
   ~
@@ -14,12 +16,15 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/containerPeople"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/large_padding"
-    android:layout_marginRight="@dimen/default_padding"
-    tools:context="com.battlelancer.seriesguide.ui.PeopleActivity"
-    tools:ignore="MergeRootFrame" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_action_person_tmdb"
+        android:title="@string/tmdb"
+        android:showAsAction="never" />
+    <item
+        android:id="@+id/menu_action_person_web_search"
+        android:title="@string/web_search"
+        android:showAsAction="never" />
+
+</menu>

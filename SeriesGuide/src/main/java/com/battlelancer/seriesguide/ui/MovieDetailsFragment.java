@@ -319,7 +319,7 @@ public class MovieDetailsFragment extends Fragment {
             return true;
         }
         if (itemId == R.id.menu_open_tmdb) {
-            TmdbTools.openTmdb(getActivity(), mTmdbId, TAG);
+            TmdbTools.openTmdbMovie(getActivity(), mTmdbId, TAG);
         }
         if (itemId == R.id.menu_open_trakt) {
             ServiceUtils.openTraktMovie(getActivity(), mTmdbId, TAG);
@@ -481,18 +481,8 @@ public class MovieDetailsFragment extends Fragment {
             mCastView.setVisibility(View.GONE);
         } else {
             mCastView.setVisibility(View.VISIBLE);
-            PeopleListHelper.populateCast(getActivity(), getActivity().getLayoutInflater(),
-                    mCastContainer, credits.cast, new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startActivity(new Intent(v.getContext(), PeopleActivity.class)
-                                    .putExtra(PeopleActivity.InitBundle.PEOPLE_TYPE,
-                                            PeopleActivity.PeopleType.CAST.toString())
-                                    .putExtra(PeopleActivity.InitBundle.MEDIA_TYPE,
-                                            PeopleActivity.MediaType.MOVIE.toString())
-                                    .putExtra(PeopleActivity.InitBundle.TMDB_ID, credits.id));
-                        }
-                    });
+            PeopleListHelper.populateMovieCast(getActivity(), getActivity().getLayoutInflater(),
+                    mCastContainer, credits);
         }
 
         // crew members
@@ -500,18 +490,8 @@ public class MovieDetailsFragment extends Fragment {
             mCrewView.setVisibility(View.GONE);
         } else {
             mCrewView.setVisibility(View.VISIBLE);
-            PeopleListHelper.populateCrew(getActivity(), getActivity().getLayoutInflater(),
-                    mCrewContainer, credits.crew, new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startActivity(new Intent(v.getContext(), PeopleActivity.class)
-                                    .putExtra(PeopleActivity.InitBundle.PEOPLE_TYPE,
-                                            PeopleActivity.PeopleType.CREW.toString())
-                                    .putExtra(PeopleActivity.InitBundle.MEDIA_TYPE,
-                                            PeopleActivity.MediaType.MOVIE.toString())
-                                    .putExtra(PeopleActivity.InitBundle.TMDB_ID, credits.id));
-                        }
-                    });
+            PeopleListHelper.populateMovieCrew(getActivity(), getActivity().getLayoutInflater(),
+                    mCrewContainer, credits);
         }
     }
 
