@@ -3,5 +3,6 @@
 
     <item name="activity_episodes" type="layout">@layout/activity_episodes_multipane</item>
     <item name="activity_search" type="layout">@layout/activity_singlepane_drawer_wide</item>
+    <item name="fragment_person" type="layout">@layout/fragment_person_wide</item>
 
 </resources>
