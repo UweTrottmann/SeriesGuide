@@ -43,7 +43,18 @@ import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
  */
 public class PeopleFragment extends Fragment {
 
-    private OnShowPersonListener mListener;
+    /**
+     * The serialization (saved instance state) Bundle key representing the
+     * activated item position. Only used on tablets.
+     */
+    private static final String STATE_ACTIVATED_POSITION = "activated_position";
+
+    private OnShowPersonListener mListener = sDummyListener;
+
+    /**
+     * The current activated item position. Only used on tablets.
+     */
+    private int mActivatedPosition = ListView.INVALID_POSITION;
 
     private ListView mListView;
     private TextView mEmptyView;
@@ -53,10 +64,17 @@ public class PeopleFragment extends Fragment {
     private PeopleActivity.MediaType mMediaType;
     private PeopleActivity.PeopleType mPeopleType;
     private int mTmdbId;
+    private boolean mActivateOnItemClick;
 
     public interface OnShowPersonListener {
         public void showPerson(int tmdbId);
     }
+
+    private static OnShowPersonListener sDummyListener = new OnShowPersonListener() {
+        @Override
+        public void showPerson(int tmdbId) {
+        }
+    };
 
     public PeopleFragment() {
         // Required empty public constructor
@@ -83,9 +101,26 @@ public class PeopleFragment extends Fragment {
         mEmptyView.setText(null);
         mListView.setEmptyView(mEmptyView);
 
+        // When setting CHOICE_MODE_SINGLE, ListView will automatically
+        // give items the 'activated' state when touched.
+        mListView.setChoiceMode(mActivateOnItemClick
+                ? ListView.CHOICE_MODE_SINGLE
+                : ListView.CHOICE_MODE_NONE);
+
         mProgressBar = ButterKnife.findById(rootView, R.id.progressBarPeople);
 
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Restore the previously serialized activated item position.
+        if (savedInstanceState != null
+                && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
+            setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
+        }
     }
 
     @Override
@@ -125,8 +160,42 @@ public class PeopleFragment extends Fragment {
         getLoaderManager().initLoader(PeopleActivity.PEOPLE_LOADER_ID, null, mCreditsLoaderCallbacks);
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        mListener = sDummyListener;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mActivatedPosition != ListView.INVALID_POSITION) {
+            // Serialize and persist the activated item position.
+            outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
+        }
+    }
+
     public void refresh() {
         getLoaderManager().restartLoader(PeopleActivity.PEOPLE_LOADER_ID, null, mCreditsLoaderCallbacks);
+    }
+
+    /**
+     * Turns on activate-on-click mode. When this mode is on, list items will be
+     * given the 'activated' state when touched.
+     */
+    public void setActivateOnItemClick(boolean activateOnItemClick) {
+        mActivateOnItemClick = activateOnItemClick;
+    }
+
+    private void setActivatedPosition(int position) {
+        if (position == ListView.INVALID_POSITION) {
+            mListView.setItemChecked(mActivatedPosition, false);
+        } else {
+            mListView.setItemChecked(position, true);
+        }
+
+        mActivatedPosition = position;
     }
 
     /**

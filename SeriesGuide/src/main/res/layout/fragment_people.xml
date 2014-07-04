@@ -22,16 +22,18 @@
 
     <TextView
         android:id="@+id/emptyViewPeople"
-        android:layout_width="@dimen/empty_view_width"
-        android:layout_height="@dimen/empty_view_width"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:maxWidth="@dimen/empty_view_width"
         android:gravity="center"
         tools:text="@string/people_empty"
         android:textAppearance="@style/TextAppearance.Light" />
 
     <ListView
         android:id="@+id/listViewPeople"
-        style="@style/Page.Centered"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:clipToPadding="false" />
 
     <fr.castorflex.android.smoothprogressbar.SmoothProgressBar

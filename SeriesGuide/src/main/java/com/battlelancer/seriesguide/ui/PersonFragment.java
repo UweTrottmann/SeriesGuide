@@ -16,10 +16,12 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,12 +99,13 @@ public class PersonFragment extends Fragment {
         mTextName.setText(person.name);
         mTextBiography.setText(person.biography);
 
-        ServiceUtils.getPicasso(getActivity())
-                .load(TmdbTools.buildProfileImageUrl(getActivity(), person.profile_path,
-                        TmdbTools.ProfileImageSize.H632))
-                .resize(mImageHeadshot.getWidth(), mImageHeadshot.getHeight())
-                .centerCrop()
-                .into(mImageHeadshot);
+        if (!TextUtils.isEmpty(person.profile_path)) {
+            ServiceUtils.getPicasso(getActivity())
+                    .load(TmdbTools.buildProfileImageUrl(getActivity(), person.profile_path,
+                            TmdbTools.ProfileImageSize.H632))
+                    .placeholder(new ColorDrawable(getResources().getColor(R.color.protection_dark)))
+                    .into(mImageHeadshot);
+        }
     }
 
     /**

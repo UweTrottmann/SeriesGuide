@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2014 Uwe Trottmann
   ~
@@ -14,10 +15,8 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/containerPeople"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.battlelancer.seriesguide.ui.PeopleActivity"
-    tools:ignore="MergeRootFrame" />
+<resources>
+
+    <item type="layout" name="activity_people">@layout/activity_people_twopane</item>
+
+</resources>

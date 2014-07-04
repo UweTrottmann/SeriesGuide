@@ -17,12 +17,14 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 
 public class PeopleActivity extends BaseActivity implements PeopleFragment.OnShowPersonListener {
+
+    private boolean mTwoPane;
 
     public interface InitBundle {
         String MEDIA_TYPE = "media_title";
@@ -72,11 +74,21 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
 
         setupActionBar();
 
+        if (findViewById(R.id.containerPeoplePerson) != null) {
+            mTwoPane = true;
+        }
+
         if (savedInstanceState == null) {
-            Fragment f = new PeopleFragment();
+            PeopleFragment f = new PeopleFragment();
             f.setArguments(getIntent().getExtras());
+
+            // in two-pane mode, list items should be activated when touched
+            if (mTwoPane) {
+                f.setActivateOnItemClick(true);
+            }
+
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, f)
+                    .add(R.id.containerPeople, f, "people-list")
                     .commit();
         }
     }
@@ -103,10 +115,17 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
 
     @Override
     public void showPerson(int tmdbId) {
-        PersonFragment f = PersonFragment.newInstance(tmdbId);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, f)
-                .addToBackStack(null)
-                .commit();
+        if (mTwoPane) {
+            // show inline
+            PersonFragment f = PersonFragment.newInstance(tmdbId);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.containerPeoplePerson, f)
+                    .commit();
+        } else {
+            // start new activity
+            Intent i = new Intent(this, PersonActivity.class);
+            i.putExtra(PersonFragment.InitBundle.TMDB_ID, tmdbId);
+            startActivity(i);
+        }
     }
 }

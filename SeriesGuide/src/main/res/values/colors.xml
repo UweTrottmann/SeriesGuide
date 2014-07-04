@@ -52,6 +52,9 @@
     <color name="divider_inverse">#1A000000</color>
     <color name="white">#ffffffff</color>
 
+    <color name="black_11">#ffe3e3e3</color>
+    <color name="protection_dark">#66000000</color>
+
     <integer-array name="progressBarColors">
         <item>@color/accent_primary</item>
         <item>@color/white</item>
