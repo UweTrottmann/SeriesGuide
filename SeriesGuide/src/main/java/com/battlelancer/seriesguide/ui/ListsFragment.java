@@ -114,7 +114,6 @@ public class ListsFragment extends Fragment implements
                 intent = new Intent(getActivity(), OverviewActivity.class);
                 intent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID,
                         Integer.valueOf(itemRefId));
-                startActivity(intent);
                 break;
             }
             case 2: {
@@ -122,7 +121,6 @@ public class ListsFragment extends Fragment implements
                 intent = new Intent(getActivity(), EpisodesActivity.class);
                 intent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID,
                         Integer.valueOf(itemRefId));
-                startActivity(intent);
                 break;
             }
             case 3: {
@@ -130,7 +128,6 @@ public class ListsFragment extends Fragment implements
                 intent = new Intent(getActivity(), EpisodesActivity.class);
                 intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
                         Integer.valueOf(itemRefId));
-                startActivity(intent);
                 break;
             }
         }
