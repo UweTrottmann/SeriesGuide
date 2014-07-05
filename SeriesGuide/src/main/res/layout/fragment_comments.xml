@@ -4,7 +4,7 @@
     style="@style/Page.Centered"
     android:orientation="vertical">
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout
         android:id="@+id/swipeRefreshLayoutShouts"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -13,14 +13,6 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <ListView
-                android:id="@+id/listViewShouts"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="@bool/gridClipToPadding"
-                android:divider="?attr/drawableDivider"
-                android:listSelector="?attr/custom_list_selector" />
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -38,9 +30,17 @@
 
             </ScrollView>
 
+            <ListView
+                android:id="@+id/listViewShouts"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="@bool/gridClipToPadding"
+                android:divider="?attr/drawableDivider"
+                android:listSelector="?attr/custom_list_selector" />
+
         </FrameLayout>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout>
 
     <include
         android:id="@+id/divider"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeRefreshLayoutStream"
     android:layout_width="match_parent"
@@ -8,6 +8,21 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/emptyViewStream"
+                android:layout_width="@dimen/empty_view_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                tools:text="Dummy empty view message!"
+                android:textAppearance="@style/TextAppearance.Light" />
+
+        </ScrollView>
 
         <com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView
             android:id="@+id/gridViewStream"
@@ -26,20 +41,6 @@
             android:scrollbarStyle="outsideInset"
             android:verticalSpacing="@dimen/grid_vertical_spacing" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/emptyViewStream"
-                android:layout_width="@dimen/empty_view_width"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                tools:text="Dummy empty view message!"
-                android:textAppearance="@style/TextAppearance.Light" />
-        </ScrollView>
-
         <TextView
             android:id="@+id/poweredby"
             android:layout_width="wrap_content"
@@ -53,4 +54,4 @@
 
     </FrameLayout>
 
-</android.support.v4.widget.SwipeRefreshLayout>
+</com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout>
