@@ -141,11 +141,15 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
             Intent i = new Intent(this, PersonActivity.class);
             i.putExtra(PersonFragment.InitBundle.PERSON_TMDB_ID, tmdbId);
 
-            ActivityCompat.startActivity(this, i,
-                    ActivityOptionsCompat
-                            .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
-                            .toBundle()
-            );
+            if (view != null) {
+                ActivityCompat.startActivity(this, i,
+                        ActivityOptionsCompat
+                                .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                                .toBundle()
+                );
+            } else {
+                startActivity(i);
+            }
         }
     }
 }
