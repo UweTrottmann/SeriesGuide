@@ -27,6 +27,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -564,9 +566,11 @@ public class OverviewFragment extends Fragment implements
                     Intent intent = new Intent(getActivity(), EpisodesActivity.class);
                     intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
                             mCurrentEpisodeTvdbId);
-                    startActivity(intent);
-                    getActivity().overridePendingTransition(R.anim.blow_up_enter,
-                            R.anim.blow_up_exit);
+
+                    ActivityCompat.startActivity(getActivity(), intent,
+                            ActivityOptionsCompat.makeScaleUpAnimation(view, 0, 0, view.getWidth(),
+                                            view.getHeight()).toBundle()
+                    );
                 }
             });
             episodePrimaryContainer.setFocusable(true);

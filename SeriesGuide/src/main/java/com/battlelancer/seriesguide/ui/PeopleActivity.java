@@ -19,7 +19,10 @@ package com.battlelancer.seriesguide.ui;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.view.MenuItem;
+import android.view.View;
 import com.battlelancer.seriesguide.R;
 
 public class PeopleActivity extends BaseActivity implements PeopleFragment.OnShowPersonListener {
@@ -82,7 +85,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
             // check if we should directly show a person
             int personTmdbId = getIntent().getIntExtra(PersonFragment.InitBundle.PERSON_TMDB_ID, -1);
             if (personTmdbId != -1) {
-                showPerson(personTmdbId);
+                showPerson(null, personTmdbId);
 
                 // if this is not a dual pane layout, remove ourselves from back stack
                 if (!mTwoPane) {
@@ -126,7 +129,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
     }
 
     @Override
-    public void showPerson(int tmdbId) {
+    public void showPerson(View view, int tmdbId) {
         if (mTwoPane) {
             // show inline
             PersonFragment f = PersonFragment.newInstance(tmdbId);
@@ -137,7 +140,12 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
             // start new activity
             Intent i = new Intent(this, PersonActivity.class);
             i.putExtra(PersonFragment.InitBundle.PERSON_TMDB_ID, tmdbId);
-            startActivity(i);
+
+            ActivityCompat.startActivity(this, i,
+                    ActivityOptionsCompat
+                            .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                            .toBundle()
+            );
         }
     }
 }

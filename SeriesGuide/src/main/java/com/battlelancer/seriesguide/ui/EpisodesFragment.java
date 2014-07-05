@@ -22,6 +22,8 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
@@ -149,7 +151,7 @@ public class EpisodesFragment extends ListFragment
      * Display the episode at the given position in a detail pane or if not available in a new
      * activity.
      */
-    private void showDetails(int position) {
+    private void showDetails(View view, int position) {
         if (mDualPane) {
             EpisodesActivity activity = (EpisodesActivity) getActivity();
             activity.setCurrentPage(position);
@@ -161,8 +163,11 @@ public class EpisodesFragment extends ListFragment
             intent.setClass(getActivity(), EpisodesActivity.class);
             intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
 
-            startActivity(intent);
-            getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
+            ActivityCompat.startActivity(getActivity(), intent,
+                    ActivityOptionsCompat
+                            .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                            .toBundle()
+            );
         }
     }
 
@@ -208,8 +213,8 @@ public class EpisodesFragment extends ListFragment
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        showDetails(position);
+    public void onListItemClick(ListView l, View view, int position, long id) {
+        showDetails(view, position);
     }
 
     @Override

@@ -67,12 +67,12 @@ public class PeopleFragment extends Fragment {
     private boolean mActivateOnItemClick;
 
     public interface OnShowPersonListener {
-        public void showPerson(int tmdbId);
+        public void showPerson(View view, int tmdbId);
     }
 
     private static OnShowPersonListener sDummyListener = new OnShowPersonListener() {
         @Override
-        public void showPerson(int tmdbId) {
+        public void showPerson(View view, int tmdbId) {
         }
     };
 
@@ -146,7 +146,7 @@ public class PeopleFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 PeopleListHelper.Person person = mAdapter.getItem(position);
-                mListener.showPerson(person.tmdbId);
+                mListener.showPerson(view, person.tmdbId);
             }
         });
 

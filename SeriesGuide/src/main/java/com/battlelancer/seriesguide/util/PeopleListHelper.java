@@ -16,8 +16,13 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.annotation.TargetApi;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +31,7 @@ import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.PeopleActivity;
 import com.battlelancer.seriesguide.ui.PersonFragment;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb.entities.Credits;
 import java.util.ArrayList;
 import java.util.List;
@@ -176,6 +182,7 @@ public class PeopleListHelper {
             mPersonTmdbId = personTmdbId;
         }
 
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         @Override
         public void onClick(View v) {
             Intent i = new Intent(v.getContext(), PeopleActivity.class);
@@ -185,7 +192,15 @@ public class PeopleListHelper {
             if (mPersonTmdbId != -1) {
                 i.putExtra(PersonFragment.InitBundle.PERSON_TMDB_ID, mPersonTmdbId);
             }
-            v.getContext().startActivity(i);
+
+            if (AndroidUtils.isJellyBeanOrHigher()) {
+                v.getContext()
+                        .startActivity(i,
+                                ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(),
+                                        v.getHeight()).toBundle());
+            } else {
+                v.getContext().startActivity(i);
+            }
         }
     }
 
