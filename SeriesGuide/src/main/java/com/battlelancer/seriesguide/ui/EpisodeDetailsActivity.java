@@ -211,12 +211,6 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == android.R.id.home) {
@@ -245,7 +239,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
                         Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(upIntent);
             }
-            overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
+            overridePendingTransition(R.anim.fade_in, R.anim.slide_right_exit);
             return true;
         }
         return super.onOptionsItemSelected(item);

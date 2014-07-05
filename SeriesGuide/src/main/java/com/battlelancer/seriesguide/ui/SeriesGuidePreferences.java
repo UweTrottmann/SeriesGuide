@@ -386,18 +386,6 @@ public class SeriesGuidePreferences extends PreferenceActivity implements
     }
 
     @Override
-    public boolean onKeyLongPress(int keyCode, KeyEvent event) {
-        // always navigate back to the home activity
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            NavUtils.navigateUpTo(this,
-                    new Intent(Intent.ACTION_MAIN).setClass(this, ShowsActivity.class));
-            overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:

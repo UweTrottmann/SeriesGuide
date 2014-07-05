@@ -226,12 +226,6 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
-    }
-
-    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content
         // view
@@ -252,7 +246,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
             Intent upIntent = new Intent(this, ShowsActivity.class);
             upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(upIntent);
-            overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
+            overridePendingTransition(R.anim.fade_in, R.anim.slide_right_exit);
             return true;
         } else if (itemId == R.id.menu_overview_search) {
             onSearchRequested();
