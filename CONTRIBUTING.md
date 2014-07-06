@@ -25,6 +25,8 @@ Setup
 
 This project is built with Gradle, the [Android Gradle plugin][3] and uses jars or Maven dependencies. Clone this repository inside your working folder. Import the build.gradle file in the root folder into e.g. Android Studio. (You can also have a look at the build.gradle files on how the projects depend on another.)
 
+Note: To successfully build, drop the `uploadArchives` section from `api/build.gradle`.
+
 Before your first build create the following files:
 
 * `SeriesGuide/src/main/res/values/keys.xml`, add the following values:
