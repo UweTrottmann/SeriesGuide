@@ -15,6 +15,7 @@ Version 16 *(in development)*
 * TWEAK Ensure share button is always on the right.
 * TWEAK Clean up action bar on many screens by moving infrequent actions to the overflow menu.
 * TWEAK Drop the dedicated check in screen.
+* TWEAK New transition animations, making more clear where content came from and where it is going in the visual stack.
 * FIX Don't display error message while loading cast or crew members.
 * FIX Could not swipe to refresh if trakt check-in stream was empty.
 
