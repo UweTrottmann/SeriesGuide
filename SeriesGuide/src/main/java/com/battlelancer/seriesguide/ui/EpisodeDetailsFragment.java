@@ -559,7 +559,11 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                 Intent intent = new Intent(getActivity(), TraktShoutsActivity.class);
                 intent.putExtras(TraktShoutsActivity.createInitBundleEpisode(mShowTvdbId,
                         mSeasonNumber, mEpisodeNumber, mEpisodeTitle));
-                startActivity(intent);
+                ActivityCompat.startActivity(getActivity(), intent,
+                        ActivityOptionsCompat
+                                .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
+                                .toBundle()
+                );
                 fireTrackerEvent("Comments");
             }
         });

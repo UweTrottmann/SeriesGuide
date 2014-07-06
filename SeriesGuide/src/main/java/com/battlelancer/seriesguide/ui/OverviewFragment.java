@@ -774,7 +774,11 @@ public class OverviewFragment extends Fragment implements
                     Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
                     i.putExtras(TraktShoutsActivity.createInitBundleEpisode(getShowId(),
                             seasonNumber, episodeNumber, episodeTitle));
-                    startActivity(i);
+                    ActivityCompat.startActivity(getActivity(), i,
+                            ActivityOptionsCompat
+                                    .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
+                                    .toBundle()
+                    );
                     fireTrackerEvent("Comments");
                 }
             }

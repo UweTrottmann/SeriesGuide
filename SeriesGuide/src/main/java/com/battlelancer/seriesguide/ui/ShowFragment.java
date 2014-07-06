@@ -298,7 +298,11 @@ public class ShowFragment extends Fragment {
                 Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
                 i.putExtras(TraktShoutsActivity.createInitBundleShow(mShow.getTitle(),
                         getShowTvdbId()));
-                startActivity(i);
+                ActivityCompat.startActivity(getActivity(), i,
+                        ActivityOptionsCompat
+                                .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
+                                .toBundle()
+                );
                 fireTrackerEvent("Shouts");
             }
         });
