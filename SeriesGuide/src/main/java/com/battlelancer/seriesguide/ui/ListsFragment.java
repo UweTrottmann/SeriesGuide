@@ -20,6 +20,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -105,31 +107,37 @@ public class ListsFragment extends Fragment implements
         int itemType = listItem.getInt(ListItemsQuery.ITEM_TYPE);
         String itemRefId = listItem.getString(ListItemsQuery.ITEM_REF_ID);
 
+        Intent intent = null;
         switch (itemType) {
             case 1: {
                 // display show overview
-                Intent intent = new Intent(getActivity(), OverviewActivity.class);
+                intent = new Intent(getActivity(), OverviewActivity.class);
                 intent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID,
                         Integer.valueOf(itemRefId));
-                startActivity(intent);
                 break;
             }
             case 2: {
                 // display episodes of season
-                Intent intent = new Intent(getActivity(), EpisodesActivity.class);
+                intent = new Intent(getActivity(), EpisodesActivity.class);
                 intent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID,
                         Integer.valueOf(itemRefId));
-                startActivity(intent);
                 break;
             }
             case 3: {
                 // display episode details
-                Intent intent = new Intent(getActivity(), EpisodesActivity.class);
+                intent = new Intent(getActivity(), EpisodesActivity.class);
                 intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
                         Integer.valueOf(itemRefId));
-                startActivity(intent);
                 break;
             }
+        }
+
+        if (intent != null) {
+            ActivityCompat.startActivity(getActivity(), intent,
+                    ActivityOptionsCompat
+                            .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                            .toBundle()
+            );
         }
     }
 

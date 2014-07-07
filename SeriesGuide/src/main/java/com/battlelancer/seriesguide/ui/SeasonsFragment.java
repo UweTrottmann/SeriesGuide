@@ -24,6 +24,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
@@ -294,12 +296,15 @@ public class SeasonsFragment extends ListFragment implements
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    public void onListItemClick(ListView l, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), EpisodesActivity.class);
-
         intent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID, (int) id);
-        startActivity(intent);
-        getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
+
+        ActivityCompat.startActivity(getActivity(), intent,
+                ActivityOptionsCompat
+                        .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                        .toBundle()
+        );
     }
 
     @Override

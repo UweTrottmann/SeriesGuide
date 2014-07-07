@@ -34,6 +34,7 @@
   <string name="app_not_available">Nenhuma aplicação disponível para lidar com isto.</string>
   <string name="onlyx">Apenas disponível com a assinatura de X</string>
   <string name="add_empty">Não existe nenhuma série.</string>
+  <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="share_show">Partilhar série</string>
   <string name="share_episode">Partilhar episódio</string>
   <string name="share_movie">Partilhar filme</string>
@@ -451,4 +452,5 @@
   <string name="extension_youtube">Pesquisa no YouTube</string>
   <string name="description_extension_youtube">Pesquisa no YouTube por alguns vídeos</string>
   <string name="description_extension_web_search">Pesquisa por websites e imagens</string>
+  <string name="person_biography">Biography</string>
 </resources>

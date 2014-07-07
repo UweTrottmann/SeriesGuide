@@ -43,7 +43,7 @@
     <string name="app_not_available">No app available to handle this.</string>
     <string name="onlyx">Only available with X Subscription</string>
     <string name="add_empty">There are no shows here.</string>
-
+    <string name="people_empty">Nobody here?! Touch to try again.</string>
 
     <!-- Sharing -->
     <string name="share_show">Share show</string>
@@ -538,4 +538,8 @@
     <string name="extension_youtube">YouTube search</string>
     <string name="description_extension_youtube">Search YouTube for videos</string>
     <string name="description_extension_web_search">Search for websites and images</string>
+
+    <!-- People -->
+    <string name="person_biography">Biography</string>
+
 </resources>

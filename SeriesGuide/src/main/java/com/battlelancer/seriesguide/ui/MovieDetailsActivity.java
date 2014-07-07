@@ -95,7 +95,7 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
                     Intent.FLAG_ACTIVITY_CLEAR_TOP |
                             Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(parentActivityIntent);
-            overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
+            overridePendingTransition(R.anim.fade_in, R.anim.slide_right_exit);
             finish();
             return true;
         }

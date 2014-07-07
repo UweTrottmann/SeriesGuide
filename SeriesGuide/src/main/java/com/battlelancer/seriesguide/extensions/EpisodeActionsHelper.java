@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.extensions;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.List;
 import timber.log.Timber;
 
@@ -74,8 +76,15 @@ public class EpisodeActionsHelper {
         configureView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.getContext().startActivity(
-                        new Intent(v.getContext(), ExtensionsConfigurationActivity.class));
+                Intent intent = new Intent(v.getContext(), ExtensionsConfigurationActivity.class);
+                if (AndroidUtils.isJellyBeanOrHigher()) {
+                    v.getContext()
+                            .startActivity(intent,
+                                    ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(),
+                                            v.getHeight()).toBundle());
+                } else {
+                    v.getContext().startActivity(intent);
+                }
             }
         });
         actionsContainer.addView(configureView);

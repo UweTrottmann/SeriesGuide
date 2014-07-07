@@ -34,6 +34,7 @@
   <string name="app_not_available">Немає доступних програм, щоб впоратися з цим.</string>
   <string name="onlyx">Доступно тільки з версією X Підписки</string>
   <string name="add_empty">Тут немає жодного серіалу.</string>
+  <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="share_show">Поділитись фільмом</string>
   <string name="share_episode">Поділитись серією</string>
   <string name="share_movie">Поділитися фільмом</string>
@@ -451,4 +452,5 @@
   <string name="extension_youtube">Пошук YouTube</string>
   <string name="description_extension_youtube">Шукати у  YouTube відео</string>
   <string name="description_extension_web_search">Шукати вебсайти та зображення</string>
+  <string name="person_biography">Biography</string>
 </resources>

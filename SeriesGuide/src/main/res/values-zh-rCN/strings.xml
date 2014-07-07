@@ -25,7 +25,7 @@
   <string name="discard">放弃</string>
   <string name="save_selection">保存已选项</string>
   <string name="search_hint">搜索剧集</string>
-  <string name="action_display_all">Show all</string>
+  <string name="action_display_all">显示全部</string>
   <string name="updated">已更新至最新版本。</string>
   <string name="norating">无评分</string>
   <string name="unknown">未知</string>
@@ -34,6 +34,7 @@
   <string name="app_not_available">没有相关程序可用。</string>
   <string name="onlyx">仅向高级用户开放</string>
   <string name="add_empty">尚未添加任何节目</string>
+  <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="share_show">分享此节目</string>
   <string name="share_episode">分享剧集</string>
   <string name="share_movie">分享电影</string>
@@ -65,8 +66,8 @@
   <string name="statistics_movies">电影总数</string>
   <string name="shows_with_next">%s 部节目仍有未观看剧集</string>
   <string name="shows_continuing">%s 部节目仍在连载</string>
-  <string name="episodes_watched">总计已观看 %s 集</string>
-  <string name="runtime_all_episodes">所有已观看剧集的总播放时间</string>
+  <string name="episodes_watched">%s 集节目已观看</string>
+  <string name="runtime_all_episodes">所有已看剧集的总时间</string>
   <string name="movies_on_watchlist">%s 部待看电影</string>
   <string name="runtime_movies_watchlist">所有待看电影的总时间</string>
   <plurals name="days_plural">
@@ -451,4 +452,5 @@
   <string name="extension_youtube">YouTube 搜索</string>
   <string name="description_extension_youtube">搜索 YouTube 相关视频</string>
   <string name="description_extension_web_search">搜索相关网站或图片</string>
+  <string name="person_biography">Biography</string>
 </resources>

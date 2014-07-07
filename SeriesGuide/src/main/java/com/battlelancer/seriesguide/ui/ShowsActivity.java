@@ -74,7 +74,7 @@ import timber.log.Timber;
 /**
  * Provides the apps main screen, displaying a list of shows and their next episodes.
  */
-public class ShowsActivity extends BaseTopShowsActivity implements
+public class ShowsActivity extends BaseTopActivity implements
         AddShowDialogFragment.OnAddShowListener, OnFirstRunDismissedListener {
 
     protected static final String TAG = "Shows";
@@ -184,7 +184,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements
 
         if (intent != null) {
             startActivity(intent);
-            overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
     }
 

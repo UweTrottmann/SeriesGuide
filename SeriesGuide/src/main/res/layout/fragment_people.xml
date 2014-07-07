@@ -20,19 +20,29 @@
     android:layout_height="match_parent"
     tools:context="com.battlelancer.seriesguide.ui.PeopleActivity.PeopleFragment">
 
-    <TextView
-        android:id="@+id/emptyViewPeople"
-        android:layout_width="@dimen/empty_view_width"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="@string/offline"
-        android:textAppearance="@style/TextAppearance.Light" />
-
     <ListView
         android:id="@+id/listViewPeople"
-        style="@style/Page.Centered"
-        android:clipToPadding="false"
-        android:listSelector="@color/transparent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/large_padding"
+        android:paddingBottom="@dimen/large_padding"
+        android:listSelector="@color/transparent"
+        android:clipToPadding="false" />
+
+    <TextView
+        android:id="@+id/emptyViewPeople"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/empty_view_width"
+        android:layout_gravity="center"
+        android:maxWidth="@dimen/empty_view_width"
+        android:gravity="center"
+        tools:text="@string/people_empty"
+        android:textAppearance="@style/TextAppearance.Light" />
+
+    <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+        android:id="@+id/progressBarPeople"
+        style="@style/Widget.SeriesGuide.SmoothProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="4dp" />
 
 </FrameLayout>

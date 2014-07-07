@@ -34,6 +34,7 @@
   <string name="app_not_available">Geen app beschikbaar voor deze actie.</string>
   <string name="onlyx">Enkel beschikbaar met X-abonnement</string>
   <string name="add_empty">Er zijn geen series hier.</string>
+  <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="share_show">Serie delen</string>
   <string name="share_episode">Aflevering delen</string>
   <string name="share_movie">Film delen</string>
@@ -451,4 +452,5 @@
   <string name="extension_youtube">Zoek op YouTube</string>
   <string name="description_extension_youtube">Zoek op YouTube voor video\'s</string>
   <string name="description_extension_web_search">Zoek naar websites en afbeeldingen</string>
+  <string name="person_biography">Biography</string>
 </resources>

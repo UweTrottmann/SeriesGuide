@@ -42,6 +42,12 @@ public class TimeTools {
 
     private static final String TIMEZONE_ID_AUSTRALIA = "Australia/Sydney";
 
+    private static final String TIMEZONE_ID_CANADA_ATLANTIC = "America/Halifax";
+    private static final String TIMEZONE_ID_CANADA_EASTERN = "America/Montreal";
+    private static final String TIMEZONE_ID_CANADA_CENTRAL = "America/Winnipeg";
+    private static final String TIMEZONE_ID_CANADA_MOUNTAIN = "America/Edmonton";
+    private static final String TIMEZONE_ID_CANADA_PACIFIC = "America/Vancouver";
+
     private static final String TIMEZONE_ID_FINLAND = "Europe/Helsinki";
 
     private static final String TIMEZONE_ID_GERMANY = "Europe/Berlin";
@@ -51,15 +57,10 @@ public class TimeTools {
     private static final String TIMEZONE_ID_NETHERLANDS = "Europe/Amsterdam";
 
     private static final String TIMEZONE_ID_US_EASTERN = "America/New_York";
-
     private static final Object TIMEZONE_ID_US_EASTERN_DETROIT = "America/Detroit";
-
     private static final String TIMEZONE_ID_US_CENTRAL = "America/Chicago";
-
     private static final String TIMEZONE_ID_US_MOUNTAIN = "America/Denver";
-
     private static final String TIMEZONE_ID_US_ARIZONA = "America/Phoenix";
-
     private static final String TIMEZONE_ID_US_PACIFIC = "America/Los_Angeles";
 
     private static final String TIMEZONE_ID_UK = "Europe/London";
@@ -77,6 +78,7 @@ public class TimeTools {
         DATE_FORMAT_TVDB.setTimeZone(customTimeZone);
     }
 
+    public static final String CANADA = "Canada";
     public static final String UNITED_STATES = "United States";
 
     public static final int RELEASE_DAY_DAILY = 0;
@@ -403,10 +405,54 @@ public class TimeTools {
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
 
+        // Shows from Canada typically air at the same time across its time zones
+        if (CANADA.equals(releaseCountry)) {
+            applyCanadaCorrections(calendar);
+            return;
+        }
+
         // US shows air at the same LOCAL time across all its time zones (with exceptions)
         if (releaseCountry == null || releaseCountry.length() == 0
                 || UNITED_STATES.equals(releaseCountry)) {
             applyUnitedStatesCorrections(calendar);
+        }
+    }
+
+    /**
+     * Reverse some time zone based release time shifts for Canadian time zones.
+     */
+    private static void applyCanadaCorrections(Calendar calendar) {
+        // get device time zone
+        final String localTimeZone = TimeZone.getDefault().getID();
+
+        /**
+         * Base time zone for Canada is Eastern (see getTimeZoneIdForCountry()).
+         *
+         * Eastern feed is aired at the same LOCAL time in Pacific.
+         * Eastern feed is aired at the same GLOBAL time in Central, Mountain.
+         * Eastern feed is aired 1 hour earlier in Atlantic.
+         */
+
+        // do nothing when automatic conversion is enough
+        if (!localTimeZone.startsWith(TIMEZONE_ID_PREFIX_AMERICA, 0)
+                || localTimeZone.equals(TIMEZONE_ID_CANADA_EASTERN)
+                || localTimeZone.equals(TIMEZONE_ID_CANADA_CENTRAL)
+                || localTimeZone.equals(TIMEZONE_ID_CANADA_MOUNTAIN)) {
+            return;
+        }
+
+        // need to correct Pacific + Atlantic time zones
+        int hourOffset = 0;
+        if (localTimeZone.equals(TIMEZONE_ID_CANADA_ATLANTIC)) {
+            // 1 hour earlier than Eastern
+            hourOffset -= 1;
+        } else if (localTimeZone.equals(TIMEZONE_ID_CANADA_PACIFIC)) {
+            // same LOCAL time as Eastern
+            hourOffset += 3;
+        }
+
+        if (hourOffset != 0) {
+            calendar.add(Calendar.HOUR_OF_DAY, hourOffset);
         }
     }
 
@@ -474,6 +520,10 @@ public class TimeTools {
             switch (releaseCountry) {
                 case UNITED_STATES:
                     timeZoneId = TIMEZONE_ID_US_PACIFIC;
+                    break;
+                case CANADA:
+                    // example: https://trakt.tv/show/rookie-blue
+                    timeZoneId = TIMEZONE_ID_CANADA_EASTERN;
                     break;
                 case "United Kingdom":
                     // example: https://trakt.tv/show/top-gear

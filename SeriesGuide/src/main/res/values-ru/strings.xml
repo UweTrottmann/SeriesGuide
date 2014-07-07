@@ -25,7 +25,7 @@
   <string name="discard">Отменить</string>
   <string name="save_selection">Сохранить выбор</string>
   <string name="search_hint">Поиск эпизодов</string>
-  <string name="action_display_all">Show all</string>
+  <string name="action_display_all">Показать все</string>
   <string name="updated">Обновлено до последней версии.</string>
   <string name="norating">нет данных</string>
   <string name="unknown">Неизвестно</string>
@@ -34,6 +34,7 @@
   <string name="app_not_available">Нет приложения для обработки это.</string>
   <string name="onlyx">Доступно для X версии</string>
   <string name="add_empty">Здесь нет сериалов.</string>
+  <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="share_show">Поделиться сериалом</string>
   <string name="share_episode">Поделиться эпизодом</string>
   <string name="share_movie">Поделиться сериалом</string>
@@ -67,8 +68,8 @@
   <string name="shows_continuing">Продолжается %s</string>
   <string name="episodes_watched">посмотрели: %s</string>
   <string name="runtime_all_episodes">Общее время всех просмотренных эпизодов</string>
-  <string name="movies_on_watchlist">%s on watchlist</string>
-  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
+  <string name="movies_on_watchlist">%s в списке просмотров</string>
+  <string name="runtime_movies_watchlist">Общее время в списке просмотров</string>
   <plurals name="days_plural">
     <item quantity="one">%d день</item>
     <item quantity="zero">%d дней</item>
@@ -194,8 +195,8 @@
   <string name="friends">Друзья</string>
   <string name="friends_empty">Нет активности друзей на trakt.</string>
   <string name="user_stream">Вы</string>
-  <string name="user_stream_empty">Не последние данные по активности на trakt. Проверите в некоторых сериалах!</string>
-  <string name="user_movie_stream_empty">Не последние данные по активности на trakt. Проверите в некоторых фильмах!</string>
+  <string name="user_stream_empty">Нет последней информации об активности в trakt. Проверьте в некоторых сериалах!</string>
+  <string name="user_movie_stream_empty">Нет последней информации об активности в trakt. Проверьте в некоторых фильмах!</string>
   <string name="noupcoming">Выходящих эпизодов нет.</string>
   <string name="norecent">Недавних эпизодов нет.</string>
   <string name="only_favorites">Только избранные сериалы</string>
@@ -451,4 +452,5 @@
   <string name="extension_youtube">Поиск YouTube</string>
   <string name="description_extension_youtube">Поиск YouTube для видео</string>
   <string name="description_extension_web_search">Поиск веб-сайтов и изображений</string>
+  <string name="person_biography">Biography</string>
 </resources>

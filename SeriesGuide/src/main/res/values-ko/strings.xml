@@ -34,6 +34,7 @@
   <string name="app_not_available">이 형식을 실행할 수 있는 앱이 없습니다.</string>
   <string name="onlyx">X 구독자에게만 제공되는 기능입니다</string>
   <string name="add_empty">쇼 정보가 없습니다.</string>
+  <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="share_show">쇼 공유</string>
   <string name="share_episode">에피소드 공유</string>
   <string name="share_movie">Share movie</string>
@@ -451,4 +452,5 @@
   <string name="extension_youtube">YouTube search</string>
   <string name="description_extension_youtube">Search YouTube for videos</string>
   <string name="description_extension_web_search">Search for websites and images</string>
+  <string name="person_biography">Biography</string>
 </resources>

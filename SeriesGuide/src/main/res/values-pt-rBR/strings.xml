@@ -25,7 +25,7 @@
   <string name="discard">Descartar</string>
   <string name="save_selection">Salvar seleção</string>
   <string name="search_hint">Pesquisar episódios</string>
-  <string name="action_display_all">Show all</string>
+  <string name="action_display_all">Mostrar tudo</string>
   <string name="updated">Atualizado para a versão mais recente.</string>
   <string name="norating">n/a</string>
   <string name="unknown">desconhecido</string>
@@ -34,6 +34,7 @@
   <string name="app_not_available">Nenhum aplicativo disponível que suporte isso.</string>
   <string name="onlyx">Disponível apenas com a Assinatura X</string>
   <string name="add_empty">Nenhuma série aqui.</string>
+  <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="share_show">Compartilhar série</string>
   <string name="share_episode">Compartilhar episódio</string>
   <string name="share_movie">Compartilhar filme</string>
@@ -451,4 +452,5 @@
   <string name="extension_youtube">Pesquisar no YouTube</string>
   <string name="description_extension_youtube">Pesquisar no YouTube por vídeos</string>
   <string name="description_extension_web_search">Pesquisar por sites e imagens</string>
+  <string name="person_biography">Biography</string>
 </resources>

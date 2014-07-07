@@ -34,6 +34,7 @@
   <string name="app_not_available">İşlemi yapacak uygulama bulunamadı.</string>
   <string name="onlyx">Sadece X aboneleri kullanabilir</string>
   <string name="add_empty">Burada dizi yok.</string>
+  <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="share_show">Diziyi paylaş</string>
   <string name="share_episode">Bölümü paylaş</string>
   <string name="share_movie">Filmi paylaş</string>
@@ -451,4 +452,5 @@
   <string name="extension_youtube">YouTube\'da ara</string>
   <string name="description_extension_youtube">YouTube videolarını ara</string>
   <string name="description_extension_web_search">Websiteler ve resimlerde ara</string>
+  <string name="person_biography">Biography</string>
 </resources>

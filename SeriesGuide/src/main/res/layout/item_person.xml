@@ -19,7 +19,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?attr/custom_list_selector">
 
     <ImageView
         android:id="@+id/imageViewPerson"
@@ -43,7 +44,6 @@
             android:maxLines="1"
             android:scrollHorizontally="true"
             android:ellipsize="end"
-            android:textIsSelectable="true"
             tools:text="Bryan Cranston" />
 
         <TextView
@@ -54,7 +54,6 @@
             android:maxLines="1"
             android:scrollHorizontally="true"
             android:ellipsize="end"
-            android:textIsSelectable="true"
             tools:text="Walter White" />
 
     </LinearLayout>

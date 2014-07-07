@@ -23,6 +23,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -245,8 +247,11 @@ public class ActivityFragment extends Fragment implements
         intent.setClass(getActivity(), EpisodesActivity.class);
         intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
 
-        startActivity(intent);
-        getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
+        ActivityCompat.startActivity(getActivity(), intent,
+                ActivityOptionsCompat
+                        .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                        .toBundle()
+        );
     }
 
     @Override

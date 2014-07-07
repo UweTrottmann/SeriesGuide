@@ -298,7 +298,11 @@ public class ShowFragment extends Fragment {
                 Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
                 i.putExtras(TraktShoutsActivity.createInitBundleShow(mShow.getTitle(),
                         getShowTvdbId()));
-                startActivity(i);
+                ActivityCompat.startActivity(getActivity(), i,
+                        ActivityOptionsCompat
+                                .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
+                                .toBundle()
+                );
                 fireTrackerEvent("Shouts");
             }
         });
@@ -351,49 +355,27 @@ public class ShowFragment extends Fragment {
         }
     };
 
-    private void populateCredits(final Credits data) {
-        if (data == null) {
+    private void populateCredits(final Credits credits) {
+        if (credits == null) {
             mCastView.setVisibility(View.GONE);
             mCrewView.setVisibility(View.GONE);
             return;
         }
 
-        if (data.cast == null || data.cast.size() == 0) {
+        if (credits.cast == null || credits.cast.size() == 0) {
             mCastView.setVisibility(View.GONE);
         } else {
             mCastView.setVisibility(View.VISIBLE);
-            PeopleListHelper.populateCast(getActivity(), getActivity().getLayoutInflater(),
-                    mCastContainer, data.cast, new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startActivity(new Intent(v.getContext(), PeopleActivity.class)
-                                    .putExtra(PeopleActivity.InitBundle.PEOPLE_TYPE,
-                                            PeopleActivity.PeopleType.CAST.toString())
-                                    .putExtra(PeopleActivity.InitBundle.MEDIA_TYPE,
-                                            PeopleActivity.MediaType.SHOW.toString())
-                                    .putExtra(PeopleActivity.InitBundle.TMDB_ID, data.id));
-                        }
-                    }
-            );
+            PeopleListHelper.populateShowCast(getActivity(), getActivity().getLayoutInflater(),
+                    mCastContainer, credits);
         }
 
-        if (data.crew == null || data.crew.size() == 0) {
+        if (credits.crew == null || credits.crew.size() == 0) {
             mCrewView.setVisibility(View.GONE);
         } else {
             mCrewView.setVisibility(View.VISIBLE);
-            PeopleListHelper.populateCrew(getActivity(), getActivity().getLayoutInflater(),
-                    mCrewContainer, data.crew, new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startActivity(new Intent(v.getContext(), PeopleActivity.class)
-                                    .putExtra(PeopleActivity.InitBundle.PEOPLE_TYPE,
-                                            PeopleActivity.PeopleType.CREW.toString())
-                                    .putExtra(PeopleActivity.InitBundle.MEDIA_TYPE,
-                                            PeopleActivity.MediaType.SHOW.toString())
-                                    .putExtra(PeopleActivity.InitBundle.TMDB_ID, data.id));
-                        }
-                    }
-            );
+            PeopleListHelper.populateShowCrew(getActivity(), getActivity().getLayoutInflater(),
+                    mCrewContainer, credits);
         }
     }
 

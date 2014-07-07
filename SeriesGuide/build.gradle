@@ -5,8 +5,6 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
-    useOldManifestMerger true
-
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 19

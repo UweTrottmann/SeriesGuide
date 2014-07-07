@@ -25,7 +25,7 @@
   <string name="discard">בטל</string>
   <string name="save_selection">שמור בחירה</string>
   <string name="search_hint">חפש פרקים</string>
-  <string name="action_display_all">Show all</string>
+  <string name="action_display_all">הצג הכל</string>
   <string name="updated">עדכן לגרסה האחרונה.</string>
   <string name="norating">לא ידוע</string>
   <string name="unknown">לא ידוע</string>
@@ -34,6 +34,7 @@
   <string name="app_not_available">אין יישום זמין בשביל זה.</string>
   <string name="onlyx">זמין רק עם מנוי X</string>
   <string name="add_empty">אין סדרות כאן.</string>
+  <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="share_show">שתף סדרה</string>
   <string name="share_episode">שתף פרק</string>
   <string name="share_movie">שתף סרט</string>
@@ -67,8 +68,8 @@
   <string name="shows_continuing">%s ממשיכים</string>
   <string name="episodes_watched">%s נצפו</string>
   <string name="runtime_all_episodes">זמן הריצה של כל הפרקים שנצפו</string>
-  <string name="movies_on_watchlist">%s on watchlist</string>
-  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
+  <string name="movies_on_watchlist">%s על רשימת המעקב</string>
+  <string name="runtime_movies_watchlist">זמן הריצה של הסרט רשימת המעקב</string>
   <plurals name="days_plural">
     <item quantity="one">יום אחד</item>
     <item quantity="zero">%d ימים</item>
@@ -451,4 +452,5 @@
   <string name="extension_youtube">חיפוש בYouTube</string>
   <string name="description_extension_youtube">חפש את הוידיאו בYouTube</string>
   <string name="description_extension_web_search">חפש אתרים ותמונות</string>
+  <string name="person_biography">Biography</string>
 </resources>

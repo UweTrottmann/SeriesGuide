@@ -26,6 +26,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
@@ -391,8 +393,12 @@ public class ShowsFragment extends Fragment implements
 
         Intent i = new Intent(getActivity(), OverviewActivity.class);
         i.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, (int) id);
-        startActivity(i);
-        getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
+
+        ActivityCompat.startActivity(getActivity(), i,
+                ActivityOptionsCompat
+                        .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                        .toBundle()
+        );
     }
 
     @Override

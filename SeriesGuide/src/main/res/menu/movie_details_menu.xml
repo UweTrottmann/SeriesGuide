@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menu_movie_share"
-        android:icon="@drawable/ic_action_share"
-        android:showAsAction="ifRoom"
-        android:title="@string/share_movie" />
-    <item
         android:id="@+id/menu_open_youtube"
         android:icon="@drawable/ic_action_youtube"
         android:showAsAction="ifRoom"
         android:title="@string/trailer" />
+    <item
+        android:id="@+id/menu_movie_share"
+        android:icon="@drawable/ic_action_share"
+        android:showAsAction="ifRoom"
+        android:title="@string/share_movie" />
     <item
         android:id="@+id/menu_open_google_play"
         android:showAsAction="never"

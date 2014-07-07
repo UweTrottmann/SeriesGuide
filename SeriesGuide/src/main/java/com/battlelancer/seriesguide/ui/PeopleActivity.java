@@ -17,30 +17,21 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.view.LayoutInflater;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.PeopleAdapter;
-import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
-import com.battlelancer.seriesguide.loaders.ShowCreditsLoader;
-import com.battlelancer.seriesguide.util.PeopleListHelper;
-import com.uwetrottmann.tmdb.entities.Credits;
-import java.util.HashMap;
-import java.util.Map;
 
-public class PeopleActivity extends BaseActivity {
+public class PeopleActivity extends BaseActivity implements PeopleFragment.OnShowPersonListener {
+
+    private boolean mTwoPane;
 
     public interface InitBundle {
         String MEDIA_TYPE = "media_title";
-        String TMDB_ID = "tmdb_id";
+        String ITEM_TMDB_ID = "item_tmdb_id";
         String PEOPLE_TYPE = "people_type";
     }
 
@@ -77,6 +68,7 @@ public class PeopleActivity extends BaseActivity {
     }
 
     public static final int PEOPLE_LOADER_ID = 100;
+    public static final int PERSON_LOADER_ID = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,11 +77,33 @@ public class PeopleActivity extends BaseActivity {
 
         setupActionBar();
 
+        if (findViewById(R.id.containerPeoplePerson) != null) {
+            mTwoPane = true;
+        }
+
         if (savedInstanceState == null) {
-            Fragment f = new PeopleFragment();
+            // check if we should directly show a person
+            int personTmdbId = getIntent().getIntExtra(PersonFragment.InitBundle.PERSON_TMDB_ID, -1);
+            if (personTmdbId != -1) {
+                showPerson(null, personTmdbId);
+
+                // if this is not a dual pane layout, remove ourselves from back stack
+                if (!mTwoPane) {
+                    finish();
+                    return;
+                }
+            }
+
+            PeopleFragment f = new PeopleFragment();
             f.setArguments(getIntent().getExtras());
+
+            // in two-pane mode, list items should be activated when touched
+            if (mTwoPane) {
+                f.setActivateOnItemClick(true);
+            }
+
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, f)
+                    .add(R.id.containerPeople, f, "people-list")
                     .commit();
         }
     }
@@ -114,79 +128,28 @@ public class PeopleActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A fragment loading and showing a list of people.
-     */
-    public static class PeopleFragment extends Fragment {
+    @Override
+    public void showPerson(View view, int tmdbId) {
+        if (mTwoPane) {
+            // show inline
+            PersonFragment f = PersonFragment.newInstance(tmdbId);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.containerPeoplePerson, f)
+                    .commit();
+        } else {
+            // start new activity
+            Intent i = new Intent(this, PersonActivity.class);
+            i.putExtra(PersonFragment.InitBundle.PERSON_TMDB_ID, tmdbId);
 
-        private ListView mListView;
-        private PeopleAdapter mAdapter;
-
-        private MediaType mMediaType;
-        private PeopleType mPeopleType;
-        private int mTmdbId;
-
-        public PeopleFragment() {
-        }
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            mMediaType = MediaType.valueOf(getArguments().getString(InitBundle.MEDIA_TYPE));
-            mPeopleType = PeopleType.valueOf(getArguments().getString(InitBundle.PEOPLE_TYPE));
-            mTmdbId = getArguments().getInt(InitBundle.TMDB_ID);
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_people, container, false);
-
-            mListView = ButterKnife.findById(rootView, R.id.listViewPeople);
-            mListView.setEmptyView(rootView.findViewById(R.id.emptyViewPeople));
-
-            return rootView;
-        }
-
-        @Override
-        public void onActivityCreated(Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
-
-            mAdapter = new PeopleAdapter(getActivity());
-            mListView.setAdapter(mAdapter);
-
-            getLoaderManager().initLoader(PEOPLE_LOADER_ID, null, mCreditsLoaderCallbacks);
-        }
-
-        private LoaderManager.LoaderCallbacks<Credits> mCreditsLoaderCallbacks
-                = new LoaderManager.LoaderCallbacks<Credits>() {
-            @Override
-            public Loader<Credits> onCreateLoader(int id, Bundle args) {
-                if (mMediaType == MediaType.MOVIE) {
-                    return new MovieCreditsLoader(getActivity(), mTmdbId);
-                } else {
-                    return new ShowCreditsLoader(getActivity(), mTmdbId, false);
-                }
+            if (view != null) {
+                ActivityCompat.startActivity(this, i,
+                        ActivityOptionsCompat
+                                .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                                .toBundle()
+                );
+            } else {
+                startActivity(i);
             }
-
-            @Override
-            public void onLoadFinished(Loader<Credits> loader, Credits data) {
-                if (data == null) {
-                    mAdapter.setData(null);
-                    return;
-                }
-                if (mPeopleType == PeopleType.CAST) {
-                    mAdapter.setData(PeopleListHelper.transformCastToPersonList(data.cast));
-                } else {
-                    mAdapter.setData(PeopleListHelper.transformCrewToPersonList(data.crew));
-                }
-            }
-
-            @Override
-            public void onLoaderReset(Loader<Credits> loader) {
-                // do nothing, preferring stale data over no data
-            }
-        };
+        }
     }
 }

@@ -19,6 +19,8 @@ package com.battlelancer.seriesguide.ui.streams;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -195,7 +197,7 @@ public abstract class StreamFragment extends Fragment implements
         if (episodeQuery.getCount() != 0) {
             // display the episode details if we have a match
             episodeQuery.moveToFirst();
-            showDetails(episodeQuery.getInt(0));
+            showDetails(view, episodeQuery.getInt(0));
         } else {
             // offer to add the show if it's not in the show database yet
             SearchResult showToAdd = new SearchResult();
@@ -211,13 +213,16 @@ public abstract class StreamFragment extends Fragment implements
     /**
      * Starts an activity to display the given episode.
      */
-    protected void showDetails(int episodeId) {
+    protected void showDetails(View view, int episodeId) {
         Intent intent = new Intent();
         intent.setClass(getActivity(), EpisodesActivity.class);
         intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
 
-        startActivity(intent);
-        getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
+        ActivityCompat.startActivity(getActivity(), intent,
+                ActivityOptionsCompat
+                        .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                        .toBundle()
+        );
     }
 
     /**
