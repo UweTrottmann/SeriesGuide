@@ -49,7 +49,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
-import com.battlelancer.seriesguide.util.FlagTask;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
 
 /**
@@ -274,22 +274,17 @@ public class EpisodesFragment extends ListFragment
 
     @Override
     public void onFlagEpisodeWatched(int episodeTvdbId, int episode, boolean isWatched) {
-        new FlagTask(getActivity(), getShowId())
-                .episodeWatched(episodeTvdbId, getSeasonNumber(), episode,
-                        isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED)
-                .execute();
+        EpisodeTools.episodeWatched(getActivity(), getShowId(), episodeTvdbId, getSeasonNumber(),
+                episode, isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
     }
 
     public void onFlagEpisodeCollected(int episodeTvdbId, int episode, boolean isCollected) {
-        new FlagTask(getActivity(), getShowId())
-                .episodeCollected(episodeTvdbId, getSeasonNumber(), episode, isCollected)
-                .execute();
+        EpisodeTools.episodeCollected(getActivity(), getShowId(), episodeTvdbId, getSeasonNumber(),
+                episode, isCollected);
     }
 
-    private void onMarkUntilHere(long firstaired) {
-        new FlagTask(getActivity(), getShowId())
-                .episodeWatchedPrevious(firstaired)
-                .execute();
+    private void onMarkUntilHere(long episodeFirstReleaseMs) {
+        EpisodeTools.episodeWatchedPrevious(getActivity(), getShowId(), episodeFirstReleaseMs);
     }
 
     private LoaderManager.LoaderCallbacks<Cursor> mLoaderCallbacks

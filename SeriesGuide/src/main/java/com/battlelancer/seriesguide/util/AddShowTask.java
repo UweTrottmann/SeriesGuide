@@ -20,6 +20,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
@@ -64,35 +66,41 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
     private static final int ADD_OFFLINE = 3;
 
-    final private Context mContext;
+    private final Context mContext;
 
-    final private LinkedList<SearchResult> mAddQueue = new LinkedList<SearchResult>();
+    private final LinkedList<SearchResult> mAddQueue = new LinkedList<>();
 
     private boolean mIsFinishedAddingShows = false;
 
-    private String mCurrentShowName;
-
     private boolean mIsSilentMode;
 
-    public AddShowTask(Context context, List<SearchResult> shows, boolean isSilentMode) {
+    private boolean mIsMergingShows;
+
+    private String mCurrentShowName;
+
+    public AddShowTask(Context context, List<SearchResult> shows, boolean isSilentMode,
+            boolean isMergingShows) {
         // use an activity independent context
         mContext = context.getApplicationContext();
         mAddQueue.addAll(shows);
         mIsSilentMode = isSilentMode;
+        mIsMergingShows = isMergingShows;
     }
 
     /**
      * Adds shows to the add queue. If this returns false, the shows were not
      * added because the task is finishing up. Create a new one instead.
      */
-    public boolean addShows(List<SearchResult> show) {
-        Timber.d("Trying to add shows to queue...");
+    public boolean addShows(List<SearchResult> show, boolean isSilentMode, boolean isMergingShows) {
         if (mIsFinishedAddingShows) {
-            Timber.d("FAILED. Already finishing up.");
+            Timber.d("addShows: failed, already finishing up.");
             return false;
         } else {
+            mIsSilentMode = isSilentMode;
+            // never reset mIsMergingShows once true, so merged flag is correctly set on completion
+            mIsMergingShows = mIsMergingShows || isMergingShows;
             mAddQueue.addAll(show);
-            Timber.d("SUCCESS.");
+            Timber.d("addShows: added shows to queue.");
             return true;
         }
     }
@@ -107,9 +115,6 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             return null;
         }
 
-        int result;
-        boolean modifiedDB = false;
-
         if (!AndroidUtils.isNetworkConnected(mContext)) {
             Timber.d("Finished. No internet connection.");
             publishProgress(ADD_OFFLINE);
@@ -121,24 +126,28 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             return null;
         }
 
-        // get watched episodes from trakt (if enabled/possible)
-        // already here, so we only have to get it once
-        List<TvShow> watched = new ArrayList<TvShow>();
-        List<TvShow> collection = new ArrayList<TvShow>();
-        Trakt manager = ServiceUtils.getTraktWithAuth(mContext);
-        if (manager != null) {
-            Timber.d("Getting watched and collected episodes from trakt.");
-            String username = TraktCredentials.get(mContext).getUsername();
-            try {
-                UserService userService = manager.userService();
-                watched = userService.libraryShowsWatched(username, Extended.MIN);
-                collection = userService.libraryShowsCollection(username, Extended.MIN);
-            } catch (RetrofitError e) {
-                // something went wrong, continue anyhow
-                Timber.w(e, "Getting watched and collected episodes failed");
+        // get watched episodes from trakt (only if not connected to Hexagon) once
+        List<TvShow> watched = new ArrayList<>();
+        List<TvShow> collection = new ArrayList<>();
+        if (!HexagonTools.isSignedIn(mContext)) {
+            Trakt manager = ServiceUtils.getTraktWithAuth(mContext);
+            if (manager != null) {
+                Timber.d("Getting watched and collected episodes from trakt.");
+                String username = TraktCredentials.get(mContext).getUsername();
+                try {
+                    UserService userService = manager.userService();
+                    watched = userService.libraryShowsWatched(username, Extended.MIN);
+                    collection = userService.libraryShowsCollection(username, Extended.MIN);
+                } catch (RetrofitError e) {
+                    // something went wrong, continue anyhow
+                    Timber.w(e, "Getting watched and collected episodes failed");
+                }
             }
         }
 
+        int result;
+        boolean modifiedDatabase = false;
+        boolean failedToAddShow = false;
         while (!mAddQueue.isEmpty()) {
             Timber.d("Starting to add next show...");
             if (isCancelled()) {
@@ -151,25 +160,20 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             if (!AndroidUtils.isNetworkConnected(mContext)) {
                 Timber.d("Finished. No connection.");
                 publishProgress(ADD_OFFLINE);
+                failedToAddShow = true;
                 break;
             }
 
             SearchResult nextShow = mAddQueue.removeFirst();
 
             try {
-                if (TheTVDB.addShow(nextShow.tvdbid, watched, collection, mContext)) {
-                    // success
-                    result = ADD_SUCCESS;
-
-                    // remove isRemoved flag on Hexagon
-                    ShowTools.get(mContext).sendIsRemoved(nextShow.tvdbid, false);
-                } else {
-                    // already exists
-                    result = ADD_ALREADYEXISTS;
-                }
-                modifiedDB = true;
+                boolean addedShow = TheTVDB.addShow(mContext, nextShow.tvdbid, watched, collection);
+                result = addedShow ? ADD_SUCCESS : ADD_ALREADYEXISTS;
+                modifiedDatabase = addedShow
+                        || modifiedDatabase; // do not overwrite previous success
             } catch (TvdbException e) {
                 result = ADD_ERROR;
+                failedToAddShow = true;
                 Timber.e(e, "Adding show failed");
             }
 
@@ -179,8 +183,14 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         }
 
         mIsFinishedAddingShows = true;
+
+        // when merging shows down from Hexagon, set success flag
+        if (mIsMergingShows && !failedToAddShow) {
+            HexagonSettings.setHasMergedShows(mContext, true);
+        }
+
         // renew FTS3 table
-        if (modifiedDB) {
+        if (modifiedDatabase) {
             Timber.d("Renewing search table.");
             DBUtils.rebuildFtsTable(mContext);
         }

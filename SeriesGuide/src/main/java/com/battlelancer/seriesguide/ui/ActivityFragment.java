@@ -51,7 +51,6 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 
@@ -226,17 +225,14 @@ public class ActivityFragment extends Fragment implements
 
     private void updateEpisodeCollectionState(int showTvdbId, int episodeTvdbId, int seasonNumber,
             int episodeNumber, boolean addToCollection) {
-        new FlagTask(getActivity(), showTvdbId)
-                .episodeCollected(episodeTvdbId, seasonNumber, episodeNumber, addToCollection)
-                .execute();
+        EpisodeTools.episodeCollected(getActivity(), showTvdbId, episodeTvdbId, seasonNumber,
+                episodeNumber, addToCollection);
     }
 
     private void updateEpisodeWatchedState(int showTvdbId, int episodeTvdbId, int seasonNumber,
             int episodeNumber, boolean isWatched) {
-        new FlagTask(getActivity(), showTvdbId)
-                .episodeWatched(episodeTvdbId, seasonNumber, episodeNumber,
-                        isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED)
-                .execute();
+        EpisodeTools.episodeWatched(getActivity(), showTvdbId, episodeTvdbId, seasonNumber,
+                episodeNumber, isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
     }
 
     @Override

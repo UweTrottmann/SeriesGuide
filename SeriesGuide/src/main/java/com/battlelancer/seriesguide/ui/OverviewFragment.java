@@ -63,7 +63,7 @@ import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.FlagTask;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
@@ -312,10 +312,8 @@ public class OverviewFragment extends Fragment implements
         if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()) {
             final int season = mCurrentEpisodeCursor.getInt(EpisodeQuery.SEASON);
             final int episode = mCurrentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-            new FlagTask(getActivity(), getShowId())
-                    .episodeWatched(mCurrentEpisodeCursor.getInt(EpisodeQuery._ID), season,
-                            episode, episodeFlag)
-                    .execute();
+            EpisodeTools.episodeWatched(getActivity(), getShowId(),
+                    mCurrentEpisodeCursor.getInt(EpisodeQuery._ID), season, episode, episodeFlag);
         }
     }
 
@@ -351,11 +349,8 @@ public class OverviewFragment extends Fragment implements
             final int season = mCurrentEpisodeCursor.getInt(EpisodeQuery.SEASON);
             final int episode = mCurrentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
             final boolean isCollected = mCurrentEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1;
-            new FlagTask(getActivity(), getShowId())
-                    .episodeCollected(mCurrentEpisodeCursor.getInt(EpisodeQuery._ID), season,
-                            episode,
-                            !isCollected)
-                    .execute();
+            EpisodeTools.episodeCollected(getActivity(), getShowId(),
+                    mCurrentEpisodeCursor.getInt(EpisodeQuery._ID), season, episode, !isCollected);
         }
     }
 
@@ -569,7 +564,7 @@ public class OverviewFragment extends Fragment implements
 
                     ActivityCompat.startActivity(getActivity(), intent,
                             ActivityOptionsCompat.makeScaleUpAnimation(view, 0, 0, view.getWidth(),
-                                            view.getHeight()).toBundle()
+                                    view.getHeight()).toBundle()
                     );
                 }
             });

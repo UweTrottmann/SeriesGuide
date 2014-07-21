@@ -28,6 +28,7 @@ import android.sax.RootElement;
 import android.text.format.DateUtils;
 import android.util.Xml;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
@@ -36,7 +37,9 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -119,29 +122,60 @@ public class TheTVDB {
     /**
      * Adds a show and its episodes to the database. If the show already exists, does nothing.
      *
-     * @return whether the show and its episodes were added
+     * <p> If signed in to Hexagon, gets show properties and episode flags.
+     *
+     * <p> If connected to trakt, but not signed in to Hexagon, gets episode flags from trakt
+     * instead.
+     *
+     * @return True, if the show and its episodes were added to the database.
      */
-    public static boolean addShow(int showTvdbId, List<TvShow> seenShows,
-            List<TvShow> collectedShows, Context context) throws TvdbException {
+    public static boolean addShow(Context context, int showTvdbId, List<TvShow> seenTraktShows,
+            List<TvShow> collectedTraktShows) throws TvdbException {
         boolean isShowExists = DBUtils.isShowExists(context, showTvdbId);
         if (isShowExists) {
             return false;
         }
 
+        // get show info from TVDb and trakt
         String language = DisplaySettings.getContentLanguage(context);
+        Show show = fetchShow(context, showTvdbId, language);
+
+        // get show properties from hexagon
+        if (HexagonTools.isSignedIn(context)) {
+            try {
+                ShowTools.Download.showPropertiesFromHexagon(context, show);
+            } catch (IOException e) {
+                throw new TvdbException("Failed to download show properties from Hexagon.");
+            }
+        }
+
+        // get episodes from TVDb and do database update
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-
-        // get show and episode info from TVDb
-        Show show = fetchShow(showTvdbId, language, context);
-        batch.add(DBUtils.buildShowOp(show, context, true));
-
+        batch.add(DBUtils.buildShowOp(show, true));
         getEpisodesAndUpdateDatabase(context, show, language, batch);
 
-        // try to set watched and collected flags from trakt
-        storeTraktFlags(showTvdbId, seenShows, context, true);
-        storeTraktFlags(showTvdbId, collectedShows, context, false);
+        // download episode flags...
+        if (HexagonTools.isSignedIn(context)) {
+            // ...from Hexagon
+            boolean success = EpisodeTools.Download.flagsFromHexagon(context, showTvdbId);
+            if (!success) {
+                // failed to download episode flags
+                // flag show as needing an episode merge
+                ContentValues values = new ContentValues();
+                values.put(Shows.HEXAGON_MERGE_COMPLETE, false);
+                context.getContentResolver()
+                        .update(Shows.buildShowUri(showTvdbId), values, null, null);
+            }
 
-        // calculate the next episode to display
+            // remove any isRemoved flag on Hexagon
+            ShowTools.get(context).sendIsRemoved(showTvdbId, false);
+        } else {
+            // ...from trakt
+            storeTraktFlags(showTvdbId, seenTraktShows, context, true);
+            storeTraktFlags(showTvdbId, collectedTraktShows, context, false);
+        }
+
+        // calculate next episode
         DBUtils.updateLatestEpisode(context, showTvdbId);
 
         return true;
@@ -150,12 +184,13 @@ public class TheTVDB {
     /**
      * Updates show. Adds new, updates changed and removes orphaned episodes.
      */
+
     public static void updateShow(Context context, int showTvdbId) throws TvdbException {
         String language = DisplaySettings.getContentLanguage(context);
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
-        Show show = fetchShow(showTvdbId, language, context);
-        batch.add(DBUtils.buildShowOp(show, context, false));
+        Show show = fetchShow(context, showTvdbId, language);
+        batch.add(DBUtils.buildShowOp(show, false));
 
         getEpisodesAndUpdateDatabase(context, show, language, batch);
     }
@@ -323,7 +358,7 @@ public class TheTVDB {
      * @param language A TVDb language code (see <a href="http://www.thetvdb.com/wiki/index.php/API:languages.xml"
      *                 >TVDb wiki</a>).
      */
-    private static Show fetchShow(int showTvdbId, String language, Context context)
+    private static Show fetchShow(Context context, int showTvdbId, String language)
             throws TvdbException {
         // get show details from TVDb
         Show show = downloadAndParseShow(context, showTvdbId, language);

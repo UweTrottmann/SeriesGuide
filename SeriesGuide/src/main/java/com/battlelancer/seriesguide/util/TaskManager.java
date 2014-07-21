@@ -63,12 +63,19 @@ public class TaskManager {
     public synchronized void performAddTask(SearchResult show) {
         List<SearchResult> wrapper = new ArrayList<>();
         wrapper.add(show);
-        performAddTask(wrapper, false);
+        performAddTask(wrapper, false, false);
     }
 
+    /**
+     * Schedule shows to be added to the database.
+     *
+     * @param isSilentMode   Whether to display status toasts if a show could not be added.
+     * @param isMergingShows Whether to set the Hexagon show merged flag to true if all shows were
+     *                       added successfully.
+     */
     public synchronized void performAddTask(final List<SearchResult> shows,
-            final boolean isSilent) {
-        if (!isSilent) {
+            final boolean isSilentMode, final boolean isMergingShows) {
+        if (!isSilentMode) {
             // notify user here already
             if (shows.size() == 1) {
                 // say title of show
@@ -86,13 +93,13 @@ public class TaskManager {
         }
 
         // add the show(s) to a running add task or create a new one
-        if (!isAddTaskRunning() || !mAddTask.addShows(shows)) {
+        if (!isAddTaskRunning() || !mAddTask.addShows(shows, isSilentMode, isMergingShows)) {
             // ensure this is called on our main thread (AsyncTask needs access to it)
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
                     mAddTask = (AddShowTask) Utils.executeInOrder(
-                            new AddShowTask(mContext, shows, isSilent));
+                            new AddShowTask(mContext, shows, isSilentMode, isMergingShows));
                 }
             });
         }

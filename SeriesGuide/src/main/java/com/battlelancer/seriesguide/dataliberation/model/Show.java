@@ -32,8 +32,6 @@ public class Show {
 
     public boolean hidden;
 
-    public boolean sync;
-
     public long airtime;
 
     public String airday;

@@ -11,14 +11,12 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textViewRegisterTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/hexagon_setup"
             android:textAppearance="@style/TextAppearance.Large.Light" />
 
         <TextView
-            android:id="@+id/textViewRegisterWarning"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_padding"
@@ -26,47 +24,43 @@
             android:textAppearance="@style/TextAppearance.Small.Highlight.Blue" />
 
         <TextView
-            android:id="@+id/textViewRegisterDescription"
+            android:id="@+id/textViewCloudDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_padding"
             android:text="@string/hexagon_description"
             android:textAppearance="@style/TextAppearance" />
 
-        <ProgressBar
-            android:id="@+id/progressBarRegister"
-            style="?android:attr/progressBarStyleHorizontal"
+        <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+            android:id="@+id/progressBarCloud"
+            style="@style/Widget.SeriesGuide.SmoothProgressBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large_padding"
-            android:indeterminateOnly="true" />
-
-        <RadioGroup
-            android:id="@+id/radioGroupRegisterPriority"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large_padding">
-
-            <RadioButton
-                android:id="@+id/radioButtonRegisterPriorityCloud"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hexagon_priority_cloud" />
-
-            <RadioButton
-                android:id="@+id/radioButtonRegisterPriorityDevice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hexagon_priority_local" />
-
-        </RadioGroup>
+            android:layout_height="4dp"
+            android:layout_marginTop="@dimen/large_padding" />
 
         <Button
-            android:id="@+id/buttonRegisterAction"
+            android:id="@+id/buttonCloudAction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/large_padding"
             android:text="@string/hexagon_signin" />
+
+        <TextView
+            android:id="@+id/textViewCloudWarnings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_padding"
+            android:text="@string/hexagon_warning_lists"
+            android:textAppearance="@style/TextAppearance.Small.Highlight" />
+
+        <Button
+            android:id="@+id/buttonCloudRemoveAccount"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Small.Highlight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:text="@string/hexagon_remove_account" />
 
     </LinearLayout>
 
