@@ -78,5 +78,18 @@
             tools:text="5x02 Introcution to Teaching"
             android:textAppearance="@style/TextAppearance.Small.Light" />
 
+        <TextView
+            android:id="@+id/textViewFriendMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewFriendEpisode"
+            android:layout_marginLeft="@dimen/default_padding"
+            android:layout_marginRight="@dimen/default_padding"
+            android:layout_toRightOf="@+id/imageViewFriendPoster"
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="5 more"
+            android:textAppearance="@style/TextAppearance.XSmall.Dim" />
+
     </RelativeLayout>
 </FrameLayout>

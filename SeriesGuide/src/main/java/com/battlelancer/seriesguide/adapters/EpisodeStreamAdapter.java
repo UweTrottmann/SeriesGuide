@@ -28,6 +28,7 @@ import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.ActivityItem;
+import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.enumerations.ActivityAction;
 
 /**
@@ -53,6 +54,7 @@ public class EpisodeStreamAdapter extends SectionedStreamAdapter {
             holder.name = (TextView) convertView.findViewById(R.id.textViewFriendUsername);
             holder.show = (TextView) convertView.findViewById(R.id.textViewFriendShow);
             holder.episode = (TextView) convertView.findViewById(R.id.textViewFriendEpisode);
+            holder.more = (TextView) convertView.findViewById(R.id.textViewFriendMore);
             holder.timestamp = (TextView) convertView.findViewById(
                     R.id.textViewFriendTimestamp);
             holder.poster = (ImageView) convertView.findViewById(R.id.imageViewFriendPoster);
@@ -66,20 +68,20 @@ public class EpisodeStreamAdapter extends SectionedStreamAdapter {
         // Bind the data efficiently with the holder.
         ActivityItem activity = getItem(position);
 
-        // show poster
+        // show
+        holder.show.setText(activity.show.title);
         if (activity.show.images != null && !TextUtils.isEmpty(activity.show.images.poster)) {
             String posterPath = activity.show.images.poster.replace(
                     TraktSettings.POSTER_SIZE_SPEC_DEFAULT, TraktSettings.POSTER_SIZE_SPEC_138);
             ServiceUtils.getPicasso(getContext()).load(posterPath).into(holder.poster);
         }
 
+        // user
         holder.name.setText(activity.user.username);
         ServiceUtils.getPicasso(getContext()).load(activity.user.avatar).into(holder.avatar);
 
-        holder.timestamp.setTextAppearance(getContext(), R.style.TextAppearance_Small_Dim);
-
+        // timestamp
         CharSequence timestamp;
-        // friend is watching something right now?
         if (activity.action == ActivityAction.Watching) {
             timestamp = getContext().getString(R.string.now);
             holder.timestamp.setTextAppearance(getContext(),
@@ -88,12 +90,26 @@ public class EpisodeStreamAdapter extends SectionedStreamAdapter {
             timestamp = DateUtils.getRelativeTimeSpanString(
                     activity.timestamp.getTime(), System.currentTimeMillis(),
                     DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL);
+            holder.timestamp.setTextAppearance(getContext(), R.style.TextAppearance_Small_Dim);
         }
-
-        holder.show.setText(activity.show.title);
-        holder.episode.setText(Utils.getNextEpisodeString(getContext(), activity.episode.season,
-                activity.episode.number, activity.episode.title));
         holder.timestamp.setText(timestamp);
+
+        // episode(s)
+        if (activity.action == ActivityAction.Seen) {
+            // can be multiple episodes
+            TvShowEpisode episode = activity.episodes.get(0);
+            holder.episode.setText(Utils.getNextEpisodeString(getContext(), episode.season,
+                    episode.number, episode.title));
+            if (activity.episodes.size() > 1) {
+                holder.more.setText(
+                        getContext().getString(R.string.more, activity.episodes.size()));
+            }
+        } else {
+            // single episode (check-in, scrobble)
+            holder.episode.setText(Utils.getNextEpisodeString(getContext(), activity.episode.season,
+                    activity.episode.number, activity.episode.title));
+            holder.more.setText(null);
+        }
 
         return convertView;
     }
@@ -105,6 +121,8 @@ public class EpisodeStreamAdapter extends SectionedStreamAdapter {
         TextView show;
 
         TextView episode;
+
+        TextView more;
 
         TextView timestamp;
 

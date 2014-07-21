@@ -43,6 +43,8 @@ import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.ActivityItem;
+import com.jakewharton.trakt.entities.TvShowEpisode;
+import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
@@ -182,12 +184,22 @@ public abstract class StreamFragment extends Fragment implements
             return;
         }
 
+        TvShowEpisode episode = activity.episode;
+        if (episode == null && activity.episodes != null && activity.episodes.size() > 0) {
+            // looks like we have multiple episodes, get first one
+            episode = activity.episodes.get(0);
+        }
+        if (episode == null) {
+            // still no episode? give up
+            return;
+        }
+
         Cursor episodeQuery = getActivity().getContentResolver().query(
                 SeriesGuideContract.Episodes.buildEpisodesOfShowUri(activity.show.tvdb_id),
                 new String[] {
                         SeriesGuideContract.Episodes._ID
-                }, SeriesGuideContract.Episodes.NUMBER + "=" + activity.episode.number + " AND "
-                        + SeriesGuideContract.Episodes.SEASON + "=" + activity.episode.season, null,
+                }, SeriesGuideContract.Episodes.NUMBER + "=" + episode.number + " AND "
+                        + SeriesGuideContract.Episodes.SEASON + "=" + episode.season, null,
                 null
         );
         if (episodeQuery == null) {
