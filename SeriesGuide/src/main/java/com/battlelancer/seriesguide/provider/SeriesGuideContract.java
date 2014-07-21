@@ -88,9 +88,9 @@ public class SeriesGuideContract {
         String HIDDEN = "series_hidden";
 
         /**
-         * Whether this show is included in manual trakt upload.
+         * Whether this show was merged with data on Hexagon after signing in the last time.
          */
-        String SYNCENABLED = "series_syncenabled";
+        String HEXAGON_MERGE_COMPLETE = "series_syncenabled";
 
         /**
          * Next episode ID.

@@ -361,10 +361,8 @@ public class DBUtils {
             );
             if (episode != null) {
                 if (episode.moveToFirst()) {
-                    new FlagTask(context, showId)
-                            .episodeWatched(episodeId, episode.getInt(0), episode.getInt(1),
-                                    EpisodeFlags.WATCHED)
-                            .execute();
+                    EpisodeTools.episodeWatched(context, showId, episodeId, episode.getInt(0),
+                            episode.getInt(1), EpisodeFlags.WATCHED);
                 }
                 episode.close();
             }
@@ -440,12 +438,17 @@ public class DBUtils {
      * Builds a {@link ContentProviderOperation} for inserting or updating a show (depending on
      * {@code isNew}.
      */
-    public static ContentProviderOperation buildShowOp(Show show, Context context, boolean isNew) {
+    public static ContentProviderOperation buildShowOp(Show show, boolean isNew) {
         ContentValues values = new ContentValues();
         values = putCommonShowValues(show, values);
 
         if (isNew) {
             values.put(Shows._ID, show.tvdbId);
+            values.put(Shows.FAVORITE, show.favorite);
+            values.put(Shows.HIDDEN, show.hidden);
+            if (show.checkInGetGlueId != null) {
+                values.put(Shows.GETGLUEID, show.checkInGetGlueId);
+            }
             return ContentProviderOperation.newInsert(Shows.CONTENT_URI).withValues(values).build();
         } else {
             return ContentProviderOperation

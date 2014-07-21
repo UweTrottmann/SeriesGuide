@@ -20,7 +20,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
-import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
 import com.jakewharton.trakt.services.ShowService;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.ArrayList;
@@ -42,7 +41,7 @@ public class FlagTapedTask {
 
     private ShowService mShowService;
 
-    private FlagAction mAction;
+    private EpisodeTools.EpisodeAction mAction;
 
     private int mShowId;
 
@@ -50,7 +49,7 @@ public class FlagTapedTask {
 
     private boolean mIsFlag;
 
-    public FlagTapedTask(Context context, ShowService showService, FlagAction action, int showId,
+    public FlagTapedTask(Context context, ShowService showService, EpisodeTools.EpisodeAction action, int showId,
             List<Flag> flags, boolean isFlag) {
         mContext = context;
         mShowService = showService;

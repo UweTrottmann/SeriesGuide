@@ -24,22 +24,37 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.MovieDetails;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.battlelancer.seriesguide.util.tasks.HexagonAddMovieToCollectionTask;
+import com.battlelancer.seriesguide.util.tasks.HexagonAddMovieToWatchlistTask;
+import com.battlelancer.seriesguide.util.tasks.HexagonRemoveMovieFromCollectionTask;
+import com.battlelancer.seriesguide.util.tasks.HexagonRemoveMovieFromWatchlistTask;
+import com.google.api.client.util.DateTime;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.enumerations.Extended;
 import com.jakewharton.trakt.services.MovieService;
 import com.jakewharton.trakt.services.UserService;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.backend.movies.model.MovieList;
 import com.uwetrottmann.tmdb.services.MoviesService;
 import de.greenrobot.event.EventBus;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
@@ -47,6 +62,8 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import static com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult;
 
 public class MovieTools {
+
+    private static final int MOVIES_MAX_BATCH_SIZE = 100;
 
     public static class MovieChangedEvent {
         public int movieTmdbId;
@@ -57,6 +74,14 @@ public class MovieTools {
     }
 
     public static void addToCollection(Context context, int movieTmdbId) {
+        if (HexagonTools.isSignedIn(context)) {
+            if (!Utils.isConnected(context, true)) {
+                return;
+            }
+            AndroidUtils.executeOnPool(
+                    new HexagonAddMovieToCollectionTask(context, movieTmdbId)
+            );
+        }
         if (TraktCredentials.get(context).hasCredentials()) {
             if (!Utils.isConnected(context, true)) {
                 return;
@@ -72,6 +97,14 @@ public class MovieTools {
     }
 
     public static void addToWatchlist(Context context, int movieTmdbId) {
+        if (HexagonTools.isSignedIn(context)) {
+            if (!Utils.isConnected(context, true)) {
+                return;
+            }
+            AndroidUtils.executeOnPool(
+                    new HexagonAddMovieToWatchlistTask(context, movieTmdbId)
+            );
+        }
         if (TraktCredentials.get(context).hasCredentials()) {
             if (!Utils.isConnected(context, true)) {
                 return;
@@ -101,6 +134,14 @@ public class MovieTools {
     }
 
     public static void removeFromCollection(Context context, int movieTmdbId) {
+        if (HexagonTools.isSignedIn(context)) {
+            if (!Utils.isConnected(context, true)) {
+                return;
+            }
+            AndroidUtils.executeOnPool(
+                    new HexagonRemoveMovieFromCollectionTask(context, movieTmdbId)
+            );
+        }
         if (TraktCredentials.get(context).hasCredentials()) {
             if (!Utils.isConnected(context, true)) {
                 return;
@@ -117,6 +158,14 @@ public class MovieTools {
     }
 
     public static void removeFromWatchlist(Context context, int movieTmdbId) {
+        if (HexagonTools.isSignedIn(context)) {
+            if (!Utils.isConnected(context, true)) {
+                return;
+            }
+            AndroidUtils.executeOnPool(
+                    new HexagonRemoveMovieFromWatchlistTask(context, movieTmdbId)
+            );
+        }
         if (TraktCredentials.get(context).hasCredentials()) {
             if (!Utils.isConnected(context, true)) {
                 return;
@@ -364,6 +413,115 @@ public class MovieTools {
     public static class Download {
 
         /**
+         * Downloads movies from hexagon, updates existing movies with new properties, removes
+         * movies that are neither in collection or watchlist. Adds new movies to the given map.
+         */
+        public static boolean fromHexagon(Context context,
+                HashMap<Integer, com.uwetrottmann.seriesguide.backend.movies.model.Movie> moviesToAdd,
+                boolean hasMergedMovies) {
+            List<com.uwetrottmann.seriesguide.backend.movies.model.Movie> movies;
+            boolean hasMoreMovies = true;
+            String cursor = null;
+            long currentTime = System.currentTimeMillis();
+            DateTime lastSyncTime = new DateTime(HexagonSettings.getLastMoviesSyncTime(context));
+            HashSet<Integer> localMovies = getMovieTmdbIdsAsSet(context);
+
+            if (hasMergedMovies) {
+                Timber.d("fromHexagon: downloading movies changed since " + lastSyncTime);
+            } else {
+                Timber.d("fromHexagon: downloading all movies");
+            }
+
+            while (hasMoreMovies) {
+                // abort if connection is lost
+                if (!AndroidUtils.isNetworkConnected(context)) {
+                    Timber.e("fromHexagon: no network connection");
+                    return false;
+                }
+
+                try {
+                    com.uwetrottmann.seriesguide.backend.movies.Movies.Get request
+                            = HexagonTools.getMoviesService(context).get()
+                            .setLimit(MOVIES_MAX_BATCH_SIZE);
+                    if (hasMergedMovies) {
+                        request.setUpdatedSince(lastSyncTime);
+                    }
+                    if (!TextUtils.isEmpty(cursor)) {
+                        request.setCursor(cursor);
+                    }
+
+                    MovieList response = request.execute();
+                    if (response == null) {
+                        // nothing more to do
+                        Timber.d("fromHexagon: response was null, done here");
+                        break;
+                    }
+
+                    movies = response.getMovies();
+
+                    if (response.getCursor() != null) {
+                        cursor = response.getCursor();
+                    } else {
+                        hasMoreMovies = false;
+                    }
+                } catch (IOException e) {
+                    Timber.e(e, "fromHexagon: failed to download movies");
+                    return false;
+                }
+
+                if (movies == null || movies.size() == 0) {
+                    // nothing more to do
+                    break;
+                }
+
+                ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+                for (com.uwetrottmann.seriesguide.backend.movies.model.Movie movie : movies) {
+                    if (localMovies.contains(movie.getTmdbId())) {
+                        // movie is in database
+                        if (movie.getIsInCollection() != null && movie.getIsInWatchlist() != null
+                                && !movie.getIsInCollection() && !movie.getIsInWatchlist()) {
+                            // if neither in watchlist or collection: remove movie
+                            batch.add(ContentProviderOperation.newDelete(
+                                    Movies.buildMovieUri(movie.getTmdbId())).build());
+                        } else {
+                            // update movie properties
+                            ContentValues values = new ContentValues();
+                            if (movie.getIsInCollection() != null) {
+                                values.put(Movies.IN_COLLECTION, movie.getIsInCollection());
+                            }
+                            if (movie.getIsInWatchlist() != null) {
+                                values.put(Movies.IN_WATCHLIST, movie.getIsInWatchlist());
+                            }
+                            batch.add(ContentProviderOperation.newUpdate(
+                                    Movies.buildMovieUri(movie.getTmdbId()))
+                                    .withValues(values).build());
+                        }
+                    } else {
+                        // schedule movie to be added
+                        moviesToAdd.put(movie.getTmdbId(), movie);
+                    }
+                }
+
+                try {
+                    DBUtils.applyInSmallBatches(context, batch);
+                } catch (OperationApplicationException e) {
+                    Timber.e(e, "fromHexagon: applying movie updates failed");
+                    return false;
+                }
+            }
+
+            // set new last sync time
+            if (hasMergedMovies) {
+                PreferenceManager.getDefaultSharedPreferences(context)
+                        .edit()
+                        .putLong(HexagonSettings.KEY_LAST_SYNC_MOVIES, currentTime)
+                        .commit();
+            }
+
+            return true;
+        }
+
+        /**
          * Updates the movie local database against trakt movie watchlist and collection, therefore
          * adds, updates and removes movies in the database.<br/>Performs <b>synchronous network
          * access</b>, so make sure to run this on a background thread!
@@ -469,42 +627,71 @@ public class MovieTools {
             }
 
             // add movies new from trakt
-            return addMovies(context, trakt, moviesToAdd.toArray(new Integer[moviesToAdd.size()]));
+            return addMovies(context, trakt, moviesToAdd, null);
         }
 
         /**
-         * Downloads movie summaries from trakt and adds them to the database.
+         * Adds new movies to the database.
+         *
+         * @param trakt         Requires a trakt with user auth, except when supplying movies from
+         *                      hexagon.
+         * @param movieTmdbIds  A list of movies to add.
+         * @param hexagonMovies If given, adds movie to watchlist or collection based on the
+         *                      matching movie.
          */
-        private static UpdateResult addMovies(Context context, Trakt trakt,
-                Integer... movieTmdbIds) {
+        public static UpdateResult addMovies(
+                @Nonnull Context context,
+                @Nonnull Trakt trakt,
+                @Nonnull Set<Integer> movieTmdbIds,
+                @Nullable
+                Map<Integer, com.uwetrottmann.seriesguide.backend.movies.model.Movie> hexagonMovies
+        ) {
+            Timber.d("addMovies: adding " + movieTmdbIds.size() + " movies"
+                    + (hexagonMovies != null ? " (from hexagon)" : ""));
+
             MovieService movieServiceTrakt = trakt.movieService();
             MoviesService moviesServiceTmdb = ServiceUtils.getTmdb(context)
                     .moviesService();
             String languageCode = DisplaySettings.getContentLanguage(context);
             List<MovieDetails> movies = new LinkedList<>();
 
-            for (int i = 0; i < movieTmdbIds.length; i++) {
+            for (Iterator<Integer> iterator = movieTmdbIds.iterator(); iterator.hasNext(); ) {
+                int movieTmdbId = iterator.next();
                 if (!AndroidUtils.isNetworkConnected(context)) {
+                    Timber.e("addMovies: no network connection");
                     return UpdateResult.INCOMPLETE;
                 }
 
                 MovieDetails movieDetails = getMovieDetails(movieServiceTrakt, moviesServiceTmdb,
-                        languageCode, movieTmdbIds[i]);
+                        languageCode, movieTmdbId);
                 if (movieDetails.traktMovie() == null || movieDetails.tmdbMovie() == null) {
                     // TODO abort if server looks unreachable (check http status)
                     // skip this one
+                    Timber.d("addMovies: downloaded movie was null, skipping");
                     continue;
+                }
+
+                // overwrite with properties from hexagon
+                if (hexagonMovies != null && hexagonMovies.containsKey(movieTmdbId)) {
+                    com.uwetrottmann.seriesguide.backend.movies.model.Movie movie
+                            = hexagonMovies.get(movieTmdbId);
+                    if (movie.getIsInCollection() != null) {
+                        movieDetails.traktMovie().inCollection = movie.getIsInCollection();
+                    }
+                    if (movie.getIsInWatchlist() != null) {
+                        movieDetails.traktMovie().inWatchlist = movie.getIsInWatchlist();
+                    }
                 }
 
                 movies.add(movieDetails);
 
                 // process in batches of at most 10
-                if (i % 10 == 0 || i == movieTmdbIds.length - 1) {
+                if (movies.size() == 10 || !iterator.hasNext()) {
                     // insert into database
-                    context.getContentResolver()
-                            .bulkInsert(Movies.CONTENT_URI, buildMoviesContentValues(movies));
+                    context.getContentResolver().bulkInsert(Movies.CONTENT_URI,
+                            buildMoviesContentValues(movies));
 
-                    // reset
+                    // start new batch
                     movies.clear();
                 }
             }
@@ -604,7 +791,68 @@ public class MovieTools {
         }
     }
 
-    private static class Upload {
+    public static class Upload {
+
+        /**
+         * Uploads all local movies to Hexagon.
+         */
+        public static boolean toHexagon(Context context) {
+            Timber.d("toHexagon: uploading all movies");
+
+            List<com.uwetrottmann.seriesguide.backend.movies.model.Movie> movies = buildMovieList(
+                    context);
+            if (movies == null) {
+                Timber.e("toHexagon: movie query was null");
+                return false;
+            }
+            if (movies.size() == 0) {
+                // nothing to do
+                Timber.d("toHexagon: no movies to upload");
+                return true;
+            }
+
+            MovieList movieList = new MovieList();
+            movieList.setMovies(movies);
+
+            try {
+                HexagonTools.getMoviesService(context).save(movieList).execute();
+            } catch (IOException e) {
+                Timber.e(e, "toHexagon: failed to upload movies");
+                return false;
+            }
+
+            return true;
+        }
+
+        private static List<com.uwetrottmann.seriesguide.backend.movies.model.Movie> buildMovieList(
+                Context context) {
+            List<com.uwetrottmann.seriesguide.backend.movies.model.Movie> movies
+                    = new ArrayList<>();
+
+            Cursor query = context.getContentResolver().query(Movies.CONTENT_URI,
+                    new String[] {
+                            Movies.TMDB_ID,
+                            Movies.IN_COLLECTION,
+                            Movies.IN_WATCHLIST
+                    }, null, null, null
+            );
+            if (query == null) {
+                return null;
+            }
+
+            while (query.moveToNext()) {
+                com.uwetrottmann.seriesguide.backend.movies.model.Movie movie
+                        = new com.uwetrottmann.seriesguide.backend.movies.model.Movie();
+                movie.setTmdbId(query.getInt(0));
+                movie.setIsInCollection(query.getInt(1) == 1);
+                movie.setIsInWatchlist(query.getInt(2) == 1);
+                movies.add(movie);
+            }
+
+            query.close();
+
+            return movies;
+        }
 
         /**
          * Uploads the given movies to the appropriate list(s) on trakt.
@@ -623,7 +871,8 @@ public class MovieTools {
 
             Cursor localMovies = context.getContentResolver().query(Movies.CONTENT_URI,
                     new String[] { Movies._ID, Movies.TMDB_ID, Movies.IN_COLLECTION,
-                            Movies.IN_WATCHLIST }, null, null, null);
+                            Movies.IN_WATCHLIST }, null, null, null
+            );
             if (localMovies == null) {
                 return UpdateResult.INCOMPLETE;
             }

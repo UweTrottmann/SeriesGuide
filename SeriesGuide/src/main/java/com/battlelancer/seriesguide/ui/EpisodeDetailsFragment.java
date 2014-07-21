@@ -64,7 +64,6 @@ import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -303,16 +302,14 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
 
     private void changeEpisodeFlag(int episodeFlag) {
         mEpisodeFlag = episodeFlag;
-        new FlagTask(getActivity(), mShowTvdbId)
-                .episodeWatched(getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber, episodeFlag)
-                .execute();
+        EpisodeTools.episodeWatched(getActivity(), mShowTvdbId, getEpisodeTvdbId(), mSeasonNumber,
+                mEpisodeNumber, episodeFlag);
     }
 
     private void onToggleCollected() {
         mCollected = !mCollected;
-        new FlagTask(getActivity(), mShowTvdbId)
-                .episodeCollected(getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber, mCollected)
-                .execute();
+        EpisodeTools.episodeCollected(getActivity(), mShowTvdbId, getEpisodeTvdbId(), mSeasonNumber,
+                mEpisodeNumber, mCollected);
     }
 
     @Override
@@ -377,8 +374,10 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             // "in 15 mins (Fri)"
             timeAndNumbersText
                     .append(getString(R.string.release_date_and_day,
-                            TimeTools.formatToRelativeLocalReleaseTime(getActivity(), actualRelease),
-                            TimeTools.formatToLocalReleaseDay(actualRelease))
+                            TimeTools.formatToRelativeLocalReleaseTime(getActivity(),
+                                    actualRelease),
+                            TimeTools.formatToLocalReleaseDay(actualRelease)
+                    )
                             .toUpperCase(Locale.getDefault()));
             timeAndNumbersText.append("  ");
         } else {

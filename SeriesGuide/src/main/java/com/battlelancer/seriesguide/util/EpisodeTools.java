@@ -16,12 +16,60 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.content.ContentProviderOperation;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.OperationApplicationException;
 import android.database.Cursor;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+import android.text.TextUtils;
+import android.widget.Toast;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.google.api.client.util.DateTime;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
+import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
+import com.uwetrottmann.seriesguide.backend.episodes.model.EpisodeList;
+import de.greenrobot.event.EventBus;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.Nonnull;
+import timber.log.Timber;
 
 public class EpisodeTools {
+
+    private static final int EPISODE_MAX_BATCH_SIZE = 500;
+
+    /**
+     * Lower season or if season is equal has to have a lower episode number. Must be watched or
+     * skipped, excludes special episodes (because their release times are spread over all
+     * seasons).
+     */
+    private static final String SELECTION_PREVIOUS_WATCHED =
+            SeriesGuideContract.Episodes.SEASON + ">0"
+                    + " AND " + SeriesGuideContract.Episodes.WATCHED + "!=" + EpisodeFlags.UNWATCHED
+                    + " AND (" + SeriesGuideContract.Episodes.SEASON + "<? OR "
+                    + "(" + SeriesGuideContract.Episodes.SEASON + "=? AND "
+                    + SeriesGuideContract.Episodes.NUMBER + "<?)"
+                    + ")";
+    /**
+     * Order by season, then by number, then by release time.
+     */
+    private static final String ORDER_PREVIOUS_WATCHED =
+            SeriesGuideContract.Episodes.SEASON + " DESC" + ","
+                    + SeriesGuideContract.Episodes.NUMBER + " DESC" + ","
+                    + SeriesGuideContract.Episodes.FIRSTAIREDMS + " DESC";
+    private static final String[] PROJECTION_EPISODE = new String[] {
+            SeriesGuideContract.Episodes._ID
+    };
 
     /**
      * Checks the database whether there is an entry for this episode.
@@ -73,6 +121,1145 @@ public class EpisodeTools {
         if (!hasValidFlag) {
             throw new IllegalArgumentException(
                     "Did not pass a valid episode flag. See EpisodeFlags class for details.");
+        }
+    }
+
+    public static void episodeWatched(Context context, int showTvdbId, int episodeTvdbId,
+            int season, int episode, int episodeFlags) {
+        validateFlags(episodeFlags);
+        execute(context,
+                new EpisodeWatchedType(context, showTvdbId, episodeTvdbId, season, episode,
+                        episodeFlags)
+        );
+    }
+
+    public static void episodeCollected(Context context, int showTvdbId, int episodeTvdbId,
+            int season, int episode, boolean isFlag) {
+        execute(context,
+                new EpisodeCollectedType(context, showTvdbId, episodeTvdbId, season, episode,
+                        isFlag ? 1 : 0)
+        );
+    }
+
+    /**
+     * Flags all episodes released previous to this one as watched (excluding episodes with no
+     * release date).
+     */
+    public static void episodeWatchedPrevious(Context context, int showTvdbId,
+            long episodeFirstAired) {
+        execute(context,
+                new EpisodeWatchedPreviousType(context, showTvdbId, episodeFirstAired)
+        );
+    }
+
+    public static void seasonWatched(Context context, int showTvdbId, int seasonTvdbId, int season,
+            int episodeFlags) {
+        validateFlags(episodeFlags);
+        execute(context,
+                new SeasonWatchedType(context, showTvdbId, seasonTvdbId, season, episodeFlags)
+        );
+    }
+
+    public static void seasonCollected(Context context, int showTvdbId, int seasonTvdbId,
+            int season, boolean isFlag) {
+        execute(context,
+                new SeasonCollectedType(context, showTvdbId, seasonTvdbId, season, isFlag ? 1 : 0)
+        );
+    }
+
+    public static void showWatched(Context context, int showTvdbId, boolean isFlag) {
+        execute(context,
+                new ShowWatchedType(context, showTvdbId, isFlag ? 1 : 0)
+        );
+    }
+
+    public static void showCollected(Context context, int showTvdbId, boolean isFlag) {
+        execute(context,
+                new ShowCollectedType(context, showTvdbId, isFlag ? 1 : 0)
+        );
+    }
+
+    /**
+     * Run the task on the thread pool.
+     */
+    private static void execute(@Nonnull Context context, @Nonnull FlagType type) {
+        AndroidUtils.executeOnPool(
+                new EpisodeFlagTask(context.getApplicationContext(), type)
+        );
+    }
+
+    public enum EpisodeAction {
+        EPISODE_WATCHED,
+
+        EPISODE_COLLECTED,
+
+        EPISODE_WATCHED_PREVIOUS,
+
+        SEASON_WATCHED,
+
+        SEASON_COLLECTED,
+
+        SHOW_WATCHED,
+
+        SHOW_COLLECTED
+    }
+
+    /**
+     * Sent once the database ops are finished, sending to trakt may still be in progress or queued
+     * due to no available connection.
+     */
+    public static class EpisodeActionCompletedEvent {
+
+        public FlagType mType;
+
+        public EpisodeActionCompletedEvent(FlagType type) {
+            mType = type;
+        }
+    }
+
+    public static abstract class FlagType {
+
+        protected Context mContext;
+
+        protected EpisodeAction mAction;
+
+        protected int mShowTvdbId;
+
+        protected int mEpisodeFlag;
+
+        public FlagType(Context context, int showTvdbId) {
+            mContext = context;
+            mShowTvdbId = showTvdbId;
+        }
+
+        public abstract Uri getUri();
+
+        public abstract String getSelection();
+
+        /**
+         * Builds a list of episodes ready to upload to hexagon. However, the show TVDb id is not
+         * set. It should be set in a wrapping {@link com.uwetrottmann.seriesguide.backend.episodes.model.EpisodeList}.
+         */
+        public List<Episode> getEpisodesForHexagon() {
+            return buildEpisodeList();
+        }
+
+        public abstract List<FlagTapeEntry.Flag> getEpisodesForTrakt();
+
+        public int getShowTvdbId() {
+            return mShowTvdbId;
+        }
+
+        private List<Episode> buildEpisodeList() {
+            List<Episode> episodes = new ArrayList<>();
+
+            // determine uri
+            Uri uri = getUri();
+            String selection = getSelection();
+
+            // query and add episodes to list
+            final Cursor episodeCursor = mContext.getContentResolver().query(
+                    uri,
+                    new String[] {
+                            SeriesGuideContract.Episodes.SEASON, SeriesGuideContract.Episodes.NUMBER
+                    }, selection, null, null
+            );
+            if (episodeCursor != null) {
+                while (episodeCursor.moveToNext()) {
+                    Episode episode = new Episode();
+                    setEpisodeProperties(episode);
+                    episode.setSeasonNumber(episodeCursor.getInt(0));
+                    episode.setEpisodeNumber(episodeCursor.getInt(1));
+                    episodes.add(episode);
+                }
+                episodeCursor.close();
+            }
+
+            return episodes;
+        }
+
+        /**
+         * Set any additional properties besides show id, season or episode number.
+         */
+        protected abstract void setEpisodeProperties(Episode episode);
+
+        /**
+         * Builds a list of {@link com.battlelancer.seriesguide.util.FlagTapeEntry.Flag} objects to
+         * pass to a {@link com.battlelancer.seriesguide.util.FlagTapedTask} to submit to
+         * trakt.
+         */
+        protected List<FlagTapeEntry.Flag> createEpisodeFlags() {
+            List<FlagTapeEntry.Flag> episodes = new ArrayList<>();
+
+            // determine uri
+            Uri uri = getUri();
+            String selection = getSelection();
+
+            // query and add episodes to list
+            final Cursor episodeCursor = mContext.getContentResolver().query(
+                    uri,
+                    new String[] {
+                            SeriesGuideContract.Episodes.SEASON, SeriesGuideContract.Episodes.NUMBER
+                    }, selection, null, null
+            );
+            if (episodeCursor != null) {
+                while (episodeCursor.moveToNext()) {
+                    episodes.add(new FlagTapeEntry.Flag(episodeCursor.getInt(0),
+                            episodeCursor.getInt(1)));
+                }
+                episodeCursor.close();
+            }
+
+            return episodes;
+        }
+
+        /**
+         * Return the column which should get updated, either {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes}
+         * .WATCHED or {@link
+         * com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes}.COLLECTED.
+         */
+        protected abstract String getColumn();
+
+        protected abstract ContentValues getContentValues();
+
+        /**
+         * Builds and executes the database op required to flag episodes in the local database.
+         */
+        public void updateDatabase() {
+            // determine query uri
+            Uri uri = getUri();
+            if (uri == null) {
+                return;
+            }
+
+            // build and execute query
+            ContentValues values = getContentValues();
+            mContext.getContentResolver().update(uri, values, getSelection(), null);
+
+            // notify the content provider for udpates
+            mContext.getContentResolver()
+                    .notifyChange(SeriesGuideContract.Episodes.CONTENT_URI, null);
+            mContext.getContentResolver()
+                    .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null);
+        }
+
+        /**
+         * Determines the last watched episode and returns its TVDb id or -1 if it can't be
+         * determined.
+         */
+        protected abstract int getLastWatchedEpisodeTvdbId();
+
+        /**
+         * Saves the last watched episode for a show to the database.
+         */
+        public void storeLastEpisode() {
+            int lastWatchedId = getLastWatchedEpisodeTvdbId();
+            if (lastWatchedId != -1) {
+                // set latest watched
+                ContentValues values = new ContentValues();
+                values.put(SeriesGuideContract.Shows.LASTWATCHEDID, lastWatchedId);
+                mContext.getContentResolver().update(
+                        SeriesGuideContract.Shows.buildShowUri(String.valueOf(mShowTvdbId)),
+                        values, null, null);
+            }
+        }
+
+        /**
+         * Returns the text which should be prepended to the submission status message. Tells e.g.
+         * which episode was flagged watched.
+         */
+        public abstract String getNotificationText();
+    }
+
+    /**
+     * Flagging single episodes watched or collected.
+     */
+    public static abstract class EpisodeType extends FlagType {
+
+        protected int mEpisodeTvdbId;
+
+        protected int mSeason;
+
+        protected int mEpisode;
+
+        public EpisodeType(Context context, int showTvdbId, int episodeTvdbId, int season,
+                int episode, int episodeFlags) {
+            super(context, showTvdbId);
+            mEpisodeTvdbId = episodeTvdbId;
+            mSeason = season;
+            mEpisode = episode;
+            mEpisodeFlag = episodeFlags;
+        }
+
+        @Override
+        public Uri getUri() {
+            return SeriesGuideContract.Episodes.buildEpisodeUri(String.valueOf(mEpisodeTvdbId));
+        }
+
+        @Override
+        public String getSelection() {
+            return null;
+        }
+
+        @Override
+        protected ContentValues getContentValues() {
+            ContentValues values = new ContentValues();
+            values.put(getColumn(), mEpisodeFlag);
+            return values;
+        }
+
+        @Override
+        public List<Episode> getEpisodesForHexagon() {
+            List<Episode> episodes = new ArrayList<>();
+
+            Episode episode = new Episode();
+            setEpisodeProperties(episode);
+            episode.setSeasonNumber(mSeason);
+            episode.setEpisodeNumber(mEpisode);
+            episodes.add(episode);
+
+            return episodes;
+        }
+
+        @Override
+        public List<FlagTapeEntry.Flag> getEpisodesForTrakt() {
+            List<FlagTapeEntry.Flag> episodes = new ArrayList<>();
+            // flag a single episode
+            episodes.add(new FlagTapeEntry.Flag(mSeason, mEpisode));
+            return episodes;
+        }
+    }
+
+    public static class EpisodeWatchedType extends EpisodeType {
+
+        public EpisodeWatchedType(Context context, int showTvdbId, int episodeTvdbId, int season,
+                int episode, int episodeFlags) {
+            super(context, showTvdbId, episodeTvdbId, season, episode, episodeFlags);
+            mAction = EpisodeAction.EPISODE_WATCHED;
+        }
+
+        @Override
+        protected void setEpisodeProperties(Episode episode) {
+            episode.setWatchedFlag(mEpisodeFlag);
+        }
+
+        @Override
+        protected String getColumn() {
+            return SeriesGuideContract.Episodes.WATCHED;
+        }
+
+        @Override
+        protected int getLastWatchedEpisodeTvdbId() {
+            if (isUnwatched(mEpisodeFlag)) {
+                // unwatched episode
+
+                int lastWatchedId = -1; // don't change last watched episode by default
+
+                // if modified episode is identical to last watched one (e.g. was just watched),
+                // find an appropriate last watched episode
+                final Cursor show = mContext.getContentResolver().query(
+                        SeriesGuideContract.Shows.buildShowUri(String.valueOf(mShowTvdbId)),
+                        new String[] {
+                                SeriesGuideContract.Shows._ID,
+                                SeriesGuideContract.Shows.LASTWATCHEDID
+                        }, null, null, null
+                );
+                if (show != null) {
+                    // identical to last watched episode?
+                    if (show.moveToFirst() && show.getInt(1) == mEpisodeTvdbId) {
+                        if (mSeason == 0) {
+                            // keep last watched (= this episode) if we got a special
+                            return -1;
+                        }
+                        lastWatchedId = 0; // re-set if we don't find one
+
+                        // get latest watched before this one
+                        String season = String.valueOf(mSeason);
+                        final Cursor latestWatchedEpisode = mContext.getContentResolver()
+                                .query(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(String
+                                                .valueOf(mShowTvdbId)),
+                                        PROJECTION_EPISODE, SELECTION_PREVIOUS_WATCHED,
+                                        new String[] {
+                                                season, season, String.valueOf(mEpisode)
+                                        }, ORDER_PREVIOUS_WATCHED
+                                );
+                        if (latestWatchedEpisode != null) {
+                            if (latestWatchedEpisode.moveToFirst()) {
+                                lastWatchedId = latestWatchedEpisode.getInt(0);
+                            }
+
+                            latestWatchedEpisode.close();
+                        }
+                    }
+
+                    show.close();
+                }
+
+                return lastWatchedId;
+            } else {
+                // watched or skipped episode
+                return mEpisodeTvdbId;
+            }
+        }
+
+        @Override
+        public String getNotificationText() {
+            if (isSkipped(mEpisodeFlag)) {
+                // skipping is not sent to trakt, no need for a message
+                return null;
+            }
+
+            // show episode seen/unseen message
+            String number = Utils.getEpisodeNumber(mContext, mSeason, mEpisode);
+            return mContext.getString(
+                    isWatched(mEpisodeFlag) ? R.string.trakt_seen
+                            : R.string.trakt_notseen,
+                    number
+            );
+        }
+    }
+
+    public static class EpisodeCollectedType extends EpisodeType {
+
+        public EpisodeCollectedType(Context context, int showTvdbId, int episodeTvdbId, int season,
+                int episode, int episodeFlags) {
+            super(context, showTvdbId, episodeTvdbId, season, episode, episodeFlags);
+            mAction = EpisodeAction.EPISODE_COLLECTED;
+        }
+
+        @Override
+        protected void setEpisodeProperties(Episode episode) {
+            episode.setIsInCollection(isCollected(mEpisodeFlag));
+        }
+
+        @Override
+        protected String getColumn() {
+            return SeriesGuideContract.Episodes.COLLECTED;
+        }
+
+        @Override
+        protected int getLastWatchedEpisodeTvdbId() {
+            // we don't care
+            return -1;
+        }
+
+        @Override
+        public String getNotificationText() {
+            String number = Utils.getEpisodeNumber(mContext, mSeason, mEpisode);
+            return mContext.getString(mEpisodeFlag == 1 ? R.string.trakt_collected
+                    : R.string.trakt_notcollected, number);
+        }
+    }
+
+    /**
+     * Flagging whole seasons watched or collected.
+     */
+    public static abstract class SeasonType extends FlagType {
+
+        protected int mSeasonTvdbId;
+
+        protected int mSeason;
+
+        public SeasonType(Context context, int showTvdbId, int seasonTvdbId, int season,
+                int episodeFlags) {
+            super(context, showTvdbId);
+            mSeasonTvdbId = seasonTvdbId;
+            mSeason = season;
+            mEpisodeFlag = episodeFlags;
+        }
+
+        public int getSeasonTvdbId() {
+            return mSeasonTvdbId;
+        }
+
+        @Override
+        public Uri getUri() {
+            return SeriesGuideContract.Episodes.buildEpisodesOfSeasonUri(
+                    String.valueOf(mSeasonTvdbId));
+        }
+
+        @Override
+        public String getSelection() {
+            return null;
+        }
+
+        @Override
+        protected ContentValues getContentValues() {
+            ContentValues values = new ContentValues();
+            values.put(getColumn(), mEpisodeFlag);
+            return values;
+        }
+
+        @Override
+        public List<FlagTapeEntry.Flag> getEpisodesForTrakt() {
+            if (mEpisodeFlag != 0) {
+                // watched, skipped or collected season
+                List<FlagTapeEntry.Flag> episodes = new ArrayList<>();
+                episodes.add(new FlagTapeEntry.Flag(mSeason, -1));
+                return episodes;
+            } else {
+                // unwatched, not collected season
+                return createEpisodeFlags();
+            }
+        }
+    }
+
+    public static class SeasonWatchedType extends SeasonType {
+
+        public SeasonWatchedType(Context context, int showTvdbId, int seasonTvdbId, int season,
+                int episodeFlags) {
+            super(context, showTvdbId, seasonTvdbId, season, episodeFlags);
+            mAction = EpisodeAction.SEASON_WATCHED;
+        }
+
+        @Override
+        protected void setEpisodeProperties(Episode episode) {
+            episode.setWatchedFlag(mEpisodeFlag);
+        }
+
+        @Override
+        protected String getColumn() {
+            return SeriesGuideContract.Episodes.WATCHED;
+        }
+
+        @Override
+        protected int getLastWatchedEpisodeTvdbId() {
+            if (isUnwatched(mEpisodeFlag)) {
+                // unwatched season
+                // just reset
+                return 0;
+            } else {
+                // watched or skipped season
+                int lastWatchedId = -1;
+
+                // get the last flagged episode of the season
+                final Cursor seasonEpisodes = mContext.getContentResolver().query(
+                        SeriesGuideContract.Episodes.buildEpisodesOfSeasonUri(
+                                String.valueOf(mSeasonTvdbId)),
+                        PROJECTION_EPISODE, null, null,
+                        SeriesGuideContract.Episodes.NUMBER + " DESC"
+                );
+                if (seasonEpisodes != null) {
+                    if (seasonEpisodes.moveToFirst()) {
+                        lastWatchedId = seasonEpisodes.getInt(0);
+                    }
+
+                    seasonEpisodes.close();
+                }
+
+                return lastWatchedId;
+            }
+        }
+
+        @Override
+        public String getNotificationText() {
+            if (isSkipped(mEpisodeFlag)) {
+                // skipping is not sent to trakt, no need for a message
+                return null;
+            }
+
+            String number = Utils.getEpisodeNumber(mContext, mSeason, -1);
+            return mContext.getString(
+                    isWatched(mEpisodeFlag) ? R.string.trakt_seen
+                            : R.string.trakt_notseen,
+                    number
+            );
+        }
+    }
+
+    public static class SeasonCollectedType extends SeasonType {
+
+        public SeasonCollectedType(Context context, int showTvdbId, int seasonTvdbId, int season,
+                int episodeFlags) {
+            super(context, showTvdbId, seasonTvdbId, season, episodeFlags);
+            mAction = EpisodeAction.SEASON_COLLECTED;
+        }
+
+        @Override
+        protected void setEpisodeProperties(Episode episode) {
+            episode.setIsInCollection(isCollected(mEpisodeFlag));
+        }
+
+        @Override
+        protected String getColumn() {
+            return SeriesGuideContract.Episodes.COLLECTED;
+        }
+
+        @Override
+        protected int getLastWatchedEpisodeTvdbId() {
+            return -1;
+        }
+
+        @Override
+        public String getNotificationText() {
+            String number = Utils.getEpisodeNumber(mContext, mSeason, -1);
+            return mContext.getString(mEpisodeFlag == 1 ? R.string.trakt_collected
+                    : R.string.trakt_notcollected, number);
+        }
+    }
+
+    public static abstract class ShowType extends FlagType {
+
+        public ShowType(Context context, int showTvdbId, int episodeFlags) {
+            super(context, showTvdbId);
+            mEpisodeFlag = episodeFlags;
+        }
+
+        @Override
+        public Uri getUri() {
+            return SeriesGuideContract.Episodes.buildEpisodesOfShowUri(String.valueOf(mShowTvdbId));
+        }
+
+        @Override
+        public String getSelection() {
+            return null;
+        }
+
+        @Override
+        protected ContentValues getContentValues() {
+            ContentValues values = new ContentValues();
+            values.put(getColumn(), mEpisodeFlag);
+            return values;
+        }
+
+        @Override
+        public List<FlagTapeEntry.Flag> getEpisodesForTrakt() {
+            // only for removing flags we need single episodes
+            if (mEpisodeFlag == 0) {
+                return createEpisodeFlags();
+            } else {
+                return null;
+            }
+        }
+
+        @Override
+        public String getNotificationText() {
+            return null;
+        }
+    }
+
+    public static class ShowWatchedType extends ShowType {
+
+        public ShowWatchedType(Context context, int showTvdbId, int episodeFlags) {
+            super(context, showTvdbId, episodeFlags);
+            mAction = EpisodeAction.SHOW_WATCHED;
+        }
+
+        @Override
+        protected void setEpisodeProperties(Episode episode) {
+            episode.setWatchedFlag(mEpisodeFlag);
+        }
+
+        @Override
+        protected String getColumn() {
+            return SeriesGuideContract.Episodes.WATCHED;
+        }
+
+        @Override
+        protected int getLastWatchedEpisodeTvdbId() {
+            if (isUnwatched(mEpisodeFlag)) {
+                // just reset
+                return 0;
+            } else {
+                // we don't care
+                return -1;
+            }
+        }
+    }
+
+    public static class ShowCollectedType extends ShowType {
+
+        public ShowCollectedType(Context context, int showTvdbId, int episodeFlags) {
+            super(context, showTvdbId, episodeFlags);
+            mAction = EpisodeAction.SHOW_COLLECTED;
+        }
+
+        @Override
+        protected void setEpisodeProperties(Episode episode) {
+            episode.setIsInCollection(isCollected(mEpisodeFlag));
+        }
+
+        @Override
+        protected String getColumn() {
+            return SeriesGuideContract.Episodes.COLLECTED;
+        }
+
+        @Override
+        protected int getLastWatchedEpisodeTvdbId() {
+            // we don't care
+            return -1;
+        }
+    }
+
+    public static class EpisodeWatchedPreviousType extends FlagType {
+
+        private long mEpisodeFirstAired;
+
+        public EpisodeWatchedPreviousType(Context context, int showTvdbId, long episodeFirstAired) {
+            super(context, showTvdbId);
+            mEpisodeFirstAired = episodeFirstAired;
+            mAction = EpisodeAction.EPISODE_WATCHED_PREVIOUS;
+        }
+
+        @Override
+        public Uri getUri() {
+            return SeriesGuideContract.Episodes.buildEpisodesOfShowUri(String.valueOf(mShowTvdbId));
+        }
+
+        @Override
+        public String getSelection() {
+            return SeriesGuideContract.Episodes.FIRSTAIREDMS + "<" + mEpisodeFirstAired + " AND "
+                    + SeriesGuideContract.Episodes.FIRSTAIREDMS + ">0";
+        }
+
+        @Override
+        protected ContentValues getContentValues() {
+            ContentValues values = new ContentValues();
+            values.put(SeriesGuideContract.Episodes.WATCHED, EpisodeFlags.WATCHED);
+            return values;
+        }
+
+        @Override
+        public List<FlagTapeEntry.Flag> getEpisodesForTrakt() {
+            return createEpisodeFlags();
+        }
+
+        @Override
+        protected void setEpisodeProperties(Episode episode) {
+            episode.setWatchedFlag(EpisodeFlags.WATCHED);
+        }
+
+        @Override
+        protected String getColumn() {
+            // not used
+            return null;
+        }
+
+        @Override
+        protected int getLastWatchedEpisodeTvdbId() {
+            // we don't care
+            return -1;
+        }
+
+        @Override
+        public String getNotificationText() {
+            return null;
+        }
+    }
+
+    private static class EpisodeFlagTask extends AsyncTask<Void, Void, Integer> {
+
+        private final Context mContext;
+        private final FlagType mType;
+
+        private boolean mIsSendingToTrakt;
+
+        public EpisodeFlagTask(Context context, FlagType type) {
+            mContext = context;
+            mType = type;
+        }
+
+        @Override
+        protected Integer doInBackground(Void... params) {
+            // upload updated episodes to hexagon
+            if (HexagonTools.isSignedIn(mContext)) {
+                if (!AndroidUtils.isNetworkConnected(mContext)) {
+                    return -1;
+                }
+
+                uploadToHexagon();
+            }
+
+            /**
+             * Do net send to trakt if we skipped episodes, this is not supported by trakt.
+             * However, if the skipped flag is removed this will be handled identical
+             * to flagging as unwatched.
+             */
+            // check for valid trakt credentials
+            mIsSendingToTrakt = !isSkipped(mType.mEpisodeFlag)
+                    && TraktCredentials.get(mContext).hasCredentials();
+
+            // prepare trakt stuff
+            if (mIsSendingToTrakt) {
+                if (!AndroidUtils.isNetworkConnected(mContext)) {
+                    return -1;
+                }
+
+                List<FlagTapeEntry.Flag> episodes = mType.getEpisodesForTrakt();
+
+                // convert to boolean flag used by trakt (un/watched, un/collected)
+                boolean isFlag = !isUnwatched(mType.mEpisodeFlag);
+
+                // Add a new taped flag task to the tape queue
+                FlagTapeEntryQueue.getInstance(mContext).add(
+                        new FlagTapeEntry(mType.mAction, mType.mShowTvdbId, episodes, isFlag));
+            }
+
+            // always update local database
+            mType.updateDatabase();
+            mType.storeLastEpisode();
+
+            return 0;
+        }
+
+        private void uploadToHexagon() {
+            List<Episode> batch = mType.getEpisodesForHexagon();
+
+            EpisodeList uploadWrapper = new EpisodeList();
+            uploadWrapper.setShowTvdbId(mType.mShowTvdbId);
+
+            // upload in small batches
+            List<Episode> smallBatch = new ArrayList<>();
+            while (!batch.isEmpty()) {
+                // batch small enough? upload right away
+                if (batch.size() <= EPISODE_MAX_BATCH_SIZE) {
+                    uploadWrapper.setEpisodes(batch);
+                    Upload.flagsToHexagon(mContext, uploadWrapper);
+                    return;
+                }
+
+                // build smaller batch
+                for (int count = 0; count < EPISODE_MAX_BATCH_SIZE; count++) {
+                    if (batch.isEmpty()) {
+                        break;
+                    }
+                    smallBatch.add(batch.remove(0));
+                }
+
+                // upload small batch
+                uploadWrapper.setEpisodes(smallBatch);
+                Upload.flagsToHexagon(mContext, uploadWrapper);
+
+                // reset
+                smallBatch = new ArrayList<>();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            if (result == -1) {
+                Toast.makeText(mContext, R.string.offline, Toast.LENGTH_LONG).show();
+            }
+            // display a small toast if submission to trakt was successful
+            else if (mIsSendingToTrakt) {
+                int status = R.string.trakt_submitqueued;
+
+                if (mType.mAction == EpisodeAction.SHOW_WATCHED
+                        || mType.mAction == EpisodeAction.SHOW_COLLECTED
+                        || mType.mAction == EpisodeAction.EPISODE_WATCHED_PREVIOUS) {
+                    // simple ack
+                    Toast.makeText(mContext,
+                            mContext.getString(status),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    // detailed ack
+                    String message = mType.getNotificationText();
+                    Toast.makeText(mContext,
+                            message + " " + mContext.getString(status),
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            EventBus.getDefault().post(new EpisodeActionCompletedEvent(mType));
+        }
+    }
+
+    public static class Download {
+
+        /**
+         * Downloads all episodes changed since the last time this was called and applies changes
+         * to the database.
+         */
+        public static boolean flagsFromHexagon(Context context) {
+            List<Episode> episodes;
+            boolean hasMoreEpisodes = true;
+            String cursor = null;
+            long currentTime = System.currentTimeMillis();
+            DateTime lastSyncTime = new DateTime(HexagonSettings.getLastEpisodesSyncTime(context));
+
+            Timber.d("flagsFromHexagon: downloading changed episode flags since " + lastSyncTime);
+
+            while (hasMoreEpisodes) {
+                try {
+                    Episodes.Get request = HexagonTools.getEpisodesService(context).get()
+                            .setUpdatedSince(lastSyncTime)
+                            .setLimit(EPISODE_MAX_BATCH_SIZE);
+                    if (!TextUtils.isEmpty(cursor)) {
+                        request.setCursor(cursor);
+                    }
+
+                    EpisodeList response = request.execute();
+                    if (response == null) {
+                        // we're done here
+                        Timber.d("flagsFromHexagon: response was null, done here");
+                        break;
+                    }
+
+                    episodes = response.getEpisodes();
+
+                    // check for more items
+                    if (response.getCursor() != null) {
+                        cursor = response.getCursor();
+                    } else {
+                        hasMoreEpisodes = false;
+                    }
+                } catch (IOException e) {
+                    Timber.e(e, "flagsFromHexagon: failed to download changed episode flags");
+                    return false;
+                }
+
+                if (episodes == null || episodes.size() == 0) {
+                    // nothing to do here
+                    break;
+                }
+
+                // build batch of episode flag updates
+                ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+                for (Episode episode : episodes) {
+                    ContentValues values = new ContentValues();
+                    if (episode.getWatchedFlag() != null) {
+                        values.put(SeriesGuideContract.Episodes.WATCHED, episode.getWatchedFlag());
+                    }
+                    if (episode.getIsInCollection() != null) {
+                        values.put(SeriesGuideContract.Episodes.COLLECTED,
+                                episode.getIsInCollection());
+                    }
+
+                    ContentProviderOperation op = ContentProviderOperation
+                            .newUpdate(SeriesGuideContract.Episodes.CONTENT_URI)
+                            .withSelection(SeriesGuideContract.Shows.REF_SHOW_ID + "="
+                                    + episode.getShowTvdbId() + " AND "
+                                    + SeriesGuideContract.Episodes.SEASON + "="
+                                    + episode.getSeasonNumber() + " AND "
+                                    + SeriesGuideContract.Episodes.NUMBER + "="
+                                    + episode.getEpisodeNumber(), null)
+                            .withValues(values)
+                            .build();
+
+                    batch.add(op);
+                }
+
+                // execute database update
+                try {
+                    DBUtils.applyInSmallBatches(context, batch);
+                } catch (OperationApplicationException e) {
+                    Timber.e(e, "flagsFromHexagon: failed to apply changed episode flag updates");
+                    return false;
+                }
+            }
+
+            // store new last sync time
+            PreferenceManager.getDefaultSharedPreferences(context).edit()
+                    .putLong(HexagonSettings.KEY_LAST_SYNC_EPISODES, currentTime)
+                    .commit();
+
+            return true;
+        }
+
+        /**
+         * Downloads watched, skipped or collected episodes of this show from Hexagon and applies
+         * those flags to episodes in the database.
+         *
+         * @return Whether the download was successful and all changes were applied to the database.
+         */
+        public static boolean flagsFromHexagon(Context context, int showTvdbId) {
+            Timber.d("flagsFromHexagon: downloading episode flags for show " + showTvdbId);
+            List<Episode> episodes;
+            boolean hasMoreEpisodes = true;
+            String cursor = null;
+
+            Uri episodesOfShowUri = SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId);
+
+            while (hasMoreEpisodes) {
+                // abort if connection is lost
+                if (!AndroidUtils.isNetworkConnected(context)) {
+                    Timber.e("flagsFromHexagon: no network connection");
+                    return false;
+                }
+
+                try {
+                    // build request
+                    Episodes.Get request = HexagonTools.getEpisodesService(context).get()
+                            .setShowTvdbId(showTvdbId)
+                            .setLimit(EPISODE_MAX_BATCH_SIZE);
+                    if (!TextUtils.isEmpty(cursor)) {
+                        request.setCursor(cursor);
+                    }
+
+                    // execute request
+                    EpisodeList response = request.execute();
+                    if (response == null) {
+                        break;
+                    }
+
+                    episodes = response.getEpisodes();
+
+                    // check for more items
+                    if (response.getCursor() != null) {
+                        cursor = response.getCursor();
+                    } else {
+                        hasMoreEpisodes = false;
+                    }
+                } catch (IOException e) {
+                    Timber.e(e, "flagsFromHexagon: failed to download episode flags for show "
+                            + showTvdbId);
+                    return false;
+                }
+
+                if (episodes == null || episodes.size() == 0) {
+                    // nothing to do here
+                    break;
+                }
+
+                // build batch of episode flag updates
+                ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+                for (Episode episode : episodes) {
+                    ContentValues values = new ContentValues();
+                    if (episode.getWatchedFlag() != null
+                            && episode.getWatchedFlag() != EpisodeFlags.UNWATCHED) {
+                        values.put(SeriesGuideContract.Episodes.WATCHED, episode.getWatchedFlag());
+                    }
+                    if (episode.getIsInCollection() != null
+                            && episode.getIsInCollection()) {
+                        values.put(SeriesGuideContract.Episodes.COLLECTED,
+                                episode.getIsInCollection());
+                    }
+
+                    if (values.size() == 0) {
+                        // skip if episode has neither a watched flag or is in collection
+                        continue;
+                    }
+
+                    ContentProviderOperation op = ContentProviderOperation
+                            .newUpdate(episodesOfShowUri)
+                            .withSelection(SeriesGuideContract.Episodes.SEASON + "="
+                                    + episode.getSeasonNumber() + " AND "
+                                    + SeriesGuideContract.Episodes.NUMBER + "="
+                                    + episode.getEpisodeNumber(), null)
+                            .withValues(values)
+                            .build();
+
+                    batch.add(op);
+                }
+
+                // execute database update
+                try {
+                    DBUtils.applyInSmallBatches(context, batch);
+                } catch (OperationApplicationException e) {
+                    Timber.e(e, "flagsFromHexagon: failed to apply episode flag updates for show "
+                            + showTvdbId);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }
+
+    public static class Upload {
+
+        private interface FlaggedEpisodesQuery {
+            String[] PROJECTION = new String[] {
+                    SeriesGuideContract.Episodes._ID,
+                    SeriesGuideContract.Episodes.SEASON,
+                    SeriesGuideContract.Episodes.NUMBER,
+                    SeriesGuideContract.Episodes.WATCHED,
+                    SeriesGuideContract.Episodes.COLLECTED
+            };
+
+            String SELECTION = SeriesGuideContract.Episodes.WATCHED + "!=" + EpisodeFlags.UNWATCHED
+                    + " OR " + SeriesGuideContract.Episodes.COLLECTED + "=1";
+
+            int SEASON = 1;
+            int NUMBER = 2;
+            int WATCHED = 3;
+            int IN_COLLECTION = 4;
+        }
+
+        /**
+         * Uploads all watched, skipped or collected episodes of this show to Hexagon.
+         *
+         * @return Whether the upload was successful.
+         */
+        public static boolean flagsToHexagon(Context context, int showTvdbId) {
+            Timber.d("flagsToHexagon: uploading episode flags for show " + showTvdbId);
+
+            // query for watched, skipped or collected episodes
+            Cursor query = context.getContentResolver()
+                    .query(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
+                            FlaggedEpisodesQuery.PROJECTION, FlaggedEpisodesQuery.SELECTION,
+                            null, null
+                    );
+            if (query == null) {
+                Timber.e("flagsToHexagon: episode flags query was null");
+                return false;
+            }
+            if (query.getCount() == 0) {
+                Timber.d("flagsToHexagon: no episode flags to upload");
+                query.close();
+                return true;
+            }
+
+            // build list of episodes to upload
+            List<Episode> episodes = new ArrayList<>();
+            while (query.moveToNext()) {
+                Episode episode = new Episode();
+                episode.setSeasonNumber(query.getInt(FlaggedEpisodesQuery.SEASON));
+                episode.setEpisodeNumber(query.getInt(FlaggedEpisodesQuery.NUMBER));
+
+                int watchedFlag = query.getInt(FlaggedEpisodesQuery.WATCHED);
+                if (!EpisodeTools.isUnwatched(watchedFlag)) {
+                    episode.setWatchedFlag(watchedFlag);
+                }
+
+                boolean isInCollection = EpisodeTools.isCollected(
+                        query.getInt(FlaggedEpisodesQuery.IN_COLLECTION));
+                if (isInCollection) {
+                    episode.setIsInCollection(true);
+                }
+
+                episodes.add(episode);
+
+                // upload a batch
+                if (episodes.size() == EPISODE_MAX_BATCH_SIZE || query.isLast()) {
+                    EpisodeList episodeList = new EpisodeList();
+                    episodeList.setEpisodes(episodes);
+                    episodeList.setShowTvdbId(showTvdbId);
+
+                    try {
+                        HexagonTools.getEpisodesService(context).save(episodeList).execute();
+                    } catch (IOException e) {
+                        // abort
+                        Timber.e(e, "flagsToHexagon: failed to upload episode flags for show "
+                                + showTvdbId);
+                        query.close();
+                        return false;
+                    }
+
+                    // clear array
+                    episodes = new ArrayList<>();
+                }
+            }
+
+            query.close();
+
+            return true;
+        }
+
+        /**
+         * Upload the given episodes to Hexagon. Assumes the given episode wrapper has valid
+         * values.
+         */
+        public static boolean flagsToHexagon(Context context, EpisodeList episodes) {
+            try {
+                HexagonTools.getEpisodesService(context).save(episodes).execute();
+            } catch (IOException e) {
+                Timber.e(e, "flagsToHexagon: failed to upload episodes for show "
+                        + episodes.getShowTvdbId());
+                return false;
+            }
+
+            return true;
         }
     }
 }

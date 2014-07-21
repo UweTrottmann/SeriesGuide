@@ -57,7 +57,7 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -724,7 +724,7 @@ public class ShowsFragment extends Fragment implements
         }
     };
 
-    public void onEvent(FlagTaskCompletedEvent event) {
+    public void onEvent(EpisodeTools.EpisodeActionCompletedEvent event) {
         if (isAdded()) {
             AndroidUtils.executeOnPool(new LatestEpisodeUpdateTask(getActivity()),
                     event.mType.getShowTvdbId());
