@@ -59,6 +59,7 @@ public class EpisodeStreamAdapter extends SectionedStreamAdapter {
                     R.id.textViewFriendTimestamp);
             holder.poster = (ImageView) convertView.findViewById(R.id.imageViewFriendPoster);
             holder.avatar = (ImageView) convertView.findViewById(R.id.imageViewFriendAvatar);
+            holder.type = (ImageView) convertView.findViewById(R.id.imageViewFriendActionType);
 
             convertView.setTag(holder);
         } else {
@@ -94,7 +95,7 @@ public class EpisodeStreamAdapter extends SectionedStreamAdapter {
         }
         holder.timestamp.setText(timestamp);
 
-        // episode(s)
+        // episode(s) and activity type indicator
         if (activity.action == ActivityAction.Seen) {
             // can be multiple episodes
             TvShowEpisode episode = activity.episodes.get(0);
@@ -104,11 +105,13 @@ public class EpisodeStreamAdapter extends SectionedStreamAdapter {
                 holder.more.setText(
                         getContext().getString(R.string.more, activity.episodes.size()));
             }
+            holder.type.setImageResource(getResIdDrawableWatched());
         } else {
             // single episode (check-in, scrobble)
             holder.episode.setText(Utils.getNextEpisodeString(getContext(), activity.episode.season,
                     activity.episode.number, activity.episode.title));
             holder.more.setText(null);
+            holder.type.setImageResource(getResIdDrawableCheckin());
         }
 
         return convertView;
@@ -129,5 +132,7 @@ public class EpisodeStreamAdapter extends SectionedStreamAdapter {
         ImageView poster;
 
         ImageView avatar;
+
+        ImageView type;
     }
 }

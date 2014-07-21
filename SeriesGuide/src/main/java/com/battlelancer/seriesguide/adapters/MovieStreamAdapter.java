@@ -55,6 +55,7 @@ public class MovieStreamAdapter extends SectionedStreamAdapter {
             holder.poster = (ImageView) convertView.findViewById(R.id.imageViewFriendPoster);
             holder.username = (TextView) convertView.findViewById(R.id.textViewFriendUsername);
             holder.avatar = (ImageView) convertView.findViewById(R.id.imageViewFriendAvatar);
+            holder.type = (ImageView) convertView.findViewById(R.id.imageViewFriendActionType);
 
             // no need for secondary text
             convertView.findViewById(R.id.textViewFriendEpisode).setVisibility(View.GONE);
@@ -91,6 +92,13 @@ public class MovieStreamAdapter extends SectionedStreamAdapter {
                     DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL);
         }
 
+        // activity type indicator
+        if (activity.action == ActivityAction.Seen) {
+            holder.type.setImageResource(getResIdDrawableWatched());
+        } else {
+            holder.type.setImageResource(getResIdDrawableCheckin());
+        }
+
         holder.movie.setText(activity.movie.title);
         holder.timestamp.setText(timestamp);
 
@@ -108,5 +116,7 @@ public class MovieStreamAdapter extends SectionedStreamAdapter {
         TextView username;
 
         ImageView avatar;
+
+        ImageView type;
     }
 }

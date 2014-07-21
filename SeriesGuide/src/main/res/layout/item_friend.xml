@@ -65,6 +65,18 @@
             tools:text="Community"
             android:textAppearance="@style/TextAppearance.Medium.Light" />
 
+        <ImageView
+            android:id="@+id/imageViewFriendActionType"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="?attr/drawableWatch"
+            android:paddingTop="@dimen/default_padding"
+            android:paddingRight="@dimen/default_padding"
+            android:paddingBottom="@dimen/inline_padding"
+            android:paddingLeft="@dimen/default_padding"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true" />
+
         <TextView
             android:id="@+id/textViewFriendEpisode"
             android:layout_width="wrap_content"
@@ -73,6 +85,7 @@
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
             android:layout_toRightOf="@+id/imageViewFriendPoster"
+            android:layout_toLeftOf="@+id/imageViewFriendActionType"
             android:ellipsize="end"
             android:maxLines="1"
             tools:text="5x02 Introcution to Teaching"
@@ -86,6 +99,7 @@
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
             android:layout_toRightOf="@+id/imageViewFriendPoster"
+            android:layout_toLeftOf="@+id/imageViewFriendActionType"
             android:ellipsize="end"
             android:maxLines="1"
             tools:text="5 more"
