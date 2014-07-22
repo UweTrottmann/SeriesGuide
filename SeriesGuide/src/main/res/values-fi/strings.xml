@@ -34,7 +34,7 @@
   <string name="app_not_available">Tähän toimintoon ei löydy sovellusta.</string>
   <string name="onlyx">Saatavilla vain X-tilauksella</string>
   <string name="add_empty">Täällä ei ole ohjelman ohjelmaa.</string>
-  <string name="people_empty">Nobody here?! Touch to try again.</string>
+  <string name="people_empty">Onko kukaan täällä?! Kosketa yrittääksesi uudelleen.</string>
   <string name="share_show">Jaa ohjelma</string>
   <string name="share_episode">Jaa jakso</string>
   <string name="share_movie">Jaa elokuva</string>
@@ -235,16 +235,18 @@
   <string name="list_item_remove">Poista listalta</string>
   <string name="list_empty">Voit lisätä ohjelmia, kausia tai jaksoja tähän listaan.</string>
   <string name="hexagon_setup">Määritä SeriesGuide-pilvi</string>
-  <string name="hexagon_description">Yhdistä pilveen varmuuskopioidaksesi ja synkronoidaksesi ohjelmasi.\nJaksot ja elokuvat eivät ole vielä sisällytetty. Jatka trakt.tv:n integroinnin käyttämistä niihin.</string>
+  <string name="hexagon_description">Voit varmuuskopioida ja synkronoida ohjelmasi ja elokuvasi yhdistämällä pilvipalveluun.</string>
+  <string name="hexagon_warning_lists">Listoja ei näytetä.</string>
+  <string name="hexagon_warning_trakt">Käyttäessäsi SeriesGuiden pilvipalvelua, tekemäsi muutokset trakt-palvelussa eivät synkronoidu SeriesGuide-sovellukseen.</string>
   <string name="hexagon_signin">Kirjaudu sisään</string>
   <string name="hexagon_signed_in">Olet yhteydessä SeriesGuide-pilveen.</string>
   <string name="hexagon_signout">Kirjaudu ulos</string>
   <string name="hexagon_setup_incomplete">SeriesGuide-pilven määrittäminen epäonnistui.</string>
-  <string name="hexagon_setup_complete">Päätä määrittäminen</string>
-  <string name="hexagon_priority_choice_required">Jotkin ohjelmistasi ovat jo pilvessä. Kumman version haluat säilyttää?</string>
-  <string name="hexagon_priority_local">Tämän laitteen</string>
-  <string name="hexagon_priority_cloud">Pilvessä olevan</string>
-  <string name="hexagon_priority_select">Valitse versio</string>
+  <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
+  <string name="hexagon_remove_account">Poista tili</string>
+  <string name="hexagon_remove_account_success">Tili poistettu.</string>
+  <string name="hexagon_remove_account_failure">Tiliä ei voitu poistaa.</string>
+  <string name="hexagon_remove_account_confirmation">Tilin poistaminen poistaa kaikki tallennetut ohjelmat ja elokuvat SeriesGuiden pilvipalvelimelta. Muista poistaa ne myös muista yhdistetyistä laitteista.</string>
   <string name="connect_trakt">Yhdistä traktiin</string>
   <string name="connect_trakt_done">Yhdistetty traktiin!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide syknronoi nyt tämän laitteen ohjelmat ja elokuvat traktin kanssa. Tämä voi kestää hetken.</string>
@@ -452,5 +454,5 @@
   <string name="extension_youtube">YouTube-haku</string>
   <string name="description_extension_youtube">Etsi videoita YouTubesta</string>
   <string name="description_extension_web_search">Etsi verkkosivustoja ja kuvia</string>
-  <string name="person_biography">Biography</string>
+  <string name="person_biography">Elämäkerta</string>
 </resources>

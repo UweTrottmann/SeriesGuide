@@ -25,7 +25,7 @@
   <string name="discard">Откажи</string>
   <string name="save_selection">Запази избраните</string>
   <string name="search_hint">Търсене на епизоди</string>
-  <string name="action_display_all">Show all</string>
+  <string name="action_display_all">Покажи всички</string>
   <string name="updated">Актуализиран до последна версия.</string>
   <string name="norating">няма</string>
   <string name="unknown">неизвестен</string>
@@ -34,7 +34,7 @@
   <string name="app_not_available">Няма налично подходящо приложение.</string>
   <string name="onlyx">Налично само с X абонамент</string>
   <string name="add_empty">Няма ТВ предавания.</string>
-  <string name="people_empty">Nobody here?! Touch to try again.</string>
+  <string name="people_empty">Няма никой тук?! Натисни, за да опиташ отново.</string>
   <string name="share_show">Сподели ТВ предаване</string>
   <string name="share_episode">Сподели епизод</string>
   <string name="share_movie">Сподели филм</string>
@@ -68,8 +68,8 @@
   <string name="shows_continuing">%s продължаващи</string>
   <string name="episodes_watched">%s гледани</string>
   <string name="runtime_all_episodes">Продължителност на всички гледани епизоди</string>
-  <string name="movies_on_watchlist">%s on watchlist</string>
-  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
+  <string name="movies_on_watchlist">%s в плейлистата</string>
+  <string name="runtime_movies_watchlist">Обща продължителност на гледаните филми</string>
   <plurals name="days_plural">
     <item quantity="one">%d ден</item>
     <item quantity="zero">%d дни</item>
@@ -235,16 +235,18 @@
   <string name="list_item_remove">Премахни от списък</string>
   <string name="list_empty">Можете да добавите сериали, сезони или епизоди към този списък.</string>
   <string name="hexagon_setup">Създаване на SeriesGuide облак</string>
-  <string name="hexagon_description">Свържете се с облака, за да архивирате и синхронизирате вашите ТВ предавания.\nЕпизодите и филмите все още не са включени, за тази цел моля продължете да ползвате trakt интеграцията.</string>
+  <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
+  <string name="hexagon_warning_lists">Lists are not included.</string>
+  <string name="hexagon_warning_trakt">When using SeriesGuide cloud, changes on trakt will not sync down to SeriesGuide.</string>
   <string name="hexagon_signin">Вписване</string>
   <string name="hexagon_signed_in">Вие сте свързани към SeriesGuide облака.</string>
   <string name="hexagon_signout">Отписване</string>
   <string name="hexagon_setup_incomplete">Настройването на SeriesGuide облака не беше завършено.</string>
-  <string name="hexagon_setup_complete">Пълна настройка</string>
-  <string name="hexagon_priority_choice_required">Някои от вашите сериали са вече в облака. Коя версия предпочитате?</string>
-  <string name="hexagon_priority_local">На това устройство</string>
-  <string name="hexagon_priority_cloud">В облака</string>
-  <string name="hexagon_priority_select">Изберете версия</string>
+  <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
+  <string name="hexagon_remove_account">Remove account</string>
+  <string name="hexagon_remove_account_success">Account obliterated.</string>
+  <string name="hexagon_remove_account_failure">Could not remove account.</string>
+  <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide cloud. Make sure to remove it on other connected devices as well.</string>
   <string name="connect_trakt">Свържете се с trakt</string>
   <string name="connect_trakt_done">Свързани сте с trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide ще синхронизира ТВ предаванията и филмите на това устройство с trakt. Това може да отнеме известно време.</string>
@@ -452,5 +454,5 @@
   <string name="extension_youtube">Търсене в YouTube</string>
   <string name="description_extension_youtube">Търси видеа в Youtube</string>
   <string name="description_extension_web_search">Търси за уебсайтове и снимки</string>
-  <string name="person_biography">Biography</string>
+  <string name="person_biography">Биография</string>
 </resources>
