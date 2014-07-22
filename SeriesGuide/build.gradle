@@ -64,7 +64,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:5.1.1'
     compile 'com.jakewharton.timber:timber:2.4.+'
     compile 'com.readystatesoftware.systembartint:systembartint:+'
-    compile 'com.squareup.picasso:picasso:2.2.0'
+    compile 'com.squareup.picasso:picasso:2.3.3'
     compile 'com.squareup.retrofit:retrofit:1.6.0'
     compile 'com.squareup:tape:1.2.2'
     compile 'com.uwetrottmann:getglue-java:1.3.+'
