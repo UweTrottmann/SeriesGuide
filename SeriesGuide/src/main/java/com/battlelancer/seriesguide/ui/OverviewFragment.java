@@ -666,7 +666,8 @@ public class OverviewFragment extends Fragment implements
             episodeTime.setVisibility(View.GONE);
             episodeInfo.setVisibility(View.GONE);
             episodemeta.setVisibility(View.GONE);
-            episodePrimaryContainer.setBackgroundResource(R.color.background_dim);
+            episodePrimaryContainer.setBackgroundColor(
+                    getResources().getColor(R.color.background_dim));
             episodePrimaryContainer.setOnClickListener(null);
             episodePrimaryContainer.setClickable(false);
             episodePrimaryContainer.setFocusable(false);
