@@ -55,15 +55,6 @@ public class WatchedBox extends ImageView {
         updateStateImage();
     }
 
-    /**
-     * If box was in watched state, sets to unwatched. Otherwise sets to watched.
-     */
-    public void toggleWatched() {
-        mEpisodeFlag = EpisodeTools.isWatched(mEpisodeFlag)
-                ? EpisodeFlags.UNWATCHED : EpisodeFlags.WATCHED;
-        updateStateImage();
-    }
-
     private void updateStateImage() {
         switch (mEpisodeFlag) {
             case EpisodeFlags.WATCHED: {

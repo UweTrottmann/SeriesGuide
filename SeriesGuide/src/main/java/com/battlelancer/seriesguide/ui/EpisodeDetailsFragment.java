@@ -477,10 +477,13 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         mWatchedButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                // disable button, will be re-enabled on data reload once action completes
+                v.setEnabled(false);
                 onToggleWatched();
                 fireTrackerEvent("Toggle watched");
             }
         });
+        mWatchedButton.setEnabled(true);
         CheatSheet.setup(mWatchedButton, isWatched ? R.string.unmark_episode
                 : R.string.mark_episode);
 
@@ -492,10 +495,13 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         mCollectedButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                // disable button, will be re-enabled on data reload once action completes
+                v.setEnabled(false);
                 onToggleCollected();
                 fireTrackerEvent("Toggle collected");
             }
         });
+        mCollectedButton.setEnabled(true);
         CheatSheet.setup(mCollectedButton, mCollected
                 ? R.string.action_collection_remove : R.string.action_collection_add);
 
@@ -513,6 +519,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             mSkipButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // disable button, will be re-enabled on data reload once action completes
+                    v.setEnabled(false);
                     onToggleSkipped();
                     fireTrackerEvent("Toggle skipped");
                 }
@@ -520,6 +528,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             CheatSheet.setup(mSkipButton,
                     isSkipped ? R.string.action_dont_skip : R.string.action_skip);
         }
+        mSkipButton.setEnabled(true);
 
         // menu button
         final int showRunTime = cursor.getInt(DetailsQuery.SHOW_RUNTIME);

@@ -586,9 +586,12 @@ public class OverviewFragment extends Fragment implements
             watchedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // disable button, will be re-enabled on data reload once action completes
+                    v.setEnabled(false);
                     onEpisodeWatched();
                 }
             });
+            watchedButton.setEnabled(true);
             CheatSheet.setup(watchedButton, R.string.mark_episode);
 
             // collected button
@@ -601,9 +604,12 @@ public class OverviewFragment extends Fragment implements
             collectedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // disable button, will be re-enabled on data reload once action completes
+                    v.setEnabled(false);
                     onToggleCollected();
                 }
             });
+            collectedButton.setEnabled(true);
             CheatSheet.setup(collectedButton, isCollected
                     ? R.string.action_collection_remove : R.string.action_collection_add);
 
@@ -612,9 +618,12 @@ public class OverviewFragment extends Fragment implements
             skipButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // disable button, will be re-enabled on data reload once action completes
+                    v.setEnabled(false);
                     onEpisodeSkipped();
                 }
             });
+            skipButton.setEnabled(true);
             CheatSheet.setup(skipButton);
 
             // button bar menu

@@ -380,6 +380,8 @@ public class MovieDetailsFragment extends Fragment {
             mWatchedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // disable button, will be re-enabled on data reload once action completes
+                    v.setEnabled(false);
                     if (isWatched) {
                         MovieTools.unwatchedMovie(getActivity(), mTmdbId);
                         fireTrackerEvent("Unwatched movie");
@@ -389,6 +391,7 @@ public class MovieDetailsFragment extends Fragment {
                     }
                 }
             });
+            mWatchedButton.setEnabled(true);
         } else {
             mWatchedButton.setVisibility(View.GONE);
         }
@@ -404,6 +407,8 @@ public class MovieDetailsFragment extends Fragment {
         mCollectedButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                // disable button, will be re-enabled on data reload once action completes
+                v.setEnabled(false);
                 if (isInCollection) {
                     MovieTools.removeFromCollection(getActivity(), mTmdbId);
                     fireTrackerEvent("Uncollected movie");
@@ -413,6 +418,7 @@ public class MovieDetailsFragment extends Fragment {
                 }
             }
         });
+        mCollectedButton.setEnabled(true);
 
         // watchlist button
         final boolean isInWatchlist = traktMovie.inWatchlist != null && traktMovie.inWatchlist;
@@ -425,6 +431,8 @@ public class MovieDetailsFragment extends Fragment {
         mWatchlistedButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                // disable button, will be re-enabled on data reload once action completes
+                v.setEnabled(false);
                 if (isInWatchlist) {
                     MovieTools.removeFromWatchlist(getActivity(), mTmdbId);
                     fireTrackerEvent("Unwatchlist movie");
@@ -434,6 +442,7 @@ public class MovieDetailsFragment extends Fragment {
                 }
             }
         });
+        mWatchlistedButton.setEnabled(true);
 
         // show button bar
         mButtonContainer.setVisibility(View.VISIBLE);
