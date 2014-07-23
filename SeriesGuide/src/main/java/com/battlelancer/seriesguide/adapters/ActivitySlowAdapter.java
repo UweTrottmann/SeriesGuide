@@ -88,6 +88,8 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         viewHolder.watchedBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 WatchedBox box = (WatchedBox) v;
+                // disable button, will be re-enabled on data reload once action completes
+                box.setEnabled(false);
                 EpisodeTools.episodeWatched(context, showTvdbId, episodeTvdbId, season, episode,
                         EpisodeTools.isWatched(box.getEpisodeFlag()) ? EpisodeFlags.UNWATCHED
                                 : EpisodeFlags.WATCHED
@@ -95,6 +97,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
             }
         });
         viewHolder.watchedBox.setEpisodeFlag(cursor.getInt(ActivityFragment.ActivityQuery.WATCHED));
+        viewHolder.watchedBox.setEnabled(true);
         CheatSheet.setup(viewHolder.watchedBox,
                 EpisodeTools.isWatched(viewHolder.watchedBox.getEpisodeFlag())
                         ? R.string.unmark_episode : R.string.mark_episode

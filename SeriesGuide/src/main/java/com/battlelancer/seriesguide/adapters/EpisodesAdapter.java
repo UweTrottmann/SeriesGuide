@@ -130,10 +130,13 @@ public class EpisodesAdapter extends CursorAdapter {
         viewHolder.watchedBox.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 WatchedBox box = (WatchedBox) v;
+                // disable button, will be re-enabled on data reload once action completes
+                box.setEnabled(false);
                 mOnFlagListener.onFlagEpisodeWatched(episodeId, episodeNumber,
                         !EpisodeTools.isWatched(box.getEpisodeFlag()));
             }
         });
+        viewHolder.watchedBox.setEnabled(true);
         final boolean isWatched = EpisodeTools.isWatched(viewHolder.watchedBox.getEpisodeFlag());
         CheatSheet.setup(viewHolder.watchedBox,
                 isWatched ? R.string.unmark_episode : R.string.mark_episode
