@@ -127,6 +127,22 @@
         <item name="android:textColor">?attr/colorTabStripText</item>
     </style>
 
+    <style name="TextAppearance.Display1">
+        <item name="android:textSize">34sp</item>
+    </style>
+
+    <style name="TextAppearance.Display1.White">
+        <item name="android:textColor">@color/black_11</item>
+    </style>
+
+    <style name="TextAppearance.Subhead">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextAppearance.Body">
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <!-- Widget styles -->
     <style name="Widget"/>
 
@@ -202,6 +218,10 @@
     <!-- TextView -->
     <style name="Widget.SeriesGuide.TextView"/>
 
+    <style name="Widget.SeriesGuide.TextView.Body">
+        <item name="android:lineSpacingMultiplier">1.25</item>
+    </style>
+
     <style name="Widget.SeriesGuide.TextView.ShowLabels">
         <item name="android:layout_marginLeft">@dimen/default_padding</item>
         <item name="android:layout_marginRight">@dimen/default_padding</item>
@@ -252,7 +272,7 @@
     <style name="DropDownListView" parent="android:Widget.Holo.ListView.DropDown">
         <item name="android:listSelector">?custom_list_selector</item>
     </style>
-    
+
     <style name="ActionOverflowButtonStyle" parent="@android:style/Widget.Holo.ActionButton.Overflow">
         <item name="android:src">@drawable/ic_action_overflow_round</item>
     </style>

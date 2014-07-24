@@ -54,9 +54,7 @@
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="2"
-                android:textAppearance="@style/TextAppearance.Large.Light"
-                android:textColor="@color/black_11"
-                android:textSize="34sp" />
+                android:textAppearance="@style/TextAppearance.Display1.White" />
 
         </RelativeLayout>
 
@@ -79,19 +77,18 @@
                     android:layout_marginRight="@dimen/large_padding"
                     android:layout_marginBottom="@dimen/default_padding"
                     android:text="@string/person_biography"
-                    android:textAppearance="@style/TextAppearance"
-                    android:textSize="16sp" />
+                    android:textAppearance="@style/TextAppearance.Subhead" />
 
                 <TextView
                     android:id="@+id/textViewPersonBiography"
+                    style="@style/Widget.SeriesGuide.TextView.Body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/textViewPersonBiographyHeader"
                     android:paddingLeft="@dimen/large_padding"
                     android:paddingRight="@dimen/large_padding"
                     tools:text="Kiefer Sutherland  (born 21 December 1966) is a British-Canadian actor"
-                    android:textAppearance="@style/TextAppearance"
-                    android:textSize="14sp" />
+                    android:textAppearance="@style/TextAppearance.Body" />
 
             </RelativeLayout>
         </ScrollView>
