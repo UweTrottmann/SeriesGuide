@@ -63,7 +63,7 @@ import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.FlagTask;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
@@ -312,10 +312,8 @@ public class OverviewFragment extends Fragment implements
         if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()) {
             final int season = mCurrentEpisodeCursor.getInt(EpisodeQuery.SEASON);
             final int episode = mCurrentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-            new FlagTask(getActivity(), getShowId())
-                    .episodeWatched(mCurrentEpisodeCursor.getInt(EpisodeQuery._ID), season,
-                            episode, episodeFlag)
-                    .execute();
+            EpisodeTools.episodeWatched(getActivity(), getShowId(),
+                    mCurrentEpisodeCursor.getInt(EpisodeQuery._ID), season, episode, episodeFlag);
         }
     }
 
@@ -351,11 +349,8 @@ public class OverviewFragment extends Fragment implements
             final int season = mCurrentEpisodeCursor.getInt(EpisodeQuery.SEASON);
             final int episode = mCurrentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
             final boolean isCollected = mCurrentEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1;
-            new FlagTask(getActivity(), getShowId())
-                    .episodeCollected(mCurrentEpisodeCursor.getInt(EpisodeQuery._ID), season,
-                            episode,
-                            !isCollected)
-                    .execute();
+            EpisodeTools.episodeCollected(getActivity(), getShowId(),
+                    mCurrentEpisodeCursor.getInt(EpisodeQuery._ID), season, episode, !isCollected);
         }
     }
 
@@ -569,7 +564,7 @@ public class OverviewFragment extends Fragment implements
 
                     ActivityCompat.startActivity(getActivity(), intent,
                             ActivityOptionsCompat.makeScaleUpAnimation(view, 0, 0, view.getWidth(),
-                                            view.getHeight()).toBundle()
+                                    view.getHeight()).toBundle()
                     );
                 }
             });
@@ -591,9 +586,12 @@ public class OverviewFragment extends Fragment implements
             watchedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // disable button, will be re-enabled on data reload once action completes
+                    v.setEnabled(false);
                     onEpisodeWatched();
                 }
             });
+            watchedButton.setEnabled(true);
             CheatSheet.setup(watchedButton, R.string.mark_episode);
 
             // collected button
@@ -606,9 +604,12 @@ public class OverviewFragment extends Fragment implements
             collectedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // disable button, will be re-enabled on data reload once action completes
+                    v.setEnabled(false);
                     onToggleCollected();
                 }
             });
+            collectedButton.setEnabled(true);
             CheatSheet.setup(collectedButton, isCollected
                     ? R.string.action_collection_remove : R.string.action_collection_add);
 
@@ -617,9 +618,12 @@ public class OverviewFragment extends Fragment implements
             skipButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // disable button, will be re-enabled on data reload once action completes
+                    v.setEnabled(false);
                     onEpisodeSkipped();
                 }
             });
+            skipButton.setEnabled(true);
             CheatSheet.setup(skipButton);
 
             // button bar menu
@@ -671,7 +675,8 @@ public class OverviewFragment extends Fragment implements
             episodeTime.setVisibility(View.GONE);
             episodeInfo.setVisibility(View.GONE);
             episodemeta.setVisibility(View.GONE);
-            episodePrimaryContainer.setBackgroundResource(R.color.background_dim);
+            episodePrimaryContainer.setBackgroundColor(
+                    getResources().getColor(R.color.background_dim));
             episodePrimaryContainer.setOnClickListener(null);
             episodePrimaryContainer.setClickable(false);
             episodePrimaryContainer.setFocusable(false);

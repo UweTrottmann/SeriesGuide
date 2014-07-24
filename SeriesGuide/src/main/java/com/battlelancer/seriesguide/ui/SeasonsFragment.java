@@ -53,9 +53,8 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
-import com.battlelancer.seriesguide.util.FlagTask.SeasonWatchedType;
+import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.EpisodeTools.SeasonWatchedType;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
@@ -359,28 +358,24 @@ public class SeasonsFragment extends ListFragment implements
     }
 
     private void onFlagSeasonSkipped(long seasonId, int seasonNumber) {
-        new FlagTask(getActivity(), getShowId())
-                .seasonWatched((int) seasonId, seasonNumber, EpisodeFlags.SKIPPED)
-                .execute();
+        EpisodeTools.seasonWatched(getActivity(), getShowId(), (int) seasonId, seasonNumber,
+                EpisodeFlags.SKIPPED);
     }
 
     /**
      * Changes the seasons episodes watched flags, updates the status label of the season.
      */
     private void onFlagSeasonWatched(long seasonId, int seasonNumber, boolean isWatched) {
-        new FlagTask(getActivity(), getShowId())
-                .seasonWatched((int) seasonId, seasonNumber,
-                        isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED)
-                .execute();
+        EpisodeTools.seasonWatched(getActivity(), getShowId(), (int) seasonId, seasonNumber,
+                isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
     }
 
     /**
      * Changes the seasons episodes collected flags.
      */
     private void onFlagSeasonCollected(long seasonId, int seasonNumber, boolean isCollected) {
-        new FlagTask(getActivity(), getShowId())
-                .seasonCollected((int) seasonId, seasonNumber, isCollected)
-                .execute();
+        EpisodeTools.seasonCollected(getActivity(), getShowId(), (int) seasonId, seasonNumber,
+                isCollected);
     }
 
     /**
@@ -388,9 +383,7 @@ public class SeasonsFragment extends ListFragment implements
      * all seasons.
      */
     private void onFlagShowWatched(boolean isWatched) {
-        new FlagTask(getActivity(), getShowId())
-                .showWatched(isWatched)
-                .execute();
+        EpisodeTools.showWatched(getActivity(), getShowId(), isWatched);
     }
 
     /**
@@ -398,9 +391,7 @@ public class SeasonsFragment extends ListFragment implements
      * all seasons.
      */
     private void onFlagShowCollected(boolean isCollected) {
-        new FlagTask(getActivity(), getShowId())
-                .showCollected(isCollected)
-                .execute();
+        EpisodeTools.showCollected(getActivity(), getShowId(), isCollected);
     }
 
     /**
@@ -581,16 +572,16 @@ public class SeasonsFragment extends ListFragment implements
         getActivity().invalidateOptionsMenu();
     }
 
-    public void onEvent(FlagTaskCompletedEvent event) {
+    public void onEvent(EpisodeTools.EpisodeActionCompletedEvent event) {
         /**
          * Updates the total remaining episodes counter, updates season
          * counters.
          */
         if (isAdded()) {
             onLoadRemainingCounter();
-            if (event.mType instanceof SeasonWatchedType) {
+            if (event.mType instanceof EpisodeTools.SeasonWatchedType) {
                 // If we can narrow it down to just one season...
-                SeasonWatchedType seasonWatchedType = (SeasonWatchedType) event.mType;
+                EpisodeTools.SeasonWatchedType seasonWatchedType = (SeasonWatchedType) event.mType;
                 Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()),
                         String.valueOf(seasonWatchedType.getSeasonTvdbId()));
                 t.start();

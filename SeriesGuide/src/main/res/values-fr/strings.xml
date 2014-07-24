@@ -34,7 +34,7 @@
   <string name="app_not_available">Aucune application n\'est disponible pour gérer ceci.</string>
   <string name="onlyx">Disponible uniquement avec l\'abonnement X</string>
   <string name="add_empty">Il n\'y a aucune série ici.</string>
-  <string name="people_empty">Nobody here?! Touch to try again.</string>
+  <string name="people_empty">Personne ici ?! Touchez pour réessayer.</string>
   <string name="share_show">Partager la série</string>
   <string name="share_episode">Partager l\'épisode</string>
   <string name="share_movie">Partager ce film</string>
@@ -235,16 +235,18 @@
   <string name="list_item_remove">Retirer de la liste</string>
   <string name="list_empty">Vous pouvez ajouter des séries, des saisons ou des épisodes à cette liste.</string>
   <string name="hexagon_setup">Configurer le cloud SeriesGuide</string>
-  <string name="hexagon_description">Connectez-vous au cloud pour sauvegarder et synchroniser vos séries.\nLes épisodes et les films ne sont pas encore inclus, continuez à utiliser le service trakt.tv pour cela.</string>
+  <string name="hexagon_description">Connectez vous au cloud pour sauvegarder et synchroniser vos séries et films.</string>
+  <string name="hexagon_warning_lists">Les listes ne sont pas incluses.</string>
+  <string name="hexagon_warning_trakt">En utilisant le cloud SeriesGuide, les changements sur trakt ne seront pas synchronisés vers SeriesGuide.</string>
   <string name="hexagon_signin">Connexion</string>
   <string name="hexagon_signed_in">Vous êtes connecté au cloud SeriesGuide.</string>
   <string name="hexagon_signout">Déconnexion</string>
   <string name="hexagon_setup_incomplete">La configuration du cloud SeriesGuide n\'était pas terminée.</string>
-  <string name="hexagon_setup_complete">Terminer la configuration</string>
-  <string name="hexagon_priority_choice_required">Certaines de vos séries sont déjà sur le cloud. Quelle version préférez-vous ?</string>
-  <string name="hexagon_priority_local">Sur cet appareil</string>
-  <string name="hexagon_priority_cloud">Dans le cloud</string>
-  <string name="hexagon_priority_select">Choisir cette version</string>
+  <string name="hexagon_setup_fail_auth">Problème rencontré avec votre compte Google.</string>
+  <string name="hexagon_remove_account">Supprimer le compte</string>
+  <string name="hexagon_remove_account_success">Compte supprimé.</string>
+  <string name="hexagon_remove_account_failure">Problème lors de la suppression du compte.</string>
+  <string name="hexagon_remove_account_confirmation">Retirer votre compte supprimera tous les films et séries se trouvant sur le cloud SeriesGuide. Assurez-vous de le retirer également sur vos autres appareils connectés.</string>
   <string name="connect_trakt">Me connecter à trakt</string>
   <string name="connect_trakt_done">Connecté à trakt !</string>
   <string name="connect_trakt_done_explanation">SeriesGuide va maintenant synchroniser les séries et les films sur cet appareil. Cela peut prendre un peu de temps.</string>
@@ -452,5 +454,5 @@
   <string name="extension_youtube">Recherche Youtube</string>
   <string name="description_extension_youtube">Recherche des vidéos sur Youtube</string>
   <string name="description_extension_web_search">Rechercher des sites web et des images</string>
-  <string name="person_biography">Biography</string>
+  <string name="person_biography">Biographie</string>
 </resources>

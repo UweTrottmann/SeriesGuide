@@ -64,7 +64,6 @@ import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -303,16 +302,14 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
 
     private void changeEpisodeFlag(int episodeFlag) {
         mEpisodeFlag = episodeFlag;
-        new FlagTask(getActivity(), mShowTvdbId)
-                .episodeWatched(getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber, episodeFlag)
-                .execute();
+        EpisodeTools.episodeWatched(getActivity(), mShowTvdbId, getEpisodeTvdbId(), mSeasonNumber,
+                mEpisodeNumber, episodeFlag);
     }
 
     private void onToggleCollected() {
         mCollected = !mCollected;
-        new FlagTask(getActivity(), mShowTvdbId)
-                .episodeCollected(getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber, mCollected)
-                .execute();
+        EpisodeTools.episodeCollected(getActivity(), mShowTvdbId, getEpisodeTvdbId(), mSeasonNumber,
+                mEpisodeNumber, mCollected);
     }
 
     @Override
@@ -377,8 +374,10 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             // "in 15 mins (Fri)"
             timeAndNumbersText
                     .append(getString(R.string.release_date_and_day,
-                            TimeTools.formatToRelativeLocalReleaseTime(getActivity(), actualRelease),
-                            TimeTools.formatToLocalReleaseDay(actualRelease))
+                            TimeTools.formatToRelativeLocalReleaseTime(getActivity(),
+                                    actualRelease),
+                            TimeTools.formatToLocalReleaseDay(actualRelease)
+                    )
                             .toUpperCase(Locale.getDefault()));
             timeAndNumbersText.append("  ");
         } else {
@@ -478,10 +477,13 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         mWatchedButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                // disable button, will be re-enabled on data reload once action completes
+                v.setEnabled(false);
                 onToggleWatched();
                 fireTrackerEvent("Toggle watched");
             }
         });
+        mWatchedButton.setEnabled(true);
         CheatSheet.setup(mWatchedButton, isWatched ? R.string.unmark_episode
                 : R.string.mark_episode);
 
@@ -493,10 +495,13 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         mCollectedButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                // disable button, will be re-enabled on data reload once action completes
+                v.setEnabled(false);
                 onToggleCollected();
                 fireTrackerEvent("Toggle collected");
             }
         });
+        mCollectedButton.setEnabled(true);
         CheatSheet.setup(mCollectedButton, mCollected
                 ? R.string.action_collection_remove : R.string.action_collection_add);
 
@@ -514,6 +519,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             mSkipButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // disable button, will be re-enabled on data reload once action completes
+                    v.setEnabled(false);
                     onToggleSkipped();
                     fireTrackerEvent("Toggle skipped");
                 }
@@ -521,6 +528,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             CheatSheet.setup(mSkipButton,
                     isSkipped ? R.string.action_dont_skip : R.string.action_skip);
         }
+        mSkipButton.setEnabled(true);
 
         // menu button
         final int showRunTime = cursor.getInt(DetailsQuery.SHOW_RUNTIME);

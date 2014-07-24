@@ -30,7 +30,6 @@ import com.battlelancer.seriesguide.adapters.model.HeaderData;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.WatchedBox;
@@ -89,15 +88,16 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         viewHolder.watchedBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 WatchedBox box = (WatchedBox) v;
-                new FlagTask(context, showTvdbId)
-                        .episodeWatched(episodeTvdbId, season, episode,
-                                EpisodeTools.isWatched(box.getEpisodeFlag())
-                                        ? EpisodeFlags.UNWATCHED : EpisodeFlags.WATCHED
-                        )
-                        .execute();
+                // disable button, will be re-enabled on data reload once action completes
+                box.setEnabled(false);
+                EpisodeTools.episodeWatched(context, showTvdbId, episodeTvdbId, season, episode,
+                        EpisodeTools.isWatched(box.getEpisodeFlag()) ? EpisodeFlags.UNWATCHED
+                                : EpisodeFlags.WATCHED
+                );
             }
         });
         viewHolder.watchedBox.setEpisodeFlag(cursor.getInt(ActivityFragment.ActivityQuery.WATCHED));
+        viewHolder.watchedBox.setEnabled(true);
         CheatSheet.setup(viewHolder.watchedBox,
                 EpisodeTools.isWatched(viewHolder.watchedBox.getEpisodeFlag())
                         ? R.string.unmark_episode : R.string.mark_episode

@@ -72,9 +72,9 @@ public class FullscreenImageActivity extends FragmentActivity {
 
     private void setupActionBar() {
         final ActionBar actionBar = getActionBar();
+        actionBar.setBackgroundDrawable(
+                getResources().getDrawable(R.drawable.background_actionbar_gradient));
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setBackgroundDrawable(new ColorDrawable(getResources()
-                .getColor(R.color.black_overlay)));
         actionBar.setIcon(R.drawable.ic_actionbar);
         actionBar.setDisplayShowTitleEnabled(false);
     }

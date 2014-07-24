@@ -114,8 +114,10 @@ public class UserEpisodeStreamFragment extends StreamFragment {
                 Activity activity = activityService.user(
                         TraktCredentials.get(getContext()).getUsername(),
                         ActivityType.Episode.toString(),
-                        ActivityAction.Watching + "," + ActivityAction.Checkin + ","
-                                + ActivityAction.Scrobble,
+                        ActivityAction.Watching + ","
+                                + ActivityAction.Checkin + ","
+                                + ActivityAction.Scrobble + ","
+                                + ActivityAction.Seen,
                         (System.currentTimeMillis() - DateUtils.WEEK_IN_MILLIS) / 1000,
                         null, null
                 );

@@ -118,7 +118,7 @@ public class Utils {
             if (tvdbstring.length() != 0) {
                 tvdbstring += ", ";
             }
-            tvdbstring += item;
+            tvdbstring += item.trim();
         }
         return tvdbstring;
     }

@@ -17,11 +17,14 @@
 package com.battlelancer.seriesguide.backend;
 
 import android.accounts.AccountManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -29,21 +32,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.enums.Result;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.ui.dialogs.RemoveCloudAccountDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.uwetrottmann.seriesguide.shows.model.Show;
-import java.util.HashSet;
-import java.util.List;
+import de.greenrobot.event.EventBus;
 import timber.log.Timber;
 
 /**
@@ -52,14 +53,10 @@ import timber.log.Timber;
 public class CloudSetupFragment extends Fragment {
 
     private Button mButtonAction;
-
     private TextView mTextViewDescription;
-
     private ProgressBar mProgressBar;
-
-    private RadioGroup mRadioGroupPriority;
-
-    private GoogleAccountCredential mCredential;
+    private Button mButtonRemoveAccount;
+    private TextView mTextViewWarning;
 
     private HexagonSetupTask mHexagonSetupTask;
 
@@ -78,16 +75,23 @@ public class CloudSetupFragment extends Fragment {
         setRetainInstance(true);
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_cloud_setup, container, false);
 
-        mButtonAction = (Button) v.findViewById(R.id.buttonRegisterAction);
-        mTextViewDescription = (TextView) v.findViewById(R.id.textViewRegisterDescription);
-        mProgressBar = (ProgressBar) v.findViewById(R.id.progressBarRegister);
-        mRadioGroupPriority = (RadioGroup) v.findViewById(R.id.radioGroupRegisterPriority);
+        mTextViewDescription = (TextView) v.findViewById(R.id.textViewCloudDescription);
+        mTextViewWarning = ButterKnife.findById(v, R.id.textViewCloudWarnings);
+        mProgressBar = (ProgressBar) v.findViewById(R.id.progressBarCloud);
+        mButtonAction = (Button) v.findViewById(R.id.buttonCloudAction);
+        mButtonRemoveAccount = ButterKnife.findById(v, R.id.buttonCloudRemoveAccount);
+        mButtonRemoveAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment f = new RemoveCloudAccountDialogFragment();
+                f.show(getFragmentManager(), "remove-cloud-account");
+            }
+        });
 
         return v;
     }
@@ -96,11 +100,7 @@ public class CloudSetupFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mCredential = GoogleAccountCredential
-                .usingAudience(getActivity(), HexagonSettings.AUDIENCE);
-        setAccountName(HexagonSettings.getAccountName(getActivity()));
-
-        updateViewsStates(false);
+        updateViewStates();
 
         // lock down UI if task is still running
         if (mHexagonSetupTask != null
@@ -109,39 +109,26 @@ public class CloudSetupFragment extends Fragment {
         }
     }
 
-    private void updateViewsStates(boolean enableVersionDecision) {
+    private void updateViewStates() {
         // setup not in progress
         mProgressBar.setVisibility(View.GONE);
-
-        // display user decision form?
-        if (enableVersionDecision) {
-            // require decision before upload: show options
-            mRadioGroupPriority.setVisibility(View.VISIBLE);
-            mRadioGroupPriority.check(R.id.radioButtonRegisterPriorityCloud); // default to cloud
-            mTextViewDescription.setText(R.string.hexagon_priority_choice_required);
-            mButtonAction.setText(R.string.hexagon_priority_select);
-            mButtonAction.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // create new setup task, give it user decision on duplicates
-                    boolean isCloudOverwrites = mRadioGroupPriority.getCheckedRadioButtonId()
-                            == R.id.radioButtonRegisterPriorityCloud;
-
-                    setProgressLock(true);  // prevent duplicate tasks
-                    mHexagonSetupTask = new HexagonSetupTask(getActivity(), mSetupFinishedListener,
-                            isCloudOverwrites);
-                    mHexagonSetupTask.execute();
-                }
-            });
-            return;
+        // warn about changes in behavior with trakt
+        String warning = getString(R.string.hexagon_warning_lists);
+        if (TraktCredentials.get(getActivity()).hasCredentials()) {
+            warning += "\n" + getString(R.string.hexagon_warning_trakt);
         }
-
-        // don't display user decision form
-        mRadioGroupPriority.setVisibility(View.GONE);
+        mTextViewWarning.setText(warning);
 
         // not signed in?
-        if (!isSignedIn()) {
-            mTextViewDescription.setText(R.string.hexagon_description);
+        if (!HexagonTools.isSignedIn(getActivity())) {
+            // did try to setup, but failed?
+            if (!HexagonSettings.hasCompletedSetup(getActivity())) {
+                // show error message
+                mTextViewDescription.setText(R.string.hexagon_setup_incomplete);
+            } else {
+                mTextViewDescription.setText(R.string.hexagon_description);
+            }
+            // enable sign-in
             mButtonAction.setText(R.string.hexagon_signin);
             mButtonAction.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -154,32 +141,24 @@ public class CloudSetupFragment extends Fragment {
                     }
                 }
             });
+            // disable account removal
+            mButtonRemoveAccount.setVisibility(View.GONE);
             return;
         }
 
-        // setup complete?
-        if (HexagonSettings.hasCompletedSetup(getActivity())) {
-            // enable sign-out
-            mTextViewDescription.setText(R.string.hexagon_signed_in);
-            mButtonAction.setText(R.string.hexagon_signout);
-            mButtonAction.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    signOut();
-                }
-            });
-            return;
-        }
+        // signed in!
 
-        // setup failed, offer action to re-try
-        mTextViewDescription.setText(R.string.hexagon_setup_incomplete);
-        mButtonAction.setText(R.string.hexagon_setup_complete);
+        // enable sign-out
+        mTextViewDescription.setText(R.string.hexagon_signed_in);
+        mButtonAction.setText(R.string.hexagon_signout);
         mButtonAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setupHexagon();
+                signOut();
             }
         });
+        // enable account removal
+        mButtonRemoveAccount.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -195,6 +174,7 @@ public class CloudSetupFragment extends Fragment {
             return;
         }
         mButtonAction.setEnabled(!isLocked);
+        mButtonRemoveAccount.setEnabled(!isLocked);
     }
 
     /**
@@ -206,9 +186,11 @@ public class CloudSetupFragment extends Fragment {
         // always disable if ongoing progress
         if (mIsProgressLocked) {
             mButtonAction.setEnabled(false);
+            mButtonRemoveAccount.setEnabled(false);
             return;
         }
         mButtonAction.setEnabled(!isLocked);
+        mButtonRemoveAccount.setEnabled(!isLocked);
     }
 
     @Override
@@ -220,13 +202,7 @@ public class CloudSetupFragment extends Fragment {
                     String accountName = data.getExtras().getString(
                             AccountManager.KEY_ACCOUNT_NAME);
                     if (!TextUtils.isEmpty(accountName)) {
-                        storeAccountName(accountName);
-                        setAccountName(accountName);
-                        if (isSignedIn()) {
-                            setupHexagon();
-                        } else {
-                            updateViewsStates(false);
-                        }
+                        setupHexagon(accountName);
                     }
                 }
                 break;
@@ -240,6 +216,15 @@ public class CloudSetupFragment extends Fragment {
 
         // disable UI if no Google Play services available
         checkGooglePlayServicesAvailable();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -251,6 +236,12 @@ public class CloudSetupFragment extends Fragment {
         mHexagonSetupTask = null;
 
         super.onDestroy();
+    }
+
+    public void onEventMainThread(
+            RemoveCloudAccountDialogFragment.RemoveHexagonAccountTask.HexagonAccountRemovedEvent event) {
+        event.handle(getActivity());
+        updateViewStates();
     }
 
     /**
@@ -276,190 +267,95 @@ public class CloudSetupFragment extends Fragment {
         setLock(false);
     }
 
-    private boolean isSignedIn() {
-        return mCredential.getSelectedAccountName() != null;
-    }
-
     private void signIn() {
         // launch account picker
-        startActivityForResult(mCredential.newChooseAccountIntent(),
+        startActivityForResult(
+                HexagonTools.getAccountCredential(getActivity()).newChooseAccountIntent(),
                 CloudSetupActivity.REQUEST_ACCOUNT_PICKER);
     }
 
     private void signOut() {
         // remove account name from settings
-        storeAccountName(null);
-        setAccountName(null);
+        HexagonTools.storeAccountName(getActivity(), null);
 
-        updateViewsStates(false);
+        updateViewStates();
     }
 
-    private void setAccountName(String accountName) {
-        mCredential.setSelectedAccountName(accountName);
-    }
-
-    private void storeAccountName(String accountName) {
-        // store account name in settings
-        PreferenceManager.getDefaultSharedPreferences(getActivity())
-                .edit()
-                .putString(HexagonSettings.KEY_ACCOUNT_NAME, accountName)
-                .commit();
-
-        ShowTools.get(getActivity()).setShowsServiceAccountName(accountName);
-    }
-
-    private void setupHexagon() {
+    private void setupHexagon(String accountName) {
         setProgressLock(true);  // prevent duplicate tasks
 
         mHexagonSetupTask = new HexagonSetupTask(getActivity(), mSetupFinishedListener);
-        mHexagonSetupTask.execute();
+        mHexagonSetupTask.execute(accountName);
     }
 
-    private static class HexagonSetupTask extends AsyncTask<Void, Void, Integer> {
-
-        public static final int USER_ACTION_REQUIRED = 2;
+    private static class HexagonSetupTask extends AsyncTask<String, Void, Integer> {
 
         public static final int SYNC_REQUIRED = 1;
 
-        public static final int SUCCESS = 0;
-
         public static final int FAILURE = -1;
+
+        public static final int FAILURE_AUTH = -2;
 
         public interface OnSetupFinishedListener {
 
             public void onSetupFinished(int resultCode);
-
         }
 
         private final Context mContext;
 
         private OnSetupFinishedListener mOnSetupFinishedListener;
 
-        private boolean mIsDecidingOnDuplicates;
-
-        private boolean mIsCloudOverwrites;
-
         /**
          * Checks for local and remote shows and uploads shows accordingly. If there are some shows
-         * in the local database as well as on hexagon, will abort with result code indicating
-         * required user intervention.
+         * in the local database as well as on hexagon, will download and merge data first, then
+         * upload.
          */
         public HexagonSetupTask(Context context, OnSetupFinishedListener listener) {
             mContext = context.getApplicationContext();
             mOnSetupFinishedListener = listener;
-            mIsDecidingOnDuplicates = false;
-        }
-
-        /**
-         * Same as regular task, but if there are some shows in the local database as well as on
-         * hexagon, does make a decision on uploading only missing or all shows without user
-         * intervention based on the given flag.
-         */
-        public HexagonSetupTask(Context context, OnSetupFinishedListener listener,
-                boolean isCloudOverwrites) {
-            mContext = context.getApplicationContext();
-            mOnSetupFinishedListener = listener;
-            mIsDecidingOnDuplicates = true;
-            mIsCloudOverwrites = isCloudOverwrites;
         }
 
         @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected Integer doInBackground(Void... params) {
+        protected Integer doInBackground(String... params) {
             // set setup incomplete flag
             Timber.i("Setting up Hexagon...");
             HexagonSettings.setSetupIncomplete(mContext);
 
-            // are there local shows?
-            HashSet<Integer> showsLocal = ShowTools.getShowTvdbIdsAsSet(mContext);
-            if (showsLocal == null || isCancelled()) {
-                // that did go wrong
+            // validate auth data
+            String accountName = params[0];
+            if (TextUtils.isEmpty(accountName)
+                    || !HexagonTools.validateAccount(mContext, accountName)) {
+                return FAILURE_AUTH;
+            }
+
+            // set all shows as not merged with Hexagon
+            ContentValues values = new ContentValues();
+            values.put(SeriesGuideContract.Shows.HEXAGON_MERGE_COMPLETE, false);
+            mContext.getContentResolver().update(SeriesGuideContract.Shows.CONTENT_URI, values,
+                    null, null);
+
+            // reset sync related properties
+            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
+                    mContext).edit();
+            editor.putBoolean(HexagonSettings.KEY_MERGED_SHOWS, false);
+            editor.putBoolean(HexagonSettings.KEY_MERGED_MOVIES, false);
+            editor.remove(HexagonSettings.KEY_LAST_SYNC_EPISODES);
+            editor.remove(HexagonSettings.KEY_LAST_SYNC_SHOWS);
+            editor.remove(HexagonSettings.KEY_LAST_SYNC_MOVIES);
+            if (!editor.commit()) {
                 return FAILURE;
             }
-            if (showsLocal.size() == 0) {
-                // no local shows, download any from Hexagon
-                return SYNC_REQUIRED;
-            }
 
-            // are there shows on Hexagon?
-            List<Show> showsRemote = ShowTools.Download.getRemoteShows(mContext);
-            if (showsRemote == null || isCancelled()) {
-                // that did go wrong
-                return FAILURE;
-            }
-            if (showsRemote.size() == 0) {
-                // no shows on Hexagon
-                // upload all local shows
-                return uploadAllShows();
-            }
+            // at last store the new credentials (enables SG hexagon integration)
+            HexagonTools.storeAccountName(mContext, accountName);
 
-            // are any of the local shows already on Hexagon?
-            int showsLocalCount = showsLocal.size();
-            pruneShowsAlreadyOnHexagon(showsLocal, showsRemote);
-            if (showsLocal.size() == showsLocalCount) {
-                // none of the local shows are on Hexagon, upload all
-                if (ShowTools.Upload.showsAll(mContext) == Result.ERROR) {
-                    // that did go wrong
-                    return FAILURE;
-                } else {
-                    // good, now download the other shows from hexagon
-                    return SYNC_REQUIRED;
-                }
-            }
-
-            // user intervention required on duplicates?
-            if (mIsDecidingOnDuplicates) {
-                // no, was instructed with decision
-                if (mIsCloudOverwrites) {
-                    if (showsLocal.size() == 0) {
-                        // all shows are already on hexagon, done!
-                        return SUCCESS;
-                    }
-                    // uploading only shows missing from the cloud
-                    List<Show> showsMissing = ShowTools.Upload
-                            .getSelectedLocalShowsAsList(mContext, showsLocal);
-                    if (ShowTools.Upload.shows(mContext, showsMissing) == Result.ERROR) {
-                        // that did go wrong
-                        return FAILURE;
-                    } else {
-                        // good, now sync the other shows from hexagon
-                        return SYNC_REQUIRED;
-                    }
-                } else {
-                    // upload all, overwriting duplicates in the cloud
-                    return uploadAllShows();
-                }
-            }
-
-            // user intervention required: upload only missing or overwrite all shows?
-            return USER_ACTION_REQUIRED;
+            return SYNC_REQUIRED;
         }
 
         @Override
         protected void onPostExecute(Integer result) {
             if (mOnSetupFinishedListener != null) {
                 mOnSetupFinishedListener.onSetupFinished(result);
-            }
-        }
-
-        private void pruneShowsAlreadyOnHexagon(HashSet<Integer> showsLocal,
-                List<Show> showsRemote) {
-            for (Show show : showsRemote) {
-                // try removing the id
-                showsLocal.remove(show.getTvdbId());
-            }
-        }
-
-        private Integer uploadAllShows() {
-            if (ShowTools.Upload.showsAll(mContext) == Result.ERROR) {
-                // that did go wrong
-                return FAILURE;
-            } else {
-                // all good!
-                return SUCCESS;
             }
         }
     }
@@ -469,37 +365,30 @@ public class CloudSetupFragment extends Fragment {
         @Override
         public void onSetupFinished(int resultCode) {
             switch (resultCode) {
-                case HexagonSetupTask.USER_ACTION_REQUIRED: {
-                    // task user to select which version of shows to keep
-                    Timber.d("Setting up Hexagon...USER_ACTION_REQUIRED");
-                    updateViewsStates(true);
-                    break;
-                }
                 case HexagonSetupTask.SYNC_REQUIRED: {
                     // schedule full sync
                     Timber.d("Setting up Hexagon...SYNC_REQUIRED");
                     SgSyncAdapter.requestSyncImmediate(getActivity(), SgSyncAdapter.SyncType.FULL,
                             0, false);
                     HexagonSettings.setSetupCompleted(getActivity());
-                    updateViewsStates(false);
+                    break;
+                }
+                case HexagonSetupTask.FAILURE_AUTH: {
+                    // show setup incomplete message + error toast
+                    Toast.makeText(getActivity(), R.string.hexagon_setup_fail_auth,
+                            Toast.LENGTH_LONG).show();
+                    Timber.d("Setting up Hexagon...FAILURE_AUTH");
                     break;
                 }
                 case HexagonSetupTask.FAILURE: {
                     // show setup incomplete message
-                    Timber.d("Setting up Hexagon...FAILED");
-                    updateViewsStates(false);
+                    Timber.d("Setting up Hexagon...FAILURE");
                     break;
                 }
-                case HexagonSetupTask.SUCCESS:
-                    // nothing further to do!
-                    Timber.d("Setting up Hexagon...SUCCESS");
-                    HexagonSettings.setSetupCompleted(getActivity());
-                    updateViewsStates(false);
-                    break;
             }
 
+            updateViewStates();
             setProgressLock(false); // allow new task
         }
     };
-
 }

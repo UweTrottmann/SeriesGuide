@@ -150,7 +150,8 @@ public class UserMovieStreamFragment extends StreamFragment {
                         ActivityType.Movie.toString(),
                         ActivityAction.Watching + ","
                                 + ActivityAction.Checkin + ","
-                                + ActivityAction.Scrobble,
+                                + ActivityAction.Scrobble + ","
+                                + ActivityAction.Seen,
                         (System.currentTimeMillis() - 8 * DateUtils.WEEK_IN_MILLIS) / 1000,
                         null,
                         null

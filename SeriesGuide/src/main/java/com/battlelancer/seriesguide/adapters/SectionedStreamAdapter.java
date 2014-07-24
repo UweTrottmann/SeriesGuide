@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.model.HeaderData;
 import com.battlelancer.seriesguide.util.TimeTools;
+import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.ActivityItem;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
 import java.util.ArrayList;
@@ -45,11 +46,17 @@ public abstract class SectionedStreamAdapter extends ArrayAdapter<ActivityItem> 
 
     private List<HeaderData> mHeaders;
     private Calendar mCalendar;
+    private final int mResIdDrawableWatched;
+    private final int mResIdDrawableCheckin;
 
     public SectionedStreamAdapter(Context context) {
         super(context, 0);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mCalendar = Calendar.getInstance();
+        mResIdDrawableWatched = Utils.resolveAttributeToResourceId(getContext().getTheme(),
+                R.attr.drawableWatch);
+        mResIdDrawableCheckin = Utils.resolveAttributeToResourceId(getContext().getTheme(),
+                R.attr.drawableCheckin);
     }
 
     public void setData(List<ActivityItem> data) {
@@ -57,6 +64,14 @@ public abstract class SectionedStreamAdapter extends ArrayAdapter<ActivityItem> 
         if (data != null) {
             addAll(data);
         }
+    }
+
+    public int getResIdDrawableWatched() {
+        return mResIdDrawableWatched;
+    }
+
+    public int getResIdDrawableCheckin() {
+        return mResIdDrawableCheckin;
     }
 
     @Override

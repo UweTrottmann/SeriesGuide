@@ -34,7 +34,7 @@
   <string name="app_not_available">אין יישום זמין בשביל זה.</string>
   <string name="onlyx">זמין רק עם מנוי X</string>
   <string name="add_empty">אין סדרות כאן.</string>
-  <string name="people_empty">Nobody here?! Touch to try again.</string>
+  <string name="people_empty">אין אף אחד כאן?! לחץ כדי לנסות שוב.</string>
   <string name="share_show">שתף סדרה</string>
   <string name="share_episode">שתף פרק</string>
   <string name="share_movie">שתף סרט</string>
@@ -235,16 +235,18 @@
   <string name="list_item_remove">הסר מהרשימה</string>
   <string name="list_empty">באפשרותך להוסיף סדרות, עונות או פרקים לרשימה זו.</string>
   <string name="hexagon_setup">הגדר ענן SeriesGuide</string>
-  <string name="hexagon_description">התחבר לענן לגיבוי ולסנכרן את הסדרות שלך. פרקים וסרטים שעדיין לא כלולים, אנא המשך להשתמש ב-trakt.tv בשביל זה.</string>
+  <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
+  <string name="hexagon_warning_lists">Lists are not included.</string>
+  <string name="hexagon_warning_trakt">When using SeriesGuide cloud, changes on trakt will not sync down to SeriesGuide.</string>
   <string name="hexagon_signin">התחבר</string>
   <string name="hexagon_signed_in">אתה מחובר לענן SeriesGuide.</string>
   <string name="hexagon_signout">התנתק</string>
   <string name="hexagon_setup_incomplete">לא הושלם הגדרת ענן SeriesGuide.</string>
-  <string name="hexagon_setup_complete">השלמת התקנה</string>
-  <string name="hexagon_priority_choice_required">חלק מהסדרות שלך כבר נמצאים בענן. איזו גרסה אתה מעדף?</string>
-  <string name="hexagon_priority_local">בהתקן הזה</string>
-  <string name="hexagon_priority_cloud">בענן</string>
-  <string name="hexagon_priority_select">בחר גירסה</string>
+  <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
+  <string name="hexagon_remove_account">Remove account</string>
+  <string name="hexagon_remove_account_success">Account obliterated.</string>
+  <string name="hexagon_remove_account_failure">Could not remove account.</string>
+  <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide cloud. Make sure to remove it on other connected devices as well.</string>
   <string name="connect_trakt">התחבר trakt</string>
   <string name="connect_trakt_done">מחובר אל trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide עכשיו יסנכרן את הסדרות והסרטים על מכשיר זה עם trakt. זה עלול לקחת מעט זמן.</string>
@@ -452,5 +454,5 @@
   <string name="extension_youtube">חיפוש בYouTube</string>
   <string name="description_extension_youtube">חפש את הוידיאו בYouTube</string>
   <string name="description_extension_web_search">חפש אתרים ותמונות</string>
-  <string name="person_biography">Biography</string>
+  <string name="person_biography">ביוגרפיה</string>
 </resources>

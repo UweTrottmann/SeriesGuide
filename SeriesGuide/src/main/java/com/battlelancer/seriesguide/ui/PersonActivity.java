@@ -17,8 +17,10 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.app.ActionBar;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.Window;
 import com.battlelancer.seriesguide.R;
 
 /**
@@ -30,6 +32,7 @@ public class PersonActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person);
 
@@ -46,6 +49,8 @@ public class PersonActivity extends BaseActivity {
 
     private void setupActionBar() {
         ActionBar actionBar = getActionBar();
+        actionBar.setBackgroundDrawable(
+                getResources().getDrawable(R.drawable.background_actionbar_gradient));
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
     }

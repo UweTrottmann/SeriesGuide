@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.backend;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 
@@ -35,20 +36,32 @@ public class CloudSetupActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_singlepane_drawer);
+        setContentView(R.layout.activity_cloud);
 
         setupActionBar();
 
         if (savedInstanceState == null) {
             CloudSetupFragment f = new CloudSetupFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.content_frame, f).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.containerCloud, f).commit();
         }
     }
 
     private void setupActionBar() {
         final ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(R.string.hexagon);
         actionBar.setIcon(R.drawable.ic_action_lab);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

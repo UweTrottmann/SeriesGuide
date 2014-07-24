@@ -34,11 +34,11 @@
   <string name="app_not_available">Δεν υπάρχει διαθέσιμη εφαρμογή για να το χειριστεί αυτό.</string>
   <string name="onlyx">Διαθέσιμο μόνο με συνδρομή X</string>
   <string name="add_empty">Δεν υπάρχουν σειρές εδώ.</string>
-  <string name="people_empty">Nobody here?! Touch to try again.</string>
+  <string name="people_empty">Κανείς εδώ;! Πατήστε για να προσπαθήσετε ξανά.</string>
   <string name="share_show">Κοινοποίηση σειράς</string>
   <string name="share_episode">Κοινή χρήση επεισοδίου</string>
   <string name="share_movie">Κοινοποίηση ταινίας</string>
-  <string name="share_checkout">Check out %s</string>
+  <string name="share_checkout">Κάντε Check out για το %s</string>
   <string name="comments">Σχόλια</string>
   <string name="shout_hint">Πληκτρολογήστε ένα shout (στα Αγγλικά)</string>
   <string name="shout">Shout!</string>
@@ -57,8 +57,8 @@
   <string name="movies_watchlist_empty">Δεν έχετε προσθέσει ταινίες στην λίστα προς παρακολούθηση.</string>
   <string name="trailer">Τρέιλερ</string>
   <string name="movie_cast">Ηθοποιοί</string>
-  <string name="movie_crew">Crew</string>
-  <string name="action_movies_sort">Sort movies</string>
+  <string name="movie_crew">Ομάδα ηθοποιών</string>
+  <string name="action_movies_sort">Ταξινόμηση ταινιών</string>
   <string name="action_movies_sort_title">Τίτλος</string>
   <string name="action_movies_sort_release">Ημερομηνία προβολής</string>
   <string name="statistics_shows">Σειρές</string>
@@ -123,7 +123,7 @@
   <string name="show_genres">Είδη</string>
   <string name="show_runtime">Διάρκεια</string>
   <string name="show_contentrating">Αξιολόγηση περιεχομένου</string>
-  <string name="show_release_times">Release times</string>
+  <string name="show_release_times">Ώρες που παίζονται</string>
   <string name="episode_directors">Σκηνοθέτες</string>
   <string name="episode_gueststars">Γκεστ Σταρ</string>
   <string name="episode_writers">Συγγραφείς</string>
@@ -162,7 +162,7 @@
   <string name="action_watched">Έχει παρακολουθηθεί </string>
   <string name="action_unwatched">Δεν έχουν ακόμη παρακολουθηθεί</string>
   <string name="confirm_delete">Θέλετε πράγματι να αφαιρέσετε %s?</string>
-  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
+  <string name="delete_has_list_items">Δεν μπορώ να το κάνω, παρακαλώ αφαιρέστε πρώτα το %s από όλες τις λίστες.</string>
   <string name="delete_error">Δεν ήταν δυνατή η αφαίρεση της σειράς. Προσπαθήστε ξανά αργότερα.</string>
   <string name="delete_show">Αφαίρεση</string>
   <string name="dontdelete_show">Να μην αφαιρεθεί</string>
@@ -201,7 +201,7 @@
   <string name="norecent">Δεν υπάρχουν πρόσφατα επεισόδια.</string>
   <string name="only_favorites">Μόνο αγαπημένες σειρές</string>
   <string name="togglewatched">Εναλλαγή παρακολουθημένων</string>
-  <string name="pref_infinite_scrolling">Infinite activity</string>
+  <string name="pref_infinite_scrolling">Άπειρη δραστηριότητα</string>
   <string name="action_activity_filter">Φίλτρο δραστηριότητας</string>
   <string name="update_scheduled">Ενημέρωση…</string>
   <string name="update_no_connection">Για ενημέρωση συνδεθείτε στο internet.</string>
@@ -235,23 +235,25 @@
   <string name="list_item_remove">Κατάργηση από τη λίστα</string>
   <string name="list_empty">Μπορείτε να προσθέσετε σειρές, σεζόν ή επεισόδια σε αυτή τη λίστα.</string>
   <string name="hexagon_setup">Ρυθμίστε το SeriesGuide cloud</string>
-  <string name="hexagon_description">Συνδεθείτε μέσω cloud για αντίγραφο ασφαλείας και συγχρονισμό των σειρών σας. \nΤα επισόδεια και οι ταινίες δεν συμπεριλαμβάνονται ακόμα, παρακαλώ συνεχίστε να χρησιμοποιείτε το trackt για την ολοκλήρωση.</string>
+  <string name="hexagon_description">Συνδεθείτε με το  cloud για να κάνετε αντίγραφα ασφαλείας και να συγχρονίσετε τις σειρές και τις ταινίες σας.</string>
+  <string name="hexagon_warning_lists">Δεν συμπεριλαμβάνονται λίστες.</string>
+  <string name="hexagon_warning_trakt">Όταν χρησιμοποιείτε το SeriesGuide cloud, οι αλλαγές στο trakt δεν συγχρονίζονται στο SeriesGuide.</string>
   <string name="hexagon_signin">Σύνδεση</string>
   <string name="hexagon_signed_in">Είστε συνδεδεμένος στο σύννεφο του SeriesGuide.</string>
   <string name="hexagon_signout">Αποσύνδεση</string>
-  <string name="hexagon_setup_incomplete">Setting up SeriesGuide cloud was not completed.</string>
-  <string name="hexagon_setup_complete">Πλήρη παραμετροποίηση</string>
-  <string name="hexagon_priority_choice_required">Κάποιες από τις σειρές βρίσκονται ήδη στο cloud. Ποιά έκδοση προτιμάτε;</string>
-  <string name="hexagon_priority_local">Σε αυτήν την συσκευή</string>
-  <string name="hexagon_priority_cloud">Στο σύννεφο</string>
-  <string name="hexagon_priority_select">Επιλέξτε έκδοση</string>
+  <string name="hexagon_setup_incomplete">Η ρύθμιση του SeriesGuide cloud δεν ολοκληρώθηκε.</string>
+  <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
+  <string name="hexagon_remove_account">Αφαίρεση λογαριασμού</string>
+  <string name="hexagon_remove_account_success">Ο λογαριασμός διαγράφηκε.</string>
+  <string name="hexagon_remove_account_failure">Δεν ήταν δυνατή η κατάργηση του λογαριασμού.</string>
+  <string name="hexagon_remove_account_confirmation">Η αφαίρεση του λογαριασμού σας θα διαγράψει όλες τις σειρές και τις ταινίες από το SeriesGuide cloud. Σιγουρευτείτε ότι θα τον αφαιρέσετε και από τις άλλες συνδεδεμένες συσκευές σας.</string>
   <string name="connect_trakt">Σύνδεση trakt</string>
   <string name="connect_trakt_done">Συνδεδεμένο με το trakt!</string>
   <string name="connect_trakt_done_explanation">Το SeriesGuide θα συγχρονίσει τώρα τις σειρές και τις ταινίες σε αυτή την συσκευή μέσω του trackt. Αυτό μπορεί να διαρκέσει λίγο χρόνο.</string>
   <string name="add_trakt_shows">Προσθέστε σειρές από τη βιβλιοθήκη σας:</string>
   <string name="show_library">Εμφάνιση της  βιβλιοθήκη σας</string>
   <string name="about_trakt">Το Trakt βοηθά να καταγράψετε τα τηλεοπτικά προγράμματα και τις ταινίες που βλέπετε. <a href="http://trakt.tv"> Μάθετε περισσότερα</a></string>
-  <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
+  <string name="integration_trakt_items">- προσθέστε σειρές από τη βιβλιοθήκη σας και τη λίστα παρακολούθησης\n\n- δείτε τις προτάσεις για εσάς και τις δραστηριότητες των φίλων σας\n\n- αυτά που μαρκάρονται ότι τα έχετε παρακολουθήσει και συλλέξει, συγχρονίζονται αυτόματα\n\n- νέες σειρές που παρακολουθήσατε προστίθενται αυτόματα</string>
   <string name="prefs_category_basic">Βασικά</string>
   <string name="prefs_category_sharing">Υπηρεσίες</string>
   <string name="prefs_category_advanced">Για προχωρημένους</string>
@@ -310,7 +312,7 @@
   <string name="clear_cache">Καθαρισμός προσωρινής μνήμης εικόνων</string>
   <string name="clear_cache_summary">Αφαιρέστε όλες τις προσωρινά αποθηκευμένες εικόνες από τη συσκευή σας</string>
   <string name="pref_ganalyticssummary">Καταγραφή της χρήσης για την βελτίωση του SeriesGuide</string>
-  <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
+  <string name="backup_description">Το <b>Αντίγραφο ασφαλείας</b> θα εξάγει τις σειρές, τις σεζόν, τα επεισόδια και τις λίστες σε ένα αρχείο JSON στον παρακάτω φάκελο.\nΓια  <b>Επαναφορά</b> σιγουρευτείτε ότι τα δημιουργημένα από το Αντίγραφο ασφαλείας αρχεία JSON βρίσκονται στον παρακάτω φάκελο.</string>
   <string name="backup_full_dump">Περιλαμβάνει όλα τα μετα-δεδομένα όπως περιγραφές, ηθοποιούς και βαθμολογίες.</string>
   <string name="backup_path">Φάκελος αντιγράφων ασφαλείας</string>
   <string name="backup_version">Έκδοση βάσης δεδομένων</string>
@@ -353,7 +355,7 @@
   <string name="menu_rate_episode">Βαθμολόγησε επεισόδιο</string>
   <string name="menu_rate_show">Βαθμολόγησε τη σειρά</string>
   <string name="traktcheckin_cancel">Παράκαμψη</string>
-  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
+  <string name="traktcheckin_inprogress">Έχετε ήδη κάνει check ένα άλλο επεισόδιο ή ταινία. Είτε παρακάμψτε το προηγούμενο check-in, είτε περιμένετε %s και δοκιμάστε ξανά.</string>
   <string name="traktcheckin_wait">Θα περιμένω</string>
   <string name="addtocalendar">Προσθήκη στο ημερολόγιο</string>
   <string name="addtocalendar_failed">Δεν είναι δυνατόν να δημιουργηθεί γεγονός ημερολογίου.</string>
@@ -364,7 +366,7 @@
   <string name="connect">Σύνδεση</string>
   <string name="disconnect">Αποσύνδεση</string>
   <string name="trakt_error">Αλληλεπίδραση με Trakt απέτυχε</string>
-  <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
+  <string name="trakt_error_credentials">Κάτι πήγε στραβά. Παρακαλώ ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά.</string>
   <string name="trakt_error_general">Δεν μπορέσαμε να μιλήσουμε στο trakt. Προσπαθήστε ξανά αργότερα.</string>
   <string name="trakt_createaccount">Δημιουργία νέου λογαριασμού</string>
   <string name="get_started">Ξεκινήστε</string>
@@ -409,7 +411,7 @@
     <item>Αγαπημένα</item>
   </string-array>
   <string name="dashclock_extension_label">Επερχόμενο επεισόδιο</string>
-  <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
+  <string name="dashclock_extension_description">Εμφανίζει το επερχόμενο επεισόδιο των σειρών σας στο SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Εμφάνιση επεισοδίων στην επόμενη</string>
   <string-array name="dashclockUpcomingThresholds">
     <item>ώρα</item>
@@ -419,16 +421,16 @@
     <item>3 ημέρες</item>
     <item>εβδομάδα</item>
   </string-array>
-  <string name="action_migrate">Migrate from X</string>
-  <string name="migration_description">SeriesGuide X is now an unlock key for X features in the free version (X Pass). Please migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
-  <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
+  <string name="action_migrate">Μετεγκατάσταση από την έκδοση Χ</string>
+  <string name="migration_description">To SeriesGuide X είναι τώρα κλειδί για ξεκλείδωμα των Χ χαρακτηριστικών στην δωρεάν έκδοση  ("X Pass"). Παρακαλώ μεταφέρετε  τις σειρές σας στη δωρεάν έκδοση του SeriesGuide. Κρατήσει την X έκδοση εγκατεστημένη για να ξεκλειδωθούν όλα τα χαρακτηριστικά στη δωρεάν έκδοση.</string>
+  <string name="migration_import">Πατήστε παρακάτω για να εισάγετε το αντίγραφο ασφαλείας που δημιουργήθηκε στο SeriesGuide X.</string>
   <string name="migration_action_import">Εισαγωγή και αντικατάσταση των τρέχοντων σειρών</string>
   <string name="action_upgrade">Λήψη X χαρακτηριστικών</string>
   <string name="billing_action_subscribe">Παρακολούθηση</string>
-  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_action_pass">Αποκτήστε X Pass</string>
   <string name="billing_price_subscribe">%s/έτος, δοκιμή 30 ημερών</string>
   <string name="billing_price_pass">εφάπαξ αγοράς</string>
-  <string name="upgrade_description">Get access to notifications, more list widget options and all future X features. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
+  <string name="upgrade_description">Αποκτήστε πρόσβαση σε ειδοποιήσεις, περισσότερες επιλογές για widget λιστών και όλα τα μελλοντικά χαρακτηριστικά της έκδοσης X. Υποστήριξη για περαιτέρω ανάπτυξη της εφαρμογής.\n\nΕάν έχετε ήδη αγοράσει το SeriesGuide X, εγκαταστήσετε το για να ξεκλειδώσετε αυτή την αναβάθμιση.</string>
   <string name="upgrade_success">Ευχαριστούμε, είστε ήδη εγγεγραμμένος στο SeriesGuide X!</string>
   <string name="billing_learn_more">Γιατί πληρώνετε; Μάθετε περισσότερα.</string>
   <string name="subscription_activated">Έχετε τώρα εγγραφεί στα Χ χαρακτηριστικά.</string>
@@ -445,12 +447,12 @@
   <string name="action_extension_settings">Ρυθμίσεις</string>
   <string name="action_extension_remove">Αφαίρεση</string>
   <string name="extension_amazon">Αναζήτηση στο Amazon</string>
-  <string name="description_extension_amazon">Search your local Amazon site</string>
+  <string name="description_extension_amazon">Ψάξτε στον τοπικό σας ιστότοπο Amazon</string>
   <string name="pref_amazon_domain">Ιστοσελίδα Amazon</string>
   <string name="extension_google_play">Αναζήτηση στο Google Play</string>
   <string name="description_extension_google_play">Αναζήτηση στο Google Play Store</string>
   <string name="extension_youtube">Αναζήτηση στο YouTube</string>
   <string name="description_extension_youtube">Αναζήτηση για βίντεος στο YouTube</string>
   <string name="description_extension_web_search">Αναζήτηση για ιστοσελίδες και εικόνες</string>
-  <string name="person_biography">Biography</string>
+  <string name="person_biography">Βιογραφία</string>
 </resources>

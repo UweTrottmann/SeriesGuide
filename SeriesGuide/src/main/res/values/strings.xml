@@ -279,16 +279,18 @@
 
     <!-- Hexagon -->
     <string name="hexagon_setup">Set up SeriesGuide cloud</string>
-    <string name="hexagon_description">Connect to the cloud to backup and sync your shows.\nEpisodes and movies are not yet included, please continue to use trakt integration for that.</string>
+    <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
+    <string name="hexagon_warning_lists">Lists are not included.</string>
+    <string name="hexagon_warning_trakt">When using SeriesGuide cloud, changes on trakt will not sync down to SeriesGuide.</string>
     <string name="hexagon_signin">Sign In</string>
     <string name="hexagon_signed_in">You are connected to SeriesGuide cloud.</string>
     <string name="hexagon_signout">Sign Out</string>
     <string name="hexagon_setup_incomplete">Setting up SeriesGuide cloud was not completed.</string>
-    <string name="hexagon_setup_complete">Complete setup</string>
-    <string name="hexagon_priority_choice_required">Some of your shows are already in the cloud. Which version do you prefer?</string>
-    <string name="hexagon_priority_local">On this device</string>
-    <string name="hexagon_priority_cloud">In the cloud</string>
-    <string name="hexagon_priority_select">Select version</string>
+    <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
+    <string name="hexagon_remove_account">Remove account</string>
+    <string name="hexagon_remove_account_success">Account obliterated.</string>
+    <string name="hexagon_remove_account_failure">Could not remove account.</string>
+    <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide cloud. Make sure to remove it on other connected devices as well.</string>
 
     <!-- Connect trakt -->
     <string name="connect_trakt">Connect trakt</string>
@@ -316,7 +318,7 @@
     <string name="about">About SeriesGuide</string>
     <string name="pref_credits">Credits</string>
     <string name="clearGetGlueCredentials">Disconnect tvtag</string>
-    <string name="clearGetGlueCredentialssummary">Check in with tvtag to reconnect</string>
+    <string name="clearGetGlueCredentialssummary">Check in with tvtag to connect</string>
     <string name="pref_traktsummary">Add or edit your trakt credentials</string>
     <string name="feedback">Send feedback</string>
     <string name="pref_autoaddshows">Add new trakt shows</string>
