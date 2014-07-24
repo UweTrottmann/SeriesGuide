@@ -114,7 +114,7 @@ public class FriendsEpisodeStreamFragment extends StreamFragment {
                                 + ActivityAction.Checkin + ","
                                 + ActivityAction.Scrobble + ","
                                 + ActivityAction.Seen,
-                        (System.currentTimeMillis() - DateUtils.WEEK_IN_MILLIS) / 1000, null, null
+                        (System.currentTimeMillis() - 3 * DateUtils.DAY_IN_MILLIS) / 1000, null, null
                 );
 
                 if (activity == null || activity.activity == null) {
