@@ -393,7 +393,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                     .append(String.valueOf(absoluteNumber));
             // de-emphasize number
             timeAndNumbersText.setSpan(new TextAppearanceSpan(getActivity(),
-                            R.style.TextAppearance_Small_Dim), numberStartIndex,
+                            R.style.TextAppearance_Caption_Dim), numberStartIndex,
                     timeAndNumbersText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             );
         }

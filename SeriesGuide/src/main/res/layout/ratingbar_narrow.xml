@@ -24,7 +24,7 @@
         android:layout_marginRight="@dimen/default_padding"
         android:layout_toRightOf="@+id/imageViewRatingsStar"
         android:minWidth="48dp"
-        android:text="@string/norating"
+        android:text="@string/notvdbrating"
         android:textAppearance="@style/TextAppearance.Large.Light"
         android:textColor="?attr/textColorSgDefault"
         android:textSize="26sp"
