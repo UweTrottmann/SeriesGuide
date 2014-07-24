@@ -242,7 +242,7 @@
   <string name="hexagon_signed_in">Vous êtes connecté au cloud SeriesGuide.</string>
   <string name="hexagon_signout">Déconnexion</string>
   <string name="hexagon_setup_incomplete">La configuration du cloud SeriesGuide n\'était pas terminée.</string>
-  <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
+  <string name="hexagon_setup_fail_auth">Problème rencontré avec votre compte Google.</string>
   <string name="hexagon_remove_account">Supprimer le compte</string>
   <string name="hexagon_remove_account_success">Compte supprimé.</string>
   <string name="hexagon_remove_account_failure">Problème lors de la suppression du compte.</string>
