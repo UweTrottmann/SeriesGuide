@@ -55,7 +55,7 @@
 
     <dimen name="person_headshot_size">56dp</dimen>
     <dimen name="person_headshot_large_width">100dp</dimen>
-    <dimen name="person_headshot_large_height">250dp</dimen>
+    <dimen name="person_headshot_large_height">300dp</dimen>
 
     <dimen name="tab_padding_horizontal">12dp</dimen>
 
