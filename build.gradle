@@ -35,7 +35,7 @@ ext {
 ext.libraries = [
 
         supportv4: 'com.android.support:support-v4:19.1.+',
-        okhttp: 'com.squareup.okhttp:okhttp:2.0.0',
-        okhttpurlconnection: 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
+        okhttp: 'com.squareup.okhttp:okhttp:1.6.0',
+        okhttpurlconnection: 'com.squareup.okhttp:okhttp-urlconnection:1.6.0'
 
 ]
