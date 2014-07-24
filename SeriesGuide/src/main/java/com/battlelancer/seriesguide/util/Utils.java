@@ -27,6 +27,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -34,6 +35,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -223,6 +225,51 @@ public class Utils {
         }
 
         return false;
+    }
+
+    /**
+     * Sets the Drawables (if any) to appear to the start of, above,
+     * to the end of, and below the text.  Use 0 if you do not
+     * want a Drawable there. The Drawables' bounds will be set to
+     * their intrinsic bounds.
+     */
+    public static void setCompoundDrawablesRelativeWithIntrinsicBounds(Button button, int left,
+            int top, int right, int bottom) {
+        if (AndroidUtils.isJellyBeanMR1OrHigher()) {
+            button.setCompoundDrawablesRelativeWithIntrinsicBounds(left, top, right, bottom);
+            return;
+        }
+
+        final Resources resources = button.getContext().getResources();
+        setCompoundDrawablesRelativeWithIntrinsicBounds(
+                button,
+                left != 0 ? resources.getDrawable(left) : null,
+                top != 0 ? resources.getDrawable(top) : null,
+                right != 0 ? resources.getDrawable(right) : null,
+                bottom != 0 ? resources.getDrawable(bottom) : null);
+    }
+
+    /**
+     * Sets the Drawables (if any) to appear to the start of, above,
+     * to the end of, and below the text.  Use null if you do not
+     * want a Drawable there. The Drawables' bounds will be set to
+     * their intrinsic bounds.
+     */
+    public static void setCompoundDrawablesRelativeWithIntrinsicBounds(Button button,
+            Drawable left, Drawable top, Drawable right, Drawable bottom) {
+        if (left != null) {
+            left.setBounds(0, 0, left.getIntrinsicWidth(), left.getIntrinsicHeight());
+        }
+        if (right != null) {
+            right.setBounds(0, 0, right.getIntrinsicWidth(), right.getIntrinsicHeight());
+        }
+        if (top != null) {
+            top.setBounds(0, 0, top.getIntrinsicWidth(), top.getIntrinsicHeight());
+        }
+        if (bottom != null) {
+            bottom.setBounds(0, 0, bottom.getIntrinsicWidth(), bottom.getIntrinsicHeight());
+        }
+        button.setCompoundDrawables(left, top, right, bottom);
     }
 
     public static void setValueOrPlaceholder(View view, final String value) {

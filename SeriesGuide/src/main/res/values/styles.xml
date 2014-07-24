@@ -209,6 +209,16 @@
         <item name="android:textStyle">italic</item>
     </style>
 
+    <style name="Widget.SeriesGuide.Button.Borderless.Caption">
+        <item name="android:padding">4dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.Button.Borderless.Caption.Dim">
+        <item name="android:textColor">?attr/textColorSgDim</item>
+    </style>
+
     <style name="Widget.SeriesGuide.Button.Borderless.Rating">
         <item name="android:drawableLeft">@drawable/trakt_heart</item>
         <item name="android:drawablePadding">@dimen/inline_padding</item>
@@ -326,7 +336,8 @@
     </style>
 
     <style name="DefaultPadding.Blocks.WithTopMargin">
-        <item name="android:layout_marginTop">@dimen/inline_padding</item>
+        <item name="android:layout_marginTop">@dimen/default_padding</item>
+        <item name="android:layout_marginBottom">@dimen/inline_padding</item>
     </style>
 
     <style name="DefaultPadding.Blocks.WithBottomMargin">
