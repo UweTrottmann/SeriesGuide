@@ -147,6 +147,18 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="TextAppearance.Caption">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextAppearance.Body.Dim">
+        <item name="android:textColor">?attr/textColorSgDim</item>
+    </style>
+
+    <style name="TextAppearance.Body.Highlight">
+        <item name="android:textStyle">italic</item>
+    </style>
+
     <!-- Widget styles -->
     <style name="Widget"/>
 
