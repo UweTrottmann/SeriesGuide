@@ -33,7 +33,7 @@
                 android:paddingLeft="@dimen/default_padding"
                 android:paddingRight="@dimen/default_padding"
                 android:text="@string/action_shows_add"
-                android:textAppearance="@style/TextAppearance.Large.Light"
+                android:textAppearance="@style/TextAppearance.Headline"
                 android:textIsSelectable="true" />
 
             <TextView
@@ -45,7 +45,7 @@
                 android:layout_below="@+id/textViewAddTitle"
                 android:layout_toLeftOf="@+id/imageViewAddPoster"
                 tools:text="@string/description_overview"
-                android:textAppearance="@style/TextAppearance.Light"
+                android:textAppearance="@style/TextAppearance.Body"
                 android:textIsSelectable="true" />
 
             <ImageView

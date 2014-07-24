@@ -135,6 +135,10 @@
         <item name="android:textColor">@color/black_11</item>
     </style>
 
+    <style name="TextAppearance.Headline">
+        <item name="android:textSize">24sp</item>
+    </style>
+
     <style name="TextAppearance.Subhead">
         <item name="android:textSize">16sp</item>
     </style>
@@ -310,7 +314,7 @@
     </style>
 
     <style name="DefaultPadding.Blocks.WithBottomMargin.FlowText">
-        <item name="android:lineSpacingMultiplier">1.2</item>
+        <item name="android:lineSpacingMultiplier">1.25</item>
     </style>
 
     <style name="Page">
