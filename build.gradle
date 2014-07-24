@@ -28,14 +28,14 @@ ext {
     buildToolsVersion = '19.1.0'
 
     // API level 15+ -> version 15xxx
-    versionCode = 15019
-    versionName = '16-beta7'
+    versionCode = 15020
+    versionName = '16-beta8'
 }
 
 ext.libraries = [
 
         supportv4: 'com.android.support:support-v4:19.1.+',
-        okhttp: 'com.squareup.okhttp:okhttp:2.0.0',
-        okhttpurlconnection: 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
+        okhttp: 'com.squareup.okhttp:okhttp:1.6.0',
+        okhttpurlconnection: 'com.squareup.okhttp:okhttp-urlconnection:1.6.0'
 
 ]

@@ -8,6 +8,10 @@ All dates are in the European Central timezone.
 Version 16 *(in development)*
 -----------------------------
 
+#### 16-beta8 *(2014-07-24)*
+
+* FIX Crash when loading images.
+
 #### 16-beta7 *(2014-07-24)*
 
 * FEATURE SeriesGuide Cloud v2 with support for episode and movie backup and sync.
