@@ -8,13 +8,14 @@ All dates are in the European Central timezone.
 Version 16 *(in development)*
 -----------------------------
 
-#### 16-beta7 *(2014-07-23)*
+#### 16-beta7 *(2014-07-24)*
 
 * FEATURE SeriesGuide Cloud v2 with support for episode and movie backup and sync.
 * TWEAK Display episodes or movies marked as seen in trakt activity streams.
 * TWEAK Trakt connect screens wrap content better on tablet displays.
 * FIX Guest star names sometimes contain leading or trailing spaces.
 * NOTICE The original SeriesGuide Cloud experiment is now deprecated (and will be disabled soon). You will have to sign in again to connect to Cloud v2 on each device.
+* NOTICE When connecting to SeriesGuide Cloud, activity on trakt will no longer be downloaded to SeriesGuide.
 
 #### 16-beta6 *(2014-07-04)*
 
