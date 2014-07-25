@@ -103,6 +103,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     protected int mEpisodeNumber;
     private String mEpisodeTitle;
     private String mShowTitle;
+    private int mShowRunTime;
+    private long mEpisodeReleaseTime;
 
     @InjectView(R.id.scrollViewEpisode) ScrollView mEpisodeScrollView;
     @InjectView(R.id.containerEpisode) View mEpisodeContainer;
@@ -129,7 +131,6 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     @InjectView(R.id.imageButtonBarWatched) Button mWatchedButton;
     @InjectView(R.id.imageButtonBarCollected) Button mCollectedButton;
     @InjectView(R.id.imageButtonBarSkip) Button mSkipButton;
-    //@InjectView(R.id.imageButtonBarMenu) ImageButton mOverflowButton;
 
     @InjectView(R.id.buttonShowInfoIMDB) View mImdbButton;
     @InjectView(R.id.buttonTVDB) View mTvdbButton;
@@ -274,9 +275,15 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             shareEpisode();
             return true;
         } else if (itemId == R.id.menu_manage_lists) {
-            fireTrackerEvent("Manage lists");
             ManageListsDialogFragment.showListsDialog(getEpisodeTvdbId(), ListItemTypes.EPISODE,
                     getFragmentManager());
+            fireTrackerEvent("Manage lists");
+            return true;
+        } else if (itemId == R.id.menu_action_episode_calendar) {
+            ShareUtils.onAddCalendarEvent(getActivity(), mShowTitle,
+                    Utils.getNextEpisodeString(getActivity(), mSeasonNumber, mEpisodeNumber,
+                            mEpisodeTitle), mEpisodeReleaseTime, mShowRunTime);
+            fireTrackerEvent("Add to calendar");
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -358,6 +365,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         mShowTvdbId = cursor.getInt(DetailsQuery.REF_SHOW_ID);
         mSeasonNumber = cursor.getInt(DetailsQuery.SEASON);
         mEpisodeNumber = cursor.getInt(DetailsQuery.NUMBER);
+        mShowRunTime = cursor.getInt(DetailsQuery.SHOW_RUNTIME);
+        mEpisodeReleaseTime = cursor.getLong(DetailsQuery.FIRST_RELEASE_MS);
 
         // title and description
         mEpisodeTitle = cursor.getString(DetailsQuery.TITLE);
@@ -369,9 +378,9 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
 
         // release time and day
         SpannableStringBuilder timeAndNumbersText = new SpannableStringBuilder();
-        final long releaseTime = cursor.getLong(DetailsQuery.FIRST_RELEASE_MS);
-        if (releaseTime != -1) {
-            Date actualRelease = TimeTools.getEpisodeReleaseTime(getActivity(), releaseTime);
+        if (mEpisodeReleaseTime != -1) {
+            Date actualRelease = TimeTools.getEpisodeReleaseTime(getActivity(),
+                    mEpisodeReleaseTime);
             mReleaseDay.setText(TimeTools.formatToDate(getActivity(), actualRelease));
             // "in 15 mins (Fri)"
             timeAndNumbersText
@@ -538,22 +547,6 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                     isSkipped ? R.string.action_dont_skip : R.string.action_skip);
         }
         mSkipButton.setEnabled(true);
-
-        // menu button
-        //final int showRunTime = cursor.getInt(DetailsQuery.SHOW_RUNTIME);
-        //mOverflowButton.setOnClickListener(new OnClickListener() {
-        //    @Override
-        //    public void onClick(View v) {
-        //        PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-        //        popupMenu.getMenuInflater()
-        //                .inflate(R.menu.episode_popup_menu, popupMenu.getMenu());
-        //        popupMenu.setOnMenuItemClickListener(new OverflowItemClickListener(mShowTitle,
-        //                Utils.getNextEpisodeString(v.getContext(), mSeasonNumber, mEpisodeNumber,
-        //                        mEpisodeTitle), releaseTime, showRunTime
-        //        ));
-        //        popupMenu.show();
-        //    }
-        //});
 
         // service buttons
         ServiceUtils.setUpTraktButton(mShowTvdbId, mSeasonNumber, mEpisodeNumber, mTraktButton,
