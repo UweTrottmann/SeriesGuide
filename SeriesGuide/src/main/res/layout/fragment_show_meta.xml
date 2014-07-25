@@ -4,102 +4,115 @@
 
     <TextView
         android:id="@+id/textViewShowOverview"
-        style="@style/DefaultPadding.Blocks.WithBottomMargin.FlowText"
+        style="@style/Block.FlowText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxEms="20"
-        android:textAppearance="@style/TextAppearance.Light"
+        android:textAppearance="@style/TextAppearance.Body"
         android:textIsSelectable="true"
-        tools:text="A multi-line description of this show." />
+        tools:text="A multi-line description of this show. Which is rather lenghty." />
 
-    <TextView
-        style="@style/DefaultPadding.Blocks.WithTopMargin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/show_genres"
-        android:textAppearance="@style/TextAppearance.Small.Label" />
-
-    <TextView
-        android:id="@+id/textViewShowGenres"
-        style="@style/DefaultPadding.Blocks.WithBottomMargin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.Light"
-        android:textIsSelectable="true" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/large_padding"
+        android:layout_marginLeft="@dimen/large_padding"
+        android:layout_marginRight="@dimen/large_padding"
+        android:background="?attr/colorDivider" />
 
     <include
         layout="@layout/people_list"
         android:id="@+id/containerShowCast"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/default_padding" />
+        android:layout_height="wrap_content" />
 
     <include
         layout="@layout/people_list"
         android:id="@+id/containerShowCrew"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/default_padding" />
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/large_padding"
+        android:layout_marginLeft="@dimen/large_padding"
+        android:layout_marginRight="@dimen/large_padding"
+        android:background="?attr/colorDivider" />
 
     <TextView
-        style="@style/DefaultPadding.Blocks.WithTopMargin"
+        style="@style/Block.WithTopMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show_genres"
+        android:textAppearance="@style/TextAppearance.Body.Bold" />
+
+    <TextView
+        android:id="@+id/textViewShowGenres"
+        style="@style/Block"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.Body"
+        android:textIsSelectable="true" />
+
+    <TextView
+        style="@style/Block.WithTopMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/show_contentrating"
-        android:textAppearance="@style/TextAppearance.Small.Label" />
+        android:textAppearance="@style/TextAppearance.Body.Bold" />
 
     <TextView
         android:id="@+id/textViewShowContentRating"
-        style="@style/DefaultPadding.Blocks.WithBottomMargin"
+        style="@style/Block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.Light"
+        android:textAppearance="@style/TextAppearance.Body"
         android:textIsSelectable="true" />
 
     <TextView
-        style="@style/DefaultPadding.Blocks.WithTopMargin"
+        style="@style/Block.WithTopMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/show_release_times"
-        android:textAppearance="@style/TextAppearance.Small.Label" />
+        android:textAppearance="@style/TextAppearance.Body.Bold" />
 
     <TextView
         android:id="@+id/textViewShowReleaseCountry"
-        style="@style/DefaultPadding.Blocks.WithBottomMargin"
+        style="@style/Block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.Light"
+        android:textAppearance="@style/TextAppearance.Body"
         android:textIsSelectable="true" />
 
     <TextView
-        style="@style/DefaultPadding.Blocks.WithTopMargin"
+        style="@style/Block.WithTopMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/show_firstaired"
-        android:textAppearance="@style/TextAppearance.Small.Label" />
+        android:textAppearance="@style/TextAppearance.Body.Bold" />
 
     <TextView
         android:id="@+id/textViewShowFirstAirdate"
-        style="@style/DefaultPadding.Blocks.WithBottomMargin"
+        style="@style/Block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.Light"
+        android:textAppearance="@style/TextAppearance.Body"
         android:textIsSelectable="true" />
 
     <TextView
-        style="@style/DefaultPadding.Blocks.WithTopMargin"
+        style="@style/Block.WithTopMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/lastEdit"
-        android:textAppearance="@style/TextAppearance.Small.Label" />
+        android:textAppearance="@style/TextAppearance.Body.Bold" />
 
     <TextView
         android:id="@+id/textViewShowLastEdit"
-        style="@style/DefaultPadding.Blocks.WithBottomMargin"
+        style="@style/Block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:textAppearance="@style/TextAppearance.Light"
+        tools:text="July 17, 21:48"
+        android:textAppearance="@style/TextAppearance.Body"
         android:textIsSelectable="true" />
 
 </merge>

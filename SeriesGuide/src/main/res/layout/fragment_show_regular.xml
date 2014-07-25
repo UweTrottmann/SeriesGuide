@@ -5,15 +5,17 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        style="@style/DefaultPadding.Page"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/large_padding"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="208dp"
-            android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginTop="@dimen/large_padding"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
             android:background="?attr/drawableCardBackground">
 
             <FrameLayout
@@ -78,8 +80,32 @@
 
         <include layout="@layout/ratingbar" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginBottom="@dimen/large_padding"
+            android:background="?attr/colorDivider" />
+
         <include layout="@layout/fragment_show_meta" />
 
-        <include layout="@layout/buttons_more" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginTop="@dimen/large_padding"
+            android:background="?attr/colorDivider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:orientation="vertical">
+
+            <include layout="@layout/buttons_more" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
