@@ -27,6 +27,7 @@
         style="@style/Block.WithTopMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
         tools:text="Cast"
         android:textAppearance="@style/TextAppearance.Body.Bold" />
 
