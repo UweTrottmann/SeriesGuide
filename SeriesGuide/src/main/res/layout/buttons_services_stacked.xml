@@ -2,10 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingTop="@dimen/default_padding">
+    android:paddingBottom="@dimen/large_padding"
+    android:orientation="vertical">
 
     <include layout="@layout/buttons_extensions" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/large_padding"
+        android:layout_marginLeft="@dimen/large_padding"
+        android:layout_marginRight="@dimen/large_padding"
+        android:background="?attr/colorDivider" />
 
     <include layout="@layout/buttons_more" />
 
