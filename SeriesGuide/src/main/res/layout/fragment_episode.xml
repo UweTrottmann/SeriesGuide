@@ -18,7 +18,7 @@
             android:layout_marginTop="12dp"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
-            tools:text="@string/app_name"
+            tools:text="Episode Title Of Episode"
             android:textAppearance="@style/TextAppearance.Headline"
             android:textIsSelectable="true" />
 
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/large_padding"
-            tools:text="@string/app_name"
+            tools:text="OCT 15, 2013 (TUE) ABSOLUTE 52"
             android:textAppearance="@style/TextAppearance.Caption"
             android:textIsSelectable="true" />
 
@@ -187,7 +187,6 @@
             style="@style/Block"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/large_padding"
             tools:text="July 17, 21:48"
             android:textAppearance="@style/TextAppearance.Body"
             android:textIsSelectable="true" />
@@ -197,6 +196,7 @@
             android:layout_height="1dp"
             android:layout_marginLeft="@dimen/large_padding"
             android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginTop="@dimen/large_padding"
             android:background="?attr/colorDivider" />
 
         <include
