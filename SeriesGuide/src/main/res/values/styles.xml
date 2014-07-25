@@ -151,6 +151,11 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="TextAppearance.Button">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
     <style name="TextAppearance.Body.Bold">
         <item name="android:textStyle">bold</item>
     </style>
@@ -165,6 +170,10 @@
 
     <style name="TextAppearance.Caption.Dim">
         <item name="android:textColor">?attr/textColorSgDim</item>
+    </style>
+
+    <style name="TextAppearance.Button.Highlight">
+        <item name="android:textColor">?attr/colorAccent</item>
     </style>
 
     <!-- Widget styles -->
