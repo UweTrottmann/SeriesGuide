@@ -7,7 +7,6 @@
 
     <LinearLayout
         android:id="@+id/containerEpisode"
-        style="@style/DefaultPadding.Page"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -16,17 +15,19 @@
             android:id="@+id/textViewEpisodeTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_padding"
-            android:layout_marginRight="@dimen/default_padding"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
             tools:text="@string/app_name"
             android:textAppearance="@style/TextAppearance.Headline"
             android:textIsSelectable="true" />
 
         <TextView
             android:id="@+id/textViewEpisodeReleaseTime"
-            style="@style/DefaultPadding.Blocks.WithBottomMargin"
+            style="@style/Block"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/large_padding"
             tools:text="@string/app_name"
             android:textAppearance="@style/TextAppearance.Caption"
             android:textIsSelectable="true" />
@@ -36,6 +37,9 @@
             android:id="@+id/containerEpisodeImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginBottom="@dimen/inline_padding"
             android:background="?attr/colorBackgroundDim"
             android:foreground="?attr/custom_list_selector"
             tools:ignore="Overdraw">
@@ -49,27 +53,45 @@
 
         </FrameLayout>
 
+        <include layout="@layout/buttons_episode" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="?attr/colorAccent" />
-
-        <include layout="@layout/buttons_episode" />
-
-        <include layout="@layout/ratingbar" />
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginBottom="@dimen/large_padding"
+            android:background="?attr/colorDivider" />
 
         <TextView
             android:id="@+id/textViewEpisodeDescription"
-            style="@style/DefaultPadding.Blocks.WithBottomMargin.FlowText"
+            style="@style/Block.FlowText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/large_padding"
             tools:text="This is a sample description of what happens in this episode. A lot."
             android:textAppearance="@style/TextAppearance.Body"
             android:textIsSelectable="true" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:background="?attr/colorDivider" />
+
+        <include layout="@layout/ratingbar" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:background="?attr/colorDivider" />
+
         <TextView
             android:id="@+id/labelEpisodeGuestStars"
-            style="@style/DefaultPadding.Blocks.WithTopMargin"
+            style="@style/Block.WithTopMargin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/episode_gueststars"
@@ -77,7 +99,7 @@
 
         <TextView
             android:id="@+id/textViewEpisodeGuestStars"
-            style="@style/DefaultPadding.Blocks.WithBottomMargin.FlowText"
+            style="@style/Block.FlowText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Daniel Craig, Jaimie Alexander, Kiefer Sutherland, Stephanie Leonidas"
@@ -86,7 +108,7 @@
 
         <TextView
             android:id="@+id/labelEpisodeDirectors"
-            style="@style/DefaultPadding.Blocks.WithTopMargin"
+            style="@style/Block.WithTopMargin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/episode_directors"
@@ -94,7 +116,7 @@
 
         <TextView
             android:id="@+id/textViewEpisodeDirectors"
-            style="@style/DefaultPadding.Blocks.WithBottomMargin.FlowText"
+            style="@style/Block.FlowText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Daniel Craig"
@@ -103,7 +125,7 @@
 
         <TextView
             android:id="@+id/labelEpisodeWriters"
-            style="@style/DefaultPadding.Blocks.WithTopMargin"
+            style="@style/Block.WithTopMargin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/episode_writers"
@@ -111,7 +133,7 @@
 
         <TextView
             android:id="@+id/textViewEpisodeWriters"
-            style="@style/DefaultPadding.Blocks.WithBottomMargin.FlowText"
+            style="@style/Block.FlowText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Daniel Craig, Jaimie Alexander"
@@ -120,7 +142,7 @@
 
         <TextView
             android:id="@+id/labelEpisodeDvd"
-            style="@style/DefaultPadding.Blocks.WithTopMargin"
+            style="@style/Block.WithTopMargin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/episode_dvdnumber"
@@ -128,7 +150,7 @@
 
         <TextView
             android:id="@+id/textViewEpisodeDvd"
-            style="@style/DefaultPadding.Blocks.WithBottomMargin"
+            style="@style/Block"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="42.0"
@@ -137,7 +159,7 @@
 
         <TextView
             android:id="@+id/labelEpisodeReleaseDay"
-            style="@style/DefaultPadding.Blocks.WithTopMargin"
+            style="@style/Block.WithTopMargin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/episode_firstaired"
@@ -145,7 +167,7 @@
 
         <TextView
             android:id="@+id/textViewEpisodeReleaseDay"
-            style="@style/DefaultPadding.Blocks.WithBottomMargin"
+            style="@style/Block"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="2014/07/25 CEST (Fri)"
@@ -154,7 +176,7 @@
 
         <TextView
             android:id="@+id/labelEpisodeLastEdit"
-            style="@style/DefaultPadding.Blocks.WithTopMargin"
+            style="@style/Block.WithTopMargin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lastEdit"
@@ -162,9 +184,10 @@
 
         <TextView
             android:id="@+id/textViewEpisodeLastEdit"
-            style="@style/DefaultPadding.Blocks.WithBottomMargin"
+            style="@style/Block"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/large_padding"
             tools:text="July 17, 21:48"
             android:textAppearance="@style/TextAppearance.Body"
             android:textIsSelectable="true" />
