@@ -106,7 +106,6 @@ public class OverviewFragment extends Fragment implements
     private String mShowTitle;
 
     private View mContainerShow;
-    private View mSpacerShow;
     private View mContainerEpisode;
     private LinearLayout mContainerActions;
     private ImageView mBackgroundImage;
@@ -143,7 +142,6 @@ public class OverviewFragment extends Fragment implements
             }
         });
         mContainerShow = v.findViewById(R.id.containerOverviewShow);
-        mSpacerShow = v.findViewById(R.id.spacerOverviewShow);
         mContainerEpisode = v.findViewById(R.id.containerOverviewEpisode);
         mContainerEpisode.setVisibility(View.GONE);
         mContainerActions = (LinearLayout) v.findViewById(R.id.containerEpisodeActions);
@@ -166,7 +164,6 @@ public class OverviewFragment extends Fragment implements
 
         // do not display show info header in multi pane layout
         mContainerShow.setVisibility(multiPane ? View.GONE : View.VISIBLE);
-        mSpacerShow.setVisibility(multiPane ? View.VISIBLE : View.GONE);
 
         getLoaderManager().initLoader(SHOW_LOADER_ID, null, this);
         getLoaderManager().initLoader(EPISODE_LOADER_ID, null, this);
