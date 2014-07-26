@@ -120,15 +120,15 @@ public class SeasonsAdapter extends CursorAdapter {
             }
 
             viewHolder.seasonWatchCount.setTextAppearance(mContext,
-                    R.style.TextAppearance_XSmall_Dim_Condensed);
+                    R.style.TextAppearance_Caption_Narrow_Dim);
         } else if (count == 1) {
             episodeCount += count + " " + mContext.getString(R.string.season_onenotwatched);
             viewHolder.seasonWatchCount.setTextAppearance(mContext,
-                    R.style.TextAppearance_XSmall_Condensed);
+                    R.style.TextAppearance_Caption_Narrow);
         } else {
             episodeCount += count + " " + mContext.getString(R.string.season_watchcount);
             viewHolder.seasonWatchCount.setTextAppearance(mContext,
-                    R.style.TextAppearance_XSmall_Condensed);
+                    R.style.TextAppearance_Caption_Narrow);
         }
 
         // add strings for unaired episodes

@@ -155,6 +155,14 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="TextAppearance.Subhead.Dim">
+        <item name="android:textColor">?attr/textColorSgDim</item>
+    </style>
+
+    <style name="TextAppearance.Subhead.Narrow">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
+    </style>
+
     <style name="TextAppearance.Body.Bold">
         <item name="android:textStyle">bold</item>
     </style>
@@ -168,6 +176,14 @@
     </style>
 
     <style name="TextAppearance.Caption.Dim">
+        <item name="android:textColor">?attr/textColorSgDim</item>
+    </style>
+
+    <style name="TextAppearance.Caption.Narrow">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
+    </style>
+
+    <style name="TextAppearance.Caption.Narrow.Dim">
         <item name="android:textColor">?attr/textColorSgDim</item>
     </style>
 
