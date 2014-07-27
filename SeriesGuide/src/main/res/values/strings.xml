@@ -278,6 +278,7 @@
     <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
 
     <!-- Hexagon -->
+    <string name="hexagon_warning">Experimental!</string>
     <string name="hexagon_setup">Set up SeriesGuide cloud</string>
     <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
     <string name="hexagon_warning_lists">Lists are not included.</string>
