@@ -19,8 +19,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginRight="@dimen/default_padding"
             android:contentDescription="@string/description_poster"
-            android:scaleType="centerCrop"
-            android:src="@drawable/appwidget_bg" />
+            android:scaleType="centerInside" />
 
         <TextView
             android:id="@+id/textViewUpcomingShow"

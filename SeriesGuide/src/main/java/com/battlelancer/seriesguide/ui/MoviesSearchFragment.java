@@ -19,6 +19,8 @@ package com.battlelancer.seriesguide.ui;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
@@ -173,7 +175,12 @@ public class MoviesSearchFragment extends Fragment implements OnEditorActionList
         // launch details activity
         Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
         i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, movie.id);
-        startActivity(i);
+
+        ActivityCompat.startActivity(getActivity(), i,
+                ActivityOptionsCompat
+                        .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                        .toBundle()
+        );
     }
 
     private void fireTrackerEvent(String label) {

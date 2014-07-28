@@ -21,11 +21,11 @@
   <string name="description_overview">Overzicht</string>
   <string name="description_poster">Affiche weergeven</string>
   <string name="description_image">Afleveringsafbeelding</string>
-  <string name="done">Gereed</string>
   <string name="clear">Wissen</string>
   <string name="discard">Negeren</string>
   <string name="save_selection">Selectie bewaren</string>
   <string name="search_hint">Afleveringen zoeken</string>
+  <string name="action_display_all">Toon alles</string>
   <string name="updated">Nieuwste versie is geïnstaleerd.</string>
   <string name="norating">n.v.t.</string>
   <string name="unknown">onbekend</string>
@@ -34,6 +34,7 @@
   <string name="app_not_available">Geen app beschikbaar voor deze actie.</string>
   <string name="onlyx">Enkel beschikbaar met X-abonnement</string>
   <string name="add_empty">Er zijn geen series hier.</string>
+  <string name="people_empty">Niemand?! Probeer opnieuw.</string>
   <string name="share_show">Serie delen</string>
   <string name="share_episode">Aflevering delen</string>
   <string name="share_movie">Film delen</string>
@@ -57,14 +58,18 @@
   <string name="trailer">Trailer</string>
   <string name="movie_cast">Cast</string>
   <string name="movie_crew">Filmploeg</string>
-  <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">Sorteer films</string>
   <string name="action_movies_sort_title">Titel</string>
   <string name="action_movies_sort_release">Releasedatum</string>
+  <string name="statistics_shows">Series</string>
+  <string name="statistics_episodes">Afleveringen</string>
+  <string name="statistics_movies">Films</string>
   <string name="shows_with_next">%s met de volgende afleveringen</string>
   <string name="shows_continuing">%s lopende</string>
   <string name="episodes_watched">%s bekeken</string>
   <string name="runtime_all_episodes">Speelduur van alle bekeken afleveringen</string>
+  <string name="movies_on_watchlist">%s op watchlist</string>
+  <string name="runtime_movies_watchlist">Looptijd van films op de watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d dag</item>
     <item quantity="zero">%d dagen</item>
@@ -91,7 +96,7 @@
   </plurals>
   <string name="your_rating">Uw beoordeling</string>
   <string name="love">Zeer goed!</string>
-  <string name="hate">Zwak</string>
+  <string name="hate">Slappe hap :(</string>
   <string name="rating2">Verschrikkelijk</string>
   <string name="rating3">Slecht</string>
   <string name="rating4">Zwak</string>
@@ -201,9 +206,6 @@
   <string name="update_scheduled">Bijwerken…</string>
   <string name="update_no_connection">Verbindt met het internet om bij te werken.</string>
   <string name="update_inprogress">Er wordt een update uitgevoerd, probeer het later opnieuw.</string>
-  <string name="menu_updateart">Affiches laden</string>
-  <string name="arttask_incomplete">Sommige affiches zijn niet geladen, probeer het later opnieuw.</string>
-  <string name="arttask_start">Affiches laden…</string>
   <string name="show_on_network">op %s</string>
   <string name="season_watchcount">Niet bekeken afleveringen</string>
   <string name="season_allwatched">Alle afleveringen bekeken</string>
@@ -232,17 +234,20 @@
   <string name="list_item_manage">Lijsten beheren</string>
   <string name="list_item_remove">Verwijderen uit lijst</string>
   <string name="list_empty">U kunt series, seizoenen of afleveringen toevoegen aan deze lijst.</string>
+  <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">SeriesGuide Cloud instellen</string>
-  <string name="hexagon_description">Maak verbinding met de cloud om uw series te synchroniseren. Afleveringen en films zijn nog niet inbegrepen, blijf daarvoor a.u.b. trakt.tv integratie gebruiken.</string>
+  <string name="hexagon_description">Maak verbinding met de cloud zodat je een backup kunt maken van je series en films.</string>
+  <string name="hexagon_warning_lists">Exclusief lijsten.</string>
+  <string name="hexagon_warning_trakt">Als je SeriesGuide cloud gebruikt, worden aanpassingen in trakt niet terug gesynchroniseerd met SeriesGuide.</string>
   <string name="hexagon_signin">Log in</string>
   <string name="hexagon_signed_in">U bent verbonden met de SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Uitloggen</string>
   <string name="hexagon_setup_incomplete">SeriesGuide cloud instellen is niet afgerond.</string>
-  <string name="hexagon_setup_complete">Instellen voltooid</string>
-  <string name="hexagon_priority_choice_required">Enkele van uw series staan al in de cloud. Welke versie heeft uw voorkeur?</string>
-  <string name="hexagon_priority_local">Op dit apparaat</string>
-  <string name="hexagon_priority_cloud">In de cloud</string>
-  <string name="hexagon_priority_select">Versie selecteren</string>
+  <string name="hexagon_setup_fail_auth">Je Google account is niet verbonden.</string>
+  <string name="hexagon_remove_account">Verwijder account</string>
+  <string name="hexagon_remove_account_success">Account vernietigd.</string>
+  <string name="hexagon_remove_account_failure">Kan de account niet verwijderen.</string>
+  <string name="hexagon_remove_account_confirmation">Uw account verwijderen zorgt er voor dat alle series en films van SeriesGuide cloud worden verwijderd. Vergeet niet om andere gekoppelde apparaten ook te wissen.</string>
   <string name="connect_trakt">Verbinden met trakt</string>
   <string name="connect_trakt_done">Verbonden met trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide zal nu de shows en films op dit apparaat synchroniseren met Trakt. Dit kan enige tijd duren.</string>
@@ -308,8 +313,6 @@
   <string name="clear_cache">Afbeeldingenbuffer wissen</string>
   <string name="clear_cache_summary">Alle gebufferde afbeeldingen van het apparaat verwijderen</string>
   <string name="pref_ganalyticssummary">Het gebruik van functies volgen om SeriesGuide te helpen te verbeteren</string>
-  <string name="pref_hideimages">Afbeeldingen verbergen</string>
-  <string name="pref_hideimagessummary">Afbeeldingen voor de fotogalerij verbergen (opnieuw opstarten vereist)</string>
   <string name="backup_description"><b>Back-up</b> zal uw series, seizoenen, afleveringen en lijsten naar een JSON-bestand exporteren in de onderstaande map. \nOm te <b>herstellen</b> zorg ervoor dat de JSON-bestanden die door back-up gecreëerd zijn zich in de map hieronder bevinden.</string>
   <string name="backup_full_dump">Inclusief alle metadata zoals beschrijvingen, acteurs en beoordelingen.</string>
   <string name="backup_path">Back-upmap</string>
@@ -452,4 +455,5 @@
   <string name="extension_youtube">Zoek op YouTube</string>
   <string name="description_extension_youtube">Zoek op YouTube voor video\'s</string>
   <string name="description_extension_web_search">Zoek naar websites en afbeeldingen</string>
+  <string name="person_biography">Biografie</string>
 </resources>

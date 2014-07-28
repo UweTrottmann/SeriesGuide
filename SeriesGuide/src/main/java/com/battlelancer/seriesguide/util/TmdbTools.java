@@ -19,12 +19,33 @@ package com.battlelancer.seriesguide.util;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import com.battlelancer.seriesguide.settings.TmdbSettings;
 import java.text.DecimalFormat;
 
 public class TmdbTools {
 
+    public enum ProfileImageSize {
+
+        W45("w45"),
+        W185("w185"),
+        H632("h632"),
+        ORIGINAL("original");
+
+        private final String value;
+
+        private ProfileImageSize(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return value;
+        }
+    }
+
     private static final String BASE_URL = "https://www.themoviedb.org/";
     private static final String PATH_MOVIES = "movie/";
+    private static final String PATH_PERSON = "person/";
 
     private static DecimalFormat RATING_FORMAT = new DecimalFormat("0.0");
 
@@ -32,9 +53,22 @@ public class TmdbTools {
         return value == null ? "-.-" : RATING_FORMAT.format(value);
     }
 
-    public static void openTmdb(Context context, int movieTmdbId, final String logTag) {
-        Intent intent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse(buildMovieUrl(movieTmdbId)));
+    /**
+     * Tries to display the TMDb website of the given movie through a view intent.
+     */
+    public static void openTmdbMovie(Context context, int movieTmdbId, String logTag) {
+        openTmdbUrl(context, buildMovieUrl(movieTmdbId), logTag);
+    }
+
+    /**
+     * Tries to display the TMDb website of the given person through a view intent.
+     */
+    public static void openTmdbPerson(Context context, int personTmdbId, String logTag) {
+        openTmdbUrl(context, buildPersonUrl(personTmdbId), logTag);
+    }
+
+    private static void openTmdbUrl(Context context, String url, String logTag) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
 
@@ -43,5 +77,17 @@ public class TmdbTools {
 
     private static String buildMovieUrl(int movieTmdbId) {
         return BASE_URL + PATH_MOVIES + movieTmdbId;
+    }
+
+    private static String buildPersonUrl(int personTmdbId) {
+        return BASE_URL + PATH_PERSON + personTmdbId;
+    }
+
+    /**
+     * Build url to a profile image using the given size spec and current TMDb image url (see
+     * {@link com.battlelancer.seriesguide.settings.TmdbSettings#getImageBaseUrl(android.content.Context)}.
+     */
+    public static String buildProfileImageUrl(Context context, String path, ProfileImageSize size) {
+        return TmdbSettings.getImageBaseUrl(context) + size + path;
     }
 }

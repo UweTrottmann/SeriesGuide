@@ -19,6 +19,8 @@ package com.battlelancer.seriesguide.ui.streams;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.format.DateUtils;
@@ -97,7 +99,12 @@ public class FriendsMovieStreamFragment extends StreamFragment {
         // display movie details
         Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
         i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, activity.movie.tmdbId);
-        startActivity(i);
+
+        ActivityCompat.startActivity(getActivity(), i,
+                ActivityOptionsCompat
+                        .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                        .toBundle()
+        );
     }
 
     private LoaderManager.LoaderCallbacks<List<ActivityItem>> mActivityLoaderCallbacks =
@@ -139,7 +146,8 @@ public class FriendsMovieStreamFragment extends StreamFragment {
                 Activity activity = activityService.friends(ActivityType.Movie.toString(),
                         ActivityAction.Watching + ","
                                 + ActivityAction.Checkin + ","
-                                + ActivityAction.Scrobble,
+                                + ActivityAction.Scrobble + ","
+                                + ActivityAction.Seen,
                         (System.currentTimeMillis() - 4 * DateUtils.WEEK_IN_MILLIS) / 1000,
                         null,
                         null

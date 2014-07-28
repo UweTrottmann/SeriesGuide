@@ -20,11 +20,13 @@ package com.battlelancer.seriesguide.ui;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -39,7 +41,6 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.view.KeyEvent;
 import android.view.MenuItem;
-import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
@@ -51,7 +52,6 @@ import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -88,8 +88,6 @@ public class SeriesGuidePreferences extends PreferenceActivity implements
     public static final String KEY_DATABASEIMPORTED = "com.battlelancer.seriesguide.dbimported";
 
     public static final String KEY_SECURE = "com.battlelancer.seriesguide.secure";
-
-    public static final String KEY_HIDEIMAGES = "hideimages";
 
     public static final String SUPPORT_MAIL = "support@seriesgui.de";
 
@@ -313,10 +311,19 @@ public class SeriesGuidePreferences extends PreferenceActivity implements
             public boolean onPreferenceClick(Preference preference) {
                 fireTrackerEvent(context, "Clear Image Cache");
 
-                ImageProvider.getInstance(context).clearCache();
-                ImageProvider.getInstance(context).clearExternalStorageCache();
-                Toast.makeText(context, context.getString(R.string.done), Toast.LENGTH_SHORT)
-                        .show();
+                // try to open app info where user can clear app cache folders
+                Intent intent = new Intent(
+                        android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                intent.setData(Uri.parse("package:" + context.getPackageName()));
+                try {
+                    context.startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    // open all apps view
+                    intent = new Intent(
+                            android.provider.Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
+                    context.startActivity(intent);
+                }
+
                 return true;
             }
         });
@@ -376,18 +383,6 @@ public class SeriesGuidePreferences extends PreferenceActivity implements
                 .getDefaultSharedPreferences(getApplicationContext());
         prefs.unregisterOnSharedPreferenceChangeListener(this);
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
-    }
-
-    @Override
-    public boolean onKeyLongPress(int keyCode, KeyEvent event) {
-        // always navigate back to the home activity
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            NavUtils.navigateUpTo(this,
-                    new Intent(Intent.ACTION_MAIN).setClass(this, ShowsActivity.class));
-            overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
-            return true;
-        }
-        return false;
     }
 
     @Override

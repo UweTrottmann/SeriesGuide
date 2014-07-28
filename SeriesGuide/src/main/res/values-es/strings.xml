@@ -21,11 +21,11 @@
   <string name="description_overview">Reseña</string>
   <string name="description_poster">Mostrar el poster</string>
   <string name="description_image">Imagen del episodio</string>
-  <string name="done">Hecho</string>
   <string name="clear">Limpiar</string>
   <string name="discard">Descartar</string>
   <string name="save_selection">Guardar selección</string>
   <string name="search_hint">Buscar episodios</string>
+  <string name="action_display_all">Show all</string>
   <string name="updated">Actualizado a la última versión.</string>
   <string name="norating">n/a</string>
   <string name="unknown">desconocido</string>
@@ -34,6 +34,7 @@
   <string name="app_not_available">Ninguna aplicación disponible para manejar esto.</string>
   <string name="onlyx">Sólo disponible con la suscripción X</string>
   <string name="add_empty">No hay series.</string>
+  <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="share_show">Compartir serie</string>
   <string name="share_episode">Compartir episodio</string>
   <string name="share_movie">Compartir película</string>
@@ -57,14 +58,18 @@
   <string name="trailer">Trailer</string>
   <string name="movie_cast">Reparto</string>
   <string name="movie_crew">Equipo técnico</string>
-  <string name="movie_person_in_role">%1$s (%2$s)</string>
   <string name="action_movies_sort">Corto</string>
   <string name="action_movies_sort_title">Título</string>
   <string name="action_movies_sort_release">Fecha de estreno</string>
+  <string name="statistics_shows">Series</string>
+  <string name="statistics_episodes">Episodios</string>
+  <string name="statistics_movies">Películas</string>
   <string name="shows_with_next">%s con nuevos episodios</string>
   <string name="shows_continuing">%s continuando</string>
   <string name="episodes_watched">%s vistos</string>
   <string name="runtime_all_episodes">Duración de todos los episodios vistos</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d día</item>
     <item quantity="zero">%d dias</item>
@@ -167,7 +172,7 @@
   <string name="favorited">Agregado a Favoritos</string>
   <string name="unfavorited">Borrado de los favoritos</string>
   <string name="context_hide">Oculto</string>
-  <string name="context_unhide">Des-esconder</string>
+  <string name="context_unhide">Mostrar</string>
   <string name="hidden">Serie oculta</string>
   <string name="unhidden">Mostrar serie</string>
   <string name="action_shows_add">Añadir serie</string>
@@ -186,7 +191,7 @@
   <string name="context_updateshow">Actualizar</string>
   <string name="context_marknext">Siguiente episodio visto</string>
   <string name="upcoming">Próximos</string>
-  <string name="recent">Reciente</string>
+  <string name="recent">Recientes</string>
   <string name="friends">Amigos</string>
   <string name="friends_empty">No hay actividad de amigos en trakt.</string>
   <string name="user_stream">Tú</string>
@@ -201,9 +206,6 @@
   <string name="update_scheduled">Actualizando…</string>
   <string name="update_no_connection">Para actualizar conéctese a internet.</string>
   <string name="update_inprogress">Una actualización está en curso, intente de nuevo más tarde.</string>
-  <string name="menu_updateart">Cargar imágenes</string>
-  <string name="arttask_incomplete">Algunos posters no cargan, inténtalo más tarde.</string>
-  <string name="arttask_start">Cargando imágenes…</string>
   <string name="show_on_network">en %s</string>
   <string name="season_watchcount">episodios no vistos</string>
   <string name="season_allwatched">Todos los episodios vistos</string>
@@ -232,17 +234,20 @@
   <string name="list_item_manage">Gestionar listas</string>
   <string name="list_item_remove">Eliminar de la lista</string>
   <string name="list_empty">Puedes agregar series, temporadas o episodios a la lista.</string>
+  <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configurar SeriesGuide cloud</string>
-  <string name="hexagon_description">Conéctate a la nube para guardar y sincronizar tus series.\nLos episodios y las películas aun no están incluidos, continua usando trakt.tv para ello.</string>
+  <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
+  <string name="hexagon_warning_lists">Lists are not included.</string>
+  <string name="hexagon_warning_trakt">When using SeriesGuide cloud, changes on trakt will not sync down to SeriesGuide.</string>
   <string name="hexagon_signin">Iniciar sesión</string>
   <string name="hexagon_signed_in">Estás conectado a SeriesGuide cloud.</string>
   <string name="hexagon_signout">Cerrar sesión</string>
   <string name="hexagon_setup_incomplete">La configuración de SeriesGuide cloud no se completó.</string>
-  <string name="hexagon_setup_complete">Configuración completada</string>
-  <string name="hexagon_priority_choice_required">Algunas de tus series ya están en la nube. ¿Qué versión prefieres?</string>
-  <string name="hexagon_priority_local">En este dispositivo</string>
-  <string name="hexagon_priority_cloud">En la nube</string>
-  <string name="hexagon_priority_select">Seleccionar versión</string>
+  <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
+  <string name="hexagon_remove_account">Remove account</string>
+  <string name="hexagon_remove_account_success">Account obliterated.</string>
+  <string name="hexagon_remove_account_failure">Could not remove account.</string>
+  <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide cloud. Make sure to remove it on other connected devices as well.</string>
   <string name="connect_trakt">Conectar a trakt</string>
   <string name="connect_trakt_done">¡Conectado a trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide va a sincronizar las series y películas de este dispositivo con trakt. Esto puede demorar un poco.</string>
@@ -308,8 +313,6 @@
   <string name="clear_cache">Limpiar el caché de imágenes</string>
   <string name="clear_cache_summary">Quitar todas las imágenes en la memoria caché del dispositivo</string>
   <string name="pref_ganalyticssummary">Hacer un seguimiento del uso para ayudar a mejorar Series Guide</string>
-  <string name="pref_hideimages">Ocultar imágenes</string>
-  <string name="pref_hideimagessummary">Ocultar imágenes a la Galería de fotografías (se requiere reiniciar)</string>
   <string name="backup_description">El <b>respaldo</b> exportará tus programas, temporadas, episodios y listas a un archivo JSON en la carpeta de abajo.\nPara <b>restaurar</b> asegúrate de que el archivo JSON creado por el respaldo está en la carpeta de abajo.</string>
   <string name="backup_full_dump">Incluir todos los metadatos como descripciones, actores y calificaciones.</string>
   <string name="backup_path">Carpeta de respaldo</string>
@@ -388,7 +391,7 @@
     <item>en directo</item>
     <item>5 min antes</item>
     <item>10 min antes</item>
-    <item>una hora antes</item>
+    <item>1 hora antes</item>
   </string-array>
   <string name="smallwidget">SeriesGuide (pequeño)</string>
   <string name="bigwidget">SeriesGuide (mediano)</string>
@@ -452,4 +455,5 @@
   <string name="extension_youtube">Búsqueda en YouTube</string>
   <string name="description_extension_youtube">Buscar vídeos en YouTube</string>
   <string name="description_extension_web_search">Buscar imágenes y sitios web</string>
+  <string name="person_biography">Biography</string>
 </resources>

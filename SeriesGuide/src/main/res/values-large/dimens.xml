@@ -2,5 +2,6 @@
 <resources>
 
     <dimen name="item_padding">4dp</dimen>
+    <dimen name="tab_padding_horizontal">24dp</dimen>
 
 </resources>

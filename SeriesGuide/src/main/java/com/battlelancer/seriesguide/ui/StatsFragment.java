@@ -31,7 +31,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -44,12 +47,46 @@ import java.util.Locale;
  */
 public class StatsFragment extends Fragment {
 
+    @InjectView(R.id.textViewStatsShows) TextView mShowCount;
+    @InjectView(R.id.textViewStatsShowsWithNext) TextView mShowsWithNextEpisode;
+    @InjectView(R.id.progressBarStatsShowsWithNext) ProgressBar mProgressShowsWithNextEpisode;
+    @InjectView(R.id.textViewStatsShowsContinuing) TextView mShowsContinuing;
+    @InjectView(R.id.progressBarStatsShowsContinuing) ProgressBar mProgressShowsContinuing;
+
+    @InjectView(R.id.textViewStatsEpisodes) TextView mEpisodeCount;
+    @InjectView(R.id.textViewStatsEpisodesWatched) TextView mEpisodesWatched;
+    @InjectView(R.id.progressBarStatsEpisodesWatched) ProgressBar mProgressEpisodesWatched;
+    @InjectView(R.id.textViewStatsEpisodesRuntime) TextView mEpisodesRuntime;
+    @InjectView(R.id.progressBarStatsEpisodesRuntime) ProgressBar mProgressEpisodesRuntime;
+
+    @InjectView(R.id.textViewStatsMovies) TextView mMovieCount;
+    @InjectView(R.id.textViewStatsMoviesWatchlist) TextView mMoviesWatchlist;
+    @InjectView(R.id.progressBarStatsMoviesWatchlist) ProgressBar mProgressMoviesWatchlist;
+    @InjectView(R.id.textViewStatsMoviesWatchlistRuntime) TextView mMoviesWatchlistRuntime;
+
     private AsyncTask<Void, Stats, Stats> mStatsTask;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.stats_fragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_stats, container, false);
+        ButterKnife.inject(this, v);
+
+        // set some views invisible so they can be animated in once stats are computed
+        mShowsWithNextEpisode.setVisibility(View.INVISIBLE);
+        mProgressShowsWithNextEpisode.setVisibility(View.INVISIBLE);
+        mShowsContinuing.setVisibility(View.INVISIBLE);
+        mProgressShowsContinuing.setVisibility(View.INVISIBLE);
+
+        mEpisodesWatched.setVisibility(View.INVISIBLE);
+        mProgressEpisodesWatched.setVisibility(View.INVISIBLE);
+        mEpisodesRuntime.setVisibility(View.INVISIBLE);
+
+        mMoviesWatchlist.setVisibility(View.INVISIBLE);
+        mProgressMoviesWatchlist.setVisibility(View.INVISIBLE);
+        mMoviesWatchlistRuntime.setVisibility(View.INVISIBLE);
+
+        return v;
     }
 
     @Override
@@ -67,10 +104,17 @@ public class StatsFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onStop() {
+        super.onStop();
 
         cleanupStatsTask();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        ButterKnife.reset(this);
     }
 
     @Override
@@ -116,6 +160,33 @@ public class StatsFragment extends Fragment {
             ContentResolver resolver = getActivity().getContentResolver();
 
             // number of...
+            // ...movies (count, in watchlist, runtime of watchlist)
+            final Cursor movies = resolver.query(SeriesGuideContract.Movies.CONTENT_URI,
+                    new String[] { SeriesGuideContract.Movies._ID,
+                            SeriesGuideContract.Movies.IN_WATCHLIST,
+                            SeriesGuideContract.Movies.RUNTIME_MIN }, null, null, null
+            );
+            if (movies != null) {
+                stats.movies = movies.getCount();
+
+                int inWatchlist = 0;
+                long watchlistRuntime = 0;
+                while (movies.moveToNext()) {
+                    if (movies.getInt(1) == 1) {
+                        inWatchlist++;
+                        watchlistRuntime += movies.getInt(2) * DateUtils.MINUTE_IN_MILLIS;
+                    }
+                }
+                movies.close();
+
+                stats.moviesWatchlist = inWatchlist;
+                stats.moviesWatchlistRuntime = watchlistRuntime;
+            }
+
+            if (isCancelled()) {
+                return stats;
+            }
+
             // ...all shows
             final Cursor shows = resolver.query(Shows.CONTENT_URI,
                     new String[] {
@@ -162,6 +233,11 @@ public class StatsFragment extends Fragment {
                     episodesWatched.close();
                 }
 
+                if (isCancelled()) {
+                    shows.close();
+                    return stats;
+                }
+
                 // report intermediate results before longer running op
                 publishProgress(stats);
 
@@ -199,65 +275,65 @@ public class StatsFragment extends Fragment {
                 Stats stats = values[0];
 
                 // all shows
-                ((TextView) getView().findViewById(R.id.textViewShows)).setText(
-                        String.valueOf(stats.shows()));
+                mShowCount.setText(String.valueOf(stats.shows()));
 
                 // shows with next episodes
-                ProgressBar progressShowsWithNext = (ProgressBar) findAndShowView(
-                        R.id.progressBarShowsWithNext);
-                progressShowsWithNext.setMax(stats.shows());
-                progressShowsWithNext.setProgress(stats.showsWithNextEpisodes());
+                mProgressShowsWithNextEpisode.setMax(stats.shows());
+                mProgressShowsWithNextEpisode.setProgress(stats.showsWithNextEpisodes());
+                mProgressShowsWithNextEpisode.setVisibility(View.VISIBLE);
 
-                ((TextView) findAndShowView(R.id.textViewShowsWithNext)).setText(getString(
-                        R.string.shows_with_next,
+                mShowsWithNextEpisode.setText(getString(R.string.shows_with_next,
                         stats.showsWithNextEpisodes()).toUpperCase(Locale.getDefault()));
+                mShowsWithNextEpisode.setVisibility(View.VISIBLE);
 
                 // continuing shows
-                ProgressBar progressShowsContinuing = (ProgressBar) findAndShowView(
-                        R.id.progressBarShowsContinuing);
-                progressShowsContinuing.setMax(stats.shows());
-                progressShowsContinuing.setProgress(stats.showsContinuing());
+                mProgressShowsContinuing.setMax(stats.shows());
+                mProgressShowsContinuing.setProgress(stats.showsContinuing());
+                mProgressShowsContinuing.setVisibility(View.VISIBLE);
 
-                ((TextView) findAndShowView(R.id.textViewShowsContinuing)).setText(getString(
-                        R.string.shows_continuing,
+                mShowsContinuing.setText(getString(R.string.shows_continuing,
                         stats.showsContinuing()).toUpperCase(Locale.getDefault()));
+                mShowsContinuing.setVisibility(View.VISIBLE);
 
                 // all episodes
-                ((TextView) getView().findViewById(R.id.textViewEpisodes)).setText(
-                        String.valueOf(stats.episodes()));
+                mEpisodeCount.setText(String.valueOf(stats.episodes()));
 
                 // watched episodes
-                ProgressBar progressEpisodesWatched = (ProgressBar) findAndShowView(
-                        R.id.progressBarEpisodesWatched);
-                progressEpisodesWatched.setMax(stats.episodes());
-                progressEpisodesWatched.setProgress(stats.episodesWatched());
+                mProgressEpisodesWatched.setMax(stats.episodes());
+                mProgressEpisodesWatched.setProgress(stats.episodesWatched());
+                mProgressEpisodesWatched.setVisibility(View.VISIBLE);
 
-                ((TextView) findAndShowView(R.id.textViewEpisodesWatched)).setText(getString(
-                        R.string.episodes_watched,
+                mEpisodesWatched.setText(getString(R.string.episodes_watched,
                         stats.episodesWatched()).toUpperCase(Locale.getDefault()));
-            }
-        }
+                mEpisodesWatched.setVisibility(View.VISIBLE);
 
-        private View findAndShowView(int viewResId) {
-            View v = getView().findViewById(viewResId);
-            if (v.getVisibility() != View.VISIBLE) {
-                v.setVisibility(View.VISIBLE);
+                // movies
+                mMovieCount.setText(String.valueOf(stats.movies));
+
+                // movies in watchlist
+                mProgressMoviesWatchlist.setMax(stats.movies);
+                mProgressMoviesWatchlist.setProgress(stats.moviesWatchlist);
+                mProgressMoviesWatchlist.setVisibility(View.VISIBLE);
+
+                mMoviesWatchlist.setText(getString(R.string.movies_on_watchlist,
+                        stats.moviesWatchlist).toUpperCase(Locale.getDefault()));
+                mMoviesWatchlist.setVisibility(View.VISIBLE);
+
+                // runtime of movie watchlist
+                mMoviesWatchlistRuntime.setText(getTimeDuration(stats.moviesWatchlistRuntime));
+                mMoviesWatchlistRuntime.setVisibility(View.VISIBLE);
             }
-            return v;
         }
 
         @Override
         protected void onPostExecute(Stats stats) {
             if (isAdded()) {
-                View progress = getView().findViewById(R.id.progressEpisodesRuntime);
-                if (progress.getVisibility() == View.VISIBLE) {
-                    progress.setVisibility(View.GONE);
-                }
+                mProgressEpisodesRuntime.setVisibility(View.GONE);
 
                 // runtime
                 String watchedDuration = getTimeDuration(stats.episodesWatchedRuntime());
-                ((TextView) getView().findViewById(R.id.textViewEpisodesRuntime))
-                        .setText(watchedDuration);
+                mEpisodesRuntime.setText(watchedDuration);
+                mEpisodesRuntime.setVisibility(View.VISIBLE);
             }
         }
 
@@ -300,6 +376,9 @@ public class StatsFragment extends Fragment {
         private int mEpisodes;
         private int mEpisodesWatched;
         private long mEpisodesWatchedRuntime;
+        public int movies;
+        public int moviesWatchlist;
+        public long moviesWatchlistRuntime;
 
         public int shows() {
             return mShows;

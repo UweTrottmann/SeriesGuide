@@ -117,11 +117,6 @@
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.CheckinActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
-        </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.ListsActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
@@ -205,6 +200,8 @@
         <activity
             android:name="com.battlelancer.seriesguide.ui.FullscreenImageActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity android:name="com.battlelancer.seriesguide.ui.PeopleActivity" />
+        <activity android:name="com.battlelancer.seriesguide.ui.PersonActivity" />
 
         <!-- Services -->
         <service android:name="com.battlelancer.seriesguide.service.TraktFlagService" >
@@ -264,41 +261,6 @@
         <service
             android:name="com.battlelancer.seriesguide.appwidget.AppWidget$UpdateService"
             android:enabled="@bool/isIceCreamSandwichOrLower" >
-        </service>
-
-        <receiver
-            android:name="com.battlelancer.seriesguide.appwidget.AppWidgetBig"
-            android:enabled="@bool/isGingerbreadOrLower"
-            android:label="@string/bigwidget" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/appwidget_big_info" />
-        </receiver>
-        <service
-            android:name="com.battlelancer.seriesguide.appwidget.AppWidgetBig$UpdateServiceBig"
-            android:enabled="@bool/isGingerbreadOrLower" >
-        </service>
-
-        <receiver
-            android:name="com.battlelancer.seriesguide.appwidget.AppWidgetLarge"
-            android:enabled="@bool/isGingerbreadOrLower"
-            android:label="@string/largewidget" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/appwidget_large_info" />
-        </receiver>
-
-        <service
-            android:name="com.battlelancer.seriesguide.appwidget.AppWidgetLarge$UpdateServiceLarge"
-            android:enabled="@bool/isGingerbreadOrLower" >
         </service>
 
         <!-- DashClock Extension -->

@@ -73,7 +73,7 @@ public class TraktAddFragment extends AddFragment {
         // if (container == null) {
         // return null;
         // }
-        return inflater.inflate(R.layout.traktaddfragment, container, false);
+        return inflater.inflate(R.layout.fragment_addshow_trakt, container, false);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class TraktAddFragment extends AddFragment {
         if (mAdapter == null) {
             mContentContainer.setVisibility(View.GONE);
             mProgressIndicator.setVisibility(View.VISIBLE);
-            mAdapter = new AddAdapter(getActivity(), R.layout.add_searchresult,
+            mAdapter = new AddAdapter(getActivity(), R.layout.item_addshow,
                     new ArrayList<SearchResult>(), mDetailsButtonListener);
 
             AndroidUtils.executeOnPool(new GetTraktShowsTask(getActivity()), type);
@@ -151,7 +151,7 @@ public class TraktAddFragment extends AddFragment {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_add_all) {
             if (mSearchResults != null) {
-                TaskManager.getInstance(getActivity()).performAddTask(mSearchResults, false);
+                TaskManager.getInstance(getActivity()).performAddTask(mSearchResults, false, false);
             }
             // disable the item so the user has to come back
             item.setEnabled(false);

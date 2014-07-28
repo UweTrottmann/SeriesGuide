@@ -60,7 +60,7 @@ ossrhPassword=sonatypePassword
 </manifest>
 ```
 
-Now build any variant of the free flavor (flavor + debug build type, see [instructions about product flavors][5]) defined in `SeriesGuide/build.gradle`.
+Now build any variant of the free flavor (flavor + build type, see [instructions about product flavors][5]) defined in `SeriesGuide/build.gradle`.
 
  [1]: https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide
  [2]: https://github.com/UweTrottmann/SeriesGuide/wiki/Beta

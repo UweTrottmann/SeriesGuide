@@ -66,7 +66,7 @@ public class BackupDeleteActivity extends BaseActivity {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.backup);
+        setContentView(R.layout.activity_backup);
 
         setupActionBar();
 

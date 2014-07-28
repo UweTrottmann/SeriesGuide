@@ -26,15 +26,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.widgets.WatchedBox;
 import com.battlelancer.seriesguide.adapters.model.HeaderData;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.WatchedBox;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
 import com.uwetrottmann.androidutils.CheatSheet;
 import java.util.ArrayList;
@@ -45,7 +43,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Adapter for {@link com.battlelancer.seriesguide.ui.ActivityFragment} with optimizations for image
+ * Adapter for {@link com.battlelancer.seriesguide.ui.ActivityFragment} with optimizations for
+ * image
  * loading for smoother scrolling.
  */
 public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHeadersBaseAdapter {
@@ -89,17 +88,20 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         viewHolder.watchedBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 WatchedBox box = (WatchedBox) v;
-                new FlagTask(context, showTvdbId)
-                        .episodeWatched(episodeTvdbId, season, episode,
-                                EpisodeTools.isWatched(box.getEpisodeFlag())
-                                        ? EpisodeFlags.UNWATCHED : EpisodeFlags.WATCHED)
-                        .execute();
+                // disable button, will be re-enabled on data reload once action completes
+                box.setEnabled(false);
+                EpisodeTools.episodeWatched(context, showTvdbId, episodeTvdbId, season, episode,
+                        EpisodeTools.isWatched(box.getEpisodeFlag()) ? EpisodeFlags.UNWATCHED
+                                : EpisodeFlags.WATCHED
+                );
             }
         });
         viewHolder.watchedBox.setEpisodeFlag(cursor.getInt(ActivityFragment.ActivityQuery.WATCHED));
+        viewHolder.watchedBox.setEnabled(true);
         CheatSheet.setup(viewHolder.watchedBox,
                 EpisodeTools.isWatched(viewHolder.watchedBox.getEpisodeFlag())
-                        ? R.string.unmark_episode : R.string.mark_episode);
+                        ? R.string.unmark_episode : R.string.mark_episode
+        );
 
         // number and show
         final String number = Utils.getEpisodeNumber(context, season, episode);
@@ -127,8 +129,8 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         viewHolder.meta.setText(metaText);
 
         // set poster
-        final String imagePath = cursor.getString(ActivityFragment.ActivityQuery.SHOW_POSTER);
-        ImageProvider.getInstance(context).loadPosterThumb(viewHolder.poster, imagePath);
+        Utils.loadPosterThumbnail(context, viewHolder.poster,
+                cursor.getString(ActivityFragment.ActivityQuery.SHOW_POSTER));
     }
 
     @Override
@@ -275,6 +277,5 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
     static class HeaderViewHolder {
 
         public TextView day;
-
     }
 }

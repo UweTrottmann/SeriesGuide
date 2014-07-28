@@ -26,8 +26,10 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.TypedValue;
@@ -44,10 +46,13 @@ import com.battlelancer.seriesguide.service.OnAlarmReceiver;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -113,7 +118,7 @@ public class Utils {
             if (tvdbstring.length() != 0) {
                 tvdbstring += ", ";
             }
-            tvdbstring += item;
+            tvdbstring += item.trim();
         }
         return tvdbstring;
     }
@@ -150,6 +155,9 @@ public class Utils {
                 * DateUtils.MINUTE_IN_MILLIS, pi);
     }
 
+    /**
+     * Creates a SHA1 hex encoded representation of the given String.
+     */
     public static String toSHA1(String message) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
@@ -248,16 +256,74 @@ public class Utils {
         }
     }
 
-    @TargetApi(16)
-    @SuppressWarnings("deprecation")
-    public static void setPosterBackground(ImageView background, String posterPath,
-            Context context) {
-        if (AndroidUtils.isJellyBeanOrHigher()) {
-            background.setImageAlpha(30);
-        } else {
-            background.setAlpha(30);
+    /**
+     * Clear all files in files directory on external storage.
+     */
+    public static void clearLegacyExternalFileCache(Context context) {
+        File path = context.getApplicationContext().getExternalFilesDir(null);
+        if (path == null) {
+            Timber.w("Could not clear cache, external storage not available");
+            return;
         }
-        ImageProvider.getInstance(context).loadPoster(background, posterPath);
+
+        final File[] files = path.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                file.delete();
+            }
+        }
+    }
+
+    /**
+     * Tries to load the given TVDb show poster into the given {@link android.widget.ImageView}
+     * without any resizing or cropping.
+     */
+    public static void loadPoster(Context context, ImageView imageView,
+            String posterPath) {
+        Picasso picasso = ServiceUtils.getExternalPicasso(context);
+        if (picasso != null) {
+            picasso.load(TheTVDB.buildPosterUrl(posterPath)).noFade().into(imageView);
+        }
+    }
+
+    /**
+     * Tries to load the given TVDb show poster into the given {@link android.widget.ImageView}
+     * without any resizing or cropping. In addition sets alpha on the view.
+     */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public static void loadPosterBackground(Context context, ImageView imageView,
+            String posterPath) {
+        if (AndroidUtils.isJellyBeanOrHigher()) {
+            imageView.setImageAlpha(30);
+        } else {
+            imageView.setAlpha(30);
+        }
+
+        loadPoster(context, imageView, posterPath);
+    }
+
+    /**
+     * Tries to load a down-sized, center cropped version of the given TVDb show poster into the
+     * given {@link android.widget.ImageView}.
+     *
+     * <p> The resize dimensions are those used for posters in the show list.
+     */
+    public static void loadPosterThumbnail(Context context, ImageView imageView,
+            String posterPath) {
+        if (TextUtils.isEmpty(posterPath)) {
+            // there is no image available
+            imageView.setImageBitmap(null);
+            return;
+        }
+
+        Picasso picasso = ServiceUtils.getExternalPicasso(context);
+        if (picasso != null) {
+            picasso.load(TheTVDB.buildPosterUrl(posterPath))
+                    .centerCrop()
+                    .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
+                    .error(R.drawable.ic_image_missing)
+                    .into(imageView);
+        }
     }
 
     /**
@@ -276,6 +342,13 @@ public class Utils {
                 SeriesGuidePreferences.THEME = R.style.Theme_SeriesGuide;
                 break;
         }
+    }
+
+    /**
+     * Set the alpha value of the {@code color} to be the given {@code alpha} value.
+     */
+    public static int setColorAlpha(int color, int alpha) {
+        return Color.argb(alpha, Color.red(color), Color.green(color), Color.blue(color));
     }
 
     /**

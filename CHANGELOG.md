@@ -5,6 +5,75 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 16 *(2014-07-28)*
+-----------------------------
+
+* Cast and crew info with photos and biography for shows and movies.
+* Added some movie statistics.
+* trakt activity streams display items manually marked as watched.
+* Fixed notification text color on Android Wear devices.
+* Improved image loading, using Android designated cache folders.
+* Dropped dedicated check-in screen.
+* SeriesGuide Cloud experiment: save and sync shows and movies. (If connected to trakt at the same time, will only sync with SeriesGuide Cloud. Check-Ins, marking watched/collected still sent to trakt.)
+
+#### 16 *(2014-07-28)*
+
+* FIX List widget poster placeholder icon cut off.
+* NOTICE Latest translations from crowdin.
+
+#### 16-beta8 *(2014-07-24)*
+
+* FIX Crash when loading images.
+
+#### 16-beta7 *(2014-07-24)*
+
+* FEATURE SeriesGuide Cloud v2 with support for episode and movie backup and sync.
+* TWEAK Display episodes or movies marked as seen in trakt activity streams.
+* TWEAK Trakt connect screens wrap content better on tablet displays.
+* FIX Guest star names sometimes contain leading or trailing spaces.
+* NOTICE The original SeriesGuide Cloud experiment is now deprecated (and will be disabled soon). You will have to sign in again to connect to Cloud v2 on each device.
+* NOTICE When connecting to SeriesGuide Cloud, activity on trakt will no longer be downloaded to SeriesGuide.
+
+#### 16-beta6 *(2014-07-04)*
+
+* FEATURE Person details view, currently with bio, TMDb and web search link. Try in landscape!
+* FEATURE Support shows released in Canada. See https://github.com/UweTrottmann/SeriesGuide/issues/382 for details.
+* TWEAK Ensure share button is always on the right.
+* TWEAK Clean up action bar on many screens by moving infrequent actions to the overflow menu.
+* TWEAK Drop the dedicated check in screen.
+* TWEAK New transition animations, making more clear where content came from and where it is going in the visual stack.
+* FIX Don't display error message while loading cast or crew members.
+* FIX Could not swipe to refresh if trakt check-in stream was empty.
+
+#### 16-beta5 *(2014-06-30)*
+
+* FEATURE Display cast and crew with headshots, name and character respectively job.
+* TWEAK Increase tab size on large+ screens (tablets).
+
+#### 16-beta4 *(2014-06-27)*
+
+* FIX Episode title in notifications not visible on Android Wear devices.
+* FIX Episode list sometimes incorrectly re-selects the first episode.
+
+#### 16-beta3 *(2014-06-25)*
+
+* FEATURE Add some movie statistics.
+* FIX Potentially fix crash in episode pages view if number of episodes changes.
+* FIX On tablets, going into episode view the shown episode is correctly selected in list. Selection is correctly kept when changing sort order.
+* NOTICE Latest translations from crowdin.
+
+#### 16-beta2 *(2014-06-20)*
+
+* TWEAK UI improvements (episode list, rate dialog, light theme immersive theme).
+* TWEAK Sort ended after continuing shows when ordering by next episode.
+* NOTICE Latest translations from crowdin (some updates for Spanish).
+
+#### 16-beta1 *(2014-06-18)*
+
+* TWEAK Better way of loading show posters and episode images, also now using designated cache folders.
+* NOTICE Dropped now deprecated poster loading tool, clear image cache setting now links to app info where you can 'Clear Cache'.
+* NOTICE Latest translations from crowdin.
+
 Version 15 *(2014-06-03)*
 -----------------------------
 

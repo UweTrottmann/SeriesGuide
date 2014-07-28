@@ -26,15 +26,20 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.support.v4.app.TaskStackBuilder;
+import android.text.TextUtils;
 import android.widget.RemoteViews;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.squareup.picasso.Picasso;
+import java.io.IOException;
 import java.util.Date;
+import timber.log.Timber;
 
 public class AppWidget extends AppWidgetProvider {
 
@@ -110,26 +115,30 @@ public class AppWidget extends AppWidgetProvider {
 
                     RemoteViews item = new RemoteViews(context.getPackageName(), itemLayout);
                     // upcoming episode
-                    int seasonNumber = upcomingEpisodes.getInt(ActivityFragment.ActivityQuery.SEASON);
-                    int episodeNumber = upcomingEpisodes.getInt(ActivityFragment.ActivityQuery.NUMBER);
+                    int seasonNumber = upcomingEpisodes.getInt(
+                            ActivityFragment.ActivityQuery.SEASON);
+                    int episodeNumber = upcomingEpisodes.getInt(
+                            ActivityFragment.ActivityQuery.NUMBER);
                     String title = upcomingEpisodes.getString(ActivityFragment.ActivityQuery.TITLE);
                     item.setTextViewText(R.id.textViewWidgetEpisode,
                             Utils.getNextEpisodeString(this, seasonNumber, episodeNumber, title));
 
                     Date actualRelease = TimeTools.getEpisodeReleaseTime(context,
-                            upcomingEpisodes.getLong(
-                                    ActivityFragment.ActivityQuery.RELEASE_TIME_MS));
+                            upcomingEpisodes.getLong(ActivityFragment.ActivityQuery.RELEASE_TIME_MS)
+                    );
 
                     // "in 13 mins (Fri)"
                     item.setTextViewText(R.id.widgetAirtime,
-                            TimeTools.formatToRelativeLocalReleaseTime(this, actualRelease)
-                                    + " (" + TimeTools.formatToLocalReleaseDay(actualRelease)
-                                    + ")");
+                            getString(R.string.release_date_and_day,
+                                    TimeTools.formatToRelativeLocalReleaseTime(this, actualRelease),
+                                    TimeTools.formatToLocalReleaseDay(actualRelease))
+                    );
 
                     // absolute release time and network (if any)
                     String releaseTime = TimeTools.formatToLocalReleaseTime(context, actualRelease);
-                    String network = upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
-                    if (network.length() != 0) {
+                    String network = upcomingEpisodes.getString(
+                            ActivityFragment.ActivityQuery.SHOW_NETWORK);
+                    if (!TextUtils.isEmpty(network)) {
                         releaseTime += " " + network;
                     }
                     item.setTextViewText(R.id.widgetNetwork, releaseTime);
@@ -139,10 +148,21 @@ public class AppWidget extends AppWidgetProvider {
                             upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_TITLE));
 
                     // show poster
-                    String posterPath = upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_POSTER);
-                    final Bitmap poster = ImageProvider.getInstance(context).getImage(posterPath, true);
-                    if (poster != null) {
-                        item.setImageViewBitmap(R.id.widgetPoster, poster);
+                    String posterPath = upcomingEpisodes.getString(
+                            ActivityFragment.ActivityQuery.SHOW_POSTER);
+                    Picasso picasso = ServiceUtils.getExternalPicasso(this);
+                    if (picasso != null) {
+                        try {
+                            Bitmap poster = picasso.load(TheTVDB.buildPosterUrl(posterPath))
+                                    .centerCrop()
+                                    .resizeDimen(R.dimen.show_poster_width,
+                                            R.dimen.show_poster_height)
+                                    .get();
+                            item.setImageViewBitmap(R.id.widgetPoster, poster);
+                        } catch (IOException e) {
+                            Timber.e(e,
+                                    "Failed to load show poster for widget item: " + posterPath);
+                        }
                     }
 
                     views.addView(R.id.LinearLayoutWidget, item);

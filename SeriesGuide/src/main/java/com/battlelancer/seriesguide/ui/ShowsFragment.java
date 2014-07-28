@@ -26,6 +26,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
@@ -53,10 +55,9 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
-import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -100,7 +101,7 @@ public class ShowsFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.shows_fragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_shows, container, false);
 
         v.findViewById(R.id.emptyViewShows).setOnClickListener(new OnClickListener() {
             @Override
@@ -392,8 +393,12 @@ public class ShowsFragment extends Fragment implements
 
         Intent i = new Intent(getActivity(), OverviewActivity.class);
         i.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, (int) id);
-        startActivity(i);
-        getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
+
+        ActivityCompat.startActivity(getActivity(), i,
+                ActivityOptionsCompat
+                        .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                        .toBundle()
+        );
     }
 
     @Override
@@ -566,8 +571,8 @@ public class ShowsFragment extends Fragment implements
                     + values[1] + " " + values[0]);
 
             // set poster
-            final String imagePath = cursor.getString(ShowsQuery.POSTER);
-            ImageProvider.getInstance(context).loadPosterThumb(viewHolder.poster, imagePath);
+            Utils.loadPosterThumbnail(context, viewHolder.poster,
+                    cursor.getString(ShowsQuery.POSTER));
 
             // context menu
             viewHolder.contextMenu.setVisibility(View.VISIBLE);
@@ -631,7 +636,7 @@ public class ShowsFragment extends Fragment implements
                         return true;
                     }
                     case R.id.menu_action_shows_manage_lists: {
-                        ListsDialogFragment.showListsDialog(mShowTvdbId, ListItemTypes.SHOW,
+                        ManageListsDialogFragment.showListsDialog(mShowTvdbId, ListItemTypes.SHOW,
                                 getFragmentManager());
                         fireTrackerEventContext("Manage lists");
                         return true;
@@ -719,7 +724,7 @@ public class ShowsFragment extends Fragment implements
         }
     };
 
-    public void onEvent(FlagTaskCompletedEvent event) {
+    public void onEvent(EpisodeTools.EpisodeActionCompletedEvent event) {
         if (isAdded()) {
             AndroidUtils.executeOnPool(new LatestEpisodeUpdateTask(getActivity()),
                     event.mType.getShowTvdbId());

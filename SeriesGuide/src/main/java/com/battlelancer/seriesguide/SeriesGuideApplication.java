@@ -25,7 +25,6 @@ import android.os.StrictMode.VmPolicy;
 import android.preference.PreferenceManager;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -65,10 +64,6 @@ public class SeriesGuideApplication extends Application {
         // Set provider authority
         CONTENT_AUTHORITY = getString(R.string.provider_authority);
 
-        // Initialize settings on first run
-        PreferenceManager.setDefaultValues(this, R.xml.settings_basic, false);
-        PreferenceManager.setDefaultValues(this, R.xml.settings_advanced, false);
-
         // Load the current theme into a global variable
         Utils.updateTheme(DisplaySettings.getThemeIndex(this));
 
@@ -83,15 +78,6 @@ public class SeriesGuideApplication extends Application {
 
         // Enable StrictMode
         enableStrictMode();
-    }
-
-    @Override
-    public void onLowMemory() {
-        if (!AndroidUtils.isICSOrHigher()) {
-            // Clear the whole cache as Honeycomb and below don't support
-            // onTrimMemory (used directly in our ImageProvider)
-            ImageProvider.getInstance(this).clearCache();
-        }
     }
 
     /**

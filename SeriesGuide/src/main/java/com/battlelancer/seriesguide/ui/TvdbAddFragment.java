@@ -57,7 +57,7 @@ public class TvdbAddFragment extends AddFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.tvdbaddfragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_addshow_tvdb, container, false);
         ButterKnife.inject(this, v);
 
         mClearButton.setOnClickListener(new OnClickListener() {
@@ -89,7 +89,7 @@ public class TvdbAddFragment extends AddFragment {
 
         // create an empty adapter to avoid displaying a progress indicator
         if (mAdapter == null) {
-            mAdapter = new AddAdapter(getActivity(), R.layout.add_searchresult,
+            mAdapter = new AddAdapter(getActivity(), R.layout.item_addshow,
                     new ArrayList<SearchResult>(), mDetailsButtonListener);
         }
 

@@ -112,8 +112,9 @@ public class FriendsEpisodeStreamFragment extends StreamFragment {
                 Activity activity = activityService.friends(ActivityType.Episode.toString(),
                         ActivityAction.Watching + ","
                                 + ActivityAction.Checkin + ","
-                                + ActivityAction.Scrobble,
-                        (System.currentTimeMillis() - DateUtils.WEEK_IN_MILLIS) / 1000, null, null
+                                + ActivityAction.Scrobble + ","
+                                + ActivityAction.Seen,
+                        (System.currentTimeMillis() - 3 * DateUtils.DAY_IN_MILLIS) / 1000, null, null
                 );
 
                 if (activity == null || activity.activity == null) {

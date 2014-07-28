@@ -262,7 +262,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ShowsColumns.NEXTAIRDATETEXT + " TEXT DEFAULT '',"
 
-            + ShowsColumns.SYNCENABLED + " INTEGER DEFAULT 1,"
+            + ShowsColumns.HEXAGON_MERGE_COMPLETE + " INTEGER DEFAULT 1,"
 
             + ShowsColumns.RELEASE_COUNTRY + " TEXT DEFAULT '',"
 
@@ -825,7 +825,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     private static void upgradeToTwenty(SQLiteDatabase db) {
-        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.SYNCENABLED
+        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.HEXAGON_MERGE_COMPLETE
                 + " INTEGER DEFAULT 1;");
     }
 

@@ -19,6 +19,7 @@ package com.uwetrottmann.androidutils;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -27,6 +28,7 @@ import android.os.Environment;
 import android.text.TextUtils;
 import android.view.View;
 import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.OkUrlFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -71,7 +73,8 @@ public class AndroidUtils {
     }
 
     public static boolean isGoogleTV(Context context) {
-        return context.getPackageManager().hasSystemFeature("com.google.android.tv");
+        PackageManager packageManager = context.getPackageManager();
+        return packageManager != null && packageManager.hasSystemFeature("com.google.android.tv");
     }
 
     /**
@@ -151,7 +154,7 @@ public class AndroidUtils {
     public static int copy(InputStream input, OutputStream output) throws IOException {
         byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
         int count = 0;
-        int n = 0;
+        int n;
         while (-1 != (n = input.read(buffer))) {
             output.write(buffer, 0, n);
             count += n;
@@ -166,6 +169,7 @@ public class AndroidUtils {
      * @param args Optional arguments to pass to {@link AsyncTask#execute(Object[])}.
      * @param <T>  Task argument type.
      */
+    @SafeVarargs
     @TargetApi(11)
     public static <T> void executeOnPool(AsyncTask<T, ?, ?> task, T... args) {
         // TODO figure out how to subclass abstract and generalized AsyncTask,
@@ -184,8 +188,7 @@ public class AndroidUtils {
         HttpURLConnection conn = buildHttpUrlConnection(urlString);
         conn.connect();
 
-        InputStream stream = conn.getInputStream();
-        return stream;
+        return conn.getInputStream();
     }
 
     /**
@@ -196,7 +199,7 @@ public class AndroidUtils {
 
         OkHttpClient client = createOkHttpClient();
 
-        HttpURLConnection conn = client.open(url);
+        HttpURLConnection conn = new OkUrlFactory(client).open(url);
         conn.setConnectTimeout(15 * 1000 /* milliseconds */);
         conn.setReadTimeout(20 * 1000 /* milliseconds */);
         return conn;

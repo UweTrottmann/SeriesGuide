@@ -20,13 +20,13 @@ import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Window;
-import com.astuetz.PagerSlidingTabStrip;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.streams.FriendsMovieStreamFragment;
 import com.battlelancer.seriesguide.ui.streams.UserMovieStreamFragment;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 
 /**
  * Users can search for a movie, display detailed information and then check in with trakt or
@@ -49,7 +49,7 @@ public class MoviesActivity extends BaseTopActivity {
         setProgressBarIndeterminateVisibility(false);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.movies);
+        setContentView(R.layout.activity_movies);
         setupNavDrawer();
 
         setupActionBar();
@@ -64,11 +64,9 @@ public class MoviesActivity extends BaseTopActivity {
     }
 
     private void setupViews() {
-        ViewPager pager = (ViewPager) findViewById(R.id.pagerMovies);
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabsMovies);
-
-        TabStripAdapter tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this, pager,
-                tabs);
+        TabStripAdapter tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this,
+                (ViewPager) findViewById(R.id.pagerMovies),
+                (SlidingTabLayout) findViewById(R.id.tabsMovies));
         // search
         tabsAdapter.addTab(R.string.search, MoviesSearchFragment.class, null);
         // watchlist
@@ -96,5 +94,4 @@ public class MoviesActivity extends BaseTopActivity {
     protected void fireTrackerEvent(String label) {
         Utils.trackAction(this, TAG, label);
     }
-
 }

@@ -36,7 +36,7 @@ import java.util.Date;
 
 public class EpisodesAdapter extends CursorAdapter {
 
-    private static final int LAYOUT = R.layout.episode_row;
+    private static final int LAYOUT = R.layout.item_episode;
 
     private LayoutInflater mLayoutInflater;
 
@@ -60,6 +60,26 @@ public class EpisodesAdapter extends CursorAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mPopupMenuClickListener = listener;
         mOnFlagListener = flagListener;
+    }
+
+    /**
+     * Get the item position in the data set, or the position of the first item if it is not found.
+     */
+    public int getItemPosition(long itemId) {
+        Cursor cursor = getCursor();
+        if (cursor != null) {
+            int rowId = cursor.getColumnIndexOrThrow("_id");
+            for (int position = 0; position < cursor.getCount(); position++) {
+                if (!cursor.moveToPosition(position)) {
+                    return 0;
+                }
+                if (cursor.getLong(rowId) == itemId) {
+                    return position;
+                }
+            }
+        }
+
+        return 0;
     }
 
     @Override
@@ -110,10 +130,13 @@ public class EpisodesAdapter extends CursorAdapter {
         viewHolder.watchedBox.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 WatchedBox box = (WatchedBox) v;
+                // disable button, will be re-enabled on data reload once action completes
+                box.setEnabled(false);
                 mOnFlagListener.onFlagEpisodeWatched(episodeId, episodeNumber,
                         !EpisodeTools.isWatched(box.getEpisodeFlag()));
             }
         });
+        viewHolder.watchedBox.setEnabled(true);
         final boolean isWatched = EpisodeTools.isWatched(viewHolder.watchedBox.getEpisodeFlag());
         CheatSheet.setup(viewHolder.watchedBox,
                 isWatched ? R.string.unmark_episode : R.string.mark_episode

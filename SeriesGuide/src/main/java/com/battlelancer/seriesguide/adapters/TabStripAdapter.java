@@ -23,12 +23,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import com.astuetz.PagerSlidingTabStrip;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import java.util.ArrayList;
 import java.util.Locale;
 
 /**
- * Helper class for easy setup of a {@link PagerSlidingTabStrip}.
+ * Helper class for easy setup of a {@link com.battlelancer.seriesguide.widgets.SlidingTabLayout}.
  */
 public class TabStripAdapter extends FragmentPagerAdapter {
 
@@ -40,7 +42,7 @@ public class TabStripAdapter extends FragmentPagerAdapter {
 
     private final ViewPager mViewPager;
 
-    private final PagerSlidingTabStrip mTabStrip;
+    private final SlidingTabLayout mTabLayout;
 
     static final class TabInfo {
 
@@ -58,14 +60,25 @@ public class TabStripAdapter extends FragmentPagerAdapter {
     }
 
     public TabStripAdapter(FragmentManager fm, Context context, ViewPager pager,
-            PagerSlidingTabStrip tabs) {
+            SlidingTabLayout tabs) {
         super(fm);
         mFragmentManager = fm;
         mContext = context;
-        mTabStrip = tabs;
+
+        // setup view pager
         mViewPager = pager;
         mViewPager.setAdapter(this);
-        mTabStrip.setViewPager(mViewPager);
+
+        // setup tabs
+        mTabLayout = tabs;
+        mTabLayout.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
+        mTabLayout.setSelectedIndicatorColors(context.getResources().getColor(
+                Utils.resolveAttributeToResourceId(context.getTheme(), R.attr.colorAccent)));
+        mTabLayout.setBottomBorderColor(context.getResources().getColor(
+                Utils.resolveAttributeToResourceId(context.getTheme(),
+                        R.attr.colorTabStripUnderline)
+        ));
+        mTabLayout.setViewPager(mViewPager);
     }
 
     /**
@@ -99,7 +112,7 @@ public class TabStripAdapter extends FragmentPagerAdapter {
      */
     public void notifyTabsChanged() {
         notifyDataSetChanged();
-        mTabStrip.notifyDataSetChanged();
+        mTabLayout.setViewPager(mViewPager);
     }
 
     @Override
@@ -128,5 +141,4 @@ public class TabStripAdapter extends FragmentPagerAdapter {
     private static String makeFragmentName(int viewId, long id) {
         return "android:switcher:" + viewId + ":" + id;
     }
-
 }

@@ -26,7 +26,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Color;
+import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
@@ -34,20 +35,23 @@ import android.support.v4.app.TaskStackBuilder;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.QuickCheckInActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import timber.log.Timber;
@@ -164,8 +168,9 @@ public class NotificationService extends IntentService {
         final long customCurrentTime = TimeTools.getCurrentTime(this);
         final Cursor upcomingEpisodes = getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 PROJECTION, selection.toString(), new String[] {
-                String.valueOf(customCurrentTime - 12 * DateUtils.HOUR_IN_MILLIS)
-        }, SORTING);
+                        String.valueOf(customCurrentTime - 12 * DateUtils.HOUR_IN_MILLIS)
+                }, SORTING
+        );
 
         if (upcomingEpisodes != null) {
             int notificationThreshold = NotificationSettings.getLatestToIncludeTreshold(this);
@@ -412,10 +417,7 @@ public class NotificationService extends IntentService {
             if (count == 1) {
                 // single episode
                 upcomingEpisodes.moveToPosition(notifyPositions.get(0));
-                final String imagePath = upcomingEpisodes
-                        .getString(NotificationQuery.POSTER);
-                nb.setLargeIcon(ImageProvider.getInstance(context)
-                        .getImage(imagePath, true));
+                maybeSetPoster(context, nb, upcomingEpisodes.getString(NotificationQuery.POSTER));
 
                 final String episodeTitle = upcomingEpisodes
                         .getString(NotificationQuery.TITLE);
@@ -424,8 +426,7 @@ public class NotificationService extends IntentService {
 
                 final SpannableStringBuilder bigText = new SpannableStringBuilder();
                 bigText.append(TextUtils.isEmpty(episodeTitle) ? "" : episodeTitle);
-                bigText.setSpan(new ForegroundColorSpan(Color.WHITE), 0, bigText.length(),
-                        0);
+                bigText.setSpan(new StyleSpan(Typeface.BOLD), 0, bigText.length(), 0);
                 bigText.append("\n");
                 bigText.append(TextUtils.isEmpty(episodeSummary) ? "" : episodeSummary);
 
@@ -459,7 +460,7 @@ public class NotificationService extends IntentService {
                     // show title
                     String showTitle = upcomingEpisodes.getString(NotificationQuery.SHOW_TITLE);
                     lineText.append(TextUtils.isEmpty(showTitle) ? "" : showTitle);
-                    lineText.setSpan(new ForegroundColorSpan(Color.WHITE), 0, lineText.length(), 0);
+                    lineText.setSpan(new StyleSpan(Typeface.BOLD), 0, lineText.length(), 0);
 
                     lineText.append(" ");
 
@@ -488,8 +489,7 @@ public class NotificationService extends IntentService {
             if (count == 1) {
                 // single episode
                 upcomingEpisodes.moveToPosition(notifyPositions.get(0));
-                final String posterPath = upcomingEpisodes.getString(NotificationQuery.POSTER);
-                nb.setLargeIcon(ImageProvider.getInstance(context).getImage(posterPath, true));
+                maybeSetPoster(context, nb, upcomingEpisodes.getString(NotificationQuery.POSTER));
             }
         }
 
@@ -530,5 +530,22 @@ public class NotificationService extends IntentService {
         final NotificationManager nm = (NotificationManager) getSystemService(
                 Context.NOTIFICATION_SERVICE);
         nm.notify(R.string.upcoming_show, notification);
+    }
+
+    private void maybeSetPoster(Context context, NotificationCompat.Builder nb, String posterPath) {
+        Picasso picasso = ServiceUtils.getExternalPicasso(context);
+        if (picasso == null) {
+            return;
+        }
+        try {
+            Bitmap poster = picasso
+                    .load(TheTVDB.buildPosterUrl(posterPath))
+                    .centerCrop()
+                    .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
+                    .get();
+            nb.setLargeIcon(poster);
+        } catch (IOException e) {
+            Timber.e(e, "Failed to load poster for notification: " + posterPath);
+        }
     }
 }

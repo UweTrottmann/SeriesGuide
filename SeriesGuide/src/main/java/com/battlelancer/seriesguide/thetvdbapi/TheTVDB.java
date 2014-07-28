@@ -21,16 +21,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.sax.Element;
 import android.sax.EndElementListener;
 import android.sax.EndTextElementListener;
 import android.sax.RootElement;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Xml;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
@@ -39,8 +37,9 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -48,11 +47,9 @@ import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.enumerations.Extended;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,9 +74,28 @@ public class TheTVDB {
         int UNKNOWN = -1;
     }
 
-    public static final String TVDB_MIRROR_BANNERS = "http://thetvdb.com/banners/";
+    private static final String TVDB_MIRROR_BANNERS = "http://thetvdb.com/banners/";
+
+    private static final String TVDB_MIRROR_BANNERS_CACHE = TVDB_MIRROR_BANNERS + "_cache/";
 
     private static final String TVDB_API_URL = "http://thetvdb.com/api/";
+
+    /**
+     * Builds a full url for a TVDb show poster using the given image path.
+     */
+    public static String buildPosterUrl(String imagePath) {
+        return TVDB_MIRROR_BANNERS_CACHE + imagePath;
+    }
+
+    /**
+     * Builds a full url for a TVDb screenshot (episode still) using the given image path.
+     *
+     * <p> May also be used with posters, but a much larger version than {@link
+     * #buildPosterUrl(String)} will be downloaded as a result.
+     */
+    public static String buildScreenshotUrl(String imagePath) {
+        return TVDB_MIRROR_BANNERS + imagePath;
+    }
 
     /**
      * Returns true if the given show has not been updated in the last 12 hours.
@@ -106,29 +122,60 @@ public class TheTVDB {
     /**
      * Adds a show and its episodes to the database. If the show already exists, does nothing.
      *
-     * @return whether the show and its episodes were added
+     * <p> If signed in to Hexagon, gets show properties and episode flags.
+     *
+     * <p> If connected to trakt, but not signed in to Hexagon, gets episode flags from trakt
+     * instead.
+     *
+     * @return True, if the show and its episodes were added to the database.
      */
-    public static boolean addShow(int showTvdbId, List<TvShow> seenShows,
-            List<TvShow> collectedShows, Context context) throws TvdbException {
+    public static boolean addShow(Context context, int showTvdbId, List<TvShow> seenTraktShows,
+            List<TvShow> collectedTraktShows) throws TvdbException {
         boolean isShowExists = DBUtils.isShowExists(context, showTvdbId);
         if (isShowExists) {
             return false;
         }
 
+        // get show info from TVDb and trakt
         String language = DisplaySettings.getContentLanguage(context);
+        Show show = fetchShow(context, showTvdbId, language);
+
+        // get show properties from hexagon
+        if (HexagonTools.isSignedIn(context)) {
+            try {
+                ShowTools.Download.showPropertiesFromHexagon(context, show);
+            } catch (IOException e) {
+                throw new TvdbException("Failed to download show properties from Hexagon.");
+            }
+        }
+
+        // get episodes from TVDb and do database update
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-
-        // get show and episode info from TVDb
-        Show show = fetchShow(showTvdbId, language, context);
-        batch.add(DBUtils.buildShowOp(show, context, true));
-
+        batch.add(DBUtils.buildShowOp(show, true));
         getEpisodesAndUpdateDatabase(context, show, language, batch);
 
-        // try to set watched and collected flags from trakt
-        storeTraktFlags(showTvdbId, seenShows, context, true);
-        storeTraktFlags(showTvdbId, collectedShows, context, false);
+        // download episode flags...
+        if (HexagonTools.isSignedIn(context)) {
+            // ...from Hexagon
+            boolean success = EpisodeTools.Download.flagsFromHexagon(context, showTvdbId);
+            if (!success) {
+                // failed to download episode flags
+                // flag show as needing an episode merge
+                ContentValues values = new ContentValues();
+                values.put(Shows.HEXAGON_MERGE_COMPLETE, false);
+                context.getContentResolver()
+                        .update(Shows.buildShowUri(showTvdbId), values, null, null);
+            }
 
-        // calculate the next episode to display
+            // remove any isRemoved flag on Hexagon
+            ShowTools.get(context).sendIsRemoved(showTvdbId, false);
+        } else {
+            // ...from trakt
+            storeTraktFlags(showTvdbId, seenTraktShows, context, true);
+            storeTraktFlags(showTvdbId, collectedTraktShows, context, false);
+        }
+
+        // calculate next episode
         DBUtils.updateLatestEpisode(context, showTvdbId);
 
         return true;
@@ -137,12 +184,13 @@ public class TheTVDB {
     /**
      * Updates show. Adds new, updates changed and removes orphaned episodes.
      */
+
     public static void updateShow(Context context, int showTvdbId) throws TvdbException {
         String language = DisplaySettings.getContentLanguage(context);
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
-        Show show = fetchShow(showTvdbId, language, context);
-        batch.add(DBUtils.buildShowOp(show, context, false));
+        Show show = fetchShow(context, showTvdbId, language);
+        batch.add(DBUtils.buildShowOp(show, false));
 
         getEpisodesAndUpdateDatabase(context, show, language, batch);
     }
@@ -310,7 +358,7 @@ public class TheTVDB {
      * @param language A TVDb language code (see <a href="http://www.thetvdb.com/wiki/index.php/API:languages.xml"
      *                 >TVDb wiki</a>).
      */
-    private static Show fetchShow(int showTvdbId, String language, Context context)
+    private static Show fetchShow(Context context, int showTvdbId, String language)
             throws TvdbException {
         // get show details from TVDb
         Show show = downloadAndParseShow(context, showTvdbId, language);
@@ -331,11 +379,6 @@ public class TheTVDB {
 
         show.airtime = TimeTools.parseShowReleaseTime(traktShow.airTime);
         show.country = traktShow.country;
-
-        // try to download the show poster
-        if (Utils.isAllowedLargeDataConnection(context, false)) {
-            fetchArt(show.poster, true, context);
-        }
 
         return show;
     }
@@ -676,115 +719,6 @@ public class TheTVDB {
             throw new TvdbException("Problem parsing " + urlString);
         } catch (Exception e) {
             throw new TvdbException("Problem downloading and parsing " + urlString, e);
-        }
-    }
-
-    /**
-     * Tries to download art from the thetvdb banner TVDB_MIRROR. Ignores blank ("") or null paths
-     * and skips existing images. Returns true even if there was no art downloaded.
-     *
-     * @param fileName of image
-     * @return false if not all images could be fetched. true otherwise, even if nothing was
-     * downloaded
-     */
-    public static boolean fetchArt(String fileName, boolean isPoster, Context context) {
-        if (context == null || TextUtils.isEmpty(fileName)) {
-            return true;
-        }
-
-        final ImageProvider imageProvider = ImageProvider.getInstance(context);
-
-        if (!imageProvider.exists(fileName)) {
-            final String imageUrl;
-            if (isPoster) {
-                // the cached version is a lot smaller, but still big enough for
-                // our purposes
-                imageUrl = TVDB_MIRROR_BANNERS + "_cache/" + fileName;
-            } else {
-                imageUrl = TVDB_MIRROR_BANNERS + fileName;
-            }
-
-            // try to download, decode and store the image
-            final Bitmap bitmap = downloadBitmap(imageUrl, context);
-            if (bitmap != null) {
-                imageProvider.storeImage(fileName, bitmap, isPoster);
-            } else {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private static Bitmap downloadBitmap(String url, Context context) {
-        InputStream inputStream = null;
-        HttpURLConnection urlConnection = null;
-        try {
-            urlConnection = AndroidUtils.buildHttpUrlConnection(url);
-            urlConnection.connect();
-            long imageSize = urlConnection.getContentLength();
-            // allow images up to 300 kBytes (although size is always around
-            // 30 kBytes for posters and 100 kBytes for episode images)
-            if (imageSize > 300000 || imageSize < 1) {
-                return null;
-            } else {
-                inputStream = urlConnection.getInputStream();
-                // return BitmapFactory.decodeStream(inputStream);
-                // Bug on slow connections, fixed in future release.
-                try {
-                    return BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
-                } catch (OutOfMemoryError e) {
-                    Timber.e(e, "Out of memory while retrieving bitmap from " + url);
-                }
-            }
-        } catch (IOException e) {
-            Timber.e(e, "I/O error retrieving bitmap from " + url);
-        } catch (IllegalStateException e) {
-            Timber.e(e, "Incorrect URL: " + url);
-        } catch (Exception e) {
-            Timber.e(e, "Error while retrieving bitmap from " + url);
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    Timber.e(e, "I/O error retrieving bitmap from " + url);
-                }
-            } else {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-            }
-        }
-        return null;
-    }
-
-    /*
-     * An InputStream that skips the exact number of bytes provided, unless it
-     * reaches EOF.
-     */
-    static class FlushedInputStream extends FilterInputStream {
-
-        public FlushedInputStream(InputStream inputStream) {
-            super(inputStream);
-        }
-
-        @Override
-        public long skip(long n) throws IOException {
-            long totalBytesSkipped = 0L;
-            while (totalBytesSkipped < n) {
-                long bytesSkipped = in.skip(n - totalBytesSkipped);
-                if (bytesSkipped == 0L) {
-                    int b = read();
-                    if (b < 0) {
-                        break; // we reached EOF
-                    } else {
-                        bytesSkipped = 1; // we read one byte
-                    }
-                }
-                totalBytesSkipped += bytesSkipped;
-            }
-            return totalBytesSkipped;
         }
     }
 }

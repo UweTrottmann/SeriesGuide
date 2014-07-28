@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#7F0707">
+
+            <Button
+                android:id="@+id/totallyninja"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/love" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#7B0C0B">
+
+            <Button
+                android:id="@+id/rating9"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rating9" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#751212">
+
+            <Button
+                android:id="@+id/rating8"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rating8" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#6D191A">
+
+            <Button
+                android:id="@+id/rating7"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rating7" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#662221">
+
+            <Button
+                android:id="@+id/rating6"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rating6" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#5D292A">
+
+            <Button
+                android:id="@+id/rating5"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rating5" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#553232">
+
+            <Button
+                android:id="@+id/rating4"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rating4" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#4E393A">
+
+            <Button
+                android:id="@+id/rating3"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rating3" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#494040">
+
+            <Button
+                android:id="@+id/rating2"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rating2" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#444444">
+
+            <Button
+                android:id="@+id/weaksauce"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/hate" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+</ScrollView>

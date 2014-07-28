@@ -23,6 +23,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -49,7 +51,6 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 
@@ -224,17 +225,14 @@ public class ActivityFragment extends Fragment implements
 
     private void updateEpisodeCollectionState(int showTvdbId, int episodeTvdbId, int seasonNumber,
             int episodeNumber, boolean addToCollection) {
-        new FlagTask(getActivity(), showTvdbId)
-                .episodeCollected(episodeTvdbId, seasonNumber, episodeNumber, addToCollection)
-                .execute();
+        EpisodeTools.episodeCollected(getActivity(), showTvdbId, episodeTvdbId, seasonNumber,
+                episodeNumber, addToCollection);
     }
 
     private void updateEpisodeWatchedState(int showTvdbId, int episodeTvdbId, int seasonNumber,
             int episodeNumber, boolean isWatched) {
-        new FlagTask(getActivity(), showTvdbId)
-                .episodeWatched(episodeTvdbId, seasonNumber, episodeNumber,
-                        isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED)
-                .execute();
+        EpisodeTools.episodeWatched(getActivity(), showTvdbId, episodeTvdbId, seasonNumber,
+                episodeNumber, isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
     }
 
     @Override
@@ -245,8 +243,11 @@ public class ActivityFragment extends Fragment implements
         intent.setClass(getActivity(), EpisodesActivity.class);
         intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
 
-        startActivity(intent);
-        getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
+        ActivityCompat.startActivity(getActivity(), intent,
+                ActivityOptionsCompat
+                        .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                        .toBundle()
+        );
     }
 
     @Override

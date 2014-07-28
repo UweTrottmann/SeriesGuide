@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class GetGlueObjectAdapter extends ArrayAdapter<GetGlueObject> {
 
-    private static int LAYOUT = R.layout.getglue_item;
+    private static int LAYOUT = R.layout.item_getglue_result;
 
     private LayoutInflater mInflater;
 

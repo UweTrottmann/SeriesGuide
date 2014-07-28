@@ -36,7 +36,7 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 public class MoviesCursorAdapter extends CursorAdapter {
 
-    private final int LAYOUT = R.layout.movie_item;
+    private final int LAYOUT = R.layout.item_movie;
 
     private LayoutInflater mLayoutInflater;
 
@@ -96,10 +96,12 @@ public class MoviesCursorAdapter extends CursorAdapter {
             holder.releaseDate.setText("");
         }
 
-        // poster
+        // load poster, cache on external storage
         String posterPath = cursor.getString(MoviesQuery.POSTER);
         if (!TextUtils.isEmpty(posterPath)) {
-            ServiceUtils.getPicasso(context).load(mImageBaseUrl + posterPath).into(holder.poster);
+            ServiceUtils.getExternalPicasso(context)
+                    .load(mImageBaseUrl + posterPath)
+                    .into(holder.poster);
         } else {
             // no image
             holder.poster.setImageDrawable(null);
@@ -126,20 +128,17 @@ public class MoviesCursorAdapter extends CursorAdapter {
         ImageView poster;
 
         View contextMenu;
-
     }
 
     public interface MoviesQuery {
 
-        String[] PROJECTION = {Movies._ID, Movies.TMDB_ID, Movies.TITLE, Movies.POSTER,
-                Movies.RELEASED_UTC_MS};
+        String[] PROJECTION = { Movies._ID, Movies.TMDB_ID, Movies.TITLE, Movies.POSTER,
+                Movies.RELEASED_UTC_MS };
 
         int ID = 0;
         int TMDB_ID = 1;
         int TITLE = 2;
         int POSTER = 3;
         int RELEASED_UTC_MS = 4;
-
     }
-
 }

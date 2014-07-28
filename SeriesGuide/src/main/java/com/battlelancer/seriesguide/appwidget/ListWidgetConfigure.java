@@ -16,20 +16,17 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
-import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RemoteViews;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
  * Hosts a {@link ListWidgetPreferenceFragment} to allow changing settings of the associated app
@@ -38,7 +35,6 @@ import com.uwetrottmann.androidutils.AndroidUtils;
  * triggering update and backup mechanisms.
  * <p> The list widget is only available on API level 11 and above.
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ListWidgetConfigure extends Activity {
 
     private int mAppWidgetId;
@@ -49,7 +45,6 @@ public class ListWidgetConfigure extends Activity {
         setTheme(SeriesGuidePreferences.THEME);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.listwidget_configure);
 
         // if the user backs out, no widget gets added
         setResult(RESULT_CANCELED);
@@ -70,10 +65,12 @@ public class ListWidgetConfigure extends Activity {
 
         setupActionBar();
 
-        ListWidgetPreferenceFragment f = ListWidgetPreferenceFragment.newInstance(mAppWidgetId);
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.content_container, f);
-        ft.commit();
+        if (savedInstanceState == null) {
+            ListWidgetPreferenceFragment f = ListWidgetPreferenceFragment.newInstance(mAppWidgetId);
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.add(android.R.id.content, f);
+            ft.commit();
+        }
     }
 
     private void setupActionBar() {

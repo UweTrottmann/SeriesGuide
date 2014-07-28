@@ -20,6 +20,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -38,8 +40,7 @@ import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
-import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -106,31 +107,37 @@ public class ListsFragment extends Fragment implements
         int itemType = listItem.getInt(ListItemsQuery.ITEM_TYPE);
         String itemRefId = listItem.getString(ListItemsQuery.ITEM_REF_ID);
 
+        Intent intent = null;
         switch (itemType) {
             case 1: {
                 // display show overview
-                Intent intent = new Intent(getActivity(), OverviewActivity.class);
+                intent = new Intent(getActivity(), OverviewActivity.class);
                 intent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID,
                         Integer.valueOf(itemRefId));
-                startActivity(intent);
                 break;
             }
             case 2: {
                 // display episodes of season
-                Intent intent = new Intent(getActivity(), EpisodesActivity.class);
+                intent = new Intent(getActivity(), EpisodesActivity.class);
                 intent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID,
                         Integer.valueOf(itemRefId));
-                startActivity(intent);
                 break;
             }
             case 3: {
                 // display episode details
-                Intent intent = new Intent(getActivity(), EpisodesActivity.class);
+                intent = new Intent(getActivity(), EpisodesActivity.class);
                 intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
                         Integer.valueOf(itemRefId));
-                startActivity(intent);
                 break;
             }
+        }
+
+        if (intent != null) {
+            ActivityCompat.startActivity(getActivity(), intent,
+                    ActivityOptionsCompat
+                            .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                            .toBundle()
+            );
         }
     }
 
@@ -238,8 +245,8 @@ public class ListsFragment extends Fragment implements
             }
 
             // poster
-            final String imagePath = cursor.getString(ListItemsQuery.SHOW_POSTER);
-            ImageProvider.getInstance(context).loadPosterThumb(viewHolder.poster, imagePath);
+            Utils.loadPosterThumbnail(context, viewHolder.poster,
+                    cursor.getString(ListItemsQuery.SHOW_POSTER));
 
             // context menu
             viewHolder.contextMenu.setVisibility(View.VISIBLE);
@@ -283,7 +290,7 @@ public class ListsFragment extends Fragment implements
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_action_lists_manage: {
-                        ListsDialogFragment.showListsDialog(mItemTvdbId, mItemType,
+                        ManageListsDialogFragment.showListsDialog(mItemTvdbId, mItemType,
                                 getFragmentManager());
                         fireTrackerEvent("Manage lists");
                         return true;

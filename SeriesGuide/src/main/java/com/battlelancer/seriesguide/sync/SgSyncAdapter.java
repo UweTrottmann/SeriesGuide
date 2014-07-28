@@ -34,6 +34,7 @@ import android.text.format.DateUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -317,37 +318,39 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             Timber.d("Syncing...TMDb config");
             getTmdbConfiguration(getContext(), prefs);
 
-            // prepare for finding shows not yet added to local database
+            // sync with Hexagon or trakt
             final HashSet<Integer> showsExisting = ShowTools.getShowTvdbIdsAsSet(getContext());
             final HashMap<Integer, SearchResult> showsNew = new HashMap<>();
             if (showsExisting == null) {
                 resultCode = UpdateResult.INCOMPLETE;
             } else {
-                // sync with hexagon
-                if (ShowTools.get(getContext()).isSignedIn()) {
-                    UpdateResult resultHexagon = ShowTools.Download
-                            .syncRemoteShows(getContext(), showsExisting, showsNew);
+                if (HexagonTools.isSignedIn(getContext())) {
+                    // sync with hexagon...
+                    boolean success = HexagonTools.syncWithHexagon(getContext(), showsExisting,
+                            showsNew);
                     // don't overwrite failure
                     if (resultCode == UpdateResult.SUCCESS) {
-                        resultCode = resultHexagon;
+                        resultCode = success ? UpdateResult.SUCCESS : UpdateResult.INCOMPLETE;
+                    }
+                } else {
+                    // ...OR sync with trakt
+                    UpdateResult resultTrakt = performTraktSync(getContext(), showsExisting,
+                            showsNew, syncImmediately, currentTime);
+                    // don't overwrite failure
+                    if (resultCode == UpdateResult.SUCCESS) {
+                        resultCode = resultTrakt;
+                    }
+
+                    // add shows newly discovered on trakt
+                    if (showsNew.size() > 0) {
+                        List<SearchResult> showsNewList = new LinkedList<>(showsNew.values());
+                        TaskManager.getInstance(getContext())
+                                .performAddTask(showsNewList, true, false);
                     }
                 }
 
-                // sync with trakt
-                UpdateResult resultTrakt = performTraktSync(getContext(), showsExisting, showsNew,
-                        syncImmediately, currentTime);
                 // make sure other loaders (activity, overview, details) are notified of changes
                 resolver.notifyChange(Episodes.CONTENT_URI_WITHSHOW, null);
-                // don't overwrite failure
-                if (resultCode == UpdateResult.SUCCESS) {
-                    resultCode = resultTrakt;
-                }
-
-                // add newly discovered shows to database
-                if (showsNew.size() > 0) {
-                    List<SearchResult> showsNewList = new LinkedList<>(showsNew.values());
-                    TaskManager.getInstance(getContext()).performAddTask(showsNewList, true);
-                }
             }
 
             // renew search table if shows were updated and it will not be renewed by add task

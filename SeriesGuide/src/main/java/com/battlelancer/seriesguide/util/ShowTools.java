@@ -22,23 +22,21 @@ import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.backend.CloudEndpointUtils;
+import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.shows.Shows;
-import com.uwetrottmann.seriesguide.shows.model.CollectionResponseShow;
-import com.uwetrottmann.seriesguide.shows.model.Show;
-import com.uwetrottmann.seriesguide.shows.model.ShowList;
+import com.uwetrottmann.seriesguide.backend.shows.Shows;
+import com.uwetrottmann.seriesguide.backend.shows.model.Show;
+import com.uwetrottmann.seriesguide.backend.shows.model.ShowList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,44 +45,26 @@ import java.util.LinkedList;
 import java.util.List;
 import timber.log.Timber;
 
-import static com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult;
-
 /**
  * Common activities and tools useful when interacting with shows.
  */
 public class ShowTools {
 
+    private static final int SHOWS_MAX_BATCH_SIZE = 100;
+
     private static ShowTools _instance;
 
     private final Context mContext;
 
-    private final GoogleAccountCredential mCredential;
-
-    private final Shows mShowsService;
-
     public static synchronized ShowTools get(Context context) {
         if (_instance == null) {
-            _instance = new ShowTools(context);
+            _instance = new ShowTools(context.getApplicationContext());
         }
         return _instance;
     }
 
     private ShowTools(Context context) {
         mContext = context;
-
-        // get registered Google account
-        mCredential = GoogleAccountCredential.usingAudience(context, HexagonSettings.AUDIENCE);
-        setShowsServiceAccountName(HexagonSettings.getAccountName(context));
-
-        // build show service endpoint
-        Shows.Builder builder = new Shows.Builder(
-                AndroidHttp.newCompatibleTransport(), new GsonFactory(), mCredential
-        );
-        mShowsService = CloudEndpointUtils.updateBuilder(builder).build();
-    }
-
-    public void setShowsServiceAccountName(String accountName) {
-        mCredential.setSelectedAccountName(accountName);
     }
 
     /**
@@ -94,7 +74,7 @@ public class ShowTools {
      * @return One of {@link com.battlelancer.seriesguide.enums.NetworkResult}.
      */
     public int removeShow(int showTvdbId) {
-        if (isSignedIn()) {
+        if (HexagonTools.isSignedIn(mContext)) {
             if (!AndroidUtils.isNetworkConnected(mContext)) {
                 return NetworkResult.OFFLINE;
             }
@@ -102,16 +82,15 @@ public class ShowTools {
             sendIsRemoved(showTvdbId, true);
         }
 
-        // remove database entries in last stage, so if an earlier stage fails, user can at least try again
+        // remove database entries in stages, so if an earlier stage fails, user can at least try again
+        // also saves memory by applying batches early
 
-        // IMAGES
-        final ImageProvider imageProvider = ImageProvider.getInstance(mContext);
-
-        // remove episode images
+        // SEARCH DATABASE ENTRIES
         final Cursor episodes = mContext.getContentResolver().query(
-                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId), new String[]{
-                SeriesGuideContract.Episodes._ID, SeriesGuideContract.Episodes.IMAGE
-        }, null, null, null);
+                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId), new String[] {
+                        SeriesGuideContract.Episodes._ID
+                }, null, null, null
+        );
         if (episodes == null) {
             // failed
             return Result.ERROR;
@@ -119,34 +98,11 @@ public class ShowTools {
         List<String> episodeTvdbIds = new LinkedList<>(); // need those for search entries
         while (episodes.moveToNext()) {
             episodeTvdbIds.add(episodes.getString(0));
-            String imageUrl = episodes.getString(1);
-            if (!TextUtils.isEmpty(imageUrl)) {
-                imageProvider.removeImage(imageUrl);
-            }
         }
         episodes.close();
 
-        // remove show poster
-        final Cursor show = mContext.getContentResolver().query(
-                SeriesGuideContract.Shows.buildShowUri(showTvdbId),
-                new String[]{
-                        SeriesGuideContract.Shows.POSTER
-                }, null, null, null);
-        if (show == null || !show.moveToFirst()) {
-            // failed
-            return Result.ERROR;
-        }
-        String posterPath = show.getString(0);
-        if (!TextUtils.isEmpty(posterPath)) {
-            imageProvider.removeImage(posterPath);
-        }
-        show.close();
-
-        // DATABASE ENTRIES
-        // apply batches early to save memory
-        final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-
         // remove episode search database entries
+        final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         for (String episodeTvdbId : episodeTvdbIds) {
             batch.add(ContentProviderOperation.newDelete(
                     SeriesGuideContract.EpisodeSearch.buildDocIdUri(episodeTvdbId)).build());
@@ -159,6 +115,7 @@ public class ShowTools {
         }
         batch.clear();
 
+        // ACTUAL ENTITY ENTRIES
         // remove episodes, seasons and show
         batch.add(ContentProviderOperation.newDelete(
                 SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId)).build());
@@ -181,23 +138,23 @@ public class ShowTools {
     }
 
     /**
-     * Sends new removed flag, if signed in, up into the cloud.
+     * Sets the isRemoved flag of the given show on Hexagon.
+     *
+     * @param isRemoved If true, the show will not be auto-added on any device connected to
+     *                  Hexagon.
      */
     public void sendIsRemoved(int showTvdbId, boolean isRemoved) {
-        if (isSignedIn()) {
-            // send to cloud
-            Show show = new Show();
-            show.setTvdbId(showTvdbId);
-            show.setIsRemoved(isRemoved);
-            uploadShowAsync(show);
-        }
+        Show show = new Show();
+        show.setTvdbId(showTvdbId);
+        show.setIsRemoved(isRemoved);
+        uploadShowAsync(show);
     }
 
     /**
      * Saves new favorite flag to the local database and, if signed in, up into the cloud as well.
      */
     public void storeIsFavorite(int showTvdbId, boolean isFavorite) {
-        if (isSignedIn()) {
+        if (HexagonTools.isSignedIn(mContext)) {
             if (!Utils.isConnected(mContext, true)) {
                 return;
             }
@@ -222,7 +179,7 @@ public class ShowTools {
      * Saves new hidden flag to the local database and, if signed in, up into the cloud as well.
      */
     public void storeIsHidden(int showTvdbId, boolean isHidden) {
-        if (isSignedIn()) {
+        if (HexagonTools.isSignedIn(mContext)) {
             if (!Utils.isConnected(mContext, true)) {
                 return;
             }
@@ -247,14 +204,14 @@ public class ShowTools {
      * Saves new GetGlue id to the local database and, if signed in, up into the cloud as well.
      */
     public void storeGetGlueId(int showTvdbId, String getglueId) {
-        if (isSignedIn()) {
+        if (HexagonTools.isSignedIn(mContext)) {
             if (!Utils.isConnected(mContext, true)) {
                 return;
             }
             // send to cloud
             Show show = new Show();
             show.setTvdbId(showTvdbId);
-            show.setGetGlueId(getglueId);
+            show.setTvtagId(getglueId);
             uploadShowAsync(show);
         }
 
@@ -265,105 +222,95 @@ public class ShowTools {
                 .update(SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
     }
 
-    public boolean isSignedIn() {
-        return mCredential.getSelectedAccountName() != null;
-    }
-
     private void uploadShowAsync(Show show) {
-        List<Show> shows = new LinkedList<>();
-        shows.add(show);
-        new ShowsUploadTask(mContext, shows).execute();
+        AndroidUtils.executeOnPool(
+                new ShowsUploadTask(mContext, show)
+        );
     }
 
     private static class ShowsUploadTask extends AsyncTask<Void, Void, Void> {
 
         private final Context mContext;
 
-        private final List<Show> mShows;
+        private final Show mShow;
 
-        public ShowsUploadTask(Context context, List<Show> shows) {
+        public ShowsUploadTask(Context context, Show show) {
             mContext = context;
-            mShows = shows;
+            mShow = show;
         }
 
         @Override
         protected Void doInBackground(Void... params) {
+            List<Show> shows = new LinkedList<>();
+            shows.add(mShow);
 
-            Upload.shows(mContext, mShows);
+            Upload.toHexagon(mContext, shows);
 
             return null;
         }
-
     }
 
     public static class Upload {
 
         /**
-         * Tries to upload the given list of shows to Hexagon.
+         * Uploads all local shows to Hexagon.
+         */
+        public static boolean toHexagon(Context context) {
+            Timber.d("toHexagon: uploading all shows");
+            List<Show> shows = buildShowList(context);
+            if (shows == null) {
+                Timber.e("toHexagon: show query was null");
+                return false;
+            }
+            if (shows.size() == 0) {
+                Timber.d("toHexagon: no shows to upload");
+                // nothing to upload
+                return true;
+            }
+            return toHexagon(context, shows);
+        }
+
+        /**
+         * Uploads the given list of shows to Hexagon.
          *
          * @return One of {@link com.battlelancer.seriesguide.enums.Result}.
          */
-        public static int shows(Context context, List<Show> shows) {
-            int resultCode = Result.SUCCESS;
-
+        public static boolean toHexagon(Context context, List<Show> shows) {
             // wrap into helper object
             ShowList showList = new ShowList();
             showList.setShows(shows);
 
-            Timber.d("Uploading show(s)...");
-
             // upload shows
             try {
-                ShowTools.get(context).mShowsService.save(showList).execute();
+                HexagonTools.getShowsService(context).save(showList).execute();
             } catch (IOException e) {
-                Timber.e(e, "Uploading shows failed");
-                resultCode = Result.ERROR;
+                Timber.e(e, "toHexagon: failed to upload shows");
+                return false;
             }
 
-            Timber.d("Uploading show(s)...DONE");
-
-            return resultCode;
+            return true;
         }
 
-        /**
-         * Tries to upload all shows in the local database to Hexagon.
-         *
-         * @return 0 if successful, -1 if something went wrong.
-         */
-        public static int showsAll(Context context) {
-            return shows(context, getLocalShowsAsList(context));
-        }
-
-        public static List<Show> getLocalShowsAsList(Context context) {
-            return getSelectedLocalShowsAsList(context, null);
-        }
-
-        public static List<Show> getSelectedLocalShowsAsList(Context context,
-                HashSet<Integer> showTvdbIds) {
+        private static List<Show> buildShowList(Context context) {
             List<Show> shows = new LinkedList<>();
 
             Cursor query = context.getContentResolver()
-                    .query(SeriesGuideContract.Shows.CONTENT_URI, new String[]{
-                            SeriesGuideContract.Shows._ID, SeriesGuideContract.Shows.FAVORITE,
-                            SeriesGuideContract.Shows.HIDDEN, SeriesGuideContract.Shows.GETGLUEID,
-                            SeriesGuideContract.Shows.SYNCENABLED
+                    .query(SeriesGuideContract.Shows.CONTENT_URI, new String[] {
+                            SeriesGuideContract.Shows._ID,
+                            SeriesGuideContract.Shows.FAVORITE,
+                            SeriesGuideContract.Shows.HIDDEN,
+                            SeriesGuideContract.Shows.GETGLUEID
                     }, null, null, null);
             if (query == null) {
                 return null;
             }
 
             while (query.moveToNext()) {
-                int showTvdbId = query.getInt(0);
-                if (showTvdbIds != null && !showTvdbIds.contains(showTvdbId)) {
-                    // skip this show
-                    continue;
-                }
                 Show show = new Show();
-                show.setTvdbId(showTvdbId);
+                show.setTvdbId(query.getInt(0));
                 show.setIsFavorite(query.getInt(1) == 1);
                 show.setIsHidden(query.getInt(2) == 1);
-                show.setGetGlueId(query.getString(3));
-                show.setIsSyncEnabled(query.getInt(4) == 1);
+                show.setTvtagId(query.getString(3));
                 shows.add(show);
             }
 
@@ -380,87 +327,111 @@ public class ShowTools {
          * shows not yet in the local database, determined by the given TVDb id set, will be added
          * to the given map.
          */
-        public static UpdateResult syncRemoteShows(Context context,
-                HashSet<Integer> showsExisting, HashMap<Integer, SearchResult> showsNew) {
-            // download shows
-            List<Show> shows = getRemoteShows(context);
-            if (shows == null) {
-                // response got screwed up
-                return UpdateResult.INCOMPLETE;
-            }
-            if (shows.size() == 0) {
-                // no shows on hexagon, nothing to do
-                return UpdateResult.SUCCESS;
-            }
+        public static boolean fromHexagon(Context context, HashSet<Integer> existingShows,
+                HashMap<Integer, SearchResult> newShows, boolean hasMergedShows) {
+            List<Show> shows;
+            boolean hasMoreShows = true;
+            String cursor = null;
+            long currentTime = System.currentTimeMillis();
+            DateTime lastSyncTime = new DateTime(HexagonSettings.getLastShowsSyncTime(context));
 
-            // update all received shows, ContentProvider will ignore those not added locally
-            ArrayList<ContentProviderOperation> batch = buildShowUpdateOps(shows, showsExisting,
-                    showsNew);
-            try {
-                DBUtils.applyInSmallBatches(context, batch);
-            } catch (OperationApplicationException e) {
-                Timber.e(e, "Applying hexagon show updates failed");
-                return UpdateResult.INCOMPLETE;
+            if (hasMergedShows) {
+                Timber.d("fromHexagon: downloading changed shows since " + lastSyncTime);
+            } else {
+                Timber.d("fromHexagon: downloading all shows");
             }
 
-            return UpdateResult.SUCCESS;
-        }
+            while (hasMoreShows) {
+                // abort if connection is lost
+                if (!AndroidUtils.isNetworkConnected(context)) {
+                    Timber.e("fromHexagon: no network connection");
+                    return false;
+                }
 
-        /**
-         * Downloads a list of all shows on Hexagon.
-         */
-        public static List<Show> getRemoteShows(Context context) {
-            // download shows
-            Timber.d("Downloading shows from Hexagon...");
-            CollectionResponseShow remoteShows = null;
-            try {
-                remoteShows = ShowTools.get(context).mShowsService.list().execute();
-            } catch (IOException e) {
-                Timber.e(e, "Downloading shows failed");
+                try {
+                    Shows.Get request = HexagonTools.getShowsService(context).get()
+                            .setLimit(SHOWS_MAX_BATCH_SIZE);
+                    if (hasMergedShows) {
+                        // only get changed shows (otherwise returns all)
+                        request.setUpdatedSince(lastSyncTime);
+                    }
+                    if (!TextUtils.isEmpty(cursor)) {
+                        request.setCursor(cursor);
+                    }
+
+                    ShowList response = request.execute();
+                    if (response == null) {
+                        // we're done
+                        Timber.d("fromHexagon: response was null, done here");
+                        break;
+                    }
+
+                    shows = response.getShows();
+
+                    // check for more items
+                    if (response.getCursor() != null) {
+                        cursor = response.getCursor();
+                    } else {
+                        hasMoreShows = false;
+                    }
+                } catch (IOException e) {
+                    Timber.e(e, "fromHexagon: failed to download shows");
+                    return false;
+                }
+
+                if (shows == null || shows.size() == 0) {
+                    // nothing to do here
+                    break;
+                }
+
+                // update all received shows, ContentProvider will ignore those not added locally
+                ArrayList<ContentProviderOperation> batch = buildShowUpdateOps(shows, existingShows,
+                        newShows, !hasMergedShows);
+
+                try {
+                    DBUtils.applyInSmallBatches(context, batch);
+                } catch (OperationApplicationException e) {
+                    Timber.e(e, "fromHexagon: applying show updates failed");
+                    return false;
+                }
             }
-            Timber.d("Downloading shows from Hexagon...DONE");
 
-            // abort if no response
-            if (remoteShows == null) {
-                return null;
+            if (hasMergedShows) {
+                // set new last sync time
+                PreferenceManager.getDefaultSharedPreferences(context)
+                        .edit()
+                        .putLong(HexagonSettings.KEY_LAST_SYNC_SHOWS, currentTime)
+                        .commit();
             }
 
-            // no remote shows
-            if (remoteShows.getItems() == null) {
-                // return empty list
-                return new LinkedList<>();
-            }
-
-            // extract list of remote shows
-            return remoteShows.getItems();
+            return true;
         }
 
         private static ArrayList<ContentProviderOperation> buildShowUpdateOps(List<Show> shows,
-                HashSet<Integer> showsExisting, HashMap<Integer, SearchResult> showsNew) {
+                HashSet<Integer> existingShows, HashMap<Integer, SearchResult> newShows,
+                boolean mergeValues) {
             ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
             ContentValues values = new ContentValues();
             for (Show show : shows) {
-                // skip shows not in local database
-                if (!showsExisting.contains(show.getTvdbId())) {
-                    // skip shows flagged as removed
+                // schedule to add shows not in local database
+                if (!existingShows.contains(show.getTvdbId())) {
+                    // ...but do NOT add shows marked as removed
                     if (show.getIsRemoved() != null && show.getIsRemoved()) {
                         continue;
                     }
 
-                    if (!showsNew.containsKey(show.getTvdbId())) {
-                        // add show later
+                    if (!newShows.containsKey(show.getTvdbId())) {
                         SearchResult item = new SearchResult();
                         item.tvdbid = show.getTvdbId();
                         item.title = "";
-                        showsNew.put(show.getTvdbId(), item);
+                        newShows.put(show.getTvdbId(), item);
                     }
 
-                    // do not create an update op for show
                     continue;
                 }
 
-                putSyncedShowPropertyValues(show, values);
+                buildShowPropertyValues(show, values, mergeValues);
 
                 // build update op
                 if (values.size() > 0) {
@@ -477,28 +448,54 @@ public class ShowTools {
             return batch;
         }
 
-        private static void putSyncedShowPropertyValues(Show show, ContentValues values) {
-            putPropertyValueIfNotNull(values, SeriesGuideContract.Shows.FAVORITE, show.getIsFavorite());
-            putPropertyValueIfNotNull(values, SeriesGuideContract.Shows.HIDDEN, show.getIsHidden());
-            putPropertyValueIfNotNull(values, SeriesGuideContract.Shows.SYNCENABLED,
-                    show.getIsSyncEnabled());
-            putPropertyValueIfNotNull(values, SeriesGuideContract.Shows.GETGLUEID, show.getGetGlueId());
-        }
-
-        private static void putPropertyValueIfNotNull(ContentValues values, String key,
-                Boolean value) {
-            if (value != null) {
-                values.put(key, value);
+        /**
+         * @param mergeValues If set, only overwrites property if remote show property has a
+         *                    certain value.
+         */
+        private static void buildShowPropertyValues(Show show, ContentValues values,
+                boolean mergeValues) {
+            if (show.getIsFavorite() != null) {
+                // when merging, favorite shows, but never unfavorite them
+                if (!mergeValues || show.getIsFavorite()) {
+                    values.put(SeriesGuideContract.Shows.FAVORITE, show.getIsFavorite());
+                }
+            }
+            if (show.getIsHidden() != null) {
+                // when merging, un-hide shows, but never hide them
+                if (!mergeValues || !show.getIsHidden()) {
+                    values.put(SeriesGuideContract.Shows.HIDDEN, show.getIsHidden());
+                }
+            }
+            if (show.getTvtagId() != null) {
+                // always overwrite with the hexagon tvtag id
+                values.put(SeriesGuideContract.Shows.GETGLUEID, show.getTvtagId());
             }
         }
 
-        private static void putPropertyValueIfNotNull(ContentValues values, String key,
-                String value) {
-            if (value != null) {
-                values.put(key, value);
+        /**
+         * If the given show exists on Hexagon, downloads and sets properties from Hexagon on the
+         * given show entity.
+         *
+         * <p> <b>Note:</b> Ensure the given show has a valid TVDb id.
+         */
+        public static void showPropertiesFromHexagon(Context context,
+                com.battlelancer.seriesguide.dataliberation.model.Show show) throws IOException {
+            Show hexagonShow = HexagonTools.getShowsService(context)
+                    .getShow()
+                    .setShowTvdbId(show.tvdbId)
+                    .execute();
+            if (hexagonShow != null) {
+                if (hexagonShow.getIsFavorite() != null) {
+                    show.favorite = hexagonShow.getIsFavorite();
+                }
+                if (hexagonShow.getIsHidden() != null) {
+                    show.hidden = hexagonShow.getIsHidden();
+                }
+                if (hexagonShow.getTvtagId() != null) {
+                    show.checkInGetGlueId = hexagonShow.getTvtagId();
+                }
             }
         }
-
     }
 
     /**
@@ -510,7 +507,7 @@ public class ShowTools {
         HashSet<Integer> existingShows = new HashSet<>();
 
         Cursor shows = context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,
-                new String[]{SeriesGuideContract.Shows._ID}, null, null, null);
+                new String[] { SeriesGuideContract.Shows._ID }, null, null, null);
         if (shows == null) {
             return null;
         }
@@ -523,5 +520,4 @@ public class ShowTools {
 
         return existingShows;
     }
-
 }

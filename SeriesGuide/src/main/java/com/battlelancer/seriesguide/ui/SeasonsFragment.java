@@ -24,6 +24,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
@@ -48,12 +50,11 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
-import com.battlelancer.seriesguide.util.FlagTask.SeasonWatchedType;
+import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.EpisodeTools.SeasonWatchedType;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
@@ -114,7 +115,7 @@ public class SeasonsFragment extends ListFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.seasons_fragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_seasons, container, false);
 
         mButtonWatchedAll = (ImageView) v.findViewById(R.id.imageViewSeasonsWatchedToggle);
         mButtonCollectedAll = (ImageView) v.findViewById(R.id.imageViewSeasonsCollectedToggle);
@@ -294,12 +295,15 @@ public class SeasonsFragment extends ListFragment implements
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    public void onListItemClick(ListView l, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), EpisodesActivity.class);
-
         intent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID, (int) id);
-        startActivity(intent);
-        getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
+
+        ActivityCompat.startActivity(getActivity(), intent,
+                ActivityOptionsCompat
+                        .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                        .toBundle()
+        );
     }
 
     @Override
@@ -336,7 +340,8 @@ public class SeasonsFragment extends ListFragment implements
                         return true;
                     }
                     case R.id.menu_action_seasons_manage_lists: {
-                        ListsDialogFragment.showListsDialog(seasonTvdbId, ListItemTypes.SEASON,
+                        ManageListsDialogFragment.showListsDialog(seasonTvdbId,
+                                ListItemTypes.SEASON,
                                 getFragmentManager());
                         fireTrackerEventContextMenu("Manage lists");
                         return true;
@@ -353,28 +358,24 @@ public class SeasonsFragment extends ListFragment implements
     }
 
     private void onFlagSeasonSkipped(long seasonId, int seasonNumber) {
-        new FlagTask(getActivity(), getShowId())
-                .seasonWatched((int) seasonId, seasonNumber, EpisodeFlags.SKIPPED)
-                .execute();
+        EpisodeTools.seasonWatched(getActivity(), getShowId(), (int) seasonId, seasonNumber,
+                EpisodeFlags.SKIPPED);
     }
 
     /**
      * Changes the seasons episodes watched flags, updates the status label of the season.
      */
     private void onFlagSeasonWatched(long seasonId, int seasonNumber, boolean isWatched) {
-        new FlagTask(getActivity(), getShowId())
-                .seasonWatched((int) seasonId, seasonNumber,
-                        isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED)
-                .execute();
+        EpisodeTools.seasonWatched(getActivity(), getShowId(), (int) seasonId, seasonNumber,
+                isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
     }
 
     /**
      * Changes the seasons episodes collected flags.
      */
     private void onFlagSeasonCollected(long seasonId, int seasonNumber, boolean isCollected) {
-        new FlagTask(getActivity(), getShowId())
-                .seasonCollected((int) seasonId, seasonNumber, isCollected)
-                .execute();
+        EpisodeTools.seasonCollected(getActivity(), getShowId(), (int) seasonId, seasonNumber,
+                isCollected);
     }
 
     /**
@@ -382,9 +383,7 @@ public class SeasonsFragment extends ListFragment implements
      * all seasons.
      */
     private void onFlagShowWatched(boolean isWatched) {
-        new FlagTask(getActivity(), getShowId())
-                .showWatched(isWatched)
-                .execute();
+        EpisodeTools.showWatched(getActivity(), getShowId(), isWatched);
     }
 
     /**
@@ -392,9 +391,7 @@ public class SeasonsFragment extends ListFragment implements
      * all seasons.
      */
     private void onFlagShowCollected(boolean isCollected) {
-        new FlagTask(getActivity(), getShowId())
-                .showCollected(isCollected)
-                .execute();
+        EpisodeTools.showCollected(getActivity(), getShowId(), isCollected);
     }
 
     /**
@@ -575,16 +572,16 @@ public class SeasonsFragment extends ListFragment implements
         getActivity().invalidateOptionsMenu();
     }
 
-    public void onEvent(FlagTaskCompletedEvent event) {
+    public void onEvent(EpisodeTools.EpisodeActionCompletedEvent event) {
         /**
          * Updates the total remaining episodes counter, updates season
          * counters.
          */
         if (isAdded()) {
             onLoadRemainingCounter();
-            if (event.mType instanceof SeasonWatchedType) {
+            if (event.mType instanceof EpisodeTools.SeasonWatchedType) {
                 // If we can narrow it down to just one season...
-                SeasonWatchedType seasonWatchedType = (SeasonWatchedType) event.mType;
+                EpisodeTools.SeasonWatchedType seasonWatchedType = (SeasonWatchedType) event.mType;
                 Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()),
                         String.valueOf(seasonWatchedType.getSeasonTvdbId()));
                 t.start();

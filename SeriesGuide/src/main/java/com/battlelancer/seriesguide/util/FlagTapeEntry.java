@@ -17,7 +17,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
 import java.io.Serializable;
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class FlagTapeEntry implements Serializable {
         }
     }
 
-    public FlagTapeEntry(FlagAction action, int showId, List<FlagTapeEntry.Flag> flags,
+    public FlagTapeEntry(EpisodeTools.EpisodeAction action, int showId, List<FlagTapeEntry.Flag> flags,
             boolean isFlag) {
         this.action = action;
         this.showId = showId;
@@ -46,7 +45,7 @@ public class FlagTapeEntry implements Serializable {
         this.isFlag = isFlag;
     }
 
-    public FlagAction action;
+    public EpisodeTools.EpisodeAction action;
     public int showId;
     public List<FlagTapeEntry.Flag> flags;
     public boolean isFlag;
