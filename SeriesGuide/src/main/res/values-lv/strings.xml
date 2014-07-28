@@ -234,6 +234,7 @@
   <string name="list_item_manage">Pārvaldīt sarakstus</string>
   <string name="list_item_remove">Noņemt no saraksta</string>
   <string name="list_empty">Tu vari pievienot šovus, sezonas vai epizodes šim sarakstam.</string>
+  <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Uzstādi SeriesGuide mākoni</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
   <string name="hexagon_warning_lists">Lists are not included.</string>

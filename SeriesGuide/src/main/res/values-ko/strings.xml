@@ -234,6 +234,7 @@
   <string name="list_item_manage">목록 관리</string>
   <string name="list_item_remove">목록에서 제거</string>
   <string name="list_empty">쇼, 시즌 혹은 에피소드를 목록에 추가할 수 있습니다.</string>
+  <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">시리즈가이드 클라우드 설정</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
   <string name="hexagon_warning_lists">Lists are not included.</string>

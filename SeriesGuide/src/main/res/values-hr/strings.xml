@@ -234,6 +234,7 @@
   <string name="list_item_manage">Uredi popise</string>
   <string name="list_item_remove">Ukloni s popisa</string>
   <string name="list_empty">Možeš dodati serije, sezone ili epizode na ovaj popis.</string>
+  <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Napravite SeriesGuide oblak.</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
   <string name="hexagon_warning_lists">Lists are not included.</string>

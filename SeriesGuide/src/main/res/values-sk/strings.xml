@@ -234,6 +234,7 @@
   <string name="list_item_manage">Spravovať zoznamy</string>
   <string name="list_item_remove">Odstrániť zo zoznamu</string>
   <string name="list_empty">Do tohto zoznamu môžete pridať seriály, sezóny alebo epizódy.</string>
+  <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Set up SeriesGuide cloud</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
   <string name="hexagon_warning_lists">Lists are not included.</string>

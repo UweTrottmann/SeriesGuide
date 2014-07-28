@@ -5,8 +5,21 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 16 *(in development)*
+Version 16 *(2014-07-28)*
 -----------------------------
+
+* Cast and crew info with photos and biography for shows and movies.
+* Added some movie statistics.
+* trakt activity streams display items manually marked as watched.
+* Fixed notification text color on Android Wear devices.
+* Improved image loading, using Android designated cache folders.
+* Dropped dedicated check-in screen.
+* SeriesGuide Cloud experiment: save and sync shows and movies. (If connected to trakt at the same time, will only sync with SeriesGuide Cloud. Check-Ins, marking watched/collected still sent to trakt.)
+
+#### 16 *(2014-07-28)*
+
+* FIX List widget poster placeholder icon cut off.
+* NOTICE Latest translations from crowdin.
 
 #### 16-beta8 *(2014-07-24)*
 
