@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_padding"
             android:text="@string/hexagon_warning"
-            android:textAppearance="@style/TextAppearance.Small.Highlight.Blue" />
+            android:textAppearance="@style/TextAppearance.Small.Highlight.Red" />
 
         <TextView
             android:id="@+id/textViewCloudDescription"

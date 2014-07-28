@@ -25,7 +25,6 @@
     <string name="backup_legacy_warning">This is the legacy backup system. It will get removed with a future update. If you want to restore an old backup, now would be the time. You can then export again using the new export tool.</string>
 	<string name="not_available">n/a</string>
     <string name="hexagon_short">Cloud beta</string>
-    <string name="hexagon_warning">Experimental! Might kill kittens!</string>
 
     <!-- Internal -->
     <string name="menu_action_extensions_enable_debug">[Debug] Enable extensions</string>

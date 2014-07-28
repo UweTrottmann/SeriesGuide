@@ -234,6 +234,7 @@
   <string name="list_item_manage">Administrer lister</string>
   <string name="list_item_remove">Fjern fra liste</string>
   <string name="list_empty">Du kan tilføje serier, sæsoner eller episoder til denne liste.</string>
+  <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Opsæt SeriesGuide sky</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
   <string name="hexagon_warning_lists">Lists are not included.</string>

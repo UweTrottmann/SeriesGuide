@@ -25,7 +25,7 @@
   <string name="discard">Negeren</string>
   <string name="save_selection">Selectie bewaren</string>
   <string name="search_hint">Afleveringen zoeken</string>
-  <string name="action_display_all">Show all</string>
+  <string name="action_display_all">Toon alles</string>
   <string name="updated">Nieuwste versie is geïnstaleerd.</string>
   <string name="norating">n.v.t.</string>
   <string name="unknown">onbekend</string>
@@ -34,7 +34,7 @@
   <string name="app_not_available">Geen app beschikbaar voor deze actie.</string>
   <string name="onlyx">Enkel beschikbaar met X-abonnement</string>
   <string name="add_empty">Er zijn geen series hier.</string>
-  <string name="people_empty">Nobody here?! Touch to try again.</string>
+  <string name="people_empty">Niemand?! Probeer opnieuw.</string>
   <string name="share_show">Serie delen</string>
   <string name="share_episode">Aflevering delen</string>
   <string name="share_movie">Film delen</string>
@@ -96,7 +96,7 @@
   </plurals>
   <string name="your_rating">Uw beoordeling</string>
   <string name="love">Zeer goed!</string>
-  <string name="hate">Zwak</string>
+  <string name="hate">Slappe hap :(</string>
   <string name="rating2">Verschrikkelijk</string>
   <string name="rating3">Slecht</string>
   <string name="rating4">Zwak</string>
@@ -234,19 +234,20 @@
   <string name="list_item_manage">Lijsten beheren</string>
   <string name="list_item_remove">Verwijderen uit lijst</string>
   <string name="list_empty">U kunt series, seizoenen of afleveringen toevoegen aan deze lijst.</string>
+  <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">SeriesGuide Cloud instellen</string>
-  <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
-  <string name="hexagon_warning_lists">Lists are not included.</string>
-  <string name="hexagon_warning_trakt">When using SeriesGuide cloud, changes on trakt will not sync down to SeriesGuide.</string>
+  <string name="hexagon_description">Maak verbinding met de cloud zodat je een backup kunt maken van je series en films.</string>
+  <string name="hexagon_warning_lists">Exclusief lijsten.</string>
+  <string name="hexagon_warning_trakt">Als je SeriesGuide cloud gebruikt, worden aanpassingen in trakt niet terug gesynchroniseerd met SeriesGuide.</string>
   <string name="hexagon_signin">Log in</string>
   <string name="hexagon_signed_in">U bent verbonden met de SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Uitloggen</string>
   <string name="hexagon_setup_incomplete">SeriesGuide cloud instellen is niet afgerond.</string>
-  <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
-  <string name="hexagon_remove_account">Remove account</string>
-  <string name="hexagon_remove_account_success">Account obliterated.</string>
-  <string name="hexagon_remove_account_failure">Could not remove account.</string>
-  <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide cloud. Make sure to remove it on other connected devices as well.</string>
+  <string name="hexagon_setup_fail_auth">Je Google account is niet verbonden.</string>
+  <string name="hexagon_remove_account">Verwijder account</string>
+  <string name="hexagon_remove_account_success">Account vernietigd.</string>
+  <string name="hexagon_remove_account_failure">Kan de account niet verwijderen.</string>
+  <string name="hexagon_remove_account_confirmation">Uw account verwijderen zorgt er voor dat alle series en films van SeriesGuide cloud worden verwijderd. Vergeet niet om andere gekoppelde apparaten ook te wissen.</string>
   <string name="connect_trakt">Verbinden met trakt</string>
   <string name="connect_trakt_done">Verbonden met trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide zal nu de shows en films op dit apparaat synchroniseren met Trakt. Dit kan enige tijd duren.</string>
@@ -454,5 +455,5 @@
   <string name="extension_youtube">Zoek op YouTube</string>
   <string name="description_extension_youtube">Zoek op YouTube voor video\'s</string>
   <string name="description_extension_web_search">Zoek naar websites en afbeeldingen</string>
-  <string name="person_biography">Biography</string>
+  <string name="person_biography">Biografie</string>
 </resources>

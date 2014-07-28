@@ -234,6 +234,7 @@
   <string name="list_item_manage">Редактировать списки</string>
   <string name="list_item_remove">Удалить из списка</string>
   <string name="list_empty">Сериалы, сезоны или эпизоды можно добавить в этот список.</string>
+  <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Настройка SeriesGuide облако</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
   <string name="hexagon_warning_lists">Lists are not included.</string>

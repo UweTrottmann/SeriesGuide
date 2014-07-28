@@ -234,6 +234,7 @@
   <string name="list_item_manage">Управљање листама</string>
   <string name="list_item_remove">Уклони са листе</string>
   <string name="list_empty">Можете да додате серије, сезоне или епизоде на листу.</string>
+  <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Подеси SeriesGuide Облак сервис</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
   <string name="hexagon_warning_lists">Lists are not included.</string>

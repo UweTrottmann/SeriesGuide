@@ -234,6 +234,7 @@
   <string name="list_item_manage">Gestionar listas</string>
   <string name="list_item_remove">Eliminar de la lista</string>
   <string name="list_empty">Puedes agregar series, temporadas o episodios a la lista.</string>
+  <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configurar SeriesGuide cloud</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
   <string name="hexagon_warning_lists">Lists are not included.</string>

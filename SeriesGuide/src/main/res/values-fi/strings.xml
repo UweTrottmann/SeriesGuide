@@ -234,6 +234,7 @@
   <string name="list_item_manage">Hallitse listoja</string>
   <string name="list_item_remove">Poista listalta</string>
   <string name="list_empty">Voit lisätä ohjelmia, kausia tai jaksoja tähän listaan.</string>
+  <string name="hexagon_warning">Kokeellista ja helposti syttyvää!</string>
   <string name="hexagon_setup">Määritä SeriesGuide-pilvi</string>
   <string name="hexagon_description">Voit varmuuskopioida ja synkronoida ohjelmasi ja elokuvasi yhdistämällä pilvipalveluun.</string>
   <string name="hexagon_warning_lists">Listoja ei näytetä.</string>
@@ -242,7 +243,7 @@
   <string name="hexagon_signed_in">Olet yhteydessä SeriesGuide-pilveen.</string>
   <string name="hexagon_signout">Kirjaudu ulos</string>
   <string name="hexagon_setup_incomplete">SeriesGuide-pilven määrittäminen epäonnistui.</string>
-  <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
+  <string name="hexagon_setup_fail_auth">Google-tiliäsi ei ole tarkistettu.</string>
   <string name="hexagon_remove_account">Poista tili</string>
   <string name="hexagon_remove_account_success">Tili poistettu.</string>
   <string name="hexagon_remove_account_failure">Tiliä ei voitu poistaa.</string>

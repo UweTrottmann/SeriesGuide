@@ -234,6 +234,7 @@
   <string name="list_item_manage">Gestionați listele</string>
   <string name="list_item_remove">Eliminaţi din listă</string>
   <string name="list_empty">Puteţi adăuga emisiuni, sezoane sau episoade la această listă.</string>
+  <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Set up SeriesGuide cloud</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
   <string name="hexagon_warning_lists">Lists are not included.</string>

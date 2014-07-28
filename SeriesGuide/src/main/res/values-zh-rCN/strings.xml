@@ -44,7 +44,7 @@
   <string name="shout">提交</string>
   <string name="isspoiler">!!!! 剧透警告 !!!!</string>
   <string name="no_shouts">抢沙发！</string>
-  <string name="refresh">刷新</string>
+  <string name="refresh">重新载入</string>
   <string name="movies_collection">收藏</string>
   <string name="movies_watchlist">待看列表</string>
   <string name="watchlist_add">加入待看列表</string>
@@ -58,7 +58,7 @@
   <string name="trailer">预告片</string>
   <string name="movie_cast">演员</string>
   <string name="movie_crew">摄制组</string>
-  <string name="action_movies_sort">电影排序依据</string>
+  <string name="action_movies_sort">重新排序</string>
   <string name="action_movies_sort_title">按名称</string>
   <string name="action_movies_sort_release">按上映日期</string>
   <string name="statistics_shows">电视节目总数</string>
@@ -133,7 +133,7 @@
   <string name="services_watch">在线观看</string>
   <string name="services_more">更多</string>
   <string name="sort">排序依据</string>
-  <string name="action_sort_ignore_articles">忽略冠词 (the)</string>
+  <string name="action_sort_ignore_articles">忽略起始冠词</string>
   <string name="today">今天</string>
   <string name="now">现在</string>
   <string name="daily">每日</string>
@@ -167,10 +167,10 @@
   <string name="delete_show">移除</string>
   <string name="dontdelete_show">保留</string>
   <string name="no_nextepisode">没有新剧集信息</string>
-  <string name="context_favorite">加入喜爱列表</string>
-  <string name="context_unfavorite">移出喜爱列表</string>
-  <string name="favorited">已添加到喜爱列表</string>
-  <string name="unfavorited">已从喜爱列表移除</string>
+  <string name="context_favorite">标记为喜爱</string>
+  <string name="context_unfavorite">取消喜爱标记</string>
+  <string name="favorited">已标记为喜爱的节目。</string>
+  <string name="unfavorited">已移除节目的喜爱标记。</string>
   <string name="context_hide">隐藏</string>
   <string name="context_unhide">取消隐藏</string>
   <string name="hidden">已隐藏选中的节目</string>
@@ -178,14 +178,14 @@
   <string name="action_shows_add">添加节目</string>
   <string name="action_shows_filter">筛选条件</string>
   <string name="empty_filter">清除筛选条件</string>
-  <string name="action_shows_filter_favorites">标记为喜爱</string>
-  <string name="action_shows_filter_unwatched">标记为未观看</string>
-  <string name="action_shows_filter_upcoming">即将播出</string>
-  <string name="action_shows_filter_hidden">标记为隐藏</string>
-  <string name="action_shows_sort">列表排序</string>
-  <string name="action_shows_sort_title">按剧集名称</string>
-  <string name="action_shows_sort_episode">按下一集时间</string>
-  <string name="action_shows_sort_favorites">按喜爱状态</string>
+  <string name="action_shows_filter_favorites">已被标记为喜爱</string>
+  <string name="action_shows_filter_unwatched">仍有未观看剧集</string>
+  <string name="action_shows_filter_upcoming">将在时限内播出</string>
+  <string name="action_shows_filter_hidden">已被标记为隐藏</string>
+  <string name="action_shows_sort">重新排序</string>
+  <string name="action_shows_sort_title">依据节目名称</string>
+  <string name="action_shows_sort_episode">依据下集时间</string>
+  <string name="action_shows_sort_favorites">依据喜爱状态</string>
   <string name="updateall_yes">更新所有节目</string>
   <string name="menu_update_delta">更新过期节目</string>
   <string name="context_updateshow">更新</string>
@@ -201,8 +201,8 @@
   <string name="norecent">没有近期已播出的剧集</string>
   <string name="only_favorites">仅显示喜爱节目</string>
   <string name="togglewatched">切换观看状态</string>
-  <string name="pref_infinite_scrolling">无限滚动列表</string>
-  <string name="action_activity_filter">过滤器</string>
+  <string name="pref_infinite_scrolling">紧凑的无限列表</string>
+  <string name="action_activity_filter">列表选项</string>
   <string name="update_scheduled">正在更新…</string>
   <string name="update_no_connection">要执行更新操作，请连接互联网。</string>
   <string name="update_inprogress">更新正在进行，请稍后重试。</string>
@@ -234,6 +234,7 @@
   <string name="list_item_manage">管理列表</string>
   <string name="list_item_remove">移出列表</string>
   <string name="list_empty">请将节目或剧集添加到列表</string>
+  <string name="hexagon_warning">这是一个实验性功能！</string>
   <string name="hexagon_setup">设置 SeriesGuide 云服务</string>
   <string name="hexagon_description">连接到云服务来备份或同步节目和电影。</string>
   <string name="hexagon_warning_lists">注意：列表不包括在备份或同步中。</string>
@@ -242,14 +243,14 @@
   <string name="hexagon_signed_in">已关联 SeriesGuide 云服务。</string>
   <string name="hexagon_signout">注销</string>
   <string name="hexagon_setup_incomplete">无法设置 SeriesGuide 云同步服务</string>
-  <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
-  <string name="hexagon_remove_account">删除用户</string>
+  <string name="hexagon_setup_fail_auth">处理 Google 帐户关联时出现问题！</string>
+  <string name="hexagon_remove_account">删除帐户</string>
   <string name="hexagon_remove_account_success">用户数据已删除。</string>
-  <string name="hexagon_remove_account_failure">无法删除此用户。</string>
-  <string name="hexagon_remove_account_confirmation">删除用户会同时删除您以此身份储存的所有数据，包括在线备份的节目和电影。一旦您在此设备上完成删除，请记得从其它已同步设备上删除相同的 SeriesGuide 云服务用户。</string>
-  <string name="connect_trakt">关联 trakt 用户</string>
+  <string name="hexagon_remove_account_failure">无法删除帐户。</string>
+  <string name="hexagon_remove_account_confirmation">删除帐户会同时删除您储存的所有数据，包括在线备份的节目和电影。一旦您在此设备上完成删除，请记得从其它已同步设备上删除相同的 SeriesGuide 云服务帐户。</string>
+  <string name="connect_trakt">关联 trakt 帐户</string>
   <string name="connect_trakt_done">trakt 已关联</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide 会将此设备上的电视节目和电影数据与您的 trakt 用户同步，这需要几分钟的时间。</string>
+  <string name="connect_trakt_done_explanation">SeriesGuide 会将此设备上的电视节目和电影数据与您的 trakt 帐户同步，这需要几分钟的时间。</string>
   <string name="add_trakt_shows">同时，您也可以添加来自 trakt 资料库中先前观看的节目。</string>
   <string name="show_library">显示资料库</string>
   <string name="about_trakt">trakt 会记录您已观看的电影和电视节目。\n<a href="http://trakt.tv">了解详情</a></string>
@@ -271,7 +272,7 @@
   <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">断开与 tvtag 的关联</string>
   <string name="clearGetGlueCredentialssummary">再次于 tvtag 上签到才能重新关联</string>
-  <string name="pref_traktsummary">关联或编辑 trakt 用户</string>
+  <string name="pref_traktsummary">添加或编辑 trakt 帐户信息</string>
   <string name="feedback">发送反馈报告</string>
   <string name="pref_autoaddshows">添加来自 trakt 的节目</string>
   <string name="pref_autoaddshowssummary">自动从 trakt 用户数据中添加节目</string>
@@ -305,16 +306,16 @@
   <string name="pref_autobackupsummary">每周生成一次备份</string>
   <string name="backup">备份与还原</string>
   <string name="backup_summary">备份或还原节目单</string>
-  <string name="pref_upcominglimit">「即将播出」的时间区间</string>
+  <string name="pref_upcominglimit">筛选将要播出节目的时限</string>
   <string name="pref_number">序号格式</string>
   <string name="pref_offset">手动偏移播出时间</string>
   <string name="pref_offsetsummary">显示时间与原播出时间相差 %s 小时</string>
   <string name="clear_cache">清理图片缓存</string>
   <string name="clear_cache_summary">删除所有节目的截图和海报</string>
   <string name="pref_ganalyticssummary">发送匿名的使用情况报告</string>
-  <string name="backup_description"><b>备份</b>将储存所有节目数据到一个 JSON 文件里。<b>还原</b>时需要含有数据库的 JSON 文件。</string>
+  <string name="backup_description"><b>备份</b>将导出数据库 (JSON) 至以下路径。\n<b>还原</b>需要在以下路径中放置旧数据库。</string>
   <string name="backup_full_dump">备份时包含所有「元数据」，例如节目简介、演员和评分。</string>
-  <string name="backup_path">备份路径：</string>
+  <string name="backup_path">备份/还原数据库的路径</string>
   <string name="backup_version">数据库版本</string>
   <string name="backup_failed_nosd">无法创建备份，备份文件夹不可用。</string>
   <string name="backup_inprogress">正在写入文件……</string>
@@ -344,7 +345,7 @@
   <string name="paste_title">粘贴名称</string>
   <string name="checkinsuccess">已在 tvtag 上为 %s 签到。</string>
   <string name="checkinfailed">无法完成 tvtag 签到</string>
-  <string name="getglue_authentication">关联 tvtag 用户</string>
+  <string name="getglue_authentication">关联 tvtag 帐户</string>
   <string name="getglue_authfailed">tvtag 用户认证失败，请稍后重试。</string>
   <string name="checkin_success_trakt">已在 trakt 上为 %s 签到。</string>
   <string name="checkin_canceled_success_trakt">已取消 trakt 上的签到。</string>
@@ -378,7 +379,7 @@
   <string name="upcoming_show_detailed">%1$s 在 %2$s</string>
   <string name="more">还有 %s 个项目</string>
   <string name="upcoming_display">选中来显示即将播出的节目</string>
-  <string name="pref_notifications">即时通知</string>
+  <string name="pref_notifications">通知</string>
   <string name="pref_notificationssummary">新剧集开始播出时显示通知</string>
   <string name="pref_notifyfavonly">忽略非喜爱节目</string>
   <string name="pref_notifyfavonlysummary">仅为标记为喜爱的节目显示通知</string>
@@ -398,7 +399,7 @@
   <string name="hide_watched">隐藏已观看剧集</string>
   <string name="pref_widget_opacity">小部件背景</string>
   <string-array name="widgetOpacity">
-    <item>透明度</item>
+    <item>透明</item>
     <item>黑色 25%</item>
     <item>黑色 50%</item>
     <item>黑色 75%</item>
@@ -408,7 +409,7 @@
   <string-array name="widgetType">
     <item>即将播出</item>
     <item>已播剧集</item>
-    <item>喜爱</item>
+    <item>喜爱节目</item>
   </string-array>
   <string name="dashclock_extension_label">即将播出</string>
   <string name="dashclock_extension_description">显示 SeriesGuide 节目单中即将播出的剧集</string>
@@ -430,7 +431,7 @@
   <string name="billing_action_pass">购买 SeriesGuide X</string>
   <string name="billing_price_subscribe">%s/年（包含 30 天试用期）</string>
   <string name="billing_price_pass">一次性支付</string>
-  <string name="upgrade_description">\n解锁通知、更多小部件和未来所有高级功能，并支持开发者的工作。\n\n如果您已经购买了 SeriesGuide X 密匙，安装它即可完成解锁。</string>
+  <string name="upgrade_description">\n解锁通知、小部件和更多高级功能，并支持开发者的工作。\n\n如果您已经购买了 SeriesGuide X 密匙，安装它即可完成解锁。</string>
   <string name="upgrade_success">非常感谢您的支持！高级功能已解锁。</string>
   <string name="billing_learn_more">升级为专业版有哪些优势？</string>
   <string name="subscription_activated">您已升级为专业版。</string>
