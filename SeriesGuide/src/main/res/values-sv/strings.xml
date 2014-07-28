@@ -235,6 +235,7 @@
   <string name="list_item_manage">Hantera listor</string>
   <string name="list_item_remove">Ta bort från lista</string>
   <string name="list_empty">Du kan lägga till serier, säsonger eller avsnitt till denna lista.</string>
+  <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Ställa in SeriesGuide moln</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
   <string name="hexagon_warning_lists">Lists are not included.</string>

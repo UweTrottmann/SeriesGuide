@@ -234,6 +234,7 @@
   <string name="list_item_manage">Tvarkyti sąrašus</string>
   <string name="list_item_remove">Pašalinti iš sąrašo</string>
   <string name="list_empty">Į šį sąrašą galite įtraukti serialus, sezonus arba serijas.</string>
+  <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Set up SeriesGuide cloud</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
   <string name="hexagon_warning_lists">Lists are not included.</string>

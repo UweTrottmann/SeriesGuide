@@ -25,7 +25,7 @@
   <string name="discard">Відмінити</string>
   <string name="save_selection">Зберегти вибране</string>
   <string name="search_hint">Пошук серій</string>
-  <string name="action_display_all">Show all</string>
+  <string name="action_display_all">Показати все</string>
   <string name="updated">Оновлено до останньої версії.</string>
   <string name="norating">Нема даних</string>
   <string name="unknown">Невідомо</string>
@@ -34,7 +34,7 @@
   <string name="app_not_available">Немає доступних програм, щоб впоратися з цим.</string>
   <string name="onlyx">Доступно тільки з версією X Підписки</string>
   <string name="add_empty">Тут немає жодного серіалу.</string>
-  <string name="people_empty">Nobody here?! Touch to try again.</string>
+  <string name="people_empty">Нікого тут немає?! Натисніть щоб спробувати ще раз.</string>
   <string name="share_show">Поділитись фільмом</string>
   <string name="share_episode">Поділитись серією</string>
   <string name="share_movie">Поділитися фільмом</string>
@@ -68,8 +68,8 @@
   <string name="shows_continuing">%s продовжується</string>
   <string name="episodes_watched">%s переглянуто</string>
   <string name="runtime_all_episodes">Тривалість всіх переглянутих серій</string>
-  <string name="movies_on_watchlist">%s on watchlist</string>
-  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
+  <string name="movies_on_watchlist">%s в списку спостереження</string>
+  <string name="runtime_movies_watchlist">Загальний час в списку переглядів</string>
   <plurals name="days_plural">
     <item quantity="one">%d день</item>
     <item quantity="zero">%d днів</item>
@@ -234,19 +234,20 @@
   <string name="list_item_manage">Керувати списками</string>
   <string name="list_item_remove">Видалити зі списку</string>
   <string name="list_empty">Ви можете додавати серіали, сезони або серії до цього списку.</string>
+  <string name="hexagon_warning">Експериментальна!</string>
   <string name="hexagon_setup">Встановити хмару SeriesGuide</string>
-  <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
+  <string name="hexagon_description">Підключення до хмари для резервного копіювання і синхронізації серіалів та фільмів.</string>
   <string name="hexagon_warning_lists">Lists are not included.</string>
   <string name="hexagon_warning_trakt">When using SeriesGuide cloud, changes on trakt will not sync down to SeriesGuide.</string>
   <string name="hexagon_signin">Увійти</string>
   <string name="hexagon_signed_in">Ви під\'єднані до хмари SeriesGuide.</string>
   <string name="hexagon_signout">Відключитись</string>
   <string name="hexagon_setup_incomplete">Налаштування хмари SeriesGuide не було завершено.</string>
-  <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
-  <string name="hexagon_remove_account">Remove account</string>
-  <string name="hexagon_remove_account_success">Account obliterated.</string>
-  <string name="hexagon_remove_account_failure">Could not remove account.</string>
-  <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide cloud. Make sure to remove it on other connected devices as well.</string>
+  <string name="hexagon_setup_fail_auth">Твій обліковий запис Google неможливо перевірити.</string>
+  <string name="hexagon_remove_account">Видалити обліковий запис</string>
+  <string name="hexagon_remove_account_success">Обліковий запис видалено.</string>
+  <string name="hexagon_remove_account_failure">Не вдалося видалити обліковий запис.</string>
+  <string name="hexagon_remove_account_confirmation">Видалення облікового запису призведе до видалення всіх серіалів та фільмів з SeriesGuide хмари. А також не забудьте видалити його на інших підключених пристроях.</string>
   <string name="connect_trakt">Підключитись до trakt</string>
   <string name="connect_trakt_done">Підключено до trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide зараз синхронізує серіали та фільми на цьому пристрої з trakt.  Це може зайняти деякий час.</string>
@@ -454,5 +455,5 @@
   <string name="extension_youtube">Пошук YouTube</string>
   <string name="description_extension_youtube">Шукати у  YouTube відео</string>
   <string name="description_extension_web_search">Шукати вебсайти та зображення</string>
-  <string name="person_biography">Biography</string>
+  <string name="person_biography">Біографія</string>
 </resources>

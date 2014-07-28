@@ -234,6 +234,7 @@
   <string name="list_item_manage">إدارة القوائم</string>
   <string name="list_item_remove">إزالة من القائمة</string>
   <string name="list_empty">يمكنك إضافة المسلسلات, المواسم أو الحلقات لهذه القائمة.</string>
+  <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">إعداد التخزين السحابي لدليل المسلسلات</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
   <string name="hexagon_warning_lists">Lists are not included.</string>
