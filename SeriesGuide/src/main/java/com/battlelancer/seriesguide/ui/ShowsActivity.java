@@ -190,7 +190,7 @@ public class ShowsActivity extends BaseTopActivity implements
 
     private void setUpActionBar() {
         final ActionBar actionBar = getActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setTitle(R.string.shows);
     }
 
     private void setupViews() {
