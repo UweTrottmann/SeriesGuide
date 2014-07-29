@@ -80,6 +80,15 @@
                 android:textAppearance="@style/TextAppearance.Subhead" />
         </RelativeLayout>
 
+        <include layout="@layout/buttons_show" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:background="?attr/colorDivider" />
+
         <include layout="@layout/ratingbar_narrow" />
 
         <View

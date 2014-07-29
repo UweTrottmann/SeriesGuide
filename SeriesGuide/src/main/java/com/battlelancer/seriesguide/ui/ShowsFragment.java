@@ -699,9 +699,6 @@ public class ShowsFragment extends Fragment implements
         // store new value
         ShowTools.get(getActivity()).storeIsFavorite(showTvdbId, isFavorite);
 
-        // favoriting makes show eligible for notifications
-        Utils.runNotificationService(getActivity());
-
         fireTrackerEventContext(isFavorite ? "Favorite show" : "Unfavorite show");
     }
 

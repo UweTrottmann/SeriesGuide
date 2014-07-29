@@ -221,23 +221,22 @@ public class OverviewFragment extends Fragment implements
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
 
-        // enable/disable menu items
-        boolean isEpisodeVisible;
-        if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()) {
-            isEpisodeVisible = true;
-        } else {
-            isEpisodeVisible = false;
-        }
-        menu.findItem(R.id.menu_overview_manage_lists).setEnabled(isEpisodeVisible);
-        menu.findItem(R.id.menu_overview_share).setEnabled(isEpisodeVisible);
+        // If no episode is visible, hide actions related to the episode
+        boolean isEpisodeVisible = mCurrentEpisodeCursor != null
+                && mCurrentEpisodeCursor.moveToFirst();
 
-        // If the nav drawer is open, hide action items related to the content
-        // view
+        // If the nav drawer is open, hide action items related to the content view
         boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
-        menu.findItem(R.id.menu_overview_manage_lists)
-                .setVisible(!isDrawerOpen && isEpisodeVisible);
-        menu.findItem(R.id.menu_overview_share).setVisible(!isDrawerOpen && isEpisodeVisible);
-        menu.findItem(R.id.menu_overview_search).setVisible(!isDrawerOpen);
+
+        // enable/disable menu items
+        MenuItem itemShare = menu.findItem(R.id.menu_overview_share);
+        itemShare.setEnabled(isEpisodeVisible);
+        itemShare.setVisible(!isDrawerOpen && isEpisodeVisible);
+        MenuItem itemManageLists = menu.findItem(R.id.menu_overview_manage_lists);
+        if (itemManageLists != null) {
+            itemManageLists.setEnabled(isEpisodeVisible);
+            itemManageLists.setVisible(isEpisodeVisible);
+        }
     }
 
     @Override
@@ -359,9 +358,6 @@ public class OverviewFragment extends Fragment implements
         // store new value
         boolean isFavorite = (Boolean) v.getTag();
         ShowTools.get(getActivity()).storeIsFavorite(getShowId(), !isFavorite);
-
-        // favoriting makes show eligible for notifications
-        Utils.runNotificationService(getActivity());
     }
 
     public static class EpisodeLoader extends CursorLoader {

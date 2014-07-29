@@ -46,6 +46,7 @@
     <string name="people_empty">Nobody here?! Touch to try again.</string>
 
     <!-- Sharing -->
+    <string name="share">Share</string>
     <string name="share_show">Share show</string>
     <string name="share_episode">Share episode</string>
     <string name="share_movie">Share movie</string>
@@ -197,8 +198,8 @@
     <string name="delete_show">Remove</string>
     <string name="dontdelete_show">Don\'t remove</string>
     <string name="no_nextepisode">no next episode found</string>
-    <string name="context_favorite">Add to favorites</string>
-    <string name="context_unfavorite">Remove from favorites</string>
+    <string name="context_favorite">Favorite</string>
+    <string name="context_unfavorite">No favorite</string>
     <string name="favorited">Added to favorites</string>
     <string name="unfavorited">Removed from favorites</string>
     <string name="context_hide">Hide</string>
@@ -519,7 +520,7 @@
     <string name="subscription_expired_details">Your X features subscription has expired.</string>
 
     <!-- Add to Homescreen -->
-    <string name="add_to_homescreen">Add to Home screen</string>
+    <string name="add_to_homescreen">Shortcut</string>
 
     <!-- Search -->
     <string name="search_within_show">Search within %s</string>
