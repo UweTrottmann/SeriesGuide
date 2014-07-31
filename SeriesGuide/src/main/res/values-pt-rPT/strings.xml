@@ -25,7 +25,7 @@
   <string name="discard">Descartar</string>
   <string name="save_selection">Guardar Selecção</string>
   <string name="search_hint">Procurar episódios</string>
-  <string name="action_display_all">Show all</string>
+  <string name="action_display_all">Mostrar tudo</string>
   <string name="updated">Actualizado para a última versão.</string>
   <string name="norating">n/a</string>
   <string name="unknown">desconhecido</string>
@@ -69,7 +69,7 @@
   <string name="episodes_watched">%s vistos</string>
   <string name="runtime_all_episodes">Duração de todos os episódios assistidos</string>
   <string name="movies_on_watchlist">%s on watchlist</string>
-  <string name="runtime_movies_watchlist">Runtime of movie watchlist</string>
+  <string name="runtime_movies_watchlist">Duração de todos os filmes assistidos</string>
   <plurals name="days_plural">
     <item quantity="one">%d dia</item>
     <item quantity="zero">%d dias</item>
@@ -244,7 +244,7 @@
   <string name="hexagon_signout">Sair</string>
   <string name="hexagon_setup_incomplete">A configuração do SeriesGuide cloud não foi completada.</string>
   <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
-  <string name="hexagon_remove_account">Remove account</string>
+  <string name="hexagon_remove_account">Remover conta</string>
   <string name="hexagon_remove_account_success">Account obliterated.</string>
   <string name="hexagon_remove_account_failure">Could not remove account.</string>
   <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide cloud. Make sure to remove it on other connected devices as well.</string>
@@ -455,5 +455,5 @@
   <string name="extension_youtube">Pesquisa no YouTube</string>
   <string name="description_extension_youtube">Pesquisa no YouTube por alguns vídeos</string>
   <string name="description_extension_web_search">Pesquisa por websites e imagens</string>
-  <string name="person_biography">Biography</string>
+  <string name="person_biography">Biografia</string>
 </resources>

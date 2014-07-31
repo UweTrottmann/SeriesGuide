@@ -234,7 +234,7 @@
   <string name="list_item_manage">Lijsten beheren</string>
   <string name="list_item_remove">Verwijderen uit lijst</string>
   <string name="list_empty">U kunt series, seizoenen of afleveringen toevoegen aan deze lijst.</string>
-  <string name="hexagon_warning">Experimental!</string>
+  <string name="hexagon_warning">Experimenteel!</string>
   <string name="hexagon_setup">SeriesGuide Cloud instellen</string>
   <string name="hexagon_description">Maak verbinding met de cloud zodat je een backup kunt maken van je series en films.</string>
   <string name="hexagon_warning_lists">Exclusief lijsten.</string>

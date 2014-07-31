@@ -237,7 +237,7 @@
   <string name="hexagon_warning">Kokeellista ja helposti syttyvää!</string>
   <string name="hexagon_setup">Määritä SeriesGuide-pilvi</string>
   <string name="hexagon_description">Voit varmuuskopioida ja synkronoida ohjelmasi ja elokuvasi yhdistämällä pilvipalveluun.</string>
-  <string name="hexagon_warning_lists">Listoja ei näytetä.</string>
+  <string name="hexagon_warning_lists">Listoja ei sisällytetä.</string>
   <string name="hexagon_warning_trakt">Käyttäessäsi SeriesGuiden pilvipalvelua, tekemäsi muutokset trakt-palvelussa eivät synkronoidu SeriesGuide-sovellukseen.</string>
   <string name="hexagon_signin">Kirjaudu sisään</string>
   <string name="hexagon_signed_in">Olet yhteydessä SeriesGuide-pilveen.</string>
