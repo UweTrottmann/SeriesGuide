@@ -16,6 +16,11 @@ Version 16 *(2014-07-28)*
 * Dropped dedicated check-in screen.
 * SeriesGuide Cloud experiment: save and sync shows and movies. (If connected to trakt at the same time, will only sync with SeriesGuide Cloud. Check-Ins, marking watched/collected still sent to trakt.)
 
+#### 16.0.1 *(2014-07-31)*
+
+* FIX Crash when loading movie poster, but no external storage is available.
+* NOTICE Latest translations from crowdin.
+
 #### 16 *(2014-07-28)*
 
 * FIX List widget poster placeholder icon cut off.

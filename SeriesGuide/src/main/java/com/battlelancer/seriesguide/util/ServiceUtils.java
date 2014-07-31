@@ -31,6 +31,8 @@ import com.jakewharton.trakt.Trakt;
 import com.squareup.picasso.Picasso;
 import com.uwetrottmann.tmdb.Tmdb;
 import java.io.File;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Helper methods to interact with third-party services trakt and The Movie Database used within
@@ -94,7 +96,7 @@ public final class ServiceUtils {
      * <p> This may return {@code null} if the external cache directory is currently not
      * accessible.
      */
-    public static synchronized Picasso getExternalPicasso(Context context) {
+    public static synchronized @Nullable Picasso getExternalPicasso(@Nonnull Context context) {
         if (sExternalPicasso == null) {
             File externalCacheDir = context.getExternalCacheDir();
             if (externalCacheDir == null) {
