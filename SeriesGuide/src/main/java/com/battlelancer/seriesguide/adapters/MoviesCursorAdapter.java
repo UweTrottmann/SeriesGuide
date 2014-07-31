@@ -29,6 +29,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.squareup.picasso.Picasso;
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -98,10 +99,9 @@ public class MoviesCursorAdapter extends CursorAdapter {
 
         // load poster, cache on external storage
         String posterPath = cursor.getString(MoviesQuery.POSTER);
-        if (!TextUtils.isEmpty(posterPath)) {
-            ServiceUtils.getExternalPicasso(context)
-                    .load(mImageBaseUrl + posterPath)
-                    .into(holder.poster);
+        Picasso picasso = ServiceUtils.getExternalPicasso(context);
+        if (!TextUtils.isEmpty(posterPath) && picasso != null) {
+            picasso.load(mImageBaseUrl + posterPath).into(holder.poster);
         } else {
             // no image
             holder.poster.setImageDrawable(null);
