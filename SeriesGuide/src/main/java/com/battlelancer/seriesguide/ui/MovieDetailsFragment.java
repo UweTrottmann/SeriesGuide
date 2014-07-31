@@ -60,6 +60,7 @@ import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.Movie;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb.entities.Credits;
@@ -91,8 +92,6 @@ public class MovieDetailsFragment extends Fragment {
     private int mTmdbId;
 
     private MovieDetails mMovieDetails = new MovieDetails();
-
-    private Credits mCredits;
 
     private Trailers mTrailers;
 
@@ -478,10 +477,9 @@ public class MovieDetailsFragment extends Fragment {
         });
 
         // load poster, cache on external storage
-        if (!TextUtils.isEmpty(tmdbMovie.poster_path)) {
-            ServiceUtils.getExternalPicasso(getActivity())
-                    .load(mImageBaseUrl + tmdbMovie.poster_path)
-                    .into(mMoviePosterBackground);
+        Picasso picasso = ServiceUtils.getExternalPicasso(getActivity());
+        if (!TextUtils.isEmpty(tmdbMovie.poster_path) && picasso != null) {
+            picasso.load(mImageBaseUrl + tmdbMovie.poster_path).into(mMoviePosterBackground);
         }
     }
 
