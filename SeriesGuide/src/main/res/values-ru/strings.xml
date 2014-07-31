@@ -34,7 +34,7 @@
   <string name="app_not_available">Нет приложения для обработки это.</string>
   <string name="onlyx">Доступно для X версии</string>
   <string name="add_empty">Здесь нет сериалов.</string>
-  <string name="people_empty">Nobody here?! Touch to try again.</string>
+  <string name="people_empty">Никого нет? Коснитесь, чтобы попробовать еще раз.</string>
   <string name="share_show">Поделиться сериалом</string>
   <string name="share_episode">Поделиться эпизодом</string>
   <string name="share_movie">Поделиться сериалом</string>
@@ -234,19 +234,19 @@
   <string name="list_item_manage">Редактировать списки</string>
   <string name="list_item_remove">Удалить из списка</string>
   <string name="list_empty">Сериалы, сезоны или эпизоды можно добавить в этот список.</string>
-  <string name="hexagon_warning">Experimental!</string>
+  <string name="hexagon_warning">Экспериментальный!</string>
   <string name="hexagon_setup">Настройка SeriesGuide облако</string>
-  <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
-  <string name="hexagon_warning_lists">Lists are not included.</string>
+  <string name="hexagon_description">Подключитесь к облаку для резервного копирования и синхронизации ваших сериалов и фильмов.</string>
+  <string name="hexagon_warning_lists">Списки не включены.</string>
   <string name="hexagon_warning_trakt">When using SeriesGuide cloud, changes on trakt will not sync down to SeriesGuide.</string>
   <string name="hexagon_signin">Войти</string>
   <string name="hexagon_signed_in">Вы подключены к SeriesGuide облако.</string>
   <string name="hexagon_signout">Выход</string>
   <string name="hexagon_setup_incomplete">Настройка SeriesGuide облако было не завершено.</string>
-  <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
-  <string name="hexagon_remove_account">Remove account</string>
+  <string name="hexagon_setup_fail_auth">Ваш Google аккаунт не проверен.</string>
+  <string name="hexagon_remove_account">Удалить аккаунт</string>
   <string name="hexagon_remove_account_success">Account obliterated.</string>
-  <string name="hexagon_remove_account_failure">Could not remove account.</string>
+  <string name="hexagon_remove_account_failure">Не могу удалить аккаунт.</string>
   <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide cloud. Make sure to remove it on other connected devices as well.</string>
   <string name="connect_trakt">Подключение trakt</string>
   <string name="connect_trakt_done">Подключен к trakt!</string>
@@ -455,5 +455,5 @@
   <string name="extension_youtube">Поиск YouTube</string>
   <string name="description_extension_youtube">Поиск YouTube для видео</string>
   <string name="description_extension_web_search">Поиск веб-сайтов и изображений</string>
-  <string name="person_biography">Biography</string>
+  <string name="person_biography">Биография</string>
 </resources>
