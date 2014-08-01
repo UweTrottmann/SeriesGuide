@@ -73,9 +73,6 @@
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
 
-        <!-- Hexagon -->
-        <activity android:name="com.battlelancer.seriesguide.backend.CloudSetupActivity"/>
-
         <!-- Shows -->
         <activity
             android:name="com.battlelancer.seriesguide.ui.AddActivity"

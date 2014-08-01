@@ -33,7 +33,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.backend.CloudSetupActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import java.util.Locale;
 
