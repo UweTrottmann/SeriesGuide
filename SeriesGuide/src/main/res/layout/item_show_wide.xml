@@ -15,7 +15,7 @@
             android:layout_width="@dimen/show_poster_width"
             android:layout_height="@dimen/show_poster_height"
             android:layout_alignParentLeft="true"
-            android:layout_marginRight="@dimen/default_padding"
+            android:layout_marginRight="@dimen/large_padding"
             android:scaleType="centerInside"
             tools:ignore="ContentDescription" />
 
@@ -47,9 +47,10 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/showposter"
             android:layout_toLeftOf="@id/favoritedLabel"
+            android:layout_marginTop="@dimen/default_padding"
             android:ellipsize="marquee"
             android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.Large.Light"
+            android:textAppearance="@style/TextAppearance.Title"
             tools:text="@string/show" />
 
         <TextView
@@ -62,7 +63,7 @@
             android:ellipsize="marquee"
             android:singleLine="true"
             android:paddingBottom="@dimen/default_padding"
-            android:textAppearance="@style/TextAppearance.Small.Dim"
+            android:textAppearance="@style/TextAppearance.Caption.Dim"
             tools:text="Tue 08:00 PM | Showtime Network" />
 
         <TextView
@@ -74,7 +75,7 @@
             android:layout_toRightOf="@id/showposter"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textAppearance="@style/TextAppearance.Light"
+            android:textAppearance="@style/TextAppearance.Subhead"
             tools:text="10x456 Some Very Cool Episode Title Therefore" />
 
         <TextView
@@ -87,7 +88,7 @@
             android:ellipsize="marquee"
             android:singleLine="true"
             android:paddingBottom="@dimen/item_padding"
-            android:textAppearance="@style/TextAppearance.Small"
+            android:textAppearance="@style/TextAppearance.Caption.Dim"
             tools:text="Jan 8, 2009 (Thu)" />
 
     </RelativeLayout>
