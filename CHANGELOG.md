@@ -5,6 +5,11 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 13.0.3-gb *(2014-08-01)*
+--------------------------------
+
+* Bugfixes and improvements.
+
 Version 13.0.2-gb *(2014-04-22)*
 --------------------------------
 
