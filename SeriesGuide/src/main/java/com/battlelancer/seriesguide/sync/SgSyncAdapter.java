@@ -323,16 +323,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             if (showsExisting == null) {
                 resultCode = UpdateResult.INCOMPLETE;
             } else {
-                // sync with hexagon
-                if (ShowTools.get(getContext()).isSignedIn()) {
-                    UpdateResult resultHexagon = ShowTools.Download
-                            .syncRemoteShows(getContext(), showsExisting, showsNew);
-                    // don't overwrite failure
-                    if (resultCode == UpdateResult.SUCCESS) {
-                        resultCode = resultHexagon;
-                    }
-                }
-
                 // sync with trakt
                 UpdateResult resultTrakt = performTraktSync(getContext(), showsExisting, showsNew,
                         syncImmediately, currentTime);

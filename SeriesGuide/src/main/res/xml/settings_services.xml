@@ -10,13 +10,6 @@
                 android:targetPackage="@string/package_name" />
         </Preference>
         <Preference
-            android:key="com.battlelancer.seriesguide.cloud"
-            android:title="@string/hexagon_short">
-            <intent
-                android:targetClass="com.battlelancer.seriesguide.backend.CloudSetupActivity"
-                android:targetPackage="@string/package_name" />
-        </Preference>
-        <Preference
             android:key="com.battlelancer.seriesguide.migrate"
             android:title="@string/action_migrate">
             <intent
