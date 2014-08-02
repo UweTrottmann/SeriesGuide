@@ -153,6 +153,10 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="TextAppearance.Menu">
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="TextAppearance.Button">
         <item name="android:textSize">14sp</item>
         <item name="android:textAllCaps">true</item>
