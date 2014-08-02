@@ -190,6 +190,10 @@
         <item name="android:textColor">?attr/textColorSgDim</item>
     </style>
 
+    <style name="TextAppearance.Caption.Red">
+        <item name="android:textColor">@color/text_red</item>
+    </style>
+
     <style name="TextAppearance.Button.Highlight">
         <item name="android:textColor">?attr/colorAccent</item>
     </style>
