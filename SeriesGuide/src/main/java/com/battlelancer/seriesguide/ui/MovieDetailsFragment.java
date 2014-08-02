@@ -141,8 +141,6 @@ public class MovieDetailsFragment extends Fragment {
 
     @InjectView(R.id.progressBar) View mProgressBar;
 
-    @InjectView(R.id.dividerHorizontalMovieDetails) View mDivider;
-
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -172,10 +170,6 @@ public class MovieDetailsFragment extends Fragment {
         mCrewLabel.setText(R.string.movie_crew);
         mCrewContainer = ButterKnife.findById(mCrewView, R.id.containerPeople);
         mCrewView.setVisibility(View.GONE);
-
-        // comments button
-        mDivider.setVisibility(View.GONE);
-        mCommentsButton.setVisibility(View.GONE);
 
         // poster background transparency
         if (AndroidUtils.isJellyBeanOrHigher()) {
@@ -459,8 +453,6 @@ public class MovieDetailsFragment extends Fragment {
         mRatingsContainer.setVisibility(View.VISIBLE);
 
         // trakt comments link
-        mDivider.setVisibility(View.VISIBLE);
-        mCommentsButton.setVisibility(View.VISIBLE);
         mCommentsButton.setOnClickListener(new OnClickListener() {
 
             @Override
