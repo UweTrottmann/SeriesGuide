@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/shout_root"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/default_padding">
+    android:paddingLeft="@dimen/large_padding"
+    android:paddingTop="@dimen/large_padding">
 
     <ImageView
         android:id="@+id/avatar"
@@ -12,31 +13,32 @@
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="@dimen/default_padding"
-        android:src="@drawable/ic_launcher" />
+        android:layout_marginRight="@dimen/large_padding"
+        tools:src="@color/protection_dark" />
 
     <LinearLayout
         android:id="@+id/userstrip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/avatar">
+        android:layout_marginRight="@dimen/large_padding"
+        android:layout_toRightOf="@+id/avatar"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.XSmall.Dim" />
+            tools:text="sgtest"
+            android:textAppearance="@style/TextAppearance.Subhead" />
 
         <TextView
             android:id="@+id/timestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="@string/norating"
-            android:textAppearance="@style/TextAppearance.XSmall.Dim" />
+            tools:text="Dec 28, 2013"
+            android:textAppearance="@style/TextAppearance.Caption.Dim" />
     </LinearLayout>
 
     <TextView
@@ -45,7 +47,16 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/userstrip"
         android:layout_toRightOf="@+id/avatar"
-        android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.Small" />
+        android:layout_marginRight="@dimen/large_padding"
+        android:layout_marginBottom="@dimen/large_padding"
+        tools:text="Some comment describing how the user felt or not felt about the watched media item..."
+        android:textAppearance="@style/TextAppearance.Body" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/shout"
+        android:layout_toRightOf="@+id/avatar"
+        android:background="?attr/colorDivider" />
 
 </RelativeLayout>
