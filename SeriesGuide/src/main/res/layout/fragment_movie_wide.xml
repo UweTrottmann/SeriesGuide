@@ -22,7 +22,7 @@
 
     <ImageView
         android:id="@+id/imageViewMoviePoster"
-        android:layout_width="420dp"
+        android:layout_width="380dp"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:layout_gravity="left"
@@ -37,10 +37,8 @@
 
     <ScrollView
         android:id="@+id/contentContainerMovie"
-        android:layout_width="420dp"
+        android:layout_width="380dp"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/large_padding"
-        android:paddingRight="@dimen/large_padding"
         android:paddingTop="?android:actionBarSize">
 
         <RelativeLayout
@@ -189,12 +187,10 @@
     </ScrollView>
 
     <ScrollView
-        android:layout_width="300dp"
+        android:layout_width="210dp"
         android:layout_height="match_parent"
-        android:layout_marginLeft="420dp"
-        android:paddingTop="?android:actionBarSize"
-        android:paddingLeft="@dimen/large_padding"
-        android:paddingRight="@dimen/large_padding">
+        android:layout_marginLeft="380dp"
+        android:paddingTop="?android:actionBarSize">
 
         <LinearLayout
             android:layout_width="match_parent"
