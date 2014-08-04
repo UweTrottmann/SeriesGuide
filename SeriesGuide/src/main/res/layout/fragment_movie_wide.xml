@@ -147,6 +147,7 @@
     </ScrollView>
 
     <ScrollView
+        android:id="@+id/contentContainerMovieRight"
         android:layout_width="210dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="380dp"

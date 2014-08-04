@@ -210,18 +210,36 @@ public class MovieDetailsFragment extends Fragment {
 
     private void setupViews() {
         // fix padding for translucent system bars
-        if (AndroidUtils.isKitKatOrHigher()) {
-            SystemBarTintManager.SystemBarConfig config
-                    = ((MovieDetailsActivity) getActivity()).getSystemBarTintManager().getConfig();
-            ViewGroup contentContainer = (ViewGroup) getView().findViewById(
-                    R.id.contentContainerMovie);
-            contentContainer.setClipToPadding(false);
-            contentContainer.setPadding(0, 0, config.getPixelInsetRight(),
-                    config.getPixelInsetBottom());
-            ViewGroup.MarginLayoutParams layoutParams
-                    = (ViewGroup.MarginLayoutParams) contentContainer.getLayoutParams();
-            layoutParams.setMargins(0, config.getPixelInsetTop(true), 0, 0);
-            contentContainer.setLayoutParams(layoutParams);
+        if (!AndroidUtils.isKitKatOrHigher()) {
+            return;
+        }
+
+        SystemBarTintManager.SystemBarConfig config
+                = ((MovieDetailsActivity) getActivity()).getSystemBarTintManager().getConfig();
+
+        ViewGroup mainContainer = (ViewGroup) getView().findViewById(
+                R.id.contentContainerMovie);
+        ViewGroup rightContainer = (ViewGroup) getView().findViewById(
+                R.id.contentContainerMovieRight);
+
+        int insetTop = config.getPixelInsetTop(true);
+        int insetBottom = config.getPixelInsetBottom();
+
+        // avoid overlap with nav bar (bottom padding) and status/action bar (top margin)
+        mainContainer.setClipToPadding(false);
+        mainContainer.setPadding(0, 0, 0, insetBottom);
+        ViewGroup.MarginLayoutParams layoutParams
+                = (ViewGroup.MarginLayoutParams) mainContainer.getLayoutParams();
+        layoutParams.setMargins(0, insetTop, 0, 0);
+        mainContainer.setLayoutParams(layoutParams);
+
+        // dual pane layout?
+        if (rightContainer != null) {
+            rightContainer.setClipToPadding(false);
+            rightContainer.setPadding(0, 0, 0, insetBottom);
+            ViewGroup.MarginLayoutParams layoutParamsRight
+                    = (ViewGroup.MarginLayoutParams) rightContainer.getLayoutParams();
+            layoutParamsRight.setMargins(layoutParamsRight.leftMargin, insetTop, 0, 0);
         }
     }
 
