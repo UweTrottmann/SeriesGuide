@@ -19,7 +19,7 @@
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
             tools:text="Episode Title Of Episode"
-            android:textAppearance="@style/TextAppearance.Headline"
+            android:textAppearance="@style/TextAppearance.Title"
             android:textIsSelectable="true" />
 
         <TextView

@@ -48,7 +48,7 @@
                 android:layout_marginTop="@dimen/inline_padding"
                 android:layout_toRightOf="@+id/containerShowPoster"
                 tools:text="Continuing"
-                android:textAppearance="@style/TextAppearance.Headline" />
+                android:textAppearance="@style/TextAppearance.Title" />
 
             <TextView
                 android:id="@+id/textViewShowReleaseTime"
@@ -58,7 +58,7 @@
                 android:layout_below="@+id/textViewShowStatus"
                 android:layout_toRightOf="@+id/containerShowPoster"
                 tools:text="Sat 08:00 PM"
-                android:textAppearance="@style/TextAppearance.Headline" />
+                android:textAppearance="@style/TextAppearance.Title" />
 
             <TextView
                 android:id="@+id/textViewShowNetwork"
@@ -68,7 +68,7 @@
                 android:layout_below="@+id/textViewShowReleaseTime"
                 android:layout_toRightOf="@+id/containerShowPoster"
                 tools:text="YouTube"
-                android:textAppearance="@style/TextAppearance.Headline" />
+                android:textAppearance="@style/TextAppearance.Title" />
 
             <TextView
                 android:id="@+id/textViewShowRuntime"
@@ -78,7 +78,7 @@
                 android:layout_below="@+id/textViewShowNetwork"
                 android:layout_toRightOf="@+id/containerShowPoster"
                 tools:text="60 min"
-                android:textAppearance="@style/TextAppearance.Headline" />
+                android:textAppearance="@style/TextAppearance.Title" />
         </RelativeLayout>
 
         <include layout="@layout/buttons_show" />
