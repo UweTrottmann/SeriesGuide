@@ -107,13 +107,13 @@ public class MovieDetailsFragment extends Fragment {
 
     @InjectView(R.id.containerMovieButtons) View mButtonContainer;
 
-    @InjectView(R.id.buttonMovieCheckIn) ImageButton mCheckinButton;
+    @InjectView(R.id.buttonMovieCheckIn) Button mCheckinButton;
 
-    @InjectView(R.id.buttonMovieWatched) ImageButton mWatchedButton;
+    @InjectView(R.id.buttonMovieWatched) Button mWatchedButton;
 
-    @InjectView(R.id.buttonMovieCollected) ImageButton mCollectedButton;
+    @InjectView(R.id.buttonMovieCollected) Button mCollectedButton;
 
-    @InjectView(R.id.buttonMovieWatchlisted) ImageButton mWatchlistedButton;
+    @InjectView(R.id.buttonMovieWatchlisted) Button mWatchlistedButton;
 
     @InjectView(R.id.ratingbar) View mRatingsContainer;
 
@@ -345,7 +345,6 @@ public class MovieDetailsFragment extends Fragment {
         mMovieReleaseDate.setText(releaseAndRuntime.toString());
 
         // check-in button
-        CheatSheet.setup(mCheckinButton);
         final String title = tmdbMovie.title;
         // fall back to local title for tvtag check-in if we currently don't have the original one
         final String originalTitle = TextUtils.isEmpty(tmdbMovie.original_title)
@@ -364,12 +363,11 @@ public class MovieDetailsFragment extends Fragment {
         // watched button (only supported when connected to trakt)
         if (TraktCredentials.get(getActivity()).hasCredentials()) {
             final boolean isWatched = traktMovie.watched != null && traktMovie.watched;
-            mWatchedButton.setImageResource(isWatched
-                    ? R.drawable.ic_ticked
-                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                            R.attr.drawableWatch));
-            CheatSheet.setup(mWatchedButton,
-                    isWatched ? R.string.action_unwatched : R.string.action_watched);
+            Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mWatchedButton, 0,
+                    isWatched ? R.drawable.ic_ticked
+                            : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                                    R.attr.drawableWatch), 0, 0);
+            mWatchedButton.setText(isWatched ? R.string.action_unwatched : R.string.action_watched);
             mWatchedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -391,11 +389,12 @@ public class MovieDetailsFragment extends Fragment {
 
         // collected button
         final boolean isInCollection = traktMovie.inCollection != null && traktMovie.inCollection;
-        mCollectedButton.setImageResource(isInCollection
-                ? R.drawable.ic_collected
-                : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                        R.attr.drawableCollect));
-        CheatSheet.setup(mCollectedButton, isInCollection ? R.string.action_collection_remove
+        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mCollectedButton, 0,
+                isInCollection
+                        ? R.drawable.ic_collected
+                        : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                                R.attr.drawableCollect), 0, 0);
+        mCollectedButton.setText(isInCollection ? R.string.action_collection_remove
                 : R.string.action_collection_add);
         mCollectedButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -415,11 +414,12 @@ public class MovieDetailsFragment extends Fragment {
 
         // watchlist button
         final boolean isInWatchlist = traktMovie.inWatchlist != null && traktMovie.inWatchlist;
-        mWatchlistedButton.setImageResource(isInWatchlist
-                ? R.drawable.ic_action_list_highlight
-                : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                        R.attr.drawableList));
-        CheatSheet.setup(mWatchlistedButton,
+        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mWatchlistedButton, 0,
+                isInWatchlist
+                        ? R.drawable.ic_action_list_highlight
+                        : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                                R.attr.drawableList), 0, 0);
+        mWatchlistedButton.setText(
                 isInWatchlist ? R.string.watchlist_remove : R.string.watchlist_add);
         mWatchlistedButton.setOnClickListener(new OnClickListener() {
             @Override

@@ -74,63 +74,23 @@
                 android:textAppearance="@style/TextAppearance.Caption"
                 android:textIsSelectable="true" />
 
-            <LinearLayout
-                android:id="@+id/containerMovieButtons"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?attr/colorBackgroundDim"
-                android:layout_below="@+id/textViewMovieDate"
+            <include layout="@layout/buttons_movie" />
+
+            <View
+                android:id="@+id/dividerMovie0"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/containerMovieButtons"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/buttonMovieCheckIn"
-                    style="@style/Widget.SeriesGuide.Button.Borderless.Small"
-                    android:layout_width="@dimen/buttonbar_button_width"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/checkin"
-                    android:paddingLeft="@dimen/default_padding"
-                    android:paddingRight="@dimen/default_padding"
-                    android:src="?attr/drawableCheckin" />
-
-                <ImageButton
-                    android:id="@+id/buttonMovieWatched"
-                    style="@style/Widget.SeriesGuide.Button.Borderless"
-                    android:layout_width="@dimen/buttonbar_button_width"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/togglewatched"
-                    android:paddingLeft="@dimen/default_padding"
-                    android:paddingRight="@dimen/default_padding"
-                    android:src="?attr/drawableWatch" />
-
-                <ImageButton
-                    android:id="@+id/buttonMovieWatchlisted"
-                    style="@style/Widget.SeriesGuide.Button.Borderless"
-                    android:layout_width="@dimen/buttonbar_button_width"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/watchlist_add"
-                    android:paddingLeft="@dimen/default_padding"
-                    android:paddingRight="@dimen/default_padding"
-                    android:src="?attr/drawableList" />
-
-                <ImageButton
-                    android:id="@+id/buttonMovieCollected"
-                    style="@style/Widget.SeriesGuide.Button.Borderless"
-                    android:layout_width="@dimen/buttonbar_button_width"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/action_collection_add"
-                    android:paddingLeft="@dimen/default_padding"
-                    android:paddingRight="@dimen/default_padding"
-                    android:src="?attr/drawableCollect" />
-            </LinearLayout>
+                android:background="?attr/colorDivider" />
 
             <include
                 layout="@layout/ratingbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@+id/containerMovieButtons" />
+                android:layout_below="@+id/dividerMovie0" />
 
             <View
                 android:id="@+id/dividerMovie1"
