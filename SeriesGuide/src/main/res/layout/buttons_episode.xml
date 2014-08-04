@@ -20,7 +20,8 @@
     android:id="@+id/buttonbar"
     android:layout_width="match_parent"
     android:layout_height="64dp"
-    tools:ignore="Overdraw">
+    tools:ignore="Overdraw"
+    tools:showIn="@layout/fragment_episode">
 
     <Button
         android:id="@+id/imageButtonBarCheckin"
