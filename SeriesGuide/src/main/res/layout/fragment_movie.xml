@@ -181,25 +181,18 @@
                 android:text="@string/services_more"
                 android:textAppearance="@style/TextAppearance.Body.Bold" />
 
-            <LinearLayout
+            <Button
+                android:id="@+id/buttonMovieComments"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Default"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_below="@+id/textViewMovieMore"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
-                android:baselineAligned="false"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/buttonMovieComments"
-                    style="@style/Widget.SeriesGuide.Button.Borderless.Default"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical|left"
-                    android:paddingLeft="@dimen/default_padding"
-                    android:paddingRight="@dimen/default_padding"
-                    android:text="@string/comments" />
-            </LinearLayout>
+                android:gravity="center_vertical|left"
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingRight="@dimen/default_padding"
+                android:text="@string/comments" />
         </RelativeLayout>
     </ScrollView>
 
