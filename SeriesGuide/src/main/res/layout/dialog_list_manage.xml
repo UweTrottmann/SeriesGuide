@@ -13,7 +13,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/large_padding">
+            android:padding="@dimen/larger_padding">
 
             <TextView
                 android:id="@+id/textViewListManageDialogTitle"
@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_padding"
                 android:text="@string/list_manage"
-                android:textAppearance="@style/TextAppearance.Large.Light" />
+                android:textAppearance="@style/TextAppearance.Headline" />
 
             <EditText
                 android:id="@+id/editTextListManageListTitle"

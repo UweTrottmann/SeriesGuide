@@ -13,14 +13,14 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/default_padding"
             android:text="@string/action_migrate"
-            android:textAppearance="@style/TextAppearance.Large.Light" />
+            android:textAppearance="@style/TextAppearance.Headline" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/large_padding"
             android:text="@string/migration_description"
-            android:textAppearance="@style/TextAppearance" />
+            android:textAppearance="@style/TextAppearance.Body" />
 
         <TextView
             android:id="@+id/textViewMigrationLaunchInstructions"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/large_padding"
             android:text="@string/migration_import"
-            android:textAppearance="@style/TextAppearance" />
+            android:textAppearance="@style/TextAppearance.Body" />
 
         <ProgressBar
             android:id="@+id/progressBarMigration"

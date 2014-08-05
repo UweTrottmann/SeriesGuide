@@ -16,7 +16,7 @@
             android:gravity="center"
             android:text="@string/norating"
             tools:text="42"
-            android:textAppearance="@style/TextAppearance.HyperLarge"
+            android:textAppearance="@style/TextAppearance.Display3"
             android:textIsSelectable="true" />
 
         <TextView
@@ -73,7 +73,7 @@
             android:gravity="center"
             android:text="@string/norating"
             tools:text="5260"
-            android:textAppearance="@style/TextAppearance.HyperLarge"
+            android:textAppearance="@style/TextAppearance.Display3"
             android:textIsSelectable="true" />
 
         <TextView
@@ -110,11 +110,11 @@
             android:layout_below="@+id/textViewStatsEpisodesWatched"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/large_padding"
-            android:fontFamily="sans-serif-thin"
             android:gravity="center"
             android:text="@string/norating"
             tools:text="61 days 13 hours 29 minutes"
-            android:textAppearance="@style/TextAppearance.Large.Light"
+            android:fontFamily="sans-serif-condensed"
+            android:textAppearance="@style/TextAppearance.Headline"
             android:textIsSelectable="true" />
 
         <ProgressBar
@@ -144,7 +144,7 @@
             android:gravity="center"
             android:text="@string/norating"
             tools:text="250"
-            android:textAppearance="@style/TextAppearance.HyperLarge"
+            android:textAppearance="@style/TextAppearance.Display3"
             android:textIsSelectable="true" />
 
         <TextView
@@ -181,11 +181,11 @@
             android:layout_below="@+id/textViewStatsMoviesWatchlist"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/large_padding"
-            android:fontFamily="sans-serif-thin"
             android:gravity="center"
             android:text="@string/norating"
             tools:text="61 days 13 hours 29 minutes"
-            android:textAppearance="@style/TextAppearance.Large.Light"
+            android:fontFamily="sans-serif-condensed"
+            android:textAppearance="@style/TextAppearance.Headline"
             android:textIsSelectable="true" />
 
         <TextView

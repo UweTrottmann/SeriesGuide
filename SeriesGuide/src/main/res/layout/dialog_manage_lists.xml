@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,26 +10,23 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/larger_padding">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_padding"
-            android:layout_marginRight="@dimen/default_padding"
-            android:layout_marginTop="@dimen/default_padding"
             android:text="@string/list_item_manage"
-            android:textAppearance="@style/TextAppearance.Large.Light" />
+            android:textAppearance="@style/TextAppearance.Headline" />
 
         <TextView
             android:id="@+id/item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/default_padding"
-            android:layout_marginLeft="@dimen/default_padding"
-            android:layout_marginRight="@dimen/default_padding"
-            android:textAppearance="@style/TextAppearance.Small.Primary" />
+            tools:text="Defiance"
+            android:textAppearance="@style/TextAppearance.Caption" />
 
         <include layout="@layout/divider_horizontal" />
 

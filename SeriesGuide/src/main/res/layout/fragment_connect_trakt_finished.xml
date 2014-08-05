@@ -48,6 +48,8 @@
         </LinearLayout>
     </ScrollView>
 
+    <include layout="@layout/divider_horizontal" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,6 +57,7 @@
 
         <Button
             android:id="@+id/buttonClose"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Footer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

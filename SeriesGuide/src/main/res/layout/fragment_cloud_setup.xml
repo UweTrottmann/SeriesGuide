@@ -55,11 +55,9 @@
 
         <Button
             android:id="@+id/buttonCloudRemoveAccount"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Small.Highlight"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Blue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="0dp"
-            android:paddingRight="0dp"
             android:text="@string/hexagon_remove_account" />
 
     </LinearLayout>

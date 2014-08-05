@@ -18,11 +18,9 @@
 
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Widget.SeriesGuide.Button.Borderless.Default"
+    style="@style/Widget.SeriesGuide.Button.Borderless.Purple"
     android:id="@+id/textViewItemActionTitle"
     android:layout_height="48dp"
     android:layout_width="match_parent"
     android:gravity="center"
-    android:textAppearance="@style/TextAppearance.Button.Highlight"
-    android:textColor="?attr/colorAccent"
     tools:text="Episode Action" />
