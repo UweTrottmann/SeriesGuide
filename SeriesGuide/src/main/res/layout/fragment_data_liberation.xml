@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_padding"
             android:text="@string/backup_description"
-            android:textAppearance="@style/TextAppearance" />
+            android:textAppearance="@style/TextAppearance.Body" />
 
         <TextView
             android:id="@+id/textViewBackupPath"
@@ -22,7 +22,7 @@
             android:layout_below="@+id/textViewBackupOverview"
             android:layout_marginTop="@dimen/default_padding"
             android:text="@string/backup_path"
-            android:textAppearance="@style/TextAppearance.Small" />
+            android:textAppearance="@style/TextAppearance.Body.Bold" />
 
         <TextView
             android:id="@+id/textViewBackupDatabaseVersion"
@@ -32,7 +32,7 @@
             android:layout_marginTop="@dimen/default_padding"
             android:layout_marginBottom="@dimen/default_padding"
             android:text="@string/backup_version"
-            android:textAppearance="@style/TextAppearance.Small" />
+            android:textAppearance="@style/TextAppearance.Body.Bold" />
 
         <ProgressBar
             android:id="@+id/progressBarDataLiberation"
@@ -49,7 +49,7 @@
             android:layout_below="@+id/progressBarDataLiberation"
             android:layout_marginBottom="@dimen/default_padding"
             android:text="@string/backup_button"
-            android:textAppearance="@style/TextAppearance.Large.Light" />
+            android:textAppearance="@style/TextAppearance.Headline" />
 
         <CheckBox
             android:id="@+id/checkBoxFullDump"
@@ -75,7 +75,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginBottom="@dimen/default_padding"
             android:text="@string/import_button"
-            android:textAppearance="@style/TextAppearance.Large.Light" />
+            android:textAppearance="@style/TextAppearance.Headline" />
 
         <CheckBox
             android:id="@+id/checkBoxImportWarning"
@@ -100,7 +100,7 @@
             android:layout_below="@+id/buttonImport"
             android:layout_marginTop="@dimen/default_padding"
             android:text="@string/last_auto_backup"
-            android:textAppearance="@style/TextAppearance.Small" />
+            android:textAppearance="@style/TextAppearance.Body.Bold" />
 
         <Button
             android:id="@+id/buttonBackupRestoreAutoBackup"

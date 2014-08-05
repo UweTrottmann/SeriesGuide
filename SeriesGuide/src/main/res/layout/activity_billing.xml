@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:text="@string/action_upgrade"
-                android:textAppearance="@style/TextAppearance.Large.Light" />
+                android:textAppearance="@style/TextAppearance.Headline" />
 
             <TextView
                 android:id="@+id/textViewBillingDescription"
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewBillingTitle"
                 android:text="@string/upgrade_description"
-                android:textAppearance="@style/TextAppearance" />
+                android:textAppearance="@style/TextAppearance.Body" />
 
             <Button
                 android:id="@+id/buttonBillingGetSubscription"
@@ -54,7 +54,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/inline_padding"
                 tools:text="1.99 €/year, 30 day trial"
-                android:textAppearance="@style/TextAppearance.Small.Light"
+                android:textAppearance="@style/TextAppearance.Body.Highlight"
                 android:textStyle="italic" />
 
             <Button
@@ -75,7 +75,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/inline_padding"
                 android:text="@string/billing_price_pass"
-                android:textAppearance="@style/TextAppearance.Small.Light"
+                android:textAppearance="@style/TextAppearance.Body.Highlight"
                 android:textStyle="italic" />
 
             <TextView
@@ -85,7 +85,7 @@
                 android:layout_below="@+id/textViewBillingPricePass"
                 android:layout_marginTop="@dimen/large_padding"
                 android:text="@string/upgrade_success"
-                android:textAppearance="@style/TextAppearance.Small.Highlight" />
+                android:textAppearance="@style/TextAppearance.Body.Highlight" />
 
             <Button
                 android:id="@+id/textViewBillingMoreInfo"
@@ -95,8 +95,8 @@
                 android:layout_below="@+id/textViewBillingExisting"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
-                android:text="@string/billing_learn_more"
-                android:textAppearance="@style/TextAppearance.Small.Highlight.Blue" />
+                android:text="@string/billing_learn_more" />
+
         </RelativeLayout>
 
     </ScrollView>

@@ -182,6 +182,14 @@
         <item name="android:textStyle">italic</item>
     </style>
 
+    <style name="TextAppearance.Body.Highlight.Blue">
+        <item name="android:textColor">@color/text_blue</item>
+    </style>
+
+    <style name="TextAppearance.Body.Highlight.Red">
+        <item name="android:textColor">@color/text_red</item>
+    </style>
+
     <style name="TextAppearance.Caption.Dim">
         <item name="android:textColor">?attr/textColorSgDim</item>
     </style>

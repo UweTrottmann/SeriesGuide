@@ -56,7 +56,7 @@
             android:layout_marginTop="@dimen/default_padding"
             android:layout_toRightOf="@+id/imageViewItemExtensionIcon"
             android:layout_toLeftOf="@+id/imageViewItemExtensionSettings"
-            android:textAppearance="@style/TextAppearance.Medium.Light"
+            android:textAppearance="@style/TextAppearance.Subhead"
             tools:text="Sample Extension" />
 
         <TextView
@@ -67,7 +67,7 @@
             android:layout_toLeftOf="@+id/imageViewItemExtensionSettings"
             android:layout_below="@+id/textViewItemExtensionTitle"
             android:paddingBottom="@dimen/default_padding"
-            android:textAppearance="@style/TextAppearance.Small"
+            android:textAppearance="@style/TextAppearance.Body"
             tools:text="Displays some important information about episodes" />
 
     </RelativeLayout>

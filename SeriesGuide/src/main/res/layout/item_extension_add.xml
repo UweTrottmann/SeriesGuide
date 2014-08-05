@@ -28,7 +28,7 @@
         android:gravity="center"
         android:drawableLeft="?attr/drawableAddIcon"
         android:text="@string/action_extensions_add"
-        android:textAppearance="@style/TextAppearance.Medium" />
+        android:textAppearance="@style/TextAppearance.Button" />
 
     <TextView
         android:id="@+id/textViewItemExtensionAddLimit"
@@ -36,7 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/action_extensions_limit"
-        android:textAppearance="@style/TextAppearance.Small.Highlight.Blue"
-        android:visibility="gone" />
+        android:textAppearance="@style/TextAppearance.Body.Highlight.Blue" />
 
 </FrameLayout>
