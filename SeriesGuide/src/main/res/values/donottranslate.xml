@@ -19,6 +19,7 @@
     <string name="powered_by_tmdb">powered by themoviedb.org</string>
     <string name="tvdb_range">/10</string>
     <string name="notraktrating">--%</string>
+    <string name="notvdbrating">-.-</string>
     <string name="help_url">http://seriesgui.de/help</string>
     <string name="url_whypay">http://seriesgui.de/whypay</string>
     <string name="url_x_pass">http://play.google.com/store/apps/details?id=com.battlelancer.seriesguide.x</string>

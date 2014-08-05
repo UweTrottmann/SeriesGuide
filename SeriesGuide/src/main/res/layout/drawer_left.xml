@@ -27,6 +27,10 @@
         android:background="?attr/colorBackgroundDrawer"
         android:choiceMode="singleChoice"
         android:listSelector="@color/transparent"
-        android:clipToPadding="@bool/gridClipToPadding" />
+        android:divider="@color/transparent"
+        android:dividerHeight="0dp"
+        android:clipToPadding="@bool/gridClipToPadding"
+        android:paddingTop="@dimen/default_padding"
+        android:paddingBottom="@dimen/default_padding" />
 
 </merge>

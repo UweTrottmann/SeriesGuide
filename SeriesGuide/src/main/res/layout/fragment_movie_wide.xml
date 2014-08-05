@@ -1,4 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright 2014 Uwe Trottmann
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,9 +22,10 @@
 
     <ImageView
         android:id="@+id/imageViewMoviePoster"
-        android:layout_width="match_parent"
+        android:layout_width="380dp"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
+        android:layout_gravity="left"
         tools:ignore="ContentDescription" />
 
     <ProgressBar
@@ -21,12 +37,12 @@
 
     <ScrollView
         android:id="@+id/contentContainerMovie"
-        android:layout_width="match_parent"
+        android:layout_width="380dp"
         android:layout_height="match_parent"
         android:paddingTop="?android:actionBarSize">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/default_padding"
             android:paddingBottom="@dimen/default_padding"
@@ -93,7 +109,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/dividerMovie1"
                 android:layout_marginBottom="@dimen/large_padding"
-                android:maxWidth="400dp"
                 android:textAppearance="@style/TextAppearance.Body"
                 android:textIsSelectable="true"
                 tools:text="Description for a super awesome movie..." />
@@ -105,39 +120,14 @@
                 android:layout_below="@+id/textViewMovieDescription"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
-                android:layout_marginBottom="@dimen/large_padding"
-                android:background="?attr/colorDivider" />
-
-            <include
-                layout="@layout/people_list"
-                android:id="@+id/containerMovieCast"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/dividerMovie2" />
-
-            <include
-                layout="@layout/people_list"
-                android:id="@+id/containerMovieCrew"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/containerMovieCast" />
-
-            <View
-                android:id="@+id/dividerMovie3"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/containerMovieCrew"
-                android:layout_marginLeft="@dimen/large_padding"
-                android:layout_marginRight="@dimen/large_padding"
-                android:layout_marginTop="@dimen/large_padding"
                 android:background="?attr/colorDivider" />
 
             <TextView
                 android:id="@+id/textViewMovieMore"
                 style="@style/Block.WithTopMargin"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/dividerMovie3"
+                android:layout_below="@+id/dividerMovie2"
                 android:text="@string/services_more"
                 android:textAppearance="@style/TextAppearance.Body.Bold" />
 
@@ -154,6 +144,35 @@
                 android:paddingRight="@dimen/default_padding"
                 android:text="@string/comments" />
         </RelativeLayout>
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/contentContainerMovieRight"
+        android:layout_width="210dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="380dp"
+        android:paddingTop="?android:actionBarSize">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/default_padding"
+            android:paddingBottom="@dimen/default_padding"
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/people_list"
+                android:id="@+id/containerMovieCast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
+                layout="@layout/people_list"
+                android:id="@+id/containerMovieCrew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
     </ScrollView>
 
 </FrameLayout>

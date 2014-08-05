@@ -45,7 +45,6 @@
 
         <TextView
             android:id="@+id/textViewShowsTimeAndNetwork"
-            style="@style/TextAppearance.XSmall.Dim"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -58,18 +57,19 @@
             android:gravity="right"
             android:maxLines="1"
             android:text="@string/norating"
-            tools:text="Tue 08:00 PM | Showtime Network" />
+            tools:text="Tue 08:00 PM | Showtime Network"
+            android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
         <TextView
             android:id="@+id/seriesname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="@dimen/default_padding"
             android:layout_toRightOf="@id/showposter"
             android:layout_toLeftOf="@id/favoritedLabel"
             android:ellipsize="marquee"
             android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.Medium.Light"
+            android:textAppearance="@style/TextAppearance.Subhead"
             tools:text="@string/show" />
 
         <TextView
@@ -81,7 +81,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:paddingRight="@dimen/inline_padding"
-            android:textAppearance="@style/TextAppearance.Light"
+            android:textAppearance="@style/TextAppearance.Body"
             tools:text="10x456 Some Very Cool Episode Title Therefore" />
 
         <TextView
@@ -91,7 +91,7 @@
             android:layout_below="@id/TextViewShowListNextEpisode"
             android:layout_toRightOf="@id/showposter"
             android:paddingRight="@dimen/inline_padding"
-            android:textAppearance="@style/TextAppearance.XSmall.Dim"
+            android:textAppearance="@style/TextAppearance.Caption.Dim"
             tools:text="Jan 8, 2009 (Thur)" />
 
     </RelativeLayout>

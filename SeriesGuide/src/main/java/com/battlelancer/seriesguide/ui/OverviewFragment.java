@@ -106,7 +106,6 @@ public class OverviewFragment extends Fragment implements
     private String mShowTitle;
 
     private View mContainerShow;
-    private View mSpacerShow;
     private View mContainerEpisode;
     private LinearLayout mContainerActions;
     private ImageView mBackgroundImage;
@@ -143,7 +142,6 @@ public class OverviewFragment extends Fragment implements
             }
         });
         mContainerShow = v.findViewById(R.id.containerOverviewShow);
-        mSpacerShow = v.findViewById(R.id.spacerOverviewShow);
         mContainerEpisode = v.findViewById(R.id.containerOverviewEpisode);
         mContainerEpisode.setVisibility(View.GONE);
         mContainerActions = (LinearLayout) v.findViewById(R.id.containerEpisodeActions);
@@ -166,7 +164,6 @@ public class OverviewFragment extends Fragment implements
 
         // do not display show info header in multi pane layout
         mContainerShow.setVisibility(multiPane ? View.GONE : View.VISIBLE);
-        mSpacerShow.setVisibility(multiPane ? View.VISIBLE : View.GONE);
 
         getLoaderManager().initLoader(SHOW_LOADER_ID, null, this);
         getLoaderManager().initLoader(EPISODE_LOADER_ID, null, this);
@@ -224,23 +221,22 @@ public class OverviewFragment extends Fragment implements
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
 
-        // enable/disable menu items
-        boolean isEpisodeVisible;
-        if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()) {
-            isEpisodeVisible = true;
-        } else {
-            isEpisodeVisible = false;
-        }
-        menu.findItem(R.id.menu_overview_manage_lists).setEnabled(isEpisodeVisible);
-        menu.findItem(R.id.menu_overview_share).setEnabled(isEpisodeVisible);
+        // If no episode is visible, hide actions related to the episode
+        boolean isEpisodeVisible = mCurrentEpisodeCursor != null
+                && mCurrentEpisodeCursor.moveToFirst();
 
-        // If the nav drawer is open, hide action items related to the content
-        // view
+        // If the nav drawer is open, hide action items related to the content view
         boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
-        menu.findItem(R.id.menu_overview_manage_lists)
-                .setVisible(!isDrawerOpen && isEpisodeVisible);
-        menu.findItem(R.id.menu_overview_share).setVisible(!isDrawerOpen && isEpisodeVisible);
-        menu.findItem(R.id.menu_overview_search).setVisible(!isDrawerOpen);
+
+        // enable/disable menu items
+        MenuItem itemShare = menu.findItem(R.id.menu_overview_share);
+        itemShare.setEnabled(isEpisodeVisible);
+        itemShare.setVisible(!isDrawerOpen && isEpisodeVisible);
+        MenuItem itemManageLists = menu.findItem(R.id.menu_overview_manage_lists);
+        if (itemManageLists != null) {
+            itemManageLists.setEnabled(isEpisodeVisible);
+            itemManageLists.setVisible(isEpisodeVisible);
+        }
     }
 
     @Override
@@ -362,9 +358,6 @@ public class OverviewFragment extends Fragment implements
         // store new value
         boolean isFavorite = (Boolean) v.getTag();
         ShowTools.get(getActivity()).storeIsFavorite(getShowId(), !isFavorite);
-
-        // favoriting makes show eligible for notifications
-        Utils.runNotificationService(getActivity());
     }
 
     public static class EpisodeLoader extends CursorLoader {

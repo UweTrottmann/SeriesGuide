@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Page.Centered"
+    android:padding="0dp"
     android:orientation="vertical">
 
     <com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout
@@ -34,8 +35,10 @@
                 android:id="@+id/listViewShouts"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingTop="@dimen/default_padding"
                 android:clipToPadding="@bool/gridClipToPadding"
-                android:divider="?attr/drawableDivider"
+                android:divider="@color/transparent"
+                android:dividerHeight="0dp"
                 android:listSelector="?attr/custom_list_selector" />
 
         </FrameLayout>
@@ -51,15 +54,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_padding">
+        android:layout_margin="@dimen/large_padding">
 
         <EditText
             android:id="@+id/editTextShouts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/inline_padding"
+            android:layout_marginRight="@dimen/default_padding"
             android:layout_toLeftOf="@+id/imageButtonShouts"
-            android:gravity="top"
             android:hint="@string/shout_hint"
             android:maxLength="2000"
             android:maxLines="3" />
@@ -69,7 +71,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/editTextShouts"
             android:contentDescription="@string/shout"
             android:src="@drawable/ic_action_send" />
 

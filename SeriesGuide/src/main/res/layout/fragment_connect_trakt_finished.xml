@@ -22,21 +22,21 @@
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/default_padding"
                 android:text="@string/connect_trakt_done"
-                android:textAppearance="@style/TextAppearance.Large.Light" />
+                android:textAppearance="@style/TextAppearance.Headline" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/large_padding"
                 android:text="@string/connect_trakt_done_explanation"
-                android:textAppearance="@style/TextAppearance.Small.Highlight" />
+                android:textAppearance="@style/TextAppearance.Body.Highlight" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/large_padding"
                 android:text="@string/add_trakt_shows"
-                android:textAppearance="@style/TextAppearance.Small" />
+                android:textAppearance="@style/TextAppearance.Body" />
 
             <Button
                 android:id="@+id/buttonShowLibrary"
@@ -58,8 +58,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/dismiss"
-            android:textSize="@dimen/text_size_small" />
+            android:text="@string/dismiss" />
     </LinearLayout>
 
 </LinearLayout>

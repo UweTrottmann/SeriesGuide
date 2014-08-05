@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -39,6 +40,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -101,6 +103,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     protected int mEpisodeNumber;
     private String mEpisodeTitle;
     private String mShowTitle;
+    private int mShowRunTime;
+    private long mEpisodeReleaseTime;
 
     @InjectView(R.id.scrollViewEpisode) ScrollView mEpisodeScrollView;
     @InjectView(R.id.containerEpisode) View mEpisodeContainer;
@@ -123,11 +127,10 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     @InjectView(R.id.textViewEpisodeDvd) TextView mDvd;
     @InjectView(R.id.textViewRatingsTvdbValue) TextView mTvdbRating;
 
-    @InjectView(R.id.imageButtonBarCheckin) ImageButton mCheckinButton;
-    @InjectView(R.id.imageButtonBarWatched) ImageButton mWatchedButton;
-    @InjectView(R.id.imageButtonBarCollected) ImageButton mCollectedButton;
-    @InjectView(R.id.imageButtonBarSkip) ImageButton mSkipButton;
-    @InjectView(R.id.imageButtonBarMenu) ImageButton mOverflowButton;
+    @InjectView(R.id.imageButtonBarCheckin) Button mCheckinButton;
+    @InjectView(R.id.imageButtonBarWatched) Button mWatchedButton;
+    @InjectView(R.id.imageButtonBarCollected) Button mCollectedButton;
+    @InjectView(R.id.imageButtonBarSkip) Button mSkipButton;
 
     @InjectView(R.id.buttonShowInfoIMDB) View mImdbButton;
     @InjectView(R.id.buttonTVDB) View mTvdbButton;
@@ -272,9 +275,15 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             shareEpisode();
             return true;
         } else if (itemId == R.id.menu_manage_lists) {
-            fireTrackerEvent("Manage lists");
             ManageListsDialogFragment.showListsDialog(getEpisodeTvdbId(), ListItemTypes.EPISODE,
                     getFragmentManager());
+            fireTrackerEvent("Manage lists");
+            return true;
+        } else if (itemId == R.id.menu_action_episode_calendar) {
+            ShareUtils.onAddCalendarEvent(getActivity(), mShowTitle,
+                    Utils.getNextEpisodeString(getActivity(), mSeasonNumber, mEpisodeNumber,
+                            mEpisodeTitle), mEpisodeReleaseTime, mShowRunTime);
+            fireTrackerEvent("Add to calendar");
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -356,6 +365,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         mShowTvdbId = cursor.getInt(DetailsQuery.REF_SHOW_ID);
         mSeasonNumber = cursor.getInt(DetailsQuery.SEASON);
         mEpisodeNumber = cursor.getInt(DetailsQuery.NUMBER);
+        mShowRunTime = cursor.getInt(DetailsQuery.SHOW_RUNTIME);
+        mEpisodeReleaseTime = cursor.getLong(DetailsQuery.FIRST_RELEASE_MS);
 
         // title and description
         mEpisodeTitle = cursor.getString(DetailsQuery.TITLE);
@@ -367,9 +378,9 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
 
         // release time and day
         SpannableStringBuilder timeAndNumbersText = new SpannableStringBuilder();
-        final long releaseTime = cursor.getLong(DetailsQuery.FIRST_RELEASE_MS);
-        if (releaseTime != -1) {
-            Date actualRelease = TimeTools.getEpisodeReleaseTime(getActivity(), releaseTime);
+        if (mEpisodeReleaseTime != -1) {
+            Date actualRelease = TimeTools.getEpisodeReleaseTime(getActivity(),
+                    mEpisodeReleaseTime);
             mReleaseDay.setText(TimeTools.formatToDate(getActivity(), actualRelease));
             // "in 15 mins (Fri)"
             timeAndNumbersText
@@ -393,7 +404,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                     .append(String.valueOf(absoluteNumber));
             // de-emphasize number
             timeAndNumbersText.setSpan(new TextAppearanceSpan(getActivity(),
-                            R.style.TextAppearance_Small_Dim), numberStartIndex,
+                            R.style.TextAppearance_Caption_Dim), numberStartIndex,
                     timeAndNumbersText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             );
         }
@@ -471,9 +482,10 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         // watched button
         mEpisodeFlag = cursor.getInt(DetailsQuery.WATCHED);
         boolean isWatched = EpisodeTools.isWatched(mEpisodeFlag);
-        mWatchedButton.setImageResource(isWatched ? R.drawable.ic_ticked
-                : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                        R.attr.drawableWatch));
+        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mWatchedButton, 0,
+                isWatched ? R.drawable.ic_ticked
+                        : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                                R.attr.drawableWatch), 0, 0);
         mWatchedButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -484,14 +496,16 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             }
         });
         mWatchedButton.setEnabled(true);
+        mWatchedButton.setText(isWatched ? R.string.action_unwatched : R.string.action_watched);
         CheatSheet.setup(mWatchedButton, isWatched ? R.string.unmark_episode
                 : R.string.mark_episode);
 
         // collected button
         mCollected = cursor.getInt(DetailsQuery.COLLECTED) == 1;
-        mCollectedButton.setImageResource(mCollected ? R.drawable.ic_collected
-                : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                        R.attr.drawableCollect));
+        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mCollectedButton, 0,
+                mCollected ? R.drawable.ic_collected
+                        : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                                R.attr.drawableCollect), 0, 0);
         mCollectedButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -502,6 +516,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             }
         });
         mCollectedButton.setEnabled(true);
+        mCollectedButton.setText(mCollected
+                ? R.string.uncollect : R.string.collect);
         CheatSheet.setup(mCollectedButton, mCollected
                 ? R.string.action_collection_remove : R.string.action_collection_add);
 
@@ -509,13 +525,14 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         boolean isSkipped = EpisodeTools.isSkipped(mEpisodeFlag);
         if (isWatched) {
             // if watched do not allow skipping
-            mSkipButton.setVisibility(View.GONE);
+            mSkipButton.setVisibility(View.INVISIBLE);
         } else {
             mSkipButton.setVisibility(View.VISIBLE);
-            mSkipButton.setImageResource(isSkipped
-                    ? R.drawable.ic_action_playback_next_highlight
-                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                            R.attr.drawableSkip));
+            Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mSkipButton, 0,
+                    isSkipped
+                            ? R.drawable.ic_action_playback_next_highlight
+                            : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                                    R.attr.drawableSkip), 0, 0);
             mSkipButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -525,26 +542,11 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                     fireTrackerEvent("Toggle skipped");
                 }
             });
+            mSkipButton.setText(isSkipped ? R.string.action_dont_skip : R.string.action_skip);
             CheatSheet.setup(mSkipButton,
                     isSkipped ? R.string.action_dont_skip : R.string.action_skip);
         }
         mSkipButton.setEnabled(true);
-
-        // menu button
-        final int showRunTime = cursor.getInt(DetailsQuery.SHOW_RUNTIME);
-        mOverflowButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-                popupMenu.getMenuInflater()
-                        .inflate(R.menu.episode_popup_menu, popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new OverflowItemClickListener(mShowTitle,
-                        Utils.getNextEpisodeString(v.getContext(), mSeasonNumber, mEpisodeNumber,
-                                mEpisodeTitle), releaseTime, showRunTime
-                ));
-                popupMenu.show();
-            }
-        });
 
         // service buttons
         ServiceUtils.setUpTraktButton(mShowTvdbId, mSeasonNumber, mEpisodeNumber, mTraktButton,

@@ -171,6 +171,9 @@ public class ShowTools {
         mContext.getContentResolver().update(
                 SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
 
+        // favorite status may determine eligibility for notifications
+        Utils.runNotificationService(mContext);
+
         Toast.makeText(mContext, mContext.getString(isFavorite ?
                 R.string.favorited : R.string.unfavorited), Toast.LENGTH_SHORT).show();
     }

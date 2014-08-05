@@ -29,6 +29,9 @@
         android:clipToPadding="@bool/gridClipToPadding"
         android:fitsSystemWindows="@bool/sgFitSystemWindows"
         android:listSelector="@color/transparent"
-        android:paddingTop="?android:actionBarSize" />
+        android:divider="@color/transparent"
+        android:dividerHeight="0dp"
+        android:paddingTop="?android:actionBarSize"
+        android:paddingBottom="@dimen/default_padding" />
 
 </merge>

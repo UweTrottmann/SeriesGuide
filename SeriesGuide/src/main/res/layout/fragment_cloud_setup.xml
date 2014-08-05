@@ -14,14 +14,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/hexagon_setup"
-            android:textAppearance="@style/TextAppearance.Large.Light" />
+            android:textAppearance="@style/TextAppearance.Headline" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_padding"
             android:text="@string/hexagon_warning"
-            android:textAppearance="@style/TextAppearance.Small.Highlight.Red" />
+            android:textAppearance="@style/TextAppearance.Body.Highlight.Red" />
 
         <TextView
             android:id="@+id/textViewCloudDescription"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_padding"
             android:text="@string/hexagon_description"
-            android:textAppearance="@style/TextAppearance" />
+            android:textAppearance="@style/TextAppearance.Body" />
 
         <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
             android:id="@+id/progressBarCloud"
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/large_padding"
             android:text="@string/hexagon_warning_lists"
-            android:textAppearance="@style/TextAppearance.Small.Highlight" />
+            android:textAppearance="@style/TextAppearance.Body.Highlight" />
 
         <Button
             android:id="@+id/buttonCloudRemoveAccount"

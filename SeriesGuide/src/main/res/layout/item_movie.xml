@@ -42,7 +42,7 @@
             android:layout_toLeftOf="@+id/imageViewMovieItemContextMenu"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textAppearance="@style/TextAppearance.Primary"
+            android:textAppearance="@style/TextAppearance.Subhead"
             tools:text="Awesome Movie Title" />
 
         <TextView
@@ -54,7 +54,7 @@
             android:layout_marginLeft="@dimen/inline_padding"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.XSmall"
+            android:textAppearance="@style/TextAppearance.Caption.Dim"
             tools:text="November 13, 2013" />
     </RelativeLayout>
 

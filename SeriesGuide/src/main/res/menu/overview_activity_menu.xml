@@ -7,10 +7,5 @@
         android:orderInCategory="0"
         android:showAsAction="ifRoom"
         android:title="@string/search_hint"/>
-    <item
-        android:id="@+id/menu_overview_add_to_homescreen"
-        android:orderInCategory="3"
-        android:showAsAction="never"
-        android:title="@string/add_to_homescreen"/>
 
 </menu>

@@ -11,13 +11,12 @@
 
         <com.battlelancer.seriesguide.widgets.WatchedBox
             android:id="@+id/watchedBoxEpisode"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/buttonbar_button_width"
+            android:layout_height="@dimen/buttonbar_button_height"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:background="?custom_list_selector"
-            android:padding="16dp"
-            android:scaleType="fitStart" />
+            android:padding="8dp" />
 
         <TextView
             android:id="@+id/textViewEpisodeTitle"
@@ -26,7 +25,7 @@
             android:layout_marginTop="@dimen/default_padding"
             android:layout_toLeftOf="@+id/textViewEpisodeNumber"
             android:layout_toRightOf="@id/watchedBoxEpisode"
-            android:textAppearance="@style/TextAppearance.Medium.Light"
+            android:textAppearance="@style/TextAppearance.Subhead"
             tools:text="Episode Title" />
 
         <TextView
@@ -38,7 +37,7 @@
             android:layout_marginRight="@dimen/default_padding"
             android:layout_marginTop="@dimen/default_padding"
             tools:text="23"
-            android:textAppearance="@style/TextAppearance.Medium.Light.Dim" />
+            android:textAppearance="@style/TextAppearance.Subhead.Dim" />
 
         <TextView
             android:id="@+id/textViewEpisodeAirdate"
@@ -46,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewEpisodeTitle"
             android:layout_toRightOf="@id/watchedBoxEpisode"
-            android:textAppearance="@style/TextAppearance.Small.Light"
+            android:textAppearance="@style/TextAppearance.Body.Dim"
             tools:text="in 2 days" />
 
         <include
@@ -69,7 +68,7 @@
             android:layout_toRightOf="@id/watchedBoxEpisode"
             android:paddingBottom="@dimen/default_padding"
             tools:text="ABSOLUTE 42"
-            android:textAppearance="@style/TextAppearance.XSmall.Dim" />
+            android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
         <ImageView
             android:id="@+id/imageViewCollected"

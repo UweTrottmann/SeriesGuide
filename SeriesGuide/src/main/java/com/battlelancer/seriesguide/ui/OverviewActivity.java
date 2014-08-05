@@ -251,25 +251,6 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         } else if (itemId == R.id.menu_overview_search) {
             onSearchRequested();
             return true;
-        } else if (itemId == R.id.menu_overview_add_to_homescreen) {
-            if (!Utils.hasAccessToX(this)) {
-                Utils.advertiseSubscription(this);
-                return true;
-            }
-
-            // Create the shortcut
-            final Series show = DBUtils.getShow(this, mShowId);
-            String title = show.getTitle();
-            String poster = show.getPoster();
-            ShortcutUtils.createShortcut(this, title, poster, mShowId);
-
-            // drop to home screen
-            startActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).setFlags(
-                    Intent.FLAG_ACTIVITY_NEW_TASK));
-
-            // Analytics
-            fireTrackerEvent("Add to Homescreen");
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }
