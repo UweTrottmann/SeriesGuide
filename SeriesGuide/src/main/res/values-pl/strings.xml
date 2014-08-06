@@ -35,6 +35,7 @@
   <string name="onlyx">Dostępne tylko z wersją X</string>
   <string name="add_empty">Brak seriali.</string>
   <string name="people_empty">Nikogo tutaj nie ma?! Dotknij, aby spróbować ponownie.</string>
+  <string name="share">Share</string>
   <string name="share_show">Współdziel serial</string>
   <string name="share_episode">Udostępnij</string>
   <string name="share_movie">Współdziel film</string>
@@ -144,8 +145,8 @@
   <string name="mark_all">Oznacz jako obejrzane</string>
   <string name="unmark_all">Oznacz jako nieobejrzane</string>
   <string name="mark_untilhere">Oznacz wcześniej wyemitowane odcinki jako obejrzane</string>
-  <string name="collect">Odcinek jest w kolekcji</string>
-  <string name="uncollect">Odcinka nie ma w kolekcji</string>
+  <string name="collect">Collected</string>
+  <string name="uncollect">Not collected</string>
   <string name="collect_all">Wszystkie zebrane</string>
   <string name="uncollect_all">Brak zebranych</string>
   <string name="action_skip">Pomiń</string>
@@ -160,15 +161,15 @@
   <string name="action_collection_added">Dodano do kolekcji</string>
   <string name="action_collection_removed">Usunięto z kolekcji</string>
   <string name="action_watched">Obejrzane</string>
-  <string name="action_unwatched">Nieobejrzane</string>
+  <string name="action_unwatched">Not watched</string>
   <string name="confirm_delete">Czy na pewno chcesz usunąć %s?</string>
   <string name="delete_has_list_items">Nie można kontynuować, usuń %s z wszystkich list.</string>
   <string name="delete_error">Nie można usunąć serialu. Spróbuj ponownie później.</string>
   <string name="delete_show">Usuń</string>
   <string name="dontdelete_show">Nie usuwaj</string>
   <string name="no_nextepisode">nie znaleziono nowych odcinków</string>
-  <string name="context_favorite">Dodaj do ulubionych</string>
-  <string name="context_unfavorite">Usuń z ulubionych</string>
+  <string name="context_favorite">Favorite</string>
+  <string name="context_unfavorite">No favorite</string>
   <string name="favorited">Dodano do ulubionych</string>
   <string name="unfavorited">Usunięto z ulubionych</string>
   <string name="context_hide">Ukryj</string>
@@ -234,7 +235,7 @@
   <string name="list_item_manage">Zarządzaj listami</string>
   <string name="list_item_remove">Usuń z listy</string>
   <string name="list_empty">Do listy można dodać seriale, sezony lub odcinki.</string>
-  <string name="hexagon_warning">Experimental!</string>
+  <string name="hexagon_warning">Eksperymentalne!</string>
   <string name="hexagon_setup">Skonfiguruj SeriesGuide w chmurze</string>
   <string name="hexagon_description">Połącz się z chmurą w celu przechowywania kopii zapasowej oraz synchronizacji seriali i filmów.</string>
   <string name="hexagon_warning_lists">Listy nie są uwzględniane.</string>
@@ -437,7 +438,7 @@
   <string name="subscription_activated">Subskrybujesz teraz funkcję X.</string>
   <string name="subscription_expired">Subskrypcja wygasła</string>
   <string name="subscription_expired_details">Twoje funkcję X wygasły.</string>
-  <string name="add_to_homescreen">Dodaj do pulpitu</string>
+  <string name="add_to_homescreen">Shortcut</string>
   <string name="search_within_show">Szukaj w %s</string>
   <string name="web_search">Wyszukiwarka</string>
   <string name="extensions">Rozszerzenia</string>

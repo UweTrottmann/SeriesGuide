@@ -35,6 +35,7 @@
   <string name="onlyx">فقط در دسترس با اشتراک X</string>
   <string name="add_empty">There are no shows here.</string>
   <string name="people_empty">Nobody here?! Touch to try again.</string>
+  <string name="share">Share</string>
   <string name="share_show">اشتراک سریال</string>
   <string name="share_episode">اشتراک قسمت</string>
   <string name="share_movie">Share movie</string>
@@ -144,8 +145,8 @@
   <string name="mark_all">Watched all</string>
   <string name="unmark_all">Watched none</string>
   <string name="mark_untilhere">Watched all previously aired</string>
-  <string name="collect">Collected episode</string>
-  <string name="uncollect">Not yet collected episode</string>
+  <string name="collect">Collected</string>
+  <string name="uncollect">Not collected</string>
   <string name="collect_all">Collected all</string>
   <string name="uncollect_all">Collected none</string>
   <string name="action_skip">Skip</string>
@@ -160,15 +161,15 @@
   <string name="action_collection_added">Added to collection</string>
   <string name="action_collection_removed">Removed from collection</string>
   <string name="action_watched">Watched</string>
-  <string name="action_unwatched">Not yet watched</string>
+  <string name="action_unwatched">Not watched</string>
   <string name="confirm_delete">Do you really want to remove %s?</string>
   <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_error">Could not remove show. Try again later.</string>
   <string name="delete_show">Remove</string>
   <string name="dontdelete_show">Don\'t remove</string>
   <string name="no_nextepisode">no next episode found</string>
-  <string name="context_favorite">Add to favorites</string>
-  <string name="context_unfavorite">Remove from favorites</string>
+  <string name="context_favorite">Favorite</string>
+  <string name="context_unfavorite">No favorite</string>
   <string name="favorited">Added to favorites</string>
   <string name="unfavorited">Removed from favorites</string>
   <string name="context_hide">Hide</string>
@@ -437,7 +438,7 @@
   <string name="subscription_activated">You are now subscribed to X features.</string>
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
-  <string name="add_to_homescreen">Add to Home screen</string>
+  <string name="add_to_homescreen">Shortcut</string>
   <string name="search_within_show">Search within %s</string>
   <string name="web_search">Web search</string>
   <string name="extensions">Extensions</string>

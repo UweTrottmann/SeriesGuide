@@ -35,6 +35,7 @@
   <string name="onlyx">זמין רק עם מנוי X</string>
   <string name="add_empty">אין סדרות כאן.</string>
   <string name="people_empty">אין אף אחד כאן?! לחץ כדי לנסות שוב.</string>
+  <string name="share">Share</string>
   <string name="share_show">שתף סדרה</string>
   <string name="share_episode">שתף פרק</string>
   <string name="share_movie">שתף סרט</string>
@@ -144,8 +145,8 @@
   <string name="mark_all">הכל נצפה</string>
   <string name="unmark_all">סמן הכל כלא נצפה</string>
   <string name="mark_untilhere">כל הפרקים ששודרו נצפו</string>
-  <string name="collect">פרק שהושג</string>
-  <string name="uncollect">פרק שטרם הושג</string>
+  <string name="collect">Collected</string>
+  <string name="uncollect">Not collected</string>
   <string name="collect_all">אספתי הכל</string>
   <string name="uncollect_all">לא אספתי כלל</string>
   <string name="action_skip">דלג</string>
@@ -160,15 +161,15 @@
   <string name="action_collection_added">נוסף לאוסף</string>
   <string name="action_collection_removed">הוסר מהאוסף</string>
   <string name="action_watched">נצפה</string>
-  <string name="action_unwatched">עדיין לא נצפה</string>
+  <string name="action_unwatched">Not watched</string>
   <string name="confirm_delete">בטוח שאתה רוצה להסיר את %s?</string>
   <string name="delete_has_list_items">לא ניתן לבצע, הסר קודם את %s מכל הרשימות </string>
   <string name="delete_error">אין אפשרות להסיר סדרות. נסה שוב מאוחר יותר.</string>
   <string name="delete_show">הסר</string>
   <string name="dontdelete_show">אל תסיר</string>
   <string name="no_nextepisode">הפרק הבא לא נמצא</string>
-  <string name="context_favorite">הוסף למעודפים</string>
-  <string name="context_unfavorite">הסר ממעודפים</string>
+  <string name="context_favorite">Favorite</string>
+  <string name="context_unfavorite">No favorite</string>
   <string name="favorited">הוסף למעודפים</string>
   <string name="unfavorited">הוסר מהמעודפים</string>
   <string name="context_hide">הסתר</string>
@@ -437,7 +438,7 @@
   <string name="subscription_activated">כעת אתה מנוי על תכונות של X.</string>
   <string name="subscription_expired">פג תוקף המנוי</string>
   <string name="subscription_expired_details">פג מנוי תכונות X שלך.</string>
-  <string name="add_to_homescreen">הוסף למסך הבית</string>
+  <string name="add_to_homescreen">Shortcut</string>
   <string name="search_within_show">חיפוש בתוך %s</string>
   <string name="web_search">חיפוש באינטרנט</string>
   <string name="extensions">תוספים</string>
