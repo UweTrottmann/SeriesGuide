@@ -75,6 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/buttonCheckIn"
+        android:layout_alignBottom="@+id/buttonCheckIn"
         android:layout_toLeftOf="@+id/buttonCheckIn" />
 
     <View
