@@ -5,6 +5,14 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 17 *(in development)*
+-----------------------------
+
+#### 17-beta1 *(2014-08-06)*
+
+* TWEAK Design updates, moving towards Material Design language.
+* TWEAK Show actions are embedded for easier access.
+
 Version 16 *(2014-07-28)*
 -----------------------------
 
