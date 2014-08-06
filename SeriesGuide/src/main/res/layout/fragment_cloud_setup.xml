@@ -40,9 +40,10 @@
 
         <Button
             android:id="@+id/buttonCloudAction"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/large_padding"
+            android:layout_gravity="center_horizontal"
             android:text="@string/hexagon_signin" />
 
         <TextView
