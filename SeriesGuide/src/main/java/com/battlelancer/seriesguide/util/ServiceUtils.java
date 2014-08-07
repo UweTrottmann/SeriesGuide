@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.jakewharton.trakt.Trakt;
@@ -119,11 +120,10 @@ public final class ServiceUtils {
     /**
      * Get a tmdb-java instance with our API key set.
      */
-    public static synchronized Tmdb getTmdb(Context context) {
+    public static synchronized Tmdb getTmdb() {
         if (sTmdb == null) {
             sTmdb = new Tmdb();
-            sTmdb.setApiKey(context.getResources().getString(
-                    R.string.tmdb_apikey));
+            sTmdb.setApiKey(BuildConfig.TMDB_API_KEY);
         }
 
         return sTmdb;
@@ -135,10 +135,10 @@ public final class ServiceUtils {
      *
      * @return A {@link com.jakewharton.trakt.Trakt} instance.
      */
-    public static synchronized Trakt getTrakt(Context context) {
+    public static synchronized Trakt getTrakt() {
         if (sTrakt == null) {
             sTrakt = new Trakt();
-            sTrakt.setApiKey(context.getResources().getString(R.string.trakt_apikey));
+            sTrakt.setApiKey(BuildConfig.TRAKT_API_KEY);
         }
 
         return sTrakt;
@@ -158,7 +158,7 @@ public final class ServiceUtils {
 
         if (sTraktWithAuth == null) {
             sTraktWithAuth = new Trakt();
-            sTraktWithAuth.setApiKey(context.getResources().getString(R.string.trakt_apikey));
+            sTraktWithAuth.setApiKey(BuildConfig.TRAKT_API_KEY);
             final String username = TraktCredentials.get(context).getUsername();
             final String password = TraktCredentials.get(context).getPassword();
             sTraktWithAuth.setAuthentication(username, password);

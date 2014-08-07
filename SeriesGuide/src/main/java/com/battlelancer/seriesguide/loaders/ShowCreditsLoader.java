@@ -50,7 +50,7 @@ public class ShowCreditsLoader extends GenericSimpleLoader<Credits> {
     @Override
     public Credits loadInBackground() {
         try {
-            Tmdb tmdb = ServiceUtils.getTmdb(getContext());
+            Tmdb tmdb = ServiceUtils.getTmdb();
 
             if (mFindTmdbId) {
                 // find the show on TMDb

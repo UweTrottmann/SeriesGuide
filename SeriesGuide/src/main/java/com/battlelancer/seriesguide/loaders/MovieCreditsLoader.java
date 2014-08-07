@@ -39,7 +39,7 @@ public class MovieCreditsLoader extends GenericSimpleLoader<Credits> {
     @Override
     public Credits loadInBackground() {
         try {
-            MoviesService movieService = ServiceUtils.getTmdb(getContext()).moviesService();
+            MoviesService movieService = ServiceUtils.getTmdb().moviesService();
             return movieService.credits(mTmdbId);
         } catch (RetrofitError e) {
             Timber.e(e, "Downloading movie credits failed");

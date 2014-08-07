@@ -650,7 +650,7 @@ public class MovieTools {
                     + (hexagonMovies != null ? " (from hexagon)" : ""));
 
             MovieService movieServiceTrakt = trakt.movieService();
-            MoviesService moviesServiceTmdb = ServiceUtils.getTmdb(context)
+            MoviesService moviesServiceTmdb = ServiceUtils.getTmdb()
                     .moviesService();
             String languageCode = DisplaySettings.getContentLanguage(context);
             List<MovieDetails> movies = new LinkedList<>();
@@ -708,12 +708,12 @@ public class MovieTools {
             // trakt
             Trakt trakt = ServiceUtils.getTraktWithAuth(context);
             if (trakt == null) {
-                trakt = ServiceUtils.getTrakt(context);
+                trakt = ServiceUtils.getTrakt();
             }
             MovieService movieService = trakt.movieService();
 
             // TMDb
-            MoviesService moviesService = ServiceUtils.getTmdb(context).moviesService();
+            MoviesService moviesService = ServiceUtils.getTmdb().moviesService();
             String languageCode = DisplaySettings.getContentLanguage(context);
 
             return getMovieDetails(movieService, moviesService, languageCode, movieTmdbId);

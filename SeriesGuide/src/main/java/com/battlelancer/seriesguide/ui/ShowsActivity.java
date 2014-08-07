@@ -264,7 +264,7 @@ public class ShowsActivity extends BaseTopActivity implements
         if (!Utils.requiresPurchaseCheck(this)) {
             return;
         }
-        mHelper = new IabHelper(this, BillingActivity.getPublicKey(this));
+        mHelper = new IabHelper(this, BillingActivity.getPublicKey());
         mHelper.enableDebugLogging(BuildConfig.DEBUG);
 
         Timber.i("Starting In-App Billing helper setup.");

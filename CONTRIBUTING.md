@@ -27,25 +27,21 @@ This project is built with Gradle, the [Android Gradle plugin][3] and uses jars 
 
 Before your first build create the following files:
 
-* `gradle.properties`, add the following values (do not need to be valid Sonatype credentials):
+* `gradle.properties`, add the following values (do not need to be valid if you do not plan to use that functionality):
 ```
-ossrhUsername=sonatypeUsername
-ossrhPassword=sonatypePassword
-```
+ossrhUsername=<your sonatype username>
+ossrhPassword=<your sonatype password>
 
-* `SeriesGuide/src/main/res/values/keys.xml`, add the following values:
-```
-<resources>
-    <string name="getglue_client_id"></string>
-    <string name="getglue_client_secret"></string>
-    <string name="tvdb_apikey"></string>
-    <string name="tmdb_apikey"></string>
-    <string name="trakt_apikey"></string>
-    <string name="key_a"></string>
-    <string name="key_b"></string>
-    <string name="key_c"></string>
-    <string name="key_d"></string>
-</resources>
+TMDB_API_KEY=<your api key>
+TRAKT_API_KEY=<your api key>
+TVDB_API_KEY=<your api key>
+TVTAG_CLIENT_ID=<your client id>
+TVTAG_CLIENT_SECRET=<your client secret>
+
+IAP_KEY_A=dummy
+IAP_KEY_B=dummy
+IAP_KEY_C=dummy
+IAP_KEY_D=dummy
 ```
 
 * `SeriesGuide/src/free/AndroidManifest.xml`, add the following content:

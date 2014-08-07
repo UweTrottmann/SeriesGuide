@@ -182,7 +182,7 @@ public class TraktAddFragment extends AddFragment {
 
             if (type == AddPagerAdapter.TRENDING_TAB_POSITION) {
                 try {
-                    shows = ServiceUtils.getTrakt(mContext).showService().trending();
+                    shows = ServiceUtils.getTrakt().showService().trending();
                 } catch (RetrofitError e) {
                     Timber.e(e, "Loading trending shows failed");
                     // ignored, just display empty list

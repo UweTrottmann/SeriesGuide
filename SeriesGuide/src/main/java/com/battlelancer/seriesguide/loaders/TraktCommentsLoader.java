@@ -42,7 +42,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<List<Comment>> {
 
     @Override
     public List<Comment> loadInBackground() {
-        Trakt manager = ServiceUtils.getTrakt(getContext());
+        Trakt manager = ServiceUtils.getTrakt();
         try {
             int movieTmdbId = mArgs.getInt(TraktShoutsFragment.InitBundle.MOVIE_TMDB_ID);
             if (movieTmdbId != 0) {
