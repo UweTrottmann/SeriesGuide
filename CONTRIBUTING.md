@@ -28,6 +28,7 @@ This project is built with Gradle, the [Android Gradle plugin][3] and uses jars 
 Before your first build create the following files:
 
 * `gradle.properties`, add the following values (do not need to be valid if you do not plan to use that functionality):
+
 ```
 ossrhUsername=<your sonatype username>
 ossrhPassword=<your sonatype password>
@@ -45,6 +46,7 @@ IAP_KEY_D=dummy
 ```
 
 * `SeriesGuide/src/free/AndroidManifest.xml`, add the following content:
+
 ```
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.battlelancer.seriesguide">
