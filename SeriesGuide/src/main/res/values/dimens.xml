@@ -60,6 +60,4 @@
 
     <dimen name="tab_padding_horizontal">12dp</dimen>
 
-    <integer name="animation_duration">200</integer>
-
 </resources>

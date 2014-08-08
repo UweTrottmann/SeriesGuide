@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
 /*
 ** Copyright 2007, The Android Open Source Project
@@ -18,7 +19,11 @@
 -->
 
 <set xmlns:android="http://schemas.android.com/apk/res/android"
-        android:interpolator="@interpolator/decelerate_quint_sg">
-    <translate android:fromXDelta="0%" android:toXDelta="100%p"
-            android:duration="@integer/animation_duration"/>
+    android:interpolator="@interpolator/decelerate_quad_sg">
+
+    <translate
+        android:fromXDelta="0%"
+        android:toXDelta="100%p"
+        android:duration="250" />
+
 </set>
