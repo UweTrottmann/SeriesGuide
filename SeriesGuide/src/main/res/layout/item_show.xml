@@ -21,38 +21,39 @@
 
         <ImageView
             android:id="@+id/favoritedLabel"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_alignParentRight="true"
             android:background="?attr/custom_list_selector"
             android:contentDescription="@string/favorited"
-            android:padding="6dp"
+            android:paddingTop="6dp"
+            android:paddingRight="6dp"
+            android:paddingLeft="22dp"
+            android:paddingBottom="22dp"
             android:src="?attr/drawableStar" />
 
         <ImageView
             android:id="@+id/imageViewShowsContextMenu"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:background="?attr/custom_list_selector"
-            android:paddingTop="4dp"
+            android:paddingTop="20dp"
             android:paddingBottom="4dp"
-            android:paddingLeft="8dp"
+            android:paddingLeft="24dp"
             android:scaleType="centerInside"
-            android:src="?attr/drawableDropdown"
-            android:visibility="invisible" />
+            android:src="?attr/drawableDropdown" />
 
         <TextView
             android:id="@+id/textViewShowsTimeAndNetwork"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_gravity="right"
+            android:layout_alignParentRight="true"
             android:layout_marginBottom="8dp"
-            android:layout_marginRight="-8dp"
+            android:layout_marginRight="24dp"
             android:layout_toRightOf="@+id/showposter"
-            android:layout_toLeftOf="@+id/imageViewShowsContextMenu"
             android:ellipsize="end"
             android:gravity="right"
             android:maxLines="1"
