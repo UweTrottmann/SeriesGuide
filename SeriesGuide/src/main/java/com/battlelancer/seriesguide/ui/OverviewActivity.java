@@ -36,7 +36,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.ShortcutUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -246,7 +245,6 @@ public class OverviewActivity extends BaseNavDrawerActivity {
             Intent upIntent = new Intent(this, ShowsActivity.class);
             upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(upIntent);
-            overridePendingTransition(R.anim.fade_in, R.anim.slide_right_exit);
             return true;
         } else if (itemId == R.id.menu_overview_search) {
             onSearchRequested();

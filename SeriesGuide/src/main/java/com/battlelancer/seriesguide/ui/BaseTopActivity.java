@@ -58,7 +58,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        overridePendingTransition(R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg);
     }
 
     @Override

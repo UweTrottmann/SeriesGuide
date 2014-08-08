@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.app.ActionBar;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
@@ -157,12 +156,6 @@ public class FullscreenImageActivity extends FragmentActivity {
         mContentView.setImageDrawable(null);
         mContentView = null;
         super.onDetachedFromWindow();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.fade_in, R.anim.slide_right_exit);
     }
 
     @Override
