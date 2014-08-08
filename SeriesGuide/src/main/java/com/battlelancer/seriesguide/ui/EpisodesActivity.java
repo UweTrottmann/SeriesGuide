@@ -286,7 +286,6 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
             upIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, mShowId);
             upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(upIntent);
-            overridePendingTransition(R.anim.fade_in, R.anim.slide_right_exit);
             return true;
         }
         return super.onOptionsItemSelected(item);

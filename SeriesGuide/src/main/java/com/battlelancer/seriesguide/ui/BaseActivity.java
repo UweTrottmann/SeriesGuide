@@ -18,13 +18,11 @@ package com.battlelancer.seriesguide.ui;
 
 import android.app.ActionBar;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.text.format.DateUtils;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
@@ -110,17 +108,10 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.fade_in, R.anim.slide_right_exit);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
-                overridePendingTransition(R.anim.fade_in, R.anim.slide_right_exit);
                 return true;
         }
         return super.onOptionsItemSelected(item);

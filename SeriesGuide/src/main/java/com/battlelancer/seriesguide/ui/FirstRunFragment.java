@@ -153,7 +153,6 @@ public class FirstRunFragment extends Fragment {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_shows_add) {
             startActivity(new Intent(getActivity(), AddActivity.class));
-            getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             return true;
         }
         return super.onOptionsItemSelected(item);
