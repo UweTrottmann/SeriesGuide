@@ -42,7 +42,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -232,6 +232,9 @@ public class OverviewFragment extends Fragment implements
         MenuItem itemShare = menu.findItem(R.id.menu_overview_share);
         itemShare.setEnabled(isEpisodeVisible);
         itemShare.setVisible(!isDrawerOpen && isEpisodeVisible);
+        MenuItem itemCalendar = menu.findItem(R.id.menu_overview_calendar);
+        itemCalendar.setEnabled(isEpisodeVisible);
+        itemCalendar.setVisible(isEpisodeVisible);
         MenuItem itemManageLists = menu.findItem(R.id.menu_overview_manage_lists);
         if (itemManageLists != null) {
             itemManageLists.setEnabled(isEpisodeVisible);
@@ -243,8 +246,10 @@ public class OverviewFragment extends Fragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_overview_share) {
-            // share episode
             shareEpisode();
+            return true;
+        } else if (itemId == R.id.menu_overview_calendar) {
+            createCalendarEvent();
             return true;
         } else if (itemId == R.id.menu_overview_manage_lists) {
             fireTrackerEvent("Manage lists");
@@ -262,7 +267,7 @@ public class OverviewFragment extends Fragment implements
         return getArguments().getInt(InitBundle.SHOW_TVDBID);
     }
 
-    private void onAddCalendarEvent() {
+    private void createCalendarEvent() {
         fireTrackerEvent("Add to calendar");
 
         if (mShowCursor != null && mShowCursor.moveToFirst() && mCurrentEpisodeCursor != null
@@ -503,36 +508,30 @@ public class OverviewFragment extends Fragment implements
 
         final TextView episodeTitle = (TextView) getView().findViewById(R.id.episodeTitle);
         final TextView episodeTime = (TextView) getView().findViewById(R.id.episodeTime);
-        final TextView episodeInfo = (TextView) getView().findViewById(R.id.episodeInfo);
+        final TextView episodeSeasonAndNumber = (TextView) getView().findViewById(R.id.episodeInfo);
         final View episodemeta = getView().findViewById(R.id.episode_meta_container);
         final View episodePrimaryContainer = getView().findViewById(R.id.episode_primary_container);
         final View buttons = getView().findViewById(R.id.buttonbar);
         final View ratings = getView().findViewById(R.id.ratingbar);
 
         if (episode != null && episode.moveToFirst()) {
-            episodePrimaryContainer.setBackgroundResource(0);
-
             // some episode properties
             mCurrentEpisodeTvdbId = episode.getInt(EpisodeQuery._ID);
-            final int seasonNumber = episode.getInt(EpisodeQuery.SEASON);
-            final int episodeNumber = episode.getInt(EpisodeQuery.NUMBER);
-            final int episodeAbsoluteNumber = episode.getInt(EpisodeQuery.ABSOLUTE_NUMBER);
-            final String title = episode.getString(EpisodeQuery.TITLE);
 
             // title
-            episodeTitle.setText(title);
-            episodeTitle.setVisibility(View.VISIBLE);
+            episodeTitle.setText(episode.getString(EpisodeQuery.TITLE));
 
             // number
             StringBuilder infoText = new StringBuilder();
-            infoText.append(getString(R.string.season_number, seasonNumber));
+            infoText.append(getString(R.string.season_number, episode.getInt(EpisodeQuery.SEASON)));
             infoText.append(" ");
+            int episodeNumber = episode.getInt(EpisodeQuery.NUMBER);
             infoText.append(getString(R.string.episode_number, episodeNumber));
+            int episodeAbsoluteNumber = episode.getInt(EpisodeQuery.ABSOLUTE_NUMBER);
             if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != episodeNumber) {
                 infoText.append(" (").append(episodeAbsoluteNumber).append(")");
             }
-            episodeInfo.setText(infoText);
-            episodeInfo.setVisibility(View.VISIBLE);
+            episodeSeasonAndNumber.setText(infoText);
 
             // air date
             long releaseTime = episode.getLong(EpisodeQuery.FIRST_RELEASE_MS);
@@ -542,7 +541,8 @@ public class OverviewFragment extends Fragment implements
                 episodeTime.setText(getString(R.string.release_date_and_day,
                         TimeTools.formatToRelativeLocalReleaseTime(getActivity(), actualRelease),
                         TimeTools.formatToLocalReleaseDay(actualRelease)));
-                episodeTime.setVisibility(View.VISIBLE);
+            } else {
+                episodeTime.setText(null);
             }
 
             // make title and image clickable
@@ -565,17 +565,16 @@ public class OverviewFragment extends Fragment implements
 
             // Button bar
             // check-in button
-            View checkinButton = buttons.findViewById(R.id.imageButtonBarCheckin);
+            View checkinButton = buttons.findViewById(R.id.buttonEpisodeCheckin);
             checkinButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onCheckIn();
                 }
             });
-            CheatSheet.setup(checkinButton);
 
             // watched button
-            View watchedButton = buttons.findViewById(R.id.imageButtonBarWatched);
+            View watchedButton = buttons.findViewById(R.id.buttonEpisodeWatched);
             watchedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -585,15 +584,15 @@ public class OverviewFragment extends Fragment implements
                 }
             });
             watchedButton.setEnabled(true);
-            CheatSheet.setup(watchedButton, R.string.mark_episode);
 
             // collected button
             boolean isCollected = episode.getInt(EpisodeQuery.COLLECTED) == 1;
-            ImageButton collectedButton = (ImageButton) buttons
-                    .findViewById(R.id.imageButtonBarCollected);
-            collectedButton.setImageResource(isCollected ? R.drawable.ic_collected
-                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                            R.attr.drawableCollect));
+            Button collectedButton = (Button) buttons.findViewById(R.id.buttonEpisodeCollected);
+            Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(collectedButton, 0,
+                    isCollected ? R.drawable.ic_collected
+                            : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                                    R.attr.drawableCollect), 0, 0);
+            collectedButton.setText(isCollected ? R.string.uncollect : R.string.collect);
             collectedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -603,11 +602,9 @@ public class OverviewFragment extends Fragment implements
                 }
             });
             collectedButton.setEnabled(true);
-            CheatSheet.setup(collectedButton, isCollected
-                    ? R.string.action_collection_remove : R.string.action_collection_add);
 
             // skip button
-            View skipButton = buttons.findViewById(R.id.imageButtonBarSkip);
+            View skipButton = buttons.findViewById(R.id.buttonEpisodeSkip);
             skipButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -617,31 +614,8 @@ public class OverviewFragment extends Fragment implements
                 }
             });
             skipButton.setEnabled(true);
-            CheatSheet.setup(skipButton);
 
-            // button bar menu
-            View menuButton = buttons.findViewById(R.id.imageButtonBarMenu);
-            menuButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-                    popupMenu.getMenuInflater().inflate(R.menu.episode_popup_menu,
-                            popupMenu.getMenu());
-                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(android.view.MenuItem item) {
-                            switch (item.getItemId()) {
-                                case R.id.menu_action_episode_calendar:
-                                    onAddCalendarEvent();
-                                    return true;
-                            }
-                            return false;
-                        }
-                    });
-                    popupMenu.show();
-                }
-            });
-
+            // ratings
             ratings.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -665,15 +639,12 @@ public class OverviewFragment extends Fragment implements
             // no next episode: display single line info text, remove other
             // views
             episodeTitle.setText(R.string.no_nextepisode);
-            episodeTime.setVisibility(View.GONE);
-            episodeInfo.setVisibility(View.GONE);
-            episodemeta.setVisibility(View.GONE);
-            episodePrimaryContainer.setBackgroundColor(
-                    getResources().getColor(R.color.background_dim));
+            episodeTime.setText(null);
+            episodeSeasonAndNumber.setText(null);
             episodePrimaryContainer.setOnClickListener(null);
             episodePrimaryContainer.setClickable(false);
             episodePrimaryContainer.setFocusable(false);
-            buttons.setVisibility(View.GONE);
+            episodemeta.setVisibility(View.GONE);
             ratings.setOnClickListener(null);
             ratings.setClickable(false);
             ratings.setFocusable(false);
@@ -801,7 +772,7 @@ public class OverviewFragment extends Fragment implements
     private void onLoadImage(String imagePath) {
         // immediately hide container if there is no image
         if (TextUtils.isEmpty(imagePath)) {
-            mEpisodeImage.setVisibility(View.GONE);
+            mEpisodeImage.setVisibility(View.INVISIBLE);
             return;
         }
 

@@ -7,5 +7,10 @@
         android:orderInCategory="1"
         android:showAsAction="ifRoom"
         android:title="@string/share_episode"/>
+    <item
+        android:id="@+id/menu_overview_calendar"
+        android:orderInCategory="2"
+        android:showAsAction="never"
+        android:title="@string/addtocalendar" />
 
 </menu>
