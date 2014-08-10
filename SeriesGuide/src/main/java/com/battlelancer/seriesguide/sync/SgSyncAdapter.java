@@ -316,7 +316,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
             // get latest TMDb configuration
             Timber.d("Syncing...TMDb config");
-            getTmdbConfiguration(getContext(), prefs);
+            getTmdbConfiguration(prefs);
 
             // sync with Hexagon or trakt
             final HashSet<Integer> showsExisting = ShowTools.getShowTvdbIdsAsSet(getContext());
@@ -427,15 +427,15 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     /**
      * Downloads and stores the latest image url configuration from themoviedb.org.
      */
-    private static void getTmdbConfiguration(Context context, SharedPreferences prefs) {
+    private static void getTmdbConfiguration(SharedPreferences prefs) {
         try {
             Configuration config = ServiceUtils.getTmdb()
                     .configurationService().configuration();
             if (config != null && config.images != null
                     && !TextUtils.isEmpty(config.images.base_url)) {
                 prefs.edit()
-                        .putString(TmdbSettings.KEY_TMDB_BASE_URL, config.images.base_url)
-                        .commit();
+                        .putString(TmdbSettings.KEY_TMDB_BASE_URL, config.images.secure_base_url)
+                        .apply();
             }
         } catch (RetrofitError e) {
             Timber.e(e, "Downloading TMDb config failed");
