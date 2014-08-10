@@ -97,7 +97,7 @@ dependencies {
     compile 'de.greenrobot:eventbus:2.2.1'
 
     // Google Play Services
-    compile 'com.google.android.gms:play-services:4.4.52'
+    compile 'com.google.android.gms:play-services:5.2.08'
 
     // App Engine
     compile ('com.google.api-client:google-api-client-android:1.18.0-rc') {
