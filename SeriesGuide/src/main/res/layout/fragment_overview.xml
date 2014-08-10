@@ -107,9 +107,11 @@
                     <FrameLayout
                         android:id="@+id/episode_primary_container"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/imagecontainer_height"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/large_padding"
                         android:layout_marginRight="@dimen/large_padding"
+                        android:paddingBottom="6dp"
+                        android:background="?attr/drawableCardBackground"
                         android:foreground="?attr/custom_list_selector">
 
                         <ImageView
@@ -124,7 +126,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
                             android:background="?attr/drawableBackgroundGradient"
-                            android:paddingBottom="@dimen/default_padding"
+                            android:paddingBottom="5dp"
                             android:paddingLeft="@dimen/default_padding"
                             android:paddingRight="@dimen/default_padding"
                             android:paddingTop="@dimen/inline_padding">
@@ -162,24 +164,27 @@
                         </RelativeLayout>
                     </FrameLayout>
 
-                    <include layout="@layout/buttonbar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/large_padding"
-                        android:layout_marginRight="@dimen/large_padding"/>
-
                     <LinearLayout
                         android:id="@+id/episode_meta_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
+                        <include layout="@layout/buttons_episode" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="@dimen/large_padding"
+                            android:layout_marginRight="@dimen/large_padding"
+                            android:layout_marginBottom="@dimen/large_padding"
+                            android:background="?attr/colorDivider" />
+
                         <TextView
                             android:id="@+id/TextViewEpisodeDescription"
                             style="@style/Block.FlowText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/large_padding"
                             android:layout_marginBottom="@dimen/large_padding"
                             tools:text="This is a sample description of what happens in this episode. A lot."
                             android:textAppearance="@style/TextAppearance.Body"

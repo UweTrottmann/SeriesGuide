@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,7 +40,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -127,10 +125,10 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     @InjectView(R.id.textViewEpisodeDvd) TextView mDvd;
     @InjectView(R.id.textViewRatingsTvdbValue) TextView mTvdbRating;
 
-    @InjectView(R.id.imageButtonBarCheckin) Button mCheckinButton;
-    @InjectView(R.id.imageButtonBarWatched) Button mWatchedButton;
-    @InjectView(R.id.imageButtonBarCollected) Button mCollectedButton;
-    @InjectView(R.id.imageButtonBarSkip) Button mSkipButton;
+    @InjectView(R.id.buttonEpisodeCheckin) Button mCheckinButton;
+    @InjectView(R.id.buttonEpisodeWatched) Button mWatchedButton;
+    @InjectView(R.id.buttonEpisodeCollected) Button mCollectedButton;
+    @InjectView(R.id.buttonEpisodeSkip) Button mSkipButton;
 
     @InjectView(R.id.buttonShowInfoIMDB) View mImdbButton;
     @InjectView(R.id.buttonTVDB) View mTvdbButton;

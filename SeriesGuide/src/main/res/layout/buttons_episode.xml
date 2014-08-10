@@ -24,7 +24,7 @@
     tools:showIn="@layout/fragment_episode">
 
     <Button
-        android:id="@+id/imageButtonBarCheckin"
+        android:id="@+id/buttonEpisodeCheckin"
         style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Dim"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -37,7 +37,7 @@
         android:ellipsize="end" />
 
     <Button
-        android:id="@+id/imageButtonBarWatched"
+        android:id="@+id/buttonEpisodeWatched"
         style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Dim"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -50,7 +50,7 @@
         android:ellipsize="end" />
 
     <Button
-        android:id="@+id/imageButtonBarCollected"
+        android:id="@+id/buttonEpisodeCollected"
         style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Dim"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -63,7 +63,7 @@
         android:ellipsize="end" />
 
     <Button
-        android:id="@+id/imageButtonBarSkip"
+        android:id="@+id/buttonEpisodeSkip"
         style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Dim"
         android:layout_width="0dp"
         android:layout_height="match_parent"
