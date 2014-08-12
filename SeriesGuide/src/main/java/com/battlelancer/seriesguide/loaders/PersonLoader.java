@@ -38,7 +38,7 @@ public class PersonLoader extends GenericSimpleLoader<Person> {
     @Override
     public Person loadInBackground() {
         try {
-            return ServiceUtils.getTmdb().personService().summary(mTmdbId);
+            return ServiceUtils.getTmdb(getContext()).personService().summary(mTmdbId);
         } catch (RetrofitError e) {
             Timber.e(e, "Could not load person summary from TMDB: " + mTmdbId);
         }

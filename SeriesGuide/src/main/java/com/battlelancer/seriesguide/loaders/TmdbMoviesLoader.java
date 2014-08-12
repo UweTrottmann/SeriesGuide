@@ -42,7 +42,7 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<List<Movie>> {
 
     @Override
     public List<Movie> loadInBackground() {
-        Tmdb tmdb = ServiceUtils.getTmdb();
+        Tmdb tmdb = ServiceUtils.getTmdb(getContext());
         String languageCode = DisplaySettings.getContentLanguage(getContext());
 
         try {

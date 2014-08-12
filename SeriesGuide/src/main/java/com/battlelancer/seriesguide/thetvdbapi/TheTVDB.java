@@ -28,7 +28,6 @@ import android.sax.RootElement;
 import android.text.format.DateUtils;
 import android.util.Xml;
 import com.battlelancer.seriesguide.BuildConfig;
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
@@ -254,7 +253,7 @@ public class TheTVDB {
         try {
             InputStream in = null;
             try {
-                in = AndroidUtils.downloadUrl(url);
+                in = Utils.downloadUrl(context, url);
                 Xml.parse(in, Xml.Encoding.UTF_8, root.getContentHandler());
             } finally {
                 if (in != null) {
@@ -376,7 +375,7 @@ public class TheTVDB {
 
         // get some more details from trakt
         TvShow traktShow = null;
-        Trakt manager = ServiceUtils.getTrakt();
+        Trakt manager = ServiceUtils.getTrakt(context);
         if (manager != null) {
             try {
                 traktShow = manager.showService().summary(showTvdbId, Extended.DEFAULT);

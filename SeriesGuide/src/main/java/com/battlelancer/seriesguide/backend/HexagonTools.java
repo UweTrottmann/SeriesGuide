@@ -292,7 +292,7 @@ public class HexagonTools {
 
         // add new movies with the just downloaded properties
         SgSyncAdapter.UpdateResult result = MovieTools.Download.addMovies(context,
-                ServiceUtils.getTrakt(), newMovies.keySet(), newMovies);
+                ServiceUtils.getTrakt(context), newMovies.keySet(), newMovies);
         boolean addingSuccessful = result == SgSyncAdapter.UpdateResult.SUCCESS;
         if (!hasMergedMovies) {
             // ensure all missing movies from Hexagon are added before merge is complete

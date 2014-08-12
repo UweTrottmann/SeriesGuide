@@ -191,7 +191,7 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
         Trakt trakt = ServiceUtils.getTraktWithAuth(mContext);
         if (trakt == null) {
             // don't have auth data
-            trakt = ServiceUtils.getTrakt();
+            trakt = ServiceUtils.getTrakt(mContext);
         }
         return trakt;
     }

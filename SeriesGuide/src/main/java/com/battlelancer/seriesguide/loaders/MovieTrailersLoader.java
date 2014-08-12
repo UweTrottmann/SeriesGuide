@@ -39,7 +39,7 @@ public class MovieTrailersLoader extends GenericSimpleLoader<Trailers> {
     @Override
     public Trailers loadInBackground() {
         try {
-            MoviesService movieService = ServiceUtils.getTmdb().moviesService();
+            MoviesService movieService = ServiceUtils.getTmdb(getContext()).moviesService();
             return movieService.trailers(mTmdbId);
         } catch (RetrofitError e) {
             Timber.e(e, "Downloading movie trailers failed");
