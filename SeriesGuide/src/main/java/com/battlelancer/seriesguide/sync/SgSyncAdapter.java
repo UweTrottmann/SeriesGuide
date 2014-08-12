@@ -358,6 +358,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 DBUtils.rebuildFtsTable(getContext());
             }
 
+            // update next episodes for all shows
+            TaskManager.getInstance(getContext()).tryNextEpisodeUpdateTask();
+
             // store time of update, set retry counter on failure
             if (resultCode == UpdateResult.SUCCESS) {
                 // we were successful, reset failed counter
