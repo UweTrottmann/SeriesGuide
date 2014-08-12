@@ -55,7 +55,11 @@ import com.google.android.gms.analytics.Tracker;
 import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import timber.log.Timber;
@@ -564,5 +568,21 @@ public class Utils {
     @SafeVarargs
     public static <T> AsyncTask executeInOrder(AsyncTask<T, ?, ?> task, T... args) {
         return task.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, args);
+    }
+
+    /**
+     * Returns an {@link java.io.InputStream} using {@link java.net.HttpURLConnection} to connect
+     * to the given URL.
+     * <p/>
+     * Responses are downloaded and cached using the default HTTP client instance (see {@link
+     * com.battlelancer.seriesguide.util.ServiceUtils}.
+     */
+    public static InputStream downloadUrl(Context context, String urlString) throws IOException {
+        URL url = new URL(urlString);
+
+        HttpURLConnection conn = ServiceUtils.getUrlFactory(context).open(url);
+        conn.connect();
+
+        return conn.getInputStream();
     }
 }
