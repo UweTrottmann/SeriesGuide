@@ -8,6 +8,15 @@ All dates are in the European Central timezone.
 Version 17 *(in development)*
 -----------------------------
 
+#### 17-beta2 *(2014-08-13)*
+
+* TWEAK Use platform activity animations to better fit in with apps for that version of Android.
+* TWEAK Large episode actions in overview, larger touch area for menu buttons on shows and movies, star button on shows.
+* TWEAK Display interim results when calculating total time of watched episodes for many shows.
+* TWEAK Download movie posters over HTTPS, use HTTPS when talking to trakt.
+* TWEAK Cache TVDb and TMDb requests (e.g. search results, biography, movie details).
+* NOTICE Latest translations from crowdin.
+
 #### 17-beta1 *(2014-08-06)*
 
 * TWEAK Design updates, moving towards Material Design language.
