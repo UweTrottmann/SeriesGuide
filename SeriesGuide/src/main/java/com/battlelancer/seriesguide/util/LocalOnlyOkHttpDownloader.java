@@ -84,7 +84,8 @@ public class LocalOnlyOkHttpDownloader implements Downloader {
         connection.setUseCaches(true);
         if (localCacheOnly) {
             connection.setRequestProperty("Cache-Control",
-                    "only-if-cached,max-age=" + Integer.MAX_VALUE);
+                    "only-if-cached,max-age=" + Integer.MAX_VALUE
+                            + ",max-stale=" + Integer.MAX_VALUE);
         }
 
         int responseCode = connection.getResponseCode();
