@@ -19,12 +19,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_marginTop="@dimen/inline_padding"
         android:layout_marginBottom="@dimen/inline_padding"
         android:layout_toLeftOf="@id/imageViewWatchedStatus"
-        android:textAllCaps="true"
-        android:textAppearance="@style/TextAppearance.XSmall"
-        android:textStyle="bold"
-        tools:text="@string/show" />
+        tools:text="Homeland"
+        android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
     <TextView
         android:id="@+id/textViewEpisodeTitle"
@@ -33,8 +32,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@id/textViewShowTitle"
         android:layout_toLeftOf="@id/imageViewWatchedStatus"
-        android:textAppearance="@style/TextAppearance.Medium.Light"
-        tools:text="@string/episode" />
+        tools:text="2x13 If Tomorrow Never Comes"
+        android:textAppearance="@style/TextAppearance.Subhead" />
 
     <TextView
         android:id="@+id/textViewSearchSnippet"
@@ -42,8 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewEpisodeTitle"
         android:paddingBottom="@dimen/inline_padding"
-        android:paddingTop="@dimen/inline_padding"
-        android:text="@string/no_nextepisode"
-        android:textAppearance="@style/TextAppearance.Small.Dim" />
+        tools:text="...some text that was found to have the given search term in it..."
+        android:textAppearance="@style/TextAppearance.Body" />
 
 </RelativeLayout>

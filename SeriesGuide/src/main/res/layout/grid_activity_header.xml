@@ -9,17 +9,12 @@
         android:id="@+id/textViewUpcomingHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_padding"
+        android:paddingTop="@dimen/default_padding"
+        android:paddingBottom="@dimen/inline_padding"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
-        android:textAppearance="@style/TextAppearance.Small.Label"
+        android:textAppearance="@style/TextAppearance.Body.Bold"
         tools:text="Thu in 3 days" />
-
-    <View
-        android:layout_width="200dp"
-        android:layout_height="2dp"
-        android:layout_marginTop="@dimen/inline_padding"
-        android:background="?attr/colorAccent" />
 
 </LinearLayout>

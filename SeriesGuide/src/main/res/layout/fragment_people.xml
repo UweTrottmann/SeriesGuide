@@ -27,6 +27,7 @@
         android:paddingTop="@dimen/large_padding"
         android:paddingBottom="@dimen/large_padding"
         android:listSelector="@color/transparent"
+        android:divider="@color/transparent"
         android:clipToPadding="false" />
 
     <TextView

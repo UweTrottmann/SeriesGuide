@@ -244,6 +244,7 @@ public class StatsFragment extends Fragment {
                 // calculate runtime of watched episodes per show
                 shows.moveToPosition(-1);
                 long totalRuntime = 0;
+                int count = 0;
                 while (shows.moveToNext()) {
                     final Cursor episodesWatchedOfShow = resolver.query(
                             Episodes.buildEpisodesOfShowUri(shows.getString(0)),
@@ -253,12 +254,20 @@ public class StatsFragment extends Fragment {
                                     ? "" : " AND " + Episodes.SELECTION_NO_SPECIALS),
                             null, null
                     );
-                    if (episodesWatchedOfShow != null) {
-                        long runtimeOfShow = shows.getInt(3) * DateUtils.MINUTE_IN_MILLIS;
-                        long runtimeOfEpisodes = episodesWatchedOfShow.getCount() * runtimeOfShow;
-                        totalRuntime += runtimeOfEpisodes;
+                    if (episodesWatchedOfShow == null) {
+                        continue;
+                    }
+                    long runtimeOfShow = shows.getInt(3) * DateUtils.MINUTE_IN_MILLIS;
+                    long runtimeOfEpisodes = episodesWatchedOfShow.getCount() * runtimeOfShow;
+                    totalRuntime += runtimeOfEpisodes;
 
-                        episodesWatchedOfShow.close();
+                    episodesWatchedOfShow.close();
+                    count++;
+                    // post regular update of minimum
+                    if (count == 25) {
+                        count = 0;
+                        stats.episodesWatchedRuntime(totalRuntime);
+                        publishProgress(stats);
                     }
                 }
                 stats.episodesWatchedRuntime(totalRuntime);
@@ -271,58 +280,66 @@ public class StatsFragment extends Fragment {
 
         @Override
         protected void onProgressUpdate(Stats... values) {
-            if (isAdded()) {
-                Stats stats = values[0];
-
-                // all shows
-                mShowCount.setText(String.valueOf(stats.shows()));
-
-                // shows with next episodes
-                mProgressShowsWithNextEpisode.setMax(stats.shows());
-                mProgressShowsWithNextEpisode.setProgress(stats.showsWithNextEpisodes());
-                mProgressShowsWithNextEpisode.setVisibility(View.VISIBLE);
-
-                mShowsWithNextEpisode.setText(getString(R.string.shows_with_next,
-                        stats.showsWithNextEpisodes()).toUpperCase(Locale.getDefault()));
-                mShowsWithNextEpisode.setVisibility(View.VISIBLE);
-
-                // continuing shows
-                mProgressShowsContinuing.setMax(stats.shows());
-                mProgressShowsContinuing.setProgress(stats.showsContinuing());
-                mProgressShowsContinuing.setVisibility(View.VISIBLE);
-
-                mShowsContinuing.setText(getString(R.string.shows_continuing,
-                        stats.showsContinuing()).toUpperCase(Locale.getDefault()));
-                mShowsContinuing.setVisibility(View.VISIBLE);
-
-                // all episodes
-                mEpisodeCount.setText(String.valueOf(stats.episodes()));
-
-                // watched episodes
-                mProgressEpisodesWatched.setMax(stats.episodes());
-                mProgressEpisodesWatched.setProgress(stats.episodesWatched());
-                mProgressEpisodesWatched.setVisibility(View.VISIBLE);
-
-                mEpisodesWatched.setText(getString(R.string.episodes_watched,
-                        stats.episodesWatched()).toUpperCase(Locale.getDefault()));
-                mEpisodesWatched.setVisibility(View.VISIBLE);
-
-                // movies
-                mMovieCount.setText(String.valueOf(stats.movies));
-
-                // movies in watchlist
-                mProgressMoviesWatchlist.setMax(stats.movies);
-                mProgressMoviesWatchlist.setProgress(stats.moviesWatchlist);
-                mProgressMoviesWatchlist.setVisibility(View.VISIBLE);
-
-                mMoviesWatchlist.setText(getString(R.string.movies_on_watchlist,
-                        stats.moviesWatchlist).toUpperCase(Locale.getDefault()));
-                mMoviesWatchlist.setVisibility(View.VISIBLE);
-
-                // runtime of movie watchlist
-                mMoviesWatchlistRuntime.setText(getTimeDuration(stats.moviesWatchlistRuntime));
-                mMoviesWatchlistRuntime.setVisibility(View.VISIBLE);
+            if (!isAdded()) {
+                return;
             }
+            Stats stats = values[0];
+
+            // all shows
+            mShowCount.setText(String.valueOf(stats.shows()));
+
+            // shows with next episodes
+            mProgressShowsWithNextEpisode.setMax(stats.shows());
+            mProgressShowsWithNextEpisode.setProgress(stats.showsWithNextEpisodes());
+            mProgressShowsWithNextEpisode.setVisibility(View.VISIBLE);
+
+            mShowsWithNextEpisode.setText(getString(R.string.shows_with_next,
+                    stats.showsWithNextEpisodes()).toUpperCase(Locale.getDefault()));
+            mShowsWithNextEpisode.setVisibility(View.VISIBLE);
+
+            // continuing shows
+            mProgressShowsContinuing.setMax(stats.shows());
+            mProgressShowsContinuing.setProgress(stats.showsContinuing());
+            mProgressShowsContinuing.setVisibility(View.VISIBLE);
+
+            mShowsContinuing.setText(getString(R.string.shows_continuing,
+                    stats.showsContinuing()).toUpperCase(Locale.getDefault()));
+            mShowsContinuing.setVisibility(View.VISIBLE);
+
+            // all episodes
+            mEpisodeCount.setText(String.valueOf(stats.episodes()));
+
+            // watched episodes
+            mProgressEpisodesWatched.setMax(stats.episodes());
+            mProgressEpisodesWatched.setProgress(stats.episodesWatched());
+            mProgressEpisodesWatched.setVisibility(View.VISIBLE);
+
+            mEpisodesWatched.setText(getString(R.string.episodes_watched,
+                    stats.episodesWatched()).toUpperCase(Locale.getDefault()));
+            mEpisodesWatched.setVisibility(View.VISIBLE);
+
+            // episode runtime minimum (= not the final value)
+            if (stats.episodesWatchedRuntime() != 0) {
+                String watchedDuration = getTimeDuration(stats.episodesWatchedRuntime());
+                mEpisodesRuntime.setText("> " + watchedDuration);
+                mEpisodesRuntime.setVisibility(View.VISIBLE);
+            }
+
+            // movies
+            mMovieCount.setText(String.valueOf(stats.movies));
+
+            // movies in watchlist
+            mProgressMoviesWatchlist.setMax(stats.movies);
+            mProgressMoviesWatchlist.setProgress(stats.moviesWatchlist);
+            mProgressMoviesWatchlist.setVisibility(View.VISIBLE);
+
+            mMoviesWatchlist.setText(getString(R.string.movies_on_watchlist,
+                    stats.moviesWatchlist).toUpperCase(Locale.getDefault()));
+            mMoviesWatchlist.setVisibility(View.VISIBLE);
+
+            // runtime of movie watchlist
+            mMoviesWatchlistRuntime.setText(getTimeDuration(stats.moviesWatchlistRuntime));
+            mMoviesWatchlistRuntime.setVisibility(View.VISIBLE);
         }
 
         @Override

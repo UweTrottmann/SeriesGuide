@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/drawableCardBackground"
@@ -29,8 +30,8 @@
             android:layout_toRightOf="@+id/poster"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.Small.Dim" />
+            tools:text="2x08 | Defiance"
+            android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
         <TextView
             android:id="@+id/textViewUpcomingEpisode"
@@ -38,10 +39,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewUpcomingShow"
             android:layout_toRightOf="@+id/poster"
+            android:layout_marginTop="@dimen/inline_padding"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/no_nextepisode"
-            android:textAppearance="@style/TextAppearance.Medium.Light" />
+            tools:text="Somewhere in the middle of the park"
+            android:textAppearance="@style/TextAppearance.Subhead" />
 
         <TextView
             android:id="@+id/textViewUpcomingMeta"
@@ -53,7 +56,8 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@string/norating"
-            android:textAppearance="@style/TextAppearance.Small.Light" />
+            tools:text="8:00 PM | Aug 17\nShowtime"
+            android:textAppearance="@style/TextAppearance.Body.Dim" />
     </RelativeLayout>
 
     <include layout="@layout/divider_vertical" />

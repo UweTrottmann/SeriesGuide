@@ -22,11 +22,12 @@
             android:id="@+id/textViewFirstRunTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_padding"
-            android:layout_marginRight="@dimen/default_padding"
-            android:layout_marginTop="@dimen/default_padding"
-            android:textAppearance="@style/TextAppearance.Large.Light"
-            android:text="@string/get_started" />
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginTop="@dimen/large_padding"
+            android:layout_marginBottom="@dimen/default_padding"
+            android:text="@string/get_started"
+            android:textAppearance="@style/TextAppearance.Headline" />
 
         <LinearLayout
             android:id="@+id/containerFirstRunSettings"
@@ -35,7 +36,6 @@
             android:layout_below="@+id/textViewFirstRunTitle"
             android:layout_marginLeft="@dimen/large_padding"
             android:layout_marginRight="@dimen/large_padding"
-            android:layout_marginTop="@dimen/large_padding"
             android:orientation="vertical">
 
             <TextView
@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pref_language"
-                android:textAppearance="@style/TextAppearance" />
+                android:textAppearance="@style/TextAppearance.Caption" />
 
             <Spinner
                 android:id="@+id/welcome_setuplanguage"
@@ -54,55 +54,35 @@
 
         </LinearLayout>
 
-        <include
-            android:id="@+id/divider1"
-            layout="@layout/divider_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/containerFirstRunSettings"
-            android:layout_marginTop="@dimen/large_padding"
-            android:layout_marginLeft="@dimen/default_padding"
-            android:layout_marginRight="@dimen/default_padding" />
-
         <LinearLayout
             android:id="@+id/containerFirstRunButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/divider1"
-            android:measureWithLargestChild="true"
+            android:layout_below="@+id/containerFirstRunSettings"
+            android:paddingLeft="@dimen/large_padding"
+            android:paddingRight="@dimen/large_padding"
+            android:paddingTop="@dimen/larger_padding"
+            android:paddingBottom="@dimen/large_padding"
+            android:gravity="right"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/welcome_setuptrakt"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Small"
+                style="@style/Widget.SeriesGuide.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:paddingLeft="@dimen/large_padding"
                 android:drawablePadding="@dimen/default_padding"
-                android:drawableLeft="@drawable/ic_trakt"
-                android:textAllCaps="true"
-                android:textColor="?attr/textColorSgPrimary"
-                android:textStyle="bold"
-                android:text="@string/connect_trakt"
-                android:gravity="left|center" />
-
-            <include layout="@layout/divider_vertical" />
+                android:text="@string/connect_trakt" />
 
             <Button
                 android:id="@+id/buttonFirstRunAddShow"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Small"
+                style="@style/Widget.SeriesGuide.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:paddingLeft="@dimen/large_padding"
                 android:drawablePadding="@dimen/inline_padding"
-                android:drawableLeft="?attr/drawableAddShow"
-                android:text="@string/action_shows_add"
-                android:textAllCaps="true"
-                android:textColor="?attr/textColorSgPrimary"
-                android:textStyle="bold"
-                android:gravity="left|center" />
+                android:text="@string/action_shows_add" />
         </LinearLayout>
     </RelativeLayout>
 </ScrollView>

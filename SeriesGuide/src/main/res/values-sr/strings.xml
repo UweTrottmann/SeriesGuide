@@ -35,6 +35,7 @@
   <string name="onlyx">Доступно само са претплатом за X сервис</string>
   <string name="add_empty">Овде нема серија.</string>
   <string name="people_empty">Nobody here?! Touch to try again.</string>
+  <string name="share">Share</string>
   <string name="share_show">Подели серију</string>
   <string name="share_episode">Подели епизоду</string>
   <string name="share_movie">Подели филм</string>
@@ -144,8 +145,8 @@
   <string name="mark_all">Све погледано</string>
   <string name="unmark_all">Све  непогледано</string>
   <string name="mark_untilhere">Означи све погледане епизоде</string>
-  <string name="collect">Епизода у колекцији</string>
-  <string name="uncollect">Епизода није у колекцији</string>
+  <string name="collect">Collected</string>
+  <string name="uncollect">Not collected</string>
   <string name="collect_all">Пуна колекција</string>
   <string name="uncollect_all">Празна колекција</string>
   <string name="action_skip">Прескочи</string>
@@ -160,15 +161,15 @@
   <string name="action_collection_added">Додато у колекцију</string>
   <string name="action_collection_removed">Уклоњено из колекције</string>
   <string name="action_watched">Одгледано</string>
-  <string name="action_unwatched">Није одгледано</string>
+  <string name="action_unwatched">Not watched</string>
   <string name="confirm_delete">Желите ли да уклоните %s?</string>
   <string name="delete_has_list_items">Радња неизводљива, прво са свих листи уклоните %s.</string>
   <string name="delete_error">Серија није уклоњена. Покушајте поново касније.</string>
   <string name="delete_show">Уклони</string>
   <string name="dontdelete_show">Не уклањај</string>
   <string name="no_nextepisode">нема пронађене следеће епизоде</string>
-  <string name="context_favorite">Додај у омиљено</string>
-  <string name="context_unfavorite">Уклони из омиљеног</string>
+  <string name="context_favorite">Favorite</string>
+  <string name="context_unfavorite">No favorite</string>
   <string name="favorited">Додато у омиљено</string>
   <string name="unfavorited">Уклоњено из омиљеног</string>
   <string name="context_hide">Сакриј</string>
@@ -438,7 +439,7 @@
   <string name="subscription_activated">Прерплатили сте се на Х опције.</string>
   <string name="subscription_expired">Претплата је истекла</string>
   <string name="subscription_expired_details">Ваша претплата за Х опције је истекла.</string>
-  <string name="add_to_homescreen">Додај на главни екран</string>
+  <string name="add_to_homescreen">Shortcut</string>
   <string name="search_within_show">Тражи унутар %s</string>
   <string name="web_search">Веб претрага</string>
   <string name="extensions">Додаци</string>

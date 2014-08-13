@@ -184,13 +184,13 @@ public class ShowsActivity extends BaseTopActivity implements
 
         if (intent != null) {
             startActivity(intent);
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            overridePendingTransition(R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg);
         }
     }
 
     private void setUpActionBar() {
         final ActionBar actionBar = getActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setTitle(R.string.shows);
     }
 
     private void setupViews() {
@@ -264,7 +264,7 @@ public class ShowsActivity extends BaseTopActivity implements
         if (!Utils.requiresPurchaseCheck(this)) {
             return;
         }
-        mHelper = new IabHelper(this, BillingActivity.getPublicKey(this));
+        mHelper = new IabHelper(this, BillingActivity.getPublicKey());
         mHelper.enableDebugLogging(BuildConfig.DEBUG);
 
         Timber.i("Starting In-App Billing helper setup.");

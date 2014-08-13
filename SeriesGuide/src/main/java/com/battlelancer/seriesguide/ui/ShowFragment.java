@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -34,15 +36,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.loaders.ShowCreditsLoader;
-import com.battlelancer.seriesguide.loaders.ShowLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
@@ -51,6 +53,8 @@ import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
 import com.battlelancer.seriesguide.util.PeopleListHelper;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.ShortcutUtils;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
@@ -60,6 +64,8 @@ import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb.entities.Credits;
 import de.greenrobot.event.EventBus;
 import java.util.Date;
+
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 
 /**
  *
@@ -83,26 +89,75 @@ public class ShowFragment extends Fragment {
         return f;
     }
 
-    private Series mShow;
+    private Cursor mShowCursor;
 
     private TraktSummaryTask mTraktTask;
 
-    private View mCastView;
+    @InjectView(R.id.textViewShowStatus) TextView mTextViewStatus;
+    @InjectView(R.id.textViewShowReleaseTime) TextView mTextViewReleaseTime;
+    @InjectView(R.id.textViewShowRuntime) TextView mTextViewRuntime;
+    @InjectView(R.id.textViewShowNetwork) TextView mTextViewNetwork;
+    @InjectView(R.id.textViewShowOverview) TextView mTextViewOverview;
+    @InjectView(R.id.textViewShowReleaseCountry) TextView mTextViewReleaseCountry;
+    @InjectView(R.id.textViewShowFirstAirdate) TextView mTextViewFirstRelease;
+    @InjectView(R.id.textViewShowContentRating) TextView mTextViewContentRating;
+    @InjectView(R.id.textViewShowGenres) TextView mTextViewGenres;
+    @InjectView(R.id.textViewRatingsTvdbValue) TextView mTextViewTvdbRating;
+    @InjectView(R.id.textViewShowLastEdit) TextView mTextViewLastEdit;
+
+    @InjectView(R.id.buttonShowInfoIMDB) View mButtonImdb;
+    @InjectView(R.id.buttonShowFavorite) Button mButtonFavorite;
+    @InjectView(R.id.buttonShowShare) Button mButtonShare;
+    @InjectView(R.id.buttonShowShortcut) Button mButtonShortcut;
+    @InjectView(R.id.ratingbar) View mButtonRate;
+    @InjectView(R.id.buttonTVDB) View mButtonTvdb;
+    @InjectView(R.id.buttonTrakt) View mButtonTrakt;
+    @InjectView(R.id.buttonWebSearch) View mButtonWebSearch;
+    @InjectView(R.id.buttonShouts) View mButtonComments;
+
+    @InjectView(R.id.containerShowCast) View mCastView;
     private LinearLayout mCastContainer;
-    private View mCrewView;
+    @InjectView(R.id.containerShowCrew) View mCrewView;
     private LinearLayout mCrewContainer;
+
+    private String mShowTitle;
+    private String mShowPoster;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_show, container, false);
+        ButterKnife.inject(this, v);
 
-        mCastView = v.findViewById(R.id.containerShowCast);
+        // share button
+        mButtonShare.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareShow();
+            }
+        });
+
+        // shortcut button
+        mButtonShortcut.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createShortcut();
+            }
+        });
+
+        // rate button
+        mButtonRate.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRateOnTrakt();
+            }
+        });
+        CheatSheet.setup(mButtonRate, R.string.menu_rate_show);
+
         TextView castHeader = ButterKnife.findById(mCastView, R.id.textViewPeopleHeader);
         castHeader.setText(R.string.movie_cast);
         mCastContainer = ButterKnife.findById(mCastView, R.id.containerPeople);
 
-        mCrewView = v.findViewById(R.id.containerShowCrew);
         TextView crewHeader = ButterKnife.findById(mCrewView, R.id.textViewPeopleHeader);
         crewHeader.setText(R.string.movie_crew);
         mCrewContainer = ButterKnife.findById(mCrewView, R.id.containerPeople);
@@ -124,13 +179,22 @@ public class ShowFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         EventBus.getDefault().register(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
+
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        ButterKnife.reset(this);
     }
 
     @Override
@@ -140,23 +204,11 @@ public class ShowFragment extends Fragment {
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-
-        boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
-        menu.findItem(R.id.menu_show_manage_lists).setVisible(!isDrawerOpen);
-        menu.findItem(R.id.menu_show_share).setVisible(!isDrawerOpen);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_show_manage_lists) {
             ManageListsDialogFragment.showListsDialog(getShowTvdbId(), ListItemTypes.SHOW,
                     getFragmentManager());
-            return true;
-        } else if (itemId == R.id.menu_show_share) {
-            shareShow();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -168,135 +220,182 @@ public class ShowFragment extends Fragment {
         }
     }
 
-    private LoaderCallbacks<Series> mShowLoaderCallbacks = new LoaderCallbacks<Series>() {
+    interface ShowQuery {
+
+        String[] PROJECTION = new String[] {
+                Shows._ID,
+                Shows.TITLE,
+                Shows.STATUS,
+                Shows.AIRSTIME,
+                Shows.AIRSDAYOFWEEK,
+                Shows.NETWORK,
+                Shows.POSTER,
+                Shows.IMDBID,
+                Shows.RUNTIME,
+                Shows.FAVORITE,
+                Shows.RELEASE_COUNTRY,
+                Shows.OVERVIEW,
+                Shows.FIRSTAIRED,
+                Shows.CONTENTRATING,
+                Shows.GENRES,
+                Shows.RATING,
+                Shows.LASTEDIT
+        };
+
+        int TITLE = 1;
+        int STATUS = 2;
+        int RELEASE_TIME_MS = 3;
+        int RELEASE_DAY = 4;
+        int NETWORK = 5;
+        int POSTER = 6;
+        int IMDBID = 7;
+        int RUNTIME = 8;
+        int IS_FAVORITE = 9;
+        int RELEASE_COUNTRY = 10;
+        int OVERVIEW = 11;
+        int FIRST_RELEASE = 12;
+        int CONTENT_RATING = 13;
+        int GENRES = 14;
+        int TVDB_RATING = 15;
+        int LAST_EDIT_MS = 16;
+    }
+
+    private LoaderCallbacks<Cursor> mShowLoaderCallbacks = new LoaderCallbacks<Cursor>() {
         @Override
-        public Loader<Series> onCreateLoader(int id, Bundle args) {
-            return new ShowLoader(getActivity(), getShowTvdbId());
+        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+            return new CursorLoader(getActivity(), Shows.buildShowUri(getShowTvdbId()),
+                    ShowQuery.PROJECTION, null, null, null);
         }
 
         @Override
-        public void onLoadFinished(Loader<Series> loader, Series data) {
-            if (data != null) {
-                mShow = data;
-            }
-            if (isAdded()) {
-                onPopulateShowData();
+        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+            if (data != null && data.moveToFirst()) {
+                mShowCursor = data;
+                if (isAdded()) {
+                    populateShow();
+                }
             }
         }
 
         @Override
-        public void onLoaderReset(Loader<Series> loader) {
-            // do nothing
+        public void onLoaderReset(Loader<Cursor> loader) {
+            // do nothing, prefer stale data
         }
     };
 
-    private void onPopulateShowData() {
-        if (mShow == null) {
+    private void populateShow() {
+        if (mShowCursor == null) {
             return;
         }
 
+        // title
+        mShowTitle = mShowCursor.getString(ShowQuery.TITLE);
+        mShowPoster = mShowCursor.getString(ShowQuery.POSTER);
+
         // status
-        TextView status = (TextView) getView().findViewById(R.id.textViewShowStatus);
-        if (mShow.getStatus() == 1) {
-            status.setTextColor(getResources().getColor(Utils.resolveAttributeToResourceId(
-                    getActivity().getTheme(), R.attr.textColorSgGreen)));
-            status.setText(getString(R.string.show_isalive));
-        } else if (mShow.getStatus() == 0) {
-            status.setTextColor(Color.GRAY);
-            status.setText(getString(R.string.show_isnotalive));
+        if (mShowCursor.getInt(ShowQuery.STATUS) == 1) {
+            mTextViewStatus.setTextColor(getResources().getColor(
+                    Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                            R.attr.textColorSgGreen)));
+            mTextViewStatus.setText(getString(R.string.show_isalive));
+        } else {
+            mTextViewStatus.setTextColor(Color.GRAY);
+            mTextViewStatus.setText(getString(R.string.show_isnotalive));
         }
 
         // release time
-        TextView releaseTime = (TextView) getView().findViewById(R.id.textViewShowReleaseTime);
-        if (!TextUtils.isEmpty(mShow.getAirsDayOfWeek()) && mShow.getAirsTime() != -1) {
-            String[] values = TimeTools
-                    .formatToShowReleaseTimeAndDay(getActivity(), mShow.getAirsTime(),
-                            mShow.getCountry(), mShow.getAirsDayOfWeek());
-            releaseTime.setText(values[1] + " " + values[0]);
+        String releaseDay = mShowCursor.getString(ShowQuery.RELEASE_DAY);
+        long releaseTime = mShowCursor.getLong(ShowQuery.RELEASE_TIME_MS);
+        String releaseCountry = mShowCursor.getString(ShowQuery.RELEASE_COUNTRY);
+        if (!TextUtils.isEmpty(releaseDay)) {
+            String[] values = TimeTools.formatToShowReleaseTimeAndDay(getActivity(), releaseTime,
+                    releaseCountry, releaseDay);
+            mTextViewReleaseTime.setText(values[1] + " " + values[0]);
         } else {
-            releaseTime.setText(null);
+            mTextViewReleaseTime.setText(null);
         }
 
         // runtime
-        TextView runtime = (TextView) getView().findViewById(R.id.textViewShowRuntime);
-        runtime.setText(getString(R.string.runtime_minutes, mShow.getRuntime()));
+        mTextViewRuntime.setText(
+                getString(R.string.runtime_minutes, mShowCursor.getInt(ShowQuery.RUNTIME)));
 
         // network
-        TextView network = (TextView) getView().findViewById(R.id.textViewShowNetwork);
-        network.setText(TextUtils.isEmpty(mShow.getNetwork()) ? null : mShow.getNetwork());
+        mTextViewNetwork.setText(mShowCursor.getString(ShowQuery.NETWORK));
+
+        // favorite button
+        final boolean isFavorite = mShowCursor.getInt(ShowQuery.IS_FAVORITE) == 1;
+        mButtonFavorite.setEnabled(true);
+        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mButtonFavorite, 0,
+                Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                        isFavorite ? R.attr.drawableStar : R.attr.drawableStar0),
+                0, 0);
+        mButtonFavorite.setText(
+                isFavorite ? R.string.context_unfavorite : R.string.context_favorite);
+        mButtonFavorite.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // disable until action is complete
+                v.setEnabled(false);
+                ShowTools.get(v.getContext()).storeIsFavorite(getShowTvdbId(), !isFavorite);
+            }
+        });
 
         // overview
-        TextView overview = (TextView) getView().findViewById(R.id.textViewShowOverview);
-        overview.setText(TextUtils.isEmpty(mShow.getOverview()) ? null : mShow.getOverview());
+        mTextViewOverview.setText(mShowCursor.getString(ShowQuery.OVERVIEW));
 
         // country for release times (or assumed one)
         // show "United States" if country is not supported
-        TextView releaseCountry = (TextView) getView()
-                .findViewById(R.id.textViewShowReleaseCountry);
-        releaseCountry.setText(TimeTools.isUnsupportedCountryOrUs(mShow.getCountry())
-                ? TimeTools.UNITED_STATES : mShow.getCountry());
+        mTextViewReleaseCountry.setText(TimeTools.isUnsupportedCountryOrUs(releaseCountry)
+                ? TimeTools.UNITED_STATES : releaseCountry);
 
         // first release: use the same parser as for episodes, because we have an exact date
-        long actualRelease = TimeTools.parseEpisodeReleaseTime(mShow.getFirstAired(),
-                mShow.getAirsTime(), mShow.getCountry());
-        Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewShowFirstAirdate),
+        String firstRelease = mShowCursor.getString(ShowQuery.FIRST_RELEASE);
+        long actualRelease = TimeTools.parseEpisodeReleaseTime(firstRelease, releaseTime,
+                releaseCountry);
+        Utils.setValueOrPlaceholder(mTextViewFirstRelease,
                 TimeTools.formatToDate(getActivity(), new Date(actualRelease)));
 
-        // Others
-        Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewShowContentRating),
-                mShow.getContentRating());
-        Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewShowGenres),
-                Utils.splitAndKitTVDBStrings(mShow.getGenres()));
+        // content rating
+        Utils.setValueOrPlaceholder(mTextViewContentRating,
+                mShowCursor.getString(ShowQuery.CONTENT_RATING));
+        // genres
+        Utils.setValueOrPlaceholder(mTextViewGenres,
+                Utils.splitAndKitTVDBStrings(mShowCursor.getString(ShowQuery.GENRES)));
 
         // TVDb rating
-        String ratingText = mShow.getRating();
-        if (ratingText != null && ratingText.length() != 0) {
-            TextView rating = (TextView) getView().findViewById(R.id.textViewRatingsTvdbValue);
-            rating.setText(ratingText);
+        String tvdbRating = mShowCursor.getString(ShowQuery.TVDB_RATING);
+        if (!TextUtils.isEmpty(tvdbRating)) {
+            mTextViewTvdbRating.setText(tvdbRating);
         }
-        View ratings = getView().findViewById(R.id.ratingbar);
-        ratings.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRateOnTrakt();
-            }
-        });
-        ratings.setFocusable(true);
-        CheatSheet.setup(ratings, R.string.menu_rate_show);
 
-        // Last edit date
-        TextView lastEdit = (TextView) getView().findViewById(R.id.textViewShowLastEdit);
-        long lastEditRaw = mShow.getLastEdit();
+        // last edit
+        long lastEditRaw = mShowCursor.getLong(ShowQuery.LAST_EDIT_MS);
         if (lastEditRaw > 0) {
-            lastEdit.setText(DateUtils.formatDateTime(getActivity(), lastEditRaw * 1000,
+            mTextViewLastEdit.setText(DateUtils.formatDateTime(getActivity(), lastEditRaw * 1000,
                     DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));
         } else {
-            lastEdit.setText(R.string.unknown);
+            mTextViewLastEdit.setText(R.string.unknown);
         }
 
         // IMDb button
-        View imdbButton = getView().findViewById(R.id.buttonShowInfoIMDB);
-        final String imdbId = mShow.getImdbId();
-        ServiceUtils.setUpImdbButton(imdbId, imdbButton, TAG, getActivity());
+        String imdbId = mShowCursor.getString(ShowQuery.IMDBID);
+        ServiceUtils.setUpImdbButton(imdbId, mButtonImdb, TAG, getActivity());
 
         // TVDb button
-        View tvdbButton = getView().findViewById(R.id.buttonTVDB);
-        ServiceUtils.setUpTvdbButton(getShowTvdbId(), tvdbButton, TAG);
+        ServiceUtils.setUpTvdbButton(getShowTvdbId(), mButtonTvdb, TAG);
 
         // trakt button
-        ServiceUtils.setUpTraktButton(getShowTvdbId(), getView().findViewById(R.id.buttonTrakt),
-                TAG);
+        ServiceUtils.setUpTraktButton(getShowTvdbId(), mButtonTrakt, TAG);
 
-        // Web search button
-        View webSearch = getView().findViewById(R.id.buttonWebSearch);
-        ServiceUtils.setUpWebSearchButton(mShow.getTitle(), webSearch, TAG);
+        // web search button
+        ServiceUtils.setUpWebSearchButton(mShowTitle, mButtonWebSearch, TAG);
 
-        // Shout button
-        getView().findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
+        // shout button
+        mButtonComments.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
-                i.putExtras(TraktShoutsActivity.createInitBundleShow(mShow.getTitle(),
+                i.putExtras(TraktShoutsActivity.createInitBundleShow(mShowTitle,
                         getShowTvdbId()));
                 ActivityCompat.startActivity(getActivity(), i,
                         ActivityOptionsCompat
@@ -307,18 +406,17 @@ public class ShowFragment extends Fragment {
             }
         });
 
-        // Poster
+        // poster, full screen poster button
         final View posterContainer = getView().findViewById(R.id.containerShowPoster);
         final ImageView posterView = (ImageView) posterContainer
                 .findViewById(R.id.imageViewShowPoster);
-        final String posterPath = mShow.getPoster();
-        Utils.loadPoster(getActivity(), posterView, posterPath);
+        Utils.loadPoster(getActivity(), posterView, mShowPoster);
         posterContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
                 fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH,
-                        TheTVDB.buildScreenshotUrl(posterPath));
+                        TheTVDB.buildScreenshotUrl(mShowPoster));
                 ActivityCompat.startActivity(getActivity(), fullscreen,
                         ActivityOptionsCompat
                                 .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
@@ -327,12 +425,11 @@ public class ShowFragment extends Fragment {
             }
         });
 
-        // background poster
-        ImageView background = (ImageView) getView()
-                .findViewById(R.id.imageViewShowPosterBackground);
-        Utils.loadPosterBackground(getActivity(), background, posterPath);
+        // background
+        ImageView background = (ImageView) getView().findViewById(
+                R.id.imageViewShowPosterBackground);
+        Utils.loadPosterBackground(getActivity(), background, mShowPoster);
 
-        // trakt ratings
         onLoadTraktRatings(true);
     }
 
@@ -397,17 +494,37 @@ public class ShowFragment extends Fragment {
     }
 
     private void onLoadTraktRatings(boolean isUseCachedValues) {
-        if (mShow != null
-                && (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED)) {
-            mTraktTask = new TraktSummaryTask(getActivity(), getView().findViewById(
-                    R.id.ratingbar), isUseCachedValues).show(getShowTvdbId());
+        if (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED) {
+            mTraktTask = new TraktSummaryTask(getActivity(), getView().findViewById(R.id.ratingbar),
+                    isUseCachedValues).show(getShowTvdbId());
             AndroidUtils.executeOnPool(mTraktTask);
         }
     }
 
+    private void createShortcut() {
+        if (!Utils.hasAccessToX(getActivity())) {
+            Utils.advertiseSubscription(getActivity());
+            return;
+        }
+
+        if (mShowCursor == null) {
+            return;
+        }
+
+        // create the shortcut
+        ShortcutUtils.createShortcut(getActivity(), mShowTitle, mShowPoster, getShowTvdbId());
+
+        // drop to home screen
+        startActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).setFlags(
+                Intent.FLAG_ACTIVITY_NEW_TASK));
+
+        // Analytics
+        fireTrackerEvent("Add to Homescreen");
+    }
+
     private void shareShow() {
-        if (mShow != null) {
-            ShareUtils.shareShow(getActivity(), getShowTvdbId(), mShow.getTitle());
+        if (mShowCursor != null) {
+            ShareUtils.shareShow(getActivity(), getShowTvdbId(), mShowTitle);
             fireTrackerEvent("Share");
         }
     }

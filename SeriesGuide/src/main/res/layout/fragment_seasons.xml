@@ -48,8 +48,8 @@
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance.Light"
-        tools:text="199 episodes remaining" />
+        android:textAppearance="@style/TextAppearance.Subhead.Narrow"
+        tools:text="199 remaining" />
 
     <include
         android:id="@+id/dividerSeasonsHorizontal"

@@ -143,6 +143,7 @@ public class PeopleListHelper {
                         TmdbTools.ProfileImageSize.W185))
                 .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
                 .centerCrop()
+                .error(R.color.protection_dark)
                 .into((ImageView) personView.findViewById(R.id.imageViewPerson));
 
         TextView nameView = (TextView) personView.findViewById(R.id.textViewPerson);
@@ -206,7 +207,7 @@ public class PeopleListHelper {
 
     private static void addShowAllView(LayoutInflater inflater, ViewGroup peopleContainer,
             View.OnClickListener clickListener) {
-        TextView showAllView = (TextView) inflater.inflate(R.layout.item_action,
+        TextView showAllView = (TextView) inflater.inflate(R.layout.item_action_add,
                 peopleContainer, false);
         showAllView.setText(R.string.action_display_all);
         showAllView.setOnClickListener(clickListener);

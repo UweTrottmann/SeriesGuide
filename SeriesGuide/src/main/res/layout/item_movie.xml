@@ -21,28 +21,26 @@
 
         <ImageView
             android:id="@+id/imageViewMovieItemContextMenu"
-            android:layout_width="28dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/imageViewMoviePoster"
             android:background="?attr/custom_list_selector"
-            android:paddingBottom="8dp"
-            android:paddingLeft="8dp"
+            android:paddingBottom="24dp"
+            android:paddingLeft="28dp"
             android:scaleType="centerInside"
             android:src="?attr/drawableDropdown" />
 
         <TextView
             android:id="@+id/textViewMovieTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_below="@+id/imageViewMoviePoster"
-            android:layout_marginRight="@dimen/inline_padding"
+            android:layout_marginRight="16dp"
             android:layout_marginLeft="@dimen/inline_padding"
-            android:layout_toLeftOf="@+id/imageViewMovieItemContextMenu"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textAppearance="@style/TextAppearance.Primary"
+            android:textAppearance="@style/TextAppearance.Subhead"
             tools:text="Awesome Movie Title" />
 
         <TextView
@@ -54,7 +52,7 @@
             android:layout_marginLeft="@dimen/inline_padding"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.XSmall"
+            android:textAppearance="@style/TextAppearance.Caption.Dim"
             tools:text="November 13, 2013" />
     </RelativeLayout>
 

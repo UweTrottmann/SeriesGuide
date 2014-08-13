@@ -14,7 +14,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/default_padding">
+            android:padding="@dimen/larger_padding">
 
             <ProgressBar
                 android:id="@+id/progressBarAdd"
@@ -27,23 +27,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageViewAddPoster"
                 android:paddingBottom="@dimen/default_padding"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
                 android:text="@string/action_shows_add"
                 android:textAppearance="@style/TextAppearance.Headline"
                 android:textIsSelectable="true" />
 
             <TextView
                 android:id="@+id/textViewAddDescription"
-                style="@style/DefaultPadding.Blocks.WithBottomMargin.FlowText"
+                style="@style/Block.FlowText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/textViewAddTitle"
                 android:layout_toLeftOf="@+id/imageViewAddPoster"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
                 tools:text="@string/description_overview"
                 android:textAppearance="@style/TextAppearance.Body"
                 android:textIsSelectable="true" />
@@ -53,8 +52,9 @@
                 android:layout_width="102dp"
                 android:layout_height="150dp"
                 android:layout_alignParentRight="true"
-                android:layout_margin="@dimen/default_padding"
-                android:contentDescription="@string/description_poster" />
+                android:layout_marginLeft="@dimen/large_padding"
+                android:contentDescription="@string/description_poster"
+                tools:src="@color/protection_dark" />
         </RelativeLayout>
     </ScrollView>
 

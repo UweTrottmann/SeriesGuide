@@ -27,7 +27,7 @@ import android.sax.EndTextElementListener;
 import android.sax.RootElement;
 import android.text.format.DateUtils;
 import android.util.Xml;
-import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
@@ -79,6 +79,17 @@ public class TheTVDB {
     private static final String TVDB_MIRROR_BANNERS_CACHE = TVDB_MIRROR_BANNERS + "_cache/";
 
     private static final String TVDB_API_URL = "http://thetvdb.com/api/";
+
+    private static final String TVDB_API_GETSERIES = TVDB_API_URL + "GetSeries.php?seriesname=";
+
+    private static final String TVDB_API_SERIES = TVDB_API_URL + BuildConfig.TVDB_API_KEY
+            + "/series/";
+
+    private static final String TVDB_PATH_ALL = "all/";
+    private static final String TVDB_PARAM_LANGUAGE = "&language=";
+    private static final String TVDB_EXTENSION_UNCOMPRESSED = ".xml";
+    private static final String TVDB_EXTENSION_COMPRESSED = ".zip";
+    private static final String TVDB_FILE_DEFAULT = "en" + TVDB_EXTENSION_COMPRESSED;
 
     /**
      * Builds a full url for a TVDb show poster using the given image path.
@@ -233,9 +244,8 @@ public class TheTVDB {
         String language = DisplaySettings.getContentLanguage(context);
         String url;
         try {
-            url = TVDB_API_URL + "GetSeries.php?seriesname="
-                    + URLEncoder.encode(title, "UTF-8")
-                    + (language != null ? "&language=" + language : "");
+            url = TVDB_API_GETSERIES + URLEncoder.encode(title, "UTF-8")
+                    + (language != null ? TVDB_PARAM_LANGUAGE + language : "");
         } catch (UnsupportedEncodingException e) {
             throw new TvdbException("Encoding show title failed", e);
         }
@@ -243,7 +253,7 @@ public class TheTVDB {
         try {
             InputStream in = null;
             try {
-                in = AndroidUtils.downloadUrl(url);
+                in = Utils.downloadUrl(context, url);
                 Xml.parse(in, Xml.Encoding.UTF_8, root.getContentHandler());
             } finally {
                 if (in != null) {
@@ -490,8 +500,8 @@ public class TheTVDB {
         });
 
         // build TVDb url, get localized content when possible
-        String url = TVDB_API_URL + context.getResources().getString(R.string.tvdb_apikey)
-                + "/series/" + showTvdbId + "/" + (language != null ? language + ".xml" : "");
+        String url = TVDB_API_SERIES + showTvdbId + "/"
+                + (language != null ? language + TVDB_EXTENSION_UNCOMPRESSED : "");
         downloadAndParse(url, root.getContentHandler(), false);
 
         return currentShow;
@@ -500,9 +510,8 @@ public class TheTVDB {
     private static ArrayList<ContentValues> fetchEpisodes(
             ArrayList<ContentProviderOperation> batch, Show show, String language, Context context)
             throws TvdbException {
-        String url = TVDB_API_URL + context.getResources().getString(R.string.tvdb_apikey)
-                + "/series/" + show.tvdbId + "/all/"
-                + (language != null ? language + ".zip" : "en.zip");
+        String url = TVDB_API_SERIES + show.tvdbId + "/" + TVDB_PATH_ALL
+                + (language != null ? language + TVDB_EXTENSION_COMPRESSED : TVDB_FILE_DEFAULT);
 
         return parseEpisodes(batch, url, show, context);
     }

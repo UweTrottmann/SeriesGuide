@@ -7,7 +7,6 @@
 
     <LinearLayout
         android:id="@+id/containerEpisode"
-        style="@style/DefaultPadding.Page"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -16,138 +15,189 @@
             android:id="@+id/textViewEpisodeTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_padding"
-            android:layout_marginRight="@dimen/default_padding"
-            tools:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.Large.Light"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            tools:text="Episode Title Of Episode"
+            android:textAppearance="@style/TextAppearance.Title"
             android:textIsSelectable="true" />
 
         <TextView
             android:id="@+id/textViewEpisodeReleaseTime"
-            style="@style/DefaultPadding.Blocks.WithBottomMargin"
+            style="@style/Block"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.Small"
+            android:layout_marginBottom="@dimen/large_padding"
+            tools:text="OCT 15, 2013 (TUE) ABSOLUTE 52"
+            android:textAppearance="@style/TextAppearance.Caption"
             android:textIsSelectable="true" />
 
-        <include
-            layout="@layout/imagecontainer"
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/containerEpisodeImage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginBottom="@dimen/inline_padding"
+            android:background="?attr/colorBackgroundDim"
+            android:foreground="?attr/custom_list_selector"
+            tools:ignore="Overdraw">
+
+            <ImageView
+                android:id="@+id/imageViewEpisode"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/imagecontainer_height"
+                android:contentDescription="@string/description_image"
+                android:scaleType="centerCrop" />
+
+        </FrameLayout>
+
+        <include layout="@layout/buttons_episode" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="?attr/colorAccent" />
-
-        <include layout="@layout/buttonbar" />
-
-        <include layout="@layout/ratingbar" />
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginBottom="@dimen/large_padding"
+            android:background="?attr/colorDivider" />
 
         <TextView
             android:id="@+id/textViewEpisodeDescription"
-            style="@style/DefaultPadding.Blocks.WithBottomMargin.FlowText"
+            style="@style/Block.FlowText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.Light"
+            android:layout_marginBottom="@dimen/large_padding"
+            tools:text="This is a sample description of what happens in this episode. A lot."
+            android:textAppearance="@style/TextAppearance.Body"
             android:textIsSelectable="true" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:background="?attr/colorDivider" />
+
+        <include layout="@layout/ratingbar" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:background="?attr/colorDivider" />
 
         <TextView
             android:id="@+id/labelEpisodeGuestStars"
-            style="@style/DefaultPadding.Blocks.WithTopMargin"
+            style="@style/Block.WithTopMargin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/episode_gueststars"
-            android:textAppearance="@style/TextAppearance.Small.Label" />
+            android:textAppearance="@style/TextAppearance.Body.Bold" />
 
         <TextView
             android:id="@+id/textViewEpisodeGuestStars"
-            style="@style/DefaultPadding.Blocks.WithBottomMargin"
+            style="@style/Block.FlowText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.Light"
+            tools:text="Daniel Craig, Jaimie Alexander, Kiefer Sutherland, Stephanie Leonidas"
+            android:textAppearance="@style/TextAppearance.Body"
             android:textIsSelectable="true" />
 
         <TextView
             android:id="@+id/labelEpisodeDirectors"
-            style="@style/DefaultPadding.Blocks.WithTopMargin"
+            style="@style/Block.WithTopMargin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/episode_directors"
-            android:textAppearance="@style/TextAppearance.Small.Label" />
+            android:textAppearance="@style/TextAppearance.Body.Bold" />
 
         <TextView
             android:id="@+id/textViewEpisodeDirectors"
-            style="@style/DefaultPadding.Blocks.WithBottomMargin"
+            style="@style/Block.FlowText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.Light"
+            tools:text="Daniel Craig"
+            android:textAppearance="@style/TextAppearance.Body"
             android:textIsSelectable="true" />
 
         <TextView
             android:id="@+id/labelEpisodeWriters"
-            style="@style/DefaultPadding.Blocks.WithTopMargin"
+            style="@style/Block.WithTopMargin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/episode_writers"
-            android:textAppearance="@style/TextAppearance.Small.Label" />
+            android:textAppearance="@style/TextAppearance.Body.Bold" />
 
         <TextView
             android:id="@+id/textViewEpisodeWriters"
-            style="@style/DefaultPadding.Blocks.WithBottomMargin"
+            style="@style/Block.FlowText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.Light"
+            tools:text="Daniel Craig, Jaimie Alexander"
+            android:textAppearance="@style/TextAppearance.Body"
             android:textIsSelectable="true" />
 
         <TextView
             android:id="@+id/labelEpisodeDvd"
-            style="@style/DefaultPadding.Blocks.WithTopMargin"
+            style="@style/Block.WithTopMargin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/episode_dvdnumber"
-            android:textAppearance="@style/TextAppearance.Small.Label" />
+            android:textAppearance="@style/TextAppearance.Body.Bold" />
 
         <TextView
             android:id="@+id/textViewEpisodeDvd"
-            style="@style/DefaultPadding.Blocks.WithBottomMargin"
+            style="@style/Block"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.Light"
+            tools:text="42.0"
+            android:textAppearance="@style/TextAppearance.Body"
             android:textIsSelectable="true" />
 
         <TextView
             android:id="@+id/labelEpisodeReleaseDay"
-            style="@style/DefaultPadding.Blocks.WithTopMargin"
+            style="@style/Block.WithTopMargin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/episode_firstaired"
-            android:textAppearance="@style/TextAppearance.Small.Label" />
+            android:textAppearance="@style/TextAppearance.Body.Bold" />
 
         <TextView
             android:id="@+id/textViewEpisodeReleaseDay"
-            style="@style/DefaultPadding.Blocks.WithBottomMargin"
+            style="@style/Block"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.Light"
+            tools:text="2014/07/25 CEST (Fri)"
+            android:textAppearance="@style/TextAppearance.Body"
             android:textIsSelectable="true" />
 
         <TextView
             android:id="@+id/labelEpisodeLastEdit"
-            style="@style/DefaultPadding.Blocks.WithTopMargin"
+            style="@style/Block.WithTopMargin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lastEdit"
-            android:textAppearance="@style/TextAppearance.Small.Label" />
+            android:textAppearance="@style/TextAppearance.Body.Bold" />
 
         <TextView
             android:id="@+id/textViewEpisodeLastEdit"
-            style="@style/DefaultPadding.Blocks.WithBottomMargin"
+            style="@style/Block"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.Light"
+            tools:text="July 17, 21:48"
+            android:textAppearance="@style/TextAppearance.Body"
             android:textIsSelectable="true" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginTop="@dimen/large_padding"
+            android:background="?attr/colorDivider" />
 
         <include
             layout="@layout/buttons_services"

@@ -73,6 +73,7 @@ public class PeopleAdapter extends ArrayAdapter<PeopleListHelper.Person> {
                         TmdbTools.ProfileImageSize.W185))
                 .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
                 .centerCrop()
+                .error(R.color.protection_dark)
                 .into(viewHolder.headshot);
 
         return convertView;

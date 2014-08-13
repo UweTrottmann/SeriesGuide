@@ -96,7 +96,7 @@ public class BillingActivity extends BaseActivity {
 
         setWaitMode(true);
 
-        mHelper = new IabHelper(this, getPublicKey(this));
+        mHelper = new IabHelper(this, getPublicKey());
 
         // enable debug logging (for a production application, you should set
         // this to false).
@@ -393,9 +393,9 @@ public class BillingActivity extends BaseActivity {
     /**
      * Returns the public key used for verification of purchases by {@link IabHelper}.
      */
-    public static String getPublicKey(Context context) {
-        return context.getString(R.string.key_a) + context.getString(R.string.key_b)
-                + context.getString(R.string.key_c) + context.getString(R.string.key_d);
+    public static String getPublicKey() {
+        return BuildConfig.IAP_KEY_A + BuildConfig.IAP_KEY_B + BuildConfig.IAP_KEY_C
+                + BuildConfig.IAP_KEY_D;
     }
 
     private void updateViewStates(boolean hasUpgrade) {

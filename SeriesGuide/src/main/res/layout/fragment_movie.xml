@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ui.MovieDetailsActivity">
 
     <ImageView
         android:id="@+id/imageViewMoviePoster"
@@ -25,9 +26,10 @@
         android:paddingTop="?android:actionBarSize">
 
         <RelativeLayout
-            style="@style/DefaultPadding.Page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/default_padding"
+            android:paddingBottom="@dimen/default_padding"
             android:animateLayoutChanges="true">
 
             <TextView
@@ -35,147 +37,122 @@
                 style="@style/DefaultPadding.Blocks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:textAppearance="@style/TextAppearance.Large.Light"
-                android:textIsSelectable="true"
-                android:textSize="@dimen/text_size_ultralarge"
-                tools:text="Awesome Movie Title" />
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginRight="@dimen/large_padding"
+                tools:text="Awesome Movie Title"
+                android:textAppearance="@style/TextAppearance.Headline"
+                android:textIsSelectable="true" />
 
             <TextView
                 android:id="@+id/textViewMovieDate"
                 style="@style/DefaultPadding.Blocks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
                 android:layout_below="@+id/textViewMovieTitle"
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginRight="@dimen/large_padding"
                 android:layout_marginBottom="@dimen/large_padding"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textAppearance="@style/TextAppearance.Small"
-                android:textIsSelectable="true"
-                tools:text="20 Oct 2013" />
+                tools:text="20 Oct 2013"
+                android:textAppearance="@style/TextAppearance.Caption"
+                android:textIsSelectable="true" />
 
-            <LinearLayout
-                android:id="@+id/containerMovieButtons"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?attr/colorBackgroundDim"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/textViewMovieDate"
-                android:layout_marginBottom="@dimen/large_padding"
-                android:orientation="horizontal">
+            <include layout="@layout/buttons_movie" />
 
-                <ImageButton
-                    android:id="@+id/buttonMovieCheckIn"
-                    style="@style/Widget.SeriesGuide.Button.Borderless.Small"
-                    android:layout_width="@dimen/buttonbar_button_width"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/checkin"
-                    android:paddingLeft="@dimen/default_padding"
-                    android:paddingRight="@dimen/default_padding"
-                    android:src="?attr/drawableCheckin" />
-
-                <ImageButton
-                    android:id="@+id/buttonMovieWatched"
-                    style="@style/Widget.SeriesGuide.Button.Borderless"
-                    android:layout_width="@dimen/buttonbar_button_width"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/togglewatched"
-                    android:paddingLeft="@dimen/default_padding"
-                    android:paddingRight="@dimen/default_padding"
-                    android:src="?attr/drawableWatch" />
-
-                <ImageButton
-                    android:id="@+id/buttonMovieWatchlisted"
-                    style="@style/Widget.SeriesGuide.Button.Borderless"
-                    android:layout_width="@dimen/buttonbar_button_width"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/watchlist_add"
-                    android:paddingLeft="@dimen/default_padding"
-                    android:paddingRight="@dimen/default_padding"
-                    android:src="?attr/drawableList" />
-
-                <ImageButton
-                    android:id="@+id/buttonMovieCollected"
-                    style="@style/Widget.SeriesGuide.Button.Borderless"
-                    android:layout_width="@dimen/buttonbar_button_width"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/action_collection_add"
-                    android:paddingLeft="@dimen/default_padding"
-                    android:paddingRight="@dimen/default_padding"
-                    android:src="?attr/drawableCollect" />
-            </LinearLayout>
+            <View
+                android:id="@+id/dividerMovie0"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/containerMovieButtons"
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginRight="@dimen/large_padding"
+                android:background="?attr/colorDivider" />
 
             <include
                 layout="@layout/ratingbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginRight="@dimen/default_padding"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/dividerMovie0" />
+
+            <View
+                android:id="@+id/dividerMovie1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/ratingbar"
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginRight="@dimen/large_padding"
                 android:layout_marginBottom="@dimen/large_padding"
-                android:layout_below="@+id/containerMovieButtons" />
+                android:background="?attr/colorDivider" />
 
             <TextView
                 android:id="@+id/textViewMovieDescription"
-                style="@style/DefaultPadding.Blocks.WithBottomMargin.FlowText"
+                style="@style/Block.FlowText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/ratingbar"
+                android:layout_below="@+id/dividerMovie1"
+                android:layout_marginBottom="@dimen/large_padding"
                 android:maxWidth="400dp"
-                android:textAppearance="@style/TextAppearance.Light"
+                android:textAppearance="@style/TextAppearance.Body"
                 android:textIsSelectable="true"
                 tools:text="Description for a super awesome movie..." />
+
+            <View
+                android:id="@+id/dividerMovie2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/textViewMovieDescription"
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginRight="@dimen/large_padding"
+                android:layout_marginBottom="@dimen/large_padding"
+                android:background="?attr/colorDivider" />
 
             <include
                 layout="@layout/people_list"
                 android:id="@+id/containerMovieCast"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewMovieDescription"
-                android:layout_alignLeft="@+id/textViewMovieDescription"
-                android:layout_alignRight="@+id/textViewMovieDescription"
-                android:layout_marginBottom="@dimen/default_padding" />
+                android:layout_below="@+id/dividerMovie2" />
 
             <include
                 layout="@layout/people_list"
                 android:id="@+id/containerMovieCrew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/containerMovieCast" />
+
+            <View
+                android:id="@+id/dividerMovie3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/containerMovieCrew"
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginRight="@dimen/large_padding"
+                android:layout_marginTop="@dimen/large_padding"
+                android:background="?attr/colorDivider" />
+
+            <TextView
+                android:id="@+id/textViewMovieMore"
+                style="@style/Block.WithTopMargin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/containerMovieCast"
-                android:layout_alignLeft="@+id/textViewMovieDescription"
-                android:layout_alignRight="@+id/textViewMovieDescription"
-                android:layout_marginBottom="@dimen/default_padding" />
+                android:layout_below="@+id/dividerMovie3"
+                android:text="@string/services_more"
+                android:textAppearance="@style/TextAppearance.Body.Bold" />
 
-            <include
-                android:id="@+id/dividerHorizontalMovieDetails"
-                layout="@layout/divider_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/textViewMovieDescription"
-                android:layout_alignRight="@+id/textViewMovieDescription"
-                android:layout_below="@+id/containerMovieCrew" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/buttonMovieComments"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Default"
+                android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/dividerHorizontalMovieDetails"
-                android:baselineAligned="false"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/buttonMovieComments"
-                    style="@style/Widget.SeriesGuide.Button.Borderless.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/default_padding"
-                    android:paddingRight="@dimen/default_padding"
-                    android:text="@string/comments"
-                    android:textAllCaps="true" />
-            </LinearLayout>
+                android:layout_below="@+id/textViewMovieMore"
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginRight="@dimen/large_padding"
+                android:gravity="center_vertical|left"
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingRight="@dimen/default_padding"
+                android:text="@string/comments" />
         </RelativeLayout>
     </ScrollView>
 

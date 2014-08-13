@@ -35,6 +35,7 @@
   <string name="onlyx">Налично само с X абонамент</string>
   <string name="add_empty">Няма ТВ предавания.</string>
   <string name="people_empty">Няма никой тук?! Натисни, за да опиташ отново.</string>
+  <string name="share">Share</string>
   <string name="share_show">Сподели ТВ предаване</string>
   <string name="share_episode">Сподели епизод</string>
   <string name="share_movie">Сподели филм</string>
@@ -144,8 +145,8 @@
   <string name="mark_all">Всички са гледани</string>
   <string name="unmark_all">Никой не е гледан</string>
   <string name="mark_untilhere">Всички излъчени до сега са гледани</string>
-  <string name="collect">Епизоди в колекция</string>
-  <string name="uncollect">Все още несъбран епизод</string>
+  <string name="collect">Collected</string>
+  <string name="uncollect">Not collected</string>
   <string name="collect_all">Всички са в колекцията</string>
   <string name="uncollect_all">Нито един не е в колекцията</string>
   <string name="action_skip">Пропусни</string>
@@ -160,15 +161,15 @@
   <string name="action_collection_added">Добавено в колекцията</string>
   <string name="action_collection_removed">Премахнато от колекцията</string>
   <string name="action_watched">Гледано</string>
-  <string name="action_unwatched">Все още не е гледано</string>
+  <string name="action_unwatched">Not watched</string>
   <string name="confirm_delete">Наистина ли искате премахнете %s?</string>
   <string name="delete_has_list_items">Не може да се изпълни, първо премахнете %s от всички списъци.</string>
   <string name="delete_error">Премахването неуспешно. Опитайте по-късно.</string>
   <string name="delete_show">Премахни</string>
   <string name="dontdelete_show">Не премахвай</string>
   <string name="no_nextepisode">няма намерен предстоящ епизод</string>
-  <string name="context_favorite">Добави към Любими</string>
-  <string name="context_unfavorite">Премахни от Любими</string>
+  <string name="context_favorite">Favorite</string>
+  <string name="context_unfavorite">No favorite</string>
   <string name="favorited">Добавено в Любими</string>
   <string name="unfavorited">Премахнато от Любими</string>
   <string name="context_hide">Скрий</string>
@@ -437,7 +438,7 @@
   <string name="subscription_activated">Вече сте абонирани за X характеристики (функции).</string>
   <string name="subscription_expired">Абонаментът е изтекъл</string>
   <string name="subscription_expired_details">Вашият абонамент за X характеристики (функции) е изтекъл.</string>
-  <string name="add_to_homescreen">Добави на Хоум екрана</string>
+  <string name="add_to_homescreen">Shortcut</string>
   <string name="search_within_show">Търси в %s</string>
   <string name="web_search">Търсене в мрежата</string>
   <string name="extensions">Разширения</string>

@@ -263,7 +263,6 @@ public class ShowsFragment extends Fragment implements
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_shows_add) {
             startActivity(new Intent(getActivity(), AddActivity.class));
-            getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             return true;
         } else if (itemId == R.id.menu_action_shows_filter) {
             fireTrackerEventAction("Filter shows");
@@ -698,9 +697,6 @@ public class ShowsFragment extends Fragment implements
     private void onFavoriteShow(int showTvdbId, boolean isFavorite) {
         // store new value
         ShowTools.get(getActivity()).storeIsFavorite(showTvdbId, isFavorite);
-
-        // favoriting makes show eligible for notifications
-        Utils.runNotificationService(getActivity());
 
         fireTrackerEventContext(isFavorite ? "Favorite show" : "Unfavorite show");
     }

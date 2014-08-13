@@ -35,6 +35,7 @@
   <string name="onlyx">متاح فقط على النسخة المدفوعة</string>
   <string name="add_empty">لا توجد مسلسلات هنا.</string>
   <string name="people_empty">Nobody here?! Touch to try again.</string>
+  <string name="share">Share</string>
   <string name="share_show">مشاركة العرض</string>
   <string name="share_episode">مشاركة الحلقة</string>
   <string name="share_movie">مشاركة فيلم</string>
@@ -144,8 +145,8 @@
   <string name="mark_all">مشاهدة الكل</string>
   <string name="unmark_all">لم يُشاهد شئ</string>
   <string name="mark_untilhere">تم مشاهدة جميع ما بُث سابقاً</string>
-  <string name="collect">تجميع الحلقات</string>
-  <string name="uncollect">لم يتم بعد جمع الحلقة</string>
+  <string name="collect">Collected</string>
+  <string name="uncollect">Not collected</string>
   <string name="collect_all">جمع الكل</string>
   <string name="uncollect_all">لم يتم جمع شئ</string>
   <string name="action_skip">تخطي</string>
@@ -160,15 +161,15 @@
   <string name="action_collection_added">إضافة إلى مجموعة</string>
   <string name="action_collection_removed">إزالة من المجموعة</string>
   <string name="action_watched">تم مشاهدتها</string>
-  <string name="action_unwatched">لم تشاهد</string>
+  <string name="action_unwatched">Not watched</string>
   <string name="confirm_delete">هل تريد فعلاً إزالة %s؟</string>
   <string name="delete_has_list_items">لا يمكن الإكمال, أزل أولاً %s من كل القوائم.</string>
   <string name="delete_error">لم يتم إزالة المسلسل، حاول مرة أخرى.</string>
   <string name="delete_show">إزالة</string>
   <string name="dontdelete_show">لا تقم بالإزالة</string>
   <string name="no_nextepisode">لا توجد حلقة قادمة</string>
-  <string name="context_favorite">إضافة إلى المفضلة</string>
-  <string name="context_unfavorite">إزالة من المفضلة</string>
+  <string name="context_favorite">Favorite</string>
+  <string name="context_unfavorite">No favorite</string>
   <string name="favorited">إضافة إلى المفضلة</string>
   <string name="unfavorited">إزالة من المفضلة</string>
   <string name="context_hide">إخفاء</string>
@@ -437,7 +438,7 @@
   <string name="subscription_activated">أنت الآن مشترك في النسخة المدفوعة.</string>
   <string name="subscription_expired">انتهت مدة الإشتراك</string>
   <string name="subscription_expired_details">انتهت مدة اشتراك في البرنامج المدفوع.</string>
-  <string name="add_to_homescreen">إضافة إلى الشاشة الرئيسية</string>
+  <string name="add_to_homescreen">Shortcut</string>
   <string name="search_within_show">البحث في %s</string>
   <string name="web_search">البحث في الويب</string>
   <string name="extensions">الإضافات</string>

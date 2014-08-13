@@ -27,6 +27,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -34,6 +35,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,7 +55,11 @@ import com.google.android.gms.analytics.Tracker;
 import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import timber.log.Timber;
@@ -223,6 +229,51 @@ public class Utils {
         }
 
         return false;
+    }
+
+    /**
+     * Sets the Drawables (if any) to appear to the start of, above,
+     * to the end of, and below the text.  Use 0 if you do not
+     * want a Drawable there. The Drawables' bounds will be set to
+     * their intrinsic bounds.
+     */
+    public static void setCompoundDrawablesRelativeWithIntrinsicBounds(Button button, int left,
+            int top, int right, int bottom) {
+        if (AndroidUtils.isJellyBeanMR1OrHigher()) {
+            button.setCompoundDrawablesRelativeWithIntrinsicBounds(left, top, right, bottom);
+            return;
+        }
+
+        final Resources resources = button.getContext().getResources();
+        setCompoundDrawablesRelativeWithIntrinsicBounds(
+                button,
+                left != 0 ? resources.getDrawable(left) : null,
+                top != 0 ? resources.getDrawable(top) : null,
+                right != 0 ? resources.getDrawable(right) : null,
+                bottom != 0 ? resources.getDrawable(bottom) : null);
+    }
+
+    /**
+     * Sets the Drawables (if any) to appear to the start of, above,
+     * to the end of, and below the text.  Use null if you do not
+     * want a Drawable there. The Drawables' bounds will be set to
+     * their intrinsic bounds.
+     */
+    public static void setCompoundDrawablesRelativeWithIntrinsicBounds(Button button,
+            Drawable left, Drawable top, Drawable right, Drawable bottom) {
+        if (left != null) {
+            left.setBounds(0, 0, left.getIntrinsicWidth(), left.getIntrinsicHeight());
+        }
+        if (right != null) {
+            right.setBounds(0, 0, right.getIntrinsicWidth(), right.getIntrinsicHeight());
+        }
+        if (top != null) {
+            top.setBounds(0, 0, top.getIntrinsicWidth(), top.getIntrinsicHeight());
+        }
+        if (bottom != null) {
+            bottom.setBounds(0, 0, bottom.getIntrinsicWidth(), bottom.getIntrinsicHeight());
+        }
+        button.setCompoundDrawables(left, top, right, bottom);
     }
 
     public static void setValueOrPlaceholder(View view, final String value) {
@@ -517,5 +568,21 @@ public class Utils {
     @SafeVarargs
     public static <T> AsyncTask executeInOrder(AsyncTask<T, ?, ?> task, T... args) {
         return task.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, args);
+    }
+
+    /**
+     * Returns an {@link java.io.InputStream} using {@link java.net.HttpURLConnection} to connect
+     * to the given URL.
+     * <p/>
+     * Responses are downloaded and cached using the default HTTP client instance (see {@link
+     * com.battlelancer.seriesguide.util.ServiceUtils}.
+     */
+    public static InputStream downloadUrl(Context context, String urlString) throws IOException {
+        URL url = new URL(urlString);
+
+        HttpURLConnection conn = ServiceUtils.getUrlFactory(context).open(url);
+        conn.connect();
+
+        return conn.getInputStream();
     }
 }
