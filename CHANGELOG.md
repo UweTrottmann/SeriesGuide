@@ -8,6 +8,12 @@ All dates are in the European Central timezone.
 Version 17 *(in development)*
 -----------------------------
 
+#### 17-beta3 *(2014-08-15)*
+
+* TWEAK Remove show dialog opens without delay.
+* FIX Crash when authenticating with tvtag.
+* FIX Discard old list widget data only after query for new data has finished.
+
 #### 17-beta2 *(2014-08-13)*
 
 * TWEAK Use platform activity animations to better fit in with apps for that version of Android.
