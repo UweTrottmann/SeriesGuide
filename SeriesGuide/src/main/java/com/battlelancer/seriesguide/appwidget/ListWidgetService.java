@@ -65,12 +65,8 @@ public class ListWidgetService extends RemoteViewsService {
         }
 
         public void onCreate() {
-            // In onCreate() you setup any connections / cursors to your data
-            // source. Heavy lifting, for example downloading or creating
-            // content etc, should be deferred to onDataSetChanged() or
-            // getViewAt(). Taking more than 20 seconds in this call will result
-            // in an ANR.
-            onQueryForData();
+            // Since we reload the cursor in onDataSetChanged() which gets called immediately after
+            // onCreate(), we do nothing here.
         }
 
         private void onQueryForData() {
