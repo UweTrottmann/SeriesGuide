@@ -77,15 +77,16 @@ public class ListWidgetService extends RemoteViewsService {
             boolean isHideWatched = WidgetSettings.getWidgetHidesWatched(mContext, mAppWidgetId);
             mTypeIndex = WidgetSettings.getWidgetListType(mContext, mAppWidgetId);
 
+            Cursor newCursor;
             switch (mTypeIndex) {
                 case WidgetSettings.Type.RECENT:
                     // Recent episodes
-                    mDataCursor = DBUtils.getRecentEpisodes(isHideWatched, mContext);
+                    newCursor = DBUtils.getRecentEpisodes(isHideWatched, mContext);
                     break;
                 case WidgetSettings.Type.FAVORITES:
                     // Favorite shows + next episodes, exclude those without
                     // episode
-                    mDataCursor = getContentResolver().query(
+                    newCursor = getContentResolver().query(
                             Shows.CONTENT_URI_WITH_NEXT_EPISODE,
                             ShowsQuery.PROJECTION,
                             Shows.SELECTION_NO_HIDDEN + " AND " + Shows.SELECTION_FAVORITES
@@ -94,8 +95,17 @@ public class ListWidgetService extends RemoteViewsService {
                     break;
                 default:
                     // Upcoming episodes
-                    mDataCursor = DBUtils.getUpcomingEpisodes(isHideWatched, mContext);
+                    newCursor = DBUtils.getUpcomingEpisodes(isHideWatched, mContext);
                     break;
+            }
+
+            // switch out cursor
+            Cursor oldCursor = mDataCursor;
+
+            mDataCursor = newCursor;
+
+            if (oldCursor != null) {
+                oldCursor.close();
             }
         }
 
@@ -223,9 +233,6 @@ public class ListWidgetService extends RemoteViewsService {
             // The widget will remain
             // in its current state while work is being done here, so you don't
             // need to worry about locking up the widget.
-            if (mDataCursor != null) {
-                mDataCursor.close();
-            }
             onQueryForData();
         }
     }
