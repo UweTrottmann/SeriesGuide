@@ -99,6 +99,11 @@ public class ListWidgetService extends RemoteViewsService {
                     break;
             }
 
+            if (newCursor == null) {
+                // do NOT switch to null cursor
+                return;
+            }
+
             // switch out cursor
             Cursor oldCursor = mDataCursor;
 
@@ -112,7 +117,9 @@ public class ListWidgetService extends RemoteViewsService {
         public void onDestroy() {
             // In onDestroy() you should tear down anything that was setup for
             // your data source, eg. cursors, connections, etc.
-            mDataCursor.close();
+            if (mDataCursor != null) {
+                mDataCursor.close();
+            }
         }
 
         public int getCount() {
@@ -130,7 +137,8 @@ public class ListWidgetService extends RemoteViewsService {
             // file, and set the text based on the position.
             RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.appwidget_row);
 
-            if (mDataCursor.isClosed() || !mDataCursor.moveToPosition(position)) {
+            if (mDataCursor == null
+                    || mDataCursor.isClosed() || !mDataCursor.moveToPosition(position)) {
                 return rv;
             }
 
