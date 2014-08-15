@@ -65,27 +65,24 @@ public class ListWidgetService extends RemoteViewsService {
         }
 
         public void onCreate() {
-            // In onCreate() you setup any connections / cursors to your data
-            // source. Heavy lifting, for example downloading or creating
-            // content etc, should be deferred to onDataSetChanged() or
-            // getViewAt(). Taking more than 20 seconds in this call will result
-            // in an ANR.
-            onQueryForData();
+            // Since we reload the cursor in onDataSetChanged() which gets called immediately after
+            // onCreate(), we do nothing here.
         }
 
         private void onQueryForData() {
             boolean isHideWatched = WidgetSettings.getWidgetHidesWatched(mContext, mAppWidgetId);
             mTypeIndex = WidgetSettings.getWidgetListType(mContext, mAppWidgetId);
 
+            Cursor newCursor;
             switch (mTypeIndex) {
                 case WidgetSettings.Type.RECENT:
                     // Recent episodes
-                    mDataCursor = DBUtils.getRecentEpisodes(isHideWatched, mContext);
+                    newCursor = DBUtils.getRecentEpisodes(isHideWatched, mContext);
                     break;
                 case WidgetSettings.Type.FAVORITES:
                     // Favorite shows + next episodes, exclude those without
                     // episode
-                    mDataCursor = getContentResolver().query(
+                    newCursor = getContentResolver().query(
                             Shows.CONTENT_URI_WITH_NEXT_EPISODE,
                             ShowsQuery.PROJECTION,
                             Shows.SELECTION_NO_HIDDEN + " AND " + Shows.SELECTION_FAVORITES
@@ -94,15 +91,31 @@ public class ListWidgetService extends RemoteViewsService {
                     break;
                 default:
                     // Upcoming episodes
-                    mDataCursor = DBUtils.getUpcomingEpisodes(isHideWatched, mContext);
+                    newCursor = DBUtils.getUpcomingEpisodes(isHideWatched, mContext);
                     break;
+            }
+
+            if (newCursor == null) {
+                // do NOT switch to null cursor
+                return;
+            }
+
+            // switch out cursor
+            Cursor oldCursor = mDataCursor;
+
+            mDataCursor = newCursor;
+
+            if (oldCursor != null) {
+                oldCursor.close();
             }
         }
 
         public void onDestroy() {
             // In onDestroy() you should tear down anything that was setup for
             // your data source, eg. cursors, connections, etc.
-            mDataCursor.close();
+            if (mDataCursor != null) {
+                mDataCursor.close();
+            }
         }
 
         public int getCount() {
@@ -120,7 +133,8 @@ public class ListWidgetService extends RemoteViewsService {
             // file, and set the text based on the position.
             RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.appwidget_row);
 
-            if (mDataCursor.isClosed() || !mDataCursor.moveToPosition(position)) {
+            if (mDataCursor == null
+                    || mDataCursor.isClosed() || !mDataCursor.moveToPosition(position)) {
                 return rv;
             }
 
@@ -223,9 +237,6 @@ public class ListWidgetService extends RemoteViewsService {
             // The widget will remain
             // in its current state while work is being done here, so you don't
             // need to worry about locking up the widget.
-            if (mDataCursor != null) {
-                mDataCursor.close();
-            }
             onQueryForData();
         }
     }
