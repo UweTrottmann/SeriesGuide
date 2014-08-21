@@ -83,8 +83,11 @@ public class LocalOnlyOkHttpDownloader implements Downloader {
         HttpURLConnection connection = openConnection(uri);
         connection.setUseCaches(true);
         if (localCacheOnly) {
+            // only-if-cached: do not go over network
+            // max-age: accept cached responses up to one year of age (rec. max. value)
+            // max-stale: accept stale images of any age
             connection.setRequestProperty("Cache-Control",
-                    "only-if-cached,max-age=" + Integer.MAX_VALUE);
+                    "only-if-cached,max-age=31536000,max-stale");
         }
 
         int responseCode = connection.getResponseCode();
