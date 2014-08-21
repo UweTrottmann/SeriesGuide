@@ -124,7 +124,10 @@ public class ShowsActivity extends BaseTopActivity implements
         NotificationService.handleDeleteIntent(this, getIntent());
 
         // handle implicit intents from other apps
-        handleViewIntents();
+        if (handleViewIntents()) {
+            finish();
+            return;
+        }
 
         // setup all the views!
         setUpActionBar();
@@ -138,11 +141,13 @@ public class ShowsActivity extends BaseTopActivity implements
     /**
      * Handles further behavior, if this activity was launched through one of the {@link
      * Intents} action filters defined in the manifest.
+     *
+     * @return true if a show or episode is viewed directly and this activity should finish.
      */
-    private void handleViewIntents() {
+    private boolean handleViewIntents() {
         String action = getIntent().getAction();
         if (TextUtils.isEmpty(action)) {
-            return;
+            return false;
         }
 
         Intent intent = null;
@@ -168,7 +173,7 @@ public class ShowsActivity extends BaseTopActivity implements
         else if (Intents.ACTION_VIEW_SHOW.equals(action)) {
             int showTvdbId = getIntent().getIntExtra(Intents.EXTRA_SHOW_TVDBID, 0);
             if (showTvdbId <= 0) {
-                return;
+                return false;
             }
             if (DBUtils.isShowExists(this, showTvdbId)) {
                 // show exists, display it
@@ -184,8 +189,10 @@ public class ShowsActivity extends BaseTopActivity implements
 
         if (intent != null) {
             startActivity(intent);
-            overridePendingTransition(R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg);
+            return true;
         }
+
+        return false;
     }
 
     private void setUpActionBar() {
