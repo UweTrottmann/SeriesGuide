@@ -79,8 +79,9 @@ dependencies {
     compile project(':libraries:androidutils')
     compile project(':libraries:drag-sort-listview')
     compile project(':libraries:stickygridheaders')
-    compile rootProject.ext.libraries.okhttp
-    compile rootProject.ext.libraries.okhttpurlconnection
+    // temporary workwaround for https://github.com/square/okhttp/issues/967
+    //compile rootProject.ext.libraries.okhttp
+    //compile rootProject.ext.libraries.okhttpurlconnection
     compile rootProject.ext.libraries.supportv4
     compile 'com.github.castorflex.smoothprogressbar:library:0.5.1'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
