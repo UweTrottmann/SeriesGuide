@@ -33,6 +33,6 @@ public class SgTrakt extends Trakt {
     @Override
     protected RestAdapter.Builder newRestAdapterBuilder() {
         return new RestAdapter.Builder().setClient(
-                new OkClient(ServiceUtils.getOkHttpClient(context)));
+                new OkClient(ServiceUtils.getCachingOkHttpClient(context)));
     }
 }

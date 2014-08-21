@@ -577,10 +577,26 @@ public class Utils {
      * Responses are downloaded and cached using the default HTTP client instance (see {@link
      * com.battlelancer.seriesguide.util.ServiceUtils}.
      */
-    public static InputStream downloadUrl(Context context, String urlString) throws IOException {
+    public static InputStream downloadUrl(String urlString) throws IOException {
         URL url = new URL(urlString);
 
-        HttpURLConnection conn = ServiceUtils.getUrlFactory(context).open(url);
+        HttpURLConnection conn = ServiceUtils.getUrlFactory().open(url);
+        conn.connect();
+
+        return conn.getInputStream();
+    }
+
+    /**
+     * Returns an {@link java.io.InputStream} using {@link java.net.HttpURLConnection} to connect
+     * to the given URL.
+     * <p/>
+     * Responses are downloaded and cached using the default HTTP client instance (see {@link
+     * com.battlelancer.seriesguide.util.ServiceUtils}.
+     */
+    public static InputStream downloadAndCacheUrl(Context context, String urlString) throws IOException {
+        URL url = new URL(urlString);
+
+        HttpURLConnection conn = ServiceUtils.getCachingUrlFactory(context).open(url);
         conn.connect();
 
         return conn.getInputStream();

@@ -82,6 +82,8 @@ public final class ServiceUtils {
 
     private static OkHttpClient httpClient;
     private static OkUrlFactory urlFactory;
+    private static OkHttpClient cachingHttpClient;
+    private static OkUrlFactory cachingUrlFactory;
 
     private static Picasso sPicasso;
 
@@ -97,18 +99,35 @@ public final class ServiceUtils {
     private ServiceUtils() {
     }
 
-    public static synchronized OkHttpClient getOkHttpClient(Context context) {
+    /**
+     * Returns this apps {@link com.squareup.okhttp.OkHttpClient} with no cache enabled.
+     */
+    public static synchronized OkHttpClient getOkHttpClient() {
         if (httpClient == null) {
             httpClient = new OkHttpClient();
             httpClient.setConnectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
             httpClient.setReadTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+        }
+        return httpClient;
+    }
+
+    /**
+     * Returns this apps {@link com.squareup.okhttp.OkHttpClient} with enabled response cache.
+     * Should be used with API calls.
+     */
+    public static synchronized OkHttpClient getCachingOkHttpClient(Context context) {
+        if (cachingHttpClient == null) {
+            cachingHttpClient = new OkHttpClient();
+            cachingHttpClient.setConnectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+            cachingHttpClient.setReadTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
             File cacheDir = createApiCacheDir(context);
             try {
-                httpClient.setCache(new Cache(cacheDir, calculateApiDiskCacheSize(cacheDir)));
+                cachingHttpClient.setCache(
+                        new Cache(cacheDir, calculateApiDiskCacheSize(cacheDir)));
             } catch (IOException ignored) {
             }
         }
-        return httpClient;
+        return cachingHttpClient;
     }
 
     static File createApiCacheDir(Context context) {
@@ -134,11 +153,18 @@ public final class ServiceUtils {
         return Math.max(Math.min(size, MAX_DISK_API_CACHE_SIZE), MIN_DISK_API_CACHE_SIZE);
     }
 
-    public static synchronized OkUrlFactory getUrlFactory(Context context) {
+    public static synchronized OkUrlFactory getUrlFactory() {
         if (urlFactory == null) {
-            urlFactory = new OkUrlFactory(getOkHttpClient(context));
+            urlFactory = new OkUrlFactory(getOkHttpClient());
         }
         return urlFactory;
+    }
+
+    public static synchronized OkUrlFactory getCachingUrlFactory(Context context) {
+        if (cachingUrlFactory == null) {
+            cachingUrlFactory = new OkUrlFactory(getCachingOkHttpClient(context));
+        }
+        return cachingUrlFactory;
     }
 
     public static synchronized Picasso getPicasso(Context context) {

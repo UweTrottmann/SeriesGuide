@@ -46,7 +46,6 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.enumerations.Extended;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -253,7 +252,7 @@ public class TheTVDB {
         try {
             InputStream in = null;
             try {
-                in = Utils.downloadUrl(context, url);
+                in = Utils.downloadAndCacheUrl(context, url);
                 Xml.parse(in, Xml.Encoding.UTF_8, root.getContentHandler());
             } finally {
                 if (in != null) {
@@ -697,7 +696,7 @@ public class TheTVDB {
     private static void downloadAndParse(String urlString,
             ContentHandler handler, boolean isZipFile) throws TvdbException {
         try {
-            final InputStream input = AndroidUtils.downloadUrl(urlString);
+            final InputStream input = Utils.downloadUrl(urlString);
 
             if (isZipFile) {
                 // We downloaded the compressed file from TheTVDB
