@@ -8,6 +8,13 @@ All dates are in the European Central timezone.
 Version 17 *(in development)*
 -----------------------------
 
+#### 17-beta4 *(2014-08-21)*
+
+* TWEAK Pressing back when third-party app linked to show or episode returns to third-party app (see https://github.com/UweTrottmann/SeriesGuide/wiki/Extension-API).
+* TWEAK Accept stale images when offline. This should improve images displaying if offline for longer periods of time.
+* FIX Temporary workaround for crash on Android L developer preview due to wrongly packaged library in Android (see https://github.com/square/okhttp/issues/967).
+* NOTICE Latest translations from crowdin.
+
 #### 17-beta3 *(2014-08-15)*
 
 * TWEAK Remove show dialog opens without delay.
