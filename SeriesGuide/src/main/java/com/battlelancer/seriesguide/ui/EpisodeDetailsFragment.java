@@ -229,10 +229,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         // This ensures that the anonymous callback we have does not prevent the fragment from
         // being garbage collected. It also prevents our callback from getting invoked even after the
         // fragment is destroyed.
-        Picasso picasso = ServiceUtils.getExternalPicasso(getActivity());
-        if (picasso != null) {
-            picasso.cancelRequest(mEpisodeImage);
-        }
+        ServiceUtils.getPicasso(getActivity()).cancelRequest(mEpisodeImage);
         ButterKnife.reset(this);
     }
 
@@ -641,11 +638,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
 
         // try loading image
         mImageContainer.setVisibility(View.VISIBLE);
-        Picasso picasso = ServiceUtils.getExternalPicasso(getActivity());
-        if (picasso == null) {
-            return;
-        }
-        picasso.load(TheTVDB.buildScreenshotUrl(imagePath))
+        ServiceUtils.getPicasso(getActivity()).load(TheTVDB.buildScreenshotUrl(imagePath))
                 .error(R.drawable.ic_image_missing)
                 .into(mEpisodeImage,
                         new Callback() {

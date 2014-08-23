@@ -58,17 +58,15 @@ public final class ShortcutUtils {
                 // try to get the show poster
                 Bitmap posterBitmap = null;
 
-                Picasso picasso = ServiceUtils.getExternalPicasso(context);
-                if (picasso != null) {
-                    try {
-                        posterBitmap = picasso.load(TheTVDB.buildPosterUrl(posterPath))
-                                .centerCrop()
-                                .resizeDimen(R.dimen.shortcut_icon_size, R.dimen.shortcut_icon_size)
-                                .get();
-                    } catch (IOException e) {
-                        Timber.e(e, "Could not load show poster for shortcut " + posterPath);
-                        posterBitmap = null;
-                    }
+                try {
+                    posterBitmap = ServiceUtils.getPicasso(context)
+                            .load(TheTVDB.buildPosterUrl(posterPath))
+                            .centerCrop()
+                            .resizeDimen(R.dimen.shortcut_icon_size, R.dimen.shortcut_icon_size)
+                            .get();
+                } catch (IOException e) {
+                    Timber.e(e, "Could not load show poster for shortcut " + posterPath);
+                    posterBitmap = null;
                 }
 
                 // Intent used when the icon is touched

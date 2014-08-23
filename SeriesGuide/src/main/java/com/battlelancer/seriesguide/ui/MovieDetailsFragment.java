@@ -487,9 +487,9 @@ public class MovieDetailsFragment extends Fragment {
         });
 
         // load poster, cache on external storage
-        Picasso picasso = ServiceUtils.getExternalPicasso(getActivity());
-        if (!TextUtils.isEmpty(tmdbMovie.poster_path) && picasso != null) {
-            picasso.load(mImageBaseUrl + tmdbMovie.poster_path).into(mMoviePosterBackground);
+        if (!TextUtils.isEmpty(tmdbMovie.poster_path)) {
+            ServiceUtils.getPicasso(getActivity())
+                    .load(mImageBaseUrl + tmdbMovie.poster_path).into(mMoviePosterBackground);
         }
     }
 

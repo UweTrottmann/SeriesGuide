@@ -78,16 +78,12 @@ public final class ServiceUtils {
 
     private static final String YOUTUBE_PACKAGE = "com.google.android.youtube";
 
-    private static final String IMAGE_CACHE = "offline-cache";
-
     private static OkHttpClient httpClient;
     private static OkUrlFactory urlFactory;
     private static OkHttpClient cachingHttpClient;
     private static OkUrlFactory cachingUrlFactory;
 
     private static Picasso sPicasso;
-
-    private static Picasso sExternalPicasso;
 
     private static Trakt trakt;
 
@@ -173,36 +169,6 @@ public final class ServiceUtils {
                     new LocalOnlyOkHttpDownloader(context)).build();
         }
         return sPicasso;
-    }
-
-    /**
-     * Returns a {@link com.squareup.picasso.Picasso} instance caching images in a larger external
-     * cache directory. This is useful for show posters and episode images which remain valid for
-     * long time periods and should be accessible offline.
-     *
-     * <p> This may return {@code null} if the external cache directory is currently not
-     * accessible.
-     */
-    public static synchronized
-    @Nullable
-    Picasso getExternalPicasso(@Nonnull Context context) {
-        if (sExternalPicasso == null) {
-            File externalCacheDir = context.getExternalCacheDir();
-            if (externalCacheDir == null) {
-                // external storage currently unavailable
-                return null;
-            }
-
-            File cache = new File(externalCacheDir, IMAGE_CACHE);
-            if (!cache.exists()) {
-                //noinspection ResultOfMethodCallIgnored
-                cache.mkdirs();
-            }
-
-            sExternalPicasso = new Picasso.Builder(context).downloader(
-                    new LocalOnlyOkHttpDownloader(context, cache)).build();
-        }
-        return sExternalPicasso;
     }
 
     /**

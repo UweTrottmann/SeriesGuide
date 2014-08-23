@@ -331,10 +331,10 @@ public class Utils {
      */
     public static void loadPoster(Context context, ImageView imageView,
             String posterPath) {
-        Picasso picasso = ServiceUtils.getExternalPicasso(context);
-        if (picasso != null) {
-            picasso.load(TheTVDB.buildPosterUrl(posterPath)).noFade().into(imageView);
-        }
+        ServiceUtils.getPicasso(context)
+                .load(TheTVDB.buildPosterUrl(posterPath))
+                .noFade()
+                .into(imageView);
     }
 
     /**
@@ -367,14 +367,11 @@ public class Utils {
             return;
         }
 
-        Picasso picasso = ServiceUtils.getExternalPicasso(context);
-        if (picasso != null) {
-            picasso.load(TheTVDB.buildPosterUrl(posterPath))
-                    .centerCrop()
-                    .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
-                    .error(R.drawable.ic_image_missing)
-                    .into(imageView);
-        }
+        ServiceUtils.getPicasso(context).load(TheTVDB.buildPosterUrl(posterPath))
+                .centerCrop()
+                .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
+                .error(R.drawable.ic_image_missing)
+                .into(imageView);
     }
 
     /**
@@ -593,7 +590,8 @@ public class Utils {
      * Responses are downloaded and cached using the default HTTP client instance (see {@link
      * com.battlelancer.seriesguide.util.ServiceUtils}.
      */
-    public static InputStream downloadAndCacheUrl(Context context, String urlString) throws IOException {
+    public static InputStream downloadAndCacheUrl(Context context, String urlString)
+            throws IOException {
         URL url = new URL(urlString);
 
         HttpURLConnection conn = ServiceUtils.getCachingUrlFactory(context).open(url);

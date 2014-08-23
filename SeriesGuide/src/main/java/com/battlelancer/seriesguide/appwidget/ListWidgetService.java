@@ -176,17 +176,15 @@ public class ListWidgetService extends RemoteViewsService {
             String posterPath = mDataCursor.getString(isShowQuery
                     ? ShowsQuery.SHOW_POSTER : ActivityFragment.ActivityQuery.SHOW_POSTER);
             Bitmap poster = null;
-            Picasso picasso = ServiceUtils.getExternalPicasso(mContext);
-            if (picasso != null) {
-                try {
-                    poster = picasso.load(TheTVDB.buildPosterUrl(posterPath))
-                            .centerCrop()
-                            .resizeDimen(R.dimen.widget_item_width, R.dimen.widget_item_height)
-                            .get();
-                } catch (IOException e) {
-                    Timber.e(e, "Failed to load show poster for widget item: " + posterPath);
-                    poster = null;
-                }
+            try {
+                poster = ServiceUtils.getPicasso(mContext)
+                        .load(TheTVDB.buildPosterUrl(posterPath))
+                        .centerCrop()
+                        .resizeDimen(R.dimen.widget_item_width, R.dimen.widget_item_height)
+                        .get();
+            } catch (IOException e) {
+                Timber.e(e, "Failed to load show poster for widget item: " + posterPath);
+                poster = null;
             }
             if (poster != null) {
                 rv.setImageViewBitmap(R.id.widgetPoster, poster);
@@ -267,6 +265,5 @@ public class ListWidgetService extends RemoteViewsService {
         int EPISODE_SEASON = 8;
 
         int EPISODE_FIRSTAIRED_MS = 9;
-
     }
 }
