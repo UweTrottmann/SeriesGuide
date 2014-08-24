@@ -285,25 +285,41 @@ public class Utils {
         }
     }
 
-    public static void setLabelValueOrHide(View label, TextView text, final String value) {
+    /**
+     * If the given string is not null or empty, will make the label and value field {@link
+     * View#VISIBLE}. Otherwise both {@link View#GONE}.
+     *
+     * @return True if the views are visible.
+     */
+    public static boolean setLabelValueOrHide(View label, TextView text, final String value) {
         if (TextUtils.isEmpty(value)) {
             label.setVisibility(View.GONE);
             text.setVisibility(View.GONE);
+            return false;
         } else {
             label.setVisibility(View.VISIBLE);
             text.setVisibility(View.VISIBLE);
             text.setText(value);
+            return true;
         }
     }
 
-    public static void setLabelValueOrHide(View label, TextView text, double value) {
+    /**
+     * If the given double is larger than 0, will make the label and value field {@link
+     * View#VISIBLE}. Otherwise both {@link View#GONE}.
+     *
+     * @return True if the views are visible.
+     */
+    public static boolean setLabelValueOrHide(View label, TextView text, double value) {
         if (value > 0.0) {
             label.setVisibility(View.VISIBLE);
             text.setVisibility(View.VISIBLE);
             text.setText(String.valueOf(value));
+            return true;
         } else {
             label.setVisibility(View.GONE);
             text.setVisibility(View.GONE);
+            return false;
         }
     }
 

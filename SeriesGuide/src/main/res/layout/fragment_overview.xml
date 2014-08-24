@@ -238,6 +238,7 @@
                             android:textAppearance="@style/TextAppearance.Body" />
 
                         <View
+                            android:id="@+id/dividerHorizontalOverviewEpisodeMeta"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginLeft="@dimen/large_padding"

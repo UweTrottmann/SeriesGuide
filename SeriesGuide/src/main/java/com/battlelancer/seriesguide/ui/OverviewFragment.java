@@ -696,13 +696,18 @@ public class OverviewFragment extends Fragment implements
         // Description, DVD episode number, guest stars, absolute number
         ((TextView) getView().findViewById(R.id.TextViewEpisodeDescription)).setText(episode
                 .getString(EpisodeQuery.OVERVIEW));
-        Utils.setLabelValueOrHide(getView().findViewById(R.id.labelDvd), (TextView) getView()
-                .findViewById(R.id.textViewEpisodeDVDnumber), episode
-                .getDouble(EpisodeQuery.DVDNUMBER));
-        Utils.setLabelValueOrHide(getView().findViewById(R.id.labelGuestStars),
+
+        boolean isShowingMeta;
+        isShowingMeta = Utils.setLabelValueOrHide(getView().findViewById(R.id.labelDvd),
+                (TextView) getView().findViewById(R.id.textViewEpisodeDVDnumber), episode
+                        .getDouble(EpisodeQuery.DVDNUMBER));
+        isShowingMeta |= Utils.setLabelValueOrHide(getView().findViewById(R.id.labelGuestStars),
                 (TextView) getView().findViewById(R.id.TextViewEpisodeGuestStars), Utils
                         .splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS))
         );
+        // hide divider if no meta is visible
+        getView().findViewById(R.id.dividerHorizontalOverviewEpisodeMeta)
+                .setVisibility(isShowingMeta ? View.VISIBLE : View.GONE);
 
         // TVDb rating
         final String ratingText = episode.getString(EpisodeQuery.RATING);
