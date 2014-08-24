@@ -36,7 +36,6 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.util.Date;
 import timber.log.Timber;
@@ -150,19 +149,17 @@ public class AppWidget extends AppWidgetProvider {
                     // show poster
                     String posterPath = upcomingEpisodes.getString(
                             ActivityFragment.ActivityQuery.SHOW_POSTER);
-                    Picasso picasso = ServiceUtils.getExternalPicasso(this);
-                    if (picasso != null) {
-                        try {
-                            Bitmap poster = picasso.load(TheTVDB.buildPosterUrl(posterPath))
-                                    .centerCrop()
-                                    .resizeDimen(R.dimen.show_poster_width,
-                                            R.dimen.show_poster_height)
-                                    .get();
-                            item.setImageViewBitmap(R.id.widgetPoster, poster);
-                        } catch (IOException e) {
-                            Timber.e(e,
-                                    "Failed to load show poster for widget item: " + posterPath);
-                        }
+                    try {
+                        Bitmap poster = ServiceUtils.getPicasso(this)
+                                .load(TheTVDB.buildPosterUrl(posterPath))
+                                .centerCrop()
+                                .resizeDimen(R.dimen.show_poster_width,
+                                        R.dimen.show_poster_height)
+                                .get();
+                        item.setImageViewBitmap(R.id.widgetPoster, poster);
+                    } catch (IOException e) {
+                        Timber.e(e,
+                                "Failed to load show poster for widget item: " + posterPath);
                     }
 
                     views.addView(R.id.LinearLayoutWidget, item);
