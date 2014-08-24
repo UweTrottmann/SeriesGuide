@@ -285,25 +285,41 @@ public class Utils {
         }
     }
 
-    public static void setLabelValueOrHide(View label, TextView text, final String value) {
+    /**
+     * If the given string is not null or empty, will make the label and value field {@link
+     * View#VISIBLE}. Otherwise both {@link View#GONE}.
+     *
+     * @return True if the views are visible.
+     */
+    public static boolean setLabelValueOrHide(View label, TextView text, final String value) {
         if (TextUtils.isEmpty(value)) {
             label.setVisibility(View.GONE);
             text.setVisibility(View.GONE);
+            return false;
         } else {
             label.setVisibility(View.VISIBLE);
             text.setVisibility(View.VISIBLE);
             text.setText(value);
+            return true;
         }
     }
 
-    public static void setLabelValueOrHide(View label, TextView text, double value) {
+    /**
+     * If the given double is larger than 0, will make the label and value field {@link
+     * View#VISIBLE}. Otherwise both {@link View#GONE}.
+     *
+     * @return True if the views are visible.
+     */
+    public static boolean setLabelValueOrHide(View label, TextView text, double value) {
         if (value > 0.0) {
             label.setVisibility(View.VISIBLE);
             text.setVisibility(View.VISIBLE);
             text.setText(String.valueOf(value));
+            return true;
         } else {
             label.setVisibility(View.GONE);
             text.setVisibility(View.GONE);
+            return false;
         }
     }
 
@@ -331,10 +347,10 @@ public class Utils {
      */
     public static void loadPoster(Context context, ImageView imageView,
             String posterPath) {
-        Picasso picasso = ServiceUtils.getExternalPicasso(context);
-        if (picasso != null) {
-            picasso.load(TheTVDB.buildPosterUrl(posterPath)).noFade().into(imageView);
-        }
+        ServiceUtils.getPicasso(context)
+                .load(TheTVDB.buildPosterUrl(posterPath))
+                .noFade()
+                .into(imageView);
     }
 
     /**
@@ -367,14 +383,11 @@ public class Utils {
             return;
         }
 
-        Picasso picasso = ServiceUtils.getExternalPicasso(context);
-        if (picasso != null) {
-            picasso.load(TheTVDB.buildPosterUrl(posterPath))
-                    .centerCrop()
-                    .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
-                    .error(R.drawable.ic_image_missing)
-                    .into(imageView);
-        }
+        ServiceUtils.getPicasso(context).load(TheTVDB.buildPosterUrl(posterPath))
+                .centerCrop()
+                .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
+                .error(R.drawable.ic_image_missing)
+                .into(imageView);
     }
 
     /**
@@ -577,10 +590,27 @@ public class Utils {
      * Responses are downloaded and cached using the default HTTP client instance (see {@link
      * com.battlelancer.seriesguide.util.ServiceUtils}.
      */
-    public static InputStream downloadUrl(Context context, String urlString) throws IOException {
+    public static InputStream downloadUrl(String urlString) throws IOException {
         URL url = new URL(urlString);
 
-        HttpURLConnection conn = ServiceUtils.getUrlFactory(context).open(url);
+        HttpURLConnection conn = ServiceUtils.getUrlFactory().open(url);
+        conn.connect();
+
+        return conn.getInputStream();
+    }
+
+    /**
+     * Returns an {@link java.io.InputStream} using {@link java.net.HttpURLConnection} to connect
+     * to the given URL.
+     * <p/>
+     * Responses are downloaded and cached using the default HTTP client instance (see {@link
+     * com.battlelancer.seriesguide.util.ServiceUtils}.
+     */
+    public static InputStream downloadAndCacheUrl(Context context, String urlString)
+            throws IOException {
+        URL url = new URL(urlString);
+
+        HttpURLConnection conn = ServiceUtils.getCachingUrlFactory(context).open(url);
         conn.connect();
 
         return conn.getInputStream();

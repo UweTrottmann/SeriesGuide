@@ -193,10 +193,7 @@ public class OverviewFragment extends Fragment implements
         // This ensures that the anonymous callback we have does not prevent the fragment from
         // being garbage collected. It also prevents our callback from getting invoked even after the
         // fragment is destroyed.
-        Picasso picasso = ServiceUtils.getExternalPicasso(getActivity());
-        if (picasso != null) {
-            picasso.cancelRequest(mEpisodeImage);
-        }
+        ServiceUtils.getPicasso(getActivity()).cancelRequest(mEpisodeImage);
     }
 
     @Override
@@ -699,13 +696,18 @@ public class OverviewFragment extends Fragment implements
         // Description, DVD episode number, guest stars, absolute number
         ((TextView) getView().findViewById(R.id.TextViewEpisodeDescription)).setText(episode
                 .getString(EpisodeQuery.OVERVIEW));
-        Utils.setLabelValueOrHide(getView().findViewById(R.id.labelDvd), (TextView) getView()
-                .findViewById(R.id.textViewEpisodeDVDnumber), episode
-                .getDouble(EpisodeQuery.DVDNUMBER));
-        Utils.setLabelValueOrHide(getView().findViewById(R.id.labelGuestStars),
+
+        boolean isShowingMeta;
+        isShowingMeta = Utils.setLabelValueOrHide(getView().findViewById(R.id.labelDvd),
+                (TextView) getView().findViewById(R.id.textViewEpisodeDVDnumber), episode
+                        .getDouble(EpisodeQuery.DVDNUMBER));
+        isShowingMeta |= Utils.setLabelValueOrHide(getView().findViewById(R.id.labelGuestStars),
                 (TextView) getView().findViewById(R.id.TextViewEpisodeGuestStars), Utils
                         .splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS))
         );
+        // hide divider if no meta is visible
+        getView().findViewById(R.id.dividerHorizontalOverviewEpisodeMeta)
+                .setVisibility(isShowingMeta ? View.VISIBLE : View.GONE);
 
         // TVDb rating
         final String ratingText = episode.getString(EpisodeQuery.RATING);
@@ -778,11 +780,7 @@ public class OverviewFragment extends Fragment implements
 
         // try loading image
         mEpisodeImage.setVisibility(View.VISIBLE);
-        Picasso picasso = ServiceUtils.getExternalPicasso(getActivity());
-        if (picasso == null) {
-            return;
-        }
-        picasso.load(TheTVDB.buildScreenshotUrl(imagePath))
+        ServiceUtils.getPicasso(getActivity()).load(TheTVDB.buildScreenshotUrl(imagePath))
                 .error(R.drawable.ic_image_missing)
                 .into(mEpisodeImage,
                         new Callback() {

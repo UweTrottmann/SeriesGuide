@@ -38,7 +38,6 @@
     <attr name="drawableHelp" format="reference" />
     <attr name="drawableLink" format="reference" />
     <attr name="drawableList" format="reference" />
-    <attr name="drawableLab" format="reference" />
     <attr name="drawableMovie" format="reference" />
     <attr name="drawableSearch" format="reference" />
     <attr name="drawableSettings" format="reference" />

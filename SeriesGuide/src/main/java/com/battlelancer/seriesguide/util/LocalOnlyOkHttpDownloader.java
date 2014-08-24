@@ -22,7 +22,6 @@ import android.os.StatFs;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.OkUrlFactory;
 import com.squareup.picasso.Downloader;
-import com.squareup.picasso.OkHttpDownloader;
 import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -83,8 +82,11 @@ public class LocalOnlyOkHttpDownloader implements Downloader {
         HttpURLConnection connection = openConnection(uri);
         connection.setUseCaches(true);
         if (localCacheOnly) {
+            // only-if-cached: do not go over network
+            // max-age: accept cached responses up to one year of age (rec. max. value)
+            // max-stale: accept stale images of any age
             connection.setRequestProperty("Cache-Control",
-                    "only-if-cached,max-age=" + Integer.MAX_VALUE);
+                    "only-if-cached,max-age=31536000,max-stale=31536000");
         }
 
         int responseCode = connection.getResponseCode();
@@ -98,9 +100,10 @@ public class LocalOnlyOkHttpDownloader implements Downloader {
             responseSource = connection.getHeaderField(RESPONSE_SOURCE_ANDROID);
         }
 
+        long contentLength = connection.getHeaderFieldInt("Content-Length", -1);
         boolean fromCache = parseResponseSourceHeader(responseSource);
 
-        return new Response(connection.getInputStream(), fromCache);
+        return new Response(connection.getInputStream(), fromCache, contentLength);
     }
 
     static File createDefaultCacheDir(Context context) {

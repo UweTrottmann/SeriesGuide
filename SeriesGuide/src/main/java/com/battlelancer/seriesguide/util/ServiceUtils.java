@@ -78,14 +78,12 @@ public final class ServiceUtils {
 
     private static final String YOUTUBE_PACKAGE = "com.google.android.youtube";
 
-    private static final String IMAGE_CACHE = "offline-cache";
-
     private static OkHttpClient httpClient;
     private static OkUrlFactory urlFactory;
+    private static OkHttpClient cachingHttpClient;
+    private static OkUrlFactory cachingUrlFactory;
 
     private static Picasso sPicasso;
-
-    private static Picasso sExternalPicasso;
 
     private static Trakt trakt;
 
@@ -97,18 +95,35 @@ public final class ServiceUtils {
     private ServiceUtils() {
     }
 
-    public static synchronized OkHttpClient getOkHttpClient(Context context) {
+    /**
+     * Returns this apps {@link com.squareup.okhttp.OkHttpClient} with no cache enabled.
+     */
+    public static synchronized OkHttpClient getOkHttpClient() {
         if (httpClient == null) {
             httpClient = new OkHttpClient();
             httpClient.setConnectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
             httpClient.setReadTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+        }
+        return httpClient;
+    }
+
+    /**
+     * Returns this apps {@link com.squareup.okhttp.OkHttpClient} with enabled response cache.
+     * Should be used with API calls.
+     */
+    public static synchronized OkHttpClient getCachingOkHttpClient(Context context) {
+        if (cachingHttpClient == null) {
+            cachingHttpClient = new OkHttpClient();
+            cachingHttpClient.setConnectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+            cachingHttpClient.setReadTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
             File cacheDir = createApiCacheDir(context);
             try {
-                httpClient.setCache(new Cache(cacheDir, calculateApiDiskCacheSize(cacheDir)));
+                cachingHttpClient.setCache(
+                        new Cache(cacheDir, calculateApiDiskCacheSize(cacheDir)));
             } catch (IOException ignored) {
             }
         }
-        return httpClient;
+        return cachingHttpClient;
     }
 
     static File createApiCacheDir(Context context) {
@@ -134,11 +149,18 @@ public final class ServiceUtils {
         return Math.max(Math.min(size, MAX_DISK_API_CACHE_SIZE), MIN_DISK_API_CACHE_SIZE);
     }
 
-    public static synchronized OkUrlFactory getUrlFactory(Context context) {
+    public static synchronized OkUrlFactory getUrlFactory() {
         if (urlFactory == null) {
-            urlFactory = new OkUrlFactory(getOkHttpClient(context));
+            urlFactory = new OkUrlFactory(getOkHttpClient());
         }
         return urlFactory;
+    }
+
+    public static synchronized OkUrlFactory getCachingUrlFactory(Context context) {
+        if (cachingUrlFactory == null) {
+            cachingUrlFactory = new OkUrlFactory(getCachingOkHttpClient(context));
+        }
+        return cachingUrlFactory;
     }
 
     public static synchronized Picasso getPicasso(Context context) {
@@ -147,36 +169,6 @@ public final class ServiceUtils {
                     new LocalOnlyOkHttpDownloader(context)).build();
         }
         return sPicasso;
-    }
-
-    /**
-     * Returns a {@link com.squareup.picasso.Picasso} instance caching images in a larger external
-     * cache directory. This is useful for show posters and episode images which remain valid for
-     * long time periods and should be accessible offline.
-     *
-     * <p> This may return {@code null} if the external cache directory is currently not
-     * accessible.
-     */
-    public static synchronized
-    @Nullable
-    Picasso getExternalPicasso(@Nonnull Context context) {
-        if (sExternalPicasso == null) {
-            File externalCacheDir = context.getExternalCacheDir();
-            if (externalCacheDir == null) {
-                // external storage currently unavailable
-                return null;
-            }
-
-            File cache = new File(externalCacheDir, IMAGE_CACHE);
-            if (!cache.exists()) {
-                //noinspection ResultOfMethodCallIgnored
-                cache.mkdirs();
-            }
-
-            sExternalPicasso = new Picasso.Builder(context).downloader(
-                    new LocalOnlyOkHttpDownloader(context, cache)).build();
-        }
-        return sExternalPicasso;
     }
 
     /**

@@ -27,16 +27,12 @@ import android.os.Build;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.view.View;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.OkUrlFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.util.Locale;
 
@@ -179,37 +175,6 @@ public class AndroidUtils {
         } else {
             task.execute(args);
         }
-    }
-
-    /**
-     * Returns an {@link InputStream} using {@link HttpURLConnection} to connect to the given URL.
-     */
-    public static InputStream downloadUrl(String urlString) throws IOException {
-        HttpURLConnection conn = buildHttpUrlConnection(urlString);
-        conn.connect();
-
-        return conn.getInputStream();
-    }
-
-    /**
-     * Returns an {@link HttpURLConnection} using sensible default settings for mobile.
-     */
-    public static HttpURLConnection buildHttpUrlConnection(String urlString) throws IOException {
-        URL url = new URL(urlString);
-
-        OkHttpClient client = createOkHttpClient();
-
-        HttpURLConnection conn = new OkUrlFactory(client).open(url);
-        conn.setConnectTimeout(15 * 1000 /* milliseconds */);
-        conn.setReadTimeout(20 * 1000 /* milliseconds */);
-        return conn;
-    }
-
-    /**
-     * Create an OkHttpClient instance.
-     */
-    public static OkHttpClient createOkHttpClient() {
-        return new OkHttpClient();
     }
 
 }

@@ -37,11 +37,10 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
@@ -50,6 +49,7 @@ import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.Utils;
@@ -144,6 +144,7 @@ public class SeriesGuidePreferences extends PreferenceActivity implements
             addPreferencesFromResource(R.xml.settings_services);
             setupSharingSettings(
                     this,
+                    findPreference(TraktSettings.KEY_AUTO_ADD_TRAKT_SHOWS),
                     findPreference(KEY_GETGLUE_DISCONNECT)
             );
         } else if (action != null && action.equals(ACTION_PREFS_ADVANCED)) {
@@ -175,7 +176,12 @@ public class SeriesGuidePreferences extends PreferenceActivity implements
         actionBar.setIcon(R.drawable.ic_actionbar);
     }
 
-    protected static void setupSharingSettings(final Context context, Preference getGluePref) {
+    protected static void setupSharingSettings(final Context context, Preference traktAutoAddPref,
+            Preference getGluePref) {
+        if (HexagonTools.isSignedIn(context)) {
+            traktAutoAddPref.setEnabled(false);
+            traktAutoAddPref.setSummary(R.string.hexagon_warning_trakt);
+        }
         // Disconnect GetGlue
         getGluePref.setEnabled(GetGlueSettings.isAuthenticated(context));
         getGluePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -510,6 +516,7 @@ public class SeriesGuidePreferences extends PreferenceActivity implements
                     addPreferencesFromResource(R.xml.settings_services);
                     setupSharingSettings(
                             getActivity(),
+                            findPreference(TraktSettings.KEY_AUTO_ADD_TRAKT_SHOWS),
                             findPreference(KEY_GETGLUE_DISCONNECT)
                     );
                     break;

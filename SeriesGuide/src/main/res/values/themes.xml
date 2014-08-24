@@ -77,7 +77,6 @@
         <item name="drawableLink">@drawable/ic_action_link</item>
         <item name="drawableList">@drawable/ic_action_list</item>
         <item name="drawableMovie">@drawable/ic_action_movie</item>
-        <item name="drawableLab">@drawable/ic_action_lab</item>
         <item name="drawableShare">@drawable/ic_action_share</item>
         <item name="drawableStats">@drawable/ic_action_bargraph</item>
         <item name="drawableSearch">@drawable/ic_action_search</item>
@@ -144,7 +143,6 @@
         <item name="drawableLink">@drawable/ic_action_link</item>
         <item name="drawableList">@drawable/ic_action_list</item>
         <item name="drawableMovie">@drawable/ic_action_movie</item>
-        <item name="drawableLab">@drawable/ic_action_lab</item>
         <item name="drawableShare">@drawable/ic_action_share</item>
         <item name="drawableStats">@drawable/ic_action_bargraph</item>
         <item name="drawableSearch">@drawable/ic_action_search</item>
@@ -234,7 +232,6 @@
         <item name="drawableLink">@drawable/ic_action_link_inverse</item>
         <item name="drawableList">@drawable/ic_action_list_inverse</item>
         <item name="drawableMovie">@drawable/ic_action_movie_inverse</item>
-        <item name="drawableLab">@drawable/ic_action_lab_inverse</item>
         <item name="drawableShare">@drawable/ic_action_share_inverse</item>
         <item name="drawableStats">@drawable/ic_action_bargraph_inverse</item>
         <item name="drawableSearch">@drawable/ic_action_search_inverse</item>
