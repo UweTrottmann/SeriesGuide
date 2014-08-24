@@ -79,8 +79,6 @@ dependencies {
     compile project(':libraries:androidutils')
     compile project(':libraries:drag-sort-listview')
     compile project(':libraries:stickygridheaders')
-    compile rootProject.ext.libraries.okhttp
-    compile rootProject.ext.libraries.okhttpurlconnection
     compile rootProject.ext.libraries.supportv4
     compile 'com.github.castorflex.smoothprogressbar:library:0.5.1'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
@@ -88,10 +86,19 @@ dependencies {
     compile 'com.jakewharton:butterknife:5.1.2'
     compile 'com.jakewharton.timber:timber:2.4.1'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
+    //compile 'com.squareup.okhttp:okhttp:2.0.0'
+    compile 'com.squareup.okio:okio:1.0.1'
+    compile ('com.squareup.okhttp:okhttp-urlconnection:2.0.0') {
+        exclude group: 'com.squareup.okhttp'
+    }
     //compile 'com.squareup.picasso:picasso:2.2.0'
-    compile 'com.squareup.retrofit:retrofit:1.6.1'
+    compile ('com.squareup.retrofit:retrofit:1.6.1') {
+        exclude group: 'com.squareup.okhttp'
+    }
     compile 'com.squareup:tape:1.2.2'
-    compile 'com.uwetrottmann:getglue-java:1.4.0'
+    compile ('com.uwetrottmann:getglue-java:1.4.0') {
+        exclude group: 'com.squareup.okhttp'
+    }
     compile 'com.uwetrottmann:tmdb-java:0.7.0'
     compile 'com.uwetrottmann:trakt-java:3.3.1'
     compile 'de.greenrobot:eventbus:2.2.1'
