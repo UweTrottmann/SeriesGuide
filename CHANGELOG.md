@@ -8,6 +8,10 @@ All dates are in the European Central timezone.
 Version 17 *(in development)*
 -----------------------------
 
+#### 17-beta5 *(2014-08-25)*
+
+* FIX Crash due to Android L developer preview bug. Temporarily repackage okio and okhttp dependencies. See https://github.com/square/okhttp/issues/967.
+
 #### 17-beta4 *(2014-08-24)*
 
 * TWEAK Pressing back when third-party app linked to show or episode returns to third-party app (see https://github.com/UweTrottmann/SeriesGuide/wiki/Extension-API).
