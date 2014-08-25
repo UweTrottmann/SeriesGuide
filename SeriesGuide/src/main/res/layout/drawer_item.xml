@@ -2,25 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
+    android:layout_height="@dimen/drawer_item_height"
     android:background="?attr/drawableBackgroundDrawerItem">
 
     <ImageView
         android:id="@+id/menu_icon"
-        android:layout_width="48dp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/default_padding"
-        android:padding="@dimen/default_padding"
+        android:layout_width="@dimen/icon_small_size"
+        android:layout_height="@dimen/icon_small_size"
+        android:layout_marginLeft="@dimen/keyline"
+        android:layout_marginRight="@dimen/large_padding"
+        android:layout_centerVertical="true"
         tools:src="?attr/drawableMovie" />
 
     <TextView
         android:id="@+id/menu_title"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_toRightOf="@+id/menu_icon"
+        android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/large_padding"
+        android:layout_toRightOf="@+id/menu_icon"
         android:gravity="center_vertical"
-        android:paddingRight="@dimen/large_padding"
+        android:paddingRight="@dimen/keyline"
         android:singleLine="true"
         android:ellipsize="end"
         android:textAppearance="@style/TextAppearance.Menu"
