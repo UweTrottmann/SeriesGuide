@@ -295,7 +295,7 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
 
     private void checkIn() {
         // connected?
-        if (!Utils.isConnected(getActivity(), true)) {
+        if (Utils.isNotConnected(getActivity(), true)) {
             return;
         }
 

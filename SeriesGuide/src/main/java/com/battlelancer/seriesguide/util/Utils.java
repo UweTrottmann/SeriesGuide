@@ -182,7 +182,8 @@ public class Utils {
     }
 
     /**
-     * Returns whether a regular check with the Google Play app is not necessary to determine access
+     * Returns whether a regular check with the Google Play app is not necessary to determine
+     * access
      * to X features (e.g. the subscription is still valid).
      */
     public static boolean canSkipPurchaseCheck(Context context) {
@@ -500,11 +501,12 @@ public class Utils {
     }
 
     /**
-     * Returns true if a network connection exists.
+     * Checks for an available network connection.
      *
-     * @param showOfflineToast If true, displays a toast asking the user to connect to a network.
+     * @param showOfflineToast If not connected, displays a toast asking the user to connect to a
+     *                         network.
      */
-    public static boolean isConnected(Context context, boolean showOfflineToast) {
+    public static boolean isNotConnected(Context context, boolean showOfflineToast) {
         boolean isConnected = AndroidUtils.isNetworkConnected(context);
 
         // display optional offline toast
@@ -512,7 +514,7 @@ public class Utils {
             Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show();
         }
 
-        return isConnected;
+        return !isConnected;
     }
 
     /**

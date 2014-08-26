@@ -155,7 +155,7 @@ public class ShowTools {
      */
     public void storeIsFavorite(int showTvdbId, boolean isFavorite) {
         if (HexagonTools.isSignedIn(mContext)) {
-            if (!Utils.isConnected(mContext, true)) {
+            if (Utils.isNotConnected(mContext, true)) {
                 return;
             }
             // send to cloud
@@ -183,7 +183,7 @@ public class ShowTools {
      */
     public void storeIsHidden(int showTvdbId, boolean isHidden) {
         if (HexagonTools.isSignedIn(mContext)) {
-            if (!Utils.isConnected(mContext, true)) {
+            if (Utils.isNotConnected(mContext, true)) {
                 return;
             }
             // send to cloud
@@ -208,7 +208,7 @@ public class ShowTools {
      */
     public void storeGetGlueId(int showTvdbId, String getglueId) {
         if (HexagonTools.isSignedIn(mContext)) {
-            if (!Utils.isConnected(mContext, true)) {
+            if (Utils.isNotConnected(mContext, true)) {
                 return;
             }
             // send to cloud
