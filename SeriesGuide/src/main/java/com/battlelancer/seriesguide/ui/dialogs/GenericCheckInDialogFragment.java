@@ -141,7 +141,7 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        final View layout = inflater.inflate(R.layout.dialog_checkin, null);
+        final View layout = inflater.inflate(R.layout.dialog_checkin, container, false);
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
 
