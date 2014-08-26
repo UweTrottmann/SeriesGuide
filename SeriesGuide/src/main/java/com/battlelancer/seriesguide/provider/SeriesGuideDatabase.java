@@ -568,11 +568,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         /*
         Add new columns. Added existence checks as 14.0.3 update botched upgrade process.
          */
-        if (!isTableColumnExisting(db, Tables.SHOWS, Shows.TITLE_NOARTICLE)) {
+        if (isTableColumnMissing(db, Tables.SHOWS, Shows.TITLE_NOARTICLE)) {
             db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + Shows.TITLE_NOARTICLE
                     + " TEXT;");
         }
-        if (!isTableColumnExisting(db, Tables.MOVIES, Movies.TITLE_NOARTICLE)) {
+        if (isTableColumnMissing(db, Tables.MOVIES, Movies.TITLE_NOARTICLE)) {
             db.execSQL("ALTER TABLE " + Tables.MOVIES + " ADD COLUMN " + Movies.TITLE_NOARTICLE
                     + " TEXT;");
         }
@@ -647,7 +647,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * episode.
      */
     private static void upgradeToThirtyOne(SQLiteDatabase db) {
-        if (!isTableColumnExisting(db, Tables.SHOWS, Shows.LASTWATCHEDID)) {
+        if (isTableColumnMissing(db, Tables.SHOWS, Shows.LASTWATCHEDID)) {
             db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + Shows.LASTWATCHEDID
                     + " INTEGER DEFAULT 0;");
         }
@@ -694,7 +694,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * Add {@link Episodes} column to store absolute episode number.
      */
     private static void upgradeToThirty(SQLiteDatabase db) {
-        if (!isTableColumnExisting(db, Tables.EPISODES, Episodes.ABSOLUTE_NUMBER)) {
+        if (isTableColumnMissing(db, Tables.EPISODES, Episodes.ABSOLUTE_NUMBER)) {
             db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN "
                     + Episodes.ABSOLUTE_NUMBER + " INTEGER;");
         }
@@ -704,7 +704,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * Add {@link Shows} column to store a GetGlue object id.
      */
     private static void upgradeToTwentyNine(SQLiteDatabase db) {
-        if (!isTableColumnExisting(db, Tables.SHOWS, Shows.GETGLUEID)) {
+        if (isTableColumnMissing(db, Tables.SHOWS, Shows.GETGLUEID)) {
             db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + Shows.GETGLUEID
                     + " TEXT DEFAULT '';");
         }
@@ -1033,13 +1033,13 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     /**
      * Checks whether the given column exists in the given table of the given database.
      */
-    private static boolean isTableColumnExisting(SQLiteDatabase db, String table, String column) {
+    private static boolean isTableColumnMissing(SQLiteDatabase db, String table, String column) {
         Cursor cursor = db.query(table, null, null, null, null, null, null, "1");
         if (cursor == null) {
-            return false;
+            return true;
         }
         boolean isColumnExisting = cursor.getColumnIndex(column) != -1;
         cursor.close();
-        return isColumnExisting;
+        return !isColumnExisting;
     }
 }
