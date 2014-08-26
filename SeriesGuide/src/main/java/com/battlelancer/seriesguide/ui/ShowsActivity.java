@@ -86,6 +86,8 @@ public class ShowsActivity extends BaseTopActivity implements
     public static final int USER_LOADER_ID = 104;
     public static final int ADD_SHOW_LOADER_ID = 105;
 
+    private static final int TAB_COUNT_WITH_TRAKT = 5;
+
     private IabHelper mHelper;
 
     private SmoothProgressBar mProgressBar;
@@ -312,6 +314,9 @@ public class ShowsActivity extends BaseTopActivity implements
                     .apply();
         }
 
+        // add trakt tabs if user just signed in
+        maybeAddTraktTabs();
+
         // check for running show removal worker
         Fragment f = getSupportFragmentManager().findFragmentByTag(RemoveShowWorkerFragment.TAG);
         if (f != null && !((RemoveShowWorkerFragment) f).isTaskFinished()) {
@@ -319,6 +324,18 @@ public class ShowsActivity extends BaseTopActivity implements
         }
         // now listen to events
         EventBus.getDefault().register(this);
+    }
+
+    private void maybeAddTraktTabs() {
+        int currentTabCount = mTabsAdapter.getCount();
+        boolean shouldShowTraktTabs = TraktCredentials.get(this).hasCredentials();
+
+        if (shouldShowTraktTabs && currentTabCount != TAB_COUNT_WITH_TRAKT) {
+            mTabsAdapter.addTab(R.string.friends, FriendsEpisodeStreamFragment.class, null);
+            mTabsAdapter.addTab(R.string.user_stream, UserEpisodeStreamFragment.class, null);
+            // update tabs
+            mTabsAdapter.notifyTabsChanged();
+        }
     }
 
     @Override
@@ -606,8 +623,7 @@ public class ShowsActivity extends BaseTopActivity implements
 
     /**
      * Special {@link TabStripAdapter} which saves the currently selected page to preferences, so
-     * we
-     * can restore it when the user comes back later.
+     * we can restore it when the user comes back later.
      */
     public static class ShowsTabPageAdapter extends TabStripAdapter
             implements ViewPager.OnPageChangeListener {
