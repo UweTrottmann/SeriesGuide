@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.settings;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -39,6 +40,7 @@ public class AdvancedSettings {
                 true);
     }
 
+    @SuppressLint("CommitPrefEdits")
     public static long getLastAutoBackupTime(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 

@@ -362,7 +362,7 @@ public class ExtensionManager {
         }
         Timber.d("Saving " + serializedSubscriptions.size() + " subscriptions");
         JSONArray json = new JSONArray(serializedSubscriptions);
-        mSharedPrefs.edit().putString(PREF_SUBSCRIPTIONS, json.toString()).commit();
+        mSharedPrefs.edit().putString(PREF_SUBSCRIPTIONS, json.toString()).apply();
     }
 
     /**

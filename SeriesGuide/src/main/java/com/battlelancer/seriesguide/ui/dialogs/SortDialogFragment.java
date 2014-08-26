@@ -68,7 +68,7 @@ public class SortDialogFragment extends DialogFragment {
                                         getArguments().getString("prefkey"),
                                         (getResources().getStringArray(getArguments().getInt(
                                                 "itemdata")))[item]);
-                                editor.commit();
+                                editor.apply();
                                 dismiss();
                             }
                         }).create();

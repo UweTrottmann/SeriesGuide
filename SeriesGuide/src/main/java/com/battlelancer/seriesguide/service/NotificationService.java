@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.service;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.IntentService;
@@ -115,6 +116,7 @@ public class NotificationService extends IntentService {
         setIntentRedelivery(true);
     }
 
+    @SuppressLint("CommitPrefEdits")
     @TargetApi(android.os.Build.VERSION_CODES.KITKAT)
     @Override
     protected void onHandleIntent(Intent intent) {
@@ -344,11 +346,13 @@ public class NotificationService extends IntentService {
      * episodes
      * may appear, which were already notified about.
      */
+    @SuppressLint("CommitPrefEdits")
     public static void resetLastEpisodeAirtime(final SharedPreferences prefs) {
         Timber.d("Resetting last cleared and last notified");
-        prefs.edit().putLong(NotificationSettings.KEY_LAST_CLEARED, 0)
+        prefs.edit()
+                .putLong(NotificationSettings.KEY_LAST_CLEARED, 0)
+                .putLong(NotificationSettings.KEY_LAST_NOTIFIED, 0)
                 .commit();
-        prefs.edit().putLong(NotificationSettings.KEY_LAST_NOTIFIED, 0).commit();
     }
 
     private void onNotify(final Cursor upcomingEpisodes, List<Integer> notifyPositions,

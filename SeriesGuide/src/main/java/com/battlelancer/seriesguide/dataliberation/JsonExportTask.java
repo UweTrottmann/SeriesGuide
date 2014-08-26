@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.dataliberation;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -113,6 +114,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         mIsAutoBackupMode = isSilentMode;
     }
 
+    @SuppressLint("CommitPrefEdits")
     @Override
     protected Integer doInBackground(Void... params) {
         // Ensure external storage is available

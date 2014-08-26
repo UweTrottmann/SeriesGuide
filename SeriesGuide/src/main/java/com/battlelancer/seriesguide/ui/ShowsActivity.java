@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.accounts.Account;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -461,6 +462,7 @@ public class ShowsActivity extends BaseTopActivity implements
     /**
      * Runs any upgrades necessary if coming from earlier versions.
      */
+    @SuppressLint("CommitPrefEdits")
     private void onUpgrade() {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final int lastVersion = AppSettings.getLastVersionCode(this);
@@ -657,7 +659,7 @@ public class ShowsActivity extends BaseTopActivity implements
         @Override
         public void onPageSelected(int position) {
             // save selected tab index
-            mPrefs.edit().putInt(ActivitySettings.KEY_ACTIVITYTAB, position).commit();
+            mPrefs.edit().putInt(ActivitySettings.KEY_ACTIVITYTAB, position).apply();
         }
     }
 }

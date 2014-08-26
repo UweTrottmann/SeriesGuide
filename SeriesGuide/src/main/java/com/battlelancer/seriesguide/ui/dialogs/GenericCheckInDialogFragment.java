@@ -191,8 +191,7 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
                 handleGetGlueToggle(isChecked);
 
                 mGetGlueChecked = isChecked;
-                prefs.edit().putBoolean(GetGlueSettings.KEY_SHARE_WITH_GETGLUE, isChecked)
-                        .commit();
+                prefs.edit().putBoolean(GetGlueSettings.KEY_SHARE_WITH_GETGLUE, isChecked).apply();
                 updateCheckInButtonState();
             }
         });
@@ -209,8 +208,7 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
                 }
 
                 mTraktChecked = isChecked;
-                prefs.edit().putBoolean(TraktSettings.KEY_SHARE_WITH_TRAKT, isChecked)
-                        .commit();
+                prefs.edit().putBoolean(TraktSettings.KEY_SHARE_WITH_TRAKT, isChecked).apply();
                 updateCheckInButtonState();
             }
         });

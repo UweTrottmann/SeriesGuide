@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -60,6 +61,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         mListener = listener;
     }
 
+    @SuppressLint("CommitPrefEdits")
     @Override
     protected Integer doInBackground(String... params) {
         // check for connectivity

@@ -161,7 +161,7 @@ public class FirstRunFragment extends Fragment {
     private void setFirstRunDismissed() {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
-        prefs.edit().putBoolean(PREF_KEY_FIRSTRUN, true).commit();
+        prefs.edit().putBoolean(PREF_KEY_FIRSTRUN, true).apply();
 
         // display shows fragment again, better use an interface!
         mListener.onFirstRunDismissed();
@@ -173,7 +173,7 @@ public class FirstRunFragment extends Fragment {
             final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(getActivity());
             final String value = getResources().getStringArray(R.array.languageData)[pos];
-            prefs.edit().putString(DisplaySettings.KEY_LANGUAGE, value).commit();
+            prefs.edit().putString(DisplaySettings.KEY_LANGUAGE, value).apply();
         }
 
         public void onNothingSelected(AdapterView<?> parent) {

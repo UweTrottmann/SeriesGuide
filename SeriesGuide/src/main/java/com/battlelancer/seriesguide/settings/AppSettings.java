@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.settings;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -35,6 +36,7 @@ public class AppSettings {
      * fresh
      * installs.
      */
+    @SuppressLint("CommitPrefEdits")
     public static int getLastVersionCode(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
