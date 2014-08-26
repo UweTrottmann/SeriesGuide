@@ -237,6 +237,7 @@ public class Utils {
      * want a Drawable there. The Drawables' bounds will be set to
      * their intrinsic bounds.
      */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static void setCompoundDrawablesRelativeWithIntrinsicBounds(Button button, int left,
             int top, int right, int bottom) {
         if (AndroidUtils.isJellyBeanMR1OrHigher()) {
