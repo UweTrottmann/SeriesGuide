@@ -52,7 +52,6 @@ import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
 import java.io.IOException;
@@ -183,22 +182,20 @@ public class Utils {
     }
 
     /**
-     * Returns whether a regular check with the Google Play app is necessary to determine access to
-     * X features (e.g. the subscription is still valid).
+     * Returns whether a regular check with the Google Play app is not necessary to determine access
+     * to X features (e.g. the subscription is still valid).
      */
-    public static boolean requiresPurchaseCheck(Context context) {
-        // dev builds and the SeriesGuide X key app are not handled through the
-        // Play store
-        return !(BuildConfig.DEBUG || hasUnlockKeyInstalled(context));
+    public static boolean canSkipPurchaseCheck(Context context) {
+        // dev builds and the SeriesGuide X key app are not handled through the Play store
+        return (BuildConfig.DEBUG || hasUnlockKeyInstalled(context));
     }
 
     /**
      * Returns whether this user should currently get access to X features.
      */
     public static boolean hasAccessToX(Context context) {
-        // dev builds, SeriesGuide X installed or a valid purchase unlock X
-        // features
-        return !requiresPurchaseCheck(context) || AdvancedSettings.isSubscribedToX(context);
+        // dev builds, SeriesGuide X installed or a valid purchase unlock X features
+        return canSkipPurchaseCheck(context) || AdvancedSettings.isSubscribedToX(context);
     }
 
     /**

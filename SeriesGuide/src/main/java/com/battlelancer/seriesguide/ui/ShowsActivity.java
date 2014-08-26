@@ -271,7 +271,7 @@ public class ShowsActivity extends BaseTopActivity implements
     }
 
     private void checkPurchase() {
-        if (!Utils.requiresPurchaseCheck(this)) {
+        if (Utils.canSkipPurchaseCheck(this)) {
             return;
         }
         mHelper = new IabHelper(this, BillingActivity.getPublicKey());
