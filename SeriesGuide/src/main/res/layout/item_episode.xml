@@ -2,29 +2,31 @@
 <com.battlelancer.seriesguide.widgets.CheckableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="88dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp">
+        android:layout_height="match_parent">
 
         <com.battlelancer.seriesguide.widgets.WatchedBox
             android:id="@+id/watchedBoxEpisode"
-            android:layout_width="@dimen/buttonbar_button_width"
-            android:layout_height="@dimen/buttonbar_button_height"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:background="?custom_list_selector"
-            android:padding="8dp" />
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="4dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:background="?custom_list_selector" />
 
         <TextView
             android:id="@+id/textViewEpisodeTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_padding"
             android:layout_toLeftOf="@+id/textViewEpisodeNumber"
             android:layout_toRightOf="@id/watchedBoxEpisode"
+            android:layout_marginTop="16dp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textAppearance="@style/TextAppearance.Subhead"
             tools:text="Episode Title" />
 
@@ -34,8 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="@dimen/default_padding"
-            android:layout_marginRight="@dimen/default_padding"
-            android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="@dimen/large_padding"
             tools:text="23"
             android:textAppearance="@style/TextAppearance.Subhead.Dim" />
 
@@ -45,50 +47,40 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewEpisodeTitle"
             android:layout_toRightOf="@id/watchedBoxEpisode"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textAppearance="@style/TextAppearance.Body.Dim"
             tools:text="in 2 days" />
-
-        <include
-            android:id="@+id/divider"
-            layout="@layout/divider_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/textViewEpisodeAirdate"
-            android:layout_marginBottom="@dimen/inline_padding"
-            android:layout_marginTop="@dimen/inline_padding"
-            android:layout_toLeftOf="@+id/textViewEpisodeNumber"
-            android:layout_toRightOf="@id/watchedBoxEpisode" />
 
         <TextView
             android:id="@+id/textViewEpisodeAlternativeNumbers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/divider"
+            android:layout_below="@id/textViewEpisodeAirdate"
             android:layout_toLeftOf="@+id/textViewEpisodeNumber"
             android:layout_toRightOf="@id/watchedBoxEpisode"
-            android:paddingBottom="@dimen/default_padding"
+            android:maxLines="1"
+            android:ellipsize="end"
             tools:text="ABSOLUTE 42"
             android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
         <ImageView
             android:id="@+id/imageViewCollected"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_below="@+id/textViewEpisodeNumber"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="4dp"
-            android:scaleType="fitXY"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_below="@+id/watchedBoxEpisode"
+            android:layout_marginLeft="29dp"
             android:src="@drawable/ic_collected" />
 
         <ImageView
             android:id="@+id/imageViewContextMenu"
-            android:layout_width="40dp"
+            android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
             android:background="?attr/custom_list_selector"
-            android:paddingBottom="@dimen/inline_padding"
+            android:paddingRight="@dimen/default_padding"
+            android:paddingBottom="13dp"
             android:scaleType="fitXY"
             android:src="?attr/drawableDropdown" />
     </RelativeLayout>
