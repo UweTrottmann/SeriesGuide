@@ -97,6 +97,9 @@
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
 
+        <!-- System widgets -->
+        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_dark</item>
+
         <!-- Action bar -->
         <item name="android:actionBarStyle">@style/ActionBarDark</item>
         <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>
