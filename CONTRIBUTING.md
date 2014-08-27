@@ -23,13 +23,14 @@ The repository is made up of two main branches: master (stable) and dev (unstabl
 Setup
 -----
 
-This project is built with Gradle, the [Android Gradle plugin][3] and uses jars or Maven dependencies. Clone this repository inside your working folder. Import the build.gradle file in the root folder into e.g. Android Studio. (You can also have a look at the build.gradle files on how the projects depend on another.)
+This project is built with Gradle, the [Android Gradle plugin][3] and uses jars or Maven dependencies. Clone this repository inside your working folder. Import the settings.gradle file in the root folder into e.g. Android Studio. (You can also have a look at the build.gradle files on how the projects depend on another.)
 
 Before your first build create the following files:
 
 * `gradle.properties`, add the following values (do not need to be valid if you do not plan to use that functionality):
 
 ```
+// used for publishing the API jar
 ossrhUsername=<your sonatype username>
 ossrhPassword=<your sonatype password>
 
@@ -39,6 +40,7 @@ TVDB_API_KEY=<your api key>
 TVTAG_CLIENT_ID=<your client id>
 TVTAG_CLIENT_SECRET=<your client secret>
 
+// Play Store in-app billing public key
 IAP_KEY_A=dummy
 IAP_KEY_B=dummy
 IAP_KEY_C=dummy

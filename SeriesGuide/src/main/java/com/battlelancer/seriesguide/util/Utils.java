@@ -52,7 +52,6 @@ import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
 import java.io.IOException;
@@ -183,22 +182,21 @@ public class Utils {
     }
 
     /**
-     * Returns whether a regular check with the Google Play app is necessary to determine access to
-     * X features (e.g. the subscription is still valid).
+     * Returns whether a regular check with the Google Play app is not necessary to determine
+     * access
+     * to X features (e.g. the subscription is still valid).
      */
-    public static boolean requiresPurchaseCheck(Context context) {
-        // dev builds and the SeriesGuide X key app are not handled through the
-        // Play store
-        return !(BuildConfig.DEBUG || hasUnlockKeyInstalled(context));
+    public static boolean canSkipPurchaseCheck(Context context) {
+        // dev builds and the SeriesGuide X key app are not handled through the Play store
+        return (BuildConfig.DEBUG || hasUnlockKeyInstalled(context));
     }
 
     /**
      * Returns whether this user should currently get access to X features.
      */
     public static boolean hasAccessToX(Context context) {
-        // dev builds, SeriesGuide X installed or a valid purchase unlock X
-        // features
-        return !requiresPurchaseCheck(context) || AdvancedSettings.isSubscribedToX(context);
+        // dev builds, SeriesGuide X installed or a valid purchase unlock X features
+        return canSkipPurchaseCheck(context) || AdvancedSettings.isSubscribedToX(context);
     }
 
     /**
@@ -237,6 +235,7 @@ public class Utils {
      * want a Drawable there. The Drawables' bounds will be set to
      * their intrinsic bounds.
      */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static void setCompoundDrawablesRelativeWithIntrinsicBounds(Button button, int left,
             int top, int right, int bottom) {
         if (AndroidUtils.isJellyBeanMR1OrHigher()) {
@@ -502,11 +501,12 @@ public class Utils {
     }
 
     /**
-     * Returns true if a network connection exists.
+     * Checks for an available network connection.
      *
-     * @param showOfflineToast If true, displays a toast asking the user to connect to a network.
+     * @param showOfflineToast If not connected, displays a toast asking the user to connect to a
+     *                         network.
      */
-    public static boolean isConnected(Context context, boolean showOfflineToast) {
+    public static boolean isNotConnected(Context context, boolean showOfflineToast) {
         boolean isConnected = AndroidUtils.isNetworkConnected(context);
 
         // display optional offline toast
@@ -514,7 +514,7 @@ public class Utils {
             Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show();
         }
 
-        return isConnected;
+        return !isConnected;
     }
 
     /**

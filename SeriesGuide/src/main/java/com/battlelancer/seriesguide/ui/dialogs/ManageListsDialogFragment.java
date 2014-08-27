@@ -99,7 +99,7 @@ public class ManageListsDialogFragment extends DialogFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        final View layout = inflater.inflate(R.layout.dialog_manage_lists, null);
+        final View layout = inflater.inflate(R.layout.dialog_manage_lists, container, false);
 
         // buttons
         Button dontAddButton = (Button) layout.findViewById(R.id.buttonNegative);

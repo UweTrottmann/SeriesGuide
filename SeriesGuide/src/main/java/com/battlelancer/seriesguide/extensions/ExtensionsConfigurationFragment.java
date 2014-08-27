@@ -78,7 +78,7 @@ public class ExtensionsConfigurationFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_extensions_configuration, null);
+        View v = inflater.inflate(R.layout.fragment_extensions_configuration, container, false);
         ButterKnife.inject(this, v);
 
         final ExtensionsDragSortController dragSortController = new ExtensionsDragSortController();

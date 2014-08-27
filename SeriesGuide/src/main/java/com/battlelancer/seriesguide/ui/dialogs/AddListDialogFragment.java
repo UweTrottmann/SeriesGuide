@@ -67,7 +67,7 @@ public class AddListDialogFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View layout = inflater.inflate(R.layout.dialog_list_manage, null);
+        final View layout = inflater.inflate(R.layout.dialog_list_manage, container, false);
 
         // set alternate dialog title
         ((TextView) layout.findViewById(R.id.textViewListManageDialogTitle)).setText(R.string.list_add);

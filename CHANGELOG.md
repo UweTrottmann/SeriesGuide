@@ -5,8 +5,15 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 17 *(in development)*
+Version 17 *(2014-08-27)*
 -----------------------------
+
+* Design updates, moving towards Material Design language.
+* Access trakt and TMDb over a secure connection (HTTPS).
+
+#### 17 *(2014-08-27)*
+
+* TWEAK Restore larger nav drawer items on tablets. Also increase people tile size.
 
 #### 17-beta5 *(2014-08-25)*
 

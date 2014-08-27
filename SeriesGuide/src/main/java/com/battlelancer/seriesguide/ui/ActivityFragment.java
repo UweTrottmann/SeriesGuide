@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -383,6 +384,7 @@ public class ActivityFragment extends Fragment implements
         Utils.trackAction(getActivity(), TAG, label);
     }
 
+    @SuppressLint("CommitPrefEdits")
     private void toggleFilterSetting(MenuItem item, String key) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         prefs.edit().putBoolean(key, !item.isChecked()).commit();

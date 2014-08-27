@@ -75,7 +75,7 @@ public class MovieTools {
 
     public static void addToCollection(Context context, int movieTmdbId) {
         if (HexagonTools.isSignedIn(context)) {
-            if (!Utils.isConnected(context, true)) {
+            if (Utils.isNotConnected(context, true)) {
                 return;
             }
             AndroidUtils.executeOnPool(
@@ -83,7 +83,7 @@ public class MovieTools {
             );
         }
         if (TraktCredentials.get(context).hasCredentials()) {
-            if (!Utils.isConnected(context, true)) {
+            if (Utils.isNotConnected(context, true)) {
                 return;
             }
             // add to trakt collection
@@ -98,7 +98,7 @@ public class MovieTools {
 
     public static void addToWatchlist(Context context, int movieTmdbId) {
         if (HexagonTools.isSignedIn(context)) {
-            if (!Utils.isConnected(context, true)) {
+            if (Utils.isNotConnected(context, true)) {
                 return;
             }
             AndroidUtils.executeOnPool(
@@ -106,7 +106,7 @@ public class MovieTools {
             );
         }
         if (TraktCredentials.get(context).hasCredentials()) {
-            if (!Utils.isConnected(context, true)) {
+            if (Utils.isNotConnected(context, true)) {
                 return;
             }
             // add to trakt watchlist
@@ -135,7 +135,7 @@ public class MovieTools {
 
     public static void removeFromCollection(Context context, int movieTmdbId) {
         if (HexagonTools.isSignedIn(context)) {
-            if (!Utils.isConnected(context, true)) {
+            if (Utils.isNotConnected(context, true)) {
                 return;
             }
             AndroidUtils.executeOnPool(
@@ -143,7 +143,7 @@ public class MovieTools {
             );
         }
         if (TraktCredentials.get(context).hasCredentials()) {
-            if (!Utils.isConnected(context, true)) {
+            if (Utils.isNotConnected(context, true)) {
                 return;
             }
             // remove from trakt collection
@@ -159,7 +159,7 @@ public class MovieTools {
 
     public static void removeFromWatchlist(Context context, int movieTmdbId) {
         if (HexagonTools.isSignedIn(context)) {
-            if (!Utils.isConnected(context, true)) {
+            if (Utils.isNotConnected(context, true)) {
                 return;
             }
             AndroidUtils.executeOnPool(
@@ -167,7 +167,7 @@ public class MovieTools {
             );
         }
         if (TraktCredentials.get(context).hasCredentials()) {
-            if (!Utils.isConnected(context, true)) {
+            if (Utils.isNotConnected(context, true)) {
                 return;
             }
             // remove from trakt watchlist
@@ -197,7 +197,7 @@ public class MovieTools {
 
     public static void watchedMovie(Context context, int movieTmdbId) {
         if (TraktCredentials.get(context).hasCredentials()) {
-            if (!Utils.isConnected(context, true)) {
+            if (Utils.isNotConnected(context, true)) {
                 return;
             }
             // remove from trakt watchlist
@@ -212,7 +212,7 @@ public class MovieTools {
 
     public static void unwatchedMovie(Context context, int movieTmdbId) {
         if (TraktCredentials.get(context).hasCredentials()) {
-            if (!Utils.isConnected(context, true)) {
+            if (Utils.isNotConnected(context, true)) {
                 return;
             }
             // remove from trakt watchlist

@@ -86,7 +86,7 @@ public class BillingActivity extends BaseActivity {
         setupViews();
 
         // do not query IAB if user has key
-        boolean hasUpgrade = !Utils.requiresPurchaseCheck(this);
+        boolean hasUpgrade = Utils.canSkipPurchaseCheck(this);
         updateViewStates(hasUpgrade);
         // no need to go further if user has a key
         if (hasUpgrade) {

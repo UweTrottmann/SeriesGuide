@@ -541,10 +541,9 @@ public class DBUtils {
      */
     public static ContentProviderOperation buildEpisodeUpdateOp(ContentValues values) {
         final String episodeId = values.getAsString(Episodes._ID);
-        ContentProviderOperation op = ContentProviderOperation
+        return ContentProviderOperation
                 .newUpdate(Episodes.buildEpisodeUri(episodeId))
                 .withValues(values).build();
-        return op;
     }
 
     /**

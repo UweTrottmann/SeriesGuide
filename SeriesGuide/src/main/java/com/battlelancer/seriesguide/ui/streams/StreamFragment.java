@@ -38,13 +38,13 @@ import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.ActivityItem;
 import com.jakewharton.trakt.entities.TvShowEpisode;
-import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
@@ -138,6 +138,11 @@ public abstract class StreamFragment extends Fragment implements
     }
 
     private void refreshStreamWithNetworkCheck() {
+        if (!TraktCredentials.ensureCredentials(getActivity())) {
+            showProgressBar(false);
+            return;
+        }
+
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
             // keep existing data, but update empty view anyhow
             showProgressBar(false);

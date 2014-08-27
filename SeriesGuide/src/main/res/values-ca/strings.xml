@@ -39,7 +39,7 @@
   <string name="share_show">Comparteix la serie</string>
   <string name="share_episode">Comparteix l\'episodi</string>
   <string name="share_movie">Comparteix la pel·lícula</string>
-  <string name="share_checkout">Donar un cop d\'ull al %</string>
+  <string name="share_checkout">Donar un cop d\'ull al %s</string>
   <string name="comments">Comentaris</string>
   <string name="shout_hint">Escriu una nota (en Anglès)</string>
   <string name="shout">Nota!</string>

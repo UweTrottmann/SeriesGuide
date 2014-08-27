@@ -59,7 +59,7 @@ public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
         TraktCommentsAdapter.ViewHolder holder;
 
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_comment, null);
+            convertView = mInflater.inflate(R.layout.item_comment, parent, false);
 
             holder = new ViewHolder();
             holder.name = (TextView) convertView.findViewById(R.id.name);
