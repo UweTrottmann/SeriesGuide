@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,7 +39,9 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.util.ShareUtils;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import de.greenrobot.event.EventBus;
 import java.util.Locale;
 
 /**
@@ -64,7 +67,8 @@ public class StatsFragment extends Fragment {
     @InjectView(R.id.progressBarStatsMoviesWatchlist) ProgressBar mProgressMoviesWatchlist;
     @InjectView(R.id.textViewStatsMoviesWatchlistRuntime) TextView mMoviesWatchlistRuntime;
 
-    private AsyncTask<Void, Stats, Stats> mStatsTask;
+    private AsyncTask<Void, Stats, Stats> statsTask;
+    private Stats currentStats;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,6 +104,7 @@ public class StatsFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
+        EventBus.getDefault().register(this);
         loadStats();
     }
 
@@ -108,6 +113,7 @@ public class StatsFragment extends Fragment {
         super.onStop();
 
         cleanupStatsTask();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -126,8 +132,18 @@ public class StatsFragment extends Fragment {
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
+        menu.findItem(R.id.menu_action_stats_share).setVisible(!isDrawerOpen);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
+        if (itemId == R.id.menu_action_stats_share) {
+            shareStats();
+            return true;
+        }
         if (itemId == R.id.menu_action_stats_filter_specials) {
             PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
                     .putBoolean(DisplaySettings.KEY_HIDE_SPECIALS, !item.isChecked())
@@ -141,23 +157,191 @@ public class StatsFragment extends Fragment {
 
     private void loadStats() {
         cleanupStatsTask();
-        mStatsTask = new StatsTask();
-        AndroidUtils.executeOnPool(mStatsTask);
+        statsTask = new StatsTask(getActivity());
+        AndroidUtils.executeOnPool(statsTask);
     }
 
     private void cleanupStatsTask() {
-        if (mStatsTask != null && mStatsTask.getStatus() != AsyncTask.Status.FINISHED) {
-            mStatsTask.cancel(true);
+        if (statsTask != null && statsTask.getStatus() != AsyncTask.Status.FINISHED) {
+            statsTask.cancel(true);
         }
-        mStatsTask = null;
+        statsTask = null;
     }
 
-    private class StatsTask extends AsyncTask<Void, Stats, Stats> {
+    public void onEventMainThread(StatsTask.StatsUpdateEvent event) {
+        if (!isAdded()) {
+            return;
+        }
+        currentStats = event.stats;
+        updateStats(event.stats);
+    }
+
+    private void updateStats(Stats stats) {
+        // all shows
+        mShowCount.setText(String.valueOf(stats.shows()));
+
+        // shows with next episodes
+        mProgressShowsWithNextEpisode.setMax(stats.shows());
+        mProgressShowsWithNextEpisode.setProgress(stats.showsWithNextEpisodes());
+        mProgressShowsWithNextEpisode.setVisibility(View.VISIBLE);
+
+        mShowsWithNextEpisode.setText(getString(R.string.shows_with_next,
+                stats.showsWithNextEpisodes()).toUpperCase(Locale.getDefault()));
+        mShowsWithNextEpisode.setVisibility(View.VISIBLE);
+
+        // continuing shows
+        mProgressShowsContinuing.setMax(stats.shows());
+        mProgressShowsContinuing.setProgress(stats.showsContinuing());
+        mProgressShowsContinuing.setVisibility(View.VISIBLE);
+
+        mShowsContinuing.setText(getString(R.string.shows_continuing,
+                stats.showsContinuing()).toUpperCase(Locale.getDefault()));
+        mShowsContinuing.setVisibility(View.VISIBLE);
+
+        // all episodes
+        mEpisodeCount.setText(String.valueOf(stats.episodes()));
+
+        // watched episodes
+        mProgressEpisodesWatched.setMax(stats.episodes());
+        mProgressEpisodesWatched.setProgress(stats.episodesWatched());
+        mProgressEpisodesWatched.setVisibility(View.VISIBLE);
+
+        mEpisodesWatched.setText(getString(R.string.episodes_watched,
+                stats.episodesWatched()).toUpperCase(Locale.getDefault()));
+        mEpisodesWatched.setVisibility(View.VISIBLE);
+
+        // episode runtime
+        if (stats.episodesWatchedRuntime() != 0) {
+            String watchedDuration = getTimeDuration(stats.episodesWatchedRuntime());
+            if (!stats.hasFinalValues) {
+                // showing minimum (= not the final value)
+                watchedDuration = "> " + watchedDuration;
+            }
+            mEpisodesRuntime.setText(watchedDuration);
+            mEpisodesRuntime.setVisibility(View.VISIBLE);
+        }
+        if (stats.hasFinalValues) {
+            mProgressEpisodesRuntime.setVisibility(View.GONE);
+        }
+
+        // movies
+        mMovieCount.setText(String.valueOf(stats.movies));
+
+        // movies in watchlist
+        mProgressMoviesWatchlist.setMax(stats.movies);
+        mProgressMoviesWatchlist.setProgress(stats.moviesWatchlist);
+        mProgressMoviesWatchlist.setVisibility(View.VISIBLE);
+
+        mMoviesWatchlist.setText(getString(R.string.movies_on_watchlist,
+                stats.moviesWatchlist).toUpperCase(Locale.getDefault()));
+        mMoviesWatchlist.setVisibility(View.VISIBLE);
+
+        // runtime of movie watchlist
+        mMoviesWatchlistRuntime.setText(getTimeDuration(stats.moviesWatchlistRuntime));
+        mMoviesWatchlistRuntime.setVisibility(View.VISIBLE);
+    }
+
+    private String getTimeDuration(long duration) {
+        long days = duration / DateUtils.DAY_IN_MILLIS;
+        duration %= DateUtils.DAY_IN_MILLIS;
+        long hours = duration / DateUtils.HOUR_IN_MILLIS;
+        duration %= DateUtils.HOUR_IN_MILLIS;
+        long minutes = duration / DateUtils.MINUTE_IN_MILLIS;
+
+        StringBuilder result = new StringBuilder();
+        if (days != 0) {
+            result.append(getResources().getQuantityString(R.plurals.days_plural, (int) days,
+                    (int) days));
+        }
+        if (hours != 0) {
+            if (days != 0) {
+                result.append(" ");
+            }
+            result.append(getResources().getQuantityString(R.plurals.hours_plural, (int) hours,
+                    (int) hours));
+        }
+        if (minutes != 0 || (days == 0 && hours == 0)) {
+            if (days != 0 || hours != 0) {
+                result.append(" ");
+            }
+            result.append(getResources().getQuantityString(R.plurals.minutes_plural,
+                    (int) minutes,
+                    (int) minutes));
+        }
+
+        return result.toString();
+    }
+
+    private void shareStats() {
+        if (currentStats == null) {
+            return;
+        }
+
+        StringBuilder statsString = new StringBuilder();
+        // shows
+        statsString.append(currentStats.shows())
+                .append(" ")
+                .append(getString(R.string.statistics_shows));
+        statsString.append("\n");
+        statsString.append(
+                getString(R.string.shows_with_next, currentStats.showsWithNextEpisodes()));
+        statsString.append("\n");
+        statsString.append(getString(R.string.shows_continuing, currentStats.showsContinuing()));
+        statsString.append("\n");
+        statsString.append("\n");
+        // episodes
+        statsString.append(currentStats.episodes()).append(" ").append(
+                getString(R.string.statistics_episodes));
+        statsString.append("\n");
+        statsString.append(getString(R.string.episodes_watched, currentStats.episodesWatched()));
+        statsString.append("\n");
+        if (currentStats.episodesWatchedRuntime() != 0) {
+            String watchedDuration = getTimeDuration(currentStats.episodesWatchedRuntime());
+            if (!currentStats.hasFinalValues) {
+                // showing minimum (= not the final value)
+                watchedDuration = "> " + watchedDuration;
+            }
+            statsString.append(watchedDuration)
+                    .append(" ")
+                    .append(getString(R.string.runtime_all_episodes));
+            statsString.append("\n");
+        }
+        statsString.append("\n");
+        // movies
+        statsString.append(currentStats.movies)
+                .append(" ")
+                .append(getString(R.string.statistics_movies));
+        statsString.append("\n");
+        statsString.append(getString(R.string.movies_on_watchlist, currentStats.moviesWatchlist));
+        statsString.append("\n");
+        statsString.append(getTimeDuration(currentStats.moviesWatchlistRuntime))
+                .append(" ")
+                .append(getString(R.string.runtime_movies_watchlist));
+
+        ShareUtils.startShareIntentChooser(getActivity(), statsString.toString(), R.string.share);
+    }
+
+    private static class StatsTask extends AsyncTask<Void, Stats, Stats> {
+
+        public class StatsUpdateEvent {
+            public final Stats stats;
+
+            public StatsUpdateEvent(Stats stats, boolean hasFinalValues) {
+                stats.hasFinalValues = hasFinalValues;
+                this.stats = stats;
+            }
+        }
+
+        private final Context context;
+
+        public StatsTask(Context context) {
+            this.context = context.getApplicationContext();
+        }
 
         @Override
         protected Stats doInBackground(Void... params) {
             Stats stats = new Stats();
-            ContentResolver resolver = getActivity().getContentResolver();
+            ContentResolver resolver = context.getContentResolver();
 
             // number of...
             // ...movies (count, in watchlist, runtime of watchlist)
@@ -209,7 +393,7 @@ public class StatsFragment extends Fragment {
                 stats.shows(shows.getCount()).showsContinuing(continuing)
                         .showsWithNextEpisodes(withnext);
 
-                boolean includeSpecials = !DisplaySettings.isHidingSpecials(getActivity());
+                boolean includeSpecials = !DisplaySettings.isHidingSpecials(context);
 
                 // ...all episodes
                 final Cursor episodes = resolver.query(Episodes.CONTENT_URI,
@@ -280,113 +464,17 @@ public class StatsFragment extends Fragment {
 
         @Override
         protected void onProgressUpdate(Stats... values) {
-            if (!isAdded()) {
-                return;
-            }
-            Stats stats = values[0];
-
-            // all shows
-            mShowCount.setText(String.valueOf(stats.shows()));
-
-            // shows with next episodes
-            mProgressShowsWithNextEpisode.setMax(stats.shows());
-            mProgressShowsWithNextEpisode.setProgress(stats.showsWithNextEpisodes());
-            mProgressShowsWithNextEpisode.setVisibility(View.VISIBLE);
-
-            mShowsWithNextEpisode.setText(getString(R.string.shows_with_next,
-                    stats.showsWithNextEpisodes()).toUpperCase(Locale.getDefault()));
-            mShowsWithNextEpisode.setVisibility(View.VISIBLE);
-
-            // continuing shows
-            mProgressShowsContinuing.setMax(stats.shows());
-            mProgressShowsContinuing.setProgress(stats.showsContinuing());
-            mProgressShowsContinuing.setVisibility(View.VISIBLE);
-
-            mShowsContinuing.setText(getString(R.string.shows_continuing,
-                    stats.showsContinuing()).toUpperCase(Locale.getDefault()));
-            mShowsContinuing.setVisibility(View.VISIBLE);
-
-            // all episodes
-            mEpisodeCount.setText(String.valueOf(stats.episodes()));
-
-            // watched episodes
-            mProgressEpisodesWatched.setMax(stats.episodes());
-            mProgressEpisodesWatched.setProgress(stats.episodesWatched());
-            mProgressEpisodesWatched.setVisibility(View.VISIBLE);
-
-            mEpisodesWatched.setText(getString(R.string.episodes_watched,
-                    stats.episodesWatched()).toUpperCase(Locale.getDefault()));
-            mEpisodesWatched.setVisibility(View.VISIBLE);
-
-            // episode runtime minimum (= not the final value)
-            if (stats.episodesWatchedRuntime() != 0) {
-                String watchedDuration = getTimeDuration(stats.episodesWatchedRuntime());
-                mEpisodesRuntime.setText("> " + watchedDuration);
-                mEpisodesRuntime.setVisibility(View.VISIBLE);
-            }
-
-            // movies
-            mMovieCount.setText(String.valueOf(stats.movies));
-
-            // movies in watchlist
-            mProgressMoviesWatchlist.setMax(stats.movies);
-            mProgressMoviesWatchlist.setProgress(stats.moviesWatchlist);
-            mProgressMoviesWatchlist.setVisibility(View.VISIBLE);
-
-            mMoviesWatchlist.setText(getString(R.string.movies_on_watchlist,
-                    stats.moviesWatchlist).toUpperCase(Locale.getDefault()));
-            mMoviesWatchlist.setVisibility(View.VISIBLE);
-
-            // runtime of movie watchlist
-            mMoviesWatchlistRuntime.setText(getTimeDuration(stats.moviesWatchlistRuntime));
-            mMoviesWatchlistRuntime.setVisibility(View.VISIBLE);
+            EventBus.getDefault().post(new StatsUpdateEvent(values[0], false));
         }
 
         @Override
         protected void onPostExecute(Stats stats) {
-            if (isAdded()) {
-                mProgressEpisodesRuntime.setVisibility(View.GONE);
-
-                // runtime
-                String watchedDuration = getTimeDuration(stats.episodesWatchedRuntime());
-                mEpisodesRuntime.setText(watchedDuration);
-                mEpisodesRuntime.setVisibility(View.VISIBLE);
-            }
-        }
-
-        private String getTimeDuration(long duration) {
-            long days = duration / DateUtils.DAY_IN_MILLIS;
-            duration %= DateUtils.DAY_IN_MILLIS;
-            long hours = duration / DateUtils.HOUR_IN_MILLIS;
-            duration %= DateUtils.HOUR_IN_MILLIS;
-            long minutes = duration / DateUtils.MINUTE_IN_MILLIS;
-
-            StringBuilder result = new StringBuilder();
-            if (days != 0) {
-                result.append(getResources().getQuantityString(R.plurals.days_plural, (int) days,
-                        (int) days));
-            }
-            if (hours != 0) {
-                if (days != 0) {
-                    result.append(" ");
-                }
-                result.append(getResources().getQuantityString(R.plurals.hours_plural, (int) hours,
-                        (int) hours));
-            }
-            if (minutes != 0 || (days == 0 && hours == 0)) {
-                if (days != 0 || hours != 0) {
-                    result.append(" ");
-                }
-                result.append(getResources().getQuantityString(R.plurals.minutes_plural,
-                        (int) minutes,
-                        (int) minutes));
-            }
-
-            return result.toString();
+            EventBus.getDefault().post(new StatsUpdateEvent(stats, true));
         }
     }
 
     private static class Stats {
+        public boolean hasFinalValues;
         private int mShows;
         private int mShowsContinuing;
         private int mShowsWithNext;
