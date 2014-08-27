@@ -30,6 +30,7 @@ Before your first build create the following files:
 * `gradle.properties`, add the following values (do not need to be valid if you do not plan to use that functionality):
 
 ```
+// used for publishing the API jar
 ossrhUsername=<your sonatype username>
 ossrhPassword=<your sonatype password>
 
@@ -39,6 +40,7 @@ TVDB_API_KEY=<your api key>
 TVTAG_CLIENT_ID=<your client id>
 TVTAG_CLIENT_SECRET=<your client secret>
 
+// Play Store in-app billing public key
 IAP_KEY_A=dummy
 IAP_KEY_B=dummy
 IAP_KEY_C=dummy
