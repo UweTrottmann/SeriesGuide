@@ -278,6 +278,11 @@ public class StatsFragment extends Fragment {
         }
 
         StringBuilder statsString = new StringBuilder();
+        statsString.append(getString(R.string.app_name))
+                .append(" ")
+                .append(getString(R.string.statistics));
+        statsString.append("\n");
+        statsString.append("\n");
         // shows
         statsString.append(currentStats.shows())
                 .append(" ")
