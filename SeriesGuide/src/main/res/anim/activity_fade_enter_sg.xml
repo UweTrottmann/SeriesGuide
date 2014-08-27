@@ -16,10 +16,15 @@
   ~ limitations under the License.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:zAdjustment="normal">
 
-    <item
-        android:id="@+id/menu_action_episode_calendar"
-        android:title="@string/addtocalendar" />
+    <alpha
+        android:fromAlpha="0.7"
+        android:toAlpha="1.0"
+        android:fillEnabled="true"
+        android:fillBefore="true"
+        android:fillAfter="true"
+        android:duration="250" />
 
-</menu>
+</set>

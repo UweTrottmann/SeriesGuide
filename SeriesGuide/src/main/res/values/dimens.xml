@@ -5,6 +5,7 @@
     <dimen name="default_padding">8dp</dimen>
     <dimen name="large_padding">16dp</dimen>
     <dimen name="item_padding">2dp</dimen>
+    <dimen name="larger_padding">24dp</dimen>
 
     <dimen name="text_size_xsmall">12sp</dimen>
     <dimen name="text_size_small">14sp</dimen>
@@ -53,12 +54,19 @@
     <dimen name="drag_grip_ridge_size">4dp</dimen>
     <dimen name="drag_grip_ridge_gap">2dp</dimen>
 
-    <dimen name="person_headshot_size">56dp</dimen>
+    <dimen name="person_headshot_size">40dp</dimen>
     <dimen name="person_headshot_large_width">100dp</dimen>
     <dimen name="person_headshot_large_height">300dp</dimen>
 
     <dimen name="tab_padding_horizontal">12dp</dimen>
 
-    <integer name="animation_duration">200</integer>
+    <dimen name="drawer_item_height">48dp</dimen>
+    <dimen name="drawer_icon_size">24dp</dimen>
+
+    <dimen name="keyline">16dp</dimen>
+    <dimen name="keyline_minus_16">0dp</dimen>
+    <dimen name="icon_small_size">24dp</dimen>
+    <dimen name="icon_large_size">40dp</dimen>
+    <dimen name="item_regular_height">56dp</dimen>
 
 </resources>

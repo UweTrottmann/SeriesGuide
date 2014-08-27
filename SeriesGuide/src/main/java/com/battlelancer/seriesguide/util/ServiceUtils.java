@@ -21,16 +21,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.StatFs;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.jakewharton.trakt.Trakt;
+import com.squareup.okhttp.Cache;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.OkUrlFactory;
 import com.squareup.picasso.Picasso;
 import com.uwetrottmann.tmdb.Tmdb;
 import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -41,6 +49,12 @@ import javax.annotation.Nullable;
 public final class ServiceUtils {
 
     public static final String TAG = "Service Utils";
+
+    static final int CONNECT_TIMEOUT_MILLIS = 15 * 1000; // 15s
+    static final int READ_TIMEOUT_MILLIS = 20 * 1000; // 20s
+    private static final String API_CACHE = "api-cache";
+    private static final int MIN_DISK_API_CACHE_SIZE = 2 * 1024 * 1024; // 2MB
+    private static final int MAX_DISK_API_CACHE_SIZE = 10 * 1024 * 1024; // 10MB
 
     private static final String GOOGLE_PLAY = "https://play.google.com/store/search?q=%s&c=movies";
 
@@ -64,20 +78,89 @@ public final class ServiceUtils {
 
     private static final String YOUTUBE_PACKAGE = "com.google.android.youtube";
 
-    private static final String IMAGE_CACHE = "offline-cache";
+    private static OkHttpClient httpClient;
+    private static OkUrlFactory urlFactory;
+    private static OkHttpClient cachingHttpClient;
+    private static OkUrlFactory cachingUrlFactory;
 
     private static Picasso sPicasso;
 
-    private static Picasso sExternalPicasso;
+    private static Trakt trakt;
 
-    private static Trakt sTrakt;
+    private static Trakt traktWithAuth;
 
-    private static Trakt sTraktWithAuth;
-
-    private static Tmdb sTmdb;
+    private static Tmdb tmdb;
 
     /* This class is never initialized */
     private ServiceUtils() {
+    }
+
+    /**
+     * Returns this apps {@link com.squareup.okhttp.OkHttpClient} with no cache enabled.
+     */
+    public static synchronized OkHttpClient getOkHttpClient() {
+        if (httpClient == null) {
+            httpClient = new OkHttpClient();
+            httpClient.setConnectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+            httpClient.setReadTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+        }
+        return httpClient;
+    }
+
+    /**
+     * Returns this apps {@link com.squareup.okhttp.OkHttpClient} with enabled response cache.
+     * Should be used with API calls.
+     */
+    public static synchronized OkHttpClient getCachingOkHttpClient(Context context) {
+        if (cachingHttpClient == null) {
+            cachingHttpClient = new OkHttpClient();
+            cachingHttpClient.setConnectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+            cachingHttpClient.setReadTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+            File cacheDir = createApiCacheDir(context);
+            try {
+                cachingHttpClient.setCache(
+                        new Cache(cacheDir, calculateApiDiskCacheSize(cacheDir)));
+            } catch (IOException ignored) {
+            }
+        }
+        return cachingHttpClient;
+    }
+
+    static File createApiCacheDir(Context context) {
+        File cache = new File(context.getApplicationContext().getCacheDir(), API_CACHE);
+        if (!cache.exists()) {
+            cache.mkdirs();
+        }
+        return cache;
+    }
+
+    static long calculateApiDiskCacheSize(File dir) {
+        long size = MIN_DISK_API_CACHE_SIZE;
+
+        try {
+            StatFs statFs = new StatFs(dir.getAbsolutePath());
+            long available = ((long) statFs.getBlockCount()) * statFs.getBlockSize();
+            // Target 2% of the total space.
+            size = available / 50;
+        } catch (IllegalArgumentException ignored) {
+        }
+
+        // Bound inside min/max size for disk cache.
+        return Math.max(Math.min(size, MAX_DISK_API_CACHE_SIZE), MIN_DISK_API_CACHE_SIZE);
+    }
+
+    public static synchronized OkUrlFactory getUrlFactory() {
+        if (urlFactory == null) {
+            urlFactory = new OkUrlFactory(getOkHttpClient());
+        }
+        return urlFactory;
+    }
+
+    public static synchronized OkUrlFactory getCachingUrlFactory(Context context) {
+        if (cachingUrlFactory == null) {
+            cachingUrlFactory = new OkUrlFactory(getCachingOkHttpClient(context));
+        }
+        return cachingUrlFactory;
     }
 
     public static synchronized Picasso getPicasso(Context context) {
@@ -89,44 +172,13 @@ public final class ServiceUtils {
     }
 
     /**
-     * Returns a {@link com.squareup.picasso.Picasso} instance caching images in a larger external
-     * cache directory. This is useful for show posters and episode images which remain valid for
-     * long time periods and should be accessible offline.
-     *
-     * <p> This may return {@code null} if the external cache directory is currently not
-     * accessible.
-     */
-    public static synchronized @Nullable Picasso getExternalPicasso(@Nonnull Context context) {
-        if (sExternalPicasso == null) {
-            File externalCacheDir = context.getExternalCacheDir();
-            if (externalCacheDir == null) {
-                // external storage currently unavailable
-                return null;
-            }
-
-            File cache = new File(externalCacheDir, IMAGE_CACHE);
-            if (!cache.exists()) {
-                //noinspection ResultOfMethodCallIgnored
-                cache.mkdirs();
-            }
-
-            sExternalPicasso = new Picasso.Builder(context).downloader(
-                    new LocalOnlyOkHttpDownloader(context, cache)).build();
-        }
-        return sExternalPicasso;
-    }
-
-    /**
      * Get a tmdb-java instance with our API key set.
      */
     public static synchronized Tmdb getTmdb(Context context) {
-        if (sTmdb == null) {
-            sTmdb = new Tmdb();
-            sTmdb.setApiKey(context.getResources().getString(
-                    R.string.tmdb_apikey));
+        if (tmdb == null) {
+            tmdb = new SgTmdb(context).setApiKey(BuildConfig.TMDB_API_KEY);
         }
-
-        return sTmdb;
+        return tmdb;
     }
 
     /**
@@ -136,12 +188,10 @@ public final class ServiceUtils {
      * @return A {@link com.jakewharton.trakt.Trakt} instance.
      */
     public static synchronized Trakt getTrakt(Context context) {
-        if (sTrakt == null) {
-            sTrakt = new Trakt();
-            sTrakt.setApiKey(context.getResources().getString(R.string.trakt_apikey));
+        if (trakt == null) {
+            trakt = new SgTrakt(context).setApiKey(BuildConfig.TRAKT_API_KEY);
         }
-
-        return sTrakt;
+        return trakt;
     }
 
     /**
@@ -156,15 +206,15 @@ public final class ServiceUtils {
             return null;
         }
 
-        if (sTraktWithAuth == null) {
-            sTraktWithAuth = new Trakt();
-            sTraktWithAuth.setApiKey(context.getResources().getString(R.string.trakt_apikey));
+        if (traktWithAuth == null) {
+            Trakt trakt = new SgTrakt(context).setApiKey(BuildConfig.TRAKT_API_KEY);
             final String username = TraktCredentials.get(context).getUsername();
             final String password = TraktCredentials.get(context).getPassword();
-            sTraktWithAuth.setAuthentication(username, password);
+            trakt.setAuthentication(username, password);
+            traktWithAuth = trakt;
         }
 
-        return sTraktWithAuth;
+        return traktWithAuth;
     }
 
     /**

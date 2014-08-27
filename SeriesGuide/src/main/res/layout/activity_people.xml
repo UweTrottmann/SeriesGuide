@@ -19,7 +19,5 @@
     android:id="@+id/containerPeople"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/large_padding"
-    android:layout_marginRight="@dimen/default_padding"
     tools:context="com.battlelancer.seriesguide.ui.PeopleActivity"
     tools:ignore="MergeRootFrame" />

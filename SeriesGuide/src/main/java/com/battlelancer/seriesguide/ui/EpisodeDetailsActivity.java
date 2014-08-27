@@ -177,12 +177,6 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         tabs.setCustomTabView(R.layout.tabstrip_item, R.id.textViewTabStripItem);
         tabs.setSelectedIndicatorColors(getResources().getColor(
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorAccent)));
-        tabs.setDividerColors(Utils.setColorAlpha(getResources().getColor(
-                        Utils.resolveAttributeToResourceId(getTheme(),
-                                R.attr.colorTabStripUnderline)
-                ),
-                0x26
-        ));
         tabs.setBottomBorderColor(Utils.setColorAlpha(getResources().getColor(
                         Utils.resolveAttributeToResourceId(getTheme(),
                                 R.attr.colorTabStripUnderline)
@@ -239,7 +233,6 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
                         Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(upIntent);
             }
-            overridePendingTransition(R.anim.fade_in, R.anim.slide_right_exit);
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -86,12 +86,12 @@ public class EpisodeStreamAdapter extends SectionedStreamAdapter {
         if (activity.action == ActivityAction.Watching) {
             timestamp = getContext().getString(R.string.now);
             holder.timestamp.setTextAppearance(getContext(),
-                    R.style.TextAppearance_Small_Highlight_Red);
+                    R.style.TextAppearance_Caption_Red);
         } else {
             timestamp = DateUtils.getRelativeTimeSpanString(
                     activity.timestamp.getTime(), System.currentTimeMillis(),
                     DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL);
-            holder.timestamp.setTextAppearance(getContext(), R.style.TextAppearance_Small_Dim);
+            holder.timestamp.setTextAppearance(getContext(), R.style.TextAppearance_Caption_Dim);
         }
         holder.timestamp.setText(timestamp);
 

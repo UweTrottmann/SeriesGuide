@@ -16,8 +16,10 @@
 
 package com.battlelancer.seriesguide.extensions;
 
+import android.annotation.TargetApi;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,10 +72,11 @@ public class EpisodeActionsHelper {
         }
 
         // link to extensions configuration
-        TextView configureView = (TextView) layoutInflater.inflate(R.layout.item_action,
+        TextView configureView = (TextView) layoutInflater.inflate(R.layout.item_action_add,
                 actionsContainer, false);
         configureView.setText(R.string.action_extensions_configure);
         configureView.setOnClickListener(new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ExtensionsConfigurationActivity.class);

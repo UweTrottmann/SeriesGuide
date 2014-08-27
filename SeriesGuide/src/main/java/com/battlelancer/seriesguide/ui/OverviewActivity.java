@@ -36,7 +36,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.ShortcutUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -246,29 +245,9 @@ public class OverviewActivity extends BaseNavDrawerActivity {
             Intent upIntent = new Intent(this, ShowsActivity.class);
             upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(upIntent);
-            overridePendingTransition(R.anim.fade_in, R.anim.slide_right_exit);
             return true;
         } else if (itemId == R.id.menu_overview_search) {
             onSearchRequested();
-            return true;
-        } else if (itemId == R.id.menu_overview_add_to_homescreen) {
-            if (!Utils.hasAccessToX(this)) {
-                Utils.advertiseSubscription(this);
-                return true;
-            }
-
-            // Create the shortcut
-            final Series show = DBUtils.getShow(this, mShowId);
-            String title = show.getTitle();
-            String poster = show.getPoster();
-            ShortcutUtils.createShortcut(this, title, poster, mShowId);
-
-            // drop to home screen
-            startActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).setFlags(
-                    Intent.FLAG_ACTIVITY_NEW_TASK));
-
-            // Analytics
-            fireTrackerEvent("Add to Homescreen");
             return true;
         }
         return super.onOptionsItemSelected(item);

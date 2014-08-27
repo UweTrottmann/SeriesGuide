@@ -469,6 +469,7 @@ public class EpisodeTools {
                     if (show.moveToFirst() && show.getInt(1) == mEpisodeTvdbId) {
                         if (mSeason == 0) {
                             // keep last watched (= this episode) if we got a special
+                            show.close();
                             return -1;
                         }
                         lastWatchedId = 0; // re-set if we don't find one

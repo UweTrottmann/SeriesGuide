@@ -5,6 +5,48 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 17 *(2014-08-27)*
+-----------------------------
+
+* Design updates, moving towards Material Design language.
+* Access trakt and TMDb over a secure connection (HTTPS).
+
+#### 17 *(2014-08-27)*
+
+* TWEAK Restore larger nav drawer items on tablets. Also increase people tile size.
+
+#### 17-beta5 *(2014-08-25)*
+
+* FIX Crash due to Android L developer preview bug. Temporarily repackage okio and okhttp dependencies. See https://github.com/square/okhttp/issues/967.
+
+#### 17-beta4 *(2014-08-24)*
+
+* TWEAK Pressing back when third-party app linked to show or episode returns to third-party app (see https://github.com/UweTrottmann/SeriesGuide/wiki/Extension-API).
+* TWEAK Accept stale images when offline. This should improve images displaying if offline for longer periods of time.
+* FIX Potential fix for image cache getting corrupted. Also, images are now exclusively cached on internal storage (avoids external storage format issues).
+* FIX Small UI fixes.
+* NOTICE Latest translations from crowdin.
+
+#### 17-beta3 *(2014-08-15)*
+
+* TWEAK Remove show dialog opens without delay.
+* FIX Crash when authenticating with tvtag.
+* FIX Discard old list widget data only after query for new data has finished.
+
+#### 17-beta2 *(2014-08-13)*
+
+* TWEAK Use platform activity animations to better fit in with apps for that version of Android.
+* TWEAK Large episode actions in overview, larger touch area for menu buttons on shows and movies, star button on shows.
+* TWEAK Display interim results when calculating total time of watched episodes for many shows.
+* TWEAK Download movie posters over HTTPS, use HTTPS when talking to trakt.
+* TWEAK Cache TVDb and TMDb requests (e.g. search results, biography, movie details).
+* NOTICE Latest translations from crowdin.
+
+#### 17-beta1 *(2014-08-06)*
+
+* TWEAK Design updates, moving towards Material Design language.
+* TWEAK Show actions are embedded for easier access.
+
 Version 16 *(2014-07-28)*
 -----------------------------
 

@@ -12,7 +12,7 @@
 
     <Button
         android:id="@+id/buttonShowSearch"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Small.Highlight"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Blue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/inline_padding"

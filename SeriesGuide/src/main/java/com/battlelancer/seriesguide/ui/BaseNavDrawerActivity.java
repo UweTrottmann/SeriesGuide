@@ -34,7 +34,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Utils;
-import java.util.Locale;
 
 /**
  * Adds onto {@link BaseActivity} by attaching a navigation drawer.
@@ -58,9 +57,11 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
     public static final int MENU_ITEM_STATS_POSITION = 3;
 
-    public static final int MENU_ITEM_SETTINGS_POSITION = 4;
+    // DIVIDER IN BETWEEN HERE
 
-    public static final int MENU_ITEM_HELP_POSITION = 5;
+    public static final int MENU_ITEM_SETTINGS_POSITION = 5;
+
+    public static final int MENU_ITEM_HELP_POSITION = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,12 +100,11 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableMovie)));
         drawerAdapter.add(new DrawerItem(getString(R.string.statistics),
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableStats)));
-        drawerAdapter.add(new DrawerItemSecondary(getString(R.string.preferences).toUpperCase(
-                Locale.getDefault()),
+        drawerAdapter.add(new DrawerItemDivider());
+        drawerAdapter.add(new DrawerItem(getString(R.string.preferences),
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableSettings)));
-        drawerAdapter.add(
-                new DrawerItemSecondary(getString(R.string.help).toUpperCase(Locale.getDefault()),
-                        Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableHelp)));
+        drawerAdapter.add(new DrawerItem(getString(R.string.help),
+                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableHelp)));
 
         mDrawerList.setAdapter(drawerAdapter);
         mDrawerList.setOnItemClickListener(this);
@@ -192,7 +192,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         }
 
         startActivity(launchIntent);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        overridePendingTransition(R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg);
     }
 
     /**
@@ -246,14 +246,17 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         }
     }
 
-    private class DrawerItemSecondary extends DrawerItem {
+    private class DrawerItemDivider extends DrawerItem {
 
-        public DrawerItemSecondary(String title, int iconRes) {
-            super(title, iconRes);
+        public DrawerItemDivider() {
+            super(null, 0);
         }
     }
 
     public class DrawerAdapter extends ArrayAdapter<Object> {
+
+        private static final int VIEW_TYPE_ITEM = 0;
+        private static final int VIEW_TYPE_DIVIDER = 1;
 
         public DrawerAdapter(Context context) {
             super(context, 0);
@@ -261,7 +264,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
         @Override
         public int getItemViewType(int position) {
-            return getItem(position) instanceof DrawerItemSecondary ? 1 : 0;
+            return getItem(position) instanceof DrawerItemDivider ? 1 : 0;
         }
 
         @Override
@@ -272,15 +275,16 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         public View getView(int position, View convertView, ViewGroup parent) {
             Object item = getItem(position);
 
+            if (getItemViewType(position) == VIEW_TYPE_DIVIDER) {
+                convertView = LayoutInflater.from(getContext()).inflate(
+                        R.layout.drawer_item_divider, parent, false);
+                return convertView;
+            }
+
             ViewHolder holder;
             if (convertView == null) {
-                if (item instanceof DrawerItemSecondary) {
-                    convertView = LayoutInflater.from(getContext()).inflate(
-                            R.layout.drawer_item_secondary, parent, false);
-                } else {
-                    convertView = LayoutInflater.from(getContext()).inflate(
-                            R.layout.drawer_item, parent, false);
-                }
+                convertView = LayoutInflater.from(getContext()).inflate(
+                        R.layout.drawer_item, parent, false);
                 holder = new ViewHolder();
                 holder.attach(convertView);
                 convertView.setTag(holder);

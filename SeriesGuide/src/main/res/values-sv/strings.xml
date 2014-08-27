@@ -36,6 +36,7 @@
   <string name="onlyx">Endast tillgänglig med X Prenumeration</string>
   <string name="add_empty">Det finns inga program här.</string>
   <string name="people_empty">Nobody here?! Touch to try again.</string>
+  <string name="share">Share</string>
   <string name="share_show">Dela serie</string>
   <string name="share_episode">Dela avsnitt</string>
   <string name="share_movie">Dela film</string>
@@ -145,8 +146,8 @@
   <string name="mark_all">Sett alla</string>
   <string name="unmark_all">Inga sedda</string>
   <string name="mark_untilhere">Sett alla sända avsnitt</string>
-  <string name="collect">Hämtat avsnitt</string>
-  <string name="uncollect">Ännu ej hämtat avsnitt</string>
+  <string name="collect">Collected</string>
+  <string name="uncollect">Not collected</string>
   <string name="collect_all">Samla alla</string>
   <string name="uncollect_all">Hämtat ingen</string>
   <string name="action_skip">Hoppa över</string>
@@ -161,15 +162,15 @@
   <string name="action_collection_added">Tillagd i samlingen</string>
   <string name="action_collection_removed">Borttagen från samlingen</string>
   <string name="action_watched">Sett</string>
-  <string name="action_unwatched">Ännu inte sett</string>
+  <string name="action_unwatched">Not watched</string>
   <string name="confirm_delete">Vill du verkligen ta bort %s?</string>
   <string name="delete_has_list_items">Kan\kan inte följa, ta bort %s från alla listor först.</string>
   <string name="delete_error">Det gick inte att ta bort program. Försök igen senare.</string>
   <string name="delete_show">Ta bort</string>
   <string name="dontdelete_show">Ta inte bort</string>
   <string name="no_nextepisode">Inga ytterligare avsnitt hittade</string>
-  <string name="context_favorite">Lägg till som favorit</string>
-  <string name="context_unfavorite">Ta bort från favoriter</string>
+  <string name="context_favorite">Favorite</string>
+  <string name="context_unfavorite">No favorite</string>
   <string name="favorited">Lade till som favorit</string>
   <string name="unfavorited">Tog bort som favorit</string>
   <string name="context_hide">Dölj</string>
@@ -438,7 +439,7 @@
   <string name="subscription_activated">Du prenumerar nu på X-funktioner.</string>
   <string name="subscription_expired">Prenumerationen har gått ut</string>
   <string name="subscription_expired_details">Dina X-funktioners prenumeration har gått ut.</string>
-  <string name="add_to_homescreen">Lägg till på hemskärmen </string>
+  <string name="add_to_homescreen">Shortcut</string>
   <string name="search_within_show">Sök inom %s</string>
   <string name="web_search">Webbsökning</string>
   <string name="extensions">Tillägg</string>

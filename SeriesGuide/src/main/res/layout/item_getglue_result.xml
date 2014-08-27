@@ -10,14 +10,14 @@
         android:id="@+id/textViewGetGlueShowTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.Small"
+        android:textAppearance="@style/TextAppearance.Body"
         tools:text="Homeland" />
 
     <TextView
         android:id="@+id/textViewGetGlueShowId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.Small.Dim"
+        android:textAppearance="@style/TextAppearance.Body.Dim"
         tools:text="tv_shows/homeland" />
 
 </LinearLayout>

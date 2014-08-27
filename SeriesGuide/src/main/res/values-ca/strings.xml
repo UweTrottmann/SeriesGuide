@@ -35,6 +35,7 @@
   <string name="onlyx">Només disponible amb subscripció X</string>
   <string name="add_empty">Aquí no hi ha series.</string>
   <string name="people_empty">Nobody here?! Touch to try again.</string>
+  <string name="share">Share</string>
   <string name="share_show">Comparteix la serie</string>
   <string name="share_episode">Comparteix l\'episodi</string>
   <string name="share_movie">Comparteix la pel·lícula</string>
@@ -144,8 +145,8 @@
   <string name="mark_all">Tots vists</string>
   <string name="unmark_all">Cap episodi vist</string>
   <string name="mark_untilhere">Vists tots els episodis estrenats</string>
-  <string name="collect">Episodis col·leccionats</string>
-  <string name="uncollect">No hi ha col·lecció d\'episodis</string>
+  <string name="collect">Collected</string>
+  <string name="uncollect">Not collected</string>
   <string name="collect_all">Tots recopilats</string>
   <string name="uncollect_all">Cap recopilat</string>
   <string name="action_skip">Omet</string>
@@ -160,15 +161,15 @@
   <string name="action_collection_added">Afegir a la col·lecció</string>
   <string name="action_collection_removed">Eliminar de la col·ecció</string>
   <string name="action_watched">Vist</string>
-  <string name="action_unwatched">Encara per veure</string>
+  <string name="action_unwatched">Not watched</string>
   <string name="confirm_delete">Realment vols eliminar %s?</string>
   <string name="delete_has_list_items">No es pot realitzar. Treu els %s de totes les llistes primer.</string>
   <string name="delete_error">No s\'ha pogut esborrar la sèrie. Intenta-ho més tard</string>
   <string name="delete_show">Elimina</string>
   <string name="dontdelete_show">No eliminis</string>
   <string name="no_nextepisode">cap episodi trobat</string>
-  <string name="context_favorite">Afageix a favorits</string>
-  <string name="context_unfavorite">Elimina de favorits</string>
+  <string name="context_favorite">Favorite</string>
+  <string name="context_unfavorite">No favorite</string>
   <string name="favorited">Afegit a favorits</string>
   <string name="unfavorited">Esborrat de favorits</string>
   <string name="context_hide">Ocult</string>
@@ -437,7 +438,7 @@
   <string name="subscription_activated">You are now subscribed to X features.</string>
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your X features subscription has expired.</string>
-  <string name="add_to_homescreen">Add to Home screen</string>
+  <string name="add_to_homescreen">Shortcut</string>
   <string name="search_within_show">Search within %s</string>
   <string name="web_search">Web search</string>
   <string name="extensions">Extensions</string>

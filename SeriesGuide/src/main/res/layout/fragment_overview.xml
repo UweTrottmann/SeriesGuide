@@ -4,7 +4,8 @@
     android:id="@+id/layout_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true">
+    android:animateLayoutChanges="true"
+    tools:context="com.battlelancer.seriesguide.ui.OverviewFragment">
 
     <ImageView
         android:id="@+id/background"
@@ -31,15 +32,17 @@
 
         <LinearLayout
             android:id="@+id/overview_container"
-            style="@style/DefaultPadding.Page"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/large_padding"
             android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/containerOverviewShow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginRight="@dimen/large_padding"
                 android:orientation="horizontal">
 
                 <RelativeLayout
@@ -57,7 +60,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
-                        android:textAppearance="@style/TextAppearance.Small"
+                        android:textAppearance="@style/TextAppearance.Body"
                         tools:text="@string/show_isalive" />
 
                     <TextView
@@ -67,7 +70,7 @@
                         android:layout_below="@id/showStatus"
                         android:layout_marginLeft="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
-                        android:textAppearance="@style/TextAppearance.Small"
+                        android:textAppearance="@style/TextAppearance.Body"
                         android:textIsSelectable="true"
                         tools:text="Tue 5:00 AM on CBS" />
                 </RelativeLayout>
@@ -83,12 +86,6 @@
                     android:padding="10dp"
                     android:src="@drawable/ic_action_star_0" />
             </LinearLayout>
-
-            <View
-                android:id="@+id/spacerOverviewShow"
-                android:layout_width="match_parent"
-                android:layout_height="8dp"
-                android:visibility="gone" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -110,7 +107,11 @@
                     <FrameLayout
                         android:id="@+id/episode_primary_container"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/imagecontainer_height"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/large_padding"
+                        android:layout_marginRight="@dimen/large_padding"
+                        android:paddingBottom="6dp"
+                        android:background="?attr/drawableCardBackground"
                         android:foreground="?attr/custom_list_selector">
 
                         <ImageView
@@ -125,7 +126,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
                             android:background="?attr/drawableBackgroundGradient"
-                            android:paddingBottom="@dimen/default_padding"
+                            android:paddingBottom="5dp"
                             android:paddingLeft="@dimen/default_padding"
                             android:paddingRight="@dimen/default_padding"
                             android:paddingTop="@dimen/inline_padding">
@@ -136,7 +137,8 @@
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
                                 android:maxLines="2"
-                                android:textAppearance="@style/TextAppearance.Large.Light" />
+                                tools:text="Episode Title Of Episode"
+                                android:textAppearance="@style/TextAppearance.Title"/>
 
                             <TextView
                                 android:id="@+id/episodeTime"
@@ -144,8 +146,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/episodeTitle"
                                 android:layout_marginRight="@dimen/default_padding"
+                                tools:text="OCT 15, 2013 (TUE)"
                                 android:textAllCaps="true"
-                                android:textAppearance="@style/TextAppearance.Small" />
+                                android:textAppearance="@style/TextAppearance.Caption" />
 
                             <TextView
                                 android:id="@+id/episodeInfo"
@@ -155,17 +158,11 @@
                                 android:layout_toRightOf="@+id/episodeTime"
                                 android:singleLine="true"
                                 android:ellipsize="marquee"
+                                tools:text="Season 3 Episode 3 (51)"
                                 android:textAllCaps="true"
-                                android:textAppearance="@style/TextAppearance.Small.Dim" />
+                                android:textAppearance="@style/TextAppearance.Caption.Dim" />
                         </RelativeLayout>
                     </FrameLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="?attr/colorAccent" />
-
-                    <include layout="@layout/buttonbar" />
 
                     <LinearLayout
                         android:id="@+id/episode_meta_container"
@@ -173,46 +170,81 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <include layout="@layout/ratingbar" />
+                        <include layout="@layout/buttons_episode" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="@dimen/large_padding"
+                            android:layout_marginRight="@dimen/large_padding"
+                            android:layout_marginBottom="@dimen/large_padding"
+                            android:background="?attr/colorDivider" />
 
                         <TextView
                             android:id="@+id/TextViewEpisodeDescription"
-                            style="@style/DefaultPadding.Blocks.WithBottomMargin.FlowText"
+                            style="@style/Block.FlowText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="@style/TextAppearance.Light"
+                            android:layout_marginBottom="@dimen/large_padding"
+                            tools:text="This is a sample description of what happens in this episode. A lot."
+                            android:textAppearance="@style/TextAppearance.Body"
                             android:textIsSelectable="true" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="@dimen/large_padding"
+                            android:layout_marginRight="@dimen/large_padding"
+                            android:background="?attr/colorDivider" />
+
+                        <include layout="@layout/ratingbar" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="@dimen/large_padding"
+                            android:layout_marginRight="@dimen/large_padding"
+                            android:background="?attr/colorDivider" />
 
                         <TextView
                             android:id="@+id/labelGuestStars"
-                            style="@style/DefaultPadding.Blocks.WithTopMargin"
+                            style="@style/Block.WithTopMargin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/episode_gueststars"
-                            android:textAppearance="@style/TextAppearance.Small.Label" />
+                            android:textAppearance="@style/TextAppearance.Body.Bold" />
 
                         <TextView
                             android:id="@+id/TextViewEpisodeGuestStars"
-                            style="@style/DefaultPadding.Blocks.WithBottomMargin"
+                            style="@style/Block.FlowText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="@style/TextAppearance.Light"
+                            android:textAppearance="@style/TextAppearance.Body"
                             android:textIsSelectable="true" />
 
                         <TextView
                             android:id="@+id/labelDvd"
-                            style="@style/DefaultPadding.Blocks.WithTopMargin"
+                            style="@style/Block.WithTopMargin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/episode_dvdnumber"
-                            android:textAppearance="@style/TextAppearance.Small.Label" />
+                            android:textAppearance="@style/TextAppearance.Body.Bold" />
 
                         <TextView
                             android:id="@+id/textViewEpisodeDVDnumber"
-                            style="@style/DefaultPadding.Blocks.WithBottomMargin"
+                            style="@style/Block"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="@style/TextAppearance.Light" />
+                            android:textAppearance="@style/TextAppearance.Body" />
+
+                        <View
+                            android:id="@+id/dividerHorizontalOverviewEpisodeMeta"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="@dimen/large_padding"
+                            android:layout_marginRight="@dimen/large_padding"
+                            android:layout_marginTop="@dimen/large_padding"
+                            android:background="?attr/colorDivider" />
 
                         <include
                             layout="@layout/buttons_services"

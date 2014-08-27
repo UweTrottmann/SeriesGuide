@@ -12,8 +12,7 @@
         android:layout_marginLeft="@dimen/default_padding"
         android:layout_toLeftOf="@+id/textViewSeasonProgress"
         android:paddingTop="@dimen/default_padding"
-
-        android:textAppearance="@style/TextAppearance.Medium.Light"
+        android:textAppearance="@style/TextAppearance.Subhead"
         tools:text="@string/season_number" />
 
     <ImageView
@@ -35,7 +34,8 @@
         android:layout_toLeftOf="@id/imageViewContextMenu"
         android:paddingTop="@dimen/default_padding"
         android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance.Medium.Light.Dim" />
+        tools:text="3/24"
+        android:textAppearance="@style/TextAppearance.Subhead.Dim" />
 
     <ProgressBar
         android:id="@+id/progressBarSeason"
@@ -66,7 +66,7 @@
         android:layout_toLeftOf="@id/imageViewContextMenu"
         android:layout_toRightOf="@id/imageViewSeasonSkipped"
         android:paddingBottom="@dimen/default_padding"
-        android:textAppearance="@style/TextAppearance.XSmall"
+        android:textAppearance="@style/TextAppearance.Caption.Narrow"
         tools:text="10 episodes not watched yet" />
 
 </RelativeLayout>

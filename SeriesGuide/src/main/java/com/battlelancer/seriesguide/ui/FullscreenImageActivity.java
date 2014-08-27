@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.app.ActionBar;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
@@ -90,25 +89,19 @@ public class FullscreenImageActivity extends FragmentActivity {
             ServiceUtils.getPicasso(this).load(imagePath).into(mContentView);
         } else {
             // load from network or external cache, typically for episode images
-            Picasso picasso = ServiceUtils.getExternalPicasso(this);
-            if (picasso == null) {
-                mContentView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                mContentView.setImageResource(R.drawable.ic_image_missing);
-            } else {
-                picasso.load(TheTVDB.buildScreenshotUrl(imagePath))
-                        .error(R.drawable.ic_image_missing)
-                        .into(mContentView, new Callback() {
-                            @Override
-                            public void onSuccess() {
-                                mContentView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                            }
+            ServiceUtils.getPicasso(this).load(TheTVDB.buildScreenshotUrl(imagePath))
+                    .error(R.drawable.ic_image_missing)
+                    .into(mContentView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            mContentView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                        }
 
-                            @Override
-                            public void onError() {
-                                mContentView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                            }
-                        });
-            }
+                        @Override
+                        public void onError() {
+                            mContentView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        }
+                    });
         }
 
         // Set up an instance of SystemUiHider to control the system UI for
@@ -137,14 +130,11 @@ public class FullscreenImageActivity extends FragmentActivity {
         super.onPause();
 
         if (isFinishing()) {
-            Picasso picasso = ServiceUtils.getExternalPicasso(this);
-            if (picasso != null) {
-                // Always cancel the request here, this is safe to call even if the image has been loaded.
-                // This ensures that the anonymous callback we have does not prevent the activity from
-                // being garbage collected. It also prevents our callback from getting invoked even after the
-                // activity has finished.
-                picasso.cancelRequest(mContentView);
-            }
+            // Always cancel the request here, this is safe to call even if the image has been loaded.
+            // This ensures that the anonymous callback we have does not prevent the activity from
+            // being garbage collected. It also prevents our callback from getting invoked even after the
+            // activity has finished.
+            ServiceUtils.getPicasso(this).cancelRequest(mContentView);
         }
     }
 
@@ -157,12 +147,6 @@ public class FullscreenImageActivity extends FragmentActivity {
         mContentView.setImageDrawable(null);
         mContentView = null;
         super.onDetachedFromWindow();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.fade_in, R.anim.slide_right_exit);
     }
 
     @Override

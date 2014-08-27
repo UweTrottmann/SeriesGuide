@@ -1,6 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'crashlytics'
 
+def loadStringPropertyOrPlaceholder(String name) {
+    return rootProject.hasProperty(name) ? rootProject.property(name) : "MISSING"
+}
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -9,6 +13,16 @@ android {
         minSdkVersion 15
         targetSdkVersion 19
         testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
+
+        buildConfigField("String", "TVDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TVDB_API_KEY")}\"")
+        buildConfigField("String", "TMDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TMDB_API_KEY")}\"")
+        buildConfigField("String", "TRAKT_API_KEY", "\"${loadStringPropertyOrPlaceholder("TRAKT_API_KEY")}\"")
+        buildConfigField("String", "TVTAG_CLIENT_ID", "\"${loadStringPropertyOrPlaceholder("TVTAG_CLIENT_ID")}\"")
+        buildConfigField("String", "TVTAG_CLIENT_SECRET", "\"${loadStringPropertyOrPlaceholder("TVTAG_CLIENT_SECRET")}\"")
+        buildConfigField("String", "IAP_KEY_A", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_A")}\"")
+        buildConfigField("String", "IAP_KEY_B", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_B")}\"")
+        buildConfigField("String", "IAP_KEY_C", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_C")}\"")
+        buildConfigField("String", "IAP_KEY_D", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_D")}\"")
     }
 
     compileOptions {
@@ -39,13 +53,23 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('release.keystore')
+            if(rootProject.file('keystore.properties').exists()) {
+                def props = new Properties()
+                props.load(new FileInputStream(rootProject.file('keystore.properties')))
+
+                storeFile = file(props['storeFile'])
+                storePassword = props['storePassword']
+                keyAlias = props['keyAlias']
+                keyPassword = props['keyPassword']
+            }
         }
     }
 
     buildTypes {
         release {
-            signingConfig signingConfigs.release
+            if(rootProject.file('keystore.properties').exists()) {
+                signingConfig signingConfigs.release
+            }
         }
     }
 }
@@ -55,25 +79,26 @@ dependencies {
     compile project(':libraries:androidutils')
     compile project(':libraries:drag-sort-listview')
     compile project(':libraries:stickygridheaders')
-    compile rootProject.ext.libraries.okhttp
-    compile rootProject.ext.libraries.okhttpurlconnection
     compile rootProject.ext.libraries.supportv4
     compile 'com.github.castorflex.smoothprogressbar:library:0.5.1'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
-    compile 'com.google.android.apps.dashclock:dashclock-api:2.0.+'
-    compile 'com.jakewharton:butterknife:5.1.1'
-    compile 'com.jakewharton.timber:timber:2.4.+'
-    compile 'com.readystatesoftware.systembartint:systembartint:+'
-    compile 'com.squareup.picasso:picasso:2.2.0'
-    compile 'com.squareup.retrofit:retrofit:1.6.1'
+    compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
+    compile 'com.jakewharton:butterknife:5.1.2'
+    compile 'com.jakewharton.timber:timber:2.4.1'
+    compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
+    compile ('com.squareup.retrofit:retrofit:1.6.1') {
+        exclude group: 'com.squareup.okhttp'
+    }
     compile 'com.squareup:tape:1.2.2'
-    compile 'com.uwetrottmann:getglue-java:1.3.+'
-    compile 'com.uwetrottmann:tmdb-java:0.6.+'
-    compile 'com.uwetrottmann:trakt-java:3.2.+'
+    compile ('com.uwetrottmann:getglue-java:1.4.0') {
+        exclude group: 'com.squareup.okhttp'
+    }
+    compile 'com.uwetrottmann:tmdb-java:0.7.0'
+    compile 'com.uwetrottmann:trakt-java:3.3.1'
     compile 'de.greenrobot:eventbus:2.2.1'
 
     // Google Play Services
-    compile 'com.google.android.gms:play-services:4.4.52'
+    compile 'com.google.android.gms:play-services:5.0.89'
 
     // App Engine
     compile ('com.google.api-client:google-api-client-android:1.18.0-rc') {
@@ -99,16 +124,5 @@ dependencies {
     }
 
     // Crashlytics
-    compile 'com.crashlytics.android:crashlytics:1.+'
-}
-
-// get signing config from gradle.properties file
-if (project.hasProperty('storePassword')
-        && project.hasProperty('keyAlias')
-        && project.hasProperty('keyPassword')) {
-    android.signingConfigs.release.storePassword = storePassword
-    android.signingConfigs.release.keyAlias = keyAlias
-    android.signingConfigs.release.keyPassword = keyPassword
-} else {
-    android.buildTypes.release.signingConfig = null
+    compile 'com.crashlytics.android:crashlytics:1.1.11'
 }

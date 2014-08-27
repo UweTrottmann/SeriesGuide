@@ -40,8 +40,7 @@ import android.widget.TextView;
  * is being used for.
  * <p>
  * The colors can be customized in two ways. The first and simplest is to provide an array of
- * colors
- * via {@link #setSelectedIndicatorColors(int...)} and {@link #setDividerColors(int...)}. The
+ * colors via {@link #setSelectedIndicatorColors(int...)}. The
  * alternative is via the {@link com.battlelancer.seriesguide.widgets.SlidingTabLayout.TabColorizer}
  * interface which provides you complete control over
  * which color is used for any individual position.
@@ -65,11 +64,6 @@ public class SlidingTabLayout extends HorizontalScrollView {
          * @return return the color of the indicator used when {@code position} is selected.
          */
         int getIndicatorColor(int position);
-
-        /**
-         * @return return the color of the divider drawn to the right of {@code position}.
-         */
-        int getDividerColor(int position);
     }
 
     private static final int TITLE_OFFSET_DIPS = 24;
@@ -129,14 +123,6 @@ public class SlidingTabLayout extends HorizontalScrollView {
      */
     public void setSelectedIndicatorColors(int... colors) {
         mTabStrip.setSelectedIndicatorColors(colors);
-    }
-
-    /**
-     * Sets the colors to be used for tab dividers. These colors are treated as a circular array.
-     * Providing one color will mean that all tabs are indicated with the same color.
-     */
-    public void setDividerColors(int... colors) {
-        mTabStrip.setDividerColors(colors);
     }
 
     /**

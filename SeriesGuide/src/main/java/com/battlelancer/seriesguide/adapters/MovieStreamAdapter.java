@@ -78,14 +78,14 @@ public class MovieStreamAdapter extends SectionedStreamAdapter {
         holder.username.setText(activity.user.username);
         ServiceUtils.getPicasso(getContext()).load(activity.user.avatar).into(holder.avatar);
 
-        holder.timestamp.setTextAppearance(getContext(), R.style.TextAppearance_Small_Dim);
+        holder.timestamp.setTextAppearance(getContext(), R.style.TextAppearance_Caption_Dim);
 
         CharSequence timestamp;
         // friend is watching something right now?
         if (activity.action == ActivityAction.Watching) {
             timestamp = getContext().getString(R.string.now);
             holder.timestamp.setTextAppearance(getContext(),
-                    R.style.TextAppearance_Small_Highlight_Red);
+                    R.style.TextAppearance_Caption_Red);
         } else {
             timestamp = DateUtils.getRelativeTimeSpanString(
                     activity.timestamp.getTime(), System.currentTimeMillis(),

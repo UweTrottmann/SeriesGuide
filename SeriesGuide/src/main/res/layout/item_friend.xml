@@ -2,14 +2,14 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="103dp"
+    android:background="?attr/drawableCardBackground"
     android:foreground="?attr/custom_list_selector">
 
     <RelativeLayout
         android:id="@+id/friend_root"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/drawableCardBackground">
+        android:layout_height="100dp">
 
         <ImageView
             android:id="@+id/imageViewFriendPoster"
@@ -18,52 +18,56 @@
             android:layout_alignParentLeft="true"
             android:contentDescription="@string/description_poster"
             android:scaleType="centerCrop"
-            android:src="@drawable/appwidget_bg" />
+            tools:src="@color/protection_dark" />
 
         <TextView
             android:id="@+id/textViewFriendTimestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_padding"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/inline_padding"
             android:layout_marginRight="@dimen/default_padding"
             android:layout_marginTop="@dimen/inline_padding"
-            android:layout_alignParentRight="true"
             tools:text="11 hours ago"
-            android:textAppearance="@style/TextAppearance.Small.Dim" />
+            android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
         <ImageView
             android:id="@+id/imageViewFriendAvatar"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentBottom="true"
             android:layout_toRightOf="@+id/imageViewFriendPoster"
+            android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/inline_padding"
+            android:layout_marginBottom="@dimen/default_padding"
+            tools:src="@color/protection_dark"
             tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/textViewFriendUsername"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/inline_padding"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="12dp"
             android:layout_toRightOf="@+id/imageViewFriendAvatar"
-            android:layout_toLeftOf="@+id/textViewFriendTimestamp"
+            android:layout_toLeftOf="@+id/imageViewFriendActionType"
             android:ellipsize="end"
             android:maxLines="1"
             tools:text="sgtest"
-            android:textAppearance="@style/TextAppearance.Small.Dim" />
+            android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
         <TextView
             android:id="@+id/textViewFriendShow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageViewFriendAvatar"
+            android:layout_marginTop="@dimen/default_padding"
             android:layout_marginLeft="@dimen/default_padding"
-            android:layout_marginRight="@dimen/default_padding"
-            android:layout_marginTop="@dimen/inline_padding"
+            android:layout_toLeftOf="@+id/textViewFriendTimestamp"
             android:layout_toRightOf="@+id/imageViewFriendPoster"
-            android:ellipsize="end"
-            android:maxLines="1"
+            android:ellipsize="marquee"
+            android:singleLine="true"
             tools:text="Community"
-            android:textAppearance="@style/TextAppearance.Medium.Light" />
+            android:textAppearance="@style/TextAppearance.Subhead" />
 
         <ImageView
             android:id="@+id/imageViewFriendActionType"
@@ -85,11 +89,10 @@
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
             android:layout_toRightOf="@+id/imageViewFriendPoster"
-            android:layout_toLeftOf="@+id/imageViewFriendActionType"
             android:ellipsize="end"
             android:maxLines="1"
             tools:text="5x02 Introcution to Teaching"
-            android:textAppearance="@style/TextAppearance.Small.Light" />
+            android:textAppearance="@style/TextAppearance.Body.Dim" />
 
         <TextView
             android:id="@+id/textViewFriendMore"
@@ -99,11 +102,10 @@
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
             android:layout_toRightOf="@+id/imageViewFriendPoster"
-            android:layout_toLeftOf="@+id/imageViewFriendActionType"
             android:ellipsize="end"
             android:maxLines="1"
             tools:text="5 more"
-            android:textAppearance="@style/TextAppearance.XSmall.Dim" />
+            android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
     </RelativeLayout>
 </FrameLayout>

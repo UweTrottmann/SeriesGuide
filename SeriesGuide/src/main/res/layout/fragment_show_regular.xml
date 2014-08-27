@@ -5,15 +5,17 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        style="@style/DefaultPadding.Page"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/large_padding"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="208dp"
-            android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginTop="@dimen/large_padding"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
             android:background="?attr/drawableCardBackground">
 
             <FrameLayout
@@ -45,8 +47,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/inline_padding"
                 android:layout_toRightOf="@+id/containerShowPoster"
-                android:textAllCaps="true"
-                tools:text="Continuing" />
+                tools:text="Continuing"
+                android:textAppearance="@style/TextAppearance.Title" />
 
             <TextView
                 android:id="@+id/textViewShowReleaseTime"
@@ -55,7 +57,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewShowStatus"
                 android:layout_toRightOf="@+id/containerShowPoster"
-                tools:text="Sat 08:00 PM" />
+                tools:text="Sat 08:00 PM"
+                android:textAppearance="@style/TextAppearance.Title" />
 
             <TextView
                 android:id="@+id/textViewShowNetwork"
@@ -64,7 +67,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewShowReleaseTime"
                 android:layout_toRightOf="@+id/containerShowPoster"
-                tools:text="YouTube" />
+                tools:text="YouTube"
+                android:textAppearance="@style/TextAppearance.Title" />
 
             <TextView
                 android:id="@+id/textViewShowRuntime"
@@ -73,13 +77,47 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewShowNetwork"
                 android:layout_toRightOf="@+id/containerShowPoster"
-                tools:text="60 min" />
+                tools:text="60 min"
+                android:textAppearance="@style/TextAppearance.Title" />
         </RelativeLayout>
+
+        <include layout="@layout/buttons_show" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:background="?attr/colorDivider" />
 
         <include layout="@layout/ratingbar" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginBottom="@dimen/large_padding"
+            android:background="?attr/colorDivider" />
+
         <include layout="@layout/fragment_show_meta" />
 
-        <include layout="@layout/buttons_more" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginTop="@dimen/large_padding"
+            android:background="?attr/colorDivider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:orientation="vertical">
+
+            <include layout="@layout/buttons_more" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

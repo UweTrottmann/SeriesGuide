@@ -30,6 +30,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
+import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.ui.BaseActivity;
@@ -107,7 +108,7 @@ public class GetGlueAuthActivity extends BaseActivity {
         Resources res = getResources();
         try {
             OAuthClientRequest request = com.uwetrottmann.getglue.GetGlue
-                    .getAuthorizationRequest(res.getString(R.string.getglue_client_id),
+                    .getAuthorizationRequest(BuildConfig.TVTAG_CLIENT_ID,
                             GetGlueCheckin.OAUTH_CALLBACK_URL);
             webview.loadUrl(request.getLocationUri());
         } catch (OAuthSystemException e) {
@@ -163,8 +164,8 @@ public class GetGlueAuthActivity extends BaseActivity {
         Timber.d("Building OAuth 2.0 token request...");
         try {
             response = GetGlue.getAccessTokenResponse(
-                    resources.getString(R.string.getglue_client_id),
-                    resources.getString(R.string.getglue_client_secret),
+                    BuildConfig.TVTAG_CLIENT_ID,
+                    BuildConfig.TVTAG_CLIENT_SECRET,
                     GetGlueCheckin.OAUTH_CALLBACK_URL,
                     authCode
             );

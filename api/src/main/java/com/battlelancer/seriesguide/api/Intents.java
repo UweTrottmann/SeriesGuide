@@ -45,9 +45,7 @@ public class Intents {
         return new Intent(ACTION_VIEW_EPISODE)
                 .putExtra(EXTRA_SHOW_TVDBID, showTvdbId)
                 .putExtra(EXTRA_EPISODE_TVDBID, episodeTvdbId)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                .addFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
     }
 
     /**
@@ -60,8 +58,6 @@ public class Intents {
     public static Intent buildViewShowIntent(int showTvdbId) {
         return new Intent(ACTION_VIEW_SHOW)
                 .putExtra(EXTRA_SHOW_TVDBID, showTvdbId)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                .addFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
     }
 }

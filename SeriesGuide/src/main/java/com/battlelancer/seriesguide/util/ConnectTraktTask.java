@@ -21,6 +21,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
@@ -82,7 +83,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         // check validity
         // use a new Trakt instance for testing
         Trakt trakt = new Trakt();
-        trakt.setApiKey(mContext.getResources().getString(R.string.trakt_apikey));
+        trakt.setApiKey(BuildConfig.TRAKT_API_KEY);
         trakt.setAuthentication(username, password);
 
         Response response = null;

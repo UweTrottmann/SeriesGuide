@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/default_padding"
             android:text="@string/backup_legacy_warning"
-            android:textAppearance="@style/TextAppearance.Medium" />
+            android:textAppearance="@style/TextAppearance.Body" />
 
         <TextView
             android:id="@+id/textViewBackupPath"
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/default_padding"
             android:text="@string/backup_path"
-            android:textAppearance="@style/TextAppearance.Small" />
+            android:textAppearance="@style/TextAppearance.Body.Bold" />
 
         <TextView
             android:id="@+id/textViewBackupDatabaseVersion"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/default_padding"
             android:text="@string/backup_version"
-            android:textAppearance="@style/TextAppearance.Small" />
+            android:textAppearance="@style/TextAppearance.Body.Bold" />
 
         <LinearLayout
             android:id="@+id/buttons"

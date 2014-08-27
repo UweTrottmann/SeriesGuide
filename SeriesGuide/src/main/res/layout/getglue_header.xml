@@ -14,8 +14,7 @@
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:text="@string/select_show"
-
-        android:textAppearance="@style/TextAppearance.Large.Light" />
+        android:textAppearance="@style/TextAppearance.Headline" />
 
     <TextView
         android:id="@+id/textViewSelectedShowHeader"
@@ -26,8 +25,7 @@
         android:ellipsize="end"
         android:paddingLeft="@dimen/default_padding"
         android:text="@string/check_into"
-        android:textAllCaps="true"
-        android:textStyle="bold" />
+        android:textAppearance="@style/TextAppearance.Body.Bold" />
 
     <TextView
         android:id="@+id/textViewSelectedShowValue"
@@ -36,7 +34,8 @@
         android:layout_below="@+id/textViewFixGetGlueHeader"
         android:layout_toRightOf="@+id/textViewSelectedShowHeader"
         android:paddingRight="@dimen/default_padding"
-        android:text="@string/no_selection" />
+        android:text="@string/no_selection"
+        android:textAppearance="@style/TextAppearance.Body" />
 
     <include
         android:id="@+id/divider1"

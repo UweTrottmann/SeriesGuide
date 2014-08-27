@@ -24,9 +24,11 @@
         android:id="@+id/listViewPeople"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="@dimen/large_padding"
-        android:paddingBottom="@dimen/large_padding"
+        android:paddingTop="@dimen/default_padding"
+        android:paddingBottom="@dimen/default_padding"
+        android:paddingLeft="@dimen/keyline_minus_16"
         android:listSelector="@color/transparent"
+        android:divider="@color/transparent"
         android:clipToPadding="false" />
 
     <TextView
