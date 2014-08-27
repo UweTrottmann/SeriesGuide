@@ -19,6 +19,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/menu_action_stats_share"
+        android:icon="@drawable/ic_action_share"
+        android:showAsAction="ifRoom"
+        android:title="@string/share" />
+    <item
         android:id="@+id/menu_action_stats_filter_specials"
         android:checkable="true"
         android:title="@string/pref_onlyseasoneps" />
