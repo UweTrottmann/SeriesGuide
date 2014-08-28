@@ -20,6 +20,8 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
@@ -79,7 +81,10 @@ public class EpisodeSearchFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         Intent i = new Intent(getActivity(), EpisodesActivity.class);
         i.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, (int) id);
-        startActivity(i);
+
+        ActivityCompat.startActivity(getActivity(), i,
+                ActivityOptionsCompat.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
+                        .toBundle());
     }
 
     public void onEventMainThread(SearchActivity.SearchQueryEvent event) {

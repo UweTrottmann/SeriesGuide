@@ -11,7 +11,9 @@
         android:layout_height="match_parent"
         android:paddingLeft="@dimen/keyline"
         android:paddingRight="@dimen/keyline"
+        android:dividerHeight="4dp"
         android:fastScrollEnabled="true"
+        android:drawSelectorOnTop="true"
         android:scrollbarStyle="outsideInset" />
 
     <TextView

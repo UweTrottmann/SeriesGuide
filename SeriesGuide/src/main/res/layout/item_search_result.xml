@@ -2,16 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/default_padding">
+    android:layout_height="wrap_content"
+    android:background="?attr/drawableCardBackground"
+    android:padding="@dimen/large_padding">
 
     <ImageView
         android:id="@+id/imageViewWatchedStatus"
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/inline_padding"
-        android:layout_marginTop="@dimen/inline_padding"
         android:src="?attr/drawableWatch" />
 
     <TextView
@@ -19,7 +18,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="@dimen/inline_padding"
         android:layout_marginBottom="@dimen/inline_padding"
         android:layout_toLeftOf="@id/imageViewWatchedStatus"
         tools:text="Homeland"
@@ -40,7 +38,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewEpisodeTitle"
-        android:paddingBottom="@dimen/inline_padding"
         tools:text="...some text that was found to have the given search term in it..."
         android:textAppearance="@style/TextAppearance.Body" />
 
