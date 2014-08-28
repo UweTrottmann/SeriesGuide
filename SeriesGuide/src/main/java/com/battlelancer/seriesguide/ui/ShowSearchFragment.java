@@ -28,6 +28,8 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +37,8 @@ import android.widget.ListView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import de.greenrobot.event.EventBus;
 
@@ -57,6 +61,9 @@ public class ShowSearchFragment extends ListFragment {
 
         adapter = new ShowResultsAdapter(getActivity(), null, 0);
         setListAdapter(adapter);
+
+        // initially display shows with recently released episodes
+        getLoaderManager().initLoader(SearchActivity.SHOWS_LOADER_ID, new Bundle(), searchLoaderCallbacks);
     }
 
     @Override
@@ -97,10 +104,23 @@ public class ShowSearchFragment extends ListFragment {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
             String query = args.getString(SearchManager.QUERY);
-            Uri uri = Uri.withAppendedPath(SeriesGuideContract.Shows.CONTENT_FILTER_URI,
-                    Uri.encode(query));
-
-            return new CursorLoader(getActivity(), uri, SearchQuery.PROJECTION, null, null, null);
+            if (TextUtils.isEmpty(query)) {
+                // empty query selects shows with next episodes before this point in time
+                String customTimeInOneHour = String.valueOf(TimeTools.getCurrentTime(getActivity())
+                        + DateUtils.HOUR_IN_MILLIS);
+                return new CursorLoader(getActivity(), SeriesGuideContract.Shows.CONTENT_URI,
+                        SearchQuery.PROJECTION,
+                        SeriesGuideContract.Shows.NEXTEPISODE + "!='' AND "
+                                + SeriesGuideContract.Shows.HIDDEN + "=0 AND "
+                                + SeriesGuideContract.Shows.NEXTAIRDATEMS + "<?",
+                        new String[] { customTimeInOneHour },
+                        ShowsDistillationSettings.ShowsSortOrder.EPISODE_REVERSE);
+            } else {
+                Uri uri = Uri.withAppendedPath(SeriesGuideContract.Shows.CONTENT_FILTER_URI,
+                        Uri.encode(query));
+                return new CursorLoader(getActivity(), uri, SearchQuery.PROJECTION, null, null,
+                        null);
+            }
         }
 
         @Override

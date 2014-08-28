@@ -14,7 +14,7 @@
         android:dividerHeight="4dp"
         android:fastScrollEnabled="true"
         android:drawSelectorOnTop="true"
-        android:scrollbarStyle="outsideInset" />
+        android:scrollbarStyle="outsideOverlay" />
 
     <TextView
         android:id="@id/android:empty"
