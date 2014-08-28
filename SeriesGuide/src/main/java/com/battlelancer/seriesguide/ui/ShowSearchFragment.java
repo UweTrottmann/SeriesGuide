@@ -62,7 +62,7 @@ public class ShowSearchFragment extends ListFragment {
     public void onStart() {
         super.onStart();
 
-        EventBus.getDefault().register(this);
+        EventBus.getDefault().registerSticky(this);
     }
 
     @Override

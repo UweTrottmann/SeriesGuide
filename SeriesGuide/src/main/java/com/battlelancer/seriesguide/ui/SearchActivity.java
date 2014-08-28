@@ -94,6 +94,7 @@ public class SearchActivity extends BaseNavDrawerActivity {
 
     @Override
     protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
         setIntent(intent);
         handleIntent(intent);
     }
@@ -123,7 +124,7 @@ public class SearchActivity extends BaseNavDrawerActivity {
             }
 
             // post query event to search fragments
-            EventBus.getDefault().post(new SearchQueryEvent(extras));
+            EventBus.getDefault().postSticky(new SearchQueryEvent(extras));
             Utils.trackCustomEvent(this, TAG, "Search action", "Search");
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
             Uri data = intent.getData();
@@ -132,6 +133,14 @@ public class SearchActivity extends BaseNavDrawerActivity {
             Utils.trackCustomEvent(this, TAG, "Search action", "View");
             finish();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // clear any previous search
+        EventBus.getDefault().removeStickyEvent(SearchQueryEvent.class);
     }
 
     @Override
