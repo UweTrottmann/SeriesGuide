@@ -187,15 +187,12 @@ public class ListsFragment extends Fragment implements
                 case 1:
                     // shows
 
-                    // air time and network
-                    String[] values = TimeTools.formatToShowReleaseTimeAndDay(context,
+                    // network, day and time
+                    viewHolder.timeAndNetwork.setText(buildNetworkAndTimeString(context,
                             cursor.getLong(ListItemsQuery.SHOW_OR_EPISODE_RELEASE_TIME),
                             cursor.getString(ListItemsQuery.SHOW_RELEASE_COUNTRY),
-                            cursor.getString(ListItemsQuery.SHOW_RELEASE_DAY));
-                    // network first, then time, one line
-                    viewHolder.timeAndNetwork.setText(cursor
-                            .getString(ListItemsQuery.SHOW_NETWORK) + " / "
-                            + values[1] + " " + values[0]);
+                            cursor.getString(ListItemsQuery.SHOW_RELEASE_DAY),
+                            cursor.getString(ListItemsQuery.SHOW_NETWORK)));
 
                     // next episode info
                     String fieldValue = cursor.getString(ListItemsQuery.SHOW_NEXTTEXT);

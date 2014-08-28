@@ -7,4 +7,6 @@
     <dimen name="widget_text_middle">14sp</dimen>
     <dimen name="widget_text_large">16sp</dimen>
 
+    <dimen name="search_padding_right">200dp</dimen>
+
 </resources>

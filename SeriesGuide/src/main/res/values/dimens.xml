@@ -69,4 +69,6 @@
     <dimen name="icon_large_size">40dp</dimen>
     <dimen name="item_regular_height">56dp</dimen>
 
+    <dimen name="search_padding_right">16dp</dimen>
+
 </resources>

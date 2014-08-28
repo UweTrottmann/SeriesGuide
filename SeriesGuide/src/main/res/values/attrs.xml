@@ -39,7 +39,6 @@
     <attr name="drawableLink" format="reference" />
     <attr name="drawableList" format="reference" />
     <attr name="drawableMovie" format="reference" />
-    <attr name="drawableSearch" format="reference" />
     <attr name="drawableSettings" format="reference" />
     <attr name="drawableShare" format="reference" />
     <attr name="drawableSkip" format="reference" />
