@@ -258,7 +258,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         final String showTitle = show.getTitle();
 
         Bundle args = new Bundle();
-        args.putString(SearchFragment.InitBundle.SHOW_TITLE, showTitle);
+        args.putString(EpisodeSearchFragment.InitBundle.SHOW_TITLE, showTitle);
         startSearch(null, false, args, false);
         return true;
     }

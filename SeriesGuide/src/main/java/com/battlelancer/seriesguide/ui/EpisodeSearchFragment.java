@@ -35,9 +35,9 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 
 /**
- * Displays a list of search results and allows searching for episodes.
+ * Displays episode search results.
  */
-public class SearchFragment extends ListFragment implements LoaderCallbacks<Cursor> {
+public class EpisodeSearchFragment extends ListFragment implements LoaderCallbacks<Cursor> {
 
     private static final int LOADER_ID = R.string.search_hint;
 
@@ -64,7 +64,7 @@ public class SearchFragment extends ListFragment implements LoaderCallbacks<Curs
         mAdapter = new SearchResultsAdapter(getActivity(), null, 0);
         setListAdapter(mAdapter);
 
-        getLoaderManager().initLoader(LOADER_ID, getArguments(), this);
+        //getLoaderManager().initLoader(LOADER_ID, getArguments(), this);
     }
 
     public void onPerformSearch(Bundle args) {

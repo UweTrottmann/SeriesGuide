@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,15 +30,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 
 /**
- * Handles search intents and displays a {@link SearchFragment} when needed or
+ * Handles search intents and displays a {@link EpisodeSearchFragment} when needed or
  * redirects directly to an {@link EpisodeDetailsActivity}.
  */
 public class SearchActivity extends BaseNavDrawerActivity {
 
     private static final String TAG = "Search";
+    private TabStripAdapter tabsAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,12 +49,29 @@ public class SearchActivity extends BaseNavDrawerActivity {
         setContentView(R.layout.activity_search);
         setupNavDrawer();
 
+        setupActionBar();
+
+        setupViews();
+
+        handleIntent(getIntent());
+    }
+
+    private void setupActionBar() {
         final ActionBar actionBar = getActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(R.string.search_hint);
+    }
 
-        handleIntent(getIntent());
+    private void setupViews() {
+        tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this,
+                (ViewPager) findViewById(R.id.pagerSearch),
+                (SlidingTabLayout) findViewById(R.id.tabsSearch));
+
+        tabsAdapter.addTab(R.string.shows, ShowSearchFragment.class, null);
+        tabsAdapter.addTab(R.string.episodes, EpisodeSearchFragment.class, null);
+
+        tabsAdapter.notifyTabsChanged();
     }
 
     @Override
@@ -74,24 +95,25 @@ public class SearchActivity extends BaseNavDrawerActivity {
             // searching within a show?
             Bundle appData = extras.getBundle(SearchManager.APP_DATA);
             if (appData != null) {
-                String showTitle = appData.getString(SearchFragment.InitBundle.SHOW_TITLE);
+                String showTitle = appData.getString(EpisodeSearchFragment.InitBundle.SHOW_TITLE);
                 if (!TextUtils.isEmpty(showTitle)) {
                     actionBar.setTitle(getString(R.string.search_within_show, showTitle));
                 }
             }
 
+            // TODO post search event
             // display results in a search fragment
-            SearchFragment searchFragment = (SearchFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.search_fragment);
-            if (searchFragment == null) {
-                SearchFragment newFragment = new SearchFragment();
-                newFragment.setArguments(extras);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, newFragment).commit();
-            } else {
-                searchFragment.onPerformSearch(extras);
-            }
-            Utils.trackCustomEvent(this, TAG, "Search action", "Search");
+            //SearchFragment searchFragment = (SearchFragment) getSupportFragmentManager()
+            //        .findFragmentById(R.id.search_fragment);
+            //if (searchFragment == null) {
+            //    SearchFragment newFragment = new SearchFragment();
+            //    newFragment.setArguments(extras);
+            //    getSupportFragmentManager().beginTransaction()
+            //            .replace(R.id.content_frame, newFragment).commit();
+            //} else {
+            //    searchFragment.onPerformSearch(extras);
+            //}
+            //Utils.trackCustomEvent(this, TAG, "Search action", "Search");
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
             Uri data = intent.getData();
             String id = data.getLastPathSegment();
