@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="@dimen/keyline"
-        android:paddingRight="@dimen/keyline"
+        android:paddingRight="@dimen/search_padding_right"
         android:dividerHeight="4dp"
         android:fastScrollEnabled="true"
         android:drawSelectorOnTop="true"

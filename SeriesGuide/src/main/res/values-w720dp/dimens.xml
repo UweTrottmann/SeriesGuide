@@ -6,4 +6,6 @@
     <dimen name="buttonbar_button_width">64dp</dimen>
     <dimen name="buttonbar_button_height">56dp</dimen>
 
+    <dimen name="search_padding_right">400dp</dimen>
+
 </resources>
