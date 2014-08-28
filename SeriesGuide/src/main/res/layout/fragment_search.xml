@@ -6,13 +6,13 @@
 
     <ListView
         android:id="@id/android:list"
-        style="@style/DefaultPadding.Page"
+        style="@style/DefaultPadding.List"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="@bool/gridClipToPadding"
-        android:divider="?attr/drawableDivider"
+        android:paddingLeft="@dimen/keyline"
+        android:paddingRight="@dimen/keyline"
         android:fastScrollEnabled="true"
-        android:listSelector="?custom_list_selector" />
+        android:scrollbarStyle="outsideInset" />
 
     <TextView
         android:id="@id/android:empty"

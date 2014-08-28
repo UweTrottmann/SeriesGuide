@@ -60,7 +60,6 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
 import com.battlelancer.seriesguide.util.ShowTools;
-import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
@@ -561,13 +560,11 @@ public class ShowsFragment extends Fragment implements
             }
 
             // network, day and time
-            String[] values = TimeTools.formatToShowReleaseTimeAndDay(context,
+            viewHolder.timeAndNetwork.setText(buildNetworkAndTimeString(context,
                     cursor.getLong(ShowsQuery.RELEASE_TIME),
                     cursor.getString(ShowsQuery.RELEASE_COUNTRY),
-                    cursor.getString(ShowsQuery.RELEASE_DAY));
-            // one line: 'Network / Tue 08:00 PM'
-            viewHolder.timeAndNetwork.setText(cursor.getString(ShowsQuery.NETWORK) + " / "
-                    + values[1] + " " + values[0]);
+                    cursor.getString(ShowsQuery.RELEASE_DAY),
+                    cursor.getString(ShowsQuery.NETWORK)));
 
             // set poster
             Utils.loadPosterThumbnail(context, viewHolder.poster,

@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.TimeTools;
 
 /**
  * Base adapter using the shows_row.xml layout with a ViewHolder.
@@ -60,6 +61,16 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         v.setTag(viewHolder);
 
         return v;
+    }
+
+    /**
+     * Builds a network + release time string for a show formatted like "Network / Tue 08:00 PM".
+     */
+    public static String buildNetworkAndTimeString(Context context, long releaseTime,
+            String releaseCountry, String releaseDay, String network) {
+        String[] values = TimeTools.formatToShowReleaseTimeAndDay(context, releaseTime,
+                releaseCountry, releaseDay);
+        return network + " / " + values[1] + " " + values[0];
     }
 
     public static class ViewHolder {

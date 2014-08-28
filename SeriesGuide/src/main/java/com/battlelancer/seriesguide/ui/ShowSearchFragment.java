@@ -35,6 +35,7 @@ import android.widget.ListView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.util.Utils;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -124,6 +125,21 @@ public class ShowSearchFragment extends ListFragment {
             BaseShowsAdapter.ViewHolder viewHolder = (BaseShowsAdapter.ViewHolder) view.getTag();
 
             viewHolder.name.setText(cursor.getString(SearchQuery.TITLE));
+
+            // favorited label
+            boolean isFavorited = cursor.getInt(SearchQuery.FAVORITE) == 1;
+            viewHolder.favorited.setVisibility(isFavorited ? View.VISIBLE : View.GONE);
+
+            // network, day and time
+            viewHolder.timeAndNetwork.setText(buildNetworkAndTimeString(context,
+                    cursor.getLong(SearchQuery.RELEASE_TIME),
+                    cursor.getString(SearchQuery.RELEASE_COUNTRY),
+                    cursor.getString(SearchQuery.RELEASE_DAY),
+                    cursor.getString(SearchQuery.NETWORK)));
+
+            // poster
+            Utils.loadPosterThumbnail(context, viewHolder.poster,
+                    cursor.getString(SearchQuery.POSTER));
         }
 
         @Override
@@ -141,10 +157,22 @@ public class ShowSearchFragment extends ListFragment {
     private interface SearchQuery {
         String[] PROJECTION = new String[] {
                 SeriesGuideContract.Shows._ID,
-                SeriesGuideContract.Shows.TITLE
+                SeriesGuideContract.Shows.TITLE,
+                SeriesGuideContract.Shows.POSTER,
+                SeriesGuideContract.Shows.FAVORITE,
+                SeriesGuideContract.Shows.AIRSTIME,
+                SeriesGuideContract.Shows.RELEASE_COUNTRY,
+                SeriesGuideContract.Shows.AIRSDAYOFWEEK,
+                SeriesGuideContract.Shows.NETWORK
         };
 
         int ID = 0;
         int TITLE = 1;
+        int POSTER = 2;
+        int FAVORITE = 3;
+        int RELEASE_TIME = 4;
+        int RELEASE_COUNTRY = 5;
+        int RELEASE_DAY = 6;
+        int NETWORK = 7;
     }
 }
