@@ -76,7 +76,7 @@ public class SearchActivity extends BaseNavDrawerActivity {
         final ActionBar actionBar = getActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(R.string.search_hint);
+        actionBar.setTitle(R.string.search);
     }
 
     private void setupViews() {
@@ -150,6 +150,7 @@ public class SearchActivity extends BaseNavDrawerActivity {
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setQueryHint(getString(R.string.search));
         searchView.setIconifiedByDefault(false);
 
         if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
