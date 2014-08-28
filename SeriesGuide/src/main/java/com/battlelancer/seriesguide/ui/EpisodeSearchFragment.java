@@ -33,27 +33,23 @@ import com.battlelancer.seriesguide.adapters.SearchResultsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import de.greenrobot.event.EventBus;
 
 /**
  * Displays episode search results.
  */
-public class EpisodeSearchFragment extends ListFragment implements LoaderCallbacks<Cursor> {
+public class EpisodeSearchFragment extends ListFragment {
 
-    private static final int LOADER_ID = R.string.search_hint;
-
-    private SearchResultsAdapter mAdapter;
-
-    private String mShowTitle;
+    private SearchResultsAdapter adapter;
 
     interface InitBundle {
-        String QUERY = "query";
-
         /** Set to pre-filter search results by show title. */
         String SHOW_TITLE = "title";
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
@@ -61,14 +57,22 @@ public class EpisodeSearchFragment extends ListFragment implements LoaderCallbac
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new SearchResultsAdapter(getActivity(), null, 0);
-        setListAdapter(mAdapter);
-
-        //getLoaderManager().initLoader(LOADER_ID, getArguments(), this);
+        adapter = new SearchResultsAdapter(getActivity(), null, 0);
+        setListAdapter(adapter);
     }
 
-    public void onPerformSearch(Bundle args) {
-        getLoaderManager().restartLoader(LOADER_ID, args, this);
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -78,49 +82,50 @@ public class EpisodeSearchFragment extends ListFragment implements LoaderCallbac
         startActivity(i);
     }
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String selection = null;
-        final String query = args.getString(SearchManager.QUERY);
-        String[] selectionArgs = new String[] {
-                query
-        };
+    public void onEventMainThread(SearchActivity.SearchQueryEvent event) {
+        search(event.args);
+    }
 
-        Bundle appData = args.getBundle(SearchManager.APP_DATA);
-        if (appData != null) {
-            String showtitle = appData.getString(InitBundle.SHOW_TITLE);
-            if (showtitle != null) {
-                // preserve show filter as long as this fragment is alive
-                mShowTitle = showtitle;
-            }
-        }
+    public void search(Bundle args) {
+        getLoaderManager().restartLoader(SearchActivity.EPISODES_LOADER_ID, args,
+                searchLoaderCallbacks);
+    }
 
-        // set show filter
-        if (mShowTitle != null) {
-            selection = Shows.TITLE + "=?";
-            selectionArgs = new String[] {
-                    query, mShowTitle
+    private LoaderCallbacks<Cursor> searchLoaderCallbacks = new LoaderCallbacks<Cursor>() {
+        @Override
+        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+            String selection = null;
+            final String query = args.getString(SearchManager.QUERY);
+            String[] selectionArgs = new String[] {
+                    query
             };
+
+            Bundle appData = args.getBundle(SearchManager.APP_DATA);
+            if (appData != null) {
+                String showtitle = appData.getString(InitBundle.SHOW_TITLE);
+                // set show filter instead
+                if (showtitle != null) {
+                    selection = Shows.TITLE + "=?";
+                    selectionArgs = new String[] {
+                            query, showtitle
+                    };
+                }
+            }
+
+            return new CursorLoader(getActivity(), EpisodeSearch.CONTENT_URI_SEARCH,
+                    SearchQuery.PROJECTION, selection, selectionArgs, null);
         }
 
-        return new CursorLoader(getActivity(), EpisodeSearch.CONTENT_URI_SEARCH,
-                SearchQuery.PROJECTION, selection, selectionArgs, null);
-    }
+        @Override
+        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+            adapter.swapCursor(data);
+        }
 
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        // Swap the new cursor in. (The framework will take care of closing the
-        // old cursor once we return.)
-        mAdapter.swapCursor(data);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        // This is called when the last Cursor provided to onLoadFinished()
-        // above is about to be closed. We need to make sure we are no
-        // longer using it.
-        mAdapter.swapCursor(null);
-    }
+        @Override
+        public void onLoaderReset(Loader<Cursor> loader) {
+            adapter.swapCursor(null);
+        }
+    };
 
     public interface SearchQuery {
         String[] PROJECTION = new String[] {

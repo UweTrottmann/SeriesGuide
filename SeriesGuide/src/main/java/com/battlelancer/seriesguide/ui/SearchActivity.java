@@ -33,6 +33,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
+import de.greenrobot.event.EventBus;
 
 /**
  * Handles search intents and displays a {@link EpisodeSearchFragment} when needed or
@@ -40,7 +41,22 @@ import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
  */
 public class SearchActivity extends BaseNavDrawerActivity {
 
+    public static final int SHOWS_LOADER_ID = 100;
+    public static final int EPISODES_LOADER_ID = 101;
+
+    public class SearchQueryEvent {
+
+        public final Bundle args;
+
+        public SearchQueryEvent(Bundle args) {
+            this.args = args;
+        }
+    }
+
     private static final String TAG = "Search";
+    private static final int EPISODES_TAB_INDEX = 1;
+
+    private ViewPager viewPager;
     private TabStripAdapter tabsAdapter;
 
     @Override
@@ -64,6 +80,8 @@ public class SearchActivity extends BaseNavDrawerActivity {
     }
 
     private void setupViews() {
+        viewPager = (ViewPager) findViewById(R.id.pagerSearch);
+
         tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this,
                 (ViewPager) findViewById(R.id.pagerSearch),
                 (SlidingTabLayout) findViewById(R.id.tabsSearch));
@@ -94,26 +112,19 @@ public class SearchActivity extends BaseNavDrawerActivity {
 
             // searching within a show?
             Bundle appData = extras.getBundle(SearchManager.APP_DATA);
+            String showTitle = null;
             if (appData != null) {
-                String showTitle = appData.getString(EpisodeSearchFragment.InitBundle.SHOW_TITLE);
+                showTitle = appData.getString(EpisodeSearchFragment.InitBundle.SHOW_TITLE);
                 if (!TextUtils.isEmpty(showTitle)) {
+                    // change title + switch to episodes tab if show restriction was submitted
+                    viewPager.setCurrentItem(EPISODES_TAB_INDEX);
                     actionBar.setTitle(getString(R.string.search_within_show, showTitle));
                 }
             }
 
-            // TODO post search event
-            // display results in a search fragment
-            //SearchFragment searchFragment = (SearchFragment) getSupportFragmentManager()
-            //        .findFragmentById(R.id.search_fragment);
-            //if (searchFragment == null) {
-            //    SearchFragment newFragment = new SearchFragment();
-            //    newFragment.setArguments(extras);
-            //    getSupportFragmentManager().beginTransaction()
-            //            .replace(R.id.content_frame, newFragment).commit();
-            //} else {
-            //    searchFragment.onPerformSearch(extras);
-            //}
-            //Utils.trackCustomEvent(this, TAG, "Search action", "Search");
+            // post query event to search fragments
+            EventBus.getDefault().post(new SearchQueryEvent(extras));
+            Utils.trackCustomEvent(this, TAG, "Search action", "Search");
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
             Uri data = intent.getData();
             String id = data.getLastPathSegment();
@@ -135,20 +146,23 @@ public class SearchActivity extends BaseNavDrawerActivity {
         if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
             // override search view style for light theme (because we use dark actionbar theme)
             // search text
-            int searchSrcTextId = getResources().getIdentifier("android:id/search_src_text", null, null);
+            int searchSrcTextId = getResources().getIdentifier("android:id/search_src_text", null,
+                    null);
             if (searchSrcTextId != 0) {
                 EditText searchEditText = (EditText) searchView.findViewById(searchSrcTextId);
                 searchEditText.setTextAppearance(this, R.style.TextAppearance_Inverse);
                 searchEditText.setHintTextColor(getResources().getColor(R.color.text_dim));
             }
             // close button
-            int closeButtonId = getResources().getIdentifier("android:id/search_close_btn", null, null);
+            int closeButtonId = getResources().getIdentifier("android:id/search_close_btn", null,
+                    null);
             if (closeButtonId != 0) {
                 ImageView closeButtonImage = (ImageView) searchView.findViewById(closeButtonId);
                 closeButtonImage.setImageResource(R.drawable.ic_action_cancel);
             }
             // search button
-            int searchIconId = getResources().getIdentifier("android:id/search_mag_icon", null, null);
+            int searchIconId = getResources().getIdentifier("android:id/search_mag_icon", null,
+                    null);
             if (searchIconId != 0) {
                 ImageView searchIcon = (ImageView) searchView.findViewById(searchIconId);
                 searchIcon.setImageResource(R.drawable.ic_action_search);
@@ -185,5 +199,4 @@ public class SearchActivity extends BaseNavDrawerActivity {
         i.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, Integer.valueOf(id));
         startActivity(i);
     }
-
 }
