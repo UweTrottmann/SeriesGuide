@@ -75,8 +75,6 @@ public class SeasonsFragment extends ListFragment implements
 
     private static final int CONTEXT_COLLECTED_SHOW_NONE_ID = 3;
 
-    private static final int LOADER_ID = 1;
-
     private static final String TAG = "Seasons";
 
     private Constants.SeasonSorting mSorting;
@@ -217,7 +215,7 @@ public class SeasonsFragment extends ListFragment implements
         mAdapter = new SeasonsAdapter(getActivity(), null, 0, this);
         setListAdapter(mAdapter);
         // now let's get a loader or reconnect to existing one
-        getLoaderManager().initLoader(LOADER_ID, null, this);
+        getLoaderManager().initLoader(OverviewActivity.SEASONS_LOADER_ID, null, this);
 
         // listen to changes to the sorting preference
         final SharedPreferences prefs = PreferenceManager
@@ -570,7 +568,7 @@ public class SeasonsFragment extends ListFragment implements
         Utils.trackCustomEvent(getActivity(), TAG, "Sorting", mSorting.name());
 
         // restart loader and update menu description
-        getLoaderManager().restartLoader(LOADER_ID, null, SeasonsFragment.this);
+        getLoaderManager().restartLoader(OverviewActivity.SEASONS_LOADER_ID, null, SeasonsFragment.this);
         getActivity().invalidateOptionsMenu();
     }
 
