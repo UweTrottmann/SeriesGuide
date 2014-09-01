@@ -45,7 +45,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
@@ -73,7 +72,6 @@ import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import de.greenrobot.event.EventBus;
@@ -88,10 +86,6 @@ public class OverviewFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, ActionsFragmentContract {
 
     private static final String TAG = "Overview";
-
-    private static final int EPISODE_LOADER_ID = 100;
-    private static final int SHOW_LOADER_ID = 101;
-    private static final int ACTIONS_LOADER_ID = 102;
 
     private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
 
@@ -165,8 +159,8 @@ public class OverviewFragment extends Fragment implements
         // do not display show info header in multi pane layout
         mContainerShow.setVisibility(multiPane ? View.GONE : View.VISIBLE);
 
-        getLoaderManager().initLoader(SHOW_LOADER_ID, null, this);
-        getLoaderManager().initLoader(EPISODE_LOADER_ID, null, this);
+        getLoaderManager().initLoader(OverviewActivity.OVERVIEW_SHOW_LOADER_ID, null, this);
+        getLoaderManager().initLoader(OverviewActivity.OVERVIEW_EPISODE_LOADER_ID, null, this);
 
         setHasOptionsMenu(true);
     }
@@ -445,10 +439,10 @@ public class OverviewFragment extends Fragment implements
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
-            case EPISODE_LOADER_ID:
+            case OverviewActivity.OVERVIEW_EPISODE_LOADER_ID:
             default:
                 return new EpisodeLoader(getActivity(), getShowId());
-            case SHOW_LOADER_ID:
+            case OverviewActivity.OVERVIEW_SHOW_LOADER_ID:
                 return new CursorLoader(getActivity(), Shows.buildShowUri(String
                         .valueOf(getShowId())), ShowQuery.PROJECTION, null, null, null);
         }
@@ -459,11 +453,11 @@ public class OverviewFragment extends Fragment implements
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if (isAdded()) {
             switch (loader.getId()) {
-                case EPISODE_LOADER_ID:
+                case OverviewActivity.OVERVIEW_EPISODE_LOADER_ID:
                     getActivity().invalidateOptionsMenu();
                     onPopulateEpisodeData(data);
                     break;
-                case SHOW_LOADER_ID:
+                case OverviewActivity.OVERVIEW_SHOW_LOADER_ID:
                     onPopulateShowData(data);
                     break;
             }
@@ -473,10 +467,10 @@ public class OverviewFragment extends Fragment implements
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         switch (loader.getId()) {
-            case EPISODE_LOADER_ID:
+            case OverviewActivity.OVERVIEW_EPISODE_LOADER_ID:
                 mCurrentEpisodeCursor = null;
                 break;
-            case SHOW_LOADER_ID:
+            case OverviewActivity.OVERVIEW_SHOW_LOADER_ID:
                 mShowCursor = null;
                 break;
         }
@@ -671,7 +665,7 @@ public class OverviewFragment extends Fragment implements
         }
         Bundle args = new Bundle();
         args.putInt(KEY_EPISODE_TVDB_ID, mCurrentEpisodeTvdbId);
-        getLoaderManager().restartLoader(ACTIONS_LOADER_ID, args, mEpisodeActionsLoaderCallbacks);
+        getLoaderManager().restartLoader(OverviewActivity.OVERVIEW_ACTIONS_LOADER_ID, args, mEpisodeActionsLoaderCallbacks);
     }
 
     Runnable mEpisodeActionsRunnable = new Runnable() {

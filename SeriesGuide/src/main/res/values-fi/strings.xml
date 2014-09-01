@@ -162,7 +162,7 @@
   <string name="action_collection_removed">Poistettu kokoelmasta</string>
   <string name="action_watched">Katsottu</string>
   <string name="action_unwatched">Katsomaton</string>
-  <string name="confirm_delete">Haluatko todella poistaa %s?</string>
+  <string name="confirm_delete">Haluatko varmasti poistaa ohjelman: %s?</string>
   <string name="delete_has_list_items">Ei onnistu. Poista %s kaikilta listoiltasi ensin.</string>
   <string name="delete_error">Ohjelman poistaminen ei onnistunut. Yritä myöhemmin uudelleen.</string>
   <string name="delete_show">Poista</string>

@@ -37,7 +37,6 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.util.Date;
 import timber.log.Timber;
@@ -175,7 +174,7 @@ public class ListWidgetService extends RemoteViewsService {
             // show poster
             String posterPath = mDataCursor.getString(isShowQuery
                     ? ShowsQuery.SHOW_POSTER : ActivityFragment.ActivityQuery.SHOW_POSTER);
-            Bitmap poster = null;
+            Bitmap poster;
             try {
                 poster = ServiceUtils.getPicasso(mContext)
                         .load(TheTVDB.buildPosterUrl(posterPath))
@@ -183,7 +182,8 @@ public class ListWidgetService extends RemoteViewsService {
                         .resizeDimen(R.dimen.widget_item_width, R.dimen.widget_item_height)
                         .get();
             } catch (IOException e) {
-                Timber.e(e, "Failed to load show poster for widget item: " + posterPath);
+                Timber.w(e.getMessage() + " Failed to load show poster for widget item: "
+                        + posterPath);
                 poster = null;
             }
             if (poster != null) {
