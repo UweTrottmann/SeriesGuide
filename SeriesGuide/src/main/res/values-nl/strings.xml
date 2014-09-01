@@ -35,7 +35,7 @@
   <string name="onlyx">Enkel beschikbaar met X-abonnement</string>
   <string name="add_empty">Er zijn geen series hier.</string>
   <string name="people_empty">Niemand?! Probeer opnieuw.</string>
-  <string name="share">Share</string>
+  <string name="share">Delen</string>
   <string name="share_show">Serie delen</string>
   <string name="share_episode">Aflevering delen</string>
   <string name="share_movie">Film delen</string>
@@ -145,8 +145,8 @@
   <string name="mark_all">Alles bekeken</string>
   <string name="unmark_all">Niets bekeken</string>
   <string name="mark_untilhere">Alle eerder uitgezonden bekijken</string>
-  <string name="collect">Collected</string>
-  <string name="uncollect">Not collected</string>
+  <string name="collect">Verzameld</string>
+  <string name="uncollect">Niet verzameld</string>
   <string name="collect_all">Alles verzameld</string>
   <string name="uncollect_all">Niets verzameld</string>
   <string name="action_skip">Overslaan</string>
@@ -161,15 +161,15 @@
   <string name="action_collection_added">Aan je collectie toegevoegd</string>
   <string name="action_collection_removed">Van je collectie verwijderd</string>
   <string name="action_watched">Bekeken</string>
-  <string name="action_unwatched">Not watched</string>
+  <string name="action_unwatched">Niet bekeken</string>
   <string name="confirm_delete">Wilt u %s echt verwijderen?</string>
   <string name="delete_has_list_items">Kan geen overeenkomst vinden; verwijder eerst %s uit alle lijsten.</string>
   <string name="delete_error">Kan show niet verwijderen. Probeer later opnieuw.</string>
   <string name="delete_show">Verwijderen</string>
   <string name="dontdelete_show">Niet verwijderen</string>
   <string name="no_nextepisode">Geen volgende aflevering gevonden.</string>
-  <string name="context_favorite">Favorite</string>
-  <string name="context_unfavorite">No favorite</string>
+  <string name="context_favorite">Favoriet</string>
+  <string name="context_unfavorite">Geen favoriet</string>
   <string name="favorited">Toegevoegd aan favorieten</string>
   <string name="unfavorited">Verwijderd uit favorieten</string>
   <string name="context_hide">Verbergen</string>
@@ -438,7 +438,7 @@
   <string name="subscription_activated">U bent nu geabonneerd op X-functies.</string>
   <string name="subscription_expired">Abonnement verlopen</string>
   <string name="subscription_expired_details">Uw X-abonnement is verlopen.</string>
-  <string name="add_to_homescreen">Shortcut</string>
+  <string name="add_to_homescreen">Snelkoppeling</string>
   <string name="search_within_show">Zoek binnen %s</string>
   <string name="web_search">Zoeken op het web</string>
   <string name="extensions">Extensies</string>
