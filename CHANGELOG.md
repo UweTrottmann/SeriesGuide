@@ -21,6 +21,12 @@ Version 17 *(2014-08-27)*
 * Design updates, moving towards Material Design language.
 * Access trakt and TMDb over a secure connection (HTTPS).
 
+#### 17.0.1 *(2014-09-01)*
+
+* TWEAK Cut down on excessive log reports.
+* FIX Potential fix for very rare crash in show overview.
+* NOTICE Latest translations from crowdin.
+
 #### 17 *(2014-08-27)*
 
 * TWEAK Restore larger nav drawer items on tablets. Also increase people tile size.

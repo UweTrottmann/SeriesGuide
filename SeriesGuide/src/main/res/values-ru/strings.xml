@@ -31,7 +31,7 @@
   <string name="unknown">Неизвестно</string>
   <string name="offline">Повторите после включения сети.</string>
   <string name="offline_no_wifi">Включите WiFi или сеть и повторите.</string>
-  <string name="app_not_available">Нет приложения для обработки это.</string>
+  <string name="app_not_available">Нет доступного приложения для обработки.</string>
   <string name="onlyx">Доступно для X версии</string>
   <string name="add_empty">Здесь нет сериалов.</string>
   <string name="people_empty">Никого нет? Коснитесь, чтобы попробовать еще раз.</string>
@@ -168,7 +168,7 @@
   <string name="delete_show">Удалить</string>
   <string name="dontdelete_show">Не удалять</string>
   <string name="no_nextepisode">следующий эпизод не найден</string>
-  <string name="context_favorite">Favorite</string>
+  <string name="context_favorite">Избранное</string>
   <string name="context_unfavorite">No favorite</string>
   <string name="favorited">Добавлено в избранное</string>
   <string name="unfavorited">Удалено из избранного</string>
@@ -239,7 +239,7 @@
   <string name="hexagon_setup">Настройка SeriesGuide облако</string>
   <string name="hexagon_description">Подключитесь к облаку для резервного копирования и синхронизации ваших сериалов и фильмов.</string>
   <string name="hexagon_warning_lists">Списки не включены.</string>
-  <string name="hexagon_warning_trakt">When using SeriesGuide cloud, changes on trakt will not sync down to SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">When using SeriesGuide Cloud, changes on trakt will not sync down to SeriesGuide.</string>
   <string name="hexagon_signin">Войти</string>
   <string name="hexagon_signed_in">Вы подключены к SeriesGuide облако.</string>
   <string name="hexagon_signout">Выход</string>
@@ -248,7 +248,7 @@
   <string name="hexagon_remove_account">Удалить аккаунт</string>
   <string name="hexagon_remove_account_success">Account obliterated.</string>
   <string name="hexagon_remove_account_failure">Не могу удалить аккаунт.</string>
-  <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide cloud. Make sure to remove it on other connected devices as well.</string>
+  <string name="hexagon_remove_account_confirmation">При удалении аккаунта будут удалены все сериалы и фильмы из облака SeriesGuide. Также убедитесь, что вы удалили используемый аккаунт на других подключенных устройствах.</string>
   <string name="connect_trakt">Подключение trakt</string>
   <string name="connect_trakt_done">Подключен к trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide сейчас синхронизирует сериалы и фильмы на этом устройстве с trakt. Это может занять некоторое время.</string>
@@ -303,19 +303,19 @@
   <string name="pref_other">Другие</string>
   <string name="pref_autoupdate">Включить автоматическое обновление</string>
   <string name="pref_autoupdatesummary">Время от времени обновлять ваши сериалы</string>
-  <string name="pref_autobackup">Включите автоматическое резервное копирование</string>
+  <string name="pref_autobackup">Включить автоматическое резервное копирование</string>
   <string name="pref_autobackupsummary">Еженедельное резервное копирование базы данных в папке загрузки</string>
   <string name="backup">Резервное копирование/восстановление</string>
   <string name="backup_summary">Резервное копирование или восстановление ваших сериалов</string>
   <string name="pref_upcominglimit">Показы в ближайшие N дней…</string>
   <string name="pref_number">Формат номеров серий</string>
-  <string name="pref_offset">Смещение времени вручную</string>
+  <string name="pref_offset">Ручное смещение времени</string>
   <string name="pref_offsetsummary">До прямого эфира осталось %s часов</string>
   <string name="clear_cache">Очистить кэш изображений</string>
   <string name="clear_cache_summary">Удалить все кэшированные изображения с вашего устройства</string>
   <string name="pref_ganalyticssummary">Отслеживать использование функций приложения, чтобы улучшить SeriesGuide</string>
-  <string name="backup_description"><b>Резервное копирование</b> будет экспортировать ваши сериалы, сезоны, эпизоды и списки в JSON файл в папку ниже. \n Для <b>восстановления</b> убедитесь, что JSON файлы, созданные с помощью резервного копирования находятся в папке ниже.</string>
-  <string name="backup_full_dump">Включить все мета данные, как описания, актеров и рейтинги.</string>
+  <string name="backup_description"><b>Резервное копирование</b> будет экспортировать ваши сериалы, сезоны, эпизоды и списки в JSON файл в папку ниже. \nДля <b>восстановления</b> убедитесь, что JSON файлы, созданные с помощью резервного копирования, находятся в папке ниже.</string>
+  <string name="backup_full_dump">Включить все мета-данные такие, как описания, актеры и рейтинги.</string>
   <string name="backup_path">Папка резервного копирования</string>
   <string name="backup_version">Версия базы данных</string>
   <string name="backup_failed_nosd">Не могу сделать резервное копирование. Папка резервного копирования не доступен.</string>
@@ -336,7 +336,7 @@
   <string name="import_question">Текущий список сериалов будут потерян! Убедитесь, что файл резервной копии находится в папке резервного копирования.</string>
   <string name="import_no">Не востановлять</string>
   <string name="import_warning">Я понимаю, что мои текущие просмотры и списки будут потеряны!</string>
-  <string name="last_auto_backup">Последний автоматическое резервное копирование: %s</string>
+  <string name="last_auto_backup">Последнее автоматическое резервное копирование:\n%s</string>
   <string name="restore_auto_backup">Восстановить Автоматическую резервную копию</string>
   <string name="checkin">Отметить</string>
   <string name="checkin_searchhint">Введите название сериала</string>
@@ -431,7 +431,7 @@
   <string name="billing_action_subscribe">Подписка</string>
   <string name="billing_action_pass">Получить X ключ</string>
   <string name="billing_price_subscribe">%s/год, пробный период - 30 дней</string>
-  <string name="billing_price_pass">Единовременная покупка</string>
+  <string name="billing_price_pass">Единоразовая покупка</string>
   <string name="upgrade_description">Вы получите доступ к уведомлениям, расширенным настройкам виджета и всем будущим X функциям. Также этим вы поддержите дальнейшее развитие приложения.\n\n Если вы уже приобрели SeriesGuide X, установите его, чтобы разблокировать доступ к X функциям.</string>
   <string name="upgrade_success">Спасибо вы уже подписались на всех X функции!</string>
   <string name="billing_learn_more">Зачем платить?</string>
