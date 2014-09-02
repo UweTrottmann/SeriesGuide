@@ -51,6 +51,10 @@ public class OverviewActivity extends BaseNavDrawerActivity {
 
     public static final int SHOW_LOADER_ID = 100;
     public static final int SHOW_CREDITS_LOADER_ID = 101;
+    public static final int OVERVIEW_EPISODE_LOADER_ID = 102;
+    public static final int OVERVIEW_SHOW_LOADER_ID = 103;
+    public static final int OVERVIEW_ACTIONS_LOADER_ID = 104;
+    public static final int SEASONS_LOADER_ID = 105;
 
     private static final String TAG = "Overview";
 
@@ -258,7 +262,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         final String showTitle = show.getTitle();
 
         Bundle args = new Bundle();
-        args.putString(SearchFragment.InitBundle.SHOW_TITLE, showTitle);
+        args.putString(EpisodeSearchFragment.InitBundle.SHOW_TITLE, showTitle);
         startSearch(null, false, args, false);
         return true;
     }

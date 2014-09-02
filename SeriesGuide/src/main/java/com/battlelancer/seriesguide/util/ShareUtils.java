@@ -41,7 +41,8 @@ public class ShareUtils {
     public static void shareEpisode(Activity activity, int showTvdbId, int seasonNumber,
             int episodeNumber, String showTitle, String episodeTitle) {
         String message = activity.getString(R.string.share_checkout,
-                showTitle + " " + Utils.getNextEpisodeString(activity, seasonNumber, episodeNumber, episodeTitle))
+                showTitle + " " + Utils.getNextEpisodeString(activity, seasonNumber, episodeNumber,
+                        episodeTitle))
                 + " " + TraktTools.buildEpisodeOrShowUrl(showTvdbId, seasonNumber, episodeNumber);
         startShareIntentChooser(activity, message, R.string.share_episode);
     }
@@ -58,7 +59,11 @@ public class ShareUtils {
         startShareIntentChooser(activity, message, R.string.share_movie);
     }
 
-    private static void startShareIntentChooser(Activity activity, String message, int titleResId) {
+    /**
+     * Share a text snippet. Displays a share intent chooser with the given title, share type is
+     * text/plain.
+     */
+    public static void startShareIntentChooser(Activity activity, String message, int titleResId) {
         IntentBuilder ib = ShareCompat.IntentBuilder.from(activity);
         ib.setText(message);
         ib.setChooserTitle(titleResId);
@@ -96,5 +101,4 @@ public class ShareUtils {
             Utils.trackCustomEvent(context, TAG, "Calendar", "Failed");
         }
     }
-
 }

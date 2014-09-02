@@ -5,11 +5,27 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 18 *(in development)*
+-----------------------------
+
+#### 18-beta1 *(2014-09-01)*
+
+* FEATURE Add shows tab to search. Results update as you type.
+* FEATURE Share your statistics: export stats screen as text for email, IM, etc.
+* TWEAK Update season and episode list designs.
+* NOTICE Latest translations from crowdin.
+
 Version 17 *(2014-08-27)*
 -----------------------------
 
 * Design updates, moving towards Material Design language.
 * Access trakt and TMDb over a secure connection (HTTPS).
+
+#### 17.0.1 *(2014-09-01)*
+
+* TWEAK Cut down on excessive log reports.
+* FIX Potential fix for very rare crash in show overview.
+* NOTICE Latest translations from crowdin.
 
 #### 17 *(2014-08-27)*
 

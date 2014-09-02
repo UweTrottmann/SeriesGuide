@@ -178,7 +178,8 @@
         <activity android:name="com.battlelancer.seriesguide.ui.StatsActivity" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.SearchActivity"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="stateVisible">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>

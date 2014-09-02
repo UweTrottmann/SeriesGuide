@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item name="activity_search" type="layout">@layout/activity_singlepane_drawer</item>
     <item name="fragment_show" type="layout">@layout/fragment_show_regular</item>
     <item name="buttons_services" type="layout">@layout/buttons_services_stacked</item>
     

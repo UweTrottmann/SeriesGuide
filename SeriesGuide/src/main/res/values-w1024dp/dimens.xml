@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright 2014 Uwe Trottmann
   ~
@@ -16,16 +15,8 @@
   ~ limitations under the License.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<resources>
 
-    <item
-        android:id="@+id/menu_action_stats_share"
-        android:icon="@drawable/ic_action_share"
-        android:showAsAction="ifRoom"
-        android:title="@string/share" />
-    <item
-        android:id="@+id/menu_action_stats_filter_specials"
-        android:checkable="true"
-        android:title="@string/pref_onlyseasoneps" />
+    <dimen name="search_padding_right">700dp</dimen>
 
-</menu>
+</resources>
