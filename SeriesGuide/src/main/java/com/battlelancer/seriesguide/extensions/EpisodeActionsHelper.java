@@ -28,6 +28,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.CheatSheet;
 import java.util.List;
 import timber.log.Timber;
 
@@ -55,6 +56,7 @@ public class EpisodeActionsHelper {
                 TextView actionView = (TextView) layoutInflater.inflate(R.layout.item_action,
                         actionsContainer, false);
                 actionView.setText(action.getTitle());
+                CheatSheet.setup(actionView, action.getTitle());
 
                 final Intent viewIntent = action.getViewIntent();
                 if (viewIntent != null) {
