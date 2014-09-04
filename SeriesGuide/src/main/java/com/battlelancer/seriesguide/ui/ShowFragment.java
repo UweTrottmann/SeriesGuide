@@ -154,7 +154,7 @@ public class ShowFragment extends Fragment {
                 onRateOnTrakt();
             }
         });
-        CheatSheet.setup(mButtonRate, R.string.menu_rate_show);
+        CheatSheet.setup(mButtonRate, R.string.action_rate);
 
         TextView castHeader = ButterKnife.findById(mCastView, R.id.textViewPeopleHeader);
         castHeader.setText(R.string.movie_cast);

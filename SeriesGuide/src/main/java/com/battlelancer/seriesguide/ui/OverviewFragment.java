@@ -618,7 +618,7 @@ public class OverviewFragment extends Fragment implements
                 }
             });
             ratings.setFocusable(true);
-            CheatSheet.setup(ratings, R.string.menu_rate_episode);
+            CheatSheet.setup(ratings, R.string.action_rate);
 
             // load all other info
             onLoadEpisodeDetails(episode);

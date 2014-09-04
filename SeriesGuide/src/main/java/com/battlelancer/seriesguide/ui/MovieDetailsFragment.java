@@ -159,6 +159,7 @@ public class MovieDetailsFragment extends Fragment {
                 rateOnTrakt();
             }
         });
+        CheatSheet.setup(mRatingsContainer, R.string.action_rate);
         mRatingsTmdbLabel.setText(R.string.tmdb);
 
         // cast and crew labels
