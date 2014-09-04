@@ -45,6 +45,7 @@
         android:drawableTop="?attr/drawableShare"
         android:drawablePadding="-4dp"
         android:text="@string/share"
+        android:contentDescription="@string/share"
         android:maxLines="2"
         android:ellipsize="end" />
 
@@ -58,6 +59,7 @@
         android:drawableTop="?attr/drawableLink"
         android:drawablePadding="-4dp"
         android:text="@string/add_to_homescreen"
+        android:contentDescription="@string/add_to_homescreen"
         android:maxLines="2"
         android:ellipsize="end" />
 

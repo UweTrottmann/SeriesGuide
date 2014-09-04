@@ -37,6 +37,7 @@
         android:drawableTop="?attr/drawableCheckin"
         android:drawablePadding="-4dp"
         android:text="@string/checkin"
+        android:contentDescription="@string/checkin"
         android:maxLines="2"
         android:ellipsize="end" />
 
