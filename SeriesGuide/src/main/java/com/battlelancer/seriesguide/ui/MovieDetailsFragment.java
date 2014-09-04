@@ -159,6 +159,7 @@ public class MovieDetailsFragment extends Fragment {
                 rateOnTrakt();
             }
         });
+        CheatSheet.setup(mRatingsContainer, R.string.action_rate);
         mRatingsTmdbLabel.setText(R.string.tmdb);
 
         // cast and crew labels
@@ -377,6 +378,7 @@ public class MovieDetailsFragment extends Fragment {
                 fireTrackerEvent("Check-In");
             }
         });
+        CheatSheet.setup(mCheckinButton);
 
         // watched button (only supported when connected to trakt)
         if (TraktCredentials.get(getActivity()).hasCredentials()) {
@@ -386,6 +388,8 @@ public class MovieDetailsFragment extends Fragment {
                             : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                     R.attr.drawableWatch), 0, 0);
             mWatchedButton.setText(isWatched ? R.string.action_unwatched : R.string.action_watched);
+            CheatSheet.setup(mWatchedButton,
+                    isWatched ? R.string.action_unwatched : R.string.action_watched);
             mWatchedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -414,6 +418,8 @@ public class MovieDetailsFragment extends Fragment {
                                 R.attr.drawableCollect), 0, 0);
         mCollectedButton.setText(isInCollection ? R.string.action_collection_remove
                 : R.string.action_collection_add);
+        CheatSheet.setup(mCollectedButton, isInCollection ? R.string.action_collection_remove
+                : R.string.action_collection_add);
         mCollectedButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -438,6 +444,8 @@ public class MovieDetailsFragment extends Fragment {
                         : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                 R.attr.drawableList), 0, 0);
         mWatchlistedButton.setText(
+                isInWatchlist ? R.string.watchlist_remove : R.string.watchlist_add);
+        CheatSheet.setup(mWatchlistedButton,
                 isInWatchlist ? R.string.watchlist_remove : R.string.watchlist_add);
         mWatchlistedButton.setOnClickListener(new OnClickListener() {
             @Override

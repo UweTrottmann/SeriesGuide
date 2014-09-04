@@ -2,7 +2,7 @@
 <com.battlelancer.seriesguide.widgets.CheckableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="88dp">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/textViewEpisodeNumber"
             android:layout_toRightOf="@id/watchedBoxEpisode"
-            android:layout_marginTop="16dp"
+            android:paddingTop="16dp"
             android:maxLines="1"
             android:ellipsize="end"
             android:textAppearance="@style/TextAppearance.Subhead"
@@ -36,8 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="@dimen/default_padding"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="@dimen/large_padding"
+            android:paddingTop="16dp"
+            android:paddingRight="@dimen/large_padding"
             tools:text="23"
             android:textAppearance="@style/TextAppearance.Subhead.Dim" />
 
@@ -59,6 +59,7 @@
             android:layout_below="@id/textViewEpisodeAirdate"
             android:layout_toLeftOf="@+id/textViewEpisodeNumber"
             android:layout_toRightOf="@id/watchedBoxEpisode"
+            android:paddingBottom="@dimen/large_padding"
             android:maxLines="1"
             android:ellipsize="end"
             tools:text="ABSOLUTE 42"

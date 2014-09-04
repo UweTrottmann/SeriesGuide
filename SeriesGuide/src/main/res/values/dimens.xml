@@ -46,8 +46,8 @@
 
     <dimen name="shortcut_icon_size">48dp</dimen>
 
+    <dimen name="buttons_min_height">64dp</dimen>
     <dimen name="buttonbar_button_width">56dp</dimen>
-    <dimen name="buttonbar_button_height">48dp</dimen>
 
     <dimen name="empty_view_width">250dp</dimen>
 

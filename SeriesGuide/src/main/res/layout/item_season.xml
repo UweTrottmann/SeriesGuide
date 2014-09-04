@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="88dp"
+    android:layout_height="wrap_content"
     android:paddingLeft="@dimen/large_padding">
 
     <TextView
@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/textViewSeasonProgress"
-        android:layout_marginTop="@dimen/large_padding"
+        android:paddingTop="@dimen/large_padding"
         android:maxLines="1"
         android:ellipsize="end"
         android:textAppearance="@style/TextAppearance.Subhead"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/default_padding"
         android:layout_toLeftOf="@id/imageViewContextMenu"
-        android:layout_marginTop="@dimen/large_padding"
+        android:paddingTop="@dimen/large_padding"
         android:text="@string/norating"
         tools:text="3/24"
         android:textAppearance="@style/TextAppearance.Subhead.Dim" />
@@ -63,8 +63,7 @@
         android:layout_below="@id/progressBarSeason"
         android:layout_toLeftOf="@id/imageViewContextMenu"
         android:layout_toRightOf="@id/imageViewSeasonSkipped"
-        android:maxLines="1"
-        android:ellipsize="end"
+        android:paddingBottom="@dimen/large_padding"
         android:textAppearance="@style/TextAppearance.Caption.Narrow"
         tools:text="10 episodes not watched yet" />
 

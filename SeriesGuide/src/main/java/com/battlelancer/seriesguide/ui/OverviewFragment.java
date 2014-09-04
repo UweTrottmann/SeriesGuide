@@ -563,6 +563,7 @@ public class OverviewFragment extends Fragment implements
                     onCheckIn();
                 }
             });
+            CheatSheet.setup(checkinButton);
 
             // watched button
             View watchedButton = buttons.findViewById(R.id.buttonEpisodeWatched);
@@ -575,6 +576,7 @@ public class OverviewFragment extends Fragment implements
                 }
             });
             watchedButton.setEnabled(true);
+            CheatSheet.setup(watchedButton);
 
             // collected button
             boolean isCollected = episode.getInt(EpisodeQuery.COLLECTED) == 1;
@@ -584,6 +586,7 @@ public class OverviewFragment extends Fragment implements
                             : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                     R.attr.drawableCollect), 0, 0);
             collectedButton.setText(isCollected ? R.string.uncollect : R.string.collect);
+            CheatSheet.setup(collectedButton, isCollected ? R.string.uncollect : R.string.collect);
             collectedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -605,6 +608,7 @@ public class OverviewFragment extends Fragment implements
                 }
             });
             skipButton.setEnabled(true);
+            CheatSheet.setup(skipButton);
 
             // ratings
             ratings.setOnClickListener(new OnClickListener() {
@@ -614,7 +618,7 @@ public class OverviewFragment extends Fragment implements
                 }
             });
             ratings.setFocusable(true);
-            CheatSheet.setup(ratings, R.string.menu_rate_episode);
+            CheatSheet.setup(ratings, R.string.action_rate);
 
             // load all other info
             onLoadEpisodeDetails(episode);

@@ -115,6 +115,7 @@
     </plurals>
 
     <!-- Trakt ratings -->
+    <string name="action_rate">Rate</string>
     <string name="your_rating">Your rating</string>
     <string name="love">Totally ninja!</string>
     <string name="hate">Weak Sauce :(</string>
@@ -415,8 +416,6 @@
     <string name="looking_for_something_else">Looking for something else?</string>
 
     <!-- Share methods -->
-    <string name="menu_rate_episode">Rate episode</string>
-    <string name="menu_rate_show">Rate show</string>
     <string name="traktcheckin_cancel">Override</string>
     <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
     <string name="traktcheckin_wait">I\'ll wait</string>

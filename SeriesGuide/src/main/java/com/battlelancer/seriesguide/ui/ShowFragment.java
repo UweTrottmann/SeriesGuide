@@ -136,6 +136,7 @@ public class ShowFragment extends Fragment {
                 shareShow();
             }
         });
+        CheatSheet.setup(mButtonShare);
 
         // shortcut button
         mButtonShortcut.setOnClickListener(new OnClickListener() {
@@ -144,6 +145,7 @@ public class ShowFragment extends Fragment {
                 createShortcut();
             }
         });
+        CheatSheet.setup(mButtonShortcut);
 
         // rate button
         mButtonRate.setOnClickListener(new OnClickListener() {
@@ -152,7 +154,7 @@ public class ShowFragment extends Fragment {
                 onRateOnTrakt();
             }
         });
-        CheatSheet.setup(mButtonRate, R.string.menu_rate_show);
+        CheatSheet.setup(mButtonRate, R.string.action_rate);
 
         TextView castHeader = ButterKnife.findById(mCastView, R.id.textViewPeopleHeader);
         castHeader.setText(R.string.movie_cast);
@@ -330,6 +332,8 @@ public class ShowFragment extends Fragment {
                         isFavorite ? R.attr.drawableStar : R.attr.drawableStar0),
                 0, 0);
         mButtonFavorite.setText(
+                isFavorite ? R.string.context_unfavorite : R.string.context_favorite);
+        CheatSheet.setup(mButtonFavorite,
                 isFavorite ? R.string.context_unfavorite : R.string.context_favorite);
         mButtonFavorite.setOnClickListener(new OnClickListener() {
             @Override
