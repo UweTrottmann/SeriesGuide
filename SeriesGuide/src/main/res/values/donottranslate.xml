@@ -39,9 +39,22 @@
     <string name="pref_suggest_features">Suggest improvements</string>
     <string name="pref_suggest_featuressummary">Suggest and vote on future improvements</string>
 
+    <string-array name="sesorting">
+        <item>@string/sort_order_latest_first</item>
+        <item>@string/sort_order_oldest_first</item>
+    </string-array>
     <string-array name="sesortingData">
         <item>latestfirst</item>
         <item>oldestfirst</item>
+    </string-array>
+    <string-array name="epsorting">
+        <item>@string/sort_order_latest_first</item>
+        <item>@string/sort_order_oldest_first</item>
+        <item>@string/sort_order_unwatched_first</item>
+        <item>@string/sort_order_alphabetical</item>
+        <item>@string/sort_order_top_rated_first</item>
+        <item>@string/sort_order_latest_first_dvd</item>
+        <item>@string/sort_order_oldest_first_dvd</item>
     </string-array>
     <string-array name="epsortingData">
         <item>latestfirst</item>

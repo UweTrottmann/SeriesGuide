@@ -327,19 +327,15 @@
     <string name="pref_autoaddshows">Add new trakt shows</string>
     <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
 
-    <string-array name="sesorting">
-        <item>Latest first</item>
-        <item>Oldest first</item>
-    </string-array>
-    <string-array name="epsorting">
-        <item>Latest first</item>
-        <item>Oldest first</item>
-        <item>Unwatched first</item>
-        <item>A - Z</item>
-        <item>Top rated</item>
-        <item>Latest first (DVD)</item>
-        <item>Oldest first (DVD)</item>
-    </string-array>
+    <!-- Sort orders -->
+    <string name="sort_order_latest_first">Latest first</string>
+    <string name="sort_order_oldest_first">Oldest first</string>
+    <string name="sort_order_unwatched_first">Unwatched first</string>
+    <string name="sort_order_alphabetical">A - Z</string>
+    <string name="sort_order_top_rated_first">Top rated</string>
+    <string name="sort_order_latest_first_dvd">Latest first (DVD)</string>
+    <string name="sort_order_oldest_first_dvd">Oldest first (DVD)</string>
+
     <string-array name="upcominglimit">
         <item>now</item>
         <item>1 day</item>
