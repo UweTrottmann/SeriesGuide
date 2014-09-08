@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 19
+        targetSdkVersion 'L'
         testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
 
         buildConfigField("String", "TVDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TVDB_API_KEY")}\"")
