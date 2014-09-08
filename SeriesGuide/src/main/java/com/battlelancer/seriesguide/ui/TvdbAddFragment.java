@@ -26,13 +26,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.util.Utils;
@@ -44,13 +46,15 @@ import timber.log.Timber;
 
 public class TvdbAddFragment extends AddFragment {
 
+    private ArrayAdapter<String> searchHistoryAdapter;
+
     public static TvdbAddFragment newInstance() {
         return new TvdbAddFragment();
     }
 
     @InjectView(R.id.clearButton) ImageButton mClearButton;
 
-    @InjectView(R.id.searchbox) EditText mSearchBox;
+    @InjectView(R.id.searchbox) AutoCompleteTextView mSearchBox;
 
     private SearchTask mSearchTask;
 
@@ -66,19 +70,40 @@ public class TvdbAddFragment extends AddFragment {
             }
         });
 
-        mSearchBox.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-        mSearchBox.setInputType(EditorInfo.TYPE_CLASS_TEXT);
         mSearchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH
                         || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                     search();
+                    mSearchBox.dismissDropDown();
                     return true;
                 }
                 return false;
             }
         });
+        List<String> searchHistory = SearchSettings.getSearchHistoryTheTvdb(getActivity());
+        searchHistoryAdapter = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_dropdown_item_1line, searchHistory);
+        mSearchBox.setAdapter(searchHistoryAdapter);
+        mSearchBox.setThreshold(1);
+        mSearchBox.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    mSearchBox.showDropDown();
+                }
+            }
+        });
+        mSearchBox.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSearchBox.showDropDown();
+            }
+        });
+        // set in code as XML is overridden
+        mSearchBox.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+        mSearchBox.setInputType(EditorInfo.TYPE_CLASS_TEXT);
 
         return v;
     }
@@ -129,10 +154,16 @@ public class TvdbAddFragment extends AddFragment {
         if (query.length() == 0) {
             return;
         }
+        // query for results
         if (mSearchTask == null || mSearchTask.getStatus() == AsyncTask.Status.FINISHED) {
             mSearchTask = new SearchTask(getActivity());
             AndroidUtils.executeOnPool(mSearchTask, query);
         }
+        // store query to history
+        List<String> updatedSearchHistory = SearchSettings.addRecentSearchTheTvdb(getActivity(),
+                query);
+        searchHistoryAdapter.clear();
+        searchHistoryAdapter.addAll(updatedSearchHistory);
     }
 
     public class SearchTask extends AsyncTask<String, Void, List<SearchResult>> {
