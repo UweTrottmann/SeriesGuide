@@ -39,6 +39,7 @@
     <string name="pref_suggest_features">Suggest improvements</string>
     <string name="pref_suggest_featuressummary">Suggest and vote on future improvements</string>
 
+    <!-- Season sort orders -->
     <string-array name="sesorting">
         <item>@string/sort_order_latest_first</item>
         <item>@string/sort_order_oldest_first</item>
@@ -47,6 +48,8 @@
         <item>latestfirst</item>
         <item>oldestfirst</item>
     </string-array>
+
+    <!-- Episode sort orders -->
     <string-array name="epsorting">
         <item>@string/sort_order_latest_first</item>
         <item>@string/sort_order_oldest_first</item>
@@ -65,6 +68,8 @@
         <item>dvdlatestfirst</item>
         <item>dvdoldestfirst</item>
     </string-array>
+
+    <!-- Content languages -->
     <string-array name="languages">
         <item>English</item>
         <item>čeština</item>
@@ -115,6 +120,8 @@
         <item>he</item>
         <item>ja</item>
     </string-array>
+
+    <!-- Number format options -->
     <string-array name="numberData">
         <item>default</item>
         <item>english</item>
@@ -125,6 +132,8 @@
         <item>S01E01</item>
         <item>s01e01</item>
     </string-array>
+
+    <!-- Time offset options -->
     <string-array name="offsets">
         <item>-12</item>
         <item>-11</item>
@@ -197,6 +206,16 @@
         <item>20</item>
         <item>21</item>
     </string-array>
+
+    <!-- Upcoming thresholds -->
+    <string-array name="upcominglimit">
+        <item>@string/upcoming_upto_now</item>
+        <item>@string/upcoming_upto_one_day</item>
+        <item>@string/upcoming_upto_three_days</item>
+        <item>@string/upcoming_upto_one_week</item>
+        <item>@string/upcoming_upto_two_weeks</item>
+        <item>@string/upcoming_upto_one_month</item>
+    </string-array>
     <string-array name="upcominglimitData">
         <item>0</item>
         <item>1</item>
@@ -205,6 +224,8 @@
         <item>14</item>
         <item>30</item>
     </string-array>
+
+    <!-- Theme variants -->
     <string-array name="themeSelection">
         <item>SeriesGuide</item>
         <item>Android Dark</item>
@@ -215,11 +236,28 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+
+    <!-- Notification thresholds -->
+    <string-array name="notificationThreshold">
+        <item>@string/notification_release_exact</item>
+        <item>@string/notification_release_earlier_five</item>
+        <item>@string/notification_release_earlier_ten</item>
+        <item>@string/notification_release_earlier_hour</item>
+    </string-array>
     <string-array name="notificationThresholdData">
         <item>0</item>
         <item>5</item>
         <item>10</item>
         <item>60</item>
+    </string-array>
+
+    <!-- Widget background options -->
+    <string-array name="widgetOpacity">
+        <item>@string/widget_background_transparent</item>
+        <item>@string/widget_background_25</item>
+        <item>@string/widget_background_50</item>
+        <item>@string/widget_background_75</item>
+        <item>@string/widget_background_opaque</item>
     </string-array>
     <string-array name="widgetOpacityData">
         <item>0</item>
@@ -228,12 +266,29 @@
         <item>75</item>
         <item>100</item>
     </string-array>
+
+    <!-- Widget types -->
+    <string-array name="widgetType">
+        <item>@string/upcoming</item>
+        <item>@string/recent</item>
+        <item>@string/action_shows_filter_favorites</item>
+    </string-array>
     <string-array name="widgetTypeData">
         <item>0</item>
         <item>1</item>
         <item>2</item>
     </string-array>
-    <string-array name="dashclockUpcomingThresholdsData" translatable="false">
+
+    <!-- DashClock extension thresholds -->
+    <string-array name="dashclockUpcomingThresholds">
+        <item>@string/upcoming_upto_one_hour</item>
+        <item>@string/upcoming_upto_six_hours</item>
+        <item>@string/upcoming_upto_half_day</item>
+        <item>@string/upcoming_upto_one_day</item>
+        <item>@string/upcoming_upto_three_days</item>
+        <item>@string/upcoming_upto_one_week</item>
+    </string-array>
+    <string-array name="dashclockUpcomingThresholdsData">
         <item>1</item>
         <item>6</item>
         <item>12</item>
@@ -241,6 +296,7 @@
         <item>72</item>
         <item>168</item>
     </string-array>
+
     <string-array name="amazonDomainsData">
         <item>amazon.com</item>
         <item>www.amazon.com.au</item>
