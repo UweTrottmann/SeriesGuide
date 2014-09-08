@@ -95,6 +95,7 @@
     <item quantity="many">%d perc</item>
     <item quantity="other">%d perc</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Értékelésed</string>
   <string name="love">Totally ninja!</string>
   <string name="hate">Weak Sauce :(</string>
@@ -277,19 +278,13 @@
   <string name="feedback">Visszajelzés küldése</string>
   <string name="pref_autoaddshows">Új trakt sorozatok hozzáadása</string>
   <string name="pref_autoaddshowssummary">Trakt aktivitása és adatai alapján sorozatai bekerülnek az adatbázisba</string>
-  <string-array name="sesorting">
-    <item>Újabbak előre</item>
-    <item>Régebbiek előre</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Újabbak előre</item>
-    <item>Régebbiek előre</item>
-    <item>Nem látottak előre</item>
-    <item>A - Z</item>
-    <item>Magasan értékelt</item>
-    <item>Újabbak előre (DVD)</item>
-    <item>Régebbiek előre (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">Újabbak előre</string>
+  <string name="sort_order_oldest_first">Régebbiek előre</string>
+  <string name="sort_order_unwatched_first">Nem látottak előre</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">Magasan értékelt</string>
+  <string name="sort_order_latest_first_dvd">Újabbak előre (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Régebbiek előre (DVD)</string>
   <string-array name="upcominglimit">
     <item>most</item>
     <item>egy nap</item>
@@ -354,8 +349,6 @@
   <string name="check_into">Bejelentkezés</string>
   <string name="no_selection">válasszon egyet lentről</string>
   <string name="looking_for_something_else">Valami mást keres?</string>
-  <string name="menu_rate_episode">Epizód értékelése</string>
-  <string name="menu_rate_show">Műsor értékelése</string>
   <string name="traktcheckin_cancel">Felülbírál</string>
   <string name="traktcheckin_inprogress">Már bejelentkezett egy másik epizódba, vagy filmbe. Bírálja felül a korábbi bejelentkezést, vagy várjon %s és próbálja újra.</string>
   <string name="traktcheckin_wait">Várok</string>

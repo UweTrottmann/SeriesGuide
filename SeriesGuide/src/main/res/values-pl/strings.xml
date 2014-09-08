@@ -95,6 +95,7 @@
     <item quantity="many">%d minut</item>
     <item quantity="other">%d minut</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Twoja ocena</string>
   <string name="love">Uwielbiam to!</string>
   <string name="hate">Słaby :(</string>
@@ -277,19 +278,13 @@
   <string name="feedback">Wyślij opinię</string>
   <string name="pref_autoaddshows">Dodaj nowe seriale trakt</string>
   <string name="pref_autoaddshowssummary">Automatycznie dodawaj nowe seriale z listy aktywności trakt</string>
-  <string-array name="sesorting">
-    <item>Najpierw najnowsze</item>
-    <item>Najpierw najstarsze</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Najpierw najnowsze</item>
-    <item>Najpierw najstarsze</item>
-    <item>Najpierw nieobejrzane</item>
-    <item>Od A do Z</item>
-    <item>Najwyżej oceniane</item>
-    <item>Najpierw najnowsze (DVD)</item>
-    <item>Najpierw najstarsze (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">Najpierw najnowsze</string>
+  <string name="sort_order_oldest_first">Najpierw najstarsze</string>
+  <string name="sort_order_unwatched_first">Najpierw nieobejrzane</string>
+  <string name="sort_order_alphabetical">Od A do Z</string>
+  <string name="sort_order_top_rated_first">Najwyżej oceniane</string>
+  <string name="sort_order_latest_first_dvd">Najpierw najnowsze (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Najpierw najstarsze (DVD)</string>
   <string-array name="upcominglimit">
     <item>Teraz</item>
     <item>Dziś</item>
@@ -354,8 +349,6 @@
   <string name="check_into">Podepnij się</string>
   <string name="no_selection">wybierz z poniższych</string>
   <string name="looking_for_something_else">Szukasz czegoś innego?</string>
-  <string name="menu_rate_episode">Oceń odcinek</string>
-  <string name="menu_rate_show">Oceń serial</string>
   <string name="traktcheckin_cancel">Zastąp</string>
   <string name="traktcheckin_inprogress">Już podpięto do innego odcinka lub filmu. Należy zamienić poprzednie podpięcie lub zaczekać %s i spróbować ponownie.</string>
   <string name="traktcheckin_wait">Poczekam</string>

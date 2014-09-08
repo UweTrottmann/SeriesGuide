@@ -95,6 +95,7 @@
     <item quantity="many">%d 분</item>
     <item quantity="other">%d 분</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">당신의 평가</string>
   <string name="love">킹왕짱!</string>
   <string name="hate">쓰레기 :(</string>
@@ -277,19 +278,13 @@
   <string name="feedback">사용자 의견 보내기</string>
   <string name="pref_autoaddshows">새로운 trakt 쇼를 추가합니다</string>
   <string name="pref_autoaddshowssummary">trakt 활동 스트림으로부터 자동으로 쇼를 추가합니다</string>
-  <string-array name="sesorting">
-    <item>최근 방영 순</item>
-    <item>예전 방영 순</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>최근 방영 순</item>
-    <item>오래된 것부터</item>
-    <item>안본 것부터</item>
-    <item>A - Z</item>
-    <item>최고 점수</item>
-    <item>최근 방영 순 (DVD)</item>
-    <item>예전 방영 순 (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">최근 방영 순</string>
+  <string name="sort_order_oldest_first">오래된 것부터</string>
+  <string name="sort_order_unwatched_first">안본 것부터</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">최고 점수</string>
+  <string name="sort_order_latest_first_dvd">내림차순 (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">오름차순 (DVD)</string>
   <string-array name="upcominglimit">
     <item>지금</item>
     <item>1일</item>
@@ -354,8 +349,6 @@
   <string name="check_into">체크인</string>
   <string name="no_selection">아래에서 선택하세요</string>
   <string name="looking_for_something_else">다른것을 찾고 있습니까?</string>
-  <string name="menu_rate_episode">에피소드 평가</string>
-  <string name="menu_rate_show">쇼 평가</string>
   <string name="traktcheckin_cancel">오버라이드</string>
   <string name="traktcheckin_inprogress">이미 다른 에피소드 또는 영화에 체크인하였습니다. 이전 체크인을 해제하거나 %s 기다렸다가 다시 시도하세요.</string>
   <string name="traktcheckin_wait">기다리겠소</string>

@@ -95,6 +95,7 @@
     <item quantity="many">%d minut</item>
     <item quantity="other">%d minut</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Vaše hodnocení</string>
   <string name="love">Úplný ninja!</string>
   <string name="hate">Odpad</string>
@@ -277,19 +278,13 @@
   <string name="feedback">Poslat reakci</string>
   <string name="pref_autoaddshows">Přidávat nové seriály z traktu</string>
   <string name="pref_autoaddshowssummary">Automaticky přidávat seriály z Vaší aktivity na trakt.tv</string>
-  <string-array name="sesorting">
-    <item>Od nejnovější</item>
-    <item>Od nejstarší</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Od nejnovější</item>
-    <item>Od nejstarších</item>
-    <item>Od nezhlédnutých</item>
-    <item>A - Z</item>
-    <item>Nejlépe hodnocené</item>
-    <item>Od nejnovějších (DVD)</item>
-    <item>Od nejstarších (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">Od nejnovější</string>
+  <string name="sort_order_oldest_first">Od nejstarší</string>
+  <string name="sort_order_unwatched_first">Od nezhlédnutých</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">Nejlépe hodnocené</string>
+  <string name="sort_order_latest_first_dvd">Od nejnovějších (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Od nejstarších (DVD)</string>
   <string-array name="upcominglimit">
     <item>teď</item>
     <item>dne</item>
@@ -354,8 +349,6 @@
   <string name="check_into">Ohlásit se do</string>
   <string name="no_selection">vyberte níže</string>
   <string name="looking_for_something_else">Hledáte něco jiného?</string>
-  <string name="menu_rate_episode">Hodnotit epizodu</string>
-  <string name="menu_rate_show">Hodnotit seriál</string>
   <string name="traktcheckin_cancel">Přepsat</string>
   <string name="traktcheckin_inprogress">Již jste se ohlásil u jiné epizody nebo filmu. Buď přepište předchozí ohlášení, nebo počkejte %s a zkuste to znovu.</string>
   <string name="traktcheckin_wait">Já počkám</string>

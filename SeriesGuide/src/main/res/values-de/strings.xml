@@ -95,6 +95,7 @@
     <item quantity="many">%d Minuten</item>
     <item quantity="other">%d Minuten</item>
   </plurals>
+  <string name="action_rate">Bewerten</string>
   <string name="your_rating">Ihre Bewertung</string>
   <string name="love">Absolut top!</string>
   <string name="hate">Totaler Flop :(</string>
@@ -277,19 +278,13 @@
   <string name="feedback">Feedback senden</string>
   <string name="pref_autoaddshows">Neue trakt Serien hinzufügen</string>
   <string name="pref_autoaddshowssummary">Automatisch neue Serien aus Ihren trakt-Aktivitäten hinzufügen</string>
-  <string-array name="sesorting">
-    <item>Aktuellste zuerst</item>
-    <item>Älteste zuerst</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Aktuellste zuerst</item>
-    <item>Älteste zuerst</item>
-    <item>Ungesehene zuerst</item>
-    <item>A - Z</item>
-    <item>Top bewertet</item>
-    <item>Aktuellste zuerst (DVD)</item>
-    <item>Älteste zuerst (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">Aktuellste zuerst</string>
+  <string name="sort_order_oldest_first">Älteste zuerst</string>
+  <string name="sort_order_unwatched_first">Ungesehene zuerst</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">Top bewertet</string>
+  <string name="sort_order_latest_first_dvd">Aktuellste zuerst (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Älteste zuerst (DVD)</string>
   <string-array name="upcominglimit">
     <item>jetzt</item>
     <item>1 Tag</item>
@@ -354,8 +349,6 @@
   <string name="check_into">Einchecken in</string>
   <string name="no_selection">unten auswählen</string>
   <string name="looking_for_something_else">Sie suchen etwas anderes?</string>
-  <string name="menu_rate_episode">Folge bewerten</string>
-  <string name="menu_rate_show">Serie bewerten</string>
   <string name="traktcheckin_cancel">Überschreiben</string>
   <string name="traktcheckin_inprogress">Sie sind bereits in eine anderen Folge oder einen Film eingecheckt. Überschreiben Sie den vorherigen Check-in oder warten Sie %s und versuchen es erneut.</string>
   <string name="traktcheckin_wait">Ich warte</string>

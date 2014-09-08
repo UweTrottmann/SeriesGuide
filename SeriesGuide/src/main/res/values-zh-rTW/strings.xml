@@ -95,6 +95,7 @@
     <item quantity="many">%d minutes</item>
     <item quantity="other">%d minutes</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">您的評分</string>
   <string name="love">太讚啦!</string>
   <string name="hate">太弱了:(</string>
@@ -277,19 +278,13 @@
   <string name="feedback">傳送反饋意見</string>
   <string name="pref_autoaddshows">Add new trakt shows</string>
   <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
-  <string-array name="sesorting">
-    <item>按最新的項目排序</item>
-    <item>按最舊的項目排序</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>按最新的項目排序</item>
-    <item>按最舊的項目排序</item>
-    <item>先排未觀賞</item>
-    <item>A - Z</item>
-    <item>Top rated</item>
-    <item>按最新的順序排序(DVD)</item>
-    <item>按最舊的順序排序(DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">按最新的項目排序</string>
+  <string name="sort_order_oldest_first">按最舊的項目排序</string>
+  <string name="sort_order_unwatched_first">先排未觀賞</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">Top rated</string>
+  <string name="sort_order_latest_first_dvd">按最新的順序排序(DVD)</string>
+  <string name="sort_order_oldest_first_dvd">按最舊的順序排序(DVD)</string>
   <string-array name="upcominglimit">
     <item>目前</item>
     <item>1 day</item>
@@ -354,8 +349,6 @@
   <string name="check_into">Check into</string>
   <string name="no_selection">pick one below</string>
   <string name="looking_for_something_else">Looking for something else?</string>
-  <string name="menu_rate_episode">Rate episode</string>
-  <string name="menu_rate_show">Rate show</string>
   <string name="traktcheckin_cancel">Override</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">等待</string>

@@ -95,6 +95,7 @@
     <item quantity="many">%d minutos</item>
     <item quantity="other">%d minutos</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Tu calificación</string>
   <string name="love">¡Una pasada!</string>
   <string name="hate">¡Apesta!</string>
@@ -237,7 +238,7 @@
   <string name="list_empty">Puedes agregar series, temporadas o episodios a la lista.</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configurar SeriesGuide cloud</string>
-  <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
+  <string name="hexagon_description">Conéctate a la nube para hacer copias de seguridad y sincronizar tus series y películas.</string>
   <string name="hexagon_warning_lists">Lists are not included.</string>
   <string name="hexagon_warning_trakt">When using SeriesGuide Cloud, changes on trakt will not sync down to SeriesGuide.</string>
   <string name="hexagon_signin">Iniciar sesión</string>
@@ -277,19 +278,13 @@
   <string name="feedback">Enviar comentarios</string>
   <string name="pref_autoaddshows">Añadir nueva serie trakt</string>
   <string name="pref_autoaddshowssummary">Añadir automáticamente series de tu flujo de actividad trakt</string>
-  <string-array name="sesorting">
-    <item>Más reciente primero</item>
-    <item>Más antiguo primero</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Más reciente primero</item>
-    <item>Más antiguo primero</item>
-    <item>No vistos primero</item>
-    <item>A - Z</item>
-    <item>Mas valorado</item>
-    <item>Primero los más rencientes (DVD)</item>
-    <item>Primero más antiguos (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">Más reciente primero</string>
+  <string name="sort_order_oldest_first">Más antiguo primero</string>
+  <string name="sort_order_unwatched_first">No vistos primero</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">Mas valorado</string>
+  <string name="sort_order_latest_first_dvd">Primero los más rencientes (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Primero más antiguos (DVD)</string>
   <string-array name="upcominglimit">
     <item>ahora</item>
     <item>un día</item>
@@ -354,8 +349,6 @@
   <string name="check_into">Acceder a</string>
   <string name="no_selection">elige uno debajo</string>
   <string name="looking_for_something_else">¿Buscando algo más?</string>
-  <string name="menu_rate_episode">Calificar episodio</string>
-  <string name="menu_rate_show">Calificar show</string>
   <string name="traktcheckin_cancel">Reemplace</string>
   <string name="traktcheckin_inprogress">Ya te has registrado en otro episodio o película. Sobrescribe el registro anterior o espere %s e inténtelo de nuevo.</string>
   <string name="traktcheckin_wait">﻿Esperaré</string>

@@ -95,6 +95,7 @@
     <item quantity="many">%d minuta</item>
     <item quantity="other">%d minuta</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Tvoja ocjena</string>
   <string name="love">Zakon!</string>
   <string name="hate">Jadno :(</string>
@@ -277,19 +278,13 @@
   <string name="feedback">Pošalji povratnu informaciju</string>
   <string name="pref_autoaddshows">Dodaj nove trakt serije</string>
   <string name="pref_autoaddshowssummary">Automatski dodaj serije iz svojih aktivnosti na traktu</string>
-  <string-array name="sesorting">
-    <item>Prvo zadnje</item>
-    <item>Prvo najstarije</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Zadnji prvi</item>
-    <item>Najstariji prvi</item>
-    <item>Nepogledane prve</item>
-    <item>A-Z</item>
-    <item>Najbolje ocijenjene</item>
-    <item>Prvo zadnje (DVD)</item>
-    <item>Prvo najstarije (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">Prvo zadnje</string>
+  <string name="sort_order_oldest_first">Prvo najstarije</string>
+  <string name="sort_order_unwatched_first">Nepogledane prve</string>
+  <string name="sort_order_alphabetical">A-Z</string>
+  <string name="sort_order_top_rated_first">Najbolje ocijenjene</string>
+  <string name="sort_order_latest_first_dvd">Prvo zadnje (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Prvo najstarije (DVD)</string>
   <string-array name="upcominglimit">
     <item>Sada</item>
     <item>1 dana</item>
@@ -354,8 +349,6 @@
   <string name="check_into">Prijavi se u</string>
   <string name="no_selection">Odaberi jednu od</string>
   <string name="looking_for_something_else">Tražiš nešto drugo?</string>
-  <string name="menu_rate_episode">Ocijeni epizodu</string>
-  <string name="menu_rate_show">Ocijeni seriju</string>
   <string name="traktcheckin_cancel">Zamijeni</string>
   <string name="traktcheckin_inprogress">Već si prijavljen u drugu epizodu ili film. Ili zamijeni prošlu prijavu ili pričekaj %s i pokušaj ponovno.</string>
   <string name="traktcheckin_wait">Pričekat ću</string>

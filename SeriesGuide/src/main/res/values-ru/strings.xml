@@ -95,6 +95,7 @@
     <item quantity="many">%d минут</item>
     <item quantity="other">%d минут</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Ваш рейтинг</string>
   <string name="love">Супер!</string>
   <string name="hate">Слабый соус:(</string>
@@ -145,8 +146,8 @@
   <string name="mark_all">Видел всё</string>
   <string name="unmark_all">Не видел ни одного</string>
   <string name="mark_untilhere">Смотрел все вышедшие в эфир</string>
-  <string name="collect">Collected</string>
-  <string name="uncollect">Not collected</string>
+  <string name="collect">Cобранный</string>
+  <string name="uncollect">Hе Cобранный</string>
   <string name="collect_all">Собраны все</string>
   <string name="uncollect_all">Не собраны</string>
   <string name="action_skip">Пропустить</string>
@@ -169,7 +170,7 @@
   <string name="dontdelete_show">Не удалять</string>
   <string name="no_nextepisode">следующий эпизод не найден</string>
   <string name="context_favorite">Избранное</string>
-  <string name="context_unfavorite">No favorite</string>
+  <string name="context_unfavorite">Не любимый</string>
   <string name="favorited">Добавлено в избранное</string>
   <string name="unfavorited">Удалено из избранного</string>
   <string name="context_hide">Скрыть</string>
@@ -239,14 +240,14 @@
   <string name="hexagon_setup">Настройка SeriesGuide облако</string>
   <string name="hexagon_description">Подключитесь к облаку для резервного копирования и синхронизации ваших сериалов и фильмов.</string>
   <string name="hexagon_warning_lists">Списки не включены.</string>
-  <string name="hexagon_warning_trakt">When using SeriesGuide Cloud, changes on trakt will not sync down to SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">При использовании SeriesGuide Cloud, изменения на тракт не будет синхронизировать до SeriesGuide.</string>
   <string name="hexagon_signin">Войти</string>
   <string name="hexagon_signed_in">Вы подключены к SeriesGuide облако.</string>
   <string name="hexagon_signout">Выход</string>
   <string name="hexagon_setup_incomplete">Настройка SeriesGuide облако было не завершено.</string>
   <string name="hexagon_setup_fail_auth">Ваш Google аккаунт не проверен.</string>
   <string name="hexagon_remove_account">Удалить аккаунт</string>
-  <string name="hexagon_remove_account_success">Account obliterated.</string>
+  <string name="hexagon_remove_account_success">Аккаунт уничтожены.</string>
   <string name="hexagon_remove_account_failure">Не могу удалить аккаунт.</string>
   <string name="hexagon_remove_account_confirmation">При удалении аккаунта будут удалены все сериалы и фильмы из облака SeriesGuide. Также убедитесь, что вы удалили используемый аккаунт на других подключенных устройствах.</string>
   <string name="connect_trakt">Подключение trakt</string>
@@ -277,19 +278,13 @@
   <string name="feedback">Отправить отзыв</string>
   <string name="pref_autoaddshows">Добавить новые сериалы из trakt</string>
   <string name="pref_autoaddshowssummary">Автоматически добавлять сериалы из trakt</string>
-  <string-array name="sesorting">
-    <item>Сначала последний</item>
-    <item>Старшие с начала</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Сначала последний</item>
-    <item>Старшие с начала</item>
-    <item>Сначала непросмотренные</item>
-    <item>A - Z</item>
-    <item>Лучшие по рейтингу</item>
-    <item>Сначала последние (DVD)</item>
-    <item>Более старые первыми (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">Сначала последний</string>
+  <string name="sort_order_oldest_first">Старшие с начала</string>
+  <string name="sort_order_unwatched_first">Сначала непросмотренные</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">Лучшие по рейтингу</string>
+  <string name="sort_order_latest_first_dvd">Сначала последние (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Более старые первыми (DVD)</string>
   <string-array name="upcominglimit">
     <item>сейчас</item>
     <item>день</item>
@@ -354,8 +349,6 @@
   <string name="check_into">Чек-ин</string>
   <string name="no_selection">Выберите из предложенных вариантов</string>
   <string name="looking_for_something_else">Ищете что-то еще?</string>
-  <string name="menu_rate_episode">Оценить эпизод</string>
-  <string name="menu_rate_show">Оценить сериал</string>
   <string name="traktcheckin_cancel">Переопределение</string>
   <string name="traktcheckin_inprogress">Вы уже отметились в другом эпизоде или фильме. Вы можете заменить предыдущий чек-ин или подождать %s и попробовать снова.</string>
   <string name="traktcheckin_wait">ожидаю</string>
@@ -438,7 +431,7 @@
   <string name="subscription_activated">Теперь вы подписаны на X функции.</string>
   <string name="subscription_expired">Срок действия подписки истек</string>
   <string name="subscription_expired_details">Подписка X функции истекла.</string>
-  <string name="add_to_homescreen">Shortcut</string>
+  <string name="add_to_homescreen">Ярлык</string>
   <string name="search_within_show">Поиск в %s</string>
   <string name="web_search">Веб-поиск</string>
   <string name="extensions">Расширения</string>

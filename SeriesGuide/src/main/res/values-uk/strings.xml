@@ -10,7 +10,7 @@
   <string name="help">Допомога</string>
   <string name="drawer_open">Відкрити вікно навігації</string>
   <string name="drawer_close">Закрити вікно навігації</string>
-  <string name="show">Про фільм</string>
+  <string name="show">Серіал</string>
   <string name="episode">Серія</string>
   <string name="episode_number">Серія %s</string>
   <string name="episodes">Серії</string>
@@ -29,14 +29,14 @@
   <string name="updated">Оновлено до останньої версії.</string>
   <string name="norating">Нема даних</string>
   <string name="unknown">Невідомо</string>
-  <string name="offline">Підключіться до мережі, і повторіть спробу.</string>
+  <string name="offline">Підключіться до мережі і повторіть спробу.</string>
   <string name="offline_no_wifi">Підключіться до Wi-Fi або дозвольте всі підключення, а потім повторіть спробу.</string>
   <string name="app_not_available">Немає доступних програм, щоб впоратися з цим.</string>
   <string name="onlyx">Доступно тільки з версією X Підписки</string>
   <string name="add_empty">Тут немає жодного серіалу.</string>
   <string name="people_empty">Нікого тут немає?! Натисніть щоб спробувати ще раз.</string>
   <string name="share">Поділитись</string>
-  <string name="share_show">Поділитись фільмом</string>
+  <string name="share_show">Поділитись серіалом</string>
   <string name="share_episode">Поділитись серією</string>
   <string name="share_movie">Поділитися фільмом</string>
   <string name="share_checkout">Погляньте %s</string>
@@ -95,6 +95,7 @@
     <item quantity="many">%d хвилин</item>
     <item quantity="other">%d хвилин</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Ваш рейтинг</string>
   <string name="love">Супер!</string>
   <string name="hate">Слабо :(</string>
@@ -277,19 +278,13 @@
   <string name="feedback">Відправити відгук</string>
   <string name="pref_autoaddshows">Додати нові серіали з trakt</string>
   <string name="pref_autoaddshowssummary">Автоматично додавати серіали з вашого потоку активності на trakt</string>
-  <string-array name="sesorting">
-    <item>Останні спочатку</item>
-    <item>Давніші спочатку</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Останні спочатку</item>
-    <item>Давніші спочатку</item>
-    <item>Непереглянуті спочатку</item>
-    <item>А - Я</item>
-    <item>Топ кращих</item>
-    <item>Останні спочатку (DVD)</item>
-    <item>Давніші спочатку (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">Останні спочатку</string>
+  <string name="sort_order_oldest_first">Давніші спочатку</string>
+  <string name="sort_order_unwatched_first">Непереглянуті спочатку</string>
+  <string name="sort_order_alphabetical">А - Я</string>
+  <string name="sort_order_top_rated_first">Топ кращих</string>
+  <string name="sort_order_latest_first_dvd">Останні спочатку (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Давніші спочатку (DVD)</string>
   <string-array name="upcominglimit">
     <item>сьогодні</item>
     <item>1 дня</item>
@@ -354,8 +349,6 @@
   <string name="check_into">Відзначити</string>
   <string name="no_selection">Виберіть один внизу</string>
   <string name="looking_for_something_else">Шукаєте щось інше?</string>
-  <string name="menu_rate_episode">Голосувати за серію</string>
-  <string name="menu_rate_show">Голосувати за фільм</string>
   <string name="traktcheckin_cancel">Перевизначити</string>
   <string name="traktcheckin_inprogress">Ви вже відзначили іншу серію або фільм. Перевизначіть попередній вибір або зачекайте %s та спробуйте ще раз.</string>
   <string name="traktcheckin_wait">Я зачекаю</string>

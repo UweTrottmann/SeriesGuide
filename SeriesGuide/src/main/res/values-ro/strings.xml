@@ -95,6 +95,7 @@
     <item quantity="many">%d minute</item>
     <item quantity="other">%d minute</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Nota ta</string>
   <string name="love">Super tare!</string>
   <string name="hate">Slab :(</string>
@@ -277,19 +278,13 @@
   <string name="feedback">Trimiteţi feedback</string>
   <string name="pref_autoaddshows">Add new trakt shows</string>
   <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
-  <string-array name="sesorting">
-    <item>Întai cele mai recente</item>
-    <item>Întai cele mai vechi</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Întai cele mai recente</item>
-    <item>Cele mai vechi primele</item>
-    <item>Cele nevizionate primele</item>
-    <item>A - Z</item>
-    <item>Cele mai votate</item>
-    <item>Cele mai noi primele (DVD)</item>
-    <item>Cele mai vechi primele (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">Întai cele mai recente</string>
+  <string name="sort_order_oldest_first">Întai cele mai vechi</string>
+  <string name="sort_order_unwatched_first">Cele nevizionate primele</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">Cele mai votate</string>
+  <string name="sort_order_latest_first_dvd">Cele mai noi primele (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Cele mai vechi primele (DVD)</string>
   <string-array name="upcominglimit">
     <item>acum</item>
     <item>o zi</item>
@@ -354,8 +349,6 @@
   <string name="check_into">Check into</string>
   <string name="no_selection">alegeți una de mai jos</string>
   <string name="looking_for_something_else">Căutați altceva?</string>
-  <string name="menu_rate_episode">Votati episodul</string>
-  <string name="menu_rate_show">Votati serialul</string>
   <string name="traktcheckin_cancel">Override</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">I\ voi aştepta</string>

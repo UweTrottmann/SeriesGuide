@@ -95,6 +95,7 @@
     <item quantity="many">%d 分钟</item>
     <item quantity="other">%d 分钟</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">您的评分</string>
   <string name="love">100 - 非常棒 :-)</string>
   <string name="hate">10 - 弱爆了 :-(</string>
@@ -277,19 +278,13 @@
   <string name="feedback">发送反馈报告</string>
   <string name="pref_autoaddshows">添加来自 trakt 的节目</string>
   <string name="pref_autoaddshowssummary">自动从 trakt 用户数据中添加节目</string>
-  <string-array name="sesorting">
-    <item>最新在最上</item>
-    <item>最旧在最上</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>最新在最上</item>
-    <item>最旧在最上</item>
-    <item>未观看在最上</item>
-    <item>A 到 Z</item>
-    <item>最高评分</item>
-    <item>最新在最上 (DVD)</item>
-    <item>最旧在最上 (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">最新在最上</string>
+  <string name="sort_order_oldest_first">最旧在最上</string>
+  <string name="sort_order_unwatched_first">未观看在最上</string>
+  <string name="sort_order_alphabetical">A 到 Z</string>
+  <string name="sort_order_top_rated_first">最高评分</string>
+  <string name="sort_order_latest_first_dvd">最新在最上 (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">最旧在最上 (DVD)</string>
   <string-array name="upcominglimit">
     <item>现在</item>
     <item>1 天</item>
@@ -354,8 +349,6 @@
   <string name="check_into">为节目签到</string>
   <string name="no_selection">从下面当中选一个</string>
   <string name="looking_for_something_else">这不是我要找的…</string>
-  <string name="menu_rate_episode">对剧集评分</string>
-  <string name="menu_rate_show">为节目评分</string>
   <string name="traktcheckin_cancel">替换</string>
   <string name="traktcheckin_inprogress">您已经为另一个剧集或电影签到了，请等待 %s 后重新签到或替换掉之前的签到状态。</string>
   <string name="traktcheckin_wait">等待</string>

@@ -95,6 +95,7 @@
     <item quantity="many">%d minút</item>
     <item quantity="other">%d minút</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Vaše hodnotenie</string>
   <string name="love">Totálna pecka!</string>
   <string name="hate">Odpad :(</string>
@@ -277,19 +278,13 @@
   <string name="feedback">Poslať reakciu</string>
   <string name="pref_autoaddshows">Pridávať nové seriály z trakt.tv</string>
   <string name="pref_autoaddshowssummary">Automaticky pridávať seriály z vašej aktivity na trakt.tv</string>
-  <string-array name="sesorting">
-    <item>Od najnovších</item>
-    <item>Od najstarších</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Od najnovších</item>
-    <item>Od najstarších</item>
-    <item>Od nezhliadnutých</item>
-    <item>A - Z</item>
-    <item>Najlepšie hodnotené</item>
-    <item>Od najnovších (DVD)</item>
-    <item>Od najstarších (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">Od najnovších</string>
+  <string name="sort_order_oldest_first">Od najstarších</string>
+  <string name="sort_order_unwatched_first">Od nezhliadnutých</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">Najlepšie hodnotené</string>
+  <string name="sort_order_latest_first_dvd">Od najnovších (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Od najstarších (DVD)</string>
   <string-array name="upcominglimit">
     <item>teraz</item>
     <item>denne</item>
@@ -354,8 +349,6 @@
   <string name="check_into">Check into</string>
   <string name="no_selection">pick one below</string>
   <string name="looking_for_something_else">Looking for something else?</string>
-  <string name="menu_rate_episode">Hodnotiť epizódu</string>
-  <string name="menu_rate_show">Ohodnoť seriál</string>
   <string name="traktcheckin_cancel">Prepísať</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">Budem čakať</string>

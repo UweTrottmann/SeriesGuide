@@ -95,6 +95,7 @@
     <item quantity="many">%d دقائق</item>
     <item quantity="other">%d دقائق</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">تقييمك</string>
   <string name="love">أعجبني!</string>
   <string name="hate">لم يعجبني :(</string>
@@ -277,19 +278,13 @@
   <string name="feedback">أرسل ملاحظاتك</string>
   <string name="pref_autoaddshows">إضافة المسلسلات الجديدة من موقع التراكت</string>
   <string name="pref_autoaddshowssummary">إضافة المسلسلات تلقائياً من حسابك الموجود على موقع Trakt</string>
-  <string-array name="sesorting">
-    <item>الأحدث أولاً</item>
-    <item>الأقدم أولاً</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>الأحدث أولاً</item>
-    <item>الأقدم أولاً</item>
-    <item>غير المُشاهدة أولاً</item>
-    <item>A-Z</item>
-    <item>أعلى تقييم</item>
-    <item>الأحدث أولاً-دي في دي</item>
-    <item>الأقدم أولاً-دي في دي</item>
-  </string-array>
+  <string name="sort_order_latest_first">الأحدث أولاً</string>
+  <string name="sort_order_oldest_first">الأقدم أولاً</string>
+  <string name="sort_order_unwatched_first">غير المُشاهدة أولاً</string>
+  <string name="sort_order_alphabetical">A-Z</string>
+  <string name="sort_order_top_rated_first">أعلى تقييم</string>
+  <string name="sort_order_latest_first_dvd">الأحدث أولاً-دي في دي</string>
+  <string name="sort_order_oldest_first_dvd">الأقدم أولاً-دي في دي</string>
   <string-array name="upcominglimit">
     <item>الآن</item>
     <item>يوم</item>
@@ -354,8 +349,6 @@
   <string name="check_into">فحص</string>
   <string name="no_selection">اختر واحد أدناه</string>
   <string name="looking_for_something_else">هل تبحث عن شئ آخر؟</string>
-  <string name="menu_rate_episode">تقييم الحلقة</string>
-  <string name="menu_rate_show">تقييم العرض</string>
   <string name="traktcheckin_cancel">تجاهل</string>
   <string name="traktcheckin_inprogress">أنت بالفعل تشاهد حلقة أو فيلم. إما أن تتجاوز ما تشاهده الآن أو تنتظر %s وتحاول مرة أخرى.</string>
   <string name="traktcheckin_wait">سأنتظر</string>

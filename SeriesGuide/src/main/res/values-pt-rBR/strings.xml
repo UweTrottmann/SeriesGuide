@@ -95,6 +95,7 @@
     <item quantity="many">%d minutos</item>
     <item quantity="other">%d minutos</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Sua classificação</string>
   <string name="love">Muito show!</string>
   <string name="hate">Horrível :(</string>
@@ -277,19 +278,13 @@
   <string name="feedback">Enviar comentários</string>
   <string name="pref_autoaddshows">Adicionar novas séries do trakt</string>
   <string name="pref_autoaddshowssummary">Adiciona automaticamente séries do seu fluxo de atividades do trakt</string>
-  <string-array name="sesorting">
-    <item>Mais recentes primeiro</item>
-    <item>Mais antigos primeiro</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Mais recentes primeiro</item>
-    <item>Mais antigos primeiro</item>
-    <item>Não vistos primeiro</item>
-    <item>A - Z</item>
-    <item>Mais votados</item>
-    <item>Mais recentes primeiro (DVD)</item>
-    <item>Mais antigos primeiro (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">Mais recentes primeiro</string>
+  <string name="sort_order_oldest_first">Mais antigos primeiro</string>
+  <string name="sort_order_unwatched_first">Não vistos primeiro</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">Mais votados</string>
+  <string name="sort_order_latest_first_dvd">Mais recentes primeiro (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Mais antigos primeiro (DVD)</string>
   <string-array name="upcominglimit">
     <item>agora</item>
     <item>um dia</item>
@@ -354,8 +349,6 @@
   <string name="check_into">Realizar check-in</string>
   <string name="no_selection">Escolha um abaixo</string>
   <string name="looking_for_something_else">Procurando algo mais?</string>
-  <string name="menu_rate_episode">Avaliar episódio</string>
-  <string name="menu_rate_show">Avaliar série</string>
   <string name="traktcheckin_cancel">Substituir</string>
   <string name="traktcheckin_inprogress">Você já fez check-in em outro episódio ou filme. Substitua o check-in anterior ou aguarde %s e tente novamente.</string>
   <string name="traktcheckin_wait">Vou esperar</string>

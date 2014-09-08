@@ -95,6 +95,7 @@
     <item quantity="many">%d minūtes</item>
     <item quantity="other">%d minūtes</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Jūsu vērtējums</string>
   <string name="love">Riktīgi labs!</string>
   <string name="hate">Vāja mērce :(</string>
@@ -277,19 +278,13 @@
   <string name="feedback">Nosūtīt savas domas par aplikāciju</string>
   <string name="pref_autoaddshows">Pievienot jaunus trakt šovus</string>
   <string name="pref_autoaddshowssummary">Automātiski pievienot šovus no tavas trakt aktivitāšu straumes</string>
-  <string-array name="sesorting">
-    <item>Svaigākie sākumā</item>
-    <item>Vecākie sākumā</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Svaigākie sākumā</item>
-    <item>Vecākie sākumā</item>
-    <item>Neredzētās(-ie) sākumā</item>
-    <item>No A līdz Z</item>
-    <item>Visaugstāk novērtētākas</item>
-    <item>Jaunākās pirmās (DVD)</item>
-    <item>Vecākās pirmās (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">Svaigākie sākumā</string>
+  <string name="sort_order_oldest_first">Vecākie sākumā</string>
+  <string name="sort_order_unwatched_first">Neredzētās(-ie) sākumā</string>
+  <string name="sort_order_alphabetical">No A līdz Z</string>
+  <string name="sort_order_top_rated_first">Visaugstāk novērtētākas</string>
+  <string name="sort_order_latest_first_dvd">Jaunākās pirmās (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Vecākās pirmās (DVD)</string>
   <string-array name="upcominglimit">
     <item>pašlaik</item>
     <item>1 diena</item>
@@ -355,8 +350,6 @@
   <string name="check_into">Iečekojies</string>
   <string name="no_selection">izvēlies vienu no lejup esošajiem</string>
   <string name="looking_for_something_else">Meklē kautko citu?</string>
-  <string name="menu_rate_episode">Novērtē epizodi</string>
-  <string name="menu_rate_show">Novērtē šovu</string>
   <string name="traktcheckin_cancel">Pārraksti</string>
   <string name="traktcheckin_inprogress">Tu jau esi iečekojies citā epizodē vai filmā. Pārraksti savu iepriekšējo izvēli vai arī gaidi %s un mēģini vēlreiz.</string>
   <string name="traktcheckin_wait">Es gaidīšu</string>

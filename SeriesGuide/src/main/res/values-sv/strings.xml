@@ -96,6 +96,7 @@
     <item quantity="many">%d minuter</item>
     <item quantity="other">%d minuter</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Ditt betyg</string>
   <string name="love">Helt ninja!</string>
   <string name="hate">Svag sås :(</string>
@@ -278,19 +279,13 @@
   <string name="feedback">Skicka feedback</string>
   <string name="pref_autoaddshows">Lägg till nya trakt-serier</string>
   <string name="pref_autoaddshowssummary">Lägg automatiskt till program från din trakt activity stream</string>
-  <string-array name="sesorting">
-    <item>Senaste först</item>
-    <item>Äldsta först</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Senaste först</item>
-    <item>Äldsta först</item>
-    <item>Ej sedda först</item>
-    <item>A – Ö</item>
-    <item>Högst rankad</item>
-    <item>Senaste först (DVD)</item>
-    <item>Äldsta först (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">Senaste först</string>
+  <string name="sort_order_oldest_first">Äldsta först</string>
+  <string name="sort_order_unwatched_first">Ej sedda först</string>
+  <string name="sort_order_alphabetical">A – Ö</string>
+  <string name="sort_order_top_rated_first">Högst rankad</string>
+  <string name="sort_order_latest_first_dvd">Senaste först (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Äldsta först (DVD)</string>
   <string-array name="upcominglimit">
     <item>nu</item>
     <item>en dag</item>
@@ -355,8 +350,6 @@
   <string name="check_into">Checka in</string>
   <string name="no_selection">välj en nedan</string>
   <string name="looking_for_something_else">Letar du efter något annat?</string>
-  <string name="menu_rate_episode">Betygsätt avsnitt</string>
-  <string name="menu_rate_show">Betygsätt show</string>
   <string name="traktcheckin_cancel">Hoppa över</string>
   <string name="traktcheckin_inprogress">Du är redan incheckad på ett annat avsnitt eller film. Antingen hoppar du över föregående incheckning eller vänta %s och försök igen.</string>
   <string name="traktcheckin_wait">Jag väntar</string>

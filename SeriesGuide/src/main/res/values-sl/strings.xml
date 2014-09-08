@@ -95,6 +95,7 @@
     <item quantity="many">%d minut</item>
     <item quantity="other">%d minut</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Vaša ocena</string>
   <string name="love">Totalno nindža!</string>
   <string name="hate">Bedno :(</string>
@@ -277,19 +278,13 @@
   <string name="feedback">Pošlji povratno informacijo</string>
   <string name="pref_autoaddshows">Dodaj nove trakt oddaje</string>
   <string name="pref_autoaddshowssummary">Avtomatsko dodaj oddaje iz svoje trakt aktivnosti</string>
-  <string-array name="sesorting">
-    <item>Najnovejša prva</item>
-    <item>Najstarejša prva</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Najnovejša prva</item>
-    <item>Najstarejša prva</item>
-    <item>Najprej nepogledane</item>
-    <item>A - Ž</item>
-    <item>Najvišje ocenjene</item>
-    <item>Najstarejša prva (DVD)</item>
-    <item>Najstarejša prva (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">Novejša prva</string>
+  <string name="sort_order_oldest_first">Starejša prva</string>
+  <string name="sort_order_unwatched_first">Najprej nepogledane</string>
+  <string name="sort_order_alphabetical">A - Ž</string>
+  <string name="sort_order_top_rated_first">Najvišje ocenjene</string>
+  <string name="sort_order_latest_first_dvd">Najprej zadnje (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Najprej najstarejše (DVD)</string>
   <string-array name="upcominglimit">
     <item>sedaj</item>
     <item>istega dne</item>
@@ -354,8 +349,6 @@
   <string name="check_into">Prijavi se v</string>
   <string name="no_selection">Izberi možnost spodaj</string>
   <string name="looking_for_something_else">Iščeš nekaj drugega?</string>
-  <string name="menu_rate_episode">Oceni epizodo</string>
-  <string name="menu_rate_show">Oceni oddajo</string>
   <string name="traktcheckin_cancel">Razveljavi</string>
   <string name="traktcheckin_inprogress">Prijavljen si že v drugo epizodo ali film. Ali razveljavi prejšnji vnos ali pa počakaj %s in poizkusi ponovno.</string>
   <string name="traktcheckin_wait">Počakal bom</string>

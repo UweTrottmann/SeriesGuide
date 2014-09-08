@@ -95,6 +95,7 @@
     <item quantity="many">%d minuten</item>
     <item quantity="other">%d minuten</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Uw beoordeling</string>
   <string name="love">Zeer goed!</string>
   <string name="hate">Slappe hap :(</string>
@@ -277,19 +278,13 @@
   <string name="feedback">Reactie verzenden</string>
   <string name="pref_autoaddshows">Nieuwe trakt-series toevoegen</string>
   <string name="pref_autoaddshowssummary">Series van uw actieve trakt-stream automatisch toevoegen</string>
-  <string-array name="sesorting">
-    <item>Nieuwste eerst</item>
-    <item>Oudste eerst</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Nieuwste eerst</item>
-    <item>Oudste eerst</item>
-    <item>Onbekeken eerst</item>
-    <item>A - Z</item>
-    <item>Hoogste waardering</item>
-    <item>Nieuwste eerst (DVD)</item>
-    <item>Oudste eerst (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">Nieuwste eerst</string>
+  <string name="sort_order_oldest_first">Oudste eerst</string>
+  <string name="sort_order_unwatched_first">Onbekeken eerst</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">Hoogste waardering</string>
+  <string name="sort_order_latest_first_dvd">Nieuwste eerst (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Oudste eerst (DVD)</string>
   <string-array name="upcominglimit">
     <item>nu</item>
     <item>1 dag</item>
@@ -354,8 +349,6 @@
   <string name="check_into">Check-in bij</string>
   <string name="no_selection">kies één hieronder</string>
   <string name="looking_for_something_else">Op zoek naar iets anders?</string>
-  <string name="menu_rate_episode">Aflevering beoordelen</string>
-  <string name="menu_rate_show">Serie beoordelen</string>
   <string name="traktcheckin_cancel">Overschrijven</string>
   <string name="traktcheckin_inprogress">U bent al aangemeld bij een andere aflevering of film. Overschrijf de vorige aanmelding of wacht %s en probeer het opnieuw.</string>
   <string name="traktcheckin_wait">Wachten</string>

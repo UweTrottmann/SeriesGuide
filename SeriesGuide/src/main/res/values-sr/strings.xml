@@ -95,6 +95,7 @@
     <item quantity="many">%d минута</item>
     <item quantity="other">%d минута</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Твоја оцена</string>
   <string name="love">Врхунски!</string>
   <string name="hate">Очајно :(</string>
@@ -277,19 +278,13 @@
   <string name="feedback">Пошаљи повратне информације</string>
   <string name="pref_autoaddshows">Додај нове серије тракта</string>
   <string name="pref_autoaddshowssummary">Аутоматски додај серије са ваших активности на тракту</string>
-  <string-array name="sesorting">
-    <item>Прво најновије</item>
-    <item>Прво најстарије</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Прво најновије</item>
-    <item>Прво најстарије</item>
-    <item>Прво непогледане</item>
-    <item>A - Z</item>
-    <item>Најбоље оцењене</item>
-    <item>Прво најновије (DVD)</item>
-    <item>Прво настарије (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">Прво најновије</string>
+  <string name="sort_order_oldest_first">Прво најстарије</string>
+  <string name="sort_order_unwatched_first">Прво непогледане</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">Најбоље оцењене</string>
+  <string name="sort_order_latest_first_dvd">Прво најновије (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Прво настарије (DVD)</string>
   <string-array name="upcominglimit">
     <item>одмах</item>
     <item>дан</item>
@@ -354,8 +349,6 @@
   <string name="check_into">Пријави гледање</string>
   <string name="no_selection">Одабери једну од доњих серија</string>
   <string name="looking_for_something_else">Тражите нешто друго?</string>
-  <string name="menu_rate_episode">Оцени епизоду</string>
-  <string name="menu_rate_show">Оцени серију</string>
   <string name="traktcheckin_cancel">Прескочи пријаву</string>
   <string name="traktcheckin_inprogress">Пријављени сте да гледате другу епизоду или филм. Замените претходну пријаву, или чекајте %s и покушајте поново.</string>
   <string name="traktcheckin_wait">Сачекаћу</string>

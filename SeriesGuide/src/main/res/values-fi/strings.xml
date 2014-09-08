@@ -95,6 +95,7 @@
     <item quantity="many">%d minuuttia</item>
     <item quantity="other">%d minuuttia</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Arvosanasi</string>
   <string name="love">Maailman parasta!</string>
   <string name="hate">Ei sytyttänyt :(</string>
@@ -277,19 +278,13 @@
   <string name="feedback">Lähetä palautetta</string>
   <string name="pref_autoaddshows">Lisää uudet ohjelmat traktista</string>
   <string name="pref_autoaddshowssummary">Automaattisesti lisää uudet ohjelmat traktin toimintavirrastasi</string>
-  <string-array name="sesorting">
-    <item>Uusin ensin</item>
-    <item>Vanhin ensin</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Uusin ensin</item>
-    <item>Vanhin ensin</item>
-    <item>Katsomattomat ensin</item>
-    <item>A - Ö</item>
-    <item>Suosituimmat</item>
-    <item>Uusin ensin (DVD)</item>
-    <item>Vanhin ensin (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">Uusin ensin</string>
+  <string name="sort_order_oldest_first">Vanhin ensin</string>
+  <string name="sort_order_unwatched_first">Katsomattomat ensin</string>
+  <string name="sort_order_alphabetical">A - Ö</string>
+  <string name="sort_order_top_rated_first">Suosituimmat</string>
+  <string name="sort_order_latest_first_dvd">Uusin ensin (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Vanhin ensin (DVD)</string>
   <string-array name="upcominglimit">
     <item>nyt</item>
     <item>päivän ajalta</item>
@@ -354,8 +349,6 @@
   <string name="check_into">Kuittaa</string>
   <string name="no_selection">valitse yksi alta</string>
   <string name="looking_for_something_else">Etsitkö jotain muuta?</string>
-  <string name="menu_rate_episode">Arvostele jakso</string>
-  <string name="menu_rate_show">Arvostele ohjelma</string>
   <string name="traktcheckin_cancel">Korvaa</string>
   <string name="traktcheckin_inprogress">Olet jo kuitannut toiseen jaksoon tai elokuvaan. Joko korvaa edellinen kuittaus tai odota %s ja yritä uudelleen.</string>
   <string name="traktcheckin_wait">Odotetaan</string>

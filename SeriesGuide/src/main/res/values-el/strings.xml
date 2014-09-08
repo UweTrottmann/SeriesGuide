@@ -95,6 +95,7 @@
     <item quantity="many">%d λεπτά</item>
     <item quantity="other">%d λεπτά</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Η βαθμολογία σας</string>
   <string name="love">Εντελώς ninja!</string>
   <string name="hate">Ξεφτίλα :(</string>
@@ -277,19 +278,13 @@
   <string name="feedback">Αποστολή σχολίων</string>
   <string name="pref_autoaddshows">Προσθήκη νέων σειρών από το trakt</string>
   <string name="pref_autoaddshowssummary">Αυτόματη προσθήκη σειρών από το trakt activity stream</string>
-  <string-array name="sesorting">
-    <item>Η πιο πρόσφατη πρώτα</item>
-    <item>Η παλαιότερη πρώτα</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Το πιο πρόσφατο πρώτα</item>
-    <item>Το παλαιότερο πρώτα</item>
-    <item>Αυτά που δεν έχουν παρακολουθηθεί, πρώτα</item>
-    <item>Α - Ω</item>
-    <item>Κορυφαία</item>
-    <item>Το πιο πρόσφατο, πρώτο (DVD)</item>
-    <item>Το παλαιότερο πρώτα (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">Η πιο πρόσφατη πρώτα</string>
+  <string name="sort_order_oldest_first">Η παλαιότερη πρώτα</string>
+  <string name="sort_order_unwatched_first">Αυτά που δεν έχουν παρακολουθηθεί, πρώτα</string>
+  <string name="sort_order_alphabetical">Α - Ω</string>
+  <string name="sort_order_top_rated_first">Κορυφαία</string>
+  <string name="sort_order_latest_first_dvd">Το πιο πρόσφατο, πρώτο (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Το παλαιότερο πρώτα (DVD)</string>
   <string-array name="upcominglimit">
     <item>τώρα</item>
     <item>1 ημέρα</item>
@@ -354,8 +349,6 @@
   <string name="check_into">Έλεγχος σε</string>
   <string name="no_selection">επιλογή ενός από τα παρακάτω</string>
   <string name="looking_for_something_else">Ψάχνετε για κάτι άλλο;</string>
-  <string name="menu_rate_episode">Βαθμολόγησε επεισόδιο</string>
-  <string name="menu_rate_show">Βαθμολόγησε τη σειρά</string>
   <string name="traktcheckin_cancel">Παράκαμψη</string>
   <string name="traktcheckin_inprogress">Έχετε ήδη κάνει check ένα άλλο επεισόδιο ή ταινία. Είτε παρακάμψτε το προηγούμενο check-in, είτε περιμένετε %s και δοκιμάστε ξανά.</string>
   <string name="traktcheckin_wait">Θα περιμένω</string>

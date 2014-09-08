@@ -95,6 +95,7 @@
     <item quantity="many">%d דקות</item>
     <item quantity="other">%d דקות</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">הדירוג שלך</string>
   <string name="love">לגמרי נינג\'ה!</string>
   <string name="hate">על הפנים ):</string>
@@ -277,19 +278,13 @@
   <string name="feedback">שלח משוב</string>
   <string name="pref_autoaddshows">הוסף סדרות trakt חדשות</string>
   <string name="pref_autoaddshowssummary">הוסף סדרות מפעילות ה-trakt שלך באופן אוטומטי</string>
-  <string-array name="sesorting">
-    <item>אחרון קודם</item>
-    <item>ראשון קודם</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>אחרון קודם</item>
-    <item>ראשון קודם</item>
-    <item>לא נצפו קודם</item>
-    <item>A - Z</item>
-    <item>פופולרים</item>
-    <item>אחרון קודם (DVD)</item>
-    <item>ראשון קודם (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">אחרון קודם</string>
+  <string name="sort_order_oldest_first">ראשון קודם</string>
+  <string name="sort_order_unwatched_first">לא נצפו קודם</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">פופולרים</string>
+  <string name="sort_order_latest_first_dvd">אחרון קודם (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">ראשון קודם (DVD)</string>
   <string-array name="upcominglimit">
     <item>כעת</item>
     <item>יום</item>
@@ -354,8 +349,6 @@
   <string name="check_into">בצע צ\'ק-אין ב</string>
   <string name="no_selection">בחר אחד להלן</string>
   <string name="looking_for_something_else">מחפש משהו אחר?</string>
-  <string name="menu_rate_episode">דרג פרק</string>
-  <string name="menu_rate_show">דרג סדרה</string>
   <string name="traktcheckin_cancel">דרוס</string>
   <string name="traktcheckin_inprogress">אתה כבר עושה צ\'ק-אין לפרק או לסרט אחר. דרוס את הצ\'ק-אין הקודם או חכה %s ונסה שנית.</string>
   <string name="traktcheckin_wait">אני אחכה</string>

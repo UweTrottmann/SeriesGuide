@@ -95,6 +95,7 @@
     <item quantity="many">%d minutter</item>
     <item quantity="other">%d minutter</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Din bedømmelse</string>
   <string name="love">Totalt ninja!</string>
   <string name="hate">Svag sovs :(</string>
@@ -277,19 +278,13 @@
   <string name="feedback">Send feedback</string>
   <string name="pref_autoaddshows">Tilføj nye trakt serier</string>
   <string name="pref_autoaddshowssummary">Tilføj automatisk serier fra dine trakt aktiviteter</string>
-  <string-array name="sesorting">
-    <item>Seneste først</item>
-    <item>Ældste først</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Nyeste først</item>
-    <item>Ældste først</item>
-    <item>Usete først</item>
-    <item>A - Z</item>
-    <item>Top bedømte</item>
-    <item>Nyeste først (DVD)</item>
-    <item>Ældste først (DVD)</item>
-  </string-array>
+  <string name="sort_order_latest_first">Seneste først</string>
+  <string name="sort_order_oldest_first">Ældste først</string>
+  <string name="sort_order_unwatched_first">Usete først</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">Top bedømte</string>
+  <string name="sort_order_latest_first_dvd">Nyeste først (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Ældste først (DVD)</string>
   <string-array name="upcominglimit">
     <item>nu</item>
     <item>en dag</item>
@@ -354,8 +349,6 @@
   <string name="check_into">Tjek ind</string>
   <string name="no_selection">Vælg en nedenfor</string>
   <string name="looking_for_something_else">Søger du noget andet?</string>
-  <string name="menu_rate_episode">Bedøm episode</string>
-  <string name="menu_rate_show">Bedøm serie</string>
   <string name="traktcheckin_cancel">Overskriv</string>
   <string name="traktcheckin_inprogress">Du er allerede tjekket ind på en anden episode eller film. Overskriv den foregående indtjekning eller vent %s og prøv igen.</string>
   <string name="traktcheckin_wait">Jeg venter</string>
