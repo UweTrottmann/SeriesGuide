@@ -122,6 +122,7 @@
   <string name="episode_dvdnumber">حلقة دي في دي</string>
   <string name="show_actors">الممثلون</string>
   <string name="show_firstaired">بثت أول مرة</string>
+  <string name="show_on_network">خلال %s</string>
   <string name="show_genres">الأنواع</string>
   <string name="show_runtime">وقت التشغيل</string>
   <string name="show_contentrating">تقييم المحتوى</string>
@@ -134,8 +135,6 @@
   <string name="lastEdit">آخر تحرير//TVDb</string>
   <string name="services_watch">شاهد</string>
   <string name="services_more">المزيد</string>
-  <string name="sort">ترتيب حسب</string>
-  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">اليوم</string>
   <string name="now">الآن</string>
   <string name="daily">يومي</string>
@@ -208,7 +207,6 @@
   <string name="update_scheduled">جاري التحديث</string>
   <string name="update_no_connection">ليتم التحديث إتصل بالإنترنت.</string>
   <string name="update_inprogress">التحديث قيد التقدم, حاول مرة أخرى.</string>
-  <string name="show_on_network">خلال %s</string>
   <string name="season_watchcount">الحلقات التي لم تشاهد</string>
   <string name="season_allwatched">تم مشاهدة جميع الحلقات</string>
   <string name="season_onenotwatched">الحلقة التي لم تشاهد</string>
@@ -278,6 +276,8 @@
   <string name="feedback">أرسل ملاحظاتك</string>
   <string name="pref_autoaddshows">إضافة المسلسلات الجديدة من موقع التراكت</string>
   <string name="pref_autoaddshowssummary">إضافة المسلسلات تلقائياً من حسابك الموجود على موقع Trakt</string>
+  <string name="sort">ترتيب حسب</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="sort_order_latest_first">الأحدث أولاً</string>
   <string name="sort_order_oldest_first">الأقدم أولاً</string>
   <string name="sort_order_unwatched_first">غير المُشاهدة أولاً</string>
@@ -285,14 +285,15 @@
   <string name="sort_order_top_rated_first">أعلى تقييم</string>
   <string name="sort_order_latest_first_dvd">الأحدث أولاً-دي في دي</string>
   <string name="sort_order_oldest_first_dvd">الأقدم أولاً-دي في دي</string>
-  <string-array name="upcominglimit">
-    <item>الآن</item>
-    <item>يوم</item>
-    <item>ثلاثة أيام</item>
-    <item>أسبوع</item>
-    <item>أسبوعين</item>
-    <item>شهر</item>
-  </string-array>
+  <string name="upcoming_upto_now">الآن</string>
+  <string name="upcoming_upto_one_day">يوم</string>
+  <string name="upcoming_upto_three_days">ثلاثة أيام</string>
+  <string name="upcoming_upto_one_week">أسبوع</string>
+  <string name="upcoming_upto_two_weeks">أسبوعين</string>
+  <string name="upcoming_upto_one_month">شهر</string>
+  <string name="upcoming_upto_one_hour">ساعة</string>
+  <string name="upcoming_upto_six_hours">6 ساعات</string>
+  <string name="upcoming_upto_half_day">12 ساعة</string>
   <string name="pref_appearance">المظهر</string>
   <string name="pref_theme">مظهر التطبيق</string>
   <string name="pref_other">أخرى</string>
@@ -381,41 +382,24 @@
   <string name="pref_vibrate">إهتزاز</string>
   <string name="pref_vibratesummary">إهتزاز عند عرض التنبيه</string>
   <string name="pref_notifications_treshold">موعد التنبيه</string>
-  <string-array name="notificationThreshold">
-    <item>مباشر</item>
-    <item>قبل 5 دقائق</item>
-    <item>قبل 10 دقائق</item>
-    <item>قبل ساعة</item>
-  </string-array>
+  <string name="notification_release_exact">مباشر</string>
+  <string name="notification_release_earlier_five">قبل 5 دقائق</string>
+  <string name="notification_release_earlier_ten">قبل 10 دقائق</string>
+  <string name="notification_release_earlier_hour">قبل ساعة</string>
   <string name="smallwidget">دليل المسلسلات (صغير)</string>
   <string name="bigwidget">دليل المسلسلات (وسط)</string>
   <string name="largewidget">دليل المسلسلات (كبير)</string>
   <string name="hide_watched">إخفاء الحلقات المشاهدة</string>
   <string name="pref_widget_opacity">خلفية القطعة العائمة</string>
-  <string-array name="widgetOpacity">
-    <item>شفافية</item>
-    <item>٢٥٪ أسود</item>
-    <item>٥٠% أسود</item>
-    <item>٧٥% أسود</item>
-    <item>أسود</item>
-  </string-array>
   <string name="pref_widget_type">نوع القطعة العائمة</string>
-  <string-array name="widgetType">
-    <item>القادم</item>
-    <item>مؤخراُ</item>
-    <item>المفضلة</item>
-  </string-array>
+  <string name="widget_background_transparent">شفافية</string>
+  <string name="widget_background_25">٢٥٪ أسود</string>
+  <string name="widget_background_50">٥٠% أسود</string>
+  <string name="widget_background_75">٧٥% أسود</string>
+  <string name="widget_background_opaque">أسود</string>
   <string name="dashclock_extension_label">الحلقة القادمة</string>
   <string name="dashclock_extension_description">عرض الحلقة القادمة  من دليل المسلسلات الخاص بك</string>
   <string name="dashclock_pref_upcoming_threshold">عرض الحلقات القادمة</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>ساعة</item>
-    <item>6 ساعات</item>
-    <item>12 ساعة</item>
-    <item>24 ساعة</item>
-    <item>ثلاثة أيام</item>
-    <item>أسبوع</item>
-  </string-array>
   <string name="action_migrate">التحول إلى النسخة المدفوعة</string>
   <string name="migration_description">برنامج دليل المسلسلات النسخة المدفوعة أصبح الآن عبارة عن مفتاح لتفعيل النسخة المجانية لتصبح مدفوعة. رجاء تحول إلى النسخة المجانية من برنامج دليل المسلسلات. ولا تحذف النسخة المدفوعة لأنها هي المفتاح لتفعيل النسخة المجانية.</string>
   <string name="migration_import">إضغظ أدناه لعمل إستيراد للنسخة الإحتياطية التي تم إنشاؤها في برنامج دليل المسلسلات.</string>

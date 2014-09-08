@@ -122,6 +122,7 @@
   <string name="episode_dvdnumber">DVD Episode</string>
   <string name="show_actors">Skuespillere</string>
   <string name="show_firstaired">Først sendt</string>
+  <string name="show_on_network">på %s</string>
   <string name="show_genres">Sjangre</string>
   <string name="show_runtime">Lengde</string>
   <string name="show_contentrating">Innholdsvurdering</string>
@@ -134,8 +135,6 @@
   <string name="lastEdit">Sist endret // TVDb</string>
   <string name="services_watch">Se</string>
   <string name="services_more">Mer</string>
-  <string name="sort">Sorter etter</string>
-  <string name="action_sort_ignore_articles">Ignorer artikler</string>
   <string name="today">i dag</string>
   <string name="now">nå</string>
   <string name="daily">Daglig</string>
@@ -208,7 +207,6 @@
   <string name="update_scheduled">Oppdaterer…</string>
   <string name="update_no_connection">Koble til internett for å oppdatere.</string>
   <string name="update_inprogress">En oppdatering er i gang, prøv på nytt senere.</string>
-  <string name="show_on_network">på %s</string>
   <string name="season_watchcount">episoder ikke sett</string>
   <string name="season_allwatched">Alle episoder sett</string>
   <string name="season_onenotwatched">episode ikke sett</string>
@@ -278,6 +276,8 @@
   <string name="feedback">Gi tilbakemelding</string>
   <string name="pref_autoaddshows">Legg til nye trakt serier</string>
   <string name="pref_autoaddshowssummary">Automatisk legge til serier fra din trakt aktivitetsstrøm</string>
+  <string name="sort">Sorter etter</string>
+  <string name="action_sort_ignore_articles">Ignorer artikler</string>
   <string name="sort_order_latest_first">Nyeste først</string>
   <string name="sort_order_oldest_first">Eldste først</string>
   <string name="sort_order_unwatched_first">Usette først</string>
@@ -285,14 +285,15 @@
   <string name="sort_order_top_rated_first">Høyest rangerte først</string>
   <string name="sort_order_latest_first_dvd">Nyeste først (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Eldste først (DVD)</string>
-  <string-array name="upcominglimit">
-    <item>nå</item>
-    <item>en dag</item>
-    <item>3 dager</item>
-    <item>en uke</item>
-    <item>to uker</item>
-    <item>en måned</item>
-  </string-array>
+  <string name="upcoming_upto_now">nå</string>
+  <string name="upcoming_upto_one_day">en dag</string>
+  <string name="upcoming_upto_three_days">3 dager</string>
+  <string name="upcoming_upto_one_week">en uke</string>
+  <string name="upcoming_upto_two_weeks">to uker</string>
+  <string name="upcoming_upto_one_month">en måned</string>
+  <string name="upcoming_upto_one_hour">time</string>
+  <string name="upcoming_upto_six_hours">6 timer</string>
+  <string name="upcoming_upto_half_day">12 timer</string>
   <string name="pref_appearance">Utseende</string>
   <string name="pref_theme">App tema</string>
   <string name="pref_other">Annet</string>
@@ -381,41 +382,24 @@
   <string name="pref_vibrate">Vibrer</string>
   <string name="pref_vibratesummary">Vibrer også ved visning av varsel</string>
   <string name="pref_notifications_treshold">Når skal det varsles</string>
-  <string-array name="notificationThreshold">
-    <item>På lufta</item>
-    <item>5 min på forhånd</item>
-    <item>10 min på forhånd</item>
-    <item>en time på forhånd</item>
-  </string-array>
+  <string name="notification_release_exact">På lufta</string>
+  <string name="notification_release_earlier_five">5 min på forhånd</string>
+  <string name="notification_release_earlier_ten">10 min på forhånd</string>
+  <string name="notification_release_earlier_hour">en time på forhånd</string>
   <string name="smallwidget">SeriesGuide (liten)</string>
   <string name="bigwidget">SeriesGuide (middels)</string>
   <string name="largewidget">SeriesGuide (stor)</string>
   <string name="hide_watched">Skjul sette episoder</string>
   <string name="pref_widget_opacity">Modulbakgrunn</string>
-  <string-array name="widgetOpacity">
-    <item>Gjennomsiktig</item>
-    <item>25% svart</item>
-    <item>50% svart</item>
-    <item>75% svart</item>
-    <item>Svart</item>
-  </string-array>
   <string name="pref_widget_type">Modultype</string>
-  <string-array name="widgetType">
-    <item>Kommende</item>
-    <item>Nylig</item>
-    <item>Favoritter</item>
-  </string-array>
+  <string name="widget_background_transparent">Gjennomsiktig</string>
+  <string name="widget_background_25">25% svart</string>
+  <string name="widget_background_50">50% svart</string>
+  <string name="widget_background_75">75% svart</string>
+  <string name="widget_background_opaque">Svart</string>
   <string name="dashclock_extension_label">Kommende episode</string>
   <string name="dashclock_extension_description">Viser neste episode av dine SeriesGuide serier.</string>
   <string name="dashclock_pref_upcoming_threshold">Vis episoder i neste</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>time</item>
-    <item>6 timer</item>
-    <item>12 timer</item>
-    <item>24 timer</item>
-    <item>3 dager</item>
-    <item>uke</item>
-  </string-array>
   <string name="action_migrate">Migrere fra X</string>
   <string name="migration_description">SeriesGuide X er nå er opplåsningsnøkkel til X funksjonene i gratis versjonen (X Pass). Vennligst migrer dine serier til gratisversjonen av SeriesGuide. Hold X installert for å låse opp alle funksjonene i gratisversjonen.</string>
   <string name="migration_import">Trykk under for å importere sikkerhetskopien som er opprettet i SeriesGuide X.</string>

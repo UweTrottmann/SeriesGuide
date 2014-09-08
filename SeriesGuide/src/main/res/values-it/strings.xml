@@ -122,6 +122,7 @@
   <string name="episode_dvdnumber">Episodio su DVD</string>
   <string name="show_actors">Attori</string>
   <string name="show_firstaired">Data prima trasmissione</string>
+  <string name="show_on_network">su %s</string>
   <string name="show_genres">Generi</string>
   <string name="show_runtime">Durata</string>
   <string name="show_contentrating">Valutazione contenuto</string>
@@ -134,8 +135,6 @@
   <string name="lastEdit">Ultima modifica // TVDb</string>
   <string name="services_watch">Guarda</string>
   <string name="services_more">Altro</string>
-  <string name="sort">Ordina per</string>
-  <string name="action_sort_ignore_articles">Ignora gli articoli</string>
   <string name="today">oggi</string>
   <string name="now">adesso</string>
   <string name="daily">Giornaliero</string>
@@ -208,7 +207,6 @@
   <string name="update_scheduled">Aggiornamento…</string>
   <string name="update_no_connection">Per aggiornare connettersi a internet.</string>
   <string name="update_inprogress">Un aggiornamento è in corso, riprova più tardi.</string>
-  <string name="show_on_network">su %s</string>
   <string name="season_watchcount">episodi non visti</string>
   <string name="season_allwatched">Tutti gli episodi visti</string>
   <string name="season_onenotwatched">episodio non visto</string>
@@ -278,6 +276,8 @@
   <string name="feedback">Invia feedback</string>
   <string name="pref_autoaddshows">Aggiungi nuove serie trakt</string>
   <string name="pref_autoaddshowssummary">Aggiungi automaticamente le serie dal tuo trakt</string>
+  <string name="sort">Ordina per</string>
+  <string name="action_sort_ignore_articles">Ignora gli articoli</string>
   <string name="sort_order_latest_first">Prima i più recenti</string>
   <string name="sort_order_oldest_first">Prima i più vecchi</string>
   <string name="sort_order_unwatched_first">Prima i non visti</string>
@@ -285,14 +285,15 @@
   <string name="sort_order_top_rated_first">Le più votate</string>
   <string name="sort_order_latest_first_dvd">Prima i più recenti (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Prima i più vecchi (DVD)</string>
-  <string-array name="upcominglimit">
-    <item>ora</item>
-    <item>1 giorno</item>
-    <item>3 giorni</item>
-    <item>1 settimana</item>
-    <item>2 settimane</item>
-    <item>1 mese</item>
-  </string-array>
+  <string name="upcoming_upto_now">adesso</string>
+  <string name="upcoming_upto_one_day">1 giorno</string>
+  <string name="upcoming_upto_three_days">3 giorni</string>
+  <string name="upcoming_upto_one_week">1 settimana</string>
+  <string name="upcoming_upto_two_weeks">2 settimane</string>
+  <string name="upcoming_upto_one_month">1 mese</string>
+  <string name="upcoming_upto_one_hour">1 ora</string>
+  <string name="upcoming_upto_six_hours">6 ore</string>
+  <string name="upcoming_upto_half_day">12 ore</string>
   <string name="pref_appearance">Aspetto</string>
   <string name="pref_theme">Tema applicazione</string>
   <string name="pref_other">Altro</string>
@@ -381,41 +382,24 @@
   <string name="pref_vibrate">Vibrazione</string>
   <string name="pref_vibratesummary">Vibra anche alla visualizzazione di una notifica</string>
   <string name="pref_notifications_treshold">Ora di notifica</string>
-  <string-array name="notificationThreshold">
-    <item>in onda</item>
-    <item>5 min in anticipo</item>
-    <item>10 min in anticipo</item>
-    <item>1 ora in anticipo</item>
-  </string-array>
+  <string name="notification_release_exact">in onda</string>
+  <string name="notification_release_earlier_five">5 min in anticipo</string>
+  <string name="notification_release_earlier_ten">10 min in anticipo</string>
+  <string name="notification_release_earlier_hour">1 ora in anticipo</string>
   <string name="smallwidget">SeriesGuide (piccolo)</string>
   <string name="bigwidget">SeriesGuide (medio)</string>
   <string name="largewidget">SeriesGuide (grande)</string>
   <string name="hide_watched">Nascondi episodi già visti</string>
   <string name="pref_widget_opacity">Sfondo widget</string>
-  <string-array name="widgetOpacity">
-    <item>Trasparente</item>
-    <item>25% nero</item>
-    <item>50% nero</item>
-    <item>75% nero</item>
-    <item>Nero</item>
-  </string-array>
   <string name="pref_widget_type">Tipo di widget</string>
-  <string-array name="widgetType">
-    <item>Prossimi</item>
-    <item>Recenti</item>
-    <item>Preferiti</item>
-  </string-array>
+  <string name="widget_background_transparent">Trasparente</string>
+  <string name="widget_background_25">25% nero</string>
+  <string name="widget_background_50">50% nero</string>
+  <string name="widget_background_75">75% nero</string>
+  <string name="widget_background_opaque">Nero</string>
   <string name="dashclock_extension_label">Prossimi episodi</string>
   <string name="dashclock_extension_description">Mostra il prossimo episodio nella lista SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Mostra episodio entro…</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>1 ora</item>
-    <item>6 ore</item>
-    <item>12 ore</item>
-    <item>24 ore</item>
-    <item>3 giorni</item>
-    <item>1 settimana</item>
-  </string-array>
   <string name="action_migrate">Migrazione da X</string>
   <string name="migration_description">SeriesGuide X è diventato una chiave di sblocco per le funzioni X nella versione gratuita (X Pass). Per favore, migra le tue serie nella versione gratuita di SeriesGuide. Mantieni installato X per sbloccare tutte le funzioni nella versione gratuita.</string>
   <string name="migration_import">Tocca qui sotto per importare il backup creato in SeriesGuide X.</string>

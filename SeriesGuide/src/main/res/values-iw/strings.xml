@@ -122,6 +122,7 @@
   <string name="episode_dvdnumber">פרק DVD</string>
   <string name="show_actors">שחקנים</string>
   <string name="show_firstaired">הקרנה ראשונה</string>
+  <string name="show_on_network">ב- %s</string>
   <string name="show_genres">ז\'אנרים</string>
   <string name="show_runtime">זמן ריצה</string>
   <string name="show_contentrating">דירוג תוכן</string>
@@ -134,8 +135,6 @@
   <string name="lastEdit">עדכון אחרון // TVDb</string>
   <string name="services_watch">צפה</string>
   <string name="services_more">עוד</string>
-  <string name="sort">מיין לפי</string>
-  <string name="action_sort_ignore_articles">התעלם מהמאמרים</string>
   <string name="today">היום</string>
   <string name="now">עכשיו</string>
   <string name="daily">יומי</string>
@@ -208,7 +207,6 @@
   <string name="update_scheduled">מעדכן…</string>
   <string name="update_no_connection">התחבר לאינטרנט כדי לעדכן.</string>
   <string name="update_inprogress">מבצע תהליך עדכון, נסה מאוחר יותר.</string>
-  <string name="show_on_network">ב- %s</string>
   <string name="season_watchcount">הפרקים לא נצפו</string>
   <string name="season_allwatched">כל הפרקים נצפו</string>
   <string name="season_onenotwatched">פרק שטרם נצפה</string>
@@ -278,6 +276,8 @@
   <string name="feedback">שלח משוב</string>
   <string name="pref_autoaddshows">הוסף סדרות trakt חדשות</string>
   <string name="pref_autoaddshowssummary">הוסף סדרות מפעילות ה-trakt שלך באופן אוטומטי</string>
+  <string name="sort">מיין לפי</string>
+  <string name="action_sort_ignore_articles">התעלם מהמאמרים</string>
   <string name="sort_order_latest_first">אחרון קודם</string>
   <string name="sort_order_oldest_first">ראשון קודם</string>
   <string name="sort_order_unwatched_first">לא נצפו קודם</string>
@@ -285,14 +285,15 @@
   <string name="sort_order_top_rated_first">פופולרים</string>
   <string name="sort_order_latest_first_dvd">אחרון קודם (DVD)</string>
   <string name="sort_order_oldest_first_dvd">ראשון קודם (DVD)</string>
-  <string-array name="upcominglimit">
-    <item>כעת</item>
-    <item>יום</item>
-    <item>3 ימים</item>
-    <item>שבוע אחד</item>
-    <item>שבועיים</item>
-    <item>חודש אחד</item>
-  </string-array>
+  <string name="upcoming_upto_now">עכשיו</string>
+  <string name="upcoming_upto_one_day">יום</string>
+  <string name="upcoming_upto_three_days">3 ימים</string>
+  <string name="upcoming_upto_one_week">שבוע אחד</string>
+  <string name="upcoming_upto_two_weeks">שבועיים</string>
+  <string name="upcoming_upto_one_month">חודש אחד</string>
+  <string name="upcoming_upto_one_hour">שעה</string>
+  <string name="upcoming_upto_six_hours">6 שעות</string>
+  <string name="upcoming_upto_half_day">12 שעות</string>
   <string name="pref_appearance">תצוגה</string>
   <string name="pref_theme">נושא אפליקציה</string>
   <string name="pref_other">אחר</string>
@@ -381,41 +382,24 @@
   <string name="pref_vibrate">רטט</string>
   <string name="pref_vibratesummary">רטוט גם בזמן הצגת התראות</string>
   <string name="pref_notifications_treshold">מתי להתריע</string>
-  <string-array name="notificationThreshold">
-    <item>משודר</item>
-    <item>5 דקות מראש</item>
-    <item>10 דקות מראש</item>
-    <item>שעה מראש</item>
-  </string-array>
+  <string name="notification_release_exact">משודר</string>
+  <string name="notification_release_earlier_five">5 דקות מראש</string>
+  <string name="notification_release_earlier_ten">10 דקות מראש</string>
+  <string name="notification_release_earlier_hour">שעה מראש</string>
   <string name="smallwidget">SeriesGuide (קטן)</string>
   <string name="bigwidget">SeriesGuide (בינוני)</string>
   <string name="largewidget">SeriesGuide (גדול)</string>
   <string name="hide_watched">הסתר פרקים שנצפו</string>
   <string name="pref_widget_opacity">רקע ווידג\'ט</string>
-  <string-array name="widgetOpacity">
-    <item>שקוף</item>
-    <item>25% שחור</item>
-    <item>50% שחור</item>
-    <item>75% שחור</item>
-    <item>שחור</item>
-  </string-array>
   <string name="pref_widget_type">סוג ווידג\'ט</string>
-  <string-array name="widgetType">
-    <item>בקרוב</item>
-    <item>חדש</item>
-    <item>מועדפים</item>
-  </string-array>
+  <string name="widget_background_transparent">שקוף</string>
+  <string name="widget_background_25">25% שחור</string>
+  <string name="widget_background_50">50% שחור</string>
+  <string name="widget_background_75">75% שחור</string>
+  <string name="widget_background_opaque">שחור</string>
   <string name="dashclock_extension_label">פרקים קרובים</string>
   <string name="dashclock_extension_description">מציג את הפרק הקרוב הבא מסדרות ה-SeriesGuide שלך.</string>
   <string name="dashclock_pref_upcoming_threshold">הצג פרקים ב-</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>שעה</item>
-    <item>6 שעות</item>
-    <item>12 שעות</item>
-    <item>24 שעות</item>
-    <item>שלושה ימים</item>
-    <item>שבוע</item>
-  </string-array>
   <string name="action_migrate">העבר מ-X</string>
   <string name="migration_description">SeriesGuide X מעתה הינו קוד לפתיחת יכולות מנוי ה-X מתוך הגרסה החינמית (X Pass). אנא העבר את הסדרות שלך לגרסה החינמית של SeriesGuide. תשאיר את X מותקן עבור פתיחת כל היכולות בגסה החינמית.</string>
   <string name="migration_import">לחץ מטה כדי לייבא את הגיבוי, אשר נוצר ב-SeriesGuide X.</string>

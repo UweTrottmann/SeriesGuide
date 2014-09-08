@@ -122,6 +122,7 @@
   <string name="episode_dvdnumber">DVD epizode</string>
   <string name="show_actors">Aktieri</string>
   <string name="show_firstaired">Izlaišanas datums</string>
+  <string name="show_on_network">kanālā %s</string>
   <string name="show_genres">Žanri</string>
   <string name="show_runtime">Garums</string>
   <string name="show_contentrating">Satura novērtējums</string>
@@ -134,8 +135,6 @@
   <string name="lastEdit">Pēdējais labojums //TVDb</string>
   <string name="services_watch">Skaties</string>
   <string name="services_more">Vairāk</string>
-  <string name="sort">Kārtot pēc</string>
-  <string name="action_sort_ignore_articles">Ignorēt rakstus</string>
   <string name="today">šodien</string>
   <string name="now">pašlaik</string>
   <string name="daily">Ikdienišķi</string>
@@ -208,7 +207,6 @@
   <string name="update_scheduled">Notiek atjaunināšana…</string>
   <string name="update_no_connection">Lai atjaunināt, pieslēdzieties internetam.</string>
   <string name="update_inprogress">Notiek atjaunināšana, mēģiniet vēlreiz vēlāk.</string>
-  <string name="show_on_network">kanālā %s</string>
   <string name="season_watchcount">Nenoskatītās epizodes</string>
   <string name="season_allwatched">Visas epizodes noskatītas</string>
   <string name="season_onenotwatched">Epizode nav noskatīta</string>
@@ -278,6 +276,8 @@
   <string name="feedback">Nosūtīt savas domas par aplikāciju</string>
   <string name="pref_autoaddshows">Pievienot jaunus trakt šovus</string>
   <string name="pref_autoaddshowssummary">Automātiski pievienot šovus no tavas trakt aktivitāšu straumes</string>
+  <string name="sort">Kārtot pēc</string>
+  <string name="action_sort_ignore_articles">Ignorēt rakstus</string>
   <string name="sort_order_latest_first">Svaigākie sākumā</string>
   <string name="sort_order_oldest_first">Vecākie sākumā</string>
   <string name="sort_order_unwatched_first">Neredzētās(-ie) sākumā</string>
@@ -285,14 +285,15 @@
   <string name="sort_order_top_rated_first">Visaugstāk novērtētākas</string>
   <string name="sort_order_latest_first_dvd">Jaunākās pirmās (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Vecākās pirmās (DVD)</string>
-  <string-array name="upcominglimit">
-    <item>pašlaik</item>
-    <item>1 diena</item>
-    <item>3 dienas</item>
-    <item>1 nedēļa</item>
-    <item>2 nedēļas</item>
-    <item>1 mēnesis</item>
-  </string-array>
+  <string name="upcoming_upto_now">pašlaik</string>
+  <string name="upcoming_upto_one_day">1 diena</string>
+  <string name="upcoming_upto_three_days">3 dienas</string>
+  <string name="upcoming_upto_one_week">1 nedēļa</string>
+  <string name="upcoming_upto_two_weeks">2 nedēļas</string>
+  <string name="upcoming_upto_one_month">1 mēnesis</string>
+  <string name="upcoming_upto_one_hour">1 stundu pirms</string>
+  <string name="upcoming_upto_six_hours">6 stundas pirms</string>
+  <string name="upcoming_upto_half_day">12 stundas pirms</string>
   <string name="pref_appearance">Izskats</string>
   <string name="pref_theme">Aplikācijas motīvs</string>
   <string name="pref_other">Citi</string>
@@ -382,41 +383,24 @@
   <string name="pref_vibrate">Vibrēt</string>
   <string name="pref_vibratesummary">Vibrēt arī paziņojuma uzrādīšanas laikā</string>
   <string name="pref_notifications_treshold">Kad paziņot</string>
-  <string-array name="notificationThreshold">
-    <item>ekranizācijas laikā</item>
-    <item>5 minūtes pirms</item>
-    <item>10 minūtes pirms</item>
-    <item>1 stundu pirms</item>
-  </string-array>
+  <string name="notification_release_exact">ekranizācijas laikā</string>
+  <string name="notification_release_earlier_five">5 minūtes pirms</string>
+  <string name="notification_release_earlier_ten">10 minūtes pirms</string>
+  <string name="notification_release_earlier_hour">1 stundu pirms</string>
   <string name="smallwidget">SeriesGuide (neliels)</string>
   <string name="bigwidget">SeriesGuide (vidēji liels)</string>
   <string name="largewidget">SeriesGuide (liels)</string>
   <string name="hide_watched">Slēpt jau redzētās epizodes</string>
   <string name="pref_widget_opacity">Logrīka fons</string>
-  <string-array name="widgetOpacity">
-    <item>Caurredzams</item>
-    <item>25% melns</item>
-    <item>50% melns</item>
-    <item>75% melns</item>
-    <item>Tumšs</item>
-  </string-array>
   <string name="pref_widget_type">Logrīka tips</string>
-  <string-array name="widgetType">
-    <item>Gaidāmās</item>
-    <item>Nesen</item>
-    <item>Favorīti</item>
-  </string-array>
+  <string name="widget_background_transparent">Caurredzams</string>
+  <string name="widget_background_25">25% melns</string>
+  <string name="widget_background_50">50% melns</string>
+  <string name="widget_background_75">75% melns</string>
+  <string name="widget_background_opaque">Tumšs</string>
   <string name="dashclock_extension_label">Epizode tuvojas</string>
   <string name="dashclock_extension_description">Uzrāda nākamās tavu SeriesGuide šovu epizodes.</string>
   <string name="dashclock_pref_upcoming_threshold">Uz rādīt epizodi...</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>1 stundu pirms</item>
-    <item>6 stundas pirms</item>
-    <item>12 stundas pirms</item>
-    <item>24 stundas pirms</item>
-    <item>3 dienas pirms</item>
-    <item>1 nedēļu pirms</item>
-  </string-array>
   <string name="action_migrate">Migrēt no X</string>
   <string name="migration_description">SeriesGuide X ir kļuvis par atbloķēšanas atslēgu priekš X funkcijām bezmaksas versijā ("X Pass"). Lūdzu pārmigrē savus šovus uz bezmaksas SeriesGuide versiju. Atstāj X ieinstalētu, lai atbloķētu visas funkcijas bezmaksas versijā.</string>
   <string name="migration_import">Pieskāries lejā lai importēti SeriesGuide X radīto kopiju.</string>

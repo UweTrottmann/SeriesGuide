@@ -122,6 +122,7 @@
   <string name="episode_dvdnumber">DVD эпизод</string>
   <string name="show_actors">Актеры</string>
   <string name="show_firstaired">Премьера</string>
+  <string name="show_on_network">В %s</string>
   <string name="show_genres">Жанры</string>
   <string name="show_runtime">Продолжительность</string>
   <string name="show_contentrating">Оценка содержимого</string>
@@ -134,8 +135,6 @@
   <string name="lastEdit">Последние изменения / / TVDb</string>
   <string name="services_watch">Смотреть</string>
   <string name="services_more">Подробнее</string>
-  <string name="sort">Сортировать по</string>
-  <string name="action_sort_ignore_articles">Игнорировать статей</string>
   <string name="today">сегодня</string>
   <string name="now">сейчас</string>
   <string name="daily">Ежедневно</string>
@@ -208,7 +207,6 @@
   <string name="update_scheduled">Обновление…</string>
   <string name="update_no_connection">Для обновления подключите Интернет.</string>
   <string name="update_inprogress">Выполняется обновление, попробуйте еще раз позже.</string>
-  <string name="show_on_network">В %s</string>
   <string name="season_watchcount">не просмотрено</string>
   <string name="season_allwatched">Отметить все, как просмотренные</string>
   <string name="season_onenotwatched">эпизод не просмотрен</string>
@@ -278,6 +276,8 @@
   <string name="feedback">Отправить отзыв</string>
   <string name="pref_autoaddshows">Добавить новые сериалы из trakt</string>
   <string name="pref_autoaddshowssummary">Автоматически добавлять сериалы из trakt</string>
+  <string name="sort">Сортировать по</string>
+  <string name="action_sort_ignore_articles">Игнорировать статей</string>
   <string name="sort_order_latest_first">Сначала последний</string>
   <string name="sort_order_oldest_first">Старшие с начала</string>
   <string name="sort_order_unwatched_first">Сначала непросмотренные</string>
@@ -285,14 +285,15 @@
   <string name="sort_order_top_rated_first">Лучшие по рейтингу</string>
   <string name="sort_order_latest_first_dvd">Сначала последние (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Более старые первыми (DVD)</string>
-  <string-array name="upcominglimit">
-    <item>сейчас</item>
-    <item>день</item>
-    <item>3 дня</item>
-    <item>неделя</item>
-    <item>две недели</item>
-    <item>месяц</item>
-  </string-array>
+  <string name="upcoming_upto_now">сейчас</string>
+  <string name="upcoming_upto_one_day">день</string>
+  <string name="upcoming_upto_three_days">3 дня</string>
+  <string name="upcoming_upto_one_week">неделя</string>
+  <string name="upcoming_upto_two_weeks">две недели</string>
+  <string name="upcoming_upto_one_month">месяц</string>
+  <string name="upcoming_upto_one_hour">час</string>
+  <string name="upcoming_upto_six_hours">6 часов</string>
+  <string name="upcoming_upto_half_day">12 часов</string>
   <string name="pref_appearance">Оформление</string>
   <string name="pref_theme">Тема</string>
   <string name="pref_other">Другие</string>
@@ -381,41 +382,24 @@
   <string name="pref_vibrate">Вибросигнал</string>
   <string name="pref_vibratesummary">Вибрация при уведомлении</string>
   <string name="pref_notifications_treshold">Когда уведомлять</string>
-  <string-array name="notificationThreshold">
-    <item>в эфире</item>
-    <item>5 минут до начала</item>
-    <item>10 минут до начала</item>
-    <item>один час до начала</item>
-  </string-array>
+  <string name="notification_release_exact">в эфире</string>
+  <string name="notification_release_earlier_five">5 минут до начала</string>
+  <string name="notification_release_earlier_ten">10 минут до начала</string>
+  <string name="notification_release_earlier_hour">один час до начала</string>
   <string name="smallwidget">SeriesGuide (малый)</string>
   <string name="bigwidget">SeriesGuide (средний)</string>
   <string name="largewidget">SeriesGuide (большой)</string>
   <string name="hide_watched">Скрыть просмотренные эпизоды</string>
   <string name="pref_widget_opacity">Фон виджета</string>
-  <string-array name="widgetOpacity">
-    <item>Прозрачный</item>
-    <item>25% непрозрачности</item>
-    <item>50% непрозрачности</item>
-    <item>75% непрозрачности</item>
-    <item>Непрозрачный</item>
-  </string-array>
   <string name="pref_widget_type">Тип виджета</string>
-  <string-array name="widgetType">
-    <item>Следующие эпизоды</item>
-    <item>Недавние</item>
-    <item>Избранное</item>
-  </string-array>
+  <string name="widget_background_transparent">Прозрачный</string>
+  <string name="widget_background_25">25% непрозрачности</string>
+  <string name="widget_background_50">50% непрозрачности</string>
+  <string name="widget_background_75">75% непрозрачности</string>
+  <string name="widget_background_opaque">Непрозрачный</string>
   <string name="dashclock_extension_label">Предстоящий</string>
   <string name="dashclock_extension_description">Отображает следующий предстоящийего SeriesGuide сериала.</string>
   <string name="dashclock_pref_upcoming_threshold">Эпизоды скоро</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>час</item>
-    <item>6 часов</item>
-    <item>12 часов</item>
-    <item>24 часа</item>
-    <item>3 дня</item>
-    <item>Неделя</item>
-  </string-array>
   <string name="action_migrate">Миграция с X</string>
   <string name="migration_description">SeriesGuide X — теперь ключ разблокировки для X есть в бесплатной версии (X). Прошу перенести ваши сериалы на бесплатную версию SeriesGuide. Держите X установлена для разблокировки всех функций в бесплатной версии.</string>
   <string name="migration_import">Нажмите ниже для импорта резервной копии, созданной в SeriesGuide X.</string>

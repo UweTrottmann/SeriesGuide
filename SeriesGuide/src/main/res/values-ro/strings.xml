@@ -122,6 +122,7 @@
   <string name="episode_dvdnumber">Episod DVD</string>
   <string name="show_actors">Actori</string>
   <string name="show_firstaired">Prima difuzare</string>
+  <string name="show_on_network">pe %s</string>
   <string name="show_genres">Genuri</string>
   <string name="show_runtime">Durata</string>
   <string name="show_contentrating">Punctajul conţinutului</string>
@@ -134,8 +135,6 @@
   <string name="lastEdit">Ultima editare//TVDb</string>
   <string name="services_watch">Vezi</string>
   <string name="services_more">Mai mult</string>
-  <string name="sort">Sortați după</string>
-  <string name="action_sort_ignore_articles">Ignoră articolele</string>
   <string name="today">astăzi</string>
   <string name="now">acum</string>
   <string name="daily">Zilnic</string>
@@ -208,7 +207,6 @@
   <string name="update_scheduled">Actualizare…</string>
   <string name="update_no_connection">Pentru a actualiza conectați-vă la internet.</string>
   <string name="update_inprogress">O actualizare este în progres, încercaţi din nou mai târziu.</string>
-  <string name="show_on_network">pe %s</string>
   <string name="season_watchcount">episoadele nu au fost vizionate</string>
   <string name="season_allwatched">Toate episoadele au fost vizionate</string>
   <string name="season_onenotwatched">episodul nu a fost vizionat</string>
@@ -278,6 +276,8 @@
   <string name="feedback">Trimiteţi feedback</string>
   <string name="pref_autoaddshows">Add new trakt shows</string>
   <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
+  <string name="sort">Sortați după</string>
+  <string name="action_sort_ignore_articles">Ignoră articolele</string>
   <string name="sort_order_latest_first">Întai cele mai recente</string>
   <string name="sort_order_oldest_first">Întai cele mai vechi</string>
   <string name="sort_order_unwatched_first">Cele nevizionate primele</string>
@@ -285,14 +285,15 @@
   <string name="sort_order_top_rated_first">Cele mai votate</string>
   <string name="sort_order_latest_first_dvd">Cele mai noi primele (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Cele mai vechi primele (DVD)</string>
-  <string-array name="upcominglimit">
-    <item>acum</item>
-    <item>o zi</item>
-    <item>3 zile</item>
-    <item>o săptămână</item>
-    <item>două săptămâni</item>
-    <item>o lună</item>
-  </string-array>
+  <string name="upcoming_upto_now">acum</string>
+  <string name="upcoming_upto_one_day">o zi</string>
+  <string name="upcoming_upto_three_days">3 zile</string>
+  <string name="upcoming_upto_one_week">o săptămână</string>
+  <string name="upcoming_upto_two_weeks">două săptămâni</string>
+  <string name="upcoming_upto_one_month">o lună</string>
+  <string name="upcoming_upto_one_hour">oră</string>
+  <string name="upcoming_upto_six_hours">6 ore</string>
+  <string name="upcoming_upto_half_day">12 ore</string>
   <string name="pref_appearance">Aspect</string>
   <string name="pref_theme">Tema aplicației</string>
   <string name="pref_other">Alte</string>
@@ -381,41 +382,24 @@
   <string name="pref_vibrate">Vibrează</string>
   <string name="pref_vibratesummary">Vibrează si la afişarea unei notificări</string>
   <string name="pref_notifications_treshold">Când să fiti notificat</string>
-  <string-array name="notificationThreshold">
-    <item>Difuzate</item>
-    <item>5 min în avans</item>
-    <item>10 min în avans</item>
-    <item>o oră în avans</item>
-  </string-array>
+  <string name="notification_release_exact">Difuzate</string>
+  <string name="notification_release_earlier_five">5 min în avans</string>
+  <string name="notification_release_earlier_ten">10 min în avans</string>
+  <string name="notification_release_earlier_hour">o oră în avans</string>
   <string name="smallwidget">SeriesGuide (mic)</string>
   <string name="bigwidget">SeriesGuide (mediu)</string>
   <string name="largewidget">SeriesGuide (mare)</string>
   <string name="hide_watched">Ascundeți episoadele vizionate</string>
   <string name="pref_widget_opacity">Widget fundal</string>
-  <string-array name="widgetOpacity">
-    <item>Transparent</item>
-    <item>25 % negru</item>
-    <item>50% negru</item>
-    <item>75% negru</item>
-    <item>Negru</item>
-  </string-array>
   <string name="pref_widget_type">Tip de widget</string>
-  <string-array name="widgetType">
-    <item>Viitoare</item>
-    <item>Recente</item>
-    <item>Favorite</item>
-  </string-array>
+  <string name="widget_background_transparent">Transparent</string>
+  <string name="widget_background_25">25 % negru</string>
+  <string name="widget_background_50">50% negru</string>
+  <string name="widget_background_75">75% negru</string>
+  <string name="widget_background_opaque">Negru</string>
   <string name="dashclock_extension_label">Episoade ce urmeaza</string>
   <string name="dashclock_extension_description">Afişează următorul episod din SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Afisare episod intre…</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>oră</item>
-    <item>6 ore</item>
-    <item>12 ore</item>
-    <item>24 de ore</item>
-    <item>3 zile</item>
-    <item>o săptămână</item>
-  </string-array>
   <string name="action_migrate">Migrati de la veriunea X</string>
   <string name="migration_description">SeriesGuide X este acum o cheie de deblocare a optiunilor X in varianta gratuita ("X Life-Time Pass"). Va rugam sa migrati Serialele in versiunea gratuita a SeriesGuide. Pastrati X instalat pentru a debloca toate optiunile in versiunea gratuita.</string>
   <string name="migration_import">Atingeti mai jos pentru a importa backup-ul din SeriesGuide X.</string>

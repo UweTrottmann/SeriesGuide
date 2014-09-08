@@ -122,6 +122,7 @@
   <string name="episode_dvdnumber">DVD-jakso</string>
   <string name="show_actors">Näyttelijät</string>
   <string name="show_firstaired">Ensiesitys</string>
+  <string name="show_on_network">kanavalla %s</string>
   <string name="show_genres">Genret</string>
   <string name="show_runtime">Kesto</string>
   <string name="show_contentrating">Sisällön luokitus</string>
@@ -134,8 +135,6 @@
   <string name="lastEdit">Viimeisin muokkaus // TVDb</string>
   <string name="services_watch">Katso</string>
   <string name="services_more">Enemmän</string>
-  <string name="sort">Lajittele</string>
-  <string name="action_sort_ignore_articles">Ohita artikkelit</string>
   <string name="today">tänään</string>
   <string name="now">nyt</string>
   <string name="daily">Päivittäinen</string>
@@ -208,7 +207,6 @@
   <string name="update_scheduled">Päivitetään…</string>
   <string name="update_no_connection">Päivittääksesi muodosta yhteys internetiin.</string>
   <string name="update_inprogress">Päivitys on käynnissä, yritä myöhemmin uudelleen.</string>
-  <string name="show_on_network">kanavalla %s</string>
   <string name="season_watchcount">katsomatonta jaksoa</string>
   <string name="season_allwatched">Kaikki jaksot katsottu</string>
   <string name="season_onenotwatched">katsomaton jakso</string>
@@ -278,6 +276,8 @@
   <string name="feedback">Lähetä palautetta</string>
   <string name="pref_autoaddshows">Lisää uudet ohjelmat traktista</string>
   <string name="pref_autoaddshowssummary">Automaattisesti lisää uudet ohjelmat traktin toimintavirrastasi</string>
+  <string name="sort">Lajittele</string>
+  <string name="action_sort_ignore_articles">Ohita artikkelit</string>
   <string name="sort_order_latest_first">Uusin ensin</string>
   <string name="sort_order_oldest_first">Vanhin ensin</string>
   <string name="sort_order_unwatched_first">Katsomattomat ensin</string>
@@ -285,14 +285,15 @@
   <string name="sort_order_top_rated_first">Suosituimmat</string>
   <string name="sort_order_latest_first_dvd">Uusin ensin (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Vanhin ensin (DVD)</string>
-  <string-array name="upcominglimit">
-    <item>nyt</item>
-    <item>päivän ajalta</item>
-    <item>3 päivän ajalta</item>
-    <item>viikon ajalta</item>
-    <item>2 viikon ajalta</item>
-    <item>kuukauden ajalta</item>
-  </string-array>
+  <string name="upcoming_upto_now">nyt</string>
+  <string name="upcoming_upto_one_day">päivän ajalta</string>
+  <string name="upcoming_upto_three_days">3 päivän ajalta</string>
+  <string name="upcoming_upto_one_week">viikon ajalta</string>
+  <string name="upcoming_upto_two_weeks">2 viikon ajalta</string>
+  <string name="upcoming_upto_one_month">kuukauden ajalta</string>
+  <string name="upcoming_upto_one_hour">tunti</string>
+  <string name="upcoming_upto_six_hours">6 tuntia</string>
+  <string name="upcoming_upto_half_day">12 tuntia</string>
   <string name="pref_appearance">Ulkonäkö</string>
   <string name="pref_theme">Sovelluksen teema</string>
   <string name="pref_other">Muu</string>
@@ -381,41 +382,24 @@
   <string name="pref_vibrate">Värinä</string>
   <string name="pref_vibratesummary">Värinä, kun näytetään ilmoitus</string>
   <string name="pref_notifications_treshold">Milloin ilmoittaa</string>
-  <string-array name="notificationThreshold">
-    <item>esitettäessä</item>
-    <item>5 min etukäteen</item>
-    <item>10 min etukäteen</item>
-    <item>1 tunti etukäteen</item>
-  </string-array>
+  <string name="notification_release_exact">esitettäessä</string>
+  <string name="notification_release_earlier_five">5 min etukäteen</string>
+  <string name="notification_release_earlier_ten">10 min etukäteen</string>
+  <string name="notification_release_earlier_hour">1 tunti etukäteen</string>
   <string name="smallwidget">SeriesGuide (pieni)</string>
   <string name="bigwidget">SeriesGuide (keski)</string>
   <string name="largewidget">SeriesGuide (suuri)</string>
   <string name="hide_watched">Piilota katsotut jaksot</string>
   <string name="pref_widget_opacity">Widgetin tausta</string>
-  <string-array name="widgetOpacity">
-    <item>Läpinäkyvä</item>
-    <item>25% musta</item>
-    <item>50% musta</item>
-    <item>75% musta</item>
-    <item>Musta</item>
-  </string-array>
   <string name="pref_widget_type">Widgetin tyyppi</string>
-  <string-array name="widgetType">
-    <item>Tulevat</item>
-    <item>Viimeisimmät</item>
-    <item>Suosikit</item>
-  </string-array>
+  <string name="widget_background_transparent">Läpinäkyvä</string>
+  <string name="widget_background_25">25% musta</string>
+  <string name="widget_background_50">50% musta</string>
+  <string name="widget_background_75">75% musta</string>
+  <string name="widget_background_opaque">Musta</string>
   <string name="dashclock_extension_label">Tuleva jakso</string>
   <string name="dashclock_extension_description">Näyttää seuraavan tulevan jakson SeriesGuidesi ohjelmistasi.</string>
   <string name="dashclock_pref_upcoming_threshold">Näytä jaksot ajalta</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>tunti</item>
-    <item>6 tuntia</item>
-    <item>12 tuntia</item>
-    <item>24 tuntia</item>
-    <item>3 päivää</item>
-    <item>viikko</item>
-  </string-array>
   <string name="action_migrate">Siirrä X:stä</string>
   <string name="migration_description">SeriesGuide X on nyt avausavain X-ominaisuuksiin ilmaisessa versiossa (X-passi). Siirrä ohjelmasi SeriesGuiden ilmaiseen versioon. Pidä X asennettuna avataksesi kaikki ominaisuudet ilmaisessa versiossa.</string>
   <string name="migration_import">Kosketa painiketta tuodaksesi SeriesGuide X:ssä luotu varmuuskopio.</string>

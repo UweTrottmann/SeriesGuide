@@ -122,6 +122,7 @@
   <string name="episode_dvdnumber">DVD Bölümü</string>
   <string name="show_actors">Aktörler</string>
   <string name="show_firstaired">İlk Yayınlanma Tarihi</string>
+  <string name="show_on_network">kanal %s</string>
   <string name="show_genres">Türler</string>
   <string name="show_runtime">Süresi</string>
   <string name="show_contentrating">İçerik Derecelendirmesi</string>
@@ -134,8 +135,6 @@
   <string name="lastEdit">Son Düzenleme // TVDb</string>
   <string name="services_watch">İzle</string>
   <string name="services_more">Daha</string>
-  <string name="sort">Sırala</string>
-  <string name="action_sort_ignore_articles">Metinleri yoksay</string>
   <string name="today">bugün</string>
   <string name="now">şimdi</string>
   <string name="daily">Günlük</string>
@@ -208,7 +207,6 @@
   <string name="update_scheduled">Güncelleniyor…</string>
   <string name="update_no_connection">Güncelleme amacıyla internete bağlayın.</string>
   <string name="update_inprogress">Devam eden bir güncelleme var, daha sonra tekrar deneyin.</string>
-  <string name="show_on_network">kanal %s</string>
   <string name="season_watchcount">izlenmeyen bölümler</string>
   <string name="season_allwatched">Tüm bölümler izlendi</string>
   <string name="season_onenotwatched">bölüm izlenmedi</string>
@@ -278,6 +276,8 @@
   <string name="feedback">Geribildirim Gönder</string>
   <string name="pref_autoaddshows">yeni trakt dizileri ekleyin</string>
   <string name="pref_autoaddshowssummary">dizileri trakt aktivite akışından otomatik olarak yükleyin</string>
+  <string name="sort">Sırala</string>
+  <string name="action_sort_ignore_articles">Metinleri yoksay</string>
   <string name="sort_order_latest_first">Önce en yenisi</string>
   <string name="sort_order_oldest_first">Önce en eskisi</string>
   <string name="sort_order_unwatched_first">Önce izlenmeyen</string>
@@ -285,14 +285,15 @@
   <string name="sort_order_top_rated_first">En çok oy alanlar</string>
   <string name="sort_order_latest_first_dvd">Önce en yenisi (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Önce en eskisi (DVD)</string>
-  <string-array name="upcominglimit">
-    <item>şimdi</item>
-    <item>bir gün</item>
-    <item>3 gün</item>
-    <item>bir hafta</item>
-    <item>iki hafta</item>
-    <item>bir ay</item>
-  </string-array>
+  <string name="upcoming_upto_now">şimdi</string>
+  <string name="upcoming_upto_one_day">bir gün</string>
+  <string name="upcoming_upto_three_days">3 gün</string>
+  <string name="upcoming_upto_one_week">bir hafta</string>
+  <string name="upcoming_upto_two_weeks">iki hafta</string>
+  <string name="upcoming_upto_one_month">bir ay</string>
+  <string name="upcoming_upto_one_hour">saat</string>
+  <string name="upcoming_upto_six_hours">6 saat</string>
+  <string name="upcoming_upto_half_day">12 saat</string>
   <string name="pref_appearance">Görünüm</string>
   <string name="pref_theme">Uygulama teması</string>
   <string name="pref_other">Diğer</string>
@@ -381,41 +382,24 @@
   <string name="pref_vibrate">Titreşim</string>
   <string name="pref_vibratesummary">Uyarırken aynı zamanda titret</string>
   <string name="pref_notifications_treshold">Bildirim zamanı</string>
-  <string-array name="notificationThreshold">
-    <item>yayında</item>
-    <item>5 dakika önce</item>
-    <item>10 dakika önce</item>
-    <item>bir saat önce</item>
-  </string-array>
+  <string name="notification_release_exact">yayında</string>
+  <string name="notification_release_earlier_five">5 dakika önce</string>
+  <string name="notification_release_earlier_ten">10 dakika önce</string>
+  <string name="notification_release_earlier_hour">bir saat önce</string>
   <string name="smallwidget">SeriesGuide (dar)</string>
   <string name="bigwidget">SeriesGuide (orta)</string>
   <string name="largewidget">SeriesGuide (geniş)</string>
   <string name="hide_watched">İzlenmiş bölümleri gizle</string>
   <string name="pref_widget_opacity">Widget arka planı</string>
-  <string-array name="widgetOpacity">
-    <item>Saydam</item>
-    <item>25% siyah</item>
-    <item>50% siyah</item>
-    <item>75% siyah</item>
-    <item>Siyah</item>
-  </string-array>
   <string name="pref_widget_type">Widget tipi</string>
-  <string-array name="widgetType">
-    <item>Yaklaşan</item>
-    <item>En son</item>
-    <item>Sık Kullanılanlar</item>
-  </string-array>
+  <string name="widget_background_transparent">Saydam</string>
+  <string name="widget_background_25">25% siyah</string>
+  <string name="widget_background_50">50% siyah</string>
+  <string name="widget_background_75">75% siyah</string>
+  <string name="widget_background_opaque">Siyah</string>
   <string name="dashclock_extension_label">Gelecek bölüm</string>
   <string name="dashclock_extension_description">SeriesGuide dizilerinizin gelecek bölümünü gösterir.</string>
   <string name="dashclock_pref_upcoming_threshold">Dizinin sonraki bölümlerinde</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>saat</item>
-    <item>6 saat</item>
-    <item>12 saat</item>
-    <item>24 saat</item>
-    <item>3 gün</item>
-    <item>hafta</item>
-  </string-array>
   <string name="action_migrate">X ten geçiş yap</string>
   <string name="migration_description">SeriesGuide X artık ücretsiz sürümdeki X özelliklerini açmak için bir anahtar olarak kullanılıyor (\"X Life-Time Pass\"). Lütfen dizilerinizi SeriesGuide\'ın ücretsiz sürümüne taşıyın. Ücretsiz sürümdeki tüm özellikleri kullanabilmek için de X\'i kurulu bırakın.</string>
   <string name="migration_import">SeriesGuide X ile oluşturulmuş yedeği yüklemek için aşağıya dokunun.</string>
