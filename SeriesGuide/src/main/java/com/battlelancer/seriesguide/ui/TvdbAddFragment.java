@@ -35,6 +35,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.util.SearchHistory;
@@ -51,12 +52,12 @@ public class TvdbAddFragment extends AddFragment {
         return new TvdbAddFragment();
     }
 
-    @InjectView(R.id.clearButton) ImageButton mClearButton;
-    @InjectView(R.id.searchbox) AutoCompleteTextView mSearchBox;
+    @InjectView(R.id.clearButton) ImageButton clearButton;
+    @InjectView(R.id.searchbox) AutoCompleteTextView searchBox;
 
-    private SearchTask mSearchTask;
-    private ArrayAdapter<String> searchHistoryAdapter;
+    private SearchTask searchTask;
     private SearchHistory searchHistory;
+    private ArrayAdapter<String> searchHistoryAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,13 +65,14 @@ public class TvdbAddFragment extends AddFragment {
         View v = inflater.inflate(R.layout.fragment_addshow_tvdb, container, false);
         ButterKnife.inject(this, v);
 
-        mClearButton.setOnClickListener(new OnClickListener() {
+        clearButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 clearSearchTerm();
             }
         });
 
-        mSearchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        searchBox.setThreshold(1);
+        searchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH
@@ -81,22 +83,21 @@ public class TvdbAddFragment extends AddFragment {
                 return false;
             }
         });
-        mSearchBox.setThreshold(1);
-        mSearchBox.setOnClickListener(new OnClickListener() {
+        searchBox.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((AutoCompleteTextView) v).showDropDown();
             }
         });
-        mSearchBox.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        searchBox.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 search();
             }
         });
         // set in code as XML is overridden
-        mSearchBox.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-        mSearchBox.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+        searchBox.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+        searchBox.setInputType(EditorInfo.TYPE_CLASS_TEXT);
 
         return v;
     }
@@ -115,10 +116,13 @@ public class TvdbAddFragment extends AddFragment {
             setEmptyMessage(R.string.offline);
         }
 
-        searchHistory = new SearchHistory(getActivity(), "thetvdb");
-        searchHistoryAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_dropdown_item_1line, searchHistory.getSearchHistory());
-        mSearchBox.setAdapter(searchHistoryAdapter);
+        // setup search history
+        if (searchHistory == null || searchHistoryAdapter == null) {
+            searchHistory = new SearchHistory(getActivity(), SearchSettings.KEY_SUFFIX_THETVDB);
+            searchHistoryAdapter = new ArrayAdapter<>(getActivity(),
+                    android.R.layout.simple_dropdown_item_1line, searchHistory.getSearchHistory());
+            searchBox.setAdapter(searchHistoryAdapter);
+        }
     }
 
     @Override
@@ -136,12 +140,12 @@ public class TvdbAddFragment extends AddFragment {
     }
 
     private void clearSearchTerm() {
-        mSearchBox.setText(null);
-        mSearchBox.requestFocus();
+        searchBox.setText(null);
+        searchBox.requestFocus();
     }
 
     private void search() {
-        mSearchBox.dismissDropDown();
+        searchBox.dismissDropDown();
 
         // nag about no connectivity
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
@@ -150,14 +154,14 @@ public class TvdbAddFragment extends AddFragment {
             return;
         }
 
-        String query = mSearchBox.getText().toString().trim();
+        String query = searchBox.getText().toString().trim();
         if (query.length() == 0) {
             return;
         }
         // query for results
-        if (mSearchTask == null || mSearchTask.getStatus() == AsyncTask.Status.FINISHED) {
-            mSearchTask = new SearchTask(getActivity());
-            AndroidUtils.executeOnPool(mSearchTask, query);
+        if (searchTask == null || searchTask.getStatus() == AsyncTask.Status.FINISHED) {
+            searchTask = new SearchTask(getActivity());
+            AndroidUtils.executeOnPool(searchTask, query);
         }
         // update history
         if (searchHistory.saveRecentSearch(query)) {
