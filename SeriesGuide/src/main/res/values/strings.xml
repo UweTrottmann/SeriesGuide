@@ -29,6 +29,7 @@
 
     <!-- Actions -->
     <string name="clear">Clear</string>
+    <string name="clear_search_history">Clear search history</string>
     <string name="discard">Discard</string>
     <string name="save_selection">Save selection</string>
     <string name="search_hint">Search episodes</string>

@@ -27,6 +27,7 @@ import android.support.v4.content.Loader;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -150,6 +151,8 @@ public class MoviesSearchFragment extends Fragment implements
         }
 
         getLoaderManager().initLoader(MoviesActivity.SEARCH_LOADER_ID, null, this);
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -157,6 +160,24 @@ public class MoviesSearchFragment extends Fragment implements
         super.onDestroyView();
 
         ButterKnife.reset(this);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.search_history_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_action_search_clear_history) {
+            if (searchHistory != null && searchHistoryAdapter != null) {
+                searchHistory.clearHistory();
+                searchHistoryAdapter.clear();
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void search() {
