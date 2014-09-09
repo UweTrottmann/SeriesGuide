@@ -95,6 +95,7 @@
     <item quantity="many">%d минута</item>
     <item quantity="other">%d минута</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Твоја оцена</string>
   <string name="love">Врхунски!</string>
   <string name="hate">Очајно :(</string>
@@ -121,6 +122,7 @@
   <string name="episode_dvdnumber">DVD епизода</string>
   <string name="show_actors">Глумци</string>
   <string name="show_firstaired">Прво емитовање</string>
+  <string name="show_on_network">на %s</string>
   <string name="show_genres">Жанрови</string>
   <string name="show_runtime">Трајање</string>
   <string name="show_contentrating">Оцена садржаја</string>
@@ -133,8 +135,6 @@
   <string name="lastEdit">Последње уређено // TVDb</string>
   <string name="services_watch">Гледај</string>
   <string name="services_more">Више</string>
-  <string name="sort">Поређај по</string>
-  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">данас</string>
   <string name="now">сада</string>
   <string name="daily">Дневно</string>
@@ -207,7 +207,6 @@
   <string name="update_scheduled">Ажурирање…</string>
   <string name="update_no_connection">Да би сте освежили повежите се на интернет.</string>
   <string name="update_inprogress">Ажурирање је у току, покушајте касније.</string>
-  <string name="show_on_network">на %s</string>
   <string name="season_watchcount">непогледаних епизода</string>
   <string name="season_allwatched">Све епизоде погледане</string>
   <string name="season_onenotwatched">епизода непогледана</string>
@@ -277,27 +276,24 @@
   <string name="feedback">Пошаљи повратне информације</string>
   <string name="pref_autoaddshows">Додај нове серије тракта</string>
   <string name="pref_autoaddshowssummary">Аутоматски додај серије са ваших активности на тракту</string>
-  <string-array name="sesorting">
-    <item>Прво најновије</item>
-    <item>Прво најстарије</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Прво најновије</item>
-    <item>Прво најстарије</item>
-    <item>Прво непогледане</item>
-    <item>A - Z</item>
-    <item>Најбоље оцењене</item>
-    <item>Прво најновије (DVD)</item>
-    <item>Прво настарије (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>одмах</item>
-    <item>дан</item>
-    <item>3 дана</item>
-    <item>недељу дана</item>
-    <item>2 недеље</item>
-    <item>месец</item>
-  </string-array>
+  <string name="sort">Поређај по</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
+  <string name="sort_order_latest_first">Прво најновије</string>
+  <string name="sort_order_oldest_first">Прво најстарије</string>
+  <string name="sort_order_unwatched_first">Прво непогледане</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">Најбоље оцењене</string>
+  <string name="sort_order_latest_first_dvd">Прво најновије (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Прво настарије (DVD)</string>
+  <string name="upcoming_upto_now">сада</string>
+  <string name="upcoming_upto_one_day">дан</string>
+  <string name="upcoming_upto_three_days">3 дана</string>
+  <string name="upcoming_upto_one_week">недељу дана</string>
+  <string name="upcoming_upto_two_weeks">2 недеље</string>
+  <string name="upcoming_upto_one_month">месец</string>
+  <string name="upcoming_upto_one_hour">сат</string>
+  <string name="upcoming_upto_six_hours">6 сати</string>
+  <string name="upcoming_upto_half_day">12 сати</string>
   <string name="pref_appearance">Изглед</string>
   <string name="pref_theme">Тема апликације</string>
   <string name="pref_other">Остало</string>
@@ -354,8 +350,6 @@
   <string name="check_into">Пријави гледање</string>
   <string name="no_selection">Одабери једну од доњих серија</string>
   <string name="looking_for_something_else">Тражите нешто друго?</string>
-  <string name="menu_rate_episode">Оцени епизоду</string>
-  <string name="menu_rate_show">Оцени серију</string>
   <string name="traktcheckin_cancel">Прескочи пријаву</string>
   <string name="traktcheckin_inprogress">Пријављени сте да гледате другу епизоду или филм. Замените претходну пријаву, или чекајте %s и покушајте поново.</string>
   <string name="traktcheckin_wait">Сачекаћу</string>
@@ -388,41 +382,24 @@
   <string name="pref_vibrate">Вибрирај</string>
   <string name="pref_vibratesummary">Такође вибрирај при обавештењима</string>
   <string name="pref_notifications_treshold">Кад да обавештава</string>
-  <string-array name="notificationThreshold">
-    <item>емитује се</item>
-    <item>5 мин унапред</item>
-    <item>10 мин унапред</item>
-    <item>1 сат унапред</item>
-  </string-array>
+  <string name="notification_release_exact">емитује се</string>
+  <string name="notification_release_earlier_five">5 мин унапред</string>
+  <string name="notification_release_earlier_ten">10 мин унапред</string>
+  <string name="notification_release_earlier_hour">1 сат унапред</string>
   <string name="smallwidget">SeriesGuide (мали)</string>
   <string name="bigwidget">SeriesGuide (средњи)</string>
   <string name="largewidget">SeriesGuide (велики)</string>
   <string name="hide_watched">Сакриј погледане епизоде</string>
   <string name="pref_widget_opacity">Позадина виџета</string>
-  <string-array name="widgetOpacity">
-    <item>Провидно</item>
-    <item>25% црно</item>
-    <item>50% црно</item>
-    <item>75% црно</item>
-    <item>Црно</item>
-  </string-array>
   <string name="pref_widget_type">Тип виџета</string>
-  <string-array name="widgetType">
-    <item>Предстојеће</item>
-    <item>Скорашње</item>
-    <item>Омиљено</item>
-  </string-array>
+  <string name="widget_background_transparent">Провидно</string>
+  <string name="widget_background_25">25% црно</string>
+  <string name="widget_background_50">50% црно</string>
+  <string name="widget_background_75">75% црно</string>
+  <string name="widget_background_opaque">Црно</string>
   <string name="dashclock_extension_label">Предстојећа епизода</string>
   <string name="dashclock_extension_description">Прикажу предстојећу епизоду Ваших SeriesGuide серија.</string>
   <string name="dashclock_pref_upcoming_threshold">Прикажи епизоде у следећем</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>сат</item>
-    <item>6 сати</item>
-    <item>12 сати</item>
-    <item>24 сата</item>
-    <item>3 дана</item>
-    <item>недеља</item>
-  </string-array>
   <string name="action_migrate">Мигрирај са X-а</string>
   <string name="migration_description">SeriesGuide X је сада кључ за X опције у бесплатној верзији ("X Pass"). Молимо, мигрирајте омиљене TV програме у бесплатну верзију SeriesGuide-а. 
 Задржите X инсталиран да откључате све опције у бесплатној верзији.</string>

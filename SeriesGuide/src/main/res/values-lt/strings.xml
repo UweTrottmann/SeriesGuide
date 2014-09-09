@@ -95,6 +95,7 @@
     <item quantity="many">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Your rating</string>
   <string name="love">Totalus nindzė!</string>
   <string name="hate">Weak Sauce :(</string>
@@ -121,6 +122,7 @@
   <string name="episode_dvdnumber">DVD serija</string>
   <string name="show_actors">Aktoriai</string>
   <string name="show_firstaired">Pirmą kartą parodyta</string>
+  <string name="show_on_network">on %s</string>
   <string name="show_genres">Žanrai</string>
   <string name="show_runtime">Trukmė</string>
   <string name="show_contentrating">Turinio įvertinimas</string>
@@ -133,8 +135,6 @@
   <string name="lastEdit">Paskutinis redagavimas // TVDb</string>
   <string name="services_watch">Žiūrėti</string>
   <string name="services_more">Daugiau</string>
-  <string name="sort">Rūšiuoti pagal</string>
-  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">šiandien</string>
   <string name="now">dabar</string>
   <string name="daily">Kasdien</string>
@@ -207,7 +207,6 @@
   <string name="update_scheduled">Atnaujinimas…</string>
   <string name="update_no_connection">To update connect to the internet.</string>
   <string name="update_inprogress">Vyksta atnaujinimas, pabandykite dar kartą vėliau.</string>
-  <string name="show_on_network">on %s</string>
   <string name="season_watchcount">serijos nepažiūrėtos</string>
   <string name="season_allwatched">Visos serijos pažiūrėtos</string>
   <string name="season_onenotwatched">serija nepažiūrėta</string>
@@ -277,27 +276,24 @@
   <string name="feedback">Siųsti atsiliepimą</string>
   <string name="pref_autoaddshows">Add new trakt shows</string>
   <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
-  <string-array name="sesorting">
-    <item>Latest first</item>
-    <item>Oldest first</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Latest first</item>
-    <item>Oldest first</item>
-    <item>Unwatched first</item>
-    <item>A–Z</item>
-    <item>Top rated</item>
-    <item>Latest first (DVD)</item>
-    <item>Oldest first (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>dabar</item>
-    <item>1 day</item>
-    <item>3 days</item>
-    <item>1 week</item>
-    <item>2 weeks</item>
-    <item>1 month</item>
-  </string-array>
+  <string name="sort">Rūšiuoti pagal</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
+  <string name="sort_order_latest_first">Latest first</string>
+  <string name="sort_order_oldest_first">Oldest first</string>
+  <string name="sort_order_unwatched_first">Unwatched first</string>
+  <string name="sort_order_alphabetical">A–Z</string>
+  <string name="sort_order_top_rated_first">Top rated</string>
+  <string name="sort_order_latest_first_dvd">Latest first (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Oldest first (DVD)</string>
+  <string name="upcoming_upto_now">dabar</string>
+  <string name="upcoming_upto_one_day">1 day</string>
+  <string name="upcoming_upto_three_days">3 days</string>
+  <string name="upcoming_upto_one_week">1 week</string>
+  <string name="upcoming_upto_two_weeks">2 weeks</string>
+  <string name="upcoming_upto_one_month">1 month</string>
+  <string name="upcoming_upto_one_hour">1 hour</string>
+  <string name="upcoming_upto_six_hours">6 hours</string>
+  <string name="upcoming_upto_half_day">12 hours</string>
   <string name="pref_appearance">Išvaizda</string>
   <string name="pref_theme">Programėlės tema</string>
   <string name="pref_other">Kita</string>
@@ -354,8 +350,6 @@
   <string name="check_into">Check into</string>
   <string name="no_selection">pick one below</string>
   <string name="looking_for_something_else">Looking for something else?</string>
-  <string name="menu_rate_episode">Rate episode</string>
-  <string name="menu_rate_show">Rate show</string>
   <string name="traktcheckin_cancel">Override</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">I\'ll wait</string>
@@ -388,41 +382,24 @@
   <string name="pref_vibrate">Vibravimas</string>
   <string name="pref_vibratesummary">Vibruoti, kai rodomas pranešimas</string>
   <string name="pref_notifications_treshold">When to notify</string>
-  <string-array name="notificationThreshold">
-    <item>on air</item>
-    <item>5 min in advance</item>
-    <item>10 min in advance</item>
-    <item>1 hour in advance</item>
-  </string-array>
+  <string name="notification_release_exact">on air</string>
+  <string name="notification_release_earlier_five">5 min in advance</string>
+  <string name="notification_release_earlier_ten">10 min in advance</string>
+  <string name="notification_release_earlier_hour">1 hour in advance</string>
   <string name="smallwidget">SeriesGuide (small)</string>
   <string name="bigwidget">SeriesGuide (middle)</string>
   <string name="largewidget">SeriesGuide (large)</string>
   <string name="hide_watched">Slėpti pažiūrėtas serijas</string>
   <string name="pref_widget_opacity">Widget background</string>
-  <string-array name="widgetOpacity">
-    <item>Transparent</item>
-    <item>25% black</item>
-    <item>50% black</item>
-    <item>75% black</item>
-    <item>Black</item>
-  </string-array>
   <string name="pref_widget_type">Widget type</string>
-  <string-array name="widgetType">
-    <item>Artėjančios</item>
-    <item>Paskutinės</item>
-    <item>Mėgstamiausi</item>
-  </string-array>
+  <string name="widget_background_transparent">Transparent</string>
+  <string name="widget_background_25">25% black</string>
+  <string name="widget_background_50">50% black</string>
+  <string name="widget_background_75">75% black</string>
+  <string name="widget_background_opaque">Black</string>
   <string name="dashclock_extension_label">Upcoming episode</string>
   <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="dashclock_pref_upcoming_threshold">Display episode within…</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>1 hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>24 hours</item>
-    <item>3 days</item>
-    <item>1 week</item>
-  </string-array>
   <string name="action_migrate">Migrate from X</string>
   <string name="migration_description">SeriesGuide X is now an unlock key for X features in the free version (X Pass). Please migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
   <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>

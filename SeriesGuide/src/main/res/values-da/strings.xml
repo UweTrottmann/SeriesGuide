@@ -95,6 +95,7 @@
     <item quantity="many">%d minutter</item>
     <item quantity="other">%d minutter</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Din bedømmelse</string>
   <string name="love">Totalt ninja!</string>
   <string name="hate">Svag sovs :(</string>
@@ -121,6 +122,7 @@
   <string name="episode_dvdnumber">DVD Episode</string>
   <string name="show_actors">Skuespillere</string>
   <string name="show_firstaired">Sendt første gang</string>
+  <string name="show_on_network">på %s</string>
   <string name="show_genres">Genrer</string>
   <string name="show_runtime">Spilletid</string>
   <string name="show_contentrating">Indholdsklassifikation</string>
@@ -133,8 +135,6 @@
   <string name="lastEdit">Sidste redigering / / TVDb</string>
   <string name="services_watch">Se</string>
   <string name="services_more">Mere</string>
-  <string name="sort">Sorter efter</string>
-  <string name="action_sort_ignore_articles">Ignorer artikler</string>
   <string name="today">i dag</string>
   <string name="now">Nu</string>
   <string name="daily">Daglig</string>
@@ -207,7 +207,6 @@
   <string name="update_scheduled">Opdaterer…</string>
   <string name="update_no_connection">Forbind til internettet for at opdatere.</string>
   <string name="update_inprogress">En opdatering er allerede i gang, prøv igen senere.</string>
-  <string name="show_on_network">på %s</string>
   <string name="season_watchcount">episoder ikke set</string>
   <string name="season_allwatched">Alle episoder set</string>
   <string name="season_onenotwatched">episode ikke set</string>
@@ -277,27 +276,24 @@
   <string name="feedback">Send feedback</string>
   <string name="pref_autoaddshows">Tilføj nye trakt serier</string>
   <string name="pref_autoaddshowssummary">Tilføj automatisk serier fra dine trakt aktiviteter</string>
-  <string-array name="sesorting">
-    <item>Seneste først</item>
-    <item>Ældste først</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Nyeste først</item>
-    <item>Ældste først</item>
-    <item>Usete først</item>
-    <item>A - Z</item>
-    <item>Top bedømte</item>
-    <item>Nyeste først (DVD)</item>
-    <item>Ældste først (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>nu</item>
-    <item>en dag</item>
-    <item>3 dage</item>
-    <item>en uge</item>
-    <item>to uger</item>
-    <item>en måned</item>
-  </string-array>
+  <string name="sort">Sorter efter</string>
+  <string name="action_sort_ignore_articles">Ignorer artikler</string>
+  <string name="sort_order_latest_first">Seneste først</string>
+  <string name="sort_order_oldest_first">Ældste først</string>
+  <string name="sort_order_unwatched_first">Usete først</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">Top bedømte</string>
+  <string name="sort_order_latest_first_dvd">Nyeste først (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Ældste først (DVD)</string>
+  <string name="upcoming_upto_now">Nu</string>
+  <string name="upcoming_upto_one_day">en dag</string>
+  <string name="upcoming_upto_three_days">3 dage</string>
+  <string name="upcoming_upto_one_week">en uge</string>
+  <string name="upcoming_upto_two_weeks">to uger</string>
+  <string name="upcoming_upto_one_month">en måned</string>
+  <string name="upcoming_upto_one_hour">time</string>
+  <string name="upcoming_upto_six_hours">6 timer</string>
+  <string name="upcoming_upto_half_day">12 timer</string>
   <string name="pref_appearance">Udseende</string>
   <string name="pref_theme">App Tema</string>
   <string name="pref_other">Andet</string>
@@ -354,8 +350,6 @@
   <string name="check_into">Tjek ind</string>
   <string name="no_selection">Vælg en nedenfor</string>
   <string name="looking_for_something_else">Søger du noget andet?</string>
-  <string name="menu_rate_episode">Bedøm episode</string>
-  <string name="menu_rate_show">Bedøm serie</string>
   <string name="traktcheckin_cancel">Overskriv</string>
   <string name="traktcheckin_inprogress">Du er allerede tjekket ind på en anden episode eller film. Overskriv den foregående indtjekning eller vent %s og prøv igen.</string>
   <string name="traktcheckin_wait">Jeg venter</string>
@@ -388,41 +382,24 @@
   <string name="pref_vibrate">Vibrer</string>
   <string name="pref_vibratesummary">Vibrer også når en notifikation bliver vist</string>
   <string name="pref_notifications_treshold">Hvornår skal der notificeres</string>
-  <string-array name="notificationThreshold">
-    <item>on air</item>
-    <item>5 min i forvejen</item>
-    <item>10 min. på forhånd</item>
-    <item>en time i forvejen</item>
-  </string-array>
+  <string name="notification_release_exact">on air</string>
+  <string name="notification_release_earlier_five">5 min i forvejen</string>
+  <string name="notification_release_earlier_ten">10 min. på forhånd</string>
+  <string name="notification_release_earlier_hour">en time i forvejen</string>
   <string name="smallwidget">SeriesGuide (lille)</string>
   <string name="bigwidget">SeriesGuide (mellem)</string>
   <string name="largewidget">SeriesGuide (stor)</string>
   <string name="hide_watched">Skjul sete episoder</string>
   <string name="pref_widget_opacity">Widget baggrund</string>
-  <string-array name="widgetOpacity">
-    <item>Gennemsigtig</item>
-    <item>25% sort</item>
-    <item>50% sort</item>
-    <item>75% sort</item>
-    <item>Sort</item>
-  </string-array>
   <string name="pref_widget_type">Widget type</string>
-  <string-array name="widgetType">
-    <item>Kommende</item>
-    <item>Seneste</item>
-    <item>Favoritter</item>
-  </string-array>
+  <string name="widget_background_transparent">Gennemsigtig</string>
+  <string name="widget_background_25">25% sort</string>
+  <string name="widget_background_50">50% sort</string>
+  <string name="widget_background_75">75% sort</string>
+  <string name="widget_background_opaque">Sort</string>
   <string name="dashclock_extension_label">Kommende episode</string>
   <string name="dashclock_extension_description">Viser de kommende episoder af dine SeriesGuide serier.</string>
   <string name="dashclock_pref_upcoming_threshold">Vis episoder i de næste</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>time</item>
-    <item>6 timer</item>
-    <item>12 timer</item>
-    <item>24 timer</item>
-    <item>3 dage</item>
-    <item>uge</item>
-  </string-array>
   <string name="action_migrate">Migrer fra X</string>
   <string name="migration_description">SeriesGuide X er nu en oplåsnings-nøgle for X funktioner i den gratis version (X Pass). Migrer venligst dine serier til den gratis version af SeriesGuide. Hold X installeret for at oplåse alle funktioner i den gratis version.</string>
   <string name="migration_import">Tryk nedenfor for at importere backup\'en som er oprettet af SeriesGuide X.</string>

@@ -95,6 +95,7 @@
     <item quantity="many">%d minutos</item>
     <item quantity="other">%d minutos</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Tu calificación</string>
   <string name="love">¡Una pasada!</string>
   <string name="hate">¡Apesta!</string>
@@ -121,6 +122,7 @@
   <string name="episode_dvdnumber">Episodio de DVD</string>
   <string name="show_actors">Actores</string>
   <string name="show_firstaired">Estrenado</string>
+  <string name="show_on_network">en %s</string>
   <string name="show_genres">Géneros</string>
   <string name="show_runtime">Duración</string>
   <string name="show_contentrating">Clasificación de contenido</string>
@@ -133,8 +135,6 @@
   <string name="lastEdit">Última edición//TVDb</string>
   <string name="services_watch">Ver</string>
   <string name="services_more">Más</string>
-  <string name="sort">Ordenar por</string>
-  <string name="action_sort_ignore_articles">Ignorar artículos</string>
   <string name="today">Hoy</string>
   <string name="now">ahora</string>
   <string name="daily">Diariamente</string>
@@ -207,7 +207,6 @@
   <string name="update_scheduled">Actualizando…</string>
   <string name="update_no_connection">Para actualizar conéctese a internet.</string>
   <string name="update_inprogress">Una actualización está en curso, intente de nuevo más tarde.</string>
-  <string name="show_on_network">en %s</string>
   <string name="season_watchcount">episodios no vistos</string>
   <string name="season_allwatched">Todos los episodios vistos</string>
   <string name="season_onenotwatched">episodio no visto</string>
@@ -237,7 +236,7 @@
   <string name="list_empty">Puedes agregar series, temporadas o episodios a la lista.</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configurar SeriesGuide cloud</string>
-  <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
+  <string name="hexagon_description">Conéctate a la nube para hacer copias de seguridad y sincronizar tus series y películas.</string>
   <string name="hexagon_warning_lists">Lists are not included.</string>
   <string name="hexagon_warning_trakt">When using SeriesGuide Cloud, changes on trakt will not sync down to SeriesGuide.</string>
   <string name="hexagon_signin">Iniciar sesión</string>
@@ -277,27 +276,24 @@
   <string name="feedback">Enviar comentarios</string>
   <string name="pref_autoaddshows">Añadir nueva serie trakt</string>
   <string name="pref_autoaddshowssummary">Añadir automáticamente series de tu flujo de actividad trakt</string>
-  <string-array name="sesorting">
-    <item>Más reciente primero</item>
-    <item>Más antiguo primero</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Más reciente primero</item>
-    <item>Más antiguo primero</item>
-    <item>No vistos primero</item>
-    <item>A - Z</item>
-    <item>Mas valorado</item>
-    <item>Primero los más rencientes (DVD)</item>
-    <item>Primero más antiguos (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>ahora</item>
-    <item>un día</item>
-    <item>3 días</item>
-    <item>una semana</item>
-    <item>dos semanas</item>
-    <item>un mes</item>
-  </string-array>
+  <string name="sort">Ordenar por</string>
+  <string name="action_sort_ignore_articles">Ignorar artículos</string>
+  <string name="sort_order_latest_first">Más reciente primero</string>
+  <string name="sort_order_oldest_first">Más antiguo primero</string>
+  <string name="sort_order_unwatched_first">No vistos primero</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">Mas valorado</string>
+  <string name="sort_order_latest_first_dvd">Primero los más rencientes (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Primero más antiguos (DVD)</string>
+  <string name="upcoming_upto_now">ahora</string>
+  <string name="upcoming_upto_one_day">un día</string>
+  <string name="upcoming_upto_three_days">3 días</string>
+  <string name="upcoming_upto_one_week">una semana</string>
+  <string name="upcoming_upto_two_weeks">dos semanas</string>
+  <string name="upcoming_upto_one_month">un mes</string>
+  <string name="upcoming_upto_one_hour">hora</string>
+  <string name="upcoming_upto_six_hours">6 horas</string>
+  <string name="upcoming_upto_half_day">12 horas</string>
   <string name="pref_appearance">Apariencia</string>
   <string name="pref_theme">Tema de la App</string>
   <string name="pref_other">Otros</string>
@@ -354,8 +350,6 @@
   <string name="check_into">Acceder a</string>
   <string name="no_selection">elige uno debajo</string>
   <string name="looking_for_something_else">¿Buscando algo más?</string>
-  <string name="menu_rate_episode">Calificar episodio</string>
-  <string name="menu_rate_show">Calificar show</string>
   <string name="traktcheckin_cancel">Reemplace</string>
   <string name="traktcheckin_inprogress">Ya te has registrado en otro episodio o película. Sobrescribe el registro anterior o espere %s e inténtelo de nuevo.</string>
   <string name="traktcheckin_wait">﻿Esperaré</string>
@@ -388,41 +382,24 @@
   <string name="pref_vibrate">Vibrar</string>
   <string name="pref_vibratesummary">También vibrar al mostrar una notificación</string>
   <string name="pref_notifications_treshold">Cuando notificar</string>
-  <string-array name="notificationThreshold">
-    <item>en directo</item>
-    <item>5 min antes</item>
-    <item>10 min antes</item>
-    <item>1 hora antes</item>
-  </string-array>
+  <string name="notification_release_exact">en directo</string>
+  <string name="notification_release_earlier_five">5 min antes</string>
+  <string name="notification_release_earlier_ten">10 min antes</string>
+  <string name="notification_release_earlier_hour">1 hora antes</string>
   <string name="smallwidget">SeriesGuide (pequeño)</string>
   <string name="bigwidget">SeriesGuide (mediano)</string>
   <string name="largewidget">SeriesGuide (grande)</string>
   <string name="hide_watched">Ocultar episodios vistos</string>
   <string name="pref_widget_opacity">Fondo de widget</string>
-  <string-array name="widgetOpacity">
-    <item>Transparente</item>
-    <item>25% negro</item>
-    <item>50% negro</item>
-    <item>75% negro</item>
-    <item>Negro</item>
-  </string-array>
   <string name="pref_widget_type">Tipo de widget</string>
-  <string-array name="widgetType">
-    <item>Próximo</item>
-    <item>Recientes</item>
-    <item>Favoritos</item>
-  </string-array>
+  <string name="widget_background_transparent">Transparente</string>
+  <string name="widget_background_25">25% negro</string>
+  <string name="widget_background_50">50% negro</string>
+  <string name="widget_background_75">75% negro</string>
+  <string name="widget_background_opaque">Negro</string>
   <string name="dashclock_extension_label">Próximo episodio</string>
   <string name="dashclock_extension_description">Muestra el próximo episodio de sus series de SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Mostrar próximos episodios</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>hora</item>
-    <item>6 horas</item>
-    <item>12 horas</item>
-    <item>24 horas</item>
-    <item>3 días</item>
-    <item>semana</item>
-  </string-array>
   <string name="action_migrate">Migrar desde X</string>
   <string name="migration_description">SeriesGuide X es ahora una clave de desbloqueo para las características X en la versión gratuita (\"X Life-Time Pass\"). Por favor, migra tus series a la versión gratuita de SeriesGuide.Manten X instalado para desbloquear todas las características en la versión gratuita.</string>
   <string name="migration_import">Pulse abajo para importar la copia de seguridad creada en SeriesGuide X.</string>

@@ -95,6 +95,7 @@
     <item quantity="many">%d minut</item>
     <item quantity="other">%d minut</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Vaše hodnocení</string>
   <string name="love">Úplný ninja!</string>
   <string name="hate">Odpad</string>
@@ -121,6 +122,7 @@
   <string name="episode_dvdnumber">Epizoda na DVD</string>
   <string name="show_actors">Herci</string>
   <string name="show_firstaired">Poprvé vysíláno</string>
+  <string name="show_on_network">na %s</string>
   <string name="show_genres">Žánr</string>
   <string name="show_runtime">Celková délka</string>
   <string name="show_contentrating">Hodnocení obsahu</string>
@@ -133,8 +135,6 @@
   <string name="lastEdit">Naposledy editováno // TVDb</string>
   <string name="services_watch">Zhlédnout</string>
   <string name="services_more">Více</string>
-  <string name="sort">Řadit dle</string>
-  <string name="action_sort_ignore_articles">Ignorovat členy</string>
   <string name="today">dnes</string>
   <string name="now">nyní</string>
   <string name="daily">Denně</string>
@@ -207,7 +207,6 @@
   <string name="update_scheduled">Probíhá aktualizace…</string>
   <string name="update_no_connection">Pro aktualizaci se připojte k internetu.</string>
   <string name="update_inprogress">Probíhá aktualizace, zkuste to později.</string>
-  <string name="show_on_network">na %s</string>
   <string name="season_watchcount">epizod ke zhlédnutí</string>
   <string name="season_allwatched">Všechny epizody zhlédnuty</string>
   <string name="season_onenotwatched">epizoda ke zhlédnutí</string>
@@ -277,27 +276,24 @@
   <string name="feedback">Poslat reakci</string>
   <string name="pref_autoaddshows">Přidávat nové seriály z traktu</string>
   <string name="pref_autoaddshowssummary">Automaticky přidávat seriály z Vaší aktivity na trakt.tv</string>
-  <string-array name="sesorting">
-    <item>Od nejnovější</item>
-    <item>Od nejstarší</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Od nejnovější</item>
-    <item>Od nejstarších</item>
-    <item>Od nezhlédnutých</item>
-    <item>A - Z</item>
-    <item>Nejlépe hodnocené</item>
-    <item>Od nejnovějších (DVD)</item>
-    <item>Od nejstarších (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>teď</item>
-    <item>dne</item>
-    <item>3 dnů</item>
-    <item>týdne</item>
-    <item>dvou týdnů</item>
-    <item>měsíce</item>
-  </string-array>
+  <string name="sort">Řadit dle</string>
+  <string name="action_sort_ignore_articles">Ignorovat členy</string>
+  <string name="sort_order_latest_first">Od nejnovější</string>
+  <string name="sort_order_oldest_first">Od nejstarší</string>
+  <string name="sort_order_unwatched_first">Od nezhlédnutých</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">Nejlépe hodnocené</string>
+  <string name="sort_order_latest_first_dvd">Od nejnovějších (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Od nejstarších (DVD)</string>
+  <string name="upcoming_upto_now">nyní</string>
+  <string name="upcoming_upto_one_day">dne</string>
+  <string name="upcoming_upto_three_days">3 dnů</string>
+  <string name="upcoming_upto_one_week">týdne</string>
+  <string name="upcoming_upto_two_weeks">dvou týdnů</string>
+  <string name="upcoming_upto_one_month">měsíce</string>
+  <string name="upcoming_upto_one_hour">hodiny</string>
+  <string name="upcoming_upto_six_hours">6 hodin</string>
+  <string name="upcoming_upto_half_day">12 hodin</string>
   <string name="pref_appearance">Vzhled</string>
   <string name="pref_theme">Téma aplikace</string>
   <string name="pref_other">Ostatní</string>
@@ -354,8 +350,6 @@
   <string name="check_into">Ohlásit se do</string>
   <string name="no_selection">vyberte níže</string>
   <string name="looking_for_something_else">Hledáte něco jiného?</string>
-  <string name="menu_rate_episode">Hodnotit epizodu</string>
-  <string name="menu_rate_show">Hodnotit seriál</string>
   <string name="traktcheckin_cancel">Přepsat</string>
   <string name="traktcheckin_inprogress">Již jste se ohlásil u jiné epizody nebo filmu. Buď přepište předchozí ohlášení, nebo počkejte %s a zkuste to znovu.</string>
   <string name="traktcheckin_wait">Já počkám</string>
@@ -388,41 +382,24 @@
   <string name="pref_vibrate">Vibrovat</string>
   <string name="pref_vibratesummary">Při upozornění také vibrovat</string>
   <string name="pref_notifications_treshold">Čas upozornění</string>
-  <string-array name="notificationThreshold">
-    <item>vysílá se</item>
-    <item>5 minut předem</item>
-    <item>10 minut předem</item>
-    <item>hodinu předem</item>
-  </string-array>
+  <string name="notification_release_exact">vysílá se</string>
+  <string name="notification_release_earlier_five">5 minut předem</string>
+  <string name="notification_release_earlier_ten">10 minut předem</string>
+  <string name="notification_release_earlier_hour">hodinu předem</string>
   <string name="smallwidget">SeriesGuide (malý)</string>
   <string name="bigwidget">SeriesGuide (střední)</string>
   <string name="largewidget">SeriesGuide (velký)</string>
   <string name="hide_watched">Skrýt zhlédnuté epizody</string>
   <string name="pref_widget_opacity">Pozadí widgetu</string>
-  <string-array name="widgetOpacity">
-    <item>Průhledné</item>
-    <item>25% černá</item>
-    <item>50% černá</item>
-    <item>75% černá</item>
-    <item>Černá</item>
-  </string-array>
   <string name="pref_widget_type">Typ widgetu</string>
-  <string-array name="widgetType">
-    <item>Nadcházející</item>
-    <item>Nedávné</item>
-    <item>Oblíbené</item>
-  </string-array>
+  <string name="widget_background_transparent">Průhledné</string>
+  <string name="widget_background_25">25% černá</string>
+  <string name="widget_background_50">50% černá</string>
+  <string name="widget_background_75">75% černá</string>
+  <string name="widget_background_opaque">Černá</string>
   <string name="dashclock_extension_label">Nadcházející epizoda</string>
   <string name="dashclock_extension_description">Zobrazuje nadcházející epizodu ze seznamu pořadů v SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Zobrazovat epizody nadcházející během</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>hodiny</item>
-    <item>6 hodin</item>
-    <item>12 hodin</item>
-    <item>24 hodin</item>
-    <item>3 dnů</item>
-    <item>týdne</item>
-  </string-array>
   <string name="action_migrate">Přesunutí z verze X</string>
   <string name="migration_description">SeriesGuide X nyní slouží k odemknutí Rozšířených funkcí v bezplatné verzi (\"doživotní verze X\"). Prosím přesuňte své seriály na bezplatnou verzi SeriesGuide. Nechte verzi X nainstalovanou pro odemknutí všech funkcí v bezplatné verzi.</string>
   <string name="migration_import">Klikněte dole pro importování zálohy vytvořené ve verzi X.</string>

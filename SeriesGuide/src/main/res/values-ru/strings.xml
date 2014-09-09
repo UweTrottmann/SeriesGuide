@@ -95,6 +95,7 @@
     <item quantity="many">%d минут</item>
     <item quantity="other">%d минут</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Ваш рейтинг</string>
   <string name="love">Супер!</string>
   <string name="hate">Слабый соус:(</string>
@@ -121,6 +122,7 @@
   <string name="episode_dvdnumber">DVD эпизод</string>
   <string name="show_actors">Актеры</string>
   <string name="show_firstaired">Премьера</string>
+  <string name="show_on_network">В %s</string>
   <string name="show_genres">Жанры</string>
   <string name="show_runtime">Продолжительность</string>
   <string name="show_contentrating">Оценка содержимого</string>
@@ -133,8 +135,6 @@
   <string name="lastEdit">Последние изменения / / TVDb</string>
   <string name="services_watch">Смотреть</string>
   <string name="services_more">Подробнее</string>
-  <string name="sort">Сортировать по</string>
-  <string name="action_sort_ignore_articles">Игнорировать статей</string>
   <string name="today">сегодня</string>
   <string name="now">сейчас</string>
   <string name="daily">Ежедневно</string>
@@ -145,8 +145,8 @@
   <string name="mark_all">Видел всё</string>
   <string name="unmark_all">Не видел ни одного</string>
   <string name="mark_untilhere">Смотрел все вышедшие в эфир</string>
-  <string name="collect">Collected</string>
-  <string name="uncollect">Not collected</string>
+  <string name="collect">Cобранный</string>
+  <string name="uncollect">Hе Cобранный</string>
   <string name="collect_all">Собраны все</string>
   <string name="uncollect_all">Не собраны</string>
   <string name="action_skip">Пропустить</string>
@@ -169,7 +169,7 @@
   <string name="dontdelete_show">Не удалять</string>
   <string name="no_nextepisode">следующий эпизод не найден</string>
   <string name="context_favorite">Избранное</string>
-  <string name="context_unfavorite">No favorite</string>
+  <string name="context_unfavorite">Не любимый</string>
   <string name="favorited">Добавлено в избранное</string>
   <string name="unfavorited">Удалено из избранного</string>
   <string name="context_hide">Скрыть</string>
@@ -207,7 +207,6 @@
   <string name="update_scheduled">Обновление…</string>
   <string name="update_no_connection">Для обновления подключите Интернет.</string>
   <string name="update_inprogress">Выполняется обновление, попробуйте еще раз позже.</string>
-  <string name="show_on_network">В %s</string>
   <string name="season_watchcount">не просмотрено</string>
   <string name="season_allwatched">Отметить все, как просмотренные</string>
   <string name="season_onenotwatched">эпизод не просмотрен</string>
@@ -239,14 +238,14 @@
   <string name="hexagon_setup">Настройка SeriesGuide облако</string>
   <string name="hexagon_description">Подключитесь к облаку для резервного копирования и синхронизации ваших сериалов и фильмов.</string>
   <string name="hexagon_warning_lists">Списки не включены.</string>
-  <string name="hexagon_warning_trakt">When using SeriesGuide Cloud, changes on trakt will not sync down to SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">При использовании SeriesGuide Cloud, изменения на тракт не будет синхронизировать до SeriesGuide.</string>
   <string name="hexagon_signin">Войти</string>
   <string name="hexagon_signed_in">Вы подключены к SeriesGuide облако.</string>
   <string name="hexagon_signout">Выход</string>
   <string name="hexagon_setup_incomplete">Настройка SeriesGuide облако было не завершено.</string>
   <string name="hexagon_setup_fail_auth">Ваш Google аккаунт не проверен.</string>
   <string name="hexagon_remove_account">Удалить аккаунт</string>
-  <string name="hexagon_remove_account_success">Account obliterated.</string>
+  <string name="hexagon_remove_account_success">Аккаунт уничтожены.</string>
   <string name="hexagon_remove_account_failure">Не могу удалить аккаунт.</string>
   <string name="hexagon_remove_account_confirmation">При удалении аккаунта будут удалены все сериалы и фильмы из облака SeriesGuide. Также убедитесь, что вы удалили используемый аккаунт на других подключенных устройствах.</string>
   <string name="connect_trakt">Подключение trakt</string>
@@ -277,27 +276,24 @@
   <string name="feedback">Отправить отзыв</string>
   <string name="pref_autoaddshows">Добавить новые сериалы из trakt</string>
   <string name="pref_autoaddshowssummary">Автоматически добавлять сериалы из trakt</string>
-  <string-array name="sesorting">
-    <item>Сначала последний</item>
-    <item>Старшие с начала</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Сначала последний</item>
-    <item>Старшие с начала</item>
-    <item>Сначала непросмотренные</item>
-    <item>A - Z</item>
-    <item>Лучшие по рейтингу</item>
-    <item>Сначала последние (DVD)</item>
-    <item>Более старые первыми (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>сейчас</item>
-    <item>день</item>
-    <item>3 дня</item>
-    <item>неделя</item>
-    <item>две недели</item>
-    <item>месяц</item>
-  </string-array>
+  <string name="sort">Сортировать по</string>
+  <string name="action_sort_ignore_articles">Игнорировать статей</string>
+  <string name="sort_order_latest_first">Сначала последний</string>
+  <string name="sort_order_oldest_first">Старшие с начала</string>
+  <string name="sort_order_unwatched_first">Сначала непросмотренные</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">Лучшие по рейтингу</string>
+  <string name="sort_order_latest_first_dvd">Сначала последние (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Более старые первыми (DVD)</string>
+  <string name="upcoming_upto_now">сейчас</string>
+  <string name="upcoming_upto_one_day">день</string>
+  <string name="upcoming_upto_three_days">3 дня</string>
+  <string name="upcoming_upto_one_week">неделя</string>
+  <string name="upcoming_upto_two_weeks">две недели</string>
+  <string name="upcoming_upto_one_month">месяц</string>
+  <string name="upcoming_upto_one_hour">час</string>
+  <string name="upcoming_upto_six_hours">6 часов</string>
+  <string name="upcoming_upto_half_day">12 часов</string>
   <string name="pref_appearance">Оформление</string>
   <string name="pref_theme">Тема</string>
   <string name="pref_other">Другие</string>
@@ -354,8 +350,6 @@
   <string name="check_into">Чек-ин</string>
   <string name="no_selection">Выберите из предложенных вариантов</string>
   <string name="looking_for_something_else">Ищете что-то еще?</string>
-  <string name="menu_rate_episode">Оценить эпизод</string>
-  <string name="menu_rate_show">Оценить сериал</string>
   <string name="traktcheckin_cancel">Переопределение</string>
   <string name="traktcheckin_inprogress">Вы уже отметились в другом эпизоде или фильме. Вы можете заменить предыдущий чек-ин или подождать %s и попробовать снова.</string>
   <string name="traktcheckin_wait">ожидаю</string>
@@ -388,41 +382,24 @@
   <string name="pref_vibrate">Вибросигнал</string>
   <string name="pref_vibratesummary">Вибрация при уведомлении</string>
   <string name="pref_notifications_treshold">Когда уведомлять</string>
-  <string-array name="notificationThreshold">
-    <item>в эфире</item>
-    <item>5 минут до начала</item>
-    <item>10 минут до начала</item>
-    <item>один час до начала</item>
-  </string-array>
+  <string name="notification_release_exact">в эфире</string>
+  <string name="notification_release_earlier_five">5 минут до начала</string>
+  <string name="notification_release_earlier_ten">10 минут до начала</string>
+  <string name="notification_release_earlier_hour">один час до начала</string>
   <string name="smallwidget">SeriesGuide (малый)</string>
   <string name="bigwidget">SeriesGuide (средний)</string>
   <string name="largewidget">SeriesGuide (большой)</string>
   <string name="hide_watched">Скрыть просмотренные эпизоды</string>
   <string name="pref_widget_opacity">Фон виджета</string>
-  <string-array name="widgetOpacity">
-    <item>Прозрачный</item>
-    <item>25% непрозрачности</item>
-    <item>50% непрозрачности</item>
-    <item>75% непрозрачности</item>
-    <item>Непрозрачный</item>
-  </string-array>
   <string name="pref_widget_type">Тип виджета</string>
-  <string-array name="widgetType">
-    <item>Следующие эпизоды</item>
-    <item>Недавние</item>
-    <item>Избранное</item>
-  </string-array>
+  <string name="widget_background_transparent">Прозрачный</string>
+  <string name="widget_background_25">25% непрозрачности</string>
+  <string name="widget_background_50">50% непрозрачности</string>
+  <string name="widget_background_75">75% непрозрачности</string>
+  <string name="widget_background_opaque">Непрозрачный</string>
   <string name="dashclock_extension_label">Предстоящий</string>
   <string name="dashclock_extension_description">Отображает следующий предстоящийего SeriesGuide сериала.</string>
   <string name="dashclock_pref_upcoming_threshold">Эпизоды скоро</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>час</item>
-    <item>6 часов</item>
-    <item>12 часов</item>
-    <item>24 часа</item>
-    <item>3 дня</item>
-    <item>Неделя</item>
-  </string-array>
   <string name="action_migrate">Миграция с X</string>
   <string name="migration_description">SeriesGuide X — теперь ключ разблокировки для X есть в бесплатной версии (X). Прошу перенести ваши сериалы на бесплатную версию SeriesGuide. Держите X установлена для разблокировки всех функций в бесплатной версии.</string>
   <string name="migration_import">Нажмите ниже для импорта резервной копии, созданной в SeriesGuide X.</string>
@@ -438,7 +415,7 @@
   <string name="subscription_activated">Теперь вы подписаны на X функции.</string>
   <string name="subscription_expired">Срок действия подписки истек</string>
   <string name="subscription_expired_details">Подписка X функции истекла.</string>
-  <string name="add_to_homescreen">Shortcut</string>
+  <string name="add_to_homescreen">Ярлык</string>
   <string name="search_within_show">Поиск в %s</string>
   <string name="web_search">Веб-поиск</string>
   <string name="extensions">Расширения</string>

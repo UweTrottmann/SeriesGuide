@@ -95,6 +95,7 @@
     <item quantity="many">%d minuta</item>
     <item quantity="other">%d minuta</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Tvoja ocjena</string>
   <string name="love">Zakon!</string>
   <string name="hate">Jadno :(</string>
@@ -121,6 +122,7 @@
   <string name="episode_dvdnumber">DVD epizoda</string>
   <string name="show_actors">Glumci</string>
   <string name="show_firstaired">Prvi put emitirano</string>
+  <string name="show_on_network">na %s</string>
   <string name="show_genres">Žanrovi</string>
   <string name="show_runtime">Trajanje</string>
   <string name="show_contentrating">Ocjena sadržaja</string>
@@ -133,8 +135,6 @@
   <string name="lastEdit">Zadnje uređeno // TVDb</string>
   <string name="services_watch">Gledaj</string>
   <string name="services_more">Više</string>
-  <string name="sort">Sortiraj po</string>
-  <string name="action_sort_ignore_articles">Ignoriraj članke</string>
   <string name="today">danas</string>
   <string name="now">sada</string>
   <string name="daily">Dnevno</string>
@@ -207,7 +207,6 @@
   <string name="update_scheduled">Ažuriranje…</string>
   <string name="update_no_connection">Poveži se na internet za ažuriranje.</string>
   <string name="update_inprogress">Ažuriranje u tijeku, pokušajte kasnije.</string>
-  <string name="show_on_network">na %s</string>
   <string name="season_watchcount">Nepogledane epizode</string>
   <string name="season_allwatched">Sve epizode pogledane</string>
   <string name="season_onenotwatched">Epizoda nije pogledana</string>
@@ -277,27 +276,24 @@
   <string name="feedback">Pošalji povratnu informaciju</string>
   <string name="pref_autoaddshows">Dodaj nove trakt serije</string>
   <string name="pref_autoaddshowssummary">Automatski dodaj serije iz svojih aktivnosti na traktu</string>
-  <string-array name="sesorting">
-    <item>Prvo zadnje</item>
-    <item>Prvo najstarije</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Zadnji prvi</item>
-    <item>Najstariji prvi</item>
-    <item>Nepogledane prve</item>
-    <item>A-Z</item>
-    <item>Najbolje ocijenjene</item>
-    <item>Prvo zadnje (DVD)</item>
-    <item>Prvo najstarije (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>Sada</item>
-    <item>1 dana</item>
-    <item>3 dana</item>
-    <item>tjedna</item>
-    <item>2 tjedna</item>
-    <item>1 mjeseca</item>
-  </string-array>
+  <string name="sort">Sortiraj po</string>
+  <string name="action_sort_ignore_articles">Ignoriraj članke</string>
+  <string name="sort_order_latest_first">Prvo zadnje</string>
+  <string name="sort_order_oldest_first">Prvo najstarije</string>
+  <string name="sort_order_unwatched_first">Nepogledane prve</string>
+  <string name="sort_order_alphabetical">A-Z</string>
+  <string name="sort_order_top_rated_first">Najbolje ocijenjene</string>
+  <string name="sort_order_latest_first_dvd">Prvo zadnje (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Prvo najstarije (DVD)</string>
+  <string name="upcoming_upto_now">sada</string>
+  <string name="upcoming_upto_one_day">1 dana</string>
+  <string name="upcoming_upto_three_days">3 dana</string>
+  <string name="upcoming_upto_one_week">tjedna</string>
+  <string name="upcoming_upto_two_weeks">2 tjedna</string>
+  <string name="upcoming_upto_one_month">1 mjeseca</string>
+  <string name="upcoming_upto_one_hour">sati</string>
+  <string name="upcoming_upto_six_hours">6 sati</string>
+  <string name="upcoming_upto_half_day">12 sati</string>
   <string name="pref_appearance">Izgled</string>
   <string name="pref_theme">Slikovna tema aplikacije</string>
   <string name="pref_other">Ostalo</string>
@@ -354,8 +350,6 @@
   <string name="check_into">Prijavi se u</string>
   <string name="no_selection">Odaberi jednu od</string>
   <string name="looking_for_something_else">Tražiš nešto drugo?</string>
-  <string name="menu_rate_episode">Ocijeni epizodu</string>
-  <string name="menu_rate_show">Ocijeni seriju</string>
   <string name="traktcheckin_cancel">Zamijeni</string>
   <string name="traktcheckin_inprogress">Već si prijavljen u drugu epizodu ili film. Ili zamijeni prošlu prijavu ili pričekaj %s i pokušaj ponovno.</string>
   <string name="traktcheckin_wait">Pričekat ću</string>
@@ -388,41 +382,24 @@
   <string name="pref_vibrate">Vibriraj</string>
   <string name="pref_vibratesummary">Također vibriraj pri prikazu obavijesti</string>
   <string name="pref_notifications_treshold">Kada obavijestiti</string>
-  <string-array name="notificationThreshold">
-    <item>emitira se</item>
-    <item>5 minuta prije</item>
-    <item>10 minuta prije</item>
-    <item>1 sat prije</item>
-  </string-array>
+  <string name="notification_release_exact">emitira se</string>
+  <string name="notification_release_earlier_five">5 minuta prije</string>
+  <string name="notification_release_earlier_ten">10 minuta prije</string>
+  <string name="notification_release_earlier_hour">1 sat prije</string>
   <string name="smallwidget">SeriesGuide (mali)</string>
   <string name="bigwidget">SeriesGuide (srednji)</string>
   <string name="largewidget">SeriesGuide (veliki)</string>
   <string name="hide_watched">Sakrij pogledane epizode</string>
   <string name="pref_widget_opacity">Pozadina widgeta</string>
-  <string-array name="widgetOpacity">
-    <item>Prozirno</item>
-    <item>25% crno</item>
-    <item>50% crno</item>
-    <item>75% crno</item>
-    <item>Crno</item>
-  </string-array>
   <string name="pref_widget_type">Tip widgeta</string>
-  <string-array name="widgetType">
-    <item>Nadolazeće</item>
-    <item>Nedavno</item>
-    <item>Favoriti</item>
-  </string-array>
+  <string name="widget_background_transparent">Prozirno</string>
+  <string name="widget_background_25">25% crno</string>
+  <string name="widget_background_50">50% crno</string>
+  <string name="widget_background_75">75% crno</string>
+  <string name="widget_background_opaque">Crno</string>
   <string name="dashclock_extension_label">Nadolazeća epizoda</string>
   <string name="dashclock_extension_description">Prikazuje sljedeću nadolazeću epizodu tvojih SeriesGuide serija.</string>
   <string name="dashclock_pref_upcoming_threshold">Prikaži epizode u sljedećem</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>sati</item>
-    <item>6 sati</item>
-    <item>12 sati</item>
-    <item>24 sata</item>
-    <item>3 dana</item>
-    <item>tjedan</item>
-  </string-array>
   <string name="action_migrate">Premjesti iz X-a</string>
   <string name="migration_description">Series Guide X je sada ključ za otključavanje X opcija u besplatnoj verziji ("X pass"). Molimo premjestite svoje serije u besplatnu verziju SeriesGuide-a. Ostavite X instaliran kako bi otključali sve opcije u besplatnoj verziji.</string>
   <string name="migration_import">Dodirnite ispod kako biste uvezli sigurnosne kopije stvorene u SeriesGuide X.</string>

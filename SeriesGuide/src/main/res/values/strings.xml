@@ -144,6 +144,7 @@
     <string name="episode_dvdnumber">DVD Episode</string>
     <string name="show_actors">Actors</string>
     <string name="show_firstaired">First Aired</string>
+    <string name="show_on_network">on %s</string>
     <string name="show_genres">Genres</string>
     <string name="show_runtime">Runtime</string>
     <string name="show_contentrating">Content Rating</string>
@@ -156,10 +157,6 @@
     <string name="lastEdit">Last Edit // TVDb</string>
     <string name="services_watch">Watch</string>
     <string name="services_more">More</string>
-
-    <!-- Menu options -->
-    <string name="sort">Sort by</string>
-    <string name="action_sort_ignore_articles">Ignore articles</string>
 
     <!-- Date and Time -->
     <string name="today">today</string>
@@ -243,9 +240,6 @@
     <string name="update_no_connection">To update connect to the internet.</string>
     <string name="update_inprogress">An update is in progress, try again later.</string>
 
-    <!-- Show info -->
-    <string name="show_on_network">on %s</string>
-
     <!-- Seasons -->
     <string name="season_watchcount">episodes not watched</string>
     <string name="season_allwatched">All episodes watched</string>
@@ -327,27 +321,31 @@
     <string name="pref_autoaddshows">Add new trakt shows</string>
     <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
 
-    <string-array name="sesorting">
-        <item>Latest first</item>
-        <item>Oldest first</item>
-    </string-array>
-    <string-array name="epsorting">
-        <item>Latest first</item>
-        <item>Oldest first</item>
-        <item>Unwatched first</item>
-        <item>A - Z</item>
-        <item>Top rated</item>
-        <item>Latest first (DVD)</item>
-        <item>Oldest first (DVD)</item>
-    </string-array>
-    <string-array name="upcominglimit">
-        <item>now</item>
-        <item>1 day</item>
-        <item>3 days</item>
-        <item>1 week</item>
-        <item>2 weeks</item>
-        <item>1 month</item>
-    </string-array>
+    <!-- Sort -->
+    <string name="sort">Sort by</string>
+    <string name="action_sort_ignore_articles">Ignore articles</string>
+
+    <!-- Sort orders -->
+    <string name="sort_order_latest_first">Latest first</string>
+    <string name="sort_order_oldest_first">Oldest first</string>
+    <string name="sort_order_unwatched_first">Unwatched first</string>
+    <string name="sort_order_alphabetical">A - Z</string>
+    <string name="sort_order_top_rated_first">Top rated</string>
+    <string name="sort_order_latest_first_dvd">Latest first (DVD)</string>
+    <string name="sort_order_oldest_first_dvd">Oldest first (DVD)</string>
+
+    <!-- Upcoming thresholds -->
+    <string name="upcoming_upto_now">now</string>
+    <string name="upcoming_upto_one_day">1 day</string>
+    <string name="upcoming_upto_three_days">3 days</string>
+    <string name="upcoming_upto_one_week">1 week</string>
+    <string name="upcoming_upto_two_weeks">2 weeks</string>
+    <string name="upcoming_upto_one_month">1 month</string>
+
+    <!-- Additional DashClock extension upcoming thresholds -->
+    <string name="upcoming_upto_one_hour">1 hour</string>
+    <string name="upcoming_upto_six_hours">6 hours</string>
+    <string name="upcoming_upto_half_day">12 hours</string>
 
     <!-- Appearance settings -->
     <string name="pref_appearance">Appearance</string>
@@ -453,12 +451,11 @@
     <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
     <string name="pref_notifications_treshold">When to notify</string>
 
-    <string-array name="notificationThreshold">
-        <item>on air</item>
-        <item>5 min in advance</item>
-        <item>10 min in advance</item>
-        <item>1 hour in advance</item>
-    </string-array>
+    <!-- Notification thresholds -->
+    <string name="notification_release_exact">on air</string>
+    <string name="notification_release_earlier_five">5 min in advance</string>
+    <string name="notification_release_earlier_ten">10 min in advance</string>
+    <string name="notification_release_earlier_hour">1 hour in advance</string>
 
     <!-- Legacy Widgets -->
     <string name="smallwidget">SeriesGuide (small)</string>
@@ -468,36 +465,19 @@
     <!-- List Widget -->
     <string name="hide_watched">Hide watched episodes</string>
     <string name="pref_widget_opacity">Widget background</string>
-
-    <string-array name="widgetOpacity">
-        <item>Transparent</item>
-        <item>25% black</item>
-        <item>50% black</item>
-        <item>75% black</item>
-        <item>Black</item>
-    </string-array>
-
     <string name="pref_widget_type">Widget type</string>
 
-    <string-array name="widgetType">
-        <item>Upcoming</item>
-        <item>Recent</item>
-        <item>Favorites</item>
-    </string-array>
+    <!-- Widget background options -->
+    <string name="widget_background_transparent">Transparent</string>
+    <string name="widget_background_25">25% black</string>
+    <string name="widget_background_50">50% black</string>
+    <string name="widget_background_75">75% black</string>
+    <string name="widget_background_opaque">Black</string>
 
     <!-- DashClock extension -->
     <string name="dashclock_extension_label">Upcoming episode</string>
     <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
     <string name="dashclock_pref_upcoming_threshold">Display episode within…</string>
-
-    <string-array name="dashclockUpcomingThresholds">
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>12 hours</item>
-        <item>24 hours</item>
-        <item>3 days</item>
-        <item>1 week</item>
-    </string-array>
 
     <!-- SeriesGuide X deprecation -->
     <string name="action_migrate">Migrate from X</string>
