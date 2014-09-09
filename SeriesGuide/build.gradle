@@ -34,7 +34,9 @@ android {
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
         exclude 'LICENSE.txt'
     }
 
@@ -99,6 +101,7 @@ dependencies {
     compile 'com.uwetrottmann:tmdb-java:0.7.0'
     compile 'com.uwetrottmann:trakt-java:3.3.1'
     compile 'de.greenrobot:eventbus:2.2.1'
+    compile 'joda-time:joda-time:2.4'
 
     // Google Play Services
     compile 'com.google.android.gms:play-services:5.0.89'
