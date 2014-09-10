@@ -36,6 +36,7 @@ public class SearchHistory {
     private static final String KEY_SEARCH_HISTORY_BASE = "recent-searches-";
     private static final int MAX_HISTORY_SIZE = 10;
     private static final int ISO_8601_DATETIME_NOMILLIS_UTC_LENGTH = 20;
+    private static final int DATETIME_PREFIX_LENGTH = ISO_8601_DATETIME_NOMILLIS_UTC_LENGTH + 1;
     private static final DateTimeFormatter ISO_DATETIME_FORMATTER
             = ISODateTimeFormat.dateTimeNoMillis().withZoneUTC();
 
@@ -61,7 +62,7 @@ public class SearchHistory {
         } else {
             TreeMap<String, String> map = new TreeMap<>();
             for (String historyEntry : storedSearchHistory) {
-                String query = historyEntry.substring(ISO_8601_DATETIME_NOMILLIS_UTC_LENGTH,
+                String query = historyEntry.substring(DATETIME_PREFIX_LENGTH,
                         historyEntry.length());
                 map.put(query, historyEntry);
             }
