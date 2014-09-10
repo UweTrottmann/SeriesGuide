@@ -8,6 +8,13 @@ All dates are in the European Central timezone.
 Version 18 *(in development)*
 -----------------------------
 
+#### 18-beta2 *(2014-09-10)*
+
+* FEATURE Remember past search queries for TheTVDB and TMDB search.
+* FIX Interface handles "Large text" accessibility option better (no overlapping or cut off text).
+* FIX Always show cheat sheet for touch and hold on inline actions (like action bar buttons).
+* NOTICE Latest translations from crowdin.
+
 #### 18-beta1 *(2014-09-01)*
 
 * FEATURE Add shows tab to search. Results update as you type.
