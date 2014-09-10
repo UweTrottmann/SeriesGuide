@@ -130,5 +130,5 @@ dependencies {
     }
 
     // Crashlytics
-    compile 'com.crashlytics.android:crashlytics:1.1.11'
+    compile 'com.crashlytics.android:crashlytics:1.1.13'
 }
