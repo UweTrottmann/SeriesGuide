@@ -22,6 +22,7 @@
   <string name="description_poster">Affiche de la série</string>
   <string name="description_image">Image de l\'épisode</string>
   <string name="clear">Effacer</string>
+  <string name="clear_search_history">Clear search history</string>
   <string name="discard">Annuler</string>
   <string name="save_selection">Enregistrer</string>
   <string name="search_hint">Recherche d\'épisodes</string>
@@ -95,7 +96,7 @@
     <item quantity="many">%d minutes</item>
     <item quantity="other">%d minutes</item>
   </plurals>
-  <string name="action_rate">Rate</string>
+  <string name="action_rate">Noter</string>
   <string name="your_rating">Votre note</string>
   <string name="love">Totalement ninja !</string>
   <string name="hate">Un peu fade :(</string>

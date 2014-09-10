@@ -22,6 +22,7 @@
   <string name="description_poster">Serien-Poster</string>
   <string name="description_image">Bild der Folge</string>
   <string name="clear">Löschen</string>
+  <string name="clear_search_history">Suchverlauf löschen</string>
   <string name="discard">Verwerfen</string>
   <string name="save_selection">Auswahl speichern</string>
   <string name="search_hint">Suche Folgen</string>

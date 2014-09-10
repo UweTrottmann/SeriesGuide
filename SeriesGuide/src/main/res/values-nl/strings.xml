@@ -22,6 +22,7 @@
   <string name="description_poster">Affiche weergeven</string>
   <string name="description_image">Afleveringsafbeelding</string>
   <string name="clear">Wissen</string>
+  <string name="clear_search_history">Clear search history</string>
   <string name="discard">Negeren</string>
   <string name="save_selection">Selectie bewaren</string>
   <string name="search_hint">Afleveringen zoeken</string>

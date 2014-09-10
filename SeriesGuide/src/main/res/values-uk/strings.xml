@@ -22,6 +22,7 @@
   <string name="description_poster">Показати постер</string>
   <string name="description_image">Зображення Серії</string>
   <string name="clear">Очистити</string>
+  <string name="clear_search_history">Clear search history</string>
   <string name="discard">Відмінити</string>
   <string name="save_selection">Зберегти вибране</string>
   <string name="search_hint">Пошук серій</string>

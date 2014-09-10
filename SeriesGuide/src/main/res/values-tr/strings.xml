@@ -22,6 +22,7 @@
   <string name="description_poster">Posteri göster</string>
   <string name="description_image">Bölüm resmi</string>
   <string name="clear">Temizle</string>
+  <string name="clear_search_history">Clear search history</string>
   <string name="discard">Yoksay</string>
   <string name="save_selection">Seçimi kaydet</string>
   <string name="search_hint">Bölüm ara</string>

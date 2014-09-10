@@ -22,6 +22,7 @@
   <string name="description_poster">Vis plakat</string>
   <string name="description_image">Episode billede</string>
   <string name="clear">Slet</string>
+  <string name="clear_search_history">Clear search history</string>
   <string name="discard">Kassér</string>
   <string name="save_selection">Gem markering</string>
   <string name="search_hint">Søg episoder</string>

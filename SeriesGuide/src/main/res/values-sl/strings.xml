@@ -22,6 +22,7 @@
   <string name="description_poster">Prikaži poster</string>
   <string name="description_image">Slika epizode</string>
   <string name="clear">Zbriši</string>
+  <string name="clear_search_history">Clear search history</string>
   <string name="discard">Zavrzi</string>
   <string name="save_selection">Shrani izbiro</string>
   <string name="search_hint">Iskanje epizode</string>

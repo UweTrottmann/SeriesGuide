@@ -22,6 +22,7 @@
   <string name="description_poster">Обложка</string>
   <string name="description_image">Снимкa нa епизодa</string>
   <string name="clear">Изчисти</string>
+  <string name="clear_search_history">Clear search history</string>
   <string name="discard">Откажи</string>
   <string name="save_selection">Запази избраните</string>
   <string name="search_hint">Търсене на епизоди</string>

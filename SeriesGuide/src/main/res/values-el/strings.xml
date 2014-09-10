@@ -22,6 +22,7 @@
   <string name="description_poster">Εμφάνιση αφίσας</string>
   <string name="description_image">Εικόνα επεισοδίου</string>
   <string name="clear">Καθαρισμός</string>
+  <string name="clear_search_history">Clear search history</string>
   <string name="discard">Απόρριψη</string>
   <string name="save_selection">Αποθήκευση επιλογής</string>
   <string name="search_hint">Αναζήτηση επεισοδίων</string>

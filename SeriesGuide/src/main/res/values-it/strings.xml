@@ -22,6 +22,7 @@
   <string name="description_poster">Mostra poster</string>
   <string name="description_image">Immagine dell\'episodio</string>
   <string name="clear">Ripulire</string>
+  <string name="clear_search_history">Clear search history</string>
   <string name="discard">Scarta</string>
   <string name="save_selection">Salva selezione</string>
   <string name="search_hint">Cerca episodi</string>

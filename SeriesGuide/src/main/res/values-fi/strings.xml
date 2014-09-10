@@ -22,6 +22,7 @@
   <string name="description_poster">Näytä juliste</string>
   <string name="description_image">Jaksokuva</string>
   <string name="clear">Tyhjennä</string>
+  <string name="clear_search_history">Clear search history</string>
   <string name="discard">Peruuta</string>
   <string name="save_selection">Tallenna valinta</string>
   <string name="search_hint">Hae jaksoja</string>

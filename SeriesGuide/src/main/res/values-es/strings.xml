@@ -22,6 +22,7 @@
   <string name="description_poster">Mostrar el poster</string>
   <string name="description_image">Imagen del episodio</string>
   <string name="clear">Limpiar</string>
+  <string name="clear_search_history">Clear search history</string>
   <string name="discard">Descartar</string>
   <string name="save_selection">Guardar selección</string>
   <string name="search_hint">Buscar episodios</string>
@@ -95,7 +96,7 @@
     <item quantity="many">%d minutos</item>
     <item quantity="other">%d minutos</item>
   </plurals>
-  <string name="action_rate">Rate</string>
+  <string name="action_rate">Calificar</string>
   <string name="your_rating">Tu calificación</string>
   <string name="love">¡Una pasada!</string>
   <string name="hate">¡Apesta!</string>
@@ -244,7 +245,7 @@
   <string name="hexagon_signout">Cerrar sesión</string>
   <string name="hexagon_setup_incomplete">La configuración de SeriesGuide cloud no se completó.</string>
   <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
-  <string name="hexagon_remove_account">Remove account</string>
+  <string name="hexagon_remove_account">Eliminar cuenta</string>
   <string name="hexagon_remove_account_success">Account obliterated.</string>
   <string name="hexagon_remove_account_failure">Could not remove account.</string>
   <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide Cloud. Make sure to remove it on other connected devices as well.</string>
@@ -415,7 +416,7 @@
   <string name="subscription_activated">Ahora estás suscrito a las características X.</string>
   <string name="subscription_expired">Suscripción caducada</string>
   <string name="subscription_expired_details">Tu suscripción a las características X ha caducado.</string>
-  <string name="add_to_homescreen">Shortcut</string>
+  <string name="add_to_homescreen">Acceso directo</string>
   <string name="search_within_show">Búsqueda dentro de %s</string>
   <string name="web_search">Búsqueda en la web</string>
   <string name="extensions">Extensiones</string>
@@ -433,5 +434,5 @@
   <string name="extension_youtube">Búsqueda en YouTube</string>
   <string name="description_extension_youtube">Buscar vídeos en YouTube</string>
   <string name="description_extension_web_search">Buscar imágenes y sitios web</string>
-  <string name="person_biography">Biography</string>
+  <string name="person_biography">Biografía</string>
 </resources>

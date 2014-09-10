@@ -22,6 +22,7 @@
   <string name="description_poster">Прикажи постер</string>
   <string name="description_image">Слика епизоде</string>
   <string name="clear">Обриши</string>
+  <string name="clear_search_history">Clear search history</string>
   <string name="discard">Одбаци</string>
   <string name="save_selection">Сачувај изабрано</string>
   <string name="search_hint">Тражи епизоде</string>

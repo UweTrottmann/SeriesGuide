@@ -22,6 +22,7 @@
   <string name="description_poster">Показать постер</string>
   <string name="description_image">Кадр из эпизода</string>
   <string name="clear">Удалить</string>
+  <string name="clear_search_history">Clear search history</string>
   <string name="discard">Отменить</string>
   <string name="save_selection">Сохранить выбор</string>
   <string name="search_hint">Поиск эпизодов</string>

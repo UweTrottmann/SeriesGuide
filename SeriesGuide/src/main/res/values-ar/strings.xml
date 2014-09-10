@@ -22,6 +22,7 @@
   <string name="description_poster">إظهار الملصقات</string>
   <string name="description_image">صورة الحلقة</string>
   <string name="clear">تنظيف</string>
+  <string name="clear_search_history">Clear search history</string>
   <string name="discard">تجاهل</string>
   <string name="save_selection">حفظ التحديد</string>
   <string name="search_hint">البحث عن الحلقات</string>
