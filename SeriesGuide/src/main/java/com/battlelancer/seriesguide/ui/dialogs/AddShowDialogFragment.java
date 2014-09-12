@@ -164,22 +164,14 @@ public class AddShowDialogFragment extends DialogFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // ensure at least a title
-        if (TextUtils.isEmpty(mShow.title)) {
-            Timber.d("No title present, loading details from TVDb");
-            showProgressBar(true);
-            populateShowViews(null);
+        showProgressBar(true);
+        populateShowViews(null);
 
-            // load show details
-            Bundle args = new Bundle();
-            args.putInt(KEY_SHOW_TVDBID, mShow.tvdbid);
-            getLoaderManager().initLoader(ShowsActivity.ADD_SHOW_LOADER_ID, args,
-                    mShowLoaderCallbacks);
-        } else {
-            // use existing show details
-            showProgressBar(false);
-            populateShowViews(mShow);
-        }
+        // load show details
+        Bundle args = new Bundle();
+        args.putInt(KEY_SHOW_TVDBID, mShow.tvdbid);
+        getLoaderManager().initLoader(ShowsActivity.ADD_SHOW_LOADER_ID, args,
+                mShowLoaderCallbacks);
     }
 
     @Override
@@ -207,13 +199,7 @@ public class AddShowDialogFragment extends DialogFragment {
         @Override
         public void onLoadFinished(Loader<Show> loader, Show data) {
             showProgressBar(false);
-            if (data != null) {
-                mShow.title = data.title;
-                mShow.overview = data.overview;
-                populateShowViews(mShow);
-            } else {
-                populateShowViews(null);
-            }
+            populateShowViews(data);
         }
 
         @Override
@@ -222,7 +208,7 @@ public class AddShowDialogFragment extends DialogFragment {
         }
     };
 
-    private void populateShowViews(SearchResult show) {
+    private void populateShowViews(Show show) {
         if (show == null) {
             mButtonPositive.setEnabled(false);
             return;
