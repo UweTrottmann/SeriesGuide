@@ -24,7 +24,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.text.TextUtils;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,15 +37,15 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TvdbShowLoader;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
-import timber.log.Timber;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
  * A {@link DialogFragment} allowing the user to decide whether to add a show to SeriesGuide.
@@ -93,9 +95,10 @@ public class AddShowDialogFragment extends DialogFragment {
 
     private OnAddShowListener mListener;
 
-    @InjectView(R.id.textViewAddTitle) TextView mTitle;
-    @InjectView(R.id.textViewAddDescription) TextView mDescription;
-    @InjectView(R.id.imageViewAddPoster) ImageView mPoster;
+    @InjectView(R.id.textViewAddTitle) TextView title;
+    @InjectView(R.id.textViewAddShowMeta) TextView showmeta;
+    @InjectView(R.id.textViewAddDescription) TextView overview;
+    @InjectView(R.id.imageViewAddPoster) ImageView poster;
 
     @InjectView(R.id.buttonPositive) Button mButtonPositive;
     @InjectView(R.id.buttonNegative) Button mButtonNegative;
@@ -137,8 +140,6 @@ public class AddShowDialogFragment extends DialogFragment {
             Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.dialog_addshow, container, false);
         ButterKnife.inject(this, v);
-
-        mPoster.setVisibility(View.GONE);
 
         // buttons
         mButtonNegative.setText(R.string.dont_add_show);
@@ -211,24 +212,40 @@ public class AddShowDialogFragment extends DialogFragment {
     private void populateShowViews(Show show) {
         if (show == null) {
             mButtonPositive.setEnabled(false);
+            if (!AndroidUtils.isNetworkConnected(getActivity())) {
+                overview.setText(R.string.offline);
+            }
             return;
         }
 
         mButtonPositive.setEnabled(true);
 
-        // title and description
-        mTitle.setText(show.title);
-        mDescription.setText(show.overview);
+        // title, overview
+        title.setText(show.title);
+        overview.setText(show.overview);
+
+        SpannableStringBuilder meta = new SpannableStringBuilder();
+
+        // status
+        boolean isContinuing = JsonExportTask.ShowStatusExport.CONTINUING.equals(show.status);
+        meta.append(getString(isContinuing ? R.string.show_isalive : R.string.show_isnotalive));
+        // if continuing, paint status green
+        meta.setSpan(
+                new TextAppearanceSpan(getActivity(),
+                        isContinuing ? R.style.TextAppearance_Subhead_Green
+                                : R.style.TextAppearance_Subhead_Dim), 0,
+                meta.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        meta.append("\n");
+
+        // network, runtime
+        meta.append(show.network);
+        meta.append("\n");
+        meta.append(getString(R.string.runtime_minutes, show.runtime));
+
+        showmeta.setText(meta);
 
         // poster
-        if ((DisplaySettings.isLargeScreen(getActivity())
-                || DisplaySettings.isVeryLargeScreen(getActivity()))
-                && show.poster != null) {
-            mPoster.setVisibility(View.VISIBLE);
-            ServiceUtils.getPicasso(getActivity())
-                    .load(show.poster)
-                    .into(mPoster);
-        }
+        Utils.loadPosterThumbnail(getActivity(), poster, show.poster);
     }
 
     private void showProgressBar(boolean isVisible) {

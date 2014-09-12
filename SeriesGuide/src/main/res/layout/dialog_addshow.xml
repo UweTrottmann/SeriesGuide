@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -26,11 +25,31 @@
                 android:id="@+id/textViewAddTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@+id/imageViewAddPoster"
                 android:paddingBottom="@dimen/default_padding"
                 android:text="@string/action_shows_add"
                 android:textAppearance="@style/TextAppearance.Headline"
+                android:textIsSelectable="true" />
+
+            <ImageView
+                android:id="@+id/imageViewAddPoster"
+                android:layout_width="@dimen/show_poster_width"
+                android:layout_height="@dimen/show_poster_height"
+                android:layout_below="@+id/textViewAddTitle"
+                tools:src="@drawable/ic_image_missing"
+                android:scaleType="centerInside"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/textViewAddShowMeta"
+                style="@style/Block.FlowText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewAddTitle"
+                android:layout_toRightOf="@+id/imageViewAddPoster"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginRight="0dp"
+                tools:text="Continuing\nMon 07:00 PM\nShowtime\n60 min"
+                android:textAppearance="@style/TextAppearance.Subhead"
                 android:textIsSelectable="true" />
 
             <TextView
@@ -38,23 +57,15 @@
                 style="@style/Block.FlowText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/textViewAddTitle"
-                android:layout_toLeftOf="@+id/imageViewAddPoster"
+                android:maxWidth="@dimen/max_width_text_size_body"
+                android:layout_below="@+id/imageViewAddPoster"
+                android:layout_marginTop="@dimen/default_padding"
                 android:layout_marginLeft="0dp"
                 android:layout_marginRight="0dp"
                 tools:text="@string/description_overview"
                 android:textAppearance="@style/TextAppearance.Body"
                 android:textIsSelectable="true" />
 
-            <ImageView
-                android:id="@+id/imageViewAddPoster"
-                android:layout_width="102dp"
-                android:layout_height="150dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="@dimen/large_padding"
-                android:contentDescription="@string/description_poster"
-                tools:src="@color/protection_dark" />
         </RelativeLayout>
     </ScrollView>
 
