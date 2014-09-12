@@ -98,6 +98,8 @@ public class AddShowDialogFragment extends DialogFragment {
     @InjectView(R.id.textViewAddTitle) TextView title;
     @InjectView(R.id.textViewAddShowMeta) TextView showmeta;
     @InjectView(R.id.textViewAddDescription) TextView overview;
+    @InjectView(R.id.textViewAddRatingsTvdbValue) TextView tvdbRating;
+    @InjectView(R.id.textViewAddGenres) TextView genres;
     @InjectView(R.id.imageViewAddPoster) ImageView poster;
 
     @InjectView(R.id.buttonPositive) Button mButtonPositive;
@@ -249,6 +251,13 @@ public class AddShowDialogFragment extends DialogFragment {
         meta.append(getString(R.string.runtime_minutes, show.runtime));
 
         showmeta.setText(meta);
+
+        // TheTVDB rating
+        tvdbRating.setText(
+                show.rating > 0 ? String.valueOf(show.rating) : getString(R.string.norating));
+
+        // genres
+        Utils.setValueOrPlaceholder(genres, Utils.splitAndKitTVDBStrings(show.genres));
 
         // poster
         Utils.loadPosterThumbnail(getActivity(), poster, show.poster);
