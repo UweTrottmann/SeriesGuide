@@ -77,6 +77,10 @@
         <item name="android:textColor">?attr/textColorSgDim</item>
     </style>
 
+    <style name="TextAppearance.Subhead.Green">
+        <item name="android:textColor">?attr/textColorSgGreen</item>
+    </style>
+
     <style name="TextAppearance.Subhead.Narrow">
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
     </style>
