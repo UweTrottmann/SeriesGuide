@@ -354,23 +354,24 @@ public class TheTVDB {
 
     /**
      * Get show details from TVDb in the user preferred language ({@link
-     * DisplaySettings#getContentLanguage(android.content.Context)}).
+     * DisplaySettings#getContentLanguage(android.content.Context)}). Tries to fetch additional
+     * information from trakt.
      */
     public static Show getShow(Context context, int showTvdbId) throws TvdbException {
         String language = DisplaySettings.getContentLanguage(context);
-        return downloadAndParseShow(context, showTvdbId, language);
+        return fetchShow(context, showTvdbId, language);
     }
 
     /**
      * Get show details from TVDb. Tries to fetch additional information from trakt.
      *
      * @param language A TVDb language code (see <a href="http://www.thetvdb.com/wiki/index.php/API:languages.xml"
-     *                 >TVDb wiki</a>).
+     * >TVDb wiki</a>).
      */
     private static Show fetchShow(Context context, int showTvdbId, String language)
             throws TvdbException {
         // get show details from TVDb
-        Show show = downloadAndParseShow(context, showTvdbId, language);
+        Show show = downloadAndParseShow(showTvdbId, language);
 
         // get some more details from trakt
         TvShow traktShow = null;
@@ -395,7 +396,7 @@ public class TheTVDB {
     /**
      * Get a show from TVDb.
      */
-    private static Show downloadAndParseShow(final Context context, int showTvdbId, String language)
+    private static Show downloadAndParseShow(int showTvdbId, String language)
             throws TvdbException {
         final Show currentShow = new Show();
         RootElement root = new RootElement("Data");

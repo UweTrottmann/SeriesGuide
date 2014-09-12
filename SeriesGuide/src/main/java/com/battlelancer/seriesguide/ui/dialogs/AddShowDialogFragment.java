@@ -43,7 +43,7 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TvdbShowLoader;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
@@ -235,6 +235,12 @@ public class AddShowDialogFragment extends DialogFragment {
                         isContinuing ? R.style.TextAppearance_Subhead_Green
                                 : R.style.TextAppearance_Subhead_Dim), 0,
                 meta.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        meta.append("\n");
+
+        // release day and time
+        String[] values = TimeTools.formatToShowReleaseTimeAndDay(getActivity(), show.airtime,
+                show.country, show.airday);
+        meta.append(values[1]).append(" ").append(values[0]);
         meta.append("\n");
 
         // network, runtime
