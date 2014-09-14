@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">첫 방영 날짜 알 수 없음</string>
   <string name="episode_dvdnumber">DVD 에피소드</string>
   <string name="show_actors">배우</string>
-  <string name="show_firstaired">첫 방영날짜</string>
+  <string name="original_release">첫 방영날짜</string>
   <string name="show_on_network">방송국 %s</string>
   <string name="show_genres">장르</string>
   <string name="show_runtime">런타임</string>

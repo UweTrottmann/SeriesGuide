@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Data de llançament desconeguda</string>
   <string name="episode_dvdnumber">Episodi de DVD</string>
   <string name="show_actors">Actors</string>
-  <string name="show_firstaired">Estrena</string>
+  <string name="original_release">Estrena</string>
   <string name="show_on_network">a %s</string>
   <string name="show_genres">Gèneres</string>
   <string name="show_runtime">Durada</string>

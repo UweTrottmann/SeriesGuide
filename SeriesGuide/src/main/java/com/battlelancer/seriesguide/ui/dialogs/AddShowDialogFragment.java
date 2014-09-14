@@ -100,6 +100,7 @@ public class AddShowDialogFragment extends DialogFragment {
     @InjectView(R.id.textViewAddDescription) TextView overview;
     @InjectView(R.id.textViewAddRatingsTvdbValue) TextView tvdbRating;
     @InjectView(R.id.textViewAddGenres) TextView genres;
+    @InjectView(R.id.textViewAddReleased) TextView released;
     @InjectView(R.id.imageViewAddPoster) ImageView poster;
 
     @InjectView(R.id.buttonPositive) Button mButtonPositive;
@@ -258,6 +259,10 @@ public class AddShowDialogFragment extends DialogFragment {
 
         // genres
         Utils.setValueOrPlaceholder(genres, Utils.splitAndKitTVDBStrings(show.genres));
+
+        // original release
+        Utils.setValueOrPlaceholder(released,
+                TimeTools.getShowReleaseYear(show.firstAired, show.airtime, show.country));
 
         // poster
         Utils.loadPosterThumbnail(getActivity(), poster, show.poster);

@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Дата выпуска неизвестна</string>
   <string name="episode_dvdnumber">DVD эпизод</string>
   <string name="show_actors">Актеры</string>
-  <string name="show_firstaired">Премьера</string>
+  <string name="original_release">Премьера</string>
   <string name="show_on_network">В %s</string>
   <string name="show_genres">Жанры</string>
   <string name="show_runtime">Продолжительность</string>

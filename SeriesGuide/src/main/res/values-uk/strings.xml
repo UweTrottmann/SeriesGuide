@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Дата виходу не відома</string>
   <string name="episode_dvdnumber">Серія на DVD</string>
   <string name="show_actors">Актори</string>
-  <string name="show_firstaired">Перший ефір</string>
+  <string name="original_release">Перший ефір</string>
   <string name="show_on_network">на %s</string>
   <string name="show_genres">Жанри</string>
   <string name="show_runtime">Тривалість</string>

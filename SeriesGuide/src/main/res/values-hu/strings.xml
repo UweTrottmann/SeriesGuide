@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Első adás ismeretlen</string>
   <string name="episode_dvdnumber">DVD epizód</string>
   <string name="show_actors">Szereplők</string>
-  <string name="show_firstaired">Első sugárzás ideje</string>
+  <string name="original_release">Első sugárzás ideje</string>
   <string name="show_on_network">%s csatornán</string>
   <string name="show_genres">Műfaj</string>
   <string name="show_runtime">Hossz</string>

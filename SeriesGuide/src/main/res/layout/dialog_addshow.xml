@@ -121,6 +121,29 @@
                 android:textAppearance="@style/TextAppearance.Body"
                 android:textIsSelectable="true" />
 
+            <TextView
+                style="@style/Block.WithTopMargin"
+                android:id="@+id/textViewAddReleasedLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewAddGenres"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:text="@string/original_release"
+                android:textAppearance="@style/TextAppearance.Body.Bold" />
+
+            <TextView
+                android:id="@+id/textViewAddReleased"
+                style="@style/Block"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewAddReleasedLabel"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                tools:text="2014"
+                android:textAppearance="@style/TextAppearance.Body"
+                android:textIsSelectable="true" />
+
         </RelativeLayout>
     </ScrollView>
 

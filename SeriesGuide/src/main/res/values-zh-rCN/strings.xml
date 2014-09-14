@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">没有已知放映计划</string>
   <string name="episode_dvdnumber">DVD 剧集</string>
   <string name="show_actors">演员</string>
-  <string name="show_firstaired">首播</string>
+  <string name="original_release">首播</string>
   <string name="show_on_network">在 %s 频道播出</string>
   <string name="show_genres">类型</string>
   <string name="show_runtime">时长</string>

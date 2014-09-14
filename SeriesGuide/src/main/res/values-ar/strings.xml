@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">تاريخ الإصدار غير معروف</string>
   <string name="episode_dvdnumber">حلقة دي في دي</string>
   <string name="show_actors">الممثلون</string>
-  <string name="show_firstaired">بثت أول مرة</string>
+  <string name="original_release">بثت أول مرة</string>
   <string name="show_on_network">خلال %s</string>
   <string name="show_genres">الأنواع</string>
   <string name="show_runtime">وقت التشغيل</string>

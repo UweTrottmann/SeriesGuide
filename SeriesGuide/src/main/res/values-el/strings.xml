@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Άγνωστη ημερομηνία προβολής</string>
   <string name="episode_dvdnumber">Επεισόδιο DVD</string>
   <string name="show_actors">Ηθοποιοί</string>
-  <string name="show_firstaired">Πρώτη προβολή</string>
+  <string name="original_release">Πρώτη προβολή</string>
   <string name="show_on_network">στο %s</string>
   <string name="show_genres">Είδη</string>
   <string name="show_runtime">Διάρκεια</string>

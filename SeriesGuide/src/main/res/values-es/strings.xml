@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Fecha de estreno desconocida</string>
   <string name="episode_dvdnumber">Episodio de DVD</string>
   <string name="show_actors">Actores</string>
-  <string name="show_firstaired">Estrenado</string>
+  <string name="original_release">Estrenado</string>
   <string name="show_on_network">en %s</string>
   <string name="show_genres">Géneros</string>
   <string name="show_runtime">Duración</string>

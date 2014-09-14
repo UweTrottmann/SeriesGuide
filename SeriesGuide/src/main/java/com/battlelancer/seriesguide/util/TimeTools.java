@@ -391,8 +391,23 @@ public class TimeTools {
     }
 
     /**
-     * Corrects the "hour past midnight" and for US shows the release time if the device is set to
-     * a
+     * Calculate the year string of a show's release in the user's default locale.
+     *
+     * @return Returns {@code null} if one of the parameters is null (or -1 in the case of {@code
+     * releaseTime}).
+     */
+    public static String getShowReleaseYear(String releaseDate, long releaseTime, String country) {
+        if (TextUtils.isEmpty(releaseDate)
+                || releaseTime == -1
+                || TextUtils.isEmpty(country)) {
+            return null;
+        }
+        long time = parseEpisodeReleaseTime(releaseDate, releaseTime, country);
+        return new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date(time));
+    }
+
+    /**
+     * Corrects the "hour past midnight" and for US shows the release time if the device is set to a
      * US time zone.
      */
     private static void applyCustomCorrections(Calendar calendar, int releaseHourOfDay,

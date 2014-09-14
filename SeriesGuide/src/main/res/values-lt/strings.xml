@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Išleidimo data nežinoma</string>
   <string name="episode_dvdnumber">DVD serija</string>
   <string name="show_actors">Aktoriai</string>
-  <string name="show_firstaired">Pirmą kartą parodyta</string>
+  <string name="original_release">Pirmą kartą parodyta</string>
   <string name="show_on_network">on %s</string>
   <string name="show_genres">Žanrai</string>
   <string name="show_runtime">Trukmė</string>

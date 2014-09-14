@@ -352,12 +352,10 @@ public class ShowFragment extends Fragment {
         mTextViewReleaseCountry.setText(TimeTools.isUnsupportedCountryOrUs(releaseCountry)
                 ? TimeTools.UNITED_STATES : releaseCountry);
 
-        // first release: use the same parser as for episodes, because we have an exact date
+        // original release
         String firstRelease = mShowCursor.getString(ShowQuery.FIRST_RELEASE);
-        long actualRelease = TimeTools.parseEpisodeReleaseTime(firstRelease, releaseTime,
-                releaseCountry);
         Utils.setValueOrPlaceholder(mTextViewFirstRelease,
-                TimeTools.formatToDate(getActivity(), new Date(actualRelease)));
+                TimeTools.getShowReleaseYear(firstRelease, releaseTime, releaseCountry));
 
         // content rating
         Utils.setValueOrPlaceholder(mTextViewContentRating,

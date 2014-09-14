@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Датум емитовања је непознат</string>
   <string name="episode_dvdnumber">DVD епизода</string>
   <string name="show_actors">Глумци</string>
-  <string name="show_firstaired">Прво емитовање</string>
+  <string name="original_release">Прво емитовање</string>
   <string name="show_on_network">на %s</string>
   <string name="show_genres">Жанрови</string>
   <string name="show_runtime">Трајање</string>

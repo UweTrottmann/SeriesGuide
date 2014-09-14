@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">תאריך שחרור לא ידוע</string>
   <string name="episode_dvdnumber">פרק DVD</string>
   <string name="show_actors">שחקנים</string>
-  <string name="show_firstaired">הקרנה ראשונה</string>
+  <string name="original_release">הקרנה ראשונה</string>
   <string name="show_on_network">ב- %s</string>
   <string name="show_genres">ז\'אנרים</string>
   <string name="show_runtime">זמן ריצה</string>
