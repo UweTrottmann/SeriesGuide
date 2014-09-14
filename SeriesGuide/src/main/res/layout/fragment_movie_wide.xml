@@ -83,22 +83,6 @@
                 android:layout_below="@+id/containerMovieButtons"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
-                android:background="?attr/colorDivider" />
-
-            <include
-                layout="@layout/ratingbar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/dividerMovie0" />
-
-            <View
-                android:id="@+id/dividerMovie1"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/ratingbar"
-                android:layout_marginLeft="@dimen/large_padding"
-                android:layout_marginRight="@dimen/large_padding"
                 android:layout_marginBottom="@dimen/large_padding"
                 android:background="?attr/colorDivider" />
 
@@ -107,14 +91,15 @@
                 style="@style/Block.FlowText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/dividerMovie1"
+                android:layout_below="@+id/dividerMovie0"
                 android:layout_marginBottom="@dimen/large_padding"
+                android:maxWidth="400dp"
                 android:textAppearance="@style/TextAppearance.Body"
                 android:textIsSelectable="true"
                 tools:text="Description for a super awesome movie..." />
 
             <View
-                android:id="@+id/dividerMovie2"
+                android:id="@+id/dividerMovie1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@+id/textViewMovieDescription"
@@ -122,12 +107,47 @@
                 android:layout_marginRight="@dimen/large_padding"
                 android:background="?attr/colorDivider" />
 
+            <include
+                layout="@layout/ratingbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/dividerMovie1" />
+
+            <View
+                android:id="@+id/dividerMovie2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/ratingbar"
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginRight="@dimen/large_padding"
+                android:background="?attr/colorDivider" />
+
+            <TextView
+                android:id="@+id/textViewMovieGenresLabel"
+                style="@style/Block.WithTopMargin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dividerMovie2"
+                android:text="@string/show_genres"
+                android:textAppearance="@style/TextAppearance.Body.Bold" />
+
+            <TextView
+                android:id="@+id/textViewMovieGenres"
+                style="@style/Block"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewMovieGenresLabel"
+                tools:text="Action, Comedy, Drama"
+                android:textAppearance="@style/TextAppearance.Body"
+                android:textIsSelectable="true" />
+
             <TextView
                 android:id="@+id/textViewMovieMore"
                 style="@style/Block.WithTopMargin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/dividerMovie2"
+                android:layout_below="@+id/textViewMovieGenres"
                 android:text="@string/services_more"
                 android:textAppearance="@style/TextAppearance.Body.Bold" />
 

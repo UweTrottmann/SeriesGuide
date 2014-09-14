@@ -35,7 +35,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -60,7 +59,6 @@ import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.Movie;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
-import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb.entities.Credits;
@@ -98,47 +96,33 @@ public class MovieDetailsFragment extends Fragment {
     private String mImageBaseUrl;
 
     @InjectView(R.id.textViewMovieTitle) TextView mMovieTitle;
-
     @InjectView(R.id.textViewMovieDate) TextView mMovieReleaseDate;
-
     @InjectView(R.id.textViewMovieDescription) TextView mMovieDescription;
-
     @InjectView(R.id.imageViewMoviePoster) ImageView mMoviePosterBackground;
+    @InjectView(R.id.textViewMovieGenres) TextView mMovieGenres;
 
     @InjectView(R.id.containerMovieButtons) View mButtonContainer;
-
     @InjectView(R.id.buttonMovieCheckIn) Button mCheckinButton;
-
     @InjectView(R.id.buttonMovieWatched) Button mWatchedButton;
-
     @InjectView(R.id.buttonMovieCollected) Button mCollectedButton;
-
     @InjectView(R.id.buttonMovieWatchlisted) Button mWatchlistedButton;
 
     @InjectView(R.id.ratingbar) View mRatingsContainer;
-
     @InjectView(R.id.textViewRatingsTvdbLabel) TextView mRatingsTmdbLabel;
-
     @InjectView(R.id.textViewRatingsTvdbValue) TextView mRatingsTmdbValue;
-
     @InjectView(R.id.textViewRatingsTraktValue) TextView mRatingsTraktValue;
-
     @InjectView(R.id.textViewRatingsTraktVotes) TextView mRatingsTraktVotes;
-
     @InjectView(R.id.textViewRatingsTraktUser) TextView mRatingsTraktUserValue;
 
     @InjectView(R.id.containerMovieCast) View mCastView;
-
     TextView mCastLabel;
     LinearLayout mCastContainer;
 
     @InjectView(R.id.containerMovieCrew) View mCrewView;
-
     TextView mCrewLabel;
     LinearLayout mCrewContainer;
 
     @InjectView(R.id.buttonMovieComments) Button mCommentsButton;
-
     @InjectView(R.id.progressBar) View mProgressBar;
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -477,6 +461,9 @@ public class MovieDetailsFragment extends Fragment {
                     TraktTools.buildRatingPercentageString(traktMovie.ratings.percentage));
         }
         mRatingsContainer.setVisibility(View.VISIBLE);
+
+        // genres
+        Utils.setValueOrPlaceholder(mMovieGenres, TmdbTools.buildGenresString(tmdbMovie.genres));
 
         // trakt comments link
         mCommentsButton.setOnClickListener(new OnClickListener() {
