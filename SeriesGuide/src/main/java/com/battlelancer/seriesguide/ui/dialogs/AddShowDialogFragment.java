@@ -36,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.InjectViews;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
@@ -46,6 +47,7 @@ import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import java.util.List;
 
 /**
  * A {@link DialogFragment} allowing the user to decide whether to add a show to SeriesGuide.
@@ -102,6 +104,22 @@ public class AddShowDialogFragment extends DialogFragment {
     @InjectView(R.id.textViewAddGenres) TextView genres;
     @InjectView(R.id.textViewAddReleased) TextView released;
     @InjectView(R.id.imageViewAddPoster) ImageView poster;
+
+    @InjectViews({
+            R.id.textViewAddRatingsTvdbValue,
+            R.id.textViewAddRatingsTvdbLabel,
+            R.id.textViewAddRatingsTvdbRange,
+            R.id.textViewAddGenresLabel,
+            R.id.textViewAddReleasedLabel
+    }) List<View> labelViews;
+
+    static final ButterKnife.Setter<View, Boolean> VISIBLE
+            = new ButterKnife.Setter<View, Boolean>() {
+        @Override
+        public void set(View view, Boolean value, int index) {
+            view.setVisibility(value ? View.VISIBLE : View.INVISIBLE);
+        }
+    };
 
     @InjectView(R.id.buttonPositive) Button mButtonPositive;
     @InjectView(R.id.buttonNegative) Button mButtonNegative;
@@ -160,6 +178,8 @@ public class AddShowDialogFragment extends DialogFragment {
                 dismiss();
             }
         });
+
+        ButterKnife.apply(labelViews, VISIBLE, false);
 
         return v;
     }
@@ -222,6 +242,7 @@ public class AddShowDialogFragment extends DialogFragment {
         }
 
         mButtonPositive.setEnabled(true);
+        ButterKnife.apply(labelViews, VISIBLE, true);
 
         // title, overview
         title.setText(show.title);
