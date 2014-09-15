@@ -8,6 +8,12 @@ All dates are in the European Central timezone.
 Version 18 *(in development)*
 -----------------------------
 
+#### 18-beta3 *(2014-09-15)*
+
+* TWEAK Display additional details in show add dialog.
+* TWEAK Display genres for movies.
+* TWEAK Simply display year of original release for shows instead of exact date.
+
 #### 18-beta2 *(2014-09-10)*
 
 * FEATURE Remember past search queries for TheTVDB and TMDB search.
