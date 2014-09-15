@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Data de lansare necunoscută</string>
   <string name="episode_dvdnumber">Episod DVD</string>
   <string name="show_actors">Actori</string>
-  <string name="original_release">Prima difuzare</string>
+  <string name="original_release">Original release</string>
   <string name="show_on_network">pe %s</string>
   <string name="show_genres">Genuri</string>
   <string name="show_runtime">Durata</string>

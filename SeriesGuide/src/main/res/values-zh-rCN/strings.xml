@@ -22,7 +22,7 @@
   <string name="description_poster">节目海报</string>
   <string name="description_image">剧集图片</string>
   <string name="clear">清空</string>
-  <string name="clear_search_history">Clear search history</string>
+  <string name="clear_search_history">清空搜索历史</string>
   <string name="discard">放弃</string>
   <string name="save_selection">保存已选项</string>
   <string name="search_hint">搜索剧集</string>
@@ -96,7 +96,7 @@
     <item quantity="many">%d 分钟</item>
     <item quantity="other">%d 分钟</item>
   </plurals>
-  <string name="action_rate">Rate</string>
+  <string name="action_rate">评分</string>
   <string name="your_rating">您的评分</string>
   <string name="love">100 - 非常棒 :-)</string>
   <string name="hate">10 - 弱爆了 :-(</string>
@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">没有已知放映计划</string>
   <string name="episode_dvdnumber">DVD 剧集</string>
   <string name="show_actors">演员</string>
-  <string name="original_release">首播</string>
+  <string name="original_release">Original release</string>
   <string name="show_on_network">在 %s 频道播出</string>
   <string name="show_genres">类型</string>
   <string name="show_runtime">时长</string>
@@ -146,8 +146,8 @@
   <string name="mark_all">全部标记为已观看</string>
   <string name="unmark_all">全部标记为未观看</string>
   <string name="mark_untilhere">标记已播剧集为已观看</string>
-  <string name="collect">Collected</string>
-  <string name="uncollect">Not collected</string>
+  <string name="collect">已收藏</string>
+  <string name="uncollect">未收藏</string>
   <string name="collect_all">全部标记为已收藏</string>
   <string name="uncollect_all">全部标记为未收藏</string>
   <string name="action_skip">标记为已跳过</string>
@@ -162,15 +162,15 @@
   <string name="action_collection_added">已添加到收藏列表</string>
   <string name="action_collection_removed">已从收藏列表移除</string>
   <string name="action_watched">已观看</string>
-  <string name="action_unwatched">Not watched</string>
+  <string name="action_unwatched">未观看</string>
   <string name="confirm_delete">您要删除 %s 节目吗？</string>
   <string name="delete_has_list_items">无法执行操作，请先将 %s 从所有列表中移除。</string>
   <string name="delete_error">无法移除此节目</string>
   <string name="delete_show">移除</string>
   <string name="dontdelete_show">保留</string>
   <string name="no_nextepisode">没有新剧集信息</string>
-  <string name="context_favorite">Favorite</string>
-  <string name="context_unfavorite">No favorite</string>
+  <string name="context_favorite">喜欢</string>
+  <string name="context_unfavorite">不喜欢</string>
   <string name="favorited">已标记为喜爱的节目。</string>
   <string name="unfavorited">已移除节目的喜爱标记。</string>
   <string name="context_hide">隐藏</string>

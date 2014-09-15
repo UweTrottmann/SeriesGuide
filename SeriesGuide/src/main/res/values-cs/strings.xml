@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Datum vysílání neznámé</string>
   <string name="episode_dvdnumber">Epizoda na DVD</string>
   <string name="show_actors">Herci</string>
-  <string name="original_release">Poprvé vysíláno</string>
+  <string name="original_release">Original release</string>
   <string name="show_on_network">na %s</string>
   <string name="show_genres">Žánr</string>
   <string name="show_runtime">Celková délka</string>

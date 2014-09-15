@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Udgivelsesdato ukendt</string>
   <string name="episode_dvdnumber">DVD Episode</string>
   <string name="show_actors">Skuespillere</string>
-  <string name="original_release">Sendt første gang</string>
+  <string name="original_release">Original release</string>
   <string name="show_on_network">på %s</string>
   <string name="show_genres">Genrer</string>
   <string name="show_runtime">Spilletid</string>

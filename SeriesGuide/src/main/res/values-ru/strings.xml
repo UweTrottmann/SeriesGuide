@@ -22,7 +22,7 @@
   <string name="description_poster">Показать постер</string>
   <string name="description_image">Кадр из эпизода</string>
   <string name="clear">Удалить</string>
-  <string name="clear_search_history">Clear search history</string>
+  <string name="clear_search_history">Очистить историю поиска</string>
   <string name="discard">Отменить</string>
   <string name="save_selection">Сохранить выбор</string>
   <string name="search_hint">Поиск эпизодов</string>
@@ -96,7 +96,7 @@
     <item quantity="many">%d минут</item>
     <item quantity="other">%d минут</item>
   </plurals>
-  <string name="action_rate">Rate</string>
+  <string name="action_rate">Oценивать</string>
   <string name="your_rating">Ваш рейтинг</string>
   <string name="love">Супер!</string>
   <string name="hate">Слабый соус:(</string>
@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Дата выпуска неизвестна</string>
   <string name="episode_dvdnumber">DVD эпизод</string>
   <string name="show_actors">Актеры</string>
-  <string name="original_release">Премьера</string>
+  <string name="original_release">Original release</string>
   <string name="show_on_network">В %s</string>
   <string name="show_genres">Жанры</string>
   <string name="show_runtime">Продолжительность</string>

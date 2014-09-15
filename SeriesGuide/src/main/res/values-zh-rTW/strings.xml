@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">播出日期不明</string>
   <string name="episode_dvdnumber">DVD集數</string>
   <string name="show_actors">演員</string>
-  <string name="original_release">初次播放</string>
+  <string name="original_release">Original release</string>
   <string name="show_on_network">on %s</string>
   <string name="show_genres">戲劇類別</string>
   <string name="show_runtime">影片長度</string>
@@ -133,7 +133,7 @@
   <string name="episode_writers">編劇</string>
   <string name="show_isalive">待續</string>
   <string name="show_isnotalive">已完結</string>
-  <string name="lastEdit">Last Edit // TVDb</string>
+  <string name="lastEdit">Last Edit // TheTVDB</string>
   <string name="services_watch">觀看</string>
   <string name="services_more">更多</string>
   <string name="today">今日</string>

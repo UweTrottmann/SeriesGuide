@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Nezināms raidīšanas datums</string>
   <string name="episode_dvdnumber">DVD epizode</string>
   <string name="show_actors">Aktieri</string>
-  <string name="original_release">Izlaišanas datums</string>
+  <string name="original_release">Original release</string>
   <string name="show_on_network">kanālā %s</string>
   <string name="show_genres">Žanri</string>
   <string name="show_runtime">Garums</string>

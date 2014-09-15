@@ -22,7 +22,7 @@
   <string name="description_poster">Posteri göster</string>
   <string name="description_image">Bölüm resmi</string>
   <string name="clear">Temizle</string>
-  <string name="clear_search_history">Clear search history</string>
+  <string name="clear_search_history">Arama geçmişini temizle</string>
   <string name="discard">Yoksay</string>
   <string name="save_selection">Seçimi kaydet</string>
   <string name="search_hint">Bölüm ara</string>
@@ -96,7 +96,7 @@
     <item quantity="many">%d dakika</item>
     <item quantity="other">%d dakika</item>
   </plurals>
-  <string name="action_rate">Rate</string>
+  <string name="action_rate">Derecelendir</string>
   <string name="your_rating">Sizin değerlendirmeniz</string>
   <string name="love">Harikulade!</string>
   <string name="hate">Eh işte :(</string>
@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Yayın tarihi bilinmiyor</string>
   <string name="episode_dvdnumber">DVD Bölümü</string>
   <string name="show_actors">Aktörler</string>
-  <string name="original_release">İlk Yayınlanma Tarihi</string>
+  <string name="original_release">Original release</string>
   <string name="show_on_network">kanal %s</string>
   <string name="show_genres">Türler</string>
   <string name="show_runtime">Süresi</string>
@@ -238,17 +238,17 @@
   <string name="hexagon_warning">Deneysel!</string>
   <string name="hexagon_setup">SeriesGuide Bulut Hizmetini ayarla</string>
   <string name="hexagon_description">Yedekleme için buluta bağlanın ve dizilerinizi ve filmlerinizi senkronize edin.</string>
-  <string name="hexagon_warning_lists">Lists are not included.</string>
-  <string name="hexagon_warning_trakt">When using SeriesGuide Cloud, changes on trakt will not sync down to SeriesGuide.</string>
+  <string name="hexagon_warning_lists">Listeler dahil edilmez.</string>
+  <string name="hexagon_warning_trakt">SeriesGuide Cloud kullandığınızda, trakt üzerindeki değişiklikler SeriesGuide ile senkronize edilmeyecektir.</string>
   <string name="hexagon_signin">Giriş</string>
   <string name="hexagon_signed_in">SeriesGuide Bulut Hizmetine bağlısınız.</string>
   <string name="hexagon_signout">Çıkış</string>
   <string name="hexagon_setup_incomplete">Series Guide Bulut kurulumu tamamlanmadı.</string>
-  <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
+  <string name="hexagon_setup_fail_auth">Google hesabınız doğrulanamadı.</string>
   <string name="hexagon_remove_account">Hesabı kaldır</string>
   <string name="hexagon_remove_account_success">Hesap silinmiş.</string>
   <string name="hexagon_remove_account_failure">Hesap kaldırılamadı.</string>
-  <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide Cloud. Make sure to remove it on other connected devices as well.</string>
+  <string name="hexagon_remove_account_confirmation">Hesabınızı kaldırdığınızda SeriesGuide Cloud üzerindeki bütün film ve dizileriniz silinecektir. Hesabınızı diğer bağlı cihazlardan da kaldırdığınızdan emin olun.</string>
   <string name="connect_trakt">trakt\'e bağlan</string>
   <string name="connect_trakt_done">trakt\'e bağlanıldı!</string>
   <string name="connect_trakt_done_explanation">Şimdi SeriesGuide bu cihazdaki dizileri ve filmleri trakt ile eşleyecek. Bu işlem biraz zaman alabilir.</string>

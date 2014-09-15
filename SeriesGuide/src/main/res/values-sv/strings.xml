@@ -123,7 +123,7 @@
   <string name="episode_firstaired_unknown">Releasedatum okänt</string>
   <string name="episode_dvdnumber">DVD-avsnitt</string>
   <string name="show_actors">Skådespelare</string>
-  <string name="original_release">Sändes första gången</string>
+  <string name="original_release">Original release</string>
   <string name="show_on_network">på %s</string>
   <string name="show_genres">Genrer</string>
   <string name="show_runtime">Längd</string>

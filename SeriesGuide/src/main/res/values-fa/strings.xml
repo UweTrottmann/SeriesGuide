@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Release date unknown</string>
   <string name="episode_dvdnumber">DVD Episode</string>
   <string name="show_actors">Actors</string>
-  <string name="original_release">First Aired</string>
+  <string name="original_release">Original release</string>
   <string name="show_on_network">on %s</string>
   <string name="show_genres">Genres</string>
   <string name="show_runtime">Runtime</string>
@@ -133,7 +133,7 @@
   <string name="episode_writers">Writers</string>
   <string name="show_isalive">Continuing</string>
   <string name="show_isnotalive">Ended</string>
-  <string name="lastEdit">Last Edit // TVDb</string>
+  <string name="lastEdit">Last Edit // TheTVDB</string>
   <string name="services_watch">Watch</string>
   <string name="services_more">More</string>
   <string name="today">today</string>

@@ -22,7 +22,7 @@
   <string name="description_poster">Näytä juliste</string>
   <string name="description_image">Jaksokuva</string>
   <string name="clear">Tyhjennä</string>
-  <string name="clear_search_history">Clear search history</string>
+  <string name="clear_search_history">Tyhjennä hakuhistoria</string>
   <string name="discard">Peruuta</string>
   <string name="save_selection">Tallenna valinta</string>
   <string name="search_hint">Hae jaksoja</string>
@@ -96,7 +96,7 @@
     <item quantity="many">%d minuuttia</item>
     <item quantity="other">%d minuuttia</item>
   </plurals>
-  <string name="action_rate">Rate</string>
+  <string name="action_rate">Arvostele</string>
   <string name="your_rating">Arvosanasi</string>
   <string name="love">Maailman parasta!</string>
   <string name="hate">Ei sytyttänyt :(</string>
@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Tuntematon julkaisupäivä</string>
   <string name="episode_dvdnumber">DVD-jakso</string>
   <string name="show_actors">Näyttelijät</string>
-  <string name="original_release">Ensiesitys</string>
+  <string name="original_release">Original release</string>
   <string name="show_on_network">kanavalla %s</string>
   <string name="show_genres">Genret</string>
   <string name="show_runtime">Kesto</string>

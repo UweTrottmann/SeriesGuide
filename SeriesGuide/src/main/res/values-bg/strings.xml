@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Неизвестна дата на издаване</string>
   <string name="episode_dvdnumber">DVD епизод</string>
   <string name="show_actors">Актьори</string>
-  <string name="original_release">Първо излъчване</string>
+  <string name="original_release">Original release</string>
   <string name="show_on_network">на %s</string>
   <string name="show_genres">Жанрове</string>
   <string name="show_runtime">Времетраене</string>
