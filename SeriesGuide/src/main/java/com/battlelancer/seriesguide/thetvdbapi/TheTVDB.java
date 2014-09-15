@@ -371,7 +371,7 @@ public class TheTVDB {
     private static Show fetchShow(Context context, int showTvdbId, String language)
             throws TvdbException {
         // get show details from TVDb
-        Show show = downloadAndParseShow(showTvdbId, language);
+        Show show = downloadAndParseShow(context, showTvdbId, language);
 
         // get some more details from trakt
         TvShow traktShow = null;
@@ -396,7 +396,7 @@ public class TheTVDB {
     /**
      * Get a show from TVDb.
      */
-    private static Show downloadAndParseShow(int showTvdbId, String language)
+    private static Show downloadAndParseShow(Context context, int showTvdbId, String language)
             throws TvdbException {
         final Show currentShow = new Show();
         RootElement root = new RootElement("Data");
@@ -502,7 +502,7 @@ public class TheTVDB {
         // build TVDb url, get localized content when possible
         String url = TVDB_API_SERIES + showTvdbId + "/"
                 + (language != null ? language + TVDB_EXTENSION_UNCOMPRESSED : "");
-        downloadAndParse(url, root.getContentHandler(), false);
+        downloadAndParse(context, root.getContentHandler(), url, false);
 
         return currentShow;
     }
@@ -678,7 +678,7 @@ public class TheTVDB {
             }
         });
 
-        downloadAndParse(url, root.getContentHandler(), true);
+        downloadAndParse(context, root.getContentHandler(), url, true);
 
         // add delete ops for leftover episodeIds in our db
         for (Integer episodeId : removableEpisodeIds.keySet()) {
@@ -694,10 +694,10 @@ public class TheTVDB {
      * Xml#parse(InputStream, android.util.Xml.Encoding, ContentHandler)} using the given {@link
      * ContentHandler}.
      */
-    private static void downloadAndParse(String urlString,
-            ContentHandler handler, boolean isZipFile) throws TvdbException {
+    private static void downloadAndParse(Context context, ContentHandler handler, String urlString,
+            boolean isZipFile) throws TvdbException {
         try {
-            final InputStream input = Utils.downloadUrl(urlString);
+            final InputStream input = Utils.downloadAndCacheUrl(context, urlString);
 
             if (isZipFile) {
                 // We downloaded the compressed file from TheTVDB
