@@ -8,7 +8,7 @@ buildscript {
         maven { url 'http://download.crashlytics.com/maven' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.2'
+        classpath 'com.android.tools.build:gradle:0.13.0'
         classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.5-beta-6'
         classpath 'org.codehaus.groovy:groovy-backports-compat23:2.3.5' // remove once on Gradle 2.0
