@@ -417,6 +417,13 @@
   <string name="subscription_activated">Прерплатили сте се на Х опције.</string>
   <string name="subscription_expired">Претплата је истекла</string>
   <string name="subscription_expired_details">Ваша претплата за Х опције је истекла.</string>
+  <string name="action_subscription_manage">Manage subscription</string>
+  <string name="trial_title">Try SeriesGuide for 30 days</string>
+  <string name="trial_description">You can try SeriesGuide 30 days for free. If you don\'t like it, just cancel any time.\nAfter the trial period ends, I\'m asking for a small yearly fee to support future updates and features.</string>
+  <string name="subscription_active">Thanks, you are subscribed!</string>
+  <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
+  <string name="subscription_unavailable">The subscription is currently not available.</string>
+  <string name="subscription_failed">Purchase not completed.</string>
   <string name="add_to_homescreen">Shortcut</string>
   <string name="search_within_show">Тражи унутар %s</string>
   <string name="web_search">Веб претрага</string>

@@ -416,6 +416,13 @@
   <string name="subscription_activated">이제 X의 모든 기능을 활용하실 수 있습니다.</string>
   <string name="subscription_expired">구독 만료되었습니다</string>
   <string name="subscription_expired_details">X 추가기능 구독 기간이 만료되었습니다.</string>
+  <string name="action_subscription_manage">Manage subscription</string>
+  <string name="trial_title">Try SeriesGuide for 30 days</string>
+  <string name="trial_description">You can try SeriesGuide 30 days for free. If you don\'t like it, just cancel any time.\nAfter the trial period ends, I\'m asking for a small yearly fee to support future updates and features.</string>
+  <string name="subscription_active">Thanks, you are subscribed!</string>
+  <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
+  <string name="subscription_unavailable">The subscription is currently not available.</string>
+  <string name="subscription_failed">Purchase not completed.</string>
   <string name="add_to_homescreen">바로가기</string>
   <string name="search_within_show">%s 에서 검색</string>
   <string name="web_search">웹 검색</string>

@@ -416,6 +416,13 @@
   <string name="subscription_activated">U bent nu geabonneerd op X-functies.</string>
   <string name="subscription_expired">Abonnement verlopen</string>
   <string name="subscription_expired_details">Uw X-abonnement is verlopen.</string>
+  <string name="action_subscription_manage">Manage subscription</string>
+  <string name="trial_title">Try SeriesGuide for 30 days</string>
+  <string name="trial_description">You can try SeriesGuide 30 days for free. If you don\'t like it, just cancel any time.\nAfter the trial period ends, I\'m asking for a small yearly fee to support future updates and features.</string>
+  <string name="subscription_active">Thanks, you are subscribed!</string>
+  <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
+  <string name="subscription_unavailable">The subscription is currently not available.</string>
+  <string name="subscription_failed">Purchase not completed.</string>
   <string name="add_to_homescreen">Snelkoppeling</string>
   <string name="search_within_show">Zoek binnen %s</string>
   <string name="web_search">Zoeken op het web</string>

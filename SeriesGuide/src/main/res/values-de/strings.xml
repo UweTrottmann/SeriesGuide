@@ -416,6 +416,13 @@
   <string name="subscription_activated">Sie haben die X-Funktionen jetzt abonniert.</string>
   <string name="subscription_expired">Abonnement abgelaufen</string>
   <string name="subscription_expired_details">Ihr X-Funktionen-Abonnement ist abgelaufen.</string>
+  <string name="action_subscription_manage">Abonnement verwalten</string>
+  <string name="trial_title">Testen Sie SeriesGuide 30 Tage lang</string>
+  <string name="trial_description">Sie können SeriesGuide 30 Tage lang kostenlos testen. Wenn es Ihnen nicht gefällt, können Sie jederzeit kündigen.\nNach Ablauf des Testzeitraums verlange ich eine kleine jährliche Gebühr zur Unterstützung zukünftiger Updates und Funktionen.</string>
+  <string name="subscription_active">Danke, ihr Abonnement läuft!</string>
+  <string name="subscription_not_signed_in">Melden Sie sich mit Ihrem Amazon-Konto an!</string>
+  <string name="subscription_unavailable">Das Abonnement ist derzeit nicht verfügbar.</string>
+  <string name="subscription_failed">Kauf nicht abgeschlossen.</string>
   <string name="add_to_homescreen">Verknüpfung</string>
   <string name="search_within_show">Durchsuche %s</string>
   <string name="web_search">Web-Suche</string>
