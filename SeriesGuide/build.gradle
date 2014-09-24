@@ -130,8 +130,8 @@ dependencies {
     // libs folder
     compile fileTree(dir: 'libs', include: '*.jar')
 
-    // Fire OS specific
-    amazonCompile files('libs/fireos/in-app-purchasing-2.0.0.jar')
+    // Amazon flavor specific
+    amazonCompile files('libs/amazon/in-app-purchasing-2.0.0.jar')
 
     // android unit tests
     androidTestCompile 'com.squareup:fest-android:1.0.8'
