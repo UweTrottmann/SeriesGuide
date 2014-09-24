@@ -22,7 +22,7 @@
   <string name="description_poster">Vis plakat</string>
   <string name="description_image">Episode billede</string>
   <string name="clear">Slet</string>
-  <string name="clear_search_history">Clear search history</string>
+  <string name="clear_search_history">Ryd søgehistorik</string>
   <string name="discard">Kassér</string>
   <string name="save_selection">Gem markering</string>
   <string name="search_hint">Søg episoder</string>
@@ -96,7 +96,7 @@
     <item quantity="many">%d minutter</item>
     <item quantity="other">%d minutter</item>
   </plurals>
-  <string name="action_rate">Rate</string>
+  <string name="action_rate">Bedøm</string>
   <string name="your_rating">Din bedømmelse</string>
   <string name="love">Totalt ninja!</string>
   <string name="hate">Svag sovs :(</string>
@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Udgivelsesdato ukendt</string>
   <string name="episode_dvdnumber">DVD Episode</string>
   <string name="show_actors">Skuespillere</string>
-  <string name="original_release">Original release</string>
+  <string name="original_release">Oprindelige version</string>
   <string name="show_on_network">på %s</string>
   <string name="show_genres">Genrer</string>
   <string name="show_runtime">Spilletid</string>
@@ -286,7 +286,7 @@
   <string name="sort_order_top_rated_first">Top bedømte</string>
   <string name="sort_order_latest_first_dvd">Nyeste først (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Ældste først (DVD)</string>
-  <string name="upcoming_upto_now">Nu</string>
+  <string name="upcoming_upto_now">nu</string>
   <string name="upcoming_upto_one_day">en dag</string>
   <string name="upcoming_upto_three_days">3 dage</string>
   <string name="upcoming_upto_one_week">en uge</string>

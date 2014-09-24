@@ -22,7 +22,7 @@
   <string name="description_poster">Mostrar cartaz</string>
   <string name="description_image">Imagem do Episódio</string>
   <string name="clear">Apagar</string>
-  <string name="clear_search_history">Clear search history</string>
+  <string name="clear_search_history">Limpar histórico de pesquisa</string>
   <string name="discard">Descartar</string>
   <string name="save_selection">Guardar Selecção</string>
   <string name="search_hint">Procurar episódios</string>
@@ -96,7 +96,7 @@
     <item quantity="many">%d minutos</item>
     <item quantity="other">%d minutos</item>
   </plurals>
-  <string name="action_rate">Rate</string>
+  <string name="action_rate">Avaliar</string>
   <string name="your_rating">A minha classificação</string>
   <string name="love">Totalmente ninja!</string>
   <string name="hate">Que fraquinho :(</string>
@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Data de lançamento desconhecida</string>
   <string name="episode_dvdnumber">Episódio de DVD</string>
   <string name="show_actors">Actores</string>
-  <string name="original_release">Original release</string>
+  <string name="original_release">Exibição original</string>
   <string name="show_on_network">em %s</string>
   <string name="show_genres">Géneros</string>
   <string name="show_runtime">Duração</string>

@@ -96,7 +96,7 @@
     <item quantity="many">%d minutos</item>
     <item quantity="other">%d minutos</item>
   </plurals>
-  <string name="action_rate">Rate</string>
+  <string name="action_rate">Avaliar</string>
   <string name="your_rating">Sua classificação</string>
   <string name="love">Muito show!</string>
   <string name="hate">Horrível :(</string>

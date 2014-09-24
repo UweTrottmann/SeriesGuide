@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Date de parution inconnue</string>
   <string name="episode_dvdnumber">Episode DVD</string>
   <string name="show_actors">Acteurs</string>
-  <string name="original_release">Original release</string>
+  <string name="original_release">Version originale</string>
   <string name="show_on_network">sur %s</string>
   <string name="show_genres">Genres</string>
   <string name="show_runtime">Durée</string>

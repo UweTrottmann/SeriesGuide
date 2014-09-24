@@ -22,7 +22,7 @@
   <string name="description_poster">Обложка</string>
   <string name="description_image">Снимкa нa епизодa</string>
   <string name="clear">Изчисти</string>
-  <string name="clear_search_history">Clear search history</string>
+  <string name="clear_search_history">Изчисти историята</string>
   <string name="discard">Откажи</string>
   <string name="save_selection">Запази избраните</string>
   <string name="search_hint">Търсене на епизоди</string>
@@ -36,7 +36,7 @@
   <string name="onlyx">Налично само с X абонамент</string>
   <string name="add_empty">Няма ТВ предавания.</string>
   <string name="people_empty">Няма никой тук?! Натисни, за да опиташ отново.</string>
-  <string name="share">Share</string>
+  <string name="share">Сподели</string>
   <string name="share_show">Сподели ТВ предаване</string>
   <string name="share_episode">Сподели епизод</string>
   <string name="share_movie">Сподели филм</string>
@@ -162,15 +162,15 @@
   <string name="action_collection_added">Добавено в колекцията</string>
   <string name="action_collection_removed">Премахнато от колекцията</string>
   <string name="action_watched">Гледано</string>
-  <string name="action_unwatched">Not watched</string>
+  <string name="action_unwatched">Негледан</string>
   <string name="confirm_delete">Наистина ли искате премахнете %s?</string>
   <string name="delete_has_list_items">Не може да се изпълни, първо премахнете %s от всички списъци.</string>
   <string name="delete_error">Премахването неуспешно. Опитайте по-късно.</string>
   <string name="delete_show">Премахни</string>
   <string name="dontdelete_show">Не премахвай</string>
   <string name="no_nextepisode">няма намерен предстоящ епизод</string>
-  <string name="context_favorite">Favorite</string>
-  <string name="context_unfavorite">No favorite</string>
+  <string name="context_favorite">Любим</string>
+  <string name="context_unfavorite">Нелюбим</string>
   <string name="favorited">Добавено в Любими</string>
   <string name="unfavorited">Премахнато от Любими</string>
   <string name="context_hide">Скрий</string>
@@ -235,7 +235,7 @@
   <string name="list_item_manage">Управление на списъци</string>
   <string name="list_item_remove">Премахни от списък</string>
   <string name="list_empty">Можете да добавите сериали, сезони или епизоди към този списък.</string>
-  <string name="hexagon_warning">Experimental!</string>
+  <string name="hexagon_warning">Експериментално!</string>
   <string name="hexagon_setup">Създаване на SeriesGuide облак</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
   <string name="hexagon_warning_lists">Lists are not included.</string>

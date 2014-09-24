@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Tuntematon julkaisupäivä</string>
   <string name="episode_dvdnumber">DVD-jakso</string>
   <string name="show_actors">Näyttelijät</string>
-  <string name="original_release">Original release</string>
+  <string name="original_release">Alkuperäinen julkaisu</string>
   <string name="show_on_network">kanavalla %s</string>
   <string name="show_genres">Genret</string>
   <string name="show_runtime">Kesto</string>

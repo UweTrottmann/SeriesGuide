@@ -22,7 +22,7 @@
   <string name="description_poster">Pokaż plakat</string>
   <string name="description_image">Obraz odcinka</string>
   <string name="clear">Wyczyść</string>
-  <string name="clear_search_history">Clear search history</string>
+  <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
   <string name="discard">Anuluj</string>
   <string name="save_selection">Zapisz zaznaczone</string>
   <string name="search_hint">Szukaj odcinków</string>
@@ -96,7 +96,7 @@
     <item quantity="many">%d minut</item>
     <item quantity="other">%d minut</item>
   </plurals>
-  <string name="action_rate">Rate</string>
+  <string name="action_rate">Oceń</string>
   <string name="your_rating">Twoja ocena</string>
   <string name="love">Uwielbiam to!</string>
   <string name="hate">Słaby :(</string>
@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Data premiery nieznana</string>
   <string name="episode_dvdnumber">Odcinek na DVD</string>
   <string name="show_actors">Obsada</string>
-  <string name="original_release">Original release</string>
+  <string name="original_release">Oryginalna data emisji</string>
   <string name="show_on_network">na %s</string>
   <string name="show_genres">Gatunki</string>
   <string name="show_runtime">Czas trwania</string>

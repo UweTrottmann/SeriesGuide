@@ -22,7 +22,7 @@
   <string name="description_poster">Zobrazit plakát</string>
   <string name="description_image">Obrázek z epizody</string>
   <string name="clear">Vyčistit</string>
-  <string name="clear_search_history">Clear search history</string>
+  <string name="clear_search_history">Vymazat historii vyhledávání</string>
   <string name="discard">Zrušit</string>
   <string name="save_selection">Uložit výběr</string>
   <string name="search_hint">Hledat v epizodách</string>
@@ -48,7 +48,7 @@
   <string name="no_shouts">Buďte první, kdo zakřičí!</string>
   <string name="refresh">Obnovit</string>
   <string name="movies_collection">Sbírka</string>
-  <string name="movies_watchlist">Watchlist</string>
+  <string name="movies_watchlist">Chci vidět</string>
   <string name="watchlist_add">Přidat do seznamu Chci vidět</string>
   <string name="watchlist_remove">Odebrat ze seznamu Chci vidět</string>
   <string name="watchlist_added">Přídáno do seznamu Chci vidět</string>
@@ -96,7 +96,7 @@
     <item quantity="many">%d minut</item>
     <item quantity="other">%d minut</item>
   </plurals>
-  <string name="action_rate">Rate</string>
+  <string name="action_rate">Ohodnotit</string>
   <string name="your_rating">Vaše hodnocení</string>
   <string name="love">Úplný ninja!</string>
   <string name="hate">Odpad</string>
