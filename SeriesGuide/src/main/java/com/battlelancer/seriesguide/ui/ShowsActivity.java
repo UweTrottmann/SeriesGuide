@@ -48,6 +48,7 @@ import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.IabHelper;
 import com.battlelancer.seriesguide.billing.IabResult;
 import com.battlelancer.seriesguide.billing.Inventory;
+import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -138,12 +139,18 @@ public class ShowsActivity extends BaseTopActivity implements
         setInitialTab(savedInstanceState, getIntent().getExtras());
 
         // query for in-app purchases
-        checkPurchase();
+        if (Utils.isAmazonVersion()) {
+            // setup Amazon IAP
+            AmazonIapManager.setup(this);
+        } else {
+            // setup Google IAP
+            checkGooglePlayPurchase();
+        }
     }
 
     /**
-     * Handles further behavior, if this activity was launched through one of the {@link
-     * Intents} action filters defined in the manifest.
+     * Handles further behavior, if this activity was launched through one of the {@link Intents}
+     * action filters defined in the manifest.
      *
      * @return true if a show or episode is viewed directly and this activity should finish.
      */
@@ -249,8 +256,8 @@ public class ShowsActivity extends BaseTopActivity implements
     }
 
     /**
-     * Tries to restore the current tab from the given state, if that fails from the given
-     * intent extras. If that fails as well, uses the last known selected tab.
+     * Tries to restore the current tab from the given state, if that fails from the given intent
+     * extras. If that fails as well, uses the last known selected tab.
      */
     private void setInitialTab(Bundle savedInstanceState, Bundle intentExtras) {
         int selection;
@@ -270,7 +277,7 @@ public class ShowsActivity extends BaseTopActivity implements
         mViewPager.setCurrentItem(selection);
     }
 
-    private void checkPurchase() {
+    private void checkGooglePlayPurchase() {
         if (Utils.canSkipPurchaseCheck(this)) {
             return;
         }
@@ -355,11 +362,18 @@ public class ShowsActivity extends BaseTopActivity implements
     protected void onResume() {
         super.onResume();
 
+        if (Utils.isAmazonVersion()) {
+            // update Amazon IAP
+            AmazonIapManager.get().activate();
+            AmazonIapManager.get().requestUserDataAndPurchaseUpdates();
+            AmazonIapManager.get().validateSubscription(this);
+        }
+
+        // update next episodes
         TaskManager.getInstance(this).tryNextEpisodeUpdateTask();
 
+        // watch for sync state changes
         mSyncStatusObserver.onStatusChanged(0);
-
-        // Watch for sync state changes
         final int mask = ContentResolver.SYNC_OBSERVER_TYPE_PENDING |
                 ContentResolver.SYNC_OBSERVER_TYPE_ACTIVE;
         mSyncObserverHandle = ContentResolver.addStatusChangeListener(mask, mSyncStatusObserver);
@@ -368,6 +382,13 @@ public class ShowsActivity extends BaseTopActivity implements
     @Override
     protected void onPause() {
         super.onPause();
+
+        if (Utils.isAmazonVersion()) {
+            // pause Amazon IAP
+            AmazonIapManager.get().deactivate();
+        }
+
+        // stop listening to sync state changes
         if (mSyncObserverHandle != null) {
             ContentResolver.removeStatusChangeListener(mSyncObserverHandle);
             mSyncObserverHandle = null;
@@ -624,8 +645,8 @@ public class ShowsActivity extends BaseTopActivity implements
     };
 
     /**
-     * Special {@link TabStripAdapter} which saves the currently selected page to preferences, so
-     * we can restore it when the user comes back later.
+     * Special {@link TabStripAdapter} which saves the currently selected page to preferences, so we
+     * can restore it when the user comes back later.
      */
     public static class ShowsTabPageAdapter extends TabStripAdapter
             implements ViewPager.OnPageChangeListener {

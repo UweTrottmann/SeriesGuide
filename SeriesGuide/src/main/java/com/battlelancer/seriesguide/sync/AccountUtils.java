@@ -32,9 +32,7 @@ public class AccountUtils {
 
     private static final String ACCOUNT_NAME = "SeriesGuide Sync";
 
-    private static final String ACCOUNT_TYPE =
-            SeriesGuideApplication.FLAVOR_INTERNAL.equals(BuildConfig.FLAVOR)
-                    ? "com.battlelancer.seriesguide.beta" : "com.battlelancer.seriesguide";
+    private static final String ACCOUNT_TYPE = BuildConfig.APPLICATION_ID;
 
     public static void createAccount(Context context) {
         Timber.d("Setting up account...");

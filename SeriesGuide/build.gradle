@@ -23,6 +23,11 @@ android {
         buildConfigField("String", "IAP_KEY_B", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_B")}\"")
         buildConfigField("String", "IAP_KEY_C", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_C")}\"")
         buildConfigField("String", "IAP_KEY_D", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_D")}\"")
+
+        manifestPlaceholders = [
+                crashlyticsApiKey: rootProject.hasProperty("CRASHLYTICS_KEY")
+                        ? rootProject.property("CRASHLYTICS_KEY") : "MISSING"
+        ]
     }
 
     compileOptions {
@@ -43,6 +48,16 @@ android {
     productFlavors {
         free {
             applicationId "com.battlelancer.seriesguide"
+            versionCode rootProject.ext.versionCode
+            versionName rootProject.ext.versionName
+
+            manifestPlaceholders = [
+                    androidBackupKey: rootProject.hasProperty("FREE.ANDROID_BACKUP_KEY")
+                            ? rootProject.property("FREE.ANDROID_BACKUP_KEY") : "MISSING"
+            ]
+        }
+        amazon {
+            applicationId "com.uwetrottmann.seriesguide.amzn"
             versionCode rootProject.ext.versionCode
             versionName rootProject.ext.versionName
         }
@@ -114,6 +129,9 @@ dependencies {
 
     // libs folder
     compile fileTree(dir: 'libs', include: '*.jar')
+
+    // Amazon flavor specific
+    amazonCompile files('libs/amazon/in-app-purchasing-2.0.0.jar')
 
     // android unit tests
     androidTestCompile 'com.squareup:fest-android:1.0.8'

@@ -1,0 +1,4 @@
+<resources>
+    <string name="package_name">com.uwetrottmann.seriesguide.amzn</string>
+    <string name="provider_authority">com.uwetrottmann.seriesguide.amzn.provider</string>
+</resources>
