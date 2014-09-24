@@ -14,8 +14,7 @@
   ~ limitations under the License.
   -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.battlelancer.seriesguide">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Google Play in-app billing -->
     <uses-permission android:name="com.android.vending.BILLING" />
