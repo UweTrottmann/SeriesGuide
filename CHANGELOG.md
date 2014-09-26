@@ -5,8 +5,21 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 18 *(in development)*
+Version 18 *(2014-09-26)*
 -----------------------------
+
+* Display more details like release time, network and genre in the "Add show" show info dialog.
+* Better support for "Large text" accessibility option.
+* Share statistics.
+* Amazon App Store version.
+
+#### 18 *(2014-09-26)*
+
+* TWEAK Remove manually marked watched episodes and movies from "Friends" stream to improve load time. In return extend episode friends stream to 7 days.
+* TWEAK "Collected all" indicator now only takes into account released episodes.
+* TWEAK Add search button in lists section.
+* NOTE Provide a version for the Amazon App Store.
+* NOTICE Latest translations from crowdin.
 
 #### 18-beta3 *(2014-09-15)*
 
@@ -26,6 +39,7 @@ Version 18 *(in development)*
 * FEATURE Add shows tab to search. Results update as you type.
 * FEATURE Share your statistics: export stats screen as text for email, IM, etc.
 * TWEAK Update season and episode list designs.
+* FIX trakt "Friends" and "You" tabs appear immediately after signing in, previously they would only appear on restarting the main activity.
 * NOTICE Latest translations from crowdin.
 
 Version 17 *(2014-08-27)*
