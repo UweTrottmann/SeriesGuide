@@ -52,7 +52,6 @@ import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
 import java.io.IOException;
@@ -149,8 +148,7 @@ public class Utils {
     }
 
     /**
-     * Run the notification service delayed by a minute to display and (re)schedule upcoming
-     * episode
+     * Run the notification service delayed by a minute to display and (re)schedule upcoming episode
      * alarms.
      */
     public static void runNotificationServiceDelayed(Context context) {
@@ -183,30 +181,30 @@ public class Utils {
     }
 
     /**
-     * Returns whether a regular check with the Google Play app is necessary to determine access to
-     * X features (e.g. the subscription is still valid).
+     * Returns whether a regular check with the Google Play app is not necessary to determine access
+     * to X features (e.g. the subscription is still valid).
      */
-    public static boolean requiresPurchaseCheck(Context context) {
-        // dev builds and the SeriesGuide X key app are not handled through the
-        // Play store
-        return !(BuildConfig.DEBUG || hasUnlockKeyInstalled(context));
+    public static boolean canSkipPurchaseCheck(Context context) {
+        // dev builds and the SeriesGuide X key app are not handled through the Play store
+        return (BuildConfig.DEBUG || hasUnlockKeyInstalled(context));
     }
 
     /**
      * Returns whether this user should currently get access to X features.
      */
     public static boolean hasAccessToX(Context context) {
-        // dev builds, SeriesGuide X installed or a valid purchase unlock X
-        // features
-        return !requiresPurchaseCheck(context) || AdvancedSettings.isSubscribedToX(context);
+        // dev builds, SeriesGuide X installed or a valid purchase unlock X features
+        // Fire OS build is paid only
+        return isAmazonVersion()
+                || canSkipPurchaseCheck(context)
+                || AdvancedSettings.isSubscribedToX(context);
     }
 
     /**
-     * Returns true if the user has the legacy SeriesGuide X version installed, signed with the
-     * same
+     * Returns true if the user has the legacy SeriesGuide X version installed, signed with the same
      * key as we are.
      */
-    public static boolean hasUnlockKeyInstalled(Context context) {
+    private static boolean hasUnlockKeyInstalled(Context context) {
         try {
             // Get our signing key
             PackageManager manager = context.getPackageManager();
@@ -232,11 +230,27 @@ public class Utils {
     }
 
     /**
-     * Sets the Drawables (if any) to appear to the start of, above,
-     * to the end of, and below the text.  Use 0 if you do not
-     * want a Drawable there. The Drawables' bounds will be set to
-     * their intrinsic bounds.
+     * Launches {@link BillingActivity} and notifies that something is only available with the X
+     * subscription.
      */
+    public static void advertiseSubscription(Context context) {
+        Toast.makeText(context, R.string.onlyx, Toast.LENGTH_SHORT).show();
+        context.startActivity(new Intent(context, BillingActivity.class));
+    }
+
+    /**
+     * Check if this is a build for the Amazon app store.
+     */
+    public static boolean isAmazonVersion() {
+        return "amazon".equals(BuildConfig.FLAVOR);
+    }
+
+    /**
+     * Sets the Drawables (if any) to appear to the start of, above, to the end of, and below the
+     * text.  Use 0 if you do not want a Drawable there. The Drawables' bounds will be set to their
+     * intrinsic bounds.
+     */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static void setCompoundDrawablesRelativeWithIntrinsicBounds(Button button, int left,
             int top, int right, int bottom) {
         if (AndroidUtils.isJellyBeanMR1OrHigher()) {
@@ -254,9 +268,8 @@ public class Utils {
     }
 
     /**
-     * Sets the Drawables (if any) to appear to the start of, above,
-     * to the end of, and below the text.  Use null if you do not
-     * want a Drawable there. The Drawables' bounds will be set to
+     * Sets the Drawables (if any) to appear to the start of, above, to the end of, and below the
+     * text.  Use null if you do not want a Drawable there. The Drawables' bounds will be set to
      * their intrinsic bounds.
      */
     public static void setCompoundDrawablesRelativeWithIntrinsicBounds(Button button,
@@ -416,8 +429,7 @@ public class Utils {
     }
 
     /**
-     * Track a screen view. This is commonly called in {@link
-     * android.support.v4.app.Fragment#onStart()}.
+     * Track a screen view. This is commonly called in {@link android.support.v4.app.Fragment#onStart()}.
      */
     public static void trackView(Context context, String screenName) {
         Tracker tracker = Analytics.getTracker(context);
@@ -502,11 +514,12 @@ public class Utils {
     }
 
     /**
-     * Returns true if a network connection exists.
+     * Checks for an available network connection.
      *
-     * @param showOfflineToast If true, displays a toast asking the user to connect to a network.
+     * @param showOfflineToast If not connected, displays a toast asking the user to connect to a
+     * network.
      */
-    public static boolean isConnected(Context context, boolean showOfflineToast) {
+    public static boolean isNotConnected(Context context, boolean showOfflineToast) {
         boolean isConnected = AndroidUtils.isNetworkConnected(context);
 
         // display optional offline toast
@@ -514,22 +527,12 @@ public class Utils {
             Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show();
         }
 
-        return isConnected;
-    }
-
-    /**
-     * Launches {@link BillingActivity} and notifies that something is only available with the X
-     * subscription.
-     */
-    public static void advertiseSubscription(Context context) {
-        Toast.makeText(context, R.string.onlyx, Toast.LENGTH_SHORT).show();
-        context.startActivity(new Intent(context, BillingActivity.class));
+        return !isConnected;
     }
 
     /**
      * Calls {@link Context#startActivity(Intent)} with the given <b>implicit</b> {@link Intent}
-     * after making sure there is an {@link Activity} to handle it. Can show an error toast, if
-     * not.
+     * after making sure there is an {@link Activity} to handle it. Can show an error toast, if not.
      * <br> <br> This may happen if e.g. the web browser has been disabled through restricted
      * profiles.
      *
@@ -584,11 +587,9 @@ public class Utils {
     }
 
     /**
-     * Returns an {@link java.io.InputStream} using {@link java.net.HttpURLConnection} to connect
-     * to the given URL.
-     * <p/>
-     * Responses are downloaded and cached using the default HTTP client instance (see {@link
-     * com.battlelancer.seriesguide.util.ServiceUtils}.
+     * Returns an {@link java.io.InputStream} using {@link java.net.HttpURLConnection} to connect to
+     * the given URL. <p/> Responses are downloaded and cached using the default HTTP client
+     * instance (see {@link com.battlelancer.seriesguide.util.ServiceUtils}.
      */
     public static InputStream downloadUrl(String urlString) throws IOException {
         URL url = new URL(urlString);
@@ -600,11 +601,9 @@ public class Utils {
     }
 
     /**
-     * Returns an {@link java.io.InputStream} using {@link java.net.HttpURLConnection} to connect
-     * to the given URL.
-     * <p/>
-     * Responses are downloaded and cached using the default HTTP client instance (see {@link
-     * com.battlelancer.seriesguide.util.ServiceUtils}.
+     * Returns an {@link java.io.InputStream} using {@link java.net.HttpURLConnection} to connect to
+     * the given URL. <p/> Responses are downloaded and cached using the default HTTP client
+     * instance (see {@link com.battlelancer.seriesguide.util.ServiceUtils}.
      */
     public static InputStream downloadAndCacheUrl(Context context, String urlString)
             throws IOException {

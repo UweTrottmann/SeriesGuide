@@ -18,6 +18,7 @@
 package com.battlelancer.seriesguide.sync;
 
 import android.accounts.Account;
+import android.annotation.SuppressLint;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentProviderOperation;
@@ -246,6 +247,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         SUCCESS, INCOMPLETE
     }
 
+    @SuppressLint("CommitPrefEdits")
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority,
             ContentProviderClient provider, SyncResult syncResult) {
@@ -504,6 +506,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         return result;
     }
 
+    @SuppressLint("CommitPrefEdits")
     private static UpdateResult performTraktEpisodeSync(Context context, Trakt trakt,
             HashSet<Integer> existingShows, long currentTime) {
         // do we need to merge data instead of overwriting with data from trakt?

@@ -2,13 +2,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="103dp"
+    android:layout_height="wrap_content"
     android:background="?attr/drawableCardBackground"
     android:foreground="?attr/custom_list_selector">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
+        tools:ignore="UselessParent">
 
         <ImageView
             android:id="@+id/showposter"
@@ -25,12 +27,12 @@
             android:layout_height="48dp"
             android:layout_alignParentRight="true"
             android:background="?attr/custom_list_selector"
-            android:contentDescription="@string/favorited"
             android:paddingTop="6dp"
             android:paddingRight="6dp"
             android:paddingLeft="22dp"
             android:paddingBottom="22dp"
-            android:src="?attr/drawableStar" />
+            android:src="?attr/drawableStar"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/imageViewShowsContextMenu"
@@ -43,23 +45,8 @@
             android:paddingBottom="4dp"
             android:paddingLeft="24dp"
             android:scaleType="centerInside"
-            android:src="?attr/drawableDropdown" />
-
-        <TextView
-            android:id="@+id/textViewShowsTimeAndNetwork"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginRight="24dp"
-            android:layout_toRightOf="@+id/showposter"
-            android:ellipsize="end"
-            android:gravity="right"
-            android:maxLines="1"
-            android:text="@string/norating"
-            tools:text="Tue 08:00 PM | Showtime Network"
-            android:textAppearance="@style/TextAppearance.Caption.Dim" />
+            android:src="?attr/drawableDropdown"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/seriesname"
@@ -68,9 +55,9 @@
             android:layout_marginTop="@dimen/default_padding"
             android:layout_toRightOf="@id/showposter"
             android:layout_toLeftOf="@id/favoritedLabel"
-            android:ellipsize="marquee"
-            android:singleLine="true"
             android:textAppearance="@style/TextAppearance.Subhead"
+            android:maxLines="1"
+            android:ellipsize="end"
             tools:text="@string/show" />
 
         <TextView
@@ -79,11 +66,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/seriesname"
             android:layout_toRightOf="@id/showposter"
-            android:ellipsize="end"
-            android:maxLines="1"
             android:paddingRight="@dimen/inline_padding"
+            tools:text="10x456 Some Very Cool Episode Title Therefore"
             android:textAppearance="@style/TextAppearance.Body"
-            tools:text="10x456 Some Very Cool Episode Title Therefore" />
+            android:maxLines="1"
+            android:ellipsize="end" />
 
         <TextView
             android:id="@+id/episodetime"
@@ -92,8 +79,27 @@
             android:layout_below="@id/TextViewShowListNextEpisode"
             android:layout_toRightOf="@id/showposter"
             android:paddingRight="@dimen/inline_padding"
+            tools:text="Jan 8, 2009 (Thur)"
             android:textAppearance="@style/TextAppearance.Caption.Dim"
-            tools:text="Jan 8, 2009 (Thur)" />
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/textViewShowsTimeAndNetwork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/episodetime"
+            android:paddingBottom="8dp"
+            android:layout_marginRight="24dp"
+            android:layout_toRightOf="@+id/showposter"
+            android:text="@string/norating"
+            tools:text="Tue 08:00 PM | Showtime Network"
+            android:textAppearance="@style/TextAppearance.Caption.Dim"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:gravity="bottom|right" />
 
     </RelativeLayout>
 </FrameLayout>

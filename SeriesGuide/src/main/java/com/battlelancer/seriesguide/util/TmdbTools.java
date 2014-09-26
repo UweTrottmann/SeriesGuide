@@ -20,7 +20,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
+import com.uwetrottmann.tmdb.entities.Genre;
 import java.text.DecimalFormat;
+import java.util.List;
 
 public class TmdbTools {
 
@@ -84,10 +86,28 @@ public class TmdbTools {
     }
 
     /**
-     * Build url to a profile image using the given size spec and current TMDb image url (see
-     * {@link com.battlelancer.seriesguide.settings.TmdbSettings#getImageBaseUrl(android.content.Context)}.
+     * Build url to a profile image using the given size spec and current TMDb image url (see {@link
+     * com.battlelancer.seriesguide.settings.TmdbSettings#getImageBaseUrl(android.content.Context)}.
      */
     public static String buildProfileImageUrl(Context context, String path, ProfileImageSize size) {
         return TmdbSettings.getImageBaseUrl(context) + size + path;
+    }
+
+    /**
+     * Builds a string listing all given genres by name, separated by comma.
+     */
+    public static String buildGenresString(List<Genre> genres) {
+        if (genres == null || genres.isEmpty()) {
+            return null;
+        }
+        StringBuilder genresString = new StringBuilder();
+        for (int i = 0; i < genres.size(); i++) {
+            Genre genre = genres.get(i);
+            genresString.append(genre.name);
+            if (i + 1 < genres.size()) {
+                genresString.append(", ");
+            }
+        }
+        return genresString.toString();
     }
 }

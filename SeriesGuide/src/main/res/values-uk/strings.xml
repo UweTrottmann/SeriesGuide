@@ -10,7 +10,7 @@
   <string name="help">Допомога</string>
   <string name="drawer_open">Відкрити вікно навігації</string>
   <string name="drawer_close">Закрити вікно навігації</string>
-  <string name="show">Про фільм</string>
+  <string name="show">Серіал</string>
   <string name="episode">Серія</string>
   <string name="episode_number">Серія %s</string>
   <string name="episodes">Серії</string>
@@ -22,6 +22,7 @@
   <string name="description_poster">Показати постер</string>
   <string name="description_image">Зображення Серії</string>
   <string name="clear">Очистити</string>
+  <string name="clear_search_history">Clear search history</string>
   <string name="discard">Відмінити</string>
   <string name="save_selection">Зберегти вибране</string>
   <string name="search_hint">Пошук серій</string>
@@ -29,14 +30,14 @@
   <string name="updated">Оновлено до останньої версії.</string>
   <string name="norating">Нема даних</string>
   <string name="unknown">Невідомо</string>
-  <string name="offline">Підключіться до мережі, і повторіть спробу.</string>
+  <string name="offline">Підключіться до мережі і повторіть спробу.</string>
   <string name="offline_no_wifi">Підключіться до Wi-Fi або дозвольте всі підключення, а потім повторіть спробу.</string>
   <string name="app_not_available">Немає доступних програм, щоб впоратися з цим.</string>
   <string name="onlyx">Доступно тільки з версією X Підписки</string>
   <string name="add_empty">Тут немає жодного серіалу.</string>
   <string name="people_empty">Нікого тут немає?! Натисніть щоб спробувати ще раз.</string>
   <string name="share">Поділитись</string>
-  <string name="share_show">Поділитись фільмом</string>
+  <string name="share_show">Поділитись серіалом</string>
   <string name="share_episode">Поділитись серією</string>
   <string name="share_movie">Поділитися фільмом</string>
   <string name="share_checkout">Погляньте %s</string>
@@ -95,6 +96,7 @@
     <item quantity="many">%d хвилин</item>
     <item quantity="other">%d хвилин</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Ваш рейтинг</string>
   <string name="love">Супер!</string>
   <string name="hate">Слабо :(</string>
@@ -120,7 +122,8 @@
   <string name="episode_firstaired_unknown">Дата виходу не відома</string>
   <string name="episode_dvdnumber">Серія на DVD</string>
   <string name="show_actors">Актори</string>
-  <string name="show_firstaired">Перший ефір</string>
+  <string name="original_release">Original release</string>
+  <string name="show_on_network">на %s</string>
   <string name="show_genres">Жанри</string>
   <string name="show_runtime">Тривалість</string>
   <string name="show_contentrating">Рейтинг вмісту</string>
@@ -133,8 +136,6 @@
   <string name="lastEdit">Останнє редагування / / TVDb</string>
   <string name="services_watch">Переглянути</string>
   <string name="services_more">Більше</string>
-  <string name="sort">Сортувати за</string>
-  <string name="action_sort_ignore_articles">Ігнорувати артиклі</string>
   <string name="today">сьогодні</string>
   <string name="now">тепер</string>
   <string name="daily">Щодня</string>
@@ -207,7 +208,6 @@
   <string name="update_scheduled">Оновлюється…</string>
   <string name="update_no_connection">Для оновлення, з\'єднайтесь з інтернетом.</string>
   <string name="update_inprogress">Оновлення в процесі, спробуйте ще раз пізніше.</string>
-  <string name="show_on_network">на %s</string>
   <string name="season_watchcount">серій не переглянуто</string>
   <string name="season_allwatched">Усі серії переглянуті</string>
   <string name="season_onenotwatched">серія не переглянута</string>
@@ -277,27 +277,24 @@
   <string name="feedback">Відправити відгук</string>
   <string name="pref_autoaddshows">Додати нові серіали з trakt</string>
   <string name="pref_autoaddshowssummary">Автоматично додавати серіали з вашого потоку активності на trakt</string>
-  <string-array name="sesorting">
-    <item>Останні спочатку</item>
-    <item>Давніші спочатку</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Останні спочатку</item>
-    <item>Давніші спочатку</item>
-    <item>Непереглянуті спочатку</item>
-    <item>А - Я</item>
-    <item>Топ кращих</item>
-    <item>Останні спочатку (DVD)</item>
-    <item>Давніші спочатку (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>сьогодні</item>
-    <item>1 дня</item>
-    <item>3 днів</item>
-    <item>1 тижня</item>
-    <item>2 тижнів</item>
-    <item>1 місяця</item>
-  </string-array>
+  <string name="sort">Сортувати за</string>
+  <string name="action_sort_ignore_articles">Ігнорувати артиклі</string>
+  <string name="sort_order_latest_first">Останні спочатку</string>
+  <string name="sort_order_oldest_first">Давніші спочатку</string>
+  <string name="sort_order_unwatched_first">Непереглянуті спочатку</string>
+  <string name="sort_order_alphabetical">А - Я</string>
+  <string name="sort_order_top_rated_first">Топ кращих</string>
+  <string name="sort_order_latest_first_dvd">Останні спочатку (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Давніші спочатку (DVD)</string>
+  <string name="upcoming_upto_now">тепер</string>
+  <string name="upcoming_upto_one_day">1 дня</string>
+  <string name="upcoming_upto_three_days">3 днів</string>
+  <string name="upcoming_upto_one_week">1 тижня</string>
+  <string name="upcoming_upto_two_weeks">2 тижнів</string>
+  <string name="upcoming_upto_one_month">1 місяця</string>
+  <string name="upcoming_upto_one_hour">година</string>
+  <string name="upcoming_upto_six_hours">6 годин</string>
+  <string name="upcoming_upto_half_day">12 годин</string>
   <string name="pref_appearance">Оформлення</string>
   <string name="pref_theme">Тема</string>
   <string name="pref_other">Інші</string>
@@ -354,8 +351,6 @@
   <string name="check_into">Відзначити</string>
   <string name="no_selection">Виберіть один внизу</string>
   <string name="looking_for_something_else">Шукаєте щось інше?</string>
-  <string name="menu_rate_episode">Голосувати за серію</string>
-  <string name="menu_rate_show">Голосувати за фільм</string>
   <string name="traktcheckin_cancel">Перевизначити</string>
   <string name="traktcheckin_inprogress">Ви вже відзначили іншу серію або фільм. Перевизначіть попередній вибір або зачекайте %s та спробуйте ще раз.</string>
   <string name="traktcheckin_wait">Я зачекаю</string>
@@ -388,41 +383,24 @@
   <string name="pref_vibrate">Вібрація</string>
   <string name="pref_vibratesummary">Вібрувати при відображенні сповіщення</string>
   <string name="pref_notifications_treshold">Коли слід сповіщати</string>
-  <string-array name="notificationThreshold">
-    <item>в ефірі</item>
-    <item>5 хв до початку</item>
-    <item>10 хв до початку</item>
-    <item>одна година до початку</item>
-  </string-array>
+  <string name="notification_release_exact">в ефірі</string>
+  <string name="notification_release_earlier_five">5 хв до початку</string>
+  <string name="notification_release_earlier_ten">10 хв до початку</string>
+  <string name="notification_release_earlier_hour">одна година до початку</string>
   <string name="smallwidget">SeriesGuide (малий)</string>
   <string name="bigwidget">SeriesGuide (середній)</string>
   <string name="largewidget">SeriesGuide (великий)</string>
   <string name="hide_watched">Приховати переглянуті серії</string>
   <string name="pref_widget_opacity">Фон віджета</string>
-  <string-array name="widgetOpacity">
-    <item>Прозорий</item>
-    <item>25% чорного</item>
-    <item>50% чорного</item>
-    <item>75% чорного</item>
-    <item>Чорний</item>
-  </string-array>
   <string name="pref_widget_type">Тип віджета</string>
-  <string-array name="widgetType">
-    <item>Незабаром</item>
-    <item>Недавні</item>
-    <item>Улюблені</item>
-  </string-array>
+  <string name="widget_background_transparent">Прозорий</string>
+  <string name="widget_background_25">25% чорного</string>
+  <string name="widget_background_50">50% чорного</string>
+  <string name="widget_background_75">75% чорного</string>
+  <string name="widget_background_opaque">Чорний</string>
   <string name="dashclock_extension_label">Наступна серія</string>
   <string name="dashclock_extension_description">Відображає наступну найближчу серію з ваших серіалів на  SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Показати серії у наступному</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>година</item>
-    <item>6 годин</item>
-    <item>12 годин</item>
-    <item>24 години</item>
-    <item>3 дні</item>
-    <item>тиждень</item>
-  </string-array>
   <string name="action_migrate">Мігрувати з X</string>
   <string name="migration_description">SeriesGuide X відтепер є ключем для розблокування X функцій у безкоштовній версії (X Pass). Будь ласка перенесіть ваші серіали у безкоштовну версію SeriesGuide. Залиште версію X установленою для розблокування усіх функцій у безкоштовній версії.</string>
   <string name="migration_import">Торкніться нижче, щоб імпортувати резервну копію, створену в SeriesGuide X.</string>
@@ -438,6 +416,13 @@
   <string name="subscription_activated">Відтепер ви підписані на X функції.</string>
   <string name="subscription_expired">Закінчився термін дії підписки</string>
   <string name="subscription_expired_details">Підписка функцій X минула.</string>
+  <string name="action_subscription_manage">Manage subscription</string>
+  <string name="trial_title">Try SeriesGuide for 30 days</string>
+  <string name="trial_description">You can try SeriesGuide 30 days for free. If you don\'t like it, just cancel any time.\nAfter the trial period ends, I\'m asking for a small yearly fee to support future updates and features.</string>
+  <string name="subscription_active">Thanks, you are subscribed!</string>
+  <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
+  <string name="subscription_unavailable">The subscription is currently not available.</string>
+  <string name="subscription_failed">Purchase not completed.</string>
   <string name="add_to_homescreen">Ярлик</string>
   <string name="search_within_show">Пошук у %s</string>
   <string name="web_search">Веб пошук</string>

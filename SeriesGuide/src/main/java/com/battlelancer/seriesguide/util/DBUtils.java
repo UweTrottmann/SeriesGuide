@@ -56,8 +56,7 @@ public class DBUtils {
     static final String TAG = "SeriesDatabase";
 
     /**
-     * Use 9223372036854775807 (Long.MAX_VALUE) for unknown airtime/no next episode so they will
-     * get
+     * Use 9223372036854775807 (Long.MAX_VALUE) for unknown airtime/no next episode so they will get
      * sorted last.
      */
     public static final String UNKNOWN_NEXT_RELEASE_DATE = "9223372036854775807";
@@ -207,21 +206,27 @@ public class DBUtils {
     }
 
     /**
-     * Returns how many episodes of a show are left to collect.
+     * Returns how many episodes of a show are left to collect. Only considers regular, released
+     * episodes (no specials, must have a release date in the past).
      */
     public static int getUncollectedEpisodesOfShow(Context context, String showId) {
         if (context == null) {
             return -1;
         }
 
-        // unwatched, aired episodes
+        // not collected, no special, previously released episodes
         final Cursor uncollected = context.getContentResolver().query(
                 Episodes.buildEpisodesOfShowUri(showId),
                 new String[] {
                         Episodes._ID, Episodes.COLLECTED
                 },
-                Episodes.SELECTION_NOT_COLLECTED + " AND " + Episodes.SELECTION_NO_SPECIALS, null,
-                null
+                Episodes.SELECTION_NOT_COLLECTED
+                        + " AND " + Episodes.SELECTION_NO_SPECIALS
+                        + " AND " + Episodes.SELECTION_HAS_RELEASE_DATE
+                        + " AND " + Episodes.SELECTION_RELEASED_BEFORE_X,
+                new String[] {
+                        String.valueOf(TimeTools.getCurrentTime(context))
+                }, null
         );
         if (uncollected == null) {
             return -1;
@@ -240,8 +245,7 @@ public class DBUtils {
     }
 
     /**
-     * Returns all episodes that air today or later. Using Pacific Time to determine today.
-     * Excludes
+     * Returns all episodes that air today or later. Using Pacific Time to determine today. Excludes
      * shows that are hidden.
      *
      * @return Cursor using the projection of {@link com.battlelancer.seriesguide.ui.ActivityFragment.ActivityQuery}.
@@ -270,9 +274,9 @@ public class DBUtils {
      * Returns an array of size 3. The built query is stored in {@code [0][0]}, the built selection
      * args in {@code [1]} and the sort order in {@code [2][0]}.
      *
-     * @param type                  A {@link ActivityType}, defaults to UPCOMING.
+     * @param type A {@link ActivityType}, defaults to UPCOMING.
      * @param numberOfDaysToInclude Limits the time range of returned episodes to a number of days
-     *                              from today. If lower then 1 defaults to infinity.
+     * from today. If lower then 1 defaults to infinity.
      */
     public static String[][] buildActivityQuery(Context context, String type,
             int numberOfDaysToInclude) {
@@ -348,8 +352,7 @@ public class DBUtils {
     }
 
     /**
-     * Marks the next episode (if there is one) of the given show as watched. Submits it to trakt
-     * if
+     * Marks the next episode (if there is one) of the given show as watched. Submits it to trakt if
      * possible.
      */
     public static void markNextEpisode(Context context, int showId, int episodeId) {
@@ -377,8 +380,7 @@ public class DBUtils {
     };
 
     /**
-     * Returns a {@link Series} object. Might return {@code null} if there is no show with that
-     * TVDb
+     * Returns a {@link Series} object. Might return {@code null} if there is no show with that TVDb
      * id.
      */
     public static Series getShow(Context context, int showTvdbId) {
@@ -492,8 +494,7 @@ public class DBUtils {
     }
 
     /**
-     * Returns the episode IDs and their last edit time for a given show as a efficiently
-     * searchable
+     * Returns the episode IDs and their last edit time for a given show as a efficiently searchable
      * HashMap.
      *
      * @return HashMap containing the shows existing episodes
@@ -541,10 +542,9 @@ public class DBUtils {
      */
     public static ContentProviderOperation buildEpisodeUpdateOp(ContentValues values) {
         final String episodeId = values.getAsString(Episodes._ID);
-        ContentProviderOperation op = ContentProviderOperation
+        return ContentProviderOperation
                 .newUpdate(Episodes.buildEpisodeUri(episodeId))
                 .withValues(values).build();
-        return op;
     }
 
     /**
@@ -815,8 +815,7 @@ public class DBUtils {
 
     /**
      * Removes a leading article from the given string (including the first whitespace that
-     * follows).
-     * <p> <em>Currently only supports English articles (the, a and an).</em>
+     * follows). <p> <em>Currently only supports English articles (the, a and an).</em>
      */
     public static String trimLeadingArticle(String title) {
         if (TextUtils.isEmpty(title)) {

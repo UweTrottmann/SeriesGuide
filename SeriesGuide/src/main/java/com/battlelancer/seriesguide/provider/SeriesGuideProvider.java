@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.provider;
 
+import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.ContentProvider;
 import android.content.ContentProviderOperation;
@@ -216,6 +217,7 @@ public class SeriesGuideProvider extends ContentProvider {
     final OnSharedPreferenceChangeListener mImportListener
             = new OnSharedPreferenceChangeListener() {
 
+        @SuppressLint("CommitPrefEdits")
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_DATABASEIMPORTED)) {
                 if (sharedPreferences

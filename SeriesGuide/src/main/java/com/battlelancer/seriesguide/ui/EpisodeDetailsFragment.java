@@ -435,7 +435,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             }
         });
         mRatingsContainer.setFocusable(true);
-        CheatSheet.setup(mRatingsContainer, R.string.menu_rate_episode);
+        CheatSheet.setup(mRatingsContainer, R.string.action_rate);
         // TVDb rating
         String tvdbRating = cursor.getString(DetailsQuery.RATING);
         if (!TextUtils.isEmpty(tvdbRating)) {

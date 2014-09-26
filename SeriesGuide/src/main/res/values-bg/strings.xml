@@ -22,6 +22,7 @@
   <string name="description_poster">Обложка</string>
   <string name="description_image">Снимкa нa епизодa</string>
   <string name="clear">Изчисти</string>
+  <string name="clear_search_history">Изчисти историята</string>
   <string name="discard">Откажи</string>
   <string name="save_selection">Запази избраните</string>
   <string name="search_hint">Търсене на епизоди</string>
@@ -35,7 +36,7 @@
   <string name="onlyx">Налично само с X абонамент</string>
   <string name="add_empty">Няма ТВ предавания.</string>
   <string name="people_empty">Няма никой тук?! Натисни, за да опиташ отново.</string>
-  <string name="share">Share</string>
+  <string name="share">Сподели</string>
   <string name="share_show">Сподели ТВ предаване</string>
   <string name="share_episode">Сподели епизод</string>
   <string name="share_movie">Сподели филм</string>
@@ -95,6 +96,7 @@
     <item quantity="many">%d минути</item>
     <item quantity="other">%d минути</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Вашата оценка</string>
   <string name="love">Върховно!</string>
   <string name="hate">Слаба работа :(</string>
@@ -120,7 +122,8 @@
   <string name="episode_firstaired_unknown">Неизвестна дата на издаване</string>
   <string name="episode_dvdnumber">DVD епизод</string>
   <string name="show_actors">Актьори</string>
-  <string name="show_firstaired">Първо излъчване</string>
+  <string name="original_release">Original release</string>
+  <string name="show_on_network">на %s</string>
   <string name="show_genres">Жанрове</string>
   <string name="show_runtime">Времетраене</string>
   <string name="show_contentrating">Оценка на съдържанието</string>
@@ -133,8 +136,6 @@
   <string name="lastEdit">Последна промяна // TVDb</string>
   <string name="services_watch">Гледайте</string>
   <string name="services_more">Още</string>
-  <string name="sort">Подреди по</string>
-  <string name="action_sort_ignore_articles">Игнорирай статии</string>
   <string name="today">днес</string>
   <string name="now">сега</string>
   <string name="daily">Ежедневно</string>
@@ -161,15 +162,15 @@
   <string name="action_collection_added">Добавено в колекцията</string>
   <string name="action_collection_removed">Премахнато от колекцията</string>
   <string name="action_watched">Гледано</string>
-  <string name="action_unwatched">Not watched</string>
+  <string name="action_unwatched">Негледан</string>
   <string name="confirm_delete">Наистина ли искате премахнете %s?</string>
   <string name="delete_has_list_items">Не може да се изпълни, първо премахнете %s от всички списъци.</string>
   <string name="delete_error">Премахването неуспешно. Опитайте по-късно.</string>
   <string name="delete_show">Премахни</string>
   <string name="dontdelete_show">Не премахвай</string>
   <string name="no_nextepisode">няма намерен предстоящ епизод</string>
-  <string name="context_favorite">Favorite</string>
-  <string name="context_unfavorite">No favorite</string>
+  <string name="context_favorite">Любим</string>
+  <string name="context_unfavorite">Нелюбим</string>
   <string name="favorited">Добавено в Любими</string>
   <string name="unfavorited">Премахнато от Любими</string>
   <string name="context_hide">Скрий</string>
@@ -207,7 +208,6 @@
   <string name="update_scheduled">Обновяване...</string>
   <string name="update_no_connection">За актуализация се свържете към интернет.</string>
   <string name="update_inprogress">Актуализиране в процес, опитайте по-късно.</string>
-  <string name="show_on_network">на %s</string>
   <string name="season_watchcount">негледани епизоди</string>
   <string name="season_allwatched">Всички епизоди са гледани</string>
   <string name="season_onenotwatched">негледан епизод</string>
@@ -235,7 +235,7 @@
   <string name="list_item_manage">Управление на списъци</string>
   <string name="list_item_remove">Премахни от списък</string>
   <string name="list_empty">Можете да добавите сериали, сезони или епизоди към този списък.</string>
-  <string name="hexagon_warning">Experimental!</string>
+  <string name="hexagon_warning">Експериментално!</string>
   <string name="hexagon_setup">Създаване на SeriesGuide облак</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
   <string name="hexagon_warning_lists">Lists are not included.</string>
@@ -277,27 +277,24 @@
   <string name="feedback">Обратна връзка</string>
   <string name="pref_autoaddshows">Добавяне на нови сериали</string>
   <string name="pref_autoaddshowssummary">Автоматично добавяне на предавания от дейността в trakt</string>
-  <string-array name="sesorting">
-    <item>Най-новите отгоре</item>
-    <item>Най-старите отгоре</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Най-новите отгоре</item>
-    <item>Най-старите отгоре</item>
-    <item>Негледаните най-отгоре</item>
-    <item>А-Ю</item>
-    <item>Най-високо оценени</item>
-    <item>Най-новите отгоре (DVD)</item>
-    <item>Най-старите отгоре (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>сега</item>
-    <item>един ден</item>
-    <item>3 дни</item>
-    <item>седмица</item>
-    <item>две седмици</item>
-    <item>месец</item>
-  </string-array>
+  <string name="sort">Подреди по</string>
+  <string name="action_sort_ignore_articles">Игнорирай статии</string>
+  <string name="sort_order_latest_first">Най-новите отгоре</string>
+  <string name="sort_order_oldest_first">Най-старите отгоре</string>
+  <string name="sort_order_unwatched_first">Негледаните най-отгоре</string>
+  <string name="sort_order_alphabetical">А-Ю</string>
+  <string name="sort_order_top_rated_first">Най-високо оценени</string>
+  <string name="sort_order_latest_first_dvd">Най-новите отгоре (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Най-старите отгоре (DVD)</string>
+  <string name="upcoming_upto_now">сега</string>
+  <string name="upcoming_upto_one_day">един ден</string>
+  <string name="upcoming_upto_three_days">3 дни</string>
+  <string name="upcoming_upto_one_week">седмица</string>
+  <string name="upcoming_upto_two_weeks">две седмици</string>
+  <string name="upcoming_upto_one_month">месец</string>
+  <string name="upcoming_upto_one_hour">час</string>
+  <string name="upcoming_upto_six_hours">6 часа</string>
+  <string name="upcoming_upto_half_day">12 часа</string>
   <string name="pref_appearance">Външен вид</string>
   <string name="pref_theme">Тема</string>
   <string name="pref_other">Други</string>
@@ -354,8 +351,6 @@
   <string name="check_into">Отметнете в</string>
   <string name="no_selection">изберете един отдолу</string>
   <string name="looking_for_something_else">Друго ли търсите?</string>
-  <string name="menu_rate_episode">Оценете епизода</string>
-  <string name="menu_rate_show">Оценете сериала</string>
   <string name="traktcheckin_cancel">Замени</string>
   <string name="traktcheckin_inprogress">Вие вече отметнахте друг епизод или филм. Или заместете предишното отмятане или изчакайте %s и опитайте отново.</string>
   <string name="traktcheckin_wait">Ще изчакам</string>
@@ -388,41 +383,24 @@
   <string name="pref_vibrate">Вибрация</string>
   <string name="pref_vibratesummary">Също вибриране за показване на известие</string>
   <string name="pref_notifications_treshold">Кога да извести</string>
-  <string-array name="notificationThreshold">
-    <item>в момента</item>
-    <item>5 минути по-рано</item>
-    <item>10 минути по-рано</item>
-    <item>един час по-рано</item>
-  </string-array>
+  <string name="notification_release_exact">в момента</string>
+  <string name="notification_release_earlier_five">5 минути по-рано</string>
+  <string name="notification_release_earlier_ten">10 минути по-рано</string>
+  <string name="notification_release_earlier_hour">един час по-рано</string>
   <string name="smallwidget">Програма (малка)</string>
   <string name="bigwidget">Програма (средна)</string>
   <string name="largewidget">Програма (голяма)</string>
   <string name="hide_watched">Скрий гледаните епизоди</string>
   <string name="pref_widget_opacity">Фон на уиджета</string>
-  <string-array name="widgetOpacity">
-    <item>Прозрачно</item>
-    <item>25% черно</item>
-    <item>50% черно</item>
-    <item>75% черно</item>
-    <item>Черно</item>
-  </string-array>
   <string name="pref_widget_type">Вид на уиджета</string>
-  <string-array name="widgetType">
-    <item>Предстоящи</item>
-    <item>Последни</item>
-    <item>Любими</item>
-  </string-array>
+  <string name="widget_background_transparent">Прозрачно</string>
+  <string name="widget_background_25">25% черно</string>
+  <string name="widget_background_50">50% черно</string>
+  <string name="widget_background_75">75% черно</string>
+  <string name="widget_background_opaque">Черно</string>
   <string name="dashclock_extension_label">Предстоящ епизод</string>
   <string name="dashclock_extension_description">Показва следващите епизоди на вашите SeriesGuide  сериали.</string>
   <string name="dashclock_pref_upcoming_threshold">Покажи епизодите в следващите</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>час</item>
-    <item>6 часа</item>
-    <item>12 часа</item>
-    <item>24 часа</item>
-    <item>3 дни</item>
-    <item>седмица</item>
-  </string-array>
   <string name="action_migrate">Прехвърляне от X</string>
   <string name="migration_description">SeriesGuide X вече представлява ключ за X характеристики (функции) в безплатната версия ("X Pass"). Моля прехвърлете ТВ предаванията си в безплатната версия на SeriesGuide. Запазете X инсталиран, за да отключите всички характеристики (функции) в безплатната версия.</string>
   <string name="migration_import">Докоснете по-долу, за да импортирате архива създаден в SeriesGuide X.</string>
@@ -438,6 +416,13 @@
   <string name="subscription_activated">Вече сте абонирани за X характеристики (функции).</string>
   <string name="subscription_expired">Абонаментът е изтекъл</string>
   <string name="subscription_expired_details">Вашият абонамент за X характеристики (функции) е изтекъл.</string>
+  <string name="action_subscription_manage">Manage subscription</string>
+  <string name="trial_title">Try SeriesGuide for 30 days</string>
+  <string name="trial_description">You can try SeriesGuide 30 days for free. If you don\'t like it, just cancel any time.\nAfter the trial period ends, I\'m asking for a small yearly fee to support future updates and features.</string>
+  <string name="subscription_active">Thanks, you are subscribed!</string>
+  <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
+  <string name="subscription_unavailable">The subscription is currently not available.</string>
+  <string name="subscription_failed">Purchase not completed.</string>
   <string name="add_to_homescreen">Shortcut</string>
   <string name="search_within_show">Търси в %s</string>
   <string name="web_search">Търсене в мрежата</string>

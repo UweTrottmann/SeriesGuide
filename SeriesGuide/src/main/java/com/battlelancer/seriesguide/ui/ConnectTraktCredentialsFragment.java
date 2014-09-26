@@ -76,8 +76,7 @@ public class ConnectTraktCredentialsFragment extends Fragment implements
     @InjectView(R.id.progress) View mStatusView;
 
     public static ConnectTraktCredentialsFragment newInstance() {
-        ConnectTraktCredentialsFragment f = new ConnectTraktCredentialsFragment();
-        return f;
+        return new ConnectTraktCredentialsFragment();
     }
 
     @Override

@@ -77,6 +77,10 @@
         <item name="android:textColor">?attr/textColorSgDim</item>
     </style>
 
+    <style name="TextAppearance.Subhead.Green">
+        <item name="android:textColor">?attr/textColorSgGreen</item>
+    </style>
+
     <style name="TextAppearance.Subhead.Narrow">
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
     </style>
@@ -278,6 +282,14 @@
 
     <!-- Easy layouting -->
     <style name="DefaultPadding"/>
+
+    <style name="DefaultPadding.List">
+        <item name="android:paddingTop">@dimen/default_padding</item>
+        <item name="android:paddingBottom">@dimen/default_padding</item>
+        <item name="android:divider">@color/transparent</item>
+        <item name="android:dividerHeight">0dp</item>
+        <item name="android:clipToPadding">false</item>
+    </style>
 
     <style name="DefaultPadding.Page">
         <item name="android:paddingTop">@dimen/default_padding</item>

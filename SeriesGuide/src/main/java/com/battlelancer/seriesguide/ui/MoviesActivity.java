@@ -41,6 +41,9 @@ public class MoviesActivity extends BaseTopActivity {
     public static final int USER_LOADER_ID = 104;
 
     private static final String TAG = "Movies";
+    private static final int TAB_COUNT_WITH_TRAKT = 5;
+
+    private TabStripAdapter tabsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +67,7 @@ public class MoviesActivity extends BaseTopActivity {
     }
 
     private void setupViews() {
-        TabStripAdapter tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this,
+        tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this,
                 (ViewPager) findViewById(R.id.pagerMovies),
                 (SlidingTabLayout) findViewById(R.id.tabsMovies));
         // search
@@ -88,6 +91,21 @@ public class MoviesActivity extends BaseTopActivity {
         super.onStart();
 
         setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_MOVIES_POSITION);
+
+        // add trakt tabs if user just signed in
+        maybeAddTraktTabs();
+    }
+
+    private void maybeAddTraktTabs() {
+        int currentTabCount = tabsAdapter.getCount();
+        boolean shouldShowTraktTabs = TraktCredentials.get(this).hasCredentials();
+
+        if (shouldShowTraktTabs && currentTabCount != TAB_COUNT_WITH_TRAKT) {
+            tabsAdapter.addTab(R.string.friends, FriendsMovieStreamFragment.class, null);
+            tabsAdapter.addTab(R.string.user_stream, UserMovieStreamFragment.class, null);
+            // update tabs
+            tabsAdapter.notifyTabsChanged();
+        }
     }
 
     @Override

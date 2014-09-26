@@ -22,6 +22,7 @@
   <string name="description_poster">Borító mutatása</string>
   <string name="description_image">Epizód kép</string>
   <string name="clear">Törlés</string>
+  <string name="clear_search_history">Clear search history</string>
   <string name="discard">Elvetés</string>
   <string name="save_selection">Kijelöltek mentése</string>
   <string name="search_hint">Epizódok keresése</string>
@@ -95,6 +96,7 @@
     <item quantity="many">%d perc</item>
     <item quantity="other">%d perc</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Értékelésed</string>
   <string name="love">Totally ninja!</string>
   <string name="hate">Weak Sauce :(</string>
@@ -120,7 +122,8 @@
   <string name="episode_firstaired_unknown">Első adás ismeretlen</string>
   <string name="episode_dvdnumber">DVD epizód</string>
   <string name="show_actors">Szereplők</string>
-  <string name="show_firstaired">Első sugárzás ideje</string>
+  <string name="original_release">Original release</string>
+  <string name="show_on_network">%s csatornán</string>
   <string name="show_genres">Műfaj</string>
   <string name="show_runtime">Hossz</string>
   <string name="show_contentrating">Korhatár besorolás</string>
@@ -133,8 +136,6 @@
   <string name="lastEdit">Utolsó szerkesztés / / TVDb</string>
   <string name="services_watch">Figyelés</string>
   <string name="services_more">Több</string>
-  <string name="sort">Rendezés</string>
-  <string name="action_sort_ignore_articles">Cikk elrejtése</string>
   <string name="today">ma</string>
   <string name="now">most</string>
   <string name="daily">Napi</string>
@@ -207,7 +208,6 @@
   <string name="update_scheduled">Frissítés…</string>
   <string name="update_no_connection">Frissítéshez csatlakozz az internetre.</string>
   <string name="update_inprogress">Egy frissítés folyamatban, próbálja később.</string>
-  <string name="show_on_network">%s csatornán</string>
   <string name="season_watchcount">nem látott epizód</string>
   <string name="season_allwatched">Minden epizód megnézve</string>
   <string name="season_onenotwatched">nem látott epizód</string>
@@ -277,27 +277,24 @@
   <string name="feedback">Visszajelzés küldése</string>
   <string name="pref_autoaddshows">Új trakt sorozatok hozzáadása</string>
   <string name="pref_autoaddshowssummary">Trakt aktivitása és adatai alapján sorozatai bekerülnek az adatbázisba</string>
-  <string-array name="sesorting">
-    <item>Újabbak előre</item>
-    <item>Régebbiek előre</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Újabbak előre</item>
-    <item>Régebbiek előre</item>
-    <item>Nem látottak előre</item>
-    <item>A - Z</item>
-    <item>Magasan értékelt</item>
-    <item>Újabbak előre (DVD)</item>
-    <item>Régebbiek előre (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>most</item>
-    <item>egy nap</item>
-    <item>3 nap</item>
-    <item>egy hét</item>
-    <item>két hét</item>
-    <item>egy hónap</item>
-  </string-array>
+  <string name="sort">Rendezés</string>
+  <string name="action_sort_ignore_articles">Cikk elrejtése</string>
+  <string name="sort_order_latest_first">Újabbak előre</string>
+  <string name="sort_order_oldest_first">Régebbiek előre</string>
+  <string name="sort_order_unwatched_first">Nem látottak előre</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">Magasan értékelt</string>
+  <string name="sort_order_latest_first_dvd">Újabbak előre (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Régebbiek előre (DVD)</string>
+  <string name="upcoming_upto_now">most</string>
+  <string name="upcoming_upto_one_day">egy nap</string>
+  <string name="upcoming_upto_three_days">3 nap</string>
+  <string name="upcoming_upto_one_week">egy hét</string>
+  <string name="upcoming_upto_two_weeks">két hét</string>
+  <string name="upcoming_upto_one_month">egy hónap</string>
+  <string name="upcoming_upto_one_hour">óra</string>
+  <string name="upcoming_upto_six_hours">6 óra</string>
+  <string name="upcoming_upto_half_day">12 óra</string>
   <string name="pref_appearance">Megjelenés</string>
   <string name="pref_theme">Alkalmazás téma</string>
   <string name="pref_other">Egyéb</string>
@@ -354,8 +351,6 @@
   <string name="check_into">Bejelentkezés</string>
   <string name="no_selection">válasszon egyet lentről</string>
   <string name="looking_for_something_else">Valami mást keres?</string>
-  <string name="menu_rate_episode">Epizód értékelése</string>
-  <string name="menu_rate_show">Műsor értékelése</string>
   <string name="traktcheckin_cancel">Felülbírál</string>
   <string name="traktcheckin_inprogress">Már bejelentkezett egy másik epizódba, vagy filmbe. Bírálja felül a korábbi bejelentkezést, vagy várjon %s és próbálja újra.</string>
   <string name="traktcheckin_wait">Várok</string>
@@ -388,41 +383,24 @@
   <string name="pref_vibrate">Vibra</string>
   <string name="pref_vibratesummary">Vibrálás értesítések megjelenítésekor</string>
   <string name="pref_notifications_treshold">Mikor értesítsen</string>
-  <string-array name="notificationThreshold">
-    <item>vetítéskor</item>
-    <item>5 perccel előtte</item>
-    <item>10 perccel előtte</item>
-    <item>egy órával előtte</item>
-  </string-array>
+  <string name="notification_release_exact">vetítéskor</string>
+  <string name="notification_release_earlier_five">5 perccel előtte</string>
+  <string name="notification_release_earlier_ten">10 perccel előtte</string>
+  <string name="notification_release_earlier_hour">egy órával előtte</string>
   <string name="smallwidget">SeriesGuide (kicsi)</string>
   <string name="bigwidget">SeriesGuide (közepes)</string>
   <string name="largewidget">SeriesGuide (nagy)</string>
   <string name="hide_watched">Megnézett epizódok elrejtése</string>
   <string name="pref_widget_opacity">Widget háttér</string>
-  <string-array name="widgetOpacity">
-    <item>Átlátszó</item>
-    <item>25% fekete</item>
-    <item>50% fekete</item>
-    <item>75% fekete</item>
-    <item>Fekete</item>
-  </string-array>
   <string name="pref_widget_type">Widget típus</string>
-  <string-array name="widgetType">
-    <item>Következő</item>
-    <item>Legutóbbi</item>
-    <item>Kedvencek</item>
-  </string-array>
+  <string name="widget_background_transparent">Átlátszó</string>
+  <string name="widget_background_25">25% fekete</string>
+  <string name="widget_background_50">50% fekete</string>
+  <string name="widget_background_75">75% fekete</string>
+  <string name="widget_background_opaque">Fekete</string>
   <string name="dashclock_extension_label">Következő epizód</string>
   <string name="dashclock_extension_description">Megjeleníti a következő epizódokat a SeriesGuide-ból.</string>
   <string name="dashclock_pref_upcoming_threshold">Mutasd a következő epizódokat</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>óra</item>
-    <item>6 óra</item>
-    <item>12 óra</item>
-    <item>24 óra</item>
-    <item>3 nap</item>
-    <item>hét</item>
-  </string-array>
   <string name="action_migrate">Migrálás X-ből</string>
   <string name="migration_description">A SeriesGuide X egy feloldó kulcs az ingyenes alkalmazás X lehetőségeihez. ("X Örökös tagság"). Kérem, vidd át a sorozataidat a SeriesGuide igyenes verziójába. Az X-et tartsd fent telepítve, hogy az ingyenes verzióban elérhesd az összes lehetőséget.</string>
   <string name="migration_import">Érintse meg alább a SeriesGuide X-ben készült mentés importálásához.</string>
@@ -438,6 +416,13 @@
   <string name="subscription_activated">Nincs X előfizetésed.</string>
   <string name="subscription_expired">Lejárt az előfizetés</string>
   <string name="subscription_expired_details">Lejárt az X előfizetésed.</string>
+  <string name="action_subscription_manage">Manage subscription</string>
+  <string name="trial_title">Try SeriesGuide for 30 days</string>
+  <string name="trial_description">You can try SeriesGuide 30 days for free. If you don\'t like it, just cancel any time.\nAfter the trial period ends, I\'m asking for a small yearly fee to support future updates and features.</string>
+  <string name="subscription_active">Thanks, you are subscribed!</string>
+  <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
+  <string name="subscription_unavailable">The subscription is currently not available.</string>
+  <string name="subscription_failed">Purchase not completed.</string>
   <string name="add_to_homescreen">Shortcut</string>
   <string name="search_within_show">Keresés itt %s</string>
   <string name="web_search">Internetes keresés</string>

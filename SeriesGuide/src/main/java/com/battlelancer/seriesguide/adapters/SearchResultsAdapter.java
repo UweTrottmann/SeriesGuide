@@ -27,13 +27,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.ui.SearchFragment;
-import com.battlelancer.seriesguide.ui.SearchFragment.SearchQuery;
+import com.battlelancer.seriesguide.ui.EpisodeSearchFragment.SearchQuery;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
 
 /**
- * {@link CursorAdapter} displaying episode search results inside the {@link SearchFragment}.
+ * {@link CursorAdapter} displaying episode search results inside the {@link com.battlelancer.seriesguide.ui.EpisodeSearchFragment}.
  */
 public class SearchResultsAdapter extends CursorAdapter {
 

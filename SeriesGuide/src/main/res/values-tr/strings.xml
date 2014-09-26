@@ -22,10 +22,11 @@
   <string name="description_poster">Posteri göster</string>
   <string name="description_image">Bölüm resmi</string>
   <string name="clear">Temizle</string>
+  <string name="clear_search_history">Arama geçmişini temizle</string>
   <string name="discard">Yoksay</string>
   <string name="save_selection">Seçimi kaydet</string>
   <string name="search_hint">Bölüm ara</string>
-  <string name="action_display_all">Show all</string>
+  <string name="action_display_all">Tümünü göster</string>
   <string name="updated">En son sürüme güncellendi.</string>
   <string name="norating">Geçersiz</string>
   <string name="unknown">bilinmiyor</string>
@@ -34,8 +35,8 @@
   <string name="app_not_available">İşlemi yapacak uygulama bulunamadı.</string>
   <string name="onlyx">Sadece X aboneleri kullanabilir</string>
   <string name="add_empty">Burada dizi yok.</string>
-  <string name="people_empty">Nobody here?! Touch to try again.</string>
-  <string name="share">Share</string>
+  <string name="people_empty">Burada kimse var mı?! Tekrar denemek için dokunun.</string>
+  <string name="share">Paylaş</string>
   <string name="share_show">Diziyi paylaş</string>
   <string name="share_episode">Bölümü paylaş</string>
   <string name="share_movie">Filmi paylaş</string>
@@ -69,8 +70,8 @@
   <string name="shows_continuing">%s devam ediyor</string>
   <string name="episodes_watched">%s izlendi</string>
   <string name="runtime_all_episodes">İzlenen tüm bölümlerin toplam süresi</string>
-  <string name="movies_on_watchlist">%s on watchlist</string>
-  <string name="runtime_movies_watchlist">runtime of movie watchlist</string>
+  <string name="movies_on_watchlist">%s İzleme listesi</string>
+  <string name="runtime_movies_watchlist">Film izleme listesinin toplam süresi</string>
   <plurals name="days_plural">
     <item quantity="one">%d gün</item>
     <item quantity="zero">%d gün</item>
@@ -95,6 +96,7 @@
     <item quantity="many">%d dakika</item>
     <item quantity="other">%d dakika</item>
   </plurals>
+  <string name="action_rate">Derecelendir</string>
   <string name="your_rating">Sizin değerlendirmeniz</string>
   <string name="love">Harikulade!</string>
   <string name="hate">Eh işte :(</string>
@@ -120,7 +122,8 @@
   <string name="episode_firstaired_unknown">Yayın tarihi bilinmiyor</string>
   <string name="episode_dvdnumber">DVD Bölümü</string>
   <string name="show_actors">Aktörler</string>
-  <string name="show_firstaired">İlk Yayınlanma Tarihi</string>
+  <string name="original_release">Original release</string>
+  <string name="show_on_network">kanal %s</string>
   <string name="show_genres">Türler</string>
   <string name="show_runtime">Süresi</string>
   <string name="show_contentrating">İçerik Derecelendirmesi</string>
@@ -133,8 +136,6 @@
   <string name="lastEdit">Son Düzenleme // TVDb</string>
   <string name="services_watch">İzle</string>
   <string name="services_more">Daha</string>
-  <string name="sort">Sırala</string>
-  <string name="action_sort_ignore_articles">Metinleri yoksay</string>
   <string name="today">bugün</string>
   <string name="now">şimdi</string>
   <string name="daily">Günlük</string>
@@ -161,15 +162,15 @@
   <string name="action_collection_added">Koleksiyona eklendi</string>
   <string name="action_collection_removed">Koleksiyondan kaldırıldı</string>
   <string name="action_watched">İzlendi</string>
-  <string name="action_unwatched">Not watched</string>
+  <string name="action_unwatched">İzlenmemiş</string>
   <string name="confirm_delete">%s öğesini silmek istediğinize emin misiniz?</string>
   <string name="delete_has_list_items">Tamamen kaldırılamıyor, önce %s bütün listelerden kaldırın.</string>
   <string name="delete_error">Dizi kaldırılamadı. Sonra tekrar deneyin.</string>
   <string name="delete_show">Kaldır</string>
   <string name="dontdelete_show">Kaldırma</string>
   <string name="no_nextepisode">sonraki bölüm bulunamadı</string>
-  <string name="context_favorite">Favorite</string>
-  <string name="context_unfavorite">No favorite</string>
+  <string name="context_favorite">Favori</string>
+  <string name="context_unfavorite">Favori değil</string>
   <string name="favorited">Favorilere eklendi</string>
   <string name="unfavorited">Favoriler\'den kaldırıldı</string>
   <string name="context_hide">Gizle</string>
@@ -207,7 +208,6 @@
   <string name="update_scheduled">Güncelleniyor…</string>
   <string name="update_no_connection">Güncelleme amacıyla internete bağlayın.</string>
   <string name="update_inprogress">Devam eden bir güncelleme var, daha sonra tekrar deneyin.</string>
-  <string name="show_on_network">kanal %s</string>
   <string name="season_watchcount">izlenmeyen bölümler</string>
   <string name="season_allwatched">Tüm bölümler izlendi</string>
   <string name="season_onenotwatched">bölüm izlenmedi</string>
@@ -235,20 +235,20 @@
   <string name="list_item_manage">Listeleri yönet</string>
   <string name="list_item_remove">Listeden kaldır</string>
   <string name="list_empty">Dizileri, sezonları veya bölümleri listeye ekleyebilirsin.</string>
-  <string name="hexagon_warning">Experimental!</string>
+  <string name="hexagon_warning">Deneysel!</string>
   <string name="hexagon_setup">SeriesGuide Bulut Hizmetini ayarla</string>
-  <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
-  <string name="hexagon_warning_lists">Lists are not included.</string>
-  <string name="hexagon_warning_trakt">When using SeriesGuide Cloud, changes on trakt will not sync down to SeriesGuide.</string>
+  <string name="hexagon_description">Yedekleme için buluta bağlanın ve dizilerinizi ve filmlerinizi senkronize edin.</string>
+  <string name="hexagon_warning_lists">Listeler dahil edilmez.</string>
+  <string name="hexagon_warning_trakt">SeriesGuide Cloud kullandığınızda, trakt üzerindeki değişiklikler SeriesGuide ile senkronize edilmeyecektir.</string>
   <string name="hexagon_signin">Giriş</string>
   <string name="hexagon_signed_in">SeriesGuide Bulut Hizmetine bağlısınız.</string>
   <string name="hexagon_signout">Çıkış</string>
   <string name="hexagon_setup_incomplete">Series Guide Bulut kurulumu tamamlanmadı.</string>
-  <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
-  <string name="hexagon_remove_account">Remove account</string>
-  <string name="hexagon_remove_account_success">Account obliterated.</string>
-  <string name="hexagon_remove_account_failure">Could not remove account.</string>
-  <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide Cloud. Make sure to remove it on other connected devices as well.</string>
+  <string name="hexagon_setup_fail_auth">Google hesabınız doğrulanamadı.</string>
+  <string name="hexagon_remove_account">Hesabı kaldır</string>
+  <string name="hexagon_remove_account_success">Hesap silinmiş.</string>
+  <string name="hexagon_remove_account_failure">Hesap kaldırılamadı.</string>
+  <string name="hexagon_remove_account_confirmation">Hesabınızı kaldırdığınızda SeriesGuide Cloud üzerindeki bütün film ve dizileriniz silinecektir. Hesabınızı diğer bağlı cihazlardan da kaldırdığınızdan emin olun.</string>
   <string name="connect_trakt">trakt\'e bağlan</string>
   <string name="connect_trakt_done">trakt\'e bağlanıldı!</string>
   <string name="connect_trakt_done_explanation">Şimdi SeriesGuide bu cihazdaki dizileri ve filmleri trakt ile eşleyecek. Bu işlem biraz zaman alabilir.</string>
@@ -277,27 +277,24 @@
   <string name="feedback">Geribildirim Gönder</string>
   <string name="pref_autoaddshows">yeni trakt dizileri ekleyin</string>
   <string name="pref_autoaddshowssummary">dizileri trakt aktivite akışından otomatik olarak yükleyin</string>
-  <string-array name="sesorting">
-    <item>Önce en yenisi</item>
-    <item>Önce en eskisi</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Önce en yenisi</item>
-    <item>Önce en eskisi</item>
-    <item>Önce izlenmeyen</item>
-    <item>A - Z</item>
-    <item>En çok oy alanlar</item>
-    <item>Önce en yenisi (DVD)</item>
-    <item>Önce en eskisi (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>şimdi</item>
-    <item>bir gün</item>
-    <item>3 gün</item>
-    <item>bir hafta</item>
-    <item>iki hafta</item>
-    <item>bir ay</item>
-  </string-array>
+  <string name="sort">Sırala</string>
+  <string name="action_sort_ignore_articles">Metinleri yoksay</string>
+  <string name="sort_order_latest_first">Önce en yenisi</string>
+  <string name="sort_order_oldest_first">Önce en eskisi</string>
+  <string name="sort_order_unwatched_first">Önce izlenmeyen</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">En çok oy alanlar</string>
+  <string name="sort_order_latest_first_dvd">Önce en yenisi (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Önce en eskisi (DVD)</string>
+  <string name="upcoming_upto_now">şimdi</string>
+  <string name="upcoming_upto_one_day">bir gün</string>
+  <string name="upcoming_upto_three_days">3 gün</string>
+  <string name="upcoming_upto_one_week">bir hafta</string>
+  <string name="upcoming_upto_two_weeks">iki hafta</string>
+  <string name="upcoming_upto_one_month">bir ay</string>
+  <string name="upcoming_upto_one_hour">saat</string>
+  <string name="upcoming_upto_six_hours">6 saat</string>
+  <string name="upcoming_upto_half_day">12 saat</string>
   <string name="pref_appearance">Görünüm</string>
   <string name="pref_theme">Uygulama teması</string>
   <string name="pref_other">Diğer</string>
@@ -354,8 +351,6 @@
   <string name="check_into">Giriş yap</string>
   <string name="no_selection">birini seç</string>
   <string name="looking_for_something_else">Başka bir şey mi arıyorsun?</string>
-  <string name="menu_rate_episode">Bölümü değerlendirin</string>
-  <string name="menu_rate_show">Diziyi değerlendirin</string>
   <string name="traktcheckin_cancel">Geçersiz Kıl</string>
   <string name="traktcheckin_inprogress">Başka bir bölüm veya filme giriş yapmış durumdasınız. Ya önceki girişinizi geçersiz kılın, ya da %s bekleyin ve tekrar deneyin.</string>
   <string name="traktcheckin_wait">Bekleyin</string>
@@ -388,41 +383,24 @@
   <string name="pref_vibrate">Titreşim</string>
   <string name="pref_vibratesummary">Uyarırken aynı zamanda titret</string>
   <string name="pref_notifications_treshold">Bildirim zamanı</string>
-  <string-array name="notificationThreshold">
-    <item>yayında</item>
-    <item>5 dakika önce</item>
-    <item>10 dakika önce</item>
-    <item>bir saat önce</item>
-  </string-array>
+  <string name="notification_release_exact">yayında</string>
+  <string name="notification_release_earlier_five">5 dakika önce</string>
+  <string name="notification_release_earlier_ten">10 dakika önce</string>
+  <string name="notification_release_earlier_hour">bir saat önce</string>
   <string name="smallwidget">SeriesGuide (dar)</string>
   <string name="bigwidget">SeriesGuide (orta)</string>
   <string name="largewidget">SeriesGuide (geniş)</string>
   <string name="hide_watched">İzlenmiş bölümleri gizle</string>
   <string name="pref_widget_opacity">Widget arka planı</string>
-  <string-array name="widgetOpacity">
-    <item>Saydam</item>
-    <item>25% siyah</item>
-    <item>50% siyah</item>
-    <item>75% siyah</item>
-    <item>Siyah</item>
-  </string-array>
   <string name="pref_widget_type">Widget tipi</string>
-  <string-array name="widgetType">
-    <item>Yaklaşan</item>
-    <item>En son</item>
-    <item>Sık Kullanılanlar</item>
-  </string-array>
+  <string name="widget_background_transparent">Saydam</string>
+  <string name="widget_background_25">25% siyah</string>
+  <string name="widget_background_50">50% siyah</string>
+  <string name="widget_background_75">75% siyah</string>
+  <string name="widget_background_opaque">Siyah</string>
   <string name="dashclock_extension_label">Gelecek bölüm</string>
   <string name="dashclock_extension_description">SeriesGuide dizilerinizin gelecek bölümünü gösterir.</string>
   <string name="dashclock_pref_upcoming_threshold">Dizinin sonraki bölümlerinde</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>saat</item>
-    <item>6 saat</item>
-    <item>12 saat</item>
-    <item>24 saat</item>
-    <item>3 gün</item>
-    <item>hafta</item>
-  </string-array>
   <string name="action_migrate">X ten geçiş yap</string>
   <string name="migration_description">SeriesGuide X artık ücretsiz sürümdeki X özelliklerini açmak için bir anahtar olarak kullanılıyor (\"X Life-Time Pass\"). Lütfen dizilerinizi SeriesGuide\'ın ücretsiz sürümüne taşıyın. Ücretsiz sürümdeki tüm özellikleri kullanabilmek için de X\'i kurulu bırakın.</string>
   <string name="migration_import">SeriesGuide X ile oluşturulmuş yedeği yüklemek için aşağıya dokunun.</string>
@@ -438,7 +416,14 @@
   <string name="subscription_activated">Şimdi X özelliklerine abone oldunuz.</string>
   <string name="subscription_expired">Abonelik sona erdi</string>
   <string name="subscription_expired_details">X özellikleri abonelik süresi doldu.</string>
-  <string name="add_to_homescreen">Shortcut</string>
+  <string name="action_subscription_manage">Manage subscription</string>
+  <string name="trial_title">Try SeriesGuide for 30 days</string>
+  <string name="trial_description">You can try SeriesGuide 30 days for free. If you don\'t like it, just cancel any time.\nAfter the trial period ends, I\'m asking for a small yearly fee to support future updates and features.</string>
+  <string name="subscription_active">Thanks, you are subscribed!</string>
+  <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
+  <string name="subscription_unavailable">The subscription is currently not available.</string>
+  <string name="subscription_failed">Purchase not completed.</string>
+  <string name="add_to_homescreen">Kısayol</string>
   <string name="search_within_show">İçinde ara %s</string>
   <string name="web_search">Web araması</string>
   <string name="extensions">Eklentiler</string>
@@ -456,5 +441,5 @@
   <string name="extension_youtube">YouTube\'da ara</string>
   <string name="description_extension_youtube">YouTube videolarını ara</string>
   <string name="description_extension_web_search">Websiteler ve resimlerde ara</string>
-  <string name="person_biography">Biography</string>
+  <string name="person_biography">Biyografi</string>
 </resources>

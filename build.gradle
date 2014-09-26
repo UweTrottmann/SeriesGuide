@@ -8,10 +8,9 @@ buildscript {
         maven { url 'http://download.crashlytics.com/maven' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.2'
+        classpath 'com.android.tools.build:gradle:0.13.1'
         classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.5-beta-6'
-        classpath 'org.codehaus.groovy:groovy-backports-compat23:2.3.5' // remove once on Gradle 2.0
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.5'
     }
 }
 
@@ -29,8 +28,8 @@ ext {
     buildToolsVersion = '19.1.0'
 
     // API level 15+ -> version 15xxx
-    versionCode = 15036
-    versionName = '17.0.1'
+    versionCode = 15043
+    versionName = '18.0.0'
 }
 
 ext.libraries = [

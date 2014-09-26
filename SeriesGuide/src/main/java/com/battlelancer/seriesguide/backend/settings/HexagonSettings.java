@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.backend.settings;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -98,6 +99,7 @@ public class HexagonSettings {
                 .commit();
     }
 
+    @SuppressLint("CommitPrefEdits")
     public static long getLastEpisodesSyncTime(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
@@ -110,6 +112,7 @@ public class HexagonSettings {
         return lastSync;
     }
 
+    @SuppressLint("CommitPrefEdits")
     public static long getLastShowsSyncTime(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
@@ -122,6 +125,7 @@ public class HexagonSettings {
         return lastSync;
     }
 
+    @SuppressLint("CommitPrefEdits")
     public static long getLastMoviesSyncTime(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 

@@ -78,7 +78,7 @@ public class ExtensionsConfigurationFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_extensions_configuration, null);
+        View v = inflater.inflate(R.layout.fragment_extensions_configuration, container, false);
         ButterKnife.inject(this, v);
 
         final ExtensionsDragSortController dragSortController = new ExtensionsDragSortController();
@@ -132,6 +132,11 @@ public class ExtensionsConfigurationFragment extends Fragment
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.extensions_configuration_menu, menu);
+        if (Utils.isAmazonVersion()) {
+            // no third-party extensions supported on Amazon app store for now
+            menu.findItem(R.id.menu_action_extensions_search).setVisible(false);
+            menu.findItem(R.id.menu_action_extensions_search).setEnabled(false);
+        }
         if (!BuildConfig.DEBUG) {
             menu.findItem(R.id.menu_action_extensions_enable).setVisible(false);
             menu.findItem(R.id.menu_action_extensions_disable).setVisible(false);

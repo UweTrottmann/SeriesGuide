@@ -75,7 +75,7 @@ public class ListManageDialogFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View layout = inflater.inflate(R.layout.dialog_list_manage, null);
+        final View layout = inflater.inflate(R.layout.dialog_list_manage, container, false);
 
         // title
         mTitle = (EditText) layout.findViewById(R.id.editTextListManageListTitle);

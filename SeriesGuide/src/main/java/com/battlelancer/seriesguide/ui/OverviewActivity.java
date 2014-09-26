@@ -88,7 +88,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
                     public NdefMessage createNdefMessage(NfcEvent event) {
                         final Series show = DBUtils.getShow(OverviewActivity.this, mShowId);
                         // send id, also title and overview (both can be empty)
-                        NdefMessage msg = new NdefMessage(new NdefRecord[] {
+                        return new NdefMessage(new NdefRecord[] {
                                 createMimeRecord(
                                         "application/com.battlelancer.seriesguide.beam",
                                         String.valueOf(mShowId).getBytes()),
@@ -99,7 +99,6 @@ public class OverviewActivity extends BaseNavDrawerActivity {
                                                 .getOverview().getBytes()
                                 )
                         });
-                        return msg;
                     }
 
                     /**
@@ -107,9 +106,8 @@ public class OverviewActivity extends BaseNavDrawerActivity {
                      */
                     public NdefRecord createMimeRecord(String mimeType, byte[] payload) {
                         byte[] mimeBytes = mimeType.getBytes(Charset.forName("US-ASCII"));
-                        NdefRecord mimeRecord = new NdefRecord(
+                        return new NdefRecord(
                                 NdefRecord.TNF_MIME_MEDIA, mimeBytes, new byte[0], payload);
-                        return mimeRecord;
                     }
                 }, this);
             }
@@ -264,7 +262,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         final String showTitle = show.getTitle();
 
         Bundle args = new Bundle();
-        args.putString(SearchFragment.InitBundle.SHOW_TITLE, showTitle);
+        args.putString(EpisodeSearchFragment.InitBundle.SHOW_TITLE, showTitle);
         startSearch(null, false, args, false);
         return true;
     }

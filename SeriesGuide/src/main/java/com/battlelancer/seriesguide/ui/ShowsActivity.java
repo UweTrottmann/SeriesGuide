@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.accounts.Account;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -47,6 +48,7 @@ import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.IabHelper;
 import com.battlelancer.seriesguide.billing.IabResult;
 import com.battlelancer.seriesguide.billing.Inventory;
+import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -85,6 +87,8 @@ public class ShowsActivity extends BaseTopActivity implements
     public static final int FRIENDS_LOADER_ID = 103;
     public static final int USER_LOADER_ID = 104;
     public static final int ADD_SHOW_LOADER_ID = 105;
+
+    private static final int TAB_COUNT_WITH_TRAKT = 5;
 
     private IabHelper mHelper;
 
@@ -135,12 +139,18 @@ public class ShowsActivity extends BaseTopActivity implements
         setInitialTab(savedInstanceState, getIntent().getExtras());
 
         // query for in-app purchases
-        checkPurchase();
+        if (Utils.isAmazonVersion()) {
+            // setup Amazon IAP
+            AmazonIapManager.setup(this);
+        } else {
+            // setup Google IAP
+            checkGooglePlayPurchase();
+        }
     }
 
     /**
-     * Handles further behavior, if this activity was launched through one of the {@link
-     * Intents} action filters defined in the manifest.
+     * Handles further behavior, if this activity was launched through one of the {@link Intents}
+     * action filters defined in the manifest.
      *
      * @return true if a show or episode is viewed directly and this activity should finish.
      */
@@ -246,8 +256,8 @@ public class ShowsActivity extends BaseTopActivity implements
     }
 
     /**
-     * Tries to restore the current tab from the given state, if that fails from the given
-     * intent extras. If that fails as well, uses the last known selected tab.
+     * Tries to restore the current tab from the given state, if that fails from the given intent
+     * extras. If that fails as well, uses the last known selected tab.
      */
     private void setInitialTab(Bundle savedInstanceState, Bundle intentExtras) {
         int selection;
@@ -267,8 +277,8 @@ public class ShowsActivity extends BaseTopActivity implements
         mViewPager.setCurrentItem(selection);
     }
 
-    private void checkPurchase() {
-        if (!Utils.requiresPurchaseCheck(this)) {
+    private void checkGooglePlayPurchase() {
+        if (Utils.canSkipPurchaseCheck(this)) {
             return;
         }
         mHelper = new IabHelper(this, BillingActivity.getPublicKey());
@@ -312,6 +322,9 @@ public class ShowsActivity extends BaseTopActivity implements
                     .apply();
         }
 
+        // add trakt tabs if user just signed in
+        maybeAddTraktTabs();
+
         // check for running show removal worker
         Fragment f = getSupportFragmentManager().findFragmentByTag(RemoveShowWorkerFragment.TAG);
         if (f != null && !((RemoveShowWorkerFragment) f).isTaskFinished()) {
@@ -319,6 +332,18 @@ public class ShowsActivity extends BaseTopActivity implements
         }
         // now listen to events
         EventBus.getDefault().register(this);
+    }
+
+    private void maybeAddTraktTabs() {
+        int currentTabCount = mTabsAdapter.getCount();
+        boolean shouldShowTraktTabs = TraktCredentials.get(this).hasCredentials();
+
+        if (shouldShowTraktTabs && currentTabCount != TAB_COUNT_WITH_TRAKT) {
+            mTabsAdapter.addTab(R.string.friends, FriendsEpisodeStreamFragment.class, null);
+            mTabsAdapter.addTab(R.string.user_stream, UserEpisodeStreamFragment.class, null);
+            // update tabs
+            mTabsAdapter.notifyTabsChanged();
+        }
     }
 
     @Override
@@ -337,11 +362,18 @@ public class ShowsActivity extends BaseTopActivity implements
     protected void onResume() {
         super.onResume();
 
+        if (Utils.isAmazonVersion()) {
+            // update Amazon IAP
+            AmazonIapManager.get().activate();
+            AmazonIapManager.get().requestUserDataAndPurchaseUpdates();
+            AmazonIapManager.get().validateSubscription(this);
+        }
+
+        // update next episodes
         TaskManager.getInstance(this).tryNextEpisodeUpdateTask();
 
+        // watch for sync state changes
         mSyncStatusObserver.onStatusChanged(0);
-
-        // Watch for sync state changes
         final int mask = ContentResolver.SYNC_OBSERVER_TYPE_PENDING |
                 ContentResolver.SYNC_OBSERVER_TYPE_ACTIVE;
         mSyncObserverHandle = ContentResolver.addStatusChangeListener(mask, mSyncStatusObserver);
@@ -350,6 +382,13 @@ public class ShowsActivity extends BaseTopActivity implements
     @Override
     protected void onPause() {
         super.onPause();
+
+        if (Utils.isAmazonVersion()) {
+            // pause Amazon IAP
+            AmazonIapManager.get().deactivate();
+        }
+
+        // stop listening to sync state changes
         if (mSyncObserverHandle != null) {
             ContentResolver.removeStatusChangeListener(mSyncObserverHandle);
             mSyncObserverHandle = null;
@@ -444,6 +483,7 @@ public class ShowsActivity extends BaseTopActivity implements
     /**
      * Runs any upgrades necessary if coming from earlier versions.
      */
+    @SuppressLint("CommitPrefEdits")
     private void onUpgrade() {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final int lastVersion = AppSettings.getLastVersionCode(this);
@@ -605,8 +645,7 @@ public class ShowsActivity extends BaseTopActivity implements
     };
 
     /**
-     * Special {@link TabStripAdapter} which saves the currently selected page to preferences, so
-     * we
+     * Special {@link TabStripAdapter} which saves the currently selected page to preferences, so we
      * can restore it when the user comes back later.
      */
     public static class ShowsTabPageAdapter extends TabStripAdapter
@@ -641,7 +680,7 @@ public class ShowsActivity extends BaseTopActivity implements
         @Override
         public void onPageSelected(int position) {
             // save selected tab index
-            mPrefs.edit().putInt(ActivitySettings.KEY_ACTIVITYTAB, position).commit();
+            mPrefs.edit().putInt(ActivitySettings.KEY_ACTIVITYTAB, position).apply();
         }
     }
 }

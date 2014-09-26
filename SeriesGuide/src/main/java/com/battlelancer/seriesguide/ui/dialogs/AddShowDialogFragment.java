@@ -24,7 +24,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.text.TextUtils;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,16 +36,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.InjectViews;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TvdbShowLoader;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
-import timber.log.Timber;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import java.util.List;
 
 /**
  * A {@link DialogFragment} allowing the user to decide whether to add a show to SeriesGuide.
@@ -93,9 +97,29 @@ public class AddShowDialogFragment extends DialogFragment {
 
     private OnAddShowListener mListener;
 
-    @InjectView(R.id.textViewAddTitle) TextView mTitle;
-    @InjectView(R.id.textViewAddDescription) TextView mDescription;
-    @InjectView(R.id.imageViewAddPoster) ImageView mPoster;
+    @InjectView(R.id.textViewAddTitle) TextView title;
+    @InjectView(R.id.textViewAddShowMeta) TextView showmeta;
+    @InjectView(R.id.textViewAddDescription) TextView overview;
+    @InjectView(R.id.textViewAddRatingsTvdbValue) TextView tvdbRating;
+    @InjectView(R.id.textViewAddGenres) TextView genres;
+    @InjectView(R.id.textViewAddReleased) TextView released;
+    @InjectView(R.id.imageViewAddPoster) ImageView poster;
+
+    @InjectViews({
+            R.id.textViewAddRatingsTvdbValue,
+            R.id.textViewAddRatingsTvdbLabel,
+            R.id.textViewAddRatingsTvdbRange,
+            R.id.textViewAddGenresLabel,
+            R.id.textViewAddReleasedLabel
+    }) List<View> labelViews;
+
+    static final ButterKnife.Setter<View, Boolean> VISIBLE
+            = new ButterKnife.Setter<View, Boolean>() {
+        @Override
+        public void set(View view, Boolean value, int index) {
+            view.setVisibility(value ? View.VISIBLE : View.INVISIBLE);
+        }
+    };
 
     @InjectView(R.id.buttonPositive) Button mButtonPositive;
     @InjectView(R.id.buttonNegative) Button mButtonNegative;
@@ -138,8 +162,6 @@ public class AddShowDialogFragment extends DialogFragment {
         final View v = inflater.inflate(R.layout.dialog_addshow, container, false);
         ButterKnife.inject(this, v);
 
-        mPoster.setVisibility(View.GONE);
-
         // buttons
         mButtonNegative.setText(R.string.dont_add_show);
         mButtonNegative.setOnClickListener(new OnClickListener() {
@@ -157,6 +179,8 @@ public class AddShowDialogFragment extends DialogFragment {
             }
         });
 
+        ButterKnife.apply(labelViews, VISIBLE, false);
+
         return v;
     }
 
@@ -164,22 +188,14 @@ public class AddShowDialogFragment extends DialogFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // ensure at least a title
-        if (TextUtils.isEmpty(mShow.title)) {
-            Timber.d("No title present, loading details from TVDb");
-            showProgressBar(true);
-            populateShowViews(null);
+        showProgressBar(true);
+        populateShowViews(null);
 
-            // load show details
-            Bundle args = new Bundle();
-            args.putInt(KEY_SHOW_TVDBID, mShow.tvdbid);
-            getLoaderManager().initLoader(ShowsActivity.ADD_SHOW_LOADER_ID, args,
-                    mShowLoaderCallbacks);
-        } else {
-            // use existing show details
-            showProgressBar(false);
-            populateShowViews(mShow);
-        }
+        // load show details
+        Bundle args = new Bundle();
+        args.putInt(KEY_SHOW_TVDBID, mShow.tvdbid);
+        getLoaderManager().initLoader(ShowsActivity.ADD_SHOW_LOADER_ID, args,
+                mShowLoaderCallbacks);
     }
 
     @Override
@@ -207,13 +223,7 @@ public class AddShowDialogFragment extends DialogFragment {
         @Override
         public void onLoadFinished(Loader<Show> loader, Show data) {
             showProgressBar(false);
-            if (data != null) {
-                mShow.title = data.title;
-                mShow.overview = data.overview;
-                populateShowViews(mShow);
-            } else {
-                populateShowViews(null);
-            }
+            populateShowViews(data);
         }
 
         @Override
@@ -222,27 +232,61 @@ public class AddShowDialogFragment extends DialogFragment {
         }
     };
 
-    private void populateShowViews(SearchResult show) {
+    private void populateShowViews(Show show) {
         if (show == null) {
             mButtonPositive.setEnabled(false);
+            if (!AndroidUtils.isNetworkConnected(getActivity())) {
+                overview.setText(R.string.offline);
+            }
             return;
         }
 
         mButtonPositive.setEnabled(true);
+        ButterKnife.apply(labelViews, VISIBLE, true);
 
-        // title and description
-        mTitle.setText(show.title);
-        mDescription.setText(show.overview);
+        // title, overview
+        title.setText(show.title);
+        overview.setText(show.overview);
+
+        SpannableStringBuilder meta = new SpannableStringBuilder();
+
+        // status
+        boolean isContinuing = JsonExportTask.ShowStatusExport.CONTINUING.equals(show.status);
+        meta.append(getString(isContinuing ? R.string.show_isalive : R.string.show_isnotalive));
+        // if continuing, paint status green
+        meta.setSpan(
+                new TextAppearanceSpan(getActivity(),
+                        isContinuing ? R.style.TextAppearance_Subhead_Green
+                                : R.style.TextAppearance_Subhead_Dim), 0,
+                meta.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        meta.append("\n");
+
+        // release day and time
+        String[] values = TimeTools.formatToShowReleaseTimeAndDay(getActivity(), show.airtime,
+                show.country, show.airday);
+        meta.append(values[1]).append(" ").append(values[0]);
+        meta.append("\n");
+
+        // network, runtime
+        meta.append(show.network);
+        meta.append("\n");
+        meta.append(getString(R.string.runtime_minutes, show.runtime));
+
+        showmeta.setText(meta);
+
+        // TheTVDB rating
+        tvdbRating.setText(
+                show.rating > 0 ? String.valueOf(show.rating) : getString(R.string.norating));
+
+        // genres
+        Utils.setValueOrPlaceholder(genres, Utils.splitAndKitTVDBStrings(show.genres));
+
+        // original release
+        Utils.setValueOrPlaceholder(released,
+                TimeTools.getShowReleaseYear(show.firstAired, show.airtime, show.country));
 
         // poster
-        if ((DisplaySettings.isLargeScreen(getActivity())
-                || DisplaySettings.isVeryLargeScreen(getActivity()))
-                && show.poster != null) {
-            mPoster.setVisibility(View.VISIBLE);
-            ServiceUtils.getPicasso(getActivity())
-                    .load(show.poster)
-                    .into(mPoster);
-        }
+        Utils.loadPosterThumbnail(getActivity(), poster, show.poster);
     }
 
     private void showProgressBar(boolean isVisible) {

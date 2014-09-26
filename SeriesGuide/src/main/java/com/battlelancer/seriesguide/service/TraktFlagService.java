@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.service;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -97,6 +98,7 @@ public class TraktFlagService extends Service implements Callback {
         executeNext();
     }
 
+    @SuppressLint("CommitPrefEdits")
     @Override
     public void onFailure(boolean isNotConnected) {
         // The user has disconnected from trakt in the meanwhile
