@@ -65,10 +65,6 @@
                 <action android:name="com.battlelancer.seriesguide.api.action.VIEW_SHOW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
-
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
         </activity>
 
         <!-- Migration activity -->
@@ -108,27 +104,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.EpisodesActivity" >
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-        </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.EpisodeDetailsActivity" >
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-        </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.ListsActivity" >
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-        </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.EpisodesActivity" />
+        <activity android:name="com.battlelancer.seriesguide.ui.EpisodeDetailsActivity" />
+        <activity android:name="com.battlelancer.seriesguide.ui.ListsActivity" />
 
         <!-- Movies -->
-        <activity android:name="com.battlelancer.seriesguide.ui.MoviesActivity" >
-        </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.MovieDetailsActivity" >
-        </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.MoviesActivity" />
+        <activity android:name="com.battlelancer.seriesguide.ui.MovieDetailsActivity" />
 
         <!-- Settings -->
         <activity
@@ -206,12 +188,10 @@
         <activity android:name="com.battlelancer.seriesguide.ui.PersonActivity" />
 
         <!-- Services -->
-        <service android:name="com.battlelancer.seriesguide.service.TraktFlagService" >
-        </service>
+        <service android:name="com.battlelancer.seriesguide.service.TraktFlagService" />
 
         <!-- Notification service -->
-        <service android:name="com.battlelancer.seriesguide.service.NotificationService" >
-        </service>
+        <service android:name="com.battlelancer.seriesguide.service.NotificationService" />
 
         <receiver android:name="com.battlelancer.seriesguide.service.OnAlarmReceiver" >
             <intent-filter>
