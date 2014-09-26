@@ -63,7 +63,6 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb.entities.Credits;
 import de.greenrobot.event.EventBus;
-import java.util.Date;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 
@@ -347,10 +346,10 @@ public class ShowFragment extends Fragment {
         // overview
         mTextViewOverview.setText(mShowCursor.getString(ShowQuery.OVERVIEW));
 
-        // country for release times (or assumed one)
-        // show "United States" if country is not supported
-        mTextViewReleaseCountry.setText(TimeTools.isUnsupportedCountryOrUs(releaseCountry)
-                ? TimeTools.UNITED_STATES : releaseCountry);
+        // country for release time calculation
+        // show "unknown" if country is not supported
+        mTextViewReleaseCountry.setText(TimeTools.isUnsupportedCountry(releaseCountry)
+                ? getString(R.string.unknown) : releaseCountry);
 
         // original release
         String firstRelease = mShowCursor.getString(ShowQuery.FIRST_RELEASE);

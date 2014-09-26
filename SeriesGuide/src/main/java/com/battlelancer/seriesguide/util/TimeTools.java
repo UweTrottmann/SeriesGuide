@@ -37,33 +37,42 @@ import java.util.TimeZone;
 public class TimeTools {
 
     public static final String TIMEZONE_ID_CUSTOM = "GMT-08:00";
+    public static final int RELEASE_DAY_DAILY = 0;
 
     private static final String TIMEZONE_ID_PREFIX_AMERICA = "America/";
 
+    private static final String AUSTRALIA = "Australia";
     private static final String TIMEZONE_ID_AUSTRALIA = "Australia/Sydney";
 
+    private static final String CANADA = "Canada";
     private static final String TIMEZONE_ID_CANADA_ATLANTIC = "America/Halifax";
     private static final String TIMEZONE_ID_CANADA_EASTERN = "America/Montreal";
     private static final String TIMEZONE_ID_CANADA_CENTRAL = "America/Winnipeg";
     private static final String TIMEZONE_ID_CANADA_MOUNTAIN = "America/Edmonton";
     private static final String TIMEZONE_ID_CANADA_PACIFIC = "America/Vancouver";
 
+    private static final String FINLAND = "Finland";
     private static final String TIMEZONE_ID_FINLAND = "Europe/Helsinki";
 
+    private static final String GERMANY = "Germany";
     private static final String TIMEZONE_ID_GERMANY = "Europe/Berlin";
 
+    private static final String JAPAN = "Japan";
     private static final String TIMEZONE_ID_JAPAN = "Asia/Tokyo";
 
+    private static final String NETHERLANDS = "Netherlands";
     private static final String TIMEZONE_ID_NETHERLANDS = "Europe/Amsterdam";
 
+    private static final String UNITED_KINGDOM = "United Kingdom";
+    private static final String TIMEZONE_ID_UK = "Europe/London";
+
+    private static final String UNITED_STATES = "United States";
     private static final String TIMEZONE_ID_US_EASTERN = "America/New_York";
     private static final Object TIMEZONE_ID_US_EASTERN_DETROIT = "America/Detroit";
     private static final String TIMEZONE_ID_US_CENTRAL = "America/Chicago";
     private static final String TIMEZONE_ID_US_MOUNTAIN = "America/Denver";
     private static final String TIMEZONE_ID_US_ARIZONA = "America/Phoenix";
     private static final String TIMEZONE_ID_US_PACIFIC = "America/Los_Angeles";
-
-    private static final String TIMEZONE_ID_UK = "Europe/London";
 
     private static final SimpleDateFormat TIME_FORMAT_TRAKT = new SimpleDateFormat(
             "h:mmaa", Locale.US);
@@ -77,11 +86,6 @@ public class TimeTools {
         TIME_FORMAT_TRAKT.setTimeZone(customTimeZone);
         DATE_FORMAT_TVDB.setTimeZone(customTimeZone);
     }
-
-    public static final String CANADA = "Canada";
-    public static final String UNITED_STATES = "United States";
-
-    public static final int RELEASE_DAY_DAILY = 0;
 
     /**
      * Converts a release time from trakt (e.g. "12:00pm") into a millisecond value. The given time
@@ -520,11 +524,26 @@ public class TimeTools {
     }
 
     /**
-     * If the country is not supported for calculating release times in the countries time zone and
-     * falls back to US Pacific time (or country is the United States).
+     * Returns {@code true}, if the country is not supported for calculating release times in the
+     * countries time zone and falls back to US Pacific time.
      */
-    public static boolean isUnsupportedCountryOrUs(String releaseCountry) {
-        return TIMEZONE_ID_US_PACIFIC.equals(getTimeZoneIdForCountry(releaseCountry));
+    public static boolean isUnsupportedCountry(String releaseCountry) {
+        if (releaseCountry == null || releaseCountry.length() == 0) {
+            return true;
+        }
+        switch (releaseCountry) {
+            case AUSTRALIA:
+            case CANADA:
+            case JAPAN:
+            case FINLAND:
+            case GERMANY:
+            case NETHERLANDS:
+            case UNITED_STATES:
+            case UNITED_KINGDOM:
+                return false;
+            default:
+                return true;
+        }
     }
 
     private static String getTimeZoneIdForCountry(String releaseCountry) {
@@ -540,27 +559,27 @@ public class TimeTools {
                     // example: https://trakt.tv/show/rookie-blue
                     timeZoneId = TIMEZONE_ID_CANADA_EASTERN;
                     break;
-                case "United Kingdom":
+                case UNITED_KINGDOM:
                     // example: https://trakt.tv/show/top-gear
                     timeZoneId = TIMEZONE_ID_UK;
                     break;
-                case "Japan":
+                case JAPAN:
                     // example: https://trakt.tv/show/naruto-shippuuden
                     timeZoneId = TIMEZONE_ID_JAPAN;
                     break;
-                case "Finland":
+                case FINLAND:
                     // example: https://trakt.tv/show/madventures
                     timeZoneId = TIMEZONE_ID_FINLAND;
                     break;
-                case "Germany":
+                case GERMANY:
                     // example: https://trakt.tv/show/heuteshow
                     timeZoneId = TIMEZONE_ID_GERMANY;
                     break;
-                case "Netherlands":
+                case NETHERLANDS:
                     // example: https://trakt.tv/show/divorce
                     timeZoneId = TIMEZONE_ID_NETHERLANDS;
                     break;
-                case "Australia":
+                case AUSTRALIA:
                     // example: https://trakt.tv/show/masterchef-australia
                     timeZoneId = TIMEZONE_ID_AUSTRALIA;
                     break;
