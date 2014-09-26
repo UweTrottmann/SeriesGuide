@@ -31,6 +31,7 @@
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:hint="@string/search"
+        android:textColor="@color/text_primary_sg"
         android:textColorHint="@color/text_dim">
 
         <requestFocus />
