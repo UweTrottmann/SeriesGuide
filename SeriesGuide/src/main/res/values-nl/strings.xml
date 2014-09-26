@@ -22,6 +22,7 @@
   <string name="description_poster">Affiche weergeven</string>
   <string name="description_image">Afleveringsafbeelding</string>
   <string name="clear">Wissen</string>
+  <string name="clear_search_history">Clear search history</string>
   <string name="discard">Negeren</string>
   <string name="save_selection">Selectie bewaren</string>
   <string name="search_hint">Afleveringen zoeken</string>
@@ -95,6 +96,7 @@
     <item quantity="many">%d minuten</item>
     <item quantity="other">%d minuten</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Uw beoordeling</string>
   <string name="love">Zeer goed!</string>
   <string name="hate">Slappe hap :(</string>
@@ -120,7 +122,8 @@
   <string name="episode_firstaired_unknown">Releasedatum onbekend</string>
   <string name="episode_dvdnumber">DVD aflevering</string>
   <string name="show_actors">Acteurs</string>
-  <string name="show_firstaired">Eerste uitzending</string>
+  <string name="original_release">Original release</string>
+  <string name="show_on_network">op %s</string>
   <string name="show_genres">Genres</string>
   <string name="show_runtime">Speelduur</string>
   <string name="show_contentrating">Beoordeling inhoud</string>
@@ -133,8 +136,6 @@
   <string name="lastEdit">Laatste bewerking //TVDb</string>
   <string name="services_watch">Bekijken</string>
   <string name="services_more">Meer</string>
-  <string name="sort">Sorteren op</string>
-  <string name="action_sort_ignore_articles">Negeer artikel</string>
   <string name="today">vandaag</string>
   <string name="now">nu</string>
   <string name="daily">Dagelijks</string>
@@ -207,7 +208,6 @@
   <string name="update_scheduled">Bijwerken…</string>
   <string name="update_no_connection">Verbindt met het internet om bij te werken.</string>
   <string name="update_inprogress">Er wordt een update uitgevoerd, probeer het later opnieuw.</string>
-  <string name="show_on_network">op %s</string>
   <string name="season_watchcount">Niet bekeken afleveringen</string>
   <string name="season_allwatched">Alle afleveringen bekeken</string>
   <string name="season_onenotwatched">Onbekeken aflevering</string>
@@ -277,27 +277,24 @@
   <string name="feedback">Reactie verzenden</string>
   <string name="pref_autoaddshows">Nieuwe trakt-series toevoegen</string>
   <string name="pref_autoaddshowssummary">Series van uw actieve trakt-stream automatisch toevoegen</string>
-  <string-array name="sesorting">
-    <item>Nieuwste eerst</item>
-    <item>Oudste eerst</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Nieuwste eerst</item>
-    <item>Oudste eerst</item>
-    <item>Onbekeken eerst</item>
-    <item>A - Z</item>
-    <item>Hoogste waardering</item>
-    <item>Nieuwste eerst (DVD)</item>
-    <item>Oudste eerst (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>nu</item>
-    <item>1 dag</item>
-    <item>3 dagen</item>
-    <item>1 week</item>
-    <item>2 weken</item>
-    <item>een maand</item>
-  </string-array>
+  <string name="sort">Sorteren op</string>
+  <string name="action_sort_ignore_articles">Negeer artikel</string>
+  <string name="sort_order_latest_first">Nieuwste eerst</string>
+  <string name="sort_order_oldest_first">Oudste eerst</string>
+  <string name="sort_order_unwatched_first">Onbekeken eerst</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">Hoogste waardering</string>
+  <string name="sort_order_latest_first_dvd">Nieuwste eerst (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Oudste eerst (DVD)</string>
+  <string name="upcoming_upto_now">nu</string>
+  <string name="upcoming_upto_one_day">1 dag</string>
+  <string name="upcoming_upto_three_days">3 dagen</string>
+  <string name="upcoming_upto_one_week">1 week</string>
+  <string name="upcoming_upto_two_weeks">2 weken</string>
+  <string name="upcoming_upto_one_month">een maand</string>
+  <string name="upcoming_upto_one_hour">uur</string>
+  <string name="upcoming_upto_six_hours">6 uur</string>
+  <string name="upcoming_upto_half_day">12 uur</string>
   <string name="pref_appearance">Uiterlijk</string>
   <string name="pref_theme">Applicatie thema</string>
   <string name="pref_other">Andere</string>
@@ -354,8 +351,6 @@
   <string name="check_into">Check-in bij</string>
   <string name="no_selection">kies één hieronder</string>
   <string name="looking_for_something_else">Op zoek naar iets anders?</string>
-  <string name="menu_rate_episode">Aflevering beoordelen</string>
-  <string name="menu_rate_show">Serie beoordelen</string>
   <string name="traktcheckin_cancel">Overschrijven</string>
   <string name="traktcheckin_inprogress">U bent al aangemeld bij een andere aflevering of film. Overschrijf de vorige aanmelding of wacht %s en probeer het opnieuw.</string>
   <string name="traktcheckin_wait">Wachten</string>
@@ -388,41 +383,24 @@
   <string name="pref_vibrate">Trillen</string>
   <string name="pref_vibratesummary">Ook trillen als melding wordt weergegeven</string>
   <string name="pref_notifications_treshold">Wanneer te waarschuwen</string>
-  <string-array name="notificationThreshold">
-    <item>uitzending</item>
-    <item>5 min van tevoren</item>
-    <item>10 min van tevoren</item>
-    <item>één uur van tevoren</item>
-  </string-array>
+  <string name="notification_release_exact">uitzending</string>
+  <string name="notification_release_earlier_five">5 min van tevoren</string>
+  <string name="notification_release_earlier_ten">10 min van tevoren</string>
+  <string name="notification_release_earlier_hour">één uur van tevoren</string>
   <string name="smallwidget">SeriesGuide (klein)</string>
   <string name="bigwidget">SeriesGuide (middelgroot)</string>
   <string name="largewidget">SeriesGuide (groot)</string>
   <string name="hide_watched">Bekeken afleveringen verbergen</string>
   <string name="pref_widget_opacity">Widget achtergrond</string>
-  <string-array name="widgetOpacity">
-    <item>Transparantie</item>
-    <item>25% zwart</item>
-    <item>50% zwart</item>
-    <item>75% zwart</item>
-    <item>Zwart</item>
-  </string-array>
   <string name="pref_widget_type">Widget type</string>
-  <string-array name="widgetType">
-    <item>Eerstvolgende</item>
-    <item>Recent</item>
-    <item>Favorieten</item>
-  </string-array>
+  <string name="widget_background_transparent">Transparantie</string>
+  <string name="widget_background_25">25% zwart</string>
+  <string name="widget_background_50">50% zwart</string>
+  <string name="widget_background_75">75% zwart</string>
+  <string name="widget_background_opaque">Zwart</string>
   <string name="dashclock_extension_label">Volgende aflevering</string>
   <string name="dashclock_extension_description">Geeft de eerstvolgende aflevering van uw SeriesGuide shows weer.</string>
   <string name="dashclock_pref_upcoming_threshold">Toon afleveringen in de volgende</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>uur</item>
-    <item>6 uur</item>
-    <item>12 uur</item>
-    <item>24 uur</item>
-    <item>3 dagen</item>
-    <item>week</item>
-  </string-array>
   <string name="action_migrate">Migreer van X</string>
   <string name="migration_description">SeriesGuide X is nu een sleutel om X-functies in de gratis versie (\"X Life-Time Pass\") te ontgrendelen. Gelieve uw shows te migreren naar de gratis versie van SeriesGuide. Houd X geïnstalleerd om alle functies in de gratis versie beschikbaar te maken.</string>
   <string name="migration_import">Druk hieronder om de in SeriesGuide X gemaakte back-up te importeren.</string>
@@ -438,6 +416,13 @@
   <string name="subscription_activated">U bent nu geabonneerd op X-functies.</string>
   <string name="subscription_expired">Abonnement verlopen</string>
   <string name="subscription_expired_details">Uw X-abonnement is verlopen.</string>
+  <string name="action_subscription_manage">Manage subscription</string>
+  <string name="trial_title">Try SeriesGuide for 30 days</string>
+  <string name="trial_description">You can try SeriesGuide 30 days for free. If you don\'t like it, just cancel any time.\nAfter the trial period ends, I\'m asking for a small yearly fee to support future updates and features.</string>
+  <string name="subscription_active">Thanks, you are subscribed!</string>
+  <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
+  <string name="subscription_unavailable">The subscription is currently not available.</string>
+  <string name="subscription_failed">Purchase not completed.</string>
   <string name="add_to_homescreen">Snelkoppeling</string>
   <string name="search_within_show">Zoek binnen %s</string>
   <string name="web_search">Zoeken op het web</string>

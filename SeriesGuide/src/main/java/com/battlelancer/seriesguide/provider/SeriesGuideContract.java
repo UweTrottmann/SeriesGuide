@@ -460,6 +460,10 @@ public class SeriesGuideContract {
 
         public static final String SELECTION_NO_SPECIALS = Episodes.SEASON + "!=0";
 
+        public static final String SELECTION_HAS_RELEASE_DATE = Episodes.FIRSTAIREDMS + "!=-1";
+
+        public static final String SELECTION_RELEASED_BEFORE_X = Episodes.FIRSTAIREDMS + "<=?";
+
         public static Uri buildEpisodeUri(String episodeId) {
             return CONTENT_URI.buildUpon().appendPath(episodeId).build();
         }

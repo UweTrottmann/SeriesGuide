@@ -25,9 +25,7 @@ Setup
 
 This project is built with Gradle, the [Android Gradle plugin][3] and uses jars or Maven dependencies. Clone this repository inside your working folder. Import the settings.gradle file in the root folder into e.g. Android Studio. (You can also have a look at the build.gradle files on how the projects depend on another.)
 
-Before your first build create the following files:
-
-* `gradle.properties`, add the following values (do not need to be valid if you do not plan to use that functionality):
+Before your first build create `gradle.properties` in the root directory (where settings.gradle is), add the following values (do not need to be valid if you do not plan to use that functionality):
 
 ```
 // used for publishing the API jar
@@ -39,25 +37,13 @@ TRAKT_API_KEY=<your api key>
 TVDB_API_KEY=<your api key>
 TVTAG_CLIENT_ID=<your client id>
 TVTAG_CLIENT_SECRET=<your client secret>
+CRASHLYTICS_KEY=<a crashlytics api key>
 
 // Play Store in-app billing public key
 IAP_KEY_A=dummy
 IAP_KEY_B=dummy
 IAP_KEY_C=dummy
 IAP_KEY_D=dummy
-```
-
-* `SeriesGuide/src/free/AndroidManifest.xml`, add the following content:
-
-```
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.battlelancer.seriesguide">
-
-    <application>
-        <!-- Crashlytics -->
-        <meta-data android:name="com.crashlytics.ApiKey" android:value="0000000000000000000000000000000000000000"/>
-    </application>
-</manifest>
 ```
 
 Now build any variant of the free flavor (flavor + build type, see [instructions about product flavors][5]) defined in `SeriesGuide/build.gradle`.

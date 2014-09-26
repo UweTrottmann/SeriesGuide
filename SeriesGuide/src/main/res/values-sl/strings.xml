@@ -22,6 +22,7 @@
   <string name="description_poster">Prikaži poster</string>
   <string name="description_image">Slika epizode</string>
   <string name="clear">Zbriši</string>
+  <string name="clear_search_history">Clear search history</string>
   <string name="discard">Zavrzi</string>
   <string name="save_selection">Shrani izbiro</string>
   <string name="search_hint">Iskanje epizode</string>
@@ -95,6 +96,7 @@
     <item quantity="many">%d minut</item>
     <item quantity="other">%d minut</item>
   </plurals>
+  <string name="action_rate">Rate</string>
   <string name="your_rating">Vaša ocena</string>
   <string name="love">Totalno nindža!</string>
   <string name="hate">Bedno :(</string>
@@ -120,7 +122,8 @@
   <string name="episode_firstaired_unknown">Neznan datum izdaje</string>
   <string name="episode_dvdnumber">DVD epizoda</string>
   <string name="show_actors">Igralci</string>
-  <string name="show_firstaired">Prvič predvajano</string>
+  <string name="original_release">Original release</string>
+  <string name="show_on_network">na %s</string>
   <string name="show_genres">Žanri</string>
   <string name="show_runtime">Dolžina</string>
   <string name="show_contentrating">Primernost vsebine</string>
@@ -133,8 +136,6 @@
   <string name="lastEdit">Zadnja sprememba // TVDb</string>
   <string name="services_watch">Gledaj</string>
   <string name="services_more">Več</string>
-  <string name="sort">Razvrsti po</string>
-  <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="today">danes</string>
   <string name="now">zdaj</string>
   <string name="daily">Dnevno</string>
@@ -207,7 +208,6 @@
   <string name="update_scheduled">Posodabljanje…</string>
   <string name="update_no_connection">Za posodobitev se poveži z internetom.</string>
   <string name="update_inprogress">Posodabljanje je v teku. Poizkusite ponovno kasneje.</string>
-  <string name="show_on_network">na %s</string>
   <string name="season_watchcount">Nepogledane epizode.</string>
   <string name="season_allwatched">Vse epizode pogledane</string>
   <string name="season_onenotwatched">Nepogledana epizoda.</string>
@@ -277,27 +277,24 @@
   <string name="feedback">Pošlji povratno informacijo</string>
   <string name="pref_autoaddshows">Dodaj nove trakt oddaje</string>
   <string name="pref_autoaddshowssummary">Avtomatsko dodaj oddaje iz svoje trakt aktivnosti</string>
-  <string-array name="sesorting">
-    <item>Najnovejša prva</item>
-    <item>Najstarejša prva</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Najnovejša prva</item>
-    <item>Najstarejša prva</item>
-    <item>Najprej nepogledane</item>
-    <item>A - Ž</item>
-    <item>Najvišje ocenjene</item>
-    <item>Najstarejša prva (DVD)</item>
-    <item>Najstarejša prva (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>sedaj</item>
-    <item>istega dne</item>
-    <item>3 dni</item>
-    <item>tedna</item>
-    <item>dveh tednov</item>
-    <item>meseca</item>
-  </string-array>
+  <string name="sort">Razvrsti po</string>
+  <string name="action_sort_ignore_articles">Ignore articles</string>
+  <string name="sort_order_latest_first">Novejša prva</string>
+  <string name="sort_order_oldest_first">Starejša prva</string>
+  <string name="sort_order_unwatched_first">Najprej nepogledane</string>
+  <string name="sort_order_alphabetical">A - Ž</string>
+  <string name="sort_order_top_rated_first">Najvišje ocenjene</string>
+  <string name="sort_order_latest_first_dvd">Najprej zadnje (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Najprej najstarejše (DVD)</string>
+  <string name="upcoming_upto_now">zdaj</string>
+  <string name="upcoming_upto_one_day">istega dne</string>
+  <string name="upcoming_upto_three_days">3 dni</string>
+  <string name="upcoming_upto_one_week">tedna</string>
+  <string name="upcoming_upto_two_weeks">dveh tednov</string>
+  <string name="upcoming_upto_one_month">meseca</string>
+  <string name="upcoming_upto_one_hour">ura</string>
+  <string name="upcoming_upto_six_hours">6 ur</string>
+  <string name="upcoming_upto_half_day">12 ur</string>
   <string name="pref_appearance">Videz</string>
   <string name="pref_theme">Slikovna tema aplikacije</string>
   <string name="pref_other">Ostalo</string>
@@ -354,8 +351,6 @@
   <string name="check_into">Prijavi se v</string>
   <string name="no_selection">Izberi možnost spodaj</string>
   <string name="looking_for_something_else">Iščeš nekaj drugega?</string>
-  <string name="menu_rate_episode">Oceni epizodo</string>
-  <string name="menu_rate_show">Oceni oddajo</string>
   <string name="traktcheckin_cancel">Razveljavi</string>
   <string name="traktcheckin_inprogress">Prijavljen si že v drugo epizodo ali film. Ali razveljavi prejšnji vnos ali pa počakaj %s in poizkusi ponovno.</string>
   <string name="traktcheckin_wait">Počakal bom</string>
@@ -388,41 +383,24 @@
   <string name="pref_vibrate">Vibriranje</string>
   <string name="pref_vibratesummary">Vibriranje tudi ob prikazu obvestila</string>
   <string name="pref_notifications_treshold">Čas obveščanja</string>
-  <string-array name="notificationThreshold">
-    <item>se predvaja</item>
-    <item>5 min prej</item>
-    <item>10 min prej</item>
-    <item>eno uro prej</item>
-  </string-array>
+  <string name="notification_release_exact">se predvaja</string>
+  <string name="notification_release_earlier_five">5 min prej</string>
+  <string name="notification_release_earlier_ten">10 min prej</string>
+  <string name="notification_release_earlier_hour">eno uro prej</string>
   <string name="smallwidget">SeriesGuide (majhen)</string>
   <string name="bigwidget">SeriesGuide (srednji)</string>
   <string name="largewidget">SeriesGuide (velik)</string>
   <string name="hide_watched">Skrij gledane epizode</string>
   <string name="pref_widget_opacity">Widget background</string>
-  <string-array name="widgetOpacity">
-    <item>Prosojno</item>
-    <item>25 % črn</item>
-    <item>50 % črno</item>
-    <item>75 % črno</item>
-    <item>Črno</item>
-  </string-array>
   <string name="pref_widget_type">Widget type</string>
-  <string-array name="widgetType">
-    <item>Prihajajoče</item>
-    <item>Nedavno</item>
-    <item>Priljubljene</item>
-  </string-array>
+  <string name="widget_background_transparent">Prosojno</string>
+  <string name="widget_background_25">25 % črn</string>
+  <string name="widget_background_50">50 % črno</string>
+  <string name="widget_background_75">75 % črno</string>
+  <string name="widget_background_opaque">Črno</string>
   <string name="dashclock_extension_label">Upcoming episode</string>
   <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="dashclock_pref_upcoming_threshold">Display episode within…</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>ura</item>
-    <item>6 ur</item>
-    <item>12 ur</item>
-    <item>24 ur</item>
-    <item>3 dni</item>
-    <item>teden</item>
-  </string-array>
   <string name="action_migrate">Migrate from X</string>
   <string name="migration_description">SeriesGuide X is now an unlock key for X features in the free version (X Pass). Please migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
   <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
@@ -438,6 +416,13 @@
   <string name="subscription_activated">You are now subscribed to X features.</string>
   <string name="subscription_expired">Naročnina potekla</string>
   <string name="subscription_expired_details">Naročnina na X funkcije je potekla.</string>
+  <string name="action_subscription_manage">Manage subscription</string>
+  <string name="trial_title">Try SeriesGuide for 30 days</string>
+  <string name="trial_description">You can try SeriesGuide 30 days for free. If you don\'t like it, just cancel any time.\nAfter the trial period ends, I\'m asking for a small yearly fee to support future updates and features.</string>
+  <string name="subscription_active">Thanks, you are subscribed!</string>
+  <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
+  <string name="subscription_unavailable">The subscription is currently not available.</string>
+  <string name="subscription_failed">Purchase not completed.</string>
   <string name="add_to_homescreen">Shortcut</string>
   <string name="search_within_show">Išči v %s</string>
   <string name="web_search">Spletno iskanje</string>

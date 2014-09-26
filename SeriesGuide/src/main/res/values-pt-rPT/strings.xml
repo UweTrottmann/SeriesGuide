@@ -22,6 +22,7 @@
   <string name="description_poster">Mostrar cartaz</string>
   <string name="description_image">Imagem do Episódio</string>
   <string name="clear">Apagar</string>
+  <string name="clear_search_history">Limpar histórico de pesquisa</string>
   <string name="discard">Descartar</string>
   <string name="save_selection">Guardar Selecção</string>
   <string name="search_hint">Procurar episódios</string>
@@ -95,6 +96,7 @@
     <item quantity="many">%d minutos</item>
     <item quantity="other">%d minutos</item>
   </plurals>
+  <string name="action_rate">Avaliar</string>
   <string name="your_rating">A minha classificação</string>
   <string name="love">Totalmente ninja!</string>
   <string name="hate">Que fraquinho :(</string>
@@ -120,7 +122,8 @@
   <string name="episode_firstaired_unknown">Data de lançamento desconhecida</string>
   <string name="episode_dvdnumber">Episódio de DVD</string>
   <string name="show_actors">Actores</string>
-  <string name="show_firstaired">Exibido pela primeira vez</string>
+  <string name="original_release">Exibição original</string>
+  <string name="show_on_network">em %s</string>
   <string name="show_genres">Géneros</string>
   <string name="show_runtime">Duração</string>
   <string name="show_contentrating">Classificação de conteúdo</string>
@@ -133,8 +136,6 @@
   <string name="lastEdit">Última Edição // TVDb</string>
   <string name="services_watch">Ver</string>
   <string name="services_more">Mais</string>
-  <string name="sort">Ordenar por</string>
-  <string name="action_sort_ignore_articles">Ignorar artigos</string>
   <string name="today">hoje</string>
   <string name="now">agora</string>
   <string name="daily">Diário</string>
@@ -207,7 +208,6 @@
   <string name="update_scheduled">A Actualizar…</string>
   <string name="update_no_connection">Para actualizar ligue-se à Internet.</string>
   <string name="update_inprogress">Uma actualização em curso, tente novamente mais tarde.</string>
-  <string name="show_on_network">em %s</string>
   <string name="season_watchcount">episódios por assistir</string>
   <string name="season_allwatched">Todos os episódios vistos</string>
   <string name="season_onenotwatched">episódio por assistir</string>
@@ -277,27 +277,24 @@
   <string name="feedback">Enviar comentários</string>
   <string name="pref_autoaddshows">Adicionar novas séries trakt</string>
   <string name="pref_autoaddshowssummary">Adicionar séries automaticamente da tua actividade trakt</string>
-  <string-array name="sesorting">
-    <item>Mais recente primeiro</item>
-    <item>Mais Antigo primeiro</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>Mais recente primeiro</item>
-    <item>Mais Antigo primeiro</item>
-    <item>Ver os não assistidos primeiro</item>
-    <item>A - Z</item>
-    <item>Mais votados</item>
-    <item>Mais recente primeiro (DVD)</item>
-    <item>Antigo primeiro (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>agora</item>
-    <item>um dia</item>
-    <item>3 dias</item>
-    <item>uma semana</item>
-    <item>duas semanas</item>
-    <item>um mês</item>
-  </string-array>
+  <string name="sort">Ordenar por</string>
+  <string name="action_sort_ignore_articles">Ignorar artigos</string>
+  <string name="sort_order_latest_first">Mais recente primeiro</string>
+  <string name="sort_order_oldest_first">Mais Antigo primeiro</string>
+  <string name="sort_order_unwatched_first">Ver os não assistidos primeiro</string>
+  <string name="sort_order_alphabetical">A - Z</string>
+  <string name="sort_order_top_rated_first">Mais votados</string>
+  <string name="sort_order_latest_first_dvd">Mais recente primeiro (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">Antigo primeiro (DVD)</string>
+  <string name="upcoming_upto_now">agora</string>
+  <string name="upcoming_upto_one_day">um dia</string>
+  <string name="upcoming_upto_three_days">3 dias</string>
+  <string name="upcoming_upto_one_week">uma semana</string>
+  <string name="upcoming_upto_two_weeks">duas semanas</string>
+  <string name="upcoming_upto_one_month">um mês</string>
+  <string name="upcoming_upto_one_hour">hora</string>
+  <string name="upcoming_upto_six_hours">6 horas</string>
+  <string name="upcoming_upto_half_day">12 horas</string>
   <string name="pref_appearance">Aparência</string>
   <string name="pref_theme">Tema da aplicação</string>
   <string name="pref_other">Outro</string>
@@ -354,8 +351,6 @@
   <string name="check_into">Dar entrada em</string>
   <string name="no_selection">escolha uma em baixo</string>
   <string name="looking_for_something_else">À procura de outra coisa?</string>
-  <string name="menu_rate_episode">classificação do episódio</string>
-  <string name="menu_rate_show">classificação da série</string>
   <string name="traktcheckin_cancel">Substituir</string>
   <string name="traktcheckin_inprogress">Já deu entrada noutro episódio ou filme. Ou substitui a entrada anterior ou espere %s e tente novamente.</string>
   <string name="traktcheckin_wait">Prefiro aguardar</string>
@@ -388,41 +383,24 @@
   <string name="pref_vibrate">Vibrar</string>
   <string name="pref_vibratesummary">Também vibrar quando é mostrada uma notificação</string>
   <string name="pref_notifications_treshold">Quando notificar</string>
-  <string-array name="notificationThreshold">
-    <item>em directo</item>
-    <item>5 min. antes</item>
-    <item>10 min. antes</item>
-    <item>uma hora antes</item>
-  </string-array>
+  <string name="notification_release_exact">em directo</string>
+  <string name="notification_release_earlier_five">5 min. antes</string>
+  <string name="notification_release_earlier_ten">10 min. antes</string>
+  <string name="notification_release_earlier_hour">uma hora antes</string>
   <string name="smallwidget">SeriesGuide (pequeno)</string>
   <string name="bigwidget">SeriesGuide (médio)</string>
   <string name="largewidget">SeriesGuide (grande)</string>
   <string name="hide_watched">Ocultar episódios já assistidos</string>
   <string name="pref_widget_opacity">Plano de fundo do widget</string>
-  <string-array name="widgetOpacity">
-    <item>Transparente</item>
-    <item>25% preto</item>
-    <item>50% preto</item>
-    <item>75% preto</item>
-    <item>Preto</item>
-  </string-array>
   <string name="pref_widget_type">Tipo de widget</string>
-  <string-array name="widgetType">
-    <item>Próximos</item>
-    <item>Recentes</item>
-    <item>Favoritos</item>
-  </string-array>
+  <string name="widget_background_transparent">Transparente</string>
+  <string name="widget_background_25">25% preto</string>
+  <string name="widget_background_50">50% preto</string>
+  <string name="widget_background_75">75% preto</string>
+  <string name="widget_background_opaque">Preto</string>
   <string name="dashclock_extension_label">Próximo episódio</string>
   <string name="dashclock_extension_description">Exibe o próximo episódio das tuas séries do SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Mostrar episódios nos próximos</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>hora</item>
-    <item>6 horas</item>
-    <item>12 horas</item>
-    <item>24 horas</item>
-    <item>3 dias</item>
-    <item>semana</item>
-  </string-array>
   <string name="action_migrate">Migrar do X</string>
   <string name="migration_description">O SeriesGuide X passou agora a ser uma chave que serve para desbloquear X funcionalidades da versão gratuita (Passe X). Por favor, migre as suas séries para a versão gratuita do SeriesGuide. Mas mantenha o X instalado para desbloquear todas as funcionalidades da versão gratuita.</string>
   <string name="migration_import">Prima em baixo para importar o backup criado no SeriesGuide X.</string>
@@ -438,6 +416,13 @@
   <string name="subscription_activated">Agora você está inscrito para os X recursos.</string>
   <string name="subscription_expired">Assinatura expirada</string>
   <string name="subscription_expired_details">A sua assinatura dos recursos X expirou.</string>
+  <string name="action_subscription_manage">Manage subscription</string>
+  <string name="trial_title">Try SeriesGuide for 30 days</string>
+  <string name="trial_description">You can try SeriesGuide 30 days for free. If you don\'t like it, just cancel any time.\nAfter the trial period ends, I\'m asking for a small yearly fee to support future updates and features.</string>
+  <string name="subscription_active">Thanks, you are subscribed!</string>
+  <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
+  <string name="subscription_unavailable">The subscription is currently not available.</string>
+  <string name="subscription_failed">Purchase not completed.</string>
   <string name="add_to_homescreen">Atalho</string>
   <string name="search_within_show">Procurar dentro da %s</string>
   <string name="web_search">Pesquisa Web</string>

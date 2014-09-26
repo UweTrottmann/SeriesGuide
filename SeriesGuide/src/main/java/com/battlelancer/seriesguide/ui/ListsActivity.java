@@ -18,6 +18,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
@@ -108,10 +109,10 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content
-        // view
+        // If the nav drawer is open, hide action items related to the content view
         boolean isDrawerOpen = isDrawerOpen();
-        menu.findItem(R.id.menu_list_add).setVisible(!isDrawerOpen);
+        menu.findItem(R.id.menu_action_lists_add).setVisible(!isDrawerOpen);
+        menu.findItem(R.id.menu_action_lists_search).setVisible(!isDrawerOpen);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -119,13 +120,17 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_list_add) {
-            fireTrackerEvent("Add list");
+        if (itemId == R.id.menu_action_lists_add) {
             AddListDialogFragment.showAddListDialog(getSupportFragmentManager());
+            fireTrackerEvent("Add list");
             return true;
-        } else {
-            return super.onOptionsItemSelected(item);
         }
+        if (itemId == R.id.menu_action_lists_search) {
+            startActivity(new Intent(this, SearchActivity.class));
+            fireTrackerEvent("Search");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

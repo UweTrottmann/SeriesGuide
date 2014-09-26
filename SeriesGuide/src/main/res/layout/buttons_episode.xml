@@ -19,7 +19,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/buttonbar"
     android:layout_width="match_parent"
-    android:layout_height="64dp"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/buttons_min_height"
     tools:ignore="Overdraw"
     tools:showIn="@layout/fragment_episode">
 
@@ -33,6 +34,7 @@
         android:drawableTop="?attr/drawableCheckin"
         android:drawablePadding="-4dp"
         android:text="@string/checkin"
+        android:contentDescription="@string/checkin"
         android:maxLines="2"
         android:ellipsize="end" />
 
@@ -46,6 +48,7 @@
         android:drawableTop="?attr/drawableWatch"
         android:drawablePadding="-4dp"
         android:text="@string/action_watched"
+        android:contentDescription="@string/action_watched"
         android:maxLines="2"
         android:ellipsize="end" />
 
@@ -72,6 +75,7 @@
         android:drawableTop="?attr/drawableSkip"
         android:drawablePadding="-4dp"
         android:text="@string/action_skip"
+        android:contentDescription="@string/action_skip"
         android:maxLines="2"
         android:ellipsize="end" />
 

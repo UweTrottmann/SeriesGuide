@@ -7,6 +7,8 @@
     <dimen name="item_padding">2dp</dimen>
     <dimen name="larger_padding">24dp</dimen>
 
+    <dimen name="max_width_text_size_body">400dp</dimen>
+
     <dimen name="text_size_xsmall">12sp</dimen>
     <dimen name="text_size_small">14sp</dimen>
     <dimen name="text_size_xmedium">16sp</dimen>
@@ -46,8 +48,8 @@
 
     <dimen name="shortcut_icon_size">48dp</dimen>
 
+    <dimen name="buttons_min_height">64dp</dimen>
     <dimen name="buttonbar_button_width">56dp</dimen>
-    <dimen name="buttonbar_button_height">48dp</dimen>
 
     <dimen name="empty_view_width">250dp</dimen>
 

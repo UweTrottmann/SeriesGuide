@@ -22,6 +22,7 @@
   <string name="description_poster">节目海报</string>
   <string name="description_image">剧集图片</string>
   <string name="clear">清空</string>
+  <string name="clear_search_history">清空搜索历史</string>
   <string name="discard">放弃</string>
   <string name="save_selection">保存已选项</string>
   <string name="search_hint">搜索剧集</string>
@@ -95,6 +96,7 @@
     <item quantity="many">%d 分钟</item>
     <item quantity="other">%d 分钟</item>
   </plurals>
+  <string name="action_rate">评分</string>
   <string name="your_rating">您的评分</string>
   <string name="love">100 - 非常棒 :-)</string>
   <string name="hate">10 - 弱爆了 :-(</string>
@@ -120,7 +122,8 @@
   <string name="episode_firstaired_unknown">没有已知放映计划</string>
   <string name="episode_dvdnumber">DVD 剧集</string>
   <string name="show_actors">演员</string>
-  <string name="show_firstaired">首播</string>
+  <string name="original_release">Original release</string>
+  <string name="show_on_network">在 %s 频道播出</string>
   <string name="show_genres">类型</string>
   <string name="show_runtime">时长</string>
   <string name="show_contentrating">内容分级</string>
@@ -133,8 +136,6 @@
   <string name="lastEdit">最后修改 // TVDb</string>
   <string name="services_watch">在线观看</string>
   <string name="services_more">更多</string>
-  <string name="sort">排序依据</string>
-  <string name="action_sort_ignore_articles">忽略起始冠词</string>
   <string name="today">今天</string>
   <string name="now">现在</string>
   <string name="daily">每日</string>
@@ -145,8 +146,8 @@
   <string name="mark_all">全部标记为已观看</string>
   <string name="unmark_all">全部标记为未观看</string>
   <string name="mark_untilhere">标记已播剧集为已观看</string>
-  <string name="collect">Collected</string>
-  <string name="uncollect">Not collected</string>
+  <string name="collect">已收藏</string>
+  <string name="uncollect">未收藏</string>
   <string name="collect_all">全部标记为已收藏</string>
   <string name="uncollect_all">全部标记为未收藏</string>
   <string name="action_skip">标记为已跳过</string>
@@ -161,15 +162,15 @@
   <string name="action_collection_added">已添加到收藏列表</string>
   <string name="action_collection_removed">已从收藏列表移除</string>
   <string name="action_watched">已观看</string>
-  <string name="action_unwatched">Not watched</string>
+  <string name="action_unwatched">未观看</string>
   <string name="confirm_delete">您要删除 %s 节目吗？</string>
   <string name="delete_has_list_items">无法执行操作，请先将 %s 从所有列表中移除。</string>
   <string name="delete_error">无法移除此节目</string>
   <string name="delete_show">移除</string>
   <string name="dontdelete_show">保留</string>
   <string name="no_nextepisode">没有新剧集信息</string>
-  <string name="context_favorite">Favorite</string>
-  <string name="context_unfavorite">No favorite</string>
+  <string name="context_favorite">喜欢</string>
+  <string name="context_unfavorite">不喜欢</string>
   <string name="favorited">已标记为喜爱的节目。</string>
   <string name="unfavorited">已移除节目的喜爱标记。</string>
   <string name="context_hide">隐藏</string>
@@ -207,7 +208,6 @@
   <string name="update_scheduled">正在更新…</string>
   <string name="update_no_connection">要执行更新操作，请连接互联网。</string>
   <string name="update_inprogress">更新正在进行，请稍后重试。</string>
-  <string name="show_on_network">在 %s 频道播出</string>
   <string name="season_watchcount">剧集尚未观看</string>
   <string name="season_allwatched">已观看全部剧集</string>
   <string name="season_onenotwatched">剧集尚未观看</string>
@@ -277,27 +277,24 @@
   <string name="feedback">发送反馈报告</string>
   <string name="pref_autoaddshows">添加来自 trakt 的节目</string>
   <string name="pref_autoaddshowssummary">自动从 trakt 用户数据中添加节目</string>
-  <string-array name="sesorting">
-    <item>最新在最上</item>
-    <item>最旧在最上</item>
-  </string-array>
-  <string-array name="epsorting">
-    <item>最新在最上</item>
-    <item>最旧在最上</item>
-    <item>未观看在最上</item>
-    <item>A 到 Z</item>
-    <item>最高评分</item>
-    <item>最新在最上 (DVD)</item>
-    <item>最旧在最上 (DVD)</item>
-  </string-array>
-  <string-array name="upcominglimit">
-    <item>现在</item>
-    <item>1 天</item>
-    <item>3 天</item>
-    <item>1 周</item>
-    <item>2 周</item>
-    <item>1 月</item>
-  </string-array>
+  <string name="sort">排序依据</string>
+  <string name="action_sort_ignore_articles">忽略起始冠词</string>
+  <string name="sort_order_latest_first">最新在最上</string>
+  <string name="sort_order_oldest_first">最旧在最上</string>
+  <string name="sort_order_unwatched_first">未观看在最上</string>
+  <string name="sort_order_alphabetical">A 到 Z</string>
+  <string name="sort_order_top_rated_first">最高评分</string>
+  <string name="sort_order_latest_first_dvd">最新在最上 (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">最旧在最上 (DVD)</string>
+  <string name="upcoming_upto_now">现在</string>
+  <string name="upcoming_upto_one_day">1 天</string>
+  <string name="upcoming_upto_three_days">3 天</string>
+  <string name="upcoming_upto_one_week">1 周</string>
+  <string name="upcoming_upto_two_weeks">2 周</string>
+  <string name="upcoming_upto_one_month">1 月</string>
+  <string name="upcoming_upto_one_hour">小时</string>
+  <string name="upcoming_upto_six_hours">6 小时</string>
+  <string name="upcoming_upto_half_day">12 小时</string>
   <string name="pref_appearance">外观</string>
   <string name="pref_theme">主题</string>
   <string name="pref_other">其它</string>
@@ -354,8 +351,6 @@
   <string name="check_into">为节目签到</string>
   <string name="no_selection">从下面当中选一个</string>
   <string name="looking_for_something_else">这不是我要找的…</string>
-  <string name="menu_rate_episode">对剧集评分</string>
-  <string name="menu_rate_show">为节目评分</string>
   <string name="traktcheckin_cancel">替换</string>
   <string name="traktcheckin_inprogress">您已经为另一个剧集或电影签到了，请等待 %s 后重新签到或替换掉之前的签到状态。</string>
   <string name="traktcheckin_wait">等待</string>
@@ -388,41 +383,24 @@
   <string name="pref_vibrate">振动</string>
   <string name="pref_vibratesummary">显示通知时振动</string>
   <string name="pref_notifications_treshold">通知显示时刻</string>
-  <string-array name="notificationThreshold">
-    <item>播出时</item>
-    <item>提前 5 分钟</item>
-    <item>提前 10 分钟</item>
-    <item>提前 1 小时</item>
-  </string-array>
+  <string name="notification_release_exact">播出时</string>
+  <string name="notification_release_earlier_five">提前 5 分钟</string>
+  <string name="notification_release_earlier_ten">提前 10 分钟</string>
+  <string name="notification_release_earlier_hour">提前 1 小时</string>
   <string name="smallwidget">SeriesGuide 最小尺寸</string>
   <string name="bigwidget">SeriesGuide 中等尺寸</string>
   <string name="largewidget">SeriesGuide 最大尺寸</string>
   <string name="hide_watched">隐藏已观看剧集</string>
   <string name="pref_widget_opacity">小部件背景</string>
-  <string-array name="widgetOpacity">
-    <item>透明</item>
-    <item>黑色 25%</item>
-    <item>黑色 50%</item>
-    <item>黑色 75%</item>
-    <item>纯黑</item>
-  </string-array>
   <string name="pref_widget_type">小部件类型</string>
-  <string-array name="widgetType">
-    <item>即将播出</item>
-    <item>已播剧集</item>
-    <item>喜爱节目</item>
-  </string-array>
+  <string name="widget_background_transparent">透明</string>
+  <string name="widget_background_25">黑色 25%</string>
+  <string name="widget_background_50">黑色 50%</string>
+  <string name="widget_background_75">黑色 75%</string>
+  <string name="widget_background_opaque">纯黑</string>
   <string name="dashclock_extension_label">即将播出</string>
   <string name="dashclock_extension_description">显示 SeriesGuide 节目单中即将播出的剧集</string>
   <string name="dashclock_pref_upcoming_threshold">显示在此时间内播出的剧集…</string>
-  <string-array name="dashclockUpcomingThresholds">
-    <item>小时</item>
-    <item>6 小时</item>
-    <item>12 小时</item>
-    <item>1 天</item>
-    <item>3 天</item>
-    <item>周</item>
-  </string-array>
   <string name="action_migrate">转移 SeriesGuide X 旧版数据</string>
   <string name="migration_description">现在 SeriesGuide X 是高级功能解锁密匙。请转移您的节目单到 SeriesGuide 免费版，但保持 SeriesGuide X 安装以解锁全部功能。</string>
   <string name="migration_import">点按按钮以导入 SeriesGuide X 旧版节目单</string>
@@ -438,6 +416,13 @@
   <string name="subscription_activated">您已升级为专业版。</string>
   <string name="subscription_expired">订阅已过期</string>
   <string name="subscription_expired_details">您的专业版订阅已过期。</string>
+  <string name="action_subscription_manage">Manage subscription</string>
+  <string name="trial_title">Try SeriesGuide for 30 days</string>
+  <string name="trial_description">You can try SeriesGuide 30 days for free. If you don\'t like it, just cancel any time.\nAfter the trial period ends, I\'m asking for a small yearly fee to support future updates and features.</string>
+  <string name="subscription_active">Thanks, you are subscribed!</string>
+  <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
+  <string name="subscription_unavailable">The subscription is currently not available.</string>
+  <string name="subscription_failed">Purchase not completed.</string>
   <string name="add_to_homescreen">置于桌面</string>
   <string name="search_within_show">在 %s 节目中搜索</string>
   <string name="web_search">网页搜索</string>

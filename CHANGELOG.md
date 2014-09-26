@@ -5,14 +5,41 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 18 *(in development)*
+Version 18 *(2014-09-26)*
 -----------------------------
+
+* Display more details like release time, network and genre in the "Add show" show info dialog.
+* Better support for "Large text" accessibility option.
+* Share statistics.
+* Amazon App Store version.
+
+#### 18 *(2014-09-26)*
+
+* TWEAK Remove manually marked watched episodes and movies from "Friends" stream to improve load time. In return extend episode friends stream to 7 days.
+* TWEAK "Collected all" indicator now only takes into account released episodes.
+* TWEAK Add search button in lists section.
+* NOTE Provide a version for the Amazon App Store.
+* NOTICE Latest translations from crowdin.
+
+#### 18-beta3 *(2014-09-15)*
+
+* TWEAK Display additional details in show add dialog.
+* TWEAK Display genres for movies.
+* TWEAK Simply display year of original release for shows instead of exact date.
+
+#### 18-beta2 *(2014-09-10)*
+
+* FEATURE Remember past search queries for TheTVDB and TMDB search.
+* FIX Interface handles "Large text" accessibility option better (no overlapping or cut off text).
+* FIX Always show cheat sheet for touch and hold on inline actions (like action bar buttons).
+* NOTICE Latest translations from crowdin.
 
 #### 18-beta1 *(2014-09-01)*
 
 * FEATURE Add shows tab to search. Results update as you type.
 * FEATURE Share your statistics: export stats screen as text for email, IM, etc.
 * TWEAK Update season and episode list designs.
+* FIX trakt "Friends" and "You" tabs appear immediately after signing in, previously they would only appear on restarting the main activity.
 * NOTICE Latest translations from crowdin.
 
 Version 17 *(2014-08-27)*

@@ -27,6 +27,7 @@ import android.support.v4.content.Loader;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,7 +35,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.EditText;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
@@ -46,7 +48,9 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.MoviesAdapter;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.util.MovieTools;
+import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb.entities.Movie;
@@ -55,7 +59,7 @@ import java.util.List;
 /**
  * Allows searching for movies on themoviedb.org, displays results in a nice grid.
  */
-public class MoviesSearchFragment extends Fragment implements OnEditorActionListener,
+public class MoviesSearchFragment extends Fragment implements
         LoaderCallbacks<List<Movie>>, OnItemClickListener,
         MoviesAdapter.PopupMenuClickListener {
 
@@ -63,13 +67,13 @@ public class MoviesSearchFragment extends Fragment implements OnEditorActionList
 
     protected static final String TAG = "Movies Search";
 
-    private MoviesAdapter mAdapter;
+    private MoviesAdapter resultsAdapter;
+    private SearchHistory searchHistory;
+    private ArrayAdapter<String> searchHistoryAdapter;
 
-    @InjectView(R.id.emptyViewMovieSearch) TextView mEmptyView;
-
-    @InjectView(R.id.imageButtonClearSearch) ImageButton mClearButton;
-
-    @InjectView(R.id.editTextMoviesSearch) EditText mSearchBox;
+    @InjectView(R.id.emptyViewMovieSearch) TextView emptyView;
+    @InjectView(R.id.imageButtonClearSearch) ImageButton clearButton;
+    @InjectView(R.id.editTextMoviesSearch) AutoCompleteTextView searchBox;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,16 +89,40 @@ public class MoviesSearchFragment extends Fragment implements OnEditorActionList
         ButterKnife.inject(this, v);
 
         // setup search box
-        mSearchBox.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-        mSearchBox.setInputType(EditorInfo.TYPE_CLASS_TEXT);
-        mSearchBox.setOnEditorActionListener(this);
-
-        // setup clear button
-        mClearButton.setOnClickListener(new OnClickListener() {
+        searchBox.setThreshold(1);
+        searchBox.setOnEditorActionListener(new OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH
+                        || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    search();
+                    return true;
+                }
+                return false;
+            }
+        });
+        searchBox.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSearchBox.setText(null);
-                mSearchBox.requestFocus();
+                ((AutoCompleteTextView) v).showDropDown();
+            }
+        });
+        searchBox.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                search();
+            }
+        });
+        // set in code as XML is overridden
+        searchBox.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+        searchBox.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+
+        // setup clear button
+        clearButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchBox.setText(null);
+                searchBox.requestFocus();
             }
         });
 
@@ -106,15 +134,25 @@ public class MoviesSearchFragment extends Fragment implements OnEditorActionList
         super.onActivityCreated(savedInstanceState);
         getActivity().setProgressBarIndeterminateVisibility(false);
 
-        mAdapter = new MoviesAdapter(getActivity(), this);
+        resultsAdapter = new MoviesAdapter(getActivity(), this);
 
         // setup grid view
         GridView list = (GridView) getView().findViewById(android.R.id.list);
-        list.setAdapter(mAdapter);
+        list.setAdapter(resultsAdapter);
         list.setOnItemClickListener(this);
-        list.setEmptyView(mEmptyView);
+        list.setEmptyView(emptyView);
+
+        // setup search history
+        if (searchHistory == null || searchHistoryAdapter == null) {
+            searchHistory = new SearchHistory(getActivity(), SearchSettings.KEY_SUFFIX_TMDB);
+            searchHistoryAdapter = new ArrayAdapter<>(getActivity(),
+                    android.R.layout.simple_dropdown_item_1line, searchHistory.getSearchHistory());
+            searchBox.setAdapter(searchHistoryAdapter);
+        }
 
         getLoaderManager().initLoader(MoviesActivity.SEARCH_LOADER_ID, null, this);
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -125,20 +163,34 @@ public class MoviesSearchFragment extends Fragment implements OnEditorActionList
     }
 
     @Override
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        if (actionId == EditorInfo.IME_ACTION_SEARCH
-                || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-            search();
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.search_history_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_action_search_clear_history) {
+            if (searchHistory != null && searchHistoryAdapter != null) {
+                searchHistory.clearHistory();
+                searchHistoryAdapter.clear();
+            }
             return true;
         }
-        return false;
+        return super.onOptionsItemSelected(item);
     }
 
     private void search() {
-        String query = mSearchBox.getText().toString();
+        String query = searchBox.getText().toString();
         Bundle args = new Bundle();
         args.putString(SEARCH_QUERY_KEY, query);
         getLoaderManager().restartLoader(MoviesActivity.SEARCH_LOADER_ID, args, this);
+
+        // update history
+        if (searchHistory.saveRecentSearch(query)) {
+            searchHistoryAdapter.clear();
+            searchHistoryAdapter.addAll(searchHistory.getSearchHistory());
+        }
     }
 
     @Override
@@ -154,23 +206,23 @@ public class MoviesSearchFragment extends Fragment implements OnEditorActionList
     @Override
     public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> data) {
         if (AndroidUtils.isNetworkConnected(getActivity())) {
-            mEmptyView.setText(R.string.movies_empty);
+            emptyView.setText(R.string.movies_empty);
         } else {
-            mEmptyView.setText(R.string.offline);
+            emptyView.setText(R.string.offline);
         }
-        mAdapter.setData(data);
+        resultsAdapter.setData(data);
         getActivity().setProgressBarIndeterminateVisibility(false);
     }
 
     @Override
     public void onLoaderReset(Loader<List<Movie>> loader) {
-        mAdapter.setData(null);
+        resultsAdapter.setData(null);
         getActivity().setProgressBarIndeterminateVisibility(false);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Movie movie = mAdapter.getItem(position);
+        Movie movie = resultsAdapter.getItem(position);
 
         // launch details activity
         Intent i = new Intent(getActivity(), MovieDetailsActivity.class);

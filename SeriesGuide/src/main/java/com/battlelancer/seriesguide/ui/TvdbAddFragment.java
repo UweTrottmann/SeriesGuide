@@ -22,19 +22,26 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
+import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.ArrayList;
@@ -48,11 +55,12 @@ public class TvdbAddFragment extends AddFragment {
         return new TvdbAddFragment();
     }
 
-    @InjectView(R.id.clearButton) ImageButton mClearButton;
+    @InjectView(R.id.clearButton) ImageButton clearButton;
+    @InjectView(R.id.searchbox) AutoCompleteTextView searchBox;
 
-    @InjectView(R.id.searchbox) EditText mSearchBox;
-
-    private SearchTask mSearchTask;
+    private SearchTask searchTask;
+    private SearchHistory searchHistory;
+    private ArrayAdapter<String> searchHistoryAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,15 +68,14 @@ public class TvdbAddFragment extends AddFragment {
         View v = inflater.inflate(R.layout.fragment_addshow_tvdb, container, false);
         ButterKnife.inject(this, v);
 
-        mClearButton.setOnClickListener(new OnClickListener() {
+        clearButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 clearSearchTerm();
             }
         });
 
-        mSearchBox.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-        mSearchBox.setInputType(EditorInfo.TYPE_CLASS_TEXT);
-        mSearchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        searchBox.setThreshold(1);
+        searchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH
@@ -79,6 +86,21 @@ public class TvdbAddFragment extends AddFragment {
                 return false;
             }
         });
+        searchBox.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((AutoCompleteTextView) v).showDropDown();
+            }
+        });
+        searchBox.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                search();
+            }
+        });
+        // set in code as XML is overridden
+        searchBox.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+        searchBox.setInputType(EditorInfo.TYPE_CLASS_TEXT);
 
         return v;
     }
@@ -96,6 +118,16 @@ public class TvdbAddFragment extends AddFragment {
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
             setEmptyMessage(R.string.offline);
         }
+
+        // setup search history
+        if (searchHistory == null || searchHistoryAdapter == null) {
+            searchHistory = new SearchHistory(getActivity(), SearchSettings.KEY_SUFFIX_THETVDB);
+            searchHistoryAdapter = new ArrayAdapter<>(getActivity(),
+                    android.R.layout.simple_dropdown_item_1line, searchHistory.getSearchHistory());
+            searchBox.setAdapter(searchHistoryAdapter);
+        }
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -112,12 +144,32 @@ public class TvdbAddFragment extends AddFragment {
         ButterKnife.reset(this);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.search_history_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_action_search_clear_history) {
+            if (searchHistory != null && searchHistoryAdapter != null) {
+                searchHistory.clearHistory();
+                searchHistoryAdapter.clear();
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void clearSearchTerm() {
-        mSearchBox.setText(null);
-        mSearchBox.requestFocus();
+        searchBox.setText(null);
+        searchBox.requestFocus();
     }
 
     private void search() {
+        searchBox.dismissDropDown();
+
         // nag about no connectivity
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
             setEmptyMessage(R.string.offline);
@@ -125,13 +177,19 @@ public class TvdbAddFragment extends AddFragment {
             return;
         }
 
-        String query = mSearchBox.getText().toString().trim();
+        String query = searchBox.getText().toString().trim();
         if (query.length() == 0) {
             return;
         }
-        if (mSearchTask == null || mSearchTask.getStatus() == AsyncTask.Status.FINISHED) {
-            mSearchTask = new SearchTask(getActivity());
-            AndroidUtils.executeOnPool(mSearchTask, query);
+        // query for results
+        if (searchTask == null || searchTask.getStatus() == AsyncTask.Status.FINISHED) {
+            searchTask = new SearchTask(getActivity());
+            AndroidUtils.executeOnPool(searchTask, query);
+        }
+        // update history
+        if (searchHistory.saveRecentSearch(query)) {
+            searchHistoryAdapter.clear();
+            searchHistoryAdapter.addAll(searchHistory.getSearchHistory());
         }
     }
 

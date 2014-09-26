@@ -23,6 +23,11 @@ android {
         buildConfigField("String", "IAP_KEY_B", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_B")}\"")
         buildConfigField("String", "IAP_KEY_C", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_C")}\"")
         buildConfigField("String", "IAP_KEY_D", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_D")}\"")
+
+        manifestPlaceholders = [
+                crashlyticsApiKey: rootProject.hasProperty("CRASHLYTICS_KEY")
+                        ? rootProject.property("CRASHLYTICS_KEY") : "MISSING"
+        ]
     }
 
     compileOptions {
@@ -34,13 +39,25 @@ android {
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
         exclude 'LICENSE.txt'
     }
 
     productFlavors {
         free {
             applicationId "com.battlelancer.seriesguide"
+            versionCode rootProject.ext.versionCode
+            versionName rootProject.ext.versionName
+
+            manifestPlaceholders = [
+                    androidBackupKey: rootProject.hasProperty("FREE.ANDROID_BACKUP_KEY")
+                            ? rootProject.property("FREE.ANDROID_BACKUP_KEY") : "MISSING"
+            ]
+        }
+        amazon {
+            applicationId "com.uwetrottmann.seriesguide.amzn"
             versionCode rootProject.ext.versionCode
             versionName rootProject.ext.versionName
         }
@@ -99,6 +116,7 @@ dependencies {
     compile 'com.uwetrottmann:tmdb-java:0.7.0'
     compile 'com.uwetrottmann:trakt-java:3.3.1'
     compile 'de.greenrobot:eventbus:2.2.1'
+    compile 'joda-time:joda-time:2.4'
 
     // Google Play Services
     compile 'com.google.android.gms:play-services:5.0.89'
@@ -111,6 +129,9 @@ dependencies {
 
     // libs folder
     compile fileTree(dir: 'libs', include: '*.jar')
+
+    // Amazon flavor specific
+    amazonCompile files('libs/amazon/in-app-purchasing-2.0.0.jar')
 
     // android unit tests
     androidTestCompile 'com.squareup:fest-android:1.0.8'
@@ -127,5 +148,5 @@ dependencies {
     }
 
     // Crashlytics
-    compile 'com.crashlytics.android:crashlytics:1.1.11'
+    compile 'com.crashlytics.android:crashlytics:1.1.13'
 }
