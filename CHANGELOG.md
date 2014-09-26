@@ -13,6 +13,10 @@ Version 18 *(2014-09-26)*
 * Share statistics.
 * Amazon App Store version.
 
+#### 18.0.1 *(2014-09-26)*
+
+* FIX Use lighter text color in search box when using Light theme.
+
 #### 18 *(2014-09-26)*
 
 * TWEAK Remove manually marked watched episodes and movies from "Friends" stream to improve load time. In return extend episode friends stream to 7 days.
