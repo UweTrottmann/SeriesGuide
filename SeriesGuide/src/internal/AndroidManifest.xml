@@ -16,6 +16,19 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Add empty manifest to keep wrong minSdk from popping up in build manifest -->
+    <application>
+
+        <!-- Built-in SeriesGuide extensions (Google Play version only) -->
+        <service
+            android:name="com.battlelancer.seriesguide.extensions.GooglePlayExtension"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/extension_google_play"
+            android:description="@string/description_extension_google_play">
+            <intent-filter>
+                <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
+            </intent-filter>
+        </service>
+
+    </application>
 
 </manifest>

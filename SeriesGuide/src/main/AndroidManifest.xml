@@ -293,15 +293,6 @@
                 android:value="com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity" />
         </service>
         <service
-            android:name="com.battlelancer.seriesguide.extensions.GooglePlayExtension"
-            android:icon="@drawable/ic_launcher"
-            android:label="@string/extension_google_play"
-            android:description="@string/description_extension_google_play">
-            <intent-filter>
-                <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
-            </intent-filter>
-        </service>
-        <service
             android:name="com.battlelancer.seriesguide.extensions.YouTubeExtension"
             android:icon="@drawable/ic_launcher"
             android:label="@string/extension_youtube"
