@@ -42,7 +42,8 @@ public class GooglePlayExtension extends SeriesGuideExtension {
         publishAction(
                 new Action.Builder(getString(R.string.extension_google_play), episodeIdentifier)
                         .viewIntent(ServiceUtils.buildGooglePlayIntent(
-                                episode.getShowTitle() + " " + episode.getTitle()))
+                                episode.getShowTitle() + " " + episode.getTitle(),
+                                getApplicationContext()))
                         .build());
     }
 }

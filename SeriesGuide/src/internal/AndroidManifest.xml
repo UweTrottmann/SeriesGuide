@@ -16,15 +16,7 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Google Play in-app billing -->
-    <uses-permission android:name="com.android.vending.BILLING" />
-
     <application>
-
-        <!-- Android Backup key for com.battlelancer.seriesguide application ID -->
-        <meta-data
-            android:name="com.google.android.backup.api_key"
-            android:value="${androidBackupKey}" />
 
         <!-- Built-in SeriesGuide extensions (Google Play version only) -->
         <service

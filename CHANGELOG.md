@@ -13,6 +13,10 @@ Version 18 *(2014-09-26)*
 * Share statistics.
 * Amazon App Store version.
 
+#### 18.0.2 *(2014-09-28)*
+
+* FIX Remove all Google Play search links from Amazon version.
+
 #### 18.0.1 *(2014-09-26)*
 
 * FIX Use lighter text color in search box when using Light theme.
