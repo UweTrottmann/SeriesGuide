@@ -1,4 +1,11 @@
 <resources>
+
     <string name="package_name">com.uwetrottmann.seriesguide.amzn</string>
     <string name="provider_authority">com.uwetrottmann.seriesguide.amzn.provider</string>
+
+    <!-- Remove Google Play links (not used in-app) -->
+    <string name="url_x_pass"/>
+    <string name="url_extensions_search"/>
+    <string name="url_movies_search"/>
+
 </resources>
