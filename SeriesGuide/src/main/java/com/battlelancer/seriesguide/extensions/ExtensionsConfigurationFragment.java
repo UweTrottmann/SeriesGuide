@@ -64,8 +64,6 @@ public class ExtensionsConfigurationFragment extends Fragment
     public static final int EXTENSION_LIMIT_FREE = 2;
 
     private static final String TAG = "Extension Configuration";
-    private static final String PLAY_STORE_EXTENSIONS_SEARCH
-            = "https://play.google.com/store/search?q=SeriesGuide%20Extension&c=apps";
 
     @InjectView(R.id.listViewExtensionsConfiguration) DragSortListView mListView;
 
@@ -147,7 +145,7 @@ public class ExtensionsConfigurationFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_extensions_search) {
-            Utils.launchWebsite(getActivity(), PLAY_STORE_EXTENSIONS_SEARCH, TAG,
+            Utils.launchWebsite(getActivity(), getString(R.string.url_extensions_search), TAG,
                     "Get more extensions");
             return true;
         }
