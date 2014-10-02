@@ -141,13 +141,9 @@
   <string name="daily">Ежедневно</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s мин.</string>
-  <string name="mark_episode">Гледан епизод</string>
-  <string name="unmark_episode">Епизода все още не е гледан</string>
   <string name="mark_all">Всички са гледани</string>
   <string name="unmark_all">Никой не е гледан</string>
   <string name="mark_untilhere">Всички излъчени до сега са гледани</string>
-  <string name="collect">Collected</string>
-  <string name="uncollect">Not collected</string>
   <string name="collect_all">Всички са в колекцията</string>
   <string name="uncollect_all">Нито един не е в колекцията</string>
   <string name="action_skip">Пропусни</string>
@@ -202,7 +198,6 @@
   <string name="noupcoming">Няма предстоящи епизоди.</string>
   <string name="norecent">Няма скорошни епизоди.</string>
   <string name="only_favorites">Само Любими</string>
-  <string name="togglewatched">Скрий гледаните</string>
   <string name="pref_infinite_scrolling">Пълен списък</string>
   <string name="action_activity_filter">Филтрирай активността</string>
   <string name="update_scheduled">Обновяване...</string>

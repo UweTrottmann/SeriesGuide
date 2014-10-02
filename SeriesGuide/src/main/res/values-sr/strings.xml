@@ -141,13 +141,9 @@
   <string name="daily">Дневно</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s мин</string>
-  <string name="mark_episode">Погледана епизода</string>
-  <string name="unmark_episode">Непогледана епизода</string>
   <string name="mark_all">Све погледано</string>
   <string name="unmark_all">Све  непогледано</string>
   <string name="mark_untilhere">Означи све погледане епизоде</string>
-  <string name="collect">У колекцији</string>
-  <string name="uncollect">Није у колекцији</string>
   <string name="collect_all">Пуна колекција</string>
   <string name="uncollect_all">Празна колекција</string>
   <string name="action_skip">Прескочи</string>
@@ -202,7 +198,6 @@
   <string name="noupcoming">Нема предстојећих епизода.</string>
   <string name="norecent">Нема скорашњих епизода.</string>
   <string name="only_favorites">Само омиљене серије</string>
-  <string name="togglewatched">Погледано/непогледано</string>
   <string name="pref_infinite_scrolling">Неограничена активност</string>
   <string name="action_activity_filter">Филтрирај дешавања</string>
   <string name="update_scheduled">Ажурирање…</string>

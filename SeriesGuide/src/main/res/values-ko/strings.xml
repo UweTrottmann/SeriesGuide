@@ -141,13 +141,9 @@
   <string name="daily">매일</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s 분</string>
-  <string name="mark_episode">시청한 에피소드</string>
-  <string name="unmark_episode">아직 안본 에피소드로 설정</string>
   <string name="mark_all">모두 시청 완료</string>
   <string name="unmark_all">한편도 안본 것으로 설정</string>
   <string name="mark_untilhere">방송된 에피소드를 모두 시청으로 표시</string>
-  <string name="collect">수집됨</string>
-  <string name="uncollect">컬렉션에 추가되지 않음</string>
   <string name="collect_all">수집 완료</string>
   <string name="uncollect_all">수집할 내용 없음</string>
   <string name="action_skip">건너뛰기</string>
@@ -202,7 +198,6 @@
   <string name="noupcoming">방영예정인 에피소드가 없습니다.</string>
   <string name="norecent">최근 방영된 에피소드가 없습니다.</string>
   <string name="only_favorites">즐겨찾기한 쇼만 보이기</string>
-  <string name="togglewatched">시청/미시청 토글</string>
   <string name="pref_infinite_scrolling">무한스크롤</string>
   <string name="action_activity_filter">활동 필터링</string>
   <string name="update_scheduled">업데이트 중…</string>

@@ -252,16 +252,20 @@ public class MovieTools {
 
     /**
      * Extracts basic properties, except in_watchlist and in_collection from trakt. Also includes
-     * the TMDb id as value.
+     * the TMDb id and watched state as value.
      */
     private static ContentValues buildBasicMovieContentValuesWithId(MovieDetails details) {
         ContentValues values = buildBasicMovieContentValues(details);
         values.put(Movies.TMDB_ID, details.tmdbMovie().id);
+        values.put(Movies.WATCHED, DBUtils.convertBooleanToInt(details.traktMovie().watched));
         return values;
     }
 
     /**
-     * Extracts basic properties, except in_watchlist and in_collection from trakt.
+     * Extracts basic properties, except watchlist, collection and watched state from trakt as well
+     * as the id from TMDb.
+     *
+     * <p> If either movie summary is null, will only not extract the properties of those.
      */
     public static ContentValues buildBasicMovieContentValues(MovieDetails details) {
         ContentValues values = new ContentValues();
@@ -269,7 +273,6 @@ public class MovieTools {
         // data from trakt
         if (details.traktMovie() != null) {
             values.put(Movies.RELEASED_UTC_MS, details.traktMovie().released.getTime());
-            values.put(Movies.WATCHED, DBUtils.convertBooleanToInt(details.traktMovie().watched));
             if (details.traktMovie().ratings != null) {
                 values.put(Movies.RATING_TRAKT, details.traktMovie().ratings.percentage);
                 values.put(Movies.RATING_VOTES_TRAKT, details.traktMovie().ratings.votes);
@@ -633,11 +636,10 @@ public class MovieTools {
         /**
          * Adds new movies to the database.
          *
-         * @param trakt         Requires a trakt with user auth, except when supplying movies from
-         *                      hexagon.
-         * @param movieTmdbIds  A list of movies to add.
+         * @param trakt Requires a trakt with user auth, except when supplying movies from hexagon.
+         * @param movieTmdbIds A list of movies to add.
          * @param hexagonMovies If given, adds movie to watchlist or collection based on the
-         *                      matching movie.
+         * matching movie.
          */
         public static UpdateResult addMovies(
                 @Nonnull Context context,

@@ -492,8 +492,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         });
         mWatchedButton.setEnabled(true);
         mWatchedButton.setText(isWatched ? R.string.action_unwatched : R.string.action_watched);
-        CheatSheet.setup(mWatchedButton, isWatched ? R.string.unmark_episode
-                : R.string.mark_episode);
+        CheatSheet.setup(mWatchedButton, isWatched ? R.string.action_unwatched
+                : R.string.action_watched);
 
         // collected button
         mCollected = cursor.getInt(DetailsQuery.COLLECTED) == 1;
@@ -512,7 +512,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         });
         mCollectedButton.setEnabled(true);
         mCollectedButton.setText(mCollected
-                ? R.string.uncollect : R.string.collect);
+                ? R.string.action_collection_remove : R.string.action_collection_add);
         CheatSheet.setup(mCollectedButton, mCollected
                 ? R.string.action_collection_remove : R.string.action_collection_add);
 

@@ -141,13 +141,9 @@
   <string name="daily">codziennie</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s minut</string>
-  <string name="mark_episode">Odcinek obejrzany</string>
-  <string name="unmark_episode">Odcinek nie obejrzany</string>
   <string name="mark_all">Oznacz jako obejrzane</string>
   <string name="unmark_all">Oznacz jako nieobejrzane</string>
   <string name="mark_untilhere">Oznacz wcześniej wyemitowane odcinki jako obejrzane</string>
-  <string name="collect">Zebrane</string>
-  <string name="uncollect">Nie zebrane</string>
   <string name="collect_all">Wszystkie zebrane</string>
   <string name="uncollect_all">Brak zebranych</string>
   <string name="action_skip">Pomiń</string>
@@ -202,7 +198,6 @@
   <string name="noupcoming">Brak nadchodzących odcinków.</string>
   <string name="norecent">Brak ostatnio emitowanych odcinków.</string>
   <string name="only_favorites">Tylko ulubione seriale</string>
-  <string name="togglewatched">Przełącz obejrzane</string>
   <string name="pref_infinite_scrolling">Nieskończona aktywność</string>
   <string name="action_activity_filter">Filtrowanie aktywności</string>
   <string name="update_scheduled">Aktualizowanie…</string>
