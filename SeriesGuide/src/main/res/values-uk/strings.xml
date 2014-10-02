@@ -141,13 +141,9 @@
   <string name="daily">Щодня</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s хвилин</string>
-  <string name="mark_episode">Переглянута серія</string>
-  <string name="unmark_episode">Не переглянута серія</string>
   <string name="mark_all">Всі переглянуті</string>
   <string name="unmark_all">Жодна не переглянута</string>
   <string name="mark_untilhere">Переглянуті всі що вийшли до цього</string>
-  <string name="collect">Вибрані</string>
-  <string name="uncollect">Не вибрані</string>
   <string name="collect_all">Зібрано всі</string>
   <string name="uncollect_all">Зібрано жодної</string>
   <string name="action_skip">Пропустити</string>
@@ -202,7 +198,6 @@
   <string name="noupcoming">Немає наступних серій.</string>
   <string name="norecent">Немає недавніх серій.</string>
   <string name="only_favorites">Лише улюблені серіали</string>
-  <string name="togglewatched">Перемикати переглянуті</string>
   <string name="pref_infinite_scrolling">Безкінечна активність</string>
   <string name="action_activity_filter">Фільтрувати активність</string>
   <string name="update_scheduled">Оновлюється…</string>

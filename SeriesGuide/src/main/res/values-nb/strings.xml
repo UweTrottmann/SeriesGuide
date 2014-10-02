@@ -141,13 +141,9 @@
   <string name="daily">Daglig</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
-  <string name="mark_episode">Sett episode</string>
-  <string name="unmark_episode">Ennå ikke sett episode</string>
   <string name="mark_all">Sett alle</string>
   <string name="unmark_all">Ingen sett</string>
   <string name="mark_untilhere">Sett alle tidligere vist</string>
-  <string name="collect">Samlet</string>
-  <string name="uncollect">Ikke samlet</string>
   <string name="collect_all">Samlet alle</string>
   <string name="uncollect_all">Samlet ingen</string>
   <string name="action_skip">Hopp over</string>
@@ -202,7 +198,6 @@
   <string name="noupcoming">Det er ingen kommende episoder.</string>
   <string name="norecent">Det er ingen nylige episoder.</string>
   <string name="only_favorites">Bare favoritter</string>
-  <string name="togglewatched">Sett/ikke sett</string>
   <string name="pref_infinite_scrolling">Uendelig aktivitet</string>
   <string name="action_activity_filter">Filtrere aktivitet</string>
   <string name="update_scheduled">Oppdaterer…</string>

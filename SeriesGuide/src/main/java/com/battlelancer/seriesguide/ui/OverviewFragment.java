@@ -585,8 +585,10 @@ public class OverviewFragment extends Fragment implements
                     isCollected ? R.drawable.ic_collected
                             : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                     R.attr.drawableCollect), 0, 0);
-            collectedButton.setText(isCollected ? R.string.uncollect : R.string.collect);
-            CheatSheet.setup(collectedButton, isCollected ? R.string.uncollect : R.string.collect);
+            collectedButton.setText(isCollected ? R.string.action_collection_remove
+                    : R.string.action_collection_add);
+            CheatSheet.setup(collectedButton, isCollected ? R.string.action_collection_remove
+                    : R.string.action_collection_add);
             collectedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -669,7 +671,8 @@ public class OverviewFragment extends Fragment implements
         }
         Bundle args = new Bundle();
         args.putInt(KEY_EPISODE_TVDB_ID, mCurrentEpisodeTvdbId);
-        getLoaderManager().restartLoader(OverviewActivity.OVERVIEW_ACTIONS_LOADER_ID, args, mEpisodeActionsLoaderCallbacks);
+        getLoaderManager().restartLoader(OverviewActivity.OVERVIEW_ACTIONS_LOADER_ID, args,
+                mEpisodeActionsLoaderCallbacks);
     }
 
     Runnable mEpisodeActionsRunnable = new Runnable() {

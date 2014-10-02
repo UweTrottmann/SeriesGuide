@@ -141,13 +141,9 @@
   <string name="daily">Diàriament</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
-  <string name="mark_episode">Episodi vist</string>
-  <string name="unmark_episode">No s\'ha vist l\'episodi</string>
   <string name="mark_all">Tots vists</string>
   <string name="unmark_all">Cap episodi vist</string>
   <string name="mark_untilhere">Vists tots els episodis estrenats</string>
-  <string name="collect">Recopilat</string>
-  <string name="uncollect">No recopilat</string>
   <string name="collect_all">Tots recopilats</string>
   <string name="uncollect_all">Cap recopilat</string>
   <string name="action_skip">Omet</string>
@@ -202,7 +198,6 @@
   <string name="noupcoming">No hi ha capítols pròximament.</string>
   <string name="norecent">No hi ha capítols recents.</string>
   <string name="only_favorites">Només sèries preferides</string>
-  <string name="togglewatched">Marca com vist</string>
   <string name="pref_infinite_scrolling">Activitat infinita</string>
   <string name="action_activity_filter">Filtra activitat</string>
   <string name="update_scheduled">S\'està actualitzant…</string>

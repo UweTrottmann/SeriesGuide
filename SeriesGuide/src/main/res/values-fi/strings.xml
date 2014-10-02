@@ -141,13 +141,9 @@
   <string name="daily">Päivittäinen</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
-  <string name="mark_episode">Jakso katsottu</string>
-  <string name="unmark_episode">Katsomaton jakso</string>
   <string name="mark_all">Kaikki katsottu</string>
   <string name="unmark_all">Kaikki katsomattomia</string>
   <string name="mark_untilhere">Kaikki aiemmin esitetyt katsottu</string>
-  <string name="collect">Kokoelmassa</string>
-  <string name="uncollect">Ei kokoelmassa</string>
   <string name="collect_all">Kaikki kerätty</string>
   <string name="uncollect_all">Kaikki keräämättä</string>
   <string name="action_skip">Ohita</string>
@@ -202,7 +198,6 @@
   <string name="noupcoming">Ei tulevia jaksoja.</string>
   <string name="norecent">Ei viimeaikaisia jaksoja.</string>
   <string name="only_favorites">Vain suosikkiohjelmat</string>
-  <string name="togglewatched">Vaihda katsottu</string>
   <string name="pref_infinite_scrolling">Päättymätön toiminta</string>
   <string name="action_activity_filter">Suodata toimintaa</string>
   <string name="update_scheduled">Päivitetään…</string>

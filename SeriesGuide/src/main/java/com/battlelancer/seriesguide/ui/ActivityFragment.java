@@ -265,9 +265,9 @@ public class ActivityFragment extends Fragment implements
         // only display the action appropriate for the items current state
         menu.add(0, CONTEXT_CHECKIN_ID, 0, R.string.checkin);
         if (EpisodeTools.isWatched(episode.getInt(ActivityQuery.WATCHED))) {
-            menu.add(0, CONTEXT_FLAG_UNWATCHED_ID, 1, R.string.unmark_episode);
+            menu.add(0, CONTEXT_FLAG_UNWATCHED_ID, 1, R.string.action_unwatched);
         } else {
-            menu.add(0, CONTEXT_FLAG_WATCHED_ID, 1, R.string.mark_episode);
+            menu.add(0, CONTEXT_FLAG_WATCHED_ID, 1, R.string.action_watched);
         }
         if (EpisodeTools.isCollected(episode.getInt(ActivityQuery.COLLECTED))) {
             menu.add(0, CONTEXT_COLLECTION_REMOVE_ID, 2, R.string.action_collection_remove);

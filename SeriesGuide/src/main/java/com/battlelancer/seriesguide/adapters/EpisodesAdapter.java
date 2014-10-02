@@ -139,7 +139,7 @@ public class EpisodesAdapter extends CursorAdapter {
         viewHolder.watchedBox.setEnabled(true);
         final boolean isWatched = EpisodeTools.isWatched(viewHolder.watchedBox.getEpisodeFlag());
         CheatSheet.setup(viewHolder.watchedBox,
-                isWatched ? R.string.unmark_episode : R.string.mark_episode
+                isWatched ? R.string.action_unwatched : R.string.action_watched
         );
 
         // collected tag

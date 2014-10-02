@@ -141,13 +141,9 @@
   <string name="daily">Denně</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
-  <string name="mark_episode">Epizoda zhlédnuta</string>
-  <string name="unmark_episode">Epizoda zatím nezhlédnuta</string>
   <string name="mark_all">Zhlédnuty všechny</string>
   <string name="unmark_all">Žádný zhlédnutý</string>
   <string name="mark_untilhere">Zhlédnuto až sem</string>
-  <string name="collect">Ve sbírce</string>
-  <string name="uncollect">Není ve sbírce</string>
   <string name="collect_all">Přidat sérii do sbírky</string>
   <string name="uncollect_all">Odebráno ze sbírky</string>
   <string name="action_skip">Přeskočit</string>
@@ -202,7 +198,6 @@
   <string name="noupcoming">Žádné nadcházející epizody.</string>
   <string name="norecent">Žádné nedávné epizody.</string>
   <string name="only_favorites">Pouze oblíbené seriály</string>
-  <string name="togglewatched">Přepnout zhlédnutí</string>
   <string name="pref_infinite_scrolling">Aktivita bez omezení časem</string>
   <string name="action_activity_filter">Filtrovat aktivitu</string>
   <string name="update_scheduled">Probíhá aktualizace…</string>
