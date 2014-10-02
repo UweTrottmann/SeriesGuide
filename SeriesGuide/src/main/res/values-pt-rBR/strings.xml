@@ -22,7 +22,7 @@
   <string name="description_poster">Exibir cartaz</string>
   <string name="description_image">Imagem do Episódio</string>
   <string name="clear">Limpar</string>
-  <string name="clear_search_history">Clear search history</string>
+  <string name="clear_search_history">Limpar histórico de pesquisa</string>
   <string name="discard">Descartar</string>
   <string name="save_selection">Salvar seleção</string>
   <string name="search_hint">Pesquisar episódios</string>
@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Data de exibição desconhecida</string>
   <string name="episode_dvdnumber">Episódio de DVD</string>
   <string name="show_actors">Atores</string>
-  <string name="original_release">Original release</string>
+  <string name="original_release">Exibição original</string>
   <string name="show_on_network">na %s</string>
   <string name="show_genres">Gêneros</string>
   <string name="show_runtime">Duração</string>
@@ -141,13 +141,9 @@
   <string name="daily">Diário</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
-  <string name="mark_episode">Episódio assistido</string>
-  <string name="unmark_episode">Episódio ainda não assistido</string>
   <string name="mark_all">Todos assistidos</string>
   <string name="unmark_all">Nenhum assistido</string>
   <string name="mark_untilhere">Vi todos os episódios exibidos anteriormente</string>
-  <string name="collect">Colecionado</string>
-  <string name="uncollect">Não colecionado</string>
   <string name="collect_all">Todos coletados</string>
   <string name="uncollect_all">Nenhum coletado</string>
   <string name="action_skip">Avançar</string>
@@ -202,7 +198,6 @@
   <string name="noupcoming">Não há episódios futuros.</string>
   <string name="norecent">Não há episódios recentes.</string>
   <string name="only_favorites">Somente séries favoritas</string>
-  <string name="togglewatched">Alternar visto</string>
   <string name="pref_infinite_scrolling">Atividade infinita</string>
   <string name="action_activity_filter">Filtrar atividade</string>
   <string name="update_scheduled">Atualizando…</string>
@@ -416,8 +411,8 @@
   <string name="subscription_activated">Você agora tem as funcionalidades X.</string>
   <string name="subscription_expired">Assinatura expirada</string>
   <string name="subscription_expired_details">Sua assinatura das funcionalidades X expirou.</string>
-  <string name="action_subscription_manage">Manage subscription</string>
-  <string name="trial_title">Try SeriesGuide for 30 days</string>
+  <string name="action_subscription_manage">Gerenciar Assinatura</string>
+  <string name="trial_title">Tente SeriesGuide por 30 dias</string>
   <string name="trial_description">You can try SeriesGuide 30 days for free. If you don\'t like it, just cancel any time.\nAfter the trial period ends, I\'m asking for a small yearly fee to support future updates and features.</string>
   <string name="subscription_active">Thanks, you are subscribed!</string>
   <string name="subscription_not_signed_in">Sign into your Amazon account!</string>

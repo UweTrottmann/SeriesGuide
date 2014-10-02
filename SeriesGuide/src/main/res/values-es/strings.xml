@@ -22,7 +22,7 @@
   <string name="description_poster">Mostrar el poster</string>
   <string name="description_image">Imagen del episodio</string>
   <string name="clear">Limpiar</string>
-  <string name="clear_search_history">Clear search history</string>
+  <string name="clear_search_history">Limpiar historial de búsqueda</string>
   <string name="discard">Descartar</string>
   <string name="save_selection">Guardar selección</string>
   <string name="search_hint">Buscar episodios</string>
@@ -141,13 +141,9 @@
   <string name="daily">Diariamente</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s minutos</string>
-  <string name="mark_episode">Episodio visto</string>
-  <string name="unmark_episode">Episodio no visto</string>
   <string name="mark_all">Todos vistos</string>
   <string name="unmark_all">Ninguno visto</string>
   <string name="mark_untilhere">Visto todo lo previamente emitido</string>
-  <string name="collect">Collected</string>
-  <string name="uncollect">Not collected</string>
   <string name="collect_all">Recopilados todos</string>
   <string name="uncollect_all">Recopilados ninguno</string>
   <string name="action_skip">Omitir</string>
@@ -202,7 +198,6 @@
   <string name="noupcoming">No hay capítulos próximamente.</string>
   <string name="norecent">No hay capítulos recientes.</string>
   <string name="only_favorites">Solo series favoritas</string>
-  <string name="togglewatched">Alternar observado</string>
   <string name="pref_infinite_scrolling">Actividad infinita</string>
   <string name="action_activity_filter">Filtrar actividad</string>
   <string name="update_scheduled">Actualizando…</string>
@@ -238,7 +233,7 @@
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configurar SeriesGuide cloud</string>
   <string name="hexagon_description">Conéctate a la nube para hacer copias de seguridad y sincronizar tus series y películas.</string>
-  <string name="hexagon_warning_lists">Lists are not included.</string>
+  <string name="hexagon_warning_lists">Listas no incluidas.</string>
   <string name="hexagon_warning_trakt">When using SeriesGuide Cloud, changes on trakt will not sync down to SeriesGuide.</string>
   <string name="hexagon_signin">Iniciar sesión</string>
   <string name="hexagon_signed_in">Estás conectado a SeriesGuide cloud.</string>

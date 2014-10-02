@@ -141,13 +141,9 @@
   <string name="daily">Quotidiennement</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
-  <string name="mark_episode">Episode vu</string>
-  <string name="unmark_episode">Episode pas encore vu</string>
   <string name="mark_all">Tous vus</string>
   <string name="unmark_all">Vus aucun</string>
   <string name="mark_untilhere">Précédemment diffusés déjà vus</string>
-  <string name="collect">Collecté</string>
-  <string name="uncollect">Non collecté</string>
   <string name="collect_all">Tous collectés</string>
   <string name="uncollect_all">Aucun collecté</string>
   <string name="action_skip">Ignorer</string>
@@ -202,7 +198,6 @@
   <string name="noupcoming">Il n\'y a pas d\'épisodes à venir.</string>
   <string name="norecent">Il n\'y a pas d\'épisodes récents.</string>
   <string name="only_favorites">Juste les séries préférées</string>
-  <string name="togglewatched">Vu/Non vu</string>
   <string name="pref_infinite_scrolling">Activité infinie</string>
   <string name="action_activity_filter">Filtrer l\'activité</string>
   <string name="update_scheduled">Mise à jour…</string>
