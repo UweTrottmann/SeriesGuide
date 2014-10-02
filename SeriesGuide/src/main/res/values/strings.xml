@@ -193,8 +193,8 @@
     <string name="delete_show">Remove</string>
     <string name="dontdelete_show">Don\'t remove</string>
     <string name="no_nextepisode">no next episode found</string>
-    <string name="context_favorite">Favorite</string>
-    <string name="context_unfavorite">No favorite</string>
+    <string name="context_favorite">Add to favorites</string>
+    <string name="context_unfavorite">Remove from favorites</string>
     <string name="favorited">Added to favorites</string>
     <string name="unfavorited">Removed from favorites</string>
     <string name="context_hide">Hide</string>
