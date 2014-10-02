@@ -141,13 +141,9 @@
   <string name="daily">Deňne</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
-  <string name="mark_episode">Pozretá epizóda</string>
-  <string name="unmark_episode">Ešte nepozretá epizóda</string>
   <string name="mark_all">Pozreté všetky</string>
   <string name="unmark_all">Nepozreté žiadne</string>
   <string name="mark_untilhere">Prezreté všetky predchádzajúce</string>
-  <string name="collect">V zbierke</string>
-  <string name="uncollect">Nie je v zbierke</string>
   <string name="collect_all">Pridať sériu do zbierky</string>
   <string name="uncollect_all">Odobrané zo zbierky</string>
   <string name="action_skip">Preskočiť</string>
@@ -170,7 +166,7 @@
   <string name="dontdelete_show">Neodstraňovať</string>
   <string name="no_nextepisode">žiadne ďalšie epizódy sa nenašli</string>
   <string name="context_favorite">Obľúbené</string>
-  <string name="context_unfavorite">No favorite</string>
+  <string name="context_unfavorite">Remove from favorites</string>
   <string name="favorited">Pridané k obľúbeným</string>
   <string name="unfavorited">Odstránené z obľúbených</string>
   <string name="context_hide">Skryť</string>
@@ -202,7 +198,6 @@
   <string name="noupcoming">Žiadne nadchádzajúce epizódy.</string>
   <string name="norecent">Žiadne nedávne epizódy.</string>
   <string name="only_favorites">Iba obľúbené seriály</string>
-  <string name="togglewatched">Prepnúť zhliadnutie</string>
   <string name="pref_infinite_scrolling">Infinite activity</string>
   <string name="action_activity_filter">Filter activity</string>
   <string name="update_scheduled">Updating…</string>

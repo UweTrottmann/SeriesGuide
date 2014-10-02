@@ -61,7 +61,7 @@
         android:padding="4dp"
         android:drawableTop="?attr/drawableCollect"
         android:drawablePadding="-4dp"
-        android:text="@string/collect"
+        android:text="@string/action_collection_add"
         android:maxLines="2"
         android:ellipsize="end" />
 

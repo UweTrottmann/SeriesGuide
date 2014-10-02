@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import com.battlelancer.seriesguide.BuildConfig;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
@@ -39,8 +40,6 @@ import com.uwetrottmann.tmdb.Tmdb;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * Helper methods to interact with third-party services trakt and The Movie Database used within
@@ -55,8 +54,6 @@ public final class ServiceUtils {
     private static final String API_CACHE = "api-cache";
     private static final int MIN_DISK_API_CACHE_SIZE = 2 * 1024 * 1024; // 2MB
     private static final int MAX_DISK_API_CACHE_SIZE = 10 * 1024 * 1024; // 10MB
-
-    private static final String GOOGLE_PLAY = "https://play.google.com/store/search?q=%s&c=movies";
 
     private static final String IMDB_APP_TITLE_URI_POSTFIX = "/";
 
@@ -262,33 +259,13 @@ public final class ServiceUtils {
     }
 
     /**
-     * Sets a {@link OnClickListener} on the given button linking to a Google Play Store search for
-     * the given title or disabling the button if the title is empty.
-     */
-    public static void setUpGooglePlayButton(final String title, View playButton,
-            final String logTag) {
-        if (playButton != null) {
-
-            if (!TextUtils.isEmpty(title)) {
-                playButton.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        searchGooglePlay(title, logTag, v.getContext());
-                    }
-                });
-            } else {
-                playButton.setEnabled(false);
-            }
-        }
-    }
-
-    /**
      * Returns a view {@link android.content.Intent} for a search of Google Play's movies category
      * (includes TV shows).
      */
-    public static Intent buildGooglePlayIntent(String title) {
+    public static Intent buildGooglePlayIntent(String title, Context context) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        String playStoreQuery = String.format(GOOGLE_PLAY, Uri.encode(title));
+        String playStoreQuery = String.format(context.getString(R.string.url_movies_search),
+                Uri.encode(title));
         intent.setData(Uri.parse(playStoreQuery));
         return intent;
     }
@@ -297,7 +274,7 @@ public final class ServiceUtils {
      * Tries to open Google Play to search for the given tv show, episode or movie title.
      */
     public static void searchGooglePlay(final String title, final String logTag, Context context) {
-        Intent intent = buildGooglePlayIntent(title);
+        Intent intent = buildGooglePlayIntent(title, context);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Utils.tryStartActivity(context, intent, true);
 
@@ -405,7 +382,7 @@ public final class ServiceUtils {
     /**
      * Used to open the YouTube app and search for <code>query</code>
      *
-     * @param query  The search query for the YouTube app
+     * @param query The search query for the YouTube app
      * @param button The {@link Button} used to invoke the {@link android.view.View.OnClickListener}
      * @param logTag The log tag to use, for Analytics
      */
@@ -429,8 +406,7 @@ public final class ServiceUtils {
 
     /**
      * Builds a search {@link android.content.Intent} to open the YouTube application to search for
-     * <code>query</code>.
-     * If the YouTube app is unavailable, a view {@link android.content.Intent}
+     * <code>query</code>. If the YouTube app is unavailable, a view {@link android.content.Intent}
      * with the web search URL is returned instead.
      */
     public static Intent buildYouTubeIntent(Context context, String query) {
@@ -462,8 +438,8 @@ public final class ServiceUtils {
      * unavailable, a web search if performed instead.
      *
      * @param context The {@link Context} to use
-     * @param query   The search query
-     * @param logTag  The log tag to use, for Analytics
+     * @param query The search query
+     * @param logTag The log tag to use, for Analytics
      */
     public static void searchYoutube(Context context, String query, String logTag) {
         Intent intent = buildYouTubeIntent(context, query);
@@ -476,7 +452,7 @@ public final class ServiceUtils {
     /**
      * Used to search the web for <code>query</code>
      *
-     * @param query  The search query for the YouTube app
+     * @param query The search query for the YouTube app
      * @param button The {@link Button} used to invoke the {@link android.view.View.OnClickListener}
      * @param logTag The log tag to use, for Analytics
      */
@@ -512,8 +488,8 @@ public final class ServiceUtils {
      * Attempts to search the web for <code>query</code>.
      *
      * @param context The {@link Context} to use
-     * @param query   The search query
-     * @param logTag  The log tag to use, for Analytics
+     * @param query The search query
+     * @param logTag The log tag to use, for Analytics
      */
     public static void performWebSearch(Context context, String query, String logTag) {
         Intent intent = buildWebSearchIntent(query);

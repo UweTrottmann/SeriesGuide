@@ -22,7 +22,7 @@
   <string name="description_poster">הצג פוסטר</string>
   <string name="description_image">תמונת הפרק</string>
   <string name="clear">נקה</string>
-  <string name="clear_search_history">Clear search history</string>
+  <string name="clear_search_history">נקה את היסטוריית החיפוש</string>
   <string name="discard">בטל</string>
   <string name="save_selection">שמור בחירה</string>
   <string name="search_hint">חפש פרקים</string>
@@ -96,7 +96,7 @@
     <item quantity="many">%d דקות</item>
     <item quantity="other">%d דקות</item>
   </plurals>
-  <string name="action_rate">Rate</string>
+  <string name="action_rate">דרג</string>
   <string name="your_rating">הדירוג שלך</string>
   <string name="love">לגמרי נינג\'ה!</string>
   <string name="hate">על הפנים ):</string>
@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">תאריך שחרור לא ידוע</string>
   <string name="episode_dvdnumber">פרק DVD</string>
   <string name="show_actors">שחקנים</string>
-  <string name="original_release">Original release</string>
+  <string name="original_release">השחרור המקורי</string>
   <string name="show_on_network">ב- %s</string>
   <string name="show_genres">ז\'אנרים</string>
   <string name="show_runtime">זמן ריצה</string>
@@ -141,13 +141,9 @@
   <string name="daily">יומי</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s דקות</string>
-  <string name="mark_episode">פרק נצפה</string>
-  <string name="unmark_episode">פרק שטרם נצפה</string>
   <string name="mark_all">הכל נצפה</string>
   <string name="unmark_all">סמן הכל כלא נצפה</string>
   <string name="mark_untilhere">כל הפרקים ששודרו נצפו</string>
-  <string name="collect">נאסף</string>
-  <string name="uncollect">לא נאסף</string>
   <string name="collect_all">אספתי הכל</string>
   <string name="uncollect_all">לא אספתי כלל</string>
   <string name="action_skip">דלג</string>
@@ -202,7 +198,6 @@
   <string name="noupcoming">אין פרקים שישודרו בקרוב</string>
   <string name="norecent">אין פרקים חדשים</string>
   <string name="only_favorites">סדרות מעודפות בלבד</string>
-  <string name="togglewatched">החלף נצפו</string>
   <string name="pref_infinite_scrolling">פעילות אינסופית</string>
   <string name="action_activity_filter">סינון פעילות</string>
   <string name="update_scheduled">מעדכן…</string>
@@ -416,13 +411,13 @@
   <string name="subscription_activated">כעת אתה מנוי על תכונות של X.</string>
   <string name="subscription_expired">פג תוקף המנוי</string>
   <string name="subscription_expired_details">פג מנוי תכונות X שלך.</string>
-  <string name="action_subscription_manage">Manage subscription</string>
-  <string name="trial_title">Try SeriesGuide for 30 days</string>
-  <string name="trial_description">You can try SeriesGuide 30 days for free. If you don\'t like it, just cancel any time.\nAfter the trial period ends, I\'m asking for a small yearly fee to support future updates and features.</string>
-  <string name="subscription_active">Thanks, you are subscribed!</string>
-  <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
-  <string name="subscription_unavailable">The subscription is currently not available.</string>
-  <string name="subscription_failed">Purchase not completed.</string>
+  <string name="action_subscription_manage">נהל הרשמה</string>
+  <string name="trial_title">נסה את SeriesGuide ל-30 ימים</string>
+  <string name="trial_description">אתה יכול לנסות את SeriesGuide בחינם ל-30 ימים. אם לא תאהב אותו, תוכל לבטל בכל זמן.\nלאחר שתקופת הנסיון מסתיימת, אני מבקש תשלום שנתי קטן כדי לתמוך בעדכונים ואפשרויות נוספות בעתיד.</string>
+  <string name="subscription_active">תודה, אתה רשום!</string>
+  <string name="subscription_not_signed_in">התחבר לחשבון האמזון שלך!</string>
+  <string name="subscription_unavailable">הרישום לא זמין כרגע.</string>
+  <string name="subscription_failed">הרכישה לא הושלמה.</string>
   <string name="add_to_homescreen">קיצור</string>
   <string name="search_within_show">חיפוש בתוך %s</string>
   <string name="web_search">חיפוש באינטרנט</string>

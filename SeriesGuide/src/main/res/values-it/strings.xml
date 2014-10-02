@@ -141,13 +141,9 @@
   <string name="daily">Giornaliero</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
-  <string name="mark_episode">Episodio visto</string>
-  <string name="unmark_episode">Episodio non ancora visto</string>
   <string name="mark_all">Visti tutti</string>
   <string name="unmark_all">Visti nessuno</string>
   <string name="mark_untilhere">Guardati tutti quelli già trasmessi</string>
-  <string name="collect">Collezionato</string>
-  <string name="uncollect">Non collezionato</string>
   <string name="collect_all">Tutti collezionati</string>
   <string name="uncollect_all">Nessuno collezionato</string>
   <string name="action_skip">Salta</string>
@@ -202,7 +198,6 @@
   <string name="noupcoming">Non c\'è nessun episodio prossimo.</string>
   <string name="norecent">Non ci sono episodi recenti.</string>
   <string name="only_favorites">Solo le serie preferite</string>
-  <string name="togglewatched">Inverti visto</string>
   <string name="pref_infinite_scrolling">Attività infinita</string>
   <string name="action_activity_filter">Filtra l\'attività</string>
   <string name="update_scheduled">Aggiornamento…</string>

@@ -100,7 +100,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         viewHolder.watchedBox.setEnabled(true);
         CheatSheet.setup(viewHolder.watchedBox,
                 EpisodeTools.isWatched(viewHolder.watchedBox.getEpisodeFlag())
-                        ? R.string.unmark_episode : R.string.mark_episode
+                        ? R.string.action_unwatched : R.string.action_watched
         );
 
         // number and show

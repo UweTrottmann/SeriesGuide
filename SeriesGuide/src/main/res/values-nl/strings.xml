@@ -22,7 +22,7 @@
   <string name="description_poster">Affiche weergeven</string>
   <string name="description_image">Afleveringsafbeelding</string>
   <string name="clear">Wissen</string>
-  <string name="clear_search_history">Clear search history</string>
+  <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
   <string name="discard">Negeren</string>
   <string name="save_selection">Selectie bewaren</string>
   <string name="search_hint">Afleveringen zoeken</string>
@@ -96,7 +96,7 @@
     <item quantity="many">%d minuten</item>
     <item quantity="other">%d minuten</item>
   </plurals>
-  <string name="action_rate">Rate</string>
+  <string name="action_rate">Beoordelen</string>
   <string name="your_rating">Uw beoordeling</string>
   <string name="love">Zeer goed!</string>
   <string name="hate">Slappe hap :(</string>
@@ -122,7 +122,7 @@
   <string name="episode_firstaired_unknown">Releasedatum onbekend</string>
   <string name="episode_dvdnumber">DVD aflevering</string>
   <string name="show_actors">Acteurs</string>
-  <string name="original_release">Original release</string>
+  <string name="original_release">Originele versie</string>
   <string name="show_on_network">op %s</string>
   <string name="show_genres">Genres</string>
   <string name="show_runtime">Speelduur</string>
@@ -141,13 +141,9 @@
   <string name="daily">Dagelijks</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
-  <string name="mark_episode">Bekeken aflevering</string>
-  <string name="unmark_episode">Onbekeken aflevering</string>
   <string name="mark_all">Alles bekeken</string>
   <string name="unmark_all">Niets bekeken</string>
   <string name="mark_untilhere">Alle eerder uitgezonden bekijken</string>
-  <string name="collect">Verzameld</string>
-  <string name="uncollect">Niet verzameld</string>
   <string name="collect_all">Alles verzameld</string>
   <string name="uncollect_all">Niets verzameld</string>
   <string name="action_skip">Overslaan</string>
@@ -202,7 +198,6 @@
   <string name="noupcoming">Er zijn geen toekomstige afleveringen.</string>
   <string name="norecent">Er zijn geen recente afleveringen.</string>
   <string name="only_favorites">Alleen favoriete series</string>
-  <string name="togglewatched">Bekeken/niet bekeken wijzigen</string>
   <string name="pref_infinite_scrolling">Oneindige activiteit</string>
   <string name="action_activity_filter">Activiteit filteren</string>
   <string name="update_scheduled">Bijwerken…</string>
@@ -416,13 +411,13 @@
   <string name="subscription_activated">U bent nu geabonneerd op X-functies.</string>
   <string name="subscription_expired">Abonnement verlopen</string>
   <string name="subscription_expired_details">Uw X-abonnement is verlopen.</string>
-  <string name="action_subscription_manage">Manage subscription</string>
-  <string name="trial_title">Try SeriesGuide for 30 days</string>
-  <string name="trial_description">You can try SeriesGuide 30 days for free. If you don\'t like it, just cancel any time.\nAfter the trial period ends, I\'m asking for a small yearly fee to support future updates and features.</string>
-  <string name="subscription_active">Thanks, you are subscribed!</string>
-  <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
-  <string name="subscription_unavailable">The subscription is currently not available.</string>
-  <string name="subscription_failed">Purchase not completed.</string>
+  <string name="action_subscription_manage">Abonnement beheren</string>
+  <string name="trial_title">Probeer SeriesGuide 30 dagen gratis</string>
+  <string name="trial_description">U kunt SeriesGuide 30 dagen gratis uitproberen. Als het niet bevalt kunt u altijd opzeggen.\n Zodra de proeftijd is verlopen zal ik om een kleine jaarlijkse vergoeding ter ondersteuning van toekomstige updates en functies.</string>
+  <string name="subscription_active">Bedankt, je bent geabonneerd!</string>
+  <string name="subscription_not_signed_in">Log in op je Amazon account!</string>
+  <string name="subscription_unavailable">Het abonnement is op die moment niet beschikbaar.</string>
+  <string name="subscription_failed">Aankoop niet voltooid.</string>
   <string name="add_to_homescreen">Snelkoppeling</string>
   <string name="search_within_show">Zoek binnen %s</string>
   <string name="web_search">Zoeken op het web</string>

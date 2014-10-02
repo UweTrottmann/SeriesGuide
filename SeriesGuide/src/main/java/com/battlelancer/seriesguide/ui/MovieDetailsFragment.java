@@ -258,6 +258,13 @@ public class MovieDetailsFragment extends Fragment {
             inflater.inflate(
                     isLightTheme ? R.menu.movie_details_menu_light : R.menu.movie_details_menu,
                     menu);
+
+            // hide Google Play button in Amazon version
+            if (Utils.isAmazonVersion()) {
+                MenuItem playStoreItem = menu.findItem(R.id.menu_open_google_play);
+                playStoreItem.setEnabled(false);
+                playStoreItem.setVisible(false);
+            }
         }
     }
 
@@ -275,9 +282,11 @@ public class MovieDetailsFragment extends Fragment {
             shareItem.setEnabled(isEnableShare);
             shareItem.setVisible(isEnableShare && !isDrawerOpen);
 
-            MenuItem playStoreItem = menu.findItem(R.id.menu_open_google_play);
-            playStoreItem.setEnabled(isEnableShare);
-            playStoreItem.setVisible(isEnableShare);
+            if (!Utils.isAmazonVersion()) {
+                MenuItem playStoreItem = menu.findItem(R.id.menu_open_google_play);
+                playStoreItem.setEnabled(isEnableShare);
+                playStoreItem.setVisible(isEnableShare);
+            }
 
             boolean isEnableImdb = mMovieDetails.traktMovie() != null
                     && !TextUtils.isEmpty(mMovieDetails.traktMovie().imdb_id);

@@ -13,6 +13,16 @@ Version 18 *(2014-09-26)*
 * Share statistics.
 * Amazon App Store version.
 
+#### 18.0.3 *(2014-10-02)*
+
+• FIX Movie watched state not changing for movies in watchlist or collection.
+• TWEAK Better action button descriptions.
+• NOTICE trakt ratings, comments and movie watched state are currently incorrectly displayed due to issues at trakt. They are, however, correctly sent to trakt.
+
+#### 18.0.2 *(2014-09-28)*
+
+* FIX Remove all Google Play search links from Amazon version.
+
 #### 18.0.1 *(2014-09-26)*
 
 * FIX Use lighter text color in search box when using Light theme.

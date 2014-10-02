@@ -141,13 +141,9 @@
   <string name="daily">每日</string>
   <string name="release_date_and_day">%1$s（%2$s）</string>
   <string name="runtime_minutes">%s 分钟</string>
-  <string name="mark_episode">标记为已观看</string>
-  <string name="unmark_episode">标记为未观看</string>
   <string name="mark_all">全部标记为已观看</string>
   <string name="unmark_all">全部标记为未观看</string>
   <string name="mark_untilhere">标记已播剧集为已观看</string>
-  <string name="collect">已收藏</string>
-  <string name="uncollect">未收藏</string>
   <string name="collect_all">全部标记为已收藏</string>
   <string name="uncollect_all">全部标记为未收藏</string>
   <string name="action_skip">标记为已跳过</string>
@@ -202,7 +198,6 @@
   <string name="noupcoming">没有即将播出的剧集</string>
   <string name="norecent">没有近期已播出的剧集</string>
   <string name="only_favorites">仅显示喜爱节目</string>
-  <string name="togglewatched">切换观看状态</string>
   <string name="pref_infinite_scrolling">紧凑的无限列表</string>
   <string name="action_activity_filter">列表选项</string>
   <string name="update_scheduled">正在更新…</string>
