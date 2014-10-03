@@ -267,7 +267,7 @@ public class OverviewFragment extends Fragment implements
             final int episodeNumber = mCurrentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
             final String episodeTitle = mCurrentEpisodeCursor.getString(EpisodeQuery.TITLE);
             // add calendar event
-            ShareUtils.onAddCalendarEvent(
+            ShareUtils.suggestCalendarEvent(
                     getActivity(),
                     mShowCursor.getString(ShowQuery.SHOW_TITLE),
                     Utils.getNextEpisodeString(getActivity(), seasonNumber, episodeNumber,

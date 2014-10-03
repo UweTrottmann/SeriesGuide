@@ -42,7 +42,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
@@ -73,7 +72,6 @@ import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import de.greenrobot.event.EventBus;
@@ -275,7 +273,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             fireTrackerEvent("Manage lists");
             return true;
         } else if (itemId == R.id.menu_action_episode_calendar) {
-            ShareUtils.onAddCalendarEvent(getActivity(), mShowTitle,
+            ShareUtils.suggestCalendarEvent(getActivity(), mShowTitle,
                     Utils.getNextEpisodeString(getActivity(), mSeasonNumber, mEpisodeNumber,
                             mEpisodeTitle), mEpisodeReleaseTime, mShowRunTime);
             fireTrackerEvent("Add to calendar");
@@ -574,34 +572,6 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         });
 
         mEpisodeContainer.setVisibility(View.VISIBLE);
-    }
-
-    private class OverflowItemClickListener implements PopupMenu.OnMenuItemClickListener {
-
-        private String mShowTitle;
-        private String mEpisodeTitleAndNumber;
-        private long mEpisodeReleaseTime;
-        private int mShowRunTime;
-
-        public OverflowItemClickListener(String showTitle, String episodeTitleAndNumber,
-                long episodeReleaseTime, int showRunTime) {
-            mShowTitle = showTitle;
-            mEpisodeTitleAndNumber = episodeTitleAndNumber;
-            mEpisodeReleaseTime = episodeReleaseTime;
-            mShowRunTime = showRunTime;
-        }
-
-        @Override
-        public boolean onMenuItemClick(android.view.MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.menu_action_episode_calendar:
-                    ShareUtils.onAddCalendarEvent(getActivity(), mShowTitle,
-                            mEpisodeTitleAndNumber, mEpisodeReleaseTime, mShowRunTime);
-                    fireTrackerEvent("Add to calendar");
-                    return true;
-            }
-            return false;
-        }
     }
 
     private void loadTraktRatings(boolean isUseCachedValues) {
