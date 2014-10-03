@@ -16,36 +16,25 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.traktapi.TraktAuthActivity;
 import com.battlelancer.seriesguide.util.ConnectTraktTask;
 import com.battlelancer.seriesguide.util.Utils;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Provides a user interface to connect or create a trakt account.
@@ -53,27 +42,16 @@ import java.util.Set;
 public class ConnectTraktCredentialsFragment extends Fragment implements
         ConnectTraktTask.OnTaskFinishedListener {
 
+    public static final String KEY_OAUTH_CODE = "auth-code";
+
     private ConnectTraktTask mTask;
 
-    @InjectView(R.id.connectbutton) Button mButtonConnect;
-
-    @InjectView(R.id.disconnectbutton) Button mButtonDisconnect;
-
-    @InjectView(R.id.username) EditText mEditTextUsername;
-
-    @InjectView(R.id.password) EditText mEditTextPassword;
-
-    @InjectView(R.id.mailviews) View mViewsNewAccount;
-
-    @InjectView(R.id.checkNewAccount) CheckBox mCheckBoxNewAccount;
-
-    @InjectView(R.id.email) AutoCompleteTextView mEmailAutoCompleteView;
-
-    @InjectView(R.id.status) TextView mTextViewStatus;
-
-    @InjectView(R.id.progressbar) View mProgressBar;
-
-    @InjectView(R.id.progress) View mStatusView;
+    @InjectView(R.id.buttonConnectTraktConnect) Button buttonConnect;
+    @InjectView(R.id.buttonConnectTraktDisconnect) Button buttonDisconnect;
+    @InjectView(R.id.textViewConnectTraktUsernameLabel) View usernameLabel;
+    @InjectView(R.id.textViewConnectTraktUsername) TextView username;
+    @InjectView(R.id.progressBarConnectTrakt) View progressBar;
+    @InjectView(R.id.textViewConnectTraktStatus) TextView status;
 
     public static ConnectTraktCredentialsFragment newInstance() {
         return new ConnectTraktCredentialsFragment();
@@ -96,18 +74,19 @@ public class ConnectTraktCredentialsFragment extends Fragment implements
         View v = inflater.inflate(R.layout.fragment_connect_trakt_credentials, container, false);
         ButterKnife.inject(this, v);
 
-        // status strip
-        mStatusView.setVisibility(View.GONE);
+        // connect button
+        buttonConnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                connect();
+            }
+        });
 
-        // new account toggle
-        mViewsNewAccount.setVisibility(View.GONE);
-        mCheckBoxNewAccount.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    mViewsNewAccount.setVisibility(View.VISIBLE);
-                } else {
-                    mViewsNewAccount.setVisibility(View.GONE);
-                }
+        // disconnect button
+        buttonDisconnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disconnect();
             }
         });
 
@@ -115,95 +94,51 @@ public class ConnectTraktCredentialsFragment extends Fragment implements
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onStart() {
+        super.onStart();
 
-        setupViews();
+        updateViews();
+        Utils.trackView(getActivity(), "Connect Trakt Credentials");
+    }
 
+    private void updateViews() {
         // unfinished task around?
         if (mTask != null && mTask.getStatus() != AsyncTask.Status.FINISHED) {
             // disable buttons, show status message
             setButtonStates(false, false);
-            setStatus(true, true, R.string.waitplease);
+            setStatus(true, R.string.waitplease);
+            setUsernameViewsStates(false);
+            return;
         }
 
-        // enable e-mail completion via device accounts
-        final Account[] accounts = AccountManager.get(getActivity()).getAccounts();
-        final Set<String> emailSet = new HashSet<>();
-        for (Account account : accounts) {
-            if (Patterns.EMAIL_ADDRESS.matcher(account.name).matches()) {
-                emailSet.add(account.name);
-            }
-        }
-        List<String> emails = new ArrayList<>(emailSet);
-        mEmailAutoCompleteView.setAdapter(
-                new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line,
-                        emails));
-
-        // connect button
-        mButtonConnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // disable buttons, show status message
-                setButtonStates(false, false);
-                setStatus(true, true, R.string.waitplease);
-
-                // get username and password
-                Editable editableUsername = mEditTextUsername.getText();
-                String username = editableUsername != null ?
-                        editableUsername.toString().trim() : null;
-                Editable editablePassword = mEditTextPassword.getText();
-                String password = editablePassword != null ?
-                        editablePassword.toString().trim() : null;
-
-                // get email
-                String email = null;
-                if (mCheckBoxNewAccount.isChecked()) {
-                    Editable editableEmail = mEmailAutoCompleteView.getText();
-                    email = editableEmail != null ? editableEmail.toString().trim() : null;
-                }
-
-                mTask = new ConnectTraktTask(getActivity().getApplicationContext(),
-                        ConnectTraktCredentialsFragment.this);
-                mTask.execute(username, password, email);
-            }
-        });
-
-        // disconnect button
-        mButtonDisconnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO do this async
-                TraktCredentials.get(getActivity()).removeCredentials();
-                setupViews();
-            }
-        });
-    }
-
-    private void setupViews() {
         boolean hasCredentials = TraktCredentials.get(getActivity()).hasCredentials();
-
-        // buttons
         if (hasCredentials) {
+            username.setText(TraktCredentials.get(getActivity()).getUsername());
             setButtonStates(false, true);
-            mEditTextUsername.setText(TraktCredentials.get(getActivity()).getUsername());
+            setUsernameViewsStates(true);
+            setStatus(false, -1);
         } else {
             setButtonStates(true, false);
+            setUsernameViewsStates(false);
+            setStatus(false, R.string.trakt_connect_instructions);
         }
-
-        // username and password
-        mEditTextUsername.setEnabled(!hasCredentials);
-        mEditTextPassword.setEnabled(!hasCredentials);
-        mEditTextPassword.setText(hasCredentials ? "********" : null); // fake password
-
-        // new account check box
-        mCheckBoxNewAccount.setEnabled(!hasCredentials);
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        Utils.trackView(getActivity(), "Connect Trakt Credentials");
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode != ConnectTraktActivity.OAUTH_CODE_REQUEST_CODE
+                || resultCode != Activity.RESULT_OK
+                || data == null
+                || !data.hasExtra(KEY_OAUTH_CODE)) {
+            return;
+        }
+
+        // fetch access token with given OAuth auth code
+        String authCode = data.getStringExtra(KEY_OAUTH_CODE);
+        mTask = new ConnectTraktTask(getActivity(), ConnectTraktCredentialsFragment.this);
+        Utils.executeInOrder(mTask, authCode == null ? "" : authCode); // avoid method ambiguity
+
+        updateViews();
     }
 
     @Override
@@ -213,31 +148,19 @@ public class ConnectTraktCredentialsFragment extends Fragment implements
         ButterKnife.reset(this);
     }
 
-    private void setButtonStates(boolean connectEnabled, boolean disconnectEnabled) {
-        // guard calls, as we might get called after the views were detached
-        if (mButtonConnect != null) {
-            mButtonConnect.setEnabled(connectEnabled);
-        }
-        if (mButtonDisconnect != null) {
-            mButtonDisconnect.setEnabled(disconnectEnabled);
-        }
+    private void connect() {
+        // disable buttons, show status message
+        setButtonStates(false, false);
+        setStatus(true, R.string.waitplease);
+
+        // launch activity to authorize with trakt
+        startActivityForResult(new Intent(getActivity(), TraktAuthActivity.class),
+                ConnectTraktActivity.OAUTH_CODE_REQUEST_CODE);
     }
 
-    private void setStatus(boolean visible, boolean inProgress, int statusTextResourceId) {
-        // guard calls, as we might get called after the views were detached
-        if (mStatusView != null) {
-            if (!visible) {
-                mStatusView.setVisibility(View.GONE);
-                return;
-            }
-            mStatusView.setVisibility(View.VISIBLE);
-        }
-        if (mProgressBar != null) {
-            mProgressBar.setVisibility(inProgress ? View.VISIBLE : View.GONE);
-        }
-        if (mTextViewStatus != null) {
-            mTextViewStatus.setText(statusTextResourceId);
-        }
+    private void disconnect() {
+        TraktCredentials.get(getActivity()).removeCredentials();
+        updateViews();
     }
 
     @Override
@@ -245,13 +168,13 @@ public class ConnectTraktCredentialsFragment extends Fragment implements
         mTask = null;
 
         if (resultCode == NetworkResult.OFFLINE) {
-            setStatus(true, false, R.string.offline);
+            setStatus(false, R.string.offline);
             setButtonStates(true, false);
             return;
         }
 
         if (resultCode == NetworkResult.ERROR) {
-            setStatus(true, false, R.string.trakt_error_credentials);
+            setStatus(false, R.string.trakt_error_credentials);
             setButtonStates(true, false);
             return;
         }
@@ -265,5 +188,42 @@ public class ConnectTraktCredentialsFragment extends Fragment implements
             ft.replace(R.id.content_frame, f);
             ft.commitAllowingStateLoss();
         }
+    }
+
+    private void setButtonStates(boolean connectEnabled, boolean disconnectEnabled) {
+        // guard calls, as we might get called after the views were detached
+        if (buttonConnect != null) {
+            buttonConnect.setEnabled(connectEnabled);
+        }
+        if (buttonDisconnect != null) {
+            buttonDisconnect.setEnabled(disconnectEnabled);
+        }
+    }
+
+    /**
+     * @param progressVisible If {@code true}, will show progress bar.
+     * @param statusTextResourceId If {@code -1} will hide the status display, otherwise show the
+     * given text ressource.
+     */
+    private void setStatus(boolean progressVisible, int statusTextResourceId) {
+        // guard calls, as we might get called after the views were detached
+        if (status == null || progressBar == null) {
+            return;
+        }
+        progressBar.setVisibility(progressVisible ? View.VISIBLE : View.INVISIBLE);
+        if (statusTextResourceId == -1) {
+            status.setVisibility(View.INVISIBLE);
+        } else {
+            status.setText(statusTextResourceId);
+            status.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setUsernameViewsStates(boolean visible) {
+        if (username == null || usernameLabel == null) {
+            return;
+        }
+        username.setVisibility(visible ? View.VISIBLE : View.GONE);
+        usernameLabel.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 }

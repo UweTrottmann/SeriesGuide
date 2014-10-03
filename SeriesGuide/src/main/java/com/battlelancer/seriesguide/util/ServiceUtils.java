@@ -31,12 +31,14 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
+import com.battlelancer.seriesguide.traktapi.SgTraktV2;
 import com.jakewharton.trakt.Trakt;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.OkUrlFactory;
 import com.squareup.picasso.Picasso;
 import com.uwetrottmann.tmdb.Tmdb;
+import com.uwetrottmann.trakt.v2.TraktV2;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -83,8 +85,10 @@ public final class ServiceUtils {
     private static Picasso sPicasso;
 
     private static Trakt trakt;
+    private static TraktV2 traktV2;
 
     private static Trakt traktWithAuth;
+    private static TraktV2 traktV2WithAuth;
 
     private static Tmdb tmdb;
 
@@ -183,7 +187,9 @@ public final class ServiceUtils {
      * auth data.
      *
      * @return A {@link com.jakewharton.trakt.Trakt} instance.
+     * @deprecated Use {@link #getTraktV2(android.content.Context)} instead.
      */
+    @Deprecated
     public static synchronized Trakt getTrakt(Context context) {
         if (trakt == null) {
             trakt = new SgTrakt(context).setApiKey(BuildConfig.TRAKT_API_KEY);
@@ -192,12 +198,27 @@ public final class ServiceUtils {
     }
 
     /**
+     * Get a {@link com.uwetrottmann.trakt.v2.TraktV2} service manager with just the API key set. NO
+     * user auth data.
+     *
+     * @return A {@link com.uwetrottmann.trakt.v2.TraktV2} instance.
+     */
+    public static synchronized TraktV2 getTraktV2(Context context) {
+        if (traktV2 == null) {
+            traktV2 = new SgTraktV2(context).setApiKey(BuildConfig.TRAKT_CLIENT_ID);
+        }
+        return traktV2;
+    }
+
+    /**
      * Get a {@link com.jakewharton.trakt.Trakt} service manager with user credentials and API key
      * set.
      *
      * @return A {@link com.jakewharton.trakt.Trakt} instance or null if there are no valid
      * credentials.
+     * @deprecated Use {@link #getTraktV2WithAuth(android.content.Context)} instead.
      */
+    @Deprecated
     public static synchronized Trakt getTraktWithAuth(Context context) {
         if (!TraktCredentials.get(context).hasCredentials()) {
             return null;
@@ -206,12 +227,34 @@ public final class ServiceUtils {
         if (traktWithAuth == null) {
             Trakt trakt = new SgTrakt(context).setApiKey(BuildConfig.TRAKT_API_KEY);
             final String username = TraktCredentials.get(context).getUsername();
-            final String password = TraktCredentials.get(context).getPassword();
+            final String password = TraktCredentials.get(context).getAccessToken();
             trakt.setAuthentication(username, password);
             traktWithAuth = trakt;
         }
 
         return traktWithAuth;
+    }
+
+    /**
+     * Get a {@link com.uwetrottmann.trakt.v2.TraktV2} service manager with OAuth access token and
+     * API key set.
+     *
+     * @return A {@link com.uwetrottmann.trakt.v2.TraktV2} instance or null if there are no valid
+     * credentials.
+     */
+    public static synchronized TraktV2 getTraktV2WithAuth(Context context) {
+        if (!TraktCredentials.get(context).hasCredentials()) {
+            return null;
+        }
+
+        if (traktV2WithAuth == null) {
+            TraktV2 trakt = new SgTraktV2(context).setApiKey(BuildConfig.TRAKT_CLIENT_ID);
+            final String accessToken = TraktCredentials.get(context).getAccessToken();
+            trakt.setAccessToken(accessToken);
+            traktV2WithAuth = trakt;
+        }
+
+        return traktV2WithAuth;
     }
 
     /**

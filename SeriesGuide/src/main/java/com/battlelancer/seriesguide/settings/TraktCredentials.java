@@ -25,10 +25,7 @@ import android.text.TextUtils;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.jakewharton.trakt.Trakt;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import retrofit.RetrofitError;
-import timber.log.Timber;
+import com.uwetrottmann.trakt.v2.TraktV2;
 
 /**
  * A singleton helping to manage the user's trakt credentials.
@@ -56,37 +53,36 @@ public class TraktCredentials {
         mContext = context;
         mUsername = PreferenceManager.getDefaultSharedPreferences(mContext)
                 .getString(KEY_USERNAME, null);
-        mHasCredentials = !TextUtils.isEmpty(getUsername())
-                && !TextUtils.isEmpty(getPassword());
+        mHasCredentials = !TextUtils.isEmpty(getUsername()) && !TextUtils.isEmpty(getAccessToken());
     }
 
     /**
-     * If there is a username and password.
+     * If there is a username and acess token.
      */
     public boolean hasCredentials() {
         return mHasCredentials;
     }
 
     /**
-     * Only removes the password, but keeps the username.
+     * Only removes the access token, but keeps the username.
      */
-    public void removePassword() {
+    public void removeAccessToken() {
         // clear all in-memory credentials from Trakt service manager in any case
-        Trakt trakt = ServiceUtils.getTraktWithAuth(mContext);
+        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(mContext);
         if (trakt != null) {
-            trakt.setAuthentication(null, null);
+            trakt.setAccessToken(null);
         }
 
         mHasCredentials = false;
 
-        setPassword(null);
+        setAccessToken(null);
     }
 
     /**
-     * Removes the username and password.
+     * Removes the username and access token.
      */
     public void removeCredentials() {
-        removePassword();
+        removeAccessToken();
         setUsername(null);
     }
 
@@ -98,10 +94,10 @@ public class TraktCredentials {
     }
 
     /**
-     * Get the password. Avoid keeping this in memory, maybe calling {@link #hasCredentials()} is
-     * sufficient.
+     * Get the access token. Avoid keeping this in memory, maybe calling {@link #hasCredentials()}
+     * is sufficient.
      */
-    public String getPassword() {
+    public String getAccessToken() {
         Account account = AccountUtils.getAccount(mContext);
         if (account == null) {
             return null;
@@ -112,15 +108,14 @@ public class TraktCredentials {
     }
 
     /**
-     * Stores the given credentials. Performs no sanitation, however, if any is null or empty
-     * throws
+     * Stores the given credentials. Performs no sanitation, however, if any is null or empty throws
      * an exception.
      */
-    public void setCredentials(String username, String password) {
-        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
-            throw new IllegalArgumentException("Username or password is null or empty.");
+    public void setCredentials(String username, String accessToken) {
+        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(accessToken)) {
+            throw new IllegalArgumentException("Username or access token is null or empty.");
         }
-        mHasCredentials = setUsername(username) && setPassword(password);
+        mHasCredentials = setUsername(username) && setAccessToken(accessToken);
     }
 
     private boolean setUsername(String username) {
@@ -129,7 +124,7 @@ public class TraktCredentials {
                 .putString(KEY_USERNAME, username).commit();
     }
 
-    private boolean setPassword(String password) {
+    private boolean setAccessToken(String accessToken) {
         Account account = AccountUtils.getAccount(mContext);
         if (account == null) {
             // try to create a new account
@@ -143,7 +138,7 @@ public class TraktCredentials {
         }
 
         AccountManager manager = AccountManager.get(mContext);
-        manager.setPassword(account, password);
+        manager.setPassword(account, accessToken);
 
         return true;
     }
@@ -162,39 +157,5 @@ public class TraktCredentials {
             return false;
         }
         return true;
-    }
-
-    /**
-     * Creates a network request to check if the current trakt credentials are still valid. Will
-     * assume valid credentials if there was no response from trakt (due to a network error,
-     * etc.).<br> <b>Never</b> run this on the main thread.
-     */
-    public void validateCredentials() {
-        // check for connectivity
-        if (!AndroidUtils.isNetworkConnected(mContext)) {
-            return;
-        }
-
-        // try to get a trakt instance with auth data
-        Trakt manager = ServiceUtils.getTraktWithAuth(mContext);
-        if (manager == null) {
-            // no credentials available
-            return;
-        }
-        try {
-            manager.accountService().test();
-        } catch (RetrofitError e) {
-            retrofit.client.Response response = e.getResponse();
-            /**
-             * Check for HTTP 401 Unauthorized as retrofit errors for non-200 responses.
-             * Ignore other response codes as trakt may be offline, have server errors, etc.
-             */
-            if (response != null && response.getStatus() == 401) {
-                // credentials invalid according to trakt, remove the password
-                removePassword();
-            } else {
-                Timber.e(e, "Trakt credential validation failed");
-            }
-        }
     }
 }

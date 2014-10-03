@@ -450,7 +450,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     private static UpdateResult performTraktSync(Context context, HashSet<Integer> existingShows,
             HashMap<Integer, SearchResult> newShows, boolean forceSync, long currentTime) {
         Timber.d("Syncing...trakt auth check");
-        TraktCredentials.get(context).validateCredentials();
         Trakt trakt = ServiceUtils.getTraktWithAuth(context);
         if (trakt == null) {
             // not connected to trakt, we are done here

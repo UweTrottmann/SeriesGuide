@@ -30,6 +30,8 @@ android {
         buildConfigField("String", "TVDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TVDB_API_KEY")}\"")
         buildConfigField("String", "TMDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TMDB_API_KEY")}\"")
         buildConfigField("String", "TRAKT_API_KEY", "\"${loadStringPropertyOrPlaceholder("TRAKT_API_KEY")}\"")
+        buildConfigField("String", "TRAKT_CLIENT_ID", "\"${loadStringPropertyOrPlaceholder("TRAKT_CLIENT_ID")}\"")
+        buildConfigField("String", "TRAKT_CLIENT_SECRET", "\"${loadStringPropertyOrPlaceholder("TRAKT_CLIENT_SECRET")}\"")
         buildConfigField("String", "TVTAG_CLIENT_ID", "\"${loadStringPropertyOrPlaceholder("TVTAG_CLIENT_ID")}\"")
         buildConfigField("String", "TVTAG_CLIENT_SECRET", "\"${loadStringPropertyOrPlaceholder("TVTAG_CLIENT_SECRET")}\"")
         buildConfigField("String", "IAP_KEY_A", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_A")}\"")
@@ -119,7 +121,7 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.7.1'
     compile 'com.squareup:tape:1.2.3'
     compile 'com.uwetrottmann:tmdb-java:0.7.0'
-    compile 'com.uwetrottmann:trakt-java:3.3.1'
+    compile 'com.uwetrottmann:trakt-java:4.0.0-SNAPSHOT'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'joda-time:joda-time:2.5'
 
