@@ -59,15 +59,15 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
         int appWidgetId = getArguments().getInt("appWidgetId");
 
         // widget type setting
-        ListPreference typePreference = new ListPreference(getActivity());
-        typePreference.setKey(WidgetSettings.KEY_PREFIX_WIDGET_LISTTYPE + appWidgetId);
-        typePreference.setTitle(R.string.pref_widget_type);
-        typePreference.setEntries(R.array.widgetType);
-        typePreference.setEntryValues(R.array.widgetTypeData);
-        typePreference.setDefaultValue("0");
-        typePreference.setPositiveButtonText(null);
-        typePreference.setNegativeButtonText(null);
-        preferenceScreen.addPreference(typePreference);
+        ListPreference typePref = new ListPreference(getActivity());
+        typePref.setKey(WidgetSettings.KEY_PREFIX_WIDGET_LISTTYPE + appWidgetId);
+        typePref.setTitle(R.string.pref_widget_type);
+        typePref.setEntries(R.array.widgetType);
+        typePref.setEntryValues(R.array.widgetTypeData);
+        typePref.setDefaultValue("0");
+        typePref.setPositiveButtonText(null);
+        typePref.setNegativeButtonText(null);
+        preferenceScreen.addPreference(typePref);
 
         // hide watched setting
         CheckBoxPreference hideWatchedPreference = new CheckBoxPreference(getActivity());
@@ -76,29 +76,43 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
         hideWatchedPreference.setDefaultValue(true);
         preferenceScreen.addPreference(hideWatchedPreference);
 
+        // widget theme setting
+        ListPreference themePref = new ListPreference(getActivity());
+        themePref.setKey(WidgetSettings.KEY_PREFIX_WIDGET_THEME + appWidgetId);
+        themePref.setTitle(R.string.pref_theme);
+        themePref.setEntries(R.array.widgetTheme);
+        themePref.setEntryValues(R.array.widgetThemeData);
+        themePref.setDefaultValue("0");
+        themePref.setPositiveButtonText(null);
+        themePref.setNegativeButtonText(null);
+        preferenceScreen.addPreference(themePref);
+
         // background setting
-        ListPreference backgroundPreference = new ListPreference(getActivity());
-        backgroundPreference.setKey(WidgetSettings.KEY_PREFIX_WIDGET_BACKGROUND_COLOR + appWidgetId);
-        backgroundPreference.setTitle(R.string.pref_widget_opacity);
-        backgroundPreference.setEntries(R.array.widgetOpacity);
-        backgroundPreference.setEntryValues(R.array.widgetOpacityData);
-        backgroundPreference.setDefaultValue("50");
-        backgroundPreference.setPositiveButtonText(null);
-        backgroundPreference.setNegativeButtonText(null);
-        preferenceScreen.addPreference(backgroundPreference);
+        ListPreference backgroundPref = new ListPreference(getActivity());
+        backgroundPref.setKey(
+                WidgetSettings.KEY_PREFIX_WIDGET_BACKGROUND_OPACITY + appWidgetId);
+        backgroundPref.setTitle(R.string.pref_widget_opacity);
+        backgroundPref.setEntries(R.array.widgetOpacity);
+        backgroundPref.setEntryValues(R.array.widgetOpacityData);
+        backgroundPref.setDefaultValue("50");
+        backgroundPref.setPositiveButtonText(null);
+        backgroundPref.setNegativeButtonText(null);
+        preferenceScreen.addPreference(backgroundPref);
 
         setPreferenceScreen(preferenceScreen);
 
-        bindPreferenceSummaryToValue(getPreferenceManager().getSharedPreferences(), typePreference);
-        bindPreferenceSummaryToValue(getPreferenceManager().getSharedPreferences(),
-                backgroundPreference);
+        bindPreferenceSummaryToValue(getPreferenceManager().getSharedPreferences(), typePref);
+        bindPreferenceSummaryToValue(getPreferenceManager().getSharedPreferences(), backgroundPref);
+        bindPreferenceSummaryToValue(getPreferenceManager().getSharedPreferences(), themePref);
 
         // disable type and background pref for non-supporters
         if (!Utils.hasAccessToX(getActivity())) {
-            typePreference.setEnabled(false);
-            typePreference.setSummary(R.string.onlyx);
-            backgroundPreference.setEnabled(false);
-            backgroundPreference.setSummary(R.string.onlyx);
+            typePref.setEnabled(false);
+            typePref.setSummary(R.string.onlyx);
+            themePref.setEnabled(false);
+            themePref.setSummary(R.string.onlyx);
+            backgroundPref.setEnabled(false);
+            backgroundPref.setSummary(R.string.onlyx);
         }
     }
 
