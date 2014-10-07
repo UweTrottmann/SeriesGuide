@@ -345,7 +345,7 @@
 
     <!-- Appearance settings -->
     <string name="pref_appearance">Appearance</string>
-    <string name="pref_theme">App Theme</string>
+    <string name="pref_theme">Theme</string>
 
     <!-- Other advanced settings -->
     <string name="pref_other">Other</string>
@@ -465,10 +465,10 @@
 
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparent</string>
-    <string name="widget_background_25">25% black</string>
-    <string name="widget_background_50">50% black</string>
-    <string name="widget_background_75">75% black</string>
-    <string name="widget_background_opaque">Black</string>
+    <string name="widget_background_25">25%</string>
+    <string name="widget_background_50">50%</string>
+    <string name="widget_background_75">75%</string>
+    <string name="widget_background_opaque">Opaque</string>
 
     <!-- DashClock extension -->
     <string name="dashclock_extension_label">Upcoming episode</string>

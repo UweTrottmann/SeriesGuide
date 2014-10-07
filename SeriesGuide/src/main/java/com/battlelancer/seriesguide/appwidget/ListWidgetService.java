@@ -56,6 +56,7 @@ public class ListWidgetService extends RemoteViewsService {
         private Cursor mDataCursor;
 
         private int mTypeIndex;
+        private boolean mIsLightTheme;
 
         public ListRemoteViewsFactory(Context context, Intent intent) {
             mContext = context;
@@ -69,8 +70,9 @@ public class ListWidgetService extends RemoteViewsService {
         }
 
         private void onQueryForData() {
-            boolean isHideWatched = WidgetSettings.getWidgetHidesWatched(mContext, mAppWidgetId);
+            boolean isHideWatched = WidgetSettings.isHidingWatchedEpisodes(mContext, mAppWidgetId);
             mTypeIndex = WidgetSettings.getWidgetListType(mContext, mAppWidgetId);
+            mIsLightTheme = WidgetSettings.isLightTheme(mContext, mAppWidgetId);
 
             Cursor newCursor;
             switch (mTypeIndex) {
@@ -130,7 +132,8 @@ public class ListWidgetService extends RemoteViewsService {
 
             // We construct a remote views item based on our widget item xml
             // file, and set the text based on the position.
-            RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.appwidget_row);
+            RemoteViews rv = new RemoteViews(mContext.getPackageName(),
+                    mIsLightTheme ? R.layout.appwidget_row_light : R.layout.appwidget_row);
 
             if (mDataCursor == null
                     || mDataCursor.isClosed() || !mDataCursor.moveToPosition(position)) {
@@ -209,7 +212,8 @@ public class ListWidgetService extends RemoteViewsService {
             // You can create a custom loading view (for instance when
             // getViewAt() is slow.) If you return null here, you will get the
             // default loading view.
-            return null;
+            return new RemoteViews(mContext.getPackageName(),
+                    mIsLightTheme ? R.layout.appwidget_row_light : R.layout.appwidget_row);
         }
 
         public int getViewTypeCount() {
