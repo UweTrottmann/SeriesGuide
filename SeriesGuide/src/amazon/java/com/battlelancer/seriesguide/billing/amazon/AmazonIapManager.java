@@ -88,6 +88,7 @@ public class AmazonIapManager {
         return amazonIapManager;
     }
 
+    private final Context context;
     private final SubscriptionDataSource dataSource;
 
     private boolean userDataAvailable;
@@ -95,6 +96,7 @@ public class AmazonIapManager {
     private UserIapData userIapData;
 
     public AmazonIapManager(Context context) {
+        this.context = context.getApplicationContext();
         this.dataSource = new SubscriptionDataSource(context);
         this.userDataAvailable = false;
         this.subAvailable = false;
@@ -272,6 +274,7 @@ public class AmazonIapManager {
         try {
             // Set the purchase status to fulfilled for your application
             saveSubscriptionRecord(receipt, userData.getUserId());
+            AdvancedSettings.setSubscriptionState(context, true);
             PurchasingService.notifyFulfillment(receipt.getReceiptId(),
                     FulfillmentResult.FULFILLED);
         } catch (final Throwable e) {
