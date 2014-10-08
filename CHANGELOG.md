@@ -5,6 +5,15 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 19 *(in development)*
+-----------------------------
+
+#### 19-beta1 *(2014-10-08)*
+
+* FEATURE Light theme for list widget.
+* TWEAK Display "Unlock all features" link in nav drawer if user is no supporter. Update strings related to unlocking all features.
+* FIX Create calendar events with new method available since Android ICS. Enables creating events in Sunrise calendar.
+
 Version 18 *(2014-09-26)*
 -----------------------------
 
