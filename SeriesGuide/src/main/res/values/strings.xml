@@ -42,7 +42,6 @@
     <string name="offline">Connect to a network, then try again.</string>
     <string name="offline_no_wifi">Connect to Wi-Fi or allow all connections, then try again.</string>
     <string name="app_not_available">No app available to handle this.</string>
-    <string name="onlyx">Only available with X Subscription</string>
     <string name="add_empty">There are no shows here.</string>
     <string name="people_empty">Nobody here?! Touch to try again.</string>
 
@@ -482,6 +481,7 @@
     <string name="migration_action_import">Import and replace existing shows</string>
 
     <!-- Google In-App Billing -->
+    <string name="onlyx">Only for supporters</string>
     <string name="action_upgrade">Unlock all features</string>
     <string name="billing_action_subscribe">Subscribe</string>
     <string name="billing_action_pass">Get X Pass</string>

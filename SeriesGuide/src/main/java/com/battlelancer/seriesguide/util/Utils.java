@@ -43,6 +43,7 @@ import com.battlelancer.seriesguide.Analytics;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.billing.BillingActivity;
+import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.service.OnAlarmReceiver;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
@@ -228,12 +229,16 @@ public class Utils {
     }
 
     /**
-     * Launches {@link BillingActivity} and notifies that something is only available with the X
-     * subscription.
+     * Launches {@link com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity} or {@link
+     * BillingActivity} and notifies that something is only available with the subscription.
      */
     public static void advertiseSubscription(Context context) {
         Toast.makeText(context, R.string.onlyx, Toast.LENGTH_SHORT).show();
-        context.startActivity(new Intent(context, BillingActivity.class));
+        if (isAmazonVersion()) {
+            context.startActivity(new Intent(context, AmazonBillingActivity.class));
+        } else {
+            context.startActivity(new Intent(context, BillingActivity.class));
+        }
     }
 
     /**
