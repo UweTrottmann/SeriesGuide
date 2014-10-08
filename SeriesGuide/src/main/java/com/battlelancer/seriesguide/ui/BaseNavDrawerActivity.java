@@ -33,6 +33,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.billing.BillingActivity;
+import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.util.Utils;
 
 /**
@@ -42,12 +44,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         implements AdapterView.OnItemClickListener {
 
     private static final String TAG_NAV_DRAWER = "Navigation Drawer";
-
-    private DrawerLayout mDrawerLayout;
-
-    private ListView mDrawerList;
-
-    private ActionBarDrawerToggle mDrawerToggle;
 
     public static final int MENU_ITEM_SHOWS_POSITION = 0;
 
@@ -62,6 +58,13 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
     public static final int MENU_ITEM_SETTINGS_POSITION = 5;
 
     public static final int MENU_ITEM_HELP_POSITION = 6;
+
+    public static final int MENU_ITEM_SUBSCRIBE_POSITION = 7; // not always shown
+
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerAdapter mDrawerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +81,8 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
             mDrawerLayout.closeDrawer(mDrawerList);
         }
+
+        mDrawerAdapter.setSubscribeVisible(!Utils.hasAccessToX(this));
     }
 
     /**
@@ -91,22 +96,24 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
         // setup menu adapter
-        DrawerAdapter drawerAdapter = new DrawerAdapter(this);
-        drawerAdapter.add(new DrawerItem(getString(R.string.shows),
+        mDrawerAdapter = new DrawerAdapter(this);
+        mDrawerAdapter.add(new DrawerItem(getString(R.string.shows),
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableTv)));
-        drawerAdapter.add(new DrawerItem(getString(R.string.lists),
+        mDrawerAdapter.add(new DrawerItem(getString(R.string.lists),
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableList)));
-        drawerAdapter.add(new DrawerItem(getString(R.string.movies),
+        mDrawerAdapter.add(new DrawerItem(getString(R.string.movies),
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableMovie)));
-        drawerAdapter.add(new DrawerItem(getString(R.string.statistics),
+        mDrawerAdapter.add(new DrawerItem(getString(R.string.statistics),
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableStats)));
-        drawerAdapter.add(new DrawerItemDivider());
-        drawerAdapter.add(new DrawerItem(getString(R.string.preferences),
+        mDrawerAdapter.add(new DrawerItemDivider());
+        mDrawerAdapter.add(new DrawerItem(getString(R.string.preferences),
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableSettings)));
-        drawerAdapter.add(new DrawerItem(getString(R.string.help),
+        mDrawerAdapter.add(new DrawerItem(getString(R.string.help),
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableHelp)));
+        mDrawerAdapter.add(new DrawerItem(getString(R.string.action_upgrade),
+                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableStar)));
 
-        mDrawerList.setAdapter(drawerAdapter);
+        mDrawerList.setAdapter(mDrawerAdapter);
         mDrawerList.setOnItemClickListener(this);
 
         // setup drawer indicator
@@ -183,6 +190,14 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 launchIntent = new Intent(this, HelpActivity.class);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Help");
                 break;
+            case MENU_ITEM_SUBSCRIBE_POSITION:
+                if (Utils.isAmazonVersion()) {
+                    launchIntent = new Intent(this, AmazonBillingActivity.class);
+                } else {
+                    launchIntent = new Intent(this, BillingActivity.class);
+                }
+                Utils.trackAction(this, TAG_NAV_DRAWER, "Unlock");
+                break;
         }
 
         // already displaying correct screen
@@ -207,8 +222,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
     }
 
     /**
-     * Highlights the given position in the drawer menu. Activities listed in the drawer should
-     * call
+     * Highlights the given position in the drawer menu. Activities listed in the drawer should call
      * this in {@link #onStart()}.
      */
     public void setDrawerSelectedItem(int menuItemPosition) {
@@ -253,13 +267,25 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         }
     }
 
-    public class DrawerAdapter extends ArrayAdapter<Object> {
+    public static class DrawerAdapter extends ArrayAdapter<Object> {
 
         private static final int VIEW_TYPE_ITEM = 0;
         private static final int VIEW_TYPE_DIVIDER = 1;
 
+        private boolean isSubscribeVisible;
+
         public DrawerAdapter(Context context) {
             super(context, 0);
+        }
+
+        public void setSubscribeVisible(boolean visible) {
+            isSubscribeVisible = visible;
+        }
+
+        @Override
+        public int getCount() {
+            // assumes that subscribe is last item
+            return isSubscribeVisible ? super.getCount() : super.getCount() - 1;
         }
 
         @Override

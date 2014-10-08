@@ -19,10 +19,7 @@
     <application>
 
         <!-- Amazon In-App Purchasing -->
-        <activity
-            android:name="com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity"
-            android:label="@string/action_subscription_manage" >
-        </activity>
+        <activity android:name="com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity"/>
         <receiver android:name="com.amazon.device.iap.ResponseReceiver" >
             <intent-filter>
                 <action
