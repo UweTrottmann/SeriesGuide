@@ -67,13 +67,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Migration activity -->
-        <activity android:name="com.battlelancer.seriesguide.migration.MigrationActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
-        </activity>
-
         <!-- Hexagon -->
         <activity android:name="com.battlelancer.seriesguide.backend.CloudSetupActivity"/>
 

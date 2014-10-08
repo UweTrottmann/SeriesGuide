@@ -16,13 +16,6 @@
                 android:targetClass="com.battlelancer.seriesguide.backend.CloudSetupActivity"
                 android:targetPackage="@string/package_name" />
         </Preference>
-        <Preference
-            android:key="com.battlelancer.seriesguide.migrate"
-            android:title="@string/action_migrate">
-            <intent
-                android:targetClass="com.battlelancer.seriesguide.migration.MigrationActivity"
-                android:targetPackage="@string/package_name" />
-        </Preference>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/trakt">

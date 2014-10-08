@@ -474,12 +474,6 @@
     <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
     <string name="dashclock_pref_upcoming_threshold">Display episode within…</string>
 
-    <!-- SeriesGuide X deprecation -->
-    <string name="action_migrate">Migrate from X</string>
-    <string name="migration_description">SeriesGuide X is now an unlock key for X features in the free version (X Pass). Please migrate your shows to the free version of SeriesGuide. Keep X installed to unlock all features in the free version.</string>
-    <string name="migration_import">Touch below to import the backup created in SeriesGuide X.</string>
-    <string name="migration_action_import">Import and replace existing shows</string>
-
     <!-- Google In-App Billing -->
     <string name="onlyx">Only for supporters</string>
     <string name="action_upgrade">Unlock all features</string>
