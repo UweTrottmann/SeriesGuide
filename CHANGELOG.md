@@ -13,6 +13,7 @@ Version 19 *(in development)*
 * FEATURE Light theme for list widget.
 * TWEAK Display "Unlock all features" link in nav drawer if user is no supporter. Update strings related to unlocking all features.
 * FIX Create calendar events with new method available since Android ICS. Enables creating events in Sunrise calendar.
+* NOTICE Dropped SeriesGuide X migration tool.
 
 Version 18 *(2014-09-26)*
 -----------------------------
