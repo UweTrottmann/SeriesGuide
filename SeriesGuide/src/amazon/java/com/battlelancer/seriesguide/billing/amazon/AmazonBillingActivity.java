@@ -112,9 +112,6 @@ public class AmazonBillingActivity extends BaseActivity {
     }
 
     private void dismiss() {
-        startActivity(new Intent(this, ShowsActivity.class)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
-                        | Intent.FLAG_ACTIVITY_SINGLE_TOP));
         finish();
     }
 
