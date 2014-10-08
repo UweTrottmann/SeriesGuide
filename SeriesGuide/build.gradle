@@ -122,10 +122,10 @@ dependencies {
     compile 'com.google.android.gms:play-services:5.0.89'
 
     // App Engine
-    compile ('com.google.api-client:google-api-client-android:1.18.0-rc') {
+    compile ('com.google.api-client:google-api-client-android:1.19.0') {
         exclude group: 'com.google.android.google-play-services'
     }
-    compile 'com.google.http-client:google-http-client-gson:1.18.0-rc'
+    compile 'com.google.http-client:google-http-client-gson:1.19.0'
 
     // libs folder
     compile fileTree(dir: 'libs', include: '*.jar')
