@@ -40,7 +40,7 @@
 
     <dimen name="imagecontainer_height">180dp</dimen>
 
-    <dimen name="slidingmenu_width">240dp</dimen>
+    <dimen name="slidingmenu_width">260dp</dimen>
 
     <dimen name="movie_item_width">100dp</dimen>
     <dimen name="movie_item_height">214dp</dimen>
