@@ -109,7 +109,7 @@ dependencies {
     compile ('com.squareup.retrofit:retrofit:1.6.1') {
         exclude group: 'com.squareup.okhttp'
     }
-    compile 'com.squareup:tape:1.2.2'
+    compile 'com.squareup:tape:1.2.3'
     compile ('com.uwetrottmann:getglue-java:1.4.0') {
         exclude group: 'com.squareup.okhttp'
     }
