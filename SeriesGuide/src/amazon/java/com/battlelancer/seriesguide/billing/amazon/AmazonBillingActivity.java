@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.billing.amazon;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -31,6 +30,7 @@ import com.amazon.device.iap.model.RequestId;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.battlelancer.seriesguide.util.Utils;
 import java.util.Locale;
 import timber.log.Timber;
 
@@ -42,8 +42,7 @@ public class AmazonBillingActivity extends BaseActivity {
     @InjectView(R.id.textViewAmazonBillingPrice) TextView textViewSubPrice;
     @InjectView(R.id.textViewAmazonBillingExisting) TextView textViewSubscribed;
     @InjectView(R.id.buttonAmazonBillingDismiss) Button buttonDismiss;
-
-    private boolean isSubscribed;
+    @InjectView(R.id.textViewAmazonBillingMoreInfo) View buttonMoreInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +69,14 @@ public class AmazonBillingActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 dismiss();
+            }
+        });
+
+        buttonMoreInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.launchWebsite(v.getContext(), getString(R.string.url_whypay),
+                        "AmazonBillingActivity", "WhyPayWebsite");
             }
         });
 
@@ -105,17 +112,9 @@ public class AmazonBillingActivity extends BaseActivity {
     }
 
     private void dismiss() {
-        // launch into main activity if user is subscribed
-        if (isSubscribed) {
-            startActivity(new Intent(this, ShowsActivity.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
-                            | Intent.FLAG_ACTIVITY_SINGLE_TOP));
-        }
-        // prevent billing from auto-showing on launch again
-        PreferenceManager.getDefaultSharedPreferences(this)
-                .edit()
-                .putBoolean(AmazonBillingSettings.KEY_BILLING_DISMISSED, true)
-                .apply();
+        startActivity(new Intent(this, ShowsActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_SINGLE_TOP));
         finish();
     }
 
@@ -129,20 +128,20 @@ public class AmazonBillingActivity extends BaseActivity {
         }
         progressBar.setVisibility(View.GONE);
 
-        isSubscribed = event.productAvailable && !event.userCanSubscribe;
+        boolean isSubscribed = event.productAvailable && !event.userCanSubscribe;
 
         // subscribe button
         buttonSubscribe.setEnabled(event.productAvailable && event.userCanSubscribe);
 
         // title and status text
         if (!event.productAvailable) {
-            title.setText(R.string.trial_title);
+            title.setText(R.string.action_upgrade);
             textViewSubscribed.setText(R.string.subscription_not_signed_in);
         } else {
             title.setText(
-                    isSubscribed ? R.string.subscription_active : R.string.trial_title);
+                    isSubscribed ? R.string.upgrade_success : R.string.action_upgrade);
             textViewSubscribed.setText(
-                    isSubscribed ? R.string.subscription_active : R.string.subscription_expired);
+                    isSubscribed ? R.string.upgrade_success : R.string.subscription_expired);
         }
     }
 

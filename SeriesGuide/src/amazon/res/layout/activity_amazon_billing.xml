@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:text="@string/action_subscription_manage"
+                android:text="@string/action_upgrade"
                 android:textAppearance="@style/TextAppearance.Headline" />
 
             <TextView
@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewAmazonBillingTitle"
-                android:text="@string/trial_description"
+                android:text="@string/upgrade_description"
                 android:textAppearance="@style/TextAppearance.Body" />
 
             <Button
@@ -81,8 +81,16 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewAmazonBillingPrice"
                 android:layout_marginTop="@dimen/large_padding"
-                tools:text="@string/subscription_active"
-                android:textAppearance="@style/TextAppearance.Body.Highlight.Blue" />
+                tools:text="@string/upgrade_success"
+                android:textAppearance="@style/TextAppearance.Body.Highlight" />
+
+            <Button
+                android:id="@+id/textViewAmazonBillingMoreInfo"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewAmazonBillingExisting"
+                android:text="@string/billing_learn_more" />
 
         </RelativeLayout>
 
