@@ -441,7 +441,7 @@
     <string name="pref_notificationssummary">Notify about new episodes</string>
     <string name="pref_notifyfavonly">Favorites only</string>
     <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
-    <string name="pref_ringtone">Ringtone</string>
+    <string name="pref_ringtone">Sound</string>
     <string name="pref_vibrate">Vibrate</string>
     <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
     <string name="pref_notifications_treshold">When to notify</string>
