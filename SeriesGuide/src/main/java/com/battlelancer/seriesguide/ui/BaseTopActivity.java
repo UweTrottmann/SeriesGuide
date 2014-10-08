@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.billing.BillingActivity;
+import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.util.Utils;
 
 /**
@@ -85,7 +86,11 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
 
         int itemId = item.getItemId();
         if (itemId == R.id.menu_subscribe) {
-            startActivity(new Intent(this, BillingActivity.class));
+            if (Utils.isAmazonVersion()) {
+                startActivity(new Intent(this, AmazonBillingActivity.class));
+            } else {
+                startActivity(new Intent(this, BillingActivity.class));
+            }
 
             fireTrackerEvent("Subscribe");
             return true;

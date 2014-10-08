@@ -86,7 +86,7 @@ public class BillingActivity extends BaseActivity {
         setupViews();
 
         // do not query IAB if user has key
-        boolean hasUpgrade = Utils.canSkipPurchaseCheck(this);
+        boolean hasUpgrade = Utils.hasXpass(this);
         updateViewStates(hasUpgrade);
         // no need to go further if user has a key
         if (hasUpgrade) {
@@ -274,7 +274,7 @@ public class BillingActivity extends BaseActivity {
         }
 
         // notify the user about a change in subscription state
-        boolean isSubscribedOld = AdvancedSettings.isSubscribedToX(context);
+        boolean isSubscribedOld = AdvancedSettings.getLastSubscriptionState(context);
         boolean isSubscribed = hasXUpgrade || isSubscribedToX;
         if (!isSubscribedOld && isSubscribed) {
             Toast.makeText(context, R.string.subscription_activated, Toast.LENGTH_SHORT)

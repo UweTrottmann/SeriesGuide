@@ -25,6 +25,7 @@ import com.amazon.device.iap.model.Product;
 import com.amazon.device.iap.model.Receipt;
 import com.amazon.device.iap.model.UserData;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import de.greenrobot.event.EventBus;
 import java.util.HashSet;
 import java.util.List;
@@ -89,15 +90,12 @@ public class AmazonIapManager {
 
     private final SubscriptionDataSource dataSource;
 
-    private boolean isSubscribed;
     private boolean userDataAvailable;
     private boolean subAvailable;
     private UserIapData userIapData;
 
     public AmazonIapManager(Context context) {
         this.dataSource = new SubscriptionDataSource(context);
-        // assume active subscription until we have proof otherwise
-        this.isSubscribed = true;
         this.userDataAvailable = false;
         this.subAvailable = false;
         this.userIapData = null;
@@ -152,16 +150,14 @@ public class AmazonIapManager {
     }
 
     /**
-     * Checks if the current user has an active subscription. If not, {@link
-     * com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity} is launched.
+     * Checks if the current user has an active subscription. If the user was subscribed, but now is
+     * not {@link com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity} is launched.
      *
-     * <p> If the app is launched for the first time, will also launch billing activity.
-     *
-     * <p> Fails gracefully. If no user data has been received yet, assumes the user has a valid
-     * subscription.
+     * <p> If user or sub data could not be fetched, keeps the last subscription state.
      */
     public void validateSubscription(Activity activity) {
         Timber.d("validateSubscription");
+        boolean isSubscribed;
         if (userIapData != null) {
             loadSubscriptionRecords();
 
@@ -169,15 +165,20 @@ public class AmazonIapManager {
         } else if (userDataAvailable) {
             // user is not logged in
             isSubscribed = false;
+        } else {
+            // data could not be fetched, keep last sub state
+            return;
         }
-        if (!isSubscribed || !AmazonBillingSettings.wasBillingDismissed(activity)) {
+
+        // update state
+        boolean isSubscribedOld = AdvancedSettings.getLastSubscriptionState(activity);
+        AdvancedSettings.setSubscriptionState(activity, isSubscribed);
+
+        // notify if subscription has expired
+        if (isSubscribedOld && !isSubscribed) {
             activity.startActivity(new Intent(activity, AmazonBillingActivity.class));
             activity.finish();
         }
-    }
-
-    public boolean isSubscribed() {
-        return isSubscribed;
     }
 
     /**

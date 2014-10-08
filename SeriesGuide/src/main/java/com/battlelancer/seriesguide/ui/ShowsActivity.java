@@ -278,7 +278,7 @@ public class ShowsActivity extends BaseTopActivity implements
     }
 
     private void checkGooglePlayPurchase() {
-        if (Utils.canSkipPurchaseCheck(this)) {
+        if (Utils.hasXpass(this)) {
             return;
         }
         mHelper = new IabHelper(this, BillingActivity.getPublicKey());
