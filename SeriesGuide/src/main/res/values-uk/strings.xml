@@ -395,10 +395,6 @@
   <string name="dashclock_extension_label">Наступна серія</string>
   <string name="dashclock_extension_description">Відображає наступну найближчу серію з ваших серіалів на  SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Показати серії у наступному</string>
-  <string name="action_migrate">Мігрувати з X</string>
-  <string name="migration_description">SeriesGuide X відтепер є ключем для розблокування X функцій у безкоштовній версії (X Pass). Будь ласка перенесіть ваші серіали у безкоштовну версію SeriesGuide. Залиште версію X установленою для розблокування усіх функцій у безкоштовній версії.</string>
-  <string name="migration_import">Торкніться нижче, щоб імпортувати резервну копію, створену в SeriesGuide X.</string>
-  <string name="migration_action_import">Імпортувати та замінити існуючі серіали</string>
   <string name="onlyx">Only for supporters</string>
   <string name="action_upgrade">Unlock all features</string>
   <string name="billing_action_subscribe">Підписатись</string>

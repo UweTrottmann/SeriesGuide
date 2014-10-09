@@ -395,10 +395,6 @@
   <string name="dashclock_extension_label">Nadcházející epizoda</string>
   <string name="dashclock_extension_description">Zobrazuje nadcházející epizodu ze seznamu pořadů v SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Zobrazovat epizody nadcházející během</string>
-  <string name="action_migrate">Přesunutí z verze X</string>
-  <string name="migration_description">SeriesGuide X nyní slouží k odemknutí Rozšířených funkcí v bezplatné verzi (\"doživotní verze X\"). Prosím přesuňte své seriály na bezplatnou verzi SeriesGuide. Nechte verzi X nainstalovanou pro odemknutí všech funkcí v bezplatné verzi.</string>
-  <string name="migration_import">Klikněte dole pro importování zálohy vytvořené ve verzi X.</string>
-  <string name="migration_action_import">Importovat a nahradit stávající seriály</string>
   <string name="onlyx">Only for supporters</string>
   <string name="action_upgrade">Unlock all features</string>
   <string name="billing_action_subscribe">Odebírat</string>

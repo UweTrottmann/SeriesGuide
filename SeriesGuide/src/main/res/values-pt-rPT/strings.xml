@@ -395,10 +395,6 @@
   <string name="dashclock_extension_label">Próximo episódio</string>
   <string name="dashclock_extension_description">Exibe o próximo episódio das tuas séries do SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Mostrar episódios nos próximos</string>
-  <string name="action_migrate">Migrar do X</string>
-  <string name="migration_description">O SeriesGuide X passou agora a ser uma chave que serve para desbloquear X funcionalidades da versão gratuita (Passe X). Por favor, migre as suas séries para a versão gratuita do SeriesGuide. Mas mantenha o X instalado para desbloquear todas as funcionalidades da versão gratuita.</string>
-  <string name="migration_import">Prima em baixo para importar o backup criado no SeriesGuide X.</string>
-  <string name="migration_action_import">Importar e substituir séries existentes</string>
   <string name="onlyx">Only for supporters</string>
   <string name="action_upgrade">Unlock all features</string>
   <string name="billing_action_subscribe">Subscrever</string>

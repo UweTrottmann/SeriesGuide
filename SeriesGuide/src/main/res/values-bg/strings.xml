@@ -395,10 +395,6 @@
   <string name="dashclock_extension_label">Предстоящ епизод</string>
   <string name="dashclock_extension_description">Показва следващите епизоди на вашите SeriesGuide  сериали.</string>
   <string name="dashclock_pref_upcoming_threshold">Покажи епизодите в следващите</string>
-  <string name="action_migrate">Прехвърляне от X</string>
-  <string name="migration_description">SeriesGuide X вече представлява ключ за X характеристики (функции) в безплатната версия ("X Pass"). Моля прехвърлете ТВ предаванията си в безплатната версия на SeriesGuide. Запазете X инсталиран, за да отключите всички характеристики (функции) в безплатната версия.</string>
-  <string name="migration_import">Докоснете по-долу, за да импортирате архива създаден в SeriesGuide X.</string>
-  <string name="migration_action_import">Импортиране и замяна на съществуващите ТВ предавания</string>
   <string name="onlyx">Only for supporters</string>
   <string name="action_upgrade">Unlock all features</string>
   <string name="billing_action_subscribe">Абониране</string>

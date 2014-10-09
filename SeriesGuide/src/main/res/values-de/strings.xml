@@ -260,7 +260,7 @@
   <string name="pref_onlyseasonepssummary">Special Episodes verschwinden, außer in der Staffel-Liste</string>
   <string name="pref_seasonsorting">Sortiere Staffeln nach…</string>
   <string name="pref_episodesorting">Sortiere Folgen nach…</string>
-  <string name="pref_language">Sprache des Inhalts</string>
+  <string name="pref_language">Sprache der Inhalte</string>
   <string name="pref_updatewifionly">Bilder nur über WLAN</string>
   <string name="pref_updatewifionlysummary">Downloads über Mobilfunknetze vermeiden, um Kosten für die Datenübertragung zu senken</string>
   <string name="about">Über SeriesGuide</string>
@@ -395,10 +395,6 @@
   <string name="dashclock_extension_label">Nächste Folge</string>
   <string name="dashclock_extension_description">Zeigt die nächste kommende Folge deiner Serien aus SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Zeige Folge innerhalb…</string>
-  <string name="action_migrate">Migration von X</string>
-  <string name="migration_description">SeriesGuide X ist jetzt ein Freischalt-Schlüssel für die X Funktionen in der kostenlosen Version (\"X Life-Time Pass\"). Bitte übertragen Sie Ihre Serien in die kostenlose Version von SeriesGuide. Lassen Sie X installiert um alle Funktionen in der kostenlosen Version freizuschalten.</string>
-  <string name="migration_import">Tippen Sie unten um die in SeriesGuide X erstellte Sicherung zu importieren.</string>
-  <string name="migration_action_import">Importieren und vorhandene Serien ersetzen</string>
   <string name="onlyx">Nur für Unterstützer</string>
   <string name="action_upgrade">Alle Funktionen freischalten</string>
   <string name="billing_action_subscribe">Abonnieren</string>

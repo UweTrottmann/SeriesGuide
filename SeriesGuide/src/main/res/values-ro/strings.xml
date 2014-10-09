@@ -395,10 +395,6 @@
   <string name="dashclock_extension_label">Episoade ce urmeaza</string>
   <string name="dashclock_extension_description">Afişează următorul episod din SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Afisare episod intre…</string>
-  <string name="action_migrate">Migrati de la veriunea X</string>
-  <string name="migration_description">SeriesGuide X este acum o cheie de deblocare a optiunilor X in varianta gratuita ("X Life-Time Pass"). Va rugam sa migrati Serialele in versiunea gratuita a SeriesGuide. Pastrati X instalat pentru a debloca toate optiunile in versiunea gratuita.</string>
-  <string name="migration_import">Atingeti mai jos pentru a importa backup-ul din SeriesGuide X.</string>
-  <string name="migration_action_import">Importa si inlocuieste serialele existente</string>
   <string name="onlyx">Only for supporters</string>
   <string name="action_upgrade">Unlock all features</string>
   <string name="billing_action_subscribe">Aboneaza-te</string>
