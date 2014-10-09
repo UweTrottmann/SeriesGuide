@@ -259,27 +259,6 @@ public final class ServiceUtils {
     }
 
     /**
-     * Sets a {@link OnClickListener} on the given button linking to a Google Play Store search for
-     * the given title or disabling the button if the title is empty.
-     */
-    public static void setUpGooglePlayButton(final String title, View playButton,
-            final String logTag) {
-        if (playButton != null) {
-
-            if (!TextUtils.isEmpty(title)) {
-                playButton.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        searchGooglePlay(title, logTag, v.getContext());
-                    }
-                });
-            } else {
-                playButton.setEnabled(false);
-            }
-        }
-    }
-
-    /**
      * Returns a view {@link android.content.Intent} for a search of Google Play's movies category
      * (includes TV shows).
      */

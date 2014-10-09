@@ -49,17 +49,17 @@ public class ListWidgetService extends RemoteViewsService {
     }
 
     class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
-        private Context mContext;
 
-        private int mAppWidgetId;
+        private final Context context;
+        private final int appWidgetId;
 
-        private Cursor mDataCursor;
-
-        private int mTypeIndex;
+        private Cursor dataCursor;
+        private int widgetType;
+        private boolean isLightTheme;
 
         public ListRemoteViewsFactory(Context context, Intent intent) {
-            mContext = context;
-            mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+            this.context = context;
+            this.appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                     AppWidgetManager.INVALID_APPWIDGET_ID);
         }
 
@@ -69,14 +69,14 @@ public class ListWidgetService extends RemoteViewsService {
         }
 
         private void onQueryForData() {
-            boolean isHideWatched = WidgetSettings.getWidgetHidesWatched(mContext, mAppWidgetId);
-            mTypeIndex = WidgetSettings.getWidgetListType(mContext, mAppWidgetId);
+            boolean isHideWatched = WidgetSettings.isHidingWatchedEpisodes(context, appWidgetId);
+            int widgetType = WidgetSettings.getWidgetListType(context, appWidgetId);
 
             Cursor newCursor;
-            switch (mTypeIndex) {
+            switch (widgetType) {
                 case WidgetSettings.Type.RECENT:
                     // Recent episodes
-                    newCursor = DBUtils.getRecentEpisodes(isHideWatched, mContext);
+                    newCursor = DBUtils.getRecentEpisodes(isHideWatched, context);
                     break;
                 case WidgetSettings.Type.FAVORITES:
                     // Favorite shows + next episodes, exclude those without
@@ -90,7 +90,7 @@ public class ListWidgetService extends RemoteViewsService {
                     break;
                 default:
                     // Upcoming episodes
-                    newCursor = DBUtils.getUpcomingEpisodes(isHideWatched, mContext);
+                    newCursor = DBUtils.getUpcomingEpisodes(isHideWatched, context);
                     break;
             }
 
@@ -100,9 +100,11 @@ public class ListWidgetService extends RemoteViewsService {
             }
 
             // switch out cursor
-            Cursor oldCursor = mDataCursor;
+            Cursor oldCursor = dataCursor;
 
-            mDataCursor = newCursor;
+            this.dataCursor = newCursor;
+            this.widgetType = widgetType;
+            this.isLightTheme = WidgetSettings.isLightTheme(context, appWidgetId);
 
             if (oldCursor != null) {
                 oldCursor.close();
@@ -112,55 +114,65 @@ public class ListWidgetService extends RemoteViewsService {
         public void onDestroy() {
             // In onDestroy() you should tear down anything that was setup for
             // your data source, eg. cursors, connections, etc.
-            if (mDataCursor != null) {
-                mDataCursor.close();
+            if (dataCursor != null) {
+                dataCursor.close();
             }
         }
 
         public int getCount() {
-            if (mDataCursor != null) {
-                return mDataCursor.getCount();
+            if (dataCursor != null) {
+                return dataCursor.getCount();
             } else {
                 return 0;
             }
         }
 
         public RemoteViews getViewAt(int position) {
-            final boolean isShowQuery = mTypeIndex == WidgetSettings.Type.FAVORITES;
+            final boolean isShowQuery = widgetType == WidgetSettings.Type.FAVORITES;
 
-            // We construct a remote views item based on our widget item xml
-            // file, and set the text based on the position.
-            RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.appwidget_row);
+            // build a remote views collection item
+            RemoteViews rv = new RemoteViews(context.getPackageName(),
+                    isLightTheme ? R.layout.appwidget_row_light : R.layout.appwidget_row);
 
-            if (mDataCursor == null
-                    || mDataCursor.isClosed() || !mDataCursor.moveToPosition(position)) {
+            // return empty item if no data available
+            if (dataCursor == null
+                    || dataCursor.isClosed() || !dataCursor.moveToPosition(position)) {
                 return rv;
             }
 
+            // set the fill-in intent for the collection item
+            Bundle extras = new Bundle();
+            extras.putInt(EpisodesActivity.InitBundle.EPISODE_TVDBID,
+                    dataCursor.getInt(isShowQuery ?
+                            ShowsQuery.SHOW_NEXT_EPISODE_ID : ActivityFragment.ActivityQuery._ID));
+            Intent fillInIntent = new Intent();
+            fillInIntent.putExtras(extras);
+            rv.setOnClickFillInIntent(R.id.appwidget_row, fillInIntent);
+
             // episode description
-            int seasonNumber = mDataCursor.getInt(isShowQuery ?
+            int seasonNumber = dataCursor.getInt(isShowQuery ?
                     ShowsQuery.EPISODE_SEASON : ActivityFragment.ActivityQuery.SEASON);
-            int episodeNumber = mDataCursor.getInt(isShowQuery ?
+            int episodeNumber = dataCursor.getInt(isShowQuery ?
                     ShowsQuery.EPISODE_NUMBER : ActivityFragment.ActivityQuery.NUMBER);
-            String title = mDataCursor.getString(isShowQuery ?
+            String title = dataCursor.getString(isShowQuery ?
                     ShowsQuery.EPISODE_TITLE : ActivityFragment.ActivityQuery.TITLE);
             rv.setTextViewText(R.id.textViewWidgetEpisode,
-                    Utils.getNextEpisodeString(mContext, seasonNumber, episodeNumber, title));
+                    Utils.getNextEpisodeString(context, seasonNumber, episodeNumber, title));
 
             // relative release time
-            Date actualRelease = TimeTools.getEpisodeReleaseTime(mContext,
-                    mDataCursor.getLong(isShowQuery ?
+            Date actualRelease = TimeTools.getEpisodeReleaseTime(context,
+                    dataCursor.getLong(isShowQuery ?
                             ShowsQuery.EPISODE_FIRSTAIRED_MS
                             : ActivityFragment.ActivityQuery.RELEASE_TIME_MS));
             // "in 13 mins (Fri)"
             String relativeTime = getString(R.string.release_date_and_day,
-                    TimeTools.formatToRelativeLocalReleaseTime(mContext, actualRelease),
+                    TimeTools.formatToRelativeLocalReleaseTime(context, actualRelease),
                     TimeTools.formatToLocalReleaseDay(actualRelease));
             rv.setTextViewText(R.id.widgetAirtime, relativeTime);
 
             // absolute release time and network (if any)
-            String absoluteTime = TimeTools.formatToLocalReleaseTime(mContext, actualRelease);
-            String network = mDataCursor.getString(isShowQuery ?
+            String absoluteTime = TimeTools.formatToLocalReleaseTime(context, actualRelease);
+            String network = dataCursor.getString(isShowQuery ?
                     ShowsQuery.SHOW_NETWORK : ActivityFragment.ActivityQuery.SHOW_NETWORK);
             if (!TextUtils.isEmpty(network)) {
                 absoluteTime += " " + network;
@@ -168,15 +180,15 @@ public class ListWidgetService extends RemoteViewsService {
             rv.setTextViewText(R.id.widgetNetwork, absoluteTime);
 
             // show name
-            rv.setTextViewText(R.id.textViewWidgetShow, mDataCursor.getString(isShowQuery ?
+            rv.setTextViewText(R.id.textViewWidgetShow, dataCursor.getString(isShowQuery ?
                     ShowsQuery.SHOW_TITLE : ActivityFragment.ActivityQuery.SHOW_TITLE));
 
             // show poster
-            String posterPath = mDataCursor.getString(isShowQuery
+            String posterPath = dataCursor.getString(isShowQuery
                     ? ShowsQuery.SHOW_POSTER : ActivityFragment.ActivityQuery.SHOW_POSTER);
             Bitmap poster;
             try {
-                poster = ServiceUtils.getPicasso(mContext)
+                poster = ServiceUtils.getPicasso(context)
                         .load(TheTVDB.buildPosterUrl(posterPath))
                         .centerCrop()
                         .resizeDimen(R.dimen.widget_item_width, R.dimen.widget_item_height)
@@ -192,28 +204,20 @@ public class ListWidgetService extends RemoteViewsService {
                 rv.setImageViewResource(R.id.widgetPoster, R.drawable.ic_image_missing);
             }
 
-            // Set the fill-in intent for the list items
-            Bundle extras = new Bundle();
-            extras.putInt(EpisodesActivity.InitBundle.EPISODE_TVDBID,
-                    mDataCursor.getInt(isShowQuery ?
-                            ShowsQuery.SHOW_NEXT_EPISODE_ID : ActivityFragment.ActivityQuery._ID));
-            Intent fillInIntent = new Intent();
-            fillInIntent.putExtras(extras);
-            rv.setOnClickFillInIntent(R.id.appwidget_row, fillInIntent);
-
             // Return the remote views object.
             return rv;
         }
 
         public RemoteViews getLoadingView() {
-            // You can create a custom loading view (for instance when
-            // getViewAt() is slow.) If you return null here, you will get the
-            // default loading view.
-            return null;
+            // If you return null here, you will get the default loading view.
+            // create a custom loading view
+            return new RemoteViews(context.getPackageName(),
+                    isLightTheme ? R.layout.appwidget_row_light : R.layout.appwidget_row);
         }
 
         public int getViewTypeCount() {
-            return 1;
+            // different view layout for default and light theme
+            return 2;
         }
 
         public long getItemId(int position) {

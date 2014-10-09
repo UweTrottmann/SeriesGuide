@@ -44,6 +44,7 @@
     <color name="separator_inverse">#ffe9e9e9</color>
     <color name="green_dark">#ff05A30D</color>
     <color name="widget_default_background">#80000000</color>
+    <color name="widget_default_background_light">#80ffffff</color>
     <color name="black_overlay">#aa000000</color>
     <color name="separator_dim">#40bebebe</color>
     <color name="divider">#26ffffff</color>

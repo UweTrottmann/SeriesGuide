@@ -43,6 +43,11 @@
     <string name="pref_suggest_features">Suggest improvements</string>
     <string name="pref_suggest_featuressummary">Suggest and vote on future improvements</string>
 
+    <!-- Themes -->
+    <string name="theme_default">SeriesGuide</string>
+    <string name="theme_dark_alt">Android Dark</string>
+    <string name="theme_light">SeriesGuide Light</string>
+
     <!-- Season sort orders -->
     <string-array name="sesorting">
         <item>@string/sort_order_latest_first</item>
@@ -231,9 +236,9 @@
 
     <!-- Theme variants -->
     <string-array name="themeSelection">
-        <item>SeriesGuide</item>
-        <item>Android Dark</item>
-        <item>SeriesGuide Light</item>
+        <item>@string/theme_default</item>
+        <item>@string/theme_dark_alt</item>
+        <item>@string/theme_light</item>
     </string-array>
     <string-array name="themeSelectionData">
         <item>0</item>
@@ -281,6 +286,16 @@
         <item>0</item>
         <item>1</item>
         <item>2</item>
+    </string-array>
+
+    <!-- Widget themes -->
+    <string-array name="widgetTheme">
+        <item>@string/theme_default</item>
+        <item>@string/theme_light</item>
+    </string-array>
+    <string-array name="widgetThemeData">
+        <item>0</item>
+        <item>1</item>
     </string-array>
 
     <!-- DashClock extension thresholds -->
