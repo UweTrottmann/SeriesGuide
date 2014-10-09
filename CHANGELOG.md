@@ -5,16 +5,6 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 19 *(in development)*
------------------------------
-
-#### 19-beta1 *(2014-10-08)*
-
-* FEATURE Light theme for list widget.
-* TWEAK Display "Unlock all features" link in nav drawer if user is no supporter. Update strings related to unlocking all features.
-* FIX Create calendar events with new method available since Android ICS. Enables creating events in Sunrise calendar.
-* NOTICE Dropped SeriesGuide X migration tool.
-
 Version 18 *(2014-09-26)*
 -----------------------------
 
@@ -23,13 +13,21 @@ Version 18 *(2014-09-26)*
 * Share statistics.
 * Amazon App Store version.
 
+#### 18.1.0 *(2014-10-09) Amazon only*
+
+* TWEAK Make subscription optional, like Google version.
+* FEATURE Light theme for list widget.
+* TWEAK Display "Unlock all features" link in nav drawer if user is no supporter. Update strings related to unlocking all features.
+* FIX Create calendar events with new method available since Android ICS. Enables creating events in Sunrise calendar.
+* NOTICE Dropped SeriesGuide X migration tool.
+
 #### 18.0.3 *(2014-10-02)*
 
 * FIX Movie watched state not changing for movies in watchlist or collection.
 * TWEAK Better action button descriptions.
 * NOTICE trakt ratings, comments and movie watched state are currently incorrectly displayed due to issues at trakt. They are, however, correctly sent to trakt.
 
-#### 18.0.2 *(2014-09-28)*
+#### 18.0.2 *(2014-09-28) Amazon only*
 
 * FIX Remove all Google Play search links from Amazon version.
 
