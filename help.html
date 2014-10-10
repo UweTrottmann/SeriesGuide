@@ -11,94 +11,64 @@ title: Help
     
     <a href="#howto"><h2>How to</h2></a>
     <ul class="toc">
-      <li><a href="#upgrade" >Get X features</a></li>
-      <li><a href="#sync">Should I sync with SeriesGuide Cloud (or trakt)?</a></li>
-      <li><a href="#buttons">Check in, flag watched, collected or skip</a></li>
+      <li><a href="#upgrade">Unlock all features</a></li>
+      <li><a href="#buttons">Check in, set watched, add to collection and skip</a></li>
       <li><a href="#checkins">How check-ins work</a></li>
       <li><a href="#remove">Remove a show</a></li>
       <li><a href="#hide">Restore a hidden show</a></li>
       <li><a href="#update">Manually update shows</a></li>
-      <li><a href="#backup">Backup or restore your shows and lists</a></li>
-      <li><a href="#autobackup">Restore your shows and lists from an Auto-Backup</a></li>
+      <li><a href="#backup">Backup or restore your data</a></li>
+      <li><a href="#autobackup">Restore your data from an Auto-Backup</a></li>
       <li><a href="#language">Change the app language</a></li>
+      <li><a href="#sync">Sync with SeriesGuide Cloud (or trakt)</a></li>
       <li><a href="#migrate">Migrate from SeriesGuide X to SeriesGuide</a></li>
     </ul>
     
     <a href="#fixes"><h2>Fix an issue</h2></a>
     <ul class="toc">
       <li><a href="#translation" >Quality of translations</li>
-      <li><a href="#watching">Watching episodes or movies</a></li>
+      <li><a href="#watching">Watch shows or movies</a></li>
       <li><a href="#missing">Missing or incorrect information</a></li>
-      <li><a href="#airtimes">Wrong air/release time</a></li>
-      <li><a href="#fixcheckin">tvtag check-ins end up with the wrong show or do not work</a></li>
-      <li><a href="#widget">The app widget displays no data or is missing in the list of available widgets</a></li>
-      <li><a href="#timezone">Changing the device time zone leads to wrong air times</a></li>
+      <li><a href="#airtimes">Wrong air/release times</a></li>
+      <li><a href="#fixcheckin">tvtag check-ins do not work</a></li>
+      <li><a href="#widget">The widget displays no data or is missing</a></li>
+      <li><a href="#timezone">After changing the time zone times are incorrect</a></li>
     </ul>
     
-    <a href="#trakt"><h2 >trakt integration</h2></a>
+    <a href="#trakt"><h2>trakt integration</h2></a>
     <ul class="toc">
       <li><a href="#connecttrakt">Connect to trakt/Troubleshooting</a></li>
       <li><a href="#library">Add shows from your trakt library</a></li>
       <li><a href="#whatissynced">What is synced with trakt</a></li>
     </ul>
     
-    <h2>Still lost?</h2>
-    <ul class="toc">
-      <li><a href="https://plus.google.com/u/0/communities/103447253937737054097"><img src="images/gplus-16.png"/> Ask for help on the Google+ community <span class="glyphicon glyphicon-new-window"></span></a></li>
-      <li><a href="http://seriesguide.uservoice.com/">Suggest a feature <span class="glyphicon glyphicon-new-window"></span></a></li>
-    </ul>
+    <a href="#contact"><h2>Still lost?</h2></a>
 
     <a name="howto"></a> 
     <div class="spacer"></div>
 
     <a name="upgrade"></a>
     <h2>How to</h2>
-    
-    <div class="spacer"></div>
 
-    <h3>Get X features</h3>
-    <p>First, install SeriesGuide:</p>
-    <a href="https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide">
-        <img alt="Get it on Google Play" src="images/google-play-link-small.png" />
-    </a><br />
-    <br />
-    <p>Once installed, in SeriesGuide:</p>
-    <ol>
-        <li>From the show list, touch <strong>Menu</strong> <img src="images/optionsmenu.png" width="8" height="20" />.</li>
-        <li>Touch <strong>Get X features</strong> and proceed with the purchase.</li>
-    </ol>
-    <p>You can also <a href="whypay">learn more about X features</a>.</p>
-    <p><span class="label label-info">Tip</span> Manage your subscription in the Play Store app or on the <a href="https://play.google.com/apps">Google Play apps website</a>.</p>
-
-    <a name="sync"></a>
-    <div class="spacer"></div>
-
-    <h3>Should I sync with SeriesGuide Cloud (or trakt)?</h3>
-    <p>It depends on the devices and apps you use.</p>
-    <dt>SeriesGuide Cloud</dt>
-    <dd>You only use SeriesGuide, maybe even on multiple devices. You want to sync favorite and hidden state of shows. You want to sync skipped episodes, in addition to watched/collected state. You don't want to create a trakt account.</dd>
-    <dt>trakt</dt>
-    <dd>You use other apps (e.g. apps on iOS, a media center) connected to trakt or the trakt website to access and sync your trakt library, to check in, mark episodes watched/collected or modify your movie watchlist and collection.</dd>
-    <br/>
-    <p><span class="label label-info">Note</span> You can be <strong>connected to SeriesGuide Cloud and trakt</strong> at the same time. Checking in, sending watched/collected state to trakt, commenting, rating, etc. will still work as expected. However, <strong>sync with trakt will be disabled</strong> (new shows auto-add, episode watched/collected state download, movie watchlist and collection sync).</p>
-    <p><span class="label label-info">Tip</span> <strong>You can always change your mind!</strong> First, disconnect SeriesGuide Cloud and trakt. Then, sign in again into either SeriesGuide Cloud or trakt. The shows and movies on your device will be merged with the data already existing on the service you signed into.</p>
+    <h3>Unlock all features</h3>
+    <p>Learn more about <a href="/whypay">unlocking all features</a>.</p>
 
     <a name="buttons"></a>
     <div class="spacer"></div>
   
-  <h3>Check in, flag watched, collected or skip</h3>
+    <h3>Check in, set watched, add to collection and skip</h3>
     <p>Each episode displays a button bar with four actions:</p>
     <p><img src="images/episode-bar.png" alt="Episode action bar" class="img-responsive"></img></p>
     <ul>
-        <li><b>Check in</b> (via tvtag or trakt), e.g. you are watching right now.</li>
-        <li><b>Watched</b> flag toggle, e.g. you have (just) watched this.</li>
-        <li><b>Collected</b> flag toggle, e.g. you purchased (DVD, Blu-Ray) or downloaded the episode.</li>
-        <li><b>Skip</b>, e.g. you don't want to watch this (special or uninteresting) episode right now. (Not synced with trakt!)</li>
+        <li><a href="#checkins"><b>Check in</b> via tvtag or trakt</a> if you are watching right now.</li>
+        <li><b>Set watched</b> if you have (just) watched this.</li>
+        <li><b>Add to collection</b> if you purchased (DVD, Blu-Ray) or downloaded this.</li>
+        <li><b>Skip</b> if you don't want to watch this episode right now. (Not synced with trakt!)</li>
     </ul>
-    <p><span class="label label-info">Tip</span> Touch and hold any button or item to learn about what it does when touched.</p>
+    <p><span class="label label-info">Tip</span> On Android you can touch and hold most buttons to show a brief description.</p>
   
-  <a name="checkins"></a>
-  <div class="spacer"></div>
+    <a name="checkins"></a>
+    <div class="spacer"></div>
   
     <h3>How check-ins work</h3>
     <p>Check-in to let friends or the world know what you are watching right now. With SeriesGuide, depending on which service you use, check-ins behave a little differently.</p>
@@ -130,152 +100,157 @@ title: Help
       <li>Touch the funnel-shaped icon <strong>Filter shows</strong> again, then touch <strong>Remove all filters</strong>.</li>
     </ol>
     
-  <a name="update"></a>
-  <div class="spacer"></div>	
-  
-  <h3>Manually update shows</h3>
-  <p>Update all shows:</p>
-  <ol>
-     <li>From the show list, touch <strong>Menu</strong> <img src="images/optionsmenu.png" width="8" height="20">.</li>
-     <li>Touch <strong>Advanced</strong>.</li>
-     <li>Touch <strong>Update (outdated only)</strong> or <strong>Update (all)</strong>.</li>
-  </ol>
-  <p>Update just a single show:</p>
-  <ol>
-     <li>From the show list, touch <strong>Menu</strong> <img src="images/optionsmenu.png" width="8" height="20" /> of a show.</li>
-     <li>Select <strong>Update</strong>.</li>
-  </ol>
-  
-  <a name="backup"></a>
-  <div class="spacer"></div>
-  
-  <h3>Backup or restore your shows and lists</h3>
-    <p>To backup or restore your shows and lists:</p>
+    <a name="update"></a>
+    <div class="spacer"></div>	
+    
+    <h3>Manually update shows</h3>
+    <p>Update a single show:</p>
     <ol>
-        <li>From the show list, swipe from the left edge to open the navigation drawer.</li>
-        <li>Touch <strong>Settings</strong>.</li>
-        <li>Touch <strong>Advanced</strong>.</li>
-        <li>Touch <strong>Backup/Restore</strong> and follow the given instructions.</p></li>
+       <li>From the show list, touch <strong>Menu</strong> <img src="images/optionsmenu.png" width="8" height="20" /> of a show.</li>
+       <li>Select <strong>Update</strong>.</li>
     </ol>
-    <p><span class="label label-info">Tip</span> Some users sync their backup file with e.g. Dropbox around devices as an alternative to a trakt account.</p>
+    <p>Update all shows:</p>
+    <ol>
+      <li>From the show list, touch <strong>Menu</strong> <img src="images/optionsmenu.png" width="8" height="20">.</li>
+      <li>Touch <strong>Advanced</strong>.</li>
+      <li>Touch <strong>Update (outdated only)</strong> or <strong>Update (all)</strong>.</li>
+    </ol>
+    
+    <a name="backup"></a>
+    <div class="spacer"></div>
+  
+    <h3>Backup or restore your data</h3>
+    <p>To backup or restore your shows, lists and movies:</p>
+    <ol>
+      <li>From the show list, swipe from the left edge to open the navigation drawer.</li>
+      <li>Touch <strong>Settings</strong> > <strong>Advanced</strong> > <strong>Backup/Restore</strong>.</li>
+      <li>Follow the instructions.</p></li>
+    </ol>
+    <p><span class="label label-info">Tip</span> Some users sync their backup file with e.g. Dropbox.</p>
 
     <a name="autobackup"></a>
-  <div class="spacer"></div>
+    <div class="spacer"></div>
   
-  <h3>Restore your shows and lists from an Auto-Backup</h3>
-    <p>In case your shows get lost, SeriesGuide creates weekly automatic backups to the Download folder of your device. You can turn this off in advanced settings.</p>
+    <h3>Restore your data from an Auto-Backup</h3>
+    <p>In case your shows, lists and movies get lost and you didn't use trakt or SeriesGuide Cloud, SeriesGuide creates <strong>weekly automatic backups to the Download folder</strong> of your device. You can turn this off in advanced settings.</p>
     <p>To restore an Auto-Backup:</p>
     <ol>
-        <li>From the show list, swipe from the left edge to open the navigation drawer.</li>
-        <li>Touch <strong>Settings</strong>.</li>
-        <li>Touch <strong>Advanced</strong>.</li>
-        <li>Touch <strong>Backup/Restore</strong>.</li>
-        <li>Look for the <strong>Restore Auto-Backup</strong> button to proceed to restore from an auto-backup.</li>
+      <li>From the show list, swipe from the left edge to open the navigation drawer.</li>
+      <li>Touch <strong>Settings</strong> > <strong>Advanced</strong> > <strong>Backup/Restore</strong>.</li>
+      <li>Look for the <strong>Restore Auto-Backup</strong> button to restore from the last auto-backup.</li>
     </ol>
   
-  <a name="language"></a>
-  <div class="spacer"></div>
-  
-  <h3>Change the app language</h3>
-  <p>If available, SeriesGuide will use <strong>the language your Android device is set to</strong>. Otherwise it will fall back to English. To change the language of your Android device look in the Android Settings app.</p>
-  <p><span class="label label-info">Note</span> All translations come from volunteers who translate free of charge (!) on crowdin. Please consider <a href="http://crowdin.net/project/seriesguide-translations/invite">to translate or proof read</a>!</p>
+    <a name="language"></a>
+    <div class="spacer"></div>
+    
+    <h3>Change the app language</h3>
+    <p>If available, SeriesGuide will use <strong>the language your Android device is set to</strong>. Otherwise it will fall back to English. To change the language of your Android device look in the Android Settings app.</p>
+    <p><span class="label label-info">Note</span> All translations come from volunteers who translate free of charge (!) on crowdin. Please consider <a href="https://crowdin.com/project/seriesguide-translations/invite">to translate or proof read</a>!</p>
+
+    <a name="sync"></a>
+    <div class="spacer"></div>
+
+    <h3>Should I sync with SeriesGuide Cloud (or trakt)?</h3>
+    <p>It depends on the devices and apps you use.</p>
+    <dt>SeriesGuide Cloud</dt>
+    <dd>You only use SeriesGuide, maybe even on multiple devices. You want to sync favorite and hidden state of shows. You want to sync skipped episodes, in addition to watched/collected state. You don't want to create a trakt account.</dd>
+    <dt>trakt</dt>
+    <dd>You use other apps (e.g. apps on iOS, a media center) connected to trakt or the trakt website to access and sync your trakt library, to check in, mark episodes watched/collected or modify your movie watchlist and collection.</dd>
+    <br/>
+    <p><span class="label label-info">Note</span> You can be <strong>connected to SeriesGuide Cloud and trakt</strong> at the same time. Checking in, sending watched/collected state to trakt, commenting, rating, etc. will still work as expected. However, <strong>sync with trakt will be disabled</strong> (new shows auto-add, episode watched/collected state download, movie watchlist and collection sync).</p>
+    <p><span class="label label-info">Tip</span> <strong>You can always change your mind!</strong> First, disconnect SeriesGuide Cloud and trakt. Then, sign in again into either SeriesGuide Cloud or trakt. The shows and movies on your device will be merged with the data already existing on the service you signed into.</p>
 
     <a name="migrate"></a>
     <div class="spacer"></div>
 
-    <h3>Migrate from SeriesGuide X to SeriesGuide <span class="label label-important">For X users</span></h3>
-    <p>Since mid-2013 SeriesGuide X is an <strong>unlock key for X features in the free version</strong> ("X Pass").</p>
-    <p>Please <strong>migrate your shows to the free version</strong> of SeriesGuide. Keep X installed to unlock all features in the free version.</p>
+    <h3>Migrate from SeriesGuide X to SeriesGuide</h3>
+    <p>Since mid-2013 SeriesGuide X is an <strong>unlock key for all features in the free version</strong> ("X Pass").</p>
+    <p>Please <strong>migrate your shows to the free version</strong> of SeriesGuide.</p>
     <p>In SeriesGuide X:</p>
     <ol>
       <li>Touch <strong>Backup Shows</strong>.</li>
-      <li>Once the backup is complete a new option appears offering to install SeriesGuide. Touch <strong>Install SeriesGuide</strong> and proceed with installation</li>
+      <li>Once the backup is complete a new option appears offering to install SeriesGuide. Touch <strong>Install SeriesGuide</strong> and proceed with installation.</li>
     </ol>
-    <p>Once installed, in SeriesGuide:</p>
-    <ol>
-      <li>Touch <strong>Migrate from X</strong> on the <em>Get Started</em> page (or swipe from the left edge and touch <strong>Settings</strong> > <strong>Services</strong> > <strong>Migrate from X</strong>).</li>
-      <li>Touch <strong>Import and replace shows</strong> to restore the backup you just created.</li>
-      <li>Connect any accounts (trakt, tvtag) and change settings to your liking. From the show list you might have to touch <strong>Menu</strong> <img src="images/optionsmenu.png" width="8" height="20" /> > <strong>Advanced</strong> > <strong>Load posters</strong>.</li>
-    </ol>
-    <p><a href="whypay">Learn more about X features</a>.</p>
+    <p>Once installed, in SeriesGuide use the <strong>Backup/Restore</strong> tool to <a href="#backup">restore the backup you created.</a> Reconnect any accounts (trakt, tvtag) and change settings to your liking.</p>
   
-  <a name="fixes"></a>
-  <div class="largespacer"></div>	
-  
-  <a name="translation"></a></a>
-  <h2>Fix an issue</h2>
+    <a name="fixes"></a>
+    <div class="largespacer"></div>	
+    
+    <a name="translation"></a></a>
+    <h2>Fix an issue</h2>
 
-  <h3>Quality of translations</h3>
-  <p>If you found an error in the translation drop a message on Google+, Facebook or Twitter. You can also send an email from the in-app help menu.</p>
-  <p>Even better, consider <a href="http://crowdin.net/project/seriesguide-translations/invite">to translate or proof read</a> on crowdin!</p>
+    <h3>Quality of translations</h3>
+    <p>If you found an error in the translation <a href="#contact">drop a message</a>.</p>
+    <p>Even better, consider <a href="http://crowdin.net/project/seriesguide-translations/invite">to translate or proof read</a> on crowdin!</p>
     
     <a name="watching"></a>
     <div class="spacer"></div>
-  <h3>Watching episodes or movies</h3>
-  <p>SeriesGuide does <strong>not</strong> offer to watch shows or movies.</p>
-  <p>However, <strong>below each episode</strong> you will find <strong>links to popular services</strong> where you can (depending on your country) watch or purchase content.</p>
+    <h3>Watch shows or movies</h3>
+    <p>You can <strong>not</strong> watch shows or movies within SeriesGuide.</p>
+    <p>However, <strong>below each episode</strong> or in the <strong>menu of each movie</strong> you will find <strong>links to popular services</strong> where you can (depending on your country) watch or purchase content.</p>
   
-  <a name="missing"></a>
+    <a name="missing"></a>
     <div class="spacer"></div>    	
   
-  <h3>Missing or incorrect information about shows, episodes or movies</h3>
-  <p>First of all, try to <a href="#update">manually update</a>.</p>
-  <p>Otherwise, the <strong>information on theTVDb (shows) or TMDb (movies) might be wrong or outdated</strong>. SeriesGuide gets its data from <a href="http://thetvdb.com" rel="nofollow">thetvdb.com</a>, an open user-maintained TV database and <a href="http://www.themoviedb.org/" >themoviedb.org</a>, an open user-maintained movie database.</p>
-  <p>You may <strong>consider helping those projects to add or update show and movie information</strong>. Look on their websites for further information: <a href="http://forums.thetvdb.com/viewtopic.php?f=7&t=4076">Guidelines for thetvdb.com</a>, <a href="https://www.themoviedb.org/content/about">About themoviedb.org</a>.</p>
+    <h3>Missing or incorrect information about shows, episodes or movies</h3>
+    <p>First of all, try to <a href="#update">manually update</a>.</p>
+    <p>Otherwise, the <strong>information on TheTVDb (shows) or TMDb (movies) might be wrong or outdated</strong>. SeriesGuide gets its data from <a href="http://thetvdb.com">thetvdb.com</a>, an open user-maintained TV database and <a href="http://www.themoviedb.org/">themoviedb.org</a>, an open user-maintained movie database.</p>
+    <p>You may <strong>consider helping those projects to add or update show and movie information</strong>. Look on their websites for further information: <a href="http://forums.thetvdb.com/viewtopic.php?f=7&amp;t=4076">Guidelines for thetvdb.com</a>, <a href="https://www.themoviedb.org/content/about">About themoviedb.org</a>.</p>
   
-  <a name="airtimes"></a>
-  <div class="spacer"></div>
+    <a name="airtimes"></a>
+    <div class="spacer"></div>
   
-  <h3>Wrong air/release time</h3>
-  <p>SeriesGuide gets its data from <a href="http://thetvdb.com">thetvdb.com</a>, an open user-maintained TV database (see above) and <a href="https://trakt.tv">trakt</a>. The release times there are restricted to the <strong>original release</strong> in the country of origin.</p>
-  <p><span class="label label-info">Tip</span> If you want local listings and listings of re-broadcasts, please look for a suitable TV guide offering in your region.</p>
-  <p>If <strong>the release country is known</strong> (check <a href="https://trakt.tv">trakt</a> show page), SeriesGuide will assume the release time to be in a timezone of this country (e.g. Pacific Time for US shows, British Time for British shows, Central European Time for German shows, ...) and <strong>convert it to your device time zone</strong>. See <a href="https://github.com/UweTrottmann/SeriesGuide/issues/382">supported countries and time zones</a>.</p>
-  <p>If <strong>the release country is not known</strong>, SeriesGuide will assume the country to be the United States of America.</p>
-  <p><span class="label label-info">Info</span> If your device is <strong>set to a US or Canada mainland time zone</strong>, SeriesGuide will automatically adjust the release time (e.g. one hour earlier in Central Time).</p>
-  <p>If you believe a release time is incorrectly converted from the time displayed on <a href="https://trakt.tv">trakt</a>, please post on Google+, Facebook or Twitter or write me a mail through the Play store.</p>
+    <h3>Wrong air/release times</h3>
+    <p>SeriesGuide gets its data from <a href="http://thetvdb.com">thetvdb.com</a>, an open user-maintained TV database (see above) and <a href="https://trakt.tv">trakt</a>. The release times there are restricted to the <strong>original release</strong> in the country of origin.</p>
+    <p><span class="label label-info">Tip</span> If you want local listings and listings of re-broadcasts, please look for a suitable TV guide offering in your region.</p>
+    <p>If <strong>the release country is known</strong> (check <a href="https://trakt.tv">trakt</a> show page), SeriesGuide will assume the release time to be in a timezone of this country (e.g. Pacific Time for US shows, British Time for British shows, Central European Time for German shows, ...) and <strong>convert it to your device time zone</strong>. See <a href="https://github.com/UweTrottmann/SeriesGuide/issues/382">supported countries and time zones</a>.</p>
+    <p>If <strong>the release country is not known</strong>, SeriesGuide will assume the country to be the United States of America.</p>
+    <p><span class="label label-info">Info</span> If your device is <strong>set to a US or Canada mainland time zone</strong>, SeriesGuide will automatically adjust the release time (e.g. one hour earlier in Central Time).</p>
+    <p>If you believe a release time is incorrectly converted from the time displayed on <a href="https://trakt.tv">trakt</a>, please <a href="#contact">drop a message</a>.</p>
   
-  <a name="fixcheckin"></a>
-  <div class="spacer"></div>
+    <a name="fixcheckin"></a>
+    <div class="spacer"></div>
   
-  <h3>tvtag check-ins end up with the wrong show or do not work</h3>
-  <ol>
-        <li>From the check-in dialog, touch <b>Fix tvtag check-in</b>.</li>
-        <li>Select the show you want to check in to. If it is not listed, touch <b>Looking for something else?</b> and enter a search term, then press Enter or Search on your keyboard.</li>
-        <li>Select the show you want to check into and touch <strong>Save selection</strong>.</li>
-        <li>Touch <strong>Check-In</strong> to repeat the check-in.</li>	
-  </ol>
+    <h3>tvtag check-ins do not work</h3>
+    <ol>
+      <li>From the check-in dialog, touch <b>Fix tvtag check-in</b>.</li>
+      <li>Select the show you want to check in to. If it is not listed, touch <b>Looking for something else?</b> and enter a search term, then press Enter or Search on your keyboard.</li>
+      <li>Select the show you want to check into and touch <strong>Save selection</strong>.</li>
+      <li>Touch <strong>Check-In</strong> to repeat the check-in.</li>	
+    </ol>
   
-  <a name="widget"></a>
-  <div class="spacer"></div>
+    <a name="widget"></a>
+    <div class="spacer"></div>
+    
+    <h3>The widget displays no data or is missing</h3>
+    <p>You may have moved SeriesGuide to the SD card/external storage. For SeriesGuide to work properly it has to be installed on your device/internal memory. Move it back and everything should be fine again (if not, try rebooting your device).</p> 
   
-  <h3>The app widget displays no data or is missing in the list of available widgets</h3>
-  <p>You may have moved SeriesGuide to the SD card/external storage. For SeriesGuide to work properly it has to be installed on your device/internal memory. Move it back and everything should be fine again (if not, try rebooting your device).</p> 
+    <a name="timezone"></a>
+    <div class="spacer"></div>
   
-  <a name="timezone"></a>
-  <div class="spacer"></div>
+    <h3>After changing the time zone, times are incorrect</h3>
+    <p>Please stop SeriesGuide and restart it:</p>
+    <ol>
+       <li>Open the Settings app from the app drawer.</li>
+       <li>Touch on <strong>Apps</strong>.</li>
+       <li>Find SeriesGuide in the list of downloaded apps and tap on it.</li>
+       <li>Touch <strong>Force stop</strong>.</li>
+       <li>From your launcher, start SeriesGuide again.</li>
+    </ol>
+    <p>If that won't help, try to <a href="#update">update all shows</a>.</p>
   
-  <h3>Changing the device time zone leads to wrong air times</h3>
-  <p>Please stop SeriesGuide and restart it:</p>
-  <ol>
-     <li>From your home screen, launch Settings from the app drawer.</li>
-     <li>Touch on <strong>Apps</strong>.</li>
-     <li>Find SeriesGuide in the list of downloaded apps and tap on it.</li>
-     <li>Touch <strong>Force stop</strong>.</li>
-     <li>From your launcher, start SeriesGuide <img src="images/icon_inline.png" alt="SeriesGuide icon" class="app-logo-inline"/> again.</li>
-  </ol>
-  
-  <a name="trakt"></a>
-  <div class="largespacer"></div>
-  
+    <a name="trakt"></a>
+    <div class="largespacer"></div>
+
     <a name="connecttrakt"></a>
     <h2>trakt integration</h2>
 
     <h3>Connect to trakt</h3>
     <ol>
-        <li>From the show list, swipe from the left edge to open the navigation drawer.</li>
-        <li>Touch <strong>Settings</strong>.</li>
-        <li>Touch <strong>Services</strong>.</li>
-        <li>Touch <strong>Connect to trakt</strong> and follow the given instructions.</p></li>
+      <li>From the show list, swipe from the left edge to open the navigation drawer.</li>
+      <li>Touch <strong>Settings</strong>.</li>
+      <li>Touch <strong>Services</strong>.</li>
+      <li>Touch <strong>Connect to trakt</strong> and follow the given instructions.</p></li>
     </ol>
     <p><span class="label label-info">Troubleshooting</span> If you can't connect, try changing your password so it does not contain any special characters (but keep it long!). Make sure to connect with your trakt username and not your email address.</p>
     <p>When using a privacy tool (e.g. a Xposed module), make sure SeriesGuide has access to the Android account system. It needs an account to store your trakt credentials and sync.</p>
@@ -285,9 +260,9 @@ title: Help
         
     <h3>Add shows from your trakt library</h3>
     <ol>
-        <li>From the show list, touch <img src="images/ic_action_new_show_inverse.png" width="32" height="32"/>.</li>
-        <li>Swipe to the <strong>Library</strong> tab.</li>
-        <li>Touch on the + next to a show to add it to SeriesGuide.</li>
+      <li>From the show list, touch <img src="images/ic_action_new_show_inverse.png" width="32" height="32"/>.</li>
+      <li>Swipe to the <strong>Library</strong> tab.</li>
+      <li>Touch on the + next to a show to add it to SeriesGuide.</li>
     </ol>
     <p><span class="label label-info">Info</span> SeriesGuide will sync which episodes are already watched and collected from trakt after adding a show.</p>
 
@@ -304,10 +279,11 @@ title: Help
       <dd>Changes in SeriesGuide are sent immediately to trakt. Changes on trakt (e.g. by SeriesGuide on your other devices) will appear on the next sync.</dd>
     </dl>
   
-    <a name="Still_lost?"></a>
+    <a name="contact"></a>
     <div class="largespacer"></div>
   
-    <h2>Still lost?</h2>
-    <p>Ask on the <a href="https://plus.google.com/u/0/communities/103447253937737054097" rel="nofollow"><img src="images/gplus-16.png" width="16" height="16"/> SeriesGuide Google+ Community</a>. Or if you are up to it <a href="https://github.com/UweTrottmann/SeriesGuide/issues" rel="nofollow">report a bug on GitHub</a>.</p>
+    <h2>Drop a message!</h2>
+    <p>Post to the <a href="https://plus.google.com/communities/103447253937737054097">SeriesGuide Community <span class="glyphicon glyphicon-new-window"></span></a> or <a href="mailto:uwe@seriesgui.de">email me</a>.</p>
+
   </div> <!-- span -->
 </div> <!-- row -->
