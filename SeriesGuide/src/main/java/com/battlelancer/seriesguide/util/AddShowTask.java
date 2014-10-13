@@ -26,11 +26,12 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
-import com.jakewharton.trakt.Trakt;
-import com.jakewharton.trakt.entities.TvShow;
-import com.jakewharton.trakt.enumerations.Extended;
-import com.jakewharton.trakt.services.UserService;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.trakt.v2.TraktV2;
+import com.uwetrottmann.trakt.v2.entities.BaseShow;
+import com.uwetrottmann.trakt.v2.enums.Extended;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+import com.uwetrottmann.trakt.v2.services.Sync;
 import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -127,20 +128,21 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         }
 
         // get watched episodes from trakt (only if not connected to Hexagon) once
-        List<TvShow> watched = new ArrayList<>();
-        List<TvShow> collection = new ArrayList<>();
+        List<BaseShow> collection = new ArrayList<>();
+        List<BaseShow> watched = new ArrayList<>();
         if (!HexagonTools.isSignedIn(mContext)) {
-            Trakt manager = ServiceUtils.getTraktWithAuth(mContext);
-            if (manager != null) {
+            TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(mContext);
+            if (trakt != null) {
                 Timber.d("Getting watched and collected episodes from trakt.");
-                String username = TraktCredentials.get(mContext).getUsername();
                 try {
-                    UserService userService = manager.userService();
-                    watched = userService.libraryShowsWatched(username, Extended.MIN);
-                    collection = userService.libraryShowsCollection(username, Extended.MIN);
+                    Sync sync = trakt.sync();
+                    collection = sync.collectionShows(Extended.DEFAULT_MIN);
+                    watched = sync.watchedShows(Extended.DEFAULT_MIN);
                 } catch (RetrofitError e) {
                     // something went wrong, continue anyhow
                     Timber.w(e, "Getting watched and collected episodes failed");
+                } catch (OAuthUnauthorizedException e) {
+                    TraktCredentials.get(mContext).setCredentialsInvalid();
                 }
             }
         }

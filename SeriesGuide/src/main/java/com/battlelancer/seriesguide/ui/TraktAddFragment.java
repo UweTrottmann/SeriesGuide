@@ -38,9 +38,9 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 import com.uwetrottmann.trakt.v2.TraktV2;
+import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.entities.Show;
 import com.uwetrottmann.trakt.v2.entities.TrendingShow;
-import com.uwetrottmann.trakt.v2.entities.WatchedShow;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
@@ -221,13 +221,12 @@ public class TraktAddFragment extends AddFragment {
                                 shows = trakt.recommendations().shows(Extended.IMAGES);
                                 break;
                             case AddPagerAdapter.LIBRARY_TAB_POSITION:
-                                List<WatchedShow> watchedShows = trakt.sync()
-                                        .watchedShows(Extended.IMAGES);
-                                for (WatchedShow show : watchedShows) {
+                                List<BaseShow> watchedShows = trakt.sync().watchedShows(
+                                        Extended.IMAGES);
+                                for (BaseShow show : watchedShows) {
                                     if (show.show == null || show.show.ids == null
                                             || show.show.ids.tvdb == null) {
-                                        // skip if required values are missing
-                                        continue;
+                                        continue; // skip if required values are missing
                                     }
                                     shows.add(show.show);
                                 }

@@ -513,8 +513,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // download
         Timber.d("Syncing...trakt episodes (full)...downloading");
-        int resultCode = TraktTools.syncToSeriesGuide(context, trakt, existingShows,
-                !isInitialSync);
+        int resultCode = TraktTools.syncToSeriesGuide(context, existingShows, !isInitialSync);
 
         if (resultCode < 0 || !AndroidUtils.isNetworkConnected(context)) {
             return UpdateResult.INCOMPLETE;
@@ -526,7 +525,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         if (isInitialSync) {
             // upload
             Timber.d("Syncing...trakt episodes (full)...uploading");
-            resultCode = TraktTools.uploadToTrakt(context, trakt, existingShows);
+            resultCode = TraktTools.uploadToTrakt(context, existingShows);
 
             if (resultCode < 0) {
                 return UpdateResult.INCOMPLETE;

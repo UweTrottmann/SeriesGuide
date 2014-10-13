@@ -43,8 +43,8 @@ import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.entities.TvShow;
 import com.uwetrottmann.trakt.v2.TraktV2;
+import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.IdType;
 import java.io.IOException;
@@ -140,8 +140,8 @@ public class TheTVDB {
      *
      * @return True, if the show and its episodes were added to the database.
      */
-    public static boolean addShow(Context context, int showTvdbId, List<TvShow> seenTraktShows,
-            List<TvShow> collectedTraktShows) throws TvdbException {
+    public static boolean addShow(Context context, int showTvdbId, List<BaseShow> traktWatched,
+            List<BaseShow> traktCollection) throws TvdbException {
         boolean isShowExists = DBUtils.isShowExists(context, showTvdbId);
         if (isShowExists) {
             return false;
@@ -182,14 +182,31 @@ public class TheTVDB {
             ShowTools.get(context).sendIsRemoved(showTvdbId, false);
         } else {
             // ...from trakt
-            storeTraktFlags(showTvdbId, seenTraktShows, context, true);
-            storeTraktFlags(showTvdbId, collectedTraktShows, context, false);
+            storeTraktFlags(context, traktWatched, showTvdbId, true);
+            storeTraktFlags(context, traktCollection, showTvdbId, false);
         }
 
         // calculate next episode
         DBUtils.updateLatestEpisode(context, showTvdbId);
 
         return true;
+    }
+
+    private static void storeTraktFlags(Context context, List<BaseShow> shows, int showTvdbId,
+            boolean isWatchedList) {
+        // try to find seen episodes from trakt of the given show
+        for (BaseShow show : shows) {
+            if (show.show == null || show.show.ids == null || show.show.ids.tvdb == null
+                    || show.show.ids.tvdb != showTvdbId) {
+                continue; // skip
+            }
+
+            TraktTools.applyEpisodeFlagChanges(context, show,
+                    isWatchedList ? Episodes.WATCHED : Episodes.COLLECTED, false);
+
+            // done, found the show we were looking for
+            return;
+        }
     }
 
     /**
@@ -334,23 +351,6 @@ public class TheTVDB {
         context.getContentResolver().bulkInsert(Episodes.CONTENT_URI, newEpisodesValues);
 
         return true;
-    }
-
-    private static void storeTraktFlags(int showTvdbId, List<TvShow> shows, Context context,
-            boolean isSeenFlags) {
-        // try to find seen episodes from trakt of the given show
-        for (TvShow tvShow : shows) {
-            if (tvShow == null || tvShow.tvdb_id == null || tvShow.tvdb_id != showTvdbId) {
-                // skip, does not match
-                continue;
-            }
-
-            TraktTools.applyEpisodeFlagChanges(context, tvShow,
-                    isSeenFlags ? Episodes.WATCHED : Episodes.COLLECTED, false);
-
-            // done, found the show we were looking for
-            return;
-        }
     }
 
     /**

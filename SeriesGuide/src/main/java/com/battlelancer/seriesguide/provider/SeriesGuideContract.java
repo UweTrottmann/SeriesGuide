@@ -466,6 +466,8 @@ public class SeriesGuideContract {
 
         public static final String SELECTION_RELEASED_BEFORE_X = Episodes.FIRSTAIREDMS + "<=?";
 
+        public static final String SORT_SEASON_ASC = Episodes.SEASON + " ASC";
+
         public static Uri buildEpisodeUri(String episodeId) {
             return CONTENT_URI.buildUpon().appendPath(episodeId).build();
         }
