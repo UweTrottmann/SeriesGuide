@@ -30,20 +30,23 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.Trakt;
-import com.jakewharton.trakt.entities.TvShow;
-import com.jakewharton.trakt.enumerations.Extended;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
+import com.uwetrottmann.trakt.v2.TraktV2;
+import com.uwetrottmann.trakt.v2.entities.Show;
+import com.uwetrottmann.trakt.v2.entities.TrendingShow;
+import com.uwetrottmann.trakt.v2.entities.WatchedShow;
+import com.uwetrottmann.trakt.v2.entities.WatchlistedShow;
+import com.uwetrottmann.trakt.v2.enums.Extended;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import retrofit.RetrofitError;
 import timber.log.Timber;
@@ -195,38 +198,60 @@ public class TraktAddFragment extends AddFragment {
             type = params[0];
             List<SearchResult> showList = new ArrayList<>();
 
-            List<TvShow> shows = new ArrayList<>();
+            List<Show> shows = new LinkedList<>();
 
-            if (type == AddPagerAdapter.TRENDING_TAB_POSITION) {
-                try {
-                    shows = ServiceUtils.getTrakt(context).showService().trending();
-                } catch (RetrofitError e) {
-                    Timber.e(e, "Loading trending shows failed");
-                    // ignored, just display empty list
-                }
-            } else {
-                try {
-                    Trakt manager = ServiceUtils.getTraktWithAuth(context);
-                    if (manager != null) {
+            try {
+                if (type == AddPagerAdapter.TRENDING_TAB_POSITION) {
+                    List<TrendingShow> trendingShows = ServiceUtils.getTraktV2(context)
+                            .shows()
+                            .trending(null, null, Extended.IMAGES);
+                    for (TrendingShow show : trendingShows) {
+                        if (show.show == null || show.show.ids == null
+                                || show.show.ids.tvdb == null) {
+                            // skip if required values are missing
+                            continue;
+                        }
+                        shows.add(show.show);
+                    }
+                } else {
+                    TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
+                    if (trakt != null) {
                         switch (type) {
                             case AddPagerAdapter.RECOMMENDED_TAB_POSITION:
-                                shows = manager.recommendationsService().shows();
+                                shows = trakt.recommendations().shows(Extended.IMAGES);
                                 break;
                             case AddPagerAdapter.LIBRARY_TAB_POSITION:
-                                shows = manager.userService().libraryShowsAll(
-                                        TraktCredentials.get(context).getUsername(),
-                                        Extended.EXTENDED);
+                                List<WatchedShow> watchedShows = trakt.sync()
+                                        .watchedShows(Extended.IMAGES);
+                                for (WatchedShow show : watchedShows) {
+                                    if (show.show == null || show.show.ids == null
+                                            || show.show.ids.tvdb == null) {
+                                        // skip if required values are missing
+                                        continue;
+                                    }
+                                    shows.add(show.show);
+                                }
                                 break;
                             case AddPagerAdapter.WATCHLIST_TAB_POSITION:
-                                shows = manager.userService().watchlistShows(
-                                        TraktCredentials.get(context).getUsername());
+                                List<WatchlistedShow> watchlistedShows = trakt.sync()
+                                        .watchlistShows(Extended.IMAGES);
+                                for (WatchlistedShow show : watchlistedShows) {
+                                    if (show.show == null || show.show.ids == null
+                                            || show.show.ids.tvdb == null) {
+                                        // skip if required values are missing
+                                        continue;
+                                    }
+                                    shows.add(show.show);
+                                }
                                 break;
                         }
                     }
-                } catch (RetrofitError e) {
-                    Timber.e(e, "Loading shows failed");
-                    // ignored, just display empty list
                 }
+            } catch (RetrofitError e) {
+                Timber.e(e, "Loading shows failed: " + e.getUrl());
+                // ignored, just display empty list
+            } catch (OAuthUnauthorizedException e) {
+                TraktCredentials.get(mContext).setCredentialsInvalid();
             }
 
             // return empty list right away if there are no results
@@ -247,7 +272,7 @@ public class TraktAddFragment extends AddFragment {
                 existingShows.close();
             }
 
-            parseTvShowsToSearchResults(shows, showList, existingShowTvdbIds, context);
+            parseTvShowsToSearchResults(context, shows, showList, existingShowTvdbIds);
 
             return showList;
         }
@@ -259,26 +284,22 @@ public class TraktAddFragment extends AddFragment {
     }
 
     /**
-     * Parse a list of {@link TvShow} objects to a list of {@link SearchResult} objects.
+     * Transform a list of trakt shows to a list of {@link SearchResult}.
      */
-    private static void parseTvShowsToSearchResults(List<TvShow> inputList,
-            List<SearchResult> outputList, HashSet<Integer> existingShowTvdbIds, Context context) {
-        // large screens show larger poster, so use a higher resolution variant
-        String posterSizeSpec = DisplaySettings.isVeryLargeScreen(context)
-                ? TraktSettings.POSTER_SIZE_SPEC_300 : TraktSettings.POSTER_SIZE_SPEC_138;
+    private static void parseTvShowsToSearchResults(Context context, List<Show> inputList,
+            List<SearchResult> outputList, HashSet<Integer> existingShowTvdbIds) {
         // build list
-        for (TvShow tvShow : inputList) {
+        for (Show show : inputList) {
             // only list shows not in the database already
-            if (!existingShowTvdbIds.contains(tvShow.tvdb_id)) {
-                SearchResult show = new SearchResult();
-                show.tvdbid = tvShow.tvdb_id;
-                show.title = tvShow.title;
-                show.overview = tvShow.overview;
-                if (tvShow.images.poster != null) {
-                    show.poster = tvShow.images.poster.replace(
-                            TraktSettings.POSTER_SIZE_SPEC_DEFAULT, posterSizeSpec);
+            if (!existingShowTvdbIds.contains(show.ids.tvdb)) {
+                SearchResult result = new SearchResult();
+                result.tvdbid = show.ids.tvdb;
+                result.title = show.title;
+                result.overview = String.valueOf(show.year);
+                if (show.images != null && show.images.poster != null) {
+                    result.poster = show.images.poster.thumb;
                 }
-                outputList.add(show);
+                outputList.add(result);
             }
         }
     }

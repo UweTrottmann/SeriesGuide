@@ -348,8 +348,7 @@ public class ShowFragment extends Fragment {
 
         // country for release time calculation
         // show "unknown" if country is not supported
-        mTextViewReleaseCountry.setText(TimeTools.isUnsupportedCountry(releaseCountry)
-                ? getString(R.string.unknown) : releaseCountry);
+        mTextViewReleaseCountry.setText(TimeTools.getCountry(getActivity(), releaseCountry));
 
         // original release
         String firstRelease = mShowCursor.getString(ShowQuery.FIRST_RELEASE);

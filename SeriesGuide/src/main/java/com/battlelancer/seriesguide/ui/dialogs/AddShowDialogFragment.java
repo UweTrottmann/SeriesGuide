@@ -47,6 +47,7 @@ import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -262,9 +263,10 @@ public class AddShowDialogFragment extends DialogFragment {
         meta.append("\n");
 
         // release day and time
-        String[] values = TimeTools.formatToShowReleaseTimeAndDay(getActivity(), show.airtime,
-                show.country, show.airday);
-        meta.append(values[1]).append(" ").append(values[0]);
+        Date releaseDate = new Date(show.airtime);
+        String day = TimeTools.formatToLocalReleaseTime(getActivity(), releaseDate);
+        String time = TimeTools.formatToLocalReleaseDay(releaseDate);
+        meta.append(day).append(" ").append(time);
         meta.append("\n");
 
         // network, runtime

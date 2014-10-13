@@ -43,9 +43,10 @@ import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
-import com.jakewharton.trakt.enumerations.Extended;
+import com.uwetrottmann.trakt.v2.TraktV2;
+import com.uwetrottmann.trakt.v2.enums.Extended;
+import com.uwetrottmann.trakt.v2.enums.IdType;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -374,20 +375,31 @@ public class TheTVDB {
         Show show = downloadAndParseShow(context, showTvdbId, language);
 
         // get some more details from trakt
-        TvShow traktShow = null;
-        Trakt manager = ServiceUtils.getTrakt(context);
-        if (manager != null) {
-            try {
-                traktShow = manager.showService().summary(showTvdbId, Extended.DEFAULT);
-            } catch (RetrofitError e) {
-                Timber.e(e, "Downloading summary failed");
+        com.uwetrottmann.trakt.v2.entities.Show traktShow = null;
+        TraktV2 trakt = ServiceUtils.getTraktV2(context);
+        try {
+            // look up trakt id
+            List<com.uwetrottmann.trakt.v2.entities.SearchResult> results = trakt.search()
+                    .idLookup(IdType.TVDB, String.valueOf(showTvdbId));
+            if (!results.isEmpty()) {
+                traktShow = results.get(0).show;
+                if (traktShow != null && traktShow.ids != null && traktShow.ids.trakt != null) {
+                    // fetch details
+                    traktShow = trakt.shows()
+                            .summary(String.valueOf(traktShow.ids.trakt), Extended.FULL);
+                } else {
+                    traktShow = null;
+                }
             }
+        } catch (RetrofitError e) {
+            Timber.e(e, "Loading summary failed: " + e.getUrl());
         }
         if (traktShow == null) {
             throw new TvdbException("Could not load show from trakt: " + showTvdbId);
         }
 
-        show.airtime = TimeTools.parseShowReleaseTime(traktShow.airTime);
+        show.airtime = TimeTools.parseShowReleaseTime(traktShow.air_day, traktShow.air_time,
+                traktShow.country);
         show.country = traktShow.country;
 
         return show;

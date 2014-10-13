@@ -7,8 +7,10 @@ import java.util.TimeZone;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class TimeToolsTest extends TestCase {
 
@@ -24,9 +26,9 @@ public class TimeToolsTest extends TestCase {
     }
 
     public void test_parseEpisodeReleaseTime() {
-        long showReleaseTime = TimeTools.parseShowReleaseTime("8:00pm");
+        long showReleaseTime = new DateTime(2000, 1, 1, 20, 0, DateTimeZone.UTC).getMillis();
         long episodeReleaseTime = TimeTools
-                .parseEpisodeReleaseTime("2013-05-31", showReleaseTime, "United States");
+                .parseEpisodeReleaseTime("2013-05-31", showReleaseTime, "us");
         usTimeZoneWarning();
         System.out.println(
                 "Release time: " + episodeReleaseTime + " " + new Date(episodeReleaseTime));
@@ -34,9 +36,9 @@ public class TimeToolsTest extends TestCase {
     }
 
     public void test_parseEpisodeReleaseTime_Country() {
-        long showReleaseTime = TimeTools.parseShowReleaseTime("8:00pm");
+        long showReleaseTime = new DateTime(2000, 1, 1, 20, 0, DateTimeZone.UTC).getMillis();
         long episodeReleaseTime = TimeTools
-                .parseEpisodeReleaseTime("2013-05-31", showReleaseTime, "Germany");
+                .parseEpisodeReleaseTime("2013-05-31", showReleaseTime, "de");
         usTimeZoneWarning();
         System.out.println(
                 "Release time: " + episodeReleaseTime + " " + new Date(episodeReleaseTime));
@@ -44,9 +46,9 @@ public class TimeToolsTest extends TestCase {
     }
 
     public void test_parseEpisodeReleaseTime_HourPastMidnight() {
-        long showReleaseTime = TimeTools.parseShowReleaseTime("12:35am");
+        long showReleaseTime = new DateTime(2000, 1, 1, 0, 35, DateTimeZone.UTC).getMillis();
         long episodeReleaseTime = TimeTools
-                .parseEpisodeReleaseTime("2013-05-31", showReleaseTime, "United States");
+                .parseEpisodeReleaseTime("2013-05-31", showReleaseTime, "us");
         usTimeZoneWarning();
         System.out.println(
                 "Release time: " + episodeReleaseTime + " " + new Date(episodeReleaseTime));
@@ -56,34 +58,5 @@ public class TimeToolsTest extends TestCase {
     private void usTimeZoneWarning() {
         System.out.println("WARNING: This test WILL fail on any US time zone not US Pacific");
     }
-
-    public void test_parseShowReleaseTime_Formats() {
-        parseAndCompare("8:00pm", "08:00 PM");
-        parseAndCompare("8:00am", "08:00 AM");
-
-        // test some variations to be sure
-        parseAndCompare("8:00PM", "08:00 PM");
-        parseAndCompare("08:00pm", "08:00 PM");
-        parseAndCompare("08:00PM", "08:00 PM");
-    }
-
-    private void parseAndCompare(String time, String timeResult) {
-        long timeMs = TimeTools.parseShowReleaseTime(time);
-        String timeString = TIME_FORMAT_CUSTOM_TIMEZONE.format(new Date(timeMs));
-
-        System.out.println(
-                time + " is " + timeString + " " + timeMs + " " + new Date(timeMs));
-
-        assertThat(timeString).isEqualTo(timeResult);
-    }
-
-//    @Test
-//    public void test_formatShowReleaseTimeAndDay() {
-//        long releaseTime = TimeTools.parseTimeToMilliseconds("12:35am");
-//        Context context = Robolectric.getShadowApplication().getApplicationContext();
-//        String[] timeAndDay = TimeTools
-//                .formatShowReleaseTimeAndDay(context, releaseTime, "United States", "Monday");
-//        System.out.println("Time: " + timeAndDay[0] + "and day: " + timeAndDay[1]);
-//    }
 
 }

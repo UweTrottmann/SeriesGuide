@@ -30,6 +30,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
+import org.joda.time.DateTimeUtils;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  * Helps with converting timestamps used by TVDb and other services.
@@ -42,9 +48,11 @@ public class TimeTools {
     private static final String TIMEZONE_ID_PREFIX_AMERICA = "America/";
 
     private static final String AUSTRALIA = "Australia";
+    private static final String ISO3166_1_AUSTRALIA = "au";
     private static final String TIMEZONE_ID_AUSTRALIA = "Australia/Sydney";
 
     private static final String CANADA = "Canada";
+    private static final String ISO3166_1_CANADA = "ca";
     private static final String TIMEZONE_ID_CANADA_ATLANTIC = "America/Halifax";
     private static final String TIMEZONE_ID_CANADA_EASTERN = "America/Montreal";
     private static final String TIMEZONE_ID_CANADA_CENTRAL = "America/Winnipeg";
@@ -52,21 +60,27 @@ public class TimeTools {
     private static final String TIMEZONE_ID_CANADA_PACIFIC = "America/Vancouver";
 
     private static final String FINLAND = "Finland";
+    private static final String ISO3166_1_FINLAND = "fi";
     private static final String TIMEZONE_ID_FINLAND = "Europe/Helsinki";
 
     private static final String GERMANY = "Germany";
+    private static final String ISO3166_1_GERMANY = "de";
     private static final String TIMEZONE_ID_GERMANY = "Europe/Berlin";
 
     private static final String JAPAN = "Japan";
+    private static final String ISO3166_1_JAPAN = "jp";
     private static final String TIMEZONE_ID_JAPAN = "Asia/Tokyo";
 
     private static final String NETHERLANDS = "Netherlands";
+    private static final String ISO3166_1_NETHERLANDS = "nl";
     private static final String TIMEZONE_ID_NETHERLANDS = "Europe/Amsterdam";
 
     private static final String UNITED_KINGDOM = "United Kingdom";
+    private static final String ISO3166_1_UNITED_KINGDOM = "gb";
     private static final String TIMEZONE_ID_UK = "Europe/London";
 
     private static final String UNITED_STATES = "United States";
+    private static final String ISO3166_1_UNITED_STATES = "us";
     private static final String TIMEZONE_ID_US_EASTERN = "America/New_York";
     private static final Object TIMEZONE_ID_US_EASTERN_DETROIT = "America/Detroit";
     private static final String TIMEZONE_ID_US_CENTRAL = "America/Chicago";
@@ -74,45 +88,129 @@ public class TimeTools {
     private static final String TIMEZONE_ID_US_ARIZONA = "America/Phoenix";
     private static final String TIMEZONE_ID_US_PACIFIC = "America/Los_Angeles";
 
-    private static final SimpleDateFormat TIME_FORMAT_TRAKT = new SimpleDateFormat(
-            "h:mmaa", Locale.US);
-
     private static final SimpleDateFormat DATE_FORMAT_TVDB = new SimpleDateFormat("yyyy-MM-dd",
             Locale.US);
 
     static {
         // assume all times are in a custom time zone
         TimeZone customTimeZone = TimeZone.getTimeZone(TIMEZONE_ID_CUSTOM);
-        TIME_FORMAT_TRAKT.setTimeZone(customTimeZone);
         DATE_FORMAT_TVDB.setTimeZone(customTimeZone);
     }
 
     /**
-     * Converts a release time from trakt (e.g. "12:00pm") into a millisecond value. The given time
-     * is assumed to be in a custom UTC-08:00 time zone.
+     * Converts a UTC release time from trakt (e.g. "20:00") into a millisecond value. Adjusts the
+     * time if the current time zone has a specific schedule (e.g. United States).
      *
-     * @return -1 if no conversion was possible, a millisecond value storing the time in UTC-08:00
-     * otherwise. The date of the millisecond value should be considered as random, only the time
-     * matches the input.
+     * @return -1 if no conversion was possible. The date is today or the next week day matching
+     * {@code airDay}.
      */
-    public static long parseShowReleaseTime(String traktAirTimeString) {
-        // try parsing with different formats, starting with the most likely
-        Date time = null;
-        if (traktAirTimeString != null && traktAirTimeString.length() != 0) {
-            try {
-                time = TIME_FORMAT_TRAKT.parse(traktAirTimeString);
-            } catch (ParseException e) {
-                // string may be wrongly formatted
-                time = null;
-            }
-        }
-
-        if (time != null) {
-            return time.getTime();
-        } else {
-            // times resolution is at most in minutes, so -1 (ms) can never exist
+    public static long parseShowReleaseTime(String airDay, String airTime, String country) {
+        if (airTime == null || airTime.length() != 5) {
             return -1;
         }
+
+        // extract hour and minute, example: "20:30"
+        int hour = Integer.valueOf(airTime.substring(0, 2));
+        int minute = Integer.valueOf(airTime.substring(3, 5));
+
+        // get current datetime in UTC, change time
+        DateTime dateTime = new DateTime(DateTimeZone.UTC).withTime(hour, minute, 0, 0);
+
+        // adjust day of week so datetime is today or within the next week
+        int weekDay = getDateTimeConstantDayOfWeek(airDay);
+        if (weekDay != -1) {
+            // joda tries to preserve week
+            // so if we want a week day earlier in the week, advance by 7 days first
+            if (weekDay < dateTime.getDayOfWeek()) {
+                dateTime = dateTime.plusWeeks(1);
+            }
+            dateTime = dateTime.withDayOfWeek(weekDay);
+        }
+
+        // set to time zone used by trakt for this country
+        if (ISO3166_1_UNITED_STATES.equals(country)) {
+            // change to UTC-05:00
+            dateTime = dateTime.withZone(DateTimeZone.forOffsetHours(-5));
+            // keep values, change to America/New_York (EST UTC−5:00, EDT UTC−4:00)
+            dateTime = dateTime.withZoneRetainFields(DateTimeZone.forID(TIMEZONE_ID_US_EASTERN));
+        }
+
+        // correct time in Canada for Canadian shows, in US for US shows
+        String localTimeZone = TimeZone.getDefault().getID();
+        if (localTimeZone.startsWith(TIMEZONE_ID_PREFIX_AMERICA)) {
+            dateTime = applyUnitedStatesCorrections(country, localTimeZone, dateTime);
+        }
+
+        return dateTime.getMillis();
+    }
+
+    private static DateTime applyUnitedStatesCorrections(String country, String localTimeZone,
+            DateTime dateTime) {
+        // assumed base time zone for US shows by trakt is America/New_York
+        // EST UTC−5:00, EDT UTC−4:00
+
+        // east feed (default): simultaneously in Eastern and Central
+        // delayed 1 hour in Mountain
+        // delayed three hours in Pacific
+        // ==>
+        // same local time in Eastern + Pacific (e.g. 20:00)
+        // same local time in Central + Mountain (e.g. 19:00)
+
+        // not a US show or no correction necessary (getting east feed)
+        if (!ISO3166_1_UNITED_STATES.equals(country)
+                || localTimeZone.equals(TIMEZONE_ID_US_EASTERN)
+                || localTimeZone.equals(TIMEZONE_ID_US_EASTERN_DETROIT)
+                || localTimeZone.equals(TIMEZONE_ID_US_CENTRAL)) {
+            return dateTime;
+        }
+
+        int offset = 0;
+        if (localTimeZone.equals(TIMEZONE_ID_US_MOUNTAIN)) {
+            // MST UTC−7:00, MDT UTC−6:00
+            offset += 1;
+        } else if (localTimeZone.equals(TIMEZONE_ID_US_ARIZONA)) {
+            // is always UTC-07:00, so like Mountain, but no DST
+            boolean noDstInEastern = DateTimeZone.forID(TIMEZONE_ID_US_EASTERN)
+                    .isStandardOffset(dateTime.getMillis());
+            if (noDstInEastern) {
+                offset += 1;
+            } else {
+                offset += 2;
+            }
+        } else if (localTimeZone.equals(TIMEZONE_ID_US_PACIFIC)) {
+            // PST UTC−8:00 or PDT UTC−7:00
+            offset += 3;
+        }
+
+        dateTime = dateTime.plusHours(offset);
+
+        return dateTime;
+    }
+
+    /**
+     * Converts US week day string to {@link org.joda.time.DateTimeConstants} day.
+     */
+    private static int getDateTimeConstantDayOfWeek(String day) {
+        // catch Monday through Sunday
+        switch (day) {
+            case "Monday":
+                return DateTimeConstants.MONDAY;
+            case "Tuesday":
+                return DateTimeConstants.TUESDAY;
+            case "Wednesday":
+                return DateTimeConstants.WEDNESDAY;
+            case "Thursday":
+                return DateTimeConstants.THURSDAY;
+            case "Friday":
+                return DateTimeConstants.FRIDAY;
+            case "Saturday":
+                return DateTimeConstants.SATURDAY;
+            case "Sunday":
+                return DateTimeConstants.SUNDAY;
+        }
+
+        // no match
+        return -1;
     }
 
     public static long parseEpisodeReleaseTime(String releaseDateEpisode, long releaseTimeShow,
@@ -210,8 +308,7 @@ public class TimeTools {
         }
 
         // catch Monday through Sunday
-        DateFormatSymbols dfs = new DateFormatSymbols(Locale.US);
-        String[] weekdays = dfs.getWeekdays();
+        String[] weekdays = DateFormatSymbols.getInstance(Locale.US).getWeekdays();
 
         for (int i = 1; i < weekdays.length; i++) {
             if (day.equals(weekdays[i])) {
@@ -425,14 +522,15 @@ public class TimeTools {
         }
 
         // Shows from Canada typically air at the same time across its time zones
-        if (CANADA.equals(releaseCountry)) {
+        if (CANADA.equals(releaseCountry) || ISO3166_1_CANADA.equals(releaseCountry)) {
             applyCanadaCorrections(calendar);
             return;
         }
 
         // US shows air at the same LOCAL time across all its time zones (with exceptions)
         if (releaseCountry == null || releaseCountry.length() == 0
-                || UNITED_STATES.equals(releaseCountry)) {
+                || UNITED_STATES.equals(releaseCountry)
+                || ISO3166_1_UNITED_STATES.equals(releaseCountry)) {
             applyUnitedStatesCorrections(calendar);
         }
     }
@@ -524,25 +622,40 @@ public class TimeTools {
     }
 
     /**
-     * Returns {@code true}, if the country is not supported for calculating release times in the
-     * countries time zone and falls back to US Pacific time.
+     * Returns the text representation of the given country code. If the country is not supported,
+     * "unknown" will be returned.
      */
-    public static boolean isUnsupportedCountry(String releaseCountry) {
+    public static String getCountry(Context context, String releaseCountry) {
         if (releaseCountry == null || releaseCountry.length() == 0) {
-            return true;
+            return context.getString(R.string.unknown);
         }
         switch (releaseCountry) {
             case AUSTRALIA:
+            case ISO3166_1_AUSTRALIA:
+                return AUSTRALIA;
             case CANADA:
+            case ISO3166_1_CANADA:
+                return CANADA;
             case JAPAN:
+            case ISO3166_1_JAPAN:
+                return JAPAN;
             case FINLAND:
+            case ISO3166_1_FINLAND:
+                return FINLAND;
             case GERMANY:
+            case ISO3166_1_GERMANY:
+                return GERMANY;
             case NETHERLANDS:
-            case UNITED_STATES:
+            case ISO3166_1_NETHERLANDS:
+                return NETHERLANDS;
             case UNITED_KINGDOM:
-                return false;
+            case ISO3166_1_UNITED_KINGDOM:
+                return UNITED_KINGDOM;
+            case UNITED_STATES:
+            case ISO3166_1_UNITED_STATES:
+                return UNITED_STATES;
             default:
-                return true;
+                return context.getString(R.string.unknown);
         }
     }
 
@@ -553,33 +666,41 @@ public class TimeTools {
         } else {
             switch (releaseCountry) {
                 case UNITED_STATES:
+                case ISO3166_1_UNITED_STATES:
                     timeZoneId = TIMEZONE_ID_US_PACIFIC;
                     break;
                 case CANADA:
+                case ISO3166_1_CANADA:
                     // example: https://trakt.tv/show/rookie-blue
                     timeZoneId = TIMEZONE_ID_CANADA_EASTERN;
                     break;
                 case UNITED_KINGDOM:
+                case ISO3166_1_UNITED_KINGDOM:
                     // example: https://trakt.tv/show/top-gear
                     timeZoneId = TIMEZONE_ID_UK;
                     break;
                 case JAPAN:
+                case ISO3166_1_JAPAN:
                     // example: https://trakt.tv/show/naruto-shippuuden
                     timeZoneId = TIMEZONE_ID_JAPAN;
                     break;
                 case FINLAND:
+                case ISO3166_1_FINLAND:
                     // example: https://trakt.tv/show/madventures
                     timeZoneId = TIMEZONE_ID_FINLAND;
                     break;
                 case GERMANY:
+                case ISO3166_1_GERMANY:
                     // example: https://trakt.tv/show/heuteshow
                     timeZoneId = TIMEZONE_ID_GERMANY;
                     break;
                 case NETHERLANDS:
+                case ISO3166_1_NETHERLANDS:
                     // example: https://trakt.tv/show/divorce
                     timeZoneId = TIMEZONE_ID_NETHERLANDS;
                     break;
                 case AUSTRALIA:
+                case ISO3166_1_AUSTRALIA:
                     // example: https://trakt.tv/show/masterchef-australia
                     timeZoneId = TIMEZONE_ID_AUSTRALIA;
                     break;

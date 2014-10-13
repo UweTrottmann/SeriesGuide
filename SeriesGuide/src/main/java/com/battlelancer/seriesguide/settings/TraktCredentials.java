@@ -26,6 +26,7 @@ import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.trakt.v2.TraktV2;
+import timber.log.Timber;
 
 /**
  * A singleton helping to manage the user's trakt credentials.
@@ -64,9 +65,18 @@ public class TraktCredentials {
     }
 
     /**
+     * Removes the current trakt access token (but not the username), makes {@link
+     * #hasCredentials()} return {@code false}. Will log error.
+     */
+    public void setCredentialsInvalid() {
+        removeAccessToken();
+        Timber.e("trakt credentials invalid, removed access token");
+    }
+
+    /**
      * Only removes the access token, but keeps the username.
      */
-    public void removeAccessToken() {
+    private void removeAccessToken() {
         // clear all in-memory credentials from Trakt service manager in any case
         TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(mContext);
         if (trakt != null) {

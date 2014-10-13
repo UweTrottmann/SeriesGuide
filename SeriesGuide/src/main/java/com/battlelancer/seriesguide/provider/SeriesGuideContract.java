@@ -63,7 +63,7 @@ public class SeriesGuideContract {
         String FIRSTAIRED = "firstaired";
 
         /**
-         * Release time (e.g. 08:00pm), but encoded in ms. See {@link com.battlelancer.seriesguide.util.TimeTools#parseShowReleaseTime(String)}.
+         * Release time (e.g. 20:00), but encoded in ms. See {@link com.battlelancer.seriesguide.util.TimeTools#parseShowReleaseTime}.
          */
         String AIRSTIME = "airstime";
 
