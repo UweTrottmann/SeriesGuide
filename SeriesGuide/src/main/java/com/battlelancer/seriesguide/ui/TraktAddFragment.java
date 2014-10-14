@@ -41,7 +41,6 @@ import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.entities.Show;
 import com.uwetrottmann.trakt.v2.entities.TrendingShow;
-import com.uwetrottmann.trakt.v2.entities.WatchlistedShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import java.util.ArrayList;
@@ -223,25 +222,12 @@ public class TraktAddFragment extends AddFragment {
                             case AddPagerAdapter.LIBRARY_TAB_POSITION:
                                 List<BaseShow> watchedShows = trakt.sync().watchedShows(
                                         Extended.IMAGES);
-                                for (BaseShow show : watchedShows) {
-                                    if (show.show == null || show.show.ids == null
-                                            || show.show.ids.tvdb == null) {
-                                        continue; // skip if required values are missing
-                                    }
-                                    shows.add(show.show);
-                                }
+                                extractShows(watchedShows, shows);
                                 break;
                             case AddPagerAdapter.WATCHLIST_TAB_POSITION:
-                                List<WatchlistedShow> watchlistedShows = trakt.sync()
+                                List<BaseShow> watchlistedShows = trakt.sync()
                                         .watchlistShows(Extended.IMAGES);
-                                for (WatchlistedShow show : watchlistedShows) {
-                                    if (show.show == null || show.show.ids == null
-                                            || show.show.ids.tvdb == null) {
-                                        // skip if required values are missing
-                                        continue;
-                                    }
-                                    shows.add(show.show);
-                                }
+                                extractShows(watchlistedShows, shows);
                                 break;
                         }
                     }
@@ -274,6 +260,16 @@ public class TraktAddFragment extends AddFragment {
             parseTvShowsToSearchResults(context, shows, showList, existingShowTvdbIds);
 
             return showList;
+        }
+
+        private void extractShows(List<BaseShow> watchedShows, List<Show> shows) {
+            for (BaseShow show : watchedShows) {
+                if (show.show == null || show.show.ids == null
+                        || show.show.ids.tvdb == null) {
+                    continue; // skip if required values are missing
+                }
+                shows.add(show.show);
+            }
         }
 
         @Override
