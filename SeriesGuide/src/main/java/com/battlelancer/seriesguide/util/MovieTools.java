@@ -786,20 +786,22 @@ public class MovieTools {
                 List<SearchResult> lookup = traktSearch.idLookup(IdType.TMDB,
                         String.valueOf(movieTmdbId));
                 if (lookup == null || lookup.size() == 0) {
-                    Timber.e("Finding trakt movie failed");
+                    Timber.e("Finding trakt movie failed (no results)");
                     return null;
                 }
-                SearchResult result = lookup.get(0);
-                if (result.movie == null || result.movie.ids == null) {
-                    Timber.e("Finding trakt movie failed");
-                    return null;
+                for (SearchResult result : lookup) {
+                    // find movie (tmdb ids are not unique for tv and movies)
+                    if (result.movie != null && result.movie.ids != null) {
+                        return result.movie.ids.trakt;
+                    }
                 }
 
-                return result.movie.ids.trakt;
+                Timber.e("Finding trakt movie failed (not in results)");
             } catch (RetrofitError e) {
                 Timber.e(e, "Finding trakt movie failed " + e.getUrl());
-                return null;
             }
+
+            return null;
         }
 
         private static Movie loadSummaryFromTrakt(Movies traktMovies, int movieTraktId) {
