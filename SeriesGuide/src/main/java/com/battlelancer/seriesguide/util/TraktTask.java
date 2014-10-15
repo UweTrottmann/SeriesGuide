@@ -33,11 +33,13 @@ import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.enumerations.Rating;
 import com.jakewharton.trakt.services.CommentService;
 import com.jakewharton.trakt.services.RateService;
-import com.jakewharton.trakt.services.ShowService;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt.v2.TraktV2;
+import com.uwetrottmann.trakt.v2.entities.EpisodeCheckin;
+import com.uwetrottmann.trakt.v2.entities.EpisodeIds;
 import com.uwetrottmann.trakt.v2.entities.MovieCheckin;
 import com.uwetrottmann.trakt.v2.entities.MovieIds;
+import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncMovie;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
@@ -50,6 +52,8 @@ import retrofit.RetrofitError;
 import timber.log.Timber;
 
 public class TraktTask extends AsyncTask<Void, Void, Response> {
+
+    private static final String APP_VERSION = "SeriesGuide " + BuildConfig.VERSION_NAME;
 
     private Bundle mArgs;
 
@@ -66,6 +70,8 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         String MOVIE_TMDB_ID = "tmdbid";
 
         String SHOW_TVDBID = "tvdbid";
+
+        String EPISODE_TVDBID = "tvdbid";
 
         String SEASON = "season";
 
@@ -159,11 +165,10 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     /**
      * Check into an episode. Optionally provide a checkin message.
      */
-    public TraktTask checkInEpisode(int showTvdbid, int season, int episode, String message) {
+    public TraktTask checkInEpisode(int episodeTvdbId, String title, String message) {
         mArgs.putString(InitBundle.TRAKTACTION, TraktAction.CHECKIN_EPISODE.name());
-        mArgs.putInt(InitBundle.SHOW_TVDBID, showTvdbid);
-        mArgs.putInt(InitBundle.SEASON, season);
-        mArgs.putInt(InitBundle.EPISODE, episode);
+        mArgs.putInt(InitBundle.EPISODE_TVDBID, episodeTvdbId);
+        mArgs.putString(InitBundle.TITLE, title);
         mArgs.putString(InitBundle.MESSAGE, message);
         return this;
     }
@@ -285,7 +290,6 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
             r.error = mContext.getString(R.string.trakt_error_credentials);
             return r;
         }
-        Sync traktSync = trakt.sync();
 
         // last chance to abort
         if (isCancelled()) {
@@ -297,7 +301,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
             switch (mAction) {
                 case CHECKIN_EPISODE:
                 case CHECKIN_MOVIE: {
-                    return doCheckInAction(manager, trakt.checkin());
+                    return doCheckInAction(trakt.checkin());
                 }
                 case RATE_EPISODE:
                 case RATE_SHOW:
@@ -310,7 +314,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 case UNWATCHLIST_MOVIE:
                 case WATCHED_MOVIE:
                 case UNWATCHED_MOVIE: {
-                    return doMovieAction(traktSync);
+                    return doMovieAction(trakt.sync());
                 }
                 case SHOUT: {
                     return doShoutAction(manager);
@@ -337,56 +341,37 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         return r;
     }
 
-    private Response doCheckInAction(Trakt manager, Checkin traktCheckin)
+    private Response doCheckInAction(Checkin traktCheckin)
             throws CheckinInProgressException, OAuthUnauthorizedException {
-        final String message = mArgs.getString(InitBundle.MESSAGE);
-
+        String message = mArgs.getString(InitBundle.MESSAGE);
         switch (mAction) {
             case CHECKIN_EPISODE: {
-                Response r;
-                final int showTvdbId = mArgs.getInt(InitBundle.SHOW_TVDBID);
-                final int season = mArgs.getInt(InitBundle.SEASON);
-                final int episode = mArgs.getInt(InitBundle.EPISODE);
-                if (TextUtils.isEmpty(message)) {
-                    // no message
-                    r = manager.showService().checkin(new ShowService.ShowCheckin(
-                            showTvdbId, season, episode, Utils.getVersion(mContext), ""
-                    ));
-                } else {
-                    // with social media message
-                    r = manager.showService().checkin(new ShowService.ShowCheckin(
-                            showTvdbId, season, episode, message, Utils.getVersion(mContext), ""
-                    ));
-                }
-
-                if (com.jakewharton.trakt.enumerations.Status.SUCCESS.equals(r.status)) {
-                    r.message = mContext.getString(R.string.checkin_success_trakt,
-                            (r.show != null ? r.show.title + " " : "")
-                                    + Utils.getEpisodeNumber(mContext, season, episode));
-                }
-
-                return r;
-            }
-            case CHECKIN_MOVIE: {
-                int movieTmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
-                MovieCheckin checkin = new MovieCheckin.Builder(
-                        new SyncMovie().id(MovieIds.tmdb(movieTmdbId)),
-                        "SeriesGuide " + BuildConfig.VERSION_NAME, null)
+                int episodeTvdbId = mArgs.getInt(InitBundle.EPISODE_TVDBID);
+                EpisodeCheckin checkin = new EpisodeCheckin.Builder(
+                        new SyncEpisode().id(EpisodeIds.tvdb(episodeTvdbId)), APP_VERSION, null)
                         .message(message)
                         .build();
 
                 traktCheckin.checkin(checkin);
+                break;
+            }
+            case CHECKIN_MOVIE: {
+                int movieTmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
+                MovieCheckin checkin = new MovieCheckin.Builder(
+                        new SyncMovie().id(MovieIds.tmdb(movieTmdbId)), APP_VERSION, null)
+                        .message(message)
+                        .build();
 
-                Response r = new Response();
-                r.status = TraktStatus.SUCCESS;
-                r.message = mContext.getString(R.string.checkin_success_trakt,
-                        mArgs.getString(InitBundle.TITLE));
-
-                return r;
+                traktCheckin.checkin(checkin);
+                break;
             }
         }
 
-        return null;
+        Response r = new Response();
+        r.status = TraktStatus.SUCCESS;
+        r.message = mContext.getString(R.string.checkin_success_trakt,
+                mArgs.getString(InitBundle.TITLE));
+        return r;
     }
 
     private Response doRatingAction(Trakt manager) {

@@ -21,7 +21,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -47,18 +46,15 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
             if (episode.moveToFirst()) {
                 f = new CheckInDialogFragment();
                 Bundle args = new Bundle();
+                args.putInt(InitBundle.EPISODE_TVDB_ID, episodeTvdbId);
                 String showTitle = episode.getString(CheckInQuery.SHOW_TITLE);
                 args.putInt(InitBundle.SHOW_TVDB_ID, episode.getInt(CheckInQuery.SHOW_TVDB_ID));
-                int seasonNumber = episode.getInt(CheckInQuery.SEASON);
-                args.putInt(InitBundle.SEASON, seasonNumber);
-                int episodeNumber = episode.getInt(CheckInQuery.NUMBER);
-                args.putInt(InitBundle.EPISODE, episode.getInt(CheckInQuery.NUMBER));
 
                 String episodeTitleWithNumbers = showTitle + " "
                         + Utils.getNextEpisodeString(context,
-                        seasonNumber,
-                        episodeNumber,
-                        episode.getString(CheckInQuery.TITLE));
+                        episode.getInt(CheckInQuery.SEASON),
+                        episode.getInt(CheckInQuery.NUMBER),
+                        episode.getString(CheckInQuery.EPISODE_TITLE));
                 args.putString(InitBundle.ITEM_TITLE, episodeTitleWithNumbers);
                 args.putString(InitBundle.DEFAULT_MESSAGE, episodeTitleWithNumbers);
                 f.setArguments(args);
@@ -81,7 +77,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
 
         int SEASON = 0;
         int NUMBER = 1;
-        int TITLE = 2;
+        int EPISODE_TITLE = 2;
         int SHOW_TVDB_ID = 3;
         int SHOW_TITLE = 4;
     }
@@ -104,12 +100,11 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
 
     @Override
     protected void checkInTrakt(String message) {
-        final int season = getArguments().getInt(InitBundle.SEASON);
-        final int episode = getArguments().getInt(InitBundle.EPISODE);
-
         AndroidUtils.executeOnPool(
-                new TraktTask(getActivity())
-                        .checkInEpisode(mShowTvdbId, season, episode, message)
+                new TraktTask(getActivity()).checkInEpisode(
+                        getArguments().getInt(InitBundle.EPISODE_TVDB_ID),
+                        getArguments().getString(InitBundle.ITEM_TITLE),
+                        message)
         );
     }
 }
