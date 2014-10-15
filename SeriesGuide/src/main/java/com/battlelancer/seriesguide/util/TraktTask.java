@@ -21,6 +21,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
+import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
@@ -31,16 +32,18 @@ import com.jakewharton.trakt.entities.CheckinResponse;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.enumerations.Rating;
 import com.jakewharton.trakt.services.CommentService;
-import com.jakewharton.trakt.services.MovieService;
 import com.jakewharton.trakt.services.RateService;
 import com.jakewharton.trakt.services.ShowService;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt.v2.TraktV2;
+import com.uwetrottmann.trakt.v2.entities.MovieCheckin;
 import com.uwetrottmann.trakt.v2.entities.MovieIds;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncMovie;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
+import com.uwetrottmann.trakt.v2.exceptions.CheckinInProgressException;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+import com.uwetrottmann.trakt.v2.services.Checkin;
 import com.uwetrottmann.trakt.v2.services.Sync;
 import de.greenrobot.event.EventBus;
 import retrofit.RetrofitError;
@@ -57,6 +60,8 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     public interface InitBundle {
 
         String TRAKTACTION = "traktaction";
+
+        String TITLE = "title";
 
         String MOVIE_TMDB_ID = "tmdbid";
 
@@ -166,9 +171,10 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     /**
      * Check into an episode. Optionally provide a checkin message.
      */
-    public TraktTask checkInMovie(int tmdbId, String message) {
+    public TraktTask checkInMovie(int tmdbId, String title, String message) {
         mArgs.putString(InitBundle.TRAKTACTION, TraktAction.CHECKIN_MOVIE.name());
         mArgs.putInt(InitBundle.MOVIE_TMDB_ID, tmdbId);
+        mArgs.putString(InitBundle.TITLE, title);
         mArgs.putString(InitBundle.MESSAGE, message);
         return this;
     }
@@ -291,7 +297,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
             switch (mAction) {
                 case CHECKIN_EPISODE:
                 case CHECKIN_MOVIE: {
-                    return doCheckInAction(manager);
+                    return doCheckInAction(manager, trakt.checkin());
                 }
                 case RATE_EPISODE:
                 case RATE_SHOW:
@@ -320,12 +326,19 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
             r = new Response();
             r.status = TraktStatus.FAILURE;
             r.error = mContext.getString(R.string.trakt_error_credentials);
+        } catch (CheckinInProgressException e) {
+            CheckinResponse checkinResponse = new CheckinResponse();
+            checkinResponse.status = TraktStatus.FAILURE;
+            checkinResponse.wait = (int) (
+                    (e.getExpiresAt().getMillis() - System.currentTimeMillis()) / 1000);
+            r = checkinResponse;
         }
 
         return r;
     }
 
-    private Response doCheckInAction(Trakt manager) {
+    private Response doCheckInAction(Trakt manager, Checkin traktCheckin)
+            throws CheckinInProgressException, OAuthUnauthorizedException {
         final String message = mArgs.getString(InitBundle.MESSAGE);
 
         switch (mAction) {
@@ -355,24 +368,19 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 return r;
             }
             case CHECKIN_MOVIE: {
-                Response r;
-                final int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
+                int movieTmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
+                MovieCheckin checkin = new MovieCheckin.Builder(
+                        new SyncMovie().id(MovieIds.tmdb(movieTmdbId)),
+                        "SeriesGuide " + BuildConfig.VERSION_NAME, null)
+                        .message(message)
+                        .build();
 
-                if (TextUtils.isEmpty(message)) {
-                    r = manager.movieService().checkin(new MovieService.MovieCheckin(
-                            tmdbId, Utils.getVersion(mContext), ""
-                    ));
-                } else {
-                    r = manager.movieService().checkin(new MovieService.MovieCheckin(
-                            tmdbId, message, Utils.getVersion(mContext), ""
-                    ));
-                }
+                traktCheckin.checkin(checkin);
 
-                if (com.jakewharton.trakt.enumerations.Status.SUCCESS.equals(r.status)) {
-                    r.message = mContext.getString(R.string.checkin_success_trakt,
-                            (r.movie != null ?
-                                    r.movie.title : mContext.getString(R.string.unknown)));
-                }
+                Response r = new Response();
+                r.status = TraktStatus.SUCCESS;
+                r.message = mContext.getString(R.string.checkin_success_trakt,
+                        mArgs.getString(InitBundle.TITLE));
 
                 return r;
             }
@@ -513,7 +521,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     || mAction == TraktAction.CHECKIN_MOVIE) {
                 if (r instanceof CheckinResponse) {
                     CheckinResponse checkinResponse = (CheckinResponse) r;
-                    if (checkinResponse.wait != 0) {
+                    if (checkinResponse.wait > 0) {
                         // looks like a check in is already in progress
                         EventBus.getDefault().post(
                                 new TraktCheckInBlockedEvent(mArgs, checkinResponse.wait));
