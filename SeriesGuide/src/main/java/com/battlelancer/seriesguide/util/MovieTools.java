@@ -641,6 +641,7 @@ public class MovieTools {
 
             // merge on first run, delete on consequent runs
             if (TraktSettings.hasMergedMovies(context)) {
+                Timber.d("syncMoviesFromTrakt: remove " + moviesToRemove.size());
                 // remove movies not on trakt
                 buildMovieDeleteOps(moviesToRemove, batch);
                 try {
@@ -651,7 +652,7 @@ public class MovieTools {
                 }
             } else {
                 // upload movies not on trakt
-                UpdateResult result = Upload.uploadMovies(context, sync, moviesToRemove);
+                UpdateResult result = Upload.toTrakt(context, sync, moviesToRemove);
                 if (result != UpdateResult.SUCCESS) {
                     // abort here if there were issues
                     return result;
@@ -948,12 +949,14 @@ public class MovieTools {
         /**
          * Uploads the given movies to the appropriate list(s) on trakt.
          */
-        public static UpdateResult uploadMovies(Context context, Sync sync,
+        public static UpdateResult toTrakt(Context context, Sync sync,
                 HashSet<Integer> moviesToUpload) {
             if (moviesToUpload.size() == 0) {
                 // nothing to upload
                 return UpdateResult.SUCCESS;
             }
+
+            Timber.d("toTrakt: upload " + moviesToUpload.size());
 
             // return if connectivity is lost
             if (!AndroidUtils.isNetworkConnected(context)) {
