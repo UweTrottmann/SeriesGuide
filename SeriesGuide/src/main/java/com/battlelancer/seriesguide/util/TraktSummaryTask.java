@@ -159,10 +159,12 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
         // set the final rating values
         if (results != null
                 && mTraktLoves != null && mTraktVotes != null && mTraktUserRating != null) {
-            mTraktUserRating.setText(TraktTools.buildUserRatingString(mContext, results.rating));
+            // TODO update ratings to trakt v2
+            mTraktUserRating.setText(TraktTools.buildUserRatingString(mContext, null));
             if (results.ratings != null) {
                 mTraktLoves.setText(
-                        TraktTools.buildRatingPercentageString(results.ratings.percentage));
+                        TraktTools.buildRatingPercentageString(
+                                Double.valueOf(results.ratings.percentage)));
                 mTraktVotes.setText(
                         TraktTools.buildRatingVotesString(mContext, results.ratings.votes));
             }

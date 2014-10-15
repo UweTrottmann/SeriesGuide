@@ -26,8 +26,6 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
-import com.jakewharton.trakt.enumerations.Rating;
-import com.jakewharton.trakt.services.ShowService;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.BaseEpisode;
 import com.uwetrottmann.trakt.v2.entities.BaseSeason;
@@ -38,6 +36,7 @@ import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncSeason;
 import com.uwetrottmann.trakt.v2.entities.SyncShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
+import com.uwetrottmann.trakt.v2.enums.Rating;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.services.Sync;
 import java.util.ArrayList;
@@ -377,8 +376,8 @@ public class TraktTools {
         return TRAKT_SEARCH_MOVIE_URL + movieTmdbId;
     }
 
-    public static String buildRatingPercentageString(Integer percentage) {
-        return percentage == null ? "--%" : String.valueOf(percentage) + "%";
+    public static String buildRatingPercentageString(Double percentage) {
+        return percentage == null ? "--%" : percentage.intValue() + "%";
     }
 
     public static String buildRatingVotesString(Context context, Integer votes) {
@@ -395,34 +394,34 @@ public class TraktTools {
 
         int resId;
         switch (rating) {
-            case WeakSauce:
+            case WEAKSAUCE:
                 resId = R.string.hate;
                 break;
-            case Terrible:
+            case TERRIBLE:
                 resId = R.string.rating2;
                 break;
-            case Bad:
+            case BAD:
                 resId = R.string.rating3;
                 break;
-            case Poor:
+            case POOR:
                 resId = R.string.rating4;
                 break;
-            case Meh:
+            case MEH:
                 resId = R.string.rating5;
                 break;
-            case Fair:
+            case FAIR:
                 resId = R.string.rating6;
                 break;
-            case Good:
+            case GOOD:
                 resId = R.string.rating7;
                 break;
-            case Great:
+            case GREAT:
                 resId = R.string.rating8;
                 break;
-            case Superb:
+            case SUPERB:
                 resId = R.string.rating9;
                 break;
-            case TotallyNinja:
+            case TOTALLYNINJA:
                 resId = R.string.love;
                 break;
             default:

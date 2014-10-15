@@ -16,32 +16,41 @@
 
 package com.battlelancer.seriesguide.items;
 
-import com.jakewharton.trakt.entities.Movie;
+import com.uwetrottmann.trakt.v2.entities.Ratings;
+import com.uwetrottmann.trakt.v2.enums.Rating;
+import org.joda.time.DateTime;
 
 /**
- * Holder object for a trakt and a TMDb movie entity.
+ * Holder object for trakt and TMDb entities related to a movie.
  */
 public class MovieDetails {
 
-    private Movie mTraktMovie;
+    private Ratings traktRatings;
 
-    private com.uwetrottmann.tmdb.entities.Movie mTmdbMovie;
+    private com.uwetrottmann.tmdb.entities.Movie tmdbMovie;
 
-    public Movie traktMovie() {
-        return mTraktMovie;
+    public boolean inCollection;
+    public boolean inWatchlist;
+    public boolean watched;
+
+    public DateTime released;
+    public Rating userRating;
+
+    public Ratings traktRatings() {
+        return traktRatings;
     }
 
-    public MovieDetails traktMovie(Movie traktMovie) {
-        mTraktMovie = traktMovie;
+    public MovieDetails traktRatings(Ratings traktRatings) {
+        this.traktRatings = traktRatings;
         return this;
     }
 
     public com.uwetrottmann.tmdb.entities.Movie tmdbMovie() {
-        return mTmdbMovie;
+        return tmdbMovie;
     }
 
     public MovieDetails tmdbMovie(com.uwetrottmann.tmdb.entities.Movie movie) {
-        mTmdbMovie = movie;
+        tmdbMovie = movie;
         return this;
     }
 }

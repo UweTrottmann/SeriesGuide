@@ -465,7 +465,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             Timber.d("Syncing...trakt episodes (full)...");
-            UpdateResult fullSyncResult = performTraktEpisodeSync(context, trakt, existingShows,
+            UpdateResult fullSyncResult = performTraktEpisodeSync(context, existingShows,
                     currentTime);
             Timber.d("Syncing...trakt episodes (full)..."
                     + (fullSyncResult == UpdateResult.SUCCESS ? "SUCCESS" : "INCOMPLETE"));
@@ -506,7 +506,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     @SuppressLint("CommitPrefEdits")
-    private static UpdateResult performTraktEpisodeSync(Context context, Trakt trakt,
+    private static UpdateResult performTraktEpisodeSync(Context context,
             HashSet<Integer> existingShows, long currentTime) {
         // do we need to merge data instead of overwriting with data from trakt?
         boolean isInitialSync = !TraktSettings.hasMergedEpisodes(context);

@@ -47,6 +47,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import timber.log.Timber;
 
 /**
@@ -113,8 +114,8 @@ public class HexagonTools {
     }
 
     /**
-     * Checks if it is possible to retrieve a valid OAuth2 token for the given account,
-     * hence, it can be used for connecting to Hexagon.
+     * Checks if it is possible to retrieve a valid OAuth2 token for the given account, hence, it
+     * can be used for connecting to Hexagon.
      */
     public static boolean validateAccount(Context context, String accountName) {
         GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(
@@ -277,9 +278,10 @@ public class HexagonTools {
         boolean hasMergedMovies = HexagonSettings.hasMergedMovies(context);
 
         // download movies and apply property changes, build list of new movies
-        HashMap<Integer, Movie> newMovies = new HashMap<>();
-        boolean downloadSuccessful = MovieTools.Download.fromHexagon(context, newMovies,
-                hasMergedMovies);
+        Set<Integer> newCollectionMovies = new HashSet<>();
+        Set<Integer> newWatchlistMovies = new HashSet<>();
+        boolean downloadSuccessful = MovieTools.Download.fromHexagon(context, newCollectionMovies,
+                newWatchlistMovies, hasMergedMovies);
         if (!downloadSuccessful) {
             return false;
         }
@@ -293,7 +295,7 @@ public class HexagonTools {
 
         // add new movies with the just downloaded properties
         SgSyncAdapter.UpdateResult result = MovieTools.Download.addMovies(context,
-                ServiceUtils.getTrakt(context), newMovies.keySet(), newMovies);
+                ServiceUtils.getTraktV2(context), newCollectionMovies, newWatchlistMovies);
         boolean addingSuccessful = result == SgSyncAdapter.UpdateResult.SUCCESS;
         if (!hasMergedMovies) {
             // ensure all missing movies from Hexagon are added before merge is complete
