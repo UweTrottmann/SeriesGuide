@@ -557,11 +557,13 @@ public class MovieTools {
         }
 
         /**
-         * Updates the movie local database against trakt movie watchlist and collection, therefore
-         * adds, updates and removes movies in the database.<br/>Performs <b>synchronous network
-         * access</b>, so make sure to run this on a background thread!
+         * Updates the local movie database against trakt movie watchlist and collection. Therefore
+         * adds, updates and removes movies in the database.
+         *
+         * <p> Also performs <b>synchronous network access</b>, so make sure to run this on a
+         * background thread!
          */
-        public static UpdateResult syncMoviesFromTrakt(Context context) {
+        public static UpdateResult syncMoviesWithTrakt(Context context) {
             TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
             if (trakt == null) {
                 // trakt is not connected, we are done here
@@ -570,67 +572,72 @@ public class MovieTools {
 
             Sync sync = trakt.sync();
 
-            HashSet<Integer> localMovies = getMovieTmdbIdsAsSet(context);
-            HashSet<Integer> moviesToRemove = new HashSet<>(localMovies);
-            Set<Integer> newCollectionMovies = new HashSet<>();
-            Set<Integer> newWatchlistMovies = new HashSet<>();
+            // download collection and watchlist
+            Set<Integer> collection;
+            Set<Integer> watchlist;
+            try {
+                collection = getTraktCollection(sync);
+                if (collection == null) {
+                    return UpdateResult.INCOMPLETE;
+                }
+
+                watchlist = getTraktWatchlist(sync);
+                if (watchlist == null) {
+                    return UpdateResult.INCOMPLETE;
+                }
+            } catch (RetrofitError e) {
+                Timber.e(e, "Failed to get movie list " + e.getUrl());
+                return UpdateResult.INCOMPLETE;
+            } catch (OAuthUnauthorizedException e) {
+                TraktCredentials.get(context).setCredentialsInvalid();
+                return UpdateResult.INCOMPLETE;
+            }
+
+            // build updates
+            final boolean merging = !TraktSettings.hasMergedMovies(context);
+            Set<Integer> moviesToRemoveOrUpload = new HashSet<>();
             ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
-            // get trakt watchlist
-            List<BaseMovie> watchlistMovies;
-            try {
-                watchlistMovies = sync.watchlistMovies(Extended.DEFAULT_MIN);
-            } catch (RetrofitError e) {
-                return UpdateResult.INCOMPLETE;
-            } catch (OAuthUnauthorizedException e) {
-                TraktCredentials.get(context).setCredentialsInvalid();
-                return UpdateResult.INCOMPLETE;
-            }
-            if (watchlistMovies == null) {
-                return UpdateResult.INCOMPLETE;
-            }
+            // loop through all local movies
+            for (Integer tmdbId : getMovieTmdbIdsAsSet(context)) {
+                // is local movie in trakt collection or watchlist?
+                boolean inCollection = collection.remove(tmdbId);
+                boolean inWatchlist = watchlist.remove(tmdbId);
 
-            // build watchlist updates
-            ContentValues values = new ContentValues();
-            values.put(SeriesGuideContract.Movies.IN_WATCHLIST, true);
-            buildMovieUpdateOps(watchlistMovies, localMovies, newWatchlistMovies, moviesToRemove,
-                    batch, values);
-
-            // apply watchlist updates
-            try {
-                DBUtils.applyInSmallBatches(context, batch);
-            } catch (OperationApplicationException e) {
-                Timber.e(e, "Applying watchlist updates failed");
-                return UpdateResult.INCOMPLETE;
-            }
-            batch.clear();
-            values.clear();
-
-            // return if connectivity is lost
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                return UpdateResult.INCOMPLETE;
-            }
-
-            // get trakt collection
-            List<BaseMovie> collectionMovies;
-            try {
-                collectionMovies = sync.collectionMovies(Extended.DEFAULT_MIN);
-            } catch (RetrofitError e) {
-                return UpdateResult.INCOMPLETE;
-            } catch (OAuthUnauthorizedException e) {
-                TraktCredentials.get(context).setCredentialsInvalid();
-                return UpdateResult.INCOMPLETE;
-            }
-            if (collectionMovies == null) {
-                return UpdateResult.INCOMPLETE;
+                if (merging) {
+                    // upload movie if missing from trakt collection or watchlist
+                    if (!inCollection || !inWatchlist) {
+                        moviesToRemoveOrUpload.add(tmdbId);
+                    }
+                    // add to local collection or watchlist, but do NOT remove
+                    if (inCollection || inWatchlist) {
+                        ContentProviderOperation.Builder builder = ContentProviderOperation
+                                .newUpdate(SeriesGuideContract.Movies.buildMovieUri(tmdbId));
+                        if (inCollection) {
+                            builder.withValue(SeriesGuideContract.Movies.IN_COLLECTION, true);
+                        }
+                        if (inWatchlist) {
+                            builder.withValue(SeriesGuideContract.Movies.IN_WATCHLIST, true);
+                        }
+                        batch.add(builder.build());
+                    }
+                } else {
+                    if (!inCollection && !inWatchlist) {
+                        // remove local movie if removed from collection and watchlist on trakt
+                        moviesToRemoveOrUpload.add(tmdbId);
+                    } else {
+                        // mirror trakt collection and watchlist flag
+                        ContentProviderOperation op = ContentProviderOperation
+                                .newUpdate(SeriesGuideContract.Movies.buildMovieUri(tmdbId))
+                                .withValue(SeriesGuideContract.Movies.IN_COLLECTION, inCollection)
+                                .withValue(SeriesGuideContract.Movies.IN_WATCHLIST, inWatchlist)
+                                .build();
+                        batch.add(op);
+                    }
+                }
             }
 
-            // build collection updates
-            values.put(SeriesGuideContract.Movies.IN_COLLECTION, true);
-            buildMovieUpdateOps(collectionMovies, localMovies, newCollectionMovies, moviesToRemove,
-                    batch, values);
-
-            // apply collection updates
+            // apply collection and watchlist updates to existing movies
             try {
                 DBUtils.applyInSmallBatches(context, batch);
             } catch (OperationApplicationException e) {
@@ -640,19 +647,9 @@ public class MovieTools {
             batch.clear();
 
             // merge on first run, delete on consequent runs
-            if (TraktSettings.hasMergedMovies(context)) {
-                Timber.d("syncMoviesFromTrakt: remove " + moviesToRemove.size());
-                // remove movies not on trakt
-                buildMovieDeleteOps(moviesToRemove, batch);
-                try {
-                    DBUtils.applyInSmallBatches(context, batch);
-                } catch (OperationApplicationException e) {
-                    Timber.e(e, "Removing movies failed");
-                    return UpdateResult.INCOMPLETE;
-                }
-            } else {
-                // upload movies not on trakt
-                UpdateResult result = Upload.toTrakt(context, sync, moviesToRemove);
+            if (merging) {
+                // upload movies not in trakt collection or watchlist
+                UpdateResult result = Upload.toTrakt(context, sync, moviesToRemoveOrUpload);
                 if (result != UpdateResult.SUCCESS) {
                     // abort here if there were issues
                     return result;
@@ -661,15 +658,50 @@ public class MovieTools {
                     PreferenceManager.getDefaultSharedPreferences(context).edit()
                             .putBoolean(TraktSettings.KEY_HAS_MERGED_MOVIES, true).commit();
                 }
+            } else {
+                Timber.d("syncMoviesFromTrakt: remove " + moviesToRemoveOrUpload.size());
+                // remove movies not on trakt
+                buildMovieDeleteOps(moviesToRemoveOrUpload, batch);
+                try {
+                    DBUtils.applyInSmallBatches(context, batch);
+                } catch (OperationApplicationException e) {
+                    Timber.e(e, "Removing movies failed");
+                    return UpdateResult.INCOMPLETE;
+                }
             }
 
-            // return if connectivity is lost
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                return UpdateResult.INCOMPLETE;
+            // add movies from trakt missing locally
+            // all local movies were removed from trakt collection and watchlist,
+            // so they only contain movies missing locally
+            return addMovies(context, trakt, collection, watchlist);
+        }
+
+        private static Set<Integer> getTraktCollection(Sync sync)
+                throws OAuthUnauthorizedException {
+            List<BaseMovie> collectionList = sync.collectionMovies(Extended.DEFAULT_MIN);
+            return buildTmdbIdSet(collectionList);
+        }
+
+        private static Set<Integer> getTraktWatchlist(Sync sync)
+                throws OAuthUnauthorizedException {
+            List<BaseMovie> collectionList = sync.watchlistMovies(Extended.DEFAULT_MIN);
+            return buildTmdbIdSet(collectionList);
+        }
+
+        private static Set<Integer> buildTmdbIdSet(List<BaseMovie> movies) {
+            if (movies == null) {
+                return null;
             }
 
-            // add movies new from trakt
-            return addMovies(context, trakt, newCollectionMovies, newWatchlistMovies);
+            Set<Integer> tmdbIdSet = new HashSet<>();
+            for (BaseMovie movie : movies) {
+                if (movie.movie == null || movie.movie.ids == null
+                        || movie.movie.ids.tmdb == null) {
+                    continue; // skip invalid values
+                }
+                tmdbIdSet.add(movie.movie.ids.tmdb);
+            }
+            return tmdbIdSet;
         }
 
         /**
@@ -872,7 +904,7 @@ public class MovieTools {
             }
         }
 
-        private static void buildMovieDeleteOps(HashSet<Integer> moviesToRemove,
+        private static void buildMovieDeleteOps(Set<Integer> moviesToRemove,
                 ArrayList<ContentProviderOperation> batch) {
             for (Integer movieTmdbId : moviesToRemove) {
                 ContentProviderOperation op = ContentProviderOperation
@@ -950,7 +982,7 @@ public class MovieTools {
          * Uploads the given movies to the appropriate list(s) on trakt.
          */
         public static UpdateResult toTrakt(Context context, Sync sync,
-                HashSet<Integer> moviesToUpload) {
+                Set<Integer> moviesToUpload) {
             if (moviesToUpload.size() == 0) {
                 // nothing to upload
                 return UpdateResult.SUCCESS;

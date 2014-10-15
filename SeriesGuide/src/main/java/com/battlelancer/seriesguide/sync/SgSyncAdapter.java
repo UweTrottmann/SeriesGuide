@@ -494,7 +494,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // movies
         Timber.d("Syncing...trakt movies...");
-        UpdateResult resultMovies = MovieTools.Download.syncMoviesFromTrakt(context);
+        UpdateResult resultMovies = MovieTools.Download.syncMoviesWithTrakt(context);
         Timber.d("Syncing...trakt movies..." + resultMovies.toString());
 
         // don't overwrite failure
