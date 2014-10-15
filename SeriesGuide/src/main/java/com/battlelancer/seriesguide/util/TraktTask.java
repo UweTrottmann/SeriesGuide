@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.CheckinResponse;
@@ -34,6 +35,13 @@ import com.jakewharton.trakt.services.MovieService;
 import com.jakewharton.trakt.services.RateService;
 import com.jakewharton.trakt.services.ShowService;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.trakt.v2.TraktV2;
+import com.uwetrottmann.trakt.v2.entities.MovieIds;
+import com.uwetrottmann.trakt.v2.entities.SyncItems;
+import com.uwetrottmann.trakt.v2.entities.SyncMovie;
+import com.uwetrottmann.trakt.v2.entities.SyncResponse;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+import com.uwetrottmann.trakt.v2.services.Sync;
 import de.greenrobot.event.EventBus;
 import retrofit.RetrofitError;
 import timber.log.Timber;
@@ -122,8 +130,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     }
 
     /**
-     * Initial constructor. Call <b>one</b> of the setup-methods like {@link #shoutEpisode(int,
-     * int,
+     * Initial constructor. Call <b>one</b> of the setup-methods like {@link #shoutEpisode(int, int,
      * int, String, boolean)} afterwards.<br> <br> Make sure the user has valid trakt credentials
      * (check with {@link com.battlelancer.seriesguide.settings.TraktCredentials#hasCredentials()}
      * and then possibly launch {@link ConnectTraktActivity}) or execution will fail.
@@ -264,6 +271,16 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
             return r;
         }
 
+        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(mContext);
+        if (trakt == null) {
+            // no valid credentials
+            Response r = new Response();
+            r.status = TraktStatus.FAILURE;
+            r.error = mContext.getString(R.string.trakt_error_credentials);
+            return r;
+        }
+        Sync traktSync = trakt.sync();
+
         // last chance to abort
         if (isCancelled()) {
             return null;
@@ -287,17 +304,22 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 case UNWATCHLIST_MOVIE:
                 case WATCHED_MOVIE:
                 case UNWATCHED_MOVIE: {
-                    return doMovieAction(manager);
+                    return doMovieAction(traktSync);
                 }
                 case SHOUT: {
                     return doShoutAction(manager);
                 }
             }
         } catch (RetrofitError e) {
-            Timber.e(e, mAction.toString() + " failed");
+            Timber.e(e, mAction.toString() + " failed " + e.getUrl());
             r = new Response();
             r.status = TraktStatus.FAILURE;
             r.error = mContext.getString(R.string.trakt_error_general);
+        } catch (OAuthUnauthorizedException e) {
+            TraktCredentials.get(mContext).setCredentialsInvalid();
+            r = new Response();
+            r.status = TraktStatus.FAILURE;
+            r.error = mContext.getString(R.string.trakt_error_credentials);
         }
 
         return r;
@@ -388,57 +410,59 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         return null;
     }
 
-    private Response doMovieAction(Trakt manager) {
-        final int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
+    private Response doMovieAction(Sync traktSync) throws OAuthUnauthorizedException {
+        int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
+        SyncItems items = new SyncItems().movies(new SyncMovie().id(MovieIds.tmdb(tmdbId)));
 
+        SyncResponse response = null;
+        Response r = new Response();
         switch (mAction) {
             case COLLECTION_ADD_MOVIE: {
-                Response r = manager.movieService().library(new MovieService.Movies(
-                        new MovieService.SeenMovie(tmdbId)
-                ));
+                response = traktSync.addItemsToCollection(items);
                 // always returns success, even if movie is already in collection
                 r.message = mContext.getString(R.string.action_collection_added);
-                return r;
+                break;
             }
             case COLLECTION_REMOVE_MOVIE: {
-                Response r = manager.movieService().unlibrary(new MovieService.Movies(
-                        new MovieService.SeenMovie(tmdbId)
-                ));
+                response = traktSync.deleteItemsFromCollection(items);
                 // always returns success, even if movie was never in collection
                 r.message = mContext.getString(R.string.action_collection_removed);
-                return r;
+                break;
             }
             case WATCHED_MOVIE: {
-                Response r =  manager.movieService()
-                        .seen(new MovieService.Movies(new MovieService.SeenMovie(tmdbId)));
+                response = traktSync.addItemsToWatchedHistory(items);
                 r.message = mContext.getString(R.string.action_watched);
-                return r;
+                break;
             }
             case UNWATCHED_MOVIE: {
-                Response r = manager.movieService()
-                        .unseen(new MovieService.Movies(new MovieService.SeenMovie(tmdbId)));
+                response = traktSync.deleteItemsFromWatchedHistory(items);
                 r.message = mContext.getString(R.string.action_unwatched);
-                return r;
+                break;
             }
             case WATCHLIST_MOVIE: {
-                Response r = manager.movieService().watchlist(new MovieService.Movies(
-                        new MovieService.SeenMovie(tmdbId)
-                ));
+                response = traktSync.addItemsToWatchlist(items);
                 // always returns success, even if movie is already on watchlist
                 r.message = mContext.getString(R.string.watchlist_added);
-                return r;
+                break;
             }
             case UNWATCHLIST_MOVIE: {
-                Response r = manager.movieService().unwatchlist(new MovieService.Movies(
-                        new MovieService.SeenMovie(tmdbId)
-                ));
+                response = traktSync.deleteItemsFromWatchlist(items);
                 // always returns success, even if movie is not on watchlist anymore
                 r.message = mContext.getString(R.string.watchlist_removed);
-                return r;
+                break;
             }
         }
 
-        return null;
+        if (response == null ||
+                (response.not_found != null && response.not_found.movies != null
+                        && response.not_found.movies.size() != 0)) {
+            r.status = TraktStatus.FAILURE;
+            r.error = mContext.getString(R.string.trakt_error_general);
+        } else {
+            r.status = TraktStatus.SUCCESS;
+        }
+
+        return r;
     }
 
     private Response doShoutAction(Trakt manager) {
