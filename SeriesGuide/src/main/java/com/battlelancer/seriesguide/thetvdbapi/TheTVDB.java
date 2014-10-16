@@ -394,12 +394,11 @@ public class TheTVDB {
         } catch (RetrofitError e) {
             Timber.e(e, "Loading summary failed: " + e.getUrl());
         }
-        if (traktShow == null) {
+        if (traktShow == null || traktShow.airs == null) {
             throw new TvdbException("Could not load show from trakt: " + showTvdbId);
         }
 
-        show.airtime = TimeTools.parseShowReleaseTime(traktShow.air_day, traktShow.air_time,
-                traktShow.country);
+        show.airtime = TimeTools.parseShowReleaseTime(traktShow.airs, traktShow.country);
         show.country = traktShow.country;
 
         return show;

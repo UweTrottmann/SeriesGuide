@@ -23,6 +23,7 @@ import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.uwetrottmann.trakt.v2.entities.Airs;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,10 +33,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
-import org.joda.time.DateTimeUtils;
 import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 /**
  * Helps with converting timestamps used by TVDb and other services.
@@ -98,26 +96,31 @@ public class TimeTools {
     }
 
     /**
-     * Converts a UTC release time from trakt (e.g. "20:00") into a millisecond value. Adjusts the
-     * time if the current time zone has a specific schedule (e.g. United States).
+     * Converts a release time from trakt into a millisecond value. Adjusts the time if the current
+     * time zone has a specific schedule (e.g. United States).
      *
-     * @return -1 if no conversion was possible. The date is today or the next week day matching
-     * {@code airDay}.
+     * @return -1 if no conversion was possible. The date is today or the next day matching the
+     * release week day.
      */
-    public static long parseShowReleaseTime(String airDay, String airTime, String country) {
-        if (airTime == null || airTime.length() != 5) {
+    public static long parseShowReleaseTime(Airs airs, String country) {
+        // no time, no fun
+        if (airs.time == null || airs.time.length() != 5) {
             return -1;
         }
 
-        // extract hour and minute, example: "20:30"
-        int hour = Integer.valueOf(airTime.substring(0, 2));
-        int minute = Integer.valueOf(airTime.substring(3, 5));
+        // extract hour and minute, example: "20:30" (faster than parsing)
+        int hour = Integer.valueOf(airs.time.substring(0, 2));
+        int minute = Integer.valueOf(airs.time.substring(3, 5));
 
-        // get current datetime in UTC, change time
-        DateTime dateTime = new DateTime(DateTimeZone.UTC).withTime(hour, minute, 0, 0);
+        // determine time zone (fall back to America/New_York)
+        DateTimeZone timeZone = (airs.timezone == null || airs.timezone.length() == 0) ?
+                DateTimeZone.forID(TIMEZONE_ID_US_EASTERN) : DateTimeZone.forID(airs.timezone);
+
+        // get current datetime
+        DateTime dateTime = new DateTime().withZone(timeZone).withTime(hour, minute, 0, 0);
 
         // adjust day of week so datetime is today or within the next week
-        int weekDay = getDateTimeConstantDayOfWeek(airDay);
+        int weekDay = getDateTimeConstantDayOfWeek(airs.day);
         if (weekDay != -1) {
             // joda tries to preserve week
             // so if we want a week day earlier in the week, advance by 7 days first
@@ -127,15 +130,7 @@ public class TimeTools {
             dateTime = dateTime.withDayOfWeek(weekDay);
         }
 
-        // set to time zone used by trakt for this country
-        if (ISO3166_1_UNITED_STATES.equals(country)) {
-            // change to UTC-05:00
-            dateTime = dateTime.withZone(DateTimeZone.forOffsetHours(-5));
-            // keep values, change to America/New_York (EST UTC−5:00, EDT UTC−4:00)
-            dateTime = dateTime.withZoneRetainFields(DateTimeZone.forID(TIMEZONE_ID_US_EASTERN));
-        }
-
-        // correct time in Canada for Canadian shows, in US for US shows
+        // handle time zone effects on release time for US shows (only if device is set to US zone)
         String localTimeZone = TimeZone.getDefault().getID();
         if (localTimeZone.startsWith(TIMEZONE_ID_PREFIX_AMERICA)) {
             dateTime = applyUnitedStatesCorrections(country, localTimeZone, dateTime);
@@ -152,7 +147,7 @@ public class TimeTools {
         // east feed (default): simultaneously in Eastern and Central
         // delayed 1 hour in Mountain
         // delayed three hours in Pacific
-        // ==>
+        // <==>
         // same local time in Eastern + Pacific (e.g. 20:00)
         // same local time in Central + Mountain (e.g. 19:00)
 
