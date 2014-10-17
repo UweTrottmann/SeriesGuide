@@ -24,8 +24,8 @@ allprojects {
 }
 
 ext {
-    compileSdkVersion = 19
-    buildToolsVersion = '19.1.0'
+    compileSdkVersion = 21
+    buildToolsVersion = '21.0.0'
 
     // API level 15+ -> version 15xxx
     versionCode = 15050
