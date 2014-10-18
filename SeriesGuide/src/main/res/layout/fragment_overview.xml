@@ -18,13 +18,13 @@
         android:layout_width="2dp"
         android:layout_height="match_parent"
         android:layout_gravity="left"
-        android:background="?attr/colorSeparator" />
+        android:background="?attr/sgColorSeparator" />
 
     <View
         android:layout_width="2dp"
         android:layout_height="match_parent"
         android:layout_gravity="right"
-        android:background="?attr/colorSeparator" />
+        android:background="?attr/sgColorSeparator" />
 
     <ScrollView
         android:layout_width="match_parent"
