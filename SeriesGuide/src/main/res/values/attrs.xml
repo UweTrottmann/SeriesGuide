@@ -11,7 +11,7 @@
     <attr name="textColorSgGreen" format="reference|color" />
     <attr name="textColorSgDim" format="reference|color" />
     <attr name="textColorSgActionBar" format="reference|color" />
-    <attr name="colorBackgroundDim" format="reference|color" />
+    <attr name="sgColorBackgroundDim" format="reference|color" />
     <attr name="sgColorAccent" format="reference|color" />
     <attr name="sgColorSeparator" format="reference|color" />
     <attr name="sgColorDivider" format="reference|color" />
