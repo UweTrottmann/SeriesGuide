@@ -112,7 +112,7 @@
                         android:layout_marginRight="@dimen/large_padding"
                         android:paddingBottom="6dp"
                         android:background="?attr/drawableCardBackground"
-                        android:foreground="?attr/custom_list_selector">
+                        android:foreground="?attr/sgSelectableItemBackground">
 
                         <ImageView
                             android:id="@+id/imageViewOverviewEpisode"

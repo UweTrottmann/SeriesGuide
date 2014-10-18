@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <attr name="custom_list_selector" format="reference" />
+    <attr name="sgSelectableItemBackground" format="reference" />
 
     <!-- Colors -->
     <attr name="textColorSgDefault" format="reference|color" />

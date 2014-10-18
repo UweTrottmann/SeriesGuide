@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="103dp"
     android:background="?attr/drawableCardBackground"
-    android:foreground="?attr/custom_list_selector">
+    android:foreground="?attr/sgSelectableItemBackground">
 
     <RelativeLayout
         android:id="@+id/friend_root"

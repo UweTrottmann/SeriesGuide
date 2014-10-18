@@ -22,7 +22,7 @@
                 android:id="@+id/containerShowPoster"
                 android:layout_width="100dp"
                 android:layout_height="150dp"
-                android:foreground="?attr/custom_list_selector">
+                android:foreground="?attr/sgSelectableItemBackground">
 
                 <ImageView
                     android:id="@+id/imageViewShowPoster"

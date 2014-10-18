@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="@bool/gridClipToPadding"
-            android:listSelector="?custom_list_selector" />
+            android:listSelector="?sgSelectableItemBackground" />
     </LinearLayout>
 
     <include layout="@layout/dialog_buttons" />

@@ -23,7 +23,7 @@
         <!-- All customizations that are SPECIFIC to API-level L can go here. -->
 
         <!-- Special attributes -->
-        <item name="custom_list_selector">?android:attr/selectableItemBackground</item>
+        <item name="sgSelectableItemBackground">?android:attr/selectableItemBackground</item>
 
         <!--   your app's branding color (for the app bar) -->
         <item name="android:colorPrimary">@color/accent_primary</item>
@@ -52,7 +52,7 @@
         <!-- All customizations that are SPECIFIC to API-level L can go here. -->
 
         <!-- Special attributes -->
-        <item name="custom_list_selector">?android:attr/selectableItemBackground</item>
+        <item name="sgSelectableItemBackground">?android:attr/selectableItemBackground</item>
 
         <!--   your app's branding color (for the app bar) -->
         <item name="android:colorPrimary">@color/accent_primary</item>

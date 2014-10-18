@@ -28,7 +28,7 @@
             android:layout_marginLeft="@dimen/large_padding"
             android:layout_marginRight="@dimen/large_padding"
             android:layout_marginTop="@dimen/default_padding"
-            android:background="?attr/custom_list_selector"
+            android:background="?attr/sgSelectableItemBackground"
             android:clickable="true"
             android:focusable="true"
             android:orientation="vertical">
@@ -59,7 +59,7 @@
             android:id="@+id/addbutton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?custom_list_selector"
+            android:background="?sgSelectableItemBackground"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/default_padding"
             android:paddingRight="@dimen/default_padding"

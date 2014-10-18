@@ -13,7 +13,7 @@
         android:layout_marginRight="@dimen/large_padding"
         android:layout_weight="1"
         android:clipToPadding="@bool/gridClipToPadding"
-        android:listSelector="?custom_list_selector"
+        android:listSelector="?sgSelectableItemBackground"
         android:scrollbarStyle="outsideInset" />
 
     <include layout="@layout/divider_horizontal" />

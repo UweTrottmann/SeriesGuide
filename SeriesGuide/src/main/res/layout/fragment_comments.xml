@@ -39,7 +39,7 @@
                 android:clipToPadding="@bool/gridClipToPadding"
                 android:divider="@color/transparent"
                 android:dividerHeight="0dp"
-                android:listSelector="?attr/custom_list_selector" />
+                android:listSelector="?attr/sgSelectableItemBackground" />
 
         </FrameLayout>
 

@@ -8,7 +8,7 @@
         <!-- All customizations that are SPECIFIC to API-level 15+ go here. -->
 
         <!-- Special attributes -->
-        <item name="custom_list_selector">@drawable/list_selector_sg</item>
+        <item name="sgSelectableItemBackground">@drawable/list_selector_sg</item>
 
         <!-- System widgets -->
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
@@ -117,7 +117,7 @@
         <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>
 
         <!-- Special attributes -->
-        <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
+        <item name="sgSelectableItemBackground">@drawable/list_selector_holo_dark</item>
 
         <!-- Colors -->
         <item name="textColorSgDefault">@color/black_11</item>
@@ -172,7 +172,7 @@
         <!-- All customizations that are SPECIFIC to API-level 15+ go here. -->
 
         <!-- Special attributes -->
-        <item name="custom_list_selector">@drawable/list_selector_sg</item>
+        <item name="sgSelectableItemBackground">@drawable/list_selector_sg</item>
 
         <!-- System widgets -->
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>

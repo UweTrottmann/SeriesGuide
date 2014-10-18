@@ -42,7 +42,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center_vertical|right"
-        android:background="?custom_list_selector"
+        android:background="?sgSelectableItemBackground"
         android:contentDescription="@string/clear"
         android:src="@drawable/ic_action_cancel" />
 
