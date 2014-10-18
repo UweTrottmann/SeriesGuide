@@ -32,8 +32,10 @@ import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.account.Account;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
@@ -54,6 +56,9 @@ public class HexagonTools {
 
     private static GoogleAccountCredential sAccountCredential;
 
+    private static final JsonFactory JSON_FACTORY = new AndroidJsonFactory();
+    private static final HttpTransport HTTP_TRANSPORT = AndroidHttp.newCompatibleTransport();
+
     private static Shows sShowsService;
     private static Episodes sEpisodesService;
     private static Movies sMoviesService;
@@ -63,8 +68,7 @@ public class HexagonTools {
      */
     public static synchronized Account buildAccountService(Context context) {
         Account.Builder builder = new Account.Builder(
-                AndroidHttp.newCompatibleTransport(), new GsonFactory(),
-                getAccountCredential(context)
+                HTTP_TRANSPORT, JSON_FACTORY, getAccountCredential(context)
         );
         return CloudEndpointUtils.updateBuilder(builder).build();
     }
@@ -75,8 +79,7 @@ public class HexagonTools {
     public static synchronized Shows getShowsService(Context context) {
         if (sShowsService == null) {
             Shows.Builder builder = new Shows.Builder(
-                    AndroidHttp.newCompatibleTransport(), new GsonFactory(),
-                    getAccountCredential(context)
+                    HTTP_TRANSPORT, JSON_FACTORY, getAccountCredential(context)
             );
             sShowsService = CloudEndpointUtils.updateBuilder(builder).build();
         }
@@ -89,8 +92,7 @@ public class HexagonTools {
     public static synchronized Episodes getEpisodesService(Context context) {
         if (sEpisodesService == null) {
             Episodes.Builder builder = new Episodes.Builder(
-                    AndroidHttp.newCompatibleTransport(), new GsonFactory(),
-                    getAccountCredential(context)
+                    HTTP_TRANSPORT, JSON_FACTORY, getAccountCredential(context)
             );
             sEpisodesService = CloudEndpointUtils.updateBuilder(builder).build();
         }
@@ -103,8 +105,7 @@ public class HexagonTools {
     public static synchronized Movies getMoviesService(Context context) {
         if (sMoviesService == null) {
             Movies.Builder builder = new Movies.Builder(
-                    AndroidHttp.newCompatibleTransport(), new GsonFactory(),
-                    getAccountCredential(context)
+                    HTTP_TRANSPORT, JSON_FACTORY, getAccountCredential(context)
             );
             sMoviesService = CloudEndpointUtils.updateBuilder(builder).build();
         }
