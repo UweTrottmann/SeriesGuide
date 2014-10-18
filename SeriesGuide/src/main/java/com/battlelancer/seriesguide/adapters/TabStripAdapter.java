@@ -76,7 +76,7 @@ public class TabStripAdapter extends FragmentPagerAdapter {
                 Utils.resolveAttributeToResourceId(context.getTheme(), R.attr.sgColorAccent)));
         mTabLayout.setBottomBorderColor(context.getResources().getColor(
                 Utils.resolveAttributeToResourceId(context.getTheme(),
-                        R.attr.colorTabStripUnderline)
+                        R.attr.sgColorTabStripUnderline)
         ));
         mTabLayout.setViewPager(mViewPager);
     }

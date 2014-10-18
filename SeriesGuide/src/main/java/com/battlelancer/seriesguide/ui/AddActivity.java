@@ -87,7 +87,7 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.sgColorAccent)));
         tabs.setBottomBorderColor(getResources().getColor(
                 Utils.resolveAttributeToResourceId(getTheme(),
-                        R.attr.colorTabStripUnderline)
+                        R.attr.sgColorTabStripUnderline)
         ));
         tabs.setViewPager(pager);
 

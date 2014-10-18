@@ -73,7 +73,7 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.sgColorAccent)));
         mTabs.setBottomBorderColor(getResources().getColor(
                 Utils.resolveAttributeToResourceId(getTheme(),
-                        R.attr.colorTabStripUnderline)
+                        R.attr.sgColorTabStripUnderline)
         ));
         mTabs.setOnTabClickListener(new SlidingTabLayout.OnTabClickListener() {
             @Override

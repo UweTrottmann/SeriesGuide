@@ -179,7 +179,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.sgColorAccent)));
         tabs.setBottomBorderColor(Utils.setColorAlpha(getResources().getColor(
                         Utils.resolveAttributeToResourceId(getTheme(),
-                                R.attr.colorTabStripUnderline)
+                                R.attr.sgColorTabStripUnderline)
                 ),
                 0x26
         ));
