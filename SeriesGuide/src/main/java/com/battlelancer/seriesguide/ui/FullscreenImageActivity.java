@@ -16,10 +16,10 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,17 +30,15 @@ import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.SystemUiHider;
 import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
- * Displays a full screen image of a TV show's poster, or the image provided for a specific
- * episode. If a URI instead of a file name is provided, it will be attempted to load the image
- * from
- * the internet.
+ * Displays a full screen image of a TV show's poster, or the image provided for a specific episode.
+ * If a URI instead of a file name is provided, it will be attempted to load the image from the
+ * internet.
  */
-public class FullscreenImageActivity extends FragmentActivity {
+public class FullscreenImageActivity extends BaseActivity {
 
     public interface InitBundle {
         String IMAGE_PATH = "fullscreenimageactivity.intent.extra.image";
@@ -61,20 +59,19 @@ public class FullscreenImageActivity extends FragmentActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+        supportRequestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen_image);
-
         setupActionBar();
+
         setupViews();
     }
 
-    private void setupActionBar() {
-        final ActionBar actionBar = getActionBar();
-        actionBar.setBackgroundDrawable(
-                getResources().getDrawable(R.drawable.background_actionbar_gradient));
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setIcon(R.drawable.ic_actionbar);
         actionBar.setDisplayShowTitleEnabled(false);
     }
 
@@ -169,8 +166,8 @@ public class FullscreenImageActivity extends FragmentActivity {
     };
 
     /**
-     * Schedules a call to hide() in [delay] milliseconds, canceling any
-     * previously scheduled calls.
+     * Schedules a call to hide() in [delay] milliseconds, canceling any previously scheduled
+     * calls.
      */
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);

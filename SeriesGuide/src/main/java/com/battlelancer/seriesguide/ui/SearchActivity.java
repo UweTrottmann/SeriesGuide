@@ -16,12 +16,12 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.ActionBar;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -64,19 +64,19 @@ public class SearchActivity extends BaseNavDrawerActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        setupNavDrawer();
-
         setupActionBar();
+        setupNavDrawer();
 
         setupViews();
 
         handleIntent(getIntent());
     }
 
-    private void setupActionBar() {
-        final ActionBar actionBar = getActionBar();
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setIcon(R.drawable.ic_action_search);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setCustomView(R.layout.actionbar_search);
         actionBar.setDisplayShowCustomEnabled(true);

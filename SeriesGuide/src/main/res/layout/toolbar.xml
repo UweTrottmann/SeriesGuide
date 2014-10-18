@@ -16,21 +16,9 @@
   ~ limitations under the License.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item
-        android:id="@+id/menu_action_movies_sort"
-        android:showAsAction="ifRoom"
-        android:title="@string/action_movies_sort"
-        android:icon="@drawable/ic_action_sort_inverse">
-        <menu>
-            <item
-                android:id="@+id/menu_action_movies_sort_title"
-                android:title="@string/action_movies_sort_title" />
-            <item
-                android:id="@+id/menu_action_movies_sort_release"
-                android:title="@string/action_movies_sort_release" />
-        </menu>
-    </item>
-
-</menu>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sgToolbar"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:minHeight="?attr/actionBarSize"
+    android:background="?attr/colorPrimary" />

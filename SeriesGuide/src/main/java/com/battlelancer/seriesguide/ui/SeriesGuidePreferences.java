@@ -114,7 +114,7 @@ public class SeriesGuidePreferences extends PreferenceActivity implements
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(SeriesGuidePreferences.THEME);
+        setTheme(android.R.style.Theme_Holo);
         super.onCreate(savedInstanceState);
 
         String action = getIntent().getAction();

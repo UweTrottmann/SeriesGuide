@@ -16,11 +16,11 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
 import com.battlelancer.seriesguide.R;
@@ -74,7 +74,6 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_people);
-
         setupActionBar();
 
         if (findViewById(R.id.containerPeoplePerson) != null) {
@@ -108,8 +107,10 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
         }
     }
 
-    private void setupActionBar() {
-        final ActionBar actionBar = getActionBar();
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         PeopleType peopleType = PeopleType.valueOf(

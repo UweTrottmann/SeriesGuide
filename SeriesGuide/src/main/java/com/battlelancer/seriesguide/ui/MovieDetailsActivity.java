@@ -16,9 +16,9 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.Window;
 import com.battlelancer.seriesguide.R;
@@ -39,9 +39,10 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+        supportRequestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
+        setupActionBar();
         setupNavDrawer();
 
         if (getIntent().getExtras() == null) {
@@ -57,7 +58,6 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
 
         mSystemBarTintManager = new SystemBarTintManager(this);
 
-        setupActionBar();
 
         if (savedInstanceState == null) {
             MovieDetailsFragment f = MovieDetailsFragment.newInstance(tmdbId);
@@ -77,13 +77,12 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
         }
     }
 
-    private void setupActionBar() {
-        final ActionBar actionBar = getActionBar();
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
-        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
-            actionBar.setIcon(R.drawable.ic_launcher);
-        }
     }
 
     @Override

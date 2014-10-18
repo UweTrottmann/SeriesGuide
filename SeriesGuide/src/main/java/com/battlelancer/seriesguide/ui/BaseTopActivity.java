@@ -17,8 +17,8 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 
@@ -28,14 +28,9 @@ import com.battlelancer.seriesguide.R;
 public abstract class BaseTopActivity extends BaseNavDrawerActivity {
 
     @Override
-    protected void onCreate(Bundle arg0) {
-        super.onCreate(arg0);
-
-        setupActionBar();
-    }
-
-    private void setupActionBar() {
-        final ActionBar actionBar = getActionBar();
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }

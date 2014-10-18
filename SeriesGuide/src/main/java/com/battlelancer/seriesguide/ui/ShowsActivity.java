@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.ui;
 
 import android.accounts.Account;
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -32,6 +31,8 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -115,6 +116,7 @@ public class ShowsActivity extends BaseTopActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shows);
+        setupActionBar();
         setupNavDrawer();
 
         // Set up a sync account if needed
@@ -134,7 +136,6 @@ public class ShowsActivity extends BaseTopActivity implements
         }
 
         // setup all the views!
-        setUpActionBar();
         setupViews();
         setInitialTab(savedInstanceState, getIntent().getExtras());
 
@@ -205,8 +206,10 @@ public class ShowsActivity extends BaseTopActivity implements
         return false;
     }
 
-    private void setUpActionBar() {
-        final ActionBar actionBar = getActionBar();
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.shows);
     }
 

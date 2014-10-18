@@ -16,9 +16,9 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 
@@ -57,7 +57,7 @@ public class TraktShoutsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_singlepane);
         setupActionBar();
 
         if (savedInstanceState == null) {
@@ -76,14 +76,15 @@ public class TraktShoutsActivity extends BaseActivity {
                 f = TraktShoutsFragment
                         .newInstanceEpisode(showTvdbId, season, episode);
             }
-            getSupportFragmentManager().beginTransaction().add(android.R.id.content, f)
+            getSupportFragmentManager().beginTransaction().add(R.id.content_frame, f)
                     .commit();
         }
     }
 
-    private void setupActionBar() {
-        final ActionBar actionBar = getActionBar();
-        actionBar.setHomeButtonEnabled(true);
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(R.string.comments);
         actionBar.setSubtitle(getIntent().getExtras().getString(InitBundle.TITLE));

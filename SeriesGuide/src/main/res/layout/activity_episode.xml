@@ -1,41 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
-    android:id="@+id/drawer_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
-    <FrameLayout
+    <include layout="@layout/toolbar" />
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/background"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
+            android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/contentContainerEpisodeDetails"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingTop="?android:actionBarSize">
-
-            <com.battlelancer.seriesguide.widgets.SlidingTabLayout
-                android:id="@+id/tabsEpisodeDetails"
+            <ImageView
+                android:id="@+id/background"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/pagerEpisodeDetails"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/contentContainerEpisodeDetails"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="?android:actionBarSize">
 
-    </FrameLayout>
+                <com.battlelancer.seriesguide.widgets.SlidingTabLayout
+                    android:id="@+id/tabsEpisodeDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-    <include layout="@layout/drawer_left_fullscreen" />
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/pagerEpisodeDetails"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
 
-</android.support.v4.widget.DrawerLayout>
+        </FrameLayout>
+
+        <include layout="@layout/drawer_left_fullscreen" />
+
+    </android.support.v4.widget.DrawerLayout>
+</LinearLayout>

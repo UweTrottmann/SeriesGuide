@@ -18,19 +18,12 @@
 
 <resources>
 
-    <style name="Theme.BaseSeriesGuide" parent="android:Theme.Material">
+    <style name="Theme.BaseSeriesGuide" parent="Theme.AppCompat.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level L can go here. -->
 
         <!-- Special attributes -->
         <item name="sgSelectableItemBackground">?android:attr/selectableItemBackground</item>
-
-        <!--   your app's branding color (for the app bar) -->
-        <item name="android:colorPrimary">@color/accent_primary</item>
-        <!--   darker variant of colorPrimary (for status bar, contextual app bars) -->
-        <item name="android:colorPrimaryDark">@color/accent_primary_dark</item>
-        <!--   theme UI controls like checkboxes and text fields -->
-        <item name="android:colorAccent">@color/accent_primary</item>
 
     </style>
 

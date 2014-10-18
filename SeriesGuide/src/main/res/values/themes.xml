@@ -3,7 +3,7 @@
 
     <style name="Theme" />
 
-    <style name="Theme.BaseSeriesGuide" parent="android:Theme.Holo">
+    <style name="Theme.BaseSeriesGuide" parent="Theme.AppCompat.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 15+ go here. -->
 
@@ -34,12 +34,19 @@
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
+        <!--   your app's branding color (for the app bar) -->
+        <item name="colorPrimary">@color/accent_primary</item>
+        <!--   darker variant of colorPrimary (for status bar, contextual app bars) -->
+        <item name="colorPrimaryDark">@color/accent_primary_dark</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="colorAccent">@color/accent_primary</item>
+
         <!-- Windows -->
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
 
         <!-- Action bar -->
-        <item name="android:actionBarStyle">@style/ActionBar</item>
+        <item name="actionBarStyle">@style/ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
         <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>
 

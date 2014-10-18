@@ -17,14 +17,15 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
@@ -71,11 +72,7 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
     protected void onCreate(Bundle args) {
         super.onCreate(args);
         setContentView(R.layout.activity_fix_get_glue);
-
-        setTitle(R.string.checkin_fixgetglue);
-
-        final ActionBar actionBar = getActionBar();
-        actionBar.setHomeButtonEnabled(true);
+        setupActionBar();
 
         setupViews();
 
@@ -111,6 +108,14 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
             show.close();
         }
 
+    }
+
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(R.string.checkin_fixgetglue);
     }
 
     private void setupViews() {
@@ -172,6 +177,16 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
         GetGlueObject glueObject = mAdapter.getItem(position - 1);
         mSelectedValue.setText(glueObject.id);
         mSaveButton.setEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void onSearch(String query) {

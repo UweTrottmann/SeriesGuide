@@ -16,7 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -27,6 +26,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -91,6 +91,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_episodes);
+        setupActionBar();
         setupNavDrawer();
 
         // if coming from a notification, set last cleared time
@@ -230,7 +231,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
 
     private void setupActionBar(Series show) {
         // setup ActionBar
-        final ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(show.getTitle());
@@ -257,15 +258,15 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         }
     }
 
-    List<WeakReference<Fragment>> mFragments = new ArrayList<WeakReference<Fragment>>();
+    List<WeakReference<Fragment>> mFragments = new ArrayList<>();
 
     @Override
     public void onAttachFragment(Fragment fragment) {
-        mFragments.add(new WeakReference<Fragment>(fragment));
+        mFragments.add(new WeakReference<>(fragment));
     }
 
     public ArrayList<Fragment> getActiveFragments() {
-        ArrayList<Fragment> ret = new ArrayList<Fragment>();
+        ArrayList<Fragment> ret = new ArrayList<>();
         for (WeakReference<Fragment> ref : mFragments) {
             Fragment f = ref.get();
             if (f != null) {
@@ -321,7 +322,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
                 }, null, null, sortOrder.query()
         );
 
-        ArrayList<Episode> episodeList = new ArrayList<Episode>();
+        ArrayList<Episode> episodeList = new ArrayList<>();
         int startPosition = 0;
         if (episodeCursor != null) {
             while (episodeCursor.moveToNext()) {

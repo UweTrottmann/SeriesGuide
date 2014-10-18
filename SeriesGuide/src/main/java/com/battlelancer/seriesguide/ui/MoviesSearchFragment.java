@@ -132,7 +132,6 @@ public class MoviesSearchFragment extends Fragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getActivity().setProgressBarIndeterminateVisibility(false);
 
         resultsAdapter = new MoviesAdapter(getActivity(), this);
 
@@ -199,7 +198,6 @@ public class MoviesSearchFragment extends Fragment implements
         if (args != null) {
             query = args.getString(SEARCH_QUERY_KEY);
         }
-        getActivity().setProgressBarIndeterminateVisibility(true);
         return new TmdbMoviesLoader(getActivity(), query);
     }
 
@@ -211,13 +209,11 @@ public class MoviesSearchFragment extends Fragment implements
             emptyView.setText(R.string.offline);
         }
         resultsAdapter.setData(data);
-        getActivity().setProgressBarIndeterminateVisibility(false);
     }
 
     @Override
     public void onLoaderReset(Loader<List<Movie>> loader) {
         resultsAdapter.setData(null);
-        getActivity().setProgressBarIndeterminateVisibility(false);
     }
 
     @Override

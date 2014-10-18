@@ -17,10 +17,10 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
@@ -48,16 +48,16 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lists);
-        setupNavDrawer();
-
         setupActionBar();
+        setupNavDrawer();
 
         setupViews();
     }
 
-    private void setupActionBar() {
-        final ActionBar actionBar = getActionBar();
-        actionBar.setIcon(R.drawable.ic_action_list);
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.lists);
     }
 

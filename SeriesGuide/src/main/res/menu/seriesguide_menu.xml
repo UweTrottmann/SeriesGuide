@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/menu_search"
         android:orderInCategory="4"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/search" />
     <item
         android:id="@+id/menu_action_shows_advanced"
         android:orderInCategory="5"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/prefs_category_advanced">
         <menu>
             <item

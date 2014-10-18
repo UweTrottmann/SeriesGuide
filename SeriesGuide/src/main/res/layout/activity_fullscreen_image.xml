@@ -12,4 +12,6 @@
         android:scaleType="fitCenter"
         tools:ignore="ContentDescription" />
 
+    <include layout="@layout/toolbar_gradient" />
+
 </FrameLayout>

@@ -16,8 +16,8 @@
 
 package com.battlelancer.seriesguide.dataliberation;
 
-import android.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
@@ -27,7 +27,6 @@ public class DataLiberationActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setupActionBar();
 
         if (savedInstanceState == null) {
@@ -36,8 +35,10 @@ public class DataLiberationActivity extends BaseActivity {
         }
     }
 
-    private void setupActionBar() {
-        final ActionBar actionBar = getActionBar();
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(R.string.backup);
     }
