@@ -137,7 +137,7 @@ public class TraktShoutsFragment extends Fragment implements
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
         int accentColorResId = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                R.attr.colorAccent);
+                R.attr.sgColorAccent);
         mSwipeRefreshLayout.setColorScheme(accentColorResId, R.color.text_primary, accentColorResId,
                 R.color.text_primary);
 

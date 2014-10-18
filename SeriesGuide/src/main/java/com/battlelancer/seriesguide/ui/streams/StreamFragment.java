@@ -81,7 +81,7 @@ public abstract class StreamFragment extends Fragment implements
         super.onActivityCreated(savedInstanceState);
 
         int accentColorResId = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                R.attr.colorAccent);
+                R.attr.sgColorAccent);
         mContentContainer.setColorScheme(accentColorResId, R.color.white, accentColorResId,
                 R.color.white);
 

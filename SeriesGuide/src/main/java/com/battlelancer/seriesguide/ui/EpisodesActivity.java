@@ -201,7 +201,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
             mTabs = (SlidingTabLayout) findViewById(R.id.tabsEpisodes);
             mTabs.setCustomTabView(R.layout.tabstrip_item, R.id.textViewTabStripItem);
             mTabs.setSelectedIndicatorColors(getResources().getColor(
-                    Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorAccent)));
+                    Utils.resolveAttributeToResourceId(getTheme(), R.attr.sgColorAccent)));
             mTabs.setBottomBorderColor(Utils.setColorAlpha(getResources().getColor(
                             Utils.resolveAttributeToResourceId(getTheme(),
                                     R.attr.colorTabStripUnderline)

@@ -84,7 +84,7 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
         SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.tabsAddShows);
         tabs.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
         tabs.setSelectedIndicatorColors(getResources().getColor(
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorAccent)));
+                Utils.resolveAttributeToResourceId(getTheme(), R.attr.sgColorAccent)));
         tabs.setBottomBorderColor(getResources().getColor(
                 Utils.resolveAttributeToResourceId(getTheme(),
                         R.attr.colorTabStripUnderline)

@@ -70,7 +70,7 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
         mTabs = (SlidingTabLayout) findViewById(R.id.tabsLists);
         mTabs.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
         mTabs.setSelectedIndicatorColors(getResources().getColor(
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorAccent)));
+                Utils.resolveAttributeToResourceId(getTheme(), R.attr.sgColorAccent)));
         mTabs.setBottomBorderColor(getResources().getColor(
                 Utils.resolveAttributeToResourceId(getTheme(),
                         R.attr.colorTabStripUnderline)

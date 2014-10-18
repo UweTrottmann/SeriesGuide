@@ -12,7 +12,7 @@
     <attr name="textColorSgDim" format="reference|color" />
     <attr name="textColorSgActionBar" format="reference|color" />
     <attr name="colorBackgroundDim" format="reference|color" />
-    <attr name="colorAccent" format="reference|color" />
+    <attr name="sgColorAccent" format="reference|color" />
     <attr name="colorSeparator" format="reference|color" />
     <attr name="colorDivider" format="reference|color" />
     <attr name="colorTabStripText" format="reference|color" />
