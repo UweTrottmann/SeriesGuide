@@ -17,7 +17,7 @@
     <attr name="sgColorDivider" format="reference|color" />
     <attr name="sgColorTabStripText" format="reference|color" />
     <attr name="sgColorTabStripUnderline" format="reference|color" />
-    <attr name="colorBackgroundDrawer" format="reference|color" />
+    <attr name="sgColorBackgroundDrawer" format="reference|color" />
 
     <!-- Color Arrays -->
     <attr name="colorsProgressBar" format="reference" />
