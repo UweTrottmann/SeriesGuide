@@ -21,7 +21,7 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="?attr/tabStripBackground" >
+    android:background="?attr/custom_list_selector" >
 
     <TextView
         android:id="@+id/textViewTabStripItem"

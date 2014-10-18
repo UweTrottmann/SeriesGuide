@@ -46,9 +46,6 @@
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
 
-        <!-- Special attributes -->
-        <item name="tabStripBackground">@drawable/tab_strip_background_sg</item>
-
         <!-- Colors -->
         <item name="textColorSgDefault">@color/black_11</item>
         <item name="textColorSgPrimary">@color/text_primary_sg</item>
@@ -121,7 +118,6 @@
 
         <!-- Special attributes -->
         <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
-        <item name="tabStripBackground">?android:attr/selectableItemBackground</item>
 
         <!-- Colors -->
         <item name="textColorSgDefault">@color/black_11</item>
@@ -217,9 +213,6 @@
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
-
-        <!-- Special attributes -->
-        <item name="tabStripBackground">@drawable/tab_strip_background_sg</item>
 
         <!-- Colors -->
         <item name="textColorSgDefault">@color/black_87</item>
