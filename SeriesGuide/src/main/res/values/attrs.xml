@@ -14,7 +14,7 @@
     <attr name="colorBackgroundDim" format="reference|color" />
     <attr name="sgColorAccent" format="reference|color" />
     <attr name="sgColorSeparator" format="reference|color" />
-    <attr name="colorDivider" format="reference|color" />
+    <attr name="sgColorDivider" format="reference|color" />
     <attr name="colorTabStripText" format="reference|color" />
     <attr name="colorTabStripUnderline" format="reference|color" />
     <attr name="colorBackgroundDrawer" format="reference|color" />

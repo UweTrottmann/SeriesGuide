@@ -80,7 +80,7 @@
         android:paddingLeft="@dimen/default_padding"
         android:paddingTop="@dimen/default_padding"
         android:paddingBottom="@dimen/default_padding"
-        android:src="?attr/colorDivider"
-        android:color="?attr/colorDivider" />
+        android:src="?attr/sgColorDivider"
+        android:color="?attr/sgColorDivider" />
 
 </FrameLayout>

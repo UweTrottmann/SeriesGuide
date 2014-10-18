@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="@dimen/large_padding"
-        android:background="?attr/colorDivider" />
+        android:background="?attr/sgColorDivider" />
 
     <include layout="@layout/buttons_more" />
 

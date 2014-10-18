@@ -59,7 +59,7 @@
         <item name="sgColorAccent">@color/accent_primary</item>
         <item name="colorBackgroundDim">@color/background_dim</item>
         <item name="sgColorSeparator">@color/separator</item>
-        <item name="colorDivider">@color/divider</item>
+        <item name="sgColorDivider">@color/divider</item>
         <item name="colorTabStripText">@color/text_default</item>
         <item name="colorTabStripUnderline">@color/background_dim</item>
         <item name="colorBackgroundDrawer">@color/background_navbar</item>
@@ -133,7 +133,7 @@
         <item name="sgColorAccent">@color/accent_primary_android</item>
         <item name="colorBackgroundDim">@color/background_dim</item>
         <item name="sgColorSeparator">@color/separator</item>
-        <item name="colorDivider">@color/divider</item>
+        <item name="sgColorDivider">@color/divider</item>
         <item name="colorTabStripText">@color/text_default</item>
         <item name="colorTabStripUnderline">@color/background_dim</item>
         <item name="colorBackgroundDrawer">@color/background_navbar</item>
@@ -231,7 +231,7 @@
         <item name="sgColorAccent">@color/accent_primary</item>
         <item name="colorBackgroundDim">@color/background_dim_inverse</item>
         <item name="sgColorSeparator">@color/separator_inverse</item>
-        <item name="colorDivider">@color/divider_inverse</item>
+        <item name="sgColorDivider">@color/divider_inverse</item>
         <item name="colorTabStripText">@color/text_default_inverse</item>
         <item name="colorTabStripUnderline">@color/divider_inverse</item>
         <item name="colorBackgroundDrawer">@color/background_navbar_inverse</item>

@@ -57,6 +57,6 @@
         android:layout_height="1dp"
         android:layout_below="@+id/shout"
         android:layout_toRightOf="@+id/avatar"
-        android:background="?attr/colorDivider" />
+        android:background="?attr/sgColorDivider" />
 
 </RelativeLayout>

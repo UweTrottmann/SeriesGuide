@@ -61,7 +61,7 @@
             android:layout_marginLeft="@dimen/large_padding"
             android:layout_marginRight="@dimen/large_padding"
             android:layout_marginBottom="@dimen/large_padding"
-            android:background="?attr/colorDivider" />
+            android:background="?attr/sgColorDivider" />
 
         <TextView
             android:id="@+id/textViewEpisodeDescription"
@@ -78,7 +78,7 @@
             android:layout_height="1dp"
             android:layout_marginLeft="@dimen/large_padding"
             android:layout_marginRight="@dimen/large_padding"
-            android:background="?attr/colorDivider" />
+            android:background="?attr/sgColorDivider" />
 
         <include layout="@layout/ratingbar" />
 
@@ -87,7 +87,7 @@
             android:layout_height="1dp"
             android:layout_marginLeft="@dimen/large_padding"
             android:layout_marginRight="@dimen/large_padding"
-            android:background="?attr/colorDivider" />
+            android:background="?attr/sgColorDivider" />
 
         <TextView
             android:id="@+id/labelEpisodeGuestStars"
@@ -197,7 +197,7 @@
             android:layout_marginLeft="@dimen/large_padding"
             android:layout_marginRight="@dimen/large_padding"
             android:layout_marginTop="@dimen/large_padding"
-            android:background="?attr/colorDivider" />
+            android:background="?attr/sgColorDivider" />
 
         <include
             layout="@layout/buttons_services"

@@ -27,7 +27,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="?attr/colorDivider" />
+                android:background="?attr/sgColorDivider" />
 
             <FrameLayout
                 android:id="@+id/fragment_seasons"
