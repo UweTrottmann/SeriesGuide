@@ -29,7 +29,7 @@
     <style name="TextAppearance.Tab">
         <item name="android:textSize">14sp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">?attr/colorTabStripText</item>
+        <item name="android:textColor">?attr/sgColorTabStripText</item>
     </style>
 
     <style name="TextAppearance.Display3">
