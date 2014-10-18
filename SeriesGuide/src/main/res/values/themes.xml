@@ -89,7 +89,6 @@
         <item name="drawableTv">@drawable/ic_action_tv</item>
         <item name="drawableSettings">@drawable/ic_action_settings</item>
         <item name="drawableHelp">@drawable/ic_action_help</item>
-        <item name="drawableBackgroundDrawerItem">@drawable/background_drawer_item</item>
         <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
 
     </style>
@@ -162,7 +161,6 @@
         <item name="drawableTv">@drawable/ic_action_tv</item>
         <item name="drawableSettings">@drawable/ic_action_settings</item>
         <item name="drawableHelp">@drawable/ic_action_help</item>
-        <item name="drawableBackgroundDrawerItem">@drawable/background_drawer_item_holo</item>
         <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
 
     </style>
@@ -257,7 +255,6 @@
         <item name="drawableTv">@drawable/ic_action_tv_inverse</item>
         <item name="drawableSettings">@drawable/ic_action_settings_inverse</item>
         <item name="drawableHelp">@drawable/ic_action_help_inverse</item>
-        <item name="drawableBackgroundDrawerItem">@drawable/background_drawer_item_light</item>
         <item name="drawableBackgroundGradient">@drawable/background_gradient_light</item>
 
     </style>
