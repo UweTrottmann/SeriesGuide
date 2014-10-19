@@ -16,15 +16,16 @@
   ~ limitations under the License.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical">
-
-    <include layout="@layout/toolbar" />
 
     <FrameLayout
         android:id="@+id/containerPerson"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-</LinearLayout>
+
+    <include layout="@layout/toolbar_gradient" />
+
+</FrameLayout>
