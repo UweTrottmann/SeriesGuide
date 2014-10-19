@@ -17,7 +17,7 @@
 
 package com.battlelancer.seriesguide.util;
 
-import android.app.Activity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -36,7 +36,7 @@ public class SystemUiHiderBase extends SystemUiHider {
      * Constructor not intended to be called by clients. Use
      * {@link SystemUiHider#getInstance} to obtain an instance.
      */
-    protected SystemUiHiderBase(Activity activity, View anchorView, int flags) {
+    protected SystemUiHiderBase(ActionBarActivity activity, View anchorView, int flags) {
         super(activity, anchorView, flags);
     }
 
