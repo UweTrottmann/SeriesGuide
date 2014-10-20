@@ -28,7 +28,7 @@
                 android:id="@+id/clearButton"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="?attr/sgSelectableItemBackground"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/clear"
                 android:src="?attr/drawableCancel" />
         </LinearLayout>

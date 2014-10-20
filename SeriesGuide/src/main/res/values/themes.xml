@@ -8,7 +8,7 @@
         <!-- All customizations that are SPECIFIC to API-level 15+ go here. -->
 
         <!-- Special attributes -->
-        <item name="sgSelectableItemBackground">@drawable/list_selector_sg</item>
+        <item name="selectableItemBackground">@drawable/list_selector_sg</item>
         <item name="sgDrawerItemBackground">@drawable/list_selector_sg</item>
 
         <!-- System widgets -->

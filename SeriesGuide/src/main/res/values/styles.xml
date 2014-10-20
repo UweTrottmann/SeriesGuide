@@ -144,7 +144,7 @@
 
     <style name="Widget.SeriesGuide.Button.Borderless">
         <item name="android:textColor">?attr/textColorSgPrimary</item>
-        <item name="android:background">?sgSelectableItemBackground</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Default">
@@ -264,7 +264,7 @@
     </style>
 
     <style name="DropDownListView" parent="android:Widget.Holo.ListView.DropDown">
-        <item name="android:listSelector">?sgSelectableItemBackground</item>
+        <item name="android:listSelector">?attr/selectableItemBackground</item>
     </style>
 
     <style name="ActionOverflowButtonStyle" parent="@android:style/Widget.Holo.ActionButton.Overflow">

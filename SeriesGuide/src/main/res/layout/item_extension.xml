@@ -44,7 +44,7 @@
             android:paddingTop="@dimen/default_padding"
             android:paddingLeft="@dimen/default_padding"
             android:paddingBottom="@dimen/default_padding"
-            android:background="?attr/sgSelectableItemBackground"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:src="?attr/drawableDropdown" />
 
         <TextView

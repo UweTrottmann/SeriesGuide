@@ -23,7 +23,7 @@
         android:layout_height="44dp"
         android:layout_alignRight="@+id/editTextMoviesSearch"
         android:layout_marginTop="@dimen/inline_padding"
-        android:background="?sgSelectableItemBackground"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/clear"
         android:src="?attr/drawableCancel" />
 

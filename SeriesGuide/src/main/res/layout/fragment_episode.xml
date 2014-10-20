@@ -41,7 +41,7 @@
             android:layout_marginRight="@dimen/large_padding"
             android:layout_marginBottom="@dimen/inline_padding"
             android:background="?attr/sgColorBackgroundDim"
-            android:foreground="?attr/sgSelectableItemBackground"
+            android:foreground="?attr/selectableItemBackground"
             tools:ignore="Overdraw">
 
             <ImageView

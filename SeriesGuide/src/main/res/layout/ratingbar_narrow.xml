@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/large_padding"
     android:paddingTop="@dimen/default_padding"
     android:paddingBottom="@dimen/default_padding"
-    android:background="?attr/sgSelectableItemBackground">
+    android:background="?attr/selectableItemBackground">
 
     <TextView
         android:id="@+id/textViewRatingsTvdbValue"

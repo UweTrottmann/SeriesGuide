@@ -23,7 +23,6 @@
         <!-- All customizations that are SPECIFIC to API-level L can go here. -->
 
         <!-- Special attributes -->
-        <item name="sgSelectableItemBackground">?android:attr/selectableItemBackground</item>
         <item name="sgDrawerItemBackground">@drawable/list_selector_sg_material</item>
 
     </style>
@@ -46,7 +45,7 @@
         <!-- All customizations that are SPECIFIC to API-level L can go here. -->
 
         <!-- Special attributes -->
-        <item name="sgSelectableItemBackground">?android:attr/selectableItemBackground</item>
+        <item name="selectableItemBackground">?android:attr/selectableItemBackground</item>
 
         <!--   your app's branding color (for the app bar) -->
         <item name="android:colorPrimary">@color/accent_primary</item>

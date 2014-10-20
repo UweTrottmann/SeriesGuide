@@ -10,7 +10,7 @@
         android:layout_height="48dp"
         android:layout_marginLeft="@dimen/default_padding"
         android:layout_marginTop="@dimen/default_padding"
-        android:background="?sgSelectableItemBackground"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="@dimen/default_padding"
         android:src="?attr/drawableWatch" />
 
@@ -28,7 +28,7 @@
         android:layout_height="48dp"
         android:layout_marginTop="@dimen/default_padding"
         android:layout_toRightOf="@+id/dividerSeasons1"
-        android:background="?sgSelectableItemBackground"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="@dimen/default_padding"
         android:src="?attr/drawableCollect" />
 
