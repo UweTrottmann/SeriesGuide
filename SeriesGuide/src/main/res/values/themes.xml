@@ -13,16 +13,9 @@
         <!-- System widgets -->
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
         <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
-        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
         <item name="android:progressBarStyleHorizontal">@style/ProgressBar</item>
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
         <item name="android:editTextBackground">@drawable/edit_text_sg</item>
-        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
-        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_sg</item>
-
-        <!-- Action bar -->
-        <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_ab_back_sg</item>
 
         <!-- Fast scroll thumb -->
         <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
@@ -44,11 +37,6 @@
         <!-- Windows -->
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
-
-        <!-- Action bar -->
-        <item name="actionBarStyle">@style/ActionBar</item>
-        <item name="android:actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
-        <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
