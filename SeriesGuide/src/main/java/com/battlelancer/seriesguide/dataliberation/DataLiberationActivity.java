@@ -27,11 +27,12 @@ public class DataLiberationActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_singlepane);
         setupActionBar();
 
         if (savedInstanceState == null) {
             DataLiberationFragment f = new DataLiberationFragment();
-            getSupportFragmentManager().beginTransaction().add(android.R.id.content, f).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.content_frame, f).commit();
         }
     }
 
