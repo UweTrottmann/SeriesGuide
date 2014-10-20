@@ -16,6 +16,7 @@
         <item name="android:progressBarStyleHorizontal">@style/ProgressBar</item>
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
         <item name="android:editTextBackground">@drawable/edit_text_sg</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
 
         <!-- Fast scroll thumb -->
         <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
