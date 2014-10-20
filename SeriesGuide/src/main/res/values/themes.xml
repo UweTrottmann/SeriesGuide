@@ -9,6 +9,7 @@
 
         <!-- Special attributes -->
         <item name="sgSelectableItemBackground">@drawable/list_selector_sg</item>
+        <item name="sgDrawerItemBackground">@drawable/list_selector_sg</item>
 
         <!-- System widgets -->
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>

@@ -24,6 +24,7 @@
 
         <!-- Special attributes -->
         <item name="sgSelectableItemBackground">?android:attr/selectableItemBackground</item>
+        <item name="sgDrawerItemBackground">@drawable/list_selector_sg_material</item>
 
     </style>
 
