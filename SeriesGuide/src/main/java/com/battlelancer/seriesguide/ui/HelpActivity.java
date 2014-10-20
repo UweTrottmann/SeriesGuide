@@ -38,10 +38,10 @@ public class HelpActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
-        setContentView(R.layout.activity_help);
+        setContentView(R.layout.activity_webview);
         setupActionBar();
 
-        WebView webview = (WebView) findViewById(R.id.webViewHelp);
+        WebView webview = (WebView) findViewById(R.id.webView);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.loadUrl(getString(R.string.help_url));
     }
@@ -50,7 +50,6 @@ public class HelpActivity extends BaseActivity {
     protected void setupActionBar() {
         super.setupActionBar();
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(R.string.help);
     }
