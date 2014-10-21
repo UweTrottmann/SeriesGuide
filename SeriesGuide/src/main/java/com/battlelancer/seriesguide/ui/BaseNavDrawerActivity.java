@@ -20,9 +20,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,23 +46,18 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         implements AdapterView.OnItemClickListener {
 
     private static final String TAG_NAV_DRAWER = "Navigation Drawer";
+    private static final int NAVDRAWER_CLOSE_DELAY = 250;
 
     public static final int MENU_ITEM_SHOWS_POSITION = 0;
-
     public static final int MENU_ITEM_LISTS_POSITION = 1;
-
     public static final int MENU_ITEM_MOVIES_POSITION = 2;
-
     public static final int MENU_ITEM_STATS_POSITION = 3;
-
     // DIVIDER IN BETWEEN HERE
-
     public static final int MENU_ITEM_SETTINGS_POSITION = 5;
-
     public static final int MENU_ITEM_HELP_POSITION = 6;
-
     public static final int MENU_ITEM_SUBSCRIBE_POSITION = 7; // not always shown
 
+    private Handler mHandler;
     private DrawerLayout mDrawerLayout;
     private View mDrawerView;
     private ListView mDrawerList;
@@ -72,16 +69,13 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         // set a theme based on user preference
         setTheme(SeriesGuidePreferences.THEME);
         super.onCreate(savedInstanceState);
+
+        mHandler = new Handler();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        // close a previously opened drawer
-        if (mDrawerLayout.isDrawerOpen(mDrawerView)) {
-            mDrawerLayout.closeDrawer(mDrawerView);
-        }
 
         mDrawerAdapter.setSubscribeVisible(!Utils.hasAccessToX(this));
     }
@@ -204,12 +198,21 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         }
 
         // already displaying correct screen
-        if (launchIntent == null) {
-            mDrawerLayout.closeDrawer(mDrawerView);
-            return;
+        if (launchIntent != null) {
+            final Intent finalLaunchIntent = launchIntent;
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    goToNavDrawerItem(finalLaunchIntent);
+                }
+            }, NAVDRAWER_CLOSE_DELAY);
         }
 
-        startActivity(launchIntent);
+        mDrawerLayout.closeDrawer(Gravity.START);
+    }
+
+    private void goToNavDrawerItem(Intent intent) {
+        startActivity(intent);
         overridePendingTransition(R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg);
     }
 
