@@ -18,6 +18,8 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
@@ -26,17 +28,26 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -52,12 +63,15 @@ import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.analytics.GoogleAnalytics;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Allows tweaking of various SeriesGuide settings.
+ * Allows tweaking of various SeriesGuide settings. Does NOT inherit from {@link
+ * com.battlelancer.seriesguide.ui.BaseActivity} to avoid handling actions which might be confusing
+ * while adjusting settings.
  */
-public class SeriesGuidePreferences extends PreferenceActivity {
+public class SeriesGuidePreferences extends ActionBarActivity {
 
     private static final String TAG = "Settings";
 
@@ -82,17 +96,24 @@ public class SeriesGuidePreferences extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(SeriesGuidePreferences.THEME);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_singlepane);
+        setupActionBar();
+
+        if (savedInstanceState == null) {
+            Fragment f = new SettingsHeadersFragment();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.add(R.id.content_frame, f);
+            ft.commit();
+        }
     }
 
-    @Override
-    protected boolean isValidFragment(String fragmentName) {
-        return SettingsFragment.class.getName().equals(fragmentName);
-    }
-
-    @Override
-    public void onBuildHeaders(List<Header> target) {
-        loadHeadersFromResource(R.xml.settings, target);
+    private void setupActionBar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.sgToolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -110,13 +131,32 @@ public class SeriesGuidePreferences extends PreferenceActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        // Because we use the platform fragment manager we need to pop fragments on our own
+        if (!getFragmentManager().popBackStackImmediate()) {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                super.onBackPressed();
+                onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void switchToSettings(String settingsId) {
+        Bundle args = new Bundle();
+        args.putString("settings", settingsId);
+        Fragment f = new SettingsFragment();
+        f.setArguments(args);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, f);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 
     private static OnPreferenceChangeListener sNoOpChangeListener
@@ -332,6 +372,91 @@ public class SeriesGuidePreferences extends PreferenceActivity {
 
     private static void fireTrackerEvent(Context context, String label) {
         Utils.trackClick(context, TAG, label);
+    }
+
+    public static class SettingsHeadersFragment extends Fragment {
+        private HeaderAdapter adapter;
+        private ListView listView;
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                @Nullable Bundle savedInstanceState) {
+            View v = inflater.inflate(R.layout.fragment_settings_headers, container, false);
+
+            listView = (ListView) v.findViewById(R.id.listViewSettingsHeaders);
+
+            return v;
+        }
+
+        @Override
+        public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+            super.onActivityCreated(savedInstanceState);
+
+            adapter = new HeaderAdapter(getActivity(), buildHeaders());
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Header item = adapter.getItem(position);
+                    ((SeriesGuidePreferences) getActivity()).switchToSettings(item.settingsId);
+                }
+            });
+        }
+
+        private List<Header> buildHeaders() {
+            List<Header> headers = new LinkedList<>();
+
+            headers.add(new Header(R.string.prefs_category_basic, "basic"));
+            headers.add(new Header(R.string.pref_notifications, "notifications"));
+            headers.add(new Header(R.string.prefs_category_sharing, "sharing"));
+            headers.add(new Header(R.string.prefs_category_advanced, "advanced"));
+            headers.add(new Header(R.string.prefs_category_about, "about"));
+
+            return headers;
+        }
+
+        private static class HeaderAdapter extends ArrayAdapter<Header> {
+            private final LayoutInflater mInflater;
+
+            private static class HeaderViewHolder {
+                TextView title;
+
+                public HeaderViewHolder(View view) {
+                    title = (TextView) view.findViewById(R.id.textViewSettingsHeader);
+                }
+            }
+
+            public HeaderAdapter(Context context, List<Header> headers) {
+                super(context, 0, headers);
+                mInflater = (LayoutInflater) context.getSystemService(
+                        Context.LAYOUT_INFLATER_SERVICE);
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                HeaderViewHolder viewHolder;
+                if (convertView == null) {
+                    convertView = mInflater.inflate(R.layout.item_settings_header, parent, false);
+                    viewHolder = new HeaderViewHolder(convertView);
+                    convertView.setTag(viewHolder);
+                } else {
+                    viewHolder = (HeaderViewHolder) convertView.getTag();
+                }
+
+                viewHolder.title.setText(getContext().getString(getItem(position).titleRes));
+
+                return convertView;
+            }
+        }
+
+        public static final class Header {
+            public int titleRes;
+            public String settingsId;
+            public Header(int titleResId, String settingsId) {
+                this.titleRes = titleResId;
+                this.settingsId = settingsId;
+            }
+        }
     }
 
     public static class SettingsFragment extends PreferenceFragment implements
