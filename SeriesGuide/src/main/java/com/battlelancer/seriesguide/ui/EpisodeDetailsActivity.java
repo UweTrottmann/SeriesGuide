@@ -182,7 +182,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
             ViewGroup contentContainer = (ViewGroup) findViewById(
                     R.id.contentContainerEpisodeDetails);
             contentContainer.setClipToPadding(false);
-            contentContainer.setPadding(0, config.getPixelInsetTop(true),
+            contentContainer.setPadding(0, config.getPixelInsetTop(false),
                     config.getPixelInsetRight(), 0);
         }
 

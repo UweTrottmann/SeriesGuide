@@ -62,6 +62,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
     public static final int MENU_ITEM_SUBSCRIBE_POSITION = 7; // not always shown
 
     private DrawerLayout mDrawerLayout;
+    private View mDrawerView;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerAdapter mDrawerAdapter;
@@ -78,8 +79,8 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         super.onStart();
 
         // close a previously opened drawer
-        if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
-            mDrawerLayout.closeDrawer(mDrawerList);
+        if (mDrawerLayout.isDrawerOpen(mDrawerView)) {
+            mDrawerLayout.closeDrawer(mDrawerView);
         }
 
         mDrawerAdapter.setSubscribeVisible(!Utils.hasAccessToX(this));
@@ -92,8 +93,9 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
     public void setupNavDrawer() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        mDrawerView = findViewById(R.id.drawer_view);
 
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerList = (ListView) findViewById(R.id.drawer_list);
 
         // setup menu adapter
         mDrawerAdapter = new DrawerAdapter(this);
@@ -203,7 +205,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
         // already displaying correct screen
         if (launchIntent == null) {
-            mDrawerLayout.closeDrawer(mDrawerList);
+            mDrawerLayout.closeDrawer(mDrawerView);
             return;
         }
 
@@ -215,7 +217,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
      * Returns true if the navigation drawer is open.
      */
     public boolean isDrawerOpen() {
-        return mDrawerLayout.isDrawerOpen(mDrawerList);
+        return mDrawerLayout.isDrawerOpen(mDrawerView);
     }
 
     public void setDrawerIndicatorEnabled(boolean isEnabled) {
