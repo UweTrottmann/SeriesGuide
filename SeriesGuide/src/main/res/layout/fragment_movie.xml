@@ -23,7 +23,7 @@
         android:id="@+id/contentContainerMovie"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="?android:actionBarSize">
+        android:layout_marginTop="?attr/actionBarSize">
 
         <RelativeLayout
             android:layout_width="wrap_content"

@@ -56,8 +56,6 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
     private int mShowId;
 
-    private SystemBarTintManager mSystemBarTintManager;
-
     /**
      * Data which has to be passed when creating this activity. All Bundle extras are integer.
      */
@@ -175,15 +173,15 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         ));
         tabs.setViewPager(pager);
 
-        // fix padding for translucent system bars
         if (AndroidUtils.isKitKatOrHigher()) {
-            mSystemBarTintManager = new SystemBarTintManager(this);
-            SystemBarTintManager.SystemBarConfig config = getSystemBarTintManager().getConfig();
+            // fix padding with translucent status bar
+            // warning: status bar not always translucent (e.g. Nexus 10)
+            // (using fitsSystemWindows would not work correctly with multiple views)
+            SystemBarTintManager systemBarTintManager = new SystemBarTintManager(this);
+            SystemBarTintManager.SystemBarConfig config = systemBarTintManager.getConfig();
             ViewGroup contentContainer = (ViewGroup) findViewById(
                     R.id.contentContainerEpisodeDetails);
-            contentContainer.setClipToPadding(false);
-            contentContainer.setPadding(0, config.getPixelInsetTop(false),
-                    config.getPixelInsetRight(), 0);
+            contentContainer.setPadding(0, config.getPixelInsetTop(false), 0, 0);
         }
 
         // set current item
@@ -194,10 +192,6 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(showTitle);
-    }
-
-    public SystemBarTintManager getSystemBarTintManager() {
-        return mSystemBarTintManager;
     }
 
     @Override

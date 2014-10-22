@@ -40,6 +40,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.Optional;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.items.MovieDetails;
@@ -94,6 +95,9 @@ public class MovieDetailsFragment extends Fragment {
     private Trailers mTrailers;
 
     private String mImageBaseUrl;
+
+    @InjectView(R.id.contentContainerMovie) ViewGroup mContentContainer;
+    @Optional @InjectView(R.id.contentContainerMovieRight) ViewGroup mContentContainerRight;
 
     @InjectView(R.id.textViewMovieTitle) TextView mMovieTitle;
     @InjectView(R.id.textViewMovieDate) TextView mMovieReleaseDate;
@@ -194,37 +198,27 @@ public class MovieDetailsFragment extends Fragment {
     }
 
     private void setupViews() {
-        // fix padding for translucent system bars
-        if (!AndroidUtils.isKitKatOrHigher()) {
-            return;
-        }
+        if (AndroidUtils.isKitKatOrHigher()) {
+            // avoid overlap with status + action bar (adjust top margin)
+            // warning: status bar not always translucent (e.g. Nexus 10)
+            // (using fitsSystemWindows would not work correctly with multiple views)
+            SystemBarTintManager.SystemBarConfig config
+                    = ((MovieDetailsActivity) getActivity()).getSystemBarTintManager().getConfig();
+            int pixelInsetTop = config.getPixelInsetTop(false);
 
-        SystemBarTintManager.SystemBarConfig config
-                = ((MovieDetailsActivity) getActivity()).getSystemBarTintManager().getConfig();
+            // action bar height is pre-set as top margin, add to it
+            ViewGroup.MarginLayoutParams layoutParams
+                    = (ViewGroup.MarginLayoutParams) mContentContainer.getLayoutParams();
+            layoutParams.setMargins(0, pixelInsetTop + layoutParams.topMargin, 0, 0);
+            mContentContainer.setLayoutParams(layoutParams);
 
-        ViewGroup mainContainer = (ViewGroup) getView().findViewById(
-                R.id.contentContainerMovie);
-        ViewGroup rightContainer = (ViewGroup) getView().findViewById(
-                R.id.contentContainerMovieRight);
-
-        int insetTop = config.getPixelInsetTop(true);
-        int insetBottom = config.getPixelInsetBottom();
-
-        // avoid overlap with nav bar (bottom padding) and status/action bar (top margin)
-        mainContainer.setClipToPadding(false);
-        mainContainer.setPadding(0, 0, 0, insetBottom);
-        ViewGroup.MarginLayoutParams layoutParams
-                = (ViewGroup.MarginLayoutParams) mainContainer.getLayoutParams();
-        layoutParams.setMargins(0, insetTop, 0, 0);
-        mainContainer.setLayoutParams(layoutParams);
-
-        // dual pane layout?
-        if (rightContainer != null) {
-            rightContainer.setClipToPadding(false);
-            rightContainer.setPadding(0, 0, 0, insetBottom);
-            ViewGroup.MarginLayoutParams layoutParamsRight
-                    = (ViewGroup.MarginLayoutParams) rightContainer.getLayoutParams();
-            layoutParamsRight.setMargins(layoutParamsRight.leftMargin, insetTop, 0, 0);
+            // dual pane layout?
+            if (mContentContainerRight != null) {
+                ViewGroup.MarginLayoutParams layoutParamsRight
+                        = (ViewGroup.MarginLayoutParams) mContentContainerRight.getLayoutParams();
+                layoutParamsRight.setMargins(layoutParamsRight.leftMargin,
+                        pixelInsetTop + layoutParams.topMargin, 0, 0);
+            }
         }
     }
 
@@ -374,7 +368,7 @@ public class MovieDetailsFragment extends Fragment {
             final boolean isWatched = traktMovie.watched != null && traktMovie.watched;
             Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mWatchedButton, 0,
                     isWatched ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                                    R.attr.drawableWatched)
+                            R.attr.drawableWatched)
                             : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                     R.attr.drawableWatch), 0, 0);
             mWatchedButton.setText(isWatched ? R.string.action_unwatched : R.string.action_watched);
