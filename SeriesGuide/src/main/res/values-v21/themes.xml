@@ -20,39 +20,28 @@
 
     <style name="Theme.BaseSeriesGuide" parent="Theme.AppCompat.NoActionBar">
 
-        <!-- All customizations that are SPECIFIC to API-level L can go here. -->
+        <!-- All customizations that are SPECIFIC to API-level 21 can go here. -->
 
         <!-- Special attributes -->
         <item name="sgDrawerItemBackground">@drawable/list_selector_sg_material</item>
 
     </style>
 
-    <style name="Theme.BaseSeriesGuide.DarkBlue" parent="android:Theme.Material">
+    <style name="Theme.BaseSeriesGuide.DarkBlue" parent="Theme.AppCompat.NoActionBar">
 
-        <!-- All customizations that are SPECIFIC to API-level L can go here. -->
+        <!-- All customizations that are SPECIFIC to API-level 21 can go here. -->
 
-        <!--   your app's branding color (for the app bar) -->
-        <item name="android:colorPrimary">@color/accent_primary</item>
-        <!--   darker variant of colorPrimary (for status bar, contextual app bars) -->
-        <item name="android:colorPrimaryDark">@color/accent_primary_dark</item>
-        <!--   theme UI controls like checkboxes and text fields -->
-        <item name="android:colorAccent">@color/accent_primary</item>
+        <!-- Special attributes -->
+        <item name="sgDrawerItemBackground">@drawable/list_selector_holo_dark</item>
 
     </style>
 
-    <style name="Theme.BaseSeriesGuide.Light" parent="android:Theme.Material.Light.DarkActionBar">
+    <style name="Theme.BaseSeriesGuide.Light" parent="Theme.AppCompat.Light.NoActionBar">
 
-        <!-- All customizations that are SPECIFIC to API-level L can go here. -->
+        <!-- All customizations that are SPECIFIC to API-level 21 can go here. -->
 
         <!-- Special attributes -->
-        <item name="selectableItemBackground">?android:attr/selectableItemBackground</item>
-
-        <!--   your app's branding color (for the app bar) -->
-        <item name="android:colorPrimary">@color/accent_primary</item>
-        <!--   darker variant of colorPrimary (for status bar, contextual app bars) -->
-        <item name="android:colorPrimaryDark">@color/accent_primary_dark</item>
-        <!--   theme UI controls like checkboxes and text fields -->
-        <item name="android:colorAccent">@color/accent_primary</item>
+        <item name="sgDrawerItemBackground">@drawable/list_selector_sg_material</item>
 
     </style>
 

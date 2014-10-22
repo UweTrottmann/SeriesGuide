@@ -30,7 +30,6 @@
     <color name="text_red">#FFFF4444</color>
     <color name="accent_primary">#ff6545a0</color>
     <color name="accent_primary_dark">#ff323264</color>
-    <color name="accent_primary_android">#ff33b5e5</color>
     <color name="accent_primary_light">#bb7555B0</color>
     <color name="dim">#ff313531</color>
     <color name="background">#ff222222</color>
@@ -61,9 +60,9 @@
         <item>@color/white</item>
     </integer-array>
 
-    <integer-array name="progressBarColorsHolo">
-        <item>@color/accent_primary_android</item>
-        <item>@color/white</item>
+    <integer-array name="progressBarColorsAndroidDark">
+        <item>@color/background</item>
+        <item>@color/accent_material_dark</item>
     </integer-array>
 
 </resources>

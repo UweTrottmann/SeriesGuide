@@ -73,7 +73,7 @@ public class TabStripAdapter extends FragmentPagerAdapter {
         mTabLayout = tabs;
         mTabLayout.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
         mTabLayout.setSelectedIndicatorColors(context.getResources().getColor(
-                Utils.resolveAttributeToResourceId(context.getTheme(), R.attr.sgColorAccent)));
+                Utils.resolveAttributeToResourceId(context.getTheme(), R.attr.colorAccent)));
         mTabLayout.setBottomBorderColor(context.getResources().getColor(
                 Utils.resolveAttributeToResourceId(context.getTheme(),
                         R.attr.sgColorTabStripUnderline)

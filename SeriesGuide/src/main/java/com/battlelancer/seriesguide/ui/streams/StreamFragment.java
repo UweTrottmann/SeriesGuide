@@ -81,9 +81,8 @@ public abstract class StreamFragment extends Fragment implements
         super.onActivityCreated(savedInstanceState);
 
         int accentColorResId = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                R.attr.sgColorAccent);
-        mContentContainer.setColorScheme(accentColorResId, R.color.white, accentColorResId,
-                R.color.white);
+                R.attr.colorAccent);
+        mContentContainer.setColorSchemeResources(accentColorResId, R.color.white);
 
         // change empty message if we are offline
         if (!AndroidUtils.isNetworkConnected(getActivity())) {

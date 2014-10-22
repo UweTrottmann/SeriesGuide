@@ -40,6 +40,9 @@
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
 
+        <!-- Action bar -->
+        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
+
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
 
@@ -50,7 +53,6 @@
         <item name="textColorSgGreen">@color/green_dark</item>
         <item name="textColorSgDim">@color/text_dim</item>
         <item name="textColorSgActionBar">@color/text_primary_sg</item>
-        <item name="sgColorAccent">@color/accent_primary</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
         <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
@@ -90,12 +92,16 @@
 
     </style>
 
-    <style name="Theme.BaseSeriesGuide.DarkBlue" parent="android:Theme.Holo">
+    <style name="Theme.BaseSeriesGuide.DarkBlue" parent="Theme.AppCompat.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 15+ go here. -->
 
-        <!-- System widgets -->
-        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_dark</item>
+        <!-- Special attributes -->
+        <item name="selectableItemBackground">@drawable/list_selector_holo_dark</item>
+        <item name="sgDrawerItemBackground">@drawable/list_selector_holo_dark</item>
+
+        <!-- Fast scroll thumb -->
+        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
 
     </style>
 
@@ -108,13 +114,6 @@
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
 
-        <!-- Action bar -->
-        <item name="android:actionBarStyle">@style/ActionBarDark</item>
-        <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>
-
-        <!-- Special attributes -->
-        <item name="sgSelectableItemBackground">@drawable/list_selector_holo_dark</item>
-
         <!-- Colors -->
         <item name="textColorSgDefault">@color/black_11</item>
         <item name="textColorSgPrimary">@color/text_primary_sg</item>
@@ -122,7 +121,6 @@
         <item name="textColorSgGreen">@color/green_dark</item>
         <item name="textColorSgDim">@color/text_dim</item>
         <item name="textColorSgActionBar">@color/text_default</item>
-        <item name="sgColorAccent">@color/accent_primary_android</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
         <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
@@ -131,7 +129,7 @@
         <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
 
         <!-- Color Arrays -->
-        <item name="colorsProgressBar">@array/progressBarColorsHolo</item>
+        <item name="colorsProgressBar">@array/progressBarColorsAndroidDark</item>
 
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
@@ -162,26 +160,21 @@
 
     </style>
 
-    <style name="Theme.BaseSeriesGuide.Light" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="Theme.BaseSeriesGuide.Light" parent="Theme.AppCompat.Light.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 15+ go here. -->
 
         <!-- Special attributes -->
-        <item name="sgSelectableItemBackground">@drawable/list_selector_sg</item>
+        <item name="selectableItemBackground">@drawable/list_selector_sg</item>
+        <item name="sgDrawerItemBackground">@drawable/list_selector_sg</item>
 
         <!-- System widgets -->
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
         <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
-        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
         <item name="android:progressBarStyleHorizontal">@style/ProgressBar.Light</item>
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
         <item name="android:editTextBackground">@drawable/edit_text_holo_light</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
-        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_sg_light</item>
-
-        <!-- Action bar -->
-        <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_ab_back_sg</item>
 
         <!-- Fast scroll thumb -->
         <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
@@ -193,18 +186,23 @@
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
+        <!--   your app's branding color (for the app bar) -->
+        <item name="colorPrimary">@color/accent_primary</item>
+        <!--   darker variant of colorPrimary (for status bar, contextual app bars) -->
+        <item name="colorPrimaryDark">@color/accent_primary_dark</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="colorAccent">@color/accent_primary</item>
+
         <!-- Windows -->
         <item name="android:colorBackground">@color/background_inverse</item>
         <item name="android:windowBackground">@color/background_inverse</item>
 
-        <!-- Remove default action bar shadow -->
+        <!-- Remove default window shadow -->
         <item name="android:windowContentOverlay">@null</item>
 
         <!-- Action bar -->
-        <item name="android:actionBarStyle">@style/ActionBar.Light</item>
-        <item name="android:actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
-        <item name="android:actionBarWidgetTheme">@style/ActionBarWidgetThemeLight</item>
-        <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat.Light</item>
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
@@ -216,7 +214,6 @@
         <item name="textColorSgGreen">@color/green_dark</item>
         <item name="textColorSgDim">@color/text_dim_light</item>
         <item name="textColorSgActionBar">@color/text_primary_sg</item>
-        <item name="sgColorAccent">@color/accent_primary</item>
         <item name="sgColorBackgroundDim">@color/background_dim_inverse</item>
         <item name="sgColorSeparator">@color/separator_inverse</item>
         <item name="sgColorDivider">@color/divider_inverse</item>
@@ -301,29 +298,10 @@
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
     </style>
 
-    <style name="ImmersiveTheme" parent="Theme.SeriesGuide">
+    <style name="ImmersiveTheme" parent="Theme.SeriesGuide"/>
 
-        <!-- Action bar -->
-        <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
+    <style name="ImmersiveTheme.Stock" parent="Theme.SeriesGuide.DarkBlue"/>
 
-    </style>
-
-    <style name="ImmersiveTheme.Stock" parent="Theme.SeriesGuide.DarkBlue">
-
-        <!-- Action bar -->
-        <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
-
-    </style>
-
-    <style name="ImmersiveTheme.Light" parent="Theme.SeriesGuide.Light">
-
-        <!-- Action bar -->
-        <item name="android:actionBarStyle">@style/ActionBar.Light.Invisible</item>
-        <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle.Light</item>
-        <item name="android:homeAsUpIndicator">@drawable/sg__ic_ab_back_holo_light</item>
-
-    </style>
-
-    <style name="ActionBarWidgetThemeLight" parent="android:Widget.Holo.Light.PopupMenu" />
+    <style name="ImmersiveTheme.Light" parent="Theme.SeriesGuide.Light"/>
 
 </resources>
