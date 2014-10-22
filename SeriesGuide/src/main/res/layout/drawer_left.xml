@@ -25,7 +25,12 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:background="?attr/sgColorBackgroundDrawer">
+        android:background="?attr/sgColorBackgroundDrawer"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize" />
 
         <ListView
             android:id="@+id/drawer_list"
@@ -36,7 +41,7 @@
             android:divider="@color/transparent"
             android:dividerHeight="0dp"
             android:clipToPadding="@bool/gridClipToPadding"
-            android:paddingTop="?attr/actionBarSize"
+            android:paddingTop="@dimen/default_padding"
             android:paddingBottom="@dimen/default_padding" />
 
     </LinearLayout>
