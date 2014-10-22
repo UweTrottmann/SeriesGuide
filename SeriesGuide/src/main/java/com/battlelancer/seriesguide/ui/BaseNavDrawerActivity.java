@@ -18,12 +18,11 @@ package com.battlelancer.seriesguide.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -58,10 +57,10 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
     public static final int MENU_ITEM_SUBSCRIBE_POSITION = 7; // not always shown
 
     private Handler mHandler;
+    private Toolbar mActionBarToolbar;
     private DrawerLayout mDrawerLayout;
     private View mDrawerView;
     private ListView mDrawerList;
-    private ActionBarDrawerToggle mDrawerToggle;
     private DrawerAdapter mDrawerAdapter;
 
     @Override
@@ -85,6 +84,8 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
      * #onCreate(android.os.Bundle)} after {@link #setContentView(int)}.
      */
     public void setupNavDrawer() {
+        mActionBarToolbar = (Toolbar) findViewById(R.id.sgToolbar);
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         mDrawerView = findViewById(R.id.drawer_view);
@@ -111,34 +112,15 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
         mDrawerList.setAdapter(mDrawerAdapter);
         mDrawerList.setOnItemClickListener(this);
-
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.string.drawer_open, R.string.drawer_close) {
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                invalidateOptionsMenu();
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                invalidateOptionsMenu();
-            }
-        };
-        // don't show the indicator by default
-        mDrawerToggle.setDrawerIndicatorEnabled(false);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
+    public void onBackPressed() {
+        if (isDrawerOpen()) {
+            closeNavDrawer();
+            return;
+        }
+        super.onBackPressed();
     }
 
     @Override
@@ -223,8 +205,9 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         return mDrawerLayout.isDrawerOpen(mDrawerView);
     }
 
-    public void setDrawerIndicatorEnabled(boolean isEnabled) {
-        mDrawerToggle.setDrawerIndicatorEnabled(isEnabled);
+    public void setDrawerIndicatorEnabled() {
+        mActionBarToolbar.setNavigationIcon(R.drawable.ic_drawer);
+        mActionBarToolbar.setNavigationContentDescription(R.string.drawer_open);
     }
 
     /**
@@ -235,16 +218,16 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         mDrawerList.setItemChecked(menuItemPosition, true);
     }
 
-    /**
-     * Opens the nav drawer.
-     */
-    public void openDrawer() {
+    public void openNavDrawer() {
         mDrawerLayout.openDrawer(GravityCompat.START);
     }
 
+    public void closeNavDrawer() {
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+    }
+
     public boolean toggleDrawer(MenuItem item) {
-        if (item != null && item.getItemId() == android.R.id.home && mDrawerToggle
-                .isDrawerIndicatorEnabled()) {
+        if (item != null && item.getItemId() == android.R.id.home) {
             if (mDrawerLayout.isDrawerVisible(GravityCompat.START)) {
                 mDrawerLayout.closeDrawer(GravityCompat.START);
             } else {

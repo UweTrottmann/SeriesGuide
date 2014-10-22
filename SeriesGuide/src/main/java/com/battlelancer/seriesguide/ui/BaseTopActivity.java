@@ -17,7 +17,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
@@ -40,7 +39,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
         super.setupNavDrawer();
 
         // show a drawer indicator
-        setDrawerIndicatorEnabled(true);
+        setDrawerIndicatorEnabled();
     }
 
     @Override

@@ -32,7 +32,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -318,7 +317,7 @@ public class ShowsActivity extends BaseTopActivity implements
         setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_SHOWS_POSITION);
         if (!AppSettings.hasSeenNavDrawer(this)) {
             // introduce the nav drawer
-            openDrawer();
+            openNavDrawer();
             PreferenceManager.getDefaultSharedPreferences(this)
                     .edit()
                     .putBoolean(AppSettings.KEY_HAS_SEEN_NAV_DRAWER, true)
