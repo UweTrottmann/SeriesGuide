@@ -36,7 +36,9 @@ public class CheckableFrameLayout extends FrameLayout implements Checkable {
 
     public void setChecked(boolean checked) {
         mChecked = checked;
-        setBackgroundResource(checked ? R.drawable.list_pressed_holo_dark : 0);
+        int backgroundResId = SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light
+                ? R.drawable.list_pressed_holo_light : R.drawable.list_pressed_holo_dark;
+        setBackgroundResource(checked ? backgroundResId : 0);
     }
 
     public boolean isChecked() {
