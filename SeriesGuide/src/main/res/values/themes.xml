@@ -20,7 +20,7 @@
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
 
         <!-- Fast scroll thumb -->
-        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_sg</item>
 
     </style>
 
@@ -100,8 +100,11 @@
         <item name="selectableItemBackground">@drawable/list_selector_holo_dark</item>
         <item name="sgDrawerItemBackground">@drawable/list_selector_holo_dark</item>
 
+        <!-- System widgets -->
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBar.Dark</item>
+
         <!-- Fast scroll thumb -->
-        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_dark</item>
 
     </style>
 
@@ -118,7 +121,7 @@
         <item name="textColorSgDefault">@color/black_11</item>
         <item name="textColorSgPrimary">@color/text_primary_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
-        <item name="textColorSgGreen">@color/green_dark</item>
+        <item name="textColorSgGreen">@color/accent_material_dark</item>
         <item name="textColorSgDim">@color/text_dim</item>
         <item name="textColorSgActionBar">@color/text_default</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
@@ -177,7 +180,7 @@
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
 
         <!-- Fast scroll thumb -->
-        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_sg</item>
 
     </style>
 
