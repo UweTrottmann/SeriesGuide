@@ -46,6 +46,7 @@
     <attr name="drawableTraktHeart" format="reference" />
     <attr name="drawableTv" format="reference" />
     <attr name="drawableWatch" format="reference" />
+    <attr name="drawableWatched" format="reference" />
     <attr name="drawableWatchSkipped" format="reference" />
 
 </resources>

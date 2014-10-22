@@ -124,7 +124,9 @@ public class SeasonsFragment extends ListFragment implements
 
     private void setWatchedToggleState(int unwatchedEpisodes) {
         mWatchedAllEpisodes = unwatchedEpisodes == 0;
-        mButtonWatchedAll.setImageResource(mWatchedAllEpisodes ? R.drawable.ic_ticked
+        mButtonWatchedAll.setImageResource(mWatchedAllEpisodes ?
+                Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                        R.attr.drawableWatched)
                 : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                         R.attr.drawableWatch));
         // set onClick listener not before here to avoid unexpected actions

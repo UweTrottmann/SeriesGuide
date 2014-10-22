@@ -476,7 +476,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         mEpisodeFlag = cursor.getInt(DetailsQuery.WATCHED);
         boolean isWatched = EpisodeTools.isWatched(mEpisodeFlag);
         Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mWatchedButton, 0,
-                isWatched ? R.drawable.ic_ticked
+                isWatched ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                                R.attr.drawableWatched)
                         : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                 R.attr.drawableWatch), 0, 0);
         mWatchedButton.setOnClickListener(new OnClickListener() {

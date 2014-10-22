@@ -377,7 +377,8 @@ public class MovieDetailsFragment extends Fragment {
         if (TraktCredentials.get(getActivity()).hasCredentials()) {
             final boolean isWatched = traktMovie.watched != null && traktMovie.watched;
             Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mWatchedButton, 0,
-                    isWatched ? R.drawable.ic_ticked
+                    isWatched ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                                    R.attr.drawableWatched)
                             : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                     R.attr.drawableWatch), 0, 0);
             mWatchedButton.setText(isWatched ? R.string.action_unwatched : R.string.action_watched);
