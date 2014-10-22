@@ -116,7 +116,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        if (isDrawerOpen()) {
+        if (isNavDrawerOpen()) {
             closeNavDrawer();
             return;
         }
@@ -201,7 +201,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
     /**
      * Returns true if the navigation drawer is open.
      */
-    public boolean isDrawerOpen() {
+    public boolean isNavDrawerOpen() {
         return mDrawerLayout.isDrawerOpen(mDrawerView);
     }
 

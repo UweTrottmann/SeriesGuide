@@ -228,14 +228,6 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content
-        // view
-        menu.findItem(R.id.menu_overview_search).setVisible(!isDrawerOpen());
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.overview_activity_menu, menu);
         return super.onCreateOptionsMenu(menu);

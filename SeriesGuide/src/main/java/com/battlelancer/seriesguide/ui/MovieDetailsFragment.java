@@ -272,15 +272,11 @@ public class MovieDetailsFragment extends Fragment {
     public void onPrepareOptionsMenu(Menu menu) {
 
         if (mMovieDetails != null) {
-            // If the nav drawer is open, hide action items related to the
-            // content view
-            boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
-
             boolean isEnableShare = mMovieDetails.tmdbMovie() != null && !TextUtils.isEmpty(
                     mMovieDetails.tmdbMovie().title);
             MenuItem shareItem = menu.findItem(R.id.menu_movie_share);
             shareItem.setEnabled(isEnableShare);
-            shareItem.setVisible(isEnableShare && !isDrawerOpen);
+            shareItem.setVisible(isEnableShare);
 
             if (!Utils.isAmazonVersion()) {
                 MenuItem playStoreItem = menu.findItem(R.id.menu_open_google_play);
@@ -297,7 +293,7 @@ public class MovieDetailsFragment extends Fragment {
             boolean isEnableYoutube = mTrailers != null && mTrailers.youtube.size() > 0;
             MenuItem youtubeItem = menu.findItem(R.id.menu_open_youtube);
             youtubeItem.setEnabled(isEnableYoutube);
-            youtubeItem.setVisible(isEnableYoutube && !isDrawerOpen);
+            youtubeItem.setVisible(isEnableYoutube);
         }
 
         super.onPrepareOptionsMenu(menu);

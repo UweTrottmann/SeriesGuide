@@ -108,16 +108,6 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
-        boolean isDrawerOpen = isDrawerOpen();
-        menu.findItem(R.id.menu_action_lists_add).setVisible(!isDrawerOpen);
-        menu.findItem(R.id.menu_action_lists_search).setVisible(!isDrawerOpen);
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_lists_add) {

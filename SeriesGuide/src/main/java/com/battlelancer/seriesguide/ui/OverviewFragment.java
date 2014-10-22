@@ -217,13 +217,10 @@ public class OverviewFragment extends Fragment implements
         boolean isEpisodeVisible = mCurrentEpisodeCursor != null
                 && mCurrentEpisodeCursor.moveToFirst();
 
-        // If the nav drawer is open, hide action items related to the content view
-        boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
-
         // enable/disable menu items
         MenuItem itemShare = menu.findItem(R.id.menu_overview_share);
         itemShare.setEnabled(isEpisodeVisible);
-        itemShare.setVisible(!isDrawerOpen && isEpisodeVisible);
+        itemShare.setVisible(isEpisodeVisible);
         MenuItem itemCalendar = menu.findItem(R.id.menu_overview_calendar);
         itemCalendar.setEnabled(isEpisodeVisible);
         itemCalendar.setVisible(isEpisodeVisible);
