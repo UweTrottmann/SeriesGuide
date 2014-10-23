@@ -498,7 +498,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             mSkipButton.setVisibility(View.VISIBLE);
             Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mSkipButton, 0,
                     isSkipped
-                            ? R.drawable.ic_action_playback_next_highlight
+                            ? R.drawable.ic_skipped
                             : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                     R.attr.drawableSkip), 0, 0);
             mSkipButton.setOnClickListener(new OnClickListener() {
