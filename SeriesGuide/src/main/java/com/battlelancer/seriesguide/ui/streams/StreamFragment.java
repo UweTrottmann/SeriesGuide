@@ -82,8 +82,7 @@ public abstract class StreamFragment extends Fragment implements
 
         int accentColorResId = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                 R.attr.colorAccent);
-        mContentContainer.setColorScheme(accentColorResId, R.color.white, accentColorResId,
-                R.color.white);
+        mContentContainer.setColorSchemeResources(accentColorResId, R.color.white);
 
         // change empty message if we are offline
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
@@ -113,13 +112,6 @@ public abstract class StreamFragment extends Fragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.stream_menu, menu);
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
-        boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
-        menu.findItem(R.id.menu_action_stream_refresh).setVisible(!isDrawerOpen);
     }
 
     @Override

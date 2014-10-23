@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <attr name="custom_list_selector" format="reference" />
-    <attr name="tabStripBackground" format="reference" />
+    <attr name="sgSelectableItemBackground" format="reference" />
+    <attr name="sgDrawerItemBackground" format="reference" />
 
     <!-- Colors -->
     <attr name="textColorSgDefault" format="reference|color" />
@@ -11,13 +11,12 @@
     <attr name="textColorSgGreen" format="reference|color" />
     <attr name="textColorSgDim" format="reference|color" />
     <attr name="textColorSgActionBar" format="reference|color" />
-    <attr name="colorBackgroundDim" format="reference|color" />
-    <attr name="colorAccent" format="reference|color" />
-    <attr name="colorSeparator" format="reference|color" />
-    <attr name="colorDivider" format="reference|color" />
-    <attr name="colorTabStripText" format="reference|color" />
-    <attr name="colorTabStripUnderline" format="reference|color" />
-    <attr name="colorBackgroundDrawer" format="reference|color" />
+    <attr name="sgColorBackgroundDim" format="reference|color" />
+    <attr name="sgColorSeparator" format="reference|color" />
+    <attr name="sgColorDivider" format="reference|color" />
+    <attr name="sgColorTabStripText" format="reference|color" />
+    <attr name="sgColorTabStripUnderline" format="reference|color" />
+    <attr name="sgColorBackgroundDrawer" format="reference|color" />
 
     <!-- Color Arrays -->
     <attr name="colorsProgressBar" format="reference" />
@@ -26,7 +25,6 @@
     <attr name="drawableAddIcon" format="reference" />
     <attr name="drawableAddShow" format="reference" />
     <attr name="drawableArrowUp" format="reference" />
-    <attr name="drawableBackgroundDrawerItem" format="reference" />
     <attr name="drawableBackgroundGradient" format="reference" />
     <attr name="drawableCardBackground" format="reference" />
     <attr name="drawableCancel" format="reference" />
@@ -48,6 +46,7 @@
     <attr name="drawableTraktHeart" format="reference" />
     <attr name="drawableTv" format="reference" />
     <attr name="drawableWatch" format="reference" />
+    <attr name="drawableWatched" format="reference" />
     <attr name="drawableWatchSkipped" format="reference" />
 
 </resources>

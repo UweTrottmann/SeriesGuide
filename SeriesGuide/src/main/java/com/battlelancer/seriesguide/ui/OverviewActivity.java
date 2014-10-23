@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -29,6 +28,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,6 +67,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
+        setupActionBar();
         setupNavDrawer();
 
         mShowId = getIntent().getIntExtra(OverviewFragment.InitBundle.SHOW_TVDBID, -1);
@@ -74,8 +75,6 @@ public class OverviewActivity extends BaseNavDrawerActivity {
             finish();
             return;
         }
-
-        setupActionBar();
 
         setupViews(savedInstanceState);
 
@@ -116,8 +115,10 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         updateShowDelayed(mShowId);
     }
 
-    private void setupActionBar() {
-        final ActionBar actionBar = getActionBar();
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
@@ -224,14 +225,6 @@ public class OverviewActivity extends BaseNavDrawerActivity {
             }
         }
         return ret;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content
-        // view
-        menu.findItem(R.id.menu_overview_search).setVisible(!isDrawerOpen());
-        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override

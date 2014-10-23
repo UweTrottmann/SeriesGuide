@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2014 Uwe Trottmann
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,13 +14,15 @@
   ~ limitations under the License.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/keyline"
+    android:paddingRight="@dimen/keyline">
 
-    <item
-        android:id="@+id/menu_list_add"
-        android:icon="@drawable/ic_action_new_list_inverse"
-        android:orderInCategory="1"
-        android:showAsAction="always"
-        android:title="@string/list_add"/>
+    <ListView
+        android:id="@+id/listViewSettingsHeaders"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-</menu>
+</FrameLayout>

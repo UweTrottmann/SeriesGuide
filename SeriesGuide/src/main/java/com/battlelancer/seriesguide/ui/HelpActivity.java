@@ -18,13 +18,11 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Utils;
@@ -39,36 +37,19 @@ public class HelpActivity extends BaseActivity {
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle arg0) {
-        // webview uses a progress bar
-        requestWindowFeature(Window.FEATURE_PROGRESS);
-
         super.onCreate(arg0);
-
-        WebView webview = new WebView(this);
-        setContentView(webview);
-
+        setContentView(R.layout.activity_webview);
         setupActionBar();
 
-        setProgressBarVisibility(true);
-
-        final BaseActivity activity = this;
-        webview.setWebChromeClient(new WebChromeClient() {
-            public void onProgressChanged(WebView view, int progress) {
-                /*
-                 * Activities and WebViews measure progress with different
-                 * scales. The progress meter will automatically disappear when
-                 * we reach 100%.
-                 */
-                activity.setProgress(progress * 1000);
-            }
-        });
+        WebView webview = (WebView) findViewById(R.id.webView);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.loadUrl(getString(R.string.help_url));
     }
 
-    private void setupActionBar() {
-        final ActionBar actionBar = getActionBar();
-        actionBar.setHomeButtonEnabled(true);
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(R.string.help);
     }

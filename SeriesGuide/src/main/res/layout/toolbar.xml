@@ -16,9 +16,12 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/content_frame"
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sgToolbar"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</FrameLayout>
+    android:minHeight="?attr/actionBarSize"
+    app:theme="?attr/actionBarTheme"
+    app:popupTheme="?attr/actionBarPopupTheme"
+    android:background="?attr/colorPrimary" />

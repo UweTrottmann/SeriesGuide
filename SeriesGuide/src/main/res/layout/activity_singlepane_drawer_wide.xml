@@ -4,16 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
+    <LinearLayout
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar" />
 
         <FrameLayout
-            android:id="@+id/content_frame"
-            android:layout_width="@dimen/addpager_width"
-            android:layout_height="match_parent"
-            android:layout_gravity="right" />
-    </FrameLayout>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/content_frame"
+                android:layout_width="@dimen/addpager_width"
+                android:layout_height="match_parent"
+                android:layout_gravity="end" />
+        </FrameLayout>
+
+    </LinearLayout>
 
     <include layout="@layout/drawer_left" />
 

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright 2014 Uwe Trottmann
   ~
@@ -16,14 +15,16 @@
   ~ limitations under the License.
   -->
 
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
 
-    <item android:state_focused="true"  android:state_pressed="true"  android:drawable="@drawable/list_selector_background_transition_sg" />
-    <item android:state_focused="false" android:state_pressed="true"  android:drawable="@drawable/list_selector_background_transition_sg" />
-    <item android:state_focused="true"                                android:drawable="@drawable/list_focused_sg" />
+    <include layout="@layout/toolbar" />
 
-    <item android:state_activated="true" android:drawable="@drawable/list_pressed_holo_dark" />
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
-    <item android:drawable="@color/transparent" />
-
-</selector>
+</LinearLayout>

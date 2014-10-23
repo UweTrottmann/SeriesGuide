@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.ui;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -33,6 +32,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -216,13 +217,10 @@ public class OverviewFragment extends Fragment implements
         boolean isEpisodeVisible = mCurrentEpisodeCursor != null
                 && mCurrentEpisodeCursor.moveToFirst();
 
-        // If the nav drawer is open, hide action items related to the content view
-        boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
-
         // enable/disable menu items
         MenuItem itemShare = menu.findItem(R.id.menu_overview_share);
         itemShare.setEnabled(isEpisodeVisible);
-        itemShare.setVisible(!isDrawerOpen && isEpisodeVisible);
+        itemShare.setVisible(isEpisodeVisible);
         MenuItem itemCalendar = menu.findItem(R.id.menu_overview_calendar);
         itemCalendar.setEnabled(isEpisodeVisible);
         itemCalendar.setVisible(isEpisodeVisible);
@@ -806,7 +804,7 @@ public class OverviewFragment extends Fragment implements
 
         // set show title in action bar
         mShowTitle = show.getString(ShowQuery.SHOW_TITLE);
-        final ActionBar actionBar = getActivity().getActionBar();
+        ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
         actionBar.setTitle(mShowTitle);
 
         // status

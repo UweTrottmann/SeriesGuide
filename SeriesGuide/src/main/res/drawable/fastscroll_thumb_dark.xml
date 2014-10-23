@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright 2014 Uwe Trottmann
   ~
@@ -18,12 +17,7 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_focused="true"  android:state_pressed="true"  android:drawable="@drawable/list_selector_background_transition_sg" />
-    <item android:state_focused="false" android:state_pressed="true"  android:drawable="@drawable/list_selector_background_transition_sg" />
-    <item android:state_focused="true"                                android:drawable="@drawable/list_focused_sg" />
-
-    <item android:state_activated="true" android:drawable="@drawable/list_pressed_holo_dark" />
-
-    <item android:drawable="@color/transparent" />
+    <item android:drawable="@drawable/fastscroll_thumb_pressed_dark" android:state_pressed="true"/>
+    <item android:drawable="@drawable/fastscroll_thumb_default_dark"/>
 
 </selector>

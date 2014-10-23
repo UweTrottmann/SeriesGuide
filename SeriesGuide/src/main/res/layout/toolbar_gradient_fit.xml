@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright 2014 Uwe Trottmann
   ~
@@ -16,14 +15,13 @@
   ~ limitations under the License.
   -->
 
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:state_focused="true"  android:state_pressed="true"  android:drawable="@drawable/list_selector_background_transition_holo_dark" />
-    <item android:state_focused="false" android:state_pressed="true"  android:drawable="@drawable/list_selector_background_transition_holo_dark" />
-    <item android:state_focused="true"                                android:drawable="@drawable/list_focused_holo" />
-
-    <item android:state_activated="true" android:drawable="@drawable/list_pressed_holo_dark" />
-
-    <item android:drawable="@color/transparent" />
-
-</selector>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sgToolbar"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:minHeight="?attr/actionBarSize"
+    app:theme="?attr/actionBarTheme"
+    app:popupTheme="?attr/actionBarPopupTheme"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/background_actionbar_gradient" />

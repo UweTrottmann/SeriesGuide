@@ -4,10 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/fragment_episodes"
+    <LinearLayout
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar" />
+
+        <FrameLayout
+            android:id="@+id/fragment_episodes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
 
     <include layout="@layout/drawer_left" />
 

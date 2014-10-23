@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 19
+        targetSdkVersion 21
         testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
 
         buildConfigField("String", "TVDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TVDB_API_KEY")}\"")
@@ -97,6 +97,7 @@ dependencies {
     compile project(':libraries:drag-sort-listview')
     compile project(':libraries:stickygridheaders')
     compile rootProject.ext.libraries.supportv4
+    compile 'com.android.support:appcompat-v7:21.0.0'
     compile 'com.github.castorflex.smoothprogressbar:library:0.5.1'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'

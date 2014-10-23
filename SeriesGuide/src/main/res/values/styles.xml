@@ -29,7 +29,7 @@
     <style name="TextAppearance.Tab">
         <item name="android:textSize">14sp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">?attr/colorTabStripText</item>
+        <item name="android:textColor">?attr/sgColorTabStripText</item>
     </style>
 
     <style name="TextAppearance.Display3">
@@ -144,7 +144,7 @@
 
     <style name="Widget.SeriesGuide.Button.Borderless">
         <item name="android:textColor">?attr/textColorSgPrimary</item>
-        <item name="android:background">?custom_list_selector</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Default">
@@ -264,7 +264,7 @@
     </style>
 
     <style name="DropDownListView" parent="android:Widget.Holo.ListView.DropDown">
-        <item name="android:listSelector">?custom_list_selector</item>
+        <item name="android:listSelector">?attr/selectableItemBackground</item>
     </style>
 
     <style name="ActionOverflowButtonStyle" parent="@android:style/Widget.Holo.ActionButton.Overflow">
@@ -371,6 +371,11 @@
     <style name="ActionBarDark" parent="android:Widget.Holo.ActionBar">
         <item name="android:background">@drawable/actionbar_background_dark</item>
         <item name="android:titleTextStyle">@style/TextAppearance.ActionBar.White</item>
+    </style>
+
+    <!-- Progress bar -->
+    <style name="ProgressBar.Dark" parent="android:Widget.Holo.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_dark</item>
     </style>
 
     <!-- ////////////////////////////////////////////// -->

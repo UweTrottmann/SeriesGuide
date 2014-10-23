@@ -29,14 +29,16 @@ public class WatchedBox extends ImageView {
     private int mEpisodeFlag;
 
     private final int mResIdWatchDrawable;
-
-    private int mResIdWatchSkippedDrawable;
+    private final int mResIdWatchedDrawable;
+    private final int mResIdWatchSkippedDrawable;
 
     public WatchedBox(Context context, AttributeSet attrs) {
         super(context, attrs);
         mEpisodeFlag = EpisodeFlags.UNWATCHED;
         mResIdWatchDrawable = Utils.resolveAttributeToResourceId(context.getTheme(),
                 R.attr.drawableWatch);
+        mResIdWatchedDrawable = Utils.resolveAttributeToResourceId(context.getTheme(),
+                R.attr.drawableWatched);
         mResIdWatchSkippedDrawable = Utils.resolveAttributeToResourceId(context.getTheme(),
                 R.attr.drawableWatchSkipped);
         updateStateImage();
@@ -58,7 +60,7 @@ public class WatchedBox extends ImageView {
     private void updateStateImage() {
         switch (mEpisodeFlag) {
             case EpisodeFlags.WATCHED: {
-                setImageResource(R.drawable.ic_ticked);
+                setImageResource(mResIdWatchedDrawable);
                 break;
             }
             case EpisodeFlags.SKIPPED: {

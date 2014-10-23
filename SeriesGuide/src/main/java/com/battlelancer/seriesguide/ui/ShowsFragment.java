@@ -247,11 +247,7 @@ public class ShowsFragment extends Fragment implements
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
-        boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
-        menu.findItem(R.id.menu_action_shows_add).setVisible(!isDrawerOpen);
         MenuItem filter = menu.findItem(R.id.menu_action_shows_filter);
-        filter.setVisible(!isDrawerOpen);
         filter.setIcon(mIsFilterFavorites || mIsFilterUnwatched || mIsFilterUpcoming
                 || mIsFilterHidden ?
                 R.drawable.ic_action_filter_selected : R.drawable.ic_action_filter);

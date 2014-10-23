@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="88dp"
         android:layout_weight="1"
-        android:background="?custom_list_selector"
+        android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true">
 
@@ -61,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="88dp"
         android:padding="@dimen/default_padding"
-        android:background="?custom_list_selector"
+        android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
         android:contentDescription="@string/action_shows_filter"

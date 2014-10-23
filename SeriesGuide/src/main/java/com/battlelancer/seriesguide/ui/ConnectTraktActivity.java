@@ -17,9 +17,9 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -33,7 +33,7 @@ public class ConnectTraktActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_singlepane);
         setupActionBar();
 
         if (savedInstanceState == null) {
@@ -41,20 +41,22 @@ public class ConnectTraktActivity extends BaseActivity {
                 // immediately show credentials to allow disconnecting
                 ConnectTraktCredentialsFragment f = ConnectTraktCredentialsFragment.newInstance();
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.add(android.R.id.content, f);
+                ft.add(R.id.content_frame, f);
                 ft.commit();
             } else {
                 // display trakt introduction
                 ConnectTraktFragment f = new ConnectTraktFragment();
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.add(android.R.id.content, f);
+                ft.add(R.id.content_frame, f);
                 ft.commit();
             }
         }
     }
 
-    private void setupActionBar() {
-        final ActionBar actionBar = getActionBar();
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.connect_trakt);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }

@@ -15,33 +15,34 @@
   ~ limitations under the License.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/menu_open_youtube"
         android:icon="@drawable/ic_action_youtube_inverse"
-        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/trailer"/>
     <item
         android:id="@+id/menu_movie_share"
         android:icon="@drawable/ic_action_share_inverse"
-        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/share_movie" />
     <item
         android:id="@+id/menu_open_google_play"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/googleplay"/>
     <item
         android:id="@+id/menu_open_imdb"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/imdb"/>
     <item
         android:id="@+id/menu_open_tmdb"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/tmdb" />
     <item
         android:id="@+id/menu_open_trakt"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/trakt"/>
 
 </menu>

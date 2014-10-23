@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2014 Uwe Trottmann
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,10 +14,23 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/containerCloud"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.battlelancer.seriesguide.backend.CloudSetupActivity"
-    tools:ignore="MergeRootFrame" />
+    android:layout_height="wrap_content"
+    android:minHeight="48dp"
+    android:paddingLeft="@dimen/keyline"
+    android:paddingRight="@dimen/keyline"
+    android:orientation="vertical"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/textViewSettingsHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        tools:text="Setting"
+        android:textAppearance="?attr/textAppearanceListItem" />
+
+</LinearLayout>

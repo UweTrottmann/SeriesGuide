@@ -18,13 +18,13 @@
         android:layout_width="2dp"
         android:layout_height="match_parent"
         android:layout_gravity="left"
-        android:background="?attr/colorSeparator" />
+        android:background="?attr/sgColorSeparator" />
 
     <View
         android:layout_width="2dp"
         android:layout_height="match_parent"
         android:layout_gravity="right"
-        android:background="?attr/colorSeparator" />
+        android:background="?attr/sgColorSeparator" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -112,7 +112,7 @@
                         android:layout_marginRight="@dimen/large_padding"
                         android:paddingBottom="6dp"
                         android:background="?attr/drawableCardBackground"
-                        android:foreground="?attr/custom_list_selector">
+                        android:foreground="?attr/selectableItemBackground">
 
                         <ImageView
                             android:id="@+id/imageViewOverviewEpisode"
@@ -178,7 +178,7 @@
                             android:layout_marginLeft="@dimen/large_padding"
                             android:layout_marginRight="@dimen/large_padding"
                             android:layout_marginBottom="@dimen/large_padding"
-                            android:background="?attr/colorDivider" />
+                            android:background="?attr/sgColorDivider" />
 
                         <TextView
                             android:id="@+id/TextViewEpisodeDescription"
@@ -195,7 +195,7 @@
                             android:layout_height="1dp"
                             android:layout_marginLeft="@dimen/large_padding"
                             android:layout_marginRight="@dimen/large_padding"
-                            android:background="?attr/colorDivider" />
+                            android:background="?attr/sgColorDivider" />
 
                         <include layout="@layout/ratingbar" />
 
@@ -204,7 +204,7 @@
                             android:layout_height="1dp"
                             android:layout_marginLeft="@dimen/large_padding"
                             android:layout_marginRight="@dimen/large_padding"
-                            android:background="?attr/colorDivider" />
+                            android:background="?attr/sgColorDivider" />
 
                         <TextView
                             android:id="@+id/labelGuestStars"
@@ -244,7 +244,7 @@
                             android:layout_marginLeft="@dimen/large_padding"
                             android:layout_marginRight="@dimen/large_padding"
                             android:layout_marginTop="@dimen/large_padding"
-                            android:background="?attr/colorDivider" />
+                            android:background="?attr/sgColorDivider" />
 
                         <include
                             layout="@layout/buttons_services"

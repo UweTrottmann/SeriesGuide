@@ -202,14 +202,6 @@ public class TvdbAddFragment extends AddFragment {
         }
 
         @Override
-        protected void onPreExecute() {
-            final Activity activity = getActivity();
-            if (activity != null) {
-                activity.setProgressBarIndeterminateVisibility(true);
-            }
-        }
-
-        @Override
         protected List<SearchResult> doInBackground(String... params) {
             List<SearchResult> results;
 
@@ -227,10 +219,6 @@ public class TvdbAddFragment extends AddFragment {
 
         @Override
         protected void onPostExecute(List<SearchResult> result) {
-            final Activity activity = getActivity();
-            if (activity != null) {
-                activity.setProgressBarIndeterminateVisibility(false);
-            }
             if (result == null) {
                 // display error in empty view
                 setEmptyMessage(R.string.search_error);

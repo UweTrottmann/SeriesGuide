@@ -18,11 +18,12 @@ package com.battlelancer.seriesguide.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.os.Handler;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,26 +45,22 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         implements AdapterView.OnItemClickListener {
 
     private static final String TAG_NAV_DRAWER = "Navigation Drawer";
+    private static final int NAVDRAWER_CLOSE_DELAY = 250;
 
     public static final int MENU_ITEM_SHOWS_POSITION = 0;
-
     public static final int MENU_ITEM_LISTS_POSITION = 1;
-
     public static final int MENU_ITEM_MOVIES_POSITION = 2;
-
     public static final int MENU_ITEM_STATS_POSITION = 3;
-
     // DIVIDER IN BETWEEN HERE
-
     public static final int MENU_ITEM_SETTINGS_POSITION = 5;
-
     public static final int MENU_ITEM_HELP_POSITION = 6;
-
     public static final int MENU_ITEM_SUBSCRIBE_POSITION = 7; // not always shown
 
+    private Handler mHandler;
+    private Toolbar mActionBarToolbar;
     private DrawerLayout mDrawerLayout;
+    private View mDrawerView;
     private ListView mDrawerList;
-    private ActionBarDrawerToggle mDrawerToggle;
     private DrawerAdapter mDrawerAdapter;
 
     @Override
@@ -71,16 +68,13 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         // set a theme based on user preference
         setTheme(SeriesGuidePreferences.THEME);
         super.onCreate(savedInstanceState);
+
+        mHandler = new Handler();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        // close a previously opened drawer
-        if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
-            mDrawerLayout.closeDrawer(mDrawerList);
-        }
 
         mDrawerAdapter.setSubscribeVisible(!Utils.hasAccessToX(this));
     }
@@ -90,10 +84,13 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
      * #onCreate(android.os.Bundle)} after {@link #setContentView(int)}.
      */
     public void setupNavDrawer() {
+        mActionBarToolbar = (Toolbar) findViewById(R.id.sgToolbar);
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        mDrawerView = findViewById(R.id.drawer_view);
 
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerList = (ListView) findViewById(R.id.drawer_list);
 
         // setup menu adapter
         mDrawerAdapter = new DrawerAdapter(this);
@@ -115,33 +112,15 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
         mDrawerList.setAdapter(mDrawerAdapter);
         mDrawerList.setOnItemClickListener(this);
-
-        // setup drawer indicator
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer,
-                R.string.drawer_open, R.string.drawer_close) {
-            public void onDrawerClosed(View view) {
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            public void onDrawerOpened(View drawerView) {
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-        // don't show the indicator by default
-        mDrawerToggle.setDrawerIndicatorEnabled(false);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
+    public void onBackPressed() {
+        if (isNavDrawerOpen()) {
+            closeNavDrawer();
+            return;
+        }
+        super.onBackPressed();
     }
 
     @Override
@@ -201,24 +180,34 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         }
 
         // already displaying correct screen
-        if (launchIntent == null) {
-            mDrawerLayout.closeDrawer(mDrawerList);
-            return;
+        if (launchIntent != null) {
+            final Intent finalLaunchIntent = launchIntent;
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    goToNavDrawerItem(finalLaunchIntent);
+                }
+            }, NAVDRAWER_CLOSE_DELAY);
         }
 
-        startActivity(launchIntent);
+        mDrawerLayout.closeDrawer(Gravity.START);
+    }
+
+    private void goToNavDrawerItem(Intent intent) {
+        startActivity(intent);
         overridePendingTransition(R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg);
     }
 
     /**
      * Returns true if the navigation drawer is open.
      */
-    public boolean isDrawerOpen() {
-        return mDrawerLayout.isDrawerOpen(mDrawerList);
+    public boolean isNavDrawerOpen() {
+        return mDrawerLayout.isDrawerOpen(mDrawerView);
     }
 
-    public void setDrawerIndicatorEnabled(boolean isEnabled) {
-        mDrawerToggle.setDrawerIndicatorEnabled(isEnabled);
+    public void setDrawerIndicatorEnabled() {
+        mActionBarToolbar.setNavigationIcon(R.drawable.ic_drawer);
+        mActionBarToolbar.setNavigationContentDescription(R.string.drawer_open);
     }
 
     /**
@@ -229,16 +218,16 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         mDrawerList.setItemChecked(menuItemPosition, true);
     }
 
-    /**
-     * Opens the nav drawer.
-     */
-    public void openDrawer() {
+    public void openNavDrawer() {
         mDrawerLayout.openDrawer(GravityCompat.START);
     }
 
+    public void closeNavDrawer() {
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+    }
+
     public boolean toggleDrawer(MenuItem item) {
-        if (item != null && item.getItemId() == android.R.id.home && mDrawerToggle
-                .isDrawerIndicatorEnabled()) {
+        if (item != null && item.getItemId() == android.R.id.home) {
             if (mDrawerLayout.isDrawerVisible(GravityCompat.START)) {
                 mDrawerLayout.closeDrawer(GravityCompat.START);
             } else {
