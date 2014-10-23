@@ -66,8 +66,8 @@
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
         <item name="drawableCardBackground">@drawable/card_background</item>
         <item name="drawableDivider">@drawable/divider</item>
-        <item name="drawableStar">@drawable/ic_action_star_10</item>
-        <item name="drawableStar0">@drawable/ic_action_star_0</item>
+        <item name="drawableStar">@drawable/ic_action_star</item>
+        <item name="drawableStar0">@drawable/ic_action_star_outline</item>
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu</item>
@@ -138,8 +138,8 @@
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
         <item name="drawableCardBackground">@drawable/card_background</item>
         <item name="drawableDivider">@drawable/divider</item>
-        <item name="drawableStar">@drawable/ic_action_star_10</item>
-        <item name="drawableStar0">@drawable/ic_action_star_0</item>
+        <item name="drawableStar">@drawable/ic_action_star</item>
+        <item name="drawableStar0">@drawable/ic_action_star_outline</item>
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu</item>
@@ -231,8 +231,8 @@
         <item name="drawableAddIcon">@drawable/ic_action_add_inverse</item>
         <item name="drawableCardBackground">@drawable/card_background_inverse</item>
         <item name="drawableDivider">@drawable/divider_light</item>
-        <item name="drawableStar">@drawable/ic_action_star_10_inverse</item>
-        <item name="drawableStar0">@drawable/ic_action_star_0_inverse</item>
+        <item name="drawableStar">@drawable/ic_action_star_inverse</item>
+        <item name="drawableStar0">@drawable/ic_action_star_outline_inverse</item>
         <item name="drawableCancel">@drawable/ic_action_cancel_inverse</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top_inverse</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu_light</item>
