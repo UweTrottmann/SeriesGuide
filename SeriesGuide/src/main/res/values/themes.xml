@@ -14,7 +14,7 @@
         <!-- System widgets -->
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
         <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
-        <item name="android:progressBarStyleHorizontal">@style/ProgressBar</item>
+        <item name="android:progressBarStyleHorizontal">@style/Widget.SeriesGuide.ProgressBar</item>
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
         <item name="android:editTextBackground">@drawable/edit_text_sg</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
@@ -52,7 +52,6 @@
         <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
         <item name="textColorSgGreen">@color/green_dark</item>
         <item name="textColorSgDim">@color/text_dim</item>
-        <item name="textColorSgActionBar">@color/text_primary_sg</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
         <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
@@ -102,7 +101,7 @@
         <item name="sgDrawerItemBackground">@drawable/list_selector_dark</item>
 
         <!-- System widgets -->
-        <item name="android:progressBarStyleHorizontal">@style/ProgressBar.Dark</item>
+        <item name="android:progressBarStyleHorizontal">@style/Widget.SeriesGuide.ProgressBar.Dark</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_dark</item>
 
         <!-- Fast scroll thumb -->
@@ -125,7 +124,6 @@
         <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
         <item name="textColorSgGreen">@color/accent_material_dark</item>
         <item name="textColorSgDim">@color/text_dim</item>
-        <item name="textColorSgActionBar">@color/text_default</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
         <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
@@ -177,7 +175,7 @@
         <!-- System widgets -->
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
         <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
-        <item name="android:progressBarStyleHorizontal">@style/ProgressBar.Light</item>
+        <item name="android:progressBarStyleHorizontal">@style/Widget.SeriesGuide.ProgressBar.Light</item>
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
         <item name="android:editTextBackground">@drawable/edit_text_holo_light</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
@@ -219,7 +217,6 @@
         <item name="textColorSgPrimaryInverse">@color/text_primary</item>
         <item name="textColorSgGreen">@color/green_dark</item>
         <item name="textColorSgDim">@color/text_dim_light</item>
-        <item name="textColorSgActionBar">@color/text_primary_sg</item>
         <item name="sgColorBackgroundDim">@color/background_dim_inverse</item>
         <item name="sgColorSeparator">@color/separator_inverse</item>
         <item name="sgColorDivider">@color/divider_inverse</item>
