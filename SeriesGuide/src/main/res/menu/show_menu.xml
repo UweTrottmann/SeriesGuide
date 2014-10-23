@@ -4,7 +4,6 @@
 
     <item
         android:id="@+id/menu_show_manage_lists"
-        android:icon="@drawable/ic_action_list"
         android:orderInCategory="2"
         app:showAsAction="never"
         android:title="@string/list_item_manage"/>

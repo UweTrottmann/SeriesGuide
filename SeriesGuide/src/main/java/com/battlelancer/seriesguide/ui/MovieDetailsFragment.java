@@ -424,7 +424,7 @@ public class MovieDetailsFragment extends Fragment {
         final boolean isInWatchlist = traktMovie.inWatchlist != null && traktMovie.inWatchlist;
         Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mWatchlistedButton, 0,
                 isInWatchlist
-                        ? R.drawable.ic_action_list_highlight
+                        ? R.drawable.ic_listed
                         : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                 R.attr.drawableList), 0, 0);
         mWatchlistedButton.setText(
