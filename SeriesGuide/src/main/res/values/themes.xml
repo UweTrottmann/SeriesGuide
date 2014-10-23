@@ -98,12 +98,12 @@
         <!-- All customizations that are SPECIFIC to API-level 15+ go here. -->
 
         <!-- Special attributes -->
-        <item name="selectableItemBackground">@drawable/list_selector_holo_dark</item>
-        <item name="sgDrawerItemBackground">@drawable/list_selector_holo_dark</item>
+        <item name="selectableItemBackground">@drawable/list_selector_dark</item>
+        <item name="sgDrawerItemBackground">@drawable/list_selector_dark</item>
 
         <!-- System widgets -->
         <item name="android:progressBarStyleHorizontal">@style/ProgressBar.Dark</item>
-        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_dark</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_dark</item>
 
         <!-- Fast scroll thumb -->
         <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_dark</item>

@@ -32,7 +32,7 @@
         <!-- All customizations that are SPECIFIC to API-level 21 can go here. -->
 
         <!-- Special attributes -->
-        <item name="sgDrawerItemBackground">@drawable/list_selector_holo_dark</item>
+        <item name="sgDrawerItemBackground">@drawable/list_selector_dark_material</item>
 
     </style>
 
