@@ -1,19 +1,5 @@
-buildscript {
-    repositories {
-        maven { url 'https://maven.fabric.io/repo' }
-    }
-    dependencies {
-        //noinspection GradleDynamicVersion
-        classpath 'io.fabric.tools:gradle:1.+'
-    }
-}
-
 apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
-
-repositories {
-    maven { url 'https://maven.fabric.io/repo' }
-}
+apply plugin: 'crashlytics'
 
 def loadStringPropertyOrPlaceholder(String name) {
     return rootProject.hasProperty(name) ? rootProject.property(name) : "MISSING"
@@ -112,9 +98,6 @@ dependencies {
     compile project(':libraries:stickygridheaders')
     compile rootProject.ext.libraries.supportv4
     compile 'com.android.support:appcompat-v7:21.0.0'
-    compile('com.crashlytics.sdk.android:crashlytics:2.0.0@aar') {
-        transitive = true
-    }
     compile 'com.github.castorflex.smoothprogressbar:library:0.5.1'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
@@ -164,6 +147,9 @@ dependencies {
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
         exclude group: 'com.android.support', module: 'support-v4'
     }
+
+    // Crashlytics
+    compile 'com.crashlytics.android:crashlytics:1.1.13'
 }
 
 // Google Play Services stripping to avoid dex method limit
