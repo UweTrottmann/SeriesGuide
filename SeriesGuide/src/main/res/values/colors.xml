@@ -31,6 +31,7 @@
     <color name="accent_primary">#ff6545a0</color>
     <color name="accent_primary_dark">#ff323264</color>
     <color name="accent_primary_light">#bb7555B0</color>
+    <color name="teal_dark">#ff009688</color>
     <color name="dim">#ff313531</color>
     <color name="background">#ff222222</color>
     <color name="background_inverse">#ffebebeb</color>
@@ -42,7 +43,6 @@
     <color name="disabled">#80333333</color>
     <color name="separator">#ff1c1c1c</color>
     <color name="separator_inverse">#ffe9e9e9</color>
-    <color name="green_dark">#ff05A30D</color>
     <color name="widget_default_background">#80000000</color>
     <color name="widget_default_background_light">#80ffffff</color>
     <color name="black_overlay">#aa000000</color>

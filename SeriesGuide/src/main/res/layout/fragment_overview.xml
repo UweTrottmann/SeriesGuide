@@ -84,7 +84,7 @@
                     android:layout_height="match_parent"
                     android:focusable="true"
                     android:padding="10dp"
-                    android:src="@drawable/ic_action_star_0" />
+                    android:src="?attr/drawableStar0" />
             </LinearLayout>
 
             <FrameLayout
