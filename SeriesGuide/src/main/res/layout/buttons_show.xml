@@ -20,7 +20,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="@dimen/buttons_min_height"
-    tools:ignore="Overdraw">
+    tools:ignore="Overdraw"
+    tools:showIn="@layout/fragment_show">
 
     <Button
         android:id="@+id/buttonShowFavorite"

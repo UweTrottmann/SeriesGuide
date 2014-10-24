@@ -60,14 +60,11 @@
             android:textAppearance="@style/TextAppearance.Body.Dim" />
     </RelativeLayout>
 
-    <include layout="@layout/divider_vertical" />
-
     <com.battlelancer.seriesguide.widgets.WatchedBox
         android:id="@+id/watchedBoxUpcoming"
-        android:layout_width="wrap_content"
+        android:layout_width="48dp"
         android:layout_height="match_parent"
         android:background="?attr/selectableItemBackground"
-        android:padding="@dimen/default_padding"
         android:scaleType="centerInside" />
 
 </LinearLayout>
