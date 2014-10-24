@@ -12,7 +12,7 @@
         android:layout_marginTop="@dimen/default_padding"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="@dimen/icon_padding"
-        android:src="?attr/drawableWatch" />
+        android:src="?attr/drawableWatchAll" />
 
     <ImageView
         android:id="@+id/imageViewSeasonsCollectedToggle"
@@ -22,7 +22,7 @@
         android:layout_toRightOf="@+id/imageViewSeasonsWatchedToggle"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="@dimen/icon_padding"
-        android:src="?attr/drawableCollect" />
+        android:src="?attr/drawableCollectAll" />
 
     <TextView
         android:id="@+id/textViewSeasonsRemaining"

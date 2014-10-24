@@ -126,9 +126,9 @@ public class SeasonsFragment extends ListFragment implements
         mWatchedAllEpisodes = unwatchedEpisodes == 0;
         mButtonWatchedAll.setImageResource(mWatchedAllEpisodes ?
                 Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                        R.attr.drawableWatched)
+                        R.attr.drawableWatchedAll)
                 : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                        R.attr.drawableWatch));
+                        R.attr.drawableWatchAll));
         // set onClick listener not before here to avoid unexpected actions
         mButtonWatchedAll.setOnClickListener(new OnClickListener() {
             @Override
@@ -167,9 +167,9 @@ public class SeasonsFragment extends ListFragment implements
 
     private void setCollectedToggleState(int uncollectedEpisodes) {
         mCollectedAllEpisodes = uncollectedEpisodes == 0;
-        mButtonCollectedAll.setImageResource(mCollectedAllEpisodes ? R.drawable.ic_collected
+        mButtonCollectedAll.setImageResource(mCollectedAllEpisodes ? R.drawable.ic_collected_all
                 : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                        R.attr.drawableCollect));
+                        R.attr.drawableCollectAll));
         // set onClick listener not before here to avoid unexpected actions
         mButtonCollectedAll.setOnClickListener(new OnClickListener() {
             @Override
