@@ -50,7 +50,7 @@
         <item name="textColorSgDefault">@color/black_11</item>
         <item name="textColorSgPrimary">@color/text_primary_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
-        <item name="textColorSgGreen">@color/green_dark</item>
+        <item name="textColorSgGreen">@color/teal_dark</item>
         <item name="textColorSgDim">@color/text_dim</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
         <item name="sgColorSeparator">@color/separator</item>
@@ -125,7 +125,7 @@
         <item name="textColorSgDefault">@color/black_11</item>
         <item name="textColorSgPrimary">@color/text_primary_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
-        <item name="textColorSgGreen">@color/accent_material_dark</item>
+        <item name="textColorSgGreen">@color/teal_dark</item>
         <item name="textColorSgDim">@color/text_dim</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
         <item name="sgColorSeparator">@color/separator</item>
@@ -149,8 +149,8 @@
         <item name="drawableCheckin">@drawable/ic_action_checkin</item>
         <item name="drawableWatch">@drawable/ic_action_tick</item>
         <item name="drawableWatchAll">@drawable/ic_action_watch_all</item>
-        <item name="drawableWatched">@drawable/ic_ticked_dark</item>
-        <item name="drawableWatchedAll">@drawable/ic_watched_all_dark</item>
+        <item name="drawableWatched">@drawable/ic_ticked</item>
+        <item name="drawableWatchedAll">@drawable/ic_watched_all</item>
         <item name="drawableCollect">@drawable/ic_action_collect</item>
         <item name="drawableCollectAll">@drawable/ic_action_collect_all</item>
         <item name="drawableFilter">@drawable/ic_action_filter</item>
@@ -221,7 +221,7 @@
         <item name="textColorSgDefault">@color/black_87</item>
         <item name="textColorSgPrimary">@color/text_primary_light_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary</item>
-        <item name="textColorSgGreen">@color/green_dark</item>
+        <item name="textColorSgGreen">@color/teal_dark</item>
         <item name="textColorSgDim">@color/text_dim_light</item>
         <item name="sgColorBackgroundDim">@color/background_dim_inverse</item>
         <item name="sgColorSeparator">@color/separator_inverse</item>
