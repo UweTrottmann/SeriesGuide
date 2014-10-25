@@ -8,6 +8,11 @@ All dates are in the European Central timezone.
 Version 19 *(in development)*
 -----------------------------
 
+#### 19-beta2 *(2014-10-25)*
+
+* TWEAK More Material design updates (icons, colors, action bar).
+* FIX Potential fix for list widget crash (mostly on Samsung GT I9500).
+
 #### 19-beta1 *(2014-10-08)*
 
 * FEATURE Light theme for list widget.
