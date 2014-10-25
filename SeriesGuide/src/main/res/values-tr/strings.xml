@@ -290,7 +290,7 @@
   <string name="upcoming_upto_six_hours">6 saat</string>
   <string name="upcoming_upto_half_day">12 saat</string>
   <string name="pref_appearance">Görünüm</string>
-  <string name="pref_theme">Theme</string>
+  <string name="pref_theme">Tema</string>
   <string name="pref_other">Diğer</string>
   <string name="pref_autoupdate">Oto. Güncelleme Aç</string>
   <string name="pref_autoupdatesummary">Dizilerinizi düzenli olarak güncelleyin</string>
@@ -396,7 +396,7 @@
   <string name="dashclock_extension_description">SeriesGuide dizilerinizin gelecek bölümünü gösterir.</string>
   <string name="dashclock_pref_upcoming_threshold">Dizinin sonraki bölümlerinde</string>
   <string name="onlyx">Only for supporters</string>
-  <string name="action_upgrade">Unlock all features</string>
+  <string name="action_upgrade">Tüm özellikleri aç</string>
   <string name="billing_action_subscribe">Abone ol</string>
   <string name="billing_action_pass">X Pass edinin</string>
   <string name="billing_price_subscribe">%s/yıl, 30 günlük deneme</string>
@@ -418,7 +418,6 @@
   <string name="action_extensions_add">Eklenti ekle</string>
   <string name="action_extensions_limit">Daha fazla eklenti için X\'i edinin</string>
   <string name="action_extensions_search">Daha fazla eklenti edin</string>
-  <string name="action_extension_settings">Ayarlar</string>
   <string name="action_extension_remove">Kaldır</string>
   <string name="extension_amazon">Amazon araması</string>
   <string name="description_extension_amazon">Yerel Amazon sitesinde arama yapın</string>

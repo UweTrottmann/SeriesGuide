@@ -418,7 +418,6 @@
   <string name="action_extensions_add">Dodavanje proširenja</string>
   <string name="action_extensions_limit">Nabavite X za dodavanje više proširenja</string>
   <string name="action_extensions_search">Nabavite više proširenja</string>
-  <string name="action_extension_settings">Postavke</string>
   <string name="action_extension_remove">Izbriši</string>
   <string name="extension_amazon">Amazon pretraživanje</string>
   <string name="description_extension_amazon">Pretraži lokalnu Amazon stranicu</string>

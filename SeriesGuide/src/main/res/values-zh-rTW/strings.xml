@@ -418,7 +418,6 @@
   <string name="action_extensions_add">Add extension</string>
   <string name="action_extensions_limit">Get X to add more extensions</string>
   <string name="action_extensions_search">Get more extensions</string>
-  <string name="action_extension_settings">設定</string>
   <string name="action_extension_remove">刪除</string>
   <string name="extension_amazon">Amazon search</string>
   <string name="description_extension_amazon">Search your local Amazon site</string>

@@ -418,7 +418,6 @@
   <string name="action_extensions_add">Adicionar extensão</string>
   <string name="action_extensions_limit">Adquire o X para adicionar mais extensões</string>
   <string name="action_extensions_search">Obter mais extensões</string>
-  <string name="action_extension_settings">Definições</string>
   <string name="action_extension_remove">Remover</string>
   <string name="extension_amazon">Pesquisar na Amazon</string>
   <string name="description_extension_amazon">Pesquisar na Amazon local</string>

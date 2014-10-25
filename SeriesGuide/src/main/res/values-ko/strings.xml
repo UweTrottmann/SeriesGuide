@@ -418,7 +418,6 @@
   <string name="action_extensions_add">확장프로그램 추가</string>
   <string name="action_extensions_limit">더 많은 확장프로그램을 추가하기 위해 X를 획득</string>
   <string name="action_extensions_search">더 많은 확장프로그램 획득</string>
-  <string name="action_extension_settings">설정</string>
   <string name="action_extension_remove">삭제</string>
   <string name="extension_amazon">아마존 검색</string>
   <string name="description_extension_amazon">로컬 아마존 사이트 검색</string>

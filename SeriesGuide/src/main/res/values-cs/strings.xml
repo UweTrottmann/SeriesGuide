@@ -121,7 +121,7 @@
   <string name="episode_firstaired_unknown">Datum vysílání neznámé</string>
   <string name="episode_dvdnumber">Epizoda na DVD</string>
   <string name="show_actors">Herci</string>
-  <string name="original_release">Original release</string>
+  <string name="original_release">Původní vydání</string>
   <string name="show_on_network">na %s</string>
   <string name="show_genres">Žánr</string>
   <string name="show_runtime">Celková délka</string>
@@ -396,7 +396,7 @@
   <string name="dashclock_extension_description">Zobrazuje nadcházející epizodu ze seznamu pořadů v SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Zobrazovat epizody nadcházející během</string>
   <string name="onlyx">Only for supporters</string>
-  <string name="action_upgrade">Unlock all features</string>
+  <string name="action_upgrade">Odemknout všechny funkce</string>
   <string name="billing_action_subscribe">Odebírat</string>
   <string name="billing_action_pass">Získejte Rozšířenou verzi</string>
   <string name="billing_price_subscribe">%s ročně, 30 denní trial verze</string>
@@ -418,7 +418,6 @@
   <string name="action_extensions_add">Přidat rozšíření</string>
   <string name="action_extensions_limit">Získej X verzi s více funkcemi</string>
   <string name="action_extensions_search">Získat další rozšíření</string>
-  <string name="action_extension_settings">Nastavení</string>
   <string name="action_extension_remove">Odstranit</string>
   <string name="extension_amazon">Vyhledat na Amazonu</string>
   <string name="description_extension_amazon">Vyhledávání na místní síti Amazonu</string>

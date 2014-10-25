@@ -419,7 +419,6 @@
   <string name="action_extensions_add">Pievienot papildinājumus</string>
   <string name="action_extensions_limit">Iegūsti X lai iegūtu vairāk papildinājumus</string>
   <string name="action_extensions_search">Iegūsti vairāk papildinājumus</string>
-  <string name="action_extension_settings">Iestatījumi</string>
   <string name="action_extension_remove">Noņemt</string>
   <string name="extension_amazon">Amazon meklēšana</string>
   <string name="description_extension_amazon">Meklēt tavā vietējajā Amazon veikalā</string>
