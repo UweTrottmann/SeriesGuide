@@ -63,7 +63,7 @@
             android:paddingRight="@dimen/large_padding"
             android:paddingTop="@dimen/larger_padding"
             android:paddingBottom="@dimen/large_padding"
-            android:gravity="right"
+            android:gravity="end"
             android:orientation="horizontal">
 
             <Button
@@ -71,8 +71,6 @@
                 style="@style/Widget.SeriesGuide.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/large_padding"
-                android:drawablePadding="@dimen/default_padding"
                 android:text="@string/connect_trakt" />
 
             <Button
@@ -80,8 +78,6 @@
                 style="@style/Widget.SeriesGuide.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/large_padding"
-                android:drawablePadding="@dimen/inline_padding"
                 android:text="@string/action_shows_add" />
         </LinearLayout>
     </RelativeLayout>
