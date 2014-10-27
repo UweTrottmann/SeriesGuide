@@ -215,7 +215,6 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
 
         // Checkin Button
         mButtonCheckIn = layout.findViewById(R.id.buttonCheckIn);
-        updateCheckInButtonState();
         mButtonCheckIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -389,26 +388,22 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
     /**
      * Disables all interactive UI elements and shows a progress indicator.
      */
-    private void setProgressLock(boolean isEnabled) {
-        mProgressBar.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
-        mEditTextMessage.setEnabled(!isEnabled);
-        mButtonCheckIn.setEnabled(!isEnabled);
-        mCheckBoxTrakt.setEnabled(!isEnabled);
-        mCheckBoxGetGlue.setEnabled(!isEnabled);
-        mButtonPasteTitle.setEnabled(!isEnabled);
-        mButtonClear.setEnabled(!isEnabled);
-        mButtonFixGetGlue.setEnabled(!isEnabled);
+    private void setProgressLock(boolean lock) {
+        mProgressBar.setVisibility(lock ? View.VISIBLE : View.GONE);
+        mEditTextMessage.setEnabled(!lock);
+        mCheckBoxTrakt.setEnabled(!lock);
+        mCheckBoxGetGlue.setEnabled(!lock);
+        mButtonPasteTitle.setEnabled(!lock);
+        mButtonClear.setEnabled(!lock);
+        mButtonFixGetGlue.setEnabled(!lock);
+
+        mButtonCheckIn.setEnabled(!lock && (mGetGlueChecked || mTraktChecked));
     }
 
     /**
      * Enables the check-in button if either GetGlue or trakt are enabled.
      */
     private void updateCheckInButtonState() {
-        if (mGetGlueChecked || mTraktChecked) {
-            mButtonCheckIn.setEnabled(true);
-        } else {
-            mButtonCheckIn.setEnabled(false);
-        }
+        mButtonCheckIn.setEnabled(mGetGlueChecked || mTraktChecked);
     }
-
 }
