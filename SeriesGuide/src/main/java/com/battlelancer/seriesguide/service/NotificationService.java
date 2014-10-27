@@ -518,7 +518,9 @@ public class NotificationService extends IntentService {
         nb.setContentText(contentText);
         nb.setContentIntent(contentIntent);
         nb.setSmallIcon(R.drawable.ic_notification);
+        nb.setColor(getResources().getColor(R.color.accent_primary));
         nb.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        nb.setCategory(NotificationCompat.CATEGORY_EVENT);
 
         Timber.d("Setting delete intent with episode time: " + latestAirtime);
         Intent i = new Intent(this, NotificationService.class);
