@@ -144,7 +144,7 @@ public class TraktShoutsFragment extends Fragment implements
                         R.dimen.swipe_refresh_progress_bar_end_margin));
         int accentColorResId = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                 R.attr.colorAccent);
-        mSwipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.white);
+        mSwipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.teal_dark);
 
         mList.setOnItemClickListener(mOnClickListener);
         mList.setEmptyView(mEmptyView);

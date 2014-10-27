@@ -74,7 +74,7 @@
 
     <dimen name="search_padding_right">16dp</dimen>
 
-    <dimen name="swipe_refresh_progress_bar_start_margin">-16dp</dimen>
+    <dimen name="swipe_refresh_progress_bar_start_margin">-40dp</dimen>
     <dimen name="swipe_refresh_progress_bar_end_margin">16dp</dimen>
 
 </resources>
