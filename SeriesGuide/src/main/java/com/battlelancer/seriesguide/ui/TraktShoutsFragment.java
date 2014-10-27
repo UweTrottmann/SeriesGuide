@@ -138,6 +138,10 @@ public class TraktShoutsFragment extends Fragment implements
         ButterKnife.inject(this, v);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setProgressViewOffset(false, getResources().getDimensionPixelSize(
+                        R.dimen.swipe_refresh_progress_bar_start_margin),
+                getResources().getDimensionPixelSize(
+                        R.dimen.swipe_refresh_progress_bar_end_margin));
         int accentColorResId = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                 R.attr.colorAccent);
         mSwipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.white);

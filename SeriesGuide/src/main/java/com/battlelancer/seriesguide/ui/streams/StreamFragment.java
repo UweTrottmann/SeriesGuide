@@ -69,6 +69,10 @@ public abstract class StreamFragment extends Fragment implements
         ButterKnife.inject(this, v);
 
         mContentContainer.setOnRefreshListener(this);
+        mContentContainer.setProgressViewOffset(false, getResources().getDimensionPixelSize(
+                R.dimen.swipe_refresh_progress_bar_start_margin),
+                getResources().getDimensionPixelSize(
+                        R.dimen.swipe_refresh_progress_bar_end_margin));
 
         mGridView.setOnItemClickListener(this);
         mGridView.setEmptyView(mEmptyView);
