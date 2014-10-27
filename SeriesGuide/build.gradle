@@ -37,11 +37,6 @@ android {
         buildConfigField("String", "IAP_KEY_B", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_B")}\"")
         buildConfigField("String", "IAP_KEY_C", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_C")}\"")
         buildConfigField("String", "IAP_KEY_D", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_D")}\"")
-
-        manifestPlaceholders = [
-                crashlyticsApiKey: rootProject.hasProperty("CRASHLYTICS_KEY")
-                        ? rootProject.property("CRASHLYTICS_KEY") : "MISSING"
-        ]
     }
 
     compileOptions {
