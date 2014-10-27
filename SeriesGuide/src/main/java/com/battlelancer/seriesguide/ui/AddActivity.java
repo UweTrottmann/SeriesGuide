@@ -29,7 +29,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.widget.EditText;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -219,12 +218,6 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
 
     @Override
     public void onAddShow(SearchResult show) {
-        // clear the search field (if it is shown)
-        EditText searchbox = (EditText) findViewById(R.id.searchbox);
-        if (searchbox != null) {
-            searchbox.setText("");
-        }
-
         TaskManager.getInstance(this).performAddTask(show);
     }
 }
