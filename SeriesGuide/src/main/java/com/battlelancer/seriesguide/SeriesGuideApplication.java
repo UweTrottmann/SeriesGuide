@@ -25,9 +25,11 @@ import android.os.StrictMode.VmPolicy;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.Utils;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 /**
@@ -56,6 +58,9 @@ public class SeriesGuideApplication extends Application {
         if (!BuildConfig.DEBUG || FLAVOR_INTERNAL.equals(BuildConfig.FLAVOR)) {
             // crash and error reporting
             Timber.plant(new AnalyticsTree());
+            if (!Fabric.isInitialized()) {
+                Fabric.with(this, new Crashlytics());
+            }
         }
 
         // Set provider authority
