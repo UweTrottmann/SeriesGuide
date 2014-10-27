@@ -13,7 +13,6 @@
     <dimen name="widget_text_large">16sp</dimen>
     <dimen name="imagecontainer_height">250dp</dimen>
     <dimen name="addpager_width">600dp</dimen>
-    <dimen name="slidingmenu_width">280dp</dimen>
 
     <dimen name="show_poster_width">102dp</dimen>
     <dimen name="show_poster_height">150dp</dimen>

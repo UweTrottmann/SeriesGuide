@@ -21,7 +21,7 @@
     <!-- The navigation drawer -->
     <LinearLayout
         android:id="@+id/drawer_view"
-        android:layout_width="@dimen/slidingmenu_width"
+        android:layout_width="@dimen/drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
@@ -30,7 +30,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="@dimen/drawer_top_view_height" />
 
         <ListView
             android:id="@+id/drawer_list"
