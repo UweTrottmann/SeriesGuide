@@ -32,13 +32,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -71,9 +72,12 @@ public class MoviesSearchFragment extends Fragment implements
     private SearchHistory searchHistory;
     private ArrayAdapter<String> searchHistoryAdapter;
 
-    @InjectView(R.id.emptyViewMovieSearch) TextView emptyView;
-    @InjectView(R.id.imageButtonClearSearch) ImageButton clearButton;
+    @InjectView(R.id.containerMoviesSearchContent) View resultsContainer;
+    @InjectView(R.id.progressBarMoviesSearch) View progressBar;
+    @InjectView(android.R.id.list) GridView resultsGridView;
+    @InjectView(R.id.emptyViewMoviesSearch) TextView emptyView;
     @InjectView(R.id.editTextMoviesSearch) AutoCompleteTextView searchBox;
+    @InjectView(R.id.buttonMoviesSearchClear) View clearButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,6 +91,10 @@ public class MoviesSearchFragment extends Fragment implements
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_movies_search, container, false);
         ButterKnife.inject(this, v);
+
+        // setup grid view
+        resultsGridView.setEmptyView(emptyView);
+        resultsGridView.setOnItemClickListener(this);
 
         // setup search box
         searchBox.setThreshold(1);
@@ -126,6 +134,8 @@ public class MoviesSearchFragment extends Fragment implements
             }
         });
 
+        setProgressVisible(false, false);
+
         return v;
     }
 
@@ -133,13 +143,9 @@ public class MoviesSearchFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        // setup adapter
         resultsAdapter = new MoviesAdapter(getActivity(), this);
-
-        // setup grid view
-        GridView list = (GridView) getView().findViewById(android.R.id.list);
-        list.setAdapter(resultsAdapter);
-        list.setOnItemClickListener(this);
-        list.setEmptyView(emptyView);
+        resultsGridView.setAdapter(resultsAdapter);
 
         // setup search history
         if (searchHistory == null || searchHistoryAdapter == null) {
@@ -192,8 +198,20 @@ public class MoviesSearchFragment extends Fragment implements
         }
     }
 
+    private void setProgressVisible(boolean visible, boolean animate) {
+        if (animate) {
+            Animation out = AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out);
+            Animation in = AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in);
+            resultsContainer.startAnimation(visible ? out : in);
+            progressBar.startAnimation(visible ? in : out);
+        }
+        resultsContainer.setVisibility(visible ? View.GONE : View.VISIBLE);
+        progressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
     @Override
     public Loader<List<Movie>> onCreateLoader(int loaderId, Bundle args) {
+        setProgressVisible(true, false);
         String query = null;
         if (args != null) {
             query = args.getString(SEARCH_QUERY_KEY);
@@ -209,6 +227,7 @@ public class MoviesSearchFragment extends Fragment implements
             emptyView.setText(R.string.offline);
         }
         resultsAdapter.setData(data);
+        setProgressVisible(false, true);
     }
 
     @Override
