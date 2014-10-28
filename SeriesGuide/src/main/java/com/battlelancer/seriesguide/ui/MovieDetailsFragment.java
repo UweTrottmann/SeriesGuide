@@ -264,6 +264,7 @@ public class MovieDetailsFragment extends Fragment {
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
 
         if (mMovieDetails != null) {
             boolean isEnableShare = mMovieDetails.tmdbMovie() != null && !TextUtils.isEmpty(
@@ -289,8 +290,6 @@ public class MovieDetailsFragment extends Fragment {
             youtubeItem.setEnabled(isEnableYoutube);
             youtubeItem.setVisible(isEnableYoutube);
         }
-
-        super.onPrepareOptionsMenu(menu);
     }
 
     @Override

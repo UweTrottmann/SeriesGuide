@@ -261,9 +261,13 @@ public class SeasonsFragment extends ListFragment implements
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        final CharSequence[] items = getResources().getStringArray(R.array.sesorting);
-        menu.findItem(R.id.menu_sesortby).setTitle(
-                getString(R.string.sort) + ": " + items[mSorting.index()]);
+        super.onPrepareOptionsMenu(menu);
+
+        MenuItem item = menu.findItem(R.id.menu_sesortby);
+        if (item != null) {
+            CharSequence[] items = getResources().getStringArray(R.array.sesorting);
+            item.setTitle(getString(R.string.sort) + ": " + items[mSorting.index()]);
+        }
     }
 
     @Override

@@ -247,10 +247,14 @@ public class ShowsFragment extends Fragment implements
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
         MenuItem filter = menu.findItem(R.id.menu_action_shows_filter);
-        filter.setIcon(mIsFilterFavorites || mIsFilterUnwatched || mIsFilterUpcoming
-                || mIsFilterHidden ?
-                R.drawable.ic_action_filter_selected : R.drawable.ic_action_filter);
+        if (filter != null) {
+            filter.setIcon(mIsFilterFavorites || mIsFilterUnwatched || mIsFilterUpcoming
+                    || mIsFilterHidden ?
+                    R.drawable.ic_action_filter_selected : R.drawable.ic_action_filter);
+        }
     }
 
     @Override
