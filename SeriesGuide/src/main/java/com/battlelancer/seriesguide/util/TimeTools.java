@@ -625,28 +625,20 @@ public class TimeTools {
             return context.getString(R.string.unknown);
         }
         switch (releaseCountry) {
-            case AUSTRALIA:
             case ISO3166_1_AUSTRALIA:
                 return AUSTRALIA;
-            case CANADA:
             case ISO3166_1_CANADA:
                 return CANADA;
-            case JAPAN:
             case ISO3166_1_JAPAN:
                 return JAPAN;
-            case FINLAND:
             case ISO3166_1_FINLAND:
                 return FINLAND;
-            case GERMANY:
             case ISO3166_1_GERMANY:
                 return GERMANY;
-            case NETHERLANDS:
             case ISO3166_1_NETHERLANDS:
                 return NETHERLANDS;
-            case UNITED_KINGDOM:
             case ISO3166_1_UNITED_KINGDOM:
                 return UNITED_KINGDOM;
-            case UNITED_STATES:
             case ISO3166_1_UNITED_STATES:
                 return UNITED_STATES;
             default:
