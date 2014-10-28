@@ -18,7 +18,9 @@ package com.battlelancer.seriesguide.ui;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -43,9 +45,14 @@ public abstract class BaseOAuthActivity extends BaseActivity {
 
         WebView webview = (WebView) findViewById(R.id.webView);
 
-        setupActionBar();
-
         setupViews(webview);
+    }
+
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     protected void setupViews(WebView webview) {
@@ -89,6 +96,15 @@ public abstract class BaseOAuthActivity extends BaseActivity {
             return false;
         }
     };
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     /**
      * Return the url of the OAuth authorization page.

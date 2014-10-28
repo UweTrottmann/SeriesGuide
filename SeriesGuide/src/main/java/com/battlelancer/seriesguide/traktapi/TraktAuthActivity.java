@@ -16,24 +16,17 @@
 
 package com.battlelancer.seriesguide.traktapi;
 
-import android.app.ActionBar;
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.widget.Toast;
+import android.support.v7.app.ActionBar;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.BaseOAuthActivity;
 import com.battlelancer.seriesguide.ui.ConnectTraktCredentialsFragment;
-import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import javax.annotation.Nullable;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
-import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
-import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import timber.log.Timber;
 
@@ -46,9 +39,9 @@ public class TraktAuthActivity extends BaseOAuthActivity {
 
     @Override
     protected void setupActionBar() {
-        final ActionBar actionBar = getActionBar();
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.connect_trakt));
-        actionBar.setDisplayShowTitleEnabled(true);
     }
 
     @Override
