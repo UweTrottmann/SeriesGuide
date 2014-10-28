@@ -236,7 +236,7 @@ public class TraktAddFragment extends AddFragment {
                 Timber.e(e, "Loading shows failed: " + e.getUrl());
                 // ignored, just display empty list
             } catch (OAuthUnauthorizedException e) {
-                TraktCredentials.get(mContext).setCredentialsInvalid();
+                TraktCredentials.get(context).setCredentialsInvalid();
             }
 
             // return empty list right away if there are no results
