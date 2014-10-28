@@ -181,17 +181,6 @@ public class ActivityFragment extends Fragment implements
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        boolean isFilterApplied = ActivitySettings.isOnlyFavorites(getActivity()) ||
-                DisplaySettings.isHidingSpecials(getActivity()) ||
-                DisplaySettings.isNoWatchedEpisodes(getActivity()) ||
-                ActivitySettings.isInfiniteActivity(getActivity());
-        MenuItem filter = menu.findItem(R.id.menu_action_activity_filter);
-        filter.setIcon(isFilterApplied ?
-                R.drawable.ic_action_filter_selected : R.drawable.ic_action_filter);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_onlyfavorites) {
