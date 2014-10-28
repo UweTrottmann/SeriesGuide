@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
+import android.app.SearchManager;
 import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -36,7 +37,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.lang.ref.WeakReference;
@@ -55,8 +55,6 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     public static final int OVERVIEW_SHOW_LOADER_ID = 103;
     public static final int OVERVIEW_ACTIONS_LOADER_ID = 104;
     public static final int SEASONS_LOADER_ID = 105;
-
-    private static final String TAG = "Overview";
 
     private int mShowId;
 
@@ -242,25 +240,23 @@ public class OverviewActivity extends BaseNavDrawerActivity {
             startActivity(upIntent);
             return true;
         } else if (itemId == R.id.menu_overview_search) {
-            onSearchRequested();
+            launchSearch();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onSearchRequested() {
+    private void launchSearch() {
         // refine search with the show's title
         final Series show = DBUtils.getShow(this, mShowId);
         final String showTitle = show.getTitle();
 
-        Bundle args = new Bundle();
-        args.putString(EpisodeSearchFragment.InitBundle.SHOW_TITLE, showTitle);
-        startSearch(null, false, args, false);
-        return true;
-    }
+        Bundle appSearchData = new Bundle();
+        appSearchData.putString(EpisodeSearchFragment.InitBundle.SHOW_TITLE, showTitle);
 
-    private void fireTrackerEvent(String label) {
-        Utils.trackAction(this, TAG, label);
+        Intent intent = new Intent(this, SearchActivity.class);
+        intent.putExtra(SearchManager.APP_DATA, appSearchData);
+        intent.setAction(Intent.ACTION_SEARCH);
+        startActivity(intent);
     }
 }
