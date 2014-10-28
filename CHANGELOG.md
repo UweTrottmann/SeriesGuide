@@ -8,16 +8,31 @@ All dates are in the European Central timezone.
 Version 19 *(in development)*
 -----------------------------
 
+#### 19-beta3 *(2014-10-28)*
+
+* TWEAK Go directly to search from overview action.
+* TWEAK Set notification color, category (event) and link to settings (Android Lollipop and up).
+* TWEAK Increase drawer width, add larger top space for future use.
+* FIX Update DashClock settings to new theme.
+* FIX Some devices crash if action items are customized.
+* FIX Restore progress bars for TheTVDB and TMDB search.
+* FIX Show progress indicator when initially loading trakt streams and comments.
+* FIX Crash when trying to swipe to refresh.
+* FIX Button text getting cut off in dialogs.
+* FIX Check-in and comment button enabled, even though no action possible.
+
 #### 19-beta2 *(2014-10-25)*
 
 * TWEAK More Material design updates (icons, colors, action bar).
 * FIX Potential fix for list widget crash (mostly on Samsung GT I9500).
+* NOTICE Latest translations from crowdin.
 
 #### 19-beta1 *(2014-10-08)*
 
 * FEATURE Light theme for list widget.
 * TWEAK Display "Unlock all features" link in nav drawer if user is no supporter. Update strings related to unlocking all features.
 * FIX Create calendar events with new method available since Android ICS. Enables creating events in Sunrise calendar.
+* NOTICE Latest translations from crowdin.
 
 Version 18 *(2014-09-26)*
 -----------------------------
