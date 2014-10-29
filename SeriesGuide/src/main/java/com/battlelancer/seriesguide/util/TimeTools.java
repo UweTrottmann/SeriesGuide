@@ -40,7 +40,6 @@ import org.joda.time.format.ISODateTimeFormat;
  */
 public class TimeTools {
 
-    public static final String TIMEZONE_ID_CUSTOM = "GMT-08:00";
     public static final int RELEASE_WEEKDAY_DAILY = 0;
 
     private static final String TIMEZONE_ID_PREFIX_AMERICA = "America/";

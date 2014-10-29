@@ -1,9 +1,7 @@
 package com.battlelancer.seriesguide.test;
 
 import com.battlelancer.seriesguide.util.TimeTools;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -20,13 +18,6 @@ public class TimeToolsTest extends TestCase {
 
     public static Test suite() {
         return new TestSuite(TimeToolsTest.class);
-    }
-
-    private static final SimpleDateFormat TIME_FORMAT_CUSTOM_TIMEZONE = new SimpleDateFormat(
-            "hh:mm aa");
-
-    static {
-        TIME_FORMAT_CUSTOM_TIMEZONE.setTimeZone(TimeZone.getTimeZone(TimeTools.TIMEZONE_ID_CUSTOM));
     }
 
     public void test_parseEpisodeReleaseTime() {
