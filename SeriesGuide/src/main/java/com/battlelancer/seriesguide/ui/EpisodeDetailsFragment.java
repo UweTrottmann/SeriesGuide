@@ -657,7 +657,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                 Tables.EPISODES + "." + Episodes._ID, Shows.REF_SHOW_ID, Episodes.OVERVIEW,
                 Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIREDMS,
                 Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
-                Tables.EPISODES + "." + Episodes.RATING, Episodes.IMAGE, Episodes.DVDNUMBER,
+                Tables.EPISODES + "." + Episodes.RATING_GLOBAL, Episodes.IMAGE, Episodes.DVDNUMBER,
                 Episodes.TITLE, Shows.TITLE, Shows.IMDBID, Shows.RUNTIME, Shows.POSTER,
                 Seasons.REF_SEASON_ID, Episodes.COLLECTED, Episodes.IMDBID, Episodes.LAST_EDITED,
                 Episodes.ABSOLUTE_NUMBER

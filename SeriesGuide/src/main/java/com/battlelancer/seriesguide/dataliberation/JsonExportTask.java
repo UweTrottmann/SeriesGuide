@@ -508,17 +508,17 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
     public interface ShowsQuery {
         String[] PROJECTION = new String[] {
-                Shows._ID, Shows.TITLE, Shows.FAVORITE, Shows.HIDDEN, Shows.AIRSTIME,
-                Shows.AIRSDAYOFWEEK, Shows.GETGLUEID, Shows.LASTWATCHEDID,
+                Shows._ID, Shows.TITLE, Shows.FAVORITE, Shows.HIDDEN, Shows.RELEASE_TIME,
+                Shows.RELEASE_WEEKDAY, Shows.GETGLUEID, Shows.LASTWATCHEDID,
                 Shows.POSTER, Shows.CONTENTRATING, Shows.STATUS, Shows.RUNTIME, Shows.NETWORK,
-                Shows.IMDBID, Shows.FIRSTAIRED, Shows.RELEASE_COUNTRY
+                Shows.IMDBID, Shows.FIRST_RELEASE, Shows.RELEASE_COUNTRY
         };
         String[] PROJECTION_FULL = new String[] {
-                Shows._ID, Shows.TITLE, Shows.FAVORITE, Shows.HIDDEN, Shows.AIRSTIME,
-                Shows.AIRSDAYOFWEEK, Shows.GETGLUEID, Shows.LASTWATCHEDID,
+                Shows._ID, Shows.TITLE, Shows.FAVORITE, Shows.HIDDEN, Shows.RELEASE_TIME,
+                Shows.RELEASE_WEEKDAY, Shows.GETGLUEID, Shows.LASTWATCHEDID,
                 Shows.POSTER, Shows.CONTENTRATING, Shows.STATUS, Shows.RUNTIME, Shows.NETWORK,
-                Shows.IMDBID, Shows.FIRSTAIRED, Shows.RELEASE_COUNTRY,
-                Shows.OVERVIEW, Shows.RATING, Shows.GENRES, Shows.ACTORS,
+                Shows.IMDBID, Shows.FIRST_RELEASE, Shows.RELEASE_COUNTRY,
+                Shows.OVERVIEW, Shows.RATING_GLOBAL, Shows.GENRES, Shows.ACTORS,
                 Shows.LASTUPDATED, Shows.LASTEDIT
         };
 
@@ -559,7 +559,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 Episodes._ID, Episodes.NUMBER, Episodes.ABSOLUTE_NUMBER, Episodes.WATCHED,
                 Episodes.COLLECTED, Episodes.TITLE, Episodes.FIRSTAIREDMS, Episodes.IMDBID,
                 Episodes.DVDNUMBER, Episodes.OVERVIEW, Episodes.IMAGE, Episodes.WRITERS,
-                Episodes.GUESTSTARS, Episodes.DIRECTORS, Episodes.RATING, Episodes.LAST_EDITED
+                Episodes.GUESTSTARS, Episodes.DIRECTORS, Episodes.RATING_GLOBAL, Episodes.LAST_EDITED
         };
 
         String SORT = Episodes.NUMBER + " ASC";

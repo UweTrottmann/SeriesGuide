@@ -563,12 +563,12 @@ public class SeriesGuideProvider extends ContentProvider {
             case SHOWS_WITH_LAST_EPISODE: {
                 return builder.table(Tables.SHOWS_JOIN_EPISODES_ON_LAST_EPISODE)
                         .mapToTable(Shows._ID, Tables.SHOWS)
-                        .mapToTable(Shows.RATING, Tables.SHOWS);
+                        .mapToTable(Shows.RATING_GLOBAL, Tables.SHOWS);
             }
             case SHOWS_WITH_NEXT_EPISODE: {
                 return builder.table(Tables.SHOWS_JOIN_EPISODES_ON_NEXT_EPISODE)
                         .mapToTable(Shows._ID, Tables.SHOWS)
-                        .mapToTable(Shows.RATING, Tables.SHOWS);
+                        .mapToTable(Shows.RATING_GLOBAL, Tables.SHOWS);
             }
             case EPISODES: {
                 return builder.table(Tables.EPISODES);
@@ -589,19 +589,19 @@ public class SeriesGuideProvider extends ContentProvider {
                 final String seasonId = uri.getPathSegments().get(3);
                 return builder.table(Tables.EPISODES_JOIN_SHOWS)
                         .mapToTable(Episodes._ID, Tables.EPISODES)
-                        .mapToTable(Episodes.RATING, Tables.EPISODES)
+                        .mapToTable(Episodes.RATING_GLOBAL, Tables.EPISODES)
                         .where(Seasons.REF_SEASON_ID + "=?", seasonId);
             }
             case EPISODES_WITHSHOW: {
                 return builder.table(Tables.EPISODES_JOIN_SHOWS)
                         .mapToTable(Episodes._ID, Tables.EPISODES)
-                        .mapToTable(Episodes.RATING, Tables.EPISODES);
+                        .mapToTable(Episodes.RATING_GLOBAL, Tables.EPISODES);
             }
             case EPISODES_ID_WITHSHOW: {
                 final String episodeId = Episodes.getEpisodeId(uri);
                 return builder.table(Tables.EPISODES_JOIN_SHOWS)
                         .mapToTable(Episodes._ID, Tables.EPISODES)
-                        .mapToTable(Episodes.RATING, Tables.EPISODES)
+                        .mapToTable(Episodes.RATING_GLOBAL, Tables.EPISODES)
                         .where(Qualified.EPISODES_EPISODE_ID + "=?", episodeId);
             }
             case SEASONS: {

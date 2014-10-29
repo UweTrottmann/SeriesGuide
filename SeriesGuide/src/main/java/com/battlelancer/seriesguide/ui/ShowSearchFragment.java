@@ -180,9 +180,9 @@ public class ShowSearchFragment extends ListFragment {
                 SeriesGuideContract.Shows.TITLE,
                 SeriesGuideContract.Shows.POSTER,
                 SeriesGuideContract.Shows.FAVORITE,
-                SeriesGuideContract.Shows.AIRSTIME,
+                SeriesGuideContract.Shows.RELEASE_TIME,
                 SeriesGuideContract.Shows.RELEASE_COUNTRY,
-                SeriesGuideContract.Shows.AIRSDAYOFWEEK,
+                SeriesGuideContract.Shows.RELEASE_WEEKDAY,
                 SeriesGuideContract.Shows.NETWORK
         };
 

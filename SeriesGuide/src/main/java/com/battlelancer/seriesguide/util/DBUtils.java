@@ -373,9 +373,9 @@ public class DBUtils {
     }
 
     private static final String[] SHOW_PROJECTION = new String[] {
-            Shows._ID, Shows.ACTORS, Shows.AIRSDAYOFWEEK, Shows.AIRSTIME, Shows.CONTENTRATING,
-            Shows.FIRSTAIRED, Shows.GENRES, Shows.NETWORK, Shows.OVERVIEW, Shows.POSTER,
-            Shows.RATING, Shows.RUNTIME, Shows.TITLE, Shows.STATUS, Shows.IMDBID,
+            Shows._ID, Shows.ACTORS, Shows.RELEASE_WEEKDAY, Shows.RELEASE_TIME, Shows.CONTENTRATING,
+            Shows.FIRST_RELEASE, Shows.GENRES, Shows.NETWORK, Shows.OVERVIEW, Shows.POSTER,
+            Shows.RATING_GLOBAL, Shows.RUNTIME, Shows.TITLE, Shows.STATUS, Shows.IMDBID,
             Shows.NEXTEPISODE, Shows.LASTEDIT, Shows.RELEASE_COUNTRY
     };
 
@@ -465,13 +465,13 @@ public class DBUtils {
         values.put(Shows.TITLE_NOARTICLE, trimLeadingArticle(show.title));
         values.put(Shows.OVERVIEW, show.overview);
         values.put(Shows.ACTORS, show.actors);
-        values.put(Shows.AIRSDAYOFWEEK, show.airday);
-        values.put(Shows.AIRSTIME, show.airtime);
+        values.put(Shows.RELEASE_WEEKDAY, show.airday);
+        values.put(Shows.RELEASE_TIME, show.airtime);
         values.put(Shows.RELEASE_COUNTRY, show.country);
-        values.put(Shows.FIRSTAIRED, show.firstAired);
+        values.put(Shows.FIRST_RELEASE, show.firstAired);
         values.put(Shows.GENRES, show.genres);
         values.put(Shows.NETWORK, show.network);
-        values.put(Shows.RATING, show.rating);
+        values.put(Shows.RATING_GLOBAL, show.rating);
         values.put(Shows.RUNTIME, show.runtime);
         values.put(Shows.CONTENTRATING, show.contentRating);
         values.put(Shows.POSTER, show.poster);

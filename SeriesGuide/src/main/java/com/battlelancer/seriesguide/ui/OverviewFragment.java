@@ -378,7 +378,7 @@ public class OverviewFragment extends Fragment implements
 
         String[] PROJECTION = new String[] {
                 Episodes._ID, Episodes.OVERVIEW, Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED,
-                Episodes.FIRSTAIREDMS, Episodes.GUESTSTARS, Episodes.RATING, Episodes.IMAGE,
+                Episodes.FIRSTAIREDMS, Episodes.GUESTSTARS, Episodes.RATING_GLOBAL, Episodes.IMAGE,
                 Episodes.DVDNUMBER, Episodes.TITLE, Seasons.REF_SEASON_ID, Episodes.COLLECTED,
                 Episodes.IMDBID, Episodes.ABSOLUTE_NUMBER
         };
@@ -417,7 +417,7 @@ public class OverviewFragment extends Fragment implements
     interface ShowQuery {
 
         String[] PROJECTION = new String[] {
-                Shows._ID, Shows.TITLE, Shows.STATUS, Shows.AIRSTIME, Shows.AIRSDAYOFWEEK,
+                Shows._ID, Shows.TITLE, Shows.STATUS, Shows.RELEASE_TIME, Shows.RELEASE_WEEKDAY,
                 Shows.NETWORK, Shows.POSTER, Shows.IMDBID, Shows.RUNTIME, Shows.FAVORITE,
                 Shows.RELEASE_COUNTRY
         };

@@ -227,8 +227,8 @@ public class ShowFragment extends Fragment {
                 Shows._ID,
                 Shows.TITLE,
                 Shows.STATUS,
-                Shows.AIRSTIME,
-                Shows.AIRSDAYOFWEEK,
+                Shows.RELEASE_TIME,
+                Shows.RELEASE_WEEKDAY,
                 Shows.NETWORK,
                 Shows.POSTER,
                 Shows.IMDBID,
@@ -236,10 +236,10 @@ public class ShowFragment extends Fragment {
                 Shows.FAVORITE,
                 Shows.RELEASE_COUNTRY,
                 Shows.OVERVIEW,
-                Shows.FIRSTAIRED,
+                Shows.FIRST_RELEASE,
                 Shows.CONTENTRATING,
                 Shows.GENRES,
-                Shows.RATING,
+                Shows.RATING_GLOBAL,
                 Shows.LASTEDIT
         };
 

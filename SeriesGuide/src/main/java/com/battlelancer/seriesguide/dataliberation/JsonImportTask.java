@@ -191,15 +191,15 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         showValues.put(Shows.TITLE_NOARTICLE, DBUtils.trimLeadingArticle(show.title));
         showValues.put(Shows.FAVORITE, show.favorite);
         showValues.put(Shows.HIDDEN, show.hidden);
-        showValues.put(Shows.AIRSTIME, show.airtime);
-        showValues.put(Shows.AIRSDAYOFWEEK, show.airday);
+        showValues.put(Shows.RELEASE_TIME, show.airtime);
+        showValues.put(Shows.RELEASE_WEEKDAY, show.airday);
         showValues.put(Shows.LASTWATCHEDID, show.lastWatchedEpisode);
         showValues.put(Shows.POSTER, show.poster);
         showValues.put(Shows.CONTENTRATING, show.contentRating);
         showValues.put(Shows.RUNTIME, show.runtime);
         showValues.put(Shows.NETWORK, show.network);
         showValues.put(Shows.IMDBID, show.imdbId);
-        showValues.put(Shows.FIRSTAIRED, show.firstAired);
+        showValues.put(Shows.FIRST_RELEASE, show.firstAired);
         int status;
         if (ShowStatusExport.CONTINUING.equals(show.status)) {
             status = ShowStatus.CONTINUING;
@@ -212,7 +212,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         showValues.put(Shows.RELEASE_COUNTRY, show.country);
         // Full dump values
         showValues.put(Shows.OVERVIEW, show.overview);
-        showValues.put(Shows.RATING, show.rating);
+        showValues.put(Shows.RATING_GLOBAL, show.rating);
         showValues.put(Shows.GENRES, show.genres);
         showValues.put(Shows.ACTORS, show.actors);
         showValues.put(Shows.LASTUPDATED, show.lastUpdated);
@@ -293,7 +293,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
                 episodeValues.put(Episodes.WRITERS, episode.writers);
                 episodeValues.put(Episodes.GUESTSTARS, episode.gueststars);
                 episodeValues.put(Episodes.DIRECTORS, episode.directors);
-                episodeValues.put(Episodes.RATING, episode.rating);
+                episodeValues.put(Episodes.RATING_GLOBAL, episode.rating);
                 episodeValues.put(Episodes.LAST_EDITED, episode.lastEdited);
 
                 episodeBatch[episodeIdx] = episodeValues;

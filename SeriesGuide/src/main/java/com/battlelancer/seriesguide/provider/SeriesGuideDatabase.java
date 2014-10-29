@@ -81,7 +81,33 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_33_IGNORE_ARTICLE_SORT = 33;
 
-    public static final int DATABASE_VERSION = DBVER_33_IGNORE_ARTICLE_SORT;
+    /**
+     * Changes for trakt v2 compatibility, also for storing ratings offline.
+     *
+     * Shows:
+     * <ul>
+     *     <li>changed release time encoding</li>
+     *     <li>changed release week day encoding</li>
+     *     <li>first release date now includes time</li>
+     *     <li>added time zone</li>
+     *     <li>added rating votes</li>
+     *     <li>added user rating</li>
+     * </ul>
+     *
+     * Episodes:
+     * <ul>
+     *     <li>added rating votes</li>
+     *     <li>added user rating</li>
+     * </ul>
+     *
+     * Movies:
+     * <ul>
+     *     <li>added user rating</li>
+     * </ul>
+     */
+    public static final int DBVER_34_TRAKT_V2 = 34;
+
+    public static final int DATABASE_VERSION = DBVER_34_TRAKT_V2;
 
     private DatabaseUtils.InsertHelper mShowsInserter;
     private DatabaseUtils.InsertHelper mSeasonsInserter;
@@ -158,7 +184,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                         + Shows.POSTER + ","
                         + Shows.NETWORK + ","
                         + Shows.STATUS + ","
-                        + Shows.AIRSDAYOFWEEK + ","
+                        + Shows.RELEASE_WEEKDAY + ","
                         + Shows.FAVORITE + ","
                         + Shows.RELEASE_COUNTRY;
 
@@ -179,7 +205,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         String SHOWS_COLUMNS_INTERNAL =
                 Shows._ID + " as " + COMMON_SHOW_COLUMNS + ","
                         + Shows.OVERVIEW + ","
-                        + Shows.AIRSTIME + ","
+                        + Shows.RELEASE_TIME + ","
                         + Shows.NEXTTEXT + ","
                         + Shows.NEXTAIRDATETEXT;
 
@@ -187,7 +213,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 COMMON_LIST_ITEMS_COLUMNS + ","
                         + COMMON_SHOW_COLUMNS + ","
                         + Shows.OVERVIEW + ","
-                        + Shows.AIRSTIME + ","
+                        + Shows.RELEASE_TIME + ","
                         + Shows.NEXTTEXT + ","
                         + Shows.NEXTAIRDATETEXT;
 
@@ -195,7 +221,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 COMMON_LIST_ITEMS_COLUMNS + ","
                         + COMMON_SHOW_COLUMNS + ","
                         + Seasons.COMBINED + " as " + Shows.OVERVIEW + ","
-                        + Shows.AIRSTIME + ","
+                        + Shows.RELEASE_TIME + ","
                         + Shows.NEXTTEXT + ","
                         + Shows.NEXTAIRDATETEXT;
 
@@ -203,7 +229,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 COMMON_LIST_ITEMS_COLUMNS + ","
                         + COMMON_SHOW_COLUMNS + ","
                         + Episodes.TITLE + " as " + Shows.OVERVIEW + ","
-                        + Episodes.FIRSTAIREDMS + " as " + Shows.AIRSTIME + ","
+                        + Episodes.FIRSTAIREDMS + " as " + Shows.RELEASE_TIME + ","
                         + Episodes.SEASON + " as " + Shows.NEXTTEXT + ","
                         + Episodes.NUMBER + " as " + Shows.NEXTAIRDATETEXT;
     }
@@ -230,17 +256,25 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ShowsColumns.ACTORS + " TEXT DEFAULT '',"
 
-            + ShowsColumns.AIRSDAYOFWEEK + " TEXT DEFAULT '',"
+            + ShowsColumns.RELEASE_TIME + " INTEGER,"
 
-            + ShowsColumns.AIRSTIME + " INTEGER DEFAULT '',"
+            + ShowsColumns.RELEASE_WEEKDAY + " INTEGER,"
 
-            + ShowsColumns.FIRSTAIRED + " TEXT DEFAULT '',"
+            + ShowsColumns.RELEASE_COUNTRY + " TEXT,"
+
+            + ShowsColumns.RELEASE_TIMEZONE + " TEXT,"
+
+            + ShowsColumns.FIRST_RELEASE + " TEXT,"
 
             + ShowsColumns.GENRES + " TEXT DEFAULT '',"
 
             + ShowsColumns.NETWORK + " TEXT DEFAULT '',"
 
-            + ShowsColumns.RATING + " TEXT DEFAULT '',"
+            + ShowsColumns.RATING_GLOBAL + " REAL,"
+
+            + ShowsColumns.RATING_VOTES + " INTEGER,"
+
+            + ShowsColumns.RATING_USER + " INTEGER,"
 
             + ShowsColumns.RUNTIME + " TEXT DEFAULT '',"
 
@@ -263,8 +297,6 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + ShowsColumns.NEXTAIRDATETEXT + " TEXT DEFAULT '',"
 
             + ShowsColumns.HEXAGON_MERGE_COMPLETE + " INTEGER DEFAULT 1,"
-
-            + ShowsColumns.RELEASE_COUNTRY + " TEXT DEFAULT '',"
 
             + ShowsColumns.HIDDEN + " INTEGER DEFAULT 0,"
 
@@ -334,7 +366,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + EpisodesColumns.COLLECTED + " INTEGER DEFAULT 0,"
 
-            + EpisodesColumns.RATING + " TEXT DEFAULT '',"
+            + EpisodesColumns.RATING_GLOBAL + " REAL,"
+
+            + EpisodesColumns.RATING_VOTES + " INTEGER,"
+
+            + EpisodesColumns.RATING_USER + " INTEGER,"
 
             + EpisodesColumns.IMDBID + " TEXT DEFAULT '',"
 
@@ -425,6 +461,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + MoviesColumns.RATING_TRAKT + " INTEGER DEFAULT 0,"
 
             + MoviesColumns.RATING_VOTES_TRAKT + " INTEGER DEFAULT 0,"
+
+            + MoviesColumns.RATING_USER + " INTEGER,"
 
             + MoviesColumns.LAST_UPDATED + " INTEGER,"
 
@@ -534,7 +572,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 upgradeToThirtyTwo(db);
             case DBVER_32_MOVIES:
                 upgradeToThirtyThree(db);
-                version = DBVER_33_IGNORE_ARTICLE_SORT;
+            case DBVER_33_IGNORE_ARTICLE_SORT:
+                upgradeToThirtyFour(db);
+                version = DBVER_34_TRAKT_V2;
         }
 
         // drop all tables if version is not right
@@ -559,6 +599,36 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
 
         onCreate(db);
+    }
+
+    /**
+     * See {@link #DBVER_34_TRAKT_V2}.
+     */
+    private static void upgradeToThirtyFour(SQLiteDatabase db) {
+        db.beginTransaction();
+        try {
+            // shows
+            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
+                    + Shows.RELEASE_TIMEZONE + " TEXT;");
+            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
+                    + Shows.RATING_VOTES + " INTEGER;");
+            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
+                    + Shows.RATING_USER + " INTEGER;");
+
+            // episodes
+            db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN "
+                    + Episodes.RATING_VOTES + " INTEGER;");
+            db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN "
+                    + Episodes.RATING_USER + " INTEGER;");
+
+            // movies
+            db.execSQL("ALTER TABLE " + Tables.MOVIES + " ADD COLUMN "
+                    + Movies.RATING_USER + " INTEGER;");
+
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
     }
 
     /**
@@ -760,7 +830,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
         // populate the new column from existing data
         final Cursor shows = db.query(Tables.SHOWS, new String[] {
-                Shows._ID, Shows.AIRSTIME
+                Shows._ID, Shows.RELEASE_TIME
         }, null, null, null, null, null);
 
         while (shows.moveToNext()) {

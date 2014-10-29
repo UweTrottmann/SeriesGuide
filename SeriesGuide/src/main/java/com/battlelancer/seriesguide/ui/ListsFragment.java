@@ -311,7 +311,7 @@ public class ListsFragment extends Fragment implements
         String[] PROJECTION = new String[] {
                 ListItems._ID, ListItems.LIST_ITEM_ID, ListItems.ITEM_REF_ID, ListItems.TYPE,
                 Shows.REF_SHOW_ID, Shows.TITLE, Shows.OVERVIEW, Shows.POSTER, Shows.NETWORK,
-                Shows.AIRSTIME, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTTEXT,
+                Shows.RELEASE_TIME, Shows.RELEASE_WEEKDAY, Shows.STATUS, Shows.NEXTTEXT,
                 Shows.NEXTAIRDATETEXT, Shows.FAVORITE, Shows.RELEASE_COUNTRY
         };
 

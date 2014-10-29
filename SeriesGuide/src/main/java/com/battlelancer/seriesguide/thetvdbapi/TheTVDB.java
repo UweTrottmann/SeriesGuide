@@ -298,7 +298,7 @@ public class TheTVDB {
 
         // get existing show ids
         final Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI, new String[] {
-                Shows._ID, Shows.LASTUPDATED, Shows.AIRSDAYOFWEEK
+                Shows._ID, Shows.LASTUPDATED, Shows.RELEASE_WEEKDAY
         }, null, null, null);
 
         if (shows != null) {
@@ -665,7 +665,7 @@ public class TheTVDB {
         });
         episode.getChild("Rating").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                values.put(Episodes.RATING, body.trim());
+                values.put(Episodes.RATING_GLOBAL, body.trim());
             }
         });
         episode.getChild("filename").setEndTextElementListener(new EndTextElementListener() {

@@ -654,8 +654,8 @@ public class ShowsFragment extends Fragment implements
     private interface ShowsQuery {
 
         String[] PROJECTION = {
-                BaseColumns._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.AIRSTIME, Shows.NETWORK,
-                Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT,
+                BaseColumns._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.RELEASE_TIME, Shows.NETWORK,
+                Shows.POSTER, Shows.RELEASE_WEEKDAY, Shows.STATUS, Shows.NEXTAIRDATETEXT,
                 Shows.FAVORITE, Shows.NEXTEPISODE, Shows.RELEASE_COUNTRY, Shows.HIDDEN
         };
 
