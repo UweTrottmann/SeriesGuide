@@ -524,7 +524,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 Shows.RUNTIME,
                 Shows.NETWORK,
                 Shows.IMDBID,
-                Shows.FIRST_RELEASE,
+                Shows.FIRST_RELEASE
         };
         String[] PROJECTION_FULL = new String[] {
                 Shows._ID,
