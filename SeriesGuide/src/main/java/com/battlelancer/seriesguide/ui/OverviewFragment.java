@@ -417,21 +417,31 @@ public class OverviewFragment extends Fragment implements
     interface ShowQuery {
 
         String[] PROJECTION = new String[] {
-                Shows._ID, Shows.TITLE, Shows.STATUS, Shows.RELEASE_TIME, Shows.RELEASE_WEEKDAY,
-                Shows.NETWORK, Shows.POSTER, Shows.IMDBID, Shows.RUNTIME, Shows.FAVORITE,
-                Shows.RELEASE_COUNTRY
+                Shows._ID,
+                Shows.TITLE,
+                Shows.STATUS,
+                Shows.RELEASE_TIME,
+                Shows.RELEASE_WEEKDAY,
+                Shows.RELEASE_TIMEZONE,
+                Shows.RELEASE_COUNTRY,
+                Shows.NETWORK,
+                Shows.POSTER,
+                Shows.IMDBID,
+                Shows.RUNTIME,
+                Shows.FAVORITE
         };
 
         int SHOW_TITLE = 1;
         int SHOW_STATUS = 2;
         int SHOW_RELEASE_TIME = 3;
-        int SHOW_RELEASE_DAY = 4;
-        int SHOW_NETWORK = 5;
-        int SHOW_POSTER = 6;
-        int SHOW_IMDBID = 7;
-        int SHOW_RUNTIME = 8;
-        int SHOW_FAVORITE = 9;
-        int SHOW_RELEASE_COUNTRY = 10;
+        int SHOW_RELEASE_WEEKDAY = 4;
+        int SHOW_RELEASE_TIMEZONE = 5;
+        int SHOW_RELEASE_COUNTRY = 6;
+        int SHOW_NETWORK = 7;
+        int SHOW_POSTER = 8;
+        int SHOW_IMDBID = 9;
+        int SHOW_RUNTIME = 10;
+        int SHOW_FAVORITE = 11;
     }
 
     @Override
@@ -837,24 +847,29 @@ public class OverviewFragment extends Fragment implements
         Utils.loadPosterBackground(getActivity(), mBackgroundImage,
                 show.getString(ShowQuery.SHOW_POSTER));
 
-        // air time and network
-        final StringBuilder timeAndNetwork = new StringBuilder();
-        final long releaseTime = show.getLong(ShowQuery.SHOW_RELEASE_TIME);
-        final String releaseCountry = show.getString(ShowQuery.SHOW_RELEASE_COUNTRY);
-        final String releaseDay = show.getString(ShowQuery.SHOW_RELEASE_DAY);
-        if (!TextUtils.isEmpty(releaseDay) && releaseTime != -1) {
-            String[] values = TimeTools.formatToShowReleaseTimeAndDay(getActivity(),
-                    releaseTime, releaseCountry, releaseDay);
-            timeAndNetwork.append(values[1])
-                    .append(" ")
-                    .append(values[0])
-                    .append(" ");
+        // next release day and time
+        StringBuilder timeAndNetwork = new StringBuilder();
+        long release = TimeTools.getShowReleaseTime(
+                show.getInt(ShowQuery.SHOW_RELEASE_TIME),
+                show.getInt(ShowQuery.SHOW_RELEASE_WEEKDAY),
+                show.getString(ShowQuery.SHOW_RELEASE_TIMEZONE),
+                show.getString(ShowQuery.SHOW_RELEASE_COUNTRY));
+        if (release != -1) {
+            Date date = new Date(release);
+            String dayString = TimeTools.formatToLocalReleaseDay(date);
+            String timeString = TimeTools.formatToLocalReleaseTime(getActivity(), date);
+            // "Mon 08:30"
+            timeAndNetwork.append(dayString).append(" ").append(timeString);
         }
+        // network
         final String network = show.getString(ShowQuery.SHOW_NETWORK);
         if (!TextUtils.isEmpty(network)) {
+            if (timeAndNetwork.length() != 0) {
+                timeAndNetwork.append(" ");
+            }
             timeAndNetwork.append(getString(R.string.show_on_network, network));
         }
-        ((TextView) getActivity().findViewById(R.id.showmeta)).setText(timeAndNetwork.toString());
+        ((TextView)getView().findViewById(R.id.showmeta)).setText(timeAndNetwork.toString());
     }
 
     private LoaderManager.LoaderCallbacks<List<Action>> mEpisodeActionsLoaderCallbacks =

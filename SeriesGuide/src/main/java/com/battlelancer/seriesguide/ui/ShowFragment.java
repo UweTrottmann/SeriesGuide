@@ -63,6 +63,7 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb.entities.Credits;
 import de.greenrobot.event.EventBus;
+import java.util.Date;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 
@@ -229,12 +230,13 @@ public class ShowFragment extends Fragment {
                 Shows.STATUS,
                 Shows.RELEASE_TIME,
                 Shows.RELEASE_WEEKDAY,
+                Shows.RELEASE_TIMEZONE,
+                Shows.RELEASE_COUNTRY,
                 Shows.NETWORK,
                 Shows.POSTER,
                 Shows.IMDBID,
                 Shows.RUNTIME,
                 Shows.FAVORITE,
-                Shows.RELEASE_COUNTRY,
                 Shows.OVERVIEW,
                 Shows.FIRST_RELEASE,
                 Shows.CONTENTRATING,
@@ -245,20 +247,21 @@ public class ShowFragment extends Fragment {
 
         int TITLE = 1;
         int STATUS = 2;
-        int RELEASE_TIME_MS = 3;
-        int RELEASE_DAY = 4;
-        int NETWORK = 5;
-        int POSTER = 6;
-        int IMDBID = 7;
-        int RUNTIME = 8;
-        int IS_FAVORITE = 9;
-        int RELEASE_COUNTRY = 10;
-        int OVERVIEW = 11;
-        int FIRST_RELEASE = 12;
-        int CONTENT_RATING = 13;
-        int GENRES = 14;
-        int TVDB_RATING = 15;
-        int LAST_EDIT_MS = 16;
+        int RELEASE_TIME = 3;
+        int RELEASE_WEEKDAY = 4;
+        int RELEASE_TIMEZONE = 5;
+        int RELEASE_COUNTRY = 6;
+        int NETWORK = 7;
+        int POSTER = 8;
+        int IMDBID = 9;
+        int RUNTIME = 10;
+        int IS_FAVORITE = 11;
+        int OVERVIEW = 12;
+        int FIRST_RELEASE = 13;
+        int CONTENT_RATING = 14;
+        int GENRES = 15;
+        int TVDB_RATING = 16;
+        int LAST_EDIT_MS = 17;
     }
 
     private LoaderCallbacks<Cursor> mShowLoaderCallbacks = new LoaderCallbacks<Cursor>() {
@@ -304,14 +307,18 @@ public class ShowFragment extends Fragment {
             mTextViewStatus.setText(getString(R.string.show_isnotalive));
         }
 
-        // release time
-        String releaseDay = mShowCursor.getString(ShowQuery.RELEASE_DAY);
-        long releaseTime = mShowCursor.getLong(ShowQuery.RELEASE_TIME_MS);
+        // next release day and time
         String releaseCountry = mShowCursor.getString(ShowQuery.RELEASE_COUNTRY);
-        if (!TextUtils.isEmpty(releaseDay)) {
-            String[] values = TimeTools.formatToShowReleaseTimeAndDay(getActivity(), releaseTime,
-                    releaseCountry, releaseDay);
-            mTextViewReleaseTime.setText(values[1] + " " + values[0]);
+        long release = TimeTools.getShowReleaseTime(
+                mShowCursor.getInt(ShowQuery.RELEASE_TIME),
+                mShowCursor.getInt(ShowQuery.RELEASE_WEEKDAY),
+                mShowCursor.getString(ShowQuery.RELEASE_TIMEZONE),
+                releaseCountry);
+        if (release != -1) {
+            Date date = new Date(release);
+            String dayString = TimeTools.formatToLocalReleaseDay(date);
+            String timeString = TimeTools.formatToLocalReleaseTime(getActivity(), date);
+            mTextViewReleaseTime.setText(dayString + " " + timeString);
         } else {
             mTextViewReleaseTime.setText(null);
         }

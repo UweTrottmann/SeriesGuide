@@ -186,8 +186,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                         + Shows.POSTER + ","
                         + Shows.NETWORK + ","
                         + Shows.STATUS + ","
-                        + Shows.RELEASE_WEEKDAY + ","
                         + Shows.FAVORITE + ","
+                        + Shows.RELEASE_WEEKDAY + ","
+                        + Shows.RELEASE_TIMEZONE + ","
                         + Shows.RELEASE_COUNTRY;
 
         String COMMON_LIST_ITEMS_COLUMNS =

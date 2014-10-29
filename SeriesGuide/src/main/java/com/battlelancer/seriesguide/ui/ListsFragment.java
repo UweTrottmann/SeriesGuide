@@ -189,9 +189,10 @@ public class ListsFragment extends Fragment implements
 
                     // network, day and time
                     viewHolder.timeAndNetwork.setText(buildNetworkAndTimeString(context,
-                            cursor.getLong(ListItemsQuery.SHOW_OR_EPISODE_RELEASE_TIME),
+                            cursor.getInt(ListItemsQuery.SHOW_OR_EPISODE_RELEASE_TIME),
+                            cursor.getInt(ListItemsQuery.SHOW_RELEASE_WEEKDAY),
+                            cursor.getString(ListItemsQuery.SHOW_RELEASE_TIMEZONE),
                             cursor.getString(ListItemsQuery.SHOW_RELEASE_COUNTRY),
-                            cursor.getString(ListItemsQuery.SHOW_RELEASE_DAY),
                             cursor.getString(ListItemsQuery.SHOW_NETWORK)));
 
                     // next episode info
@@ -309,43 +310,43 @@ public class ListsFragment extends Fragment implements
     interface ListItemsQuery {
 
         String[] PROJECTION = new String[] {
-                ListItems._ID, ListItems.LIST_ITEM_ID, ListItems.ITEM_REF_ID, ListItems.TYPE,
-                Shows.REF_SHOW_ID, Shows.TITLE, Shows.OVERVIEW, Shows.POSTER, Shows.NETWORK,
-                Shows.RELEASE_TIME, Shows.RELEASE_WEEKDAY, Shows.STATUS, Shows.NEXTTEXT,
-                Shows.NEXTAIRDATETEXT, Shows.FAVORITE, Shows.RELEASE_COUNTRY
+                ListItems._ID,
+                ListItems.LIST_ITEM_ID, // 1
+                ListItems.ITEM_REF_ID,
+                ListItems.TYPE,
+                Shows.REF_SHOW_ID,
+                Shows.TITLE,
+                Shows.OVERVIEW,
+                Shows.POSTER,
+                Shows.NETWORK,
+                Shows.RELEASE_TIME,
+                Shows.RELEASE_WEEKDAY,
+                Shows.RELEASE_TIMEZONE,
+                Shows.RELEASE_COUNTRY,
+                Shows.STATUS,
+                Shows.NEXTTEXT,
+                Shows.NEXTAIRDATETEXT,
+                Shows.FAVORITE
         };
 
         String SORTING = Shows.TITLE + " COLLATE NOCASE ASC, " + ListItems.TYPE + " ASC";
 
         int LIST_ITEM_ID = 1;
-
         int ITEM_REF_ID = 2;
-
         int ITEM_TYPE = 3;
-
         int SHOW_ID = 4;
-
         int SHOW_TITLE = 5;
-
         int ITEM_TITLE = 6;
-
         int SHOW_POSTER = 7;
-
         int SHOW_NETWORK = 8;
-
         int SHOW_OR_EPISODE_RELEASE_TIME = 9;
-
-        int SHOW_RELEASE_DAY = 10;
-
-        int SHOW_STATUS = 11;
-
-        int SHOW_NEXTTEXT = 12;
-
-        int SHOW_NEXTAIRDATETEXT = 13;
-
-        int SHOW_FAVORITE = 14;
-
-        int SHOW_RELEASE_COUNTRY = 15;
+        int SHOW_RELEASE_WEEKDAY = 10;
+        int SHOW_RELEASE_TIMEZONE = 11;
+        int SHOW_RELEASE_COUNTRY = 12;
+        int SHOW_STATUS = 13;
+        int SHOW_NEXTTEXT = 14;
+        int SHOW_NEXTAIRDATETEXT = 15;
+        int SHOW_FAVORITE = 16;
     }
 
     private void fireTrackerEvent(String label) {

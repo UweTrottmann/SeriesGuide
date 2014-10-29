@@ -305,8 +305,7 @@ public class TheTVDB {
 
         if (shows != null) {
             while (shows.moveToNext()) {
-                boolean isDailyShow = TimeTools.getDayOfWeek(shows.getString(2))
-                        == TimeTools.RELEASE_DAY_DAILY;
+                boolean isDailyShow = shows.getInt(2) == TimeTools.RELEASE_WEEKDAY_DAILY;
                 long lastUpdatedTime = shows.getLong(1);
                 // update daily shows more frequently than weekly shows
                 if (currentTime - lastUpdatedTime >

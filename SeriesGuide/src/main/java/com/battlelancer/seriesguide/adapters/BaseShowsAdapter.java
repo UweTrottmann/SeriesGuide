@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.TimeTools;
+import java.util.Date;
 
 /**
  * Base adapter using the shows_row.xml layout with a ViewHolder.
@@ -66,11 +67,25 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
     /**
      * Builds a network + release time string for a show formatted like "Network / Tue 08:00 PM".
      */
-    public static String buildNetworkAndTimeString(Context context, long releaseTime,
-            String releaseCountry, String releaseDay, String network) {
-        String[] values = TimeTools.formatToShowReleaseTimeAndDay(context, releaseTime,
-                releaseCountry, releaseDay);
-        return network + " / " + values[1] + " " + values[0];
+    public static String buildNetworkAndTimeString(Context context, int time, int weekday,
+            String timeZone, String country, String network) {
+        // network
+        StringBuilder networkAndTime = new StringBuilder();
+        networkAndTime.append(network);
+
+        // time
+        long release = TimeTools.getShowReleaseTime(time, weekday, timeZone, country);
+        if (release != -1) {
+            Date date = new Date(release);
+            String dayString = TimeTools.formatToLocalReleaseDay(date);
+            String timeString = TimeTools.formatToLocalReleaseTime(context, date);
+            if (networkAndTime.length() > 0) {
+                networkAndTime.append(" / ");
+            }
+            networkAndTime.append(dayString).append(" ").append(timeString);
+        }
+
+        return networkAndTime.toString();
     }
 
     public static class ViewHolder {
@@ -88,7 +103,5 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         public ImageView favorited;
 
         public ImageView contextMenu;
-
     }
-
 }
