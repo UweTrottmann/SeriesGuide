@@ -42,6 +42,7 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB.ShowStatus;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.google.myjson.Gson;
 import com.google.myjson.JsonParseException;
 import com.google.myjson.stream.JsonReader;
@@ -191,8 +192,10 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         showValues.put(Shows.TITLE_NOARTICLE, DBUtils.trimLeadingArticle(show.title));
         showValues.put(Shows.FAVORITE, show.favorite);
         showValues.put(Shows.HIDDEN, show.hidden);
-        showValues.put(Shows.RELEASE_TIME, show.airtime);
-        showValues.put(Shows.RELEASE_WEEKDAY, show.airday);
+        showValues.put(Shows.RELEASE_TIME, show.release_time);
+        showValues.put(Shows.RELEASE_WEEKDAY, show.release_weekday);
+        showValues.put(Shows.RELEASE_TIMEZONE, show.release_timezone);
+        showValues.put(Shows.RELEASE_COUNTRY, show.country);
         showValues.put(Shows.LASTWATCHEDID, show.lastWatchedEpisode);
         showValues.put(Shows.POSTER, show.poster);
         showValues.put(Shows.CONTENTRATING, show.contentRating);
@@ -209,7 +212,6 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
             status = ShowStatus.UNKNOWN;
         }
         showValues.put(Shows.STATUS, status);
-        showValues.put(Shows.RELEASE_COUNTRY, show.country);
         // Full dump values
         showValues.put(Shows.OVERVIEW, show.overview);
         showValues.put(Shows.RATING_GLOBAL, show.rating);

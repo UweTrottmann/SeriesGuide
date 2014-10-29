@@ -37,6 +37,8 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
+import java.util.TimeZone;
+import org.joda.time.format.DateTimeFormatter;
 import timber.log.Timber;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
@@ -846,10 +848,12 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             db.beginTransaction();
             try {
                 ContentValues values = new ContentValues();
+                DateTimeFormatter tvdbDateFormatter = TimeTools.getTvdbDateFormatter(null);
+                String deviceTimeZone = TimeZone.getDefault().getID();
                 while (episodes.moveToNext()) {
                     String firstAired = episodes.getString(1);
-                    long episodeAirtime = TimeTools.parseEpisodeReleaseTime(firstAired, airtime,
-                            null);
+                    long episodeAirtime = TimeTools.parseEpisodeReleaseTime(tvdbDateFormatter,
+                            firstAired, -1, null, deviceTimeZone);
 
                     values.put(Episodes.FIRSTAIREDMS, episodeAirtime);
                     db.update(Tables.EPISODES, values, Episodes._ID + "=?", new String[] {

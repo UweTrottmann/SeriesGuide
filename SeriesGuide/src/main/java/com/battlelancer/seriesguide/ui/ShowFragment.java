@@ -353,7 +353,7 @@ public class ShowFragment extends Fragment {
         // original release
         String firstRelease = mShowCursor.getString(ShowQuery.FIRST_RELEASE);
         Utils.setValueOrPlaceholder(mTextViewFirstRelease,
-                TimeTools.getShowReleaseYear(firstRelease, releaseTime, releaseCountry));
+                TimeTools.getShowReleaseYear(firstRelease));
 
         // content rating
         Utils.setValueOrPlaceholder(mTextViewContentRating,

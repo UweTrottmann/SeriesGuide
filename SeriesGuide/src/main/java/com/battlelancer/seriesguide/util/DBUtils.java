@@ -438,46 +438,19 @@ public class DBUtils {
 
     /**
      * Builds a {@link ContentProviderOperation} for inserting or updating a show (depending on
-     * {@code isNew}.
+     * {@code isNew}).
+     *
+     * <p> If the show is new, sets some default values and the (TheTVDB) id.
      */
     public static ContentProviderOperation buildShowOp(Show show, boolean isNew) {
         ContentValues values = new ContentValues();
-        values = putCommonShowValues(show, values);
 
-        if (isNew) {
-            values.put(Shows._ID, show.tvdbId);
-            values.put(Shows.FAVORITE, show.favorite);
-            values.put(Shows.HIDDEN, show.hidden);
-            return ContentProviderOperation.newInsert(Shows.CONTENT_URI).withValues(values).build();
-        } else {
-            return ContentProviderOperation
-                    .newUpdate(Shows.buildShowUri(String.valueOf(show.tvdbId)))
-                    .withValues(values).build();
-        }
-    }
-
-    /**
-     * Transforms a {@link Show} objects attributes into {@link ContentValues} using the correct
-     * {@link Shows} columns.
-     */
-    private static ContentValues putCommonShowValues(Show show, ContentValues values) {
+        // values for new and existing shows
         values.put(Shows.TITLE, show.title);
         values.put(Shows.TITLE_NOARTICLE, trimLeadingArticle(show.title));
         values.put(Shows.OVERVIEW, show.overview);
-        values.put(Shows.ACTORS, show.actors);
-        values.put(Shows.RELEASE_WEEKDAY, show.airday);
-        values.put(Shows.RELEASE_TIME, show.airtime);
-        values.put(Shows.RELEASE_COUNTRY, show.country);
-        values.put(Shows.FIRST_RELEASE, show.firstAired);
-        values.put(Shows.GENRES, show.genres);
-        values.put(Shows.NETWORK, show.network);
-        values.put(Shows.RATING_GLOBAL, show.rating);
-        values.put(Shows.RUNTIME, show.runtime);
-        values.put(Shows.CONTENTRATING, show.contentRating);
         values.put(Shows.POSTER, show.poster);
-        values.put(Shows.IMDBID, show.imdbId);
-        values.put(Shows.LASTEDIT, show.lastEdited);
-        values.put(Shows.LASTUPDATED, System.currentTimeMillis());
+        values.put(Shows.CONTENTRATING, show.contentRating);
         int status;
         if (ShowStatusExport.CONTINUING.equals(show.status)) {
             status = ShowStatus.CONTINUING;
@@ -487,7 +460,41 @@ public class DBUtils {
             status = ShowStatus.UNKNOWN;
         }
         values.put(Shows.STATUS, status);
-        return values;
+        values.put(Shows.RUNTIME, show.runtime);
+        values.put(Shows.RATING_GLOBAL, show.rating);
+        values.put(Shows.NETWORK, show.network);
+        values.put(Shows.GENRES, show.genres);
+        values.put(Shows.FIRST_RELEASE, show.firstAired);
+        values.put(Shows.RELEASE_TIME, show.release_time);
+        values.put(Shows.RELEASE_WEEKDAY, show.release_weekday);
+        values.put(Shows.RELEASE_TIMEZONE, show.release_timezone);
+        values.put(Shows.RELEASE_COUNTRY, show.country);
+        values.put(Shows.ACTORS, show.actors);
+        values.put(Shows.IMDBID, show.imdbId);
+        values.put(Shows.LASTUPDATED, System.currentTimeMillis());
+        values.put(Shows.LASTEDIT, show.lastEdited);
+
+        if (isNew) {
+            // set TheTVDB id
+            values.put(Shows._ID, show.tvdbId);
+            // set user values
+            values.put(Shows.FAVORITE, show.favorite);
+            values.put(Shows.HIDDEN, show.hidden);
+            // set default values
+            values.put(Shows.RATING_VOTES, 0);
+            values.put(Shows.RATING_USER, -1);
+            values.put(Shows.HEXAGON_MERGE_COMPLETE, 1);
+            values.put(Shows.NEXTEPISODE, "");
+            values.put(Shows.NEXTTEXT, "");
+            values.put(Shows.NEXTAIRDATEMS, UNKNOWN_NEXT_RELEASE_DATE);
+            values.put(Shows.NEXTAIRDATETEXT, "");
+            values.put(Shows.LASTWATCHEDID, 0);
+            return ContentProviderOperation.newInsert(Shows.CONTENT_URI).withValues(values).build();
+        } else {
+            return ContentProviderOperation
+                    .newUpdate(Shows.buildShowUri(String.valueOf(show.tvdbId)))
+                    .withValues(values).build();
+        }
     }
 
     /**

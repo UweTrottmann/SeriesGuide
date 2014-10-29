@@ -233,8 +233,10 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             show.title = shows.getString(ShowsQuery.TITLE);
             show.favorite = shows.getInt(ShowsQuery.FAVORITE) == 1;
             show.hidden = shows.getInt(ShowsQuery.HIDDEN) == 1;
-            show.airtime = shows.getLong(ShowsQuery.AIRTIME);
-            show.airday = shows.getString(ShowsQuery.AIRDAY);
+            show.release_time = shows.getInt(ShowsQuery.RELEASE_TIME);
+            show.release_weekday = shows.getInt(ShowsQuery.RELEASE_WEEKDAY);
+            show.release_timezone = shows.getString(ShowsQuery.RELEASE_TIMEZONE);
+            show.country = shows.getString(ShowsQuery.RELEASE_COUNTRY);
             show.lastWatchedEpisode = shows.getInt(ShowsQuery.LASTWATCHEDID);
             show.poster = shows.getString(ShowsQuery.POSTER);
             show.contentRating = shows.getString(ShowsQuery.CONTENTRATING);
@@ -253,7 +255,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             show.network = shows.getString(ShowsQuery.NETWORK);
             show.imdbId = shows.getString(ShowsQuery.IMDBID);
             show.firstAired = shows.getString(ShowsQuery.FIRSTAIRED);
-            show.country = shows.getString(ShowsQuery.RELEASE_COUNTRY);
             if (mIsFullDump) {
                 show.overview = shows.getString(ShowsQuery.OVERVIEW);
                 show.rating = shows.getDouble(ShowsQuery.RATING);
@@ -508,18 +509,46 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
     public interface ShowsQuery {
         String[] PROJECTION = new String[] {
-                Shows._ID, Shows.TITLE, Shows.FAVORITE, Shows.HIDDEN, Shows.RELEASE_TIME,
-                Shows.RELEASE_WEEKDAY, Shows.GETGLUEID, Shows.LASTWATCHEDID,
-                Shows.POSTER, Shows.CONTENTRATING, Shows.STATUS, Shows.RUNTIME, Shows.NETWORK,
-                Shows.IMDBID, Shows.FIRST_RELEASE, Shows.RELEASE_COUNTRY
+                Shows._ID,
+                Shows.TITLE,
+                Shows.FAVORITE,
+                Shows.HIDDEN,
+                Shows.RELEASE_TIME,
+                Shows.RELEASE_WEEKDAY,
+                Shows.RELEASE_TIMEZONE,
+                Shows.RELEASE_COUNTRY,
+                Shows.LASTWATCHEDID,
+                Shows.POSTER,
+                Shows.CONTENTRATING,
+                Shows.STATUS,
+                Shows.RUNTIME,
+                Shows.NETWORK,
+                Shows.IMDBID,
+                Shows.FIRST_RELEASE,
         };
         String[] PROJECTION_FULL = new String[] {
-                Shows._ID, Shows.TITLE, Shows.FAVORITE, Shows.HIDDEN, Shows.RELEASE_TIME,
-                Shows.RELEASE_WEEKDAY, Shows.GETGLUEID, Shows.LASTWATCHEDID,
-                Shows.POSTER, Shows.CONTENTRATING, Shows.STATUS, Shows.RUNTIME, Shows.NETWORK,
-                Shows.IMDBID, Shows.FIRST_RELEASE, Shows.RELEASE_COUNTRY,
-                Shows.OVERVIEW, Shows.RATING_GLOBAL, Shows.GENRES, Shows.ACTORS,
-                Shows.LASTUPDATED, Shows.LASTEDIT
+                Shows._ID,
+                Shows.TITLE,
+                Shows.FAVORITE,
+                Shows.HIDDEN,
+                Shows.RELEASE_TIME,
+                Shows.RELEASE_WEEKDAY,
+                Shows.RELEASE_TIMEZONE,
+                Shows.RELEASE_COUNTRY,
+                Shows.LASTWATCHEDID,
+                Shows.POSTER,
+                Shows.CONTENTRATING,
+                Shows.STATUS,
+                Shows.RUNTIME,
+                Shows.NETWORK,
+                Shows.IMDBID,
+                Shows.FIRST_RELEASE,
+                Shows.OVERVIEW,
+                Shows.RATING_GLOBAL,
+                Shows.GENRES,
+                Shows.ACTORS,
+                Shows.LASTUPDATED,
+                Shows.LASTEDIT
         };
 
         String SORT = Shows.TITLE + " COLLATE NOCASE ASC";
@@ -528,18 +557,18 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         int TITLE = 1;
         int FAVORITE = 2;
         int HIDDEN = 3;
-        int AIRTIME = 4;
-        int AIRDAY = 5;
-        int GETGLUEID = 6;
-        int LASTWATCHEDID = 7;
-        int POSTER = 8;
-        int CONTENTRATING = 9;
-        int STATUS = 10;
-        int RUNTIME = 11;
-        int NETWORK = 12;
-        int IMDBID = 13;
-        int FIRSTAIRED = 14;
-        int RELEASE_COUNTRY = 15;
+        int RELEASE_TIME = 4;
+        int RELEASE_WEEKDAY = 5;
+        int RELEASE_TIMEZONE = 6;
+        int RELEASE_COUNTRY = 7;
+        int LASTWATCHEDID = 8;
+        int POSTER = 9;
+        int CONTENTRATING = 10;
+        int STATUS = 11;
+        int RUNTIME = 12;
+        int NETWORK = 13;
+        int IMDBID = 14;
+        int FIRSTAIRED = 15;
         // Full dump only
         int OVERVIEW = 16;
         int RATING = 17;

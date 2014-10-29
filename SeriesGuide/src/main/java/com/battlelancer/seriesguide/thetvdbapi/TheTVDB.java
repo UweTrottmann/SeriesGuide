@@ -55,7 +55,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.zip.ZipInputStream;
+import org.joda.time.format.DateTimeFormatter;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import retrofit.RetrofitError;
@@ -364,7 +366,7 @@ public class TheTVDB {
     }
 
     /**
-     * Get show details from TVDb. Tries to fetch additional information from trakt.
+     * Get show details from TVDb and trakt.
      *
      * @param language A TVDb language code (see <a href="http://www.thetvdb.com/wiki/index.php/API:languages.xml"
      * >TVDb wiki</a>).
@@ -398,8 +400,12 @@ public class TheTVDB {
             throw new TvdbException("Could not load show from trakt: " + showTvdbId);
         }
 
-        show.airtime = TimeTools.parseShowReleaseTime(traktShow.airs, traktShow.country);
+        show.release_time = TimeTools.parseShowReleaseTime(traktShow.airs.time);
+        show.release_weekday = TimeTools.parseDayOfWeek(traktShow.airs.day);
+        show.release_timezone = traktShow.airs.timezone;
         show.country = traktShow.country;
+        show.firstAired = TimeTools.parseShowFirstRelease(traktShow.first_aired);
+        show.rating = traktShow.rating == null ? 0.0 : traktShow.rating;
 
         return show;
     }
@@ -435,16 +441,6 @@ public class TheTVDB {
                 currentShow.actors = body.trim();
             }
         });
-        show.getChild("Airs_DayOfWeek").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.airday = body.trim();
-            }
-        });
-        show.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.firstAired = body;
-            }
-        });
         show.getChild("Genre").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 currentShow.genres = body.trim();
@@ -453,15 +449,6 @@ public class TheTVDB {
         show.getChild("Network").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 currentShow.network = body;
-            }
-        });
-        show.getChild("Rating").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                try {
-                    currentShow.rating = Double.parseDouble(body);
-                } catch (NumberFormatException e) {
-                    currentShow.rating = 0.0;
-                }
             }
         });
         show.getChild("Runtime").setEndTextElementListener(new EndTextElementListener() {
@@ -535,12 +522,16 @@ public class TheTVDB {
     private static ArrayList<ContentValues> parseEpisodes(
             final ArrayList<ContentProviderOperation> batch, String url, final Show show,
             Context context) throws TvdbException {
-        final ArrayList<ContentValues> newEpisodesValues = new ArrayList<>();
         final long dateLastMonthEpoch = (System.currentTimeMillis()
                 - (DateUtils.DAY_IN_MILLIS * 30)) / 1000;
+        final DateTimeFormatter tvdbDateFormatter = TimeTools.getTvdbDateFormatter(
+                show.release_timezone);
+        final String deviceTimeZone = TimeZone.getDefault().getID();
 
         RootElement root = new RootElement("Data");
         Element episode = root.getChild("Episode");
+
+        final ArrayList<ContentValues> newEpisodesValues = new ArrayList<>();
 
         final HashMap<Integer, Long> localEpisodeIds = DBUtils
                 .getEpisodeMapForShow(context, show.tvdbId);
@@ -622,10 +613,9 @@ public class TheTVDB {
         );
         episode.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                long episodeAirTime = TimeTools
-                        .parseEpisodeReleaseTime(body, show.airtime, show.country);
-                values.put(Episodes.FIRSTAIREDMS, episodeAirTime);
-                values.put(Episodes.FIRSTAIRED, body.trim());
+                long releaseDateTime = TimeTools.parseEpisodeReleaseTime(tvdbDateFormatter, body,
+                        show.release_time, show.country, deviceTimeZone);
+                values.put(Episodes.FIRSTAIREDMS, releaseDateTime);
             }
         });
         episode.getChild("EpisodeName").setEndTextElementListener(new EndTextElementListener() {

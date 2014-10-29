@@ -262,12 +262,16 @@ public class AddShowDialogFragment extends DialogFragment {
                 meta.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         meta.append("\n");
 
-        // release day and time
-        Date releaseDate = new Date(show.airtime);
-        String day = TimeTools.formatToLocalReleaseTime(getActivity(), releaseDate);
-        String time = TimeTools.formatToLocalReleaseDay(releaseDate);
-        meta.append(day).append(" ").append(time);
-        meta.append("\n");
+        // next release day and time
+        long releaseTime = TimeTools.getShowReleaseTime(show.release_time, show.release_weekday,
+                show.release_timezone, show.country);
+        if (releaseTime != -1) {
+            Date releaseDate = new Date(releaseTime);
+            String day = TimeTools.formatToLocalReleaseTime(getActivity(), releaseDate);
+            String time = TimeTools.formatToLocalReleaseDay(releaseDate);
+            meta.append(day).append(" ").append(time);
+            meta.append("\n");
+        }
 
         // network, runtime
         meta.append(show.network);
@@ -284,8 +288,7 @@ public class AddShowDialogFragment extends DialogFragment {
         Utils.setValueOrPlaceholder(genres, Utils.splitAndKitTVDBStrings(show.genres));
 
         // original release
-        Utils.setValueOrPlaceholder(released,
-                TimeTools.getShowReleaseYear(show.firstAired, show.airtime, show.country));
+        Utils.setValueOrPlaceholder(released, TimeTools.getShowReleaseYear(show.firstAired));
 
         // poster
         Utils.loadPosterThumbnail(getActivity(), poster, show.poster);
