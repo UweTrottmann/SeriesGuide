@@ -209,6 +209,7 @@ public class TimeTools {
         LocalDateTime localDateTime = new LocalDate(showTimeZone).toLocalDateTime(time);
 
         // adjust day of week so datetime is today or within the next week
+        // for daily shows (weekDay == 0) just use the current day
         if (weekDay >= 1 && weekDay <= 7) {
             // joda tries to preserve week
             // so if we want a week day earlier in the week, advance by 7 days first
@@ -291,7 +292,7 @@ public class TimeTools {
     /**
      * Converts US week day string to {@link org.joda.time.DateTimeConstants} day.
      *
-     * <p> Returns -1 if no conversion is possible.
+     * <p> Returns -1 if no conversion is possible and 0 if it is "Daily".
      */
     public static int parseDayOfWeek(String day) {
         if (day == null || day.length() == 0) {
@@ -314,6 +315,8 @@ public class TimeTools {
                 return DateTimeConstants.SATURDAY;
             case "Sunday":
                 return DateTimeConstants.SUNDAY;
+            case "Daily":
+                return 0;
         }
 
         // no match
@@ -350,6 +353,17 @@ public class TimeTools {
     public static String formatToLocalReleaseDay(Date actualRelease) {
         SimpleDateFormat localDayFormat = new SimpleDateFormat("E", Locale.getDefault());
         return localDayFormat.format(actualRelease);
+    }
+
+    /**
+     * Formats to the week day abbreviation (e.g. "Mon") as defined by the devices local. If the
+     * given weekDay is 0, returns the local version of "Daily".
+     */
+    public static String formatToLocalReleaseDay(Context context, Date actualRelease, int weekDay) {
+        if (weekDay == RELEASE_WEEKDAY_DAILY) {
+            return context.getString(R.string.daily);
+        }
+        return formatToLocalReleaseDay(actualRelease);
     }
 
     /**

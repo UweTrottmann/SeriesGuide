@@ -271,7 +271,8 @@ public class AddShowDialogFragment extends DialogFragment {
                     show.country);
             Date releaseDate = new Date(releaseInstant);
             String time = TimeTools.formatToLocalReleaseTime(getActivity(), releaseDate);
-            String day = TimeTools.formatToLocalReleaseDay(releaseDate);
+            String day = TimeTools.formatToLocalReleaseDay(getActivity(), releaseDate,
+                    show.release_weekday);
             meta.append(day).append(" ").append(time);
             meta.append("\n");
         }

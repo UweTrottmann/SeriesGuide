@@ -311,13 +311,14 @@ public class ShowFragment extends Fragment {
         String releaseCountry = mShowCursor.getString(ShowQuery.RELEASE_COUNTRY);
         int releaseTime = mShowCursor.getInt(ShowQuery.RELEASE_TIME);
         if (releaseTime != -1) {
+            int weekDay = mShowCursor.getInt(ShowQuery.RELEASE_WEEKDAY);
             long releaseInstant = TimeTools.getShowReleaseInstant(
                     TimeTools.getShowReleaseTime(releaseTime),
-                    mShowCursor.getInt(ShowQuery.RELEASE_WEEKDAY),
+                    weekDay,
                     mShowCursor.getString(ShowQuery.RELEASE_TIMEZONE),
                     releaseCountry);
             Date date = new Date(releaseInstant);
-            String dayString = TimeTools.formatToLocalReleaseDay(date);
+            String dayString = TimeTools.formatToLocalReleaseDay(getActivity(), date, weekDay);
             String timeString = TimeTools.formatToLocalReleaseTime(getActivity(), date);
             mTextViewReleaseTime.setText(dayString + " " + timeString);
         } else {

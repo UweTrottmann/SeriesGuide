@@ -851,13 +851,14 @@ public class OverviewFragment extends Fragment implements
         StringBuilder timeAndNetwork = new StringBuilder();
         int releaseTime = show.getInt(ShowQuery.SHOW_RELEASE_TIME);
         if (releaseTime != -1) {
+            int weekDay = show.getInt(ShowQuery.SHOW_RELEASE_WEEKDAY);
             long releaseInstant = TimeTools.getShowReleaseInstant(
                     TimeTools.getShowReleaseTime(releaseTime),
-                    show.getInt(ShowQuery.SHOW_RELEASE_WEEKDAY),
+                    weekDay,
                     show.getString(ShowQuery.SHOW_RELEASE_TIMEZONE),
                     show.getString(ShowQuery.SHOW_RELEASE_COUNTRY));
             Date date = new Date(releaseInstant);
-            String dayString = TimeTools.formatToLocalReleaseDay(date);
+            String dayString = TimeTools.formatToLocalReleaseDay(getActivity(), date, weekDay);
             String timeString = TimeTools.formatToLocalReleaseTime(getActivity(), date);
             // "Mon 08:30"
             timeAndNetwork.append(dayString).append(" ").append(timeString);

@@ -78,7 +78,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
             long releaseInstant = TimeTools.getShowReleaseInstant(
                     TimeTools.getShowReleaseTime(time), weekday, timeZone, country);
             Date date = new Date(releaseInstant);
-            String dayString = TimeTools.formatToLocalReleaseDay(date);
+            String dayString = TimeTools.formatToLocalReleaseDay(context, date, weekday);
             String timeString = TimeTools.formatToLocalReleaseTime(context, date);
             if (networkAndTime.length() > 0) {
                 networkAndTime.append(" / ");
