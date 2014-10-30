@@ -5,6 +5,8 @@ import java.util.Date;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,12 +26,12 @@ public class TimeToolsTest extends TestCase {
         // ensure a US show has its local release time correctly converted to UTC time
         // (we can be sure that in May there is always DST in effect in America/New_York
         // so this test will likely not break if DST rules change)
-        String showTimeZone = AMERICA_NEW_YORK;
+        DateTimeZone showTimeZone = DateTimeZone.forID(AMERICA_NEW_YORK);
         String deviceTimeZone = AMERICA_LOS_ANGELES;
         long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(
-                TimeTools.getTvdbDateFormatter(showTimeZone),
+                showTimeZone,
                 "2013-05-31",
-                2000, // 20:00
+                new LocalTime(20, 0), // 20:00
                 UNITED_STATES,
                 deviceTimeZone);
         System.out.println(
@@ -41,12 +43,12 @@ public class TimeToolsTest extends TestCase {
         // ensure a German show has its local release time correctly converted to UTC time
         // (we can be sure that in May there is always DST in effect in Europe/Berlin
         // so this test will likely not break if DST rules change)
-        String showTimeZone = EUROPE_BERLIN;
+        DateTimeZone showTimeZone = DateTimeZone.forID(EUROPE_BERLIN);
         String deviceTimeZone = AMERICA_LOS_ANGELES;
         long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(
-                TimeTools.getTvdbDateFormatter(showTimeZone),
+                showTimeZone,
                 "2013-05-31",
-                2000, // 20:00
+                new LocalTime(20, 0), // 20:00
                 GERMANY,
                 deviceTimeZone);
         System.out.println(
@@ -58,12 +60,12 @@ public class TimeToolsTest extends TestCase {
         // ensure episodes releasing in the hour past midnight are moved to the next day
         // e.g. if 00:35, the episode date is typically (wrongly) that of the previous day
         // this is common for late night shows, e.g. "Monday night" is technically "early Tuesday"
-        String showTimeZone = AMERICA_NEW_YORK;
+        DateTimeZone showTimeZone = DateTimeZone.forID(AMERICA_NEW_YORK);
         String deviceTimeZone = AMERICA_LOS_ANGELES;
         long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(
-                TimeTools.getTvdbDateFormatter(showTimeZone),
+                showTimeZone,
                 "2013-05-31",
-                35, // 00:35
+                new LocalTime(0, 35), // 00:35
                 UNITED_STATES,
                 deviceTimeZone);
         System.out.println(
