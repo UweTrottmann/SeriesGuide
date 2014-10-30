@@ -418,7 +418,6 @@
   <string name="action_extensions_add">Додај додатак</string>
   <string name="action_extensions_limit">Претплати се на Х да додаш нове додатке</string>
   <string name="action_extensions_search">Узми још додатака</string>
-  <string name="action_extension_settings">Подешавања</string>
   <string name="action_extension_remove">Уклони</string>
   <string name="extension_amazon">Претрага на Amazon-у</string>
   <string name="description_extension_amazon">Претражи локални Аmazon сајт</string>

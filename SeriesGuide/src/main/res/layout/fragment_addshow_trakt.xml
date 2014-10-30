@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <FrameLayout
-        android:id="@+id/contentContainer"
+        android:id="@+id/containerAddContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -21,7 +21,7 @@
     </FrameLayout>
 
     <ProgressBar
-        android:id="@+id/progressIndicator"
+        android:id="@+id/progressBarAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />

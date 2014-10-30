@@ -418,7 +418,6 @@
   <string name="action_extensions_add">Προσθήκη επέκταση</string>
   <string name="action_extensions_limit">Λήψη X για να προσθέσετε περισσότερες επεκτάσεις</string>
   <string name="action_extensions_search">Λήψη περισσότερων επεκτάσεων</string>
-  <string name="action_extension_settings">Ρυθμίσεις</string>
   <string name="action_extension_remove">Αφαίρεση</string>
   <string name="extension_amazon">Αναζήτηση στο Amazon</string>
   <string name="description_extension_amazon">Ψάξτε στον τοπικό σας ιστότοπο Amazon</string>

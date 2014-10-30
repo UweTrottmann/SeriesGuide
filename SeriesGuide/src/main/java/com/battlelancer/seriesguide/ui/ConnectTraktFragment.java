@@ -50,7 +50,7 @@ public class ConnectTraktFragment extends Fragment {
             public void onClick(View v) {
                 ConnectTraktCredentialsFragment f = ConnectTraktCredentialsFragment.newInstance();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(android.R.id.content, f);
+                ft.replace(R.id.content_frame, f);
                 ft.commit();
             }
         });

@@ -506,7 +506,6 @@
     <string name="action_extensions_add">Add extension</string>
     <string name="action_extensions_limit">Get X to add more extensions</string>
     <string name="action_extensions_search">Get more extensions</string>
-    <string name="action_extension_settings">Settings</string>
     <string name="action_extension_remove">Remove</string>
     <string name="extension_amazon">Amazon search</string>
     <string name="description_extension_amazon">Search your local Amazon site</string>

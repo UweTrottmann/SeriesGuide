@@ -5,35 +5,31 @@ buildscript {
     repositories {
         jcenter()
         mavenCentral()
-        maven { url 'http://download.crashlytics.com/maven' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.13.1'
-        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
+        classpath 'com.android.tools.build:gradle:0.13.3'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.5'
     }
 }
 
 allprojects {
     repositories {
+        jcenter()
         mavenCentral()
-        maven {
-            url 'http://download.crashlytics.com/maven'
-        }
     }
 }
 
 ext {
-    compileSdkVersion = 19
-    buildToolsVersion = '19.1.0'
+    compileSdkVersion = 21
+    buildToolsVersion = '21.0.2'
 
     // API level 15+ -> version 15xxx
-    versionCode = 15047
-    versionName = '18.1.0'
+    versionCode = 15053
+    versionName = '19'
 }
 
 ext.libraries = [
 
-        supportv4: 'com.android.support:support-v4:19.1.+',
+        supportv4: 'com.android.support:support-v4:21.0.0',
 
 ]

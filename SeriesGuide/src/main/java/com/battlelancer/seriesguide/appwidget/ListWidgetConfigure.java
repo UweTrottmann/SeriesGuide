@@ -16,12 +16,12 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RemoteViews;
@@ -35,7 +35,7 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
  * triggering update and backup mechanisms.
  * <p> The list widget is only available on API level 11 and above.
  */
-public class ListWidgetConfigure extends Activity {
+public class ListWidgetConfigure extends ActionBarActivity {
 
     private int mAppWidgetId;
 
@@ -45,6 +45,8 @@ public class ListWidgetConfigure extends Activity {
         setTheme(SeriesGuidePreferences.THEME);
 
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_singlepane);
+        setupActionBar();
 
         // if the user backs out, no widget gets added
         setResult(RESULT_CANCELED);
@@ -63,19 +65,17 @@ public class ListWidgetConfigure extends Activity {
             return;
         }
 
-        setupActionBar();
-
         if (savedInstanceState == null) {
             ListWidgetPreferenceFragment f = ListWidgetPreferenceFragment.newInstance(mAppWidgetId);
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.add(android.R.id.content, f);
+            ft.add(R.id.content_frame, f);
             ft.commit();
         }
     }
 
     private void setupActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setIcon(R.drawable.ic_actionbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.sgToolbar);
+        setSupportActionBar(toolbar);
     }
 
     @Override

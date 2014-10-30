@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_width="match_parent"
     android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
 
     <ListView
         android:id="@+id/listViewGetGlueResults"
@@ -13,7 +14,6 @@
         android:layout_marginRight="@dimen/large_padding"
         android:layout_weight="1"
         android:clipToPadding="@bool/gridClipToPadding"
-        android:listSelector="?custom_list_selector"
         android:scrollbarStyle="outsideInset" />
 
     <include layout="@layout/divider_horizontal" />
@@ -44,5 +44,4 @@
             android:layout_weight="1"
             android:text="@string/save_selection" />
     </LinearLayout>
-
 </LinearLayout>

@@ -419,7 +419,6 @@
   <string name="action_extensions_add">Lägg till tillägg</string>
   <string name="action_extensions_limit">Skaffa X för att lägga till fler tillägg</string>
   <string name="action_extensions_search">Skaffa fler tillägg</string>
-  <string name="action_extension_settings">Inställningar</string>
   <string name="action_extension_remove">Ta bort</string>
   <string name="extension_amazon">Amazon sökning</string>
   <string name="description_extension_amazon">Sök på din lokala Amazon\'s webbplats</string>

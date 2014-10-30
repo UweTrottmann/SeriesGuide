@@ -23,7 +23,7 @@
         android:layout_height="48dp"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:background="?attr/custom_list_selector"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:scaleType="centerInside"
         android:src="?attr/drawableDropdown" />
 
@@ -53,7 +53,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@id/progressBarSeason"
         android:layout_marginRight="4dp"
-        android:src="@drawable/ic_action_playback_next_highlight"
+        android:src="@drawable/ic_skipped"
         android:visibility="visible" />
 
     <TextView

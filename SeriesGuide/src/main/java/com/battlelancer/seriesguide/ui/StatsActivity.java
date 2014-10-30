@@ -16,9 +16,9 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Utils;
 
@@ -33,9 +33,8 @@ public class StatsActivity extends BaseTopActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singlepane_drawer);
-        setupNavDrawer();
-
         setupActionBar();
+        setupNavDrawer();
 
         if (savedInstanceState == null) {
             StatsFragment f = new StatsFragment();
@@ -45,10 +44,11 @@ public class StatsActivity extends BaseTopActivity {
         }
     }
 
-    private void setupActionBar() {
-        ActionBar actionBar = getActionBar();
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.statistics);
-        actionBar.setIcon(R.drawable.ic_action_bargraph);
     }
 
     @Override

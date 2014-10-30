@@ -70,7 +70,6 @@ import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.squareup.picasso.Callback;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
@@ -180,25 +179,10 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        setupViews();
-
         getLoaderManager().initLoader(EpisodesActivity.EPISODE_LOADER_ID, null,
                 mEpisodeDataLoaderCallbacks);
 
         setHasOptionsMenu(true);
-    }
-
-    private void setupViews() {
-        if (AndroidUtils.isKitKatOrHigher()) {
-            if (getActivity() instanceof EpisodeDetailsActivity) {
-                // adapt to translucent system bars
-                SystemBarTintManager.SystemBarConfig config
-                        = ((EpisodeDetailsActivity) getActivity())
-                        .getSystemBarTintManager().getConfig();
-                mEpisodeScrollView.setClipToPadding(false);
-                mEpisodeScrollView.setPadding(0, 0, 0, config.getPixelInsetBottom());
-            }
-        }
     }
 
     @Override
@@ -249,16 +233,6 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         boolean isInMultipane = getArguments().getBoolean(InitBundle.IS_IN_MULTIPANE_LAYOUT);
         inflater.inflate(isLightTheme && !isInMultipane
                 ? R.menu.episodedetails_menu_light : R.menu.episodedetails_menu, menu);
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content
-        // view
-        boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
-        menu.findItem(R.id.menu_manage_lists).setVisible(!isDrawerOpen);
-        menu.findItem(R.id.menu_share).setVisible(!isDrawerOpen);
-        super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -476,7 +450,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         mEpisodeFlag = cursor.getInt(DetailsQuery.WATCHED);
         boolean isWatched = EpisodeTools.isWatched(mEpisodeFlag);
         Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mWatchedButton, 0,
-                isWatched ? R.drawable.ic_ticked
+                isWatched ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                                R.attr.drawableWatched)
                         : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                 R.attr.drawableWatch), 0, 0);
         mWatchedButton.setOnClickListener(new OnClickListener() {
@@ -523,7 +498,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             mSkipButton.setVisibility(View.VISIBLE);
             Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mSkipButton, 0,
                     isSkipped
-                            ? R.drawable.ic_action_playback_next_highlight
+                            ? R.drawable.ic_skipped
                             : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                     R.attr.drawableSkip), 0, 0);
             mSkipButton.setOnClickListener(new OnClickListener() {

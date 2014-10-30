@@ -418,7 +418,6 @@
   <string name="action_extensions_add">Afegeix extensió</string>
   <string name="action_extensions_limit">Passeu-vos a X per afegir més extensions</string>
   <string name="action_extensions_search">Obtén més extensions</string>
-  <string name="action_extension_settings">Configuració</string>
   <string name="action_extension_remove">Elimina</string>
   <string name="extension_amazon">Cerca a Amazon</string>
   <string name="description_extension_amazon">Cerqueu al vostre Amazon local</string>

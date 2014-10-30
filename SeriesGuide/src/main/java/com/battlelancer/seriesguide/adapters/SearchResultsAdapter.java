@@ -32,7 +32,8 @@ import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
 
 /**
- * {@link CursorAdapter} displaying episode search results inside the {@link com.battlelancer.seriesguide.ui.EpisodeSearchFragment}.
+ * {@link CursorAdapter} displaying episode search results inside the {@link
+ * com.battlelancer.seriesguide.ui.EpisodeSearchFragment}.
  */
 public class SearchResultsAdapter extends CursorAdapter {
 
@@ -77,7 +78,8 @@ public class SearchResultsAdapter extends CursorAdapter {
         viewHolder.showTitle.setText(mCursor.getString(SearchQuery.SHOW_TITLE));
         viewHolder.watchedStatus.setImageResource(
                 EpisodeTools.isWatched(mCursor.getInt(SearchQuery.WATCHED))
-                        ? R.drawable.ic_ticked
+                        ? Utils.resolveAttributeToResourceId(mContext.getTheme(),
+                                R.attr.drawableWatched)
                         : Utils.resolveAttributeToResourceId(mContext.getTheme(),
                                 R.attr.drawableWatch));
 

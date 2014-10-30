@@ -17,10 +17,10 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
@@ -48,16 +48,16 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lists);
-        setupNavDrawer();
-
         setupActionBar();
+        setupNavDrawer();
 
         setupViews();
     }
 
-    private void setupActionBar() {
-        final ActionBar actionBar = getActionBar();
-        actionBar.setIcon(R.drawable.ic_action_list);
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.lists);
     }
 
@@ -73,7 +73,7 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorAccent)));
         mTabs.setBottomBorderColor(getResources().getColor(
                 Utils.resolveAttributeToResourceId(getTheme(),
-                        R.attr.colorTabStripUnderline)
+                        R.attr.sgColorTabStripUnderline)
         ));
         mTabs.setOnTabClickListener(new SlidingTabLayout.OnTabClickListener() {
             @Override
@@ -105,16 +105,6 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.lists_menu, menu);
         return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
-        boolean isDrawerOpen = isDrawerOpen();
-        menu.findItem(R.id.menu_action_lists_add).setVisible(!isDrawerOpen);
-        menu.findItem(R.id.menu_action_lists_search).setVisible(!isDrawerOpen);
-
-        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override

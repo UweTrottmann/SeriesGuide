@@ -16,12 +16,12 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
@@ -36,12 +36,11 @@ import de.greenrobot.event.EventBus;
 
 /**
  * Provides some common functionality across all activities like setting the theme, navigation
- * shortcuts and triggering AutoUpdates and AutoBackups.
- * <p> Also registers with {@link de.greenrobot.event.EventBus#getDefault()} by default to handle
- * various common events, see {@link #registerEventBus()} and {@link #unregisterEventBus()} to
- * prevent that.
+ * shortcuts and triggering AutoUpdates and AutoBackups. <p> Also registers with {@link
+ * de.greenrobot.event.EventBus#getDefault()} by default to handle various common events, see {@link
+ * #registerEventBus()} and {@link #unregisterEventBus()} to prevent that.
  */
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class BaseActivity extends ActionBarActivity {
 
     private Handler mHandler;
     private Runnable mUpdateShowRunnable;
@@ -50,8 +49,6 @@ public abstract class BaseActivity extends FragmentActivity {
     protected void onCreate(Bundle arg0) {
         setCustomTheme();
         super.onCreate(arg0);
-
-        setupActionBar();
     }
 
     protected void setCustomTheme() {
@@ -59,9 +56,13 @@ public abstract class BaseActivity extends FragmentActivity {
         setTheme(SeriesGuidePreferences.THEME);
     }
 
-    private void setupActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setIcon(R.drawable.ic_actionbar);
+    /**
+     * Implementers must call this in {@link #onCreate} after {@link #setContentView} if they want
+     * to use the action bar.
+     */
+    protected void setupActionBar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.sgToolbar);
+        setSupportActionBar(toolbar);
     }
 
     @Override
@@ -153,9 +154,9 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
     /**
-     * Schedule an update for the given show. Might not run if this show was just updated.
-     * Execution is also delayed so it won't reduce UI setup performance (= you can run this in
-     * {@link #onCreate(android.os.Bundle)}).
+     * Schedule an update for the given show. Might not run if this show was just updated. Execution
+     * is also delayed so it won't reduce UI setup performance (= you can run this in {@link
+     * #onCreate(android.os.Bundle)}).
      *
      * <p> See {@link com.battlelancer.seriesguide.sync.SgSyncAdapter#requestSyncIfTime(android.content.Context,
      * int)}.

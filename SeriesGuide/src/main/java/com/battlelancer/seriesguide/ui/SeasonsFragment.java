@@ -124,9 +124,11 @@ public class SeasonsFragment extends ListFragment implements
 
     private void setWatchedToggleState(int unwatchedEpisodes) {
         mWatchedAllEpisodes = unwatchedEpisodes == 0;
-        mButtonWatchedAll.setImageResource(mWatchedAllEpisodes ? R.drawable.ic_ticked
+        mButtonWatchedAll.setImageResource(mWatchedAllEpisodes ?
+                Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                        R.attr.drawableWatchedAll)
                 : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                        R.attr.drawableWatch));
+                        R.attr.drawableWatchAll));
         // set onClick listener not before here to avoid unexpected actions
         mButtonWatchedAll.setOnClickListener(new OnClickListener() {
             @Override
@@ -165,9 +167,9 @@ public class SeasonsFragment extends ListFragment implements
 
     private void setCollectedToggleState(int uncollectedEpisodes) {
         mCollectedAllEpisodes = uncollectedEpisodes == 0;
-        mButtonCollectedAll.setImageResource(mCollectedAllEpisodes ? R.drawable.ic_collected
+        mButtonCollectedAll.setImageResource(mCollectedAllEpisodes ? R.drawable.ic_collected_all
                 : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                        R.attr.drawableCollect));
+                        R.attr.drawableCollectAll));
         // set onClick listener not before here to avoid unexpected actions
         mButtonCollectedAll.setOnClickListener(new OnClickListener() {
             @Override
@@ -259,9 +261,13 @@ public class SeasonsFragment extends ListFragment implements
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        final CharSequence[] items = getResources().getStringArray(R.array.sesorting);
-        menu.findItem(R.id.menu_sesortby).setTitle(
-                getString(R.string.sort) + ": " + items[mSorting.index()]);
+        super.onPrepareOptionsMenu(menu);
+
+        MenuItem item = menu.findItem(R.id.menu_sesortby);
+        if (item != null) {
+            CharSequence[] items = getResources().getStringArray(R.array.sesorting);
+            item.setTitle(getString(R.string.sort) + ": " + items[mSorting.index()]);
+        }
     }
 
     @Override

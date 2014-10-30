@@ -5,69 +5,78 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:baselineAligned="false"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:orientation="vertical">
 
-        <View
-            android:id="@+id/spacer_left"
-            android:layout_width="0px"
+        <include layout="@layout/toolbar" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:baselineAligned="false"
+            android:orientation="horizontal">
 
-        <FrameLayout
-            android:id="@+id/fragment_episodes"
-            style="@style/EpisodesPane"
-            android:layout_width="0px"
-            android:layout_height="match_parent" />
-
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="?attr/colorSeparator" />
-
-        <FrameLayout
-            style="@style/DetailsPane"
-            android:layout_width="0px"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/background"
-                android:layout_width="match_parent"
+            <View
+                android:id="@+id/spacer_left"
+                android:layout_width="0px"
                 android:layout_height="match_parent"
-                android:contentDescription="@string/description_poster"
-                android:scaleType="centerCrop" />
+                android:layout_weight="1" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <FrameLayout
+                android:id="@+id/fragment_episodes"
+                style="@style/EpisodesPane"
+                android:layout_width="0px"
+                android:layout_height="match_parent" />
+
+            <View
+                android:layout_width="2dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:background="?attr/sgColorSeparator" />
 
-                <com.battlelancer.seriesguide.widgets.SlidingTabLayout
-                    android:id="@+id/tabsEpisodes"
+            <FrameLayout
+                style="@style/DetailsPane"
+                android:layout_width="0px"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/background"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/description_poster"
+                    android:scaleType="centerCrop" />
 
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/pagerEpisodes"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-            </LinearLayout>
-        </FrameLayout>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="left"
-            android:background="?attr/colorSeparator" />
+                    <com.battlelancer.seriesguide.widgets.SlidingTabLayout
+                        android:id="@+id/tabsEpisodes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-        <View
-            android:id="@+id/spacer_right"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/pagerEpisodes"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:background="?attr/sgColorSeparator" />
+
+            <View
+                android:id="@+id/spacer_right"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

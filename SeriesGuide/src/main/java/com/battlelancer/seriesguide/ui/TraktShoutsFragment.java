@@ -24,7 +24,9 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -136,10 +138,13 @@ public class TraktShoutsFragment extends Fragment implements
         ButterKnife.inject(this, v);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setProgressViewOffset(false, getResources().getDimensionPixelSize(
+                        R.dimen.swipe_refresh_progress_bar_start_margin),
+                getResources().getDimensionPixelSize(
+                        R.dimen.swipe_refresh_progress_bar_end_margin));
         int accentColorResId = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                 R.attr.colorAccent);
-        mSwipeRefreshLayout.setColorScheme(accentColorResId, R.color.text_primary, accentColorResId,
-                R.color.text_primary);
+        mSwipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.teal_dark);
 
         mList.setOnItemClickListener(mOnClickListener);
         mList.setEmptyView(mEmptyView);
@@ -148,6 +153,23 @@ public class TraktShoutsFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 shout();
+            }
+        });
+
+        // disable comment button by default, enable if comment entered
+        mButtonShout.setEnabled(false);
+        mEditTextShout.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mButtonShout.setEnabled(!TextUtils.isEmpty(s));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
             }
         });
 

@@ -6,6 +6,7 @@
     <dimen name="large_padding">16dp</dimen>
     <dimen name="item_padding">2dp</dimen>
     <dimen name="larger_padding">24dp</dimen>
+    <dimen name="icon_padding">12dp</dimen>
 
     <dimen name="max_width_text_size_body">400dp</dimen>
 
@@ -40,7 +41,8 @@
 
     <dimen name="imagecontainer_height">180dp</dimen>
 
-    <dimen name="slidingmenu_width">260dp</dimen>
+    <dimen name="drawer_width">260dp</dimen>
+    <dimen name="drawer_top_view_height">128dp</dimen>
 
     <dimen name="movie_item_width">100dp</dimen>
     <dimen name="movie_item_height">214dp</dimen>
@@ -72,5 +74,8 @@
     <dimen name="item_regular_height">56dp</dimen>
 
     <dimen name="search_padding_right">16dp</dimen>
+
+    <dimen name="swipe_refresh_progress_bar_start_margin">-40dp</dimen>
+    <dimen name="swipe_refresh_progress_bar_end_margin">16dp</dimen>
 
 </resources>

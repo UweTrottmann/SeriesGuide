@@ -418,7 +418,6 @@
   <string name="action_extensions_add">Legg til utvidelse</string>
   <string name="action_extensions_limit">Kjøp X for å legge til flere utvidelser</string>
   <string name="action_extensions_search">Få flere utvidelser</string>
-  <string name="action_extension_settings">Innstillinger</string>
   <string name="action_extension_remove">Fjern</string>
   <string name="extension_amazon">Amazon søk</string>
   <string name="description_extension_amazon">Søk på din lokale Amazon nettside</string>

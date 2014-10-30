@@ -20,7 +20,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="@dimen/buttons_min_height"
-    tools:ignore="Overdraw">
+    tools:ignore="Overdraw"
+    tools:showIn="@layout/fragment_show">
 
     <Button
         android:id="@+id/buttonShowFavorite"
@@ -28,10 +29,10 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="4dp"
+        android:padding="8dp"
         android:drawableTop="?attr/drawableStar"
-        android:drawablePadding="-4dp"
         android:text="@string/context_favorite"
+        tools:text="Remove from favorites"
         android:maxLines="2"
         android:ellipsize="end" />
 
@@ -41,9 +42,8 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="4dp"
+        android:padding="8dp"
         android:drawableTop="?attr/drawableShare"
-        android:drawablePadding="-4dp"
         android:text="@string/share"
         android:contentDescription="@string/share"
         android:maxLines="2"
@@ -55,9 +55,8 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="4dp"
+        android:padding="8dp"
         android:drawableTop="?attr/drawableLink"
-        android:drawablePadding="-4dp"
         android:text="@string/add_to_homescreen"
         android:contentDescription="@string/add_to_homescreen"
         android:maxLines="2"
