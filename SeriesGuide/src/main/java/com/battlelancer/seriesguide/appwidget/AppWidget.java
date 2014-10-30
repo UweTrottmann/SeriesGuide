@@ -124,19 +124,19 @@ public class AppWidget extends AppWidgetProvider {
                     item.setTextViewText(R.id.textViewWidgetEpisode,
                             Utils.getNextEpisodeString(this, seasonNumber, episodeNumber, title));
 
-                    Date actualRelease = TimeTools.getEpisodeReleaseTime(context,
+                    Date actualRelease = TimeTools.applyUserOffset(context,
                             upcomingEpisodes.getLong(ActivityFragment.ActivityQuery.RELEASE_TIME_MS)
                     );
 
                     // "in 13 mins (Fri)"
                     item.setTextViewText(R.id.widgetAirtime,
                             getString(R.string.release_date_and_day,
-                                    TimeTools.formatToRelativeLocalReleaseTime(this, actualRelease),
-                                    TimeTools.formatToLocalReleaseDay(actualRelease))
+                                    TimeTools.formatToLocalRelativeTime(this, actualRelease),
+                                    TimeTools.formatToLocalDay(actualRelease))
                     );
 
                     // absolute release time and network (if any)
-                    String releaseTime = TimeTools.formatToLocalReleaseTime(context, actualRelease);
+                    String releaseTime = TimeTools.formatToLocalTime(context, actualRelease);
                     String network = upcomingEpisodes.getString(
                             ActivityFragment.ActivityQuery.SHOW_NETWORK);
                     if (!TextUtils.isEmpty(network)) {

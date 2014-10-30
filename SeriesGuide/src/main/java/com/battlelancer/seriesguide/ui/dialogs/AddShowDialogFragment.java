@@ -264,15 +264,14 @@ public class AddShowDialogFragment extends DialogFragment {
 
         // next release day and time
         if (show.release_time != -1) {
-            long releaseInstant = TimeTools.getShowReleaseInstant(
+            Date release = TimeTools.getShowReleaseDateTime(getActivity(),
                     TimeTools.getShowReleaseTime(show.release_time),
                     show.release_weekday,
                     show.release_timezone,
                     show.country);
-            Date releaseDate = new Date(releaseInstant);
-            String time = TimeTools.formatToLocalReleaseTime(getActivity(), releaseDate);
-            String day = TimeTools.formatToLocalReleaseDay(getActivity(), releaseDate,
+            String day = TimeTools.formatToLocalDayOrDaily(getActivity(), release,
                     show.release_weekday);
+            String time = TimeTools.formatToLocalTime(getActivity(), release);
             meta.append(day).append(" ").append(time);
             meta.append("\n");
         }

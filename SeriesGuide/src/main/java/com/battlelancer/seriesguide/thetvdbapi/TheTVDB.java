@@ -401,7 +401,7 @@ public class TheTVDB {
         }
 
         show.release_time = TimeTools.parseShowReleaseTime(traktShow.airs.time);
-        show.release_weekday = TimeTools.parseDayOfWeek(traktShow.airs.day);
+        show.release_weekday = TimeTools.parseShowReleaseWeekDay(traktShow.airs.day);
         show.release_timezone = traktShow.airs.timezone;
         show.country = traktShow.country;
         show.firstAired = TimeTools.parseShowFirstRelease(traktShow.first_aired);

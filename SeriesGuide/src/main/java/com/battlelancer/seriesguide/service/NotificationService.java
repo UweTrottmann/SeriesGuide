@@ -50,7 +50,6 @@ import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -188,7 +187,7 @@ public class NotificationService extends IntentService {
             final long nextEpisodeReleaseTime = NotificationSettings.getNextToNotifyAbout(this);
             // wake user-defined amount of time earlier than next episode release time
             final long plannedWakeUpTime =
-                    TimeTools.getEpisodeReleaseTime(this, nextEpisodeReleaseTime).getTime()
+                    TimeTools.applyUserOffset(this, nextEpisodeReleaseTime).getTime()
                             - DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
 
             /*
@@ -296,7 +295,7 @@ public class NotificationService extends IntentService {
                                 .commit();
 
                         // calc actual wake up time
-                        wakeUpTime = TimeTools.getEpisodeReleaseTime(this, releaseTime).getTime()
+                        wakeUpTime = TimeTools.applyUserOffset(this, releaseTime).getTime()
                                 - DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
 
                         break;
@@ -384,8 +383,8 @@ public class NotificationService extends IntentService {
                     upcomingEpisodes.getInt(NotificationQuery.NUMBER));
 
             // "8:00 PM on Network"
-            final String releaseTime = TimeTools.formatToLocalReleaseTime(this, TimeTools
-                    .getEpisodeReleaseTime(this,
+            final String releaseTime = TimeTools.formatToLocalTime(this, TimeTools
+                    .applyUserOffset(this,
                             upcomingEpisodes.getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS)));
             final String network = upcomingEpisodes.getString(NotificationQuery.NETWORK);
             contentText = getString(R.string.upcoming_show_detailed, releaseTime, network);
@@ -469,8 +468,8 @@ public class NotificationService extends IntentService {
                     lineText.append(" ");
 
                     // "8:00 PM on Network"
-                    String releaseTime = TimeTools.formatToLocalReleaseTime(this, TimeTools
-                            .getEpisodeReleaseTime(this, upcomingEpisodes
+                    String releaseTime = TimeTools.formatToLocalTime(this, TimeTools
+                            .applyUserOffset(this, upcomingEpisodes
                                     .getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS)));
                     String network = upcomingEpisodes
                             .getString(NotificationQuery.NETWORK);

@@ -716,11 +716,11 @@ public class DBUtils {
 
                 // next release date text, e.g. "in 15 mins (Fri)"
                 long releaseTimeNext = next.getLong(NextEpisodesQuery.FIRST_RELEASE_MS);
-                Date actualRelease = TimeTools.getEpisodeReleaseTime(context, releaseTimeNext);
+                Date actualRelease = TimeTools.applyUserOffset(context, releaseTimeNext);
                 final String nextReleaseDateString = context.getString(
                         R.string.release_date_and_day,
-                        TimeTools.formatToRelativeLocalReleaseTime(context, actualRelease),
-                        TimeTools.formatToLocalReleaseDay(actualRelease));
+                        TimeTools.formatToLocalRelativeTime(context, actualRelease),
+                        TimeTools.formatToLocalDay(actualRelease));
 
                 nextEpisodeTvdbId = next.getInt(NextEpisodesQuery.ID);
                 newShowValues.put(Shows.NEXTEPISODE, nextEpisodeTvdbId);

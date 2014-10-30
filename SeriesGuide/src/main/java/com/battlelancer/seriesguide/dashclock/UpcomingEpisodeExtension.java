@@ -62,9 +62,9 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
                             ActivityFragment.ActivityQuery.SHOW_TITLE);
 
                     // get the actual release time
-                    Date actualRelease = TimeTools.getEpisodeReleaseTime(this, releaseTime);
-                    String absoluteTime = TimeTools.formatToLocalReleaseTime(this, actualRelease);
-                    String releaseDay = TimeTools.formatToLocalReleaseDay(actualRelease);
+                    Date actualRelease = TimeTools.applyUserOffset(this, releaseTime);
+                    String absoluteTime = TimeTools.formatToLocalTime(this, actualRelease);
+                    String releaseDay = TimeTools.formatToLocalDay(actualRelease);
 
                     // time and network, e.g. 'Mon 10:00, Network'
                     StringBuilder expandedBody = new StringBuilder();

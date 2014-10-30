@@ -346,15 +346,15 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         // release time and day
         SpannableStringBuilder timeAndNumbersText = new SpannableStringBuilder();
         if (mEpisodeReleaseTime != -1) {
-            Date actualRelease = TimeTools.getEpisodeReleaseTime(getActivity(),
+            Date actualRelease = TimeTools.applyUserOffset(getActivity(),
                     mEpisodeReleaseTime);
-            mReleaseDay.setText(TimeTools.formatToDate(getActivity(), actualRelease));
+            mReleaseDay.setText(TimeTools.formatToLocalDateAndDay(getActivity(), actualRelease));
             // "in 15 mins (Fri)"
             timeAndNumbersText
                     .append(getString(R.string.release_date_and_day,
-                            TimeTools.formatToRelativeLocalReleaseTime(getActivity(),
+                            TimeTools.formatToLocalRelativeTime(getActivity(),
                                     actualRelease),
-                            TimeTools.formatToLocalReleaseDay(actualRelease)
+                            TimeTools.formatToLocalDay(actualRelease)
                     )
                             .toUpperCase(Locale.getDefault()));
             timeAndNumbersText.append("  ");

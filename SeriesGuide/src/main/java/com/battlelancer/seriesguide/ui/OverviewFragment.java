@@ -535,11 +535,11 @@ public class OverviewFragment extends Fragment implements
             // air date
             long releaseTime = episode.getLong(EpisodeQuery.FIRST_RELEASE_MS);
             if (releaseTime != -1) {
-                Date actualRelease = TimeTools.getEpisodeReleaseTime(getActivity(), releaseTime);
+                Date actualRelease = TimeTools.applyUserOffset(getActivity(), releaseTime);
                 // "in 14 mins (Fri)"
                 episodeTime.setText(getString(R.string.release_date_and_day,
-                        TimeTools.formatToRelativeLocalReleaseTime(getActivity(), actualRelease),
-                        TimeTools.formatToLocalReleaseDay(actualRelease)));
+                        TimeTools.formatToLocalRelativeTime(getActivity(), actualRelease),
+                        TimeTools.formatToLocalDay(actualRelease)));
             } else {
                 episodeTime.setText(null);
             }
@@ -814,7 +814,7 @@ public class OverviewFragment extends Fragment implements
 
         // set show title in action bar
         mShowTitle = show.getString(ShowQuery.SHOW_TITLE);
-        ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
+        ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
         actionBar.setTitle(mShowTitle);
 
         // status
@@ -852,14 +852,13 @@ public class OverviewFragment extends Fragment implements
         int releaseTime = show.getInt(ShowQuery.SHOW_RELEASE_TIME);
         if (releaseTime != -1) {
             int weekDay = show.getInt(ShowQuery.SHOW_RELEASE_WEEKDAY);
-            long releaseInstant = TimeTools.getShowReleaseInstant(
+            Date release = TimeTools.getShowReleaseDateTime(getActivity(),
                     TimeTools.getShowReleaseTime(releaseTime),
                     weekDay,
                     show.getString(ShowQuery.SHOW_RELEASE_TIMEZONE),
                     show.getString(ShowQuery.SHOW_RELEASE_COUNTRY));
-            Date date = new Date(releaseInstant);
-            String dayString = TimeTools.formatToLocalReleaseDay(getActivity(), date, weekDay);
-            String timeString = TimeTools.formatToLocalReleaseTime(getActivity(), date);
+            String dayString = TimeTools.formatToLocalDayOrDaily(getActivity(), release, weekDay);
+            String timeString = TimeTools.formatToLocalTime(getActivity(), release);
             // "Mon 08:30"
             timeAndNetwork.append(dayString).append(" ").append(timeString);
         }
@@ -871,7 +870,7 @@ public class OverviewFragment extends Fragment implements
             }
             timeAndNetwork.append(getString(R.string.show_on_network, network));
         }
-        ((TextView)getView().findViewById(R.id.showmeta)).setText(timeAndNetwork.toString());
+        ((TextView) getView().findViewById(R.id.showmeta)).setText(timeAndNetwork.toString());
     }
 
     private LoaderManager.LoaderCallbacks<List<Action>> mEpisodeActionsLoaderCallbacks =

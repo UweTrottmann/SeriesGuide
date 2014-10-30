@@ -75,11 +75,10 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
 
         // time
         if (time != -1) {
-            long releaseInstant = TimeTools.getShowReleaseInstant(
+            Date release = TimeTools.getShowReleaseDateTime(context,
                     TimeTools.getShowReleaseTime(time), weekday, timeZone, country);
-            Date date = new Date(releaseInstant);
-            String dayString = TimeTools.formatToLocalReleaseDay(context, date, weekday);
-            String timeString = TimeTools.formatToLocalReleaseTime(context, date);
+            String dayString = TimeTools.formatToLocalDayOrDaily(context, release, weekday);
+            String timeString = TimeTools.formatToLocalTime(context, release);
             if (networkAndTime.length() > 0) {
                 networkAndTime.append(" / ");
             }

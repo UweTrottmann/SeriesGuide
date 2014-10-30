@@ -85,7 +85,7 @@ public class ShareUtils {
                 .putExtra(CalendarContract.Events.TITLE, showTitle)
                 .putExtra(CalendarContract.Events.DESCRIPTION, episodeTitle);
 
-        long beginTime = TimeTools.getEpisodeReleaseTime(context, episodeReleaseTime).getTime();
+        long beginTime = TimeTools.applyUserOffset(context, episodeReleaseTime).getTime();
         long endTime = beginTime + showRunTime * DateUtils.MINUTE_IN_MILLIS;
         intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime);
         intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime);

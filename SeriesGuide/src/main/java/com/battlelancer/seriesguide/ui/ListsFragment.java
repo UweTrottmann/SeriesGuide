@@ -234,10 +234,10 @@ public class ListsFragment extends Fragment implements
                     long releaseTime = cursor.getLong(ListItemsQuery.SHOW_OR_EPISODE_RELEASE_TIME);
                     if (releaseTime != -1) {
                         // "in 15 mins (Fri)"
-                        Date actualRelease = TimeTools.getEpisodeReleaseTime(context, releaseTime);
+                        Date actualRelease = TimeTools.applyUserOffset(context, releaseTime);
                         viewHolder.episodeTime.setText(getString(R.string.release_date_and_day,
-                                TimeTools.formatToRelativeLocalReleaseTime(context, actualRelease),
-                                TimeTools.formatToLocalReleaseDay(actualRelease)));
+                                TimeTools.formatToLocalRelativeTime(context, actualRelease),
+                                TimeTools.formatToLocalDay(actualRelease)));
                     }
                     break;
             }

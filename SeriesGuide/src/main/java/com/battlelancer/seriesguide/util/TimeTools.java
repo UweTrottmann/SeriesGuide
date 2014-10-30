@@ -40,7 +40,7 @@ import org.joda.time.format.ISODateTimeFormat;
 import timber.log.Timber;
 
 /**
- * Helps with converting timestamps used by TVDb and other services.
+ * Helper tools for converting and formatting date times for shows and episodes.
  */
 public class TimeTools {
 
@@ -84,6 +84,16 @@ public class TimeTools {
     private static final DateTimeFormatter TVDB_DATE_FORMATTER = ISODateTimeFormat.date();
 
     /**
+     * Returns the appropriate time zone for the given tzdata zone identifier.
+     *
+     * <p> Falls back to "America/New_York" if timezone string is empty.
+     */
+    public static DateTimeZone getDateTimeZone(@Nullable String timezone) {
+        return (timezone == null || timezone.length() == 0) ?
+                DateTimeZone.forID(TIMEZONE_ID_US_EASTERN) : DateTimeZone.forID(timezone);
+    }
+
+    /**
      * Parses a ISO 8601 time string (e.g. "20:30") and encodes it into an integer with format
      * "hhmm" (e.g. 2030).
      *
@@ -100,6 +110,40 @@ public class TimeTools {
 
         // return int encoded time, e.g. hhmm (2030)
         return hour * 100 + minute;
+    }
+
+    /**
+     * Converts US week day string to {@link org.joda.time.DateTimeConstants} day.
+     *
+     * <p> Returns -1 if no conversion is possible and 0 if it is "Daily".
+     */
+    public static int parseShowReleaseWeekDay(String day) {
+        if (day == null || day.length() == 0) {
+            return -1;
+        }
+
+        // catch Monday through Sunday
+        switch (day) {
+            case "Monday":
+                return DateTimeConstants.MONDAY;
+            case "Tuesday":
+                return DateTimeConstants.TUESDAY;
+            case "Wednesday":
+                return DateTimeConstants.WEDNESDAY;
+            case "Thursday":
+                return DateTimeConstants.THURSDAY;
+            case "Friday":
+                return DateTimeConstants.FRIDAY;
+            case "Saturday":
+                return DateTimeConstants.SATURDAY;
+            case "Sunday":
+                return DateTimeConstants.SUNDAY;
+            case "Daily":
+                return 0;
+        }
+
+        // no match
+        return -1;
     }
 
     /**
@@ -151,19 +195,6 @@ public class TimeTools {
     }
 
     /**
-     * Handles DST gap (typically a missing clock hour when DST is getting enabled) by moving the
-     * time forward in hour increments until the local date time is outside the gap.
-     */
-    private static LocalDateTime handleDstGap(DateTimeZone showTimeZone,
-            LocalDateTime localDateTime) {
-        while (showTimeZone.isLocalDateTimeGap(localDateTime)) {
-            // move time forward in 1 hour increments, until outside of the gap
-            localDateTime = localDateTime.plusHours(1);
-        }
-        return localDateTime;
-    }
-
-    /**
      * Creates the show release time from a {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows#RELEASE_TIME}
      * encoded value.
      *
@@ -184,24 +215,15 @@ public class TimeTools {
     }
 
     /**
-     * Returns the appropriate time zone for the given tzdata zone identifier.
-     *
-     * <p> Falls back to "America/New_York" if timezone string is empty.
-     */
-    public static DateTimeZone getDateTimeZone(@Nullable String timezone) {
-        return (timezone == null || timezone.length() == 0) ?
-                DateTimeZone.forID(TIMEZONE_ID_US_EASTERN) : DateTimeZone.forID(timezone);
-    }
-
-    /**
-     * Calculates the current release time as a millisecond instant. Adjusts for time zone effects
-     * on release time, e.g. delays between time zones (e.g. in the United States) and DST.
+     * Calculates the current release date time. Adjusts for time zone effects on release time, e.g.
+     * delays between time zones (e.g. in the United States) and DST. Adjusts for user-defined
+     * offset.
      *
      * @param time See {@link #getShowReleaseTime(int)}.
      * @return The date is today or on the next day matching the given week day.
      */
-    public static long getShowReleaseInstant(@Nonnull LocalTime time, int weekDay,
-            @Nullable String timeZone, @Nullable String country) {
+    public static Date getShowReleaseDateTime(@Nonnull Context context, @Nonnull LocalTime time,
+            int weekDay, @Nullable String timeZone, @Nullable String country) {
         // determine show time zone (falls back to America/New_York)
         DateTimeZone showTimeZone = getDateTimeZone(timeZone);
 
@@ -229,7 +251,9 @@ public class TimeTools {
             dateTime = applyUnitedStatesCorrections(country, localTimeZone, dateTime);
         }
 
-        return dateTime.getMillis();
+        dateTime = applyUserOffset(context, dateTime);
+
+        return dateTime.toDate();
     }
 
     /**
@@ -290,162 +314,16 @@ public class TimeTools {
     }
 
     /**
-     * Converts US week day string to {@link org.joda.time.DateTimeConstants} day.
-     *
-     * <p> Returns -1 if no conversion is possible and 0 if it is "Daily".
+     * Handles DST gap (typically a missing clock hour when DST is getting enabled) by moving the
+     * time forward in hour increments until the local date time is outside the gap.
      */
-    public static int parseDayOfWeek(String day) {
-        if (day == null || day.length() == 0) {
-            return -1;
+    private static LocalDateTime handleDstGap(DateTimeZone showTimeZone,
+            LocalDateTime localDateTime) {
+        while (showTimeZone.isLocalDateTimeGap(localDateTime)) {
+            // move time forward in 1 hour increments, until outside of the gap
+            localDateTime = localDateTime.plusHours(1);
         }
-
-        // catch Monday through Sunday
-        switch (day) {
-            case "Monday":
-                return DateTimeConstants.MONDAY;
-            case "Tuesday":
-                return DateTimeConstants.TUESDAY;
-            case "Wednesday":
-                return DateTimeConstants.WEDNESDAY;
-            case "Thursday":
-                return DateTimeConstants.THURSDAY;
-            case "Friday":
-                return DateTimeConstants.FRIDAY;
-            case "Saturday":
-                return DateTimeConstants.SATURDAY;
-            case "Sunday":
-                return DateTimeConstants.SUNDAY;
-            case "Daily":
-                return 0;
-        }
-
-        // no match
-        return -1;
-    }
-
-    /**
-     * Takes the UTC millisecond instant of an episode release time (see {@link
-     * #parseEpisodeReleaseDate}) and adds user-set offsets.
-     */
-    public static Date getEpisodeReleaseTime(Context context, long releaseTime) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(releaseTime);
-
-        setUserOffset(context, calendar);
-
-        return calendar.getTime();
-    }
-
-    /**
-     * Returns the current system time with inverted user-set offsets applied.
-     */
-    public static long getCurrentTime(Context context) {
-        Calendar calendar = Calendar.getInstance();
-
-        setUserOffsetInverted(context, calendar);
-
-        return calendar.getTimeInMillis();
-    }
-
-    /**
-     * Formats to the week day abbreviation (e.g. "Mon") as defined by the devices local.
-     */
-    public static String formatToLocalReleaseDay(Date actualRelease) {
-        SimpleDateFormat localDayFormat = new SimpleDateFormat("E", Locale.getDefault());
-        return localDayFormat.format(actualRelease);
-    }
-
-    /**
-     * Formats to the week day abbreviation (e.g. "Mon") as defined by the devices local. If the
-     * given weekDay is 0, returns the local version of "Daily".
-     */
-    public static String formatToLocalReleaseDay(Context context, Date actualRelease, int weekDay) {
-        if (weekDay == RELEASE_WEEKDAY_DAILY) {
-            return context.getString(R.string.daily);
-        }
-        return formatToLocalReleaseDay(actualRelease);
-    }
-
-    /**
-     * Formats to absolute time format (e.g. "08:00 PM") as defined by the devices locale.
-     */
-    public static String formatToLocalReleaseTime(Context context, Date actualRelease) {
-        java.text.DateFormat localTimeFormat = DateFormat.getTimeFormat(context);
-        return localTimeFormat.format(actualRelease);
-    }
-
-    /**
-     * Formats to relative time in relation to the current system time (e.g. "in 12 min") as defined
-     * by the devices locale. If the time difference is lower than a minute, returns the localized
-     * equivalent of "now".
-     */
-    public static String formatToRelativeLocalReleaseTime(Context context, Date actualRelease) {
-        long now = System.currentTimeMillis();
-        long releaseTime = actualRelease.getTime();
-
-        // if we are below the resolution of getRelativeTimeSpanString, return "now"
-        if (Math.abs(now - releaseTime) < DateUtils.MINUTE_IN_MILLIS) {
-            return context.getString(R.string.now);
-        }
-
-        return DateUtils
-                .getRelativeTimeSpanString(releaseTime, now, DateUtils.MINUTE_IN_MILLIS,
-                        DateUtils.FORMAT_ABBREV_ALL).toString();
-    }
-
-    /**
-     * Formats to day and relative time in relation to the current system time (e.g. "Mon in 3
-     * days") as defined by the devices locale. If the time is today, returns the local equivalent
-     * for "today".
-     */
-    public static String formatToDayAndRelativeTime(Context context, Date actualRelease) {
-        StringBuilder timeAndDay = new StringBuilder();
-
-        timeAndDay.append(formatToLocalReleaseDay(actualRelease));
-
-        timeAndDay.append(" ");
-
-        // Show 'today' instead of '0 days ago'
-        if (DateUtils.isToday(actualRelease.getTime())) {
-            timeAndDay.append(context.getString(R.string.today));
-        } else {
-            timeAndDay.append(DateUtils
-                    .getRelativeTimeSpanString(
-                            actualRelease.getTime(),
-                            System.currentTimeMillis(),
-                            DateUtils.DAY_IN_MILLIS,
-                            DateUtils.FORMAT_ABBREV_ALL));
-        }
-
-        return timeAndDay.toString();
-    }
-
-    /**
-     * Formats to a date and time zone (e.g. "2014/02/04 CET") as defined by the devices locale. If
-     * the time is today, the date is prefixed with the local equivalent of "today, ".
-     */
-    public static String formatToDate(Context context, Date actualRelease) {
-        StringBuilder date = new StringBuilder();
-
-        // date, e.g. "2014/05/31"
-        date.append(DateFormat.getDateFormat(context).format(actualRelease));
-
-        date.append(" ");
-
-        // time zone, e.g. "CEST"
-        TimeZone timeZone = TimeZone.getDefault();
-        date.append(timeZone.getDisplayName(timeZone.inDaylightTime(actualRelease), TimeZone.SHORT,
-                Locale.getDefault()));
-
-        // Show 'today' instead of e.g. 'Mon'
-        String day;
-        if (DateUtils.isToday(actualRelease.getTime())) {
-            day = context.getString(R.string.today);
-        } else {
-            day = formatToLocalReleaseDay(actualRelease);
-        }
-
-        return context.getString(R.string.release_date_and_day, date.toString(), day);
+        return localDateTime;
     }
 
     /**
@@ -478,15 +356,143 @@ public class TimeTools {
         }
     }
 
-    private static void setUserOffset(Context context, Calendar calendar) {
-        int offset = getUserOffset(context);
+    /**
+     * Returns the current system time with inverted user-set offsets applied.
+     */
+    public static long getCurrentTime(Context context) {
+        Calendar calendar = Calendar.getInstance();
 
-        if (offset != 0) {
-            calendar.add(Calendar.HOUR_OF_DAY, offset);
-        }
+        applyUserOffsetInverted(context, calendar);
+
+        return calendar.getTimeInMillis();
     }
 
-    private static void setUserOffsetInverted(Context context, Calendar calendar) {
+    /**
+     * Formats to the week day abbreviation (e.g. "Mon") as defined by the devices locale.
+     */
+    public static String formatToLocalDay(Date dateTime) {
+        SimpleDateFormat localDayFormat = new SimpleDateFormat("E", Locale.getDefault());
+        return localDayFormat.format(dateTime);
+    }
+
+    /**
+     * Formats to the week day abbreviation (e.g. "Mon") as defined by the devices locale. If the
+     * given weekDay is 0, returns the local version of "Daily".
+     */
+    public static String formatToLocalDayOrDaily(Context context, Date dateTime, int weekDay) {
+        if (weekDay == RELEASE_WEEKDAY_DAILY) {
+            return context.getString(R.string.daily);
+        }
+        return formatToLocalDay(dateTime);
+    }
+
+    /**
+     * Formats to absolute time format (e.g. "08:00 PM") as defined by the devices locale.
+     */
+    public static String formatToLocalTime(Context context, Date dateTime) {
+        java.text.DateFormat localTimeFormat = DateFormat.getTimeFormat(context);
+        return localTimeFormat.format(dateTime);
+    }
+
+    /**
+     * Formats to relative time in relation to the current system time (e.g. "in 12 min") as defined
+     * by the devices locale. If the time difference is lower than a minute, returns the localized
+     * equivalent of "now".
+     */
+    public static String formatToLocalRelativeTime(Context context, Date dateTime) {
+        long now = System.currentTimeMillis();
+        long dateTimeInstant = dateTime.getTime();
+
+        // if we are below the resolution of getRelativeTimeSpanString, return "now"
+        if (Math.abs(now - dateTimeInstant) < DateUtils.MINUTE_IN_MILLIS) {
+            return context.getString(R.string.now);
+        }
+
+        return DateUtils
+                .getRelativeTimeSpanString(dateTimeInstant, now, DateUtils.MINUTE_IN_MILLIS,
+                        DateUtils.FORMAT_ABBREV_ALL).toString();
+    }
+
+    /**
+     * Formats to day and relative time in relation to the current system time (e.g. "Mon in 3
+     * days") as defined by the devices locale. If the time is today, returns the local equivalent
+     * for "today".
+     */
+    public static String formatToLocalDayAndRelativeTime(Context context, Date dateTime) {
+        StringBuilder dayAndTime = new StringBuilder();
+
+        // day abbreviation, e.g. "Mon"
+        dayAndTime.append(formatToLocalDay(dateTime));
+        dayAndTime.append(" ");
+
+        // relative time to dateTime, "today" or e.g. "3 days ago"
+        if (DateUtils.isToday(dateTime.getTime())) {
+            // show 'today' instead of '0 days ago'
+            dayAndTime.append(context.getString(R.string.today));
+        } else {
+            dayAndTime.append(DateUtils
+                    .getRelativeTimeSpanString(
+                            dateTime.getTime(),
+                            System.currentTimeMillis(),
+                            DateUtils.DAY_IN_MILLIS,
+                            DateUtils.FORMAT_ABBREV_ALL));
+        }
+
+        return dayAndTime.toString();
+    }
+
+    /**
+     * Formats to a date, time zone and week day (e.g. "2014/02/04 CET (Mon)") as defined by the
+     * devices locale. If the date time is today, uses the local equivalent of "today" instead of a
+     * week day.
+     */
+    public static String formatToLocalDateAndDay(Context context, Date dateTime) {
+        StringBuilder date = new StringBuilder();
+
+        // date, e.g. "2014/05/31"
+        date.append(DateFormat.getDateFormat(context).format(dateTime));
+        date.append(" ");
+
+        // device time zone, e.g. "CEST"
+        TimeZone timeZone = TimeZone.getDefault();
+        date.append(timeZone.getDisplayName(timeZone.inDaylightTime(dateTime), TimeZone.SHORT,
+                Locale.getDefault()));
+
+        //
+        // Show 'today' instead of e.g. 'Mon'
+        String day;
+        if (DateUtils.isToday(dateTime.getTime())) {
+            day = context.getString(R.string.today);
+        } else {
+            day = formatToLocalDay(dateTime);
+        }
+
+        return context.getString(R.string.release_date_and_day, date.toString(), day);
+    }
+
+    /**
+     * Returns a date time equal to the given date time plus the user-defined offset.
+     */
+    private static DateTime applyUserOffset(Context context, DateTime dateTime) {
+        int offset = getUserOffset(context);
+        if (offset != 0) {
+            dateTime = dateTime.plusHours(offset);
+        }
+        return dateTime;
+    }
+
+    /**
+     * Takes a millisecond date time instant and adds the user-defined offset.
+     *
+     * <p> Typically required for episode date times stored in the database before formatting them
+     * for display.
+     */
+    public static Date applyUserOffset(Context context, long releaseInstant) {
+        DateTime dateTime = new DateTime(releaseInstant);
+        return applyUserOffset(context, dateTime).toDate();
+    }
+
+    private static void applyUserOffsetInverted(Context context, Calendar calendar) {
         int offset = getUserOffset(context);
 
         // invert

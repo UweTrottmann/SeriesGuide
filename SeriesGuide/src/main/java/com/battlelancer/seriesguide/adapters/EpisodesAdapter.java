@@ -166,10 +166,10 @@ public class EpisodesAdapter extends CursorAdapter {
         // release time
         final long releaseTime = mCursor.getLong(EpisodesQuery.FIRSTAIREDMS);
         if (releaseTime != -1) {
-            Date actualRelease = TimeTools.getEpisodeReleaseTime(mContext, releaseTime);
+            Date actualRelease = TimeTools.applyUserOffset(mContext, releaseTime);
             // "in 15 mins" or "15 July 2001"
             viewHolder.episodeAirdate
-                    .setText(TimeTools.formatToRelativeLocalReleaseTime(mContext, actualRelease));
+                    .setText(TimeTools.formatToLocalRelativeTime(mContext, actualRelease));
         } else {
             viewHolder.episodeAirdate.setText(mContext
                     .getString(R.string.episode_firstaired_unknown));
