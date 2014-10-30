@@ -32,8 +32,12 @@ import javax.annotation.Nullable;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
+import timber.log.Timber;
 
 /**
  * Helps with converting timestamps used by TVDb and other services.
@@ -77,6 +81,8 @@ public class TimeTools {
     private static final DateTimeFormatter DATE_TIME_FORMATTER_UTC
             = ISODateTimeFormat.dateTime().withZoneUTC();
 
+    private static final DateTimeFormatter TVDB_DATE_FORMATTER = ISODateTimeFormat.date();
+
     /**
      * Parses a ISO 8601 time string (e.g. "20:30") and encodes it into an integer with format
      * "hhmm" (e.g. 2030).
@@ -104,34 +110,77 @@ public class TimeTools {
     }
 
     /**
-     * Calculates the episode release time as a millisecond instant. Adjusts for time zone effects
-     * on release time, e.g. delays between time zones (e.g. in the United States) and DST.
+     * Calculates the episode release date time as a millisecond instant. Adjusts for time zone
+     * effects on release time, e.g. delays between time zones (e.g. in the United States) and DST.
      *
+     * @param showTimeZone See {@link #getDateTimeZone(String)}.
+     * @param showReleaseTime See {@link #getShowReleaseTime(int)}.
      * @return -1 if no conversion was possible. Otherwise, any other long value (may be negative!).
      */
-    public static long parseEpisodeReleaseTime(@Nonnull DateTimeFormatter formatter,
-            @Nullable String releaseDate, int showReleaseTime, @Nullable String country,
-            @Nonnull String deviceTimeZone) {
+    public static long parseEpisodeReleaseDate(@Nonnull DateTimeZone showTimeZone,
+            @Nullable String releaseDate, @Nonnull LocalTime showReleaseTime,
+            @Nullable String showCountry, @Nonnull String deviceTimeZone) {
         if (releaseDate == null || releaseDate.length() == 0) {
             return -1;
         }
 
         // get date
-        DateTime dateTime = formatter.parseDateTime(releaseDate);
-
-        // set time if available
-        if (showReleaseTime != -1) {
-            int hour = showReleaseTime / 100;
-            int minute = showReleaseTime - (hour * 100);
-            dateTime = dateTime.withTime(hour, minute, 0, 0);
+        LocalDate localDate;
+        try {
+            localDate = TVDB_DATE_FORMATTER.parseLocalDate(releaseDate);
+        } catch (IllegalArgumentException e) {
+            // date string could not be parsed
+            Timber.e(e, "TheTVDB date could not be parsed: " + releaseDate);
+            return -1;
         }
+
+        // set time
+        LocalDateTime localDateTime = localDate.toLocalDateTime(showReleaseTime);
+
+        localDateTime = handleDstGap(showTimeZone, localDateTime);
+
+        // finally get a valid datetime in the show time zone
+        DateTime dateTime = localDateTime.toDateTime(showTimeZone);
 
         // handle time zone effects on release time for US shows (only if device is set to US zone)
         if (deviceTimeZone.startsWith(TIMEZONE_ID_PREFIX_AMERICA)) {
-            dateTime = applyUnitedStatesCorrections(country, deviceTimeZone, dateTime);
+            dateTime = applyUnitedStatesCorrections(showCountry, deviceTimeZone, dateTime);
         }
 
         return dateTime.getMillis();
+    }
+
+    /**
+     * Handles DST gap (typically a missing clock hour when DST is getting enabled) by moving the
+     * time forward in hour increments until the local date time is outside the gap.
+     */
+    private static LocalDateTime handleDstGap(DateTimeZone showTimeZone,
+            LocalDateTime localDateTime) {
+        while (showTimeZone.isLocalDateTimeGap(localDateTime)) {
+            // move time forward in 1 hour increments, until outside of the gap
+            localDateTime = localDateTime.plusHours(1);
+        }
+        return localDateTime;
+    }
+
+    /**
+     * Creates the show release time from a {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows#RELEASE_TIME}
+     * encoded value.
+     *
+     * <p> If the encoded time passed is not from 0 to 2359 or the encoded minute is larger than 59,
+     * a sensible default is returned.
+     */
+    public static LocalTime getShowReleaseTime(int showReleaseTime) {
+        if (showReleaseTime >= 0 || showReleaseTime <= 2359) {
+            int hour = showReleaseTime / 100;
+            int minute = showReleaseTime - (hour * 100);
+            if (minute <= 59) {
+                return new LocalTime(hour, minute);
+            }
+        }
+
+        // if no time is available, use a sensible default
+        return new LocalTime(7, 0);
     }
 
     /**
@@ -139,51 +188,39 @@ public class TimeTools {
      *
      * <p> Falls back to "America/New_York" if timezone string is empty.
      */
-    private static DateTimeZone getDateTimeZone(@Nullable String timezone) {
+    public static DateTimeZone getDateTimeZone(@Nullable String timezone) {
         return (timezone == null || timezone.length() == 0) ?
                 DateTimeZone.forID(TIMEZONE_ID_US_EASTERN) : DateTimeZone.forID(timezone);
-    }
-
-    /**
-     * Create a date formatter for TheTVDB. Cache and re-use with {@link #parseEpisodeReleaseTime}.
-     */
-    public static DateTimeFormatter getTvdbDateFormatter(@Nullable String timeZone) {
-        return ISODateTimeFormat.date().withZone(getDateTimeZone(timeZone));
     }
 
     /**
      * Calculates the current release time as a millisecond instant. Adjusts for time zone effects
      * on release time, e.g. delays between time zones (e.g. in the United States) and DST.
      *
-     * @return -1 if no conversion was possible. The date is today or on the next day matching the
-     * given week day.
+     * @param time See {@link #getShowReleaseTime(int)}.
+     * @return The date is today or on the next day matching the given week day.
      */
-    public static long getShowReleaseTime(int time, int weekDay, @Nullable String timezone,
-            @Nullable String country) {
-        // no time, no fun. also catch old ms format.
-        if (time == -1 || time > 2359) {
-            return -1;
-        }
+    public static long getShowReleaseInstant(@Nonnull LocalTime time, int weekDay,
+            @Nullable String timeZone, @Nullable String country) {
+        // determine show time zone (falls back to America/New_York)
+        DateTimeZone showTimeZone = getDateTimeZone(timeZone);
 
-        // extract hour and minute
-        int hour = time / 100;
-        int minute = time - (hour * 100);
-
-        // determine time zone (fall back to America/New_York)
-        DateTimeZone timeZone = getDateTimeZone(timezone);
-
-        // get current datetime
-        DateTime dateTime = new DateTime().withZone(timeZone).withTime(hour, minute, 0, 0);
+        // create current date in show time zone, set local show release time
+        LocalDateTime localDateTime = new LocalDate(showTimeZone).toLocalDateTime(time);
 
         // adjust day of week so datetime is today or within the next week
         if (weekDay >= 1 && weekDay <= 7) {
             // joda tries to preserve week
             // so if we want a week day earlier in the week, advance by 7 days first
-            if (weekDay < dateTime.getDayOfWeek()) {
-                dateTime = dateTime.plusWeeks(1);
+            if (weekDay < localDateTime.getDayOfWeek()) {
+                localDateTime = localDateTime.plusWeeks(1);
             }
-            dateTime = dateTime.withDayOfWeek(weekDay);
+            localDateTime = localDateTime.withDayOfWeek(weekDay);
         }
+
+        localDateTime = handleDstGap(showTimeZone, localDateTime);
+
+        DateTime dateTime = localDateTime.toDateTime(showTimeZone);
 
         // handle time zone effects on release time for US shows (only if device is set to US zone)
         String localTimeZone = TimeZone.getDefault().getID();
@@ -285,7 +322,7 @@ public class TimeTools {
 
     /**
      * Takes the UTC millisecond instant of an episode release time (see {@link
-     * #parseEpisodeReleaseTime}) and adds user-set offsets.
+     * #parseEpisodeReleaseDate}) and adds user-set offsets.
      */
     public static Date getEpisodeReleaseTime(Context context, long releaseTime) {
         Calendar calendar = Calendar.getInstance();

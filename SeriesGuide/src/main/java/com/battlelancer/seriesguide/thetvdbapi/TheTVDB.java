@@ -57,7 +57,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.zip.ZipInputStream;
-import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalTime;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import retrofit.RetrofitError;
@@ -523,8 +524,8 @@ public class TheTVDB {
             Context context) throws TvdbException {
         final long dateLastMonthEpoch = (System.currentTimeMillis()
                 - (DateUtils.DAY_IN_MILLIS * 30)) / 1000;
-        final DateTimeFormatter tvdbDateFormatter = TimeTools.getTvdbDateFormatter(
-                show.release_timezone);
+        final DateTimeZone showTimeZone = TimeTools.getDateTimeZone(show.release_timezone);
+        final LocalTime showReleaseTime = TimeTools.getShowReleaseTime(show.release_time);
         final String deviceTimeZone = TimeZone.getDefault().getID();
 
         RootElement root = new RootElement("Data");
@@ -611,9 +612,9 @@ public class TheTVDB {
                 }
         );
         episode.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                long releaseDateTime = TimeTools.parseEpisodeReleaseTime(tvdbDateFormatter, body,
-                        show.release_time, show.country, deviceTimeZone);
+            public void end(String releaseDate) {
+                long releaseDateTime = TimeTools.parseEpisodeReleaseDate(showTimeZone, releaseDate,
+                        showReleaseTime, show.country, deviceTimeZone);
                 values.put(Episodes.FIRSTAIREDMS, releaseDateTime);
             }
         });

@@ -849,13 +849,14 @@ public class OverviewFragment extends Fragment implements
 
         // next release day and time
         StringBuilder timeAndNetwork = new StringBuilder();
-        long release = TimeTools.getShowReleaseTime(
-                show.getInt(ShowQuery.SHOW_RELEASE_TIME),
-                show.getInt(ShowQuery.SHOW_RELEASE_WEEKDAY),
-                show.getString(ShowQuery.SHOW_RELEASE_TIMEZONE),
-                show.getString(ShowQuery.SHOW_RELEASE_COUNTRY));
-        if (release != -1) {
-            Date date = new Date(release);
+        int releaseTime = show.getInt(ShowQuery.SHOW_RELEASE_TIME);
+        if (releaseTime != -1) {
+            long releaseInstant = TimeTools.getShowReleaseInstant(
+                    TimeTools.getShowReleaseTime(releaseTime),
+                    show.getInt(ShowQuery.SHOW_RELEASE_WEEKDAY),
+                    show.getString(ShowQuery.SHOW_RELEASE_TIMEZONE),
+                    show.getString(ShowQuery.SHOW_RELEASE_COUNTRY));
+            Date date = new Date(releaseInstant);
             String dayString = TimeTools.formatToLocalReleaseDay(date);
             String timeString = TimeTools.formatToLocalReleaseTime(getActivity(), date);
             // "Mon 08:30"

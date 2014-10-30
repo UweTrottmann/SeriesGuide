@@ -309,13 +309,14 @@ public class ShowFragment extends Fragment {
 
         // next release day and time
         String releaseCountry = mShowCursor.getString(ShowQuery.RELEASE_COUNTRY);
-        long release = TimeTools.getShowReleaseTime(
-                mShowCursor.getInt(ShowQuery.RELEASE_TIME),
-                mShowCursor.getInt(ShowQuery.RELEASE_WEEKDAY),
-                mShowCursor.getString(ShowQuery.RELEASE_TIMEZONE),
-                releaseCountry);
-        if (release != -1) {
-            Date date = new Date(release);
+        int releaseTime = mShowCursor.getInt(ShowQuery.RELEASE_TIME);
+        if (releaseTime != -1) {
+            long releaseInstant = TimeTools.getShowReleaseInstant(
+                    TimeTools.getShowReleaseTime(releaseTime),
+                    mShowCursor.getInt(ShowQuery.RELEASE_WEEKDAY),
+                    mShowCursor.getString(ShowQuery.RELEASE_TIMEZONE),
+                    releaseCountry);
+            Date date = new Date(releaseInstant);
             String dayString = TimeTools.formatToLocalReleaseDay(date);
             String timeString = TimeTools.formatToLocalReleaseTime(getActivity(), date);
             mTextViewReleaseTime.setText(dayString + " " + timeString);

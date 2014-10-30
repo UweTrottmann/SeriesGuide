@@ -26,7 +26,7 @@ public class TimeToolsTest extends TestCase {
         // so this test will likely not break if DST rules change)
         String showTimeZone = AMERICA_NEW_YORK;
         String deviceTimeZone = AMERICA_LOS_ANGELES;
-        long episodeReleaseTime = TimeTools.parseEpisodeReleaseTime(
+        long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(
                 TimeTools.getTvdbDateFormatter(showTimeZone),
                 "2013-05-31",
                 2000, // 20:00
@@ -43,7 +43,7 @@ public class TimeToolsTest extends TestCase {
         // so this test will likely not break if DST rules change)
         String showTimeZone = EUROPE_BERLIN;
         String deviceTimeZone = AMERICA_LOS_ANGELES;
-        long episodeReleaseTime = TimeTools.parseEpisodeReleaseTime(
+        long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(
                 TimeTools.getTvdbDateFormatter(showTimeZone),
                 "2013-05-31",
                 2000, // 20:00
@@ -60,7 +60,7 @@ public class TimeToolsTest extends TestCase {
         // this is common for late night shows, e.g. "Monday night" is technically "early Tuesday"
         String showTimeZone = AMERICA_NEW_YORK;
         String deviceTimeZone = AMERICA_LOS_ANGELES;
-        long episodeReleaseTime = TimeTools.parseEpisodeReleaseTime(
+        long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(
                 TimeTools.getTvdbDateFormatter(showTimeZone),
                 "2013-05-31",
                 35, // 00:35
