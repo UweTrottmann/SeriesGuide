@@ -21,6 +21,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.provider.CalendarContract;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.app.ShareCompat.IntentBuilder;
 import android.text.format.DateUtils;
@@ -83,17 +84,20 @@ public class ShareUtils {
         return Utils.getNextEpisodeString(context, season, number, title);
     }
 
-    public static void onAddCalendarEvent(Context context, String showTitle, String episodeTitle,
+    /**
+     * Launches a calendar insert intent for the given episode.
+     */
+    public static void suggestCalendarEvent(Context context, String showTitle, String episodeTitle,
             long episodeReleaseTime, int showRunTime) {
-        Intent intent = new Intent(Intent.ACTION_EDIT);
-        intent.setType("vnd.android.cursor.item/event");
-        intent.putExtra("title", showTitle);
-        intent.putExtra("description", episodeTitle);
+        Intent intent = new Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.Events.TITLE, showTitle)
+                .putExtra(CalendarContract.Events.DESCRIPTION, episodeTitle);
 
-        long startTime = TimeTools.getEpisodeReleaseTime(context, episodeReleaseTime).getTime();
-        long endTime = startTime + showRunTime * DateUtils.MINUTE_IN_MILLIS;
-        intent.putExtra("beginTime", startTime);
-        intent.putExtra("endTime", endTime);
+        long beginTime = TimeTools.getEpisodeReleaseTime(context, episodeReleaseTime).getTime();
+        long endTime = beginTime + showRunTime * DateUtils.MINUTE_IN_MILLIS;
+        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime);
+        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime);
 
         if (!Utils.tryStartActivity(context, intent, false)) {
             Toast.makeText(context, context.getString(R.string.addtocalendar_failed),

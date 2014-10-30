@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="88dp"
         android:layout_weight="1"
-        android:background="?custom_list_selector"
+        android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true">
 
@@ -51,20 +51,14 @@
 
     </RelativeLayout>
 
-    <include
-        layout="@layout/divider_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="88dp" />
-
     <ImageView
         android:id="@+id/addbutton"
-        android:layout_width="wrap_content"
+        android:layout_width="48dp"
         android:layout_height="88dp"
-        android:padding="@dimen/default_padding"
-        android:background="?custom_list_selector"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
-        android:contentDescription="@string/action_shows_filter"
+        android:contentDescription="@string/action_shows_add"
         android:scaleType="centerInside"
         android:src="?attr/drawableAddIcon" />
 

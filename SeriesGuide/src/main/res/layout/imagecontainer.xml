@@ -4,8 +4,8 @@
     android:id="@+id/containerEpisodeImage"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorBackgroundDim"
-    android:foreground="?attr/custom_list_selector"
+    android:background="?attr/sgColorBackgroundDim"
+    android:foreground="?attr/selectableItemBackground"
     tools:ignore="Overdraw">
 
     <ImageView

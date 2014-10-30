@@ -16,9 +16,9 @@
 
 package com.battlelancer.seriesguide.extensions;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.SeriesGuideExtension;
@@ -34,8 +34,7 @@ public class ExtensionsConfigurationActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_extensions_configure);
-
+        setContentView(R.layout.activity_singlepane);
         setupActionBar();
 
         if (getIntent().hasExtra(SeriesGuideExtension.EXTRA_FROM_SERIESGUIDE_SETTINGS)) {
@@ -56,8 +55,10 @@ public class ExtensionsConfigurationActivity extends BaseActivity {
         }
     }
 
-    private void setupActionBar() {
-        ActionBar actionBar = getActionBar();
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.action_extensions_configure);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }

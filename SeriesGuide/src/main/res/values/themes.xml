@@ -1,58 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme"/>
+    <style name="Theme" />
+
+    <style name="Theme.BaseSeriesGuide" parent="Theme.AppCompat.NoActionBar">
+
+        <!-- All customizations that are SPECIFIC to API-level 15+ go here. -->
+
+        <!-- Special attributes -->
+        <item name="selectableItemBackground">@drawable/list_selector_sg</item>
+        <item name="sgDrawerItemBackground">@drawable/list_selector_sg</item>
+
+        <!-- System widgets -->
+        <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
+        <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
+        <item name="android:progressBarStyleHorizontal">@style/Widget.SeriesGuide.ProgressBar</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
+        <item name="android:editTextBackground">@drawable/edit_text_sg</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
+
+        <!-- Fast scroll thumb -->
+        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_sg</item>
+
+    </style>
 
     <!-- SeriesGuides default theme -->
-    <style name="Theme.SeriesGuide" parent="android:Theme.Holo">
+    <style name="Theme.SeriesGuide" parent="Theme.BaseSeriesGuide">
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+
+        <!--   your app's branding color (for the app bar) -->
+        <item name="colorPrimary">@color/accent_primary</item>
+        <!--   darker variant of colorPrimary (for status bar, contextual app bars) -->
+        <item name="colorPrimaryDark">@color/accent_primary_dark</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="colorAccent">@color/accent_primary</item>
 
         <!-- Windows -->
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
 
-        <!-- System widgets -->
-        <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
-        <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
-        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
-        <item name="android:progressBarStyleHorizontal">@style/ProgressBar</item>
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
-        <item name="android:editTextBackground">@drawable/edit_text_sg</item>
-        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
-        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_sg</item>
-
         <!-- Action bar -->
-        <item name="android:actionBarStyle">@style/ActionBar</item>
-        <item name="android:actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
-        <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
-        <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_ab_back_sg</item>
-
-        <!-- Fast scroll thumb -->
-        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
-
-        <!-- Special attributes -->
-        <item name="custom_list_selector">@drawable/list_selector_sg</item>
-        <item name="tabStripBackground">@drawable/tab_strip_background_sg</item>
 
         <!-- Colors -->
         <item name="textColorSgDefault">@color/black_11</item>
         <item name="textColorSgPrimary">@color/text_primary_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
-        <item name="textColorSgGreen">@color/green_dark</item>
+        <item name="textColorSgGreen">@color/teal_dark</item>
         <item name="textColorSgDim">@color/text_dim</item>
-        <item name="textColorSgActionBar">@color/text_primary_sg</item>
-        <item name="colorAccent">@color/accent_primary</item>
-        <item name="colorBackgroundDim">@color/background_dim</item>
-        <item name="colorSeparator">@color/separator</item>
-        <item name="colorDivider">@color/divider</item>
-        <item name="colorTabStripText">@color/text_default</item>
-        <item name="colorTabStripUnderline">@color/background_dim</item>
-        <item name="colorBackgroundDrawer">@color/background_navbar</item>
+        <item name="sgColorBackgroundDim">@color/background_dim</item>
+        <item name="sgColorSeparator">@color/separator</item>
+        <item name="sgColorDivider">@color/divider</item>
+        <item name="sgColorTabStripText">@color/text_default</item>
+        <item name="sgColorTabStripUnderline">@color/background_dim</item>
+        <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
 
         <!-- Color Arrays -->
         <item name="colorsProgressBar">@array/progressBarColors</item>
@@ -61,16 +66,20 @@
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
         <item name="drawableCardBackground">@drawable/card_background</item>
         <item name="drawableDivider">@drawable/divider</item>
-        <item name="drawableStar">@drawable/ic_action_star_10</item>
-        <item name="drawableStar0">@drawable/ic_action_star_0</item>
+        <item name="drawableStar">@drawable/ic_action_star</item>
+        <item name="drawableStar0">@drawable/ic_action_star_outline</item>
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu</item>
         <item name="drawableCheckin">@drawable/ic_action_checkin</item>
         <item name="drawableWatch">@drawable/ic_action_tick</item>
+        <item name="drawableWatchAll">@drawable/ic_action_watch_all</item>
+        <item name="drawableWatched">@drawable/ic_ticked</item>
+        <item name="drawableWatchedAll">@drawable/ic_watched_all</item>
         <item name="drawableCollect">@drawable/ic_action_collect</item>
+        <item name="drawableCollectAll">@drawable/ic_action_collect_all</item>
         <item name="drawableFilter">@drawable/ic_action_filter</item>
-        <item name="drawableSkip">@drawable/ic_action_playback_next</item>
+        <item name="drawableSkip">@drawable/ic_action_skip</item>
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart</item>
         <item name="drawableAddShow">@drawable/ic_action_new_show</item>
@@ -82,13 +91,29 @@
         <item name="drawableTv">@drawable/ic_action_tv</item>
         <item name="drawableSettings">@drawable/ic_action_settings</item>
         <item name="drawableHelp">@drawable/ic_action_help</item>
-        <item name="drawableBackgroundDrawerItem">@drawable/background_drawer_item</item>
         <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
 
     </style>
 
+    <style name="Theme.BaseSeriesGuide.DarkBlue" parent="Theme.AppCompat.NoActionBar">
+
+        <!-- All customizations that are SPECIFIC to API-level 15+ go here. -->
+
+        <!-- Special attributes -->
+        <item name="selectableItemBackground">@drawable/list_selector_dark</item>
+        <item name="sgDrawerItemBackground">@drawable/list_selector_dark</item>
+
+        <!-- System widgets -->
+        <item name="android:progressBarStyleHorizontal">@style/Widget.SeriesGuide.ProgressBar.Dark</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_dark</item>
+
+        <!-- Fast scroll thumb -->
+        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_dark</item>
+
+    </style>
+
     <!-- Dark Android theme -->
-    <style name="Theme.SeriesGuide.DarkBlue" parent="android:Theme.Holo">
+    <style name="Theme.SeriesGuide.DarkBlue" parent="Theme.BaseSeriesGuide.DarkBlue">
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
@@ -96,49 +121,40 @@
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
 
-        <!-- System widgets -->
-        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_dark</item>
-
-        <!-- Action bar -->
-        <item name="android:actionBarStyle">@style/ActionBarDark</item>
-        <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>
-
-        <!-- Special attributes -->
-        <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
-        <item name="tabStripBackground">?android:attr/selectableItemBackground</item>
-
         <!-- Colors -->
         <item name="textColorSgDefault">@color/black_11</item>
         <item name="textColorSgPrimary">@color/text_primary_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
-        <item name="textColorSgGreen">@color/green_dark</item>
+        <item name="textColorSgGreen">@color/teal_dark</item>
         <item name="textColorSgDim">@color/text_dim</item>
-        <item name="textColorSgActionBar">@color/text_default</item>
-        <item name="colorAccent">@color/accent_primary_android</item>
-        <item name="colorBackgroundDim">@color/background_dim</item>
-        <item name="colorSeparator">@color/separator</item>
-        <item name="colorDivider">@color/divider</item>
-        <item name="colorTabStripText">@color/text_default</item>
-        <item name="colorTabStripUnderline">@color/background_dim</item>
-        <item name="colorBackgroundDrawer">@color/background_navbar</item>
+        <item name="sgColorBackgroundDim">@color/background_dim</item>
+        <item name="sgColorSeparator">@color/separator</item>
+        <item name="sgColorDivider">@color/divider</item>
+        <item name="sgColorTabStripText">@color/text_default</item>
+        <item name="sgColorTabStripUnderline">@color/background_dim</item>
+        <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
 
         <!-- Color Arrays -->
-        <item name="colorsProgressBar">@array/progressBarColorsHolo</item>
+        <item name="colorsProgressBar">@array/progressBarColorsAndroidDark</item>
 
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
         <item name="drawableCardBackground">@drawable/card_background</item>
         <item name="drawableDivider">@drawable/divider</item>
-        <item name="drawableStar">@drawable/ic_action_star_10</item>
-        <item name="drawableStar0">@drawable/ic_action_star_0</item>
+        <item name="drawableStar">@drawable/ic_action_star</item>
+        <item name="drawableStar0">@drawable/ic_action_star_outline</item>
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu</item>
         <item name="drawableCheckin">@drawable/ic_action_checkin</item>
         <item name="drawableWatch">@drawable/ic_action_tick</item>
+        <item name="drawableWatchAll">@drawable/ic_action_watch_all</item>
+        <item name="drawableWatched">@drawable/ic_ticked</item>
+        <item name="drawableWatchedAll">@drawable/ic_watched_all</item>
         <item name="drawableCollect">@drawable/ic_action_collect</item>
+        <item name="drawableCollectAll">@drawable/ic_action_collect_all</item>
         <item name="drawableFilter">@drawable/ic_action_filter</item>
-        <item name="drawableSkip">@drawable/ic_action_playback_next</item>
+        <item name="drawableSkip">@drawable/ic_action_skip</item>
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart</item>
         <item name="drawableAddShow">@drawable/ic_action_new_show</item>
@@ -150,65 +166,69 @@
         <item name="drawableTv">@drawable/ic_action_tv</item>
         <item name="drawableSettings">@drawable/ic_action_settings</item>
         <item name="drawableHelp">@drawable/ic_action_help</item>
-        <item name="drawableBackgroundDrawerItem">@drawable/background_drawer_item_holo</item>
         <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
 
     </style>
 
+    <style name="Theme.BaseSeriesGuide.Light" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <!-- All customizations that are SPECIFIC to API-level 15+ go here. -->
+
+        <!-- Special attributes -->
+        <item name="selectableItemBackground">@drawable/list_selector_sg</item>
+        <item name="sgDrawerItemBackground">@drawable/list_selector_sg</item>
+
+        <!-- System widgets -->
+        <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
+        <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
+        <item name="android:progressBarStyleHorizontal">@style/Widget.SeriesGuide.ProgressBar.Light</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
+        <item name="android:editTextBackground">@drawable/edit_text_holo_light</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
+
+        <!-- Fast scroll thumb -->
+        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_sg</item>
+
+    </style>
+
     <!-- SeriesGuide Light theme -->
-    <style name="Theme.SeriesGuide.Light" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="Theme.SeriesGuide.Light" parent="Theme.BaseSeriesGuide.Light">
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+
+        <!--   your app's branding color (for the app bar) -->
+        <item name="colorPrimary">@color/accent_primary</item>
+        <!--   darker variant of colorPrimary (for status bar, contextual app bars) -->
+        <item name="colorPrimaryDark">@color/accent_primary_dark</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="colorAccent">@color/accent_primary</item>
 
         <!-- Windows -->
         <item name="android:colorBackground">@color/background_inverse</item>
         <item name="android:windowBackground">@color/background_inverse</item>
 
-        <!-- Remove default action bar shadow -->
+        <!-- Remove default window shadow -->
         <item name="android:windowContentOverlay">@null</item>
 
-        <!-- System widgets -->
-        <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
-        <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
-        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
-        <item name="android:progressBarStyleHorizontal">@style/ProgressBar.Light</item>
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
-        <item name="android:editTextBackground">@drawable/edit_text_holo_light</item>
-        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
-        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_sg_light</item>
-        
         <!-- Action bar -->
-        <item name="android:actionBarStyle">@style/ActionBar.Light</item>
-        <item name="android:actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
-        <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
-        <item name="android:actionBarWidgetTheme">@style/ActionBarWidgetThemeLight</item>
-        <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_ab_back_sg</item>
-
-        <!-- Fast scroll thumb -->
-        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat.Light</item>
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
-
-        <!-- Special attributes -->
-        <item name="custom_list_selector">@drawable/list_selector_sg</item>
-        <item name="tabStripBackground">@drawable/tab_strip_background_sg</item>
 
         <!-- Colors -->
         <item name="textColorSgDefault">@color/black_87</item>
         <item name="textColorSgPrimary">@color/text_primary_light_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary</item>
-        <item name="textColorSgGreen">@color/green_dark</item>
+        <item name="textColorSgGreen">@color/teal_dark</item>
         <item name="textColorSgDim">@color/text_dim_light</item>
-        <item name="textColorSgActionBar">@color/text_primary_sg</item>
-        <item name="colorAccent">@color/accent_primary</item>
-        <item name="colorBackgroundDim">@color/background_dim_inverse</item>
-        <item name="colorSeparator">@color/separator_inverse</item>
-        <item name="colorDivider">@color/divider_inverse</item>
-        <item name="colorTabStripText">@color/text_default_inverse</item>
-        <item name="colorTabStripUnderline">@color/divider_inverse</item>
-        <item name="colorBackgroundDrawer">@color/background_navbar_inverse</item>
+        <item name="sgColorBackgroundDim">@color/background_dim_inverse</item>
+        <item name="sgColorSeparator">@color/separator_inverse</item>
+        <item name="sgColorDivider">@color/divider_inverse</item>
+        <item name="sgColorTabStripText">@color/text_default_inverse</item>
+        <item name="sgColorTabStripUnderline">@color/divider_inverse</item>
+        <item name="sgColorBackgroundDrawer">@color/background_navbar_inverse</item>
 
         <!-- Color Arrays -->
         <item name="colorsProgressBar">@array/progressBarColors</item>
@@ -217,16 +237,20 @@
         <item name="drawableAddIcon">@drawable/ic_action_add_inverse</item>
         <item name="drawableCardBackground">@drawable/card_background_inverse</item>
         <item name="drawableDivider">@drawable/divider_light</item>
-        <item name="drawableStar">@drawable/ic_action_star_10_inverse</item>
-        <item name="drawableStar0">@drawable/ic_action_star_0_inverse</item>
+        <item name="drawableStar">@drawable/ic_action_star_inverse</item>
+        <item name="drawableStar0">@drawable/ic_action_star_outline_inverse</item>
         <item name="drawableCancel">@drawable/ic_action_cancel_inverse</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top_inverse</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu_light</item>
         <item name="drawableCheckin">@drawable/ic_action_checkin_inverse</item>
         <item name="drawableWatch">@drawable/ic_action_tick_inverse</item>
+        <item name="drawableWatchAll">@drawable/ic_action_watch_all_inverse</item>
+        <item name="drawableWatched">@drawable/ic_ticked</item>
+        <item name="drawableWatchedAll">@drawable/ic_watched_all</item>
         <item name="drawableCollect">@drawable/ic_action_collect_inverse</item>
+        <item name="drawableCollectAll">@drawable/ic_action_collect_all_inverse</item>
         <item name="drawableFilter">@drawable/ic_action_filter_inverse</item>
-        <item name="drawableSkip">@drawable/ic_action_playback_next_inverse</item>
+        <item name="drawableSkip">@drawable/ic_action_skip_inverse</item>
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped_inverse</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart_inverse</item>
         <item name="drawableAddShow">@drawable/ic_action_new_show_inverse</item>
@@ -238,7 +262,6 @@
         <item name="drawableTv">@drawable/ic_action_tv_inverse</item>
         <item name="drawableSettings">@drawable/ic_action_settings_inverse</item>
         <item name="drawableHelp">@drawable/ic_action_help_inverse</item>
-        <item name="drawableBackgroundDrawerItem">@drawable/background_drawer_item_light</item>
         <item name="drawableBackgroundGradient">@drawable/background_gradient_light</item>
 
     </style>
@@ -288,29 +311,10 @@
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
     </style>
 
-    <style name="ImmersiveTheme" parent="Theme.SeriesGuide">
+    <style name="ImmersiveTheme" parent="Theme.SeriesGuide"/>
 
-        <!-- Action bar -->
-        <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
+    <style name="ImmersiveTheme.Stock" parent="Theme.SeriesGuide.DarkBlue"/>
 
-    </style>
-
-    <style name="ImmersiveTheme.Stock" parent="Theme.SeriesGuide.DarkBlue">
-
-        <!-- Action bar -->
-        <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
-
-    </style>
-
-    <style name="ImmersiveTheme.Light" parent="Theme.SeriesGuide.Light">
-
-        <!-- Action bar -->
-        <item name="android:actionBarStyle">@style/ActionBar.Light.Invisible</item>
-        <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle.Light</item>
-        <item name="android:homeAsUpIndicator">@drawable/sg__ic_ab_back_holo_light</item>
-
-    </style>
-
-    <style name="ActionBarWidgetThemeLight" parent="android:Widget.Holo.Light.PopupMenu" />
+    <style name="ImmersiveTheme.Light" parent="Theme.SeriesGuide.Light"/>
 
 </resources>

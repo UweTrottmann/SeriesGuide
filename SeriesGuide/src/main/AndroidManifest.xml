@@ -40,9 +40,6 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.SeriesGuide">
 
-        <!-- Crashlytics -->
-        <meta-data android:name="com.crashlytics.ApiKey" android:value="${crashlyticsApiKey}" />
-
         <!-- Google Play services version tag -->
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
 
@@ -65,13 +62,6 @@
                 <action android:name="com.battlelancer.seriesguide.api.action.VIEW_SHOW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
-        </activity>
-
-        <!-- Migration activity -->
-        <activity android:name="com.battlelancer.seriesguide.migration.MigrationActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
 
         <!-- Hexagon -->
@@ -122,8 +112,11 @@
 
             <intent-filter>
                 <action android:name="android.intent.action.MANAGE_NETWORK_USAGE" />
-
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.NOTIFICATION_PREFERENCES" />
             </intent-filter>
         </activity>
         <activity android:name="com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity" />

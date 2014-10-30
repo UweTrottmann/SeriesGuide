@@ -16,7 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -27,9 +26,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
@@ -57,8 +56,6 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
     private int mShowId;
 
-    private SystemBarTintManager mSystemBarTintManager;
-
     /**
      * Data which has to be passed when creating this activity. All Bundle extras are integer.
      */
@@ -69,9 +66,9 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_episode);
+        setupActionBar();
         setupNavDrawer();
 
         setupViews();
@@ -90,15 +87,6 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
             setTheme(R.style.ImmersiveTheme);
         } else {
             setTheme(R.style.ImmersiveTheme_Stock);
-        }
-    }
-
-    private void setupActionBar(String showTitle) {
-        final ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(showTitle);
-        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
-            actionBar.setIcon(R.drawable.ic_launcher);
         }
     }
 
@@ -179,29 +167,31 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorAccent)));
         tabs.setBottomBorderColor(Utils.setColorAlpha(getResources().getColor(
                         Utils.resolveAttributeToResourceId(getTheme(),
-                                R.attr.colorTabStripUnderline)
+                                R.attr.sgColorTabStripUnderline)
                 ),
                 0x26
         ));
         tabs.setViewPager(pager);
 
-        // fix padding for translucent system bars
         if (AndroidUtils.isKitKatOrHigher()) {
-            mSystemBarTintManager = new SystemBarTintManager(this);
-            SystemBarTintManager.SystemBarConfig config = getSystemBarTintManager().getConfig();
+            // fix padding with translucent status bar
+            // warning: status bar not always translucent (e.g. Nexus 10)
+            // (using fitsSystemWindows would not work correctly with multiple views)
+            SystemBarTintManager systemBarTintManager = new SystemBarTintManager(this);
+            SystemBarTintManager.SystemBarConfig config = systemBarTintManager.getConfig();
             ViewGroup contentContainer = (ViewGroup) findViewById(
                     R.id.contentContainerEpisodeDetails);
-            contentContainer.setClipToPadding(false);
-            contentContainer.setPadding(0, config.getPixelInsetTop(true),
-                    config.getPixelInsetRight(), 0);
+            contentContainer.setPadding(0, config.getPixelInsetTop(false), 0, 0);
         }
 
         // set current item
         pager.setCurrentItem(startPosition, false);
     }
 
-    public SystemBarTintManager getSystemBarTintManager() {
-        return mSystemBarTintManager;
+    private void setupActionBar(String showTitle) {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(showTitle);
     }
 
     @Override

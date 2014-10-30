@@ -1,37 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <AutoCompleteTextView
+        android:id="@+id/editTextAddTvdbSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/large_padding"
+        android:layout_marginRight="@dimen/large_padding"
+        android:paddingRight="48dp"
+        android:layout_marginTop="@dimen/default_padding"
+        android:layout_marginBottom="@dimen/inline_padding"
+        android:hint="@string/checkin_searchhint" />
+
+    <ImageButton
+        android:id="@+id/buttonAddTvdbClear"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_alignRight="@+id/editTextAddTvdbSearch"
+        android:layout_marginTop="@dimen/inline_padding"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/clear"
+        android:src="?attr/drawableCancel" />
+
+    <FrameLayout
+        android:id="@+id/containerAddContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/searchbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_padding"
-            android:layout_marginLeft="@dimen/default_padding"
-            android:layout_marginRight="@dimen/default_padding"
-            android:layout_marginTop="@dimen/large_padding">
-
-            <AutoCompleteTextView
-                android:id="@+id/searchbox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/checkin_searchhint" />
-
-            <ImageButton
-                android:id="@+id/clearButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="?attr/custom_list_selector"
-                android:contentDescription="@string/clear"
-                android:src="?attr/drawableCancel" />
-        </LinearLayout>
+        android:layout_below="@+id/editTextAddTvdbSearch">
 
         <include layout="@layout/grid_shows" />
 
@@ -43,17 +40,23 @@
             android:gravity="center"
             android:text="@string/no_results"
             android:textAppearance="@style/TextAppearance.Light" />
-    </LinearLayout>
+    </FrameLayout>
 
-    <TextView
-        android:id="@+id/poweredby"
+    <ProgressBar
+        android:id="@+id/progressBarAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:background="@color/protection_dark"
         android:padding="@dimen/default_padding"
         android:text="@string/powered_by_thetvdb"
         android:textAppearance="@style/TextAppearance.Caption.Narrow"
         android:textColor="@color/black_11" />
 
-</FrameLayout>
+</RelativeLayout>

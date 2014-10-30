@@ -42,7 +42,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
@@ -71,9 +70,7 @@ import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import de.greenrobot.event.EventBus;
@@ -182,25 +179,10 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        setupViews();
-
         getLoaderManager().initLoader(EpisodesActivity.EPISODE_LOADER_ID, null,
                 mEpisodeDataLoaderCallbacks);
 
         setHasOptionsMenu(true);
-    }
-
-    private void setupViews() {
-        if (AndroidUtils.isKitKatOrHigher()) {
-            if (getActivity() instanceof EpisodeDetailsActivity) {
-                // adapt to translucent system bars
-                SystemBarTintManager.SystemBarConfig config
-                        = ((EpisodeDetailsActivity) getActivity())
-                        .getSystemBarTintManager().getConfig();
-                mEpisodeScrollView.setClipToPadding(false);
-                mEpisodeScrollView.setPadding(0, 0, 0, config.getPixelInsetBottom());
-            }
-        }
     }
 
     @Override
@@ -254,16 +236,6 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content
-        // view
-        boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
-        menu.findItem(R.id.menu_manage_lists).setVisible(!isDrawerOpen);
-        menu.findItem(R.id.menu_share).setVisible(!isDrawerOpen);
-        super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_share) {
@@ -275,7 +247,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             fireTrackerEvent("Manage lists");
             return true;
         } else if (itemId == R.id.menu_action_episode_calendar) {
-            ShareUtils.onAddCalendarEvent(getActivity(), mShowTitle,
+            ShareUtils.suggestCalendarEvent(getActivity(), mShowTitle,
                     Utils.getNextEpisodeString(getActivity(), mSeasonNumber, mEpisodeNumber,
                             mEpisodeTitle), mEpisodeReleaseTime, mShowRunTime);
             fireTrackerEvent("Add to calendar");
@@ -478,7 +450,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         mEpisodeFlag = cursor.getInt(DetailsQuery.WATCHED);
         boolean isWatched = EpisodeTools.isWatched(mEpisodeFlag);
         Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mWatchedButton, 0,
-                isWatched ? R.drawable.ic_ticked
+                isWatched ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                                R.attr.drawableWatched)
                         : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                 R.attr.drawableWatch), 0, 0);
         mWatchedButton.setOnClickListener(new OnClickListener() {
@@ -525,7 +498,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             mSkipButton.setVisibility(View.VISIBLE);
             Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mSkipButton, 0,
                     isSkipped
-                            ? R.drawable.ic_action_playback_next_highlight
+                            ? R.drawable.ic_skipped
                             : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                     R.attr.drawableSkip), 0, 0);
             mSkipButton.setOnClickListener(new OnClickListener() {
@@ -574,34 +547,6 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         });
 
         mEpisodeContainer.setVisibility(View.VISIBLE);
-    }
-
-    private class OverflowItemClickListener implements PopupMenu.OnMenuItemClickListener {
-
-        private String mShowTitle;
-        private String mEpisodeTitleAndNumber;
-        private long mEpisodeReleaseTime;
-        private int mShowRunTime;
-
-        public OverflowItemClickListener(String showTitle, String episodeTitleAndNumber,
-                long episodeReleaseTime, int showRunTime) {
-            mShowTitle = showTitle;
-            mEpisodeTitleAndNumber = episodeTitleAndNumber;
-            mEpisodeReleaseTime = episodeReleaseTime;
-            mShowRunTime = showRunTime;
-        }
-
-        @Override
-        public boolean onMenuItemClick(android.view.MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.menu_action_episode_calendar:
-                    ShareUtils.onAddCalendarEvent(getActivity(), mShowTitle,
-                            mEpisodeTitleAndNumber, mEpisodeReleaseTime, mShowRunTime);
-                    fireTrackerEvent("Add to calendar");
-                    return true;
-            }
-            return false;
-        }
     }
 
     private void loadTraktRatings(boolean isUseCachedValues) {

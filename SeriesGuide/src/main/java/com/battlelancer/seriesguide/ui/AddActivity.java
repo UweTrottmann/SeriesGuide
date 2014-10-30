@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.nfc.NdefMessage;
@@ -29,8 +28,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Window;
-import android.widget.EditText;
+import android.support.v7.app.ActionBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -57,22 +55,19 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // The TvdbAddFragment uses a progress bar
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addshow);
-        setupNavDrawer();
-
         setupActionBar();
+        setupNavDrawer();
 
         setupViews();
     }
 
-    private void setupActionBar() {
-        final ActionBar actionBar = getActionBar();
-        actionBar.setIcon(R.drawable.ic_action_new_show);
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        setProgressBarIndeterminateVisibility(false);
     }
 
     private void setupViews() {
@@ -87,7 +82,7 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorAccent)));
         tabs.setBottomBorderColor(getResources().getColor(
                 Utils.resolveAttributeToResourceId(getTheme(),
-                        R.attr.colorTabStripUnderline)
+                        R.attr.sgColorTabStripUnderline)
         ));
         tabs.setViewPager(pager);
 
@@ -223,12 +218,6 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
 
     @Override
     public void onAddShow(SearchResult show) {
-        // clear the search field (if it is shown)
-        EditText searchbox = (EditText) findViewById(R.id.searchbox);
-        if (searchbox != null) {
-            searchbox.setText("");
-        }
-
         TaskManager.getInstance(this).performAddTask(show);
     }
 }

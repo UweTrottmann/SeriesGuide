@@ -23,7 +23,7 @@
 
     <EditText
         android:id="@+id/editTextSearchBar"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:background="@drawable/textfield_default_sg"
@@ -42,7 +42,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center_vertical|right"
-        android:background="?custom_list_selector"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/clear"
         android:src="@drawable/ic_action_cancel" />
 

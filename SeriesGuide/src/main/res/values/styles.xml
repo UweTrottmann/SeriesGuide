@@ -9,27 +9,14 @@
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif</item>
     </style>
 
-    <style name="TextAppearance.Inverse">
-        <item name="android:textColor">?attr/textColorSgPrimaryInverse</item>
-    </style>
-
     <style name="TextAppearance.Light">
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
-    </style>
-
-    <style name="TextAppearance.ActionBar" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/text_default_inverse</item>
-        <item name="android:textAppearance">@style/TextAppearance.Title</item>
-    </style>
-
-    <style name="TextAppearance.ActionBar.White">
-        <item name="android:textColor">?attr/textColorSgActionBar</item>
     </style>
 
     <style name="TextAppearance.Tab">
         <item name="android:textSize">14sp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">?attr/colorTabStripText</item>
+        <item name="android:textColor">?attr/sgColorTabStripText</item>
     </style>
 
     <style name="TextAppearance.Display3">
@@ -93,6 +80,10 @@
         <item name="android:textColor">?attr/textColorSgDim</item>
     </style>
 
+    <style name="TextAppearance.Body.White">
+        <item name="android:textColor">@color/black_11</item>
+    </style>
+
     <style name="TextAppearance.Body.Highlight">
         <item name="android:textStyle">italic</item>
     </style>
@@ -126,17 +117,14 @@
 
     <style name="Widget.SeriesGuide" parent="Widget"/>
 
-    <!-- RTL support for grid views -->
-    <style name="Widget.SeriesGuide.RtlGridView" />
-
-    <style name="Widget.SeriesGuide.RtlGridViewItem" />
-
     <!-- Buttons -->
     <style name="Widget.SeriesGuide.Button" parent="android:Widget.Holo.Button">
         <item name="android:minWidth">88dp</item>
         <item name="android:minHeight">36dp</item>
-        <item name="android:paddingLeft">16dp</item>
-        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
         <item name="android:background">@drawable/btn_default_sg</item>
         <item name="android:textAppearance">@style/TextAppearance.Button</item>
         <item name="android:textColor">@color/text_primary_sg</item>
@@ -144,7 +132,8 @@
 
     <style name="Widget.SeriesGuide.Button.Borderless">
         <item name="android:textColor">?attr/textColorSgPrimary</item>
-        <item name="android:background">?custom_list_selector</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:maxLines">2</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Default">
@@ -192,7 +181,7 @@
     </style>
 
     <!-- Progress bar -->
-    <style name="ProgressBar" parent="android:Widget.Holo.ProgressBar.Horizontal">
+    <style name="Widget.SeriesGuide.ProgressBar" parent="android:Widget.Holo.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_sg</item>
         <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_sg</item>
     </style>
@@ -249,37 +238,6 @@
         <item name="android:windowExitAnimation">@anim/checkin_dialog_exit</item>
     </style>
 
-    <!-- Action bar -->
-    <style name="ActionBar" parent="android:Widget.Holo.ActionBar">
-        <item name="android:background">@drawable/actionbar_background_sg</item>
-        <item name="android:titleTextStyle">@style/TextAppearance.ActionBar.White</item>
-    </style>
-
-    <style name="ActionBar.Invisible">
-        <item name="android:background">@null</item>
-    </style>
-
-    <style name="ActionBarTabTextStyle" parent="android:Widget.Holo.ActionBar.TabText">
-        <item name="android:textColor">?attr/textColorSgActionBar</item>
-    </style>
-
-    <style name="DropDownListView" parent="android:Widget.Holo.ListView.DropDown">
-        <item name="android:listSelector">?custom_list_selector</item>
-    </style>
-
-    <style name="ActionOverflowButtonStyle" parent="@android:style/Widget.Holo.ActionButton.Overflow">
-        <item name="android:src">@drawable/ic_action_overflow_round</item>
-    </style>
-
-    <!-- ActionBar Spinner -->
-    <style name="ActionBarSpinnerItem">
-        <item name="android:textColor">?attr/textColorSgActionBar</item>
-        <item name="android:textSize">@dimen/text_size_large</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:paddingRight">8dp</item>
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
-    </style>
-
     <!-- Easy layouting -->
     <style name="DefaultPadding"/>
 
@@ -291,29 +249,9 @@
         <item name="android:clipToPadding">false</item>
     </style>
 
-    <style name="DefaultPadding.Page">
-        <item name="android:paddingTop">@dimen/default_padding</item>
-        <item name="android:paddingBottom">@dimen/default_padding</item>
-        <item name="android:paddingLeft">@dimen/large_padding</item>
-        <item name="android:paddingRight">@dimen/large_padding</item>
-    </style>
-
     <style name="DefaultPadding.Blocks">
         <item name="android:paddingLeft">@dimen/default_padding</item>
         <item name="android:paddingRight">@dimen/default_padding</item>
-    </style>
-
-    <style name="DefaultPadding.Blocks.WithTopMargin">
-        <item name="android:layout_marginTop">@dimen/default_padding</item>
-        <item name="android:layout_marginBottom">@dimen/inline_padding</item>
-    </style>
-
-    <style name="DefaultPadding.Blocks.WithBottomMargin">
-        <item name="android:layout_marginBottom">@dimen/default_padding</item>
-    </style>
-
-    <style name="DefaultPadding.Blocks.WithBottomMargin.FlowText">
-        <item name="android:lineSpacingMultiplier">1.25</item>
     </style>
 
     <style name="Block">
@@ -367,10 +305,9 @@
 
     <!-- Dark styles -->
 
-    <!-- Action bar -->
-    <style name="ActionBarDark" parent="android:Widget.Holo.ActionBar">
-        <item name="android:background">@drawable/actionbar_background_dark</item>
-        <item name="android:titleTextStyle">@style/TextAppearance.ActionBar.White</item>
+    <!-- Progress bar -->
+    <style name="Widget.SeriesGuide.ProgressBar.Dark" parent="android:Widget.Holo.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_dark</item>
     </style>
 
     <!-- ////////////////////////////////////////////// -->
@@ -378,23 +315,8 @@
 
     <!-- Light styles -->
 
-    <!-- Action bar -->
-    <style name="ActionBar.Light" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@drawable/actionbar_background_sg</item>
-        <item name="android:titleTextStyle">@style/TextAppearance.ActionBar.White</item>
-    </style>
-
-    <style name="ActionBar.Light.Invisible" parent="android:Widget.Holo.Light.ActionBar.Solid">
-        <item name="android:background">@null</item>
-        <item name="android:titleTextStyle">@style/TextAppearance.ActionBar</item>
-    </style>
-
-    <style name="ActionOverflowButtonStyle.Light">
-        <item name="android:src">@drawable/ic_action_overflow_round_inverse</item>
-    </style>
-
     <!-- Progress bar -->
-    <style name="ProgressBar.Light" parent="android:Widget.Holo.Light.ProgressBar.Horizontal">
+    <style name="Widget.SeriesGuide.ProgressBar.Light" parent="android:Widget.Holo.Light.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_sg_light</item>
         <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_sg</item>
     </style>

@@ -69,6 +69,10 @@ public abstract class StreamFragment extends Fragment implements
         ButterKnife.inject(this, v);
 
         mContentContainer.setOnRefreshListener(this);
+        mContentContainer.setProgressViewOffset(false, getResources().getDimensionPixelSize(
+                R.dimen.swipe_refresh_progress_bar_start_margin),
+                getResources().getDimensionPixelSize(
+                        R.dimen.swipe_refresh_progress_bar_end_margin));
 
         mGridView.setOnItemClickListener(this);
         mGridView.setEmptyView(mEmptyView);
@@ -82,8 +86,7 @@ public abstract class StreamFragment extends Fragment implements
 
         int accentColorResId = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                 R.attr.colorAccent);
-        mContentContainer.setColorScheme(accentColorResId, R.color.white, accentColorResId,
-                R.color.white);
+        mContentContainer.setColorSchemeResources(accentColorResId, R.color.teal_dark);
 
         // change empty message if we are offline
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
@@ -113,13 +116,6 @@ public abstract class StreamFragment extends Fragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.stream_menu, menu);
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
-        boolean isDrawerOpen = ((BaseNavDrawerActivity) getActivity()).isDrawerOpen();
-        menu.findItem(R.id.menu_action_stream_refresh).setVisible(!isDrawerOpen);
     }
 
     @Override

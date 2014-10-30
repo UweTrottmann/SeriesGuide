@@ -26,6 +26,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -40,6 +41,7 @@ import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.enumerations.Extended;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -47,10 +49,6 @@ import retrofit.RetrofitError;
 import timber.log.Timber;
 
 public class TraktAddFragment extends AddFragment {
-
-    private View mContentContainer;
-
-    private View mProgressIndicator;
 
     public static TraktAddFragment newInstance(int position) {
         TraktAddFragment f = new TraktAddFragment();
@@ -63,17 +61,25 @@ public class TraktAddFragment extends AddFragment {
         return f;
     }
 
+    public static class TraktAddResultsEvent {
+        public int type;
+        public List<SearchResult> results;
+
+        public TraktAddResultsEvent(int type, List<SearchResult> results) {
+            this.type = type;
+            this.results = results;
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        /*
-         * never use this here (on config change the view needed before removing
-         * the fragment)
-         */
-        // if (container == null) {
-        // return null;
-        // }
-        return inflater.inflate(R.layout.fragment_addshow_trakt, container, false);
+        View v = inflater.inflate(R.layout.fragment_addshow_trakt, container, false);
+        ButterKnife.inject(this, v);
+
+        setProgressVisible(true, false);
+
+        return v;
     }
 
     @Override
@@ -82,14 +88,10 @@ public class TraktAddFragment extends AddFragment {
 
         int type = getListType();
 
-        mContentContainer = getView().findViewById(R.id.contentContainer);
-        mProgressIndicator = getView().findViewById(R.id.progressIndicator);
-
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
             // show offline message, abort
             setEmptyMessage(R.string.offline);
-            mContentContainer.setVisibility(View.VISIBLE);
-            mProgressIndicator.setVisibility(View.GONE);
+            setProgressVisible(false, false);
             return;
         }
 
@@ -98,16 +100,14 @@ public class TraktAddFragment extends AddFragment {
 
         // only create and fill a new adapter if there is no previous one
         // (e.g. after config/page changed)
-        if (mAdapter == null) {
-            mContentContainer.setVisibility(View.GONE);
-            mProgressIndicator.setVisibility(View.VISIBLE);
-            mAdapter = new AddAdapter(getActivity(), R.layout.item_addshow,
+        if (adapter == null) {
+            adapter = new AddAdapter(getActivity(), R.layout.item_addshow,
                     new ArrayList<SearchResult>(), mDetailsButtonListener);
 
+            setProgressVisible(true, false);
             AndroidUtils.executeOnPool(new GetTraktShowsTask(getActivity()), type);
         } else {
-            mContentContainer.setVisibility(View.VISIBLE);
-            mProgressIndicator.setVisibility(View.GONE);
+            setProgressVisible(false, false);
         }
 
         if (type == AddPagerAdapter.LIBRARY_TAB_POSITION
@@ -138,6 +138,15 @@ public class TraktAddFragment extends AddFragment {
         if (tag != null) {
             Utils.trackView(getActivity(), tag);
         }
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -150,8 +159,8 @@ public class TraktAddFragment extends AddFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_add_all) {
-            if (mSearchResults != null) {
-                TaskManager.getInstance(getActivity()).performAddTask(mSearchResults, false, false);
+            if (searchResults != null) {
+                TaskManager.getInstance(getActivity()).performAddTask(searchResults, false, false);
             }
             // disable the item so the user has to come back
             item.setEnabled(false);
@@ -164,32 +173,40 @@ public class TraktAddFragment extends AddFragment {
         return getArguments().getInt("traktlisttype");
     }
 
-    public class GetTraktShowsTask extends AsyncTask<Integer, Void, List<SearchResult>> {
+    public void onEventMainThread(TraktAddResultsEvent event) {
+        if (event.type == getListType()) {
+            setSearchResults(event.results);
+            setProgressVisible(false, true);
+        }
+    }
 
-        private Context mContext;
+    public static class GetTraktShowsTask extends AsyncTask<Integer, Void, List<SearchResult>> {
+
+        private Context context;
+        private int type;
 
         public GetTraktShowsTask(Context context) {
-            mContext = context;
+            this.context = context;
         }
 
         @Override
         protected List<SearchResult> doInBackground(Integer... params) {
             Timber.d("Getting shows...");
-            int type = params[0];
+            type = params[0];
             List<SearchResult> showList = new ArrayList<>();
 
             List<TvShow> shows = new ArrayList<>();
 
             if (type == AddPagerAdapter.TRENDING_TAB_POSITION) {
                 try {
-                    shows = ServiceUtils.getTrakt(mContext).showService().trending();
+                    shows = ServiceUtils.getTrakt(context).showService().trending();
                 } catch (RetrofitError e) {
                     Timber.e(e, "Loading trending shows failed");
                     // ignored, just display empty list
                 }
             } else {
                 try {
-                    Trakt manager = ServiceUtils.getTraktWithAuth(mContext);
+                    Trakt manager = ServiceUtils.getTraktWithAuth(context);
                     if (manager != null) {
                         switch (type) {
                             case AddPagerAdapter.RECOMMENDED_TAB_POSITION:
@@ -197,12 +214,12 @@ public class TraktAddFragment extends AddFragment {
                                 break;
                             case AddPagerAdapter.LIBRARY_TAB_POSITION:
                                 shows = manager.userService().libraryShowsAll(
-                                        TraktCredentials.get(mContext).getUsername(),
+                                        TraktCredentials.get(context).getUsername(),
                                         Extended.EXTENDED);
                                 break;
                             case AddPagerAdapter.WATCHLIST_TAB_POSITION:
                                 shows = manager.userService().watchlistShows(
-                                        TraktCredentials.get(mContext).getUsername());
+                                        TraktCredentials.get(context).getUsername());
                                 break;
                         }
                     }
@@ -218,7 +235,7 @@ public class TraktAddFragment extends AddFragment {
             }
 
             // get a list of existing shows to filter against
-            final Cursor existingShows = mContext.getContentResolver().query(Shows.CONTENT_URI,
+            final Cursor existingShows = context.getContentResolver().query(Shows.CONTENT_URI,
                     new String[] {
                             Shows._ID
                     }, null, null, null);
@@ -230,18 +247,14 @@ public class TraktAddFragment extends AddFragment {
                 existingShows.close();
             }
 
-            parseTvShowsToSearchResults(shows, showList, existingShowTvdbIds, mContext);
+            parseTvShowsToSearchResults(shows, showList, existingShowTvdbIds, context);
 
             return showList;
         }
 
         @Override
-        protected void onPostExecute(List<SearchResult> result) {
-            setSearchResults(result);
-            if (isAdded()) {
-                mProgressIndicator.setVisibility(View.GONE);
-                mContentContainer.setVisibility(View.VISIBLE);
-            }
+        protected void onPostExecute(List<SearchResult> results) {
+            EventBus.getDefault().post(new TraktAddResultsEvent(type, results));
         }
     }
 

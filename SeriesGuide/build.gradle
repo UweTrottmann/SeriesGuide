@@ -1,5 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/repo' }
+    }
+    dependencies {
+        //noinspection GradleDynamicVersion
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+
 apply plugin: 'com.android.application'
-apply plugin: 'crashlytics'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/repo' }
+}
 
 def loadStringPropertyOrPlaceholder(String name) {
     return rootProject.hasProperty(name) ? rootProject.property(name) : "MISSING"
@@ -11,7 +25,7 @@ android {
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 19
+        targetSdkVersion 21
         testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
 
         buildConfigField("String", "TVDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TVDB_API_KEY")}\"")
@@ -23,11 +37,6 @@ android {
         buildConfigField("String", "IAP_KEY_B", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_B")}\"")
         buildConfigField("String", "IAP_KEY_C", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_C")}\"")
         buildConfigField("String", "IAP_KEY_D", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_D")}\"")
-
-        manifestPlaceholders = [
-                crashlyticsApiKey: rootProject.hasProperty("CRASHLYTICS_KEY")
-                        ? rootProject.property("CRASHLYTICS_KEY") : "MISSING"
-        ]
     }
 
     compileOptions {
@@ -97,35 +106,43 @@ dependencies {
     compile project(':libraries:drag-sort-listview')
     compile project(':libraries:stickygridheaders')
     compile rootProject.ext.libraries.supportv4
+    compile 'com.android.support:appcompat-v7:21.0.0'
+    compile('com.crashlytics.sdk.android:crashlytics:2.0.0@aar') {
+        transitive = true
+    }
     compile 'com.github.castorflex.smoothprogressbar:library:0.5.1'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     compile 'com.jakewharton:butterknife:5.1.2'
     compile 'com.jakewharton.timber:timber:2.4.1'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
+    compile 'com.squareup.okio:okio:1.0.1'
+    compile ('com.squareup.okhttp:okhttp-urlconnection:2.0.0') {
+        exclude group: 'com.squareup.okhttp'
+    }
     compile ('com.squareup.picasso:picasso:2.3.4') {
         exclude group: 'com.squareup.okhttp'
     }
     compile ('com.squareup.retrofit:retrofit:1.6.1') {
         exclude group: 'com.squareup.okhttp'
     }
-    compile 'com.squareup:tape:1.2.2'
+    compile 'com.squareup:tape:1.2.3'
     compile ('com.uwetrottmann:getglue-java:1.4.0') {
         exclude group: 'com.squareup.okhttp'
     }
     compile 'com.uwetrottmann:tmdb-java:0.7.0'
     compile 'com.uwetrottmann:trakt-java:3.3.1'
     compile 'de.greenrobot:eventbus:2.2.1'
-    compile 'joda-time:joda-time:2.4'
+    compile 'joda-time:joda-time:2.5'
 
     // Google Play Services
-    compile 'com.google.android.gms:play-services:5.0.89'
+    compile 'com.google.android.gms:play-services:6.1.11'
 
     // App Engine
-    compile ('com.google.api-client:google-api-client-android:1.18.0-rc') {
+    compile ('com.google.api-client:google-api-client-android:1.19.0') {
         exclude group: 'com.google.android.google-play-services'
+        exclude(group: 'org.apache.httpcomponents', module: 'httpclient')
     }
-    compile 'com.google.http-client:google-http-client-gson:1.18.0-rc'
 
     // libs folder
     compile fileTree(dir: 'libs', include: '*.jar')
@@ -146,7 +163,56 @@ dependencies {
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
         exclude group: 'com.android.support', module: 'support-v4'
     }
+}
 
-    // Crashlytics
-    compile 'com.crashlytics.android:crashlytics:1.1.13'
+// Google Play Services stripping to avoid dex method limit
+// https://gist.github.com/dmarcato/d7c91b94214acd936e42
+def toCamelCase(String string) {
+    String result = ""
+    string.findAll("[^\\W]+") { String word ->
+        result += word.capitalize()
+    }
+    return result
+}
+
+afterEvaluate { project ->
+    Configuration runtimeConfiguration = project.configurations.getByName('compile')
+    ResolutionResult resolution = runtimeConfiguration.incoming.resolutionResult
+    // Forces resolve of configuration
+    ModuleVersionIdentifier module = resolution.getAllComponents().find { it.moduleVersion.name.equals("play-services") }.moduleVersion
+    String prepareTaskName = "prepare${toCamelCase("${module.group} ${module.name} ${module.version}")}Library"
+    Task prepareTask = project.tasks.findByName(prepareTaskName)
+    File playServiceRootFolder = prepareTask.explodedDir
+
+    // Add the stripping to the existing task that extracts the AAR containing the original classes.jar
+    prepareTask.doLast {
+        // Create a copy of GMS classes.jar
+        copy {
+            from(file(new File(playServiceRootFolder, "classes.jar")))
+            into(file(playServiceRootFolder))
+            rename { fileName ->
+                fileName = "classes_orig.jar"
+            }
+        }
+        // Create new .jar file without stripped packages
+        tasks.create(name: "stripPlayServices" + module.version, type: Jar) {
+            destinationDir = playServiceRootFolder
+            archiveName = "classes.jar"
+            from(zipTree(new File(playServiceRootFolder, "classes_orig.jar"))) {
+                exclude "com/google/ads/**"
+                exclude "com/google/android/gms/ads/**"
+                exclude "com/google/android/gms/cast/**"
+                exclude "com/google/android/gms/drive/**"
+                exclude "com/google/android/gms/fitness/**"
+                exclude "com/google/android/gms/games/**"
+                exclude "com/google/android/gms/location/**"
+                exclude "com/google/android/gms/maps/**"
+                exclude "com/google/android/gms/panorama/**"
+                exclude "com/google/android/gms/plus/**"
+                exclude "com/google/android/gms/wallet/**"
+                exclude "com/google/android/gms/wearable/**"
+            }
+        }.execute()
+        delete file(new File(playServiceRootFolder, "classes_orig.jar"))
+    }
 }

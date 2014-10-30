@@ -17,7 +17,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
-import android.app.ActionBar;
+import android.app.SearchManager;
 import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -29,6 +29,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,7 +37,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.lang.ref.WeakReference;
@@ -56,8 +56,6 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     public static final int OVERVIEW_ACTIONS_LOADER_ID = 104;
     public static final int SEASONS_LOADER_ID = 105;
 
-    private static final String TAG = "Overview";
-
     private int mShowId;
 
     private NfcAdapter mNfcAdapter;
@@ -67,6 +65,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
+        setupActionBar();
         setupNavDrawer();
 
         mShowId = getIntent().getIntExtra(OverviewFragment.InitBundle.SHOW_TVDBID, -1);
@@ -74,8 +73,6 @@ public class OverviewActivity extends BaseNavDrawerActivity {
             finish();
             return;
         }
-
-        setupActionBar();
 
         setupViews(savedInstanceState);
 
@@ -116,8 +113,10 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         updateShowDelayed(mShowId);
     }
 
-    private void setupActionBar() {
-        final ActionBar actionBar = getActionBar();
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
@@ -227,14 +226,6 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content
-        // view
-        menu.findItem(R.id.menu_overview_search).setVisible(!isDrawerOpen());
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.overview_activity_menu, menu);
         return super.onCreateOptionsMenu(menu);
@@ -249,25 +240,23 @@ public class OverviewActivity extends BaseNavDrawerActivity {
             startActivity(upIntent);
             return true;
         } else if (itemId == R.id.menu_overview_search) {
-            onSearchRequested();
+            launchSearch();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onSearchRequested() {
+    private void launchSearch() {
         // refine search with the show's title
         final Series show = DBUtils.getShow(this, mShowId);
         final String showTitle = show.getTitle();
 
-        Bundle args = new Bundle();
-        args.putString(EpisodeSearchFragment.InitBundle.SHOW_TITLE, showTitle);
-        startSearch(null, false, args, false);
-        return true;
-    }
+        Bundle appSearchData = new Bundle();
+        appSearchData.putString(EpisodeSearchFragment.InitBundle.SHOW_TITLE, showTitle);
 
-    private void fireTrackerEvent(String label) {
-        Utils.trackAction(this, TAG, label);
+        Intent intent = new Intent(this, SearchActivity.class);
+        intent.putExtra(SearchManager.APP_DATA, appSearchData);
+        intent.setAction(Intent.ACTION_SEARCH);
+        startActivity(intent);
     }
 }

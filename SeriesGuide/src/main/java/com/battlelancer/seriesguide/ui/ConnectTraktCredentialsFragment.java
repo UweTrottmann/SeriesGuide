@@ -262,7 +262,7 @@ public class ConnectTraktCredentialsFragment extends Fragment implements
         if (getFragmentManager() != null) {
             ConnectTraktFinishedFragment f = new ConnectTraktFinishedFragment();
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(android.R.id.content, f);
+            ft.replace(R.id.content_frame, f);
             ft.commitAllowingStateLoss();
         }
     }

@@ -402,3 +402,10 @@ Androidicons Developer set (http://www.androidicons.com/)
 
 They do not require crediting, but I'll do it anyways because you
 absolutely have to check their icons out!
+
+
+Material Design Icons (https://github.com/google/material-design-icons)
+-----------------------------------------------------------------------
+
+All icons are released under an Attribution-ShareAlike 4.0 International
+(http://creativecommons.org/licenses/by-sa/4.0/) license.

@@ -17,32 +17,19 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.ActionBar;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.billing.BillingActivity;
-import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Activities at the top of the navigation hierarchy, show menu on going up.
  */
 public abstract class BaseTopActivity extends BaseNavDrawerActivity {
 
-    private static final String TAG = "BaseTopActivity";
-
     @Override
-    protected void onCreate(Bundle arg0) {
-        super.onCreate(arg0);
-
-        setupActionBar();
-
-    }
-
-    private void setupActionBar() {
-        final ActionBar actionBar = getActionBar();
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
@@ -52,7 +39,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
         super.setupNavDrawer();
 
         // show a drawer indicator
-        setDrawerIndicatorEnabled(true);
+        setDrawerIndicatorEnabled();
     }
 
     @Override
@@ -62,35 +49,11 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.base_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-
-        // show subscribe button if not subscribed, yet
-        menu.findItem(R.id.menu_subscribe).setVisible(!Utils.hasAccessToX(this));
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // check if we should toggle the navigation drawer (app icon was touched)
         if (toggleDrawer(item)) {
             return true;
         }
-
-        int itemId = item.getItemId();
-        if (itemId == R.id.menu_subscribe) {
-            startActivity(new Intent(this, BillingActivity.class));
-
-            fireTrackerEvent("Subscribe");
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 

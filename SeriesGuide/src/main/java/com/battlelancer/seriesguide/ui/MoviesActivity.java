@@ -16,9 +16,9 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.view.Window;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
@@ -47,23 +47,19 @@ public class MoviesActivity extends BaseTopActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // MovieSearchFragment needs a progress bar
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        setProgressBarIndeterminateVisibility(false);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
-        setupNavDrawer();
-
         setupActionBar();
+        setupNavDrawer();
 
         setupViews();
     }
 
-    private void setupActionBar() {
-        final ActionBar actionBar = getActionBar();
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.movies));
-        actionBar.setIcon(R.drawable.ic_action_movie);
     }
 
     private void setupViews() {

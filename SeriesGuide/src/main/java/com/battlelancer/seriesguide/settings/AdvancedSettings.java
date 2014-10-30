@@ -31,7 +31,8 @@ public class AdvancedSettings {
 
     public static final String KEY_LASTBACKUP = "com.battlelancer.seriesguide.lastbackup";
 
-    public static final String KEY_LAST_UPGRADE_STATE = "com.battlelancer.seriesguide.lastupgradestate";
+    public static final String KEY_LAST_UPGRADE_STATE
+            = "com.battlelancer.seriesguide.lastupgradestate";
 
     public static final String KEY_UPCOMING_LIMIT = "com.battlelancer.seriesguide.upcominglimit";
 
@@ -56,14 +57,16 @@ public class AdvancedSettings {
     }
 
     /**
-     * Wether the user is qualified for the X upgrade since the last time we
-     * checked.
+     * Returns if the user was subscribed the last time we checked.
      */
-    public static boolean isSubscribedToX(Context context) {
+    public static boolean getLastSubscriptionState(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
                 KEY_LAST_UPGRADE_STATE, false);
     }
 
+    /**
+     * Set if the user currently has an active subscription.
+     */
     public static void setSubscriptionState(Context context, boolean isSubscribedToX) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(
                 KEY_LAST_UPGRADE_STATE, isSubscribedToX).commit();

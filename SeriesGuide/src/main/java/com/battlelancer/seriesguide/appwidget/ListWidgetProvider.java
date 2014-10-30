@@ -101,60 +101,69 @@ public class ListWidgetProvider extends AppWidgetProvider {
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public static RemoteViews buildRemoteViews(Context context, AppWidgetManager appWidgetManager,
             int appWidgetId) {
-        // determine layout based on given size
-        final boolean isCompactLayout = isCompactLayout(appWidgetManager, appWidgetId);
-        // determine content type from widget settings
-        final int typeIndex = WidgetSettings.getWidgetListType(context, appWidgetId);
-
-        // Here we setup the intent which points to the StackViewService
-        // which will provide the views for this collection.
+        // setup intent pointing to RemoteViewsService providing the views for the collection
         Intent intent = new Intent(context, ListWidgetService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-
         // When intents are compared, the extras are ignored, so we need to
         // embed the extras into the data so that the extras will not be
         // ignored.
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
 
-        RemoteViews rv = new RemoteViews(context.getPackageName(),
-                isCompactLayout ? R.layout.appwidget_v11_compact : R.layout.appwidget_v11);
+        // determine layout (current size) and theme (user pref)
+        final boolean isCompactLayout = isCompactLayout(appWidgetManager, appWidgetId);
+        final boolean isLightTheme = WidgetSettings.isLightTheme(context, appWidgetId);
+        int layoutResId;
+        if (isLightTheme) {
+            layoutResId = isCompactLayout ?
+                    R.layout.appwidget_v11_light_compact : R.layout.appwidget_v11_light;
+        } else {
+            layoutResId = isCompactLayout ?
+                    R.layout.appwidget_v11_compact : R.layout.appwidget_v11;
+        }
 
+        // build widget views
+        RemoteViews rv = new RemoteViews(context.getPackageName(), layoutResId);
         rv.setRemoteAdapter(R.id.list_view, intent);
-
         // The empty view is displayed when the collection has no items. It
         // should be a sibling of the collection view.
         rv.setEmptyView(R.id.list_view, R.id.empty_view);
 
         // set the background color
-        int bgColor = WidgetSettings.getWidgetBackgroundColor(context, appWidgetId);
+        int bgColor = WidgetSettings.getWidgetBackgroundColor(context, appWidgetId, isLightTheme);
         rv.setInt(R.id.container, "setBackgroundColor", bgColor);
 
-        // determine the tab touching the widget title should open
-        int tabIndex;
-        if (typeIndex == WidgetSettings.Type.UPCOMING) {
-            tabIndex = ShowsActivity.InitBundle.INDEX_TAB_UPCOMING;
-        } else if (typeIndex == WidgetSettings.Type.RECENT) {
-            tabIndex = ShowsActivity.InitBundle.INDEX_TAB_RECENT;
+        // determine type specific values
+        final int widgetType = WidgetSettings.getWidgetListType(context, appWidgetId);
+        int showsTabIndex;
+        int titleResId;
+        int emptyResId;
+        if (widgetType == WidgetSettings.Type.UPCOMING) {
+            // upcoming
+            showsTabIndex = ShowsActivity.InitBundle.INDEX_TAB_UPCOMING;
+            titleResId = R.string.upcoming;
+            emptyResId = R.string.noupcoming;
+        } else if (widgetType == WidgetSettings.Type.RECENT) {
+            // recent
+            showsTabIndex = ShowsActivity.InitBundle.INDEX_TAB_RECENT;
+            titleResId = R.string.recent;
+            emptyResId = R.string.norecent;
         } else {
-            tabIndex = ShowsActivity.InitBundle.INDEX_TAB_SHOWS;
+            // favorites
+            showsTabIndex = ShowsActivity.InitBundle.INDEX_TAB_SHOWS;
+            titleResId = R.string.action_shows_filter_favorites;
+            emptyResId = R.string.no_nextepisode;
         }
 
-        // only regular layout has text title
+        // change title and empty view based on type
+        rv.setTextViewText(R.id.empty_view, context.getString(emptyResId));
         if (!isCompactLayout) {
-            // change title based on config
-            if (typeIndex == WidgetSettings.Type.RECENT) {
-                rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.recent));
-            } else if (typeIndex == WidgetSettings.Type.FAVORITES) {
-                rv.setTextViewText(R.id.widgetTitle,
-                        context.getString(R.string.action_shows_filter_favorites));
-            } else {
-                rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.upcoming));
-            }
+            // only regular layout has text title
+            rv.setTextViewText(R.id.widgetTitle, context.getString(titleResId));
         }
 
         // app launch button
         final Intent appLaunchIntent = new Intent(context, ShowsActivity.class)
-                .putExtra(ShowsActivity.InitBundle.SELECTED_TAB, tabIndex);
+                .putExtra(ShowsActivity.InitBundle.SELECTED_TAB, showsTabIndex);
         PendingIntent pendingIntent = TaskStackBuilder.create(context)
                 .addNextIntent(appLaunchIntent)
                 .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -169,7 +178,8 @@ public class ListWidgetProvider extends AppWidgetProvider {
 
         // settings button
         Intent settingsIntent = new Intent(context, ListWidgetConfigure.class)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+                .addFlags(
+                        Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
                 .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         rv.setOnClickPendingIntent(R.id.widget_settings,
                 PendingIntent.getActivity(context, appWidgetId,

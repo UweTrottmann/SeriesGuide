@@ -5,6 +5,43 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 19 *(2014-10-30)*
+-----------------------------
+
+* Further design updates towards material design.
+* Android 5.0 support (notification color, settings, material theme).
+* List widget light theme.
+
+#### 19 *(2014-10-30)*
+
+* NOTICE Latest translations from crowdin.
+
+#### 19-beta3 *(2014-10-28)*
+
+* TWEAK Go directly to search from overview action.
+* TWEAK Set notification color, category (event) and link to settings (Android Lollipop and up).
+* TWEAK Increase drawer width, add larger top space for future use.
+* FIX Update DashClock settings to new theme.
+* FIX Some devices crash if action items are customized.
+* FIX Restore progress bars for TheTVDB and TMDB search.
+* FIX Show progress indicator when initially loading trakt streams and comments.
+* FIX Crash when trying to swipe to refresh.
+* FIX Button text getting cut off in dialogs.
+* FIX Check-in and comment button enabled, even though no action possible.
+
+#### 19-beta2 *(2014-10-25)*
+
+* TWEAK More Material design updates (icons, colors, action bar).
+* FIX Potential fix for list widget crash (mostly on Samsung GT I9500).
+* NOTICE Latest translations from crowdin.
+
+#### 19-beta1 *(2014-10-08)*
+
+* FEATURE Light theme for list widget.
+* TWEAK Display "Unlock all features" link in nav drawer if user is no supporter. Update strings related to unlocking all features.
+* FIX Create calendar events with new method available since Android ICS. Enables creating events in Sunrise calendar.
+* NOTICE Latest translations from crowdin.
+
 Version 18 *(2014-09-26)*
 -----------------------------
 
@@ -13,13 +50,21 @@ Version 18 *(2014-09-26)*
 * Share statistics.
 * Amazon App Store version.
 
+#### 18.1.0 *(2014-10-09) Amazon only*
+
+* TWEAK Make subscription optional, like Google version.
+* FEATURE Light theme for list widget.
+* TWEAK Display "Unlock all features" link in nav drawer if user is no supporter. Update strings related to unlocking all features.
+* FIX Create calendar events with new method available since Android ICS. Enables creating events in Sunrise calendar.
+* NOTICE Dropped SeriesGuide X migration tool.
+
 #### 18.0.3 *(2014-10-02)*
 
 * FIX Movie watched state not changing for movies in watchlist or collection.
 * TWEAK Better action button descriptions.
 * NOTICE trakt ratings, comments and movie watched state are currently incorrectly displayed due to issues at trakt. They are, however, correctly sent to trakt.
 
-#### 18.0.2 *(2014-09-28)*
+#### 18.0.2 *(2014-09-28) Amazon only*
 
 * FIX Remove all Google Play search links from Amazon version.
 

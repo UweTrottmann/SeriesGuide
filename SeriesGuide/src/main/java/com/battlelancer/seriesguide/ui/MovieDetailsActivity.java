@@ -16,17 +16,18 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
-import android.view.Window;
+import android.view.ViewGroup;
 import com.battlelancer.seriesguide.R;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
- * Hosts a {@link MovieDetailsFragment} displaying details about the movie
- * defined by the given TMDb id intent extra.
+ * Hosts a {@link MovieDetailsFragment} displaying details about the movie defined by the given TMDb
+ * id intent extra.
  */
 public class MovieDetailsActivity extends BaseNavDrawerActivity {
 
@@ -39,9 +40,9 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
+        setupActionBar();
         setupNavDrawer();
 
         if (getIntent().getExtras() == null) {
@@ -55,13 +56,23 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
             return;
         }
 
-        mSystemBarTintManager = new SystemBarTintManager(this);
-
-        setupActionBar();
+        setupViews();
 
         if (savedInstanceState == null) {
             MovieDetailsFragment f = MovieDetailsFragment.newInstance(tmdbId);
             getSupportFragmentManager().beginTransaction().add(R.id.content_frame, f).commit();
+        }
+    }
+
+    private void setupViews() {
+        if (AndroidUtils.isKitKatOrHigher()) {
+            // fix padding with translucent status bar
+            // warning: status bar not always translucent (e.g. Nexus 10)
+            // (using fitsSystemWindows would not work correctly with multiple views)
+            mSystemBarTintManager = new SystemBarTintManager(this);
+            int insetTop = mSystemBarTintManager.getConfig().getPixelInsetTop(false);
+            ViewGroup actionBarToolbar = (ViewGroup) findViewById(R.id.sgToolbar);
+            actionBarToolbar.setPadding(0, insetTop, 0, 0);
         }
     }
 
@@ -77,13 +88,12 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
         }
     }
 
-    private void setupActionBar() {
-        final ActionBar actionBar = getActionBar();
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
-        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
-            actionBar.setIcon(R.drawable.ic_launcher);
-        }
     }
 
     @Override

@@ -43,6 +43,7 @@ import com.battlelancer.seriesguide.Analytics;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.billing.BillingActivity;
+import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.service.OnAlarmReceiver;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
@@ -181,28 +182,26 @@ public class Utils {
     }
 
     /**
-     * Returns whether a regular check with the Google Play app is not necessary to determine access
-     * to X features (e.g. the subscription is still valid).
+     * Returns if the user should get access to paid features.
      */
-    public static boolean canSkipPurchaseCheck(Context context) {
+    public static boolean hasAccessToX(Context context) {
+        // debug builds, installed X Pass or subscription unlock all features
+        // Amazon version only supports X pass as in-app purchase, so skip check
+        return (!isAmazonVersion() && hasXpass(context))
+                || AdvancedSettings.getLastSubscriptionState(context);
+    }
+
+    /**
+     * Returns if X pass is installed and a purchase check with Google Play is not necessary to
+     * determine access to paid features.
+     */
+    public static boolean hasXpass(Context context) {
         // dev builds and the SeriesGuide X key app are not handled through the Play store
         return (BuildConfig.DEBUG || hasUnlockKeyInstalled(context));
     }
 
     /**
-     * Returns whether this user should currently get access to X features.
-     */
-    public static boolean hasAccessToX(Context context) {
-        // dev builds, SeriesGuide X installed or a valid purchase unlock X features
-        // Fire OS build is paid only
-        return isAmazonVersion()
-                || canSkipPurchaseCheck(context)
-                || AdvancedSettings.isSubscribedToX(context);
-    }
-
-    /**
-     * Returns true if the user has the legacy SeriesGuide X version installed, signed with the same
-     * key as we are.
+     * Returns if the user has a valid copy of X Pass installed.
      */
     private static boolean hasUnlockKeyInstalled(Context context) {
         try {
@@ -230,12 +229,16 @@ public class Utils {
     }
 
     /**
-     * Launches {@link BillingActivity} and notifies that something is only available with the X
-     * subscription.
+     * Launches {@link com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity} or {@link
+     * BillingActivity} and notifies that something is only available with the subscription.
      */
     public static void advertiseSubscription(Context context) {
         Toast.makeText(context, R.string.onlyx, Toast.LENGTH_SHORT).show();
-        context.startActivity(new Intent(context, BillingActivity.class));
+        if (isAmazonVersion()) {
+            context.startActivity(new Intent(context, AmazonBillingActivity.class));
+        } else {
+            context.startActivity(new Intent(context, BillingActivity.class));
+        }
     }
 
     /**

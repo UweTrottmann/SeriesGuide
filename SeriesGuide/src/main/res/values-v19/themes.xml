@@ -1,39 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <!-- Special themes -->
     <style name="ImmersiveTheme" parent="Theme.SeriesGuide">
 
-        <!-- Action bar (native, v11+) -->
-        <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
-
         <!-- Translucent navbar (native, v19+) -->
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
 
     </style>
 
     <style name="ImmersiveTheme.Stock" parent="Theme.SeriesGuide.DarkBlue">
 
-        <!-- Action bar (native, v11+) -->
-        <item name="android:actionBarStyle">@style/ActionBar.Invisible</item>
-
         <!-- Translucent navbar (native, v19+) -->
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
         
     </style>
 
     <style name="ImmersiveTheme.Light" parent="Theme.SeriesGuide.Light">
 
-        <!-- Action bar (native, v11+) -->
-        <item name="android:actionBarStyle">@style/ActionBar.Light.Invisible</item>
-        <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle.Light</item>
-        <item name="android:homeAsUpIndicator">@drawable/sg__ic_ab_back_holo_light</item>
-
         <!-- Translucent navbar (native, v19+) -->
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
 
     </style>
 

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:paddingRight="@dimen/default_padding"
-        android:background="?attr/custom_list_selector">
+        android:background="?attr/selectableItemBackground">
 
         <ImageView
             android:id="@+id/poster"
@@ -60,14 +60,11 @@
             android:textAppearance="@style/TextAppearance.Body.Dim" />
     </RelativeLayout>
 
-    <include layout="@layout/divider_vertical" />
-
     <com.battlelancer.seriesguide.widgets.WatchedBox
         android:id="@+id/watchedBoxUpcoming"
-        android:layout_width="wrap_content"
+        android:layout_width="48dp"
         android:layout_height="match_parent"
-        android:background="?custom_list_selector"
-        android:padding="@dimen/default_padding"
+        android:background="?attr/selectableItemBackground"
         android:scaleType="centerInside" />
 
 </LinearLayout>

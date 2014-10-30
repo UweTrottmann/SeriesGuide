@@ -22,10 +22,18 @@
     android:layout_height="match_parent">
 
     <FrameLayout
-        android:id="@+id/content_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
 
-    <include layout="@layout/drawer_left_fullscreen" />
+        <FrameLayout
+            android:id="@+id/content_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include layout="@layout/toolbar_transparent" />
+
+    </FrameLayout>
+
+    <include layout="@layout/drawer_left" />
 
 </android.support.v4.widget.DrawerLayout>

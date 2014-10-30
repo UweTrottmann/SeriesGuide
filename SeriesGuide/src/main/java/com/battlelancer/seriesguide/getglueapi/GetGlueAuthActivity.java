@@ -16,7 +16,6 @@
 
 package com.battlelancer.seriesguide.getglueapi;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -24,8 +23,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
 import android.text.format.DateUtils;
-import android.view.Window;
+import android.view.MenuItem;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -50,31 +50,13 @@ public class GetGlueAuthActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        // webview uses a progress bar
-        requestWindowFeature(Window.FEATURE_PROGRESS);
-
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_webview);
+        setupActionBar();
 
-        WebView webview = new WebView(this);
-        setContentView(webview);
-
-        final ActionBar actionBar = getActionBar();
-        actionBar.setTitle(getString(R.string.getglue_authentication));
-        actionBar.setDisplayShowTitleEnabled(true);
-
-        setProgressBarVisibility(true);
+        WebView webview = (WebView) findViewById(R.id.webView);
 
         final FragmentActivity activity = this;
-        webview.setWebChromeClient(new WebChromeClient() {
-            public void onProgressChanged(WebView view, int progress) {
-                /*
-                 * Activities and WebViews measure progress with different
-                 * scales. The progress meter will automatically disappear when
-                 * we reach 100%.
-                 */
-                activity.setProgress(progress * 1000);
-            }
-        });
         webview.setWebViewClient(new WebViewClient() {
             public void onReceivedError(WebView view, int errorCode, String description,
                     String failingUrl) {
@@ -114,6 +96,23 @@ public class GetGlueAuthActivity extends BaseActivity {
         } catch (OAuthSystemException e) {
             Timber.e(e, "Auth request failed");
         }
+    }
+
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(getString(R.string.getglue_authentication));
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public class RetrieveAccessTokenTask extends AsyncTask<Uri, Void, Integer> {
@@ -191,5 +190,4 @@ public class GetGlueAuthActivity extends BaseActivity {
             return false;
         }
     }
-
 }

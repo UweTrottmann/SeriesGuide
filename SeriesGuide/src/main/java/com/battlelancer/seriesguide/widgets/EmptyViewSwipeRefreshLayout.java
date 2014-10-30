@@ -22,6 +22,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 /**
  * A {@link android.support.v4.widget.SwipeRefreshLayout} hosting a {@link android.view.ViewGroup}
@@ -40,7 +41,19 @@ public class EmptyViewSwipeRefreshLayout extends SwipeRefreshLayout {
 
     @Override
     public boolean canChildScrollUp() {
-        ViewGroup target = (ViewGroup) getChildAt(0);
+        // find content view
+        ViewGroup target = null;
+        for (int i = 0; i < getChildCount(); i++) {
+            View child = getChildAt(i);
+            if (child instanceof ImageView) {
+                continue;
+            }
+            target = (ViewGroup) child;
+        }
+
+        if (target == null) {
+            return false;
+        }
 
         // check if adapter view is visible
         View scrollableView = target.getChildAt(1);

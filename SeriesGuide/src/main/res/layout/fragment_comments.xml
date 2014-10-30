@@ -38,8 +38,7 @@
                 android:paddingTop="@dimen/default_padding"
                 android:clipToPadding="@bool/gridClipToPadding"
                 android:divider="@color/transparent"
-                android:dividerHeight="0dp"
-                android:listSelector="?attr/custom_list_selector" />
+                android:dividerHeight="0dp" />
 
         </FrameLayout>
 
@@ -68,8 +67,8 @@
 
         <ImageButton
             android:id="@+id/imageButtonShouts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_alignParentRight="true"
             android:contentDescription="@string/shout"
             android:src="@drawable/ic_action_send" />

@@ -16,7 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -44,6 +43,7 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -55,8 +55,18 @@ public class TvdbAddFragment extends AddFragment {
         return new TvdbAddFragment();
     }
 
-    @InjectView(R.id.clearButton) ImageButton clearButton;
-    @InjectView(R.id.searchbox) AutoCompleteTextView searchBox;
+    public static class TvdbAddResultsEvent {
+        public int emptyTextResId;
+        public List<SearchResult> results;
+
+        public TvdbAddResultsEvent(int emptyTextResId, List<SearchResult> results) {
+            this.emptyTextResId = emptyTextResId;
+            this.results = results;
+        }
+    }
+
+    @InjectView(R.id.buttonAddTvdbClear) ImageButton clearButton;
+    @InjectView(R.id.editTextAddTvdbSearch) AutoCompleteTextView searchBox;
 
     private SearchTask searchTask;
     private SearchHistory searchHistory;
@@ -102,6 +112,8 @@ public class TvdbAddFragment extends AddFragment {
         searchBox.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
         searchBox.setInputType(EditorInfo.TYPE_CLASS_TEXT);
 
+        setProgressVisible(false, false);
+
         return v;
     }
 
@@ -110,8 +122,8 @@ public class TvdbAddFragment extends AddFragment {
         super.onActivityCreated(savedInstanceState);
 
         // create an empty adapter to avoid displaying a progress indicator
-        if (mAdapter == null) {
-            mAdapter = new AddAdapter(getActivity(), R.layout.item_addshow,
+        if (adapter == null) {
+            adapter = new AddAdapter(getActivity(), R.layout.item_addshow,
                     new ArrayList<SearchResult>(), mDetailsButtonListener);
         }
 
@@ -134,14 +146,15 @@ public class TvdbAddFragment extends AddFragment {
     public void onStart() {
         super.onStart();
 
+        EventBus.getDefault().register(this);
         Utils.trackView(getActivity(), "TVDb Search");
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onStop() {
+        super.onStop();
 
-        ButterKnife.reset(this);
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -170,10 +183,12 @@ public class TvdbAddFragment extends AddFragment {
     private void search() {
         searchBox.dismissDropDown();
 
+        // clear current search results
+        setSearchResults(new LinkedList<SearchResult>());
+
         // nag about no connectivity
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
             setEmptyMessage(R.string.offline);
-            setSearchResults(new LinkedList<SearchResult>());
             return;
         }
 
@@ -183,6 +198,7 @@ public class TvdbAddFragment extends AddFragment {
         }
         // query for results
         if (searchTask == null || searchTask.getStatus() == AsyncTask.Status.FINISHED) {
+            setProgressVisible(true, false);
             searchTask = new SearchTask(getActivity());
             AndroidUtils.executeOnPool(searchTask, query);
         }
@@ -193,20 +209,18 @@ public class TvdbAddFragment extends AddFragment {
         }
     }
 
-    public class SearchTask extends AsyncTask<String, Void, List<SearchResult>> {
+    public void onEventMainThread(TvdbAddResultsEvent event) {
+        setEmptyMessage(event.emptyTextResId);
+        setSearchResults(event.results);
+        setProgressVisible(false, true);
+    }
+
+    public static class SearchTask extends AsyncTask<String, Void, List<SearchResult>> {
 
         private Context mContext;
 
         public SearchTask(Context context) {
             mContext = context;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            final Activity activity = getActivity();
-            if (activity != null) {
-                activity.setProgressBarIndeterminateVisibility(true);
-            }
         }
 
         @Override
@@ -227,19 +241,16 @@ public class TvdbAddFragment extends AddFragment {
 
         @Override
         protected void onPostExecute(List<SearchResult> result) {
-            final Activity activity = getActivity();
-            if (activity != null) {
-                activity.setProgressBarIndeterminateVisibility(false);
-            }
+            TvdbAddResultsEvent event;
             if (result == null) {
                 // display error in empty view
-                setEmptyMessage(R.string.search_error);
-                setSearchResults(new LinkedList<SearchResult>());
+                event = new TvdbAddResultsEvent(R.string.search_error,
+                        new LinkedList<SearchResult>());
             } else {
                 // empty or there are shows
-                setEmptyMessage(R.string.no_results);
-                setSearchResults(result);
+                event = new TvdbAddResultsEvent(R.string.no_results, result);
             }
+            EventBus.getDefault().post(event);
         }
     }
 }

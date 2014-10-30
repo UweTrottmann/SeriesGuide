@@ -18,8 +18,8 @@
 package com.battlelancer.seriesguide.util;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.os.Build;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -59,7 +59,8 @@ public class SystemUiHiderHoneycomb extends SystemUiHiderBase {
      * Constructor not intended to be called by clients. Use
      * {@link SystemUiHider#getInstance} to obtain an instance.
      */
-    protected SystemUiHiderHoneycomb(Activity activity, View anchorView, int flags) {
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    protected SystemUiHiderHoneycomb(ActionBarActivity activity, View anchorView, int flags) {
         super(activity, anchorView, flags);
 
         mShowFlags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
@@ -114,12 +115,13 @@ public class SystemUiHiderHoneycomb extends SystemUiHiderBase {
             // Test against mTestFlags to see if the system UI is visible.
             if ((vis & mTestFlags) != 0) {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                    // Pre-Jelly Bean, we must manually hide the action bar
-                    // and use the old window flags API.
-                    mActivity.getActionBar().hide();
+                    // Pre-Jelly Bean, we must use the old window flags API.
                     mActivity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                             WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 }
+
+                // As we use the appcompat toolbar as an action bar, we must manually hide it
+                mActivity.getSupportActionBar().hide();
 
                 // Trigger the registered listener and cache the visibility
                 // state.
@@ -129,11 +131,12 @@ public class SystemUiHiderHoneycomb extends SystemUiHiderBase {
             } else {
                 mAnchorView.setSystemUiVisibility(mShowFlags);
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                    // Pre-Jelly Bean, we must manually show the action bar
-                    // and use the old window flags API.
-                    mActivity.getActionBar().show();
+                    // Pre-Jelly Bean, we must use the old window flags API.
                     mActivity.getWindow().setFlags(0, WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 }
+
+                // As we use the appcompat toolbar as an action bar, we must manually show it
+                mActivity.getSupportActionBar().show();
 
                 // Trigger the registered listener and cache the visibility
                 // state.
