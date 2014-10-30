@@ -5,8 +5,16 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 19 *(in development)*
+Version 19 *(2014-10-30)*
 -----------------------------
+
+* Further design updates towards material design.
+* Android 5.0 support (notification color, settings, material theme).
+* List widget light theme.
+
+#### 19 *(2014-10-30)*
+
+* NOTICE Latest translations from crowdin.
 
 #### 19-beta3 *(2014-10-28)*
 
