@@ -374,7 +374,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + EpisodesColumns.RATING_VOTES + " INTEGER,"
 
-            + EpisodesColumns.RATING_USER + " INTEGER,"
+            + EpisodesColumns.RATING_USER + " INTEGER DEFAULT -1,"
 
             + EpisodesColumns.IMDBID + " TEXT DEFAULT '',"
 
@@ -466,7 +466,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + MoviesColumns.RATING_VOTES_TRAKT + " INTEGER DEFAULT 0,"
 
-            + MoviesColumns.RATING_USER + " INTEGER,"
+            + MoviesColumns.RATING_USER + " INTEGER DEFAULT -1,"
 
             + MoviesColumns.LAST_UPDATED + " INTEGER,"
 
@@ -617,17 +617,17 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
                     + Shows.RATING_VOTES + " INTEGER;");
             db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
-                    + Shows.RATING_USER + " INTEGER;");
+                    + Shows.RATING_USER + " INTEGER DEFAULT -1;");
 
             // episodes
             db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN "
                     + Episodes.RATING_VOTES + " INTEGER;");
             db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN "
-                    + Episodes.RATING_USER + " INTEGER;");
+                    + Episodes.RATING_USER + " INTEGER DEFAULT -1;");
 
             // movies
             db.execSQL("ALTER TABLE " + Tables.MOVIES + " ADD COLUMN "
-                    + Movies.RATING_USER + " INTEGER;");
+                    + Movies.RATING_USER + " INTEGER DEFAULT -1;");
 
             db.setTransactionSuccessful();
         } finally {
