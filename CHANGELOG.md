@@ -12,6 +12,10 @@ Version 19 *(2014-10-30)*
 * Android 5.0 support (notification color, settings, material theme).
 * List widget light theme.
 
+#### 19.0.1 *(2014-11-01)*
+
+* TWEAK Add toolbar to Amazon feature unlock screen.
+
 #### 19 *(2014-10-30)*
 
 * NOTICE Latest translations from crowdin.
