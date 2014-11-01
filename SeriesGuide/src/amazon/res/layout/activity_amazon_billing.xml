@@ -21,6 +21,8 @@
     android:orientation="vertical"
     tools:context="com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity">
 
+    <include layout="@layout/toolbar" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
