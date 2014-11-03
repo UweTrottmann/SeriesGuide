@@ -24,8 +24,8 @@ ext {
     buildToolsVersion = '21.0.2'
 
     // API level 15+ -> version 15xxx
-    versionCode = 15054
-    versionName = '19.0.1'
+    versionCode = 15055
+    versionName = '19.0.2'
 }
 
 ext.libraries = [

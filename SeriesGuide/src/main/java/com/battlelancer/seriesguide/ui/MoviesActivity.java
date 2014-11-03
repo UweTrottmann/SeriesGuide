@@ -92,6 +92,13 @@ public class MoviesActivity extends BaseTopActivity {
         maybeAddTraktTabs();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        supportInvalidateOptionsMenu();
+    }
+
     private void maybeAddTraktTabs() {
         int currentTabCount = tabsAdapter.getCount();
         boolean shouldShowTraktTabs = TraktCredentials.get(this).hasCredentials();

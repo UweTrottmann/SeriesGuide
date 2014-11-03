@@ -260,17 +260,6 @@ public class SeasonsFragment extends ListFragment implements
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-
-        MenuItem item = menu.findItem(R.id.menu_sesortby);
-        if (item != null) {
-            CharSequence[] items = getResources().getStringArray(R.array.sesorting);
-            item.setTitle(getString(R.string.sort) + ": " + items[mSorting.index()]);
-        }
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_watched_all) {
@@ -383,8 +372,8 @@ public class SeasonsFragment extends ListFragment implements
     }
 
     /**
-     * Changes the watched flag for all episodes of the given show, updates the status labels of
-     * all seasons.
+     * Changes the watched flag for all episodes of the given show, updates the status labels of all
+     * seasons.
      */
     private void onFlagShowWatched(boolean isWatched) {
         EpisodeTools.showWatched(getActivity(), getShowId(), isWatched);
@@ -574,7 +563,8 @@ public class SeasonsFragment extends ListFragment implements
         Utils.trackCustomEvent(getActivity(), TAG, "Sorting", mSorting.name());
 
         // restart loader and update menu description
-        getLoaderManager().restartLoader(OverviewActivity.SEASONS_LOADER_ID, null, SeasonsFragment.this);
+        getLoaderManager().restartLoader(OverviewActivity.SEASONS_LOADER_ID, null,
+                SeasonsFragment.this);
         getActivity().invalidateOptionsMenu();
     }
 
