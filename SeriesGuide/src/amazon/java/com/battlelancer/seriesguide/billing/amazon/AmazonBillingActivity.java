@@ -16,8 +16,8 @@
 
 package com.battlelancer.seriesguide.billing.amazon;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,7 +29,6 @@ import com.amazon.device.iap.model.Price;
 import com.amazon.device.iap.model.RequestId;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
-import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import java.util.Locale;
 import timber.log.Timber;
@@ -48,10 +47,17 @@ public class AmazonBillingActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_amazon_billing);
+        setupActionBar();
 
         setupViews();
 
         AmazonIapManager.setup(this);
+    }
+
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setupViews() {
@@ -104,6 +110,15 @@ public class AmazonBillingActivity extends BaseActivity {
         super.onPause();
 
         AmazonIapManager.get().deactivate();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            super.onBackPressed();
+            return true;
+        }
+        return false;
     }
 
     private void subscribe() {

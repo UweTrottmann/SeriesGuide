@@ -364,6 +364,9 @@ public class ShowsActivity extends BaseTopActivity implements
     protected void onResume() {
         super.onResume();
 
+        // prefs might have changed, update menus
+        supportInvalidateOptionsMenu();
+
         if (Utils.isAmazonVersion()) {
             // update Amazon IAP
             AmazonIapManager.get().activate();
@@ -538,7 +541,7 @@ public class ShowsActivity extends BaseTopActivity implements
             }
 
             // update notification
-            Toast.makeText(this, R.string.updated, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.updated, Toast.LENGTH_LONG).show();
 
             // set this as lastVersion
             editor.putInt(AppSettings.KEY_VERSION, currentVersion);
