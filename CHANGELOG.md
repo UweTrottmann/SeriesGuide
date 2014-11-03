@@ -12,6 +12,11 @@ Version 19 *(2014-10-30)*
 * Android 5.0 support (notification color, settings, material theme).
 * List widget light theme.
 
+#### 19.0.2 *(2014-11-03)*
+
+* FIX Crash when creating menus in some situations.
+* FIX Potential fix for crash when displaying upgrade toast on L preview.
+
 #### 19.0.1 *(2014-11-01)*
 
 * TWEAK Add toolbar to Amazon feature unlock screen.
