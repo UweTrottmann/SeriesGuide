@@ -364,6 +364,9 @@ public class ShowsActivity extends BaseTopActivity implements
     protected void onResume() {
         super.onResume();
 
+        // prefs might have changed, update menus
+        supportInvalidateOptionsMenu();
+
         if (Utils.isAmazonVersion()) {
             // update Amazon IAP
             AmazonIapManager.get().activate();
