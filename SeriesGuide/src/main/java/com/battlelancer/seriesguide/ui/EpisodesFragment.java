@@ -196,12 +196,6 @@ public class EpisodesFragment extends ListFragment
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-
-        MenuItem item = menu.findItem(R.id.menu_epsorting);
-        if (item != null) {
-            final CharSequence[] items = getResources().getStringArray(R.array.epsorting);
-            item.setTitle(getString(R.string.sort) + ": " + items[mSorting.index()]);
-        }
     }
 
     @Override

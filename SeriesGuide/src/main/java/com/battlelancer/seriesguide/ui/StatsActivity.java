@@ -59,8 +59,15 @@ public class StatsActivity extends BaseTopActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        // prefs might have changed, update menu
+        supportInvalidateOptionsMenu();
+    }
+
+    @Override
     protected void fireTrackerEvent(String label) {
         Utils.trackAction(this, TAG, label);
     }
-
 }

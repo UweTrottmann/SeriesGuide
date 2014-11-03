@@ -226,7 +226,14 @@ public class ShowsFragment extends Fragment implements
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.shows_menu, menu);
+
+        // set filter icon state
+        menu.findItem(R.id.menu_action_shows_filter)
+                .setIcon(mIsFilterFavorites || mIsFilterUnwatched || mIsFilterUpcoming
+                        || mIsFilterHidden ?
+                        R.drawable.ic_action_filter_selected : R.drawable.ic_action_filter);
 
         // set filter check box states
         menu.findItem(R.id.menu_action_shows_filter_favorites)
@@ -243,18 +250,6 @@ public class ShowsFragment extends Fragment implements
                 .setChecked(mIsSortFavoritesFirst);
         menu.findItem(R.id.menu_action_shows_sort_ignore_articles)
                 .setChecked(mIsSortIgnoreArticles);
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-
-        MenuItem filter = menu.findItem(R.id.menu_action_shows_filter);
-        if (filter != null) {
-            filter.setIcon(mIsFilterFavorites || mIsFilterUnwatched || mIsFilterUpcoming
-                    || mIsFilterHidden ?
-                    R.drawable.ic_action_filter_selected : R.drawable.ic_action_filter);
-        }
     }
 
     @Override

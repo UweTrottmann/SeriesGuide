@@ -167,7 +167,13 @@ public class ActivityFragment extends Fragment implements
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.activity_menu, menu);
+
+        // guard against not attached to activity
+        if (!isAdded()) {
+            return;
+        }
 
         // set menu items to current values
         menu.findItem(R.id.menu_onlyfavorites)
@@ -176,8 +182,8 @@ public class ActivityFragment extends Fragment implements
                 .setChecked(DisplaySettings.isHidingSpecials(getActivity()));
         menu.findItem(R.id.menu_nowatched)
                 .setChecked(DisplaySettings.isNoWatchedEpisodes(getActivity()));
-        menu.findItem(R.id.menu_infinite_scrolling).setChecked(
-                ActivitySettings.isInfiniteActivity(getActivity()));
+        menu.findItem(R.id.menu_infinite_scrolling)
+                .setChecked(ActivitySettings.isInfiniteActivity(getActivity()));
     }
 
     @Override
