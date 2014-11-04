@@ -31,14 +31,18 @@ import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.CheckinResponse;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.enumerations.Rating;
-import com.jakewharton.trakt.services.CommentService;
 import com.jakewharton.trakt.services.RateService;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt.v2.TraktV2;
+import com.uwetrottmann.trakt.v2.entities.Comment;
+import com.uwetrottmann.trakt.v2.entities.Episode;
 import com.uwetrottmann.trakt.v2.entities.EpisodeCheckin;
 import com.uwetrottmann.trakt.v2.entities.EpisodeIds;
+import com.uwetrottmann.trakt.v2.entities.Movie;
 import com.uwetrottmann.trakt.v2.entities.MovieCheckin;
 import com.uwetrottmann.trakt.v2.entities.MovieIds;
+import com.uwetrottmann.trakt.v2.entities.Show;
+import com.uwetrottmann.trakt.v2.entities.ShowIds;
 import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncMovie;
@@ -46,6 +50,7 @@ import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.exceptions.CheckinInProgressException;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.services.Checkin;
+import com.uwetrottmann.trakt.v2.services.Comments;
 import com.uwetrottmann.trakt.v2.services.Sync;
 import de.greenrobot.event.EventBus;
 import retrofit.RetrofitError;
@@ -141,9 +146,9 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     }
 
     /**
-     * Initial constructor. Call <b>one</b> of the setup-methods like {@link #shoutEpisode(int, int,
-     * int, String, boolean)} afterwards.<br> <br> Make sure the user has valid trakt credentials
-     * (check with {@link com.battlelancer.seriesguide.settings.TraktCredentials#hasCredentials()}
+     * Initial constructor. Call <b>one</b> of the setup-methods like {@link #commentEpisode(int,
+     * int, int, String, boolean)} afterwards.<br> <br> Make sure the user has valid trakt
+     * credentials (check with {@link com.battlelancer.seriesguide.settings.TraktCredentials#hasCredentials()}
      * and then possibly launch {@link ConnectTraktActivity}) or execution will fail.
      */
     public TraktTask(Context context) {
@@ -197,34 +202,34 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     }
 
     /**
-     * Post a shout for a show.
+     * Post a comment for a show.
      */
-    public TraktTask shoutShow(int showTvdbid, String shout, boolean isSpoiler) {
-        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.SHOUT.name());
+    public TraktTask commentShow(int showTvdbid, String comment, boolean isSpoiler) {
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.COMMENT.name());
         mArgs.putInt(InitBundle.SHOW_TVDBID, showTvdbid);
-        mArgs.putString(InitBundle.MESSAGE, shout);
+        mArgs.putString(InitBundle.MESSAGE, comment);
         mArgs.putBoolean(InitBundle.ISSPOILER, isSpoiler);
         return this;
     }
 
     /**
-     * Post a shout for an episode.
+     * Post a comment for an episode.
      */
-    public TraktTask shoutEpisode(int showTvdbid, int season, int episode, String shout,
+    public TraktTask commentEpisode(int showTvdbid, int season, int episode, String comment,
             boolean isSpoiler) {
-        shoutShow(showTvdbid, shout, isSpoiler);
+        commentShow(showTvdbid, comment, isSpoiler);
         mArgs.putInt(InitBundle.SEASON, season);
         mArgs.putInt(InitBundle.EPISODE, episode);
         return this;
     }
 
     /**
-     * Post a shout for a movie.
+     * Post a comment for a movie.
      */
-    public TraktTask shoutMovie(int movieTmdbId, String shout, boolean isSpoiler) {
-        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.SHOUT.name());
+    public TraktTask commentMovie(int movieTmdbId, String comment, boolean isSpoiler) {
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.COMMENT.name());
         mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
-        mArgs.putString(InitBundle.MESSAGE, shout);
+        mArgs.putString(InitBundle.MESSAGE, comment);
         mArgs.putBoolean(InitBundle.ISSPOILER, isSpoiler);
         return this;
     }
@@ -316,8 +321,8 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 case UNWATCHED_MOVIE: {
                     return doMovieAction(trakt.sync());
                 }
-                case SHOUT: {
-                    return doShoutAction(manager);
+                case COMMENT: {
+                    return doCommentAction(trakt.comments());
                 }
             }
         } catch (RetrofitError e) {
@@ -458,35 +463,41 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         return r;
     }
 
-    private Response doShoutAction(Trakt manager) {
-        Response r;
-        final String shout = mArgs.getString(InitBundle.MESSAGE);
-        final boolean isSpoiler = mArgs.getBoolean(InitBundle.ISSPOILER);
-        final int showTvdbId = mArgs.getInt(InitBundle.SHOW_TVDBID);
-        final int season = mArgs.getInt(InitBundle.SEASON);
-        final int episode = mArgs.getInt(InitBundle.EPISODE);
-
-        // episode?
-        if (episode != 0) {
-            r = manager.commentService().episode(new CommentService.EpisodeComment(
-                    showTvdbId, season, episode, shout
-            ).spoiler(isSpoiler));
-            return r;
-        }
+    private Response doCommentAction(Comments traktComments) throws OAuthUnauthorizedException {
+        Comment comment = new Comment();
+        comment.comment = mArgs.getString(InitBundle.MESSAGE);
+        comment.spoiler = mArgs.getBoolean(InitBundle.ISSPOILER);
 
         // movie?
         int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
         if (tmdbId != 0) {
-            r = manager.commentService().movie(new CommentService.MovieComment(
-                    tmdbId, shout
-            ).spoiler(isSpoiler));
-            return r;
+            comment.movie = new Movie();
+            comment.movie.ids = MovieIds.tmdb(tmdbId);
+        } else {
+            // show or episode
+            comment.show = new Show();
+            comment.show.ids = ShowIds.tvdb(mArgs.getInt(InitBundle.SHOW_TVDBID));
+
+            // episode?
+            int episode = mArgs.getInt(InitBundle.EPISODE);
+            if (episode != 0) {
+                comment.episode = new Episode();
+                comment.episode.number = episode;
+                comment.episode.season = mArgs.getInt(InitBundle.SEASON);
+            }
         }
 
-        // show!
-        r = manager.commentService().show(new CommentService.ShowComment(
-                showTvdbId, shout
-        ).spoiler(isSpoiler));
+        // post comment
+        Comment postedComment = traktComments.post(comment);
+
+        Response r = new Response();
+        if (postedComment != null && postedComment.id != null) {
+            r.status = TraktStatus.SUCCESS;
+        } else {
+            r.status = TraktStatus.FAILURE;
+            r.error = mContext.getString(R.string.trakt_error_general);
+        }
+
         return r;
     }
 

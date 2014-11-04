@@ -152,7 +152,7 @@ public class TraktCommentsFragment extends Fragment implements
         mButtonShout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                shout();
+                comment();
             }
         });
 
@@ -176,7 +176,7 @@ public class TraktCommentsFragment extends Fragment implements
         return v;
     }
 
-    private void shout() {
+    private void comment() {
         // prevent empty shouts
         String shout = mEditTextShout.getText().toString();
         if (TextUtils.isEmpty(shout)) {
@@ -193,7 +193,7 @@ public class TraktCommentsFragment extends Fragment implements
         int movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID);
         if (movieTmdbId != 0) {
             AndroidUtils.executeOnPool(
-                    new TraktTask(getActivity()).shoutMovie(movieTmdbId, shout, isSpoiler)
+                    new TraktTask(getActivity()).commentMovie(movieTmdbId, shout, isSpoiler)
             );
             return;
         }
@@ -205,14 +205,15 @@ public class TraktCommentsFragment extends Fragment implements
             int seasonNumber = args.getInt(InitBundle.SEASON_NUMBER);
             AndroidUtils.executeOnPool(
                     new TraktTask(getActivity())
-                            .shoutEpisode(showTvdbId, seasonNumber, episodeNumber, shout, isSpoiler)
+                            .commentEpisode(showTvdbId, seasonNumber, episodeNumber, shout,
+                                    isSpoiler)
             );
             return;
         }
 
         // shout for a show!
         AndroidUtils.executeOnPool(
-                new TraktTask(getActivity()).shoutShow(showTvdbId, shout, isSpoiler)
+                new TraktTask(getActivity()).commentShow(showTvdbId, shout, isSpoiler)
         );
     }
 
@@ -360,7 +361,7 @@ public class TraktCommentsFragment extends Fragment implements
     }
 
     public void onEventMainThread(TraktTask.TraktActionCompleteEvent event) {
-        if (event.mTraktAction != TraktAction.SHOUT || getView() == null) {
+        if (event.mTraktAction != TraktAction.COMMENT || getView() == null) {
             return;
         }
 
