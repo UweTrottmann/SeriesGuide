@@ -33,8 +33,7 @@ import com.battlelancer.seriesguide.util.FlagTapeEntryQueue;
 import com.battlelancer.seriesguide.util.FlagTapedTask;
 import com.battlelancer.seriesguide.util.FlagTapedTask.Callback;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.jakewharton.trakt.Trakt;
-import com.jakewharton.trakt.services.ShowService;
+import com.uwetrottmann.trakt.v2.TraktV2;
 import timber.log.Timber;
 
 public class TraktFlagService extends Service implements Callback {
@@ -68,15 +67,12 @@ public class TraktFlagService extends Service implements Callback {
             running = true;
 
             // build a new FlagTapedTask and execute it
-            Trakt manager = ServiceUtils.getTraktWithAuth(
-                    getApplicationContext());
-            if (manager == null) {
+            TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(getApplicationContext());
+            if (trakt == null) {
                 stop();
                 return;
             }
-            ShowService showService = manager.showService();
-
-            new FlagTapedTask(getApplicationContext(), showService, entry.action, entry.showId,
+            new FlagTapedTask(getApplicationContext(), trakt.sync(), entry.action, entry.showId,
                     entry.flags, entry.isFlag)
                     .execute(this);
         } else {
@@ -142,5 +138,4 @@ public class TraktFlagService extends Service implements Callback {
     public IBinder onBind(Intent intent) {
         return null;
     }
-
 }

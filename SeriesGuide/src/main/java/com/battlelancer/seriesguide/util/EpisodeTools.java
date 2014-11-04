@@ -285,8 +285,7 @@ public class EpisodeTools {
 
         /**
          * Builds a list of {@link com.battlelancer.seriesguide.util.FlagTapeEntry.Flag} objects to
-         * pass to a {@link com.battlelancer.seriesguide.util.FlagTapedTask} to submit to
-         * trakt.
+         * pass to a {@link com.battlelancer.seriesguide.util.FlagTapedTask} to submit to trakt.
          */
         protected List<FlagTapeEntry.Flag> createEpisodeFlags() {
             List<FlagTapeEntry.Flag> episodes = new ArrayList<>();
@@ -296,11 +295,12 @@ public class EpisodeTools {
             String selection = getSelection();
 
             // query and add episodes to list
+            // sort ascending by season for FlagTapedTask
             final Cursor episodeCursor = mContext.getContentResolver().query(
                     uri,
                     new String[] {
                             SeriesGuideContract.Episodes.SEASON, SeriesGuideContract.Episodes.NUMBER
-                    }, selection, null, null
+                    }, selection, null, SeriesGuideContract.Episodes.SORT_SEASON_ASC
             );
             if (episodeCursor != null) {
                 while (episodeCursor.moveToNext()) {
@@ -315,8 +315,7 @@ public class EpisodeTools {
 
         /**
          * Return the column which should get updated, either {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes}
-         * .WATCHED or {@link
-         * com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes}.COLLECTED.
+         * .WATCHED or {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes}.COLLECTED.
          */
         protected abstract String getColumn();
 
@@ -593,15 +592,10 @@ public class EpisodeTools {
 
         @Override
         public List<FlagTapeEntry.Flag> getEpisodesForTrakt() {
-            if (mEpisodeFlag != 0) {
-                // watched, skipped or collected season
-                List<FlagTapeEntry.Flag> episodes = new ArrayList<>();
-                episodes.add(new FlagTapeEntry.Flag(mSeason, -1));
-                return episodes;
-            } else {
-                // unwatched, not collected season
-                return createEpisodeFlags();
-            }
+            // only need the season number
+            List<FlagTapeEntry.Flag> episodes = new ArrayList<>();
+            episodes.add(new FlagTapeEntry.Flag(mSeason, -1));
+            return episodes;
         }
     }
 
@@ -725,12 +719,7 @@ public class EpisodeTools {
 
         @Override
         public List<FlagTapeEntry.Flag> getEpisodesForTrakt() {
-            // only for removing flags we need single episodes
-            if (mEpisodeFlag == 0) {
-                return createEpisodeFlags();
-            } else {
-                return null;
-            }
+            return null;
         }
 
         @Override
@@ -968,8 +957,8 @@ public class EpisodeTools {
     public static class Download {
 
         /**
-         * Downloads all episodes changed since the last time this was called and applies changes
-         * to the database.
+         * Downloads all episodes changed since the last time this was called and applies changes to
+         * the database.
          */
         public static boolean flagsFromHexagon(Context context) {
             List<Episode> episodes;
