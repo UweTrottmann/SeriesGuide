@@ -22,30 +22,30 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 
-public class TraktShoutsActivity extends BaseActivity {
+public class TraktCommentsActivity extends BaseActivity {
 
     public static final int LOADER_ID_COMMENTS = 100;
 
     public static Bundle createInitBundleEpisode(int showTvdbid, int seasonNumber,
             int episodeNumber, String title) {
         Bundle extras = new Bundle();
-        extras.putInt(TraktShoutsFragment.InitBundle.SHOW_TVDB_ID, showTvdbid);
-        extras.putInt(TraktShoutsFragment.InitBundle.SEASON_NUMBER, seasonNumber);
-        extras.putInt(TraktShoutsFragment.InitBundle.EPISODE_NUMBER, episodeNumber);
+        extras.putInt(TraktCommentsFragment.InitBundle.SHOW_TVDB_ID, showTvdbid);
+        extras.putInt(TraktCommentsFragment.InitBundle.SEASON_NUMBER, seasonNumber);
+        extras.putInt(TraktCommentsFragment.InitBundle.EPISODE_NUMBER, episodeNumber);
         extras.putString(InitBundle.TITLE, title);
         return extras;
     }
 
     public static Bundle createInitBundleShow(String title, int tvdbId) {
         Bundle extras = new Bundle();
-        extras.putInt(TraktShoutsFragment.InitBundle.SHOW_TVDB_ID, tvdbId);
+        extras.putInt(TraktCommentsFragment.InitBundle.SHOW_TVDB_ID, tvdbId);
         extras.putString(InitBundle.TITLE, title);
         return extras;
     }
 
     public static Bundle createInitBundleMovie(String title, int tmdbId) {
         Bundle extras = new Bundle();
-        extras.putInt(TraktShoutsFragment.InitBundle.MOVIE_TMDB_ID, tmdbId);
+        extras.putInt(TraktCommentsFragment.InitBundle.MOVIE_TMDB_ID, tmdbId);
         extras.putString(InitBundle.TITLE, title);
         return extras;
     }
@@ -64,16 +64,16 @@ public class TraktShoutsActivity extends BaseActivity {
             // embed the shouts fragment dialog
             Fragment f;
             Bundle args = getIntent().getExtras();
-            int showTvdbId = args.getInt(TraktShoutsFragment.InitBundle.SHOW_TVDB_ID);
-            int episode = args.getInt(TraktShoutsFragment.InitBundle.EPISODE_NUMBER);
+            int showTvdbId = args.getInt(TraktCommentsFragment.InitBundle.SHOW_TVDB_ID);
+            int episode = args.getInt(TraktCommentsFragment.InitBundle.EPISODE_NUMBER);
             if (showTvdbId == 0) {
-                int tmdbId = args.getInt(TraktShoutsFragment.InitBundle.MOVIE_TMDB_ID);
-                f = TraktShoutsFragment.newInstanceMovie(tmdbId);
+                int tmdbId = args.getInt(TraktCommentsFragment.InitBundle.MOVIE_TMDB_ID);
+                f = TraktCommentsFragment.newInstanceMovie(tmdbId);
             } else if (episode == 0) {
-                f = TraktShoutsFragment.newInstanceShow(showTvdbId);
+                f = TraktCommentsFragment.newInstanceShow(showTvdbId);
             } else {
-                int season = args.getInt(TraktShoutsFragment.InitBundle.SEASON_NUMBER);
-                f = TraktShoutsFragment
+                int season = args.getInt(TraktCommentsFragment.InitBundle.SEASON_NUMBER);
+                f = TraktCommentsFragment
                         .newInstanceEpisode(showTvdbId, season, episode);
             }
             getSupportFragmentManager().beginTransaction().add(R.id.content_frame, f)

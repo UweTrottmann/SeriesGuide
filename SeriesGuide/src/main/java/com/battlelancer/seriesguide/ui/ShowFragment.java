@@ -402,8 +402,8 @@ public class ShowFragment extends Fragment {
         mButtonComments.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
-                i.putExtras(TraktShoutsActivity.createInitBundleShow(mShowTitle,
+                Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
+                i.putExtras(TraktCommentsActivity.createInitBundleShow(mShowTitle,
                         getShowTvdbId()));
                 ActivityCompat.startActivity(getActivity(), i,
                         ActivityOptionsCompat

@@ -18,7 +18,7 @@ package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
 import android.os.Bundle;
-import com.battlelancer.seriesguide.ui.TraktShoutsFragment;
+import com.battlelancer.seriesguide.ui.TraktCommentsFragment;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Comment;
@@ -44,17 +44,17 @@ public class TraktCommentsLoader extends GenericSimpleLoader<List<Comment>> {
     public List<Comment> loadInBackground() {
         Trakt manager = ServiceUtils.getTrakt(getContext());
         try {
-            int movieTmdbId = mArgs.getInt(TraktShoutsFragment.InitBundle.MOVIE_TMDB_ID);
+            int movieTmdbId = mArgs.getInt(TraktCommentsFragment.InitBundle.MOVIE_TMDB_ID);
             if (movieTmdbId != 0) {
                 // movie comments
                 return manager.movieService().comments(movieTmdbId);
             }
 
-            int showTvdbId = mArgs.getInt(TraktShoutsFragment.InitBundle.SHOW_TVDB_ID);
-            int episodeNumber = mArgs.getInt(TraktShoutsFragment.InitBundle.EPISODE_NUMBER);
+            int showTvdbId = mArgs.getInt(TraktCommentsFragment.InitBundle.SHOW_TVDB_ID);
+            int episodeNumber = mArgs.getInt(TraktCommentsFragment.InitBundle.EPISODE_NUMBER);
             if (episodeNumber != 0) {
                 // episode comments
-                int seasonNumber = mArgs.getInt(TraktShoutsFragment.InitBundle.SEASON_NUMBER);
+                int seasonNumber = mArgs.getInt(TraktCommentsFragment.InitBundle.SEASON_NUMBER);
                 return manager.showService().episodeComments(showTvdbId, seasonNumber,
                         episodeNumber);
             }

@@ -441,8 +441,8 @@ public class MovieDetailsFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
-                i.putExtras(TraktShoutsActivity.createInitBundleMovie(title, mTmdbId));
+                Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
+                i.putExtras(TraktCommentsActivity.createInitBundleMovie(title, mTmdbId));
                 ActivityCompat.startActivity(getActivity(), i,
                         ActivityOptionsCompat
                                 .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())

@@ -534,8 +534,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         mCommentsButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), TraktShoutsActivity.class);
-                intent.putExtras(TraktShoutsActivity.createInitBundleEpisode(mShowTvdbId,
+                Intent intent = new Intent(getActivity(), TraktCommentsActivity.class);
+                intent.putExtras(TraktCommentsActivity.createInitBundleEpisode(mShowTvdbId,
                         mSeasonNumber, mEpisodeNumber, mEpisodeTitle));
                 ActivityCompat.startActivity(getActivity(), intent,
                         ActivityOptionsCompat

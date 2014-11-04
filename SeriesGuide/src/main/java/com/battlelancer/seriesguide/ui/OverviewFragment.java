@@ -751,8 +751,8 @@ public class OverviewFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()) {
-                    Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
-                    i.putExtras(TraktShoutsActivity.createInitBundleEpisode(getShowId(),
+                    Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
+                    i.putExtras(TraktCommentsActivity.createInitBundleEpisode(getShowId(),
                             seasonNumber, episodeNumber, episodeTitle));
                     ActivityCompat.startActivity(getActivity(), i,
                             ActivityOptionsCompat

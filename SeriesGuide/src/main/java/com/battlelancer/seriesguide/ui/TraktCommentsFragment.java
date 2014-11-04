@@ -57,15 +57,15 @@ import java.util.List;
 /**
  * A custom {@link ListFragment} to display show or episode shouts and for posting own shouts.
  */
-public class TraktShoutsFragment extends Fragment implements
+public class TraktCommentsFragment extends Fragment implements
         LoaderCallbacks<List<Comment>>, SwipeRefreshLayout.OnRefreshListener {
 
     /**
-     * Build a {@link TraktShoutsFragment} for shouts of an episode.
+     * Build a {@link TraktCommentsFragment} for shouts of an episode.
      */
-    public static TraktShoutsFragment newInstanceEpisode(int showTvdbId, int seasonNumber,
+    public static TraktCommentsFragment newInstanceEpisode(int showTvdbId, int seasonNumber,
             int episodeNumber) {
-        TraktShoutsFragment f = new TraktShoutsFragment();
+        TraktCommentsFragment f = new TraktCommentsFragment();
         Bundle args = new Bundle();
         args.putInt(InitBundle.SHOW_TVDB_ID, showTvdbId);
         args.putInt(InitBundle.SEASON_NUMBER, seasonNumber);
@@ -75,10 +75,10 @@ public class TraktShoutsFragment extends Fragment implements
     }
 
     /**
-     * Build a {@link TraktShoutsFragment} for shouts of a show.
+     * Build a {@link TraktCommentsFragment} for shouts of a show.
      */
-    public static TraktShoutsFragment newInstanceShow(int tvdbId) {
-        TraktShoutsFragment f = new TraktShoutsFragment();
+    public static TraktCommentsFragment newInstanceShow(int tvdbId) {
+        TraktCommentsFragment f = new TraktCommentsFragment();
         Bundle args = new Bundle();
         args.putInt(InitBundle.SHOW_TVDB_ID, tvdbId);
         f.setArguments(args);
@@ -86,10 +86,10 @@ public class TraktShoutsFragment extends Fragment implements
     }
 
     /**
-     * Build a {@link TraktShoutsFragment} for shouts of a movie.
+     * Build a {@link TraktCommentsFragment} for shouts of a movie.
      */
-    public static TraktShoutsFragment newInstanceMovie(int tmdbId) {
-        TraktShoutsFragment f = new TraktShoutsFragment();
+    public static TraktCommentsFragment newInstanceMovie(int tmdbId) {
+        TraktCommentsFragment f = new TraktCommentsFragment();
         Bundle args = new Bundle();
         args.putInt(InitBundle.MOVIE_TMDB_ID, tmdbId);
         f.setArguments(args);
@@ -231,7 +231,7 @@ public class TraktShoutsFragment extends Fragment implements
         mAdapter = new TraktCommentsAdapter(getActivity());
         mList.setAdapter(mAdapter);
 
-        getLoaderManager().initLoader(TraktShoutsActivity.LOADER_ID_COMMENTS, getArguments(),
+        getLoaderManager().initLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, getArguments(),
                 this);
 
         setHasOptionsMenu(true);
@@ -347,7 +347,7 @@ public class TraktShoutsFragment extends Fragment implements
     }
 
     private void refreshComments() {
-        getLoaderManager().restartLoader(TraktShoutsActivity.LOADER_ID_COMMENTS, getArguments(),
+        getLoaderManager().restartLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, getArguments(),
                 this);
     }
 
