@@ -62,7 +62,7 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
         /**
          * Season number. <b>Required for episodes.</b>
          */
-        String EPISODE_TVDB_ID = "showtvdbid";
+        String EPISODE_TVDB_ID = "episodetvdbid";
     }
 
     public class CheckInDialogDismissedEvent {
