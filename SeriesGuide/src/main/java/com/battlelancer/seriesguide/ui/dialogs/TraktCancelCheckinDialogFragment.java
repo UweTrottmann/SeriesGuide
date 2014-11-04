@@ -30,13 +30,15 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Response;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.trakt.v2.TraktV2;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import de.greenrobot.event.EventBus;
 import retrofit.RetrofitError;
 
@@ -65,9 +67,6 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Context context = getActivity().getApplicationContext();
         final Bundle args = getArguments();
-        final boolean isEpisodeNotMovie =
-                TraktAction.valueOf(args.getString(InitBundle.TRAKTACTION))
-                        == TraktAction.CHECKIN_EPISODE;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -84,30 +83,30 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
                     @Override
                     protected Response doInBackground(String... params) {
+                        Response r = new Response();
+                        r.status = TraktStatus.FAILURE;
 
-                        Trakt manager = ServiceUtils.getTraktWithAuth(context);
-                        if (manager == null) {
+                        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
+                        if (trakt == null) {
                             // not authenticated any longer
-                            Response r = new Response();
-                            r.status = TraktStatus.FAILURE;
                             r.error = context.getString(R.string.trakt_error_credentials);
                             return r;
                         }
 
-                        Response response;
                         try {
-                            if (isEpisodeNotMovie) {
-                                response = manager.showService().cancelcheckin();
-                            } else {
-                                response = manager.movieService().cancelcheckin();
+                            retrofit.client.Response responseDelete = trakt.checkin()
+                                    .deleteActiveCheckin();
+                            if (responseDelete != null && responseDelete.getStatus() == 204) {
+                                r.status = TraktStatus.SUCCESS;
                             }
                         } catch (RetrofitError e) {
-                            Response r = new Response();
-                            r.status = TraktStatus.FAILURE;
-                            r.error = e.getMessage();
-                            return r;
+                            r.error = context.getString(R.string.trakt_error_general);
+                        } catch (OAuthUnauthorizedException e) {
+                            TraktCredentials.get(context).setCredentialsInvalid();
+                            r.error = context.getString(R.string.trakt_error_credentials);
                         }
-                        return response;
+
+                        return r;
                     }
 
                     @Override
@@ -122,9 +121,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
                             AndroidUtils.executeOnPool(new TraktTask(context, args));
                         } else if (TraktStatus.FAILURE.equals(r.status)) {
                             // well, something went wrong
-                            Toast.makeText(context,
-                                    context.getString(R.string.trakt_error) + ": " + r.error,
-                                    Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, r.error, Toast.LENGTH_LONG).show();
                         }
                     }
                 };
@@ -143,5 +140,4 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
         return builder.create();
     }
-
 }
