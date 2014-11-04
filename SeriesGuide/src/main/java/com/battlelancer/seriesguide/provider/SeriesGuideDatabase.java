@@ -278,7 +278,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ShowsColumns.RATING_VOTES + " INTEGER,"
 
-            + ShowsColumns.RATING_USER + " INTEGER,"
+            + ShowsColumns.RATING_USER + " INTEGER DEFAULT -1,"
 
             + ShowsColumns.RUNTIME + " TEXT DEFAULT '',"
 
