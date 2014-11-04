@@ -37,6 +37,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
+import java.util.Calendar;
 import java.util.TimeZone;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalTime;
@@ -88,24 +89,39 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * Changes for trakt v2 compatibility, also for storing ratings offline.
      *
      * Shows:
+     *
      * <ul>
-     *     <li>changed release time encoding</li>
-     *     <li>changed release week day encoding</li>
-     *     <li>first release date now includes time</li>
-     *     <li>added time zone</li>
-     *     <li>added rating votes</li>
-     *     <li>added user rating</li>
+     *
+     * <li>changed release time encoding
+     *
+     * <li>changed release week day encoding
+     *
+     * <li>first release date now includes time
+     *
+     * <li>added time zone
+     *
+     * <li>added rating votes
+     *
+     * <li>added user rating
+     *
      * </ul>
      *
      * Episodes:
+     *
      * <ul>
-     *     <li>added rating votes</li>
-     *     <li>added user rating</li>
+     *
+     * <li>added rating votes
+     *
+     * <li>added user rating
+     *
      * </ul>
      *
      * Movies:
+     *
      * <ul>
-     *     <li>added user rating</li>
+     *
+     * <li>added user rating
+     *
      * </ul>
      */
     public static final int DBVER_34_TRAKT_V2 = 34;
@@ -609,6 +625,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * See {@link #DBVER_34_TRAKT_V2}.
      */
     private static void upgradeToThirtyFour(SQLiteDatabase db) {
+        // add new columns
         db.beginTransaction();
         try {
             // shows
@@ -632,6 +649,45 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
+        }
+
+        // migrate existing data to new formats
+        Cursor query = db.query(Tables.SHOWS,
+                new String[] { Shows._ID, Shows.RELEASE_TIME, Shows.RELEASE_WEEKDAY }, null, null,
+                null, null, null);
+
+        // create calendar, set to custom time zone
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT-08:00"));
+        ContentValues values = new ContentValues();
+
+        db.beginTransaction();
+        try {
+            while (query.moveToNext()) {
+                // time changed from ms to encoded local time
+                long timeOld = query.getLong(1);
+                int timeNew;
+                if (timeOld != -1) {
+                    calendar.setTimeInMillis(timeOld);
+                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                    int minute = calendar.get(Calendar.MINUTE);
+                    timeNew = hour * 100 + minute;
+                } else {
+                    timeNew = -1;
+                }
+                values.put(Shows.RELEASE_TIME, timeNew);
+
+                // week day changed from string to int
+                String weekDayOld = query.getString(2);
+                int weekDayNew = TimeTools.parseShowReleaseWeekDay(weekDayOld);
+                values.put(Shows.RELEASE_WEEKDAY, weekDayNew);
+
+                db.update(Tables.SHOWS, values, Shows._ID + "=" + query.getInt(0), null);
+            }
+
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+            query.close();
         }
     }
 
@@ -876,8 +932,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Adds a column to the {@link Tables#SHOWS} table similar to the favorite boolean, but to
-     * allow
+     * Adds a column to the {@link Tables#SHOWS} table similar to the favorite boolean, but to allow
      * hiding shows.
      */
     private static void upgradeToTwentyThree(SQLiteDatabase db) {
@@ -886,8 +941,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Add a column to store the last time a show has been updated to allow for more precise
-     * control
+     * Add a column to store the last time a show has been updated to allow for more precise control
      * over which shows should get updated. This is in conjunction with a 7 day limit when a show
      * will get updated regardless if it has been marked as updated or not.
      */
@@ -902,8 +956,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     private static void upgradeToTwenty(SQLiteDatabase db) {
-        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.HEXAGON_MERGE_COMPLETE
-                + " INTEGER DEFAULT 1;");
+        db.execSQL(
+                "ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.HEXAGON_MERGE_COMPLETE
+                        + " INTEGER DEFAULT 1;");
     }
 
     /**
