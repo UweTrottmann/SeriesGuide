@@ -27,12 +27,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.jakewharton.trakt.entities.Comment;
+import com.uwetrottmann.trakt.v2.entities.Comment;
 import java.util.List;
 
 /**
- * Custom ArrayAdapter which binds {@link Comment} items to views using the
- * ViewHolder pattern.
+ * Custom ArrayAdapter which binds {@link Comment} items to views using the ViewHolder pattern.
  */
 public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
 
@@ -73,21 +72,23 @@ public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
         }
 
         // Bind the data efficiently with the holder.
-        final Comment shout = getItem(position);
+        final Comment comment = getItem(position);
 
-        holder.name.setText(shout.user.username);
-        ServiceUtils.getPicasso(getContext()).load(shout.user.avatar).into(holder.avatar);
+        holder.name.setText(comment.user.username);
+        ServiceUtils.getPicasso(getContext())
+                .load(comment.user.images.avatar.full)
+                .into(holder.avatar);
 
-        if (shout.spoiler) {
+        if (comment.spoiler) {
             holder.shout.setText(R.string.isspoiler);
             holder.shout.setTextAppearance(getContext(), R.style.TextAppearance_Body_Highlight_Red);
         } else {
-            holder.shout.setText(shout.text);
+            holder.shout.setText(comment.comment);
             holder.shout.setTextAppearance(getContext(), R.style.TextAppearance_Body);
         }
 
         String timestamp = (String) DateUtils.getRelativeTimeSpanString(
-                shout.inserted.getTimeInMillis(), System.currentTimeMillis(),
+                comment.created_at.getMillis(), System.currentTimeMillis(),
                 DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL);
         holder.timestamp.setText(timestamp);
 

@@ -49,8 +49,8 @@ import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.loaders.TraktCommentsLoader;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.entities.Comment;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.trakt.v2.entities.Comment;
 import de.greenrobot.event.EventBus;
 import java.util.List;
 
@@ -282,11 +282,11 @@ public class TraktCommentsFragment extends Fragment implements
         }
 
         if (comment.spoiler) {
-            // if shout is a spoiler, first click will reveal the shout
+            // if comment is a spoiler it is hidden, first click should reveal it
             comment.spoiler = false;
             TextView shoutText = (TextView) v.findViewById(R.id.shout);
             if (shoutText != null) {
-                shoutText.setText(comment.text);
+                shoutText.setText(comment.comment);
             }
         } else {
             // open shout or review page
