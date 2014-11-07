@@ -257,7 +257,7 @@ public class TraktAddFragment extends AddFragment {
                 existingShows.close();
             }
 
-            parseTvShowsToSearchResults(context, shows, showList, existingShowTvdbIds);
+            parseTvShowsToSearchResults(shows, showList, existingShowTvdbIds);
 
             return showList;
         }
@@ -281,10 +281,14 @@ public class TraktAddFragment extends AddFragment {
     /**
      * Transform a list of trakt shows to a list of {@link SearchResult}.
      */
-    private static void parseTvShowsToSearchResults(Context context, List<Show> inputList,
+    private static void parseTvShowsToSearchResults(List<Show> inputList,
             List<SearchResult> outputList, HashSet<Integer> existingShowTvdbIds) {
         // build list
         for (Show show : inputList) {
+            if (show.ids == null || show.ids.tvdb == null) {
+                // skip, can't handle non-TheTVDB shows
+                continue;
+            }
             // only list shows not in the database already
             if (!existingShowTvdbIds.contains(show.ids.tvdb)) {
                 SearchResult result = new SearchResult();
