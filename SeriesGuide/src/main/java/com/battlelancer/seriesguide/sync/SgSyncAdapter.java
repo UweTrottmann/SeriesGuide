@@ -64,6 +64,7 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb.entities.Configuration;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.LastActivities;
+import com.uwetrottmann.trakt.v2.entities.LastActivityMore;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -477,7 +478,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
             Timber.d("Syncing...trakt episodes (full)...");
             UpdateResult fullSyncResult = performTraktEpisodeSync(context, existingShows,
-                    lastActivity, currentTime);
+                    lastActivity.episodes, currentTime);
             Timber.d("Syncing...trakt episodes (full)..."
                     + (fullSyncResult == UpdateResult.SUCCESS ? "SUCCESS" : "INCOMPLETE"));
 
@@ -490,7 +491,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // movies
         Timber.d("Syncing...trakt movies...");
-        UpdateResult resultMovies = MovieTools.Download.syncMoviesWithTrakt(context);
+        UpdateResult resultMovies = MovieTools.Download.syncMoviesWithTrakt(context,
+                lastActivity.movies);
         Timber.d("Syncing...trakt movies..." + resultMovies.toString());
 
         // don't overwrite failure
@@ -520,13 +522,13 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
     @SuppressLint("CommitPrefEdits")
     private static UpdateResult performTraktEpisodeSync(Context context,
-            HashSet<Integer> existingShows, LastActivities lastActivity, long currentTime) {
+            HashSet<Integer> existingShows, LastActivityMore lastActivity, long currentTime) {
         // do we need to merge data instead of overwriting with data from trakt?
         boolean isInitialSync = !TraktSettings.hasMergedEpisodes(context);
 
         // download
         Timber.d("Syncing...trakt episodes (full)...downloading");
-        int resultCode = TraktTools.syncToSeriesGuide(context, existingShows, lastActivity.episodes,
+        int resultCode = TraktTools.syncToSeriesGuide(context, existingShows, lastActivity,
                 isInitialSync);
 
         if (resultCode < 0 || !AndroidUtils.isNetworkConnected(context)) {

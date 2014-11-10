@@ -17,8 +17,10 @@
 package com.battlelancer.seriesguide.settings;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
+import com.uwetrottmann.trakt.v2.entities.LastActivityMore;
 
 /**
  * Settings related to trakt.tv integration.
@@ -33,6 +35,12 @@ public class TraktSettings {
 
     public static final String KEY_LAST_ACTIVITY_EPISODES_COLLECTED
             = "trakt.last_activity.episodes.collected";
+
+    public static final String KEY_LAST_ACTIVITY_MOVIES_WATCHLISTED
+            = "trakt.last_activity.movies.watchlisted";
+
+    public static final String KEY_LAST_ACTIVITY_MOVIES_COLLECTED
+            = "trakt.last_activity.movies.collected";
 
     public static final String KEY_LAST_FULL_EPISODE_SYNC
             = "com.battlelancer.seriesguide.trakt.lastfullsync";
@@ -82,14 +90,61 @@ public class TraktSettings {
                 .getLong(KEY_LAST_ACTIVITY_EPISODES_COLLECTED, 0);
     }
 
+    /**
+     * The last time watched flags for movies have changed.
+     */
+    public static long getLastActivityMoviesWatchlisted(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getLong(KEY_LAST_ACTIVITY_MOVIES_WATCHLISTED, 0);
+    }
+
+    /**
+     * If either collection or watchlist have changes newer than last stored.
+     */
+    public static boolean isTraktMovieListsChanged(Context context, LastActivityMore activity) {
+        long lastCollected = activity.collected_at == null ? 0
+                : activity.collected_at.getMillis();
+        long lastWatchlisted = activity.watchlisted_at == null ? 0
+                : activity.watchlisted_at.getMillis();
+
+        // if either collection or watchlist has changed, return true
+        return lastCollected > TraktSettings.getLastActivityMoviesCollected(context)
+                || lastWatchlisted > TraktSettings.getLastActivityMoviesWatchlisted(context);
+    }
+
+    /**
+     * Store last collected and watchlisted timestamps.
+     */
+    public static void storeLastActivityMovies(Context context, LastActivityMore activity) {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context)
+                .edit();
+        if (activity.collected_at != null) {
+            editor.putLong(TraktSettings.KEY_LAST_ACTIVITY_MOVIES_COLLECTED,
+                    activity.collected_at.getMillis());
+        }
+        if (activity.watchlisted_at != null) {
+            editor.putLong(TraktSettings.KEY_LAST_ACTIVITY_MOVIES_WATCHLISTED,
+                    activity.watchlisted_at.getMillis());
+        }
+        editor.apply();
+    }
+
+    /**
+     * The last time collected flags for movies have changed.
+     */
+    public static long getLastActivityMoviesCollected(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getLong(KEY_LAST_ACTIVITY_MOVIES_COLLECTED, 0);
+    }
+
     public static boolean isAutoAddingShows(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_AUTO_ADD_TRAKT_SHOWS, true);
     }
 
     /**
-     * Whether watched and collected episodes were merged with the users trakt profile since
-     * she connected to trakt.
+     * Whether watched and collected episodes were merged with the users trakt profile since she
+     * connected to trakt.
      */
     public static boolean hasMergedEpisodes(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)

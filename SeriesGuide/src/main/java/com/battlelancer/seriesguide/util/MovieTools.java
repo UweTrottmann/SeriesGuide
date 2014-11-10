@@ -41,6 +41,7 @@ import com.uwetrottmann.seriesguide.backend.movies.model.MovieList;
 import com.uwetrottmann.tmdb.services.MoviesService;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.BaseMovie;
+import com.uwetrottmann.trakt.v2.entities.LastActivityMore;
 import com.uwetrottmann.trakt.v2.entities.Movie;
 import com.uwetrottmann.trakt.v2.entities.MovieIds;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
@@ -577,10 +578,16 @@ public class MovieTools {
          * <p> Also performs <b>synchronous network access</b>, so make sure to run this on a
          * background thread!
          */
-        public static UpdateResult syncMoviesWithTrakt(Context context) {
+        public static UpdateResult syncMoviesWithTrakt(Context context, LastActivityMore activity) {
             TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
             if (trakt == null) {
                 // trakt is not connected, we are done here
+                return UpdateResult.SUCCESS;
+            }
+
+            final boolean merging = !TraktSettings.hasMergedMovies(context);
+            if (!merging && !TraktSettings.isTraktMovieListsChanged(context, activity)) {
+                // trakt collection or watchlist have not changed, we are done
                 return UpdateResult.SUCCESS;
             }
 
@@ -608,7 +615,6 @@ public class MovieTools {
             }
 
             // build updates
-            final boolean merging = !TraktSettings.hasMergedMovies(context);
             Set<Integer> moviesToRemoveOrUpload = new HashSet<>();
             ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
@@ -687,7 +693,14 @@ public class MovieTools {
             // add movies from trakt missing locally
             // all local movies were removed from trakt collection and watchlist,
             // so they only contain movies missing locally
-            return addMovies(context, trakt, collection, watchlist);
+            UpdateResult result = addMovies(context, trakt, collection, watchlist);
+
+            // store last activity timestamps
+            if (result == UpdateResult.SUCCESS) {
+                TraktSettings.storeLastActivityMovies(context, activity);
+            }
+
+            return result;
         }
 
         private static Set<Integer> getTraktCollection(Sync sync)
