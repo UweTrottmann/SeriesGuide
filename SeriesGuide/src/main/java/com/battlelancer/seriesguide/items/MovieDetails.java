@@ -34,7 +34,7 @@ public class MovieDetails {
     public boolean watched;
 
     public DateTime released;
-    public Rating userRating;
+    public int userRating;
 
     public Ratings traktRatings() {
         return traktRatings;

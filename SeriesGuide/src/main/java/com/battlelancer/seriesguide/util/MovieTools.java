@@ -49,6 +49,7 @@ import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncMovie;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.IdType;
+import com.uwetrottmann.trakt.v2.enums.Rating;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.services.Movies;
 import com.uwetrottmann.trakt.v2.services.Search;
@@ -235,6 +236,19 @@ public class MovieTools {
 
         // try updating local movie (if any)
         updateMovie(context, movieTmdbId, SeriesGuideContract.Movies.WATCHED, false);
+    }
+
+    /**
+     * Store the rating for the given movie in the database (if it is in the database) and send it
+     * to trakt.
+     */
+    public static void rate(Context context, int movieTmdbId, Rating rating) {
+        AndroidUtils.executeOnPool(new TraktTask(context).rateMovie(movieTmdbId, rating));
+
+        ContentValues values = new ContentValues();
+        values.put(SeriesGuideContract.Movies.RATING_USER, rating.value);
+        context.getContentResolver()
+                .update(SeriesGuideContract.Movies.buildMovieUri(movieTmdbId), values, null, null);
     }
 
     private static void addMovieAsync(Context context, int movieTmdbId, AddMovieTask.AddTo addTo) {
@@ -849,10 +863,6 @@ public class MovieTools {
         private static Ratings loadRatingsFromTrakt(Movies traktMovies, int movieTraktId) {
             try {
                 Ratings ratings = traktMovies.ratings(String.valueOf(movieTraktId));
-                // ensure rating is between 0 and 100
-                if (ratings != null && ratings.rating != null) {
-                    ratings.rating *= 10;
-                }
                 return ratings;
             } catch (RetrofitError e) {
                 Timber.e(e, "Loading trakt movie ratings failed " + e.getUrl());

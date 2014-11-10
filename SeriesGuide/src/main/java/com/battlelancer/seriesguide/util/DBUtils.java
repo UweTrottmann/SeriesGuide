@@ -482,7 +482,7 @@ public class DBUtils {
             values.put(Shows.HIDDEN, show.hidden);
             // set default values
             values.put(Shows.RATING_VOTES, 0);
-            values.put(Shows.RATING_USER, -1);
+            values.put(Shows.RATING_USER, 0);
             values.put(Shows.HEXAGON_MERGE_COMPLETE, 1);
             values.put(Shows.NEXTEPISODE, "");
             values.put(Shows.NEXTTEXT, "");

@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -25,13 +26,12 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.CheckinResponse;
 import com.jakewharton.trakt.entities.Response;
-import com.jakewharton.trakt.enumerations.Rating;
-import com.jakewharton.trakt.services.RateService;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.Comment;
@@ -44,9 +44,13 @@ import com.uwetrottmann.trakt.v2.entities.MovieIds;
 import com.uwetrottmann.trakt.v2.entities.Show;
 import com.uwetrottmann.trakt.v2.entities.ShowIds;
 import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
+import com.uwetrottmann.trakt.v2.entities.SyncErrors;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncMovie;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
+import com.uwetrottmann.trakt.v2.entities.SyncSeason;
+import com.uwetrottmann.trakt.v2.entities.SyncShow;
+import com.uwetrottmann.trakt.v2.enums.Rating;
 import com.uwetrottmann.trakt.v2.exceptions.CheckinInProgressException;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.services.Checkin;
@@ -72,11 +76,11 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
         String TITLE = "title";
 
-        String MOVIE_TMDB_ID = "tmdbid";
+        String MOVIE_TMDB_ID = "movie-tmdbid";
 
-        String SHOW_TVDBID = "tvdbid";
+        String SHOW_TVDBID = "show-tvdbid";
 
-        String EPISODE_TVDBID = "tvdbid";
+        String EPISODE_TVDBID = "episode-tvdbid";
 
         String SEASON = "season";
 
@@ -152,7 +156,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
      * and then possibly launch {@link ConnectTraktActivity}) or execution will fail.
      */
     public TraktTask(Context context) {
-        mContext = context;
+        mContext = context.getApplicationContext();
         mArgs = new Bundle();
     }
 
@@ -234,6 +238,36 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         return this;
     }
 
+    /**
+     * Rate an episode.
+     */
+    public TraktTask rateEpisode(int episodeTvdbId, Rating rating) {
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.RATE_EPISODE.name());
+        mArgs.putInt(InitBundle.RATING, rating.value);
+        mArgs.putInt(InitBundle.EPISODE_TVDBID, episodeTvdbId);
+        return this;
+    }
+
+    /**
+     * Rate a show.
+     */
+    public TraktTask rateShow(int showTvdbId, Rating rating) {
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.RATE_SHOW.name());
+        mArgs.putInt(InitBundle.RATING, rating.value);
+        mArgs.putInt(InitBundle.SHOW_TVDBID, showTvdbId);
+        return this;
+    }
+
+    /**
+     * Rate a movie.
+     */
+    public TraktTask rateMovie(int movieTmdbId, Rating rating) {
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.RATE_MOVIE.name());
+        mArgs.putInt(InitBundle.RATING, rating.value);
+        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
+        return this;
+    }
+
     public TraktTask watchedMovie(int movieTmdbId) {
         mArgs.putString(InitBundle.TRAKTACTION, TraktAction.WATCHED_MOVIE.name());
         mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
@@ -311,7 +345,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 case RATE_EPISODE:
                 case RATE_SHOW:
                 case RATE_MOVIE: {
-                    return doRatingAction(manager);
+                    return doRatingAction(trakt.sync());
                 }
                 case COLLECTION_ADD_MOVIE:
                 case COLLECTION_REMOVE_MOVIE:
@@ -379,33 +413,80 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         return r;
     }
 
-    private Response doRatingAction(Trakt manager) {
-        Rating rating = Rating.fromValue(mArgs.getString(InitBundle.RATING));
+    private Response doRatingAction(Sync traktSync) throws OAuthUnauthorizedException {
+        Rating rating = Rating.fromValue(mArgs.getInt(InitBundle.RATING));
+        SyncItems ratedItems = new SyncItems();
 
         switch (mAction) {
             case RATE_EPISODE: {
-                final int showTvdbId = mArgs.getInt(InitBundle.SHOW_TVDBID);
-                final int season = mArgs.getInt(InitBundle.SEASON);
-                final int episode = mArgs.getInt(InitBundle.EPISODE);
-                return manager.rateService().episode(new RateService.EpisodeRating(
-                        showTvdbId, season, episode, rating
-                ));
+                int episodeTvdbId = mArgs.getInt(InitBundle.EPISODE_TVDBID);
+                int season = -1;
+                int episode = -1;
+                int showTvdbId = -1;
+                Cursor query = mContext.getContentResolver()
+                        .query(SeriesGuideContract.Episodes.buildEpisodeUri(episodeTvdbId),
+                                new String[] {
+                                        SeriesGuideContract.Episodes.SEASON,
+                                        SeriesGuideContract.Episodes.NUMBER,
+                                        SeriesGuideContract.Shows.REF_SHOW_ID }, null, null, null);
+                if (query != null) {
+                    if (query.moveToFirst()) {
+                        season = query.getInt(0);
+                        episode = query.getInt(1);
+                        showTvdbId = query.getInt(2);
+                    }
+                    query.close();
+                }
+
+                if (season == -1 || episode == -1 || showTvdbId == -1) {
+                    Response r = new Response();
+                    r.status = TraktStatus.FAILURE;
+                    r.error = mContext.getString(R.string.trakt_error);
+                    return r;
+                }
+
+                ratedItems.shows(new SyncShow().id(ShowIds.tvdb(showTvdbId))
+                        .seasons(new SyncSeason().number(season)
+                                .episodes(new SyncEpisode().number(episode)
+                                        .rating(rating))));
+                break;
             }
             case RATE_SHOW: {
-                final int showTvdbId = mArgs.getInt(InitBundle.SHOW_TVDBID);
-                return manager.rateService().show(new RateService.ShowRating(
-                        showTvdbId, rating
-                ));
+                int showTvdbId = mArgs.getInt(InitBundle.SHOW_TVDBID);
+                ratedItems.shows(new SyncShow().id(ShowIds.tvdb(showTvdbId)).rating(rating));
+                break;
             }
             case RATE_MOVIE: {
-                final int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
-                return manager.rateService().movie(new RateService.MovieRating(
-                        tmdbId, rating
-                ));
+                int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
+                ratedItems.movies(new SyncMovie().id(MovieIds.tmdb(tmdbId)).rating(rating));
+                break;
             }
         }
 
-        return null;
+        // upload ratings
+        SyncResponse response = traktSync.addRatings(ratedItems);
+
+        // handle errors
+        Response r = new Response();
+        r.status = TraktStatus.SUCCESS;
+        r.message = mContext.getString(R.string.trakt_submitqueued);
+
+        if (response == null) {
+            r.status = TraktStatus.FAILURE;
+            r.error = mContext.getString(R.string.trakt_error_general);
+        } else {
+            SyncErrors notFound = response.not_found;
+            if (notFound != null) {
+                if ((notFound.movies != null && notFound.movies.size() != 0)
+                        || (notFound.shows != null && notFound.shows.size() != 0)
+                        || (notFound.episodes != null && notFound.episodes.size() != 0)) {
+                    r.status = TraktStatus.FAILURE;
+                    r.error = mContext.getString(R.string.trakt_error_general);
+                }
+            }
+        }
+
+        return r;
     }
 
     private Response doMovieAction(Sync traktSync) throws OAuthUnauthorizedException {

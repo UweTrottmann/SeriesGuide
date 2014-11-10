@@ -653,11 +653,6 @@ public class TheTVDB {
                 values.put(Episodes.WRITERS, body.trim());
             }
         });
-        episode.getChild("Rating").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                values.put(Episodes.RATING_GLOBAL, body.trim());
-            }
-        });
         episode.getChild("filename").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 values.put(Episodes.IMAGE, body.trim());

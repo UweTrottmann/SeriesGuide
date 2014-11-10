@@ -42,14 +42,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.extensions.ActionsFragmentContract;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsHelper;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
@@ -66,8 +64,7 @@ import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.TraktSummaryTask;
-import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
+import com.battlelancer.seriesguide.util.TraktRatingsTask;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.squareup.picasso.Callback;
@@ -89,7 +86,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
 
     private Handler mHandler = new Handler();
-    private TraktSummaryTask mTraktTask;
+    private TraktRatingsTask mTraktTask;
 
     protected int mEpisodeFlag;
     protected boolean mCollected;
@@ -101,9 +98,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     private int mShowRunTime;
     private long mEpisodeReleaseTime;
 
-    @InjectView(R.id.scrollViewEpisode) ScrollView mEpisodeScrollView;
     @InjectView(R.id.containerEpisode) View mEpisodeContainer;
-    @InjectView(R.id.ratingbar) View mRatingsContainer;
+    @InjectView(R.id.containerRatings) View mRatingsContainer;
     @InjectView(R.id.containerEpisodeActions) LinearLayout mActionsContainer;
 
     @InjectView(R.id.containerEpisodeImage) View mImageContainer;
@@ -120,7 +116,9 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     @InjectView(R.id.textViewEpisodeWriters) TextView mWriters;
     @InjectView(R.id.labelEpisodeDvd) View mLabelDvd;
     @InjectView(R.id.textViewEpisodeDvd) TextView mDvd;
-    @InjectView(R.id.textViewRatingsTvdbValue) TextView mTvdbRating;
+    @InjectView(R.id.textViewRatingsValue) TextView mTextRating;
+    @InjectView(R.id.textViewRatingsVotes) TextView mTextRatingVotes;
+    @InjectView(R.id.textViewRatingsUser) TextView mTextUserRating;
 
     @InjectView(R.id.buttonEpisodeCheckin) Button mCheckinButton;
     @InjectView(R.id.buttonEpisodeWatched) Button mWatchedButton;
@@ -295,12 +293,6 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         }
     }
 
-    public void onEvent(TraktActionCompleteEvent event) {
-        if (event.mTraktAction == TraktAction.RATE_EPISODE) {
-            loadTraktRatings(false);
-        }
-    }
-
     private LoaderManager.LoaderCallbacks<Cursor> mEpisodeDataLoaderCallbacks
             = new LoaderManager.LoaderCallbacks<Cursor>() {
         @Override
@@ -329,7 +321,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             return;
         }
 
-        mShowTvdbId = cursor.getInt(DetailsQuery.REF_SHOW_ID);
+        mShowTvdbId = cursor.getInt(DetailsQuery.SHOW_ID);
         mSeasonNumber = cursor.getInt(DetailsQuery.SEASON);
         mEpisodeNumber = cursor.getInt(DetailsQuery.NUMBER);
         mShowRunTime = cursor.getInt(DetailsQuery.SHOW_RUNTIME);
@@ -363,7 +355,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         }
         // absolute number (e.g. relevant for Anime): "ABSOLUTE 142"
         int numberStartIndex = timeAndNumbersText.length();
-        int absoluteNumber = cursor.getInt(DetailsQuery.ABSOLUTE_NUMBER);
+        int absoluteNumber = cursor.getInt(DetailsQuery.NUMBER_ABSOLUTE);
         if (absoluteNumber > 0) {
             timeAndNumbersText
                     .append(getString(R.string.episode_number_absolute))
@@ -382,7 +374,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                 Utils.splitAndKitTVDBStrings(cursor.getString(DetailsQuery.GUESTSTARS))
         );
         // DVD episode number
-        Utils.setLabelValueOrHide(mLabelDvd, mDvd, cursor.getDouble(DetailsQuery.DVDNUMBER));
+        Utils.setLabelValueOrHide(mLabelDvd, mDvd, cursor.getDouble(DetailsQuery.NUMBER_DVD));
         // directors
         Utils.setValueOrPlaceholder(mDirectors, Utils.splitAndKitTVDBStrings(cursor
                 .getString(DetailsQuery.DIRECTORS)));
@@ -391,7 +383,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                 .getString(DetailsQuery.WRITERS)));
 
         // last TVDb edit date
-        long lastEditSeconds = cursor.getLong(DetailsQuery.LASTEDIT);
+        long lastEditSeconds = cursor.getLong(DetailsQuery.LAST_EDITED);
         if (lastEditSeconds > 0) {
             mLastEdit.setText(DateUtils.formatDateTime(getActivity(), lastEditSeconds * 1000,
                     DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));
@@ -403,18 +395,23 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         mRatingsContainer.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                rateOnTrakt();
+                rateEpisode();
             }
         });
         mRatingsContainer.setFocusable(true);
         CheatSheet.setup(mRatingsContainer, R.string.action_rate);
-        // TVDb rating
-        String tvdbRating = cursor.getString(DetailsQuery.RATING);
-        if (!TextUtils.isEmpty(tvdbRating)) {
-            mTvdbRating.setText(tvdbRating);
-        }
-        // trakt ratings
-        loadTraktRatings(true);
+
+        // trakt rating
+        mTextRating.setText(
+                TraktTools.buildRatingString(cursor.getDouble(DetailsQuery.RATING_GLOBAL)));
+        mTextRatingVotes.setText(TraktTools.buildRatingVotesString(getActivity(),
+                cursor.getInt(DetailsQuery.RATING_VOTES)));
+
+        // user rating
+        mTextUserRating.setText(TraktTools.buildUserRatingString(getActivity(),
+                cursor.getInt(DetailsQuery.RATING_USER)));
+
+        loadTraktRatings();
 
         // episode image
         final String imagePath = cursor.getString(DetailsQuery.IMAGE);
@@ -451,7 +448,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         boolean isWatched = EpisodeTools.isWatched(mEpisodeFlag);
         Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mWatchedButton, 0,
                 isWatched ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                                R.attr.drawableWatched)
+                        R.attr.drawableWatched)
                         : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                 R.attr.drawableWatch), 0, 0);
         mWatchedButton.setOnClickListener(new OnClickListener() {
@@ -525,9 +522,9 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             // fall back to show IMDb id
             imdbId = cursor.getString(DetailsQuery.SHOW_IMDBID);
         }
-        ServiceUtils.setUpImdbButton(imdbId, mImdbButton, TAG, getActivity());
+        ServiceUtils.setUpImdbButton(imdbId, mImdbButton, TAG);
         // TVDb
-        final int seasonTvdbId = cursor.getInt(DetailsQuery.REF_SEASON_ID);
+        final int seasonTvdbId = cursor.getInt(DetailsQuery.SEASON_ID);
         ServiceUtils.setUpTvdbButton(mShowTvdbId, seasonTvdbId, getEpisodeTvdbId(), mTvdbButton,
                 TAG);
         // trakt comments
@@ -549,18 +546,16 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         mEpisodeContainer.setVisibility(View.VISIBLE);
     }
 
-    private void loadTraktRatings(boolean isUseCachedValues) {
+    private void loadTraktRatings() {
         if (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED) {
-            mTraktTask = new TraktSummaryTask(getActivity(), mRatingsContainer,
-                    isUseCachedValues).episode(mShowTvdbId, getEpisodeTvdbId(), mSeasonNumber,
-                    mEpisodeNumber);
+            mTraktTask = new TraktRatingsTask(getActivity(), mShowTvdbId, getEpisodeTvdbId(),
+                    mSeasonNumber, mEpisodeNumber);
             AndroidUtils.executeOnPool(mTraktTask);
         }
     }
 
-    private void rateOnTrakt() {
-        TraktTools.rateEpisode(getActivity(), getFragmentManager(), mShowTvdbId, mSeasonNumber,
-                mEpisodeNumber);
+    private void rateEpisode() {
+        EpisodeTools.displayRateDialog(getActivity(), getFragmentManager(), getEpisodeTvdbId());
         fireTrackerEvent("Rate (trakt)");
     }
 
@@ -654,59 +649,55 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     interface DetailsQuery {
 
         String[] PROJECTION = new String[] {
-                Tables.EPISODES + "." + Episodes._ID, Shows.REF_SHOW_ID, Episodes.OVERVIEW,
-                Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIREDMS,
-                Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
-                Tables.EPISODES + "." + Episodes.RATING_GLOBAL, Episodes.IMAGE, Episodes.DVDNUMBER,
-                Episodes.TITLE, Shows.TITLE, Shows.IMDBID, Shows.RUNTIME, Shows.POSTER,
-                Seasons.REF_SEASON_ID, Episodes.COLLECTED, Episodes.IMDBID, Episodes.LAST_EDITED,
-                Episodes.ABSOLUTE_NUMBER
+                Tables.EPISODES + "." + Episodes._ID,
+                Episodes.NUMBER,
+                Episodes.ABSOLUTE_NUMBER,
+                Episodes.DVDNUMBER,
+                Seasons.REF_SEASON_ID,
+                Episodes.SEASON,
+                Episodes.IMDBID,
+                Episodes.TITLE,
+                Episodes.OVERVIEW,
+                Episodes.FIRSTAIREDMS,
+                Episodes.DIRECTORS,
+                Episodes.GUESTSTARS,
+                Episodes.WRITERS,
+                Episodes.IMAGE,
+                Tables.EPISODES + "." + Episodes.RATING_GLOBAL,
+                Episodes.RATING_VOTES,
+                Episodes.RATING_USER,
+                Episodes.WATCHED,
+                Episodes.COLLECTED,
+                Episodes.LAST_EDITED,
+                Shows.REF_SHOW_ID,
+                Shows.IMDBID,
+                Shows.TITLE,
+                Shows.RUNTIME
         };
 
         int _ID = 0;
-
-        int REF_SHOW_ID = 1;
-
-        int OVERVIEW = 2;
-
-        int NUMBER = 3;
-
-        int SEASON = 4;
-
-        int WATCHED = 5;
-
-        int FIRST_RELEASE_MS = 6;
-
-        int DIRECTORS = 7;
-
-        int GUESTSTARS = 8;
-
-        int WRITERS = 9;
-
-        int RATING = 10;
-
-        int IMAGE = 11;
-
-        int DVDNUMBER = 12;
-
-        int TITLE = 13;
-
-        int SHOW_TITLE = 14;
-
-        int SHOW_IMDBID = 15;
-
-        int SHOW_RUNTIME = 16;
-
-        int SHOW_POSTER = 17;
-
-        int REF_SEASON_ID = 18;
-
-        int COLLECTED = 19;
-
-        int IMDBID = 20;
-
-        int LASTEDIT = 21;
-
-        int ABSOLUTE_NUMBER = 22;
+        int NUMBER = 1;
+        int NUMBER_ABSOLUTE = 2;
+        int NUMBER_DVD = 3;
+        int SEASON_ID = 4;
+        int SEASON = 5;
+        int IMDBID = 6;
+        int TITLE = 7;
+        int OVERVIEW = 8;
+        int FIRST_RELEASE_MS = 9;
+        int DIRECTORS = 10;
+        int GUESTSTARS = 11;
+        int WRITERS = 12;
+        int IMAGE = 13;
+        int RATING_GLOBAL = 14;
+        int RATING_VOTES = 15;
+        int RATING_USER = 16;
+        int WATCHED = 17;
+        int COLLECTED = 18;
+        int LAST_EDITED = 19;
+        int SHOW_ID = 20;
+        int SHOW_IMDBID = 21;
+        int SHOW_TITLE = 22;
+        int SHOW_RUNTIME = 23;
     }
 }

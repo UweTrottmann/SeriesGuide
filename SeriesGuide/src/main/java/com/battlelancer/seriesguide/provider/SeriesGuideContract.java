@@ -70,7 +70,7 @@ public class SeriesGuideContract {
          * User rating. Encoded as integer.
          * <pre>
          * Range:   1-10
-         * Default: -1
+         * Default: 0
          * </pre>
          */
         String RATING_USER = "series_rating_user";

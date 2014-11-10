@@ -75,6 +75,8 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
         details.inWatchlist = DBUtils.restoreBooleanFromInt(
                 movieQuery.getInt(MovieQuery.IN_WATCHLIST));
         details.watched = DBUtils.restoreBooleanFromInt(movieQuery.getInt(MovieQuery.WATCHED));
+        // also use local state of user rating
+        details.userRating = movieQuery.getInt(MovieQuery.RATING_USER);
 
         // only overwrite other info if remote data failed to load
         if (details.released == null) {
@@ -127,7 +129,8 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
                 Movies.RUNTIME_MIN,
                 Movies.RATING_TMDB,
                 Movies.RATING_TRAKT,
-                Movies.RATING_VOTES_TRAKT
+                Movies.RATING_VOTES_TRAKT,
+                Movies.RATING_USER
         };
 
         int TITLE = 0;
@@ -142,5 +145,6 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
         int RATING_TMDB = 9;
         int RATING_TRAKT = 10;
         int RATING_VOTES_TRAKT = 11;
+        int RATING_USER = 12;
     }
 }

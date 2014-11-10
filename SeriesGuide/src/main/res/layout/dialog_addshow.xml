@@ -63,7 +63,7 @@
                 android:layout_below="@+id/imageViewAddPoster"
                 android:layout_marginTop="@dimen/default_padding"
                 android:layout_centerHorizontal="true"
-                android:text="@string/notvdbrating"
+                android:text="@string/placeholder_rating"
                 tools:text="9.6"
                 android:textAppearance="@style/TextAppearance.Display1" />
 

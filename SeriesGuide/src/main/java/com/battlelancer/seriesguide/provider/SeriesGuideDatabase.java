@@ -294,7 +294,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ShowsColumns.RATING_VOTES + " INTEGER,"
 
-            + ShowsColumns.RATING_USER + " INTEGER DEFAULT -1,"
+            + ShowsColumns.RATING_USER + " INTEGER,"
 
             + ShowsColumns.RUNTIME + " TEXT DEFAULT '',"
 
@@ -390,7 +390,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + EpisodesColumns.RATING_VOTES + " INTEGER,"
 
-            + EpisodesColumns.RATING_USER + " INTEGER DEFAULT -1,"
+            + EpisodesColumns.RATING_USER + " INTEGER,"
 
             + EpisodesColumns.IMDBID + " TEXT DEFAULT '',"
 
@@ -482,7 +482,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + MoviesColumns.RATING_VOTES_TRAKT + " INTEGER DEFAULT 0,"
 
-            + MoviesColumns.RATING_USER + " INTEGER DEFAULT -1,"
+            + MoviesColumns.RATING_USER + " INTEGER,"
 
             + MoviesColumns.LAST_UPDATED + " INTEGER,"
 
@@ -634,17 +634,17 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
                     + Shows.RATING_VOTES + " INTEGER;");
             db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
-                    + Shows.RATING_USER + " INTEGER DEFAULT -1;");
+                    + Shows.RATING_USER + " INTEGER;");
 
             // episodes
             db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN "
                     + Episodes.RATING_VOTES + " INTEGER;");
             db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN "
-                    + Episodes.RATING_USER + " INTEGER DEFAULT -1;");
+                    + Episodes.RATING_USER + " INTEGER;");
 
             // movies
             db.execSQL("ALTER TABLE " + Tables.MOVIES + " ADD COLUMN "
-                    + Movies.RATING_USER + " INTEGER DEFAULT -1;");
+                    + Movies.RATING_USER + " INTEGER;");
 
             db.setTransactionSuccessful();
         } finally {

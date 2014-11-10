@@ -48,7 +48,9 @@ import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.MovieLoader;
 import com.battlelancer.seriesguide.loaders.MovieTrailersLoader;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.PeopleListHelper;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -63,7 +65,6 @@ import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb.entities.Credits;
 import com.uwetrottmann.tmdb.entities.Trailers;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
-import com.uwetrottmann.trakt.v2.enums.Rating;
 import de.greenrobot.event.EventBus;
 import org.joda.time.DateTime;
 
@@ -112,12 +113,12 @@ public class MovieDetailsFragment extends Fragment {
     @InjectView(R.id.buttonMovieCollected) Button mCollectedButton;
     @InjectView(R.id.buttonMovieWatchlisted) Button mWatchlistedButton;
 
-    @InjectView(R.id.ratingbar) View mRatingsContainer;
-    @InjectView(R.id.textViewRatingsTvdbLabel) TextView mRatingsTmdbLabel;
-    @InjectView(R.id.textViewRatingsTvdbValue) TextView mRatingsTmdbValue;
+    @InjectView(R.id.containerRatings) View mRatingsContainer;
+    @InjectView(R.id.textViewRatingsTmdbValue) TextView mRatingsTmdbValue;
     @InjectView(R.id.textViewRatingsTraktValue) TextView mRatingsTraktValue;
     @InjectView(R.id.textViewRatingsTraktVotes) TextView mRatingsTraktVotes;
     @InjectView(R.id.textViewRatingsTraktUser) TextView mRatingsTraktUserValue;
+    @InjectView(R.id.textViewRatingsTraktUserLabel) View mRatingsTraktUserLabel;
 
     @InjectView(R.id.containerMovieCast) View mCastView;
     TextView mCastLabel;
@@ -142,14 +143,6 @@ public class MovieDetailsFragment extends Fragment {
         // important action buttons
         mButtonContainer.setVisibility(View.GONE);
         mRatingsContainer.setVisibility(View.GONE);
-        mRatingsContainer.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rateOnTrakt();
-            }
-        });
-        CheatSheet.setup(mRatingsContainer, R.string.action_rate);
-        mRatingsTmdbLabel.setText(R.string.tmdb);
 
         // cast and crew labels
         mCastLabel = ButterKnife.findById(mCastView, R.id.textViewPeopleHeader);
@@ -335,7 +328,7 @@ public class MovieDetailsFragment extends Fragment {
         final boolean inCollection = mMovieDetails.inCollection;
         final boolean inWatchlist = mMovieDetails.inWatchlist;
         final DateTime released = mMovieDetails.released;
-        final Rating rating = mMovieDetails.userRating;
+        final int rating = mMovieDetails.userRating;
 
         mMovieTitle.setText(tmdbMovie.title);
         mMovieDescription.setText(tmdbMovie.overview);
@@ -424,12 +417,28 @@ public class MovieDetailsFragment extends Fragment {
 
         // ratings
         mRatingsTmdbValue.setText(TmdbTools.buildRatingValue(tmdbMovie.vote_average));
-        mRatingsTraktUserValue.setText(TraktTools.buildUserRatingString(getActivity(), rating));
         if (traktRatings != null) {
             mRatingsTraktVotes.setText(
                     TraktTools.buildRatingVotesString(getActivity(), traktRatings.votes));
             mRatingsTraktValue.setText(
-                    TraktTools.buildRatingPercentageString(traktRatings.rating));
+                    TraktTools.buildRatingString(traktRatings.rating));
+        }
+        // if movie is not in database, can't handle user ratings
+        if (!inCollection && !inWatchlist) {
+            mRatingsTraktUserLabel.setVisibility(View.GONE);
+            mRatingsTraktUserValue.setVisibility(View.GONE);
+            mRatingsContainer.setClickable(false);
+        } else {
+            mRatingsTraktUserLabel.setVisibility(View.VISIBLE);
+            mRatingsTraktUserValue.setVisibility(View.VISIBLE);
+            mRatingsTraktUserValue.setText(TraktTools.buildUserRatingString(getActivity(), rating));
+            mRatingsContainer.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    rateMovie();
+                }
+            });
+            CheatSheet.setup(mRatingsContainer, R.string.action_rate);
         }
         mRatingsContainer.setVisibility(View.VISIBLE);
 
@@ -502,9 +511,12 @@ public class MovieDetailsFragment extends Fragment {
         }
     }
 
-    private void rateOnTrakt() {
-        TraktTools.rateMovie(getActivity(), getFragmentManager(), mTmdbId);
-        fireTrackerEvent("Rate (trakt)");
+    private void rateMovie() {
+        if (TraktCredentials.ensureCredentials(getActivity())) {
+            RateDialogFragment newFragment = RateDialogFragment.newInstanceMovie(mTmdbId);
+            newFragment.show(getFragmentManager(), "ratedialog");
+            fireTrackerEvent("Rate (trakt)");
+        }
     }
 
     private void restartMovieLoader() {

@@ -20,12 +20,10 @@ import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
-import android.support.v4.app.FragmentManager;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.BaseEpisode;
 import com.uwetrottmann.trakt.v2.entities.BaseSeason;
@@ -43,6 +41,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
@@ -376,79 +375,66 @@ public class TraktTools {
         return TRAKT_SEARCH_MOVIE_URL + movieTmdbId;
     }
 
-    public static String buildRatingPercentageString(Double percentage) {
-        return percentage == null ? "--%" : percentage.intValue() + "%";
+    /**
+     * Returns the given double as number string with one decimal digit, like "1.5".
+     */
+    public static String buildRatingString(Double rating) {
+        return rating == null ? "--" : String.format(Locale.getDefault(), "%.1f", rating);
     }
 
+    /**
+     * Builds a localized string like "x votes".
+     */
     public static String buildRatingVotesString(Context context, Integer votes) {
-        if (votes == null) {
+        if (votes == null || votes < 0) {
             votes = 0;
         }
         return context.getResources().getQuantityString(R.plurals.votes, votes, votes);
     }
 
-    public static String buildUserRatingString(Context context, Rating rating) {
-        if (rating == null) {
-            return context.getString(R.string.norating);
-        }
-
+    /**
+     * Converts a rating index from 1 to 10 into a localized string representation. Any other value
+     * will return the local variant of "n/a".
+     */
+    public static String buildUserRatingString(Context context, int rating) {
         int resId;
         switch (rating) {
-            case WEAKSAUCE:
+            case 1:
                 resId = R.string.hate;
                 break;
-            case TERRIBLE:
+            case 2:
                 resId = R.string.rating2;
                 break;
-            case BAD:
+            case 3:
                 resId = R.string.rating3;
                 break;
-            case POOR:
+            case 4:
                 resId = R.string.rating4;
                 break;
-            case MEH:
+            case 5:
                 resId = R.string.rating5;
                 break;
-            case FAIR:
+            case 6:
                 resId = R.string.rating6;
                 break;
-            case GOOD:
+            case 7:
                 resId = R.string.rating7;
                 break;
-            case GREAT:
+            case 8:
                 resId = R.string.rating8;
                 break;
-            case SUPERB:
+            case 9:
                 resId = R.string.rating9;
                 break;
-            case TOTALLYNINJA:
+            case 10:
                 resId = R.string.love;
                 break;
             default:
-                resId = R.string.norating;
+                resId = R.string.action_rate;
                 break;
         }
 
         return context.getString(resId);
-    }
-
-    public static void rateEpisode(Context context, FragmentManager fragmentManager, int showTvdbId,
-            int seasonNumber, int episodeNumber) {
-        if (!TraktCredentials.ensureCredentials(context)) {
-            return;
-        }
-        TraktRateDialogFragment newFragment = TraktRateDialogFragment.newInstanceEpisode(
-                showTvdbId, seasonNumber, episodeNumber);
-        newFragment.show(fragmentManager, "traktratedialog");
-    }
-
-    public static void rateMovie(Context context, FragmentManager fragmentManager,
-            int movieTmdbId) {
-        if (!TraktCredentials.ensureCredentials(context)) {
-            return;
-        }
-        TraktRateDialogFragment newFragment = TraktRateDialogFragment.newInstanceMovie(movieTmdbId);
-        newFragment.show(fragmentManager, "traktratedialog");
     }
 
     public interface EpisodesQuery {

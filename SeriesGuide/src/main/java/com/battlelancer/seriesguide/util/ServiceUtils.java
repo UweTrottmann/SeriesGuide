@@ -261,15 +261,14 @@ public final class ServiceUtils {
      * Displays the IMDb page for the given id (show or episode) in the IMDb app or on the imdb.com
      * web page. If the IMDb id is empty, disables the button.
      */
-    public static void setUpImdbButton(final String imdbId, View imdbButton, final String logTag,
-            final Context context) {
+    public static void setUpImdbButton(final String imdbId, View imdbButton, final String logTag) {
         if (imdbButton != null) {
             if (!TextUtils.isEmpty(imdbId)) {
                 imdbButton.setEnabled(true);
                 imdbButton.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        openImdb(imdbId, logTag, context);
+                        openImdb(imdbId, logTag, v.getContext());
                     }
                 });
             } else {

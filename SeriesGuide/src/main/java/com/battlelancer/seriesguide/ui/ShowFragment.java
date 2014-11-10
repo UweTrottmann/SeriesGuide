@@ -27,7 +27,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -43,26 +42,24 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.loaders.ShowCreditsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
 import com.battlelancer.seriesguide.util.PeopleListHelper;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShortcutUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.TraktSummaryTask;
-import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
+import com.battlelancer.seriesguide.util.TraktRatingsTask;
+import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb.entities.Credits;
-import de.greenrobot.event.EventBus;
 import java.util.Date;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -91,7 +88,7 @@ public class ShowFragment extends Fragment {
 
     private Cursor mShowCursor;
 
-    private TraktSummaryTask mTraktTask;
+    private TraktRatingsTask mTraktTask;
 
     @InjectView(R.id.textViewShowStatus) TextView mTextViewStatus;
     @InjectView(R.id.textViewShowReleaseTime) TextView mTextViewReleaseTime;
@@ -102,14 +99,16 @@ public class ShowFragment extends Fragment {
     @InjectView(R.id.textViewShowFirstAirdate) TextView mTextViewFirstRelease;
     @InjectView(R.id.textViewShowContentRating) TextView mTextViewContentRating;
     @InjectView(R.id.textViewShowGenres) TextView mTextViewGenres;
-    @InjectView(R.id.textViewRatingsTvdbValue) TextView mTextViewTvdbRating;
+    @InjectView(R.id.textViewRatingsValue) TextView mTextViewRatingGlobal;
+    @InjectView(R.id.textViewRatingsVotes) TextView mTextViewRatingVotes;
+    @InjectView(R.id.textViewRatingsUser) TextView mTextViewRatingUser;
     @InjectView(R.id.textViewShowLastEdit) TextView mTextViewLastEdit;
 
     @InjectView(R.id.buttonShowInfoIMDB) View mButtonImdb;
     @InjectView(R.id.buttonShowFavorite) Button mButtonFavorite;
     @InjectView(R.id.buttonShowShare) Button mButtonShare;
     @InjectView(R.id.buttonShowShortcut) Button mButtonShortcut;
-    @InjectView(R.id.ratingbar) View mButtonRate;
+    @InjectView(R.id.containerRatings) View mButtonRate;
     @InjectView(R.id.buttonTVDB) View mButtonTvdb;
     @InjectView(R.id.buttonTrakt) View mButtonTrakt;
     @InjectView(R.id.buttonWebSearch) View mButtonWebSearch;
@@ -151,7 +150,7 @@ public class ShowFragment extends Fragment {
         mButtonRate.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                onRateOnTrakt();
+                rateShow();
             }
         });
         CheatSheet.setup(mButtonRate, R.string.action_rate);
@@ -179,20 +178,6 @@ public class ShowFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
 
@@ -216,12 +201,6 @@ public class ShowFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onEvent(TraktActionCompleteEvent event) {
-        if (event.mTraktAction == TraktAction.RATE_SHOW) {
-            onLoadTraktRatings(false);
-        }
-    }
-
     interface ShowQuery {
 
         String[] PROJECTION = new String[] {
@@ -242,6 +221,8 @@ public class ShowFragment extends Fragment {
                 Shows.CONTENTRATING,
                 Shows.GENRES,
                 Shows.RATING_GLOBAL,
+                Shows.RATING_VOTES,
+                Shows.RATING_USER,
                 Shows.LASTEDIT
         };
 
@@ -260,8 +241,10 @@ public class ShowFragment extends Fragment {
         int FIRST_RELEASE = 13;
         int CONTENT_RATING = 14;
         int GENRES = 15;
-        int TVDB_RATING = 16;
-        int LAST_EDIT_MS = 17;
+        int RATING_GLOBAL = 16;
+        int RATING_VOTES = 17;
+        int RATING_USER = 18;
+        int LAST_EDIT_MS = 19;
     }
 
     private LoaderCallbacks<Cursor> mShowLoaderCallbacks = new LoaderCallbacks<Cursor>() {
@@ -370,11 +353,15 @@ public class ShowFragment extends Fragment {
         Utils.setValueOrPlaceholder(mTextViewGenres,
                 Utils.splitAndKitTVDBStrings(mShowCursor.getString(ShowQuery.GENRES)));
 
-        // TVDb rating
-        String tvdbRating = mShowCursor.getString(ShowQuery.TVDB_RATING);
-        if (!TextUtils.isEmpty(tvdbRating)) {
-            mTextViewTvdbRating.setText(tvdbRating);
-        }
+        // trakt rating
+        mTextViewRatingGlobal.setText(TraktTools.buildRatingString(
+                mShowCursor.getDouble(ShowQuery.RATING_GLOBAL)));
+        mTextViewRatingVotes.setText(TraktTools.buildRatingVotesString(getActivity(),
+                mShowCursor.getInt(ShowQuery.RATING_VOTES)));
+
+        // user rating
+        mTextViewRatingUser.setText(TraktTools.buildUserRatingString(getActivity(),
+                mShowCursor.getInt(ShowQuery.RATING_USER)));
 
         // last edit
         long lastEditRaw = mShowCursor.getLong(ShowQuery.LAST_EDIT_MS);
@@ -387,7 +374,7 @@ public class ShowFragment extends Fragment {
 
         // IMDb button
         String imdbId = mShowCursor.getString(ShowQuery.IMDBID);
-        ServiceUtils.setUpImdbButton(imdbId, mButtonImdb, TAG, getActivity());
+        ServiceUtils.setUpImdbButton(imdbId, mButtonImdb, TAG);
 
         // TVDb button
         ServiceUtils.setUpTvdbButton(getShowTvdbId(), mButtonTvdb, TAG);
@@ -438,7 +425,7 @@ public class ShowFragment extends Fragment {
                 R.id.imageViewShowPosterBackground);
         Utils.loadPosterBackground(getActivity(), background, mShowPoster);
 
-        onLoadTraktRatings(true);
+        loadTraktRatings();
     }
 
     private LoaderCallbacks<Credits> mCreditsLoaderCallbacks = new LoaderCallbacks<Credits>() {
@@ -492,19 +479,17 @@ public class ShowFragment extends Fragment {
         return getArguments().getInt(InitBundle.SHOW_TVDBID);
     }
 
-    private void onRateOnTrakt() {
+    private void rateShow() {
         if (TraktCredentials.ensureCredentials(getActivity())) {
-            TraktRateDialogFragment rateShow = TraktRateDialogFragment.newInstanceShow(
-                    getShowTvdbId());
-            rateShow.show(getFragmentManager(), "traktratedialog");
+            RateDialogFragment rateDialog = RateDialogFragment.newInstanceShow(getShowTvdbId());
+            rateDialog.show(getFragmentManager(), "ratedialog");
+            fireTrackerEvent("Rate (trakt)");
         }
-        fireTrackerEvent("Rate (trakt)");
     }
 
-    private void onLoadTraktRatings(boolean isUseCachedValues) {
+    private void loadTraktRatings() {
         if (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED) {
-            mTraktTask = new TraktSummaryTask(getActivity(), getView().findViewById(R.id.ratingbar),
-                    isUseCachedValues).show(getShowTvdbId());
+            mTraktTask = new TraktRatingsTask(getActivity(), getShowTvdbId());
             AndroidUtils.executeOnPool(mTraktTask);
         }
     }

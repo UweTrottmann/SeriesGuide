@@ -200,7 +200,7 @@
                             android:layout_marginRight="@dimen/large_padding"
                             android:background="?attr/sgColorDivider" />
 
-                        <include layout="@layout/ratingbar" />
+                        <include layout="@layout/ratings_shows" />
 
                         <View
                             android:layout_width="match_parent"

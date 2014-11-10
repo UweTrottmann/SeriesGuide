@@ -24,6 +24,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
@@ -32,11 +33,13 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
 import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 import com.uwetrottmann.seriesguide.backend.episodes.model.EpisodeList;
+import com.uwetrottmann.trakt.v2.enums.Rating;
 import de.greenrobot.event.EventBus;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -103,6 +106,37 @@ public class EpisodeTools {
 
     public static boolean isWatched(int episodeFlags) {
         return episodeFlags == EpisodeFlags.WATCHED;
+    }
+
+    /**
+     * Display a {@link com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment} to rate an
+     * episode.
+     */
+    public static void displayRateDialog(Context context, FragmentManager fragmentManager,
+            int episodeTvdbId) {
+        if (!TraktCredentials.ensureCredentials(context)) {
+            return;
+        }
+        RateDialogFragment newFragment = RateDialogFragment.newInstanceEpisode(episodeTvdbId);
+        newFragment.show(fragmentManager, "ratedialog");
+    }
+
+    /**
+     * Store the rating for the given episode in the database and send it to trakt.
+     */
+    public static void rate(Context context, int episodeTvdbId, Rating rating) {
+        AndroidUtils.executeOnPool(new TraktTask(context).rateEpisode(episodeTvdbId, rating));
+
+        ContentValues values = new ContentValues();
+        values.put(SeriesGuideContract.Episodes.RATING_USER, rating.value);
+        context.getContentResolver()
+                .update(SeriesGuideContract.Episodes.buildEpisodeUri(episodeTvdbId), values, null,
+                        null);
+
+        // notify withshow uri as well (used by episode details view)
+        context.getContentResolver()
+                .notifyChange(SeriesGuideContract.Episodes.buildEpisodeWithShowUri(episodeTvdbId),
+                        null);
     }
 
     public static void validateFlags(int episodeFlags) {

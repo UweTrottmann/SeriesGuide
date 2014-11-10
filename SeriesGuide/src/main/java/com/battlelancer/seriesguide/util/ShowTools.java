@@ -37,6 +37,7 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
 import com.uwetrottmann.seriesguide.backend.shows.model.Show;
 import com.uwetrottmann.seriesguide.backend.shows.model.ShowList;
+import com.uwetrottmann.trakt.v2.enums.Rating;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -141,7 +142,7 @@ public class ShowTools {
      * Sets the isRemoved flag of the given show on Hexagon.
      *
      * @param isRemoved If true, the show will not be auto-added on any device connected to
-     *                  Hexagon.
+     * Hexagon.
      */
     public void sendIsRemoved(int showTvdbId, boolean isRemoved) {
         Show show = new Show();
@@ -201,6 +202,18 @@ public class ShowTools {
 
         Toast.makeText(mContext, mContext.getString(isHidden ?
                 R.string.hidden : R.string.unhidden), Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Store the rating for the given episode in the database and send it to trakt.
+     */
+    public static void rate(Context context, int showTvdbId, Rating rating) {
+        AndroidUtils.executeOnPool(new TraktTask(context).rateShow(showTvdbId, rating));
+
+        ContentValues values = new ContentValues();
+        values.put(SeriesGuideContract.Shows.RATING_USER, rating.value);
+        context.getContentResolver()
+                .update(SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
     }
 
     private void uploadShowAsync(Show show) {
@@ -428,8 +441,8 @@ public class ShowTools {
         }
 
         /**
-         * @param mergeValues If set, only overwrites property if remote show property has a
-         *                    certain value.
+         * @param mergeValues If set, only overwrites property if remote show property has a certain
+         * value.
          */
         private static void buildShowPropertyValues(Show show, ContentValues values,
                 boolean mergeValues) {
