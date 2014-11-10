@@ -133,9 +133,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     /**
-     * Schedules a sync for a single show if
-     * {@link com.battlelancer.seriesguide.thetvdbapi.TheTVDB#isUpdateShow(android.content.Context,
+     * Schedules a sync for a single show if {@link com.battlelancer.seriesguide.thetvdbapi.TheTVDB#isUpdateShow(android.content.Context,
      * int)} returns true.
+     *
      * <p> <em>Note: Runs a content provider op, so you should do this on a background thread.</em>
      */
     public static void requestSyncIfTime(Context context, int showTvdbId) {
@@ -148,7 +148,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Schedules a sync. Will only queue a sync request if there is a network connection and
      * auto-sync is enabled.
      *
-     * @param syncType   Any of {@link SyncType}.
+     * @param syncType Any of {@link SyncType}.
      * @param showTvdbId If using {@link SyncType#SINGLE}, the TVDb id of a show.
      */
     public static void requestSyncIfConnected(Context context, SyncType syncType, int showTvdbId) {
@@ -168,8 +168,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Schedules an immediate sync even if auto-sync is disabled, it runs as soon as there is a
      * connection.
      *
-     * @param syncType        Any of {@link SyncType}.
-     * @param showTvdbId      If using {@link SyncType#SINGLE}, the TVDb id of a show.
+     * @param syncType Any of {@link SyncType}.
+     * @param showTvdbId If using {@link SyncType#SINGLE}, the TVDb id of a show.
      * @param isUserRequested If set, shows a status toast and aborts if offline.
      */
     public static void requestSyncImmediate(Context context, SyncType syncType, int showTvdbId,
@@ -224,8 +224,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     /**
-     * Returns true if there is currently a sync operation for the given account or authority in
-     * the
+     * Returns true if there is currently a sync operation for the given account or authority in the
      * pending list, or actively being processed.
      */
     public static boolean isSyncActive(Context context, boolean isDisplayWarning) {
@@ -450,9 +449,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     private static UpdateResult performTraktSync(Context context, HashSet<Integer> existingShows,
             HashMap<Integer, SearchResult> newShows, boolean forceSync, long currentTime) {
         Timber.d("Syncing...trakt auth check");
-        Trakt trakt = ServiceUtils.getTraktWithAuth(context);
-        if (trakt == null) {
-            // not connected to trakt, we are done here
+        if (!TraktCredentials.get(context).hasCredentials()) {
+            Timber.d("Syncing...not connected, skip trakt sync");
             return UpdateResult.SUCCESS;
         }
 
@@ -477,20 +475,21 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             return UpdateResult.INCOMPLETE;
         }
 
-        // episode activity
-        Timber.d("Syncing...trakt episodes (activity)...");
-        UpdateResult activityResult = performTraktEpisodeActivityDownload(context, trakt,
-                existingShows, newShows);
-        Timber.d("Syncing...trakt episodes (activity)..." + activityResult.toString());
-
-        // don't overwrite failure
-        if (result == UpdateResult.SUCCESS) {
-            result = activityResult;
-        }
-
-        if (!AndroidUtils.isNetworkConnected(context)) {
-            return UpdateResult.INCOMPLETE;
-        }
+        // TODO temporarily disable activity sync (not available in v2, yet)
+        //// episode activity
+        //Timber.d("Syncing...trakt episodes (activity)...");
+        //UpdateResult activityResult = performTraktEpisodeActivityDownload(context, trakt,
+        //        existingShows, newShows);
+        //Timber.d("Syncing...trakt episodes (activity)..." + activityResult.toString());
+        //
+        //// don't overwrite failure
+        //if (result == UpdateResult.SUCCESS) {
+        //    result = activityResult;
+        //}
+        //
+        //if (!AndroidUtils.isNetworkConnected(context)) {
+        //    return UpdateResult.INCOMPLETE;
+        //}
 
         // movies
         Timber.d("Syncing...trakt movies...");
