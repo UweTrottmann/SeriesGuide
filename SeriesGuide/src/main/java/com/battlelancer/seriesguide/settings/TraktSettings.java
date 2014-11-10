@@ -28,6 +28,12 @@ public class TraktSettings {
     public static final String KEY_LAST_ACTIVITY_DOWNLOAD
             = "com.battlelancer.seriesguide.lasttraktupdate";
 
+    public static final String KEY_LAST_ACTIVITY_EPISODES_WATCHED
+            = "trakt.last_activity.episodes.watched";
+
+    public static final String KEY_LAST_ACTIVITY_EPISODES_COLLECTED
+            = "trakt.last_activity.episodes.collected";
+
     public static final String KEY_LAST_FULL_EPISODE_SYNC
             = "com.battlelancer.seriesguide.trakt.lastfullsync";
 
@@ -58,6 +64,22 @@ public class TraktSettings {
     public static long getLastActivityDownloadTime(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getLong(KEY_LAST_ACTIVITY_DOWNLOAD, System.currentTimeMillis());
+    }
+
+    /**
+     * The last time watched flags for episodes have changed.
+     */
+    public static long getLastActivityEpisodesWatched(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getLong(KEY_LAST_ACTIVITY_EPISODES_WATCHED, 0);
+    }
+
+    /**
+     * The last time collected flags for episodes have changed.
+     */
+    public static long getLastActivityEpisodesCollected(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getLong(KEY_LAST_ACTIVITY_EPISODES_COLLECTED, 0);
     }
 
     public static boolean isAutoAddingShows(Context context) {

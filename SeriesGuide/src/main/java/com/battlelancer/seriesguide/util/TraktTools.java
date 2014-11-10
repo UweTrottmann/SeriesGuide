@@ -20,21 +20,23 @@ import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
+import android.preference.PreferenceManager;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.BaseEpisode;
 import com.uwetrottmann.trakt.v2.entities.BaseSeason;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
+import com.uwetrottmann.trakt.v2.entities.LastActivityMore;
 import com.uwetrottmann.trakt.v2.entities.ShowIds;
 import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncSeason;
 import com.uwetrottmann.trakt.v2.entities.SyncShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
-import com.uwetrottmann.trakt.v2.enums.Rating;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.services.Sync;
 import java.util.ArrayList;
@@ -64,13 +66,12 @@ public class TraktTools {
     /**
      * Downloads and sets watched and collected flags from trakt on local episodes.
      *
-     * @param clearExistingFlags If set, all watched and collected (and only those, e.g. skipped
-     * flag is preserved) flags will be removed prior to getting the actual flags from trakt (season
-     * by season).
+     * @param isInitialSync If not set, all watched and collected (and only those, e.g. not skipped
+     * flag) flags will be removed prior to getting the actual flags from trakt (season by season).
      * @return Any of the {@link TraktTools} result codes.
      */
     public static int syncToSeriesGuide(Context context, HashSet<Integer> localShows,
-            boolean clearExistingFlags) {
+            LastActivityMore activity, boolean isInitialSync) {
         if (localShows.size() == 0) {
             return SUCCESS_NOWORK;
         }
@@ -83,41 +84,62 @@ public class TraktTools {
         List<BaseShow> remoteShows;
 
         // watched episodes
-        try {
-            // get watched episodes from trakt
-            remoteShows = sync.watchedShows(Extended.DEFAULT_MIN);
-        } catch (RetrofitError e) {
-            Timber.e(e, "Downloading watched shows failed");
-            return FAILED_API;
-        } catch (OAuthUnauthorizedException e) {
-            TraktCredentials.get(context).setCredentialsInvalid();
-            return FAILED_CREDENTIALS;
-        }
-        if (remoteShows == null) {
-            return FAILED_API;
-        }
-        if (!remoteShows.isEmpty()) {
-            applyEpisodeFlagChanges(context, remoteShows, localShows,
-                    SeriesGuideContract.Episodes.WATCHED, clearExistingFlags);
+        // only sync if flags have changed
+        long lastWatched = activity.watched_at == null ? 0 : activity.watched_at.getMillis();
+        if (isInitialSync || (lastWatched != 0
+                && lastWatched > TraktSettings.getLastActivityEpisodesWatched(context))) {
+            try {
+                // get watched episodes from trakt
+                remoteShows = sync.watchedShows(Extended.DEFAULT_MIN);
+            } catch (RetrofitError e) {
+                Timber.e(e, "Downloading watched shows failed");
+                return FAILED_API;
+            } catch (OAuthUnauthorizedException e) {
+                TraktCredentials.get(context).setCredentialsInvalid();
+                return FAILED_CREDENTIALS;
+            }
+            if (remoteShows == null) {
+                return FAILED_API;
+            }
+            // apply any database updates
+            if (!remoteShows.isEmpty()) {
+                applyEpisodeFlagChanges(context, remoteShows, localShows,
+                        SeriesGuideContract.Episodes.WATCHED, !isInitialSync);
+            }
+            // store new last activity time
+            PreferenceManager.getDefaultSharedPreferences(context)
+                    .edit()
+                    .putLong(TraktSettings.KEY_LAST_ACTIVITY_EPISODES_WATCHED, lastWatched)
+                    .apply();
         }
 
         // collected episodes
-        try {
-            // get watched episodes from trakt
-            remoteShows = sync.collectionShows(Extended.DEFAULT_MIN);
-        } catch (RetrofitError e) {
-            Timber.e(e, "Downloading collected shows failed");
-            return FAILED_API;
-        } catch (OAuthUnauthorizedException e) {
-            TraktCredentials.get(context).setCredentialsInvalid();
-            return FAILED_CREDENTIALS;
-        }
-        if (remoteShows == null) {
-            return FAILED_API;
-        }
-        if (!remoteShows.isEmpty()) {
-            applyEpisodeFlagChanges(context, remoteShows, localShows,
-                    SeriesGuideContract.Episodes.COLLECTED, clearExistingFlags);
+        // only sync if flags have changed
+        long lastCollected = activity.collected_at == null ? 0 : activity.collected_at.getMillis();
+        if (isInitialSync || (lastCollected != 0
+                && lastCollected > TraktSettings.getLastActivityEpisodesCollected(context))) {
+            try {
+                // get watched episodes from trakt
+                remoteShows = sync.collectionShows(Extended.DEFAULT_MIN);
+            } catch (RetrofitError e) {
+                Timber.e(e, "Downloading collected shows failed");
+                return FAILED_API;
+            } catch (OAuthUnauthorizedException e) {
+                TraktCredentials.get(context).setCredentialsInvalid();
+                return FAILED_CREDENTIALS;
+            }
+            if (remoteShows == null) {
+                return FAILED_API;
+            }
+            if (!remoteShows.isEmpty()) {
+                applyEpisodeFlagChanges(context, remoteShows, localShows,
+                        SeriesGuideContract.Episodes.COLLECTED, !isInitialSync);
+            }
+            // store new last activity time
+            PreferenceManager.getDefaultSharedPreferences(context)
+                    .edit()
+                    .putLong(TraktSettings.KEY_LAST_ACTIVITY_EPISODES_WATCHED, lastCollected)
+                    .apply();
         }
 
         return SUCCESS;

@@ -62,6 +62,9 @@ import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.jakewharton.trakt.enumerations.ActivityType;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb.entities.Configuration;
+import com.uwetrottmann.trakt.v2.TraktV2;
+import com.uwetrottmann.trakt.v2.entities.LastActivities;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -454,9 +457,19 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             return UpdateResult.SUCCESS;
         }
 
-        UpdateResult result = UpdateResult.SUCCESS;
+        if (!AndroidUtils.isNetworkConnected(context)) {
+            return UpdateResult.INCOMPLETE;
+        }
+
+        // get last activity timestamps
+        LastActivities lastActivity = getTraktLastActivity(context);
+        if (lastActivity == null) {
+            // trakt is likely offline or busy, try later
+            return UpdateResult.INCOMPLETE;
+        }
 
         // full episode sync
+        UpdateResult result = UpdateResult.SUCCESS;
         if (forceSync || TraktSettings.isTimeForFullEpisodeSync(context, currentTime)) {
             if (!AndroidUtils.isNetworkConnected(context)) {
                 return UpdateResult.INCOMPLETE;
@@ -464,7 +477,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
             Timber.d("Syncing...trakt episodes (full)...");
             UpdateResult fullSyncResult = performTraktEpisodeSync(context, existingShows,
-                    currentTime);
+                    lastActivity, currentTime);
             Timber.d("Syncing...trakt episodes (full)..."
                     + (fullSyncResult == UpdateResult.SUCCESS ? "SUCCESS" : "INCOMPLETE"));
 
@@ -474,22 +487,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         if (!AndroidUtils.isNetworkConnected(context)) {
             return UpdateResult.INCOMPLETE;
         }
-
-        // TODO temporarily disable activity sync (not available in v2, yet)
-        //// episode activity
-        //Timber.d("Syncing...trakt episodes (activity)...");
-        //UpdateResult activityResult = performTraktEpisodeActivityDownload(context, trakt,
-        //        existingShows, newShows);
-        //Timber.d("Syncing...trakt episodes (activity)..." + activityResult.toString());
-        //
-        //// don't overwrite failure
-        //if (result == UpdateResult.SUCCESS) {
-        //    result = activityResult;
-        //}
-        //
-        //if (!AndroidUtils.isNetworkConnected(context)) {
-        //    return UpdateResult.INCOMPLETE;
-        //}
 
         // movies
         Timber.d("Syncing...trakt movies...");
@@ -504,15 +501,33 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         return result;
     }
 
+    private static LastActivities getTraktLastActivity(Context context) {
+        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
+        if (trakt == null) {
+            return null;
+        }
+
+        try {
+            return trakt.sync().lastActivities();
+        } catch (RetrofitError e) {
+            Timber.e(e, "Failed to get trakt last activity");
+        } catch (OAuthUnauthorizedException e) {
+            TraktCredentials.get(context).setCredentialsInvalid();
+        }
+
+        return null;
+    }
+
     @SuppressLint("CommitPrefEdits")
     private static UpdateResult performTraktEpisodeSync(Context context,
-            HashSet<Integer> existingShows, long currentTime) {
+            HashSet<Integer> existingShows, LastActivities lastActivity, long currentTime) {
         // do we need to merge data instead of overwriting with data from trakt?
         boolean isInitialSync = !TraktSettings.hasMergedEpisodes(context);
 
         // download
         Timber.d("Syncing...trakt episodes (full)...downloading");
-        int resultCode = TraktTools.syncToSeriesGuide(context, existingShows, !isInitialSync);
+        int resultCode = TraktTools.syncToSeriesGuide(context, existingShows, lastActivity.episodes,
+                isInitialSync);
 
         if (resultCode < 0 || !AndroidUtils.isNetworkConnected(context)) {
             return UpdateResult.INCOMPLETE;
