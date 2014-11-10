@@ -379,7 +379,8 @@ public class TraktTools {
      * Returns the given double as number string with one decimal digit, like "1.5".
      */
     public static String buildRatingString(Double rating) {
-        return rating == null ? "--" : String.format(Locale.getDefault(), "%.1f", rating);
+        return rating == null || rating == 0 ? "--"
+                : String.format(Locale.getDefault(), "%.1f", rating);
     }
 
     /**
