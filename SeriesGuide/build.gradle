@@ -124,7 +124,7 @@ dependencies {
     compile 'com.uwetrottmann:getglue-java:1.4.0'
     compile 'com.uwetrottmann:tmdb-java:0.7.0'
     compile 'com.uwetrottmann:trakt-java:3.3.1'
-    compile 'de.greenrobot:eventbus:2.2.1'
+    compile 'de.greenrobot:eventbus:2.4.0'
     compile 'joda-time:joda-time:2.5'
 
     // Google Play Services
