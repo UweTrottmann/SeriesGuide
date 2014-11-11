@@ -340,7 +340,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 } else {
                     // ...OR sync with trakt
                     UpdateResult resultTrakt = performTraktSync(getContext(), showsExisting,
-                            showsNew, syncImmediately, currentTime);
+                            currentTime);
                     // don't overwrite failure
                     if (resultCode == UpdateResult.SUCCESS) {
                         resultCode = resultTrakt;
@@ -451,7 +451,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private static UpdateResult performTraktSync(Context context, HashSet<Integer> existingShows,
-            HashMap<Integer, SearchResult> newShows, boolean forceSync, long currentTime) {
+            long currentTime) {
         Timber.d("Syncing...trakt auth check");
         if (!TraktCredentials.get(context).hasCredentials()) {
             Timber.d("Syncing...not connected, skip trakt sync");
@@ -469,21 +469,16 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             return UpdateResult.INCOMPLETE;
         }
 
-        // full episode sync
-        UpdateResult result = UpdateResult.SUCCESS;
-        if (forceSync || TraktSettings.isTimeForFullEpisodeSync(context, currentTime)) {
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                return UpdateResult.INCOMPLETE;
-            }
-
-            Timber.d("Syncing...trakt episodes (full)...");
-            UpdateResult fullSyncResult = performTraktEpisodeSync(context, existingShows,
-                    lastActivity.episodes, currentTime);
-            Timber.d("Syncing...trakt episodes (full)..."
-                    + (fullSyncResult == UpdateResult.SUCCESS ? "SUCCESS" : "INCOMPLETE"));
-
-            result = fullSyncResult;
+        if (!AndroidUtils.isNetworkConnected(context)) {
+            return UpdateResult.INCOMPLETE;
         }
+
+        // full episode sync
+        Timber.d("Syncing...trakt episodes (full)...");
+        UpdateResult result = performTraktEpisodeSync(context, existingShows,
+                lastActivity.episodes, currentTime);
+        Timber.d("Syncing...trakt episodes (full)..."
+                + (result == UpdateResult.SUCCESS ? "SUCCESS" : "INCOMPLETE"));
 
         if (!AndroidUtils.isNetworkConnected(context)) {
             return UpdateResult.INCOMPLETE;

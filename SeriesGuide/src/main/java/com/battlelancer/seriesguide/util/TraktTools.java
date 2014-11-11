@@ -81,18 +81,18 @@ public class TraktTools {
             return FAILED_CREDENTIALS;
         }
         Sync sync = trakt.sync();
-        List<BaseShow> remoteShows;
 
         // watched episodes
         // only sync if flags have changed
         long lastWatched = activity.watched_at == null ? 0 : activity.watched_at.getMillis();
         if (isInitialSync || (lastWatched != 0
                 && lastWatched > TraktSettings.getLastActivityEpisodesWatched(context))) {
+            List<BaseShow> remoteShows;
             try {
                 // get watched episodes from trakt
                 remoteShows = sync.watchedShows(Extended.DEFAULT_MIN);
             } catch (RetrofitError e) {
-                Timber.e(e, "Downloading watched shows failed");
+                Timber.e(e, "Downloading watched episodes failed");
                 return FAILED_API;
             } catch (OAuthUnauthorizedException e) {
                 TraktCredentials.get(context).setCredentialsInvalid();
@@ -101,7 +101,7 @@ public class TraktTools {
             if (remoteShows == null) {
                 return FAILED_API;
             }
-            // apply any database updates
+            // apply database updates
             if (!remoteShows.isEmpty()) {
                 applyEpisodeFlagChanges(context, remoteShows, localShows,
                         SeriesGuideContract.Episodes.WATCHED, !isInitialSync);
@@ -118,11 +118,12 @@ public class TraktTools {
         long lastCollected = activity.collected_at == null ? 0 : activity.collected_at.getMillis();
         if (isInitialSync || (lastCollected != 0
                 && lastCollected > TraktSettings.getLastActivityEpisodesCollected(context))) {
+            List<BaseShow> remoteShows;
             try {
-                // get watched episodes from trakt
+                // get collected episodes from trakt
                 remoteShows = sync.collectionShows(Extended.DEFAULT_MIN);
             } catch (RetrofitError e) {
-                Timber.e(e, "Downloading collected shows failed");
+                Timber.e(e, "Downloading collected episodes failed");
                 return FAILED_API;
             } catch (OAuthUnauthorizedException e) {
                 TraktCredentials.get(context).setCredentialsInvalid();
@@ -131,6 +132,7 @@ public class TraktTools {
             if (remoteShows == null) {
                 return FAILED_API;
             }
+            // apply database updates
             if (!remoteShows.isEmpty()) {
                 applyEpisodeFlagChanges(context, remoteShows, localShows,
                         SeriesGuideContract.Episodes.COLLECTED, !isInitialSync);
