@@ -106,6 +106,17 @@ public class LocalOnlyOkHttpDownloader implements Downloader {
         return new Response(connection.getInputStream(), fromCache, contentLength);
     }
 
+    @Override
+    public void shutdown() {
+        com.squareup.okhttp.Cache cache = urlFactory.client().getCache();
+        if (cache != null) {
+            try {
+                cache.close();
+            } catch (IOException ignored) {
+            }
+        }
+    }
+
     static File createDefaultCacheDir(Context context) {
         File cache = new File(context.getApplicationContext().getCacheDir(), PICASSO_CACHE);
         if (!cache.exists()) {
