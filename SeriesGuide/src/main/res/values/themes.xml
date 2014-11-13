@@ -39,6 +39,7 @@
         <!-- Windows -->
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
+        <item name="windowActionModeOverlay">true</item>
 
         <!-- Action bar -->
         <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
@@ -120,6 +121,7 @@
         <!-- Windows -->
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
+        <item name="windowActionModeOverlay">true</item>
 
         <!-- Colors -->
         <item name="textColorSgDefault">@color/black_11</item>
@@ -206,6 +208,7 @@
         <!-- Windows -->
         <item name="android:colorBackground">@color/background_inverse</item>
         <item name="android:windowBackground">@color/background_inverse</item>
+        <item name="windowActionModeOverlay">true</item>
 
         <!-- Remove default window shadow -->
         <item name="android:windowContentOverlay">@null</item>
