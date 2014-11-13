@@ -450,11 +450,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
     }
 
-    private static UpdateResult performTraktSync(Context context, HashSet<Integer> existingShows,
+    private static UpdateResult performTraktSync(Context context, HashSet<Integer> localShows,
             long currentTime) {
-        Timber.d("Syncing...trakt auth check");
         if (!TraktCredentials.get(context).hasCredentials()) {
-            Timber.d("Syncing...not connected, skip trakt sync");
+            Timber.d("performTraktSync: no auth, skip");
             return UpdateResult.SUCCESS;
         }
 
@@ -466,6 +465,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         LastActivities lastActivity = getTraktLastActivity(context);
         if (lastActivity == null) {
             // trakt is likely offline or busy, try later
+            Timber.e("performTraktSync: last activity download failed");
             return UpdateResult.INCOMPLETE;
         }
 
@@ -473,29 +473,52 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             return UpdateResult.INCOMPLETE;
         }
 
-        // full episode sync
-        Timber.d("Syncing...trakt episodes (full)...");
-        UpdateResult result = performTraktEpisodeSync(context, existingShows,
-                lastActivity.episodes, currentTime);
-        Timber.d("Syncing...trakt episodes (full)..."
-                + (result == UpdateResult.SUCCESS ? "SUCCESS" : "INCOMPLETE"));
+        if (localShows.size() == 0) {
+            Timber.d("performTraktSync: no local shows, skip shows");
+        } else {
+            // download and upload episode watched and collected flags
+            if (performTraktEpisodeSync(context, localShows, lastActivity.episodes, currentTime)
+                    != UpdateResult.SUCCESS) {
+                return UpdateResult.INCOMPLETE;
+            }
+
+            if (!AndroidUtils.isNetworkConnected(context)) {
+                return UpdateResult.INCOMPLETE;
+            }
+
+            // download show ratings
+            if (TraktTools.downloadShowRatings(context, lastActivity.shows)
+                    != UpdateResult.SUCCESS) {
+                return UpdateResult.INCOMPLETE;
+            }
+
+            if (!AndroidUtils.isNetworkConnected(context)) {
+                return UpdateResult.INCOMPLETE;
+            }
+
+            // download episode ratings
+            if (TraktTools.downloadEpisodeRatings(context, lastActivity.episodes)
+                    != UpdateResult.SUCCESS) {
+                return UpdateResult.INCOMPLETE;
+            }
+
+            if (!AndroidUtils.isNetworkConnected(context)) {
+                return UpdateResult.INCOMPLETE;
+            }
+        }
+
+        // sync watchlist and collection with trakt
+        if (MovieTools.Download.syncMoviesWithTrakt(context, lastActivity.movies)
+                != UpdateResult.SUCCESS) {
+            return UpdateResult.INCOMPLETE;
+        }
 
         if (!AndroidUtils.isNetworkConnected(context)) {
             return UpdateResult.INCOMPLETE;
         }
 
-        // movies
-        Timber.d("Syncing...trakt movies...");
-        UpdateResult resultMovies = MovieTools.Download.syncMoviesWithTrakt(context,
-                lastActivity.movies);
-        Timber.d("Syncing...trakt movies..." + resultMovies.toString());
-
-        // don't overwrite failure
-        if (result == UpdateResult.SUCCESS) {
-            result = resultMovies;
-        }
-
-        return result;
+        // download movie ratings
+        return TraktTools.downloadMovieRatings(context, lastActivity.movies.rated_at);
     }
 
     private static LastActivities getTraktLastActivity(Context context) {
@@ -515,17 +538,20 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         return null;
     }
 
+    /**
+     * Downloads and uploads episode watched and collected flags.
+     *
+     * <p> Do <b>NOT</b> call if there are no local shows to avoid unnecessary work.
+     */
     @SuppressLint("CommitPrefEdits")
     private static UpdateResult performTraktEpisodeSync(Context context,
-            HashSet<Integer> existingShows, LastActivityMore lastActivity, long currentTime) {
+            HashSet<Integer> localShows, LastActivityMore lastActivity, long currentTime) {
         // do we need to merge data instead of overwriting with data from trakt?
         boolean isInitialSync = !TraktSettings.hasMergedEpisodes(context);
 
-        // download
-        Timber.d("Syncing...trakt episodes (full)...downloading");
-        int resultCode = TraktTools.syncToSeriesGuide(context, existingShows, lastActivity,
+        // download watched and collected flags
+        int resultCode = TraktTools.downloadEpisodeFlags(context, localShows, lastActivity,
                 isInitialSync);
-
         if (resultCode < 0 || !AndroidUtils.isNetworkConnected(context)) {
             return UpdateResult.INCOMPLETE;
         }
@@ -535,9 +561,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         if (isInitialSync) {
             // upload
-            Timber.d("Syncing...trakt episodes (full)...uploading");
-            resultCode = TraktTools.uploadToTrakt(context, existingShows);
-
+            resultCode = TraktTools.uploadEpisodeFlags(context, localShows);
             if (resultCode < 0) {
                 return UpdateResult.INCOMPLETE;
             } else {
@@ -548,6 +572,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // success, set last full sync time to now
         editor.putLong(TraktSettings.KEY_LAST_FULL_EPISODE_SYNC, currentTime);
+        Timber.d("performTraktEpisodeSync: success, last sync at " + currentTime);
 
         editor.commit();
 

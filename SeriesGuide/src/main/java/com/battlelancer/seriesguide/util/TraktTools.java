@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -30,13 +31,18 @@ import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.BaseEpisode;
 import com.uwetrottmann.trakt.v2.entities.BaseSeason;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
+import com.uwetrottmann.trakt.v2.entities.LastActivity;
 import com.uwetrottmann.trakt.v2.entities.LastActivityMore;
+import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
+import com.uwetrottmann.trakt.v2.entities.RatedMovie;
+import com.uwetrottmann.trakt.v2.entities.RatedShow;
 import com.uwetrottmann.trakt.v2.entities.ShowIds;
 import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncSeason;
 import com.uwetrottmann.trakt.v2.entities.SyncShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
+import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.services.Sync;
 import java.util.ArrayList;
@@ -44,8 +50,11 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import org.joda.time.DateTime;
 import retrofit.RetrofitError;
 import timber.log.Timber;
+
+import static com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult;
 
 public class TraktTools {
 
@@ -64,16 +73,279 @@ public class TraktTools {
     private static final String TRAKT_SEARCH_EPISODE_ARG = "&e=";
 
     /**
-     * Downloads and sets watched and collected flags from trakt on local episodes.
+     * Downloads trakt movie ratings and applies the latest ones to the database.
+     *
+     * <p> To apply all ratings, set {@link TraktSettings#KEY_LAST_MOVIES_RATED_AT} to 0.
+     */
+    public static UpdateResult downloadMovieRatings(Context context, DateTime ratedAt) {
+        if (ratedAt == null) {
+            Timber.e("downloadMovieRatings: null rated_at");
+            return UpdateResult.INCOMPLETE;
+        }
+
+        long lastRatedAt = TraktSettings.getLastMoviesRatedAt(context);
+        if (!ratedAt.isAfter(lastRatedAt)) {
+            // not initial sync, no ratings have changed
+            Timber.d("downloadMovieRatings: no changes since " + lastRatedAt);
+            return UpdateResult.SUCCESS;
+        }
+
+        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
+        if (trakt == null) {
+            return UpdateResult.INCOMPLETE;
+        }
+
+        // download rated shows
+        List<RatedMovie> ratedMovies;
+        try {
+            ratedMovies = trakt.sync().ratingsMovies(RatingsFilter.ALL, Extended.DEFAULT_MIN);
+        } catch (RetrofitError e) {
+            Timber.e(e, "downloadMovieRatings: download failed");
+            return UpdateResult.INCOMPLETE;
+        } catch (OAuthUnauthorizedException e) {
+            TraktCredentials.get(context).setCredentialsInvalid();
+            return UpdateResult.INCOMPLETE;
+        }
+        if (ratedMovies == null) {
+            Timber.e("downloadMovieRatings: null response");
+            return UpdateResult.INCOMPLETE;
+        }
+        if (ratedMovies.isEmpty()) {
+            Timber.d("downloadMovieRatings: no ratings on trakt");
+            return UpdateResult.SUCCESS;
+        }
+
+        // trakt last activity rated_at timestamp is set after the rating timestamp
+        // so include ratings that are a little older
+        long ratedAtThreshold = lastRatedAt - 5 * DateUtils.MINUTE_IN_MILLIS;
+
+        // go through ratings, latest first (trakt sends in that order)
+        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+        for (RatedMovie movie : ratedMovies) {
+            if (movie.rating == null || movie.movie == null || movie.movie.ids == null
+                    || movie.movie.ids.tmdb == null) {
+                // skip, can't handle
+                continue;
+            }
+            if (movie.rated_at != null && movie.rated_at.isBefore(ratedAtThreshold)) {
+                // no need to apply older ratings again
+                break;
+            }
+
+            // if a movie does not exist, this update will do nothing
+            ContentProviderOperation op = ContentProviderOperation.newUpdate(
+                    SeriesGuideContract.Movies.buildMovieUri(movie.movie.ids.tmdb))
+                    .withValue(SeriesGuideContract.Movies.RATING_USER, movie.rating.value)
+                    .build();
+            batch.add(op);
+        }
+
+        // apply database updates
+        try {
+            DBUtils.applyInSmallBatches(context, batch);
+        } catch (OperationApplicationException e) {
+            Timber.e(e, "downloadMovieRatings: database update failed");
+            return UpdateResult.INCOMPLETE;
+        }
+
+        // save last rated instant
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putLong(TraktSettings.KEY_LAST_MOVIES_RATED_AT, ratedAt.getMillis())
+                .commit();
+
+        Timber.d("downloadMovieRatings: success, last rated_at " + ratedAt.getMillis());
+        return UpdateResult.SUCCESS;
+    }
+
+    /**
+     * Downloads trakt show ratings and applies the latest ones to the database.
+     *
+     * <p> To apply all ratings, set {@link TraktSettings#KEY_LAST_SHOWS_RATED_AT} to 0.
+     */
+    public static UpdateResult downloadShowRatings(Context context, LastActivity activity) {
+        if (activity.rated_at == null) {
+            Timber.e("downloadShowRatings: null rated_at");
+            return UpdateResult.INCOMPLETE;
+        }
+
+        long lastRatedAt = TraktSettings.getLastShowsRatedAt(context);
+        if (!activity.rated_at.isAfter(lastRatedAt)) {
+            // not initial sync, no ratings have changed
+            Timber.d("downloadShowRatings: no changes since " + lastRatedAt);
+            return UpdateResult.SUCCESS;
+        }
+
+        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
+        if (trakt == null) {
+            return UpdateResult.INCOMPLETE;
+        }
+
+        // download rated shows
+        List<RatedShow> ratedShows;
+        try {
+            ratedShows = trakt.sync().ratingsShows(RatingsFilter.ALL, Extended.DEFAULT_MIN);
+        } catch (RetrofitError e) {
+            Timber.e(e, "downloadShowRatings: download failed");
+            return UpdateResult.INCOMPLETE;
+        } catch (OAuthUnauthorizedException e) {
+            TraktCredentials.get(context).setCredentialsInvalid();
+            return UpdateResult.INCOMPLETE;
+        }
+        if (ratedShows == null) {
+            Timber.e("downloadShowRatings: null response");
+            return UpdateResult.INCOMPLETE;
+        }
+        if (ratedShows.isEmpty()) {
+            Timber.d("downloadShowRatings: no ratings on trakt");
+            return UpdateResult.SUCCESS;
+        }
+
+        // trakt last activity rated_at timestamp is set after the rating timestamp
+        // so include ratings that are a little older
+        long ratedAtThreshold = lastRatedAt - 5 * DateUtils.MINUTE_IN_MILLIS;
+
+        // go through ratings, latest first (trakt sends in that order)
+        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+        for (RatedShow show : ratedShows) {
+            if (show.rating == null || show.show == null || show.show.ids == null
+                    || show.show.ids.tvdb == null) {
+                // skip, can't handle
+                continue;
+            }
+            if (show.rated_at != null && show.rated_at.isBefore(ratedAtThreshold)) {
+                // no need to apply older ratings again
+                break;
+            }
+
+            // if a show does not exist, this update will do nothing
+            ContentProviderOperation op = ContentProviderOperation.newUpdate(
+                    SeriesGuideContract.Shows.buildShowUri(show.show.ids.tvdb))
+                    .withValue(SeriesGuideContract.Shows.RATING_USER, show.rating.value)
+                    .build();
+            batch.add(op);
+        }
+
+        // apply database updates
+        try {
+            DBUtils.applyInSmallBatches(context, batch);
+        } catch (OperationApplicationException e) {
+            Timber.e(e, "downloadShowRatings: database update failed");
+            return UpdateResult.INCOMPLETE;
+        }
+
+        // save last rated instant
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putLong(TraktSettings.KEY_LAST_SHOWS_RATED_AT, activity.rated_at.getMillis())
+                .commit();
+
+        Timber.d("downloadShowRatings: success, last rated_at " + activity.rated_at.getMillis());
+        return UpdateResult.SUCCESS;
+    }
+
+    /**
+     * Downloads trakt episode ratings and applies the latest ones to the database.
+     *
+     * <p> To apply all ratings, set {@link TraktSettings#KEY_LAST_EPISODES_RATED_AT} to 0.
+     */
+    public static UpdateResult downloadEpisodeRatings(Context context, LastActivityMore activity) {
+        if (activity.rated_at == null) {
+            Timber.e("downloadEpisodeRatings: null rated_at");
+            return UpdateResult.INCOMPLETE;
+        }
+
+        long lastRatedAt = TraktSettings.getLastEpisodesRatedAt(context);
+        if (!activity.rated_at.isAfter(lastRatedAt)) {
+            // not initial sync, no ratings have changed
+            Timber.d("downloadEpisodeRatings: no changes since " + lastRatedAt);
+            return UpdateResult.SUCCESS;
+        }
+
+        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
+        if (trakt == null) {
+            return UpdateResult.INCOMPLETE;
+        }
+
+        // download rated episodes
+        List<RatedEpisode> ratedEpisodes;
+        try {
+            ratedEpisodes = trakt.sync().ratingsEpisodes(RatingsFilter.ALL, Extended.DEFAULT_MIN);
+        } catch (RetrofitError e) {
+            Timber.e(e, "downloadEpisodeRatings: download failed");
+            return UpdateResult.INCOMPLETE;
+        } catch (OAuthUnauthorizedException e) {
+            TraktCredentials.get(context).setCredentialsInvalid();
+            return UpdateResult.INCOMPLETE;
+        }
+        if (ratedEpisodes == null) {
+            Timber.e("downloadEpisodeRatings: null response");
+            return UpdateResult.INCOMPLETE;
+        }
+        if (ratedEpisodes.isEmpty()) {
+            Timber.d("downloadEpisodeRatings: no ratings on trakt");
+            return UpdateResult.SUCCESS;
+        }
+
+        // trakt last activity rated_at timestamp is set after the rating timestamp
+        // so include ratings that are a little older
+        long ratedAtThreshold = lastRatedAt - 5 * DateUtils.MINUTE_IN_MILLIS;
+
+        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+        for (RatedEpisode episode : ratedEpisodes) {
+            if (episode.rating == null || episode.episode == null || episode.episode.ids == null
+                    || episode.episode.ids.tvdb == null) {
+                // skip, can't handle
+                continue;
+            }
+            if (episode.rated_at != null && episode.rated_at.isBefore(ratedAtThreshold)) {
+                // no need to apply older ratings again
+                break;
+            }
+
+            // if an episode does not exist, this update will do nothing
+            ContentProviderOperation op = ContentProviderOperation.newUpdate(
+                    SeriesGuideContract.Episodes.buildEpisodeUri(episode.episode.ids.tvdb))
+                    .withValue(SeriesGuideContract.Episodes.RATING_USER, episode.rating.value)
+                    .build();
+            batch.add(op);
+        }
+
+        // apply database updates
+        try {
+            DBUtils.applyInSmallBatches(context, batch);
+        } catch (OperationApplicationException e) {
+            Timber.e(e, "downloadEpisodeRatings: database update failed");
+            return UpdateResult.INCOMPLETE;
+        }
+
+        // save last rated instant
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putLong(TraktSettings.KEY_LAST_EPISODES_RATED_AT, activity.rated_at.getMillis())
+                .commit();
+
+        Timber.d("downloadEpisodeRatings: success, last rated_at " + activity.rated_at.getMillis());
+        return UpdateResult.SUCCESS;
+    }
+
+    /**
+     * Downloads and sets watched and collected flags for episodes if they have changed on trakt (or
+     * {@code isInitialSync} is true).
      *
      * @param isInitialSync If not set, all watched and collected (and only those, e.g. not skipped
      * flag) flags will be removed prior to getting the actual flags from trakt (season by season).
      * @return Any of the {@link TraktTools} result codes.
      */
-    public static int syncToSeriesGuide(Context context, HashSet<Integer> localShows,
+    public static int downloadEpisodeFlags(Context context, HashSet<Integer> localShows,
             LastActivityMore activity, boolean isInitialSync) {
-        if (localShows.size() == 0) {
-            return SUCCESS_NOWORK;
+        if (activity.collected_at == null) {
+            Timber.e("downloadEpisodeFlags: null collected_at");
+            return FAILED;
+        }
+        if (activity.watched_at == null) {
+            Timber.e("downloadEpisodeFlags: null watched_at");
+            return FAILED;
         }
 
         TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
@@ -83,22 +355,21 @@ public class TraktTools {
         Sync sync = trakt.sync();
 
         // watched episodes
-        // only sync if flags have changed
-        long lastWatched = activity.watched_at == null ? 0 : activity.watched_at.getMillis();
-        if (isInitialSync || (lastWatched != 0
-                && lastWatched > TraktSettings.getLastActivityEpisodesWatched(context))) {
+        if (isInitialSync || activity.watched_at.isAfter(
+                TraktSettings.getLastEpisodesWatchedAt(context))) {
             List<BaseShow> remoteShows;
             try {
                 // get watched episodes from trakt
                 remoteShows = sync.watchedShows(Extended.DEFAULT_MIN);
             } catch (RetrofitError e) {
-                Timber.e(e, "Downloading watched episodes failed");
+                Timber.e(e, "downloadEpisodeFlags: watched download failed");
                 return FAILED_API;
             } catch (OAuthUnauthorizedException e) {
                 TraktCredentials.get(context).setCredentialsInvalid();
                 return FAILED_CREDENTIALS;
             }
             if (remoteShows == null) {
+                Timber.e("downloadEpisodeFlags: null watched response");
                 return FAILED_API;
             }
             // apply database updates
@@ -109,27 +380,29 @@ public class TraktTools {
             // store new last activity time
             PreferenceManager.getDefaultSharedPreferences(context)
                     .edit()
-                    .putLong(TraktSettings.KEY_LAST_ACTIVITY_EPISODES_WATCHED, lastWatched)
+                    .putLong(TraktSettings.KEY_LAST_EPISODES_WATCHED_AT,
+                            activity.watched_at.getMillis())
                     .apply();
+
+            Timber.d("downloadEpisodeFlags: success for watched");
         }
 
         // collected episodes
-        // only sync if flags have changed
-        long lastCollected = activity.collected_at == null ? 0 : activity.collected_at.getMillis();
-        if (isInitialSync || (lastCollected != 0
-                && lastCollected > TraktSettings.getLastActivityEpisodesCollected(context))) {
+        if (isInitialSync || activity.collected_at.isAfter(
+                TraktSettings.getLastEpisodesCollectedAt(context))) {
             List<BaseShow> remoteShows;
             try {
                 // get collected episodes from trakt
                 remoteShows = sync.collectionShows(Extended.DEFAULT_MIN);
             } catch (RetrofitError e) {
-                Timber.e(e, "Downloading collected episodes failed");
+                Timber.e(e, "downloadEpisodeFlags: collected download failed");
                 return FAILED_API;
             } catch (OAuthUnauthorizedException e) {
                 TraktCredentials.get(context).setCredentialsInvalid();
                 return FAILED_CREDENTIALS;
             }
             if (remoteShows == null) {
+                Timber.e("downloadEpisodeFlags: null collected response");
                 return FAILED_API;
             }
             // apply database updates
@@ -140,8 +413,11 @@ public class TraktTools {
             // store new last activity time
             PreferenceManager.getDefaultSharedPreferences(context)
                     .edit()
-                    .putLong(TraktSettings.KEY_LAST_ACTIVITY_EPISODES_WATCHED, lastCollected)
+                    .putLong(TraktSettings.KEY_LAST_EPISODES_WATCHED_AT,
+                            activity.collected_at.getMillis())
                     .apply();
+
+            Timber.d("downloadEpisodeFlags: success for collected");
         }
 
         return SUCCESS;
@@ -287,11 +563,7 @@ public class TraktTools {
      *
      * @return Any of the {@link TraktTools} result codes.
      */
-    public static int uploadToTrakt(Context context, HashSet<Integer> localShows) {
-        if (localShows.size() == 0) {
-            return SUCCESS_NOWORK;
-        }
-
+    public static int uploadEpisodeFlags(Context context, HashSet<Integer> localShows) {
         TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
         if (trakt == null) {
             return FAILED_CREDENTIALS;
@@ -299,12 +571,18 @@ public class TraktTools {
         Sync sync = trakt.sync();
 
         // loop through all local shows
+        SyncItems items = new SyncItems();
+        SyncShow show = new SyncShow();
+        items.shows(show);
         for (int showTvdbId : localShows) {
-            // build a list of all watched episodes
+            show.id(ShowIds.tvdb(showTvdbId));
+
             /**
-             * We do not have to worry about uploading episodes that are already watched on
-             * trakt, it will keep the original timestamp of the episodes being watched.
+             * We do not have to worry about uploading episodes that are already watched or
+             * collected on trakt, it will keep the original timestamp.
              */
+
+            // build a list of all watched episodes
             List<SyncSeason> watchedEpisodesToUpload = new LinkedList<>();
             Cursor watchedEpisodes = context.getContentResolver().query(
                     SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
@@ -313,10 +591,25 @@ public class TraktTools {
                     null,
                     SeriesGuideContract.Episodes.SORT_SEASON_ASC);
             if (watchedEpisodes == null) {
+                Timber.e("uploadEpisodeFlags: watched query failed");
                 return FAILED;
             }
             buildEpisodeList(watchedEpisodes, watchedEpisodesToUpload);
             watchedEpisodes.close();
+
+            // upload watched to trakt
+            try {
+                if (watchedEpisodesToUpload.size() > 0) {
+                    show.seasons = watchedEpisodesToUpload;
+                    sync.addItemsToWatchedHistory(items);
+                }
+            } catch (RetrofitError e) {
+                Timber.e(e, "uploadEpisodeFlags: watched upload failed");
+                return FAILED_API;
+            } catch (OAuthUnauthorizedException e) {
+                TraktCredentials.get(context).setCredentialsInvalid();
+                return FAILED_CREDENTIALS;
+            }
 
             // build a list of collected episodes
             List<SyncSeason> collectedEpisodesToUpload = new LinkedList<>();
@@ -327,27 +620,21 @@ public class TraktTools {
                             null,
                             SeriesGuideContract.Episodes.SORT_SEASON_ASC);
             if (collectedEpisodes == null) {
+                Timber.e("uploadEpisodeFlags: collected query failed");
                 return FAILED;
             }
             buildEpisodeList(collectedEpisodes, collectedEpisodesToUpload);
             collectedEpisodes.close();
 
-            // post to trakt
-            SyncShow show = new SyncShow().id(ShowIds.tvdb(showTvdbId));
-            SyncItems items = new SyncItems().shows(show);
+            // upload collected to trakt
             try {
-                // watched episodes
-                if (watchedEpisodesToUpload.size() > 0) {
-                    show.seasons = watchedEpisodesToUpload;
-                    sync.addItemsToWatchedHistory(items);
-                }
                 // collected episodes
                 if (collectedEpisodesToUpload.size() > 0) {
                     show.seasons = collectedEpisodesToUpload;
                     sync.addItemsToCollection(items);
                 }
             } catch (RetrofitError e) {
-                Timber.e(e, "Uploading episodes to trakt failed");
+                Timber.e(e, "uploadEpisodeFlags: collected upload failed");
                 return FAILED_API;
             } catch (OAuthUnauthorizedException e) {
                 TraktCredentials.get(context).setCredentialsInvalid();
@@ -355,6 +642,7 @@ public class TraktTools {
             }
         }
 
+        Timber.d("uploadEpisodeFlags: success, uploaded " + localShows.size() + " shows");
         return SUCCESS;
     }
 

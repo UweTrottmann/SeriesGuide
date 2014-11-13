@@ -42,6 +42,7 @@ import com.uwetrottmann.trakt.v2.TraktV2;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import timber.log.Timber;
 
 /**
  * Helper methods to interact with third-party services trakt and The Movie Database used within
@@ -244,6 +245,7 @@ public final class ServiceUtils {
      */
     public static synchronized TraktV2 getTraktV2WithAuth(Context context) {
         if (!TraktCredentials.get(context).hasCredentials()) {
+            Timber.e("getTraktV2WithAuth: no auth");
             return null;
         }
 
