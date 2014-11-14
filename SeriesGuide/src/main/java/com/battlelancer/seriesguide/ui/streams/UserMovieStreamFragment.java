@@ -23,28 +23,18 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.MovieStreamAdapter;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.MovieDetailsActivity;
 import com.battlelancer.seriesguide.ui.MovieDetailsFragment;
 import com.battlelancer.seriesguide.ui.MoviesActivity;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.Trakt;
-import com.jakewharton.trakt.entities.Activity;
 import com.jakewharton.trakt.entities.ActivityItem;
-import com.jakewharton.trakt.enumerations.ActivityAction;
-import com.jakewharton.trakt.enumerations.ActivityType;
-import com.jakewharton.trakt.services.ActivityService;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import java.util.List;
-import retrofit.RetrofitError;
-import timber.log.Timber;
 
 /**
  * Displays a stream of movies the user has recently watched on trakt.
@@ -137,35 +127,35 @@ public class UserMovieStreamFragment extends StreamFragment {
 
         @Override
         public List<ActivityItem> loadInBackground() {
-            Trakt manager = ServiceUtils.getTraktWithAuth(getContext());
-            if (manager == null) {
-                return null;
-            }
-
-            try {
-                final ActivityService activityService = manager.activityService();
-                // get movies from the last 2 months
-                Activity activity = activityService.user(
-                        TraktCredentials.get(getContext()).getUsername(),
-                        ActivityType.Movie.toString(),
-                        ActivityAction.Watching + ","
-                                + ActivityAction.Checkin + ","
-                                + ActivityAction.Scrobble + ","
-                                + ActivityAction.Seen,
-                        (System.currentTimeMillis() - 8 * DateUtils.WEEK_IN_MILLIS) / 1000,
-                        null,
-                        null
-                );
-
-                if (activity == null || activity.activity == null) {
-                    Timber.e("Loading user movie activity failed, was null");
-                    return null;
-                }
-
-                return activity.activity;
-            } catch (RetrofitError e) {
-                Timber.e(e, "Loading user movie activity failed");
-            }
+            //Trakt manager = ServiceUtils.getTraktWithAuth(getContext());
+            //if (manager == null) {
+            //    return null;
+            //}
+            //
+            //try {
+            //    final ActivityService activityService = manager.activityService();
+            //    // get movies from the last 2 months
+            //    Activity activity = activityService.user(
+            //            TraktCredentials.get(getContext()).getUsername(),
+            //            ActivityType.Movie.toString(),
+            //            ActivityAction.Watching + ","
+            //                    + ActivityAction.Checkin + ","
+            //                    + ActivityAction.Scrobble + ","
+            //                    + ActivityAction.Seen,
+            //            (System.currentTimeMillis() - 8 * DateUtils.WEEK_IN_MILLIS) / 1000,
+            //            null,
+            //            null
+            //    );
+            //
+            //    if (activity == null || activity.activity == null) {
+            //        Timber.e("Loading user movie activity failed, was null");
+            //        return null;
+            //    }
+            //
+            //    return activity.activity;
+            //} catch (RetrofitError e) {
+            //    Timber.e(e, "Loading user movie activity failed");
+            //}
 
             return null;
         }

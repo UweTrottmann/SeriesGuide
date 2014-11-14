@@ -20,23 +20,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.text.format.DateUtils;
 import android.widget.ListAdapter;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.EpisodeStreamAdapter;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.Trakt;
-import com.jakewharton.trakt.entities.Activity;
 import com.jakewharton.trakt.entities.ActivityItem;
-import com.jakewharton.trakt.enumerations.ActivityAction;
-import com.jakewharton.trakt.enumerations.ActivityType;
-import com.jakewharton.trakt.services.ActivityService;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import java.util.List;
-import retrofit.RetrofitError;
-import timber.log.Timber;
 
 public class FriendsEpisodeStreamFragment extends StreamFragment {
 
@@ -102,29 +93,29 @@ public class FriendsEpisodeStreamFragment extends StreamFragment {
 
         @Override
         public List<ActivityItem> loadInBackground() {
-            Trakt manager = ServiceUtils.getTraktWithAuth(getContext());
-            if (manager == null) {
-                return null;
-            }
-
-            try {
-                final ActivityService activityService = manager.activityService();
-                Activity activity = activityService.friends(ActivityType.Episode.toString(),
-                        ActivityAction.Watching + ","
-                                + ActivityAction.Checkin + ","
-                                + ActivityAction.Scrobble,
-                        (System.currentTimeMillis() - 7 * DateUtils.DAY_IN_MILLIS) / 1000, null, null
-                );
-
-                if (activity == null || activity.activity == null) {
-                    Timber.e("Loading friends episode activity failed, was null");
-                    return null;
-                }
-
-                return activity.activity;
-            } catch (RetrofitError e) {
-                Timber.e(e, "Loading friends episode activity failed");
-            }
+            //Trakt manager = ServiceUtils.getTraktWithAuth(getContext());
+            //if (manager == null) {
+            //    return null;
+            //}
+            //
+            //try {
+            //    final ActivityService activityService = manager.activityService();
+            //    Activity activity = activityService.friends(ActivityType.Episode.toString(),
+            //            ActivityAction.Watching + ","
+            //                    + ActivityAction.Checkin + ","
+            //                    + ActivityAction.Scrobble,
+            //            (System.currentTimeMillis() - 7 * DateUtils.DAY_IN_MILLIS) / 1000, null, null
+            //    );
+            //
+            //    if (activity == null || activity.activity == null) {
+            //        Timber.e("Loading friends episode activity failed, was null");
+            //        return null;
+            //    }
+            //
+            //    return activity.activity;
+            //} catch (RetrofitError e) {
+            //    Timber.e(e, "Loading friends episode activity failed");
+            //}
 
             return null;
         }

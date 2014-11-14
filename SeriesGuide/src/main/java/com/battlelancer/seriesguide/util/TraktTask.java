@@ -29,7 +29,6 @@ import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
-import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.CheckinResponse;
 import com.jakewharton.trakt.entities.Response;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -312,15 +311,6 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         }
 
         // get authenticated trakt
-        Trakt manager = ServiceUtils.getTraktWithAuth(mContext);
-        if (manager == null) {
-            // no valid credentials
-            Response r = new Response();
-            r.status = TraktStatus.FAILURE;
-            r.error = mContext.getString(R.string.trakt_error_credentials);
-            return r;
-        }
-
         TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(mContext);
         if (trakt == null) {
             // no valid credentials
