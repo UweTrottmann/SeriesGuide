@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SG Preview</string>
+    <string name="package_name">com.uwetrottmann.seriesguide.preview</string>
+    <string name="provider_authority">com.uwetrottmann.seriesguide.preview.provider</string>
+</resources>

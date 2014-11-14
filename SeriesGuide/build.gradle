@@ -71,6 +71,11 @@ android {
             versionCode rootProject.ext.versionCode
             versionName rootProject.ext.versionName
         }
+        preview {
+            applicationId "com.uwetrottmann.seriesguide.preview"
+            versionCode rootProject.ext.versionCode
+            versionName rootProject.ext.versionName + "-preview"
+        }
     }
 
     signingConfigs {
