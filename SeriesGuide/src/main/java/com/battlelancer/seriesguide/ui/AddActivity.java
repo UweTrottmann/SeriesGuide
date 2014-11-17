@@ -35,7 +35,6 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.Locale;
@@ -78,12 +77,7 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
 
         SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.tabsAddShows);
         tabs.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
-        tabs.setSelectedIndicatorColors(getResources().getColor(
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorAccent)));
-        tabs.setBottomBorderColor(getResources().getColor(
-                Utils.resolveAttributeToResourceId(getTheme(),
-                        R.attr.sgColorTabStripUnderline)
-        ));
+        tabs.setSelectedIndicatorColors(getResources().getColor(R.color.white));
         tabs.setViewPager(pager);
 
         // set default tab
