@@ -22,7 +22,7 @@
   <string name="description_poster">Mostra el cartell</string>
   <string name="description_image">Imatge de l\'episodi</string>
   <string name="clear">Buida</string>
-  <string name="clear_search_history">Clear search history</string>
+  <string name="clear_search_history">Esborra l\'historial</string>
   <string name="discard">Descarta</string>
   <string name="save_selection">Desa la selecció</string>
   <string name="search_hint">Cerca episodis</string>
@@ -391,7 +391,7 @@
   <string name="widget_background_25">25%</string>
   <string name="widget_background_50">50%</string>
   <string name="widget_background_75">75%</string>
-  <string name="widget_background_opaque">Opaque</string>
+  <string name="widget_background_opaque">Opac</string>
   <string name="dashclock_extension_label">Proper episodi</string>
   <string name="dashclock_extension_description">Mostra el proper episodi de les sèries que teniu a SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Mostra episodi dins…</string>
