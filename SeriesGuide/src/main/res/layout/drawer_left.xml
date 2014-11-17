@@ -30,7 +30,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/drawer_top_view_height" />
+            android:layout_height="@dimen/drawer_top_view_height"
+            android:clickable="true" />
 
         <ListView
             android:id="@+id/drawer_list"
