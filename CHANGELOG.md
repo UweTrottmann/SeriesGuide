@@ -5,6 +5,19 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 20 *(in development)*
+-----------------------------
+
+#### 20-beta1 *(2014-11-17)*
+
+* FEATURE Integrate with Google Now, say "Search for Newsroom on SeriesGuide".
+* TWEAK Combine tabs with action bar, add shadow on Android Lollipop.
+* TWEAK Text edit bar overlays action bar instead of pushing it down.
+* FIX Can touch tabs through open nav drawer.
+* FIX Better action bar height on phones in landscape.
+* NOTICE Latest translations from crowdin.
+
+
 Version 19 *(2014-10-30)*
 -----------------------------
 
