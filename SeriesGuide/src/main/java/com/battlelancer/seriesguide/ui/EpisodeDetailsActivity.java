@@ -165,12 +165,6 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         tabs.setCustomTabView(R.layout.tabstrip_item, R.id.textViewTabStripItem);
         tabs.setSelectedIndicatorColors(getResources().getColor(
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorAccent)));
-        tabs.setBottomBorderColor(Utils.setColorAlpha(getResources().getColor(
-                        Utils.resolveAttributeToResourceId(getTheme(),
-                                R.attr.sgColorTabStripUnderline)
-                ),
-                0x26
-        ));
         tabs.setViewPager(pager);
 
         if (AndroidUtils.isKitKatOrHigher()) {

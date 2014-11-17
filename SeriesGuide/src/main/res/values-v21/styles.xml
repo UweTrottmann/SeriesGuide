@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright 2014 Uwe Trottmann
   ~
@@ -16,12 +15,17 @@
   ~ limitations under the License.
   -->
 
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/sgToolbar"
-    style="@style/Widget.SeriesGuide.ActionBar"
-    android:layout_height="?attr/actionBarSize"
-    android:layout_width="match_parent"
-    app:theme="?attr/actionBarTheme"
-    app:popupTheme="?attr/actionBarPopupTheme"
-    android:background="?attr/colorPrimary" />
+<resources>
+
+    <!-- Action bar -->
+    <style name="Widget.SeriesGuide.ActionBar">
+        <item name="android:elevation">4dp</item>
+    </style>
+
+    <!-- Tabs -->
+    <style name="Widget.SeriesGuide.TabLayout">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:elevation">4dp</item>
+    </style>
+
+</resources>
