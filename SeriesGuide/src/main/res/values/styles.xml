@@ -167,6 +167,7 @@
 
     <style name="Widget.SeriesGuide.Button.Borderless.Caption.Dim">
         <item name="android:textColor">?attr/textColorSgDim</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Rating">

@@ -64,7 +64,7 @@
         android:id="@+id/watchedBoxUpcoming"
         android:layout_width="48dp"
         android:layout_height="match_parent"
-        android:background="?attr/selectableItemBackground"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:scaleType="centerInside" />
 
 </LinearLayout>
