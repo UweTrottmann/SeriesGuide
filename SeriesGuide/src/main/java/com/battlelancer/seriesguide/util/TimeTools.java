@@ -504,8 +504,15 @@ public class TimeTools {
      * for display.
      */
     public static Date applyUserOffset(Context context, long releaseInstant) {
-        DateTime dateTime = new DateTime(releaseInstant);
-        return applyUserOffset(context, dateTime).toDate();
+        // using Android calendar to avoid joda-time lock-up with time zone access
+        Calendar dateTime = Calendar.getInstance();
+        dateTime.setTimeInMillis(releaseInstant);
+
+        int offset = getUserOffset(context);
+        if (offset != 0) {
+            dateTime.add(Calendar.HOUR_OF_DAY, offset);
+        }
+        return dateTime.getTime();
     }
 
     private static void applyUserOffsetInverted(Context context, Calendar calendar) {
