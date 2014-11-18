@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/drawableCardBackground"
-    android:orientation="horizontal">
+    android:foreground="?attr/selectableItemBackground">
 
     <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:paddingRight="@dimen/default_padding"
-        android:background="?attr/selectableItemBackground">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/poster"
@@ -22,12 +19,21 @@
             android:contentDescription="@string/description_poster"
             android:scaleType="centerInside" />
 
+        <com.battlelancer.seriesguide.widgets.WatchedBox
+            android:id="@+id/watchedBoxUpcoming"
+            android:layout_width="48dp"
+            android:layout_height="100dp"
+            android:layout_alignParentRight="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="centerInside" />
+
         <TextView
             android:id="@+id/textViewUpcomingShow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/inline_padding"
             android:layout_toRightOf="@+id/poster"
+            android:layout_toLeftOf="@+id/watchedBoxUpcoming"
             android:ellipsize="end"
             android:maxLines="1"
             tools:text="2x08 | Defiance"
@@ -39,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewUpcomingShow"
             android:layout_toRightOf="@+id/poster"
+            android:layout_toLeftOf="@+id/watchedBoxUpcoming"
             android:layout_marginTop="@dimen/inline_padding"
             android:ellipsize="end"
             android:maxLines="1"
@@ -53,18 +60,13 @@
             android:layout_below="@+id/textViewUpcomingEpisode"
             android:layout_marginTop="2dp"
             android:layout_toRightOf="@+id/poster"
+            android:layout_toLeftOf="@+id/watchedBoxUpcoming"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@string/norating"
             tools:text="8:00 PM | Aug 17\nShowtime"
             android:textAppearance="@style/TextAppearance.Body.Dim" />
+
     </RelativeLayout>
 
-    <com.battlelancer.seriesguide.widgets.WatchedBox
-        android:id="@+id/watchedBoxUpcoming"
-        android:layout_width="48dp"
-        android:layout_height="match_parent"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:scaleType="centerInside" />
-
-</LinearLayout>
+</FrameLayout>
