@@ -351,15 +351,12 @@
   <string name="addtocalendar">إضافة إلى التقويم</string>
   <string name="addtocalendar_failed">.لا يمكن إنشاء حدث تقويم</string>
   <string name="username">اسم المستخدم</string>
-  <string name="email">البريد الإلكتروني</string>
-  <string name="password">كلمة المرور</string>
   <string name="waitplease">لحظات, من فضلك…</string>
   <string name="connect">الاتصال</string>
   <string name="disconnect">قطع الاتصال</string>
   <string name="trakt_error">فشل الاتصال مع موقع تراكت</string>
   <string name="trakt_error_credentials">حدث خطأ ما. يرجى التحقق من بيانات اعتمادك وحاول مرة أخرى.</string>
   <string name="trakt_error_general">لايمكن التحدث إلى التراكت. حاول مرة أخرى.</string>
-  <string name="trakt_createaccount">إنشاء حساب جديد</string>
   <string name="get_started">بدء</string>
   <string name="welcome_setuplanguage">اختر اللغة</string>
   <string name="dismiss">إبعاد</string>

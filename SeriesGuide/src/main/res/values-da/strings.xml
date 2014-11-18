@@ -351,15 +351,12 @@
   <string name="addtocalendar">Tilføj til kalender</string>
   <string name="addtocalendar_failed">Kan ikke oprette en kalenderbegivenhed.</string>
   <string name="username">Brugernavn</string>
-  <string name="email">Email</string>
-  <string name="password">Adgangskode</string>
   <string name="waitplease">Vent et øjeblik</string>
   <string name="connect">Tilslut</string>
   <string name="disconnect">Afbryd</string>
   <string name="trakt_error">Kommunikation med trakt mislykkedes</string>
   <string name="trakt_error_credentials">Noget gik galt. Kontroller venligt dine legitimationsoplysninger og prøv igen.</string>
   <string name="trakt_error_general">Kunne ikke kommunikere med trakt. Prøv igen senere.</string>
-  <string name="trakt_createaccount">Opret ny konto</string>
   <string name="get_started">Kom i gang</string>
   <string name="welcome_setuplanguage">Vælg sprog</string>
   <string name="dismiss">Slet</string>

@@ -351,15 +351,12 @@
   <string name="addtocalendar">캘린더에 추가</string>
   <string name="addtocalendar_failed">캘린더 이벤트를 만들 수 없습니다.</string>
   <string name="username">아이디</string>
-  <string name="email">이메일</string>
-  <string name="password">비밀번호</string>
   <string name="waitplease">잠시만 기다려주십시오</string>
   <string name="connect">연결</string>
   <string name="disconnect">연결끊기</string>
   <string name="trakt_error">trakt와 통신 실패</string>
   <string name="trakt_error_credentials">오류가 있습니다. 계정정보를 확인하여 재시도해주세요.</string>
   <string name="trakt_error_general">Trakt 와 통신할 수 없습니다. 잠시 후 다시 시도해주세요.</string>
-  <string name="trakt_createaccount">새 계정 만들기</string>
   <string name="get_started">시작하기</string>
   <string name="welcome_setuplanguage">언어 선택</string>
   <string name="dismiss">취소</string>

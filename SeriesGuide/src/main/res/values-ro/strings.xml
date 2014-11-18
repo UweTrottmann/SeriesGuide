@@ -351,15 +351,12 @@
   <string name="addtocalendar">Adăugați la calendar</string>
   <string name="addtocalendar_failed">Nu puteţi crea evenimentul in calendar.</string>
   <string name="username">Nume de utilizator</string>
-  <string name="email">E-mail</string>
-  <string name="password">Parola</string>
   <string name="waitplease">Un moment, vă rugăm…</string>
   <string name="connect">Conectaţi</string>
   <string name="disconnect">Deconectaţi</string>
   <string name="trakt_error">Interacţiunea cu trakt a eșuat</string>
   <string name="trakt_error_credentials">Ceva a mers prost. Va rugam sa va verificaţi acreditările şi sa încercaţi din nou.</string>
   <string name="trakt_error_general">Nu s-a putut comunica cu trakt. Incercati mai tarziu.</string>
-  <string name="trakt_createaccount">Creare cont nou</string>
   <string name="get_started">Get started</string>
   <string name="welcome_setuplanguage">Alegeți limba</string>
   <string name="dismiss">Respingeți</string>

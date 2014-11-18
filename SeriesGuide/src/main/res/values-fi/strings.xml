@@ -351,15 +351,12 @@
   <string name="addtocalendar">Lisää kalenteriin</string>
   <string name="addtocalendar_failed">Ei voitu luoda kalenteritapahtumaa.</string>
   <string name="username">Käyttäjänimi</string>
-  <string name="email">Sähköposti</string>
-  <string name="password">Salasana</string>
   <string name="waitplease">Odota hetki pieni…</string>
   <string name="connect">Yhdistä</string>
   <string name="disconnect">Katkaise yhteys</string>
   <string name="trakt_error">Vuorovaikutus traktin kanssa epäonnistui</string>
   <string name="trakt_error_credentials">Jokin meni pieleen. Tarkista oikeutesi ja yritä uudelleen.</string>
   <string name="trakt_error_general">Kommunikointi traktin kanssa ei onnistu. Yritä myöhemmin uudelleen.</string>
-  <string name="trakt_createaccount">Luo uusi tili</string>
   <string name="get_started">Aloita</string>
   <string name="welcome_setuplanguage">Valitse kieli</string>
   <string name="dismiss">Hylkää</string>

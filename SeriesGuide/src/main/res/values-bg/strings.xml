@@ -351,15 +351,12 @@
   <string name="addtocalendar">Добавяне в календара</string>
   <string name="addtocalendar_failed">Не може да създаде календарно събитие.</string>
   <string name="username">Потребител</string>
-  <string name="email">Електронна поща</string>
-  <string name="password">Парола</string>
   <string name="waitplease">Един момент, моля</string>
   <string name="connect">Свързване</string>
   <string name="disconnect">Прекъсване на връзката</string>
   <string name="trakt_error">Свързването с trakt е неуспешно</string>
   <string name="trakt_error_credentials">Нещо се обърка. Проверете идентификационните си данни и опитайте отново.</string>
   <string name="trakt_error_general">Няма връзка с trakt. Опитайте отново по-късно.</string>
-  <string name="trakt_createaccount">Създаване на нов акаунт</string>
   <string name="get_started">Начало</string>
   <string name="welcome_setuplanguage">Избери език</string>
   <string name="dismiss">Отхвърли</string>

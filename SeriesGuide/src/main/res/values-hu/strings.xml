@@ -351,15 +351,12 @@
   <string name="addtocalendar">Hozzáadás naptárhoz</string>
   <string name="addtocalendar_failed">Nem sikerült az esemény létrehozása.</string>
   <string name="username">Felhasználónév</string>
-  <string name="email">E-mail</string>
-  <string name="password">Jelszó</string>
   <string name="waitplease">Kis türelmet…</string>
   <string name="connect">Kapcsolódás</string>
   <string name="disconnect">Megszakítás</string>
   <string name="trakt_error">trakt.tv kapcsolódási hiba</string>
   <string name="trakt_error_credentials">Hiba történt. Ellenőrizd a megadott adatokat és próbáld újra.</string>
   <string name="trakt_error_general">Nincs kapcsolat a trakttal. Próbáld újra később.</string>
-  <string name="trakt_createaccount">Új fiók létrehozása</string>
   <string name="get_started">Vágjunk bele!</string>
   <string name="welcome_setuplanguage">Válasszon nyelvet</string>
   <string name="dismiss">Mégsem</string>

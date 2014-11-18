@@ -351,15 +351,12 @@
   <string name="addtocalendar">Додати до календаря</string>
   <string name="addtocalendar_failed">Не можливо створити календарну подію.</string>
   <string name="username">Ім\'я користувача</string>
-  <string name="email">Електронна пошта</string>
-  <string name="password">Пароль</string>
   <string name="waitplease">Зачекайте хвилинку…</string>
   <string name="connect">Підключитись</string>
   <string name="disconnect">Від\'єднатись</string>
   <string name="trakt_error">Взаємодія з trakt не вдалася</string>
   <string name="trakt_error_credentials">Щось пішло не так. Перевірте ваші облікові дані та повторіть спробу.</string>
   <string name="trakt_error_general">Не можу з\'єднатись із trakt. Повторіть спробу пізніше.</string>
-  <string name="trakt_createaccount">Створити новий обліковий запис</string>
   <string name="get_started">Початок роботи</string>
   <string name="welcome_setuplanguage">Вибрати мову</string>
   <string name="dismiss">Відхилити</string>

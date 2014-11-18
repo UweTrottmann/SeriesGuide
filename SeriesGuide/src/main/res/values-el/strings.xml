@@ -351,15 +351,12 @@
   <string name="addtocalendar">Προσθήκη στο ημερολόγιο</string>
   <string name="addtocalendar_failed">Δεν είναι δυνατόν να δημιουργηθεί γεγονός ημερολογίου.</string>
   <string name="username">Όνομα χρήστη</string>
-  <string name="email">Email</string>
-  <string name="password">Κωδικός πρόσβασης</string>
   <string name="waitplease">Μια στιγμή, παρακαλώ…</string>
   <string name="connect">Σύνδεση</string>
   <string name="disconnect">Αποσύνδεση</string>
   <string name="trakt_error">Αλληλεπίδραση με Trakt απέτυχε</string>
   <string name="trakt_error_credentials">Κάτι πήγε στραβά. Παρακαλώ ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά.</string>
   <string name="trakt_error_general">Δεν μπορέσαμε να μιλήσουμε στο trakt. Προσπαθήστε ξανά αργότερα.</string>
-  <string name="trakt_createaccount">Δημιουργία νέου λογαριασμού</string>
   <string name="get_started">Ξεκινήστε</string>
   <string name="welcome_setuplanguage">Επιλέξτε γλώσσα</string>
   <string name="dismiss">Απόρριψη</string>

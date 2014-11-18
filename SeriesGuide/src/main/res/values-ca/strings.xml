@@ -351,15 +351,12 @@
   <string name="addtocalendar">Afegeix al calendari</string>
   <string name="addtocalendar_failed">No es pot crear l\'esdeveniment.</string>
   <string name="username">Nom d\'usuari</string>
-  <string name="email">Correu electrònic</string>
-  <string name="password">Contrasenya</string>
   <string name="waitplease">Un moment, si us plau…</string>
   <string name="connect">Connecta</string>
   <string name="disconnect">Desconnecta</string>
   <string name="trakt_error">La interacció amb trakt ha fallat</string>
   <string name="trakt_error_credentials">Alguna cosa no ha funcionat. Torneu a introduir les vostres credencials i proveu-ho una altra vegada.</string>
   <string name="trakt_error_general">No funciona la comunicació amb trakt. Intenteu-ho més tard.</string>
-  <string name="trakt_createaccount">Crea un compte nou</string>
   <string name="get_started">Inici</string>
   <string name="welcome_setuplanguage">Trieu la llengua</string>
   <string name="dismiss">Omet</string>
