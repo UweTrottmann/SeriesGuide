@@ -203,7 +203,7 @@ public class TimeTools {
      * a sensible default is returned.
      */
     public static LocalTime getShowReleaseTime(int showReleaseTime) {
-        if (showReleaseTime >= 0 || showReleaseTime <= 2359) {
+        if (showReleaseTime >= 0 && showReleaseTime <= 2359) {
             int hour = showReleaseTime / 100;
             int minute = showReleaseTime - (hour * 100);
             if (minute <= 59) {
