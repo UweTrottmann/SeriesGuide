@@ -29,6 +29,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
@@ -96,7 +97,8 @@ public class AppWidget extends AppWidgetProvider {
             views.removeAllViews(R.id.LinearLayoutWidget);
 
             // get upcoming shows (name and next episode text)
-            final Cursor upcomingEpisodes = DBUtils.getUpcomingEpisodes(context);
+            final Cursor upcomingEpisodes = DBUtils.getUpcomingEpisodes(context,
+                    ActivitySettings.isOnlyFavorites(context), false);
 
             if (upcomingEpisodes == null || upcomingEpisodes.getCount() == 0) {
                 // no next episodes exist

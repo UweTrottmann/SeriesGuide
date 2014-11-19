@@ -40,6 +40,8 @@ public class WidgetSettings {
 
     public static final String KEY_PREFIX_WIDGET_HIDE_WATCHED = "unwatched_";
 
+    public static final String KEY_PREFIX_WIDGET_ONLY_FAVORITES = "only_favorites_";
+
     private static final int DEFAULT_WIDGET_BACKGROUND_OPACITY = 50;
 
     /**
@@ -64,6 +66,14 @@ public class WidgetSettings {
     public static boolean isHidingWatchedEpisodes(Context context, int appWidgetId) {
         SharedPreferences prefs = context.getSharedPreferences(SETTINGS_FILE, 0);
         return prefs.getBoolean(KEY_PREFIX_WIDGET_HIDE_WATCHED + appWidgetId, false);
+    }
+
+    /**
+     * Returns if this widget should only show episodes of favorited shows.
+     */
+    public static boolean isOnlyFavoriteShows(Context context, int appWidgetId) {
+        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_FILE, 0);
+        return prefs.getBoolean(KEY_PREFIX_WIDGET_ONLY_FAVORITES + appWidgetId, false);
     }
 
     /**
