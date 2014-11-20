@@ -38,6 +38,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.style.StyleSpan;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
@@ -534,7 +535,7 @@ public class NotificationService extends IntentService {
         // use string resource id, always unique within app
         final NotificationManager nm = (NotificationManager) getSystemService(
                 Context.NOTIFICATION_SERVICE);
-        nm.notify(R.string.upcoming_show, notification);
+        nm.notify(SeriesGuideApplication.NOTIFICATION_EPISODE_ID, notification);
     }
 
     private void maybeSetPoster(Context context, NotificationCompat.Builder nb, String posterPath) {

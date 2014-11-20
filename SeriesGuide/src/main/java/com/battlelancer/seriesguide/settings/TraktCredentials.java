@@ -18,12 +18,19 @@ package com.battlelancer.seriesguide.settings;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.text.TextUtils;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
+import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import timber.log.Timber;
@@ -51,7 +58,7 @@ public class TraktCredentials {
     }
 
     private TraktCredentials(Context context) {
-        mContext = context;
+        mContext = context.getApplicationContext();
         mUsername = PreferenceManager.getDefaultSharedPreferences(mContext)
                 .getString(KEY_USERNAME, null);
         mHasCredentials = !TextUtils.isEmpty(getUsername()) && !TextUtils.isEmpty(getAccessToken());
@@ -71,6 +78,27 @@ public class TraktCredentials {
     public void setCredentialsInvalid() {
         removeAccessToken();
         Timber.e("trakt credentials invalid, removed access token");
+
+        NotificationCompat.Builder nb = new NotificationCompat.Builder(mContext);
+        nb.setSmallIcon(R.drawable.ic_notification);
+        nb.setContentTitle(mContext.getString(R.string.trakt_reconnect));
+        nb.setContentText(mContext.getString(R.string.trakt_reconnect_details));
+        nb.setTicker(mContext.getString(R.string.trakt_reconnect_details));
+
+        PendingIntent intent = TaskStackBuilder.create(mContext)
+                .addNextIntent(new Intent(mContext, ShowsActivity.class))
+                .addNextIntent(new Intent(mContext, ConnectTraktActivity.class))
+                .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        nb.setContentIntent(intent);
+
+        nb.setAutoCancel(true);
+        nb.setColor(mContext.getResources().getColor(R.color.accent_primary));
+        nb.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        nb.setCategory(NotificationCompat.CATEGORY_ERROR);
+
+        NotificationManager nm = (NotificationManager) mContext.getSystemService(
+                Context.NOTIFICATION_SERVICE);
+        nm.notify(SeriesGuideApplication.NOTIFICATION_TRAKT_AUTH_ID, nb.build());
     }
 
     /**

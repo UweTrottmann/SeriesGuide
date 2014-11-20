@@ -269,13 +269,15 @@
     <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
     <string name="traktcheckin_wait">I\'ll wait</string>
     <string name="trakt_error">Interaction with trakt failed</string>
-    <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
+    <string name="trakt_error_credentials">Something went wrong. Check your credentials and try again.</string>
     <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
 
     <!-- Connect trakt -->
     <string name="trakt_account">trakt account</string>
     <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
     <string name="connect_trakt">Connect trakt</string>
+    <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
+    <string name="trakt_reconnect_details">Check your trakt credentials</string>
     <string name="username">Username</string>
     <string name="waitplease">A moment, please…</string>
     <string name="connect">Connect</string>
