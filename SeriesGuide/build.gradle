@@ -128,7 +128,7 @@ dependencies {
     compile 'joda-time:joda-time:2.5'
 
     // Google Play Services
-    compile 'com.google.android.gms:play-services:6.1.11'
+    compile 'com.google.android.gms:play-services:6.1.71'
 
     // App Engine
     compile ('com.google.api-client:google-api-client-android:1.19.0') {
