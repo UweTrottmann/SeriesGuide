@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:text="@string/notvdbrating"
         android:textAppearance="@style/TextAppearance.Display1"
-        android:textColor="?attr/textColorSgDefault"
         tools:text="9.6" />
 
     <TextView
@@ -50,7 +49,6 @@
             android:layout_marginRight="@dimen/inline_padding"
             android:text="@string/notraktrating"
             android:textAppearance="@style/TextAppearance.Display1"
-            android:textColor="?attr/textColorSgDefault"
             tools:text="84%" />
 
         <TextView
