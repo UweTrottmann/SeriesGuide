@@ -120,7 +120,7 @@
     <!-- Buttons -->
     <style name="Widget.SeriesGuide.Button" parent="android:Widget.Holo.Button">
         <item name="android:minWidth">88dp</item>
-        <item name="android:minHeight">36dp</item>
+        <item name="android:minHeight">48dp</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
         <item name="android:paddingTop">4dp</item>
@@ -142,20 +142,12 @@
         <item name="android:textColor">?attr/textColorSgDefault</item>
     </style>
 
-    <style name="Widget.SeriesGuide.Button.Borderless.Footer">
-        <item name="android:minHeight">48dp</item>
-    </style>
-
     <style name="Widget.SeriesGuide.Button.Borderless.Blue">
         <item name="android:textColor">@color/text_blue</item>
-        <item name="android:paddingLeft">0dp</item>
-        <item name="android:paddingRight">0dp</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Purple">
         <item name="android:textColor">?attr/colorAccent</item>
-        <item name="android:paddingLeft">0dp</item>
-        <item name="android:paddingRight">0dp</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Caption">

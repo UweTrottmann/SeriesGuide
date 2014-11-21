@@ -25,7 +25,7 @@
 
         <Button
             android:id="@+id/buttonDiscard"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Footer"
+            style="@style/Widget.SeriesGuide.Button.Borderless"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -38,7 +38,7 @@
 
         <Button
             android:id="@+id/buttonSaveSelection"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Footer"
+            style="@style/Widget.SeriesGuide.Button.Borderless"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
