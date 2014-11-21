@@ -8,7 +8,7 @@ All dates are in the European Central timezone.
 Version 20 *(in development)*
 -----------------------------
 
-#### 20-beta1 *(2014-11-17)*
+#### 20-beta2 *(2014-11-21)*
 
 * TWEAK Add "Only favorite shows" setting to list widget. Setting is now independent from Upcoming/Recent filter settings.
 * TWEAK Move season watched/collected all/none options to inline icons.
