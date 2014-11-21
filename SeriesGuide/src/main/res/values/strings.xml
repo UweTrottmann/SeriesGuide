@@ -378,8 +378,8 @@
     <string name="dbupgradefailed">Your backup may be too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
     <string name="import_success">Backup successfully restored.</string>
     <string name="import_failed">Restoring the backup failed.</string>
-    <string name="backup_button">Backup</string>
-    <string name="import_button">Restore</string>
+    <string name="backup_button">Create backup</string>
+    <string name="import_button">Restore backup</string>
     <string name="backup_question">This will overwrite the current backup file in the backup folder!</string>
     <string name="backup_no">Don\'t Backup</string>
     <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
