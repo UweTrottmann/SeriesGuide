@@ -25,6 +25,8 @@
         <item name="android:maxLines">2</item>
     </style>
 
+    <style name="Widget.SeriesGuide.Button.Borderless.Caption.Platform" />
+
     <!-- Action bar -->
     <style name="Widget.SeriesGuide.ActionBar">
         <item name="android:elevation">4dp</item>

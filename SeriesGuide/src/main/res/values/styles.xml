@@ -155,13 +155,13 @@
     <style name="Widget.SeriesGuide.Button.Borderless.Caption">
         <item name="android:padding">4dp</item>
         <item name="android:textSize">@dimen/text_size_caption_sg</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">false</item>
-    </style>
-
-    <style name="Widget.SeriesGuide.Button.Borderless.Caption.Dim">
         <item name="android:textColor">?attr/textColorSgDim</item>
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.Button.Borderless.Caption.Platform">
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Rating">
