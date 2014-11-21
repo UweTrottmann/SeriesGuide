@@ -14,7 +14,7 @@
     </style>
 
     <style name="TextAppearance.Tab">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/text_size_default_sg</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">?attr/sgColorTabStripText</item>
     </style>
@@ -44,19 +44,19 @@
     </style>
 
     <style name="TextAppearance.Body">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/text_size_default_sg</item>
     </style>
 
     <style name="TextAppearance.Caption">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">@dimen/text_size_caption_sg</item>
     </style>
 
     <style name="TextAppearance.Menu">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/text_size_default_sg</item>
     </style>
 
     <style name="TextAppearance.Button">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/text_size_default_sg</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
@@ -137,9 +137,11 @@
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Default">
-        <item name="android:textSize">16sp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">?attr/textColorSgDefault</item>
+        <item name="android:gravity">center_vertical|start</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Blue">
@@ -152,7 +154,7 @@
 
     <style name="Widget.SeriesGuide.Button.Borderless.Caption">
         <item name="android:padding">4dp</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">@dimen/text_size_caption_sg</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">false</item>
     </style>

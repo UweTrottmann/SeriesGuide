@@ -159,9 +159,6 @@
                 android:layout_below="@+id/textViewMovieMore"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
-                android:gravity="center_vertical|left"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
                 android:text="@string/comments" />
         </RelativeLayout>
     </ScrollView>
