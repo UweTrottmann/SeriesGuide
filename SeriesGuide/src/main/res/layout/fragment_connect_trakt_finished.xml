@@ -51,16 +51,15 @@
     <include layout="@layout/divider_horizontal" />
 
     <LinearLayout
+        style="@style/Widget.SeriesGuide.ButtonBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/buttonClose"
             style="@style/Widget.SeriesGuide.Button.Borderless"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/dismiss" />
     </LinearLayout>
 

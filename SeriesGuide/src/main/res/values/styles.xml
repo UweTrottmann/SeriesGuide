@@ -176,6 +176,11 @@
         <item name="android:background">@drawable/btn_default_sg</item>
     </style>
 
+    <style name="Widget.SeriesGuide.ButtonBar">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">end</item>
+    </style>
+
     <!-- Progress bar -->
     <style name="Widget.SeriesGuide.ProgressBar" parent="android:Widget.Holo.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_sg</item>
