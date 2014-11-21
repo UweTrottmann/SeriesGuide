@@ -15,7 +15,6 @@
         style="@style/Widget.SeriesGuide.Button.Borderless.Blue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/inline_padding"
         android:text="@string/looking_for_something_else" />
 
     <EditText

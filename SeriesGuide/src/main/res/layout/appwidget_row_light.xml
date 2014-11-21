@@ -32,44 +32,52 @@
 
     <TextView
         android:id="@+id/textViewWidgetShow"
-        style="@style/WidgetTextView"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="5dp"
-        android:layout_toLeftOf="@+id/widgetAirtime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/widgetPoster"
+        android:layout_toLeftOf="@+id/widgetAirtime"
+        android:paddingRight="@dimen/inline_padding"
+        android:singleLine="true"
+        android:ellipsize="end"
         tools:text="2 Broke Girls"
         android:textColor="@color/black_87"
         android:textSize="@dimen/widget_text_large" />
 
     <TextView
         android:id="@+id/textViewWidgetEpisode"
-        style="@style/WidgetTextView"
-        android:layout_alignLeft="@+id/textViewWidgetShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/textViewWidgetShow"
-        android:layout_marginRight="5dp"
+        android:layout_toRightOf="@+id/widgetPoster"
         android:layout_toLeftOf="@+id/widgetNetwork"
+        android:paddingRight="@dimen/inline_padding"
+        android:singleLine="true"
+        android:ellipsize="end"
         tools:text="2x13 If The Time Ever Comes"
-        android:textColor="@color/black_87"
+        android:textColor="@color/black_54"
         android:textSize="@dimen/widget_text_middle" />
 
     <TextView
         android:id="@+id/widgetAirtime"
-        style="@style/WidgetTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:singleLine="true"
         tools:text="7 hours ago (Mon)"
         android:fontFamily="sans-serif-condensed"
-        android:textColor="@color/black_87"
+        android:textColor="@color/black_54"
         android:textSize="@dimen/widget_text_small" />
 
     <TextView
         android:id="@+id/widgetNetwork"
-        style="@style/WidgetTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/widgetAirtime"
+        android:singleLine="true"
         tools:text="08:00 PM ABE"
         android:fontFamily="sans-serif-condensed"
-        android:textColor="@color/black_87"
+        android:textColor="@color/black_54"
         android:textSize="@dimen/widget_text_small" />
 
 </RelativeLayout>

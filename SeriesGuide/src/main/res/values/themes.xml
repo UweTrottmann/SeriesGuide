@@ -48,9 +48,8 @@
         <item name="android:textAppearance">@style/TextAppearance</item>
 
         <!-- Colors -->
-        <item name="textColorSgDefault">@color/black_11</item>
-        <item name="textColorSgPrimary">@color/text_primary_sg</item>
-        <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
+        <item name="textColorPrimarySg">@color/white</item>
+        <item name="textColorSecondarySg">@color/white_70</item>
         <item name="textColorSgGreen">@color/teal_dark</item>
         <item name="textColorSgDim">@color/text_dim</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
@@ -123,9 +122,8 @@
         <item name="windowActionModeOverlay">true</item>
 
         <!-- Colors -->
-        <item name="textColorSgDefault">@color/black_11</item>
-        <item name="textColorSgPrimary">@color/text_primary_sg</item>
-        <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
+        <item name="textColorPrimarySg">@color/white</item>
+        <item name="textColorSecondarySg">@color/white_70</item>
         <item name="textColorSgGreen">@color/teal_dark</item>
         <item name="textColorSgDim">@color/text_dim</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
@@ -219,9 +217,8 @@
         <item name="android:textAppearance">@style/TextAppearance</item>
 
         <!-- Colors -->
-        <item name="textColorSgDefault">@color/black_87</item>
-        <item name="textColorSgPrimary">@color/text_primary_light_sg</item>
-        <item name="textColorSgPrimaryInverse">@color/text_primary</item>
+        <item name="textColorPrimarySg">@color/black_87</item>
+        <item name="textColorSecondarySg">@color/black_54</item>
         <item name="textColorSgGreen">@color/teal_dark</item>
         <item name="textColorSgDim">@color/text_dim_light</item>
         <item name="sgColorBackgroundDim">@color/background_dim_inverse</item>

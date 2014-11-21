@@ -62,8 +62,7 @@
                 android:layout_centerHorizontal="true"
                 android:text="@string/notvdbrating"
                 tools:text="9.6"
-                android:textAppearance="@style/TextAppearance.Display1"
-                android:textColor="?attr/textColorSgDefault" />
+                android:textAppearance="@style/TextAppearance.Display1" />
 
             <TextView
                 android:id="@+id/textViewAddRatingsTvdbRange"

@@ -3,8 +3,8 @@
 
     <!-- Text styles -->
     <style name="TextAppearance" parent="@android:style/TextAppearance">
-        <item name="android:textColor">?attr/textColorSgDefault</item>
-        <item name="android:textSize">@dimen/text_size_xmedium</item>
+        <item name="android:textColor">?attr/textColorPrimarySg</item>
+        <item name="android:textSize">@dimen/text_size_default_sg</item>
         <item name="android:textStyle">normal</item>
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif</item>
     </style>
@@ -14,16 +14,18 @@
     </style>
 
     <style name="TextAppearance.Tab">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textAllCaps">true</item>
         <item name="android:textColor">?attr/sgColorTabStripText</item>
+        <item name="android:textSize">@dimen/text_size_default_sg</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="TextAppearance.Display3">
+        <item name="android:textColor">?attr/textColorSecondarySg</item>
         <item name="android:textSize">56sp</item>
     </style>
 
     <style name="TextAppearance.Display1">
+        <item name="android:textColor">?attr/textColorSecondarySg</item>
         <item name="android:textSize">34sp</item>
     </style>
 
@@ -44,19 +46,20 @@
     </style>
 
     <style name="TextAppearance.Body">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/text_size_default_sg</item>
     </style>
 
     <style name="TextAppearance.Caption">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">?attr/textColorSecondarySg</item>
+        <item name="android:textSize">@dimen/text_size_caption_sg</item>
     </style>
 
     <style name="TextAppearance.Menu">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/text_size_default_sg</item>
     </style>
 
     <style name="TextAppearance.Button">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/text_size_default_sg</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
@@ -120,7 +123,7 @@
     <!-- Buttons -->
     <style name="Widget.SeriesGuide.Button" parent="android:Widget.Holo.Button">
         <item name="android:minWidth">88dp</item>
-        <item name="android:minHeight">36dp</item>
+        <item name="android:minHeight">48dp</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
         <item name="android:paddingTop">4dp</item>
@@ -131,54 +134,51 @@
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless">
-        <item name="android:textColor">?attr/textColorSgPrimary</item>
+        <item name="android:textColor">?attr/textColorPrimarySg</item>
         <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:maxLines">2</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Default">
-        <item name="android:textSize">16sp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">?attr/textColorSgDefault</item>
-    </style>
-
-    <style name="Widget.SeriesGuide.Button.Borderless.Footer">
-        <item name="android:minHeight">48dp</item>
+        <item name="android:gravity">center_vertical|start</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Blue">
         <item name="android:textColor">@color/text_blue</item>
-        <item name="android:paddingLeft">0dp</item>
-        <item name="android:paddingRight">0dp</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Purple">
         <item name="android:textColor">?attr/colorAccent</item>
-        <item name="android:paddingLeft">0dp</item>
-        <item name="android:paddingRight">0dp</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Caption">
         <item name="android:padding">4dp</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_size_caption_sg</item>
         <item name="android:textAllCaps">false</item>
-    </style>
-
-    <style name="Widget.SeriesGuide.Button.Borderless.Caption.Dim">
         <item name="android:textColor">?attr/textColorSgDim</item>
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
     </style>
 
+    <style name="Widget.SeriesGuide.Button.Borderless.Caption.Platform">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="Widget.SeriesGuide.Button.Borderless.Rating">
-        <item name="android:drawableLeft">@drawable/trakt_heart</item>
-        <item name="android:drawablePadding">@dimen/inline_padding</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:padding">@dimen/default_padding</item>
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="Widget.SeriesGuide.ImageButton" parent="android:Widget.Holo.ImageButton">
         <item name="android:background">@drawable/btn_default_sg</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.ButtonBar">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">end</item>
     </style>
 
     <!-- Progress bar -->

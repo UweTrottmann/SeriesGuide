@@ -4,12 +4,13 @@
     <attr name="sgSelectableItemBackground" format="reference" />
     <attr name="sgDrawerItemBackground" format="reference" />
 
-    <!-- Colors -->
-    <attr name="textColorSgDefault" format="reference|color" />
-    <attr name="textColorSgPrimary" format="reference|color" />
-    <attr name="textColorSgPrimaryInverse" format="reference|color" />
+    <!-- Text colors -->
+    <attr name="textColorPrimarySg" format="reference|color" />
+    <attr name="textColorSecondarySg" format="reference|color" />
     <attr name="textColorSgGreen" format="reference|color" />
     <attr name="textColorSgDim" format="reference|color" />
+
+    <!-- Colors -->
     <attr name="sgColorBackgroundDim" format="reference|color" />
     <attr name="sgColorSeparator" format="reference|color" />
     <attr name="sgColorDivider" format="reference|color" />

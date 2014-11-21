@@ -22,9 +22,6 @@
     android:id="@+id/textViewItemActionTitle"
     android:layout_height="48dp"
     android:layout_width="match_parent"
-    android:paddingLeft="@dimen/default_padding"
-    android:paddingRight="@dimen/default_padding"
-    android:gravity="center_vertical|left"
     android:ellipsize="end"
     android:singleLine="true"
     tools:text="Episode Action" />
