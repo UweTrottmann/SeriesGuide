@@ -20,6 +20,7 @@
     </style>
 
     <style name="TextAppearance.Display3">
+        <item name="android:textColor">?attr/textColorSecondarySg</item>
         <item name="android:textSize">56sp</item>
     </style>
 
