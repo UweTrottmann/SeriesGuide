@@ -26,7 +26,6 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 21
-        testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
 
         buildConfigField("String", "TVDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TVDB_API_KEY")}\"")
         buildConfigField("String", "TMDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TMDB_API_KEY")}\"")
@@ -144,17 +143,6 @@ dependencies {
 
     // android unit tests
     androidTestCompile 'com.squareup:fest-android:1.0.8'
-
-    // android instrumentation tests
-    androidTestCompile ('com.jakewharton.espresso:espresso:1.1-r3') {
-        // TODO workaround for http://b.android.com/65445
-        exclude group: 'com.google.code.findbugs', module: 'jsr305'
-    }
-    androidTestCompile ('com.jakewharton.espresso:espresso-support-v4:1.1-r3') {
-        // TODO workaround for http://b.android.com/65445
-        exclude group: 'com.google.code.findbugs', module: 'jsr305'
-        exclude group: 'com.android.support', module: 'support-v4'
-    }
 }
 
 // Google Play Services stripping to avoid dex method limit
