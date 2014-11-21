@@ -50,13 +50,13 @@
                 android:paddingTop="@dimen/inline_padding">
 
                 <TextView
+                    style="@style/TextAppearance.Title"
                     android:id="@+id/widgetTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|start"
                     android:text="@string/upcoming"
-                    android:textColor="@color/black_87"
-                    android:textSize="@dimen/text_size_medium" />
+                    android:textColor="@color/black_87" />
             </FrameLayout>
 
             <FrameLayout
