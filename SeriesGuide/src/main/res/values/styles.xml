@@ -165,10 +165,9 @@
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Rating">
-        <item name="android:drawableLeft">@drawable/trakt_heart</item>
-        <item name="android:drawablePadding">@dimen/inline_padding</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:padding">@dimen/default_padding</item>
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="Widget.SeriesGuide.ImageButton" parent="android:Widget.Holo.ImageButton">
